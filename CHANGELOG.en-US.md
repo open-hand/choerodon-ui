@@ -17,11 +17,14 @@ timeline: true
 
 - 🌟 `configure`: Added `selectReverse` `tableAutoHeightDiff` global configuration.
 - 🌟 `<pro>Select`: Added `reverse` attribute to control whether multiple selection can be reversed.
+- 🌟 `<pro>Modal`: Added `header`, `drawerOffset`, `okButton`, `cancelButton`, `contentStyle`, `bodyStyle` attributes.
 - 💄 `Collapse`: Optimized icon style.
 - 💄 `<pro>DataSet`: Optimized placeholder priority.
 - 💄 `<pro>Select`: Optimized the situation where the corresponding value is not found in the data source, and it is directly displayed empty. Now the return value is displayed.
 - 💄 `<pro>Select`: Optimized the display of multi-choice value for onOption disabled configuration.
 - 💄 `<pro>Table.Column`: Optimize the performance when the tooltip is overflow.
+- 💄 `<pro>Modal`: Optimize the behavior of close button and cancel button to be consistent.
+- 💄 `<pro>Table`: Optimize the performance of `autoMaxWidth`.
 - 🐞 `<pro>Table`: Fixed the interaction problem of filterBar.
 - 🐞 `<pro>Table`: Fixed the drag bar cannot be out of focus.
 - 🐞 `<pro>DataSet`: Fixed to delete only the modified data status after submission.
@@ -31,6 +34,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem that `summaryBar` does not render when buttons do not exist.
 - 🐞 `<pro>Record`: Fixed the error of submitting data caused by incorrect `validate` parameter passing.
 - 🐞 `<pro>Pagination`: Fixed the issue that `modifiedCheckMessage` is invalid when the page number is switched.
+- 🐞 `<pro>Modal`: Fix the display problem when multiple Modal are opened simultaneously in multiple ModalProviders.
+- 🐞 `<pro>Form`: Fix the problem that the form control values are not cleared when clearing the dataset.
 
 ## 0.8.78
 
@@ -439,7 +444,7 @@ timeline: true
 
 - 🌟 `<pro>Lov`: Add `queryBar` `fieldProps` configuration.
 - 🌟 `<pro>DataSet`: Added `cascadeParams` property.
-- 🌟 `<pro>Filed`: Add class name for formFiled Tooltip .
+- 🌟 `<pro>Field`: Add class name for formField Tooltip .
 - 💄 `<pro>DataSet`: Optimize the performance of the `ready` method.
 - 💄 `<pro>DataSet.Record`: Use the merge method to write back with object fields.
 - 🐞 `<pro>DatePicker`: Fixed the problem that when DatePicker sets the default value, the maximum date cannot select the minimum default value

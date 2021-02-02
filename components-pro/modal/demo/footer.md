@@ -14,80 +14,79 @@ title:
 Custom Footer.
 
 ```jsx
-import { Modal, Button } from 'choerodon-ui/pro';
+import { useModal, Button } from 'choerodon-ui/pro';
 
-const key1 = Modal.key();
-const key2 = Modal.key();
-const key3 = Modal.key();
+const App = () => {
+  const Modal = useModal();
 
-let modal;
+  const openModal = React.useCallback(() => {
+    const modal = Modal.open({
+      title: 'Custom Footer',
+      children: (
+        <div>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </div>
+      ),
+      footer: <Button onClick={closeModal}>关闭</Button>,
+    });
 
-function closeModal() {
-  modal.close();
-}
+    function closeModal() {
+      modal.close();
+    }
+  }, [Modal]);
 
-function openModal() {
-  modal = Modal.open({
-    key: key1,
-    title: 'Custom Footer',
-    children: (
-      <div>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </div>
-    ),
-    footer: <Button onClick={closeModal}>关闭</Button>,
-  });
-}
+  const openNoFooter = React.useCallback(() => {
+    Modal.open({
+      title: 'No Footer',
+      maskClosable: true,
+      destroyOnClose: true,
+      children: (
+        <div>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </div>
+      ),
+      footer: null,
+    });
+  }, [Modal]);
 
-function openNoFooter() {
-  Modal.open({
-    key: key2,
-    title: 'No Footer',
-    maskClosable: true,
-    destroyOnClose: true,
-    children: (
-      <div>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </div>
-    ),
-    footer: null,
-  });
-}
+  const openMoreButtons = React.useCallback(() => {
+    Modal.open({
+      title: 'More Buttons',
+      maskClosable: true,
+      destroyOnClose: true,
+      drawer: true,
+      children: (
+        <div>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </div>
+      ),
+      footer: (okBtn, cancelBtn) => (
+        <div>
+          {okBtn}
+          <Button color="primary">Custom</Button>
+          {cancelBtn}
+        </div>
+      ),
+    });
+  }, [Modal]);
 
-function openMoreButtons() {
-  Modal.open({
-    key: key3,
-    title: 'More Buttons',
-    maskClosable: true,
-    destroyOnClose: true,
-    drawer: true,
-    children: (
-      <div>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </div>
-    ),
-    footer: (okBtn, cancelBtn) => (
-      <div>
-        {okBtn}
-        <Button color="primary">Custom</Button>
-        {cancelBtn}
-      </div>
-    ),
-  });
+  return (
+    <div>
+      <Button onClick={openModal}>Custom</Button>
+      <Button onClick={openNoFooter}>No Footer</Button>
+      <Button onClick={openMoreButtons}>More Buttons</Button>
+    </div>
+  );
 }
 
 ReactDOM.render(
-  <div>
-    <Button onClick={openModal}>Custom</Button>
-    <Button onClick={openNoFooter}>No Footer</Button>
-    <Button onClick={openMoreButtons}>More Buttons</Button>
-  </div>,
+  <App />,
   mountNode,
 );
 ```

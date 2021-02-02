@@ -14,27 +14,32 @@ title:
 Full screen.
 
 ````jsx
-import { Modal, Button } from 'choerodon-ui/pro';
+import { useModal, Button } from 'choerodon-ui/pro';
 
-const modalKey = Modal.key();
+const App = () => {
+  const Modal = useModal();
 
-function openModal() {
-  Modal.open({
-    key: modalKey,
-    title: 'Full screen',
-    children: (
-      <div>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </div>
-    ),
-    fullScreen: true,
-  });
+  const openModal = React.useCallback(() => {
+    Modal.open({
+      title: 'Full screen',
+      children: (
+        <div>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </div>
+      ),
+      fullScreen: true,
+    });
+  }, [Modal]);
+
+  return (
+    <Button onClick={openModal}>Open</Button>
+  );
 }
 
 ReactDOM.render(
-  <Button onClick={openModal}>Open</Button>,
+  <App />,
   mountNode,
 );
 ````

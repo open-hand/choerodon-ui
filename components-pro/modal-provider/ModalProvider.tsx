@@ -1,5 +1,4 @@
 import React, {
-  createContext,
   ReactNode,
   useCallback,
   useContext,
@@ -10,15 +9,14 @@ import React, {
 import noop from 'lodash/noop';
 import ModalContainer, { ModalContainerProps } from '../modal-container/ModalContainer';
 import Modal, { ModalProps } from '../modal/Modal';
+import ModalContext from './ModalContext';
 
 export interface ModalProviderProps extends ModalContainerProps {
   children?: ReactNode;
 }
 
-const ModalContext = createContext({ open: noop });
-
 const ModalProvider = (props: ModalProviderProps) => {
-  const { location, children } = props;
+  const { location, children, getContainer } = props;
   const ref = useRef<ModalContainer>(null);
   const prepareToOpen = useMemo<(ModalProps & { children })[]>(
     () => [] as (ModalProps & { children })[],
@@ -40,20 +38,20 @@ const ModalProvider = (props: ModalProviderProps) => {
       };
 
       const show = () => {
-        container.top().open(modalProps);
+        container.open(modalProps);
       };
 
       const update = newProps => {
-        container.top().update({ ...modalProps, ...newProps });
+        container.update({ ...modalProps, ...newProps });
       };
 
       modalProps = {
         close,
         update,
-        ...Modal.defaultProps,
+        ...Modal.defaultProps as ModalProps,
         ...modalProps,
       };
-      container.top().open(modalProps);
+      container.open(modalProps);
 
       return {
         close,
@@ -74,17 +72,17 @@ const ModalProvider = (props: ModalProviderProps) => {
 
   return (
     <ModalContext.Provider value={context}>
-      <ModalContainer ref={ref} location={location} />
+      <ModalContainer ref={ref} location={location} getContainer={getContainer} />
       {children}
     </ModalContext.Provider>
   );
 };
 
-const useModal = () => {
+export const useModal = () => {
   return useContext(ModalContext);
 };
 
-const injectModal = Target => {
+export const injectModal = Target => {
   const Hoc = props => {
     const modal = useModal();
     return <Target {...props} Modal={modal} />;

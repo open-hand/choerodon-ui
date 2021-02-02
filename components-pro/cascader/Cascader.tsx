@@ -594,21 +594,21 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
             });
           }
           const optionProps = onOption ? onOption({ dataSet: options, record: recordItem }) : undefined;
-          const optionDisabled = recordItem.disabled || optionProps;
+          const optionDisabled = recordItem.disabled || (optionProps && optionProps.disabled);
           const key: Key = `${deepindex}-${index}`;
           let children: any;
           if (recordItem.children) {
             children = treePropsChange(recordItem.children);
           }
           return (children ? {
-            ...optionDisabled,
+            ...optionProps,
             key,
             label: text,
             value: recordItem,
             children,
             disabled: optionDisabled,
           } : {
-            ...optionDisabled,
+            ...optionProps,
             key,
             label: text,
             value: recordItem,

@@ -14,30 +14,35 @@ title:
 Custom Position.
 
 ````jsx
-import { Modal, Button } from 'choerodon-ui/pro';
+import { useModal, Button } from 'choerodon-ui/pro';
 
-const modalKey = Modal.key();
+const App = () => {
+  const Modal = useModal();
 
-function openModal() {
-  Modal.open({
-    key: modalKey,
-    title: 'No Footer',
-    children: (
-      <div>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </div>
-    ),
-    style: {
-      left: 100,
-      top: 200,
-    },
-  });
+  const openModal = React.useCallback(() => {
+    Modal.open({
+      title: 'No Footer',
+      children: (
+        <div>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </div>
+      ),
+      style: {
+        left: 100,
+        top: 200,
+      },
+    });
+  }, [Modal]);
+
+  return (
+    <Button onClick={openModal}>Open</Button>
+  );
 }
 
 ReactDOM.render(
-  <Button onClick={openModal}>Open</Button>,
+  <App />,
   mountNode,
 );
 ````

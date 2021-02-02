@@ -2,8 +2,7 @@
 order: 1
 title:
   zh-CN: 数据源
-  en-US: DataSet
-only: true    
+  en-US: DataSet  
 ---
 
 ## zh-CN
@@ -46,6 +45,9 @@ const defaultValidationMessages = {
 
 class App extends React.Component {
   ds = new DataSet({
+    data: [
+      { phone: '18116266000' }
+    ],
     fields: [
       {
         name: 'phone',
@@ -98,6 +100,10 @@ class App extends React.Component {
     this.ds.current.getField('code').set('textField', 'description');
   };
 
+  clear = () => {
+    this.ds.loadData([])
+  };
+
   render() {
     return (
       <Form dataSet={this.ds} labelLayout="float" style={{ width: '4.5rem' }}>
@@ -126,6 +132,9 @@ class App extends React.Component {
           </Button>
           <Button onClick={this.changeField} style={{ marginLeft: 8 }}>
             设置代码描述的textField
+          </Button>
+          <Button onClick={this.clear} style={{ marginLeft: 8 }}>
+            清空
           </Button>
         </div>
       </Form>
