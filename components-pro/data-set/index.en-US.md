@@ -241,6 +241,7 @@ title: DataSet
 | lookupAxiosConfig | 值列表请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。配置中默认 url 为 lookupUrl， method 为 post。 | AxiosRequestConfig\| ({ dataSet, record, params, lookupCode }) => AxiosRequestConfig |  |
 | lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 配置中默认 url 为 lovDefineUrl， method 为 post。 | AxiosRequestConfig\| (code) => AxiosRequestConfig |  |
 | lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
+| lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | bind | 内部字段别名绑定 | string |  |
 | dynamicProps | 动态属性对象。对象为字段属性和返回该字段值的钩子的键值对。原对象属性钩子将在 v1.0 版本中废弃。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
