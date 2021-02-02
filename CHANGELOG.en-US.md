@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>Modal`: Optimize the behavior of close button and cancel button to be consistent.
 - 💄 `<pro>Table`: Optimize the performance of `autoMaxWidth`.
 - 💄 `<pro>DataSet`: The `confirmMessage` parameter of `delete` and `deleteAll` can be set to false to suppress the prompt box.
+- 💄 `<pro>Table`: Optimize the performance of tree expand and collapse.
 - 🐞 `<pro>Table`: Fixed the interaction problem of filterBar.
 - 🐞 `<pro>Table`: Fixed the drag bar cannot be out of focus.
 - 🐞 `<pro>DataSet`: Fixed to delete only the modified data status after submission.

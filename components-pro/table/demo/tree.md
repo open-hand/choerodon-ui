@@ -48,7 +48,6 @@ class App extends React.Component {
     autoQuery: true,
     parentField: 'parentId',
     idField: 'id',
-    expandField: 'expand',
     checkField: 'ischecked',
     fields: [
       { name: 'id', type: 'number' },

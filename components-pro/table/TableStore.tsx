@@ -1,5 +1,5 @@
 import React, { Children, isValidElement, ReactNode } from 'react';
-import { action, set, computed, observable, runInAction } from 'mobx';
+import { action, computed, observable, runInAction, set } from 'mobx';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import defer from 'lodash/defer';
@@ -12,19 +12,10 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box';
 import ObserverRadio from '../radio';
-import { DataSetSelection, RecordStatus } from '../data-set/enum';
-import {
-  ColumnAlign,
-  ColumnLock,
-  SelectionMode,
-  TableEditMode,
-  TableMode,
-  TableQueryBarType,
-  DragColumnAlign,
-  ColumnsEditType,
-} from './enum';
+import { DataSetSelection } from '../data-set/enum';
+import { ColumnAlign, ColumnLock, ColumnsEditType, DragColumnAlign, SelectionMode, TableEditMode, TableMode, TableQueryBarType } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getColumnKey, getHeader, reorderingColumns, mergeObject  } from './utils';
+import { getColumnKey, getHeader, mergeObject, reorderingColumns } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
@@ -116,7 +107,7 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
   }
 }
 
-function mergeDefaultProps(columns: ColumnProps[],columnsMergeCoverage?:ColumnProps[],defaultKey: number[] = [0]): ColumnProps[] {
+function mergeDefaultProps(columns: ColumnProps[], columnsMergeCoverage?: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
   const columnsNew: any[] = [];
   const leftFixedColumns: any[] = [];
   const rightFixedColumns: any[] = [];
@@ -128,13 +119,13 @@ function mergeDefaultProps(columns: ColumnProps[],columnsMergeCoverage?:ColumnPr
       }
       const { children } = newColumn;
       if (children) {
-        newColumn.children = mergeDefaultProps(children,columnsMergeCoverage,defaultKey);
+        newColumn.children = mergeDefaultProps(children, columnsMergeCoverage, defaultKey);
       }
       // TODO 后续可以加key
-      if(columnsMergeCoverage && columnsMergeCoverage.length > 0){
-        const mergeItem = columnsMergeCoverage.find(columnItem => columnItem.name === column.name)
-        if(mergeItem){
-          newColumn = mergeObject(['header'],mergeItem,column)
+      if (columnsMergeCoverage && columnsMergeCoverage.length > 0) {
+        const mergeItem = columnsMergeCoverage.find(columnItem => columnItem.name === column.name);
+        if (mergeItem) {
+          newColumn = mergeObject(['header'], mergeItem, column);
         }
       }
       if (newColumn.lock === ColumnLock.left || newColumn.lock === true) {
@@ -151,7 +142,7 @@ function mergeDefaultProps(columns: ColumnProps[],columnsMergeCoverage?:ColumnPr
 
 function normalizeColumns(
   elements: ReactNode,
-  columnsMergeCoverage?:ColumnProps[],
+  columnsMergeCoverage?: ColumnProps[],
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
 ) {
@@ -172,16 +163,16 @@ function normalizeColumns(
     if (parent) {
       column.lock = parent.lock;
     }
-    column.children = normalizeColumns(column.children,columnsMergeCoverage, column, defaultKey);
+    column.children = normalizeColumns(column.children, columnsMergeCoverage, column, defaultKey);
     if (key) {
       column.key = key;
     }
     // 后续可以加key
-    if(columnsMergeCoverage && columnsMergeCoverage.length > 0){
-     const mergeItem = columnsMergeCoverage.find(columnItem => columnItem.name === column.name)
-     if(mergeItem){
-      column = mergeObject(['header'],mergeItem,column)
-     }
+    if (columnsMergeCoverage && columnsMergeCoverage.length > 0) {
+      const mergeItem = columnsMergeCoverage.find(columnItem => columnItem.name === column.name);
+      if (mergeItem) {
+        column = mergeObject(['header'], mergeItem, column);
+      }
     }
 
     if (column.lock === ColumnLock.left || column.lock === true) {
@@ -249,6 +240,8 @@ export default class TableStore {
 
   @observable multiLineHeight: number[];
 
+  inBatchExpansion: boolean = false;
+
   @computed
   get dataSet(): DataSet {
     return this.props.dataSet;
@@ -305,30 +298,30 @@ export default class TableStore {
   }
 
   @computed
-  get dragColumnAlign():DragColumnAlign | undefined {
-    if('dragColumnAlign' in this.props) {
+  get dragColumnAlign(): DragColumnAlign | undefined {
+    if ('dragColumnAlign' in this.props) {
       return this.props.dragColumnAlign;
     }
     return getConfig('tableDragColumnAlign');
   }
 
   @computed
-  get dragColumn():boolean | undefined {
-    if(this.columnMaxDeep > 1){
+  get dragColumn(): boolean | undefined {
+    if (this.columnMaxDeep > 1) {
       return false;
     }
-    if('dragColumn' in this.props) {
+    if ('dragColumn' in this.props) {
       return this.props.dragColumn;
     }
     return getConfig('tableDragColumn');
   }
 
   @computed
-  get dragRow():boolean | undefined {
+  get dragRow(): boolean | undefined {
     if (this.isTree) {
       return false;
     }
-    if('dragRow' in this.props) {
+    if ('dragRow' in this.props) {
       return this.props.dragRow;
     }
     return getConfig('tableDragRow');
@@ -437,7 +430,7 @@ export default class TableStore {
     runInAction(() => {
       const { currentEditRecord, dataSet } = this;
       if (currentEditRecord) {
-        if (currentEditRecord.status === RecordStatus.add) {
+        if (currentEditRecord.isNew) {
           dataSet.remove(currentEditRecord);
         } else {
           currentEditRecord.reset();
@@ -507,9 +500,9 @@ export default class TableStore {
     let { columns, children } = this.props;
     if (this.headersOrderable) {
       if (columnsMergeCoverage && columns) {
-        columns = reorderingColumns(columnsMergeCoverage, columns)
+        columns = reorderingColumns(columnsMergeCoverage, columns);
       } else {
-        children = reorderingColumns(columnsMergeCoverage, children)
+        children = reorderingColumns(columnsMergeCoverage, children);
       }
     }
     // 分开处理可以满足于只修改表头信息场景不改变顺序
@@ -537,16 +530,16 @@ export default class TableStore {
    * 表头支持编辑
    */
   @computed
-  get headersEditable (){
-    return (this.props.columnsEditType === ColumnsEditType.header || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage
+  get headersEditable() {
+    return (this.props.columnsEditType === ColumnsEditType.header || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage;
   }
 
   /**
    * 表头支持排序
    */
   @computed
-  get headersOrderable (){
-    return (this.props.columnsEditType === ColumnsEditType.order || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage
+  get headersOrderable() {
+    return (this.props.columnsEditType === ColumnsEditType.order || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage;
   }
 
   @computed
@@ -656,7 +649,7 @@ export default class TableStore {
       data = data.filter(filter);
     }
     if (pristine) {
-      data = data.filter(record => record.status !== RecordStatus.add);
+      data = data.filter(record => !record.isNew);
     }
     if (showCachedSeletion) {
       return [...dataSet.cachedSelected, ...data];
@@ -795,38 +788,32 @@ export default class TableStore {
     this.props = props;
   }
 
-  isRowExpanded(record: Record, tableStore?: TableStore): boolean {
-    const { parent } = record;
-    // 如果 存在expandFiled 然后这个 record 被标记为展开 或者 能在存储的已经展开列中找到 那么它为已经展开
-    // 所以逻辑错误的地方就是当这个列没有从tree expand删除那么它会一直在。
-    // 最后的方法表示当父亲节点为不展开它也不展开返回false
-    // 从tableRow触发时候由于生命周期为componentWillUnmount 所以会导致 this为空，所以替换为row作用域的tableStore
-    const that = this || tableStore;
-    const expanded = that.dataSet.props.expandField ? record.isExpanded : that.expandedRows.indexOf(record.key) !== -1;
-    return expanded && (!that.isTree || !parent || that.isRowExpanded(parent));
+  isRowExpanded(record: Record): boolean {
+    const { isExpanded = this.expandedRows.indexOf(record.key) !== -1 } = record;
+    return isExpanded && (!this.isTree || !record.parent || this.isRowExpanded(record.parent));
   }
 
   /**
-   * 
+   *
    * @param record 想修改的record
    * @param expanded 设置是否展开
    * @param disHandler 设置是否需要触发展开事件
    */
   @action
   setRowExpanded(record: Record, expanded: boolean, disHandler?: boolean) {
-    if (this.dataSet.props.expandField) {
-      record.isExpanded = expanded;
-    }
-    const index = this.expandedRows.indexOf(record.key);
-    if (expanded) {
-      if (index === -1) {
-        this.expandedRows.push(record.key);
+    record.isExpanded = expanded;
+    if (!this.inBatchExpansion) {
+      const index = this.expandedRows.indexOf(record.key);
+      if (expanded) {
+        if (index === -1) {
+          this.expandedRows.push(record.key);
+        }
+      } else if (index !== -1) {
+        this.expandedRows.splice(index, 1);
       }
-    } else if (index !== -1) {
-      this.expandedRows.splice(index, 1);
     }
     const { onExpand } = this.props;
-    if (onExpand && !disHandler ) {
+    if (onExpand && !disHandler) {
       onExpand(expanded, record);
     }
   }
@@ -847,12 +834,20 @@ export default class TableStore {
 
   @action
   expandAll() {
-    this.dataSet.records.forEach(record => this.setRowExpanded(record, true));
+    this.inBatchExpansion = true;
+    this.expandedRows = this.dataSet.records.map(record => {
+      this.setRowExpanded(record, true);
+      return record.key;
+    });
+    this.inBatchExpansion = false;
   }
 
   @action
   collapseAll() {
+    this.inBatchExpansion = true;
     this.dataSet.records.forEach(record => this.setRowExpanded(record, false));
+    this.expandedRows = [];
+    this.inBatchExpansion = false;
   }
 
   private getLeafColumns(columns: ColumnProps[]): ColumnProps[] {
@@ -923,7 +918,7 @@ export default class TableStore {
   }
 
   private addDragColumn(columns: ColumnProps[]): ColumnProps[] {
-    const { dragColumnAlign, dragRow, props: { suffixCls, prefixCls } } = this
+    const { dragColumnAlign, dragRow, props: { suffixCls, prefixCls } } = this;
     if (dragColumnAlign && dragRow) {
       const dragColumn: ColumnProps = {
         key: DRAG_KEY,
