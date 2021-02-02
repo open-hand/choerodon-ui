@@ -135,27 +135,28 @@ title: DataSet
 
 ### DataSet Events
 
-| 事件名 | 说明 | 钩子参数 | 参数说明 |
-| --- | --- | --- | --- |
-| update | 值更新事件 | ({ dataSet, record, name, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 更新的记录 `name` - 更新的字段 `value` - 新值 `oldValue` - 旧值 |
-| query | 查询事件，返回值为 false 将阻止查询 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 |
-| beforeLoad | 数据加载前的事件， 用于处理请求数据 | ({ dataSet, data }) =&gt; data | `dataSet` - 数据集 `data` - 请求数据 |
-| load | 数据加载完后事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
-| loadFailed | 数据加载失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
-| submit | 提交事件，返回值为 false 将阻止提交 | ({ dataSet, data }) =&gt; boolean | `dataSet` - 数据集 `data` - json 数据 |
-| submitSuccess | 提交成功事件 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 响应数据 |
-| submitFailed | 提交失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
-| select | 选择记录事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 选择的记录 `previous` - 之前选择的记录，单选模式下有效 |
-| unSelect | 撤销选择记录事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 撤销选择的记录 |
-| selectAll | 全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
-| unSelectAll | 撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
-| indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 |
-| fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 |
-| create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 |
-| remove | 记录移除事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 移除的记录 |
-| export | 导出事件，返回值为 false 将阻止导出 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 |
-| beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 |
-| reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 记录集 |
+| 事件名 | 说明 | 钩子参数 | 参数说明 | 是否可异步 |
+| --- | --- | --- | --- | --- |
+| update | 值更新事件 | ({ dataSet, record, name, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 更新的记录 `name` - 更新的字段 `value` - 新值 `oldValue` - 旧值 | 是 |
+| query | 查询事件，返回值为 false 将阻止查询 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 | 是 |
+| beforeLoad | 数据加载前的事件， 用于处理请求数据 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 请求数据 | 是 |
+| load | 数据加载完后事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| loadFailed | 数据加载失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| submit | 提交事件，返回值为 false 将阻止提交 | ({ dataSet, data }) =&gt; boolean | `dataSet` - 数据集 `data` - json 数据 | 是 |
+| submitSuccess | 提交成功事件 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 响应数据 | 是 |
+| submitFailed | 提交失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| select | 选择记录事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 选择的记录 `previous` - 之前选择的记录，单选模式下有效 | 是 |
+| unSelect | 撤销选择记录事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 撤销选择的记录 | 是 |
+| selectAll | 全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| unSelectAll | 撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 | 是 |
+| fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 | 是 |
+| create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 | 是 |
+| remove | 记录移除事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 移除的记录 | 是 |
+| export | 导出事件，返回值为 false 将阻止导出 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 | 是 |
+| beforeRemove | 数据临时删除前的事件， 返回值为 false 将阻止临时删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 | 否 |
+| beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 | 是 |
+| reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 记录集 | 是 |
 
 ### Record Values
 

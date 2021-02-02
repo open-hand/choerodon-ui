@@ -63,6 +63,11 @@ export default class EventManager {
     return this;
   }
 
+  fireEventSync(eventName: string, ...rest: any[]): boolean {
+    const events: handler[] = this.events[eventName.toLowerCase()];
+    return events ? events.every(([fn]) => fn(...rest) !== false) : true;
+  }
+
   fireEvent(eventName: string, ...rest: any[]): Promise<boolean> {
     const events: handler[] = this.events[eventName.toLowerCase()];
     return events

@@ -280,7 +280,7 @@ export default class Record {
     if (dataSet) {
       const { parent, parentName } = dataSet;
       if (parent && parentName) {
-        return parent.find(
+        return parent.records.find(
           record => (record.getCascadeRecords(parentName) || []).indexOf(this) !== -1,
         );
       }

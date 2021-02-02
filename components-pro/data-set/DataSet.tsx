@@ -1143,7 +1143,7 @@ export default class DataSet extends EventManager {
   remove(records?: Record | Record[]): void {
     if (records) {
       const data = isArrayLike(records) ? records.slice() : [records];
-      if (data.length) {
+      if (data.length && this.fireEventSync(DataSetEvents.beforeRemove, { dataSet: this, records: data }) !== false) {
         const { current } = this;
         data.forEach(this.deleteRecord, this);
         this.fireEvent(DataSetEvents.remove, { dataSet: this, records: data });
