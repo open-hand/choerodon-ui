@@ -728,7 +728,6 @@ export default class Record {
     [...fields.entries()].forEach(([fieldName, field]) => {
       let value = ObjectChainValue.get(newData, fieldName);
       const bind = field.get('bind');
-      const type = field.get('type');
       const transformResponse = field.get('transformResponse');
       if (bind) {
         fieldName = bind;
@@ -736,9 +735,6 @@ export default class Record {
         if (isNil(value) && !isNil(bindValue)) {
           value = bindValue;
         }
-      }
-      if (value === undefined && type === FieldType.boolean) {
-        value = false;
       }
       if (transformResponse) {
         value = transformResponse(value, data);

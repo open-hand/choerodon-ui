@@ -42,6 +42,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the defaultValue property of dynamicProps does not take effect.
 - 🐞 `<pro>DataSet`: Fix the problem in splice method.
 - 🐞 `<pro>DataSet`: Fix the problem of querying parent cascade records for deep cascade records.
+- 🐞 `<pro>DataSet`: When the Boolean value type is not set, it will be set to false by default.
 
 ## 0.8.78
 
