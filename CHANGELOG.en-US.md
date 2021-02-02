@@ -46,6 +46,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the problem of querying parent cascade records for deep cascade records.
 - 🐞 `<pro>DataSet`: When the Boolean value type is not set, it will be set to false by default.
 - 🐞 `<pro>DataSet.Record`: Optimize isExpanded attribute controlled.
+- 🐞 `<pro>Validator`: Fix the problem of passing value by combining unique validation object type fields.
 
 ## 0.8.78
 
