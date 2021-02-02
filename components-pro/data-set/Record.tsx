@@ -375,7 +375,7 @@ export default class Record {
       const childDataSet = dataSet.children[fieldName];
       if (childDataSet) {
         if (dataSet.current === this) {
-          return childDataSet.slice();
+          return childDataSet.records.slice();
         }
         const snapshot = this.dataSetSnapshot[fieldName];
         if (snapshot) {

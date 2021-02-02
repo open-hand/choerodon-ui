@@ -1,15 +1,5 @@
 import { ReactNode } from 'react';
-import {
-  action,
-  computed,
-  get,
-  IReactionDisposer,
-  isArrayLike,
-  observable,
-  runInAction,
-  set,
-  toJS,
-} from 'mobx';
+import { action, computed, get, IReactionDisposer, isArrayLike, observable, runInAction, set, toJS } from 'mobx';
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import omit from 'lodash/omit';
 import flatMap from 'lodash/flatMap';
@@ -28,41 +18,32 @@ import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
   adapterDataToJSON,
+  arrayMove,
   axiosConfigAdapter,
   checkParentByInsert,
   doExport,
   findBindFieldBy,
+  findRootParent,
   generateData,
   generateJSONData,
   generateResponseData,
   getFieldSorter,
   getOrderFields,
+  getSplitValue,
   isDirtyRecord,
   prepareForSubmit,
   prepareSubmitData,
+  processExportValue,
   processIntlField,
+  sliceTree,
   sortTree,
   useCascade,
   useSelected,
-  sliceTree,
-  findRootParent,
-  arrayMove,
-  processExportValue,
-  getSplitValue,
 } from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
-import {
-  DataSetEvents,
-  DataSetSelection,
-  DataSetStatus,
-  DataToJSON,
-  FieldType,
-  RecordStatus,
-  SortOrder,
-  ExportMode,
-} from './enum';
+import { DataSetEvents, DataSetSelection, DataSetStatus, DataToJSON, ExportMode, FieldType, RecordStatus, SortOrder } from './enum';
 import { Lang } from '../locale-context/enum';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
@@ -601,13 +582,13 @@ export default class DataSet extends EventManager {
       const index = this.indexOf(current);
       if (index !== -1) {
         if (this.paging === 'server') {
-          const currentParent = findRootParent(current)
-          let parentIndex = -1
+          const currentParent = findRootParent(current);
+          let parentIndex = -1;
           this.treeData.forEach((item, indexTree) => {
             if (this.indexOf(item) === this.indexOf(currentParent)) {
               parentIndex = indexTree;
             }
-          })
+          });
           return parentIndex;
         }
         return index + (currentPage - 1) * pageSize;
@@ -916,7 +897,7 @@ export default class DataSet extends EventManager {
         ) {
           const ExportQuantity = exportQuantity > 1000 ? 1000 : exportQuantity;
           if (this.exportMode === ExportMode.client) {
-            this.doClientExport(data, ExportQuantity)
+            this.doClientExport(data, ExportQuantity);
           } else {
             doExport(this.axios.getUri(newConfig), newConfig.data, newConfig.method);
           }
@@ -928,36 +909,36 @@ export default class DataSet extends EventManager {
   }
 
   private async doClientExport(data: any, quantity: number) {
-    const columnsExport = data._HAP_EXCEL_EXPORT_COLUMNS
-    delete data._HAP_EXCEL_EXPORT_COLUMNS
-    const params = { ...this.generateQueryString(1, quantity)}
+    const columnsExport = data._HAP_EXCEL_EXPORT_COLUMNS;
+    delete data._HAP_EXCEL_EXPORT_COLUMNS;
+    const params = { ...this.generateQueryString(1, quantity) };
     const newConfig = axiosConfigAdapter('read', this, data, params);
     const result = await this.axios(newConfig);
-    const newResult: any[] = []
+    const newResult: any[] = [];
     if (result[this.dataKey] && result[this.dataKey].length > 0) {
-      const processData = toJS(this.processData(result[this.dataKey])).map((item) => item.data)
+      const processData = toJS(this.processData(result[this.dataKey])).map((item) => item.data);
       processData.forEach((itemValue) => {
-        const dataItem = {}
+        const dataItem = {};
         const columnsExportkeys = Object.keys(columnsExport);
         for (let i = 0; i < columnsExportkeys.length; i += 1) {
-          const firstRecord = this.records[0] || this
-          const exportField = firstRecord.getField(columnsExportkeys[i])
-          let processItemValue = getSplitValue(toJS(itemValue), columnsExportkeys[i])
+          const firstRecord = this.records[0] || this;
+          const exportField = firstRecord.getField(columnsExportkeys[i]);
+          let processItemValue = getSplitValue(toJS(itemValue), columnsExportkeys[i]);
           // 处理bind 情况
           if (exportField && isNil(processItemValue) && exportField.get('bind')) {
             processItemValue = getSplitValue(
               getSplitValue(toJS(itemValue), exportField.get('bind')),
               columnsExportkeys[i],
               true,
-            )
+            );
 
           }
-          dataItem[columnsExportkeys[i]] = processExportValue(processItemValue, exportField)
+          dataItem[columnsExportkeys[i]] = processExportValue(processItemValue, exportField);
         }
         newResult.push(dataItem);
-      })
+      });
     }
-    newResult.unshift(columnsExport)
+    newResult.unshift(columnsExport);
     const ws = XLSX.utils.json_to_sheet(newResult, { skipHeader: true }); /* 新建空workbook，然后加入worksheet */
     const wb = XLSX.utils.book_new();  /* 新建book */
     XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */
@@ -1138,7 +1119,7 @@ export default class DataSet extends EventManager {
       if (
         records.length > 0 &&
         (await this.fireEvent(DataSetEvents.beforeDelete, { dataSet: this, records })) !== false &&
-        (await confirm(confirmMessage || $l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel'
+        (confirmMessage === false || (await confirm(confirmMessage && confirmMessage !== true ? confirmMessage : $l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel')
       ) {
         this.remove(records);
         return this.pending.add(this.write(this.destroyed, true));
@@ -1197,7 +1178,7 @@ export default class DataSet extends EventManager {
   async deleteAll(confirmMessage?: ReactNode | ModalProps & confirmProps) {
     if (
       this.records.length > 0 &&
-      (await confirm(confirmMessage || $l('DataSet', 'delete_all_row_confirm'))) !== 'cancel'
+      (confirmMessage === false || (await confirm(confirmMessage && confirmMessage !== true ? confirmMessage : $l('DataSet', 'delete_all_row_confirm'))) !== 'cancel')
     ) {
       this.removeAll();
       return this.pending.add(this.write(this.destroyed, true));
@@ -1275,7 +1256,7 @@ export default class DataSet extends EventManager {
    * 切换记录的顺序
    */
   move(from: number, to: number) {
-    arrayMove(this.records, from, to)
+    arrayMove(this.records, from, to);
   }
 
   /**
@@ -1712,7 +1693,7 @@ export default class DataSet extends EventManager {
         updated.forEach(r => r.commit(r.toData(), this));
       } else {
         updated.forEach(r => r.commit(omit(r.toData(), ['__dirty']), this));
-    }
+      }
       destroyed.forEach(r => r.commit(undefined, this));
       if (isNumber(total)) {
         this.totalCount = total;
@@ -1795,7 +1776,7 @@ Then the query method will be auto invoke.`,
     } else if (idField && parentField && paging === 'server') {
       // 异步情况复用以前的total
       if (!this.totalCount) {
-        this.totalCount = this.treeData.length
+        this.totalCount = this.treeData.length;
       }
     } else {
       this.totalCount = allData.length;
@@ -2104,7 +2085,7 @@ Then the query method will be auto invoke.`,
     this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: result });
     // 针对 204 的情况进行特殊处理
     // 不然在设置了 primaryKey 的情况 下,在先新增一条再使用delete的情况下，会将204这个请求内容填入到record中
-    if (!(data[0] && data[0].status === 204 && data[0].statusText === "No Content")) {
+    if (!(data[0] && data[0].status === 204 && data[0].statusText === 'No Content')) {
       this.commitData(data, total, onlyDelete);
     } else {
       this.commitData([], total);
@@ -2215,7 +2196,7 @@ Then the query method will be auto invoke.`,
   private generatePageQueryString(page: number, pageSizeInner?: number) {
     const { paging, pageSize } = this;
     if (isNumber(pageSizeInner)) {
-      return { page, pagesize: pageSizeInner }
+      return { page, pagesize: pageSizeInner };
     }
     if (paging === true || paging === 'server') {
       return { page, pagesize: pageSize };
@@ -2244,7 +2225,7 @@ Then the query method will be auto invoke.`,
    * @param page 在那个页面
    * @param pageSizeInner 页面大小
    */
-  private generateQueryString(page: number,pageSizeInner?: number) {
+  private generateQueryString(page: number, pageSizeInner?: number) {
     const order = this.generateOrderQueryString();
     const pageQuery = this.generatePageQueryString(page, pageSizeInner);
     const generatePageQuery = getConfig('generatePageQuery');
