@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Select`: Added `selectAllButton` property.
-- 🌟 `<pro>SelectBox`: implement the `optionRenderer` `optionsFilter` `searchable` properties.
+- 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
 
 ## 1.0.0
 
