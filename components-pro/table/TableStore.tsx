@@ -788,11 +788,9 @@ export default class TableStore {
     this.props = props;
   }
 
-  isRowExpanded(record: Record, tableStore?: TableStore ): boolean {
-    // 临时处理 Tree 拖拽导致展开合并的问题
-    const that = this || tableStore;
-    const { isExpanded = that.expandedRows.indexOf(record.key) !== -1 } = record;
-    return isExpanded && (!that.isTree || !record.parent || that.isRowExpanded(record.parent));
+  isRowExpanded(record: Record): boolean {
+    const { isExpanded = this.expandedRows.indexOf(record.key) !== -1 } = record;
+    return isExpanded && (!this.isTree || !record.parent || this.isRowExpanded(record.parent));
   }
 
   /**
