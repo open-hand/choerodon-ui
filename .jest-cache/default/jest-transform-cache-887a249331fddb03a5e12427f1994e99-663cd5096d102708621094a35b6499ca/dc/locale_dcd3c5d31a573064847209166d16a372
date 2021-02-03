@@ -1,0 +1,15 @@
+e1daf75d447688d41ccb1667b2d00abc
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _zh_CN = _interopRequireDefault(require("./zh_CN"));
+
+var _default = _zh_CN["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvY2FsZS1jb250ZXh0L2xvY2FsZS5qcyJdLCJuYW1lcyI6WyJ6aF9DTiJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUEsSUFBQSxNQUFBLEdBQUEsc0JBQUEsQ0FBQSxPQUFBLENBQUEsU0FBQSxDQUFBLENBQUE7O2VBQ2VBLE1BQUFBLENBQUFBLFNBQUFBLEMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgemhfQ04gZnJvbSAnLi96aF9DTic7XG5leHBvcnQgZGVmYXVsdCB6aF9DTjtcbiJdfQ==

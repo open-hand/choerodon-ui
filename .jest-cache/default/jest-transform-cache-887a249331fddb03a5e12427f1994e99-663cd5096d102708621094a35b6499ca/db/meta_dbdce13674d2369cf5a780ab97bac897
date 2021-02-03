@@ -1,0 +1,48 @@
+96608f5d119ae721d0ae1a13e9b638e6
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _avatar = _interopRequireDefault(require("../../../components/avatar"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _card = _interopRequireDefault(require("../../../components/card"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Meta = _card["default"].Meta;
+
+var __Demo = _react["default"].createElement(_card["default"], {
+  style: {
+    width: 300
+  },
+  cover: _react["default"].createElement("img", {
+    alt: "example",
+    src: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+  }),
+  actions: [_react["default"].createElement(_icon["default"], {
+    key: "setting",
+    type: "setting"
+  }), _react["default"].createElement(_icon["default"], {
+    key: "edit",
+    type: "edit"
+  }), _react["default"].createElement(_icon["default"], {
+    key: "ellipsis",
+    type: "ellipsis"
+  })]
+}, _react["default"].createElement(Meta, {
+  avatar: _react["default"].createElement(_avatar["default"], {
+    src: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+  }),
+  title: "Card title",
+  description: "This is the description"
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

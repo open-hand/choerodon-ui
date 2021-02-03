@@ -1,0 +1,51 @@
+1d5d899deb2bf1738beee33f56b4a4c8
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _cascader = _interopRequireDefault(require("../../../components-pro/cascader"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var options = [{
+  value: 'zhejiang',
+  meaning: 'Zhejiang',
+  children: [{
+    value: 'hangzhou',
+    meaning: 'Hangzhou',
+    children: [{
+      value: 'xihu',
+      meaning: 'West Lake'
+    }]
+  }]
+}, {
+  value: 'jiangsu',
+  meaning: 'Jiangsu',
+  children: [{
+    value: 'nanjing',
+    meaning: 'Nanjing',
+    children: [{
+      value: 'zhonghuamen',
+      meaning: 'Zhong Hua Men'
+    }]
+  }]
+}];
+
+function onChange(value) {
+  console.log(value);
+}
+
+var __Demo = _react["default"].createElement(_cascader["default"], {
+  value: ["zhejiang", "hangzhou", "xihu"],
+  options: options,
+  onChange: onChange,
+  placeholder: "Please select"
+});
+
+var _default = __Demo;
+exports["default"] = _default;

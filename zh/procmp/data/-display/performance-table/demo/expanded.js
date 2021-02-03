@@ -4,15 +4,15 @@ import { PerformanceTable, Button } from 'choerodon-ui/pro';
 
 const rowKey = 'id';
 const ExpandCell = ({ rowData, dataIndex, expandedRowKeys, onChange }) => (
-    <Button
-      onClick={() => {
-        onChange(rowData);
-      }}
-      funcType="flat"
-      size="small"
-    >
-      {expandedRowKeys.some(key => key === rowData[rowKey]) ? '-' : '+'}
-    </Button>
+  <Button
+    onClick={() => {
+      onChange(rowData);
+    }}
+    funcType="flat"
+    size="small"
+  >
+    {expandedRowKeys.some((key) => key === rowData[rowKey]) ? '-' : '+'}
+  </Button>
 );
 
 class ExpandedTable extends React.Component {
@@ -20,7 +20,7 @@ class ExpandedTable extends React.Component {
     super(props);
     this.state = {
       data: fakeData,
-      expandedRowKeys: [0]
+      expandedRowKeys: [0],
     };
     this.handleExpanded = this.handleExpanded.bind(this);
   }
@@ -30,7 +30,7 @@ class ExpandedTable extends React.Component {
     let open = false;
     const nextExpandedRowKeys = [];
 
-    expandedRowKeys.forEach(key => {
+    expandedRowKeys.forEach((key) => {
       if (key === rowData[rowKey]) {
         open = true;
       } else {
@@ -42,54 +42,59 @@ class ExpandedTable extends React.Component {
       nextExpandedRowKeys.push(rowData[rowKey]);
     }
     this.setState({
-      expandedRowKeys: nextExpandedRowKeys
+      expandedRowKeys: nextExpandedRowKeys,
     });
   }
   render() {
     const { expandedRowKeys, data } = this.state;
     const columns = [
-        {
-          title: '#',
-          dataIndex: 'id',
-          key: 'id',
-          width: 70, 
-          align: "center", 
-          fixed: true,
-          render: ({ rowData, dataIndex }) => ExpandCell({ rowData, dataIndex, expandedRowKeys, onChange: this.handleExpanded })
-        },
-        {
-          title: '姓',
-          dataIndex: 'lastName',
-          key: 'lastName',
-          width: 150, 
-          fixed: true,
-        },  
-        {
-          title: '名',
-          dataIndex: 'firstName',
-          key: 'firstName',
-          width: 150, 
-        },
-        {
-          title: '城市',
-          dataIndex: 'city',
-          key: 'city',
-          width: 300, 
-        },       
-        {
-          title: '街道',
-          dataIndex: 'street',
-          key: 'street',
-          width: 300, 
-        },            
-        {
-          title: '公司',
-          dataIndex: 'companyName',
-          key: 'companyName',
-          width: 300,
-        },   
-      ];
-    
+      {
+        title: '#',
+        dataIndex: 'id',
+        key: 'id',
+        width: 70,
+        fixed: true,
+        render: ({ rowData, dataIndex }) =>
+          ExpandCell({
+            rowData,
+            dataIndex,
+            expandedRowKeys,
+            onChange: this.handleExpanded,
+          }),
+      },
+      {
+        title: '姓',
+        dataIndex: 'lastName',
+        key: 'lastName',
+        width: 150,
+        fixed: true,
+      },
+      {
+        title: '名',
+        dataIndex: 'firstName',
+        key: 'firstName',
+        width: 150,
+      },
+      {
+        title: '城市',
+        dataIndex: 'city',
+        key: 'city',
+        width: 300,
+      },
+      {
+        title: '街道',
+        dataIndex: 'street',
+        key: 'street',
+        width: 300,
+      },
+      {
+        title: '公司',
+        dataIndex: 'companyName',
+        key: 'companyName',
+        width: 300,
+      },
+    ];
+
     return (
       <PerformanceTable
         height={400}
@@ -97,10 +102,10 @@ class ExpandedTable extends React.Component {
         rowKey={rowKey}
         expandedRowKeys={expandedRowKeys}
         columns={columns}
-        onRowClick={data => {
+        onRowClick={(data) => {
           console.log(data);
         }}
-        renderRowExpanded={rowData => {
+        renderRowExpanded={(rowData) => {
           return (
             <div>
               <div
@@ -109,7 +114,7 @@ class ExpandedTable extends React.Component {
                   height: 60,
                   float: 'left',
                   marginRight: 10,
-                  background: '#eee'
+                  background: '#eee',
                 }}
               >
                 <img src={rowData.avartar} style={{ width: 60 }} />

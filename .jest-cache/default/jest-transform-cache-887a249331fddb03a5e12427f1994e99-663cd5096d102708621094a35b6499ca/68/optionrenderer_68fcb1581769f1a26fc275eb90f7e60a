@@ -1,0 +1,82 @@
+5fd2ffd9ed3ee3431e09b3ba343686d9
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components-pro/row"));
+
+var _col = _interopRequireDefault(require("../../../components-pro/col"));
+
+var _select = _interopRequireDefault(require("../../../components-pro/select"));
+
+var _tooltip = _interopRequireDefault(require("../../../components-pro/tooltip"));
+
+var _icon = _interopRequireDefault(require("../../../components-pro/icon"));
+
+var _dataSet = _interopRequireDefault(require("../../../components-pro/data-set"));
+
+var _menu = _interopRequireDefault(require("../../../components-pro/menu"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Item = _menu["default"].Item;
+
+var App = function App() {
+  var optionDs = new _dataSet["default"]({
+    selection: 'single',
+    queryUrl: '/dataset/user/queries',
+    autoQuery: true
+  });
+  var ds = new _dataSet["default"]({
+    fields: [{
+      name: 'user',
+      type: 'string',
+      textField: 'name',
+      valueField: 'userid',
+      label: '用户',
+      options: optionDs
+    }]
+  });
+
+  var renderer = function renderer(_ref) {
+    var text = _ref.text;
+    return _react["default"].createElement("div", {
+      style: {
+        width: '100%'
+      }
+    }, text && _react["default"].createElement(_icon["default"], {
+      type: "people"
+    }), " ", text);
+  };
+
+  var optionRenderer = function optionRenderer(_ref2) {
+    var text = _ref2.text;
+    return _react["default"].createElement(_tooltip["default"], {
+      title: text,
+      placement: "left"
+    }, renderer({
+      text: text
+    }));
+  };
+
+  return _react["default"].createElement(_row["default"], {
+    gutter: 10
+  }, _react["default"].createElement(_col["default"], {
+    span: 8
+  }, _react["default"].createElement(_select["default"], {
+    dataSet: ds,
+    name: "user",
+    optionRenderer: optionRenderer,
+    renderer: renderer
+  })));
+};
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

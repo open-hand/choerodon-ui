@@ -1,0 +1,194 @@
+15ae7de2a2a3a462720e60a4205ee033
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _modal = _interopRequireDefault(require("../../../components/modal"));
+
+var _radio = _interopRequireDefault(require("../../../components/radio"));
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _form = _interopRequireDefault(require("../../../components/form"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var FormItem = _form["default"].Item;
+
+var CollectionCreateForm = _form["default"].create()(
+/*#__PURE__*/
+// eslint-disable-next-line
+function (_React$Component) {
+  (0, _inherits2["default"])(_class, _React$Component);
+
+  var _super = _createSuper(_class);
+
+  function _class() {
+    (0, _classCallCheck2["default"])(this, _class);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2["default"])(_class, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          visible = _this$props.visible,
+          onCancel = _this$props.onCancel,
+          onCreate = _this$props.onCreate,
+          form = _this$props.form;
+      var getFieldDecorator = form.getFieldDecorator;
+      return _react["default"].createElement(_modal["default"], {
+        visible: visible,
+        title: "Create a new collection",
+        okText: "Create",
+        onCancel: onCancel,
+        onOk: onCreate
+      }, _react["default"].createElement(_form["default"], {
+        layout: "vertical"
+      }, _react["default"].createElement(FormItem, {
+        label: "Title"
+      }, getFieldDecorator('title', {
+        rules: [{
+          required: true,
+          message: 'Please input the title of collection!'
+        }]
+      })(_react["default"].createElement(_input["default"], null))), _react["default"].createElement(FormItem, {
+        label: "Description"
+      }, getFieldDecorator('description')(_react["default"].createElement(_input["default"], {
+        type: "textarea"
+      }))), _react["default"].createElement(FormItem, {
+        className: "collection-create-form_last-form-item"
+      }, getFieldDecorator('modifier', {
+        initialValue: 'public'
+      })(_react["default"].createElement(_radio["default"].Group, null, _react["default"].createElement(_radio["default"], {
+        value: "public"
+      }, "Public"), _react["default"].createElement(_radio["default"], {
+        value: "private"
+      }, "Private"))))));
+    }
+  }]);
+  return _class;
+}(_react["default"].Component));
+
+var CollectionsPage =
+/*#__PURE__*/
+function (_React$Component2) {
+  (0, _inherits2["default"])(CollectionsPage, _React$Component2);
+
+  var _super2 = _createSuper(CollectionsPage);
+
+  function CollectionsPage() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, CollectionsPage);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super2.call.apply(_super2, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      visible: false
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "showModal", function () {
+      _this.setState({
+        visible: true
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleCancel", function () {
+      _this.setState({
+        visible: false
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleCreate", function () {
+      var form = _this.formRef.props.form;
+      form.validateFields(function (err, values) {
+        if (err) {
+          return;
+        }
+
+        console.log('Received values of form: ', values);
+        form.resetFields();
+
+        _this.setState({
+          visible: false
+        });
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "saveFormRef", function (formRef) {
+      _this.formRef = formRef;
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(CollectionsPage, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], {
+        type: "primary",
+        onClick: this.showModal
+      }, "New Collection"), _react["default"].createElement(CollectionCreateForm, {
+        wrappedComponentRef: this.saveFormRef,
+        visible: this.state.visible,
+        onCancel: this.handleCancel,
+        onCreate: this.handleCreate
+      }));
+    }
+  }]);
+  return CollectionsPage;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(CollectionsPage, null);
+
+var _default = __Demo;
+exports["default"] = _default;

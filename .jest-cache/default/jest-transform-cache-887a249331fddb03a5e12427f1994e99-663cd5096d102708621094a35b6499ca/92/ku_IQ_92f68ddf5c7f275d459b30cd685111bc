@@ -1,0 +1,213 @@
+11a6e1b50ccebe147a1b39386ceff571
+"use strict";
+
+/* istanbul ignore next */
+function cov_22n5suiqmh() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/ku_IQ.tsx";
+  var hash = "398d20745289c243c32566a2d9cc7db190825a4f";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/ku_IQ.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 88
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 14
+        },
+        end: {
+          line: 12,
+          column: 76
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 76
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 14
+        },
+        end: {
+          line: 16,
+          column: 73
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 15
+        },
+        end: {
+          line: 56,
+          column: 1
+        }
+      },
+      "8": {
+        start: {
+          line: 57,
+          column: 0
+        },
+        end: {
+          line: 57,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "398d20745289c243c32566a2d9cc7db190825a4f"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_22n5suiqmh = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_22n5suiqmh();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_22n5suiqmh().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_22n5suiqmh().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_22n5suiqmh().s[2]++;
+exports["default"] = void 0;
+
+var _ku_IQ =
+/* istanbul ignore next */
+(cov_22n5suiqmh().s[3]++, _interopRequireDefault(require("../rc-components/pagination/locale/ku_IQ")));
+
+var _ku_IQ2 =
+/* istanbul ignore next */
+(cov_22n5suiqmh().s[4]++, _interopRequireDefault(require("../date-picker/locale/ku_IQ")));
+
+var _ku_IQ3 =
+/* istanbul ignore next */
+(cov_22n5suiqmh().s[5]++, _interopRequireDefault(require("../time-picker/locale/ku_IQ")));
+
+var _ku_IQ4 =
+/* istanbul ignore next */
+(cov_22n5suiqmh().s[6]++, _interopRequireDefault(require("../calendar/locale/ku_IQ")));
+
+var _default =
+/* istanbul ignore next */
+(cov_22n5suiqmh().s[7]++, {
+  locale: 'ku-iq',
+  Pagination: _ku_IQ["default"],
+  DatePicker: _ku_IQ2["default"],
+  TimePicker: _ku_IQ3["default"],
+  Calendar: _ku_IQ4["default"],
+  Table: {
+    filterTitle: 'Menuê peldanka',
+    filterConfirm: 'Temam',
+    filterReset: 'Jê bibe',
+    emptyText: 'Agahî tune',
+    selectAll: 'Hemî hilbijêre',
+    selectInvert: 'Hilbijartinan veguhere'
+  },
+  Modal: {
+    okText: 'Temam',
+    cancelText: 'Betal ke',
+    justOkText: 'Temam'
+  },
+  Popconfirm: {
+    okText: 'Temam',
+    cancelText: 'Betal ke'
+  },
+  Transfer: {
+    notFoundContent: 'Peyda Nebû',
+    searchPlaceholder: 'Lêgerîn',
+    itemUnit: 'tişt',
+    itemsUnit: 'tişt'
+  },
+  Select: {
+    notFoundContent: 'Peyda Nebû'
+  },
+  Upload: {
+    uploading: 'Bardike...',
+    removeFile: 'Pelê rabike',
+    uploadError: 'Xeta barkirine',
+    previewFile: 'Pelê pêşbibîne'
+  }
+});
+
+/* istanbul ignore next */
+cov_22n5suiqmh().s[8]++;
+exports["default"] = _default;

@@ -1,0 +1,24 @@
+e156172286279b5d93891208e56234cb
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _iconSelect = _interopRequireDefault(require("../../../components/icon-select"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_iconSelect["default"], {
+  showAll: true,
+  style: {
+    width: '300px'
+  },
+  defaultValue: ['root']
+});
+
+var _default = __Demo;
+exports["default"] = _default;

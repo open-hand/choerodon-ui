@@ -1,0 +1,28 @@
+d6a5f62b71c88e9b8c5f9febb910dfc2
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _upload = _interopRequireDefault(require("../../../components-pro/upload"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var props = {
+  headers: {
+    'Access-Control-Allow-Origin': '*'
+  },
+  action: '//localhost:3000/upload',
+  multiple: true,
+  accept: ['.deb', '.txt', '.pdf', 'image/*'],
+  uploadImmediately: false
+};
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_upload["default"], props));
+
+var _default = __Demo;
+exports["default"] = _default;

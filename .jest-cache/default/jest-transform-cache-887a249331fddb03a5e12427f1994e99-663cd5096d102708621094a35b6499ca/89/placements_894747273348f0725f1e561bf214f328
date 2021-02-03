@@ -1,0 +1,896 @@
+e913d180e1644444138383c2b6f948a1
+"use strict";
+
+/* istanbul ignore next */
+function cov_2ogp8hgq1w() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/tooltip/placements.tsx";
+  var hash = "e6bcf60d8ccac924e86eb0a9d45a03595adaaa19";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/tooltip/placements.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 48
+        }
+      },
+      "3": {
+        start: {
+          line: 9,
+          column: 0
+        },
+        end: {
+          line: 9,
+          column: 35
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 21
+        },
+        end: {
+          line: 11,
+          column: 92
+        }
+      },
+      "5": {
+        start: {
+          line: 13,
+          column: 18
+        },
+        end: {
+          line: 13,
+          column: 88
+        }
+      },
+      "6": {
+        start: {
+          line: 15,
+          column: 32
+        },
+        end: {
+          line: 18,
+          column: 1
+        }
+      },
+      "7": {
+        start: {
+          line: 19,
+          column: 33
+        },
+        end: {
+          line: 22,
+          column: 1
+        }
+      },
+      "8": {
+        start: {
+          line: 23,
+          column: 19
+        },
+        end: {
+          line: 23,
+          column: 25
+        }
+      },
+      "9": {
+        start: {
+          line: 26,
+          column: 2
+        },
+        end: {
+          line: 28,
+          column: 3
+        }
+      },
+      "10": {
+        start: {
+          line: 27,
+          column: 4
+        },
+        end: {
+          line: 27,
+          column: 87
+        }
+      },
+      "11": {
+        start: {
+          line: 30,
+          column: 2
+        },
+        end: {
+          line: 30,
+          column: 96
+        }
+      },
+      "12": {
+        start: {
+          line: 34,
+          column: 15
+        },
+        end: {
+          line: 34,
+          column: 85
+        }
+      },
+      "13": {
+        start: {
+          line: 35,
+          column: 27
+        },
+        end: {
+          line: 35,
+          column: 44
+        }
+      },
+      "14": {
+        start: {
+          line: 36,
+          column: 19
+        },
+        end: {
+          line: 36,
+          column: 73
+        }
+      },
+      "15": {
+        start: {
+          line: 37,
+          column: 30
+        },
+        end: {
+          line: 37,
+          column: 57
+        }
+      },
+      "16": {
+        start: {
+          line: 38,
+          column: 29
+        },
+        end: {
+          line: 38,
+          column: 90
+        }
+      },
+      "17": {
+        start: {
+          line: 39,
+          column: 30
+        },
+        end: {
+          line: 39,
+          column: 55
+        }
+      },
+      "18": {
+        start: {
+          line: 40,
+          column: 27
+        },
+        end: {
+          line: 40,
+          column: 88
+        }
+      },
+      "19": {
+        start: {
+          line: 41,
+          column: 30
+        },
+        end: {
+          line: 41,
+          column: 55
+        }
+      },
+      "20": {
+        start: {
+          line: 42,
+          column: 27
+        },
+        end: {
+          line: 42,
+          column: 90
+        }
+      },
+      "21": {
+        start: {
+          line: 43,
+          column: 21
+        },
+        end: {
+          line: 92,
+          column: 3
+        }
+      },
+      "22": {
+        start: {
+          line: 93,
+          column: 2
+        },
+        end: {
+          line: 100,
+          column: 5
+        }
+      },
+      "23": {
+        start: {
+          line: 94,
+          column: 4
+        },
+        end: {
+          line: 99,
+          column: 7
+        }
+      },
+      "24": {
+        start: {
+          line: 101,
+          column: 2
+        },
+        end: {
+          line: 101,
+          column: 22
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "getOverflowOptions",
+        decl: {
+          start: {
+            line: 25,
+            column: 9
+          },
+          end: {
+            line: 25,
+            column: 27
+          }
+        },
+        loc: {
+          start: {
+            line: 25,
+            column: 48
+          },
+          end: {
+            line: 31,
+            column: 1
+          }
+        },
+        line: 25
+      },
+      "1": {
+        name: "getPlacements",
+        decl: {
+          start: {
+            line: 33,
+            column: 9
+          },
+          end: {
+            line: 33,
+            column: 22
+          }
+        },
+        loc: {
+          start: {
+            line: 33,
+            column: 25
+          },
+          end: {
+            line: 102,
+            column: 1
+          }
+        },
+        line: 33
+      },
+      "2": {
+        name: "(anonymous_2)",
+        decl: {
+          start: {
+            line: 93,
+            column: 36
+          },
+          end: {
+            line: 93,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 93,
+            column: 51
+          },
+          end: {
+            line: 100,
+            column: 3
+          }
+        },
+        line: 93
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 26,
+            column: 2
+          },
+          end: {
+            line: 28,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 26,
+            column: 2
+          },
+          end: {
+            line: 28,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 26,
+            column: 2
+          },
+          end: {
+            line: 28,
+            column: 3
+          }
+        }],
+        line: 26
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 27,
+            column: 11
+          },
+          end: {
+            line: 27,
+            column: 86
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 27,
+            column: 32
+          },
+          end: {
+            line: 27,
+            column: 57
+          }
+        }, {
+          start: {
+            line: 27,
+            column: 60
+          },
+          end: {
+            line: 27,
+            column: 86
+          }
+        }],
+        line: 27
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 34,
+            column: 15
+          },
+          end: {
+            line: 34,
+            column: 85
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 34,
+            column: 68
+          },
+          end: {
+            line: 34,
+            column: 80
+          }
+        }, {
+          start: {
+            line: 34,
+            column: 83
+          },
+          end: {
+            line: 34,
+            column: 85
+          }
+        }],
+        line: 34
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 34,
+            column: 15
+          },
+          end: {
+            line: 34,
+            column: 65
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 34,
+            column: 15
+          },
+          end: {
+            line: 34,
+            column: 35
+          }
+        }, {
+          start: {
+            line: 34,
+            column: 39
+          },
+          end: {
+            line: 34,
+            column: 65
+          }
+        }],
+        line: 34
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 36,
+            column: 19
+          },
+          end: {
+            line: 36,
+            column: 73
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 36,
+            column: 51
+          },
+          end: {
+            line: 36,
+            column: 52
+          }
+        }, {
+          start: {
+            line: 36,
+            column: 55
+          },
+          end: {
+            line: 36,
+            column: 73
+          }
+        }],
+        line: 36
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 38,
+            column: 29
+          },
+          end: {
+            line: 38,
+            column: 90
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 38,
+            column: 64
+          },
+          end: {
+            line: 38,
+            column: 66
+          }
+        }, {
+          start: {
+            line: 38,
+            column: 69
+          },
+          end: {
+            line: 38,
+            column: 90
+          }
+        }],
+        line: 38
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 40,
+            column: 27
+          },
+          end: {
+            line: 40,
+            column: 88
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 40,
+            column: 62
+          },
+          end: {
+            line: 40,
+            column: 64
+          }
+        }, {
+          start: {
+            line: 40,
+            column: 67
+          },
+          end: {
+            line: 40,
+            column: 88
+          }
+        }],
+        line: 40
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 42,
+            column: 27
+          },
+          end: {
+            line: 42,
+            column: 90
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 42,
+            column: 62
+          },
+          end: {
+            line: 42,
+            column: 66
+          }
+        }, {
+          start: {
+            line: 42,
+            column: 69
+          },
+          end: {
+            line: 42,
+            column: 90
+          }
+        }],
+        line: 42
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 94,
+            column: 24
+          },
+          end: {
+            line: 99,
+            column: 6
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 94,
+            column: 52
+          },
+          end: {
+            line: 97,
+            column: 6
+          }
+        }, {
+          start: {
+            line: 97,
+            column: 9
+          },
+          end: {
+            line: 99,
+            column: 6
+          }
+        }],
+        line: 94
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "e6bcf60d8ccac924e86eb0a9d45a03595adaaa19"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_2ogp8hgq1w = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_2ogp8hgq1w();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_2ogp8hgq1w().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_2ogp8hgq1w().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2ogp8hgq1w().s[2]++;
+exports.getOverflowOptions = getOverflowOptions;
+
+/* istanbul ignore next */
+cov_2ogp8hgq1w().s[3]++;
+exports["default"] = getPlacements;
+
+var _objectSpread2 =
+/* istanbul ignore next */
+(cov_2ogp8hgq1w().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2")));
+
+var _placements =
+/* istanbul ignore next */
+(cov_2ogp8hgq1w().s[5]++, _interopRequireDefault(require("../rc-components/tooltip/placements")));
+
+var autoAdjustOverflowEnabled =
+/* istanbul ignore next */
+(cov_2ogp8hgq1w().s[6]++, {
+  adjustX: 1,
+  adjustY: 1
+});
+var autoAdjustOverflowDisabled =
+/* istanbul ignore next */
+(cov_2ogp8hgq1w().s[7]++, {
+  adjustX: 0,
+  adjustY: 0
+});
+var targetOffset =
+/* istanbul ignore next */
+(cov_2ogp8hgq1w().s[8]++, [0, 0]);
+
+function getOverflowOptions(autoAdjustOverflow) {
+  /* istanbul ignore next */
+  cov_2ogp8hgq1w().f[0]++;
+  cov_2ogp8hgq1w().s[9]++;
+
+  if (typeof autoAdjustOverflow === 'boolean') {
+    /* istanbul ignore next */
+    cov_2ogp8hgq1w().b[0][0]++;
+    cov_2ogp8hgq1w().s[10]++;
+    return autoAdjustOverflow ?
+    /* istanbul ignore next */
+    (cov_2ogp8hgq1w().b[1][0]++, autoAdjustOverflowEnabled) :
+    /* istanbul ignore next */
+    (cov_2ogp8hgq1w().b[1][1]++, autoAdjustOverflowDisabled);
+  } else
+  /* istanbul ignore next */
+  {
+    cov_2ogp8hgq1w().b[0][1]++;
+  }
+
+  cov_2ogp8hgq1w().s[11]++;
+  return (0, _objectSpread2["default"])({}, autoAdjustOverflowDisabled, {}, autoAdjustOverflow);
+}
+
+function getPlacements() {
+  /* istanbul ignore next */
+  cov_2ogp8hgq1w().f[1]++;
+  var config =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[12]++,
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[3][0]++, arguments.length > 0) &&
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[3][1]++, arguments[0] !== undefined) ?
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[2][0]++, arguments[0]) :
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[2][1]++, {}));
+
+  var _config$arrowWidth =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[13]++, config.arrowWidth),
+      arrowWidth =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[14]++, _config$arrowWidth === void 0 ?
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[4][0]++, 5) :
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[4][1]++, _config$arrowWidth)),
+      _config$horizontalArr =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[15]++, config.horizontalArrowShift),
+      horizontalArrowShift =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[16]++, _config$horizontalArr === void 0 ?
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[5][0]++, 16) :
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[5][1]++, _config$horizontalArr)),
+      _config$verticalArrow =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[17]++, config.verticalArrowShift),
+      verticalArrowShift =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[18]++, _config$verticalArrow === void 0 ?
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[6][0]++, 12) :
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[6][1]++, _config$verticalArrow)),
+      _config$autoAdjustOve =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[19]++, config.autoAdjustOverflow),
+      autoAdjustOverflow =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[20]++, _config$autoAdjustOve === void 0 ?
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[7][0]++, true) :
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().b[7][1]++, _config$autoAdjustOve));
+
+  var placementMap =
+  /* istanbul ignore next */
+  (cov_2ogp8hgq1w().s[21]++, {
+    left: {
+      points: ['cr', 'cl'],
+      offset: [-4, 0]
+    },
+    right: {
+      points: ['cl', 'cr'],
+      offset: [4, 0]
+    },
+    top: {
+      points: ['bc', 'tc'],
+      offset: [0, -4]
+    },
+    bottom: {
+      points: ['tc', 'bc'],
+      offset: [0, 4]
+    },
+    topLeft: {
+      points: ['bl', 'tc'],
+      offset: [-(horizontalArrowShift + arrowWidth), -4]
+    },
+    leftTop: {
+      points: ['tr', 'cl'],
+      offset: [-4, -(verticalArrowShift + arrowWidth)]
+    },
+    topRight: {
+      points: ['br', 'tc'],
+      offset: [horizontalArrowShift + arrowWidth, -4]
+    },
+    rightTop: {
+      points: ['tl', 'cr'],
+      offset: [4, -(verticalArrowShift + arrowWidth)]
+    },
+    bottomRight: {
+      points: ['tr', 'bc'],
+      offset: [horizontalArrowShift + arrowWidth, 4]
+    },
+    rightBottom: {
+      points: ['bl', 'cr'],
+      offset: [4, verticalArrowShift + arrowWidth]
+    },
+    bottomLeft: {
+      points: ['tl', 'bc'],
+      offset: [-(horizontalArrowShift + arrowWidth), 4]
+    },
+    leftBottom: {
+      points: ['br', 'cl'],
+      offset: [-4, verticalArrowShift + arrowWidth]
+    }
+  });
+
+  /* istanbul ignore next */
+  cov_2ogp8hgq1w().s[22]++;
+  Object.keys(placementMap).forEach(function (key) {
+    /* istanbul ignore next */
+    cov_2ogp8hgq1w().f[2]++;
+    cov_2ogp8hgq1w().s[23]++;
+    placementMap[key] = config.arrowPointAtCenter ?
+    /* istanbul ignore next */
+    (cov_2ogp8hgq1w().b[8][0]++, (0, _objectSpread2["default"])({}, placementMap[key], {
+      overflow: getOverflowOptions(autoAdjustOverflow),
+      targetOffset: targetOffset
+    })) :
+    /* istanbul ignore next */
+    (cov_2ogp8hgq1w().b[8][1]++, (0, _objectSpread2["default"])({}, _placements["default"][key], {
+      overflow: getOverflowOptions(autoAdjustOverflow)
+    }));
+  });
+
+  /* istanbul ignore next */
+  cov_2ogp8hgq1w().s[24]++;
+  return placementMap;
+}

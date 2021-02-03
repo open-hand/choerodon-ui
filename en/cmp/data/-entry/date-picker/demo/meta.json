@@ -43,7 +43,7 @@
         "en": "The input box comes in three sizes. `default` will be used if `size` is omitted.\n"
       },
       "order": 2,
-      "height": 237,
+      "height": 287,
       "screenshot": ""
     },
     {
@@ -99,7 +99,7 @@
         "en": "When `RangePicker` does not satisfied your requirements, try to implement similar functionality with two `DatePicker`.\n> * Use the `disabledDate` property to limit the start and end dates.\n> * Improve user experience with `open` and `onOpenChange`.\n"
       },
       "order": 6,
-      "height": 237,
+      "height": 287,
       "screenshot": ""
     },
     {
@@ -127,7 +127,7 @@
         "en": "Render extra footer in panel for customized requirements.\n"
       },
       "order": 10,
-      "height": 237,
+      "height": 290,
       "screenshot": ""
     },
     {

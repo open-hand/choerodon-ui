@@ -1,0 +1,116 @@
+278dfe4c9f875b914e68aa7ce3f20cdd
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _ = _interopRequireDefault(require(".."));
+
+var _dataSet = _interopRequireDefault(require("../../data-set"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+function handleDataSetChange(_ref) {
+  var record = _ref.record,
+      name = _ref.name,
+      value = _ref.value,
+      oldValue = _ref.oldValue;
+  // eslint-disable-next-line no-console
+  console.log('[dataset newValue]', value, '[oldValue]', oldValue, "[record.get('".concat(name, "')]"), record.get(name));
+}
+
+var TextAreaTest =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(TextAreaTest, _React$Component);
+
+  var _super = _createSuper(TextAreaTest);
+
+  function TextAreaTest() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, TextAreaTest);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds", new _dataSet["default"]({
+      autoCreate: true,
+      fields: [{
+        name: 'content',
+        type: 'string',
+        defaultValue: 'textarea',
+        required: true
+      }],
+      events: {
+        update: handleDataSetChange
+      }
+    }));
+    return _this;
+  }
+
+  (0, _createClass2["default"])(TextAreaTest, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_["default"], {
+        dataSet: this.ds,
+        name: "content",
+        resize: "both"
+      });
+    }
+  }]);
+  return TextAreaTest;
+}(_react["default"].Component);
+
+var _default = TextAreaTest;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRleHRBcmVhVGVzdC5qcyJdLCJuYW1lcyI6WyJoYW5kbGVEYXRhU2V0Q2hhbmdlIiwicmVjb3JkIiwibmFtZSIsInZhbHVlIiwib2xkVmFsdWUiLCJjb25zb2xlIiwibG9nIiwiZ2V0IiwiVGV4dEFyZWFUZXN0IiwiRGF0YVNldCIsImF1dG9DcmVhdGUiLCJmaWVsZHMiLCJ0eXBlIiwiZGVmYXVsdFZhbHVlIiwicmVxdWlyZWQiLCJldmVudHMiLCJ1cGRhdGUiLCJkcyIsIlJlYWN0IiwiQ29tcG9uZW50Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBRUEsU0FBU0EsbUJBQVQsT0FBZ0U7QUFBQSxNQUFqQ0MsTUFBaUMsUUFBakNBLE1BQWlDO0FBQUEsTUFBekJDLElBQXlCLFFBQXpCQSxJQUF5QjtBQUFBLE1BQW5CQyxLQUFtQixRQUFuQkEsS0FBbUI7QUFBQSxNQUFaQyxRQUFZLFFBQVpBLFFBQVk7QUFDOUQ7QUFDQUMsRUFBQUEsT0FBTyxDQUFDQyxHQUFSLENBQ0Usb0JBREYsRUFFRUgsS0FGRixFQUdFLFlBSEYsRUFJRUMsUUFKRix5QkFLa0JGLElBTGxCLFVBTUVELE1BQU0sQ0FBQ00sR0FBUCxDQUFXTCxJQUFYLENBTkY7QUFRRDs7SUFFS00sWTs7Ozs7Ozs7Ozs7Ozs7Ozs7MkZBQ0MsSUFBSUMsbUJBQUosQ0FBWTtBQUNmQyxNQUFBQSxVQUFVLEVBQUUsSUFERztBQUVmQyxNQUFBQSxNQUFNLEVBQUUsQ0FDTjtBQUNFVCxRQUFBQSxJQUFJLEVBQUUsU0FEUjtBQUVFVSxRQUFBQSxJQUFJLEVBQUUsUUFGUjtBQUdFQyxRQUFBQSxZQUFZLEVBQUUsVUFIaEI7QUFJRUMsUUFBQUEsUUFBUSxFQUFFO0FBSlosT0FETSxDQUZPO0FBVWZDLE1BQUFBLE1BQU0sRUFBRTtBQUNOQyxRQUFBQSxNQUFNLEVBQUVoQjtBQURGO0FBVk8sS0FBWixDOzs7Ozs7NkJBZUk7QUFDUCxhQUFPLGdDQUFDLFlBQUQ7QUFBVSxRQUFBLE9BQU8sRUFBRSxLQUFLaUIsRUFBeEI7QUFBNEIsUUFBQSxJQUFJLEVBQUMsU0FBakM7QUFBMkMsUUFBQSxNQUFNLEVBQUM7QUFBbEQsUUFBUDtBQUNEOzs7RUFsQndCQyxrQkFBTUMsUzs7ZUFxQmxCWCxZIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCBUZXh0QXJlYSBmcm9tICcuLic7XG5pbXBvcnQgRGF0YVNldCBmcm9tICcuLi8uLi9kYXRhLXNldCc7XG5cbmZ1bmN0aW9uIGhhbmRsZURhdGFTZXRDaGFuZ2UoeyByZWNvcmQsIG5hbWUsIHZhbHVlLCBvbGRWYWx1ZSB9KSB7XG4gIC8vIGVzbGludC1kaXNhYmxlLW5leHQtbGluZSBuby1jb25zb2xlXG4gIGNvbnNvbGUubG9nKFxuICAgICdbZGF0YXNldCBuZXdWYWx1ZV0nLFxuICAgIHZhbHVlLFxuICAgICdbb2xkVmFsdWVdJyxcbiAgICBvbGRWYWx1ZSxcbiAgICBgW3JlY29yZC5nZXQoJyR7bmFtZX0nKV1gLFxuICAgIHJlY29yZC5nZXQobmFtZSksXG4gICk7XG59XG5cbmNsYXNzIFRleHRBcmVhVGVzdCBleHRlbmRzIFJlYWN0LkNvbXBvbmVudCB7XG4gIGRzID0gbmV3IERhdGFTZXQoe1xuICAgIGF1dG9DcmVhdGU6IHRydWUsXG4gICAgZmllbGRzOiBbXG4gICAgICB7XG4gICAgICAgIG5hbWU6ICdjb250ZW50JyxcbiAgICAgICAgdHlwZTogJ3N0cmluZycsXG4gICAgICAgIGRlZmF1bHRWYWx1ZTogJ3RleHRhcmVhJyxcbiAgICAgICAgcmVxdWlyZWQ6IHRydWUsXG4gICAgICB9LFxuICAgIF0sXG4gICAgZXZlbnRzOiB7XG4gICAgICB1cGRhdGU6IGhhbmRsZURhdGFTZXRDaGFuZ2UsXG4gICAgfSxcbiAgfSk7XG5cbiAgcmVuZGVyKCkge1xuICAgIHJldHVybiA8VGV4dEFyZWEgZGF0YVNldD17dGhpcy5kc30gbmFtZT1cImNvbnRlbnRcIiByZXNpemU9XCJib3RoXCIgLz47XG4gIH1cbn1cblxuZXhwb3J0IGRlZmF1bHQgVGV4dEFyZWFUZXN0O1xuIl19

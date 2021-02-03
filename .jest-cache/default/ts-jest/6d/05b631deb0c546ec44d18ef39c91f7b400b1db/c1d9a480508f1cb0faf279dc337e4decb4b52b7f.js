@@ -1,0 +1,15 @@
+import CalendarLocale from '../../rc-components/calendar/locale/uk_UA';
+import TimePickerLocale from '../../time-picker/locale/uk_UA';
+const locale = {
+    lang: {
+        placeholder: 'Оберіть дату',
+        rangePlaceholder: ['Початкова дата', 'Кінцева дата'],
+        ...CalendarLocale,
+    },
+    timePickerLocale: {
+        ...TimePickerLocale,
+    },
+};
+// All settings at:
+export default locale;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiL1VzZXJzL2h1aWh1YXdrL0RvY3VtZW50cy9vcHQvY2hvZXJvZG9uLXVpL2NvbXBvbmVudHMvZGF0ZS1waWNrZXIvbG9jYWxlL3VrX1VBLnRzeCIsIm1hcHBpbmdzIjoiQUFBQSxPQUFPLGNBQWMsTUFBTSwyQ0FBMkMsQ0FBQztBQUN2RSxPQUFPLGdCQUFnQixNQUFNLGdDQUFnQyxDQUFDO0FBRTlELE1BQU0sTUFBTSxHQUFHO0lBQ2IsSUFBSSxFQUFFO1FBQ0osV0FBVyxFQUFFLGNBQWM7UUFDM0IsZ0JBQWdCLEVBQUUsQ0FBQyxnQkFBZ0IsRUFBRSxjQUFjLENBQUM7UUFDcEQsR0FBRyxjQUFjO0tBQ2xCO0lBQ0QsZ0JBQWdCLEVBQUU7UUFDaEIsR0FBRyxnQkFBZ0I7S0FDcEI7Q0FDRixDQUFDO0FBRUYsbUJBQW1CO0FBRW5CLGVBQWUsTUFBTSxDQUFDIiwibmFtZXMiOltdLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzL2RhdGUtcGlja2VyL2xvY2FsZS91a19VQS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IENhbGVuZGFyTG9jYWxlIGZyb20gJy4uLy4uL3JjLWNvbXBvbmVudHMvY2FsZW5kYXIvbG9jYWxlL3VrX1VBJztcbmltcG9ydCBUaW1lUGlja2VyTG9jYWxlIGZyb20gJy4uLy4uL3RpbWUtcGlja2VyL2xvY2FsZS91a19VQSc7XG5cbmNvbnN0IGxvY2FsZSA9IHtcbiAgbGFuZzoge1xuICAgIHBsYWNlaG9sZGVyOiAn0J7QsdC10YDRltGC0Ywg0LTQsNGC0YMnLFxuICAgIHJhbmdlUGxhY2Vob2xkZXI6IFsn0J/QvtGH0LDRgtC60L7QstCwINC00LDRgtCwJywgJ9Ca0ZbQvdGG0LXQstCwINC00LDRgtCwJ10sXG4gICAgLi4uQ2FsZW5kYXJMb2NhbGUsXG4gIH0sXG4gIHRpbWVQaWNrZXJMb2NhbGU6IHtcbiAgICAuLi5UaW1lUGlja2VyTG9jYWxlLFxuICB9LFxufTtcblxuLy8gQWxsIHNldHRpbmdzIGF0OlxuXG5leHBvcnQgZGVmYXVsdCBsb2NhbGU7XG4iXSwidmVyc2lvbiI6M30=

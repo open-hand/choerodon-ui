@@ -106,7 +106,6 @@ class CustomColumnTable extends React.Component {
         dataIndex: 'id',
         key: 'id',
         width: 80,
-        align: 'center',
         fixed: true,
         render: ({ rowData, dataIndex, rowIndex }) =>
           this.CheckCell({ rowData, dataIndex, rowIndex }),

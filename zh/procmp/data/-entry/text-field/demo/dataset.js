@@ -10,7 +10,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'first-name', type: 'string', defaultValue: 'Huazhen', readOnly: true },
+      { name: 'first-name', type: 'string', defaultValue: 'Zhangsan', readOnly: true },
     ],
     events: {
       update: handleDataSetChange,

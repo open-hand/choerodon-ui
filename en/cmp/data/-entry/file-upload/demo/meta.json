@@ -117,7 +117,7 @@
       "screenshot": ""
     },
     {
-      "filename": "picture-card.js",
+      "filename": "picture-card-drag.js",
       "title": {
         "zh": "可拖拽照片墙",
         "en": "Pictures Wall"

@@ -1,0 +1,1 @@
+{"version":3,"sources":["checkbox/index.jsx"],"names":["Checkbox"],"mappings":";;;;;;;;;AAAA,IAAA,SAAA,GAAA,sBAAA,CAAA,OAAA,CAAA,YAAA,CAAA,CAAA;;eAEeA,SAAAA,CAAAA,SAAAA,C","sourcesContent":["import Checkbox from './Checkbox';\n\nexport default Checkbox;\n"]}

@@ -1,0 +1,18 @@
+7ac26a2d17797e5b31b9a6d20965d1f2
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.removeUnprintableChar = removeUnprintableChar;
+/**
+ * 去除字符串中所有不可打印字符并返回结果
+ *
+ * @param {string} text 可能含有不可打印字符的字符串
+ * @returns {string} 不含不可打印字符的字符串
+ */
+
+function removeUnprintableChar(text) {
+  return text.replace(/\s*\n\s*/g, '');
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvZGUtYXJlYS91dGlscy5qcyJdLCJuYW1lcyI6WyJ0ZXh0Il0sIm1hcHBpbmdzIjoiOzs7Ozs7QUFBQTs7Ozs7OztBQU1PLFNBQUEscUJBQUEsQ0FBQSxJQUFBLEVBQXFDO0FBQ3hDLFNBQU9BLElBQUksQ0FBSkEsT0FBQUEsQ0FBQUEsV0FBQUEsRUFBUCxFQUFPQSxDQUFQO0FBQ0giLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIOWOu+mZpOWtl+espuS4suS4reaJgOacieS4jeWPr+aJk+WNsOWtl+espuW5tui/lOWbnue7k+aenFxuICpcbiAqIEBwYXJhbSB7c3RyaW5nfSB0ZXh0IOWPr+iDveWQq+acieS4jeWPr+aJk+WNsOWtl+espueahOWtl+espuS4slxuICogQHJldHVybnMge3N0cmluZ30g5LiN5ZCr5LiN5Y+v5omT5Y2w5a2X56ym55qE5a2X56ym5LiyXG4gKi9cbmV4cG9ydCBmdW5jdGlvbiByZW1vdmVVbnByaW50YWJsZUNoYXIodGV4dCkge1xuICAgIHJldHVybiB0ZXh0LnJlcGxhY2UoL1xccypcXG5cXHMqL2csICcnKTtcbn1cbiJdfQ==

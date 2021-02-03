@@ -1,0 +1,1 @@
+{"version":3,"sources":["uid.jsx"],"names":["now","Date","index","uid"],"mappings":";;;;;;AAAA,IAAMA,GAAG,GAAG,CAAE,IAAIC,IAAJ,EAAd;AACA,IAAIC,KAAK,GAAG,CAAZ;;AAEe,SAASC,GAAT,GAAe;AAC5B,6BAAoBH,GAApB,cAA2B,EAAEE,KAA7B;AACD","sourcesContent":["const now = +(new Date());\nlet index = 0;\n\nexport default function uid() {\n  return `rc-upload-${now}-${++index}`;\n}\n"]}

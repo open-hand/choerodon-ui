@@ -7,16 +7,16 @@
     {
       "filename": "basic.js",
       "title": {
-        "zh": "基本",
+        "zh": "基础",
         "en": "Basic"
       },
       "description": {
-        "zh": "最简单的用法。\n",
-        "en": "The most basic usage.\n"
+        "zh": "最简单的表格。\n",
+        "en": "The most sample usage.\n"
       },
       "order": 0,
       "screenshot": "",
-      "height": 630,
+      "height": 480,
       "category": "pro"
     },
     {
@@ -31,7 +31,7 @@
       },
       "order": 1,
       "screenshot": "",
-      "height": 730,
+      "height": 780,
       "category": "pro"
     },
     {
@@ -46,7 +46,7 @@
       },
       "order": 2,
       "screenshot": "",
-      "height": 374,
+      "height": 454,
       "category": "pro"
     },
     {
@@ -61,7 +61,7 @@
       },
       "order": 3,
       "screenshot": "",
-      "height": 374,
+      "height": 454,
       "category": "pro"
     },
     {
@@ -76,7 +76,7 @@
       },
       "order": 4,
       "screenshot": "",
-      "height": 497,
+      "height": 680,
       "category": "pro"
     },
     {
@@ -91,7 +91,7 @@
       },
       "order": 5,
       "screenshot": "",
-      "height": 440,
+      "height": 540,
       "category": "pro"
     },
     {
@@ -106,7 +106,7 @@
       },
       "order": 5,
       "screenshot": "",
-      "height": 440,
+      "height": 450,
       "category": "pro"
     },
     {
@@ -121,7 +121,7 @@
       },
       "order": 6,
       "screenshot": "",
-      "height": 430,
+      "height": 480,
       "ignores": ["theme1", "theme3"],
       "category": "pro"
     },
@@ -137,7 +137,7 @@
       },
       "order": 7,
       "screenshot": "",
-      "height": 478,
+      "height": 558,
       "ignores": ["theme1", "theme3"],
       "category": "pro"
     },
@@ -153,7 +153,7 @@
       },
       "order": 8,
       "screenshot": "",
-      "height": 525,
+      "height": 575,
       "category": "pro"
     },
     {
@@ -168,7 +168,7 @@
       },
       "order": 9,
       "screenshot": "",
-      "height": 375,
+      "height": 435,
       "category": "pro"
     },
     {
@@ -183,7 +183,7 @@
       },
       "order": 10,
       "screenshot": "",
-      "height": 375,
+      "height": 425,
       "category": "pro"
     },
     {
@@ -198,7 +198,7 @@
       },
       "order": 11,
       "screenshot": "",
-      "height": 375,
+      "height": 525,
       "category": "pro"
     },
     {
@@ -213,7 +213,7 @@
       },
       "order": 12,
       "screenshot": "",
-      "height": 435,
+      "height": 485,
       "category": "pro"
     },
     {
@@ -228,7 +228,7 @@
       },
       "order": 13,
       "screenshot": "",
-      "height": 438,
+      "height": 488,
       "category": "pro"
     },
     {
@@ -243,7 +243,7 @@
       },
       "order": 14,
       "screenshot": "",
-      "height": 375,
+      "height": 425,
       "category": "pro"
     },
     {
@@ -258,7 +258,7 @@
       },
       "order": 15,
       "screenshot": "",
-      "height": 240,
+      "height": 290,
       "category": "pro"
     },
     {
@@ -268,12 +268,12 @@
         "en": "Tree Data"
       },
       "description": {
-        "zh": "异步懒加载实现，加父亲节点分页\n",
+        "zh": "异步懒加载实现，以及对于父亲节点分页处理\n",
         "en": "Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.onExpand event trigger，parent paging\n"
       },
       "order": 16,
       "screenshot": "",
-      "height": 435,
+      "height": 485,
       "category": "pro"
     },
     {
@@ -288,7 +288,7 @@
       },
       "order": 17,
       "screenshot": "",
-      "height": 593,
+      "height": 643,
       "category": "pro"
     },
     {
@@ -303,7 +303,8 @@
       },
       "order": 18,
       "screenshot": "",
-      "height": 630,
+      "height": 680,
+      "ignores": ["theme1", "theme3", "theme4"],
       "category": "pro"
     },
     {
@@ -318,7 +319,7 @@
       },
       "order": 19,
       "screenshot": "",
-      "height": 485,
+      "height": 535,
       "category": "pro"
     },
     {
@@ -333,7 +334,7 @@
       },
       "order": 20,
       "screenshot": "",
-      "height": 485,
+      "height": 535,
       "category": "pro"
     },
     {
@@ -343,12 +344,12 @@
         "en": "Drag Render"
       },
       "description": {
-        "zh": "可以通过rowDragRender里面方法进行对于整体的拖拽空控制，比如droppableProps，droppableProps 控制是否可以拖动和放入等,可以查看react-beautiful-dnd。\n",
+        "zh": "可以通过rowDragRender里面方法进行对于整体的拖拽控制，比如droppableProps，droppableProps 控制是否可以拖动和放入等,可以查看react-beautiful-dnd。\n",
         "en": "You can use the rowDragRender method to control the overall drag and drop, such as droppableProps, droppableProps control whether you can drag and drop, etc., you can check react-beautiful-dnd.\n"
       },
       "order": 21,
       "screenshot": "",
-      "height": 485,
+      "height": 535,
       "category": "pro"
     },
     {
@@ -363,7 +364,8 @@
       },
       "order": 22,
       "screenshot": "",
-      "height": 400,
+      "height": 450,
+      "ignores": ["theme4"],
       "category": "pro"
     },
     {
@@ -378,7 +380,7 @@
       },
       "order": 23,
       "screenshot": "",
-      "height": 430,
+      "height": 480,
       "category": "pro"
     },
     {
@@ -393,7 +395,8 @@
       },
       "order": 23,
       "screenshot": "",
-      "height": 520,
+      "height": 570,
+      "ignores": ["theme1", "theme3", "theme4"],
       "category": "pro"
     },
     {
@@ -408,7 +411,23 @@
       },
       "order": 24,
       "screenshot": "",
-      "height": 520,
+      "height": 570,
+      "ignores": ["theme1", "theme3", "theme4"],
+      "category": "pro"
+    },
+    {
+      "filename": "multifunction.js",
+      "title": {
+        "zh": "功能总和",
+        "en": "All"
+      },
+      "description": {
+        "zh": "极其复杂的案例，通过操作了解更多 Table 功能。\n",
+        "en": "The most complex usage.\n"
+      },
+      "order": 99,
+      "screenshot": "",
+      "height": 680,
       "category": "pro"
     }
   ]

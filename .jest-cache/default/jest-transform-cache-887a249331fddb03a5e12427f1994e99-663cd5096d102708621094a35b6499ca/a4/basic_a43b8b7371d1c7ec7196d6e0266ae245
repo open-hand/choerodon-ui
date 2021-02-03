@@ -1,0 +1,116 @@
+df15f36b73c5738761489a5a117f62d0
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _affix = _interopRequireDefault(require("../../../components/affix"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var Demo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(Demo, _React$Component);
+
+  var _super = _createSuper(Demo);
+
+  function Demo() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, Demo);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      top: 10,
+      bottom: 10
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(Demo, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return _react["default"].createElement("div", null, _react["default"].createElement(_affix["default"], {
+        offsetTop: this.state.top
+      }, _react["default"].createElement(_button["default"], {
+        type: "primary",
+        onClick: function onClick() {
+          _this2.setState({
+            top: _this2.state.top + 10
+          });
+        }
+      }, "Affix top")), _react["default"].createElement("br", null), _react["default"].createElement(_affix["default"], {
+        offsetBottom: this.state.bottom
+      }, _react["default"].createElement(_button["default"], {
+        type: "primary",
+        onClick: function onClick() {
+          _this2.setState({
+            bottom: _this2.state.bottom + 10
+          });
+        }
+      }, "Affix bottom")));
+    }
+  }]);
+  return Demo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(Demo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

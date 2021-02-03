@@ -6,7 +6,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'first-name', type: 'string', defaultValue: 'Huazhen', required: true },
+      { name: 'first-name', type: 'string', defaultValue: 'Zhangsan', required: true },
     ],
   });
 

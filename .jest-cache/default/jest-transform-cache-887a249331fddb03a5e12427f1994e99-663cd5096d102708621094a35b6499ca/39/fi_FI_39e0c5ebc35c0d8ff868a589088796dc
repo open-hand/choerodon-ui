@@ -1,0 +1,26 @@
+3e4a0604280c572b7343d81f6b6437f7
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var _default = {
+  // Options.jsx
+  items_per_page: '/ sivu',
+  label_items_per_page: 'Items / page',
+  jump_to: 'Mene',
+  jump_to_confirm: 'Potvrdite',
+  page: '',
+  // Pagination.jsx
+  first_page: 'First Page',
+  last_page: 'Last Page',
+  prev_page: 'Edellinen sivu',
+  next_page: 'Seuraava sivu',
+  prev_5: 'Edelliset 5 sivua',
+  next_5: 'Seuraavat 5 sivua',
+  prev_3: 'Edelliset 3 sivua',
+  next_3: 'Seuraavat 3 sivua'
+};
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpX0ZJLmpzeCJdLCJuYW1lcyI6WyJpdGVtc19wZXJfcGFnZSIsImxhYmVsX2l0ZW1zX3Blcl9wYWdlIiwianVtcF90byIsImp1bXBfdG9fY29uZmlybSIsInBhZ2UiLCJmaXJzdF9wYWdlIiwibGFzdF9wYWdlIiwicHJldl9wYWdlIiwibmV4dF9wYWdlIiwicHJldl81IiwibmV4dF81IiwicHJldl8zIiwibmV4dF8zIl0sIm1hcHBpbmdzIjoiOzs7Ozs7ZUFBZTtBQUNiO0FBQ0FBLEVBQUFBLGNBQWMsRUFBRSxRQUZIO0FBR2JDLEVBQUFBLG9CQUFvQixFQUFFLGNBSFQ7QUFJYkMsRUFBQUEsT0FBTyxFQUFFLE1BSkk7QUFLYkMsRUFBQUEsZUFBZSxFQUFFLFdBTEo7QUFNYkMsRUFBQUEsSUFBSSxFQUFFLEVBTk87QUFRYjtBQUNBQyxFQUFBQSxVQUFVLEVBQUUsWUFUQztBQVViQyxFQUFBQSxTQUFTLEVBQUUsV0FWRTtBQVdiQyxFQUFBQSxTQUFTLEVBQUUsZ0JBWEU7QUFZYkMsRUFBQUEsU0FBUyxFQUFFLGVBWkU7QUFhYkMsRUFBQUEsTUFBTSxFQUFFLG1CQWJLO0FBY2JDLEVBQUFBLE1BQU0sRUFBRSxtQkFkSztBQWViQyxFQUFBQSxNQUFNLEVBQUUsbUJBZks7QUFnQmJDLEVBQUFBLE1BQU0sRUFBRTtBQWhCSyxDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGRlZmF1bHQge1xuICAvLyBPcHRpb25zLmpzeFxuICBpdGVtc19wZXJfcGFnZTogJy8gc2l2dScsXG4gIGxhYmVsX2l0ZW1zX3Blcl9wYWdlOiAnSXRlbXMgLyBwYWdlJyxcbiAganVtcF90bzogJ01lbmUnLFxuICBqdW1wX3RvX2NvbmZpcm06ICdQb3R2cmRpdGUnLFxuICBwYWdlOiAnJyxcblxuICAvLyBQYWdpbmF0aW9uLmpzeFxuICBmaXJzdF9wYWdlOiAnRmlyc3QgUGFnZScsXG4gIGxhc3RfcGFnZTogJ0xhc3QgUGFnZScsXG4gIHByZXZfcGFnZTogJ0VkZWxsaW5lbiBzaXZ1JyxcbiAgbmV4dF9wYWdlOiAnU2V1cmFhdmEgc2l2dScsXG4gIHByZXZfNTogJ0VkZWxsaXNldCA1IHNpdnVhJyxcbiAgbmV4dF81OiAnU2V1cmFhdmF0IDUgc2l2dWEnLFxuICBwcmV2XzM6ICdFZGVsbGlzZXQgMyBzaXZ1YScsXG4gIG5leHRfMzogJ1NldXJhYXZhdCAzIHNpdnVhJyxcbn07XG4iXX0=

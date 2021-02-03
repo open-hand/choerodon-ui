@@ -1,0 +1,99 @@
+78f2ebe388a4b77b6f1e3901943f9239
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components-pro/row"));
+
+var _col = _interopRequireDefault(require("../../../components-pro/col"));
+
+var _dataSet = _interopRequireDefault(require("../../../components-pro/data-set"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _select = _interopRequireDefault(require("../../../components-pro/select"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Option = _select["default"].Option;
+var data = [{
+  'first-name': 'huazhen'
+}];
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds", new _dataSet["default"]({
+      data: data,
+      fields: [{
+        name: 'first-name',
+        readOnly: true
+      }]
+    }));
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_row["default"], {
+        gutter: 10
+      }, _react["default"].createElement(_col["default"], {
+        span: 12
+      }, _react["default"].createElement(_select["default"], {
+        name: "last-name",
+        placeholder: "\u8BF7\u9009\u62E9",
+        readOnly: true,
+        defaultValue: "jack"
+      }, _react["default"].createElement(Option, {
+        value: "jack"
+      }, "Jack"), _react["default"].createElement(Option, {
+        value: "lucy"
+      }, "Lucy"), _react["default"].createElement(Option, {
+        value: "wu"
+      }, "Wu"))), _react["default"].createElement(_col["default"], {
+        span: 12
+      }, _react["default"].createElement(_select["default"], {
+        dataSet: this.ds,
+        name: "first-name"
+      })));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

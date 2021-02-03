@@ -1,0 +1,12 @@
+16d8a99b06075ef438b549479ee5ae47
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = normalizeLanguage;
+
+function normalizeLanguage(language) {
+  return language && language.replace('_', '-').toLowerCase();
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIl91dGlsL25vcm1hbGl6ZUxhbmd1YWdlLmpzeCJdLCJuYW1lcyI6WyJsYW5ndWFnZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFlLFNBQUEsaUJBQUEsQ0FBQSxRQUFBLEVBQXFDO0FBQ2hELFNBQU9BLFFBQVEsSUFBSUEsUUFBUSxDQUFSQSxPQUFBQSxDQUFBQSxHQUFBQSxFQUFBQSxHQUFBQSxFQUFuQixXQUFtQkEsRUFBbkI7QUFDSCIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIG5vcm1hbGl6ZUxhbmd1YWdlKGxhbmd1YWdlKSB7XG4gICAgcmV0dXJuIGxhbmd1YWdlICYmIGxhbmd1YWdlLnJlcGxhY2UoJ18nLCAnLScpLnRvTG93ZXJDYXNlKCk7XG59XG4iXX0=

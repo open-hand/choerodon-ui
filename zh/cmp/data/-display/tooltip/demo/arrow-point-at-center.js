@@ -5,10 +5,13 @@ import { Tooltip, Button } from 'choerodon-ui';
 ReactDOM.render(
   <div>
     <Tooltip placement="topLeft" title="Prompt Text">
-      <Button>Align edge / 边缘对齐</Button>
+      <Button style={{ marginRight: '4px' }}>Align edge / 边缘对齐</Button>
     </Tooltip>
     <Tooltip placement="topLeft" title="Prompt Text" arrowPointAtCenter>
-      <Button>Arrow points to center / 箭头指向中心</Button>
+      <Button style={{ marginRight: '4px' }}>
+        Arrow points to center / 箭头指向中心
+      </Button>
     </Tooltip>
   </div>,
-  document.getElementById('container'));
+  document.getElementById('container'),
+);

@@ -39,23 +39,23 @@ title: API
 | columnResizable       | 可调整列宽                                                                                                                                                                                                                     | boolean                                                                                                | true     |
 | pristine              | 显示原始值                                                                                                                                                                                                                     | boolean                                                                                                | false    |
 | onExpand              | 点击展开图标时触发                                                                                                                                                                                                             | (expanded, record) => void                                                                             |          |
-| virtual               | 是否开启虚拟滚动，当设置表格高度 `style={{ height: xxx }}` 时有效                                                                                                                                                               | boolean                                                                                                | false    |
+| virtual               | 是否开启虚拟滚动，当设置表格高度时有效                                                                                                                                                               | boolean                                                                                                | false    |
 | virtualSpin           | 是否开启虚拟滚动 Spin                                                                                                                                                                                                          | boolean                                                                                                | false    |
 | autoHeight            | 是否开启高度自适应                                                                                                                                                                                                             | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) }                                      | false    |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
-| autoMaxWidth          | 是否开启双击侧边栏宽度最大自适应,初次双击为最大值再次双击为 minWidth                                                                                                                                                          | boolean                                                                                                | false    |
+| autoMaxWidth          | 是否开启双击侧边栏宽度最大自适应, 初次双击为最大值再次双击为 minWidth                                                                                                                                                          | boolean                                                                                                | false    |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | left \| right |  |
 | dragColumn | 打开列拖拽,组合列无法使用 | boolean | false |
 | dragRow | 行拖拽，实现行的拖拽，会导致拖拽列的一些事件失效，可以用dragColumnAlign来避免，树形数据无法使用 | boolean | false |
-| onDragEnd | 完成拖拽后的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
-| columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#dragRender)  |  |
-| rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#dragRender) |  |
-| columnsMergeCoverage | 优先级高于colums，可以实现表头文字修改自定义修改和列的位置自定义修改 | ColumnProps[] | [] |
-| columnsOnChange | 拖拽列和修改表头文字触发事件 | (change:{columns:columnProps[]:colum:columnProps,type:string}) => void|  |
+| onDragEnd | 完成拖拽后的触发事件 | (dataSet, columns, resultDrag, provided) => void |  |
+| columnsDragRender | 控制列的拖拽渲染 | 请查看DragRender[配置项](#dragRender)  |  |
+| rowDragRender | 控制列的拖拽渲染| 请查看DragRender[配置项](#dragRender) |  |
+| columnsMergeCoverage | 优先级高于columns，实现表头文字修改自定义修改和列的位置自定义修改 | ColumnProps[] | [] |
+| columnsOnChange | 拖拽列和修改表头文字触发事件 | (change: ChangeColumns) => void|  |
 | columnsEditType | 合并列信息选择，目前可以选择表头文字或者表的位置进行合并 | order \| all \| header |  |
-| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   |  |
+| onDragEndBefore |完成拖拽后,切换位置之前的触发事件 | (dataSet, columns, resultDrag, provided) => false \| void \|resultDrag   |  |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |
 | dynamicFilterBar | `queryBar` 为 `filterBar` 时筛选条属性配置 | DynamicFilterBarConfig | |
 
@@ -138,7 +138,7 @@ title: API
 | droppableProps | droppableProps 参考文档 | object |
 | draggableProps | DraggableProps 参考文档 | object |
 | renderClone | 拖拽起来的时候会在 body 下面新增加一个 table 会在这个 table 注入元素 | (DragTableRowProps \| DragTableHeaderCellProps) => ReactElement<any> |
-| renderIcon | 可以自定义图标图标 | 当为row 时候（{record}）=> ReactElement<any> 为column 时候 （{column，dataSet, snapshot}）=> ReactElement<any> |
+| renderIcon | 可以自定义图标图标 | 当为 row 时候（{record}）=> ReactElement<any> 为column 时候 （{column，dataSet, snapshot}）=> ReactElement<any> |
 
 
 ### spin

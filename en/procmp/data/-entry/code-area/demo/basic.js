@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { CodeArea, Switch, Row, Col } from 'choerodon-ui/pro';
 
-const style = { height: 30 };
+const style = { height: 60 };
 
 class App extends React.Component {
   state = { readOnly: true, disabled: true };
@@ -24,18 +24,19 @@ class App extends React.Component {
         </Col>
         <Col span={8}>
           <CodeArea readOnly={readOnly} style={style} defaultValue="ReadOnly" />
-          <Switch onChange={this.handleChange} checked={readOnly}>只读</Switch>
+          <Switch onChange={this.handleChange} checked={readOnly}>
+            只读
+          </Switch>
         </Col>
         <Col span={8}>
           <CodeArea disabled={disabled} style={style} defaultValue="Disabled" />
-          <Switch onChange={this.handleDisabledChange} checked={disabled}>禁用</Switch>
+          <Switch onChange={this.handleDisabledChange} checked={disabled}>
+            禁用
+          </Switch>
         </Col>
       </Row>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

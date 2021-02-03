@@ -1,0 +1,33 @@
+4e86a203d16ac5b6ba0722a803ebaad3
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = _default;
+exports.uploadTempList = void 0;
+
+var _mockjs = _interopRequireDefault(require("mockjs"));
+
+var mockTemple = {
+  message: '上传成功',
+  success: true
+};
+var uploadRule = /\/upload/;
+
+var uploadData = _mockjs["default"].mock(mockTemple);
+
+function _default() {
+  if (typeof window !== 'undefined') {
+    _mockjs["default"].mock(uploadRule, mockTemple);
+  }
+}
+
+var uploadTempList = [{
+  rule: uploadRule,
+  data: uploadData
+}];
+exports.uploadTempList = uploadTempList;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVwbG9hZC5qcyJdLCJuYW1lcyI6WyJtb2NrVGVtcGxlIiwibWVzc2FnZSIsInN1Y2Nlc3MiLCJ1cGxvYWRSdWxlIiwidXBsb2FkRGF0YSIsIk1vY2siLCJtb2NrIiwid2luZG93IiwidXBsb2FkVGVtcExpc3QiLCJydWxlIiwiZGF0YSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBOztBQUVBLElBQU1BLFVBQVUsR0FBRztBQUNqQkMsRUFBQUEsT0FBTyxFQUFFLE1BRFE7QUFFakJDLEVBQUFBLE9BQU8sRUFBRTtBQUZRLENBQW5CO0FBSUEsSUFBTUMsVUFBVSxHQUFHLFVBQW5COztBQUNBLElBQU1DLFVBQVUsR0FBR0MsbUJBQUtDLElBQUwsQ0FBVU4sVUFBVixDQUFuQjs7QUFDZSxvQkFBVztBQUN4QixNQUFJLE9BQU9PLE1BQVAsS0FBa0IsV0FBdEIsRUFBbUM7QUFDakNGLHVCQUFLQyxJQUFMLENBQVVILFVBQVYsRUFBc0JILFVBQXRCO0FBQ0Q7QUFDRjs7QUFFTSxJQUFNUSxjQUFjLEdBQUcsQ0FBQztBQUFFQyxFQUFBQSxJQUFJLEVBQUVOLFVBQVI7QUFBb0JPLEVBQUFBLElBQUksRUFBRU47QUFBMUIsQ0FBRCxDQUF2QiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBNb2NrIGZyb20gJ21vY2tqcyc7XG5cbmNvbnN0IG1vY2tUZW1wbGUgPSB7XG4gIG1lc3NhZ2U6ICfkuIrkvKDmiJDlip8nLFxuICBzdWNjZXNzOiB0cnVlLFxufTtcbmNvbnN0IHVwbG9hZFJ1bGUgPSAvXFwvdXBsb2FkLztcbmNvbnN0IHVwbG9hZERhdGEgPSBNb2NrLm1vY2sobW9ja1RlbXBsZSk7XG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbigpIHtcbiAgaWYgKHR5cGVvZiB3aW5kb3cgIT09ICd1bmRlZmluZWQnKSB7XG4gICAgTW9jay5tb2NrKHVwbG9hZFJ1bGUsIG1vY2tUZW1wbGUpO1xuICB9XG59XG5cbmV4cG9ydCBjb25zdCB1cGxvYWRUZW1wTGlzdCA9IFt7IHJ1bGU6IHVwbG9hZFJ1bGUsIGRhdGE6IHVwbG9hZERhdGEgfV07XG4iXX0=

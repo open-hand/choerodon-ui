@@ -1,0 +1,104 @@
+58b6ed9f6e5e141e75a6bef4855bef31
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _upload = _interopRequireDefault(require("../../../components-pro/upload"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _message2 = _interopRequireDefault(require("../../../components-pro/message"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App(props) {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(App).call(this, props));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleBefore", function (file, fileList) {
+      var isJPG = file.type === 'image/jpeg';
+
+      if (!isJPG) {
+        _message2["default"].error('You can only upload JPG file!');
+      }
+
+      var isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isLt2M) {
+        _message2["default"].error('Image must smaller than 2MB!');
+      }
+
+      console.log('this_up', _this.state.uploadFileList);
+
+      if (isJPG && isLt2M) {
+        _this.setState({
+          uploadFileList: [].concat((0, _toConsumableArray2["default"])(_this.state.uploadFileList), [file])
+        });
+      }
+
+      return false;
+    });
+    _this.state = {
+      uploadFileList: [{
+        name: 'xxx.jpg',
+        type: 'image/jpg',
+        status: 'success',
+        size: 2800,
+        uid: 1,
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      }]
+    };
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      var props = {
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        },
+        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        multiple: true,
+        accept: ['.deb', '.txt', '.pdf', 'image/*'],
+        uploadImmediately: false,
+        beforeUpload: this.handleBefore,
+        withCredentials: false,
+        partialUpload: false,
+        uploadFileList: this.state.uploadFileList
+      };
+      return _react["default"].createElement(_upload["default"], props);
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

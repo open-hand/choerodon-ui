@@ -1,0 +1,291 @@
+e77ba8b8be57c1ee4b233ef61fb7a00a
+"use strict";
+
+/* istanbul ignore next */
+var cov_erxjqh7nw = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/warning.tsx";
+  var hash = "d994c415a3d510916c994f0c20a733dd6e85fb2a";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/warning.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 15
+        },
+        end: {
+          line: 10,
+          column: 57
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 13
+        },
+        end: {
+          line: 12,
+          column: 15
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 15
+        },
+        end: {
+          line: 19,
+          column: 1
+        }
+      },
+      "6": {
+        start: {
+          line: 15,
+          column: 2
+        },
+        end: {
+          line: 18,
+          column: 3
+        }
+      },
+      "7": {
+        start: {
+          line: 16,
+          column: 4
+        },
+        end: {
+          line: 16,
+          column: 45
+        }
+      },
+      "8": {
+        start: {
+          line: 17,
+          column: 4
+        },
+        end: {
+          line: 17,
+          column: 27
+        }
+      },
+      "9": {
+        start: {
+          line: 21,
+          column: 0
+        },
+        end: {
+          line: 21,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "_default",
+        decl: {
+          start: {
+            line: 14,
+            column: 24
+          },
+          end: {
+            line: 14,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 14,
+            column: 49
+          },
+          end: {
+            line: 19,
+            column: 1
+          }
+        },
+        line: 14
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 15,
+            column: 2
+          },
+          end: {
+            line: 18,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 15,
+            column: 2
+          },
+          end: {
+            line: 18,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 15,
+            column: 2
+          },
+          end: {
+            line: 18,
+            column: 3
+          }
+        }],
+        line: 15
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 15,
+            column: 6
+          },
+          end: {
+            line: 15,
+            column: 32
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 15,
+            column: 6
+          },
+          end: {
+            line: 15,
+            column: 12
+          }
+        }, {
+          start: {
+            line: 15,
+            column: 16
+          },
+          end: {
+            line: 15,
+            column: 32
+          }
+        }],
+        line: 15
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "d994c415a3d510916c994f0c20a733dd6e85fb2a"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_erxjqh7nw.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_erxjqh7nw.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_erxjqh7nw.s[2]++;
+exports["default"] = void 0;
+
+var _warning =
+/* istanbul ignore next */
+(cov_erxjqh7nw.s[3]++, _interopRequireDefault(require("warning")));
+
+var warned =
+/* istanbul ignore next */
+(cov_erxjqh7nw.s[4]++, {});
+
+/* istanbul ignore next */
+cov_erxjqh7nw.s[5]++;
+
+var _default = function _default(valid, message) {
+  /* istanbul ignore next */
+  cov_erxjqh7nw.f[0]++;
+  cov_erxjqh7nw.s[6]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_erxjqh7nw.b[1][0]++, !valid) &&
+  /* istanbul ignore next */
+  (cov_erxjqh7nw.b[1][1]++, !warned[message])) {
+    /* istanbul ignore next */
+    cov_erxjqh7nw.b[0][0]++;
+    cov_erxjqh7nw.s[7]++;
+    (0, _warning["default"])(false, message);
+
+    /* istanbul ignore next */
+    cov_erxjqh7nw.s[8]++;
+    warned[message] = true;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_erxjqh7nw.b[0][1]++;
+  }
+};
+
+/* istanbul ignore next */
+cov_erxjqh7nw.s[9]++;
+exports["default"] = _default;

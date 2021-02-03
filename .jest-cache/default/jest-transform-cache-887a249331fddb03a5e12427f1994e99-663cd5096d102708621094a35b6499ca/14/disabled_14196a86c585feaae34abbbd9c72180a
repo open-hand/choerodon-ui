@@ -1,0 +1,23 @@
+5b7d7267e11f944825569d782650bc10
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _timePicker = _interopRequireDefault(require("../../../components/time-picker"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var __Demo = _react["default"].createElement(_timePicker["default"], {
+  defaultValue: (0, _moment["default"])('12:08:23', 'HH:mm:ss'),
+  disabled: true
+});
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,118 @@
+57c53c19de1031b9fe4b7770ee811426
+"use strict";
+
+/* istanbul ignore next */
+function cov_1851z26gt7() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/ru_RU.tsx";
+  var hash = "2bedfc75cf42065d28ab01114024a1b08ec903fe";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/ru_RU.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 28
+        }
+      },
+      "2": {
+        start: {
+          line: 11,
+          column: 13
+        },
+        end: {
+          line: 13,
+          column: 1
+        }
+      },
+      "3": {
+        start: {
+          line: 14,
+          column: 15
+        },
+        end: {
+          line: 14,
+          column: 21
+        }
+      },
+      "4": {
+        start: {
+          line: 15,
+          column: 0
+        },
+        end: {
+          line: 15,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "2bedfc75cf42065d28ab01114024a1b08ec903fe"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_1851z26gt7 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_1851z26gt7();
+cov_1851z26gt7().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1851z26gt7().s[1]++;
+exports["default"] = void 0;
+/**
+ * Created by Andrey Gayvoronsky on 13/04/16.
+ */
+
+var locale =
+/* istanbul ignore next */
+(cov_1851z26gt7().s[2]++, {
+  placeholder: 'Выберите время'
+});
+
+var _default =
+/* istanbul ignore next */
+(cov_1851z26gt7().s[3]++, locale);
+
+/* istanbul ignore next */
+cov_1851z26gt7().s[4]++;
+exports["default"] = _default;

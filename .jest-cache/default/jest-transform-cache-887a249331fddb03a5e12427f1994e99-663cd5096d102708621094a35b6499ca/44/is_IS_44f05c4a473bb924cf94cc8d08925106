@@ -1,0 +1,182 @@
+4c78a4dc2a1fdbe87de18d54cead027d
+"use strict";
+
+/* istanbul ignore next */
+function cov_ukhl95ebh() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/date-picker/locale/is_IS.tsx";
+  var hash = "3349d78a514e2faaf4a62f13803ee6f91e6a234e";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/date-picker/locale/is_IS.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 21
+        },
+        end: {
+          line: 10,
+          column: 92
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 13
+        },
+        end: {
+          line: 12,
+          column: 89
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 79
+        }
+      },
+      "6": {
+        start: {
+          line: 17,
+          column: 13
+        },
+        end: {
+          line: 23,
+          column: 1
+        }
+      },
+      "7": {
+        start: {
+          line: 25,
+          column: 15
+        },
+        end: {
+          line: 25,
+          column: 21
+        }
+      },
+      "8": {
+        start: {
+          line: 26,
+          column: 0
+        },
+        end: {
+          line: 26,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "3349d78a514e2faaf4a62f13803ee6f91e6a234e"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_ukhl95ebh = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_ukhl95ebh();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_ukhl95ebh().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_ukhl95ebh().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_ukhl95ebh().s[2]++;
+exports["default"] = void 0;
+
+var _objectSpread2 =
+/* istanbul ignore next */
+(cov_ukhl95ebh().s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2")));
+
+var _is_IS =
+/* istanbul ignore next */
+(cov_ukhl95ebh().s[4]++, _interopRequireDefault(require("../../rc-components/calendar/locale/is_IS")));
+
+var _is_IS2 =
+/* istanbul ignore next */
+(cov_ukhl95ebh().s[5]++, _interopRequireDefault(require("../../time-picker/locale/is_IS"))); // Merge into a locale object
+
+
+var locale =
+/* istanbul ignore next */
+(cov_ukhl95ebh().s[6]++, {
+  lang: (0, _objectSpread2["default"])({
+    placeholder: 'Veldu dag',
+    rangePlaceholder: ['Upphafsdagur', 'Lokadagur']
+  }, _is_IS["default"]),
+  timePickerLocale: (0, _objectSpread2["default"])({}, _is_IS2["default"])
+}); // All settings at:
+
+var _default =
+/* istanbul ignore next */
+(cov_ukhl95ebh().s[7]++, locale);
+
+/* istanbul ignore next */
+cov_ukhl95ebh().s[8]++;
+exports["default"] = _default;

@@ -10,7 +10,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: 150,
-    render: text => <a href="#">{text}</a>,
+    render: (text) => <a href="#">{text}</a>,
   },
   {
     title: 'Age',
@@ -52,7 +52,7 @@ for (let i = 1; i <= 10; i++) {
   });
 }
 
-const expandedRowRender = record => <p>{record.description}</p>;
+const expandedRowRender = (record) => <p>{record.description}</p>;
 const title = () => 'Here is title';
 const showHeader = true;
 const footer = () => 'Here is footer';
@@ -73,41 +73,43 @@ class Demo extends React.Component {
     scroll: undefined,
   };
 
-  handleToggle = prop => {
-    return enable => {
+  handleToggle = (prop) => {
+    return (enable) => {
       this.setState({ [prop]: enable });
     };
   };
 
-  handleSizeChange = e => {
+  handleSizeChange = (e) => {
     this.setState({ size: e.target.value });
   };
 
-  handleExpandChange = enable => {
-    this.setState({ expandedRowRender: enable ? expandedRowRender : undefined });
+  handleExpandChange = (enable) => {
+    this.setState({
+      expandedRowRender: enable ? expandedRowRender : undefined,
+    });
   };
 
-  handleTitleChange = enable => {
+  handleTitleChange = (enable) => {
     this.setState({ title: enable ? title : undefined });
   };
 
-  handleHeaderChange = enable => {
+  handleHeaderChange = (enable) => {
     this.setState({ showHeader: enable ? showHeader : false });
   };
 
-  handleFooterChange = enable => {
+  handleFooterChange = (enable) => {
     this.setState({ footer: enable ? footer : undefined });
   };
 
-  handleRowSelectionChange = enable => {
+  handleRowSelectionChange = (enable) => {
     this.setState({ rowSelection: enable ? {} : undefined });
   };
 
-  handleScollChange = enable => {
+  handleScollChange = (enable) => {
     this.setState({ scroll: enable ? scroll : undefined });
   };
 
-  handlePaginationChange = e => {
+  handlePaginationChange = (e) => {
     const { value } = e.target;
     this.setState({
       pagination: value === 'none' ? false : { position: value },
@@ -121,32 +123,59 @@ class Demo extends React.Component {
         <div className="components-table-demo-control-bar">
           <Form layout="inline">
             <FormItem label="Bordered">
-              <Switch checked={state.bordered} onChange={this.handleToggle('bordered')} />
+              <Switch
+                checked={state.bordered}
+                onChange={this.handleToggle('bordered')}
+              />
             </FormItem>
             <FormItem label="loading">
-              <Switch checked={state.loading} onChange={this.handleToggle('loading')} />
+              <Switch
+                checked={state.loading}
+                onChange={this.handleToggle('loading')}
+              />
             </FormItem>
             <FormItem label="Title">
-              <Switch checked={!!state.title} onChange={this.handleTitleChange} />
+              <Switch
+                checked={!!state.title}
+                onChange={this.handleTitleChange}
+              />
             </FormItem>
             <FormItem label="Column Header">
-              <Switch checked={!!state.showHeader} onChange={this.handleHeaderChange} />
+              <Switch
+                checked={!!state.showHeader}
+                onChange={this.handleHeaderChange}
+              />
             </FormItem>
             <FormItem label="Footer">
-              <Switch checked={!!state.footer} onChange={this.handleFooterChange} />
+              <Switch
+                checked={!!state.footer}
+                onChange={this.handleFooterChange}
+              />
             </FormItem>
             <FormItem label="Expandable">
-              <Switch checked={!!state.expandedRowRender} onChange={this.handleExpandChange} />
+              <Switch
+                checked={!!state.expandedRowRender}
+                onChange={this.handleExpandChange}
+              />
             </FormItem>
             <FormItem label="Checkbox">
-              <Switch checked={!!state.rowSelection} onChange={this.handleRowSelectionChange} />
+              <Switch
+                checked={!!state.rowSelection}
+                onChange={this.handleRowSelectionChange}
+              />
             </FormItem>
             <FormItem label="Fixed Header">
-              <Switch checked={!!state.scroll} onChange={this.handleScollChange} />
+              <Switch
+                checked={!!state.scroll}
+                onChange={this.handleScollChange}
+              />
             </FormItem>
             <FormItem label="Size">
-              <Radio.Group size="default" value={state.size} onChange={this.handleSizeChange}>
-                <Radio.Button value="default">Default</Radio.Button>
+              <Radio.Group
+                size="default"
+                value={state.size}
+                onChange={this.handleSizeChange}
+              >
                 <Radio.Button value="large">Large</Radio.Button>
                 <Radio.Button value="small">Small</Radio.Button>
               </Radio.Group>

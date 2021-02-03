@@ -1,0 +1,50 @@
+aa5c0f8542c8e2f187ecc71b2d6169f8
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _message2 = _interopRequireDefault(require("../../../components/message"));
+
+var _upload = _interopRequireDefault(require("../../../components/upload"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Dragger = _upload["default"].Dragger;
+var props = {
+  name: 'file',
+  multiple: true,
+  action: '//jsonplaceholder.typicode.com/posts/',
+  onChange: function onChange(info) {
+    var status = info.file.status;
+
+    if (status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+
+    if (status === 'done') {
+      _message2["default"].success("".concat(info.file.name, " file uploaded successfully."));
+    } else if (status === 'error') {
+      _message2["default"].error("".concat(info.file.name, " file upload failed."));
+    }
+  }
+};
+
+var __Demo = _react["default"].createElement(Dragger, props, _react["default"].createElement("p", {
+  className: "c7n-upload-drag-icon"
+}, _react["default"].createElement(_icon["default"], {
+  type: "inbox"
+})), _react["default"].createElement("p", {
+  className: "c7n-upload-text"
+}, "Click or drag file to this area to upload"), _react["default"].createElement("p", {
+  className: "c7n-upload-hint"
+}, "Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files"));
+
+var _default = __Demo;
+exports["default"] = _default;

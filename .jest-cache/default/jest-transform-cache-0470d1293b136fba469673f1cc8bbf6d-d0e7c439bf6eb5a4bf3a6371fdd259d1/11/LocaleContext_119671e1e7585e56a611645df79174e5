@@ -1,0 +1,73 @@
+ac857662860b8518bcb80f5e0b19be40
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = exports.LocaleContext = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _tslib = require("tslib");
+
+var _mobx = require("mobx");
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _locale = _interopRequireDefault(require("./locale"));
+
+var _supports = _interopRequireDefault(require("./supports"));
+
+var _normalizeLanguage = _interopRequireDefault(require("../_util/normalizeLanguage"));
+
+function setMomentLocale(locale) {
+  _moment["default"].locale((0, _normalizeLanguage["default"])(locale ? locale.lang : _locale["default"].lang));
+}
+
+var LocaleContext =
+/*#__PURE__*/
+function () {
+  function LocaleContext() {
+    var _this = this;
+
+    (0, _classCallCheck2["default"])(this, LocaleContext);
+    (0, _mobx.runInAction)(function () {
+      _this.locale = _locale["default"];
+      _this.supports = _supports["default"];
+    });
+  }
+
+  (0, _createClass2["default"])(LocaleContext, [{
+    key: "setLocale",
+    value: function setLocale(locale) {
+      setMomentLocale(locale);
+      this.locale = locale;
+    }
+  }, {
+    key: "setSupports",
+    value: function setSupports(supports) {
+      this.supports = supports;
+    }
+  }, {
+    key: "get",
+    value: function get(component, key) {
+      var cmp = (0, _mobx.get)(this.locale, component);
+      return cmp && (0, _mobx.get)(cmp, key) || "".concat(component, ".").concat(key);
+    }
+  }]);
+  return LocaleContext;
+}();
+
+exports.LocaleContext = LocaleContext;
+(0, _tslib.__decorate)([_mobx.observable], LocaleContext.prototype, "locale", void 0);
+(0, _tslib.__decorate)([_mobx.observable], LocaleContext.prototype, "supports", void 0);
+(0, _tslib.__decorate)([_mobx.action], LocaleContext.prototype, "setLocale", null);
+
+var _default = new LocaleContext();
+
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvY2FsZS1jb250ZXh0L0xvY2FsZUNvbnRleHQuanN4Il0sIm5hbWVzIjpbIm1vbWVudCIsImxvY2FsZSIsImRlZmF1bHRMb2NhbGUiLCJMb2NhbGVDb250ZXh0IiwiZGVmYXVsdFN1cHBvcnRzIiwic2V0TW9tZW50TG9jYWxlIiwic3VwcG9ydHMiLCJjb21wb25lbnQiLCJrZXkiLCJjbXAiLCJvYnNlcnZhYmxlIiwiYWN0aW9uIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7O0FBQUEsSUFBQSxNQUFBLEdBQUEsT0FBQSxDQUFBLE9BQUEsQ0FBQTs7QUFDQSxJQUFBLEtBQUEsR0FBQSxPQUFBLENBQUEsTUFBQSxDQUFBOztBQUNBLElBQUEsT0FBQSxHQUFBLHNCQUFBLENBQUEsT0FBQSxDQUFBLFFBQUEsQ0FBQSxDQUFBOztBQUNBLElBQUEsT0FBQSxHQUFBLHNCQUFBLENBQUEsT0FBQSxDQUFBLFVBQUEsQ0FBQSxDQUFBOztBQUNBLElBQUEsU0FBQSxHQUFBLHNCQUFBLENBQUEsT0FBQSxDQUFBLFlBQUEsQ0FBQSxDQUFBOztBQUNBLElBQUEsa0JBQUEsR0FBQSxzQkFBQSxDQUFBLE9BQUEsQ0FBQSw0QkFBQSxDQUFBLENBQUE7O0FBQ0EsU0FBQSxlQUFBLENBQUEsTUFBQSxFQUFpQztBQUM3QkEsRUFBQUEsT0FBQUEsQ0FBQUEsU0FBQUEsQ0FBQUEsQ0FBQUEsTUFBQUEsQ0FBYyxDQUFBLEdBQUEsa0JBQUEsQ0FBQSxTQUFBLENBQUEsRUFBa0JDLE1BQU0sR0FBR0EsTUFBTSxDQUFULElBQUEsR0FBaUJDLE9BQUFBLENBQUFBLFNBQUFBLENBQUFBLENBQXZERixJQUFjLENBQWRBO0FBQ0g7O0lBQ1lHLGE7OztBQUNULFdBQUEsYUFBQSxHQUFjO0FBQUEsUUFBQSxLQUFBLEdBQUEsSUFBQTs7QUFBQSxLQUFBLEdBQUEsZ0JBQUEsQ0FBQSxTQUFBLENBQUEsRUFBQSxJQUFBLEVBQUEsYUFBQTtBQUNWLEtBQUEsR0FBQSxLQUFBLENBQUEsV0FBQSxFQUFZLFlBQU07QUFDZCxNQUFBLEtBQUksQ0FBSixNQUFBLEdBQWNELE9BQUFBLENBQWQsU0FBY0EsQ0FBZDtBQUNBLE1BQUEsS0FBSSxDQUFKLFFBQUEsR0FBZ0JFLFNBQUFBLENBQWhCLFNBQWdCQSxDQUFoQjtBQUZKLEtBQUE7QUFJSDs7Ozs4QkFDU0gsTSxFQUFRO0FBQ2RJLE1BQUFBLGVBQWUsQ0FBZkEsTUFBZSxDQUFmQTtBQUNBLFdBQUEsTUFBQSxHQUFBLE1BQUE7QUFDSDs7O2dDQUNXQyxRLEVBQVU7QUFDbEIsV0FBQSxRQUFBLEdBQUEsUUFBQTtBQUNIOzs7d0JBQ0dDLFMsRUFBV0MsRyxFQUFLO0FBQ2hCLFVBQU1DLEdBQUcsR0FBRyxDQUFBLEdBQUEsS0FBQSxDQUFBLEdBQUEsRUFBSSxLQUFKLE1BQUEsRUFBWixTQUFZLENBQVo7QUFDQSxhQUFRQSxHQUFHLElBQUksQ0FBQSxHQUFBLEtBQUEsQ0FBQSxHQUFBLEVBQUEsR0FBQSxFQUFSLEdBQVEsQ0FBUEEsSUFBRCxHQUFBLE1BQUEsQ0FBQSxTQUFBLEVBQUEsR0FBQSxFQUFBLE1BQUEsQ0FBUCxHQUFPLENBQVA7QUFDSDs7Ozs7O0FBRUwsQ0FBQSxHQUFBLE1BQUEsQ0FBQSxVQUFBLEVBQVcsQ0FDUEMsS0FBQUEsQ0FESixVQUFXLENBQVgsRUFFR1AsYUFBYSxDQUZoQixTQUFBLEVBQUEsUUFBQSxFQUVzQyxLQUZ0QyxDQUFBO0FBR0EsQ0FBQSxHQUFBLE1BQUEsQ0FBQSxVQUFBLEVBQVcsQ0FDUE8sS0FBQUEsQ0FESixVQUFXLENBQVgsRUFFR1AsYUFBYSxDQUZoQixTQUFBLEVBQUEsVUFBQSxFQUV3QyxLQUZ4QyxDQUFBO0FBR0EsQ0FBQSxHQUFBLE1BQUEsQ0FBQSxVQUFBLEVBQVcsQ0FDUFEsS0FBQUEsQ0FESixNQUFXLENBQVgsRUFFR1IsYUFBYSxDQUZoQixTQUFBLEVBQUEsV0FBQSxFQUFBLElBQUE7O2VBR2UsSUFBQSxhQUFBLEUiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBfX2RlY29yYXRlIH0gZnJvbSBcInRzbGliXCI7XG5pbXBvcnQgeyBhY3Rpb24sIGdldCwgb2JzZXJ2YWJsZSwgcnVuSW5BY3Rpb24gfSBmcm9tICdtb2J4JztcbmltcG9ydCBtb21lbnQgZnJvbSAnbW9tZW50JztcbmltcG9ydCBkZWZhdWx0TG9jYWxlIGZyb20gJy4vbG9jYWxlJztcbmltcG9ydCBkZWZhdWx0U3VwcG9ydHMgZnJvbSAnLi9zdXBwb3J0cyc7XG5pbXBvcnQgbm9ybWFsaXplTGFuZ3VhZ2UgZnJvbSAnLi4vX3V0aWwvbm9ybWFsaXplTGFuZ3VhZ2UnO1xuZnVuY3Rpb24gc2V0TW9tZW50TG9jYWxlKGxvY2FsZSkge1xuICAgIG1vbWVudC5sb2NhbGUobm9ybWFsaXplTGFuZ3VhZ2UobG9jYWxlID8gbG9jYWxlLmxhbmcgOiBkZWZhdWx0TG9jYWxlLmxhbmcpKTtcbn1cbmV4cG9ydCBjbGFzcyBMb2NhbGVDb250ZXh0IHtcbiAgICBjb25zdHJ1Y3RvcigpIHtcbiAgICAgICAgcnVuSW5BY3Rpb24oKCkgPT4ge1xuICAgICAgICAgICAgdGhpcy5sb2NhbGUgPSBkZWZhdWx0TG9jYWxlO1xuICAgICAgICAgICAgdGhpcy5zdXBwb3J0cyA9IGRlZmF1bHRTdXBwb3J0cztcbiAgICAgICAgfSk7XG4gICAgfVxuICAgIHNldExvY2FsZShsb2NhbGUpIHtcbiAgICAgICAgc2V0TW9tZW50TG9jYWxlKGxvY2FsZSk7XG4gICAgICAgIHRoaXMubG9jYWxlID0gbG9jYWxlO1xuICAgIH1cbiAgICBzZXRTdXBwb3J0cyhzdXBwb3J0cykge1xuICAgICAgICB0aGlzLnN1cHBvcnRzID0gc3VwcG9ydHM7XG4gICAgfVxuICAgIGdldChjb21wb25lbnQsIGtleSkge1xuICAgICAgICBjb25zdCBjbXAgPSBnZXQodGhpcy5sb2NhbGUsIGNvbXBvbmVudCk7XG4gICAgICAgIHJldHVybiAoY21wICYmIGdldChjbXAsIGtleSkpIHx8IGAke2NvbXBvbmVudH0uJHtrZXl9YDtcbiAgICB9XG59XG5fX2RlY29yYXRlKFtcbiAgICBvYnNlcnZhYmxlXG5dLCBMb2NhbGVDb250ZXh0LnByb3RvdHlwZSwgXCJsb2NhbGVcIiwgdm9pZCAwKTtcbl9fZGVjb3JhdGUoW1xuICAgIG9ic2VydmFibGVcbl0sIExvY2FsZUNvbnRleHQucHJvdG90eXBlLCBcInN1cHBvcnRzXCIsIHZvaWQgMCk7XG5fX2RlY29yYXRlKFtcbiAgICBhY3Rpb25cbl0sIExvY2FsZUNvbnRleHQucHJvdG90eXBlLCBcInNldExvY2FsZVwiLCBudWxsKTtcbmV4cG9ydCBkZWZhdWx0IG5ldyBMb2NhbGVDb250ZXh0KCk7XG4iXX0=

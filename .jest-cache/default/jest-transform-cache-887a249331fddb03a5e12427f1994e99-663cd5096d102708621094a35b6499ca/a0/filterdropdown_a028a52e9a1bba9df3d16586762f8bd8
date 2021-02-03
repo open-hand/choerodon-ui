@@ -1,0 +1,96 @@
+5110aa6077beeb0184bccfb5b1acd61a
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _table = _interopRequireDefault(require("../../../components/table"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+  filters: [{
+    text: 'Joe',
+    value: 'Joe'
+  }, {
+    text: 'Jim',
+    value: 'Jim'
+  }, {
+    text: 'Last Name',
+    value: 'last',
+    children: [{
+      text: 'Green',
+      value: 'Green'
+    }, {
+      text: 'Black',
+      value: 'Black'
+    }]
+  }],
+  // specify the condition of filtering result
+  // here is that finding the name started with `value`
+  onFilter: function onFilter(value, record) {
+    return record.name.indexOf(value) > -1;
+  }
+}, {
+  title: 'Age',
+  dataIndex: 'age',
+  filters: [],
+  onFilter: function onFilter(value, record) {
+    return record.name.indexOf(value) === 0;
+  }
+}, {
+  title: 'Address',
+  dataIndex: 'address',
+  filters: [{
+    text: 'London',
+    value: 'London'
+  }, {
+    text: 'New York',
+    value: 'New York'
+  }],
+  filterMultiple: true,
+  onFilter: function onFilter(value, record) {
+    return record.address.indexOf(value) === 0;
+  }
+}];
+var data = [{
+  key: '1',
+  name: 'John Brown',
+  age: 32,
+  address: 'New York No. 1 Lake Park'
+}, {
+  key: '2',
+  name: 'Jim Green',
+  age: 42,
+  address: 'London No. 1 Lake Park'
+}, {
+  key: '3',
+  name: 'Joe Black',
+  age: 32,
+  address: 'Sidney No. 1 Lake Park'
+}, {
+  key: '4',
+  name: 'Jim Red',
+  age: 32,
+  address: 'London No. 2 Lake Park'
+}];
+
+function onChange(pagination, filters, sorter) {
+  console.log('params', pagination, filters, sorter);
+}
+
+var __Demo = _react["default"].createElement(_table["default"], {
+  columns: columns,
+  dataSource: data,
+  onChange: onChange,
+  filterBar: false
+});
+
+var _default = __Demo;
+exports["default"] = _default;

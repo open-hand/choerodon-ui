@@ -1,0 +1,212 @@
+0274f871a152e4bb9d3396a6ef926ddc
+"use strict";
+
+/* istanbul ignore next */
+var cov_1qmvv5avau = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/input/index.tsx";
+  var hash = "565b4c5c8472cc18f422a3294cbeb6e470ceebf8";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/input/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 55
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 13
+        },
+        end: {
+          line: 12,
+          column: 55
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 57
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 16
+        },
+        end: {
+          line: 16,
+          column: 61
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 0
+        },
+        end: {
+          line: 18,
+          column: 44
+        }
+      },
+      "8": {
+        start: {
+          line: 19,
+          column: 0
+        },
+        end: {
+          line: 19,
+          column: 46
+        }
+      },
+      "9": {
+        start: {
+          line: 20,
+          column: 0
+        },
+        end: {
+          line: 20,
+          column: 50
+        }
+      },
+      "10": {
+        start: {
+          line: 21,
+          column: 15
+        },
+        end: {
+          line: 21,
+          column: 32
+        }
+      },
+      "11": {
+        start: {
+          line: 22,
+          column: 0
+        },
+        end: {
+          line: 22,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "565b4c5c8472cc18f422a3294cbeb6e470ceebf8"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_1qmvv5avau.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_1qmvv5avau.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1qmvv5avau.s[2]++;
+exports["default"] = void 0;
+
+var _Input =
+/* istanbul ignore next */
+(cov_1qmvv5avau.s[3]++, _interopRequireDefault(require("./Input")));
+
+var _Group =
+/* istanbul ignore next */
+(cov_1qmvv5avau.s[4]++, _interopRequireDefault(require("./Group")));
+
+var _Search =
+/* istanbul ignore next */
+(cov_1qmvv5avau.s[5]++, _interopRequireDefault(require("./Search")));
+
+var _TextArea =
+/* istanbul ignore next */
+(cov_1qmvv5avau.s[6]++, _interopRequireDefault(require("./TextArea")));
+
+/* istanbul ignore next */
+cov_1qmvv5avau.s[7]++;
+_Input["default"].Group = _Group["default"];
+
+/* istanbul ignore next */
+cov_1qmvv5avau.s[8]++;
+_Input["default"].Search = _Search["default"];
+
+/* istanbul ignore next */
+cov_1qmvv5avau.s[9]++;
+_Input["default"].TextArea = _TextArea["default"];
+
+var _default =
+/* istanbul ignore next */
+(cov_1qmvv5avau.s[10]++, _Input["default"]);
+
+/* istanbul ignore next */
+cov_1qmvv5avau.s[11]++;
+exports["default"] = _default;

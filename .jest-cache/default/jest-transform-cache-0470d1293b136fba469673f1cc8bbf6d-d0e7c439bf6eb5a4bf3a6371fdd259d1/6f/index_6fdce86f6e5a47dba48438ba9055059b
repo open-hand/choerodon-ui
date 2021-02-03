@@ -1,0 +1,28 @@
+ce53e260cc1c7924bf29e30cb5786d18
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.$l = $l;
+exports["default"] = void 0;
+
+var _LocaleContext = _interopRequireDefault(require("./LocaleContext"));
+
+var _formatReactTemplate = _interopRequireDefault(require("../formatter/formatReactTemplate"));
+
+function $l(component, key, injectionOptions) {
+  var locale = _LocaleContext["default"].get(component, key);
+
+  if (injectionOptions) {
+    return (0, _formatReactTemplate["default"])(locale, injectionOptions);
+  }
+
+  return locale;
+}
+
+var _default = _LocaleContext["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvY2FsZS1jb250ZXh0L2luZGV4LmpzeCJdLCJuYW1lcyI6WyJsb2NhbGUiLCJsb2NhbGVDb250ZXh0Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7O0FBQUEsSUFBQSxjQUFBLEdBQUEsc0JBQUEsQ0FBQSxPQUFBLENBQUEsaUJBQUEsQ0FBQSxDQUFBOztBQUNBLElBQUEsb0JBQUEsR0FBQSxzQkFBQSxDQUFBLE9BQUEsQ0FBQSxrQ0FBQSxDQUFBLENBQUE7O0FBQ08sU0FBQSxFQUFBLENBQUEsU0FBQSxFQUFBLEdBQUEsRUFBQSxnQkFBQSxFQUE4QztBQUNqRCxNQUFNQSxNQUFNLEdBQUdDLGNBQUFBLENBQUFBLFNBQUFBLENBQUFBLENBQUFBLEdBQUFBLENBQUFBLFNBQUFBLEVBQWYsR0FBZUEsQ0FBZjs7QUFDQSxNQUFBLGdCQUFBLEVBQXNCO0FBQ2xCLFdBQU8sQ0FBQSxHQUFBLG9CQUFBLENBQUEsU0FBQSxDQUFBLEVBQUEsTUFBQSxFQUFQLGdCQUFPLENBQVA7QUFDSDs7QUFDRCxTQUFBLE1BQUE7QUFDSDs7ZUFDY0EsY0FBQUEsQ0FBQUEsU0FBQUEsQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBsb2NhbGVDb250ZXh0IGZyb20gJy4vTG9jYWxlQ29udGV4dCc7XG5pbXBvcnQgZm9ybWF0UmVhY3RUZW1wbGF0ZSBmcm9tICcuLi9mb3JtYXR0ZXIvZm9ybWF0UmVhY3RUZW1wbGF0ZSc7XG5leHBvcnQgZnVuY3Rpb24gJGwoY29tcG9uZW50LCBrZXksIGluamVjdGlvbk9wdGlvbnMpIHtcbiAgICBjb25zdCBsb2NhbGUgPSBsb2NhbGVDb250ZXh0LmdldChjb21wb25lbnQsIGtleSk7XG4gICAgaWYgKGluamVjdGlvbk9wdGlvbnMpIHtcbiAgICAgICAgcmV0dXJuIGZvcm1hdFJlYWN0VGVtcGxhdGUobG9jYWxlLCBpbmplY3Rpb25PcHRpb25zKTtcbiAgICB9XG4gICAgcmV0dXJuIGxvY2FsZTtcbn1cbmV4cG9ydCBkZWZhdWx0IGxvY2FsZUNvbnRleHQ7XG4iXX0=

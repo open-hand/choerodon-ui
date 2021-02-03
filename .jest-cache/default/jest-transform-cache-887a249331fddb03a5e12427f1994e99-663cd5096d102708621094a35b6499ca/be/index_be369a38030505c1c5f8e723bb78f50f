@@ -1,0 +1,15 @@
+9118f9cabfef75f4a4f0be3ddeaa8dec
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("choerodon-ui/lib/icon"));
+
+var _default = _icon["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby9pY29uL2luZGV4LnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFBQTs7ZUFFZSxnQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBJY29uIGZyb20gJ2Nob2Vyb2Rvbi11aS9saWIvaWNvbic7XG5cbmV4cG9ydCBkZWZhdWx0IEljb247XG4iXX0=

@@ -1,0 +1,98 @@
+1709cc2e0709a2f5e7c50f28b56ce303
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _datePicker = _interopRequireDefault(require("../../../components/date-picker"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var MonthPicker = _datePicker["default"].MonthPicker,
+    RangePicker = _datePicker["default"].RangePicker;
+
+function range(start, end) {
+  var result = [];
+
+  for (var i = start; i < end; i++) {
+    result.push(i);
+  }
+
+  return result;
+}
+
+function disabledDate(current) {
+  // Can not select days before today and today
+  return current && current < (0, _moment["default"])().endOf('day');
+}
+
+function disabledDateTime() {
+  return {
+    disabledHours: function disabledHours() {
+      return range(0, 24).splice(4, 20);
+    },
+    disabledMinutes: function disabledMinutes() {
+      return range(30, 60);
+    },
+    disabledSeconds: function disabledSeconds() {
+      return [55, 56];
+    }
+  };
+}
+
+function disabledRangeTime(_, type) {
+  if (type === 'start') {
+    return {
+      disabledHours: function disabledHours() {
+        return range(0, 60).splice(4, 20);
+      },
+      disabledMinutes: function disabledMinutes() {
+        return range(30, 60);
+      },
+      disabledSeconds: function disabledSeconds() {
+        return [55, 56];
+      }
+    };
+  }
+
+  return {
+    disabledHours: function disabledHours() {
+      return range(0, 60).splice(20, 4);
+    },
+    disabledMinutes: function disabledMinutes() {
+      return range(0, 31);
+    },
+    disabledSeconds: function disabledSeconds() {
+      return [55, 56];
+    }
+  };
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_datePicker["default"], {
+  format: "YYYY-MM-DD HH:mm:ss",
+  disabledDate: disabledDate,
+  disabledTime: disabledDateTime,
+  showTime: {
+    defaultValue: (0, _moment["default"])('00:00:00', 'HH:mm:ss')
+  }
+}), _react["default"].createElement("br", null), _react["default"].createElement(MonthPicker, {
+  disabledDate: disabledDate,
+  placeholder: "Select month"
+}), _react["default"].createElement("br", null), _react["default"].createElement(RangePicker, {
+  disabledDate: disabledDate,
+  disabledTime: disabledRangeTime,
+  showTime: {
+    hideDisabledOptions: true,
+    defaultValue: [(0, _moment["default"])('00:00:00', 'HH:mm:ss'), (0, _moment["default"])('11:59:59', 'HH:mm:ss')]
+  },
+  format: "YYYY-MM-DD HH:mm:ss"
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

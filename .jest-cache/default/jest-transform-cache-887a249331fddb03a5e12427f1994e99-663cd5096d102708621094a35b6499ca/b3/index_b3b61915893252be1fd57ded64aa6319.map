@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.jsx"],"names":["Rate"],"mappings":";;;;;;;;;AAAA;;eAEeA,gB","sourcesContent":["import Rate from './Rate';\n\nexport default Rate;\n"]}

@@ -1,0 +1,509 @@
+d4658ca05ec553d5ae61581400209246
+"use strict";
+
+/* istanbul ignore next */
+var cov_1rel1z5z2k = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/button/ButtonGroup.tsx";
+  var hash = "d04392a6aaa621f47f0a7fe4de4bff4f43f1572a";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/button/ButtonGroup.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 16
+        },
+        end: {
+          line: 10,
+          column: 81
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 23
+        },
+        end: {
+          line: 12,
+          column: 95
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 32
+        },
+        end: {
+          line: 14,
+          column: 113
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 13
+        },
+        end: {
+          line: 16,
+          column: 53
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 18
+        },
+        end: {
+          line: 18,
+          column: 63
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 17
+        },
+        end: {
+          line: 20,
+          column: 40
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 18
+        },
+        end: {
+          line: 52,
+          column: 1
+        }
+      },
+      "10": {
+        start: {
+          line: 23,
+          column: 27
+        },
+        end: {
+          line: 23,
+          column: 42
+        }
+      },
+      "11": {
+        start: {
+          line: 24,
+          column: 13
+        },
+        end: {
+          line: 24,
+          column: 23
+        }
+      },
+      "12": {
+        start: {
+          line: 25,
+          column: 18
+        },
+        end: {
+          line: 25,
+          column: 33
+        }
+      },
+      "13": {
+        start: {
+          line: 26,
+          column: 15
+        },
+        end: {
+          line: 26,
+          column: 99
+        }
+      },
+      "14": {
+        start: {
+          line: 27,
+          column: 18
+        },
+        end: {
+          line: 27,
+          column: 79
+        }
+      },
+      "15": {
+        start: {
+          line: 30,
+          column: 16
+        },
+        end: {
+          line: 30,
+          column: 18
+        }
+      },
+      "16": {
+        start: {
+          line: 32,
+          column: 2
+        },
+        end: {
+          line: 46,
+          column: 3
+        }
+      },
+      "17": {
+        start: {
+          line: 36,
+          column: 6
+        },
+        end: {
+          line: 36,
+          column: 21
+        }
+      },
+      "18": {
+        start: {
+          line: 37,
+          column: 6
+        },
+        end: {
+          line: 37,
+          column: 12
+        }
+      },
+      "19": {
+        start: {
+          line: 42,
+          column: 6
+        },
+        end: {
+          line: 42,
+          column: 21
+        }
+      },
+      "20": {
+        start: {
+          line: 43,
+          column: 6
+        },
+        end: {
+          line: 43,
+          column: 12
+        }
+      },
+      "21": {
+        start: {
+          line: 48,
+          column: 16
+        },
+        end: {
+          line: 48,
+          column: 155
+        }
+      },
+      "22": {
+        start: {
+          line: 49,
+          column: 2
+        },
+        end: {
+          line: 51,
+          column: 6
+        }
+      },
+      "23": {
+        start: {
+          line: 54,
+          column: 0
+        },
+        end: {
+          line: 54,
+          column: 40
+        }
+      },
+      "24": {
+        start: {
+          line: 55,
+          column: 15
+        },
+        end: {
+          line: 55,
+          column: 26
+        }
+      },
+      "25": {
+        start: {
+          line: 56,
+          column: 0
+        },
+        end: {
+          line: 56,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "ButtonGroup",
+        decl: {
+          start: {
+            line: 22,
+            column: 27
+          },
+          end: {
+            line: 22,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 22,
+            column: 46
+          },
+          end: {
+            line: 52,
+            column: 1
+          }
+        },
+        line: 22
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 32,
+            column: 2
+          },
+          end: {
+            line: 46,
+            column: 3
+          }
+        },
+        type: "switch",
+        locations: [{
+          start: {
+            line: 33,
+            column: 4
+          },
+          end: {
+            line: 37,
+            column: 12
+          }
+        }, {
+          start: {
+            line: 39,
+            column: 4
+          },
+          end: {
+            line: 43,
+            column: 12
+          }
+        }, {
+          start: {
+            line: 45,
+            column: 4
+          },
+          end: {
+            line: 45,
+            column: 12
+          }
+        }],
+        line: 32
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "d04392a6aaa621f47f0a7fe4de4bff4f43f1572a"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_1rel1z5z2k.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_1rel1z5z2k.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1rel1z5z2k.s[2]++;
+exports["default"] = void 0;
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_1rel1z5z2k.s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _defineProperty2 =
+/* istanbul ignore next */
+(cov_1rel1z5z2k.s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/defineProperty")));
+
+var _objectWithoutProperties2 =
+/* istanbul ignore next */
+(cov_1rel1z5z2k.s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties")));
+
+var _react =
+/* istanbul ignore next */
+(cov_1rel1z5z2k.s[6]++, _interopRequireDefault(require("react")));
+
+var _classnames =
+/* istanbul ignore next */
+(cov_1rel1z5z2k.s[7]++, _interopRequireDefault(require("classnames")));
+
+var _configure =
+/* istanbul ignore next */
+(cov_1rel1z5z2k.s[8]++, require("../configure"));
+
+/* istanbul ignore next */
+cov_1rel1z5z2k.s[9]++;
+
+var ButtonGroup = function ButtonGroup(props) {
+  /* istanbul ignore next */
+  cov_1rel1z5z2k.f[0]++;
+  var customizePrefixCls =
+  /* istanbul ignore next */
+  (cov_1rel1z5z2k.s[10]++, props.prefixCls),
+      size =
+  /* istanbul ignore next */
+  (cov_1rel1z5z2k.s[11]++, props.size),
+      className =
+  /* istanbul ignore next */
+  (cov_1rel1z5z2k.s[12]++, props.className),
+      others =
+  /* istanbul ignore next */
+  (cov_1rel1z5z2k.s[13]++, (0, _objectWithoutProperties2["default"])(props, ["prefixCls", "size", "className"]));
+  var prefixCls =
+  /* istanbul ignore next */
+  (cov_1rel1z5z2k.s[14]++, (0, _configure.getPrefixCls)('btn-group', customizePrefixCls)); // large => lg
+  // small => sm
+
+  var sizeCls =
+  /* istanbul ignore next */
+  (cov_1rel1z5z2k.s[15]++, '');
+
+  /* istanbul ignore next */
+  cov_1rel1z5z2k.s[16]++;
+
+  switch (size) {
+    case "large"
+    /* large */
+    :
+      /* istanbul ignore next */
+      cov_1rel1z5z2k.b[0][0]++;
+      cov_1rel1z5z2k.s[17]++;
+      sizeCls = 'lg';
+
+      /* istanbul ignore next */
+      cov_1rel1z5z2k.s[18]++;
+      break;
+
+    case "small"
+    /* small */
+    :
+      /* istanbul ignore next */
+      cov_1rel1z5z2k.b[0][1]++;
+      cov_1rel1z5z2k.s[19]++;
+      sizeCls = 'sm';
+
+      /* istanbul ignore next */
+      cov_1rel1z5z2k.s[20]++;
+      break;
+
+    default:
+      /* istanbul ignore next */
+      cov_1rel1z5z2k.b[0][2]++;
+  }
+
+  var classes =
+  /* istanbul ignore next */
+  (cov_1rel1z5z2k.s[21]++, (0, _classnames["default"])(prefixCls, (0, _defineProperty2["default"])({}, "".concat(prefixCls, "-").concat(sizeCls), sizeCls), className));
+
+  /* istanbul ignore next */
+  cov_1rel1z5z2k.s[22]++;
+  return _react["default"].createElement("div", (0, _extends2["default"])({}, others, {
+    className: classes
+  }));
+};
+
+/* istanbul ignore next */
+cov_1rel1z5z2k.s[23]++;
+ButtonGroup.displayName = 'ButtonGroup';
+
+var _default =
+/* istanbul ignore next */
+(cov_1rel1z5z2k.s[24]++, ButtonGroup);
+
+/* istanbul ignore next */
+cov_1rel1z5z2k.s[25]++;
+exports["default"] = _default;

@@ -1,0 +1,1624 @@
+b63eb203de7c4a81606fa23186ff88fe
+"use strict";
+
+/* istanbul ignore next */
+function cov_b7fg5uitw() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/rc-components/dialog/DialogWrap.tsx";
+  var hash = "d44c78ece877f6fb956193725e8ba702df5a8477";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/rc-components/dialog/DialogWrap.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 30
+        },
+        end: {
+          line: 3,
+          column: 86
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 29
+        },
+        end: {
+          line: 5,
+          column: 84
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 0
+        },
+        end: {
+          line: 9,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 0
+        },
+        end: {
+          line: 10,
+          column: 28
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 16
+        },
+        end: {
+          line: 12,
+          column: 81
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 23
+        },
+        end: {
+          line: 14,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 20
+        },
+        end: {
+          line: 16,
+          column: 89
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 34
+        },
+        end: {
+          line: 18,
+          column: 117
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 23
+        },
+        end: {
+          line: 20,
+          column: 95
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 30
+        },
+        end: {
+          line: 22,
+          column: 109
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 17
+        },
+        end: {
+          line: 24,
+          column: 83
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 13
+        },
+        end: {
+          line: 26,
+          column: 54
+        }
+      },
+      "12": {
+        start: {
+          line: 28,
+          column: 16
+        },
+        end: {
+          line: 28,
+          column: 60
+        }
+      },
+      "13": {
+        start: {
+          line: 30,
+          column: 14
+        },
+        end: {
+          line: 30,
+          column: 57
+        }
+      },
+      "14": {
+        start: {
+          line: 32,
+          column: 23
+        },
+        end: {
+          line: 32,
+          column: 81
+        }
+      },
+      "15": {
+        start: {
+          line: 34,
+          column: 14
+        },
+        end: {
+          line: 34,
+          column: 63
+        }
+      },
+      "16": {
+        start: {
+          line: 36,
+          column: 18
+        },
+        end: {
+          line: 36,
+          column: 56
+        }
+      },
+      "17": {
+        start: {
+          line: 40,
+          column: 0
+        },
+        end: {
+          line: 139,
+          column: 19
+        }
+      },
+      "18": {
+        start: {
+          line: 41,
+          column: 2
+        },
+        end: {
+          line: 41,
+          column: 53
+        }
+      },
+      "19": {
+        start: {
+          line: 46,
+          column: 4
+        },
+        end: {
+          line: 46,
+          column: 55
+        }
+      },
+      "20": {
+        start: {
+          line: 47,
+          column: 4
+        },
+        end: {
+          line: 47,
+          column: 131
+        }
+      },
+      "21": {
+        start: {
+          line: 49,
+          column: 4
+        },
+        end: {
+          line: 51,
+          column: 6
+        }
+      },
+      "22": {
+        start: {
+          line: 50,
+          column: 6
+        },
+        end: {
+          line: 50,
+          column: 30
+        }
+      },
+      "23": {
+        start: {
+          line: 53,
+          column: 4
+        },
+        end: {
+          line: 60,
+          column: 6
+        }
+      },
+      "24": {
+        start: {
+          line: 54,
+          column: 18
+        },
+        end: {
+          line: 54,
+          column: 88
+        }
+      },
+      "25": {
+        start: {
+          line: 55,
+          column: 6
+        },
+        end: {
+          line: 59,
+          column: 10
+        }
+      },
+      "26": {
+        start: {
+          line: 62,
+          column: 4
+        },
+        end: {
+          line: 72,
+          column: 6
+        }
+      },
+      "27": {
+        start: {
+          line: 63,
+          column: 25
+        },
+        end: {
+          line: 63,
+          column: 49
+        }
+      },
+      "28": {
+        start: {
+          line: 65,
+          column: 6
+        },
+        end: {
+          line: 67,
+          column: 7
+        }
+      },
+      "29": {
+        start: {
+          line: 66,
+          column: 8
+        },
+        end: {
+          line: 66,
+          column: 76
+        }
+      },
+      "30": {
+        start: {
+          line: 69,
+          column: 22
+        },
+        end: {
+          line: 69,
+          column: 51
+        }
+      },
+      "31": {
+        start: {
+          line: 70,
+          column: 6
+        },
+        end: {
+          line: 70,
+          column: 43
+        }
+      },
+      "32": {
+        start: {
+          line: 71,
+          column: 6
+        },
+        end: {
+          line: 71,
+          column: 23
+        }
+      },
+      "33": {
+        start: {
+          line: 74,
+          column: 4
+        },
+        end: {
+          line: 74,
+          column: 17
+        }
+      },
+      "34": {
+        start: {
+          line: 77,
+          column: 2
+        },
+        end: {
+          line: 137,
+          column: 6
+        }
+      },
+      "35": {
+        start: {
+          line: 80,
+          column: 20
+        },
+        end: {
+          line: 80,
+          column: 32
+        }
+      },
+      "36": {
+        start: {
+          line: 81,
+          column: 18
+        },
+        end: {
+          line: 81,
+          column: 28
+        }
+      },
+      "37": {
+        start: {
+          line: 82,
+          column: 6
+        },
+        end: {
+          line: 82,
+          column: 42
+        }
+      },
+      "38": {
+        start: {
+          line: 87,
+          column: 6
+        },
+        end: {
+          line: 89,
+          column: 7
+        }
+      },
+      "39": {
+        start: {
+          line: 88,
+          column: 8
+        },
+        end: {
+          line: 88,
+          column: 15
+        }
+      },
+      "40": {
+        start: {
+          line: 91,
+          column: 20
+        },
+        end: {
+          line: 91,
+          column: 38
+        }
+      },
+      "41": {
+        start: {
+          line: 93,
+          column: 6
+        },
+        end: {
+          line: 101,
+          column: 7
+        }
+      },
+      "42": {
+        start: {
+          line: 94,
+          column: 8
+        },
+        end: {
+          line: 98,
+          column: 11
+        }
+      },
+      "43": {
+        start: {
+          line: 100,
+          column: 8
+        },
+        end: {
+          line: 100,
+          column: 31
+        }
+      },
+      "44": {
+        start: {
+          line: 106,
+          column: 19
+        },
+        end: {
+          line: 106,
+          column: 23
+        }
+      },
+      "45": {
+        start: {
+          line: 108,
+          column: 20
+        },
+        end: {
+          line: 108,
+          column: 38
+        }
+      },
+      "46": {
+        start: {
+          line: 109,
+          column: 19
+        },
+        end: {
+          line: 109,
+          column: 23
+        }
+      },
+      "47": {
+        start: {
+          line: 111,
+          column: 6
+        },
+        end: {
+          line: 127,
+          column: 7
+        }
+      },
+      "48": {
+        start: {
+          line: 112,
+          column: 24
+        },
+        end: {
+          line: 118,
+          column: 9
+        }
+      },
+      "49": {
+        start: {
+          line: 113,
+          column: 32
+        },
+        end: {
+          line: 113,
+          column: 53
+        }
+      },
+      "50": {
+        start: {
+          line: 114,
+          column: 32
+        },
+        end: {
+          line: 114,
+          column: 53
+        }
+      },
+      "51": {
+        start: {
+          line: 115,
+          column: 10
+        },
+        end: {
+          line: 115,
+          column: 51
+        }
+      },
+      "52": {
+        start: {
+          line: 116,
+          column: 10
+        },
+        end: {
+          line: 116,
+          column: 51
+        }
+      },
+      "53": {
+        start: {
+          line: 117,
+          column: 10
+        },
+        end: {
+          line: 117,
+          column: 22
+        }
+      },
+      "54": {
+        start: {
+          line: 120,
+          column: 8
+        },
+        end: {
+          line: 126,
+          column: 22
+        }
+      },
+      "55": {
+        start: {
+          line: 129,
+          column: 6
+        },
+        end: {
+          line: 133,
+          column: 7
+        }
+      },
+      "56": {
+        start: {
+          line: 130,
+          column: 8
+        },
+        end: {
+          line: 132,
+          column: 32
+        }
+      },
+      "57": {
+        start: {
+          line: 135,
+          column: 6
+        },
+        end: {
+          line: 135,
+          column: 20
+        }
+      },
+      "58": {
+        start: {
+          line: 138,
+          column: 2
+        },
+        end: {
+          line: 138,
+          column: 20
+        }
+      },
+      "59": {
+        start: {
+          line: 141,
+          column: 0
+        },
+        end: {
+          line: 143,
+          column: 2
+        }
+      },
+      "60": {
+        start: {
+          line: 144,
+          column: 15
+        },
+        end: {
+          line: 144,
+          column: 25
+        }
+      },
+      "61": {
+        start: {
+          line: 145,
+          column: 0
+        },
+        end: {
+          line: 145,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 40,
+            column: 0
+          },
+          end: {
+            line: 40,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 40,
+            column: 22
+          },
+          end: {
+            line: 139,
+            column: 1
+          }
+        },
+        line: 40
+      },
+      "1": {
+        name: "DialogWrap",
+        decl: {
+          start: {
+            line: 43,
+            column: 11
+          },
+          end: {
+            line: 43,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 43,
+            column: 24
+          },
+          end: {
+            line: 75,
+            column: 3
+          }
+        },
+        line: 43
+      },
+      "2": {
+        name: "(anonymous_2)",
+        decl: {
+          start: {
+            line: 49,
+            column: 23
+          },
+          end: {
+            line: 49,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 49,
+            column: 39
+          },
+          end: {
+            line: 51,
+            column: 5
+          }
+        },
+        line: 49
+      },
+      "3": {
+        name: "(anonymous_3)",
+        decl: {
+          start: {
+            line: 53,
+            column: 25
+          },
+          end: {
+            line: 53,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 53,
+            column: 37
+          },
+          end: {
+            line: 60,
+            column: 5
+          }
+        },
+        line: 53
+      },
+      "4": {
+        name: "(anonymous_4)",
+        decl: {
+          start: {
+            line: 62,
+            column: 25
+          },
+          end: {
+            line: 62,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 62,
+            column: 37
+          },
+          end: {
+            line: 72,
+            column: 5
+          }
+        },
+        line: 62
+      },
+      "5": {
+        name: "shouldComponentUpdate",
+        decl: {
+          start: {
+            line: 79,
+            column: 20
+          },
+          end: {
+            line: 79,
+            column: 41
+          }
+        },
+        loc: {
+          start: {
+            line: 79,
+            column: 48
+          },
+          end: {
+            line: 83,
+            column: 5
+          }
+        },
+        line: 79
+      },
+      "6": {
+        name: "componentWillUnmount",
+        decl: {
+          start: {
+            line: 86,
+            column: 20
+          },
+          end: {
+            line: 86,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 86,
+            column: 43
+          },
+          end: {
+            line: 102,
+            column: 5
+          }
+        },
+        line: 86
+      },
+      "7": {
+        name: "onClose",
+        decl: {
+          start: {
+            line: 96,
+            column: 28
+          },
+          end: {
+            line: 96,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 96,
+            column: 38
+          },
+          end: {
+            line: 96,
+            column: 40
+          }
+        },
+        line: 96
+      },
+      "8": {
+        name: "render",
+        decl: {
+          start: {
+            line: 105,
+            column: 20
+          },
+          end: {
+            line: 105,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 105,
+            column: 29
+          },
+          end: {
+            line: 136,
+            column: 5
+          }
+        },
+        line: 105
+      },
+      "9": {
+        name: "container",
+        decl: {
+          start: {
+            line: 112,
+            column: 33
+          },
+          end: {
+            line: 112,
+            column: 42
+          }
+        },
+        loc: {
+          start: {
+            line: 112,
+            column: 50
+          },
+          end: {
+            line: 118,
+            column: 9
+          }
+        },
+        line: 112
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 54,
+            column: 18
+          },
+          end: {
+            line: 54,
+            column: 88
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 54,
+            column: 71
+          },
+          end: {
+            line: 54,
+            column: 83
+          }
+        }, {
+          start: {
+            line: 54,
+            column: 86
+          },
+          end: {
+            line: 54,
+            column: 88
+          }
+        }],
+        line: 54
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 54,
+            column: 18
+          },
+          end: {
+            line: 54,
+            column: 68
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 54,
+            column: 18
+          },
+          end: {
+            line: 54,
+            column: 38
+          }
+        }, {
+          start: {
+            line: 54,
+            column: 42
+          },
+          end: {
+            line: 54,
+            column: 68
+          }
+        }],
+        line: 54
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 65,
+            column: 6
+          },
+          end: {
+            line: 67,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 65,
+            column: 6
+          },
+          end: {
+            line: 67,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 65,
+            column: 6
+          },
+          end: {
+            line: 67,
+            column: 7
+          }
+        }],
+        line: 65
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 82,
+            column: 16
+          },
+          end: {
+            line: 82,
+            column: 40
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 82,
+            column: 16
+          },
+          end: {
+            line: 82,
+            column: 29
+          }
+        }, {
+          start: {
+            line: 82,
+            column: 33
+          },
+          end: {
+            line: 82,
+            column: 40
+          }
+        }],
+        line: 82
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 87,
+            column: 6
+          },
+          end: {
+            line: 89,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 87,
+            column: 6
+          },
+          end: {
+            line: 89,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 87,
+            column: 6
+          },
+          end: {
+            line: 89,
+            column: 7
+          }
+        }],
+        line: 87
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 93,
+            column: 6
+          },
+          end: {
+            line: 101,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 93,
+            column: 6
+          },
+          end: {
+            line: 101,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 93,
+            column: 6
+          },
+          end: {
+            line: 101,
+            column: 7
+          }
+        }],
+        line: 93
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 111,
+            column: 6
+          },
+          end: {
+            line: 127,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 111,
+            column: 6
+          },
+          end: {
+            line: 127,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 111,
+            column: 6
+          },
+          end: {
+            line: 127,
+            column: 7
+          }
+        }],
+        line: 111
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 129,
+            column: 6
+          },
+          end: {
+            line: 133,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 129,
+            column: 6
+          },
+          end: {
+            line: 133,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 129,
+            column: 6
+          },
+          end: {
+            line: 133,
+            column: 7
+          }
+        }],
+        line: 129
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 129,
+            column: 10
+          },
+          end: {
+            line: 129,
+            column: 36
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 129,
+            column: 10
+          },
+          end: {
+            line: 129,
+            column: 17
+          }
+        }, {
+          start: {
+            line: 129,
+            column: 21
+          },
+          end: {
+            line: 129,
+            column: 36
+          }
+        }],
+        line: 129
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "d44c78ece877f6fb956193725e8ba702df5a8477"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_b7fg5uitw = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_b7fg5uitw();
+
+var _interopRequireWildcard =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[0]++, require("@babel/runtime/helpers/interopRequireWildcard"));
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[1]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_b7fg5uitw().s[2]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_b7fg5uitw().s[3]++;
+exports["default"] = void 0;
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _assertThisInitialized2 =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[9]++, _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[10]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _react =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[11]++, _interopRequireWildcard(require("react")));
+
+var _reactDom =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[12]++, _interopRequireDefault(require("react-dom")));
+
+var _Dialog =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[13]++, _interopRequireDefault(require("./Dialog")));
+
+var _ContainerRender =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[14]++, _interopRequireDefault(require("../util/ContainerRender")));
+
+var _Portal =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[15]++, _interopRequireDefault(require("../util/Portal")));
+
+var IS_REACT_16 =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[16]++, 'createPortal' in _reactDom["default"]);
+var DialogWrap =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_b7fg5uitw().s[17]++, function (_Component) {
+  /* istanbul ignore next */
+  cov_b7fg5uitw().f[0]++;
+  cov_b7fg5uitw().s[18]++;
+  (0, _inherits2["default"])(DialogWrap, _Component);
+
+  function DialogWrap() {
+    /* istanbul ignore next */
+    cov_b7fg5uitw().f[1]++;
+
+    var _this;
+
+    /* istanbul ignore next */
+    cov_b7fg5uitw().s[19]++;
+    (0, _classCallCheck2["default"])(this, DialogWrap);
+
+    /* istanbul ignore next */
+    cov_b7fg5uitw().s[20]++;
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(DialogWrap).apply(this, arguments));
+
+    /* istanbul ignore next */
+    cov_b7fg5uitw().s[21]++;
+
+    _this.saveDialog = function (node) {
+      /* istanbul ignore next */
+      cov_b7fg5uitw().f[2]++;
+      cov_b7fg5uitw().s[22]++;
+      _this._component = node;
+    };
+
+    /* istanbul ignore next */
+    cov_b7fg5uitw().s[23]++;
+
+    _this.getComponent = function () {
+      /* istanbul ignore next */
+      cov_b7fg5uitw().f[3]++;
+      var extra =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[24]++,
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().b[1][0]++, arguments.length > 0) &&
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().b[1][1]++, arguments[0] !== undefined) ?
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().b[0][0]++, arguments[0]) :
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().b[0][1]++, {}));
+
+      /* istanbul ignore next */
+      cov_b7fg5uitw().s[25]++;
+      return _react["default"].createElement(_Dialog["default"], (0, _extends2["default"])({
+        ref: _this.saveDialog
+      }, _this.props, extra, {
+        key: "dialog"
+      }));
+    };
+
+    /* istanbul ignore next */
+    cov_b7fg5uitw().s[26]++;
+
+    _this.getContainer = function () {
+      /* istanbul ignore next */
+      cov_b7fg5uitw().f[4]++;
+      var getContainer =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[27]++, _this.props.getContainer);
+
+      /* istanbul ignore next */
+      cov_b7fg5uitw().s[28]++;
+
+      if (getContainer) {
+        /* istanbul ignore next */
+        cov_b7fg5uitw().b[2][0]++;
+        cov_b7fg5uitw().s[29]++;
+        return getContainer((0, _assertThisInitialized2["default"])(_this));
+      } else
+      /* istanbul ignore next */
+      {
+        cov_b7fg5uitw().b[2][1]++;
+      }
+
+      var container =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[30]++, document.createElement('div'));
+
+      /* istanbul ignore next */
+      cov_b7fg5uitw().s[31]++;
+      document.body.appendChild(container);
+
+      /* istanbul ignore next */
+      cov_b7fg5uitw().s[32]++;
+      return container;
+    };
+
+    /* istanbul ignore next */
+    cov_b7fg5uitw().s[33]++;
+    return _this;
+  }
+
+  /* istanbul ignore next */
+  cov_b7fg5uitw().s[34]++;
+  (0, _createClass2["default"])(DialogWrap, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(_ref) {
+      /* istanbul ignore next */
+      cov_b7fg5uitw().f[5]++;
+      var visible =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[35]++, _ref.visible);
+      var props =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[36]++, this.props);
+
+      /* istanbul ignore next */
+      cov_b7fg5uitw().s[37]++;
+      return !!(
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().b[3][0]++, props.visible) ||
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().b[3][1]++, visible));
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      /* istanbul ignore next */
+      cov_b7fg5uitw().f[6]++;
+      cov_b7fg5uitw().s[38]++;
+
+      if (IS_REACT_16) {
+        /* istanbul ignore next */
+        cov_b7fg5uitw().b[4][0]++;
+        cov_b7fg5uitw().s[39]++;
+        return;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_b7fg5uitw().b[4][1]++;
+      }
+
+      var visible =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[40]++, this.props.visible);
+
+      /* istanbul ignore next */
+      cov_b7fg5uitw().s[41]++;
+
+      if (visible) {
+        /* istanbul ignore next */
+        cov_b7fg5uitw().b[5][0]++;
+        cov_b7fg5uitw().s[42]++;
+        this.renderComponent({
+          afterClose: this.removeContainer,
+          onClose: function onClose() {
+            /* istanbul ignore next */
+            cov_b7fg5uitw().f[7]++;
+          },
+          visible: false
+        });
+      } else {
+        /* istanbul ignore next */
+        cov_b7fg5uitw().b[5][1]++;
+        cov_b7fg5uitw().s[43]++;
+        this.removeContainer();
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      /* istanbul ignore next */
+      cov_b7fg5uitw().f[8]++;
+
+      var _this2 =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[44]++, this);
+
+      var visible =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[45]++, this.props.visible);
+      var portal =
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().s[46]++, null);
+
+      /* istanbul ignore next */
+      cov_b7fg5uitw().s[47]++;
+
+      if (!IS_REACT_16) {
+        /* istanbul ignore next */
+        cov_b7fg5uitw().b[6][0]++;
+        cov_b7fg5uitw().s[48]++;
+
+        var container = function container(_ref2) {
+          /* istanbul ignore next */
+          cov_b7fg5uitw().f[9]++;
+          var renderComponent =
+          /* istanbul ignore next */
+          (cov_b7fg5uitw().s[49]++, _ref2.renderComponent),
+              removeContainer =
+          /* istanbul ignore next */
+          (cov_b7fg5uitw().s[50]++, _ref2.removeContainer);
+
+          /* istanbul ignore next */
+          cov_b7fg5uitw().s[51]++;
+          _this2.renderComponent = renderComponent;
+
+          /* istanbul ignore next */
+          cov_b7fg5uitw().s[52]++;
+          _this2.removeContainer = removeContainer;
+
+          /* istanbul ignore next */
+          cov_b7fg5uitw().s[53]++;
+          return null;
+        };
+
+        /* istanbul ignore next */
+        cov_b7fg5uitw().s[54]++;
+        return _react["default"].createElement(_ContainerRender["default"], {
+          parent: this,
+          visible: visible,
+          autoDestroy: false,
+          getComponent: this.getComponent,
+          getContainer: this.getContainer
+        }, container);
+      } else
+      /* istanbul ignore next */
+      {
+        cov_b7fg5uitw().b[6][1]++;
+      }
+
+      cov_b7fg5uitw().s[55]++;
+
+      if (
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().b[8][0]++, visible) ||
+      /* istanbul ignore next */
+      (cov_b7fg5uitw().b[8][1]++, this._component)) {
+        /* istanbul ignore next */
+        cov_b7fg5uitw().b[7][0]++;
+        cov_b7fg5uitw().s[56]++;
+        portal = _react["default"].createElement(_Portal["default"], {
+          getContainer: this.getContainer
+        }, this.getComponent());
+      } else
+      /* istanbul ignore next */
+      {
+        cov_b7fg5uitw().b[7][1]++;
+      }
+
+      cov_b7fg5uitw().s[57]++;
+      return portal;
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_b7fg5uitw().s[58]++;
+  return DialogWrap;
+}(_react.Component));
+
+/* istanbul ignore next */
+cov_b7fg5uitw().s[59]++;
+DialogWrap.defaultProps = {
+  visible: false
+};
+
+var _default =
+/* istanbul ignore next */
+(cov_b7fg5uitw().s[60]++, DialogWrap);
+
+/* istanbul ignore next */
+cov_b7fg5uitw().s[61]++;
+exports["default"] = _default;

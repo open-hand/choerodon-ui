@@ -1,0 +1,3658 @@
+133a80c7e992512d64b7d3259c52ee2d
+"use strict";
+
+/* istanbul ignore next */
+var cov_18h0bqmt5a = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/date-picker/TimesView.tsx";
+  var hash = "25e45b28cb4b929eaa5fdd4e2c63d7de4ef6f032";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/date-picker/TimesView.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 30
+        },
+        end: {
+          line: 3,
+          column: 86
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 29
+        },
+        end: {
+          line: 5,
+          column: 84
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 0
+        },
+        end: {
+          line: 9,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 0
+        },
+        end: {
+          line: 10,
+          column: 28
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 23
+        },
+        end: {
+          line: 12,
+          column: 95
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 19
+        },
+        end: {
+          line: 14,
+          column: 80
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 25
+        },
+        end: {
+          line: 16,
+          column: 99
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 23
+        },
+        end: {
+          line: 18,
+          column: 95
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 20
+        },
+        end: {
+          line: 20,
+          column: 89
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 34
+        },
+        end: {
+          line: 22,
+          column: 117
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 23
+        },
+        end: {
+          line: 24,
+          column: 95
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 12
+        },
+        end: {
+          line: 26,
+          column: 73
+        }
+      },
+      "12": {
+        start: {
+          line: 28,
+          column: 17
+        },
+        end: {
+          line: 28,
+          column: 83
+        }
+      },
+      "13": {
+        start: {
+          line: 30,
+          column: 13
+        },
+        end: {
+          line: 30,
+          column: 29
+        }
+      },
+      "14": {
+        start: {
+          line: 32,
+          column: 13
+        },
+        end: {
+          line: 32,
+          column: 53
+        }
+      },
+      "15": {
+        start: {
+          line: 34,
+          column: 14
+        },
+        end: {
+          line: 34,
+          column: 55
+        }
+      },
+      "16": {
+        start: {
+          line: 36,
+          column: 18
+        },
+        end: {
+          line: 36,
+          column: 63
+        }
+      },
+      "17": {
+        start: {
+          line: 38,
+          column: 12
+        },
+        end: {
+          line: 38,
+          column: 27
+        }
+      },
+      "18": {
+        start: {
+          line: 40,
+          column: 17
+        },
+        end: {
+          line: 40,
+          column: 38
+        }
+      },
+      "19": {
+        start: {
+          line: 42,
+          column: 16
+        },
+        end: {
+          line: 42,
+          column: 68
+        }
+      },
+      "20": {
+        start: {
+          line: 44,
+          column: 17
+        },
+        end: {
+          line: 44,
+          column: 63
+        }
+      },
+      "21": {
+        start: {
+          line: 46,
+          column: 21
+        },
+        end: {
+          line: 46,
+          column: 49
+        }
+      },
+      "22": {
+        start: {
+          line: 48,
+          column: 13
+        },
+        end: {
+          line: 48,
+          column: 38
+        }
+      },
+      "23": {
+        start: {
+          line: 50,
+          column: 20
+        },
+        end: {
+          line: 50,
+          column: 52
+        }
+      },
+      "24": {
+        start: {
+          line: 53,
+          column: 20
+        },
+        end: {
+          line: 59,
+          column: 1
+        }
+      },
+      "25": {
+        start: {
+          line: 61,
+          column: 16
+        },
+        end: {
+          line: 374,
+          column: 24
+        }
+      },
+      "26": {
+        start: {
+          line: 64,
+          column: 2
+        },
+        end: {
+          line: 64,
+          column: 51
+        }
+      },
+      "27": {
+        start: {
+          line: 67,
+          column: 4
+        },
+        end: {
+          line: 67,
+          column: 54
+        }
+      },
+      "28": {
+        start: {
+          line: 68,
+          column: 4
+        },
+        end: {
+          line: 68,
+          column: 129
+        }
+      },
+      "29": {
+        start: {
+          line: 71,
+          column: 2
+        },
+        end: {
+          line: 372,
+          column: 6
+        }
+      },
+      "30": {
+        start: {
+          line: 74,
+          column: 6
+        },
+        end: {
+          line: 76,
+          column: 8
+        }
+      },
+      "31": {
+        start: {
+          line: 81,
+          column: 6
+        },
+        end: {
+          line: 81,
+          column: 38
+        }
+      },
+      "32": {
+        start: {
+          line: 82,
+          column: 6
+        },
+        end: {
+          line: 82,
+          column: 81
+        }
+      },
+      "33": {
+        start: {
+          line: 87,
+          column: 6
+        },
+        end: {
+          line: 87,
+          column: 38
+        }
+      },
+      "34": {
+        start: {
+          line: 88,
+          column: 17
+        },
+        end: {
+          line: 88,
+          column: 38
+        }
+      },
+      "35": {
+        start: {
+          line: 89,
+          column: 17
+        },
+        end: {
+          line: 91,
+          column: 15
+        }
+      },
+      "36": {
+        start: {
+          line: 92,
+          column: 6
+        },
+        end: {
+          line: 92,
+          column: 71
+        }
+      },
+      "37": {
+        start: {
+          line: 97,
+          column: 6
+        },
+        end: {
+          line: 97,
+          column: 38
+        }
+      },
+      "38": {
+        start: {
+          line: 99,
+          column: 6
+        },
+        end: {
+          line: 109,
+          column: 7
+        }
+      },
+      "39": {
+        start: {
+          line: 100,
+          column: 8
+        },
+        end: {
+          line: 106,
+          column: 11
+        }
+      },
+      "40": {
+        start: {
+          line: 103,
+          column: 12
+        },
+        end: {
+          line: 105,
+          column: 14
+        }
+      },
+      "41": {
+        start: {
+          line: 108,
+          column: 8
+        },
+        end: {
+          line: 108,
+          column: 44
+        }
+      },
+      "42": {
+        start: {
+          line: 114,
+          column: 6
+        },
+        end: {
+          line: 114,
+          column: 38
+        }
+      },
+      "43": {
+        start: {
+          line: 116,
+          column: 6
+        },
+        end: {
+          line: 118,
+          column: 7
+        }
+      },
+      "44": {
+        start: {
+          line: 117,
+          column: 8
+        },
+        end: {
+          line: 117,
+          column: 44
+        }
+      },
+      "45": {
+        start: {
+          line: 123,
+          column: 6
+        },
+        end: {
+          line: 123,
+          column: 38
+        }
+      },
+      "46": {
+        start: {
+          line: 124,
+          column: 6
+        },
+        end: {
+          line: 124,
+          column: 86
+        }
+      },
+      "47": {
+        start: {
+          line: 129,
+          column: 6
+        },
+        end: {
+          line: 129,
+          column: 38
+        }
+      },
+      "48": {
+        start: {
+          line: 130,
+          column: 6
+        },
+        end: {
+          line: 130,
+          column: 81
+        }
+      },
+      "49": {
+        start: {
+          line: 135,
+          column: 6
+        },
+        end: {
+          line: 135,
+          column: 38
+        }
+      },
+      "50": {
+        start: {
+          line: 136,
+          column: 6
+        },
+        end: {
+          line: 136,
+          column: 81
+        }
+      },
+      "51": {
+        start: {
+          line: 141,
+          column: 6
+        },
+        end: {
+          line: 141,
+          column: 38
+        }
+      },
+      "52": {
+        start: {
+          line: 142,
+          column: 17
+        },
+        end: {
+          line: 142,
+          column: 38
+        }
+      },
+      "53": {
+        start: {
+          line: 143,
+          column: 17
+        },
+        end: {
+          line: 145,
+          column: 15
+        }
+      },
+      "54": {
+        start: {
+          line: 146,
+          column: 6
+        },
+        end: {
+          line: 146,
+          column: 71
+        }
+      },
+      "55": {
+        start: {
+          line: 151,
+          column: 6
+        },
+        end: {
+          line: 151,
+          column: 28
+        }
+      },
+      "56": {
+        start: {
+          line: 152,
+          column: 6
+        },
+        end: {
+          line: 152,
+          column: 36
+        }
+      },
+      "57": {
+        start: {
+          line: 157,
+          column: 25
+        },
+        end: {
+          line: 193,
+          column: 9
+        }
+      },
+      "58": {
+        start: {
+          line: 160,
+          column: 8
+        },
+        end: {
+          line: 192,
+          column: 26
+        }
+      },
+      "59": {
+        start: {
+          line: 161,
+          column: 10
+        },
+        end: {
+          line: 191,
+          column: 11
+        }
+      },
+      "60": {
+        start: {
+          line: 162,
+          column: 12
+        },
+        end: {
+          line: 190,
+          column: 13
+        }
+      },
+      "61": {
+        start: {
+          line: 164,
+          column: 16
+        },
+        end: {
+          line: 164,
+          column: 35
+        }
+      },
+      "62": {
+        start: {
+          line: 166,
+          column: 16
+        },
+        end: {
+          line: 169,
+          column: 17
+        }
+      },
+      "63": {
+        start: {
+          line: 167,
+          column: 18
+        },
+        end: {
+          line: 167,
+          column: 36
+        }
+      },
+      "64": {
+        start: {
+          line: 168,
+          column: 18
+        },
+        end: {
+          line: 168,
+          column: 24
+        }
+      },
+      "65": {
+        start: {
+          line: 171,
+          column: 16
+        },
+        end: {
+          line: 171,
+          column: 34
+        }
+      },
+      "66": {
+        start: {
+          line: 172,
+          column: 16
+        },
+        end: {
+          line: 172,
+          column: 98
+        }
+      },
+      "67": {
+        start: {
+          line: 175,
+          column: 16
+        },
+        end: {
+          line: 175,
+          column: 34
+        }
+      },
+      "68": {
+        start: {
+          line: 176,
+          column: 16
+        },
+        end: {
+          line: 176,
+          column: 22
+        }
+      },
+      "69": {
+        start: {
+          line: 179,
+          column: 16
+        },
+        end: {
+          line: 182,
+          column: 17
+        }
+      },
+      "70": {
+        start: {
+          line: 180,
+          column: 18
+        },
+        end: {
+          line: 180,
+          column: 36
+        }
+      },
+      "71": {
+        start: {
+          line: 181,
+          column: 18
+        },
+        end: {
+          line: 181,
+          column: 24
+        }
+      },
+      "72": {
+        start: {
+          line: 184,
+          column: 16
+        },
+        end: {
+          line: 184,
+          column: 34
+        }
+      },
+      "73": {
+        start: {
+          line: 185,
+          column: 16
+        },
+        end: {
+          line: 185,
+          column: 103
+        }
+      },
+      "74": {
+        start: {
+          line: 189,
+          column: 16
+        },
+        end: {
+          line: 189,
+          column: 39
+        }
+      },
+      "75": {
+        start: {
+          line: 196,
+          column: 8
+        },
+        end: {
+          line: 196,
+          column: 51
+        }
+      },
+      "76": {
+        start: {
+          line: 199,
+          column: 6
+        },
+        end: {
+          line: 199,
+          column: 25
+        }
+      },
+      "77": {
+        start: {
+          line: 204,
+          column: 22
+        },
+        end: {
+          line: 204,
+          column: 36
+        }
+      },
+      "78": {
+        start: {
+          line: 205,
+          column: 24
+        },
+        end: {
+          line: 205,
+          column: 34
+        }
+      },
+      "79": {
+        start: {
+          line: 206,
+          column: 17
+        },
+        end: {
+          line: 206,
+          column: 33
+        }
+      },
+      "80": {
+        start: {
+          line: 207,
+          column: 17
+        },
+        end: {
+          line: 207,
+          column: 33
+        }
+      },
+      "81": {
+        start: {
+          line: 209,
+          column: 6
+        },
+        end: {
+          line: 217,
+          column: 9
+        }
+      },
+      "82": {
+        start: {
+          line: 212,
+          column: 10
+        },
+        end: {
+          line: 216,
+          column: 83
+        }
+      },
+      "83": {
+        start: {
+          line: 219,
+          column: 6
+        },
+        end: {
+          line: 230,
+          column: 23
+        }
+      },
+      "84": {
+        start: {
+          line: 235,
+          column: 22
+        },
+        end: {
+          line: 235,
+          column: 36
+        }
+      },
+      "85": {
+        start: {
+          line: 236,
+          column: 6
+        },
+        end: {
+          line: 244,
+          column: 54
+        }
+      },
+      "86": {
+        start: {
+          line: 249,
+          column: 22
+        },
+        end: {
+          line: 249,
+          column: 42
+        }
+      },
+      "87": {
+        start: {
+          line: 250,
+          column: 6
+        },
+        end: {
+          line: 255,
+          column: 34
+        }
+      },
+      "88": {
+        start: {
+          line: 260,
+          column: 6
+        },
+        end: {
+          line: 269,
+          column: 10
+        }
+      },
+      "89": {
+        start: {
+          line: 274,
+          column: 6
+        },
+        end: {
+          line: 274,
+          column: 58
+        }
+      },
+      "90": {
+        start: {
+          line: 279,
+          column: 22
+        },
+        end: {
+          line: 279,
+          column: 36
+        }
+      },
+      "91": {
+        start: {
+          line: 280,
+          column: 25
+        },
+        end: {
+          line: 280,
+          column: 35
+        }
+      },
+      "92": {
+        start: {
+          line: 281,
+          column: 17
+        },
+        end: {
+          line: 281,
+          column: 34
+        }
+      },
+      "93": {
+        start: {
+          line: 282,
+          column: 34
+        },
+        end: {
+          line: 282,
+          column: 55
+        }
+      },
+      "94": {
+        start: {
+          line: 283,
+          column: 21
+        },
+        end: {
+          line: 283,
+          column: 95
+        }
+      },
+      "95": {
+        start: {
+          line: 284,
+          column: 34
+        },
+        end: {
+          line: 284,
+          column: 58
+        }
+      },
+      "96": {
+        start: {
+          line: 285,
+          column: 24
+        },
+        end: {
+          line: 285,
+          column: 109
+        }
+      },
+      "97": {
+        start: {
+          line: 286,
+          column: 17
+        },
+        end: {
+          line: 288,
+          column: 15
+        }
+      },
+      "98": {
+        start: {
+          line: 289,
+          column: 21
+        },
+        end: {
+          line: 289,
+          column: 33
+        }
+      },
+      "99": {
+        start: {
+          line: 290,
+          column: 16
+        },
+        end: {
+          line: 290,
+          column: 41
+        }
+      },
+      "100": {
+        start: {
+          line: 291,
+          column: 17
+        },
+        end: {
+          line: 291,
+          column: 44
+        }
+      },
+      "101": {
+        start: {
+          line: 292,
+          column: 18
+        },
+        end: {
+          line: 292,
+          column: 20
+        }
+      },
+      "102": {
+        start: {
+          line: 294,
+          column: 6
+        },
+        end: {
+          line: 315,
+          column: 7
+        }
+      },
+      "103": {
+        start: {
+          line: 297,
+          column: 22
+        },
+        end: {
+          line: 297,
+          column: 33
+        }
+      },
+      "104": {
+        start: {
+          line: 298,
+          column: 25
+        },
+        end: {
+          line: 298,
+          column: 56
+        }
+      },
+      "105": {
+        start: {
+          line: 299,
+          column: 19
+        },
+        end: {
+          line: 299,
+          column: 40
+        }
+      },
+      "106": {
+        start: {
+          line: 300,
+          column: 24
+        },
+        end: {
+          line: 300,
+          column: 319
+        }
+      },
+      "107": {
+        start: {
+          line: 301,
+          column: 20
+        },
+        end: {
+          line: 307,
+          column: 9
+        }
+      },
+      "108": {
+        start: {
+          line: 309,
+          column: 8
+        },
+        end: {
+          line: 311,
+          column: 9
+        }
+      },
+      "109": {
+        start: {
+          line: 310,
+          column: 10
+        },
+        end: {
+          line: 310,
+          column: 77
+        }
+      },
+      "110": {
+        start: {
+          line: 313,
+          column: 8
+        },
+        end: {
+          line: 313,
+          column: 61
+        }
+      },
+      "111": {
+        start: {
+          line: 314,
+          column: 8
+        },
+        end: {
+          line: 314,
+          column: 25
+        }
+      },
+      "112": {
+        start: {
+          line: 317,
+          column: 6
+        },
+        end: {
+          line: 327,
+          column: 10
+        }
+      },
+      "113": {
+        start: {
+          line: 332,
+          column: 6
+        },
+        end: {
+          line: 332,
+          column: 54
+        }
+      },
+      "114": {
+        start: {
+          line: 337,
+          column: 30
+        },
+        end: {
+          line: 337,
+          column: 46
+        }
+      },
+      "115": {
+        start: {
+          line: 338,
+          column: 24
+        },
+        end: {
+          line: 338,
+          column: 78
+        }
+      },
+      "116": {
+        start: {
+          line: 339,
+          column: 6
+        },
+        end: {
+          line: 339,
+          column: 25
+        }
+      },
+      "117": {
+        start: {
+          line: 344,
+          column: 6
+        },
+        end: {
+          line: 344,
+          column: 77
+        }
+      },
+      "118": {
+        start: {
+          line: 349,
+          column: 6
+        },
+        end: {
+          line: 349,
+          column: 77
+        }
+      },
+      "119": {
+        start: {
+          line: 354,
+          column: 6
+        },
+        end: {
+          line: 356,
+          column: 7
+        }
+      },
+      "120": {
+        start: {
+          line: 355,
+          column: 8
+        },
+        end: {
+          line: 355,
+          column: 32
+        }
+      },
+      "121": {
+        start: {
+          line: 361,
+          column: 17
+        },
+        end: {
+          line: 361,
+          column: 32
+        }
+      },
+      "122": {
+        start: {
+          line: 363,
+          column: 6
+        },
+        end: {
+          line: 368,
+          column: 9
+        }
+      },
+      "123": {
+        start: {
+          line: 366,
+          column: 10
+        },
+        end: {
+          line: 366,
+          column: 40
+        }
+      },
+      "124": {
+        start: {
+          line: 367,
+          column: 10
+        },
+        end: {
+          line: 367,
+          column: 36
+        }
+      },
+      "125": {
+        start: {
+          line: 370,
+          column: 6
+        },
+        end: {
+          line: 370,
+          column: 116
+        }
+      },
+      "126": {
+        start: {
+          line: 373,
+          column: 2
+        },
+        end: {
+          line: 373,
+          column: 19
+        }
+      },
+      "127": {
+        start: {
+          line: 376,
+          column: 0
+        },
+        end: {
+          line: 376,
+          column: 36
+        }
+      },
+      "128": {
+        start: {
+          line: 377,
+          column: 0
+        },
+        end: {
+          line: 379,
+          column: 1
+        }
+      },
+      "129": {
+        start: {
+          line: 380,
+          column: 0
+        },
+        end: {
+          line: 380,
+          column: 87
+        }
+      },
+      "130": {
+        start: {
+          line: 381,
+          column: 0
+        },
+        end: {
+          line: 381,
+          column: 98
+        }
+      },
+      "131": {
+        start: {
+          line: 382,
+          column: 0
+        },
+        end: {
+          line: 382,
+          column: 89
+        }
+      },
+      "132": {
+        start: {
+          line: 383,
+          column: 0
+        },
+        end: {
+          line: 383,
+          column: 88
+        }
+      },
+      "133": {
+        start: {
+          line: 384,
+          column: 0
+        },
+        end: {
+          line: 384,
+          column: 80
+        }
+      },
+      "134": {
+        start: {
+          line: 385,
+          column: 0
+        },
+        end: {
+          line: 385,
+          column: 83
+        }
+      },
+      "135": {
+        start: {
+          line: 386,
+          column: 15
+        },
+        end: {
+          line: 386,
+          column: 24
+        }
+      },
+      "136": {
+        start: {
+          line: 387,
+          column: 0
+        },
+        end: {
+          line: 387,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 63,
+            column: 0
+          },
+          end: {
+            line: 63,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 63,
+            column: 21
+          },
+          end: {
+            line: 374,
+            column: 1
+          }
+        },
+        line: 63
+      },
+      "1": {
+        name: "TimesView",
+        decl: {
+          start: {
+            line: 66,
+            column: 11
+          },
+          end: {
+            line: 66,
+            column: 20
+          }
+        },
+        loc: {
+          start: {
+            line: 66,
+            column: 23
+          },
+          end: {
+            line: 69,
+            column: 3
+          }
+        },
+        line: 66
+      },
+      "2": {
+        name: "handleDateTimeSelect",
+        decl: {
+          start: {
+            line: 73,
+            column: 20
+          },
+          end: {
+            line: 73,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 73,
+            column: 43
+          },
+          end: {
+            line: 77,
+            column: 5
+          }
+        },
+        line: 73
+      },
+      "3": {
+        name: "handleKeyDownHome",
+        decl: {
+          start: {
+            line: 80,
+            column: 20
+          },
+          end: {
+            line: 80,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 80,
+            column: 41
+          },
+          end: {
+            line: 83,
+            column: 5
+          }
+        },
+        line: 80
+      },
+      "4": {
+        name: "handleKeyDownEnd",
+        decl: {
+          start: {
+            line: 86,
+            column: 20
+          },
+          end: {
+            line: 86,
+            column: 36
+          }
+        },
+        loc: {
+          start: {
+            line: 86,
+            column: 40
+          },
+          end: {
+            line: 93,
+            column: 5
+          }
+        },
+        line: 86
+      },
+      "5": {
+        name: "handleKeyDownLeft",
+        decl: {
+          start: {
+            line: 96,
+            column: 20
+          },
+          end: {
+            line: 96,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 96,
+            column: 41
+          },
+          end: {
+            line: 110,
+            column: 5
+          }
+        },
+        line: 96
+      },
+      "6": {
+        name: "handleKeyDownRight",
+        decl: {
+          start: {
+            line: 113,
+            column: 20
+          },
+          end: {
+            line: 113,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 113,
+            column: 42
+          },
+          end: {
+            line: 119,
+            column: 5
+          }
+        },
+        line: 113
+      },
+      "7": {
+        name: "handleKeyDownUp",
+        decl: {
+          start: {
+            line: 122,
+            column: 20
+          },
+          end: {
+            line: 122,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 122,
+            column: 39
+          },
+          end: {
+            line: 125,
+            column: 5
+          }
+        },
+        line: 122
+      },
+      "8": {
+        name: "handleKeyDownDown",
+        decl: {
+          start: {
+            line: 128,
+            column: 20
+          },
+          end: {
+            line: 128,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 128,
+            column: 41
+          },
+          end: {
+            line: 131,
+            column: 5
+          }
+        },
+        line: 128
+      },
+      "9": {
+        name: "handleKeyDownPageUp",
+        decl: {
+          start: {
+            line: 134,
+            column: 20
+          },
+          end: {
+            line: 134,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 134,
+            column: 43
+          },
+          end: {
+            line: 137,
+            column: 5
+          }
+        },
+        line: 134
+      },
+      "10": {
+        name: "handleKeyDownPageDown",
+        decl: {
+          start: {
+            line: 140,
+            column: 20
+          },
+          end: {
+            line: 140,
+            column: 41
+          }
+        },
+        loc: {
+          start: {
+            line: 140,
+            column: 45
+          },
+          end: {
+            line: 147,
+            column: 5
+          }
+        },
+        line: 140
+      },
+      "11": {
+        name: "handleTimeCellClick",
+        decl: {
+          start: {
+            line: 150,
+            column: 20
+          },
+          end: {
+            line: 150,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 150,
+            column: 52
+          },
+          end: {
+            line: 153,
+            column: 5
+          }
+        },
+        line: 150
+      },
+      "12": {
+        name: "(anonymous_12)",
+        decl: {
+          start: {
+            line: 156,
+            column: 11
+          },
+          end: {
+            line: 156,
+            column: 12
+          }
+        },
+        loc: {
+          start: {
+            line: 156,
+            column: 23
+          },
+          end: {
+            line: 200,
+            column: 5
+          }
+        },
+        line: 156
+      },
+      "13": {
+        name: "_callee",
+        decl: {
+          start: {
+            line: 159,
+            column: 44
+          },
+          end: {
+            line: 159,
+            column: 51
+          }
+        },
+        loc: {
+          start: {
+            line: 159,
+            column: 55
+          },
+          end: {
+            line: 193,
+            column: 7
+          }
+        },
+        line: 159
+      },
+      "14": {
+        name: "_callee$",
+        decl: {
+          start: {
+            line: 160,
+            column: 53
+          },
+          end: {
+            line: 160,
+            column: 61
+          }
+        },
+        loc: {
+          start: {
+            line: 160,
+            column: 72
+          },
+          end: {
+            line: 192,
+            column: 9
+          }
+        },
+        line: 160
+      },
+      "15": {
+        name: "handleWheel",
+        decl: {
+          start: {
+            line: 195,
+            column: 15
+          },
+          end: {
+            line: 195,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 195,
+            column: 31
+          },
+          end: {
+            line: 197,
+            column: 7
+          }
+        },
+        line: 195
+      },
+      "16": {
+        name: "renderHeader",
+        decl: {
+          start: {
+            line: 203,
+            column: 20
+          },
+          end: {
+            line: 203,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 203,
+            column: 35
+          },
+          end: {
+            line: 231,
+            column: 5
+          }
+        },
+        line: 203
+      },
+      "17": {
+        name: "renderFooter",
+        decl: {
+          start: {
+            line: 234,
+            column: 20
+          },
+          end: {
+            line: 234,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 234,
+            column: 35
+          },
+          end: {
+            line: 245,
+            column: 5
+          }
+        },
+        line: 234
+      },
+      "18": {
+        name: "renderPanel",
+        decl: {
+          start: {
+            line: 248,
+            column: 20
+          },
+          end: {
+            line: 248,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 248,
+            column: 34
+          },
+          end: {
+            line: 256,
+            column: 5
+          }
+        },
+        line: 248
+      },
+      "19": {
+        name: "renderPanelBody",
+        decl: {
+          start: {
+            line: 259,
+            column: 20
+          },
+          end: {
+            line: 259,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 259,
+            column: 38
+          },
+          end: {
+            line: 270,
+            column: 5
+          }
+        },
+        line: 259
+      },
+      "20": {
+        name: "renderCell",
+        decl: {
+          start: {
+            line: 273,
+            column: 20
+          },
+          end: {
+            line: 273,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 273,
+            column: 38
+          },
+          end: {
+            line: 275,
+            column: 5
+          }
+        },
+        line: 273
+      },
+      "21": {
+        name: "getTimeBar",
+        decl: {
+          start: {
+            line: 278,
+            column: 20
+          },
+          end: {
+            line: 278,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 278,
+            column: 37
+          },
+          end: {
+            line: 328,
+            column: 5
+          }
+        },
+        line: 278
+      },
+      "22": {
+        name: "getPanelClass",
+        decl: {
+          start: {
+            line: 331,
+            column: 20
+          },
+          end: {
+            line: 331,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 331,
+            column: 36
+          },
+          end: {
+            line: 333,
+            column: 5
+          }
+        },
+        line: 331
+      },
+      "23": {
+        name: "getCurrentUnit",
+        decl: {
+          start: {
+            line: 336,
+            column: 20
+          },
+          end: {
+            line: 336,
+            column: 34
+          }
+        },
+        loc: {
+          start: {
+            line: 336,
+            column: 37
+          },
+          end: {
+            line: 340,
+            column: 5
+          }
+        },
+        line: 336
+      },
+      "24": {
+        name: "getPrevUnit",
+        decl: {
+          start: {
+            line: 343,
+            column: 20
+          },
+          end: {
+            line: 343,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 343,
+            column: 34
+          },
+          end: {
+            line: 345,
+            column: 5
+          }
+        },
+        line: 343
+      },
+      "25": {
+        name: "getNextUnit",
+        decl: {
+          start: {
+            line: 348,
+            column: 20
+          },
+          end: {
+            line: 348,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 348,
+            column: 34
+          },
+          end: {
+            line: 350,
+            column: 5
+          }
+        },
+        line: 348
+      },
+      "26": {
+        name: "changeUnit",
+        decl: {
+          start: {
+            line: 353,
+            column: 20
+          },
+          end: {
+            line: 353,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 353,
+            column: 37
+          },
+          end: {
+            line: 357,
+            column: 5
+          }
+        },
+        line: 353
+      },
+      "27": {
+        name: "choose",
+        decl: {
+          start: {
+            line: 360,
+            column: 20
+          },
+          end: {
+            line: 360,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 360,
+            column: 33
+          },
+          end: {
+            line: 371,
+            column: 5
+          }
+        },
+        line: 360
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 89,
+            column: 17
+          },
+          end: {
+            line: 91,
+            column: 15
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 91,
+            column: 8
+          },
+          end: {
+            line: 91,
+            column: 10
+          }
+        }, {
+          start: {
+            line: 91,
+            column: 13
+          },
+          end: {
+            line: 91,
+            column: 15
+          }
+        }],
+        line: 89
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 99,
+            column: 6
+          },
+          end: {
+            line: 109,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 99,
+            column: 6
+          },
+          end: {
+            line: 109,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 99,
+            column: 6
+          },
+          end: {
+            line: 109,
+            column: 7
+          }
+        }],
+        line: 99
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 100,
+            column: 8
+          },
+          end: {
+            line: 106,
+            column: 11
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 100,
+            column: 8
+          },
+          end: {
+            line: 106,
+            column: 11
+          }
+        }, {
+          start: {
+            line: 100,
+            column: 8
+          },
+          end: {
+            line: 106,
+            column: 11
+          }
+        }],
+        line: 100
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 116,
+            column: 6
+          },
+          end: {
+            line: 118,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 116,
+            column: 6
+          },
+          end: {
+            line: 118,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 116,
+            column: 6
+          },
+          end: {
+            line: 118,
+            column: 7
+          }
+        }],
+        line: 116
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 143,
+            column: 17
+          },
+          end: {
+            line: 145,
+            column: 15
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 145,
+            column: 8
+          },
+          end: {
+            line: 145,
+            column: 10
+          }
+        }, {
+          start: {
+            line: 145,
+            column: 13
+          },
+          end: {
+            line: 145,
+            column: 15
+          }
+        }],
+        line: 143
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 162,
+            column: 12
+          },
+          end: {
+            line: 190,
+            column: 13
+          }
+        },
+        type: "switch",
+        locations: [{
+          start: {
+            line: 163,
+            column: 14
+          },
+          end: {
+            line: 172,
+            column: 98
+          }
+        }, {
+          start: {
+            line: 174,
+            column: 14
+          },
+          end: {
+            line: 176,
+            column: 22
+          }
+        }, {
+          start: {
+            line: 178,
+            column: 14
+          },
+          end: {
+            line: 185,
+            column: 103
+          }
+        }, {
+          start: {
+            line: 187,
+            column: 14
+          },
+          end: {
+            line: 187,
+            column: 21
+          }
+        }, {
+          start: {
+            line: 188,
+            column: 14
+          },
+          end: {
+            line: 189,
+            column: 39
+          }
+        }],
+        line: 162
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 166,
+            column: 16
+          },
+          end: {
+            line: 169,
+            column: 17
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 166,
+            column: 16
+          },
+          end: {
+            line: 169,
+            column: 17
+          }
+        }, {
+          start: {
+            line: 166,
+            column: 16
+          },
+          end: {
+            line: 169,
+            column: 17
+          }
+        }],
+        line: 166
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 179,
+            column: 16
+          },
+          end: {
+            line: 182,
+            column: 17
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 179,
+            column: 16
+          },
+          end: {
+            line: 182,
+            column: 17
+          }
+        }, {
+          start: {
+            line: 179,
+            column: 16
+          },
+          end: {
+            line: 182,
+            column: 17
+          }
+        }],
+        line: 179
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 209,
+            column: 6
+          },
+          end: {
+            line: 217,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 209,
+            column: 6
+          },
+          end: {
+            line: 217,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 209,
+            column: 6
+          },
+          end: {
+            line: 217,
+            column: 9
+          }
+        }],
+        line: 209
+      },
+      "9": {
+        loc: {
+          start: {
+            line: 283,
+            column: 21
+          },
+          end: {
+            line: 283,
+            column: 95
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 283,
+            column: 56
+          },
+          end: {
+            line: 283,
+            column: 71
+          }
+        }, {
+          start: {
+            line: 283,
+            column: 74
+          },
+          end: {
+            line: 283,
+            column: 95
+          }
+        }],
+        line: 283
+      },
+      "10": {
+        loc: {
+          start: {
+            line: 285,
+            column: 24
+          },
+          end: {
+            line: 285,
+            column: 109
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 285,
+            column: 59
+          },
+          end: {
+            line: 285,
+            column: 85
+          }
+        }, {
+          start: {
+            line: 285,
+            column: 88
+          },
+          end: {
+            line: 285,
+            column: 109
+          }
+        }],
+        line: 285
+      },
+      "11": {
+        loc: {
+          start: {
+            line: 286,
+            column: 17
+          },
+          end: {
+            line: 288,
+            column: 15
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 288,
+            column: 8
+          },
+          end: {
+            line: 288,
+            column: 10
+          }
+        }, {
+          start: {
+            line: 288,
+            column: 13
+          },
+          end: {
+            line: 288,
+            column: 15
+          }
+        }],
+        line: 286
+      },
+      "12": {
+        loc: {
+          start: {
+            line: 309,
+            column: 8
+          },
+          end: {
+            line: 311,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 309,
+            column: 8
+          },
+          end: {
+            line: 311,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 309,
+            column: 8
+          },
+          end: {
+            line: 311,
+            column: 9
+          }
+        }],
+        line: 309
+      },
+      "13": {
+        loc: {
+          start: {
+            line: 338,
+            column: 24
+          },
+          end: {
+            line: 338,
+            column: 78
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 338,
+            column: 55
+          },
+          end: {
+            line: 338,
+            column: 58
+          }
+        }, {
+          start: {
+            line: 338,
+            column: 61
+          },
+          end: {
+            line: 338,
+            column: 78
+          }
+        }],
+        line: 338
+      },
+      "14": {
+        loc: {
+          start: {
+            line: 354,
+            column: 6
+          },
+          end: {
+            line: 356,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 354,
+            column: 6
+          },
+          end: {
+            line: 356,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 354,
+            column: 6
+          },
+          end: {
+            line: 356,
+            column: 7
+          }
+        }],
+        line: 354
+      },
+      "15": {
+        loc: {
+          start: {
+            line: 354,
+            column: 10
+          },
+          end: {
+            line: 354,
+            column: 57
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 354,
+            column: 10
+          },
+          end: {
+            line: 354,
+            column: 28
+          }
+        }, {
+          start: {
+            line: 354,
+            column: 32
+          },
+          end: {
+            line: 354,
+            column: 57
+          }
+        }],
+        line: 354
+      },
+      "16": {
+        loc: {
+          start: {
+            line: 363,
+            column: 6
+          },
+          end: {
+            line: 368,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 363,
+            column: 6
+          },
+          end: {
+            line: 368,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 363,
+            column: 6
+          },
+          end: {
+            line: 368,
+            column: 9
+          }
+        }],
+        line: 363
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0,
+      "81": 0,
+      "82": 0,
+      "83": 0,
+      "84": 0,
+      "85": 0,
+      "86": 0,
+      "87": 0,
+      "88": 0,
+      "89": 0,
+      "90": 0,
+      "91": 0,
+      "92": 0,
+      "93": 0,
+      "94": 0,
+      "95": 0,
+      "96": 0,
+      "97": 0,
+      "98": 0,
+      "99": 0,
+      "100": 0,
+      "101": 0,
+      "102": 0,
+      "103": 0,
+      "104": 0,
+      "105": 0,
+      "106": 0,
+      "107": 0,
+      "108": 0,
+      "109": 0,
+      "110": 0,
+      "111": 0,
+      "112": 0,
+      "113": 0,
+      "114": 0,
+      "115": 0,
+      "116": 0,
+      "117": 0,
+      "118": 0,
+      "119": 0,
+      "120": 0,
+      "121": 0,
+      "122": 0,
+      "123": 0,
+      "124": 0,
+      "125": 0,
+      "126": 0,
+      "127": 0,
+      "128": 0,
+      "129": 0,
+      "130": 0,
+      "131": 0,
+      "132": 0,
+      "133": 0,
+      "134": 0,
+      "135": 0,
+      "136": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0, 0, 0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0],
+      "9": [0, 0],
+      "10": [0, 0],
+      "11": [0, 0],
+      "12": [0, 0],
+      "13": [0, 0],
+      "14": [0, 0],
+      "15": [0, 0],
+      "16": [0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "25e45b28cb4b929eaa5fdd4e2c63d7de4ef6f032"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireWildcard =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[0]++, require("@babel/runtime/helpers/interopRequireWildcard"));
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[1]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[2]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[3]++;
+exports["default"] = void 0;
+
+var _defineProperty2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/defineProperty")));
+
+var _regenerator =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[5]++, _interopRequireDefault(require("@babel/runtime/regenerator")));
+
+var _asyncToGenerator2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator")));
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[9]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[10]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _get2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[11]++, _interopRequireDefault(require("@babel/runtime/helpers/get")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[12]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _tslib =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[13]++, require("tslib"));
+
+var _react =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[14]++, _interopRequireDefault(require("react")));
+
+var _moment =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[15]++, _interopRequireDefault(require("moment")));
+
+var _classnames =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[16]++, _interopRequireDefault(require("classnames")));
+
+var _mobx =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[17]++, require("mobx"));
+
+var _mobxReact =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[18]++, require("mobx-react"));
+
+var _autobind =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[19]++, _interopRequireDefault(require("../_util/autobind")));
+
+var _DaysView2 =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[20]++, _interopRequireWildcard(require("./DaysView")));
+
+var _localeContext =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[21]++, require("../locale-context"));
+
+var _utils =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[22]++, require("../field/utils"));
+
+var _EventManager =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[23]++, require("../_util/EventManager"));
+
+var TimesView_1;
+var TimeUnitQueue =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[24]++, ["h"
+/* hour */
+, "m"
+/* minute */
+, "s"
+/* second */
+]);
+var TimesView =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[25]++, TimesView_1 =
+/*#__PURE__*/
+function (_DaysView) {
+  /* istanbul ignore next */
+  cov_18h0bqmt5a.f[0]++;
+  cov_18h0bqmt5a.s[26]++;
+  (0, _inherits2["default"])(TimesView, _DaysView);
+
+  function TimesView() {
+    /* istanbul ignore next */
+    cov_18h0bqmt5a.f[1]++;
+    cov_18h0bqmt5a.s[27]++;
+    (0, _classCallCheck2["default"])(this, TimesView);
+
+    /* istanbul ignore next */
+    cov_18h0bqmt5a.s[28]++;
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(TimesView).apply(this, arguments));
+  }
+
+  /* istanbul ignore next */
+  cov_18h0bqmt5a.s[29]++;
+  (0, _createClass2["default"])(TimesView, [{
+    key: "handleDateTimeSelect",
+    value: function handleDateTimeSelect() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[2]++;
+      cov_18h0bqmt5a.s[30]++;
+      this.changeViewMode("dateTime"
+      /* dateTime */
+      );
+    }
+  }, {
+    key: "handleKeyDownHome",
+    value: function handleKeyDownHome(e) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[3]++;
+      cov_18h0bqmt5a.s[31]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[32]++;
+      this.changeSelectedDate(this.getCloneDate().set(this.getCurrentUnit(), 0));
+    }
+  }, {
+    key: "handleKeyDownEnd",
+    value: function handleKeyDownEnd(e) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[4]++;
+      cov_18h0bqmt5a.s[33]++;
+      (0, _EventManager.stopEvent)(e);
+      var unit =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[34]++, this.getCurrentUnit());
+      var size =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[35]++, unit === "h"
+      /* hour */
+      ?
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[0][0]++, 24) :
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[0][1]++, 60));
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[36]++;
+      this.changeSelectedDate(this.getCloneDate().set(unit, size - 1));
+    }
+  }, {
+    key: "handleKeyDownLeft",
+    value: function handleKeyDownLeft(e) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[5]++;
+      cov_18h0bqmt5a.s[37]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[38]++;
+
+      if (e.altKey) {
+        /* istanbul ignore next */
+        cov_18h0bqmt5a.b[1][0]++;
+        cov_18h0bqmt5a.s[39]++;
+
+        if (this.props.mode !== "time"
+        /* time */
+        ) {
+            /* istanbul ignore next */
+            cov_18h0bqmt5a.b[2][0]++;
+            cov_18h0bqmt5a.s[40]++;
+            this.changeViewMode("dateTime"
+            /* dateTime */
+            );
+          } else
+        /* istanbul ignore next */
+        {
+          cov_18h0bqmt5a.b[2][1]++;
+        }
+      } else {
+        /* istanbul ignore next */
+        cov_18h0bqmt5a.b[1][1]++;
+        cov_18h0bqmt5a.s[41]++;
+        this.changeUnit(this.getPrevUnit());
+      }
+    }
+  }, {
+    key: "handleKeyDownRight",
+    value: function handleKeyDownRight(e) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[6]++;
+      cov_18h0bqmt5a.s[42]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[43]++;
+
+      if (!e.altKey) {
+        /* istanbul ignore next */
+        cov_18h0bqmt5a.b[3][0]++;
+        cov_18h0bqmt5a.s[44]++;
+        this.changeUnit(this.getNextUnit());
+      } else
+      /* istanbul ignore next */
+      {
+        cov_18h0bqmt5a.b[3][1]++;
+      }
+    }
+  }, {
+    key: "handleKeyDownUp",
+    value: function handleKeyDownUp(e) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[7]++;
+      cov_18h0bqmt5a.s[45]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[46]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, this.getCurrentUnit()));
+    }
+  }, {
+    key: "handleKeyDownDown",
+    value: function handleKeyDownDown(e) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[8]++;
+      cov_18h0bqmt5a.s[47]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[48]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, this.getCurrentUnit()));
+    }
+  }, {
+    key: "handleKeyDownPageUp",
+    value: function handleKeyDownPageUp(e) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[9]++;
+      cov_18h0bqmt5a.s[49]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[50]++;
+      this.changeSelectedDate(this.getCloneDate().set(this.getCurrentUnit(), 0));
+    }
+  }, {
+    key: "handleKeyDownPageDown",
+    value: function handleKeyDownPageDown(e) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[10]++;
+      cov_18h0bqmt5a.s[51]++;
+      (0, _EventManager.stopEvent)(e);
+      var unit =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[52]++, this.getCurrentUnit());
+      var size =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[53]++, unit === "h"
+      /* hour */
+      ?
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[4][0]++, 24) :
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[4][1]++, 60));
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[54]++;
+      this.changeSelectedDate(this.getCloneDate().set(unit, size - 1));
+    }
+  }, {
+    key: "handleTimeCellClick",
+    value: function handleTimeCellClick(date, unit) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[11]++;
+      cov_18h0bqmt5a.s[55]++;
+      this.changeUnit(unit);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[56]++;
+      this.changeSelectedDate(date);
+    }
+  }, {
+    key: "handleWheel",
+    value: function () {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[12]++;
+
+      var _handleWheel =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[57]++, (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee(e) {
+        /* istanbul ignore next */
+        cov_18h0bqmt5a.f[13]++;
+        cov_18h0bqmt5a.s[58]++;
+        return _regenerator["default"].wrap(function _callee$(_context) {
+          /* istanbul ignore next */
+          cov_18h0bqmt5a.f[14]++;
+          cov_18h0bqmt5a.s[59]++;
+
+          while (1) {
+            /* istanbul ignore next */
+            cov_18h0bqmt5a.s[60]++;
+
+            switch (_context.prev = _context.next) {
+              case 0:
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.b[5][0]++;
+                cov_18h0bqmt5a.s[61]++;
+                e.preventDefault();
+
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.s[62]++;
+
+                if (!(e.deltaY > 0)) {
+                  /* istanbul ignore next */
+                  cov_18h0bqmt5a.b[6][0]++;
+                  cov_18h0bqmt5a.s[63]++;
+                  _context.next = 6;
+
+                  /* istanbul ignore next */
+                  cov_18h0bqmt5a.s[64]++;
+                  break;
+                } else
+                /* istanbul ignore next */
+                {
+                  cov_18h0bqmt5a.b[6][1]++;
+                }
+
+                cov_18h0bqmt5a.s[65]++;
+                _context.next = 4;
+
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.s[66]++;
+                return this.changeSelectedDate(this.getCloneDate().add(1, this.getCurrentUnit()));
+
+              case 4:
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.b[5][1]++;
+                cov_18h0bqmt5a.s[67]++;
+                _context.next = 9;
+
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.s[68]++;
+                break;
+
+              case 6:
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.b[5][2]++;
+                cov_18h0bqmt5a.s[69]++;
+
+                if (!(e.deltaY < 0)) {
+                  /* istanbul ignore next */
+                  cov_18h0bqmt5a.b[7][0]++;
+                  cov_18h0bqmt5a.s[70]++;
+                  _context.next = 9;
+
+                  /* istanbul ignore next */
+                  cov_18h0bqmt5a.s[71]++;
+                  break;
+                } else
+                /* istanbul ignore next */
+                {
+                  cov_18h0bqmt5a.b[7][1]++;
+                }
+
+                cov_18h0bqmt5a.s[72]++;
+                _context.next = 9;
+
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.s[73]++;
+                return this.changeSelectedDate(this.getCloneDate().subtract(1, this.getCurrentUnit()));
+
+              case 9:
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.b[5][3]++;
+
+              case "end":
+                /* istanbul ignore next */
+                cov_18h0bqmt5a.b[5][4]++;
+                cov_18h0bqmt5a.s[74]++;
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      })));
+
+      function handleWheel(_x) {
+        /* istanbul ignore next */
+        cov_18h0bqmt5a.f[15]++;
+        cov_18h0bqmt5a.s[75]++;
+        return _handleWheel.apply(this, arguments);
+      }
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[76]++;
+      return handleWheel;
+    }()
+  }, {
+    key: "renderHeader",
+    value: function renderHeader() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[16]++;
+
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[77]++, this.prefixCls),
+          _this$props =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[78]++, this.props),
+          date =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[79]++, _this$props.date),
+          mode =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[80]++, _this$props.mode);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[81]++;
+
+      if (mode === "time"
+      /* time */
+      ) {
+          /* istanbul ignore next */
+          cov_18h0bqmt5a.b[8][0]++;
+          cov_18h0bqmt5a.s[82]++;
+          return _react["default"].createElement("div", {
+            className: "".concat(prefixCls, "-header")
+          }, _react["default"].createElement("span", {
+            className: "".concat(prefixCls, "-view-select")
+          }, date.format((0, _utils.getDateFormatByFieldType)(TimesView_1.type))));
+        } else
+      /* istanbul ignore next */
+      {
+        cov_18h0bqmt5a.b[8][1]++;
+      }
+
+      cov_18h0bqmt5a.s[83]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-header")
+      }, _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-view-select"),
+        onClick: this.handleMonthSelect
+      }, date.localeData().monthsShort(date)), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-view-select"),
+        onClick: this.handleDateTimeSelect
+      }, date.date()), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-view-select"),
+        onClick: this.handleYearSelect
+      }, date.year()));
+    }
+  }, {
+    key: "renderFooter",
+    value: function renderFooter() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[17]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[84]++, this.prefixCls);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[85]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-footer")
+      }, _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-footer-now-btn"),
+        onClick: this.choose.bind(this, (0, _moment["default"])())
+      }, (0, _localeContext.$l)('DatePicker', 'now')), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-footer-view-select"),
+        onClick: this.choose.bind(this, this.props.date)
+      }, (0, _localeContext.$l)('DatePicker', 'ok')));
+    }
+  }, {
+    key: "renderPanel",
+    value: function renderPanel() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[18]++;
+      var className =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[86]++, this.getPanelClass());
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[87]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(className, " ").concat(this.prefixCls, "-").concat(this.getCurrentUnit()),
+        onWheel: this.handleWheel
+      }, _react["default"].createElement("div", {
+        className: "".concat(className, "-inner")
+      }, this.renderPanelBody()));
+    }
+  }, {
+    key: "renderPanelBody",
+    value: function renderPanelBody() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[19]++;
+      cov_18h0bqmt5a.s[88]++;
+      return [this.getTimeBar("h"
+      /* hour */
+      ), this.getTimeBar("m"
+      /* minute */
+      ), this.getTimeBar("s"
+      /* second */
+      ), _react["default"].createElement("div", {
+        key: "active",
+        className: "".concat(this.prefixCls, "-time-focus-active")
+      })];
+    }
+  }, {
+    key: "renderCell",
+    value: function renderCell(props) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[20]++;
+      cov_18h0bqmt5a.s[89]++;
+      return _react["default"].createElement("li", props);
+    }
+  }, {
+    key: "getTimeBar",
+    value: function getTimeBar(unit) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[21]++;
+
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[90]++, this.prefixCls),
+          _this$props2 =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[91]++, this.props),
+          date =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[92]++, _this$props2.date),
+          _this$props2$renderer =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[93]++, _this$props2.renderer),
+          renderer =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[94]++, _this$props2$renderer === void 0 ?
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[9][0]++, this.renderCell) :
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[9][1]++, _this$props2$renderer)),
+          _this$props2$isValidD =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[95]++, _this$props2.isValidDate),
+          isValidDate =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[96]++, _this$props2$isValidD === void 0 ?
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[10][0]++, _DaysView2.alwaysValidDate) :
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[10][1]++, _this$props2$isValidD));
+
+      var size =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[97]++, unit === "h"
+      /* hour */
+      ?
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[11][0]++, 24) :
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[11][1]++, 60));
+      var selected =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[98]++, date.clone());
+      var pre =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[99]++, date.clone().set(unit, 0));
+      var last =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[100]++, pre.clone().add(size, unit));
+      var items =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[101]++, []);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[102]++;
+
+      while (pre.isBefore(last)) {
+        var _classNames;
+
+        var current =
+        /* istanbul ignore next */
+        (cov_18h0bqmt5a.s[103]++, pre.clone());
+        var isDisabled =
+        /* istanbul ignore next */
+        (cov_18h0bqmt5a.s[104]++, !isValidDate(current, selected));
+        var text =
+        /* istanbul ignore next */
+        (cov_18h0bqmt5a.s[105]++, String(pre.get(unit)));
+        var className =
+        /* istanbul ignore next */
+        (cov_18h0bqmt5a.s[106]++, (0, _classnames["default"])("".concat(prefixCls, "-cell"), (_classNames = {}, (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-selected"), pre.isSame(selected, unit)), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-disabled"), isDisabled), _classNames)));
+        var props =
+        /* istanbul ignore next */
+        (cov_18h0bqmt5a.s[107]++, {
+          key: text,
+          className: className,
+          children: _react["default"].createElement("div", {
+            className: "".concat(prefixCls, "-cell-inner")
+          }, text)
+        });
+
+        /* istanbul ignore next */
+        cov_18h0bqmt5a.s[108]++;
+
+        if (!isDisabled) {
+          /* istanbul ignore next */
+          cov_18h0bqmt5a.b[12][0]++;
+          cov_18h0bqmt5a.s[109]++;
+          props.onClick = this.handleTimeCellClick.bind(this, current, unit);
+        } else
+        /* istanbul ignore next */
+        {
+          cov_18h0bqmt5a.b[12][1]++;
+        }
+
+        cov_18h0bqmt5a.s[110]++;
+        items.push(renderer(props, text, current, selected));
+
+        /* istanbul ignore next */
+        cov_18h0bqmt5a.s[111]++;
+        pre.add(1, unit);
+      }
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[112]++;
+      return _react["default"].createElement("div", {
+        key: unit,
+        className: "".concat(prefixCls, "-time-list"),
+        onMouseEnter: this.changeUnit.bind(this, unit)
+      }, _react["default"].createElement("ul", {
+        style: {
+          top: "".concat((-selected.get(unit) + 4.5) * 100, "%")
+        }
+      }, items), _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-time-focus")
+      }));
+    }
+  }, {
+    key: "getPanelClass",
+    value: function getPanelClass() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[22]++;
+      cov_18h0bqmt5a.s[113]++;
+      return "".concat(this.prefixCls, "-time-panel");
+    }
+  }, {
+    key: "getCurrentUnit",
+    value: function getCurrentUnit() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[23]++;
+
+      var _this$currentUnit =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[114]++, this.currentUnit),
+          currentUnit =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[115]++, _this$currentUnit === void 0 ?
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[13][0]++, "h") :
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[13][1]++, _this$currentUnit));
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[116]++;
+      return currentUnit;
+    }
+  }, {
+    key: "getPrevUnit",
+    value: function getPrevUnit() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[24]++;
+      cov_18h0bqmt5a.s[117]++;
+      return TimeUnitQueue[TimeUnitQueue.indexOf(this.getCurrentUnit()) - 1];
+    }
+  }, {
+    key: "getNextUnit",
+    value: function getNextUnit() {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[25]++;
+      cov_18h0bqmt5a.s[118]++;
+      return TimeUnitQueue[TimeUnitQueue.indexOf(this.getCurrentUnit()) + 1];
+    }
+  }, {
+    key: "changeUnit",
+    value: function changeUnit(unit) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[26]++;
+      cov_18h0bqmt5a.s[119]++;
+
+      if (
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[15][0]++, unit !== undefined) &&
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.b[15][1]++, unit !== this.currentUnit)) {
+        /* istanbul ignore next */
+        cov_18h0bqmt5a.b[14][0]++;
+        cov_18h0bqmt5a.s[120]++;
+        this.currentUnit = unit;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_18h0bqmt5a.b[14][1]++;
+      }
+    }
+  }, {
+    key: "choose",
+    value: function choose(date) {
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.f[27]++;
+      var mode =
+      /* istanbul ignore next */
+      (cov_18h0bqmt5a.s[121]++, this.props.mode);
+
+      /* istanbul ignore next */
+      cov_18h0bqmt5a.s[122]++;
+
+      if (mode !== "time"
+      /* time */
+      ) {
+          /* istanbul ignore next */
+          cov_18h0bqmt5a.b[16][0]++;
+          cov_18h0bqmt5a.s[123]++;
+          this.changeSelectedDate(date);
+
+          /* istanbul ignore next */
+          cov_18h0bqmt5a.s[124]++;
+          this.changeViewMode(mode);
+        } else
+      /* istanbul ignore next */
+      {
+        cov_18h0bqmt5a.b[16][1]++;
+      }
+
+      cov_18h0bqmt5a.s[125]++;
+      (0, _get2["default"])((0, _getPrototypeOf2["default"])(TimesView.prototype), "choose", this).call(this, date);
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_18h0bqmt5a.s[126]++;
+  return TimesView;
+}(_DaysView2["default"]));
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[127]++;
+TimesView.displayName = 'TimesView';
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[128]++;
+TimesView.type = "time"
+/* time */
+;
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[129]++;
+(0, _tslib.__decorate)([_mobx.observable], TimesView.prototype, "currentUnit", void 0);
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[130]++;
+(0, _tslib.__decorate)([_autobind["default"]], TimesView.prototype, "handleDateTimeSelect", null);
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[131]++;
+(0, _tslib.__decorate)([_autobind["default"]], TimesView.prototype, "handleWheel", null);
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[132]++;
+(0, _tslib.__decorate)([_autobind["default"]], TimesView.prototype, "renderCell", null);
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[133]++;
+(0, _tslib.__decorate)([_mobx.action], TimesView.prototype, "changeUnit", null);
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[134]++;
+TimesView = TimesView_1 = (0, _tslib.__decorate)([_mobxReact.observer], TimesView);
+
+var _default =
+/* istanbul ignore next */
+(cov_18h0bqmt5a.s[135]++, TimesView);
+
+/* istanbul ignore next */
+cov_18h0bqmt5a.s[136]++;
+exports["default"] = _default;

@@ -1,0 +1,73 @@
+eb6bc280ac62e2e1bf3a1341ecc15110
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = exports.LocaleContext = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _tslib = require("tslib");
+
+var _mobx = require("mobx");
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _locale = _interopRequireDefault(require("./locale"));
+
+var _supports = _interopRequireDefault(require("./supports"));
+
+var _normalizeLanguage = _interopRequireDefault(require("../_util/normalizeLanguage"));
+
+function setMomentLocale(locale) {
+  _moment["default"].locale((0, _normalizeLanguage["default"])(locale ? locale.lang : _locale["default"].lang));
+}
+
+var LocaleContext =
+/*#__PURE__*/
+function () {
+  function LocaleContext() {
+    var _this = this;
+
+    (0, _classCallCheck2["default"])(this, LocaleContext);
+    (0, _mobx.runInAction)(function () {
+      _this.locale = _locale["default"];
+      _this.supports = _supports["default"];
+    });
+  }
+
+  (0, _createClass2["default"])(LocaleContext, [{
+    key: "setLocale",
+    value: function setLocale(locale) {
+      setMomentLocale(locale);
+      this.locale = locale;
+    }
+  }, {
+    key: "setSupports",
+    value: function setSupports(supports) {
+      this.supports = supports;
+    }
+  }, {
+    key: "get",
+    value: function get(component, key) {
+      var cmp = (0, _mobx.get)(this.locale, component);
+      return cmp && (0, _mobx.get)(cmp, key) || "".concat(component, ".").concat(key);
+    }
+  }]);
+  return LocaleContext;
+}();
+
+exports.LocaleContext = LocaleContext;
+(0, _tslib.__decorate)([_mobx.observable], LocaleContext.prototype, "locale", void 0);
+(0, _tslib.__decorate)([_mobx.observable], LocaleContext.prototype, "supports", void 0);
+(0, _tslib.__decorate)([_mobx.action], LocaleContext.prototype, "setLocale", null);
+
+var _default = new LocaleContext();
+
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby9sb2NhbGUtY29udGV4dC9Mb2NhbGVDb250ZXh0LnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFFQSxTQUFTLGVBQVQsQ0FBeUIsTUFBekIsRUFBdUM7QUFDckMscUJBQU8sTUFBUCxDQUFjLG1DQUFrQixNQUFNLEdBQUcsTUFBTSxDQUFDLElBQVYsR0FBaUIsbUJBQWMsSUFBdkQsQ0FBZDtBQUNEOztJQUVZLGE7OztBQUtYLDJCQUFBO0FBQUE7O0FBQUE7QUFDRSwyQkFBWSxZQUFLO0FBQ2YsTUFBQSxLQUFJLENBQUMsTUFBTCxHQUFjLGtCQUFkO0FBQ0EsTUFBQSxLQUFJLENBQUMsUUFBTCxHQUFnQixvQkFBaEI7QUFDRCxLQUhEO0FBSUQ7Ozs7OEJBR1MsTSxFQUFjO0FBQ3RCLE1BQUEsZUFBZSxDQUFDLE1BQUQsQ0FBZjtBQUNBLFdBQUssTUFBTCxHQUFjLE1BQWQ7QUFDRDs7O2dDQUVXLFEsRUFBa0I7QUFDNUIsV0FBSyxRQUFMLEdBQWdCLFFBQWhCO0FBQ0Q7Ozt3QkFFRyxTLEVBQW1CLEcsRUFBVztBQUNoQyxVQUFNLEdBQUcsR0FBRyxlQUFJLEtBQUssTUFBVCxFQUFpQixTQUFqQixDQUFaO0FBQ0EsYUFBUSxHQUFHLElBQUksZUFBSSxHQUFKLEVBQVMsR0FBVCxDQUFSLGNBQTZCLFNBQTdCLGNBQTBDLEdBQTFDLENBQVA7QUFDRDs7Ozs7O0FBeEJXLHVCQUFBLENBQVgsZ0JBQVcsQ0FBQSxFLHVCQUFBLEUsUUFBQSxFLEtBQWUsQ0FBZjtBQUVBLHVCQUFBLENBQVgsZ0JBQVcsQ0FBQSxFLHVCQUFBLEUsVUFBQSxFLEtBQW1CLENBQW5CO0FBVVosdUJBQUEsQ0FEQyxZQUNELENBQUEsRSx1QkFBQSxFLFdBQUEsRUFHQyxJQUhEOztlQWVhLElBQUksYUFBSixFIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgYWN0aW9uLCBnZXQsIG9ic2VydmFibGUsIHJ1bkluQWN0aW9uIH0gZnJvbSAnbW9ieCc7XG5pbXBvcnQgbW9tZW50IGZyb20gJ21vbWVudCc7XG5pbXBvcnQgZGVmYXVsdExvY2FsZSwgeyBMb2NhbGUgfSBmcm9tICcuL2xvY2FsZSc7XG5pbXBvcnQgZGVmYXVsdFN1cHBvcnRzLCB7IFN1cHBvcnRzIH0gZnJvbSAnLi9zdXBwb3J0cyc7XG5pbXBvcnQgbm9ybWFsaXplTGFuZ3VhZ2UgZnJvbSAnLi4vX3V0aWwvbm9ybWFsaXplTGFuZ3VhZ2UnO1xuXG5mdW5jdGlvbiBzZXRNb21lbnRMb2NhbGUobG9jYWxlOiBMb2NhbGUpIHtcbiAgbW9tZW50LmxvY2FsZShub3JtYWxpemVMYW5ndWFnZShsb2NhbGUgPyBsb2NhbGUubGFuZyA6IGRlZmF1bHRMb2NhbGUubGFuZykpO1xufVxuXG5leHBvcnQgY2xhc3MgTG9jYWxlQ29udGV4dCB7XG4gIEBvYnNlcnZhYmxlIGxvY2FsZTogTG9jYWxlO1xuXG4gIEBvYnNlcnZhYmxlIHN1cHBvcnRzOiBTdXBwb3J0cztcblxuICBjb25zdHJ1Y3RvcigpIHtcbiAgICBydW5JbkFjdGlvbigoKSA9PiB7XG4gICAgICB0aGlzLmxvY2FsZSA9IGRlZmF1bHRMb2NhbGU7XG4gICAgICB0aGlzLnN1cHBvcnRzID0gZGVmYXVsdFN1cHBvcnRzO1xuICAgIH0pO1xuICB9XG5cbiAgQGFjdGlvblxuICBzZXRMb2NhbGUobG9jYWxlOiBMb2NhbGUpIHtcbiAgICBzZXRNb21lbnRMb2NhbGUobG9jYWxlKTtcbiAgICB0aGlzLmxvY2FsZSA9IGxvY2FsZTtcbiAgfVxuXG4gIHNldFN1cHBvcnRzKHN1cHBvcnRzOiBTdXBwb3J0cykge1xuICAgIHRoaXMuc3VwcG9ydHMgPSBzdXBwb3J0cztcbiAgfVxuXG4gIGdldChjb21wb25lbnQ6IHN0cmluZywga2V5OiBzdHJpbmcpIHtcbiAgICBjb25zdCBjbXAgPSBnZXQodGhpcy5sb2NhbGUsIGNvbXBvbmVudCk7XG4gICAgcmV0dXJuIChjbXAgJiYgZ2V0KGNtcCwga2V5KSkgfHwgYCR7Y29tcG9uZW50fS4ke2tleX1gO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IG5ldyBMb2NhbGVDb250ZXh0KCk7XG4iXX0=

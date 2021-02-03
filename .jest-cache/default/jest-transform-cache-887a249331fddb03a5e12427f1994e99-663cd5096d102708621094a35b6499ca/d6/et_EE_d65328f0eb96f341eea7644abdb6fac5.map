@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/et_EE.tsx"],"names":[],"mappings":";;;;;;AAAA,IAAM,MAAM,GAAG;AACb,EAAA,WAAW,EAAE;AADA,CAAf;eAIe,M","sourcesContent":["const locale = {\n  placeholder: 'Vali aeg',\n};\n\nexport default locale;\n"]}

@@ -1,0 +1,853 @@
+2950e734483bb42d93da77050c7d01f8
+"use strict";
+
+/* istanbul ignore next */
+var cov_ivnj421qd = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/_util/keepRunning.tsx";
+  var hash = "f6ee0276e66675273a27f78f368a372b4ddad8df";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/_util/keepRunning.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 33
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 27
+        },
+        end: {
+          line: 10,
+          column: 83
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 20
+        },
+        end: {
+          line: 12,
+          column: 69
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 18
+        },
+        end: {
+          line: 14,
+          column: 65
+        }
+      },
+      "6": {
+        start: {
+          line: 17,
+          column: 14
+        },
+        end: {
+          line: 17,
+          column: 18
+        }
+      },
+      "7": {
+        start: {
+          line: 19,
+          column: 2
+        },
+        end: {
+          line: 38,
+          column: 3
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 4
+        },
+        end: {
+          line: 20,
+          column: 16
+        }
+      },
+      "9": {
+        start: {
+          line: 21,
+          column: 18
+        },
+        end: {
+          line: 21,
+          column: 46
+        }
+      },
+      "10": {
+        start: {
+          line: 22,
+          column: 17
+        },
+        end: {
+          line: 22,
+          column: 45
+        }
+      },
+      "11": {
+        start: {
+          line: 23,
+          column: 16
+        },
+        end: {
+          line: 23,
+          column: 54
+        }
+      },
+      "12": {
+        start: {
+          line: 25,
+          column: 18
+        },
+        end: {
+          line: 27,
+          column: 5
+        }
+      },
+      "13": {
+        start: {
+          line: 26,
+          column: 6
+        },
+        end: {
+          line: 26,
+          column: 40
+        }
+      },
+      "14": {
+        start: {
+          line: 29,
+          column: 17
+        },
+        end: {
+          line: 33,
+          column: 5
+        }
+      },
+      "15": {
+        start: {
+          line: 30,
+          column: 6
+        },
+        end: {
+          line: 30,
+          column: 23
+        }
+      },
+      "16": {
+        start: {
+          line: 31,
+          column: 6
+        },
+        end: {
+          line: 31,
+          column: 22
+        }
+      },
+      "17": {
+        start: {
+          line: 32,
+          column: 6
+        },
+        end: {
+          line: 32,
+          column: 20
+        }
+      },
+      "18": {
+        start: {
+          line: 35,
+          column: 4
+        },
+        end: {
+          line: 35,
+          column: 32
+        }
+      },
+      "19": {
+        start: {
+          line: 36,
+          column: 4
+        },
+        end: {
+          line: 36,
+          column: 49
+        }
+      },
+      "20": {
+        start: {
+          line: 37,
+          column: 4
+        },
+        end: {
+          line: 37,
+          column: 46
+        }
+      },
+      "21": {
+        start: {
+          line: 40,
+          column: 2
+        },
+        end: {
+          line: 40,
+          column: 19
+        }
+      },
+      "22": {
+        start: {
+          line: 44,
+          column: 20
+        },
+        end: {
+          line: 44,
+          column: 38
+        }
+      },
+      "23": {
+        start: {
+          line: 45,
+          column: 11
+        },
+        end: {
+          line: 45,
+          column: 27
+        }
+      },
+      "24": {
+        start: {
+          line: 46,
+          column: 2
+        },
+        end: {
+          line: 66,
+          column: 4
+        }
+      },
+      "25": {
+        start: {
+          line: 49,
+          column: 6
+        },
+        end: {
+          line: 51,
+          column: 7
+        }
+      },
+      "26": {
+        start: {
+          line: 50,
+          column: 8
+        },
+        end: {
+          line: 50,
+          column: 18
+        }
+      },
+      "27": {
+        start: {
+          line: 53,
+          column: 6
+        },
+        end: {
+          line: 55,
+          column: 7
+        }
+      },
+      "28": {
+        start: {
+          line: 54,
+          column: 8
+        },
+        end: {
+          line: 54,
+          column: 18
+        }
+      },
+      "29": {
+        start: {
+          line: 57,
+          column: 20
+        },
+        end: {
+          line: 57,
+          column: 39
+        }
+      },
+      "30": {
+        start: {
+          line: 58,
+          column: 6
+        },
+        end: {
+          line: 62,
+          column: 9
+        }
+      },
+      "31": {
+        start: {
+          line: 63,
+          column: 6
+        },
+        end: {
+          line: 63,
+          column: 21
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "keep",
+        decl: {
+          start: {
+            line: 16,
+            column: 9
+          },
+          end: {
+            line: 16,
+            column: 13
+          }
+        },
+        loc: {
+          start: {
+            line: 16,
+            column: 21
+          },
+          end: {
+            line: 41,
+            column: 1
+          }
+        },
+        line: 16
+      },
+      "1": {
+        name: "delayFn",
+        decl: {
+          start: {
+            line: 25,
+            column: 27
+          },
+          end: {
+            line: 25,
+            column: 34
+          }
+        },
+        loc: {
+          start: {
+            line: 25,
+            column: 37
+          },
+          end: {
+            line: 27,
+            column: 5
+          }
+        },
+        line: 25
+      },
+      "2": {
+        name: "stopFn",
+        decl: {
+          start: {
+            line: 29,
+            column: 26
+          },
+          end: {
+            line: 29,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 29,
+            column: 35
+          },
+          end: {
+            line: 33,
+            column: 5
+          }
+        },
+        line: 29
+      },
+      "3": {
+        name: "keepRunning",
+        decl: {
+          start: {
+            line: 43,
+            column: 9
+          },
+          end: {
+            line: 43,
+            column: 20
+          }
+        },
+        loc: {
+          start: {
+            line: 43,
+            column: 46
+          },
+          end: {
+            line: 67,
+            column: 1
+          }
+        },
+        line: 43
+      },
+      "4": {
+        name: "get",
+        decl: {
+          start: {
+            line: 48,
+            column: 18
+          },
+          end: {
+            line: 48,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 48,
+            column: 24
+          },
+          end: {
+            line: 64,
+            column: 5
+          }
+        },
+        line: 48
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 19,
+            column: 2
+          },
+          end: {
+            line: 38,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 19,
+            column: 2
+          },
+          end: {
+            line: 38,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 19,
+            column: 2
+          },
+          end: {
+            line: 38,
+            column: 3
+          }
+        }],
+        line: 19
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 19,
+            column: 6
+          },
+          end: {
+            line: 19,
+            column: 19
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 19,
+            column: 6
+          },
+          end: {
+            line: 19,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 19,
+            column: 11
+          },
+          end: {
+            line: 19,
+            column: 19
+          }
+        }],
+        line: 19
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 49,
+            column: 6
+          },
+          end: {
+            line: 51,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 49,
+            column: 6
+          },
+          end: {
+            line: 51,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 49,
+            column: 6
+          },
+          end: {
+            line: 51,
+            column: 7
+          }
+        }],
+        line: 49
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 53,
+            column: 6
+          },
+          end: {
+            line: 55,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 53,
+            column: 6
+          },
+          end: {
+            line: 55,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 53,
+            column: 6
+          },
+          end: {
+            line: 55,
+            column: 7
+          }
+        }],
+        line: 53
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 53,
+            column: 10
+          },
+          end: {
+            line: 53,
+            column: 101
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 53,
+            column: 10
+          },
+          end: {
+            line: 53,
+            column: 42
+          }
+        }, {
+          start: {
+            line: 53,
+            column: 46
+          },
+          end: {
+            line: 53,
+            column: 101
+          }
+        }],
+        line: 53
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "f6ee0276e66675273a27f78f368a372b4ddad8df"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_ivnj421qd.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_ivnj421qd.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_ivnj421qd.s[2]++;
+exports["default"] = keepRunning;
+
+var _createDefaultSetter =
+/* istanbul ignore next */
+(cov_ivnj421qd.s[3]++, _interopRequireDefault(require("./createDefaultSetter")));
+
+var _EventManager =
+/* istanbul ignore next */
+(cov_ivnj421qd.s[4]++, _interopRequireDefault(require("./EventManager")));
+
+var _TaskRunner =
+/* istanbul ignore next */
+(cov_ivnj421qd.s[5]++, _interopRequireDefault(require("./TaskRunner")));
+
+function keep(fn, e) {
+  /* istanbul ignore next */
+  cov_ivnj421qd.f[0]++;
+
+  var _this =
+  /* istanbul ignore next */
+  (cov_ivnj421qd.s[6]++, this);
+
+  /* istanbul ignore next */
+  cov_ivnj421qd.s[7]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_ivnj421qd.b[1][0]++, e) &&
+  /* istanbul ignore next */
+  (cov_ivnj421qd.b[1][1]++, e.target)) {
+    /* istanbul ignore next */
+    cov_ivnj421qd.b[0][0]++;
+    cov_ivnj421qd.s[8]++;
+    e.persist();
+    var delayer =
+    /* istanbul ignore next */
+    (cov_ivnj421qd.s[9]++, new _TaskRunner["default"]());
+    var keeper =
+    /* istanbul ignore next */
+    (cov_ivnj421qd.s[10]++, new _TaskRunner["default"]());
+    var event =
+    /* istanbul ignore next */
+    (cov_ivnj421qd.s[11]++, new _EventManager["default"](e.target));
+
+    /* istanbul ignore next */
+    cov_ivnj421qd.s[12]++;
+
+    var delayFn = function delayFn() {
+      /* istanbul ignore next */
+      cov_ivnj421qd.f[1]++;
+      cov_ivnj421qd.s[13]++;
+      keeper.run(40, fn.bind(_this, e));
+    };
+
+    /* istanbul ignore next */
+    cov_ivnj421qd.s[14]++;
+
+    var stopFn = function stopFn() {
+      /* istanbul ignore next */
+      cov_ivnj421qd.f[2]++;
+      cov_ivnj421qd.s[15]++;
+      delayer.cancel();
+
+      /* istanbul ignore next */
+      cov_ivnj421qd.s[16]++;
+      keeper.cancel();
+
+      /* istanbul ignore next */
+      cov_ivnj421qd.s[17]++;
+      event.clear();
+    };
+
+    /* istanbul ignore next */
+    cov_ivnj421qd.s[18]++;
+    delayer.delay(500, delayFn);
+
+    /* istanbul ignore next */
+    cov_ivnj421qd.s[19]++;
+    event.addEventListener('mouseleave', stopFn);
+
+    /* istanbul ignore next */
+    cov_ivnj421qd.s[20]++;
+    event.addEventListener('mouseup', stopFn);
+  } else
+  /* istanbul ignore next */
+  {
+    cov_ivnj421qd.b[0][1]++;
+  }
+
+  cov_ivnj421qd.s[21]++;
+  fn.call(this, e);
+}
+
+function keepRunning(target, key, descriptor) {
+  /* istanbul ignore next */
+  cov_ivnj421qd.f[3]++;
+  var constructor =
+  /* istanbul ignore next */
+  (cov_ivnj421qd.s[22]++, target.constructor);
+  var fn =
+  /* istanbul ignore next */
+  (cov_ivnj421qd.s[23]++, descriptor.value);
+
+  /* istanbul ignore next */
+  cov_ivnj421qd.s[24]++;
+  return {
+    configurable: true,
+    get: function get() {
+      /* istanbul ignore next */
+      cov_ivnj421qd.f[4]++;
+      cov_ivnj421qd.s[25]++;
+
+      if (this === target) {
+        /* istanbul ignore next */
+        cov_ivnj421qd.b[2][0]++;
+        cov_ivnj421qd.s[26]++;
+        return fn;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_ivnj421qd.b[2][1]++;
+      }
+
+      cov_ivnj421qd.s[27]++;
+
+      if (
+      /* istanbul ignore next */
+      (cov_ivnj421qd.b[4][0]++, this.constructor !== constructor) &&
+      /* istanbul ignore next */
+      (cov_ivnj421qd.b[4][1]++, Object.getPrototypeOf(this).constructor === constructor)) {
+        /* istanbul ignore next */
+        cov_ivnj421qd.b[3][0]++;
+        cov_ivnj421qd.s[28]++;
+        return fn;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_ivnj421qd.b[3][1]++;
+      }
+
+      var boundFn =
+      /* istanbul ignore next */
+      (cov_ivnj421qd.s[29]++, keep.bind(this, fn));
+
+      /* istanbul ignore next */
+      cov_ivnj421qd.s[30]++;
+      Object.defineProperty(this, key, {
+        value: boundFn,
+        configurable: true,
+        writable: true
+      });
+
+      /* istanbul ignore next */
+      cov_ivnj421qd.s[31]++;
+      return boundFn;
+    },
+    set: (0, _createDefaultSetter["default"])(key)
+  };
+}

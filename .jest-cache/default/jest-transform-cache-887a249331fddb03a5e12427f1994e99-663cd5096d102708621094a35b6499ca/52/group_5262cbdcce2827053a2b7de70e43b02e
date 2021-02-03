@@ -1,0 +1,61 @@
+8c69a7a3ebbbd1f72c1a0b3ae5a45d81
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _checkbox = _interopRequireDefault(require("../../../components/checkbox"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var CheckboxGroup = _checkbox["default"].Group;
+
+function onChange(checkedValues) {
+  console.log('checked = ', checkedValues);
+}
+
+var plainOptions = ['Apple', 'Pear', 'Orange'];
+var options = [{
+  label: 'Apple',
+  value: 'Apple'
+}, {
+  label: 'Pear',
+  value: 'Pear'
+}, {
+  label: 'Orange',
+  value: 'Orange'
+}];
+var optionsWithDisabled = [{
+  label: 'Apple',
+  value: 'Apple'
+}, {
+  label: 'Pear',
+  value: 'Pear'
+}, {
+  label: 'Orange',
+  value: 'Orange',
+  disabled: false
+}];
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(CheckboxGroup, {
+  label: "\u8FD9\u662F\u4E00\u4E2Alabel",
+  options: plainOptions,
+  defaultValue: ['Apple'],
+  onChange: onChange
+}), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement(CheckboxGroup, {
+  options: options,
+  defaultValue: ['Pear'],
+  onChange: onChange
+}), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement(CheckboxGroup, {
+  options: optionsWithDisabled,
+  disabled: true,
+  defaultValue: ['Apple'],
+  onChange: onChange
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

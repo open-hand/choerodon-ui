@@ -9,7 +9,7 @@ function handleDataSetChange({ record, name, value, oldValue }) {
 const { Option } = Transfer;
 
 const data = [{
-  'last-name': 'huazhen',
+  'last-name': 'zhangsan',
 }];
 
 class App extends React.Component {
@@ -28,7 +28,7 @@ class App extends React.Component {
       <Transfer dataSet={this.ds} name="last-name" searchable>
         <Option value="jack">Jack</Option>
         <Option value="lucy">Lucy</Option>
-        <Option value="huazhen">Huazhen</Option>
+        <Option value="zhangsan">Zhangsan</Option>
       </Transfer>
     );
   }

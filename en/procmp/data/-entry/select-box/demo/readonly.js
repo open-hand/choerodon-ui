@@ -6,14 +6,14 @@ const { Option } = SelectBox;
 
 const optionData = [
   { text: 'Jack', value: 'jack' },
-  { text: 'Huazhen', value: 'huazhen' },
+  { text: 'Zhangsan', value: 'zhangsan' },
   { text: 'Lucy', value: 'lucy' },
   { text: 'Niu', value: 'jiaqin' },
   { text: 'Shao', value: 'shao' },
 ];
 
 const data = [{
-  name: 'huazhen',
+  name: 'zhangsan',
 }];
 
 class App extends React.Component {

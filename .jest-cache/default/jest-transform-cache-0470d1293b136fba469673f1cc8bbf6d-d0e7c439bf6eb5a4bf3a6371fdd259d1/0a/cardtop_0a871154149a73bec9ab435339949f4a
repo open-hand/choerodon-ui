@@ -1,0 +1,33 @@
+ad8681af34796cdc942afaef4089ddc7
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _tabs = _interopRequireDefault(require("../../../components/tabs"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var TabPane = _tabs["default"].TabPane;
+
+var __Demo = _react["default"].createElement("div", {
+  className: "card-container"
+}, _react["default"].createElement(_tabs["default"], {
+  type: "card"
+}, _react["default"].createElement(TabPane, {
+  tab: "Tab Title 1",
+  key: "1"
+}, _react["default"].createElement("p", null, "Content of Tab Pane 1"), _react["default"].createElement("p", null, "Content of Tab Pane 1"), _react["default"].createElement("p", null, "Content of Tab Pane 1")), _react["default"].createElement(TabPane, {
+  tab: "Tab Title 2",
+  key: "2"
+}, _react["default"].createElement("p", null, "Content of Tab Pane 2"), _react["default"].createElement("p", null, "Content of Tab Pane 2"), _react["default"].createElement("p", null, "Content of Tab Pane 2")), _react["default"].createElement(TabPane, {
+  tab: "Tab Title 3",
+  key: "3"
+}, _react["default"].createElement("p", null, "Content of Tab Pane 3"), _react["default"].createElement("p", null, "Content of Tab Pane 3"), _react["default"].createElement("p", null, "Content of Tab Pane 3"))));
+
+var _default = __Demo;
+exports["default"] = _default;

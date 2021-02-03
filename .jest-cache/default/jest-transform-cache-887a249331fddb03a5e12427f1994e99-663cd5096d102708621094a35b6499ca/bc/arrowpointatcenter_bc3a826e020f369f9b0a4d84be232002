@@ -1,0 +1,33 @@
+c36549f0f3d1ec2a622295c19d4fe161
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _popover = _interopRequireDefault(require("../../../components/popover"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var text = _react["default"].createElement("span", null, "Title");
+
+var content = _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Content"), _react["default"].createElement("p", null, "Content"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_popover["default"], {
+  placement: "topLeft",
+  title: text,
+  content: content
+}, _react["default"].createElement(_button["default"], null, "Align edge / \u8FB9\u7F18\u5BF9\u9F50")), _react["default"].createElement(_popover["default"], {
+  placement: "topLeft",
+  title: text,
+  content: content,
+  arrowPointAtCenter: true
+}, _react["default"].createElement(_button["default"], null, "Arrow points to center / \u7BAD\u5934\u6307\u5411\u4E2D\u5FC3")));
+
+var _default = __Demo;
+exports["default"] = _default;

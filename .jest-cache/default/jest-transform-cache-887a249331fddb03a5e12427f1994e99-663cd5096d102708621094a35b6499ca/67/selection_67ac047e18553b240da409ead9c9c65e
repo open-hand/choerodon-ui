@@ -1,0 +1,113 @@
+01faace5222662ee1dd367cd008f4572
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components/row"));
+
+var _col = _interopRequireDefault(require("../../../components/col"));
+
+var _tree = _interopRequireDefault(require("../../../components-pro/tree"));
+
+var _dataSet = _interopRequireDefault(require("../../../components-pro/data-set"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function nodeRenderer(_ref) {
+  var record = _ref.record;
+  return record.get('text');
+}
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds", new _dataSet["default"]({
+      primaryKey: 'id',
+      queryUrl: '/tree-less.mock',
+      autoQuery: true,
+      expandField: 'expand',
+      selection: false,
+      checkField: 'ischecked',
+      parentField: 'parentId',
+      idField: 'id',
+      fields: [{
+        name: 'id',
+        type: 'number'
+      }, {
+        name: 'expand',
+        type: 'boolean'
+      }, {
+        name: 'parentId',
+        type: 'number'
+      }],
+      events: {
+        select: function select(_ref2) {
+          var record = _ref2.record,
+              dataSet = _ref2.dataSet;
+          return console.log('select', record, dataSet);
+        },
+        unSelect: function unSelect(_ref3) {
+          var record = _ref3.record,
+              dataSet = _ref3.dataSet;
+          return console.log('unSelect', record, dataSet);
+        }
+      }
+    }));
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement(_row["default"], null, _react["default"].createElement(_col["default"], {
+        span: 12
+      }, _react["default"].createElement(_tree["default"], {
+        dataSet: this.ds,
+        checkable: true,
+        showLine: true,
+        draggable: true,
+        showIcon: true,
+        renderer: nodeRenderer
+      }))));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

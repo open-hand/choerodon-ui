@@ -7,7 +7,7 @@ class SortTable extends React.Component {
     super(props);
     this.state = {
       sortColumn: 'id',
-      data: fakeData
+      data: fakeData,
     };
     this.handleSortColumn = this.handleSortColumn.bind(this);
   }
@@ -37,7 +37,7 @@ class SortTable extends React.Component {
 
   handleSortColumn(sortColumn, sortType) {
     this.setState({
-      loading: true
+      loading: true,
     });
 
     setTimeout(() => {
@@ -45,19 +45,18 @@ class SortTable extends React.Component {
       this.setState({
         sortColumn,
         sortType,
-        loading: false
+        loading: false,
       });
     }, 500);
   }
-  
+
   render() {
     const columns = [
       {
         title: 'Id',
         dataIndex: 'id',
         key: 'id',
-        width: 70, 
-        align: "center", 
+        width: 70,
         fixed: true,
         sortable: true,
       },
@@ -65,30 +64,30 @@ class SortTable extends React.Component {
         title: '姓',
         dataIndex: 'lastName',
         key: 'lastName',
-        width: 130, 
+        width: 130,
         sortable: true,
-      },  
+      },
       {
         title: '名',
         dataIndex: 'firstName',
         key: 'firstName',
         width: 130,
-        sortable: true, 
-      },  
+        sortable: true,
+      },
       {
         title: '城市',
         dataIndex: 'city',
         key: 'city',
         width: 200,
-        sortable: true, 
-      },       
+        sortable: true,
+      },
       {
         title: '街道',
         dataIndex: 'street',
         key: 'street',
-        width: 300, 
+        width: 300,
         sortable: true,
-      },            
+      },
       {
         title: '公司',
         dataIndex: 'companyName',
@@ -101,21 +100,21 @@ class SortTable extends React.Component {
         dataIndex: 'email',
         key: 'email',
         width: 300,
-      },         
+      },
     ];
     return (
-        <PerformanceTable
-          height={400}
-          data={this.getData()}
-          sortColumn={this.state.sortColumn}
-          sortType={this.state.sortType}
-          onSortColumn={this.handleSortColumn}
-          loading={this.state.loading}
-          columns={columns}
-          onRowClick={data => {
-            console.log(data);
-          }}
-        />
+      <PerformanceTable
+        height={400}
+        data={this.getData()}
+        sortColumn={this.state.sortColumn}
+        sortType={this.state.sortType}
+        onSortColumn={this.handleSortColumn}
+        loading={this.state.loading}
+        columns={columns}
+        onRowClick={(data) => {
+          console.log(data);
+        }}
+      />
     );
   }
 }

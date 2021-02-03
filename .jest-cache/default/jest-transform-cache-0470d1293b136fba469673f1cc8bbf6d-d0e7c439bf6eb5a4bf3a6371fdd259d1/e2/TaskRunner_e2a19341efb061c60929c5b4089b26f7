@@ -1,0 +1,158 @@
+86a51dddde9cb1a93690b35c62152ed4
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var TaskRunner =
+/*#__PURE__*/
+function () {
+  function TaskRunner(fn) {
+    (0, _classCallCheck2["default"])(this, TaskRunner);
+    this.callbacks = [];
+
+    if (fn) {
+      this.fn = fn;
+    }
+  }
+
+  (0, _createClass2["default"])(TaskRunner, [{
+    key: "delay",
+    value: function () {
+      var _delay2 = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee(_delay, fn, callback) {
+        return _regenerator["default"].wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                return _context.abrupt("return", this.start(true, _delay, fn, callback));
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function delay(_x, _x2, _x3) {
+        return _delay2.apply(this, arguments);
+      }
+
+      return delay;
+    }()
+  }, {
+    key: "run",
+    value: function () {
+      var _run = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee2(interval, fn, callback) {
+        return _regenerator["default"].wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                return _context2.abrupt("return", this.start(false, interval, fn, callback));
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function run(_x4, _x5, _x6) {
+        return _run.apply(this, arguments);
+      }
+
+      return run;
+    }()
+  }, {
+    key: "start",
+    value: function () {
+      var _start = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee3(once, interval, fn, callback) {
+        var _this = this;
+
+        return _regenerator["default"].wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.cancel();
+
+                if (fn) {
+                  this.fn = fn;
+                }
+
+                if (typeof callback === 'function') {
+                  this.callbacks.push(callback);
+                }
+
+                if (!this.fn) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt("return", new Promise(function (resolve) {
+                  _this.id = setInterval(function () {
+                    if (once) {
+                      _this.cancel();
+                    }
+
+                    resolve(_this.fn());
+
+                    _this.callbacks.forEach(function (cb) {
+                      return cb();
+                    });
+
+                    _this.callbacks = [];
+                  }, interval);
+                }));
+
+              case 5:
+                return _context3.abrupt("return", Promise.reject(new Error('no caller')));
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function start(_x7, _x8, _x9, _x10) {
+        return _start.apply(this, arguments);
+      }
+
+      return start;
+    }()
+  }, {
+    key: "cancel",
+    value: function cancel() {
+      if (this.id) {
+        clearInterval(this.id);
+        delete this.id;
+      }
+
+      return this;
+    }
+  }]);
+  return TaskRunner;
+}();
+
+exports["default"] = TaskRunner;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIl91dGlsL1Rhc2tSdW5uZXIuanN4Il0sIm5hbWVzIjpbIlRhc2tSdW5uZXIiLCJkZWxheSIsImZuIiwiY2FsbGJhY2siLCJpbnRlcnZhbCIsIm9uY2UiLCJzZXRJbnRlcnZhbCIsInJlc29sdmUiLCJjYiIsIlByb21pc2UiLCJjbGVhckludGVydmFsIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7OztJQUFxQkEsVTs7O0FBQ2pCLFdBQUEsVUFBQSxDQUFBLEVBQUEsRUFBZ0I7QUFBQSxLQUFBLEdBQUEsZ0JBQUEsQ0FBQSxTQUFBLENBQUEsRUFBQSxJQUFBLEVBQUEsVUFBQTtBQUNaLFNBQUEsU0FBQSxHQUFBLEVBQUE7O0FBQ0EsUUFBQSxFQUFBLEVBQVE7QUFDSixXQUFBLEVBQUEsR0FBQSxFQUFBO0FBQ0g7QUFDSjs7Ozs7OztvREFDV0MsTSxFQUFPQyxFLEVBQUlDLFE7Ozs7O2lEQUNaLEtBQUEsS0FBQSxDQUFBLElBQUEsRUFBQSxNQUFBLEVBQUEsRUFBQSxFQUFBLFFBQUEsQzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O3FEQUVEQyxRLEVBQVVGLEUsRUFBSUMsUTs7Ozs7a0RBQ2IsS0FBQSxLQUFBLENBQUEsS0FBQSxFQUFBLFFBQUEsRUFBQSxFQUFBLEVBQUEsUUFBQSxDOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7cURBRUNFLEksRUFBTUQsUSxFQUFVRixFLEVBQUlDLFE7Ozs7Ozs7QUFDNUIscUJBQUEsTUFBQTs7QUFDQSxvQkFBQSxFQUFBLEVBQVE7QUFDSix1QkFBQSxFQUFBLEdBQUEsRUFBQTtBQUNIOztBQUNELG9CQUFJLE9BQUEsUUFBQSxLQUFKLFVBQUEsRUFBb0M7QUFDaEMsdUJBQUEsU0FBQSxDQUFBLElBQUEsQ0FBQSxRQUFBO0FBQ0g7O3FCQUNHLEtBQUtELEU7Ozs7O2tEQUNFLElBQUEsT0FBQSxDQUFZLFVBQUEsT0FBQSxFQUFXO0FBQzFCLGtCQUFBLEtBQUksQ0FBSixFQUFBLEdBQVVJLFdBQVcsQ0FBQyxZQUFNO0FBQ3hCLHdCQUFBLElBQUEsRUFBVTtBQUNOLHNCQUFBLEtBQUksQ0FBSixNQUFBO0FBQ0g7O0FBQ0RDLG9CQUFBQSxPQUFPLENBQUMsS0FBSSxDQUFaQSxFQUFRLEVBQUQsQ0FBUEE7O0FBQ0Esb0JBQUEsS0FBSSxDQUFKLFNBQUEsQ0FBQSxPQUFBLENBQXVCLFVBQUEsRUFBQSxFQUFFO0FBQUEsNkJBQUlDLEVBQUosRUFBQTtBQUF6QixxQkFBQTs7QUFDQSxvQkFBQSxLQUFJLENBQUosU0FBQSxHQUFBLEVBQUE7QUFOaUIsbUJBQUEsRUFBckIsUUFBcUIsQ0FBckI7QUFERyxpQkFBQSxDOzs7a0RBV0pDLE9BQU8sQ0FBUEEsTUFBQUEsQ0FBZSxJQUFBLEtBQUEsQ0FBZkEsV0FBZSxDQUFmQSxDOzs7Ozs7Ozs7Ozs7Ozs7Ozs7NkJBRUY7QUFDTCxVQUFJLEtBQUosRUFBQSxFQUFhO0FBQ1RDLFFBQUFBLGFBQWEsQ0FBQyxLQUFkQSxFQUFhLENBQWJBO0FBQ0EsZUFBTyxLQUFQLEVBQUE7QUFDSDs7QUFDRCxhQUFBLElBQUE7QUFDSCIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IGNsYXNzIFRhc2tSdW5uZXIge1xuICAgIGNvbnN0cnVjdG9yKGZuKSB7XG4gICAgICAgIHRoaXMuY2FsbGJhY2tzID0gW107XG4gICAgICAgIGlmIChmbikge1xuICAgICAgICAgICAgdGhpcy5mbiA9IGZuO1xuICAgICAgICB9XG4gICAgfVxuICAgIGFzeW5jIGRlbGF5KGRlbGF5LCBmbiwgY2FsbGJhY2spIHtcbiAgICAgICAgcmV0dXJuIHRoaXMuc3RhcnQodHJ1ZSwgZGVsYXksIGZuLCBjYWxsYmFjayk7XG4gICAgfVxuICAgIGFzeW5jIHJ1bihpbnRlcnZhbCwgZm4sIGNhbGxiYWNrKSB7XG4gICAgICAgIHJldHVybiB0aGlzLnN0YXJ0KGZhbHNlLCBpbnRlcnZhbCwgZm4sIGNhbGxiYWNrKTtcbiAgICB9XG4gICAgYXN5bmMgc3RhcnQob25jZSwgaW50ZXJ2YWwsIGZuLCBjYWxsYmFjaykge1xuICAgICAgICB0aGlzLmNhbmNlbCgpO1xuICAgICAgICBpZiAoZm4pIHtcbiAgICAgICAgICAgIHRoaXMuZm4gPSBmbjtcbiAgICAgICAgfVxuICAgICAgICBpZiAodHlwZW9mIGNhbGxiYWNrID09PSAnZnVuY3Rpb24nKSB7XG4gICAgICAgICAgICB0aGlzLmNhbGxiYWNrcy5wdXNoKGNhbGxiYWNrKTtcbiAgICAgICAgfVxuICAgICAgICBpZiAodGhpcy5mbikge1xuICAgICAgICAgICAgcmV0dXJuIG5ldyBQcm9taXNlKHJlc29sdmUgPT4ge1xuICAgICAgICAgICAgICAgIHRoaXMuaWQgPSBzZXRJbnRlcnZhbCgoKSA9PiB7XG4gICAgICAgICAgICAgICAgICAgIGlmIChvbmNlKSB7XG4gICAgICAgICAgICAgICAgICAgICAgICB0aGlzLmNhbmNlbCgpO1xuICAgICAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICAgICAgICAgIHJlc29sdmUodGhpcy5mbigpKTtcbiAgICAgICAgICAgICAgICAgICAgdGhpcy5jYWxsYmFja3MuZm9yRWFjaChjYiA9PiBjYigpKTtcbiAgICAgICAgICAgICAgICAgICAgdGhpcy5jYWxsYmFja3MgPSBbXTtcbiAgICAgICAgICAgICAgICB9LCBpbnRlcnZhbCk7XG4gICAgICAgICAgICB9KTtcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gUHJvbWlzZS5yZWplY3QobmV3IEVycm9yKCdubyBjYWxsZXInKSk7XG4gICAgfVxuICAgIGNhbmNlbCgpIHtcbiAgICAgICAgaWYgKHRoaXMuaWQpIHtcbiAgICAgICAgICAgIGNsZWFySW50ZXJ2YWwodGhpcy5pZCk7XG4gICAgICAgICAgICBkZWxldGUgdGhpcy5pZDtcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gdGhpcztcbiAgICB9XG59XG4iXX0=

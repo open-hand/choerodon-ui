@@ -6,11 +6,22 @@ const { RangePicker, MonthPicker } = DatePicker;
 
 ReactDOM.render(
   <div>
-    <DatePicker renderExtraFooter={() => 'extra footer'} />
-    <DatePicker renderExtraFooter={() => 'extra footer'} showTime />
-    <RangePicker renderExtraFooter={() => 'extra footer'} />
-    <RangePicker renderExtraFooter={() => 'extra footer'} showTime />
-    <MonthPicker renderExtraFooter={() => 'extra footer'} placeholder="Select month" />
+    <div style={{ marginBottom: 10 }}>
+      <DatePicker renderExtraFooter={() => 'extra footer'} />
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <DatePicker renderExtraFooter={() => 'extra footer'} showTime />
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <RangePicker renderExtraFooter={() => 'extra footer'} />
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <RangePicker renderExtraFooter={() => 'extra footer'} showTime />
+    </div>
+    <MonthPicker
+      renderExtraFooter={() => 'extra footer'}
+      placeholder="Select month"
+    />
   </div>,
   document.getElementById('container'),
 );

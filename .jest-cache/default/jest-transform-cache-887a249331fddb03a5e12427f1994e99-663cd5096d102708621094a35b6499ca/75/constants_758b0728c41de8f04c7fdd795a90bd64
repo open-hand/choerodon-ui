@@ -1,0 +1,12 @@
+5a6c49b9e41fc84b337f977e5a25bf3f
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FIELD_DATA_PROP = exports.FIELD_META_PROP = void 0;
+var FIELD_META_PROP = 'data-__meta';
+exports.FIELD_META_PROP = FIELD_META_PROP;
+var FIELD_DATA_PROP = 'data-__field';
+exports.FIELD_DATA_PROP = FIELD_DATA_PROP;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzL2Zvcm0vY29uc3RhbnRzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7QUFBTyxJQUFNLGVBQWUsR0FBRyxhQUF4Qjs7QUFDQSxJQUFNLGVBQWUsR0FBRyxjQUF4QiIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjb25zdCBGSUVMRF9NRVRBX1BST1AgPSAnZGF0YS1fX21ldGEnO1xuZXhwb3J0IGNvbnN0IEZJRUxEX0RBVEFfUFJPUCA9ICdkYXRhLV9fZmllbGQnO1xuIl19

@@ -1,0 +1,38 @@
+843d69e0326c6a16816bf2a1e9513c41
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Search = _input["default"].Search;
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(Search, {
+  placeholder: "input search text",
+  onSearch: function onSearch(value) {
+    return console.log(value);
+  },
+  style: {
+    width: 200
+  }
+}), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement(Search, {
+  placeholder: "input search text",
+  onSearch: function onSearch(value) {
+    return console.log(value);
+  },
+  enterButton: true
+}), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement(Search, {
+  placeholder: "input search text",
+  enterButton: "Search",
+  size: "large"
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

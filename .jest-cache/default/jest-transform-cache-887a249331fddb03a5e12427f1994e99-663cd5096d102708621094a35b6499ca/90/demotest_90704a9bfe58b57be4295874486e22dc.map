@@ -1,0 +1,1 @@
+{"version":3,"sources":["demo.test.js"],"names":["skip"],"mappings":";;;;AAAA;;AAEA,0BAAS,YAAT,EAAuB;AAAEA,EAAAA,IAAI,EAAE,CAAC,WAAD,EAAc,aAAd;AAAR,CAAvB","sourcesContent":["import demoTest from '../../../tests/shared/demoTest';\n\ndemoTest('breadcrumb', { skip: ['router.md', 'router-4.md'] });\n"]}

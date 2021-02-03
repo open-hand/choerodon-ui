@@ -32,5 +32,5 @@ title: API
 | key | 当前字段的标记配合handleClose以及定义为唯一值 | string | - |
 
 
-更多属性请参考 [DataSetComponent](/en/procmp/abstract/#DataSetComponent)。
+更多属性请参考 [ViewComponent](/en/procmp/abstract/ViewComponent#viewcomponent)。
 

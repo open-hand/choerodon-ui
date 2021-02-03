@@ -1,0 +1,9 @@
+8b6fc916a6255c7978e5637a32ff9b68
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
+
+(0, _demoTest["default"])('popconfirm');
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsWUFBVCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBkZW1vVGVzdCBmcm9tICcuLi8uLi8uLi90ZXN0cy9zaGFyZWQvZGVtb1Rlc3QnO1xuXG5kZW1vVGVzdCgncG9wY29uZmlybScpO1xuIl19

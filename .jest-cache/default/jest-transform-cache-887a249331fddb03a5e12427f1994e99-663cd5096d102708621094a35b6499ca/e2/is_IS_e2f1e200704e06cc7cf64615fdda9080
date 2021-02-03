@@ -1,0 +1,28 @@
+68af950caa1822f005cacba7d36a1497
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _items_per_page$label;
+
+var _default = (_items_per_page$label = {
+  // Options.jsx
+  items_per_page: '/ síðu',
+  label_items_per_page: 'Items / page',
+  jump_to: 'Síða',
+  jump_to_confirm: 'staðfest',
+  page: '',
+  // Pagination.jsx
+  first_page: 'First Page',
+  last_page: 'Last Page'
+}, (0, _defineProperty2["default"])(_items_per_page$label, "first_page", 'First Page'), (0, _defineProperty2["default"])(_items_per_page$label, "last_page", 'Last Page'), (0, _defineProperty2["default"])(_items_per_page$label, "prev_page", 'Fyrri síða'), (0, _defineProperty2["default"])(_items_per_page$label, "next_page", 'Næsta síða'), (0, _defineProperty2["default"])(_items_per_page$label, "prev_5", 'Til baka 5 síður'), (0, _defineProperty2["default"])(_items_per_page$label, "next_5", 'Áfram 5 síður'), (0, _defineProperty2["default"])(_items_per_page$label, "prev_3", 'Til baka 3 síður'), (0, _defineProperty2["default"])(_items_per_page$label, "next_3", 'Áfram 3 síður'), _items_per_page$label);
+
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImlzX0lTLmpzeCJdLCJuYW1lcyI6WyJpdGVtc19wZXJfcGFnZSIsImxhYmVsX2l0ZW1zX3Blcl9wYWdlIiwianVtcF90byIsImp1bXBfdG9fY29uZmlybSIsInBhZ2UiLCJmaXJzdF9wYWdlIiwibGFzdF9wYWdlIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7OztBQUNFO0FBQ0FBLEVBQUFBLGNBQWMsRUFBRSxRO0FBQ2hCQyxFQUFBQSxvQkFBb0IsRUFBRSxjO0FBQ3RCQyxFQUFBQSxPQUFPLEVBQUUsTTtBQUNUQyxFQUFBQSxlQUFlLEVBQUUsVTtBQUNqQkMsRUFBQUEsSUFBSSxFQUFFLEU7QUFFTjtBQUNBQyxFQUFBQSxVQUFVLEVBQUUsWTtBQUNaQyxFQUFBQSxTQUFTLEVBQUU7eUVBQ0MsWSx3RUFDRCxXLHdFQUNBLFksd0VBQ0EsWSxxRUFDSCxrQixxRUFDQSxlLHFFQUNBLGtCLHFFQUNBLGUiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZGVmYXVsdCB7XG4gIC8vIE9wdGlvbnMuanN4XG4gIGl0ZW1zX3Blcl9wYWdlOiAnLyBzw63DsHUnLFxuICBsYWJlbF9pdGVtc19wZXJfcGFnZTogJ0l0ZW1zIC8gcGFnZScsXG4gIGp1bXBfdG86ICdTw63DsGEnLFxuICBqdW1wX3RvX2NvbmZpcm06ICdzdGHDsGZlc3QnLFxuICBwYWdlOiAnJyxcblxuICAvLyBQYWdpbmF0aW9uLmpzeFxuICBmaXJzdF9wYWdlOiAnRmlyc3QgUGFnZScsXG4gIGxhc3RfcGFnZTogJ0xhc3QgUGFnZScsXG4gIGZpcnN0X3BhZ2U6ICdGaXJzdCBQYWdlJyxcbiAgbGFzdF9wYWdlOiAnTGFzdCBQYWdlJyxcbiAgcHJldl9wYWdlOiAnRnlycmkgc8Otw7BhJyxcbiAgbmV4dF9wYWdlOiAnTsOmc3RhIHPDrcOwYScsXG4gIHByZXZfNTogJ1RpbCBiYWthIDUgc8Otw7B1cicsXG4gIG5leHRfNTogJ8OBZnJhbSA1IHPDrcOwdXInLFxuICBwcmV2XzM6ICdUaWwgYmFrYSAzIHPDrcOwdXInLFxuICBuZXh0XzM6ICfDgWZyYW0gMyBzw63DsHVyJyxcbn07XG4iXX0=

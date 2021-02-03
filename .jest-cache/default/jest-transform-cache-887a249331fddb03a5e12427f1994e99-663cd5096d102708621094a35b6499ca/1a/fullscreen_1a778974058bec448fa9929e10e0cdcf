@@ -1,0 +1,33 @@
+dccb52a73af8d6dd52f96046903e8a44
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _modal = _interopRequireDefault(require("../../../components-pro/modal"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var modalKey = _modal["default"].key();
+
+function openModal() {
+  _modal["default"].open({
+    key: modalKey,
+    title: 'Full screen',
+    children: _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents...")),
+    fullScreen: true
+  });
+}
+
+var __Demo = _react["default"].createElement(_button["default"], {
+  onClick: openModal
+}, "Open");
+
+var _default = __Demo;
+exports["default"] = _default;

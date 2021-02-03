@@ -1,0 +1,36 @@
+7973c5ec0079b83e8498975ab1c5b756
+"use strict";
+
+/* istanbul ignore next */
+function cov_79uiaksj6() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/CellGroup.d.ts";
+  var hash = "2918933573ff36a2bd0289034dba40395638796d";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/CellGroup.d.ts",
+    statementMap: {},
+    fnMap: {},
+    branchMap: {},
+    s: {},
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "2918933573ff36a2bd0289034dba40395638796d"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_79uiaksj6 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_79uiaksj6();

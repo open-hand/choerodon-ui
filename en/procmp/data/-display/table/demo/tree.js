@@ -6,7 +6,10 @@ import { observer } from 'mobx-react';
 const { Column } = Table;
 
 function iconRenderer({ record, text }) {
-  return [<Icon key="icon" type={record.get('icon')} />, <span key="text">{text}</span>];
+  return [
+    <Icon key="icon" type={record.get('icon')} />,
+    <span key="text">{text}</span>,
+  ];
 }
 
 function expandedRowRenderer({ record }) {
@@ -34,7 +37,6 @@ class App extends React.Component {
     autoQuery: true,
     parentField: 'parentId',
     idField: 'id',
-    expandField: 'expand',
     checkField: 'ischecked',
     fields: [
       { name: 'id', type: 'number' },
@@ -62,17 +64,21 @@ class App extends React.Component {
     this.ds.create({ parentId: this.ds.current.get('id') });
   };
 
-  handleChangeExpandRender = () => this.setState({ expandedRender: !this.state.expandedRender });
+  handleChangeExpandRender = () =>
+    this.setState({ expandedRender: !this.state.expandedRender });
 
   handleChangeExpandIconIndex = () =>
     this.setState({
       expandIconColumnIndex:
-        this.state.expandIconColumnIndex > 2 ? 0 : this.state.expandIconColumnIndex + 1,
+        this.state.expandIconColumnIndex > 2
+          ? 0
+          : this.state.expandIconColumnIndex + 1,
     });
 
   handleChangeBorder = () => this.setState({ border: !this.state.border });
 
-  handleChangeMode = () => this.setState({ mode: this.state.mode === 'tree' ? 'list' : 'tree' });
+  handleChangeMode = () =>
+    this.setState({ mode: this.state.mode === 'tree' ? 'list' : 'tree' });
 
   buttons = [
     'add',
@@ -82,7 +88,11 @@ class App extends React.Component {
     'query',
     'expandAll',
     'collapseAll',
-    <AddChildButton key="add-child" dataSet={this.ds} onClick={this.handleCreateChild}>
+    <AddChildButton
+      key="add-child"
+      dataSet={this.ds}
+      onClick={this.handleCreateChild}
+    >
       添加子节点
     </AddChildButton>,
     <Button key="change-expand-type" onClick={this.handleChangeExpandIconIndex}>
@@ -110,10 +120,10 @@ class App extends React.Component {
         border={border}
         expandedRowRenderer={expandedRender && expandedRowRenderer}
       >
-        <Column name="text" editor renderer={iconRenderer} width={450} />
-        <Column name="url" editor />
-        <Column name="ischecked" editor />
-        <Column name="expand" editor />
+        <Column name="text" renderer={iconRenderer} width={450} />
+        <Column name="url" />
+        <Column name="ischecked" />
+        <Column name="expand" />
         <Column header="权限设置" width={150} align="center" />
       </Table>
     );

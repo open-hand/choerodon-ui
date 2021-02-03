@@ -4,10 +4,10 @@ import { Switch, Icon } from 'choerodon-ui/pro';
 
 ReactDOM.render(
   <div>
-    <Switch unCheckedChildren="关" defaultChecked>开</Switch>
+    <Switch style={{margin:'.1rem'}}  unCheckedChildren="关" defaultChecked>开</Switch>
     <br />
-    <Switch unCheckedChildren="0">1</Switch>
+    <Switch style={{margin:'.1rem'}}  unCheckedChildren="0">1</Switch>
     <br />
-    <Switch unCheckedChildren={<Icon type="close" />}><Icon type="check" /></Switch>
+    <Switch style={{margin:'.1rem'}}  unCheckedChildren={<Icon type="close" />}><Icon type="check" /></Switch>
   </div>,
   document.getElementById('container'));

@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/icon-picker/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,sB","sourcesContent":["import IconPicker from './IconPicker';\n\nexport default IconPicker;\n"]}

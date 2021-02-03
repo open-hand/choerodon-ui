@@ -1,0 +1,31 @@
+235bfabd609ae96f5250b200a8a389b3
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _range = _interopRequireDefault(require("../../../components-pro/range"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_range["default"], {
+  min: 0,
+  max: 1,
+  step: 0.01
+}), _react["default"].createElement(_range["default"], {
+  style: {
+    margin: '0.2rem 0 0 0'
+  },
+  value: 20,
+  min: 0,
+  max: 100,
+  step: 5,
+  disabled: true
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

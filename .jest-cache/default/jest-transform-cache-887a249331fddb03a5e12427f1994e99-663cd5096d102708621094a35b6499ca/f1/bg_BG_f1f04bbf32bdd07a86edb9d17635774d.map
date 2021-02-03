@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/bg_BG.tsx"],"names":[],"mappings":";;;;;;;;;AACA;;AADA;eAGe,iB","sourcesContent":["/* eslint-disable camelcase */\nimport bg_BG from '../../date-picker/locale/bg_BG';\n\nexport default bg_BG;\n"]}

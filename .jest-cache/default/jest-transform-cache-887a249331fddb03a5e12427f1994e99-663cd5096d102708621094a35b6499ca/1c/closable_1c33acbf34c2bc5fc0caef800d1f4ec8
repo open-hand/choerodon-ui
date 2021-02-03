@@ -1,0 +1,33 @@
+2c58d858d60599e15931b9236ba041ca
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _alert = _interopRequireDefault(require("../../../components/alert"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var onClose = function onClose(e) {
+  console.log(e, 'I was closed.');
+};
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_alert["default"], {
+  message: "Warning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text",
+  type: "warning",
+  closable: true,
+  onClose: onClose
+}), _react["default"].createElement(_alert["default"], {
+  message: "Error Text",
+  description: "Error Description Error Description Error Description Error Description Error Description Error Description",
+  type: "error",
+  closable: true,
+  onClose: onClose
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

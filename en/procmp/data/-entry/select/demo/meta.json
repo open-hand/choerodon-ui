@@ -232,12 +232,12 @@
     {
       "filename": "dataset-gruop.js",
       "title": {
-        "zh": "dataSet gruop 分组",
-        "en": "dataset gruop"
+        "zh": "DataSet group 分组",
+        "en": "DataSet group"
       },
       "description": {
-        "zh": "dataSet gruop 分。\n",
-        "en": "dataset gruop.\n"
+        "zh": "DataSet group 分组。\n",
+        "en": "DataSet group.\n"
       },
       "order": 14,
       "screenshot": "",

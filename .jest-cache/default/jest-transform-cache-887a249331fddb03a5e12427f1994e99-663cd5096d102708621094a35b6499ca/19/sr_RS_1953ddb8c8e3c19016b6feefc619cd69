@@ -1,0 +1,25 @@
+690ccc33442a4d32acb03416f83830d9
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var _default = {
+  // Options.jsx
+  items_per_page: '/ strani',
+  label_items_per_page: 'Items / page',
+  jump_to: 'Idi na',
+  page: '',
+  // Pagination.jsx
+  first_page: 'First Page',
+  last_page: 'Last Page',
+  prev_page: 'Prethodna strana',
+  next_page: 'Sledeća strana',
+  prev_5: 'Prethodnih 5 Strana',
+  next_5: 'Sledećih 5 Strana',
+  prev_3: 'Prethodnih 3 Strane',
+  next_3: 'Sledećih 3 Strane'
+};
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyX1JTLmpzeCJdLCJuYW1lcyI6WyJpdGVtc19wZXJfcGFnZSIsImxhYmVsX2l0ZW1zX3Blcl9wYWdlIiwianVtcF90byIsInBhZ2UiLCJmaXJzdF9wYWdlIiwibGFzdF9wYWdlIiwicHJldl9wYWdlIiwibmV4dF9wYWdlIiwicHJldl81IiwibmV4dF81IiwicHJldl8zIiwibmV4dF8zIl0sIm1hcHBpbmdzIjoiOzs7Ozs7ZUFBZTtBQUNiO0FBQ0FBLEVBQUFBLGNBQWMsRUFBRSxVQUZIO0FBR2JDLEVBQUFBLG9CQUFvQixFQUFFLGNBSFQ7QUFJYkMsRUFBQUEsT0FBTyxFQUFFLFFBSkk7QUFLYkMsRUFBQUEsSUFBSSxFQUFFLEVBTE87QUFPYjtBQUNBQyxFQUFBQSxVQUFVLEVBQUUsWUFSQztBQVNiQyxFQUFBQSxTQUFTLEVBQUUsV0FURTtBQVViQyxFQUFBQSxTQUFTLEVBQUUsa0JBVkU7QUFXYkMsRUFBQUEsU0FBUyxFQUFFLGdCQVhFO0FBWWJDLEVBQUFBLE1BQU0sRUFBRSxxQkFaSztBQWFiQyxFQUFBQSxNQUFNLEVBQUUsbUJBYks7QUFjYkMsRUFBQUEsTUFBTSxFQUFFLHFCQWRLO0FBZWJDLEVBQUFBLE1BQU0sRUFBRTtBQWZLLEMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZGVmYXVsdCB7XG4gIC8vIE9wdGlvbnMuanN4XG4gIGl0ZW1zX3Blcl9wYWdlOiAnLyBzdHJhbmknLFxuICBsYWJlbF9pdGVtc19wZXJfcGFnZTogJ0l0ZW1zIC8gcGFnZScsXG4gIGp1bXBfdG86ICdJZGkgbmEnLFxuICBwYWdlOiAnJyxcblxuICAvLyBQYWdpbmF0aW9uLmpzeFxuICBmaXJzdF9wYWdlOiAnRmlyc3QgUGFnZScsXG4gIGxhc3RfcGFnZTogJ0xhc3QgUGFnZScsXG4gIHByZXZfcGFnZTogJ1ByZXRob2RuYSBzdHJhbmEnLFxuICBuZXh0X3BhZ2U6ICdTbGVkZcSHYSBzdHJhbmEnLFxuICBwcmV2XzU6ICdQcmV0aG9kbmloIDUgU3RyYW5hJyxcbiAgbmV4dF81OiAnU2xlZGXEh2loIDUgU3RyYW5hJyxcbiAgcHJldl8zOiAnUHJldGhvZG5paCAzIFN0cmFuZScsXG4gIG5leHRfMzogJ1NsZWRlxIdpaCAzIFN0cmFuZScsXG59O1xuIl19

@@ -1,0 +1,49 @@
+b9d0b7421293c21ef4ad2d7203cb84f9
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = badInput;
+
+var _isEmpty = _interopRequireDefault(require("../../_util/isEmpty"));
+
+var _ValidationResult = _interopRequireDefault(require("../ValidationResult"));
+
+var _localeContext = require("../../locale-context");
+
+var _utils = require("../../field/utils");
+
+var isBadInput = function isBadInput(value, range) {
+  if (range) {
+    return (0, _utils.toRangeValue)(value, range).some(function (item) {
+      return !(0, _isEmpty["default"])(item) && isNaN(item);
+    });
+  }
+
+  return !(0, _isEmpty["default"])(value) && isNaN(value);
+};
+
+function badInput(value, props) {
+  var type = props.type,
+      defaultValidationMessages = props.defaultValidationMessages,
+      range = props.range;
+
+  if (type === "number"
+  /* number */
+  && isBadInput(value, range)) {
+    var ruleName = 'badInput';
+    var _defaultValidationMes = defaultValidationMessages[ruleName],
+        validationMessage = _defaultValidationMes === void 0 ? (0, _localeContext.$l)('Validator', 'bad_input') : _defaultValidationMes;
+    return new _ValidationResult["default"]({
+      validationMessage: validationMessage,
+      value: value,
+      ruleName: ruleName
+    });
+  }
+
+  return true;
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby92YWxpZGF0b3IvcnVsZXMvYmFkSW5wdXQudHN4Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOztBQUVBOztBQUdBLElBQU0sVUFBVSxHQUFHLFNBQWIsVUFBYSxDQUFDLEtBQUQsRUFBUSxLQUFSLEVBQWlCO0FBQ2xDLE1BQUksS0FBSixFQUFXO0FBQ1QsV0FBTyx5QkFBYSxLQUFiLEVBQW9CLEtBQXBCLEVBQTJCLElBQTNCLENBQWdDLFVBQUEsSUFBSTtBQUFBLGFBQUksQ0FBQyx5QkFBUSxJQUFSLENBQUQsSUFBa0IsS0FBSyxDQUFDLElBQUQsQ0FBM0I7QUFBQSxLQUFwQyxDQUFQO0FBQ0Q7O0FBQ0QsU0FBTyxDQUFDLHlCQUFRLEtBQVIsQ0FBRCxJQUFtQixLQUFLLENBQUMsS0FBRCxDQUEvQjtBQUNELENBTEQ7O0FBT2MsU0FBVSxRQUFWLENBQW1CLEtBQW5CLEVBQStCLEtBQS9CLEVBQW9EO0FBQUEsTUFDeEQsSUFEd0QsR0FDYixLQURhLENBQ3hELElBRHdEO0FBQUEsTUFDbEQseUJBRGtELEdBQ2IsS0FEYSxDQUNsRCx5QkFEa0Q7QUFBQSxNQUN2QixLQUR1QixHQUNiLEtBRGEsQ0FDdkIsS0FEdUI7O0FBRWhFLE1BQUksSUFBSSxLQUFBO0FBQUE7QUFBSixLQUE2QixVQUFVLENBQUMsS0FBRCxFQUFRLEtBQVIsQ0FBM0MsRUFBMkQ7QUFDekQsUUFBTSxRQUFRLEdBQUcsVUFBakI7QUFEeUQsZ0NBSXJELHlCQUpxRCxDQUd0RCxRQUhzRDtBQUFBLFFBRzNDLGlCQUgyQyxzQ0FHdkIsdUJBQUcsV0FBSCxFQUFnQixXQUFoQixDQUh1QjtBQUt6RCxXQUFPLElBQUksNEJBQUosQ0FBcUI7QUFDMUIsTUFBQSxpQkFBaUIsRUFBakIsaUJBRDBCO0FBRTFCLE1BQUEsS0FBSyxFQUFMLEtBRjBCO0FBRzFCLE1BQUEsUUFBUSxFQUFSO0FBSDBCLEtBQXJCLENBQVA7QUFLRDs7QUFDRCxTQUFPLElBQVA7QUFDRCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBpc0VtcHR5IGZyb20gJy4uLy4uL191dGlsL2lzRW1wdHknO1xuaW1wb3J0IFZhbGlkYXRpb25SZXN1bHQgZnJvbSAnLi4vVmFsaWRhdGlvblJlc3VsdCc7XG5pbXBvcnQgeyAkbCB9IGZyb20gJy4uLy4uL2xvY2FsZS1jb250ZXh0JztcbmltcG9ydCB7IEZpZWxkVHlwZSB9IGZyb20gJy4uLy4uL2RhdGEtc2V0L2VudW0nO1xuaW1wb3J0IHsgdG9SYW5nZVZhbHVlIH0gZnJvbSAnLi4vLi4vZmllbGQvdXRpbHMnO1xuaW1wb3J0IHsgbWV0aG9kUmV0dXJuLCBWYWxpZGF0b3JQcm9wcyB9IGZyb20gJy4nO1xuXG5jb25zdCBpc0JhZElucHV0ID0gKHZhbHVlLCByYW5nZSkgPT4ge1xuICBpZiAocmFuZ2UpIHtcbiAgICByZXR1cm4gdG9SYW5nZVZhbHVlKHZhbHVlLCByYW5nZSkuc29tZShpdGVtID0+ICFpc0VtcHR5KGl0ZW0pICYmIGlzTmFOKGl0ZW0pKTtcbiAgfVxuICByZXR1cm4gIWlzRW1wdHkodmFsdWUpICYmIGlzTmFOKHZhbHVlKTtcbn07XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIGJhZElucHV0KHZhbHVlOiBhbnksIHByb3BzOiBWYWxpZGF0b3JQcm9wcyk6IG1ldGhvZFJldHVybiB7XG4gIGNvbnN0IHsgdHlwZSwgZGVmYXVsdFZhbGlkYXRpb25NZXNzYWdlcywgcmFuZ2UgfSA9IHByb3BzO1xuICBpZiAodHlwZSA9PT0gRmllbGRUeXBlLm51bWJlciAmJiBpc0JhZElucHV0KHZhbHVlLCByYW5nZSkpIHtcbiAgICBjb25zdCBydWxlTmFtZSA9ICdiYWRJbnB1dCc7XG4gICAgY29uc3Qge1xuICAgICAgW3J1bGVOYW1lXTogdmFsaWRhdGlvbk1lc3NhZ2UgPSAkbCgnVmFsaWRhdG9yJywgJ2JhZF9pbnB1dCcpLFxuICAgIH0gPSBkZWZhdWx0VmFsaWRhdGlvbk1lc3NhZ2VzO1xuICAgIHJldHVybiBuZXcgVmFsaWRhdGlvblJlc3VsdCh7XG4gICAgICB2YWxpZGF0aW9uTWVzc2FnZSxcbiAgICAgIHZhbHVlLFxuICAgICAgcnVsZU5hbWUsXG4gICAgfSk7XG4gIH1cbiAgcmV0dXJuIHRydWU7XG59XG4iXX0=

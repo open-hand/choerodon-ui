@@ -1,0 +1,110 @@
+b1b7bd897088f2acfaabd3025f33eefa
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _select = _interopRequireDefault(require("../../../components/select"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Option = _select["default"].Option;
+var children = [];
+
+for (var i = 10; i < 36; i++) {
+  children.push(_react["default"].createElement(Option, {
+    key: i
+  }, i.toString(36) + i));
+}
+
+var SelectMulitpleDemo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(SelectMulitpleDemo, _React$Component);
+
+  function SelectMulitpleDemo() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, SelectMulitpleDemo);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(SelectMulitpleDemo)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      loading: true,
+      options: []
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "getOptions", function () {
+      setTimeout(function () {
+        _this.setState({
+          options: children,
+          loading: false
+        });
+      }, 3000);
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleChoiceRemove", function (value) {
+      return value >= 15;
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(SelectMulitpleDemo, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getOptions();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          options = _this$state.options,
+          loading = _this$state.loading;
+      return _react["default"].createElement(_select["default"], {
+        mode: "multiple",
+        style: {
+          width: '100%'
+        },
+        label: "\u591A\u9009\u7528\u4F8B",
+        optionFilterProp: "children",
+        footer: _react["default"].createElement(_button["default"], {
+          funcType: "raised",
+          type: "primary"
+        }, "\u8FD9\u91CC\u662Ffooter"),
+        loading: loading,
+        choiceRemove: this.handleChoiceRemove,
+        filter: true,
+        allowClear: true
+      }, options);
+    }
+  }]);
+  return SelectMulitpleDemo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(SelectMulitpleDemo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

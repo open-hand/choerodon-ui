@@ -1,0 +1,16 @@
+import CalendarLocale from '../../rc-components/calendar/locale/it_IT';
+import TimePickerLocale from '../../time-picker/locale/it_IT';
+// Merge into a locale object
+const locale = {
+    lang: {
+        placeholder: 'Selezionare la data',
+        rangePlaceholder: ['Data d\'inizio', 'Data di fine'],
+        ...CalendarLocale,
+    },
+    timePickerLocale: {
+        ...TimePickerLocale,
+    },
+};
+// All settings at:
+export default locale;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiL1VzZXJzL2h1aWh1YXdrL0RvY3VtZW50cy9vcHQvY2hvZXJvZG9uLXVpL2NvbXBvbmVudHMvZGF0ZS1waWNrZXIvbG9jYWxlL2l0X0lULnRzeCIsIm1hcHBpbmdzIjoiQUFBQSxPQUFPLGNBQWMsTUFBTSwyQ0FBMkMsQ0FBQztBQUN2RSxPQUFPLGdCQUFnQixNQUFNLGdDQUFnQyxDQUFDO0FBRTlELDZCQUE2QjtBQUM3QixNQUFNLE1BQU0sR0FBRztJQUNiLElBQUksRUFBRTtRQUNKLFdBQVcsRUFBRSxxQkFBcUI7UUFDbEMsZ0JBQWdCLEVBQUUsQ0FBQyxnQkFBZ0IsRUFBRSxjQUFjLENBQUM7UUFDcEQsR0FBRyxjQUFjO0tBQ2xCO0lBQ0QsZ0JBQWdCLEVBQUU7UUFDaEIsR0FBRyxnQkFBZ0I7S0FDcEI7Q0FDRixDQUFDO0FBRUYsbUJBQW1CO0FBRW5CLGVBQWUsTUFBTSxDQUFDIiwibmFtZXMiOltdLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzL2RhdGUtcGlja2VyL2xvY2FsZS9pdF9JVC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IENhbGVuZGFyTG9jYWxlIGZyb20gJy4uLy4uL3JjLWNvbXBvbmVudHMvY2FsZW5kYXIvbG9jYWxlL2l0X0lUJztcbmltcG9ydCBUaW1lUGlja2VyTG9jYWxlIGZyb20gJy4uLy4uL3RpbWUtcGlja2VyL2xvY2FsZS9pdF9JVCc7XG5cbi8vIE1lcmdlIGludG8gYSBsb2NhbGUgb2JqZWN0XG5jb25zdCBsb2NhbGUgPSB7XG4gIGxhbmc6IHtcbiAgICBwbGFjZWhvbGRlcjogJ1NlbGV6aW9uYXJlIGxhIGRhdGEnLFxuICAgIHJhbmdlUGxhY2Vob2xkZXI6IFsnRGF0YSBkXFwnaW5pemlvJywgJ0RhdGEgZGkgZmluZSddLFxuICAgIC4uLkNhbGVuZGFyTG9jYWxlLFxuICB9LFxuICB0aW1lUGlja2VyTG9jYWxlOiB7XG4gICAgLi4uVGltZVBpY2tlckxvY2FsZSxcbiAgfSxcbn07XG5cbi8vIEFsbCBzZXR0aW5ncyBhdDpcblxuZXhwb3J0IGRlZmF1bHQgbG9jYWxlO1xuIl0sInZlcnNpb24iOjN9

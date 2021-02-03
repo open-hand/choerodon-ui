@@ -1,0 +1,48 @@
+c570b2b95e58efe1a5cee9078d7f2a08
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _select = _interopRequireDefault(require("../../../components/select"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Option = _select["default"].Option;
+
+var __Demo = _react["default"].createElement(_select["default"], {
+  style: {
+    width: 300
+  },
+  placeholder: "Select a person",
+  optionFilterProp: "children",
+  filterOption: function filterOption(input, option) {
+    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+  },
+  filter: true
+}, _react["default"].createElement(Option, {
+  value: "jack"
+}, "Jack"), _react["default"].createElement(Option, {
+  value: "lucy"
+}, "Lucy"), _react["default"].createElement(Option, {
+  value: "tom"
+}, "Tom"), _react["default"].createElement(Option, {
+  value: "jack1"
+}, "Jack1"), _react["default"].createElement(Option, {
+  value: "lucy1"
+}, "Lucy1"), _react["default"].createElement(Option, {
+  value: "tom1"
+}, "Tom1"), _react["default"].createElement(Option, {
+  value: "jack2"
+}, "Jack2"), _react["default"].createElement(Option, {
+  value: "lucy2"
+}, "Lucy2"), _react["default"].createElement(Option, {
+  value: "tom2"
+}, "Tom2"));
+
+var _default = __Demo;
+exports["default"] = _default;

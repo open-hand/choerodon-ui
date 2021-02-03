@@ -1,0 +1,1 @@
+{"version":3,"sources":["demo.test.js"],"names":[],"mappings":";;;;AAAA;;AAEA,0BAAS,OAAT","sourcesContent":["import demoTest from '../../../tests/shared/demoTest';\n\ndemoTest('badge');\n"]}

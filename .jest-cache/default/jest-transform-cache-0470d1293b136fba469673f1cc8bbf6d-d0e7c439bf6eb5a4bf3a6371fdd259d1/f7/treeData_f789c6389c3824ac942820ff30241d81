@@ -1,0 +1,101 @@
+f1a2839b4cccfebefff6a44a79718155
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _treeSelect = _interopRequireDefault(require("../../../components/tree-select"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var treeData = [{
+  label: 'Node1',
+  value: '0-0',
+  key: '0-0',
+  children: [{
+    label: 'Child Node1',
+    value: '0-0-1',
+    key: '0-0-1'
+  }, {
+    label: 'Child Node2',
+    value: '0-0-2',
+    key: '0-0-2'
+  }]
+}, {
+  label: 'Node2',
+  value: '0-1',
+  key: '0-1'
+}];
+
+var Demo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(Demo, _React$Component);
+
+  function Demo() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, Demo);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(Demo)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      value: undefined
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onChange", function (value) {
+      _this.setState({
+        value: value
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(Demo, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_treeSelect["default"], {
+        style: {
+          width: 300
+        },
+        value: this.state.value,
+        dropdownStyle: {
+          maxHeight: 400,
+          overflow: 'auto'
+        },
+        treeData: treeData,
+        placeholder: "Please select",
+        treeDefaultExpandAll: true,
+        onChange: this.onChange
+      });
+    }
+  }]);
+  return Demo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(Demo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,33 @@
+1b30a9b3831a3e5765c6a926f3fad632
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _badge = _interopRequireDefault(require("../../../components/badge"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_badge["default"], {
+  dot: true
+}, _react["default"].createElement(_icon["default"], {
+  type: "notification"
+})), _react["default"].createElement(_badge["default"], {
+  count: 0,
+  dot: true
+}, _react["default"].createElement(_icon["default"], {
+  type: "notification"
+})), _react["default"].createElement(_badge["default"], {
+  dot: true
+}, _react["default"].createElement("a", {
+  href: "#"
+}, "Link something")));
+
+var _default = __Demo;
+exports["default"] = _default;

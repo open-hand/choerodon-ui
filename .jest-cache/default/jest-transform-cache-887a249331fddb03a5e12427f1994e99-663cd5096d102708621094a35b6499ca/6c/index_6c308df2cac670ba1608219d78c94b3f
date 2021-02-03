@@ -1,0 +1,130 @@
+8330ee4d742e7229a62d33ae4373e816
+"use strict";
+
+/* istanbul ignore next */
+function cov_vxwpfpysk() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/button/index.tsx";
+  var hash = "ae521a739d49a6da5f44987cbbddcb4080f68572";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/button/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 14
+        },
+        end: {
+          line: 10,
+          column: 57
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 15
+        },
+        end: {
+          line: 12,
+          column: 33
+        }
+      },
+      "5": {
+        start: {
+          line: 13,
+          column: 0
+        },
+        end: {
+          line: 13,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "ae521a739d49a6da5f44987cbbddcb4080f68572"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_vxwpfpysk = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_vxwpfpysk();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_vxwpfpysk().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_vxwpfpysk().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_vxwpfpysk().s[2]++;
+exports["default"] = void 0;
+
+var _Button =
+/* istanbul ignore next */
+(cov_vxwpfpysk().s[3]++, _interopRequireDefault(require("./Button")));
+
+var _default =
+/* istanbul ignore next */
+(cov_vxwpfpysk().s[4]++, _Button["default"]);
+
+/* istanbul ignore next */
+cov_vxwpfpysk().s[5]++;
+exports["default"] = _default;

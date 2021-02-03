@@ -1,0 +1,17 @@
+0a6c7cae6917b33b1374b7b478be1143
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Panel = exports["default"] = void 0;
+
+var _Collapse = _interopRequireDefault(require("./Collapse"));
+
+var _default = _Collapse["default"];
+exports["default"] = _default;
+var Panel = _Collapse["default"].Panel;
+exports.Panel = Panel;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzeCJdLCJuYW1lcyI6WyJDb2xsYXBzZSIsIlBhbmVsIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFBQTs7ZUFFZUEsb0I7O0FBQ1IsSUFBTUMsS0FBSyxHQUFHRCxxQkFBU0MsS0FBdkIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgQ29sbGFwc2UgZnJvbSAnLi9Db2xsYXBzZSc7XG5cbmV4cG9ydCBkZWZhdWx0IENvbGxhcHNlO1xuZXhwb3J0IGNvbnN0IFBhbmVsID0gQ29sbGFwc2UuUGFuZWw7XG4iXX0=

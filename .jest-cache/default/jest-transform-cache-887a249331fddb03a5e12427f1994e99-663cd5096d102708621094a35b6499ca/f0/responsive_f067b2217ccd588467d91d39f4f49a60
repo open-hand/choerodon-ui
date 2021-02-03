@@ -1,0 +1,38 @@
+44acc842b1a5dfe121dff7055fa8343d
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components/row"));
+
+var _col = _interopRequireDefault(require("../../../components/col"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_row["default"], null, _react["default"].createElement(_col["default"], {
+  xs: 2,
+  sm: 4,
+  md: 6,
+  lg: 8,
+  xl: 10
+}, "Col"), _react["default"].createElement(_col["default"], {
+  xs: 20,
+  sm: 16,
+  md: 12,
+  lg: 8,
+  xl: 4
+}, "Col"), _react["default"].createElement(_col["default"], {
+  xs: 2,
+  sm: 4,
+  md: 6,
+  lg: 8,
+  xl: 10
+}, "Col"));
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,67 @@
+4f60f4355431bf7d220a2f9a3ac1edb6
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _modal = _interopRequireDefault(require("../../../components-pro/modal"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var modalKey = _modal["default"].key();
+
+var ModalContent = function ModalContent(_ref) {
+  var modal = _ref.modal;
+  modal.handleOk(function () {
+    console.log('do OK');
+    return false;
+  });
+  modal.handleCancel(function () {
+    console.log('do Cancel');
+    modal.close();
+  });
+
+  function toggleOkDisabled() {
+    modal.update({
+      okProps: {
+        disabled: !modal.props.okProps.disabled
+      },
+      okText: "保存"
+    });
+  }
+
+  console.log('modal', modal);
+  return _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement(_button["default"], {
+    color: "primary",
+    onClick: modal.close
+  }, "custom button for close modal"), _react["default"].createElement(_button["default"], {
+    onClick: toggleOkDisabled
+  }, modal.props.okProps.disabled ? 'enable' : 'disable'));
+};
+
+var modalNew;
+
+function openModal() {
+  _modal["default"].open({
+    key: modalKey,
+    title: 'Basic',
+    children: _react["default"].createElement(ModalContent, null),
+    okText: '确定',
+    okProps: {
+      disabled: true
+    }
+  });
+}
+
+var __Demo = _react["default"].createElement(_button["default"], {
+  onClick: openModal
+}, "Open");
+
+var _default = __Demo;
+exports["default"] = _default;

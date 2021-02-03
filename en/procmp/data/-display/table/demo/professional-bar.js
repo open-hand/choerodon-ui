@@ -40,21 +40,18 @@ class App extends React.Component {
       },
     ],
     fields: [
-      { name: 'userid', type: 'string', label: '编号', required: true },
       { name: 'name', type: 'string', label: '姓名' },
-      { name: 'age', type: 'number', label: '年龄', max: 100, step: 1 },
+      { name: 'age', type: 'number', label: '年龄' },
       {
-        name: 'sex',
+        name: 'sex.text',
         type: 'string',
         label: '性别',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
+        textField: 'text',
+        valueField: 'value',
+        options: this.optionDs, // 下拉框组件的菜单数据集
+        defaultValue: 'F',
       },
-      {
-        name: 'date.startDate',
-        type: 'date',
-        label: '开始日期',
-        defaultValue: new Date(),
-      },
+      { name: 'date.startDate', type: 'date', label: '开始日期' },
       {
         name: 'sexMultiple',
         type: 'string',
@@ -71,8 +68,19 @@ class App extends React.Component {
 
   get columns() {
     return [
-      { name: 'name', width: 450, editor: true },
-      { name: 'age', editor: true },
+      {
+        name: 'name',
+        width: 140,
+      },
+      {
+        name: 'age',
+      },
+      {
+        name: 'date.startDate',
+      },
+      {
+        name: 'sexMultiple',
+      },
     ];
   }
 

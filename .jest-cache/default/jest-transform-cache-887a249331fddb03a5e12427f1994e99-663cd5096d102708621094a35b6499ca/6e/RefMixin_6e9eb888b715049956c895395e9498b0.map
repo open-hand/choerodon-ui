@@ -1,0 +1,1 @@
+{"version":3,"sources":["RefMixin.jsx"],"names":["saveRef","name","node"],"mappings":";;;;;;eAAe;AACbA,EAAAA,OADa,mBACLC,IADK,EACC;AAAA;;AACZ,WAAO,UAAAC,IAAI,EAAI;AACb,MAAA,KAAI,CAACD,IAAD,CAAJ,GAAaC,IAAb;AACD,KAFD;AAGD;AALY,C","sourcesContent":["export default {\n  saveRef(name) {\n    return node => {\n      this[name] = node;\n    };\n  },\n};\n"]}

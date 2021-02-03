@@ -1,0 +1,4255 @@
+8a8ea7f58f95904b26cf76b88e4e16b0
+"use strict";
+
+/* istanbul ignore next */
+var cov_qbfkx7awl = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/align/domAlign.tsx";
+  var hash = "e162f7163acdfa0b3d1364234e029dcf52df6aa4";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/align/domAlign.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 30
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 16
+        },
+        end: {
+          line: 10,
+          column: 81
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 21
+        },
+        end: {
+          line: 12,
+          column: 92
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 21
+        },
+        end: {
+          line: 14,
+          column: 54
+        }
+      },
+      "6": {
+        start: {
+          line: 17,
+          column: 2
+        },
+        end: {
+          line: 17,
+          column: 102
+        }
+      },
+      "7": {
+        start: {
+          line: 21,
+          column: 2
+        },
+        end: {
+          line: 21,
+          column: 101
+        }
+      },
+      "8": {
+        start: {
+          line: 25,
+          column: 2
+        },
+        end: {
+          line: 25,
+          column: 102
+        }
+      },
+      "9": {
+        start: {
+          line: 29,
+          column: 2
+        },
+        end: {
+          line: 29,
+          column: 101
+        }
+      },
+      "10": {
+        start: {
+          line: 33,
+          column: 13
+        },
+        end: {
+          line: 33,
+          column: 26
+        }
+      },
+      "11": {
+        start: {
+          line: 34,
+          column: 2
+        },
+        end: {
+          line: 39,
+          column: 4
+        }
+      },
+      "12": {
+        start: {
+          line: 43,
+          column: 13
+        },
+        end: {
+          line: 43,
+          column: 41
+        }
+      },
+      "13": {
+        start: {
+          line: 44,
+          column: 2
+        },
+        end: {
+          line: 49,
+          column: 4
+        }
+      },
+      "14": {
+        start: {
+          line: 53,
+          column: 20
+        },
+        end: {
+          line: 53,
+          column: 46
+        }
+      },
+      "15": {
+        start: {
+          line: 54,
+          column: 21
+        },
+        end: {
+          line: 54,
+          column: 38
+        }
+      },
+      "16": {
+        start: {
+          line: 55,
+          column: 2
+        },
+        end: {
+          line: 55,
+          column: 229
+        }
+      },
+      "17": {
+        start: {
+          line: 59,
+          column: 2
+        },
+        end: {
+          line: 63,
+          column: 5
+        }
+      },
+      "18": {
+        start: {
+          line: 60,
+          column: 4
+        },
+        end: {
+          line: 62,
+          column: 7
+        }
+      },
+      "19": {
+        start: {
+          line: 61,
+          column: 6
+        },
+        end: {
+          line: 61,
+          column: 20
+        }
+      },
+      "20": {
+        start: {
+          line: 67,
+          column: 2
+        },
+        end: {
+          line: 67,
+          column: 33
+        }
+      },
+      "21": {
+        start: {
+          line: 68,
+          column: 2
+        },
+        end: {
+          line: 68,
+          column: 16
+        }
+      },
+      "22": {
+        start: {
+          line: 72,
+          column: 10
+        },
+        end: {
+          line: 72,
+          column: 25
+        }
+      },
+      "23": {
+        start: {
+          line: 73,
+          column: 10
+        },
+        end: {
+          line: 73,
+          column: 25
+        }
+      },
+      "24": {
+        start: {
+          line: 74,
+          column: 10
+        },
+        end: {
+          line: 74,
+          column: 22
+        }
+      },
+      "25": {
+        start: {
+          line: 75,
+          column: 10
+        },
+        end: {
+          line: 75,
+          column: 23
+        }
+      },
+      "26": {
+        start: {
+          line: 76,
+          column: 10
+        },
+        end: {
+          line: 76,
+          column: 21
+        }
+      },
+      "27": {
+        start: {
+          line: 77,
+          column: 10
+        },
+        end: {
+          line: 77,
+          column: 20
+        }
+      },
+      "28": {
+        start: {
+          line: 79,
+          column: 2
+        },
+        end: {
+          line: 83,
+          column: 3
+        }
+      },
+      "29": {
+        start: {
+          line: 80,
+          column: 4
+        },
+        end: {
+          line: 80,
+          column: 15
+        }
+      },
+      "30": {
+        start: {
+          line: 81,
+          column: 9
+        },
+        end: {
+          line: 83,
+          column: 3
+        }
+      },
+      "31": {
+        start: {
+          line: 82,
+          column: 4
+        },
+        end: {
+          line: 82,
+          column: 11
+        }
+      },
+      "32": {
+        start: {
+          line: 85,
+          column: 2
+        },
+        end: {
+          line: 89,
+          column: 3
+        }
+      },
+      "33": {
+        start: {
+          line: 86,
+          column: 4
+        },
+        end: {
+          line: 86,
+          column: 15
+        }
+      },
+      "34": {
+        start: {
+          line: 87,
+          column: 9
+        },
+        end: {
+          line: 89,
+          column: 3
+        }
+      },
+      "35": {
+        start: {
+          line: 88,
+          column: 4
+        },
+        end: {
+          line: 88,
+          column: 11
+        }
+      },
+      "36": {
+        start: {
+          line: 91,
+          column: 2
+        },
+        end: {
+          line: 94,
+          column: 4
+        }
+      },
+      "37": {
+        start: {
+          line: 98,
+          column: 11
+        },
+        end: {
+          line: 98,
+          column: 51
+        }
+      },
+      "38": {
+        start: {
+          line: 99,
+          column: 11
+        },
+        end: {
+          line: 99,
+          column: 46
+        }
+      },
+      "39": {
+        start: {
+          line: 100,
+          column: 13
+        },
+        end: {
+          line: 100,
+          column: 49
+        }
+      },
+      "40": {
+        start: {
+          line: 101,
+          column: 2
+        },
+        end: {
+          line: 104,
+          column: 4
+        }
+      },
+      "41": {
+        start: {
+          line: 108,
+          column: 12
+        },
+        end: {
+          line: 108,
+          column: 59
+        }
+      },
+      "42": {
+        start: {
+          line: 109,
+          column: 13
+        },
+        end: {
+          line: 112,
+          column: 3
+        }
+      },
+      "43": {
+        start: {
+          line: 114,
+          column: 2
+        },
+        end: {
+          line: 116,
+          column: 3
+        }
+      },
+      "44": {
+        start: {
+          line: 115,
+          column: 4
+        },
+        end: {
+          line: 115,
+          column: 32
+        }
+      },
+      "45": {
+        start: {
+          line: 119,
+          column: 2
+        },
+        end: {
+          line: 121,
+          column: 3
+        }
+      },
+      "46": {
+        start: {
+          line: 120,
+          column: 4
+        },
+        end: {
+          line: 120,
+          column: 60
+        }
+      },
+      "47": {
+        start: {
+          line: 124,
+          column: 2
+        },
+        end: {
+          line: 127,
+          column: 3
+        }
+      },
+      "48": {
+        start: {
+          line: 126,
+          column: 4
+        },
+        end: {
+          line: 126,
+          column: 74
+        }
+      },
+      "49": {
+        start: {
+          line: 130,
+          column: 2
+        },
+        end: {
+          line: 132,
+          column: 3
+        }
+      },
+      "50": {
+        start: {
+          line: 131,
+          column: 4
+        },
+        end: {
+          line: 131,
+          column: 30
+        }
+      },
+      "51": {
+        start: {
+          line: 135,
+          column: 2
+        },
+        end: {
+          line: 137,
+          column: 3
+        }
+      },
+      "52": {
+        start: {
+          line: 136,
+          column: 4
+        },
+        end: {
+          line: 136,
+          column: 62
+        }
+      },
+      "53": {
+        start: {
+          line: 140,
+          column: 2
+        },
+        end: {
+          line: 143,
+          column: 3
+        }
+      },
+      "54": {
+        start: {
+          line: 142,
+          column: 4
+        },
+        end: {
+          line: 142,
+          column: 74
+        }
+      },
+      "55": {
+        start: {
+          line: 145,
+          column: 2
+        },
+        end: {
+          line: 145,
+          column: 46
+        }
+      },
+      "56": {
+        start: {
+          line: 149,
+          column: 21
+        },
+        end: {
+          line: 149,
+          column: 38
+        }
+      },
+      "57": {
+        start: {
+          line: 151,
+          column: 2
+        },
+        end: {
+          line: 153,
+          column: 3
+        }
+      },
+      "58": {
+        start: {
+          line: 152,
+          column: 4
+        },
+        end: {
+          line: 152,
+          column: 17
+        }
+      },
+      "59": {
+        start: {
+          line: 155,
+          column: 2
+        },
+        end: {
+          line: 157,
+          column: 3
+        }
+      },
+      "60": {
+        start: {
+          line: 156,
+          column: 4
+        },
+        end: {
+          line: 156,
+          column: 16
+        }
+      },
+      "61": {
+        start: {
+          line: 159,
+          column: 2
+        },
+        end: {
+          line: 159,
+          column: 39
+        }
+      },
+      "62": {
+        start: {
+          line: 163,
+          column: 15
+        },
+        end: {
+          line: 163,
+          column: 27
+        }
+      },
+      "63": {
+        start: {
+          line: 164,
+          column: 15
+        },
+        end: {
+          line: 164,
+          column: 47
+        }
+      },
+      "64": {
+        start: {
+          line: 165,
+          column: 21
+        },
+        end: {
+          line: 165,
+          column: 59
+        }
+      },
+      "65": {
+        start: {
+          line: 166,
+          column: 17
+        },
+        end: {
+          line: 166,
+          column: 37
+        }
+      },
+      "66": {
+        start: {
+          line: 167,
+          column: 15
+        },
+        end: {
+          line: 167,
+          column: 38
+        }
+      },
+      "67": {
+        start: {
+          line: 168,
+          column: 15
+        },
+        end: {
+          line: 168,
+          column: 33
+        }
+      },
+      "68": {
+        start: {
+          line: 169,
+          column: 23
+        },
+        end: {
+          line: 169,
+          column: 25
+        }
+      },
+      "69": {
+        start: {
+          line: 170,
+          column: 13
+        },
+        end: {
+          line: 170,
+          column: 14
+        }
+      },
+      "70": {
+        start: {
+          line: 171,
+          column: 20
+        },
+        end: {
+          line: 171,
+          column: 46
+        }
+      },
+      "71": {
+        start: {
+          line: 172,
+          column: 17
+        },
+        end: {
+          line: 172,
+          column: 34
+        }
+      },
+      "72": {
+        start: {
+          line: 173,
+          column: 22
+        },
+        end: {
+          line: 173,
+          column: 39
+        }
+      },
+      "73": {
+        start: {
+          line: 174,
+          column: 20
+        },
+        end: {
+          line: 174,
+          column: 89
+        }
+      },
+      "74": {
+        start: {
+          line: 175,
+          column: 20
+        },
+        end: {
+          line: 175,
+          column: 68
+        }
+      },
+      "75": {
+        start: {
+          line: 176,
+          column: 32
+        },
+        end: {
+          line: 176,
+          column: 59
+        }
+      },
+      "76": {
+        start: {
+          line: 178,
+          column: 2
+        },
+        end: {
+          line: 231,
+          column: 3
+        }
+      },
+      "77": {
+        start: {
+          line: 179,
+          column: 4
+        },
+        end: {
+          line: 196,
+          column: 5
+        }
+      },
+      "78": {
+        start: {
+          line: 180,
+          column: 6
+        },
+        end: {
+          line: 195,
+          column: 7
+        }
+      },
+      "79": {
+        start: {
+          line: 181,
+          column: 24
+        },
+        end: {
+          line: 184,
+          column: 10
+        }
+      },
+      "80": {
+        start: {
+          line: 185,
+          column: 24
+        },
+        end: {
+          line: 185,
+          column: 45
+        }
+      },
+      "81": {
+        start: {
+          line: 186,
+          column: 30
+        },
+        end: {
+          line: 186,
+          column: 57
+        }
+      },
+      "82": {
+        start: {
+          line: 187,
+          column: 29
+        },
+        end: {
+          line: 187,
+          column: 107
+        }
+      },
+      "83": {
+        start: {
+          line: 189,
+          column: 8
+        },
+        end: {
+          line: 194,
+          column: 9
+        }
+      },
+      "84": {
+        start: {
+          line: 190,
+          column: 10
+        },
+        end: {
+          line: 190,
+          column: 19
+        }
+      },
+      "85": {
+        start: {
+          line: 191,
+          column: 10
+        },
+        end: {
+          line: 191,
+          column: 29
+        }
+      },
+      "86": {
+        start: {
+          line: 192,
+          column: 10
+        },
+        end: {
+          line: 192,
+          column: 29
+        }
+      },
+      "87": {
+        start: {
+          line: 193,
+          column: 10
+        },
+        end: {
+          line: 193,
+          column: 41
+        }
+      },
+      "88": {
+        start: {
+          line: 198,
+          column: 4
+        },
+        end: {
+          line: 218,
+          column: 5
+        }
+      },
+      "89": {
+        start: {
+          line: 199,
+          column: 6
+        },
+        end: {
+          line: 217,
+          column: 7
+        }
+      },
+      "90": {
+        start: {
+          line: 200,
+          column: 25
+        },
+        end: {
+          line: 203,
+          column: 10
+        }
+      },
+      "91": {
+        start: {
+          line: 205,
+          column: 25
+        },
+        end: {
+          line: 205,
+          column: 46
+        }
+      },
+      "92": {
+        start: {
+          line: 207,
+          column: 31
+        },
+        end: {
+          line: 207,
+          column: 58
+        }
+      },
+      "93": {
+        start: {
+          line: 209,
+          column: 30
+        },
+        end: {
+          line: 209,
+          column: 111
+        }
+      },
+      "94": {
+        start: {
+          line: 211,
+          column: 8
+        },
+        end: {
+          line: 216,
+          column: 9
+        }
+      },
+      "95": {
+        start: {
+          line: 212,
+          column: 10
+        },
+        end: {
+          line: 212,
+          column: 19
+        }
+      },
+      "96": {
+        start: {
+          line: 213,
+          column: 10
+        },
+        end: {
+          line: 213,
+          column: 30
+        }
+      },
+      "97": {
+        start: {
+          line: 214,
+          column: 10
+        },
+        end: {
+          line: 214,
+          column: 30
+        }
+      },
+      "98": {
+        start: {
+          line: 215,
+          column: 10
+        },
+        end: {
+          line: 215,
+          column: 42
+        }
+      },
+      "99": {
+        start: {
+          line: 220,
+          column: 4
+        },
+        end: {
+          line: 223,
+          column: 5
+        }
+      },
+      "100": {
+        start: {
+          line: 221,
+          column: 6
+        },
+        end: {
+          line: 221,
+          column: 90
+        }
+      },
+      "101": {
+        start: {
+          line: 222,
+          column: 6
+        },
+        end: {
+          line: 222,
+          column: 58
+        }
+      },
+      "102": {
+        start: {
+          line: 225,
+          column: 4
+        },
+        end: {
+          line: 225,
+          column: 93
+        }
+      },
+      "103": {
+        start: {
+          line: 226,
+          column: 4
+        },
+        end: {
+          line: 226,
+          column: 93
+        }
+      },
+      "104": {
+        start: {
+          line: 228,
+          column: 4
+        },
+        end: {
+          line: 230,
+          column: 5
+        }
+      },
+      "105": {
+        start: {
+          line: 229,
+          column: 6
+        },
+        end: {
+          line: 229,
+          column: 90
+        }
+      },
+      "106": {
+        start: {
+          line: 233,
+          column: 2
+        },
+        end: {
+          line: 235,
+          column: 3
+        }
+      },
+      "107": {
+        start: {
+          line: 234,
+          column: 4
+        },
+        end: {
+          line: 234,
+          column: 43
+        }
+      },
+      "108": {
+        start: {
+          line: 237,
+          column: 2
+        },
+        end: {
+          line: 239,
+          column: 3
+        }
+      },
+      "109": {
+        start: {
+          line: 238,
+          column: 4
+        },
+        end: {
+          line: 238,
+          column: 45
+        }
+      },
+      "110": {
+        start: {
+          line: 241,
+          column: 22
+        },
+        end: {
+          line: 241,
+          column: 45
+        }
+      },
+      "111": {
+        start: {
+          line: 242,
+          column: 18
+        },
+        end: {
+          line: 242,
+          column: 99
+        }
+      },
+      "112": {
+        start: {
+          line: 243,
+          column: 19
+        },
+        end: {
+          line: 243,
+          column: 102
+        }
+      },
+      "113": {
+        start: {
+          line: 244,
+          column: 2
+        },
+        end: {
+          line: 247,
+          column: 5
+        }
+      },
+      "114": {
+        start: {
+          line: 249,
+          column: 2
+        },
+        end: {
+          line: 253,
+          column: 3
+        }
+      },
+      "115": {
+        start: {
+          line: 250,
+          column: 4
+        },
+        end: {
+          line: 250,
+          column: 36
+        }
+      },
+      "116": {
+        start: {
+          line: 252,
+          column: 4
+        },
+        end: {
+          line: 252,
+          column: 31
+        }
+      },
+      "117": {
+        start: {
+          line: 255,
+          column: 2
+        },
+        end: {
+          line: 260,
+          column: 4
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "isFailX",
+        decl: {
+          start: {
+            line: 16,
+            column: 9
+          },
+          end: {
+            line: 16,
+            column: 16
+          }
+        },
+        loc: {
+          start: {
+            line: 16,
+            column: 53
+          },
+          end: {
+            line: 18,
+            column: 1
+          }
+        },
+        line: 16
+      },
+      "1": {
+        name: "isFailY",
+        decl: {
+          start: {
+            line: 20,
+            column: 9
+          },
+          end: {
+            line: 20,
+            column: 16
+          }
+        },
+        loc: {
+          start: {
+            line: 20,
+            column: 53
+          },
+          end: {
+            line: 22,
+            column: 1
+          }
+        },
+        line: 20
+      },
+      "2": {
+        name: "isCompleteFailX",
+        decl: {
+          start: {
+            line: 24,
+            column: 9
+          },
+          end: {
+            line: 24,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 24,
+            column: 61
+          },
+          end: {
+            line: 26,
+            column: 1
+          }
+        },
+        line: 24
+      },
+      "3": {
+        name: "isCompleteFailY",
+        decl: {
+          start: {
+            line: 28,
+            column: 9
+          },
+          end: {
+            line: 28,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 28,
+            column: 61
+          },
+          end: {
+            line: 30,
+            column: 1
+          }
+        },
+        line: 28
+      },
+      "4": {
+        name: "getVisibleRectForElement",
+        decl: {
+          start: {
+            line: 32,
+            column: 9
+          },
+          end: {
+            line: 32,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 32,
+            column: 36
+          },
+          end: {
+            line: 40,
+            column: 1
+          }
+        },
+        line: 32
+      },
+      "5": {
+        name: "getRegion",
+        decl: {
+          start: {
+            line: 42,
+            column: 9
+          },
+          end: {
+            line: 42,
+            column: 18
+          }
+        },
+        loc: {
+          start: {
+            line: 42,
+            column: 25
+          },
+          end: {
+            line: 50,
+            column: 1
+          }
+        },
+        line: 42
+      },
+      "6": {
+        name: "isOutOfVisibleRect",
+        decl: {
+          start: {
+            line: 52,
+            column: 9
+          },
+          end: {
+            line: 52,
+            column: 27
+          }
+        },
+        loc: {
+          start: {
+            line: 52,
+            column: 36
+          },
+          end: {
+            line: 56,
+            column: 1
+          }
+        },
+        line: 52
+      },
+      "7": {
+        name: "flip",
+        decl: {
+          start: {
+            line: 58,
+            column: 9
+          },
+          end: {
+            line: 58,
+            column: 13
+          }
+        },
+        loc: {
+          start: {
+            line: 58,
+            column: 32
+          },
+          end: {
+            line: 64,
+            column: 1
+          }
+        },
+        line: 58
+      },
+      "8": {
+        name: "(anonymous_8)",
+        decl: {
+          start: {
+            line: 59,
+            column: 20
+          },
+          end: {
+            line: 59,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 59,
+            column: 33
+          },
+          end: {
+            line: 63,
+            column: 3
+          }
+        },
+        line: 59
+      },
+      "9": {
+        name: "(anonymous_9)",
+        decl: {
+          start: {
+            line: 60,
+            column: 26
+          },
+          end: {
+            line: 60,
+            column: 27
+          }
+        },
+        loc: {
+          start: {
+            line: 60,
+            column: 39
+          },
+          end: {
+            line: 62,
+            column: 5
+          }
+        },
+        line: 60
+      },
+      "10": {
+        name: "flipOffset",
+        decl: {
+          start: {
+            line: 66,
+            column: 9
+          },
+          end: {
+            line: 66,
+            column: 19
+          }
+        },
+        loc: {
+          start: {
+            line: 66,
+            column: 35
+          },
+          end: {
+            line: 69,
+            column: 1
+          }
+        },
+        line: 66
+      },
+      "11": {
+        name: "getAlignOffset",
+        decl: {
+          start: {
+            line: 71,
+            column: 9
+          },
+          end: {
+            line: 71,
+            column: 23
+          }
+        },
+        loc: {
+          start: {
+            line: 71,
+            column: 39
+          },
+          end: {
+            line: 95,
+            column: 1
+          }
+        },
+        line: 71
+      },
+      "12": {
+        name: "getElFuturePos",
+        decl: {
+          start: {
+            line: 97,
+            column: 9
+          },
+          end: {
+            line: 97,
+            column: 23
+          }
+        },
+        loc: {
+          start: {
+            line: 97,
+            column: 79
+          },
+          end: {
+            line: 105,
+            column: 1
+          }
+        },
+        line: 97
+      },
+      "13": {
+        name: "adjustForViewport",
+        decl: {
+          start: {
+            line: 107,
+            column: 9
+          },
+          end: {
+            line: 107,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 107,
+            column: 73
+          },
+          end: {
+            line: 146,
+            column: 1
+          }
+        },
+        line: 107
+      },
+      "14": {
+        name: "isFixedPosition",
+        decl: {
+          start: {
+            line: 148,
+            column: 9
+          },
+          end: {
+            line: 148,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 148,
+            column: 31
+          },
+          end: {
+            line: 160,
+            column: 1
+          }
+        },
+        line: 148
+      },
+      "15": {
+        name: "_default",
+        decl: {
+          start: {
+            line: 162,
+            column: 9
+          },
+          end: {
+            line: 162,
+            column: 17
+          }
+        },
+        loc: {
+          start: {
+            line: 162,
+            column: 38
+          },
+          end: {
+            line: 261,
+            column: 1
+          }
+        },
+        line: 162
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 17,
+            column: 9
+          },
+          end: {
+            line: 17,
+            column: 101
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 17,
+            column: 9
+          },
+          end: {
+            line: 17,
+            column: 44
+          }
+        }, {
+          start: {
+            line: 17,
+            column: 48
+          },
+          end: {
+            line: 17,
+            column: 101
+          }
+        }],
+        line: 17
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 21,
+            column: 9
+          },
+          end: {
+            line: 21,
+            column: 100
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 21,
+            column: 9
+          },
+          end: {
+            line: 21,
+            column: 42
+          }
+        }, {
+          start: {
+            line: 21,
+            column: 46
+          },
+          end: {
+            line: 21,
+            column: 100
+          }
+        }],
+        line: 21
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 25,
+            column: 9
+          },
+          end: {
+            line: 25,
+            column: 101
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 25,
+            column: 9
+          },
+          end: {
+            line: 25,
+            column: 45
+          }
+        }, {
+          start: {
+            line: 25,
+            column: 49
+          },
+          end: {
+            line: 25,
+            column: 101
+          }
+        }],
+        line: 25
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 29,
+            column: 9
+          },
+          end: {
+            line: 29,
+            column: 100
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 29,
+            column: 9
+          },
+          end: {
+            line: 29,
+            column: 45
+          }
+        }, {
+          start: {
+            line: 29,
+            column: 49
+          },
+          end: {
+            line: 29,
+            column: 100
+          }
+        }],
+        line: 29
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 55,
+            column: 9
+          },
+          end: {
+            line: 55,
+            column: 228
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 55,
+            column: 9
+          },
+          end: {
+            line: 55,
+            column: 21
+          }
+        }, {
+          start: {
+            line: 55,
+            column: 25
+          },
+          end: {
+            line: 55,
+            column: 83
+          }
+        }, {
+          start: {
+            line: 55,
+            column: 87
+          },
+          end: {
+            line: 55,
+            column: 144
+          }
+        }, {
+          start: {
+            line: 55,
+            column: 148
+          },
+          end: {
+            line: 55,
+            column: 186
+          }
+        }, {
+          start: {
+            line: 55,
+            column: 190
+          },
+          end: {
+            line: 55,
+            column: 228
+          }
+        }],
+        line: 55
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 79,
+            column: 2
+          },
+          end: {
+            line: 83,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 79,
+            column: 2
+          },
+          end: {
+            line: 83,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 79,
+            column: 2
+          },
+          end: {
+            line: 83,
+            column: 3
+          }
+        }],
+        line: 79
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 81,
+            column: 9
+          },
+          end: {
+            line: 83,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 81,
+            column: 9
+          },
+          end: {
+            line: 83,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 81,
+            column: 9
+          },
+          end: {
+            line: 83,
+            column: 3
+          }
+        }],
+        line: 81
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 85,
+            column: 2
+          },
+          end: {
+            line: 89,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 85,
+            column: 2
+          },
+          end: {
+            line: 89,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 85,
+            column: 2
+          },
+          end: {
+            line: 89,
+            column: 3
+          }
+        }],
+        line: 85
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 87,
+            column: 9
+          },
+          end: {
+            line: 89,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 87,
+            column: 9
+          },
+          end: {
+            line: 89,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 87,
+            column: 9
+          },
+          end: {
+            line: 89,
+            column: 3
+          }
+        }],
+        line: 87
+      },
+      "9": {
+        loc: {
+          start: {
+            line: 114,
+            column: 2
+          },
+          end: {
+            line: 116,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 114,
+            column: 2
+          },
+          end: {
+            line: 116,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 114,
+            column: 2
+          },
+          end: {
+            line: 116,
+            column: 3
+          }
+        }],
+        line: 114
+      },
+      "10": {
+        loc: {
+          start: {
+            line: 114,
+            column: 6
+          },
+          end: {
+            line: 114,
+            column: 53
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 114,
+            column: 6
+          },
+          end: {
+            line: 114,
+            column: 22
+          }
+        }, {
+          start: {
+            line: 114,
+            column: 26
+          },
+          end: {
+            line: 114,
+            column: 53
+          }
+        }],
+        line: 114
+      },
+      "11": {
+        loc: {
+          start: {
+            line: 119,
+            column: 2
+          },
+          end: {
+            line: 121,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 119,
+            column: 2
+          },
+          end: {
+            line: 121,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 119,
+            column: 2
+          },
+          end: {
+            line: 121,
+            column: 3
+          }
+        }],
+        line: 119
+      },
+      "12": {
+        loc: {
+          start: {
+            line: 119,
+            column: 6
+          },
+          end: {
+            line: 119,
+            column: 103
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 119,
+            column: 6
+          },
+          end: {
+            line: 119,
+            column: 26
+          }
+        }, {
+          start: {
+            line: 119,
+            column: 30
+          },
+          end: {
+            line: 119,
+            column: 58
+          }
+        }, {
+          start: {
+            line: 119,
+            column: 62
+          },
+          end: {
+            line: 119,
+            column: 103
+          }
+        }],
+        line: 119
+      },
+      "13": {
+        loc: {
+          start: {
+            line: 124,
+            column: 2
+          },
+          end: {
+            line: 127,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 124,
+            column: 2
+          },
+          end: {
+            line: 127,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 124,
+            column: 2
+          },
+          end: {
+            line: 127,
+            column: 3
+          }
+        }],
+        line: 124
+      },
+      "14": {
+        loc: {
+          start: {
+            line: 124,
+            column: 6
+          },
+          end: {
+            line: 124,
+            column: 67
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 124,
+            column: 6
+          },
+          end: {
+            line: 124,
+            column: 22
+          }
+        }, {
+          start: {
+            line: 124,
+            column: 26
+          },
+          end: {
+            line: 124,
+            column: 67
+          }
+        }],
+        line: 124
+      },
+      "15": {
+        loc: {
+          start: {
+            line: 130,
+            column: 2
+          },
+          end: {
+            line: 132,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 130,
+            column: 2
+          },
+          end: {
+            line: 132,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 130,
+            column: 2
+          },
+          end: {
+            line: 132,
+            column: 3
+          }
+        }],
+        line: 130
+      },
+      "16": {
+        loc: {
+          start: {
+            line: 130,
+            column: 6
+          },
+          end: {
+            line: 130,
+            column: 51
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 130,
+            column: 6
+          },
+          end: {
+            line: 130,
+            column: 22
+          }
+        }, {
+          start: {
+            line: 130,
+            column: 26
+          },
+          end: {
+            line: 130,
+            column: 51
+          }
+        }],
+        line: 130
+      },
+      "17": {
+        loc: {
+          start: {
+            line: 135,
+            column: 2
+          },
+          end: {
+            line: 137,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 135,
+            column: 2
+          },
+          end: {
+            line: 137,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 135,
+            column: 2
+          },
+          end: {
+            line: 137,
+            column: 3
+          }
+        }],
+        line: 135
+      },
+      "18": {
+        loc: {
+          start: {
+            line: 135,
+            column: 6
+          },
+          end: {
+            line: 135,
+            column: 103
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 135,
+            column: 6
+          },
+          end: {
+            line: 135,
+            column: 27
+          }
+        }, {
+          start: {
+            line: 135,
+            column: 31
+          },
+          end: {
+            line: 135,
+            column: 57
+          }
+        }, {
+          start: {
+            line: 135,
+            column: 61
+          },
+          end: {
+            line: 135,
+            column: 103
+          }
+        }],
+        line: 135
+      },
+      "19": {
+        loc: {
+          start: {
+            line: 140,
+            column: 2
+          },
+          end: {
+            line: 143,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 140,
+            column: 2
+          },
+          end: {
+            line: 143,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 140,
+            column: 2
+          },
+          end: {
+            line: 143,
+            column: 3
+          }
+        }],
+        line: 140
+      },
+      "20": {
+        loc: {
+          start: {
+            line: 140,
+            column: 6
+          },
+          end: {
+            line: 140,
+            column: 68
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 140,
+            column: 6
+          },
+          end: {
+            line: 140,
+            column: 22
+          }
+        }, {
+          start: {
+            line: 140,
+            column: 26
+          },
+          end: {
+            line: 140,
+            column: 68
+          }
+        }],
+        line: 140
+      },
+      "21": {
+        loc: {
+          start: {
+            line: 151,
+            column: 2
+          },
+          end: {
+            line: 153,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 151,
+            column: 2
+          },
+          end: {
+            line: 153,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 151,
+            column: 2
+          },
+          end: {
+            line: 153,
+            column: 3
+          }
+        }],
+        line: 151
+      },
+      "22": {
+        loc: {
+          start: {
+            line: 151,
+            column: 6
+          },
+          end: {
+            line: 151,
+            column: 128
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 151,
+            column: 6
+          },
+          end: {
+            line: 151,
+            column: 36
+          }
+        }, {
+          start: {
+            line: 151,
+            column: 40
+          },
+          end: {
+            line: 151,
+            column: 60
+          }
+        }, {
+          start: {
+            line: 151,
+            column: 64
+          },
+          end: {
+            line: 151,
+            column: 128
+          }
+        }],
+        line: 151
+      },
+      "23": {
+        loc: {
+          start: {
+            line: 155,
+            column: 2
+          },
+          end: {
+            line: 157,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 155,
+            column: 2
+          },
+          end: {
+            line: 157,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 155,
+            column: 2
+          },
+          end: {
+            line: 157,
+            column: 3
+          }
+        }],
+        line: 155
+      },
+      "24": {
+        loc: {
+          start: {
+            line: 164,
+            column: 16
+          },
+          end: {
+            line: 164,
+            column: 38
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 164,
+            column: 16
+          },
+          end: {
+            line: 164,
+            column: 28
+          }
+        }, {
+          start: {
+            line: 164,
+            column: 32
+          },
+          end: {
+            line: 164,
+            column: 38
+          }
+        }],
+        line: 164
+      },
+      "25": {
+        loc: {
+          start: {
+            line: 165,
+            column: 22
+          },
+          end: {
+            line: 165,
+            column: 50
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 165,
+            column: 22
+          },
+          end: {
+            line: 165,
+            column: 40
+          }
+        }, {
+          start: {
+            line: 165,
+            column: 44
+          },
+          end: {
+            line: 165,
+            column: 50
+          }
+        }],
+        line: 165
+      },
+      "26": {
+        loc: {
+          start: {
+            line: 166,
+            column: 17
+          },
+          end: {
+            line: 166,
+            column: 37
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 166,
+            column: 17
+          },
+          end: {
+            line: 166,
+            column: 31
+          }
+        }, {
+          start: {
+            line: 166,
+            column: 35
+          },
+          end: {
+            line: 166,
+            column: 37
+          }
+        }],
+        line: 166
+      },
+      "27": {
+        loc: {
+          start: {
+            line: 167,
+            column: 15
+          },
+          end: {
+            line: 167,
+            column: 38
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 167,
+            column: 15
+          },
+          end: {
+            line: 167,
+            column: 27
+          }
+        }, {
+          start: {
+            line: 167,
+            column: 31
+          },
+          end: {
+            line: 167,
+            column: 38
+          }
+        }],
+        line: 167
+      },
+      "28": {
+        loc: {
+          start: {
+            line: 168,
+            column: 15
+          },
+          end: {
+            line: 168,
+            column: 33
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 168,
+            column: 15
+          },
+          end: {
+            line: 168,
+            column: 27
+          }
+        }, {
+          start: {
+            line: 168,
+            column: 31
+          },
+          end: {
+            line: 168,
+            column: 33
+          }
+        }],
+        line: 168
+      },
+      "29": {
+        loc: {
+          start: {
+            line: 178,
+            column: 2
+          },
+          end: {
+            line: 231,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 178,
+            column: 2
+          },
+          end: {
+            line: 231,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 178,
+            column: 2
+          },
+          end: {
+            line: 231,
+            column: 3
+          }
+        }],
+        line: 178
+      },
+      "30": {
+        loc: {
+          start: {
+            line: 178,
+            column: 6
+          },
+          end: {
+            line: 178,
+            column: 86
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 178,
+            column: 6
+          },
+          end: {
+            line: 178,
+            column: 17
+          }
+        }, {
+          start: {
+            line: 178,
+            column: 22
+          },
+          end: {
+            line: 178,
+            column: 38
+          }
+        }, {
+          start: {
+            line: 178,
+            column: 42
+          },
+          end: {
+            line: 178,
+            column: 58
+          }
+        }, {
+          start: {
+            line: 178,
+            column: 63
+          },
+          end: {
+            line: 178,
+            column: 86
+          }
+        }],
+        line: 178
+      },
+      "31": {
+        loc: {
+          start: {
+            line: 179,
+            column: 4
+          },
+          end: {
+            line: 196,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 179,
+            column: 4
+          },
+          end: {
+            line: 196,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 179,
+            column: 4
+          },
+          end: {
+            line: 196,
+            column: 5
+          }
+        }],
+        line: 179
+      },
+      "32": {
+        loc: {
+          start: {
+            line: 180,
+            column: 6
+          },
+          end: {
+            line: 195,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 180,
+            column: 6
+          },
+          end: {
+            line: 195,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 180,
+            column: 6
+          },
+          end: {
+            line: 195,
+            column: 7
+          }
+        }],
+        line: 180
+      },
+      "33": {
+        loc: {
+          start: {
+            line: 189,
+            column: 8
+          },
+          end: {
+            line: 194,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 189,
+            column: 8
+          },
+          end: {
+            line: 194,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 189,
+            column: 8
+          },
+          end: {
+            line: 194,
+            column: 9
+          }
+        }],
+        line: 189
+      },
+      "34": {
+        loc: {
+          start: {
+            line: 198,
+            column: 4
+          },
+          end: {
+            line: 218,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 198,
+            column: 4
+          },
+          end: {
+            line: 218,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 198,
+            column: 4
+          },
+          end: {
+            line: 218,
+            column: 5
+          }
+        }],
+        line: 198
+      },
+      "35": {
+        loc: {
+          start: {
+            line: 199,
+            column: 6
+          },
+          end: {
+            line: 217,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 199,
+            column: 6
+          },
+          end: {
+            line: 217,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 199,
+            column: 6
+          },
+          end: {
+            line: 217,
+            column: 7
+          }
+        }],
+        line: 199
+      },
+      "36": {
+        loc: {
+          start: {
+            line: 211,
+            column: 8
+          },
+          end: {
+            line: 216,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 211,
+            column: 8
+          },
+          end: {
+            line: 216,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 211,
+            column: 8
+          },
+          end: {
+            line: 216,
+            column: 9
+          }
+        }],
+        line: 211
+      },
+      "37": {
+        loc: {
+          start: {
+            line: 220,
+            column: 4
+          },
+          end: {
+            line: 223,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 220,
+            column: 4
+          },
+          end: {
+            line: 223,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 220,
+            column: 4
+          },
+          end: {
+            line: 223,
+            column: 5
+          }
+        }],
+        line: 220
+      },
+      "38": {
+        loc: {
+          start: {
+            line: 225,
+            column: 29
+          },
+          end: {
+            line: 225,
+            column: 92
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 225,
+            column: 29
+          },
+          end: {
+            line: 225,
+            column: 45
+          }
+        }, {
+          start: {
+            line: 225,
+            column: 49
+          },
+          end: {
+            line: 225,
+            column: 92
+          }
+        }],
+        line: 225
+      },
+      "39": {
+        loc: {
+          start: {
+            line: 226,
+            column: 29
+          },
+          end: {
+            line: 226,
+            column: 92
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 226,
+            column: 29
+          },
+          end: {
+            line: 226,
+            column: 45
+          }
+        }, {
+          start: {
+            line: 226,
+            column: 49
+          },
+          end: {
+            line: 226,
+            column: 92
+          }
+        }],
+        line: 226
+      },
+      "40": {
+        loc: {
+          start: {
+            line: 228,
+            column: 4
+          },
+          end: {
+            line: 230,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 228,
+            column: 4
+          },
+          end: {
+            line: 230,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 228,
+            column: 4
+          },
+          end: {
+            line: 230,
+            column: 5
+          }
+        }],
+        line: 228
+      },
+      "41": {
+        loc: {
+          start: {
+            line: 228,
+            column: 8
+          },
+          end: {
+            line: 228,
+            column: 56
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 228,
+            column: 8
+          },
+          end: {
+            line: 228,
+            column: 30
+          }
+        }, {
+          start: {
+            line: 228,
+            column: 34
+          },
+          end: {
+            line: 228,
+            column: 56
+          }
+        }],
+        line: 228
+      },
+      "42": {
+        loc: {
+          start: {
+            line: 233,
+            column: 2
+          },
+          end: {
+            line: 235,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 233,
+            column: 2
+          },
+          end: {
+            line: 235,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 233,
+            column: 2
+          },
+          end: {
+            line: 235,
+            column: 3
+          }
+        }],
+        line: 233
+      },
+      "43": {
+        loc: {
+          start: {
+            line: 237,
+            column: 2
+          },
+          end: {
+            line: 239,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 237,
+            column: 2
+          },
+          end: {
+            line: 239,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 237,
+            column: 2
+          },
+          end: {
+            line: 239,
+            column: 3
+          }
+        }],
+        line: 237
+      },
+      "44": {
+        loc: {
+          start: {
+            line: 242,
+            column: 18
+          },
+          end: {
+            line: 242,
+            column: 99
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 242,
+            column: 34
+          },
+          end: {
+            line: 242,
+            column: 35
+          }
+        }, {
+          start: {
+            line: 242,
+            column: 38
+          },
+          end: {
+            line: 242,
+            column: 99
+          }
+        }],
+        line: 242
+      },
+      "45": {
+        loc: {
+          start: {
+            line: 242,
+            column: 38
+          },
+          end: {
+            line: 242,
+            column: 99
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 242,
+            column: 38
+          },
+          end: {
+            line: 242,
+            column: 72
+          }
+        }, {
+          start: {
+            line: 242,
+            column: 76
+          },
+          end: {
+            line: 242,
+            column: 99
+          }
+        }],
+        line: 242
+      },
+      "46": {
+        loc: {
+          start: {
+            line: 243,
+            column: 19
+          },
+          end: {
+            line: 243,
+            column: 102
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 243,
+            column: 35
+          },
+          end: {
+            line: 243,
+            column: 36
+          }
+        }, {
+          start: {
+            line: 243,
+            column: 39
+          },
+          end: {
+            line: 243,
+            column: 102
+          }
+        }],
+        line: 243
+      },
+      "47": {
+        loc: {
+          start: {
+            line: 243,
+            column: 39
+          },
+          end: {
+            line: 243,
+            column: 102
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 243,
+            column: 39
+          },
+          end: {
+            line: 243,
+            column: 74
+          }
+        }, {
+          start: {
+            line: 243,
+            column: 78
+          },
+          end: {
+            line: 243,
+            column: 102
+          }
+        }],
+        line: 243
+      },
+      "48": {
+        loc: {
+          start: {
+            line: 249,
+            column: 2
+          },
+          end: {
+            line: 253,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 249,
+            column: 2
+          },
+          end: {
+            line: 253,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 249,
+            column: 2
+          },
+          end: {
+            line: 253,
+            column: 3
+          }
+        }],
+        line: 249
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0,
+      "81": 0,
+      "82": 0,
+      "83": 0,
+      "84": 0,
+      "85": 0,
+      "86": 0,
+      "87": 0,
+      "88": 0,
+      "89": 0,
+      "90": 0,
+      "91": 0,
+      "92": 0,
+      "93": 0,
+      "94": 0,
+      "95": 0,
+      "96": 0,
+      "97": 0,
+      "98": 0,
+      "99": 0,
+      "100": 0,
+      "101": 0,
+      "102": 0,
+      "103": 0,
+      "104": 0,
+      "105": 0,
+      "106": 0,
+      "107": 0,
+      "108": 0,
+      "109": 0,
+      "110": 0,
+      "111": 0,
+      "112": 0,
+      "113": 0,
+      "114": 0,
+      "115": 0,
+      "116": 0,
+      "117": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0, 0, 0, 0],
+      "5": [0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0],
+      "9": [0, 0],
+      "10": [0, 0],
+      "11": [0, 0],
+      "12": [0, 0, 0],
+      "13": [0, 0],
+      "14": [0, 0],
+      "15": [0, 0],
+      "16": [0, 0],
+      "17": [0, 0],
+      "18": [0, 0, 0],
+      "19": [0, 0],
+      "20": [0, 0],
+      "21": [0, 0],
+      "22": [0, 0, 0],
+      "23": [0, 0],
+      "24": [0, 0],
+      "25": [0, 0],
+      "26": [0, 0],
+      "27": [0, 0],
+      "28": [0, 0],
+      "29": [0, 0],
+      "30": [0, 0, 0, 0],
+      "31": [0, 0],
+      "32": [0, 0],
+      "33": [0, 0],
+      "34": [0, 0],
+      "35": [0, 0],
+      "36": [0, 0],
+      "37": [0, 0],
+      "38": [0, 0],
+      "39": [0, 0],
+      "40": [0, 0],
+      "41": [0, 0],
+      "42": [0, 0],
+      "43": [0, 0],
+      "44": [0, 0],
+      "45": [0, 0],
+      "46": [0, 0],
+      "47": [0, 0],
+      "48": [0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "e162f7163acdfa0b3d1364234e029dcf52df6aa4"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_qbfkx7awl.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_qbfkx7awl.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_qbfkx7awl.s[2]++;
+exports["default"] = _default;
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_qbfkx7awl.s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _objectSpread2 =
+/* istanbul ignore next */
+(cov_qbfkx7awl.s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2")));
+
+var _UnitConvertor =
+/* istanbul ignore next */
+(cov_qbfkx7awl.s[5]++, require("../_util/UnitConvertor"));
+
+function isFailX(elFuturePos, elRegion, visibleRect) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[0]++;
+  cov_qbfkx7awl.s[6]++;
+  return (
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[0][0]++, elFuturePos.left < visibleRect.left) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[0][1]++, elFuturePos.left + elRegion.width > visibleRect.right)
+  );
+}
+
+function isFailY(elFuturePos, elRegion, visibleRect) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[1]++;
+  cov_qbfkx7awl.s[7]++;
+  return (
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[1][0]++, elFuturePos.top < visibleRect.top) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[1][1]++, elFuturePos.top + elRegion.height > visibleRect.bottom)
+  );
+}
+
+function isCompleteFailX(elFuturePos, elRegion, visibleRect) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[2]++;
+  cov_qbfkx7awl.s[8]++;
+  return (
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[2][0]++, elFuturePos.left > visibleRect.right) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[2][1]++, elFuturePos.left + elRegion.width < visibleRect.left)
+  );
+}
+
+function isCompleteFailY(elFuturePos, elRegion, visibleRect) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[3]++;
+  cov_qbfkx7awl.s[9]++;
+  return (
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[3][0]++, elFuturePos.top > visibleRect.bottom) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[3][1]++, elFuturePos.top + elRegion.height < visibleRect.top)
+  );
+}
+
+function getVisibleRectForElement() {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[4]++;
+  var body =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[10]++, document.body);
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[11]++;
+  return {
+    top: 0,
+    right: body.clientWidth,
+    bottom: body.clientHeight,
+    left: 0
+  };
+}
+
+function getRegion(node) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[5]++;
+  var rect =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[12]++, node.getBoundingClientRect());
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[13]++;
+  return {
+    top: rect.top,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height
+  };
+}
+
+function isOutOfVisibleRect(target) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[6]++;
+  var visibleRect =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[14]++, getVisibleRectForElement());
+  var targetRegion =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[15]++, getRegion(target));
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[16]++;
+  return (
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[4][0]++, !visibleRect) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[4][1]++, targetRegion.left + targetRegion.width <= visibleRect.left) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[4][2]++, targetRegion.top + targetRegion.height <= visibleRect.top) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[4][3]++, targetRegion.left >= visibleRect.right) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[4][4]++, targetRegion.top >= visibleRect.bottom)
+  );
+}
+
+function flip(points, reg, map) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[7]++;
+  cov_qbfkx7awl.s[17]++;
+  return points.map(function (p) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.f[8]++;
+    cov_qbfkx7awl.s[18]++;
+    return p.replace(reg, function (m) {
+      /* istanbul ignore next */
+      cov_qbfkx7awl.f[9]++;
+      cov_qbfkx7awl.s[19]++;
+      return map[m];
+    });
+  });
+}
+
+function flipOffset(offset, index) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[10]++;
+  cov_qbfkx7awl.s[20]++;
+  offset[index] = -offset[index];
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[21]++;
+  return offset;
+}
+
+function getAlignOffset(region, align) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[11]++;
+  var V =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[22]++, align.charAt(0));
+  var H =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[23]++, align.charAt(1));
+  var w =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[24]++, region.width);
+  var h =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[25]++, region.height);
+  var x =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[26]++, region.left);
+  var y =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[27]++, region.top);
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[28]++;
+
+  if (V === 'c') {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[5][0]++;
+    cov_qbfkx7awl.s[29]++;
+    y += h / 2;
+  } else {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[5][1]++;
+    cov_qbfkx7awl.s[30]++;
+
+    if (V === 'b') {
+      /* istanbul ignore next */
+      cov_qbfkx7awl.b[6][0]++;
+      cov_qbfkx7awl.s[31]++;
+      y += h;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_qbfkx7awl.b[6][1]++;
+    }
+  }
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[32]++;
+
+  if (H === 'c') {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[7][0]++;
+    cov_qbfkx7awl.s[33]++;
+    x += w / 2;
+  } else {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[7][1]++;
+    cov_qbfkx7awl.s[34]++;
+
+    if (H === 'r') {
+      /* istanbul ignore next */
+      cov_qbfkx7awl.b[8][0]++;
+      cov_qbfkx7awl.s[35]++;
+      x += w;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_qbfkx7awl.b[8][1]++;
+    }
+  }
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[36]++;
+  return {
+    left: x,
+    top: y
+  };
+}
+
+function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[12]++;
+  var p1 =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[37]++, getAlignOffset(refNodeRegion, points[1]));
+  var p2 =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[38]++, getAlignOffset(elRegion, points[0]));
+  var diff =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[39]++, [p2.left - p1.left, p2.top - p1.top]);
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[40]++;
+  return {
+    left: elRegion.left - diff[0] + offset[0] - targetOffset[0],
+    top: elRegion.top - diff[1] + offset[1] - targetOffset[1]
+  };
+}
+
+function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[13]++;
+  var pos =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[41]++, (0, _objectSpread2["default"])({}, elFuturePos));
+  var size =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[42]++, {
+    width: elRegion.width,
+    height: elRegion.height
+  });
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[43]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[10][0]++, overflow.adjustX) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[10][1]++, pos.left < visibleRect.left)) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[9][0]++;
+    cov_qbfkx7awl.s[44]++;
+    pos.left = visibleRect.left;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[9][1]++;
+  } // Left edge inside and right edge outside viewport, try to resize it.
+
+
+  cov_qbfkx7awl.s[45]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[12][0]++, overflow.resizeWidth) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[12][1]++, pos.left >= visibleRect.left) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[12][2]++, pos.left + size.width > visibleRect.right)) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[11][0]++;
+    cov_qbfkx7awl.s[46]++;
+    size.width -= pos.left + size.width - visibleRect.right;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[11][1]++;
+  } // Right edge outside viewport, try to move it.
+
+
+  cov_qbfkx7awl.s[47]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[14][0]++, overflow.adjustX) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[14][1]++, pos.left + size.width > visibleRect.right)) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[13][0]++;
+    cov_qbfkx7awl.s[48]++;
+    // 保证左边界和可视区域左边界对齐
+    pos.left = Math.max(visibleRect.right - size.width, visibleRect.left);
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[13][1]++;
+  } // Top edge outside viewport, try to move it.
+
+
+  cov_qbfkx7awl.s[49]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[16][0]++, overflow.adjustY) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[16][1]++, pos.top < visibleRect.top)) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[15][0]++;
+    cov_qbfkx7awl.s[50]++;
+    pos.top = visibleRect.top;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[15][1]++;
+  } // Top edge inside and bottom edge outside viewport, try to resize it.
+
+
+  cov_qbfkx7awl.s[51]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[18][0]++, overflow.resizeHeight) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[18][1]++, pos.top >= visibleRect.top) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[18][2]++, pos.top + size.height > visibleRect.bottom)) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[17][0]++;
+    cov_qbfkx7awl.s[52]++;
+    size.height -= pos.top + size.height - visibleRect.bottom;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[17][1]++;
+  } // Bottom edge outside viewport, try to move it.
+
+
+  cov_qbfkx7awl.s[53]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[20][0]++, overflow.adjustY) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[20][1]++, pos.top + size.height > visibleRect.bottom)) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[19][0]++;
+    cov_qbfkx7awl.s[54]++;
+    // 保证上边界和可视区域上边界对齐
+    pos.top = Math.max(visibleRect.bottom - size.height, visibleRect.top);
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[19][1]++;
+  }
+
+  cov_qbfkx7awl.s[55]++;
+  return (0, _extends2["default"])(pos, size);
+}
+
+function isFixedPosition(node) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[14]++;
+  var offsetParent =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[56]++, node.offsetParent);
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[57]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[22][0]++, offsetParent === document.body) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[22][1]++, document.defaultView) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[22][2]++, document.defaultView.getComputedStyle(node).position !== 'fixed')) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[21][0]++;
+    cov_qbfkx7awl.s[58]++;
+    return false;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[21][1]++;
+  }
+
+  cov_qbfkx7awl.s[59]++;
+
+  if (offsetParent === null) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[23][0]++;
+    cov_qbfkx7awl.s[60]++;
+    return true;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[23][1]++;
+  }
+
+  cov_qbfkx7awl.s[61]++;
+  return isFixedPosition(offsetParent);
+}
+
+function _default(el, refNode, align) {
+  /* istanbul ignore next */
+  cov_qbfkx7awl.f[15]++;
+  var points =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[62]++, align.points);
+  var offset =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[63]++, (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[24][0]++, align.offset) ||
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[24][1]++, [0, 0])).slice());
+  var targetOffset =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[64]++, (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[25][0]++, align.targetOffset) ||
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[25][1]++, [0, 0])).slice());
+  var overflow =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[65]++,
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[26][0]++, align.overflow) ||
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[26][1]++, {}));
+  var target =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[66]++,
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[27][0]++, align.target) ||
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[27][1]++, refNode));
+  var source =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[67]++,
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[28][0]++, align.source) ||
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[28][1]++, el));
+  var newOverflowCfg =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[68]++, {});
+  var fail =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[69]++, 0);
+  var visibleRect =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[70]++, getVisibleRectForElement());
+  var elRegion =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[71]++, getRegion(source));
+  var refNodeRegion =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[72]++, getRegion(target));
+  var elFuturePos =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[73]++, getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset));
+  var newElRegion =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[74]++, (0, _extends2["default"])(elRegion, elFuturePos));
+  var isTargetNotOutOfVisible =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[75]++, !isOutOfVisibleRect(target));
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[76]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[30][0]++, visibleRect) && (
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[30][1]++, overflow.adjustX) ||
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[30][2]++, overflow.adjustY)) &&
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[30][3]++, isTargetNotOutOfVisible)) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[29][0]++;
+    cov_qbfkx7awl.s[77]++;
+
+    if (overflow.adjustX) {
+      /* istanbul ignore next */
+      cov_qbfkx7awl.b[31][0]++;
+      cov_qbfkx7awl.s[78]++;
+
+      if (isFailX(elFuturePos, elRegion, visibleRect)) {
+        /* istanbul ignore next */
+        cov_qbfkx7awl.b[32][0]++;
+        var newPoints =
+        /* istanbul ignore next */
+        (cov_qbfkx7awl.s[79]++, flip(points, /[lr]/gi, {
+          l: 'r',
+          r: 'l'
+        }));
+        var newOffset =
+        /* istanbul ignore next */
+        (cov_qbfkx7awl.s[80]++, flipOffset(offset, 0));
+        var newTargetOffset =
+        /* istanbul ignore next */
+        (cov_qbfkx7awl.s[81]++, flipOffset(targetOffset, 0));
+        var newElFuturePos =
+        /* istanbul ignore next */
+        (cov_qbfkx7awl.s[82]++, getElFuturePos(elRegion, refNodeRegion, newPoints, newOffset, newTargetOffset));
+
+        /* istanbul ignore next */
+        cov_qbfkx7awl.s[83]++;
+
+        if (!isCompleteFailX(newElFuturePos, elRegion, visibleRect)) {
+          /* istanbul ignore next */
+          cov_qbfkx7awl.b[33][0]++;
+          cov_qbfkx7awl.s[84]++;
+          fail = 1;
+
+          /* istanbul ignore next */
+          cov_qbfkx7awl.s[85]++;
+          points = newPoints;
+
+          /* istanbul ignore next */
+          cov_qbfkx7awl.s[86]++;
+          offset = newOffset;
+
+          /* istanbul ignore next */
+          cov_qbfkx7awl.s[87]++;
+          targetOffset = newTargetOffset;
+        } else
+        /* istanbul ignore next */
+        {
+          cov_qbfkx7awl.b[33][1]++;
+        }
+      } else
+      /* istanbul ignore next */
+      {
+        cov_qbfkx7awl.b[32][1]++;
+      }
+    } else
+    /* istanbul ignore next */
+    {
+      cov_qbfkx7awl.b[31][1]++;
+    }
+
+    cov_qbfkx7awl.s[88]++;
+
+    if (overflow.adjustY) {
+      /* istanbul ignore next */
+      cov_qbfkx7awl.b[34][0]++;
+      cov_qbfkx7awl.s[89]++;
+
+      if (isFailY(elFuturePos, elRegion, visibleRect)) {
+        /* istanbul ignore next */
+        cov_qbfkx7awl.b[35][0]++;
+
+        var _newPoints =
+        /* istanbul ignore next */
+        (cov_qbfkx7awl.s[90]++, flip(points, /[tb]/gi, {
+          t: 'b',
+          b: 't'
+        }));
+
+        var _newOffset =
+        /* istanbul ignore next */
+        (cov_qbfkx7awl.s[91]++, flipOffset(offset, 1));
+
+        var _newTargetOffset =
+        /* istanbul ignore next */
+        (cov_qbfkx7awl.s[92]++, flipOffset(targetOffset, 1));
+
+        var _newElFuturePos =
+        /* istanbul ignore next */
+        (cov_qbfkx7awl.s[93]++, getElFuturePos(elRegion, refNodeRegion, _newPoints, _newOffset, _newTargetOffset));
+
+        /* istanbul ignore next */
+        cov_qbfkx7awl.s[94]++;
+
+        if (!isCompleteFailY(_newElFuturePos, elRegion, visibleRect)) {
+          /* istanbul ignore next */
+          cov_qbfkx7awl.b[36][0]++;
+          cov_qbfkx7awl.s[95]++;
+          fail = 1;
+
+          /* istanbul ignore next */
+          cov_qbfkx7awl.s[96]++;
+          points = _newPoints;
+
+          /* istanbul ignore next */
+          cov_qbfkx7awl.s[97]++;
+          offset = _newOffset;
+
+          /* istanbul ignore next */
+          cov_qbfkx7awl.s[98]++;
+          targetOffset = _newTargetOffset;
+        } else
+        /* istanbul ignore next */
+        {
+          cov_qbfkx7awl.b[36][1]++;
+        }
+      } else
+      /* istanbul ignore next */
+      {
+        cov_qbfkx7awl.b[35][1]++;
+      }
+    } else
+    /* istanbul ignore next */
+    {
+      cov_qbfkx7awl.b[34][1]++;
+    }
+
+    cov_qbfkx7awl.s[99]++;
+
+    if (fail) {
+      /* istanbul ignore next */
+      cov_qbfkx7awl.b[37][0]++;
+      cov_qbfkx7awl.s[100]++;
+      elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset);
+
+      /* istanbul ignore next */
+      cov_qbfkx7awl.s[101]++;
+      (0, _extends2["default"])(newElRegion, elFuturePos);
+    } else
+    /* istanbul ignore next */
+    {
+      cov_qbfkx7awl.b[37][1]++;
+    }
+
+    cov_qbfkx7awl.s[102]++;
+    newOverflowCfg.adjustX =
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[38][0]++, overflow.adjustX) &&
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[38][1]++, isFailX(elFuturePos, elRegion, visibleRect));
+
+    /* istanbul ignore next */
+    cov_qbfkx7awl.s[103]++;
+    newOverflowCfg.adjustY =
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[39][0]++, overflow.adjustY) &&
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[39][1]++, isFailY(elFuturePos, elRegion, visibleRect));
+
+    /* istanbul ignore next */
+    cov_qbfkx7awl.s[104]++;
+
+    if (
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[41][0]++, newOverflowCfg.adjustX) ||
+    /* istanbul ignore next */
+    (cov_qbfkx7awl.b[41][1]++, newOverflowCfg.adjustY)) {
+      /* istanbul ignore next */
+      cov_qbfkx7awl.b[40][0]++;
+      cov_qbfkx7awl.s[105]++;
+      newElRegion = adjustForViewport(elFuturePos, elRegion, visibleRect, newOverflowCfg);
+    } else
+    /* istanbul ignore next */
+    {
+      cov_qbfkx7awl.b[40][1]++;
+    }
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[29][1]++;
+  }
+
+  cov_qbfkx7awl.s[106]++;
+
+  if (newElRegion.width !== elRegion.width) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[42][0]++;
+    cov_qbfkx7awl.s[107]++;
+    source.style.width = newElRegion.width;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[42][1]++;
+  }
+
+  cov_qbfkx7awl.s[108]++;
+
+  if (newElRegion.height !== elRegion.height) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[43][0]++;
+    cov_qbfkx7awl.s[109]++;
+    source.style.height = newElRegion.height;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_qbfkx7awl.b[43][1]++;
+  }
+
+  var isTargetFixed =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[110]++, isFixedPosition(target));
+  var scrollTop =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[111]++, isTargetFixed ?
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[44][0]++, 0) :
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[44][1]++,
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[45][0]++, document.documentElement.scrollTop) ||
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[45][1]++, document.body.scrollTop)));
+  var scrollLeft =
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.s[112]++, isTargetFixed ?
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[46][0]++, 0) :
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[46][1]++,
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[47][0]++, document.documentElement.scrollLeft) ||
+  /* istanbul ignore next */
+  (cov_qbfkx7awl.b[47][1]++, document.body.scrollLeft)));
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[113]++;
+  (0, _extends2["default"])(source.style, {
+    left: (0, _UnitConvertor.pxToRem)(newElRegion.left + scrollLeft),
+    top: (0, _UnitConvertor.pxToRem)(newElRegion.top + scrollTop)
+  });
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[114]++;
+
+  if (isTargetFixed) {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[48][0]++;
+    cov_qbfkx7awl.s[115]++;
+    source.style.position = 'fixed';
+  } else {
+    /* istanbul ignore next */
+    cov_qbfkx7awl.b[48][1]++;
+    cov_qbfkx7awl.s[116]++;
+    source.style.position = '';
+  }
+
+  /* istanbul ignore next */
+  cov_qbfkx7awl.s[117]++;
+  return {
+    points: points,
+    offset: offset,
+    targetOffset: targetOffset,
+    overflow: newOverflowCfg
+  };
+}

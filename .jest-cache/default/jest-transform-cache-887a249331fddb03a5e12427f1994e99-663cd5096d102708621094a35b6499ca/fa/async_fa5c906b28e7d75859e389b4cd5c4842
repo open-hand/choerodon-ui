@@ -1,0 +1,112 @@
+641394de5df90394affb0995d598a51f
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _tree = _interopRequireDefault(require("../../../components-pro/tree"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _dataSet = _interopRequireDefault(require("../../../components-pro/data-set"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+// 这里面可以控制node结点的判断来实现是否展示为叶结点
+function nodeCover(_ref) {
+  var record = _ref.record;
+  var nodeProps = {
+    title: record.get('text')
+  };
+
+  if (record.get('text') === '岗位管理') {
+    nodeProps.isLeaf = true;
+  }
+
+  return nodeProps;
+}
+
+var TreeDs = function TreeDs() {
+  return {
+    primaryKey: 'id',
+    queryUrl: '/tree-async.mock',
+    autoQuery: true,
+    parentField: 'parentId',
+    expandField: 'expand',
+    idField: 'id',
+    fields: [{
+      name: 'id',
+      type: 'number'
+    }, {
+      name: 'expand',
+      type: 'boolean'
+    }, {
+      name: 'parentId',
+      type: 'number'
+    }],
+    events: {
+      select: function select(_ref2) {
+        var record = _ref2.record,
+            dataSet = _ref2.dataSet;
+        return console.log('select', record, dataSet);
+      },
+      unSelect: function unSelect(_ref3) {
+        var record = _ref3.record,
+            dataSet = _ref3.dataSet;
+        return console.log('unSelect', record, dataSet);
+      }
+    }
+  };
+};
+
+var App = function App() {
+  var dataSet = (0, _react.useMemo)(function () {
+    return new _dataSet["default"](TreeDs());
+  }, []);
+
+  function onLoadData(_ref4) {
+    var key = _ref4.key,
+        children = _ref4.children;
+    return new Promise(function (resolve) {
+      if (!children) {
+        _axios["default"].get('/tree-async.mock').then(function (res) {
+          var remianData = dataSet.toData(); // 获取子结点数据，绑定父节点
+
+          var recordsChildren = res.data.rows.map(function (item) {
+            item.parentId = key;
+            item.id = Math.random() * 100;
+            return item;
+          }); // 生成完成的dataSet数据注意会触发load event
+
+          dataSet.loadData([].concat((0, _toConsumableArray2["default"])(remianData), (0, _toConsumableArray2["default"])(recordsChildren)));
+          resolve();
+        })["catch"](function (err) {
+          resolve();
+          return;
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  return _react["default"].createElement(_tree["default"], {
+    dataSet: dataSet,
+    loadData: onLoadData,
+    checkable: true,
+    treeNodeRenderer: nodeCover
+  });
+};
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

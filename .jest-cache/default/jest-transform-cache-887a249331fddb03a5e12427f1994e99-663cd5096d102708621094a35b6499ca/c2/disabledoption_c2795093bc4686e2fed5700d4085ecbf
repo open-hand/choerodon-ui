@@ -1,0 +1,50 @@
+9ce1100c58cca6b263633f677e21cd83
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _cascader = _interopRequireDefault(require("../../../components/cascader"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var options = [{
+  value: 'zhejiang',
+  label: 'Zhejiang',
+  children: [{
+    value: 'hangzhou',
+    label: 'Hangzhou',
+    children: [{
+      value: 'xihu',
+      label: 'West Lake'
+    }]
+  }]
+}, {
+  value: 'jiangsu',
+  label: 'Jiangsu',
+  disabled: true,
+  children: [{
+    value: 'nanjing',
+    label: 'Nanjing',
+    children: [{
+      value: 'zhonghuamen',
+      label: 'Zhong Hua Men'
+    }]
+  }]
+}];
+
+function onChange(value) {
+  console.log(value);
+}
+
+var __Demo = _react["default"].createElement(_cascader["default"], {
+  options: options,
+  onChange: onChange
+});
+
+var _default = __Demo;
+exports["default"] = _default;

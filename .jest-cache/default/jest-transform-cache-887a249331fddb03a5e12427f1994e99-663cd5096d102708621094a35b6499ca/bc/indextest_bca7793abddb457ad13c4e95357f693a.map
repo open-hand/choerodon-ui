@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.test.js"],"names":["describe","Rate"],"mappings":";;;;AAAA;;AACA;;AAEAA,QAAQ,CAAC,MAAD,EAAS,YAAM;AACrB,6BAAUC,YAAV;AACD,CAFO,CAAR","sourcesContent":["import Rate from '..';\nimport focusTest from '../../../tests/shared/focusTest';\n\ndescribe('Rate', () => {\n  focusTest(Rate);\n});\n"]}

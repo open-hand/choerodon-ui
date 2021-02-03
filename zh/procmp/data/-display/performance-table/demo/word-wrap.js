@@ -6,7 +6,7 @@ class WordWrapTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: fakeData
+      data: fakeData,
     };
   }
   render() {
@@ -15,28 +15,27 @@ class WordWrapTable extends React.Component {
         title: 'Id',
         dataIndex: 'id',
         key: 'id',
-        width: 70, 
-        align: "center", 
+        width: 70,
         fixed: true,
       },
       {
         title: '姓名',
         dataIndex: 'firstName',
         key: 'firstName',
-        width: 150, 
-      },  
+        width: 150,
+      },
       {
         title: '城市',
         dataIndex: 'city',
         key: 'city',
-        width: 200, 
-      },       
+        width: 200,
+      },
       {
         title: '街道',
         dataIndex: 'street',
         key: 'street',
-        width: 300, 
-      },            
+        width: 300,
+      },
       {
         title: '公司',
         dataIndex: 'companyName',
@@ -48,18 +47,18 @@ class WordWrapTable extends React.Component {
         dataIndex: 'email',
         key: 'email',
         width: 300,
-      },         
+      },
     ];
     return (
-        <PerformanceTable
-          wordWrap
-          height={400}
-          columns={columns}
-          data={this.state.data}
-          onRowClick={data => {
-            console.log(data);
-          }}
-        />
+      <PerformanceTable
+        wordWrap
+        height={400}
+        columns={columns}
+        data={this.state.data}
+        onRowClick={(data) => {
+          console.log(data);
+        }}
+      />
     );
   }
 }

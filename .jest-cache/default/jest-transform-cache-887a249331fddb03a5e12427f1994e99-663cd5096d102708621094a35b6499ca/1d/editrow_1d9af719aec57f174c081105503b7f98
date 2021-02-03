@@ -1,0 +1,250 @@
+3230add7f36615e9e7cbf02cdfc241c8
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _table = _interopRequireDefault(require("../../../components/table"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2"));
+
+var _popconfirm = _interopRequireDefault(require("../../../components/popconfirm"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var data = [];
+
+for (var i = 0; i < 100; i++) {
+  data.push({
+    key: i.toString(),
+    name: "Edrward ".concat(i),
+    age: 32,
+    address: "London Park no. ".concat(i)
+  });
+}
+
+var EditableCell = function EditableCell(_ref) {
+  var editable = _ref.editable,
+      value = _ref.value,
+      _onChange = _ref.onChange;
+  return _react["default"].createElement("div", null, editable ? _react["default"].createElement(_input["default"], {
+    style: {
+      margin: '-5px 0'
+    },
+    value: value,
+    onChange: function onChange(e) {
+      return _onChange(e.target.value);
+    }
+  }) : value);
+};
+
+var EditableTable =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(EditableTable, _React$Component);
+
+  var _super = _createSuper(EditableTable);
+
+  function EditableTable(props) {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, EditableTable);
+    _this = _super.call(this, props);
+    _this.columns = [{
+      title: 'name',
+      dataIndex: 'name',
+      width: '25%',
+      render: function render(text, record) {
+        return _this.renderColumns(text, record, 'name');
+      }
+    }, {
+      title: 'age',
+      dataIndex: 'age',
+      width: '15%',
+      render: function render(text, record) {
+        return _this.renderColumns(text, record, 'age');
+      }
+    }, {
+      title: 'address',
+      dataIndex: 'address',
+      width: '40%',
+      render: function render(text, record) {
+        return _this.renderColumns(text, record, 'address');
+      }
+    }, {
+      title: 'operation',
+      dataIndex: 'operation',
+      render: function render(text, record) {
+        var editable = record.editable;
+        return _react["default"].createElement("div", {
+          className: "editable-row-operations"
+        }, editable ? _react["default"].createElement("span", null, _react["default"].createElement("a", {
+          onClick: function onClick() {
+            return _this.save(record.key);
+          }
+        }, "Save"), _react["default"].createElement(_popconfirm["default"], {
+          title: "Sure to cancel?",
+          onConfirm: function onConfirm() {
+            return _this.cancel(record.key);
+          }
+        }, _react["default"].createElement("a", null, "Cancel"))) : _react["default"].createElement("a", {
+          onClick: function onClick() {
+            return _this.edit(record.key);
+          }
+        }, "Edit"));
+      }
+    }];
+    _this.state = {
+      data: data
+    };
+    _this.cacheData = data.map(function (item) {
+      return (0, _objectSpread2["default"])({}, item);
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(EditableTable, [{
+    key: "renderColumns",
+    value: function renderColumns(text, record, column) {
+      var _this2 = this;
+
+      return _react["default"].createElement(EditableCell, {
+        editable: record.editable,
+        value: text,
+        onChange: function onChange(value) {
+          return _this2.handleChange(value, record.key, column);
+        }
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(value, key, column) {
+      var newData = (0, _toConsumableArray2["default"])(this.state.data);
+      var target = newData.filter(function (item) {
+        return key === item.key;
+      })[0];
+
+      if (target) {
+        target[column] = value;
+        this.setState({
+          data: newData
+        });
+      }
+    }
+  }, {
+    key: "edit",
+    value: function edit(key) {
+      var newData = (0, _toConsumableArray2["default"])(this.state.data);
+      var target = newData.filter(function (item) {
+        return key === item.key;
+      })[0];
+
+      if (target) {
+        target.editable = true;
+        this.setState({
+          data: newData
+        });
+      }
+    }
+  }, {
+    key: "save",
+    value: function save(key) {
+      var newData = (0, _toConsumableArray2["default"])(this.state.data);
+      var target = newData.filter(function (item) {
+        return key === item.key;
+      })[0];
+
+      if (target) {
+        delete target.editable;
+        this.setState({
+          data: newData
+        });
+        this.cacheData = newData.map(function (item) {
+          return (0, _objectSpread2["default"])({}, item);
+        });
+      }
+    }
+  }, {
+    key: "cancel",
+    value: function cancel(key) {
+      var newData = (0, _toConsumableArray2["default"])(this.state.data);
+      var target = newData.filter(function (item) {
+        return key === item.key;
+      })[0];
+
+      if (target) {
+        (0, _extends2["default"])(target, this.cacheData.filter(function (item) {
+          return key === item.key;
+        })[0]);
+        delete target.editable;
+        this.setState({
+          data: newData
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_table["default"], {
+        bordered: true,
+        dataSource: this.state.data,
+        columns: this.columns
+      });
+    }
+  }]);
+  return EditableTable;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(EditableTable, null);
+
+var _default = __Demo;
+exports["default"] = _default;

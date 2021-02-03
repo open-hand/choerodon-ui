@@ -1,0 +1,44 @@
+300655a1559b2bcad9c6a57d4fc697fc
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _dropdown = _interopRequireDefault(require("../../../components/dropdown"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _menu = _interopRequireDefault(require("../../../components/menu"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function handleMenuClick(e) {
+  console.log('click', e);
+}
+
+var menu = _react["default"].createElement(_menu["default"], {
+  onClick: handleMenuClick
+}, _react["default"].createElement(_menu["default"].Item, {
+  key: "1"
+}, "1st item"), _react["default"].createElement(_menu["default"].Item, {
+  key: "2"
+}, "2nd item"), _react["default"].createElement(_menu["default"].Item, {
+  key: "3"
+}, "3rd item"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], {
+  type: "primary"
+}, "primary"), _react["default"].createElement(_button["default"], null, "secondary"), _react["default"].createElement(_dropdown["default"], {
+  overlay: menu
+}, _react["default"].createElement(_button["default"], null, "Actions ", _react["default"].createElement(_icon["default"], {
+  type: "down"
+}))));
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,102 @@
+7ba825b2ff9423b19fc1cd070d21069b
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _switch = _interopRequireDefault(require("../../../components-pro/switch"));
+
+var _codeArea = _interopRequireDefault(require("../../../components-pro/code-area"));
+
+var _dataSet = _interopRequireDefault(require("../../../components-pro/data-set"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+require("codemirror/theme/material.css");
+
+require("codemirror/theme/idea.css");
+
+// 这两个主题不是组件内置的主题，需要手动引入
+var jsonText = "{\n  \"compilerOptions\": {\n    \"strictNullChecks\": true,\n    \"moduleResolution\": \"node\",\n    \"allowSyntheticDefaultImports\": true,\n    \"experimentalDecorators\": true,\n    \"jsx\": \"preserve\",\n    \"noUnusedParameters\": true,\n    \"noUnusedLocals\": true,\n    \"declaration\": true,\n    \"target\": \"es6\",\n    \"lib\": [\n      \"dom\",\n      \"dom.iterable\",\n      \"es7\",\n      \"es2017.object\"]\n  },\n  \"exclude\": [\n    \"node_modules\",\n    \"lib\",\n    \"es\"\n  ]\n}\n";
+var style = {
+  height: 525
+};
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      theme: 'idea'
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds", new _dataSet["default"]({
+      autoCreate: true,
+      fields: [{
+        name: 'content',
+        type: 'string',
+        defaultValue: jsonText,
+        required: true
+      }]
+    }));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleThemeChange", function (value) {
+      _this.setState({
+        theme: value ? 'material' : 'idea'
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement(_codeArea["default"], {
+        dataSet: this.ds,
+        name: "content",
+        options: {
+          theme: this.state.theme
+        },
+        style: style
+      }), _react["default"].createElement(_switch["default"], {
+        onChange: this.handleThemeChange,
+        unCheckedChildren: "idea"
+      }, "material"));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

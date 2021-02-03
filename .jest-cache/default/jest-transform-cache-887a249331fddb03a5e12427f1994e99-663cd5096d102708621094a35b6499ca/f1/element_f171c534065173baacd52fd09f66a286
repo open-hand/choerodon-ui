@@ -1,0 +1,227 @@
+4873cd6a65f656d91c35fd8f22d23bb1
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _skeleton = _interopRequireDefault(require("../../../components/skeleton"));
+
+var _radio = _interopRequireDefault(require("../../../components/radio"));
+
+var _form = _interopRequireDefault(require("../../../components/form"));
+
+var _switch = _interopRequireDefault(require("../../../components/switch"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var Demo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(Demo, _React$Component);
+
+  var _super = _createSuper(Demo);
+
+  function Demo() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, Demo);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      buttonActive: false,
+      avatarActive: false,
+      inputActive: false,
+      buttonSize: 'default',
+      avatarSize: 'default',
+      inputSize: 'default',
+      buttonShape: 'default',
+      avatarShape: 'circle'
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleActiveChange", function (prop) {
+      return function (checked) {
+        _this.setState((0, _defineProperty2["default"])({}, prop, checked));
+      };
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleSizeChange", function (prop) {
+      return function (e) {
+        _this.setState((0, _defineProperty2["default"])({}, prop, e.target.value));
+      };
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleShapeChange", function (prop) {
+      return function (e) {
+        _this.setState((0, _defineProperty2["default"])({}, prop, e.target.value));
+      };
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(Demo, [{
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          buttonActive = _this$state.buttonActive,
+          avatarActive = _this$state.avatarActive,
+          inputActive = _this$state.inputActive,
+          buttonSize = _this$state.buttonSize,
+          avatarSize = _this$state.avatarSize,
+          inputSize = _this$state.inputSize,
+          buttonShape = _this$state.buttonShape,
+          avatarShape = _this$state.avatarShape;
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", null, _react["default"].createElement(_form["default"], {
+        layout: "inline",
+        style: {
+          marginBottom: 16
+        }
+      }, _react["default"].createElement(_form["default"].Item, {
+        label: "ButtonActive"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: buttonActive,
+        onChange: this.handleActiveChange('buttonActive')
+      })), _react["default"].createElement(_form["default"].Item, {
+        label: "ButtonSize"
+      }, _react["default"].createElement(_radio["default"].Group, {
+        value: buttonSize,
+        onChange: this.handleSizeChange('buttonSize')
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "default"
+      }, "Default"), _react["default"].createElement(_radio["default"].Button, {
+        value: "large"
+      }, "Large"), _react["default"].createElement(_radio["default"].Button, {
+        value: "small"
+      }, "Small"))), _react["default"].createElement(_form["default"].Item, {
+        label: "ButtonShape"
+      }, _react["default"].createElement(_radio["default"].Group, {
+        value: buttonShape,
+        onChange: this.handleShapeChange('buttonShape')
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "default"
+      }, "Default"), _react["default"].createElement(_radio["default"].Button, {
+        value: "round"
+      }, "Round"), _react["default"].createElement(_radio["default"].Button, {
+        value: "circle"
+      }, "Circle")))), _react["default"].createElement(_skeleton["default"].Button, {
+        active: buttonActive,
+        size: buttonSize,
+        shape: buttonShape
+      })), _react["default"].createElement("br", null), _react["default"].createElement("div", null, _react["default"].createElement(_form["default"], {
+        layout: "inline",
+        style: {
+          marginBottom: 16
+        }
+      }, _react["default"].createElement(_form["default"].Item, {
+        label: "AvatarActive"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: avatarActive,
+        onChange: this.handleActiveChange('avatarActive')
+      })), _react["default"].createElement(_form["default"].Item, {
+        label: "AvatarSize"
+      }, _react["default"].createElement(_radio["default"].Group, {
+        value: avatarSize,
+        onChange: this.handleSizeChange('avatarSize')
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "default"
+      }, "Default"), _react["default"].createElement(_radio["default"].Button, {
+        value: "large"
+      }, "Large"), _react["default"].createElement(_radio["default"].Button, {
+        value: "small"
+      }, "Small"))), _react["default"].createElement(_form["default"].Item, {
+        label: "AvatarShape"
+      }, _react["default"].createElement(_radio["default"].Group, {
+        value: avatarShape,
+        onChange: this.handleShapeChange('avatarShape')
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "square"
+      }, "Square"), _react["default"].createElement(_radio["default"].Button, {
+        value: "circle"
+      }, "Circle")))), _react["default"].createElement(_skeleton["default"].Avatar, {
+        active: avatarActive,
+        size: avatarSize,
+        shape: avatarShape
+      })), _react["default"].createElement("br", null), _react["default"].createElement("div", null, _react["default"].createElement(_form["default"], {
+        layout: "inline",
+        style: {
+          marginBottom: 16
+        }
+      }, _react["default"].createElement(_form["default"].Item, {
+        label: "InputActive"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: inputActive,
+        onChange: this.handleActiveChange('inputActive')
+      })), _react["default"].createElement(_form["default"].Item, {
+        label: "InputSize"
+      }, _react["default"].createElement(_radio["default"].Group, {
+        value: inputSize,
+        onChange: this.handleSizeChange('inputSize')
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "default"
+      }, "Default"), _react["default"].createElement(_radio["default"].Button, {
+        value: "large"
+      }, "Large"), _react["default"].createElement(_radio["default"].Button, {
+        value: "small"
+      }, "Small")))), _react["default"].createElement(_skeleton["default"].Input, {
+        style: {
+          width: '300px'
+        },
+        active: inputActive,
+        size: inputSize
+      })));
+    }
+  }]);
+  return Demo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(Demo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

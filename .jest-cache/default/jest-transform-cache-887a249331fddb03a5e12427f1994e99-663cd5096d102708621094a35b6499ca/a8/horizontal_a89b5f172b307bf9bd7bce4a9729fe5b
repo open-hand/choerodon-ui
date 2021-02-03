@@ -1,0 +1,111 @@
+0467ecbbd3aa99c960d2e127d34f3166
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _menu = _interopRequireDefault(require("../../../components/menu"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var SubMenu = _menu["default"].SubMenu;
+var MenuItemGroup = _menu["default"].ItemGroup;
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      current: 'mail'
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleClick", function (e) {
+      console.log('click ', e);
+
+      _this.setState({
+        current: e.key
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_menu["default"], {
+        onClick: this.handleClick,
+        selectedKeys: [this.state.current],
+        mode: "horizontal"
+      }, _react["default"].createElement(_menu["default"].Item, {
+        key: "mail"
+      }, _react["default"].createElement(_icon["default"], {
+        type: "mail_outline"
+      }), "Navigation One"), _react["default"].createElement(_menu["default"].Item, {
+        key: "app",
+        disabled: true
+      }, _react["default"].createElement(_icon["default"], {
+        type: "apps"
+      }), "Navigation Two"), _react["default"].createElement(SubMenu, {
+        title: _react["default"].createElement("span", null, _react["default"].createElement(_icon["default"], {
+          type: "settings"
+        }), "Navigation Three - Submenu")
+      }, _react["default"].createElement(MenuItemGroup, {
+        title: "Item 1"
+      }, _react["default"].createElement(_menu["default"].Item, {
+        key: "setting:1"
+      }, "Option 1"), _react["default"].createElement(_menu["default"].Item, {
+        key: "setting:2"
+      }, "Option 2")), _react["default"].createElement(MenuItemGroup, {
+        title: "Item 2"
+      }, _react["default"].createElement(_menu["default"].Item, {
+        key: "setting:3"
+      }, "Option 3"), _react["default"].createElement(_menu["default"].Item, {
+        key: "setting:4"
+      }, "Option 4"))), _react["default"].createElement(_menu["default"].Item, {
+        key: "alipay"
+      }, _react["default"].createElement("a", {
+        href: "https://choerodon.github.io/choerodon-ui/",
+        target: "_blank",
+        rel: "noopener noreferrer"
+      }, "Navigation Four - Link")));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,35 @@
+43be55a2f13ccf9196a8de8b15882e0f
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _tag = _interopRequireDefault(require("../../../components/tag"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function log(e) {
+  console.log(e);
+}
+
+function preventDefault(e) {
+  e.preventDefault();
+  console.log('Clicked! But prevent default.');
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_tag["default"], null, "Tag 1"), _react["default"].createElement(_tag["default"], null, _react["default"].createElement("a", {
+  href: "https://github.com/choerodon/choerodon-ui"
+}, "Link")), _react["default"].createElement(_tag["default"], {
+  closable: true,
+  onClose: log
+}, "Tag 2"), _react["default"].createElement(_tag["default"], {
+  closable: true,
+  onClose: preventDefault
+}, "Prevent Default"));
+
+var _default = __Demo;
+exports["default"] = _default;

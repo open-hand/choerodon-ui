@@ -1,0 +1,181 @@
+a00d3ca401166b71dbd695d34d0abdbe
+"use strict";
+
+/* istanbul ignore next */
+function cov_26zn6dm9be() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/progress/Loading.tsx";
+  var hash = "d95ffad9a4bab83b6f8a0ab7d8247d2c4b0e527a";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/progress/Loading.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 29
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 53
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 11
+        },
+        end: {
+          line: 12,
+          column: 13
+        }
+      },
+      "5": {
+        start: {
+          line: 15,
+          column: 2
+        },
+        end: {
+          line: 21,
+          column: 6
+        }
+      },
+      "6": {
+        start: {
+          line: 24,
+          column: 0
+        },
+        end: {
+          line: 24,
+          column: 32
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "Loading",
+        decl: {
+          start: {
+            line: 14,
+            column: 9
+          },
+          end: {
+            line: 14,
+            column: 16
+          }
+        },
+        loc: {
+          start: {
+            line: 14,
+            column: 19
+          },
+          end: {
+            line: 22,
+            column: 1
+          }
+        },
+        line: 14
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "d95ffad9a4bab83b6f8a0ab7d8247d2c4b0e527a"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_26zn6dm9be = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_26zn6dm9be();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_26zn6dm9be().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_26zn6dm9be().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_26zn6dm9be().s[2]++;
+exports["default"] = Loading;
+
+var _react =
+/* istanbul ignore next */
+(cov_26zn6dm9be().s[3]++, _interopRequireDefault(require("react")));
+
+var SIZE =
+/* istanbul ignore next */
+(cov_26zn6dm9be().s[4]++, 50);
+
+function Loading() {
+  /* istanbul ignore next */
+  cov_26zn6dm9be().f[0]++;
+  cov_26zn6dm9be().s[5]++;
+  return _react["default"].createElement("svg", {
+    viewBox: "0 0 ".concat(SIZE, " ").concat(SIZE)
+  }, _react["default"].createElement("circle", {
+    cx: SIZE / 2,
+    cy: SIZE / 2,
+    r: SIZE / 2 - 5
+  }));
+}
+
+/* istanbul ignore next */
+cov_26zn6dm9be().s[6]++;
+Loading.displayName = 'Loading';

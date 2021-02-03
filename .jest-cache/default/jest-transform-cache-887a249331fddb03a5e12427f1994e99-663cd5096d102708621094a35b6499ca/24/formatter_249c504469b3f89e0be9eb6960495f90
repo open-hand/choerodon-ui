@@ -1,0 +1,44 @@
+f48fb9a64fe9aac59f7434774012b999
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _inputNumber = _interopRequireDefault(require("../../../components/input-number"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function onChange(value) {
+  console.log('changed', value);
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_inputNumber["default"], {
+  defaultValue: 1000,
+  label: "\u91D1\u989D",
+  formatter: function formatter(value) {
+    return "$ ".concat(value).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  },
+  parser: function parser(value) {
+    return value.replace(/\$\s?|(,*)/g, '');
+  },
+  onChange: onChange
+}), _react["default"].createElement(_inputNumber["default"], {
+  defaultValue: 100,
+  label: "\u767E\u5206\u6BD4",
+  min: 0,
+  max: 100,
+  formatter: function formatter(value) {
+    return "".concat(value, "%");
+  },
+  parser: function parser(value) {
+    return value.replace('%', '');
+  },
+  onChange: onChange
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

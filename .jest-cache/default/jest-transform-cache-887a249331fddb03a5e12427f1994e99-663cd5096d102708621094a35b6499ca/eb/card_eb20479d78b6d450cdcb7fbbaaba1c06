@@ -1,0 +1,31 @@
+2839a939f63a9366cb5558c43f160707
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _calendar = _interopRequireDefault(require("../../../components/calendar"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function onPanelChange(value, mode) {
+  console.log(value, mode);
+}
+
+var __Demo = _react["default"].createElement("div", {
+  style: {
+    width: 300,
+    border: '1px solid #d9d9d9',
+    borderRadius: 4
+  }
+}, _react["default"].createElement(_calendar["default"], {
+  fullscreen: false,
+  onPanelChange: onPanelChange
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

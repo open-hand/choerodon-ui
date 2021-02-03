@@ -1,0 +1,36 @@
+52dd336b7017faea81f08ed90b2b1a68
+"use strict";
+
+/* istanbul ignore next */
+function cov_2nfaezkahh() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/locale-context/enum.tsx";
+  var hash = "5b541ff803724e85a88580ad7861ddd3c7e8dc68";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/locale-context/enum.tsx",
+    statementMap: {},
+    fnMap: {},
+    branchMap: {},
+    s: {},
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "5b541ff803724e85a88580ad7861ddd3c7e8dc68"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_2nfaezkahh = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_2nfaezkahh();

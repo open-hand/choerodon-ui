@@ -1,0 +1,129 @@
+bc35cb4a3ba99faa9f429af2bd6f6d95
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _upload = _interopRequireDefault(require("../../../components/upload"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _message2 = _interopRequireDefault(require("../../../components/message"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function getBase64(img, callback) {
+  var reader = new FileReader();
+  reader.addEventListener('load', function () {
+    return callback(reader.result);
+  });
+  reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+  var isJPG = file.type === 'image/jpeg';
+
+  if (!isJPG) {
+    _message2["default"].error('You can only upload JPG file!');
+  }
+
+  var isLt2M = file.size / 1024 / 1024 < 2;
+
+  if (!isLt2M) {
+    _message2["default"].error('Image must smaller than 2MB!');
+  }
+
+  return isJPG && isLt2M;
+}
+
+var Avatar =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(Avatar, _React$Component);
+
+  function Avatar() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, Avatar);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(Avatar)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      loading: false
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleChange", function (info) {
+      if (info.file.status === 'uploading') {
+        _this.setState({
+          loading: true
+        });
+
+        return;
+      }
+
+      if (info.file.status === 'done') {
+        // Get this url from response in real world.
+        getBase64(info.file.originFileObj, function (imageUrl) {
+          return _this.setState({
+            imageUrl: imageUrl,
+            loading: false
+          });
+        });
+      }
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(Avatar, [{
+    key: "render",
+    value: function render() {
+      var uploadButton = _react["default"].createElement("div", null, _react["default"].createElement(_icon["default"], {
+        type: this.state.loading ? 'loading' : 'add'
+      }), _react["default"].createElement("div", {
+        className: "c7n-upload-text"
+      }, "Upload"));
+
+      var imageUrl = this.state.imageUrl;
+      return _react["default"].createElement(_upload["default"], {
+        name: "avatar",
+        listType: "picture-card",
+        className: "avatar-uploader",
+        showUploadList: false,
+        action: "//jsonplaceholder.typicode.com/posts/",
+        beforeUpload: beforeUpload,
+        onChange: this.handleChange
+      }, imageUrl ? _react["default"].createElement("img", {
+        src: imageUrl,
+        alt: ""
+      }) : uploadButton);
+    }
+  }]);
+  return Avatar;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(Avatar, null);
+
+var _default = __Demo;
+exports["default"] = _default;

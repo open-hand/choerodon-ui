@@ -38,7 +38,7 @@ function expandicon({
 
   if (record.getState('loadding') === true) {
     // 自定义状态渲染
-    return <Spin tip="loding" delay={200} size="small" />;
+    return <Spin tip="loading" delay={200} size="small" />;
   }
 
   const iconPrefixCls = `${prefixCls}-expand-icon`;
@@ -126,7 +126,7 @@ class App extends React.Component {
             return item;
           });
           record.setState('loadding', false);
-          // 生成完成的dataSet数据注意会触发load event
+          // 生成完成的dataSet数据注意会触发loading event
           that.ds.loadData([...remianData, ...recordsChildren]);
         })
         .catch((err) => {
@@ -164,10 +164,10 @@ class App extends React.Component {
         expandIcon={expandicon}
         expandedRowRenderer={expandedRowRenderer}
       >
-        <Column name="text" editor renderer={iconRenderer} width={450} />
-        <Column name="url" editor />
-        <Column name="ischecked" editor />
-        <Column name="expand" editor />
+        <Column name="text" renderer={iconRenderer} width={450} />
+        <Column name="url" />
+        <Column name="ischecked" />
+        <Column name="expand" />
         <Column header="权限设置" width={150} align="center" />
       </Table>
     );

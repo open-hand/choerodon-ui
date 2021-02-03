@@ -1,0 +1,64 @@
+291f86770f53ea89183c7dc4caf6adaf
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _get2 = _interopRequireDefault(require("@babel/runtime/helpers/get"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var enhancer = function enhancer(WrappedComponent) {
+  return (
+    /*#__PURE__*/
+    function (_WrappedComponent) {
+      (0, _inherits2["default"])(Progress, _WrappedComponent);
+
+      function Progress() {
+        (0, _classCallCheck2["default"])(this, Progress);
+        return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Progress).apply(this, arguments));
+      }
+
+      (0, _createClass2["default"])(Progress, [{
+        key: "componentDidUpdate",
+        value: function componentDidUpdate() {
+          if (!this.path) {
+            return;
+          }
+
+          var pathStyle = this.path.style;
+          pathStyle.transitionDuration = '.3s, .3s, .3s, .06s';
+          var now = Date.now();
+
+          if (this.prevTimeStamp && now - this.prevTimeStamp < 100) {
+            pathStyle.transitionDuration = '0s, 0s';
+          }
+
+          this.prevTimeStamp = Date.now();
+        }
+      }, {
+        key: "render",
+        value: function render() {
+          return (0, _get2["default"])((0, _getPrototypeOf2["default"])(Progress.prototype), "render", this).call(this);
+        }
+      }]);
+      return Progress;
+    }(WrappedComponent)
+  );
+};
+
+var _default = enhancer;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVuaGFuY2VyLmpzeCJdLCJuYW1lcyI6WyJlbmhhbmNlciIsIldyYXBwZWRDb21wb25lbnQiLCJwYXRoIiwicGF0aFN0eWxlIiwic3R5bGUiLCJ0cmFuc2l0aW9uRHVyYXRpb24iLCJub3ciLCJEYXRlIiwicHJldlRpbWVTdGFtcCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsSUFBTUEsUUFBUSxHQUFHLFNBQVhBLFFBQVcsQ0FBQUMsZ0JBQWdCO0FBQUE7QUFBQTtBQUFBO0FBQUE7O0FBQUE7QUFBQTtBQUFBO0FBQUE7O0FBQUE7QUFBQTtBQUFBLDZDQUNWO0FBQ25CLGNBQUksQ0FBQyxLQUFLQyxJQUFWLEVBQWdCO0FBQ2Q7QUFDRDs7QUFDRCxjQUFNQyxTQUFTLEdBQUcsS0FBS0QsSUFBTCxDQUFVRSxLQUE1QjtBQUNBRCxVQUFBQSxTQUFTLENBQUNFLGtCQUFWLEdBQStCLHFCQUEvQjtBQUNBLGNBQU1DLEdBQUcsR0FBR0MsSUFBSSxDQUFDRCxHQUFMLEVBQVo7O0FBQ0EsY0FBSSxLQUFLRSxhQUFMLElBQXNCRixHQUFHLEdBQUcsS0FBS0UsYUFBWCxHQUEyQixHQUFyRCxFQUEwRDtBQUN4REwsWUFBQUEsU0FBUyxDQUFDRSxrQkFBVixHQUErQixRQUEvQjtBQUNEOztBQUNELGVBQUtHLGFBQUwsR0FBcUJELElBQUksQ0FBQ0QsR0FBTCxFQUFyQjtBQUNEO0FBWjhCO0FBQUE7QUFBQSxpQ0FjdEI7QUFDUDtBQUNEO0FBaEI4QjtBQUFBO0FBQUEsTUFBMkJMLGdCQUEzQjtBQUFBO0FBQUEsQ0FBakM7O2VBbUJlRCxRIiwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgZW5oYW5jZXIgPSBXcmFwcGVkQ29tcG9uZW50ID0+IGNsYXNzIFByb2dyZXNzIGV4dGVuZHMgV3JhcHBlZENvbXBvbmVudCB7XG4gIGNvbXBvbmVudERpZFVwZGF0ZSgpIHtcbiAgICBpZiAoIXRoaXMucGF0aCkge1xuICAgICAgcmV0dXJuO1xuICAgIH1cbiAgICBjb25zdCBwYXRoU3R5bGUgPSB0aGlzLnBhdGguc3R5bGU7XG4gICAgcGF0aFN0eWxlLnRyYW5zaXRpb25EdXJhdGlvbiA9ICcuM3MsIC4zcywgLjNzLCAuMDZzJztcbiAgICBjb25zdCBub3cgPSBEYXRlLm5vdygpO1xuICAgIGlmICh0aGlzLnByZXZUaW1lU3RhbXAgJiYgbm93IC0gdGhpcy5wcmV2VGltZVN0YW1wIDwgMTAwKSB7XG4gICAgICBwYXRoU3R5bGUudHJhbnNpdGlvbkR1cmF0aW9uID0gJzBzLCAwcyc7XG4gICAgfVxuICAgIHRoaXMucHJldlRpbWVTdGFtcCA9IERhdGUubm93KCk7XG4gIH1cblxuICByZW5kZXIoKSB7XG4gICAgcmV0dXJuIHN1cGVyLnJlbmRlcigpO1xuICB9XG59O1xuXG5leHBvcnQgZGVmYXVsdCBlbmhhbmNlcjtcbiJdfQ==

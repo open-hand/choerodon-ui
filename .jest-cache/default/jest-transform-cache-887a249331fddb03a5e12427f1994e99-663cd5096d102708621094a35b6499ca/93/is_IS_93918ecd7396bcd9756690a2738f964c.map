@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/is_IS.tsx"],"names":[],"mappings":";;;;;;;;;AACA;;AADA;eAGe,iB","sourcesContent":["/* eslint-disable camelcase */\nimport is_IS from '../../date-picker/locale/is_IS';\n\nexport default is_IS;\n"]}

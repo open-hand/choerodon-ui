@@ -17,7 +17,7 @@ const { Option } = Select;
 
 const data = [
   {
-    'last-name': 'huazhen',
+    'last-name': 'zhangsan',
   },
 ];
 
@@ -45,16 +45,16 @@ class App extends React.Component {
           <Select dataSet={this.ds} name="last-name" searchable>
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
-            <Option value="huazhen">Huazhen</Option>
-            <Option value="aaa">Huazhen</Option>
+            <Option value="zhangsan">Zhangsan</Option>
+            <Option value="aaa">Zhangsan</Option>
           </Select>
         </Col>
         <Col span={8}>
           <Select dataSet={this.ds} name="first-name" searchable searchMatcher={searchMatcher}>
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
-            <Option value="huazhen">Huazhen</Option>
-            <Option value="aaa">Huazhen</Option>
+            <Option value="zhangsan">Zhangsan</Option>
+            <Option value="aaa">Zhangsan</Option>
           </Select>
         </Col>
         <Col span={8}>

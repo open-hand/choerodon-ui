@@ -3,7 +3,7 @@ const faker = require('faker');
 export function createFakeRowObjectData(index) {
   return {
     id: index,
-    avartar: faker.image.avatar(),
+    avartar: 'https://imgchr.com/i/NOXKgg',
     city: faker.address.city(),
     email: faker.internet.email(),
     firstName: faker.name.firstName(),

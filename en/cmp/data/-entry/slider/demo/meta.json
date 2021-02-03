@@ -98,6 +98,7 @@
         "zh": "垂直方向的 Slider。\n",
         "en": "The vertical Slider.\n"
       },
+      "ignores": ["theme1", "theme3", "theme4"],
       "order": 6,
       "height": 390,
       "screenshot": ""

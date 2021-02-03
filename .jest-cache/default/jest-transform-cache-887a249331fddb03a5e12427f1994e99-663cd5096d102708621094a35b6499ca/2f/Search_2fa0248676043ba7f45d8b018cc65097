@@ -1,0 +1,2130 @@
+e019069e48fd855201fb24cb6c0a71a0
+"use strict";
+
+/* istanbul ignore next */
+function cov_17772lawha() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/input/Search.tsx";
+  var hash = "1707d5ddc70a54e2a29e62beaab07fda6485364f";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/input/Search.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 30
+        },
+        end: {
+          line: 3,
+          column: 86
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 29
+        },
+        end: {
+          line: 5,
+          column: 84
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 0
+        },
+        end: {
+          line: 9,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 0
+        },
+        end: {
+          line: 10,
+          column: 28
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 16
+        },
+        end: {
+          line: 12,
+          column: 81
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 23
+        },
+        end: {
+          line: 14,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 32
+        },
+        end: {
+          line: 16,
+          column: 113
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 23
+        },
+        end: {
+          line: 18,
+          column: 95
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 20
+        },
+        end: {
+          line: 20,
+          column: 89
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 17
+        },
+        end: {
+          line: 22,
+          column: 83
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 34
+        },
+        end: {
+          line: 24,
+          column: 117
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 23
+        },
+        end: {
+          line: 26,
+          column: 95
+        }
+      },
+      "12": {
+        start: {
+          line: 28,
+          column: 13
+        },
+        end: {
+          line: 28,
+          column: 54
+        }
+      },
+      "13": {
+        start: {
+          line: 30,
+          column: 18
+        },
+        end: {
+          line: 30,
+          column: 63
+        }
+      },
+      "14": {
+        start: {
+          line: 32,
+          column: 13
+        },
+        end: {
+          line: 32,
+          column: 55
+        }
+      },
+      "15": {
+        start: {
+          line: 34,
+          column: 14
+        },
+        end: {
+          line: 34,
+          column: 58
+        }
+      },
+      "16": {
+        start: {
+          line: 36,
+          column: 17
+        },
+        end: {
+          line: 36,
+          column: 40
+        }
+      },
+      "17": {
+        start: {
+          line: 40,
+          column: 4
+        },
+        end: {
+          line: 40,
+          column: 75
+        }
+      },
+      "18": {
+        start: {
+          line: 40,
+          column: 62
+        },
+        end: {
+          line: 40,
+          column: 75
+        }
+      },
+      "19": {
+        start: {
+          line: 41,
+          column: 4
+        },
+        end: {
+          line: 41,
+          column: 45
+        }
+      },
+      "20": {
+        start: {
+          line: 41,
+          column: 32
+        },
+        end: {
+          line: 41,
+          column: 45
+        }
+      },
+      "21": {
+        start: {
+          line: 42,
+          column: 4
+        },
+        end: {
+          line: 42,
+          column: 49
+        }
+      },
+      "22": {
+        start: {
+          line: 42,
+          column: 37
+        },
+        end: {
+          line: 42,
+          column: 49
+        }
+      },
+      "23": {
+        start: {
+          line: 44,
+          column: 4
+        },
+        end: {
+          line: 49,
+          column: 5
+        }
+      },
+      "24": {
+        start: {
+          line: 45,
+          column: 6
+        },
+        end: {
+          line: 45,
+          column: 80
+        }
+      },
+      "25": {
+        start: {
+          line: 46,
+          column: 6
+        },
+        end: {
+          line: 46,
+          column: 18
+        }
+      },
+      "26": {
+        start: {
+          line: 48,
+          column: 6
+        },
+        end: {
+          line: 48,
+          column: 19
+        }
+      },
+      "27": {
+        start: {
+          line: 52,
+          column: 2
+        },
+        end: {
+          line: 64,
+          column: 4
+        }
+      },
+      "28": {
+        start: {
+          line: 53,
+          column: 16
+        },
+        end: {
+          line: 53,
+          column: 57
+        }
+      },
+      "29": {
+        start: {
+          line: 56,
+          column: 4
+        },
+        end: {
+          line: 61,
+          column: 5
+        }
+      },
+      "30": {
+        start: {
+          line: 57,
+          column: 22
+        },
+        end: {
+          line: 57,
+          column: 72
+        }
+      },
+      "31": {
+        start: {
+          line: 58,
+          column: 6
+        },
+        end: {
+          line: 58,
+          column: 62
+        }
+      },
+      "32": {
+        start: {
+          line: 60,
+          column: 6
+        },
+        end: {
+          line: 60,
+          column: 44
+        }
+      },
+      "33": {
+        start: {
+          line: 63,
+          column: 4
+        },
+        end: {
+          line: 63,
+          column: 69
+        }
+      },
+      "34": {
+        start: {
+          line: 69,
+          column: 0
+        },
+        end: {
+          line: 188,
+          column: 19
+        }
+      },
+      "35": {
+        start: {
+          line: 70,
+          column: 2
+        },
+        end: {
+          line: 70,
+          column: 49
+        }
+      },
+      "36": {
+        start: {
+          line: 72,
+          column: 15
+        },
+        end: {
+          line: 72,
+          column: 35
+        }
+      },
+      "37": {
+        start: {
+          line: 77,
+          column: 4
+        },
+        end: {
+          line: 77,
+          column: 51
+        }
+      },
+      "38": {
+        start: {
+          line: 78,
+          column: 4
+        },
+        end: {
+          line: 78,
+          column: 42
+        }
+      },
+      "39": {
+        start: {
+          line: 80,
+          column: 4
+        },
+        end: {
+          line: 88,
+          column: 6
+        }
+      },
+      "40": {
+        start: {
+          line: 81,
+          column: 21
+        },
+        end: {
+          line: 81,
+          column: 41
+        }
+      },
+      "41": {
+        start: {
+          line: 83,
+          column: 6
+        },
+        end: {
+          line: 85,
+          column: 7
+        }
+      },
+      "42": {
+        start: {
+          line: 84,
+          column: 8
+        },
+        end: {
+          line: 84,
+          column: 42
+        }
+      },
+      "43": {
+        start: {
+          line: 87,
+          column: 6
+        },
+        end: {
+          line: 87,
+          column: 26
+        }
+      },
+      "44": {
+        start: {
+          line: 90,
+          column: 4
+        },
+        end: {
+          line: 92,
+          column: 6
+        }
+      },
+      "45": {
+        start: {
+          line: 91,
+          column: 6
+        },
+        end: {
+          line: 91,
+          column: 25
+        }
+      },
+      "46": {
+        start: {
+          line: 94,
+          column: 4
+        },
+        end: {
+          line: 94,
+          column: 17
+        }
+      },
+      "47": {
+        start: {
+          line: 97,
+          column: 2
+        },
+        end: {
+          line: 186,
+          column: 6
+        }
+      },
+      "48": {
+        start: {
+          line: 100,
+          column: 6
+        },
+        end: {
+          line: 100,
+          column: 25
+        }
+      },
+      "49": {
+        start: {
+          line: 105,
+          column: 6
+        },
+        end: {
+          line: 105,
+          column: 24
+        }
+      },
+      "50": {
+        start: {
+          line: 110,
+          column: 22
+        },
+        end: {
+          line: 110,
+          column: 42
+        }
+      },
+      "51": {
+        start: {
+          line: 111,
+          column: 6
+        },
+        end: {
+          line: 111,
+          column: 69
+        }
+      },
+      "52": {
+        start: {
+          line: 116,
+          column: 24
+        },
+        end: {
+          line: 116,
+          column: 34
+        }
+      },
+      "53": {
+        start: {
+          line: 117,
+          column: 24
+        },
+        end: {
+          line: 117,
+          column: 47
+        }
+      },
+      "54": {
+        start: {
+          line: 118,
+          column: 17
+        },
+        end: {
+          line: 118,
+          column: 33
+        }
+      },
+      "55": {
+        start: {
+          line: 120,
+          column: 6
+        },
+        end: {
+          line: 127,
+          column: 7
+        }
+      },
+      "56": {
+        start: {
+          line: 121,
+          column: 8
+        },
+        end: {
+          line: 126,
+          column: 11
+        }
+      },
+      "57": {
+        start: {
+          line: 129,
+          column: 33
+        },
+        end: {
+          line: 129,
+          column: 44
+        }
+      },
+      "58": {
+        start: {
+          line: 131,
+          column: 6
+        },
+        end: {
+          line: 139,
+          column: 7
+        }
+      },
+      "59": {
+        start: {
+          line: 132,
+          column: 8
+        },
+        end: {
+          line: 138,
+          column: 11
+        }
+      },
+      "60": {
+        start: {
+          line: 141,
+          column: 6
+        },
+        end: {
+          line: 149,
+          column: 7
+        }
+      },
+      "61": {
+        start: {
+          line: 142,
+          column: 8
+        },
+        end: {
+          line: 148,
+          column: 11
+        }
+      },
+      "62": {
+        start: {
+          line: 151,
+          column: 6
+        },
+        end: {
+          line: 156,
+          column: 22
+        }
+      },
+      "63": {
+        start: {
+          line: 163,
+          column: 25
+        },
+        end: {
+          line: 163,
+          column: 35
+        }
+      },
+      "64": {
+        start: {
+          line: 164,
+          column: 22
+        },
+        end: {
+          line: 164,
+          column: 44
+        }
+      },
+      "65": {
+        start: {
+          line: 165,
+          column: 27
+        },
+        end: {
+          line: 165,
+          column: 54
+        }
+      },
+      "66": {
+        start: {
+          line: 166,
+          column: 17
+        },
+        end: {
+          line: 166,
+          column: 34
+        }
+      },
+      "67": {
+        start: {
+          line: 167,
+          column: 19
+        },
+        end: {
+          line: 167,
+          column: 38
+        }
+      },
+      "68": {
+        start: {
+          line: 168,
+          column: 24
+        },
+        end: {
+          line: 168,
+          column: 48
+        }
+      },
+      "69": {
+        start: {
+          line: 169,
+          column: 19
+        },
+        end: {
+          line: 169,
+          column: 140
+        }
+      },
+      "70": {
+        start: {
+          line: 170,
+          column: 22
+        },
+        end: {
+          line: 170,
+          column: 41
+        }
+      },
+      "71": {
+        start: {
+          line: 171,
+          column: 6
+        },
+        end: {
+          line: 171,
+          column: 29
+        }
+      },
+      "72": {
+        start: {
+          line: 172,
+          column: 6
+        },
+        end: {
+          line: 172,
+          column: 30
+        }
+      },
+      "73": {
+        start: {
+          line: 173,
+          column: 25
+        },
+        end: {
+          line: 173,
+          column: 47
+        }
+      },
+      "74": {
+        start: {
+          line: 174,
+          column: 25
+        },
+        end: {
+          line: 174,
+          column: 71
+        }
+      },
+      "75": {
+        start: {
+          line: 175,
+          column: 27
+        },
+        end: {
+          line: 175,
+          column: 305
+        }
+      },
+      "76": {
+        start: {
+          line: 176,
+          column: 6
+        },
+        end: {
+          line: 184,
+          column: 10
+        }
+      },
+      "77": {
+        start: {
+          line: 187,
+          column: 2
+        },
+        end: {
+          line: 187,
+          column: 16
+        }
+      },
+      "78": {
+        start: {
+          line: 190,
+          column: 0
+        },
+        end: {
+          line: 190,
+          column: 28
+        }
+      },
+      "79": {
+        start: {
+          line: 191,
+          column: 0
+        },
+        end: {
+          line: 191,
+          column: 30
+        }
+      },
+      "80": {
+        start: {
+          line: 192,
+          column: 0
+        },
+        end: {
+          line: 197,
+          column: 2
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "_createSuper",
+        decl: {
+          start: {
+            line: 38,
+            column: 9
+          },
+          end: {
+            line: 38,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 38,
+            column: 31
+          },
+          end: {
+            line: 65,
+            column: 1
+          }
+        },
+        line: 38
+      },
+      "1": {
+        name: "isNativeReflectConstruct",
+        decl: {
+          start: {
+            line: 39,
+            column: 11
+          },
+          end: {
+            line: 39,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 39,
+            column: 38
+          },
+          end: {
+            line: 50,
+            column: 3
+          }
+        },
+        line: 39
+      },
+      "2": {
+        name: "(anonymous_2)",
+        decl: {
+          start: {
+            line: 45,
+            column: 63
+          },
+          end: {
+            line: 45,
+            column: 64
+          }
+        },
+        loc: {
+          start: {
+            line: 45,
+            column: 75
+          },
+          end: {
+            line: 45,
+            column: 77
+          }
+        },
+        line: 45
+      },
+      "3": {
+        name: "(anonymous_3)",
+        decl: {
+          start: {
+            line: 52,
+            column: 9
+          },
+          end: {
+            line: 52,
+            column: 10
+          }
+        },
+        loc: {
+          start: {
+            line: 52,
+            column: 21
+          },
+          end: {
+            line: 64,
+            column: 3
+          }
+        },
+        line: 52
+      },
+      "4": {
+        name: "(anonymous_4)",
+        decl: {
+          start: {
+            line: 69,
+            column: 0
+          },
+          end: {
+            line: 69,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 69,
+            column: 22
+          },
+          end: {
+            line: 188,
+            column: 1
+          }
+        },
+        line: 69
+      },
+      "5": {
+        name: "Search",
+        decl: {
+          start: {
+            line: 74,
+            column: 11
+          },
+          end: {
+            line: 74,
+            column: 17
+          }
+        },
+        loc: {
+          start: {
+            line: 74,
+            column: 20
+          },
+          end: {
+            line: 95,
+            column: 3
+          }
+        },
+        line: 74
+      },
+      "6": {
+        name: "(anonymous_6)",
+        decl: {
+          start: {
+            line: 80,
+            column: 21
+          },
+          end: {
+            line: 80,
+            column: 22
+          }
+        },
+        loc: {
+          start: {
+            line: 80,
+            column: 33
+          },
+          end: {
+            line: 88,
+            column: 5
+          }
+        },
+        line: 80
+      },
+      "7": {
+        name: "(anonymous_7)",
+        decl: {
+          start: {
+            line: 90,
+            column: 22
+          },
+          end: {
+            line: 90,
+            column: 23
+          }
+        },
+        loc: {
+          start: {
+            line: 90,
+            column: 38
+          },
+          end: {
+            line: 92,
+            column: 5
+          }
+        },
+        line: 90
+      },
+      "8": {
+        name: "focus",
+        decl: {
+          start: {
+            line: 99,
+            column: 20
+          },
+          end: {
+            line: 99,
+            column: 25
+          }
+        },
+        loc: {
+          start: {
+            line: 99,
+            column: 28
+          },
+          end: {
+            line: 101,
+            column: 5
+          }
+        },
+        line: 99
+      },
+      "9": {
+        name: "blur",
+        decl: {
+          start: {
+            line: 104,
+            column: 20
+          },
+          end: {
+            line: 104,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 104,
+            column: 27
+          },
+          end: {
+            line: 106,
+            column: 5
+          }
+        },
+        line: 104
+      },
+      "10": {
+        name: "getPrefixCls",
+        decl: {
+          start: {
+            line: 109,
+            column: 20
+          },
+          end: {
+            line: 109,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 109,
+            column: 35
+          },
+          end: {
+            line: 112,
+            column: 5
+          }
+        },
+        line: 109
+      },
+      "11": {
+        name: "getButtonOrIcon",
+        decl: {
+          start: {
+            line: 115,
+            column: 20
+          },
+          end: {
+            line: 115,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 115,
+            column: 38
+          },
+          end: {
+            line: 157,
+            column: 5
+          }
+        },
+        line: 115
+      },
+      "12": {
+        name: "render",
+        decl: {
+          start: {
+            line: 160,
+            column: 20
+          },
+          end: {
+            line: 160,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 160,
+            column: 29
+          },
+          end: {
+            line: 185,
+            column: 5
+          }
+        },
+        line: 160
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 40,
+            column: 4
+          },
+          end: {
+            line: 40,
+            column: 75
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 40,
+            column: 4
+          },
+          end: {
+            line: 40,
+            column: 75
+          }
+        }, {
+          start: {
+            line: 40,
+            column: 4
+          },
+          end: {
+            line: 40,
+            column: 75
+          }
+        }],
+        line: 40
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 40,
+            column: 8
+          },
+          end: {
+            line: 40,
+            column: 60
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 40,
+            column: 8
+          },
+          end: {
+            line: 40,
+            column: 38
+          }
+        }, {
+          start: {
+            line: 40,
+            column: 42
+          },
+          end: {
+            line: 40,
+            column: 60
+          }
+        }],
+        line: 40
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 41,
+            column: 4
+          },
+          end: {
+            line: 41,
+            column: 45
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 41,
+            column: 4
+          },
+          end: {
+            line: 41,
+            column: 45
+          }
+        }, {
+          start: {
+            line: 41,
+            column: 4
+          },
+          end: {
+            line: 41,
+            column: 45
+          }
+        }],
+        line: 41
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 42,
+            column: 4
+          },
+          end: {
+            line: 42,
+            column: 49
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 42,
+            column: 4
+          },
+          end: {
+            line: 42,
+            column: 49
+          }
+        }, {
+          start: {
+            line: 42,
+            column: 4
+          },
+          end: {
+            line: 42,
+            column: 49
+          }
+        }],
+        line: 42
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 56,
+            column: 4
+          },
+          end: {
+            line: 61,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 56,
+            column: 4
+          },
+          end: {
+            line: 61,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 56,
+            column: 4
+          },
+          end: {
+            line: 61,
+            column: 5
+          }
+        }],
+        line: 56
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 83,
+            column: 6
+          },
+          end: {
+            line: 85,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 83,
+            column: 6
+          },
+          end: {
+            line: 85,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 83,
+            column: 6
+          },
+          end: {
+            line: 85,
+            column: 7
+          }
+        }],
+        line: 83
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 120,
+            column: 6
+          },
+          end: {
+            line: 127,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 120,
+            column: 6
+          },
+          end: {
+            line: 127,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 120,
+            column: 6
+          },
+          end: {
+            line: 127,
+            column: 7
+          }
+        }],
+        line: 120
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 131,
+            column: 6
+          },
+          end: {
+            line: 139,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 131,
+            column: 6
+          },
+          end: {
+            line: 139,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 131,
+            column: 6
+          },
+          end: {
+            line: 139,
+            column: 7
+          }
+        }],
+        line: 131
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 131,
+            column: 10
+          },
+          end: {
+            line: 131,
+            column: 100
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 131,
+            column: 10
+          },
+          end: {
+            line: 131,
+            column: 58
+          }
+        }, {
+          start: {
+            line: 131,
+            column: 62
+          },
+          end: {
+            line: 131,
+            column: 100
+          }
+        }],
+        line: 131
+      },
+      "9": {
+        loc: {
+          start: {
+            line: 132,
+            column: 62
+          },
+          end: {
+            line: 138,
+            column: 9
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 132,
+            column: 113
+          },
+          end: {
+            line: 136,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 136,
+            column: 12
+          },
+          end: {
+            line: 138,
+            column: 9
+          }
+        }],
+        line: 132
+      },
+      "10": {
+        loc: {
+          start: {
+            line: 141,
+            column: 6
+          },
+          end: {
+            line: 149,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 141,
+            column: 6
+          },
+          end: {
+            line: 149,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 141,
+            column: 6
+          },
+          end: {
+            line: 149,
+            column: 7
+          }
+        }],
+        line: 141
+      },
+      "11": {
+        loc: {
+          start: {
+            line: 174,
+            column: 25
+          },
+          end: {
+            line: 174,
+            column: 71
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 174,
+            column: 34
+          },
+          end: {
+            line: 174,
+            column: 56
+          }
+        }, {
+          start: {
+            line: 174,
+            column: 59
+          },
+          end: {
+            line: 174,
+            column: 71
+          }
+        }],
+        line: 174
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0],
+      "9": [0, 0],
+      "10": [0, 0],
+      "11": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "1707d5ddc70a54e2a29e62beaab07fda6485364f"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_17772lawha = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_17772lawha();
+
+var _interopRequireWildcard =
+/* istanbul ignore next */
+(cov_17772lawha().s[0]++, require("@babel/runtime/helpers/interopRequireWildcard"));
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_17772lawha().s[1]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_17772lawha().s[2]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_17772lawha().s[3]++;
+exports["default"] = void 0;
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_17772lawha().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _defineProperty2 =
+/* istanbul ignore next */
+(cov_17772lawha().s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/defineProperty")));
+
+var _objectWithoutProperties2 =
+/* istanbul ignore next */
+(cov_17772lawha().s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties")));
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_17772lawha().s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_17772lawha().s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_17772lawha().s[9]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_17772lawha().s[10]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_17772lawha().s[11]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _react =
+/* istanbul ignore next */
+(cov_17772lawha().s[12]++, _interopRequireWildcard(require("react")));
+
+var _classnames =
+/* istanbul ignore next */
+(cov_17772lawha().s[13]++, _interopRequireDefault(require("classnames")));
+
+var _Input =
+/* istanbul ignore next */
+(cov_17772lawha().s[14]++, _interopRequireDefault(require("./Input")));
+
+var _button =
+/* istanbul ignore next */
+(cov_17772lawha().s[15]++, _interopRequireDefault(require("../button")));
+
+var _configure =
+/* istanbul ignore next */
+(cov_17772lawha().s[16]++, require("../configure"));
+
+function _createSuper(Derived) {
+  /* istanbul ignore next */
+  cov_17772lawha().f[0]++;
+
+  function isNativeReflectConstruct() {
+    /* istanbul ignore next */
+    cov_17772lawha().f[1]++;
+    cov_17772lawha().s[17]++;
+
+    if (
+    /* istanbul ignore next */
+    (cov_17772lawha().b[1][0]++, typeof Reflect === "undefined") ||
+    /* istanbul ignore next */
+    (cov_17772lawha().b[1][1]++, !Reflect.construct)) {
+      /* istanbul ignore next */
+      cov_17772lawha().b[0][0]++;
+      cov_17772lawha().s[18]++;
+      return false;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_17772lawha().b[0][1]++;
+    }
+
+    cov_17772lawha().s[19]++;
+
+    if (Reflect.construct.sham) {
+      /* istanbul ignore next */
+      cov_17772lawha().b[2][0]++;
+      cov_17772lawha().s[20]++;
+      return false;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_17772lawha().b[2][1]++;
+    }
+
+    cov_17772lawha().s[21]++;
+
+    if (typeof Proxy === "function") {
+      /* istanbul ignore next */
+      cov_17772lawha().b[3][0]++;
+      cov_17772lawha().s[22]++;
+      return true;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_17772lawha().b[3][1]++;
+    }
+
+    cov_17772lawha().s[23]++;
+
+    try {
+      /* istanbul ignore next */
+      cov_17772lawha().s[24]++;
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {
+        /* istanbul ignore next */
+        cov_17772lawha().f[2]++;
+      }));
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[25]++;
+      return true;
+    } catch (e) {
+      /* istanbul ignore next */
+      cov_17772lawha().s[26]++;
+      return false;
+    }
+  }
+
+  /* istanbul ignore next */
+  cov_17772lawha().s[27]++;
+  return function () {
+    /* istanbul ignore next */
+    cov_17772lawha().f[3]++;
+    var Super =
+    /* istanbul ignore next */
+    (cov_17772lawha().s[28]++, (0, _getPrototypeOf2["default"])(Derived)),
+        result;
+
+    /* istanbul ignore next */
+    cov_17772lawha().s[29]++;
+
+    if (isNativeReflectConstruct()) {
+      /* istanbul ignore next */
+      cov_17772lawha().b[4][0]++;
+      var NewTarget =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[30]++, (0, _getPrototypeOf2["default"])(this).constructor);
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[31]++;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      /* istanbul ignore next */
+      cov_17772lawha().b[4][1]++;
+      cov_17772lawha().s[32]++;
+      result = Super.apply(this, arguments);
+    }
+
+    /* istanbul ignore next */
+    cov_17772lawha().s[33]++;
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var Search =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_17772lawha().s[34]++, function (_Component) {
+  /* istanbul ignore next */
+  cov_17772lawha().f[4]++;
+  cov_17772lawha().s[35]++;
+  (0, _inherits2["default"])(Search, _Component);
+
+  var _super =
+  /* istanbul ignore next */
+  (cov_17772lawha().s[36]++, _createSuper(Search));
+
+  function Search() {
+    /* istanbul ignore next */
+    cov_17772lawha().f[5]++;
+
+    var _this;
+
+    /* istanbul ignore next */
+    cov_17772lawha().s[37]++;
+    (0, _classCallCheck2["default"])(this, Search);
+
+    /* istanbul ignore next */
+    cov_17772lawha().s[38]++;
+    _this = _super.apply(this, arguments);
+
+    /* istanbul ignore next */
+    cov_17772lawha().s[39]++;
+
+    _this.onSearch = function () {
+      /* istanbul ignore next */
+      cov_17772lawha().f[6]++;
+      var onSearch =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[40]++, _this.props.onSearch);
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[41]++;
+
+      if (onSearch) {
+        /* istanbul ignore next */
+        cov_17772lawha().b[5][0]++;
+        cov_17772lawha().s[42]++;
+        onSearch(_this.input.input.value);
+      } else
+      /* istanbul ignore next */
+      {
+        cov_17772lawha().b[5][1]++;
+      }
+
+      cov_17772lawha().s[43]++;
+
+      _this.input.focus();
+    };
+
+    /* istanbul ignore next */
+    cov_17772lawha().s[44]++;
+
+    _this.saveInput = function (node) {
+      /* istanbul ignore next */
+      cov_17772lawha().f[7]++;
+      cov_17772lawha().s[45]++;
+      _this.input = node;
+    };
+
+    /* istanbul ignore next */
+    cov_17772lawha().s[46]++;
+    return _this;
+  }
+
+  /* istanbul ignore next */
+  cov_17772lawha().s[47]++;
+  (0, _createClass2["default"])(Search, [{
+    key: "focus",
+    value: function focus() {
+      /* istanbul ignore next */
+      cov_17772lawha().f[8]++;
+      cov_17772lawha().s[48]++;
+      this.input.focus();
+    }
+  }, {
+    key: "blur",
+    value: function blur() {
+      /* istanbul ignore next */
+      cov_17772lawha().f[9]++;
+      cov_17772lawha().s[49]++;
+      this.input.blur();
+    }
+  }, {
+    key: "getPrefixCls",
+    value: function getPrefixCls() {
+      /* istanbul ignore next */
+      cov_17772lawha().f[10]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[50]++, this.props.prefixCls);
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[51]++;
+      return (0, _configure.getPrefixCls)('input-search', prefixCls);
+    }
+  }, {
+    key: "getButtonOrIcon",
+    value: function getButtonOrIcon() {
+      /* istanbul ignore next */
+      cov_17772lawha().f[11]++;
+
+      var _this$props =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[52]++, this.props),
+          enterButton =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[53]++, _this$props.enterButton),
+          size =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[54]++, _this$props.size);
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[55]++;
+
+      if (!enterButton) {
+        /* istanbul ignore next */
+        cov_17772lawha().b[6][0]++;
+        cov_17772lawha().s[56]++;
+        return _react["default"].createElement(_button["default"], {
+          type: "primary",
+          size: size,
+          shape: "circle",
+          icon: "search"
+        });
+      } else
+      /* istanbul ignore next */
+      {
+        cov_17772lawha().b[6][1]++;
+      }
+
+      var enterButtonAsElement =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[57]++, enterButton);
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[58]++;
+
+      if (
+      /* istanbul ignore next */
+      (cov_17772lawha().b[8][0]++, enterButtonAsElement.type === _button["default"]) ||
+      /* istanbul ignore next */
+      (cov_17772lawha().b[8][1]++, enterButtonAsElement.type === 'button')) {
+        /* istanbul ignore next */
+        cov_17772lawha().b[7][0]++;
+        cov_17772lawha().s[59]++;
+        return (0, _react.cloneElement)(enterButtonAsElement, enterButtonAsElement.type === _button["default"] ?
+        /* istanbul ignore next */
+        (cov_17772lawha().b[9][0]++, {
+          className: "".concat(this.getPrefixCls(), "-button"),
+          size: size,
+          onClick: this.onSearch
+        }) :
+        /* istanbul ignore next */
+        (cov_17772lawha().b[9][1]++, {
+          onClick: this.onSearch
+        }));
+      } else
+      /* istanbul ignore next */
+      {
+        cov_17772lawha().b[7][1]++;
+      }
+
+      cov_17772lawha().s[60]++;
+
+      if (enterButton === true) {
+        /* istanbul ignore next */
+        cov_17772lawha().b[10][0]++;
+        cov_17772lawha().s[61]++;
+        return _react["default"].createElement(_button["default"], {
+          type: "primary",
+          size: size,
+          shape: "circle",
+          onClick: this.onSearch,
+          icon: "search"
+        });
+      } else
+      /* istanbul ignore next */
+      {
+        cov_17772lawha().b[10][1]++;
+      }
+
+      cov_17772lawha().s[62]++;
+      return _react["default"].createElement(_button["default"], {
+        type: "primary",
+        size: size,
+        onClick: this.onSearch,
+        key: "enterButton"
+      }, enterButton);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      /* istanbul ignore next */
+      cov_17772lawha().f[12]++;
+
+      var _classNames;
+
+      var _this$props2 =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[63]++, this.props),
+          className =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[64]++, _this$props2.className),
+          inputPrefixCls =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[65]++, _this$props2.inputPrefixCls),
+          size =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[66]++, _this$props2.size),
+          suffix =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[67]++, _this$props2.suffix),
+          enterButton =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[68]++, _this$props2.enterButton),
+          others =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[69]++, (0, _objectWithoutProperties2["default"])(_this$props2, ["className", "inputPrefixCls", "size", "suffix", "enterButton"]));
+
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[70]++, this.getPrefixCls());
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[71]++;
+      delete others.onSearch;
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[72]++;
+      delete others.prefixCls;
+      var buttonOrIcon =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[73]++, this.getButtonOrIcon());
+      var searchSuffix =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[74]++, suffix ?
+      /* istanbul ignore next */
+      (cov_17772lawha().b[11][0]++, [suffix, buttonOrIcon]) :
+      /* istanbul ignore next */
+      (cov_17772lawha().b[11][1]++, buttonOrIcon));
+      var inputClassName =
+      /* istanbul ignore next */
+      (cov_17772lawha().s[75]++, (0, _classnames["default"])(prefixCls, className, (_classNames = {}, (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-enter-button"), !!enterButton), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-").concat(size), !!size), _classNames)));
+
+      /* istanbul ignore next */
+      cov_17772lawha().s[76]++;
+      return _react["default"].createElement(_Input["default"], (0, _extends2["default"])({
+        onPressEnter: this.onSearch
+      }, others, {
+        size: size,
+        className: inputClassName,
+        prefixCls: (0, _configure.getPrefixCls)('input', inputPrefixCls),
+        suffix: searchSuffix,
+        ref: this.saveInput
+      }));
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_17772lawha().s[77]++;
+  return Search;
+}(_react.Component));
+
+/* istanbul ignore next */
+cov_17772lawha().s[78]++;
+exports["default"] = Search;
+
+/* istanbul ignore next */
+cov_17772lawha().s[79]++;
+Search.displayName = 'Search';
+
+/* istanbul ignore next */
+cov_17772lawha().s[80]++;
+Search.defaultProps = {
+  enterButton: false,
+  size: "small"
+  /* small */
+
+};

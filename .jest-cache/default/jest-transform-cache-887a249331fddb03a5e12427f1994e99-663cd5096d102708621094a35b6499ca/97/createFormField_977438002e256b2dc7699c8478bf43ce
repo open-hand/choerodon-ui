@@ -1,0 +1,32 @@
+de1050c2d9b497f777bbd6bd60cd4e44
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isFormField = isFormField;
+exports["default"] = createFormField;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var Field = function Field(fields) {
+  (0, _classCallCheck2["default"])(this, Field);
+  (0, _extends2["default"])(this, fields);
+};
+
+function isFormField(obj) {
+  return obj instanceof Field;
+}
+
+function createFormField(field) {
+  if (isFormField(field)) {
+    return field;
+  }
+
+  return new Field(field);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNyZWF0ZUZvcm1GaWVsZC5qc3giXSwibmFtZXMiOlsiRmllbGQiLCJmaWVsZHMiLCJpc0Zvcm1GaWVsZCIsIm9iaiIsImNyZWF0ZUZvcm1GaWVsZCIsImZpZWxkIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7OztJQUFNQSxLLEdBQ0osZUFBWUMsTUFBWixFQUFvQjtBQUFBO0FBQ2xCLDRCQUFjLElBQWQsRUFBb0JBLE1BQXBCO0FBQ0QsQzs7QUFHSSxTQUFTQyxXQUFULENBQXFCQyxHQUFyQixFQUEwQjtBQUMvQixTQUFPQSxHQUFHLFlBQVlILEtBQXRCO0FBQ0Q7O0FBRWMsU0FBU0ksZUFBVCxDQUF5QkMsS0FBekIsRUFBZ0M7QUFDN0MsTUFBSUgsV0FBVyxDQUFDRyxLQUFELENBQWYsRUFBd0I7QUFDdEIsV0FBT0EsS0FBUDtBQUNEOztBQUNELFNBQU8sSUFBSUwsS0FBSixDQUFVSyxLQUFWLENBQVA7QUFDRCIsInNvdXJjZXNDb250ZW50IjpbImNsYXNzIEZpZWxkIHtcbiAgY29uc3RydWN0b3IoZmllbGRzKSB7XG4gICAgT2JqZWN0LmFzc2lnbih0aGlzLCBmaWVsZHMpO1xuICB9XG59XG5cbmV4cG9ydCBmdW5jdGlvbiBpc0Zvcm1GaWVsZChvYmopIHtcbiAgcmV0dXJuIG9iaiBpbnN0YW5jZW9mIEZpZWxkO1xufVxuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBjcmVhdGVGb3JtRmllbGQoZmllbGQpIHtcbiAgaWYgKGlzRm9ybUZpZWxkKGZpZWxkKSkge1xuICAgIHJldHVybiBmaWVsZDtcbiAgfVxuICByZXR1cm4gbmV3IEZpZWxkKGZpZWxkKTtcbn1cbiJdfQ==

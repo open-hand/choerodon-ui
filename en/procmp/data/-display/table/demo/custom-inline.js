@@ -57,12 +57,12 @@ class App extends React.Component {
       record.setState('editing', false);
     }
   };
-  
+
   handleSubmit = async () => {
     const res = await this.userDs.submit();
     // 对应抛出处理
     console.log(res);
-  }
+  };
   /**
    * 行内操作按钮组
    */
@@ -70,12 +70,10 @@ class App extends React.Component {
     const btns = [];
     if (record.getState('editing')) {
       btns.push(
-        <a onClick={this.handleSubmit}>
+        <a onClick={this.handleSubmit} style={{ marginRight: '0.1rem' }}>
           确认
         </a>,
-        <a onClick={() => this.handleCancel(record)}>
-          取消
-        </a>,
+        <a onClick={() => this.handleCancel(record)}>取消</a>,
       );
     } else {
       btns.push(
@@ -104,8 +102,17 @@ class App extends React.Component {
         <Column name="name" editor={(record) => record.getState('editing')} />
         <Column name="age" editor={(record) => record.getState('editing')} />
         <Column name="sex" editor={(record) => record.getState('editing')} />
-        <Column name="enable" editor={(record) => record.getState('editing') && <Switch />} />
-        <Column header="操作" align="center" renderer={this.commands} className="custom-command" lock="right" />
+        <Column
+          name="enable"
+          editor={(record) => record.getState('editing') && <Switch />}
+        />
+        <Column
+          header="操作"
+          align="center"
+          renderer={this.commands}
+          className="custom-command"
+          lock="right"
+        />
       </Table>
     );
   }

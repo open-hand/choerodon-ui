@@ -1,0 +1,26 @@
+f0e2058545471b49d7d7b72372e91acd
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var _default = {
+  // Options.jsx
+  items_per_page: '/ trang',
+  label_items_per_page: 'Items / page',
+  jump_to: 'Đến',
+  jump_to_confirm: 'xác nhận',
+  page: '',
+  // Pagination.jsx
+  first_page: 'First Page',
+  last_page: 'Last Page',
+  prev_page: 'Trang Trước',
+  next_page: 'Trang Kế',
+  prev_5: 'Về 5 Trang Trước',
+  next_5: 'Đến 5 Trang Kế',
+  prev_3: 'Về 3 Trang Trước',
+  next_3: 'Đến 3 Trang Kế'
+};
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZpX1ZOLmpzeCJdLCJuYW1lcyI6WyJpdGVtc19wZXJfcGFnZSIsImxhYmVsX2l0ZW1zX3Blcl9wYWdlIiwianVtcF90byIsImp1bXBfdG9fY29uZmlybSIsInBhZ2UiLCJmaXJzdF9wYWdlIiwibGFzdF9wYWdlIiwicHJldl9wYWdlIiwibmV4dF9wYWdlIiwicHJldl81IiwibmV4dF81IiwicHJldl8zIiwibmV4dF8zIl0sIm1hcHBpbmdzIjoiOzs7Ozs7ZUFBZTtBQUNiO0FBQ0FBLEVBQUFBLGNBQWMsRUFBRSxTQUZIO0FBR2JDLEVBQUFBLG9CQUFvQixFQUFFLGNBSFQ7QUFJYkMsRUFBQUEsT0FBTyxFQUFFLEtBSkk7QUFLYkMsRUFBQUEsZUFBZSxFQUFFLFVBTEo7QUFNYkMsRUFBQUEsSUFBSSxFQUFFLEVBTk87QUFRYjtBQUNBQyxFQUFBQSxVQUFVLEVBQUUsWUFUQztBQVViQyxFQUFBQSxTQUFTLEVBQUUsV0FWRTtBQVdiQyxFQUFBQSxTQUFTLEVBQUUsYUFYRTtBQVliQyxFQUFBQSxTQUFTLEVBQUUsVUFaRTtBQWFiQyxFQUFBQSxNQUFNLEVBQUUsa0JBYks7QUFjYkMsRUFBQUEsTUFBTSxFQUFFLGdCQWRLO0FBZWJDLEVBQUFBLE1BQU0sRUFBRSxrQkFmSztBQWdCYkMsRUFBQUEsTUFBTSxFQUFFO0FBaEJLLEMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZGVmYXVsdCB7XG4gIC8vIE9wdGlvbnMuanN4XG4gIGl0ZW1zX3Blcl9wYWdlOiAnLyB0cmFuZycsXG4gIGxhYmVsX2l0ZW1zX3Blcl9wYWdlOiAnSXRlbXMgLyBwYWdlJyxcbiAganVtcF90bzogJ8SQ4bq/bicsXG4gIGp1bXBfdG9fY29uZmlybTogJ3jDoWMgbmjhuq1uJyxcbiAgcGFnZTogJycsXG5cbiAgLy8gUGFnaW5hdGlvbi5qc3hcbiAgZmlyc3RfcGFnZTogJ0ZpcnN0IFBhZ2UnLFxuICBsYXN0X3BhZ2U6ICdMYXN0IFBhZ2UnLFxuICBwcmV2X3BhZ2U6ICdUcmFuZyBUcsaw4bubYycsXG4gIG5leHRfcGFnZTogJ1RyYW5nIEvhur8nLFxuICBwcmV2XzU6ICdW4buBIDUgVHJhbmcgVHLGsOG7m2MnLFxuICBuZXh0XzU6ICfEkOG6v24gNSBUcmFuZyBL4bq/JyxcbiAgcHJldl8zOiAnVuG7gSAzIFRyYW5nIFRyxrDhu5tjJyxcbiAgbmV4dF8zOiAnxJDhur9uIDMgVHJhbmcgS+G6vycsXG59O1xuIl19

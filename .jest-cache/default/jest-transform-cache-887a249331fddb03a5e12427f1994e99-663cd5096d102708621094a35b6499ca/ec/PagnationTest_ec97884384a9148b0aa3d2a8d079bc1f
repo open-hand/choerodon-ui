@@ -1,0 +1,72 @@
+f69def907d20a17e33252e7cdbefd129
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _ = _interopRequireDefault(require(".."));
+
+var _dataSet = _interopRequireDefault(require("../../data-set"));
+
+var PaginationTest =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(PaginationTest, _React$Component);
+
+  function PaginationTest() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, PaginationTest);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(PaginationTest)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds", new _dataSet["default"]({
+      autoQuery: true,
+      name: 'user',
+      pageSize: 20
+    }));
+    return _this;
+  }
+
+  (0, _createClass2["default"])(PaginationTest, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_["default"], (0, _extends2["default"])({
+        showPager: true
+      }, this.props, {
+        dataSet: this.ds
+      }));
+    }
+  }]);
+  return PaginationTest;
+}(_react["default"].Component);
+
+exports["default"] = PaginationTest;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIlBhZ25hdGlvblRlc3QuanMiXSwibmFtZXMiOlsiUGFnaW5hdGlvblRlc3QiLCJEYXRhU2V0IiwiYXV0b1F1ZXJ5IiwibmFtZSIsInBhZ2VTaXplIiwicHJvcHMiLCJkcyIsIlJlYWN0IiwiQ29tcG9uZW50Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7O0lBRXFCQSxjOzs7Ozs7Ozs7Ozs7Ozs7OzsyRkFDZCxJQUFJQyxtQkFBSixDQUFZO0FBQ2ZDLE1BQUFBLFNBQVMsRUFBRSxJQURJO0FBRWZDLE1BQUFBLElBQUksRUFBRSxNQUZTO0FBR2ZDLE1BQUFBLFFBQVEsRUFBRTtBQUhLLEtBQVosQzs7Ozs7OzZCQU1JO0FBQ1AsYUFBTyxnQ0FBQyxZQUFEO0FBQVksUUFBQSxTQUFTO0FBQXJCLFNBQTBCLEtBQUtDLEtBQS9CO0FBQXNDLFFBQUEsT0FBTyxFQUFFLEtBQUtDO0FBQXBELFNBQVA7QUFDRDs7O0VBVHlDQyxrQkFBTUMsUyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCc7XG5pbXBvcnQgUGFnaW5hdGlvbiBmcm9tICcuLic7XG5pbXBvcnQgRGF0YVNldCBmcm9tICcuLi8uLi9kYXRhLXNldCc7XG5cbmV4cG9ydCBkZWZhdWx0IGNsYXNzIFBhZ2luYXRpb25UZXN0IGV4dGVuZHMgUmVhY3QuQ29tcG9uZW50IHtcbiAgZHMgPSBuZXcgRGF0YVNldCh7XG4gICAgYXV0b1F1ZXJ5OiB0cnVlLFxuICAgIG5hbWU6ICd1c2VyJyxcbiAgICBwYWdlU2l6ZTogMjAsXG4gIH0pO1xuXG4gIHJlbmRlcigpIHtcbiAgICByZXR1cm4gPFBhZ2luYXRpb24gc2hvd1BhZ2VyIHsuLi50aGlzLnByb3BzfSBkYXRhU2V0PXt0aGlzLmRzfSAvPjtcbiAgfVxufVxuIl19

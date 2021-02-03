@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/ca_ES.tsx"],"names":[],"mappings":";;;;;;AAAA,IAAM,MAAM,GAAG;AACb,EAAA,WAAW,EAAE;AADA,CAAf;eAIe,M","sourcesContent":["const locale = {\n  placeholder: 'Seleccionar hora',\n};\n\nexport default locale;\n"]}

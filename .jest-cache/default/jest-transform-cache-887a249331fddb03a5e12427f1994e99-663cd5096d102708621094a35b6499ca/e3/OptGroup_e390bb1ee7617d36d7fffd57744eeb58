@@ -1,0 +1,38 @@
+476b83222480e89a34d9ffdddaab2536
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = require("react");
+
+var OptGroup =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2["default"])(OptGroup, _Component);
+
+  function OptGroup() {
+    (0, _classCallCheck2["default"])(this, OptGroup);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(OptGroup).apply(this, arguments));
+  }
+
+  return OptGroup;
+}(_react.Component);
+
+exports["default"] = OptGroup;
+(0, _defineProperty2["default"])(OptGroup, "isSelectOptGroup", true);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIk9wdEdyb3VwLmpzeCJdLCJuYW1lcyI6WyJPcHRHcm91cCIsIkNvbXBvbmVudCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOztJQUVxQkEsUTs7Ozs7Ozs7Ozs7RUFBaUJDLGdCOzs7aUNBQWpCRCxRLHNCQUNPLEkiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QsIHsgQ29tcG9uZW50IH0gZnJvbSAncmVhY3QnO1xuXG5leHBvcnQgZGVmYXVsdCBjbGFzcyBPcHRHcm91cCBleHRlbmRzIENvbXBvbmVudCB7XG4gIHN0YXRpYyBpc1NlbGVjdE9wdEdyb3VwID0gdHJ1ZTtcbn1cbiJdfQ==

@@ -1,0 +1,11 @@
+fecb72b80b9e5e8064ed216b663b9e87
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
+
+(0, _demoTest["default"])('breadcrumb', {
+  skip: ['router.md', 'router-4.md']
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6WyJza2lwIl0sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsWUFBVCxFQUF1QjtBQUFFQSxFQUFBQSxJQUFJLEVBQUUsQ0FBQyxXQUFELEVBQWMsYUFBZDtBQUFSLENBQXZCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGRlbW9UZXN0IGZyb20gJy4uLy4uLy4uL3Rlc3RzL3NoYXJlZC9kZW1vVGVzdCc7XG5cbmRlbW9UZXN0KCdicmVhZGNydW1iJywgeyBza2lwOiBbJ3JvdXRlci5tZCcsICdyb3V0ZXItNC5tZCddIH0pO1xuIl19

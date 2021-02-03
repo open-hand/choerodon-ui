@@ -1,0 +1,36 @@
+ccaa86730decb0924ce137b1e8b159d6
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _tabs = _interopRequireDefault(require("../../../components/tabs"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var TabPane = _tabs["default"].TabPane;
+
+function callback(key) {
+  console.log(key);
+}
+
+var __Demo = _react["default"].createElement(_tabs["default"], {
+  defaultActiveKey: "1",
+  onChange: callback
+}, _react["default"].createElement(TabPane, {
+  tab: "Tab 1",
+  key: "1"
+}, "Content of Tab Pane 1"), _react["default"].createElement(TabPane, {
+  tab: "Tab 2",
+  key: "2"
+}, "Content of Tab Pane 2"), _react["default"].createElement(TabPane, {
+  tab: "Tab 3",
+  key: "3"
+}, "Content of Tab Pane 3"));
+
+var _default = __Demo;
+exports["default"] = _default;

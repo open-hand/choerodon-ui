@@ -1,0 +1,25 @@
+caa68ec48fe4097ad57c43a52b17835f
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _affix = _interopRequireDefault(require("../../../components/affix"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_affix["default"], {
+  offsetTop: 120,
+  onChange: function onChange(affixed) {
+    return console.log(affixed);
+  }
+}, _react["default"].createElement(_button["default"], null, "120px to affix top"));
+
+var _default = __Demo;
+exports["default"] = _default;

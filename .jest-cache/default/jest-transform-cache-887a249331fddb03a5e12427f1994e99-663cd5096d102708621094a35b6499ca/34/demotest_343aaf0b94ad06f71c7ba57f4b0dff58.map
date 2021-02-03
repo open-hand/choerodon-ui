@@ -1,0 +1,1 @@
+{"version":3,"sources":["demo.test.js"],"names":["skip"],"mappings":";;;;AAAA;;AAEA,0BAAS,SAAT,EAAoB;AAAEA,EAAAA,IAAI,EAAE;AAAR,CAApB","sourcesContent":["import demoTest from '../../../tests/shared/demoTest';\n\ndemoTest('mention', { skip: true });\n"]}

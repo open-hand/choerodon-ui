@@ -1,0 +1,38 @@
+e353ea9ccf2f2968e7bf334f4cd95fba
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _collapse = _interopRequireDefault(require("../../../components/collapse"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Panel = _collapse["default"].Panel;
+
+var text = _react["default"].createElement("p", {
+  style: {
+    paddingLeft: 24
+  }
+}, "A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.");
+
+var __Demo = _react["default"].createElement(_collapse["default"], {
+  bordered: false,
+  defaultActiveKey: ['1']
+}, _react["default"].createElement(Panel, {
+  header: "This is panel header 1",
+  key: "1"
+}, text), _react["default"].createElement(Panel, {
+  header: "This is panel header 2",
+  key: "2"
+}, text), _react["default"].createElement(Panel, {
+  header: "This is panel header 3",
+  key: "3"
+}, text));
+
+var _default = __Demo;
+exports["default"] = _default;

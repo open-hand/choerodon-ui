@@ -8,14 +8,21 @@ const { MonthPicker, RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 ReactDOM.render(
   <div>
-    <DatePicker defaultValue={moment('2015-06-06', dateFormat)} disabled />
-    <br />
-    <MonthPicker defaultValue={moment('2015-06', 'YYYY-MM')} disabled />
-    <br />
-    <RangePicker
-      defaultValue={[moment('2015-06-06', dateFormat), moment('2015-06-06', dateFormat)]}
-      disabled
-    />
+    <div style={{ marginBottom: 10 }}>
+      <DatePicker defaultValue={moment('2015-06-06', dateFormat)} disabled />
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <MonthPicker defaultValue={moment('2015-06', 'YYYY-MM')} disabled />
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <RangePicker
+        defaultValue={[
+          moment('2015-06-06', dateFormat),
+          moment('2015-06-06', dateFormat),
+        ]}
+        disabled
+      />
+    </div>
   </div>,
   document.getElementById('container'),
 );

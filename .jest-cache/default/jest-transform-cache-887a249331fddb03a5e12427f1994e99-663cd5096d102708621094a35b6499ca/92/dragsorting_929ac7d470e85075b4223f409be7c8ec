@@ -1,0 +1,157 @@
+c8fb176fcfc826eeaab10982db22b03b
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _table = _interopRequireDefault(require("../../../components/table"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactDnd = require("react-dnd");
+
+var _reactDndHtml5Backend = require("react-dnd-html5-backend");
+
+var _immutabilityHelper = _interopRequireDefault(require("immutability-helper"));
+
+var RNDContext = (0, _reactDnd.createDndContext)(_reactDndHtml5Backend.HTML5Backend);
+var type = 'DragableBodyRow';
+
+var DragableBodyRow = function DragableBodyRow(_ref) {
+  var index = _ref.index,
+      moveRow = _ref.moveRow,
+      className = _ref.className,
+      style = _ref.style,
+      restProps = (0, _objectWithoutProperties2["default"])(_ref, ["index", "moveRow", "className", "style"]);
+
+  var ref = _react["default"].useRef();
+
+  var _useDrop = (0, _reactDnd.useDrop)({
+    accept: type,
+    collect: function collect(monitor) {
+      var _ref2 = monitor.getItem() || {},
+          dragIndex = _ref2.index;
+
+      if (dragIndex === index) {
+        return {};
+      }
+
+      return {
+        isOver: monitor.isOver(),
+        dropClassName: dragIndex < index ? ' drop-over-downward' : ' drop-over-upward'
+      };
+    },
+    drop: function drop(item) {
+      moveRow(item.index, index);
+    }
+  }),
+      _useDrop2 = (0, _slicedToArray2["default"])(_useDrop, 2),
+      _useDrop2$ = _useDrop2[0],
+      isOver = _useDrop2$.isOver,
+      dropClassName = _useDrop2$.dropClassName,
+      drop = _useDrop2[1];
+
+  var _useDrag = (0, _reactDnd.useDrag)({
+    item: {
+      type: type,
+      index: index
+    },
+    collect: function collect(monitor) {
+      return {
+        isDragging: monitor.isDragging()
+      };
+    }
+  }),
+      _useDrag2 = (0, _slicedToArray2["default"])(_useDrag, 2),
+      drag = _useDrag2[1];
+
+  drop(drag(ref));
+  return _react["default"].createElement("tr", (0, _extends2["default"])({
+    ref: ref,
+    className: "".concat(className).concat(isOver ? dropClassName : ''),
+    style: (0, _objectSpread2["default"])({
+      cursor: 'move'
+    }, style)
+  }, restProps));
+};
+
+var columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+  key: 'name'
+}, {
+  title: 'Age',
+  dataIndex: 'age',
+  key: 'age'
+}, {
+  title: 'Address',
+  dataIndex: 'address',
+  key: 'address'
+}];
+
+var DragSortingTable = function DragSortingTable() {
+  var _useState = (0, _react.useState)([{
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park'
+  }, {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park'
+  }, {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park'
+  }]),
+      _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var components = {
+    body: {
+      row: DragableBodyRow
+    }
+  };
+  var moveRow = (0, _react.useCallback)(function (dragIndex, hoverIndex) {
+    var dragRow = data[dragIndex];
+    setData((0, _immutabilityHelper["default"])(data, {
+      $splice: [[dragIndex, 1], [hoverIndex, 0, dragRow]]
+    }));
+  }, [data]);
+  var manager = (0, _react.useRef)(RNDContext);
+  return _react["default"].createElement(_reactDnd.DndProvider, {
+    manager: manager.current.dragDropManager
+  }, _react["default"].createElement(_table["default"], {
+    columns: columns,
+    dataSource: data,
+    components: components,
+    onRow: function onRow(record, index) {
+      return {
+        index: index,
+        moveRow: moveRow
+      };
+    }
+  }));
+};
+
+var __Demo = _react["default"].createElement(DragSortingTable, null);
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,16 @@
+import CalendarLocale from '../../rc-components/calendar/locale/et_EE';
+import TimePickerLocale from '../../time-picker/locale/et_EE';
+// 统一合并为完整的 Locale
+const locale = {
+    lang: {
+        placeholder: 'Vali kuupäev',
+        rangePlaceholder: ['Algus kuupäev', 'Lõpu kuupäev'],
+        ...CalendarLocale,
+    },
+    timePickerLocale: {
+        ...TimePickerLocale,
+    },
+};
+// All settings at:
+export default locale;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiL1VzZXJzL2h1aWh1YXdrL0RvY3VtZW50cy9vcHQvY2hvZXJvZG9uLXVpL2NvbXBvbmVudHMvZGF0ZS1waWNrZXIvbG9jYWxlL2V0X0VFLnRzeCIsIm1hcHBpbmdzIjoiQUFBQSxPQUFPLGNBQWMsTUFBTSwyQ0FBMkMsQ0FBQztBQUN2RSxPQUFPLGdCQUFnQixNQUFNLGdDQUFnQyxDQUFDO0FBRTlELGtCQUFrQjtBQUNsQixNQUFNLE1BQU0sR0FBRztJQUNiLElBQUksRUFBRTtRQUNKLFdBQVcsRUFBRSxjQUFjO1FBQzNCLGdCQUFnQixFQUFFLENBQUMsZUFBZSxFQUFFLGNBQWMsQ0FBQztRQUNuRCxHQUFHLGNBQWM7S0FDbEI7SUFDRCxnQkFBZ0IsRUFBRTtRQUNoQixHQUFHLGdCQUFnQjtLQUNwQjtDQUNGLENBQUM7QUFFRixtQkFBbUI7QUFFbkIsZUFBZSxNQUFNLENBQUMiLCJuYW1lcyI6W10sInNvdXJjZXMiOlsiL1VzZXJzL2h1aWh1YXdrL0RvY3VtZW50cy9vcHQvY2hvZXJvZG9uLXVpL2NvbXBvbmVudHMvZGF0ZS1waWNrZXIvbG9jYWxlL2V0X0VFLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgQ2FsZW5kYXJMb2NhbGUgZnJvbSAnLi4vLi4vcmMtY29tcG9uZW50cy9jYWxlbmRhci9sb2NhbGUvZXRfRUUnO1xuaW1wb3J0IFRpbWVQaWNrZXJMb2NhbGUgZnJvbSAnLi4vLi4vdGltZS1waWNrZXIvbG9jYWxlL2V0X0VFJztcblxuLy8g57uf5LiA5ZCI5bm25Li65a6M5pW055qEIExvY2FsZVxuY29uc3QgbG9jYWxlID0ge1xuICBsYW5nOiB7XG4gICAgcGxhY2Vob2xkZXI6ICdWYWxpIGt1dXDDpGV2JyxcbiAgICByYW5nZVBsYWNlaG9sZGVyOiBbJ0FsZ3VzIGt1dXDDpGV2JywgJ0zDtXB1IGt1dXDDpGV2J10sXG4gICAgLi4uQ2FsZW5kYXJMb2NhbGUsXG4gIH0sXG4gIHRpbWVQaWNrZXJMb2NhbGU6IHtcbiAgICAuLi5UaW1lUGlja2VyTG9jYWxlLFxuICB9LFxufTtcblxuLy8gQWxsIHNldHRpbmdzIGF0OlxuXG5leHBvcnQgZGVmYXVsdCBsb2NhbGU7XG4iXSwidmVyc2lvbiI6M30=

@@ -1,0 +1,337 @@
+b04418fc5387137a61e2393d94b37657
+"use strict";
+
+/* istanbul ignore next */
+var cov_n50vr18lg = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/option/Option.tsx";
+  var hash = "a0c872ef598d439fe7ee0d2c059ad38c903ac7a5";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/option/Option.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 23
+        },
+        end: {
+          line: 10,
+          column: 95
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 34
+        },
+        end: {
+          line: 12,
+          column: 117
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 23
+        },
+        end: {
+          line: 14,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 17
+        },
+        end: {
+          line: 16,
+          column: 83
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 13
+        },
+        end: {
+          line: 18,
+          column: 29
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 17
+        },
+        end: {
+          line: 20,
+          column: 62
+        }
+      },
+      "9": {
+        start: {
+          line: 25,
+          column: 0
+        },
+        end: {
+          line: 34,
+          column: 19
+        }
+      },
+      "10": {
+        start: {
+          line: 26,
+          column: 2
+        },
+        end: {
+          line: 26,
+          column: 49
+        }
+      },
+      "11": {
+        start: {
+          line: 29,
+          column: 4
+        },
+        end: {
+          line: 29,
+          column: 51
+        }
+      },
+      "12": {
+        start: {
+          line: 30,
+          column: 4
+        },
+        end: {
+          line: 30,
+          column: 126
+        }
+      },
+      "13": {
+        start: {
+          line: 33,
+          column: 2
+        },
+        end: {
+          line: 33,
+          column: 16
+        }
+      },
+      "14": {
+        start: {
+          line: 36,
+          column: 0
+        },
+        end: {
+          line: 36,
+          column: 28
+        }
+      },
+      "15": {
+        start: {
+          line: 37,
+          column: 0
+        },
+        end: {
+          line: 42,
+          column: 2
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 25,
+            column: 0
+          },
+          end: {
+            line: 25,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 25,
+            column: 22
+          },
+          end: {
+            line: 34,
+            column: 1
+          }
+        },
+        line: 25
+      },
+      "1": {
+        name: "Option",
+        decl: {
+          start: {
+            line: 28,
+            column: 11
+          },
+          end: {
+            line: 28,
+            column: 17
+          }
+        },
+        loc: {
+          start: {
+            line: 28,
+            column: 20
+          },
+          end: {
+            line: 31,
+            column: 3
+          }
+        },
+        line: 28
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0
+    },
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "a0c872ef598d439fe7ee0d2c059ad38c903ac7a5"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_n50vr18lg.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_n50vr18lg.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_n50vr18lg.s[2]++;
+exports["default"] = void 0;
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_n50vr18lg.s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_n50vr18lg.s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_n50vr18lg.s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_n50vr18lg.s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _react =
+/* istanbul ignore next */
+(cov_n50vr18lg.s[7]++, require("react"));
+
+var _propTypes =
+/* istanbul ignore next */
+(cov_n50vr18lg.s[8]++, _interopRequireDefault(require("prop-types")));
+/* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */
+
+
+var Option =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_n50vr18lg.s[9]++, function (_Component) {
+  /* istanbul ignore next */
+  cov_n50vr18lg.f[0]++;
+  cov_n50vr18lg.s[10]++;
+  (0, _inherits2["default"])(Option, _Component);
+
+  function Option() {
+    /* istanbul ignore next */
+    cov_n50vr18lg.f[1]++;
+    cov_n50vr18lg.s[11]++;
+    (0, _classCallCheck2["default"])(this, Option);
+
+    /* istanbul ignore next */
+    cov_n50vr18lg.s[12]++;
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Option).apply(this, arguments));
+  }
+
+  /* istanbul ignore next */
+  cov_n50vr18lg.s[13]++;
+  return Option;
+}(_react.Component));
+
+/* istanbul ignore next */
+cov_n50vr18lg.s[14]++;
+exports["default"] = Option;
+
+/* istanbul ignore next */
+cov_n50vr18lg.s[15]++;
+Option.propTypes = {
+  /**
+   * 选项值
+   */
+  value: _propTypes["default"].any
+};

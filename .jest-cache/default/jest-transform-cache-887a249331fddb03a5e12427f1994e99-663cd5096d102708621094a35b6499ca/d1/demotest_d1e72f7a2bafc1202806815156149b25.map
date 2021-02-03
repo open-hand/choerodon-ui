@@ -1,0 +1,1 @@
+{"version":3,"sources":["demo.test.js"],"names":["skip"],"mappings":";;;;AAAA;;AAEA,0BAAS,oBAAT,EAA+B;AAAEA,EAAAA,IAAI,EAAE;AAAR,CAA/B","sourcesContent":["import demoTest from '../../../tests/shared/demoTest';\n\ndemoTest('modal-provider-pro', { skip: true });\n"]}

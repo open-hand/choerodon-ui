@@ -1,0 +1,42 @@
+1d436d32410de393f670d981823e7c1f
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components-pro/row"));
+
+var _col = _interopRequireDefault(require("../../../components-pro/col"));
+
+var _textArea = _interopRequireDefault(require("../../../components-pro/text-area"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_row["default"], {
+  gutter: 10
+}, _react["default"].createElement(_col["default"], {
+  span: 8
+}, _react["default"].createElement(_textArea["default"], {
+  placeholder: "resize both",
+  resize: "both",
+  cols: 40
+})), _react["default"].createElement(_col["default"], {
+  span: 8
+}, _react["default"].createElement(_textArea["default"], {
+  placeholder: "resize vertical",
+  resize: "vertical",
+  cols: 40
+})), _react["default"].createElement(_col["default"], {
+  span: 8
+}, _react["default"].createElement(_textArea["default"], {
+  placeholder: "resize horizontal",
+  resize: "horizontal",
+  cols: 40
+})));
+
+var _default = __Demo;
+exports["default"] = _default;

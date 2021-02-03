@@ -1,0 +1,12 @@
+b6917f96c94c84631ffa3d79709bdc7f
+"use strict";
+
+/* eslint-disable global-require */
+if (typeof window !== 'undefined') {
+  require('codemirror/addon/lint/lint.css');
+
+  require('codemirror/addon/lint/lint');
+
+  require('codemirror/addon/lint/html-lint');
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby9jb2RlLWFyZWEvbGludC9odG1sLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBO0FBQ0EsSUFBSSxPQUFPLE1BQVAsS0FBa0IsV0FBdEIsRUFBbUM7QUFDakMsRUFBQSxPQUFPLENBQUMsZ0NBQUQsQ0FBUDs7QUFDQSxFQUFBLE9BQU8sQ0FBQyw0QkFBRCxDQUFQOztBQUNBLEVBQUEsT0FBTyxDQUFDLGlDQUFELENBQVA7QUFDRCIsInNvdXJjZXNDb250ZW50IjpbIi8qIGVzbGludC1kaXNhYmxlIGdsb2JhbC1yZXF1aXJlICovXG5pZiAodHlwZW9mIHdpbmRvdyAhPT0gJ3VuZGVmaW5lZCcpIHtcbiAgcmVxdWlyZSgnY29kZW1pcnJvci9hZGRvbi9saW50L2xpbnQuY3NzJyk7XG4gIHJlcXVpcmUoJ2NvZGVtaXJyb3IvYWRkb24vbGludC9saW50Jyk7XG4gIHJlcXVpcmUoJ2NvZGVtaXJyb3IvYWRkb24vbGludC9odG1sLWxpbnQnKTtcbn1cbiJdfQ==

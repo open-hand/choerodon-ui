@@ -1,0 +1,124 @@
+4507cfeaf1624637bca1125dca214901
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _switch = _interopRequireDefault(require("../../../components/switch"));
+
+var _popconfirm = _interopRequireDefault(require("../../../components/popconfirm"));
+
+var _message2 = _interopRequireDefault(require("../../../components/message"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      visible: false,
+      condition: true // Whether meet the condition, if not show popconfirm.
+
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "changeCondition", function (value) {
+      _this.setState({
+        condition: value
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "confirm", function () {
+      _this.setState({
+        visible: false
+      });
+
+      _message2["default"].success('Next step.');
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "cancel", function () {
+      _this.setState({
+        visible: false
+      });
+
+      _message2["default"].error('Click on cancel.');
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleVisibleChange", function (visible) {
+      if (!visible) {
+        _this.setState({
+          visible: visible
+        });
+
+        return;
+      } // Determining condition before show the popconfirm.
+
+
+      console.log(_this.state.condition);
+
+      if (_this.state.condition) {
+        _this.confirm(); // next step
+
+      } else {
+        _this.setState({
+          visible: visible
+        }); // show the popconfirm
+
+      }
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement(_popconfirm["default"], {
+        title: "Are you sure delete this task?",
+        visible: this.state.visible,
+        onVisibleChange: this.handleVisibleChange,
+        onConfirm: this.confirm,
+        onCancel: this.cancel,
+        okText: "Yes",
+        cancelText: "No"
+      }, _react["default"].createElement("a", {
+        href: "#"
+      }, "Delete a task")), _react["default"].createElement("br", null), _react["default"].createElement("br", null), "Whether directly execute\uFF1A", _react["default"].createElement(_switch["default"], {
+        defaultChecked: true,
+        onChange: this.changeCondition
+      }));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

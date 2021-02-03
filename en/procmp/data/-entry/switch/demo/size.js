@@ -4,11 +4,11 @@ import { Switch } from 'choerodon-ui/pro';
 
 ReactDOM.render(
   <div>
-    <Switch size="large" defaultChecked />
+    <Switch style={{margin:'.1rem'}}  size="large" defaultChecked />
     <br />
-    <Switch size="default" defaultChecked />
+    <Switch style={{margin:'.1rem'}}  size="default" defaultChecked />
     <br />
-    <Switch size="small" defaultChecked />
+    <Switch style={{margin:'.1rem'}}  size="small" defaultChecked />
   </div>,
   document.getElementById('container'),
 );

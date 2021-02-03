@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.test.js"],"names":["ModalContainer"],"mappings":";;;;AAAA;;AACA;;AAEA,2BAAUA,YAAV","sourcesContent":["import ModalContainer from '..';\nimport mountTest from '../../../tests/shared/mountTest';\n\nmountTest(ModalContainer);\n"]}

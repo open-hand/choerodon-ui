@@ -1,0 +1,28 @@
+7a9e1000e550cce723ceda31dc12af51
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2"));
+
+var _en_US = _interopRequireDefault(require("../../rc-components/calendar/locale/en_US"));
+
+var _en_US2 = _interopRequireDefault(require("../../time-picker/locale/en_US"));
+
+// Merge into a locale object
+var locale = {
+  lang: (0, _objectSpread2["default"])({
+    placeholder: 'Select date',
+    rangePlaceholder: ['Start date', 'End date']
+  }, _en_US["default"]),
+  timePickerLocale: (0, _objectSpread2["default"])({}, _en_US2["default"])
+}; // All settings at:
+
+var _default = locale;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzL2RhdGUtcGlja2VyL2xvY2FsZS9lbl9VUy50c3giXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFFQTtBQUNBLElBQU0sTUFBTSxHQUFHO0FBQ2IsRUFBQSxJQUFJO0FBQ0YsSUFBQSxXQUFXLEVBQUUsYUFEWDtBQUVGLElBQUEsZ0JBQWdCLEVBQUUsQ0FBQyxZQUFELEVBQWUsVUFBZjtBQUZoQixLQUdDLGlCQUhELENBRFM7QUFNYixFQUFBLGdCQUFnQixxQ0FDWCxrQkFEVztBQU5ILENBQWYsQyxDQVdBOztlQUVlLE0iLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgQ2FsZW5kYXJMb2NhbGUgZnJvbSAnLi4vLi4vcmMtY29tcG9uZW50cy9jYWxlbmRhci9sb2NhbGUvZW5fVVMnO1xuaW1wb3J0IFRpbWVQaWNrZXJMb2NhbGUgZnJvbSAnLi4vLi4vdGltZS1waWNrZXIvbG9jYWxlL2VuX1VTJztcblxuLy8gTWVyZ2UgaW50byBhIGxvY2FsZSBvYmplY3RcbmNvbnN0IGxvY2FsZSA9IHtcbiAgbGFuZzoge1xuICAgIHBsYWNlaG9sZGVyOiAnU2VsZWN0IGRhdGUnLFxuICAgIHJhbmdlUGxhY2Vob2xkZXI6IFsnU3RhcnQgZGF0ZScsICdFbmQgZGF0ZSddLFxuICAgIC4uLkNhbGVuZGFyTG9jYWxlLFxuICB9LFxuICB0aW1lUGlja2VyTG9jYWxlOiB7XG4gICAgLi4uVGltZVBpY2tlckxvY2FsZSxcbiAgfSxcbn07XG5cbi8vIEFsbCBzZXR0aW5ncyBhdDpcblxuZXhwb3J0IGRlZmF1bHQgbG9jYWxlO1xuIl19

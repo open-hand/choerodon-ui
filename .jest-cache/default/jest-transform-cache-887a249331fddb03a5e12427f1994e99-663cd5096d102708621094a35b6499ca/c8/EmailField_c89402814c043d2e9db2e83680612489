@@ -1,0 +1,643 @@
+30b2bff7a65d5e323142118a299b260f
+"use strict";
+
+/* istanbul ignore next */
+function cov_2hmkl85etk() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/email-field/EmailField.tsx";
+  var hash = "1579f2beaa3ac6f09809fa1b03eb59cb38bdb974";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/email-field/EmailField.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 23
+        },
+        end: {
+          line: 10,
+          column: 95
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 20
+        },
+        end: {
+          line: 12,
+          column: 89
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 34
+        },
+        end: {
+          line: 14,
+          column: 117
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 23
+        },
+        end: {
+          line: 16,
+          column: 95
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 17
+        },
+        end: {
+          line: 18,
+          column: 83
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 13
+        },
+        end: {
+          line: 20,
+          column: 29
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 17
+        },
+        end: {
+          line: 22,
+          column: 38
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 12
+        },
+        end: {
+          line: 24,
+          column: 27
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 18
+        },
+        end: {
+          line: 26,
+          column: 52
+        }
+      },
+      "12": {
+        start: {
+          line: 28,
+          column: 21
+        },
+        end: {
+          line: 28,
+          column: 49
+        }
+      },
+      "13": {
+        start: {
+          line: 32,
+          column: 0
+        },
+        end: {
+          line: 64,
+          column: 24
+        }
+      },
+      "14": {
+        start: {
+          line: 33,
+          column: 2
+        },
+        end: {
+          line: 33,
+          column: 53
+        }
+      },
+      "15": {
+        start: {
+          line: 38,
+          column: 4
+        },
+        end: {
+          line: 38,
+          column: 55
+        }
+      },
+      "16": {
+        start: {
+          line: 39,
+          column: 4
+        },
+        end: {
+          line: 39,
+          column: 131
+        }
+      },
+      "17": {
+        start: {
+          line: 40,
+          column: 4
+        },
+        end: {
+          line: 40,
+          column: 25
+        }
+      },
+      "18": {
+        start: {
+          line: 41,
+          column: 4
+        },
+        end: {
+          line: 41,
+          column: 17
+        }
+      },
+      "19": {
+        start: {
+          line: 44,
+          column: 2
+        },
+        end: {
+          line: 62,
+          column: 6
+        }
+      },
+      "20": {
+        start: {
+          line: 47,
+          column: 6
+        },
+        end: {
+          line: 49,
+          column: 7
+        }
+      },
+      "21": {
+        start: {
+          line: 54,
+          column: 18
+        },
+        end: {
+          line: 54,
+          column: 39
+        }
+      },
+      "22": {
+        start: {
+          line: 55,
+          column: 6
+        },
+        end: {
+          line: 60,
+          column: 8
+        }
+      },
+      "23": {
+        start: {
+          line: 63,
+          column: 2
+        },
+        end: {
+          line: 63,
+          column: 20
+        }
+      },
+      "24": {
+        start: {
+          line: 66,
+          column: 0
+        },
+        end: {
+          line: 66,
+          column: 38
+        }
+      },
+      "25": {
+        start: {
+          line: 67,
+          column: 0
+        },
+        end: {
+          line: 67,
+          column: 98
+        }
+      },
+      "26": {
+        start: {
+          line: 68,
+          column: 0
+        },
+        end: {
+          line: 68,
+          column: 71
+        }
+      },
+      "27": {
+        start: {
+          line: 69,
+          column: 15
+        },
+        end: {
+          line: 69,
+          column: 25
+        }
+      },
+      "28": {
+        start: {
+          line: 70,
+          column: 0
+        },
+        end: {
+          line: 70,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 32,
+            column: 0
+          },
+          end: {
+            line: 32,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 32,
+            column: 22
+          },
+          end: {
+            line: 64,
+            column: 1
+          }
+        },
+        line: 32
+      },
+      "1": {
+        name: "EmailField",
+        decl: {
+          start: {
+            line: 35,
+            column: 11
+          },
+          end: {
+            line: 35,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 35,
+            column: 24
+          },
+          end: {
+            line: 42,
+            column: 3
+          }
+        },
+        line: 35
+      },
+      "2": {
+        name: "getFieldType",
+        decl: {
+          start: {
+            line: 46,
+            column: 20
+          },
+          end: {
+            line: 46,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 46,
+            column: 35
+          },
+          end: {
+            line: 50,
+            column: 5
+          }
+        },
+        line: 46
+      },
+      "3": {
+        name: "get",
+        decl: {
+          start: {
+            line: 53,
+            column: 18
+          },
+          end: {
+            line: 53,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 53,
+            column: 24
+          },
+          end: {
+            line: 61,
+            column: 5
+          }
+        },
+        line: 53
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 56,
+            column: 59
+          },
+          end: {
+            line: 56,
+            column: 109
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 56,
+            column: 67
+          },
+          end: {
+            line: 56,
+            column: 82
+          }
+        }, {
+          start: {
+            line: 56,
+            column: 85
+          },
+          end: {
+            line: 56,
+            column: 109
+          }
+        }],
+        line: 56
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    b: {
+      "0": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "1579f2beaa3ac6f09809fa1b03eb59cb38bdb974"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_2hmkl85etk = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_2hmkl85etk();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_2hmkl85etk().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2hmkl85etk().s[2]++;
+exports["default"] = void 0;
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _tslib =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[8]++, require("tslib"));
+
+var _mobxReact =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[9]++, require("mobx-react"));
+
+var _mobx =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[10]++, require("mobx"));
+
+var _TextField2 =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[11]++, require("../text-field/TextField"));
+
+var _localeContext =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[12]++, require("../locale-context"));
+
+var EmailField =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_2hmkl85etk().s[13]++, function (_TextField) {
+  /* istanbul ignore next */
+  cov_2hmkl85etk().f[0]++;
+  cov_2hmkl85etk().s[14]++;
+  (0, _inherits2["default"])(EmailField, _TextField);
+
+  function EmailField() {
+    /* istanbul ignore next */
+    cov_2hmkl85etk().f[1]++;
+
+    var _this;
+
+    /* istanbul ignore next */
+    cov_2hmkl85etk().s[15]++;
+    (0, _classCallCheck2["default"])(this, EmailField);
+
+    /* istanbul ignore next */
+    cov_2hmkl85etk().s[16]++;
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(EmailField).apply(this, arguments));
+
+    /* istanbul ignore next */
+    cov_2hmkl85etk().s[17]++;
+    _this.type = 'email';
+
+    /* istanbul ignore next */
+    cov_2hmkl85etk().s[18]++;
+    return _this;
+  }
+
+  /* istanbul ignore next */
+  cov_2hmkl85etk().s[19]++;
+  (0, _createClass2["default"])(EmailField, [{
+    key: "getFieldType",
+    value: function getFieldType() {
+      /* istanbul ignore next */
+      cov_2hmkl85etk().f[2]++;
+      cov_2hmkl85etk().s[20]++;
+      return "email"
+      /* email */
+      ;
+    }
+  }, {
+    key: "defaultValidationMessages",
+    get: function get() {
+      /* istanbul ignore next */
+      cov_2hmkl85etk().f[3]++;
+      var label =
+      /* istanbul ignore next */
+      (cov_2hmkl85etk().s[21]++, this.getProp('label'));
+
+      /* istanbul ignore next */
+      cov_2hmkl85etk().s[22]++;
+      return {
+        valueMissing: (0, _localeContext.$l)('EmailField', label ?
+        /* istanbul ignore next */
+        (cov_2hmkl85etk().b[0][0]++, 'value_missing') :
+        /* istanbul ignore next */
+        (cov_2hmkl85etk().b[0][1]++, 'value_missing_no_label'), {
+          label: label
+        }),
+        typeMismatch: (0, _localeContext.$l)('EmailField', 'type_mismatch')
+      };
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_2hmkl85etk().s[23]++;
+  return EmailField;
+}(_TextField2.TextField));
+
+/* istanbul ignore next */
+cov_2hmkl85etk().s[24]++;
+EmailField.displayName = 'EmailField';
+
+/* istanbul ignore next */
+cov_2hmkl85etk().s[25]++;
+(0, _tslib.__decorate)([_mobx.computed], EmailField.prototype, "defaultValidationMessages", null);
+
+/* istanbul ignore next */
+cov_2hmkl85etk().s[26]++;
+EmailField = (0, _tslib.__decorate)([_mobxReact.observer], EmailField);
+
+var _default =
+/* istanbul ignore next */
+(cov_2hmkl85etk().s[27]++, EmailField);
+
+/* istanbul ignore next */
+cov_2hmkl85etk().s[28]++;
+exports["default"] = _default;

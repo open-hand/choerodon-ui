@@ -1,0 +1,140 @@
+df82036db055dd60f80d65163e450d0d
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _form = _interopRequireDefault(require("../../../components/form"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var FormItem = _form["default"].Item;
+
+function hasErrors(fieldsError) {
+  return Object.keys(fieldsError).some(function (field) {
+    return fieldsError[field];
+  });
+}
+
+var HorizontalLoginForm =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(HorizontalLoginForm, _React$Component);
+
+  function HorizontalLoginForm() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, HorizontalLoginForm);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(HorizontalLoginForm)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleSubmit", function (e) {
+      e.preventDefault();
+
+      _this.props.form.validateFields(function (err, values) {
+        if (!err) {
+          console.log('Received values of form: ', values);
+        }
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(HorizontalLoginForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // To disabled submit button at the beginning.
+      this.props.form.validateFields();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props$form = this.props.form,
+          getFieldDecorator = _this$props$form.getFieldDecorator,
+          getFieldsError = _this$props$form.getFieldsError,
+          getFieldError = _this$props$form.getFieldError,
+          isFieldTouched = _this$props$form.isFieldTouched; // Only show error after a field is touched.
+
+      var userNameError = isFieldTouched('userName') && getFieldError('userName');
+      var passwordError = isFieldTouched('password') && getFieldError('password');
+      return _react["default"].createElement(_form["default"], {
+        layout: "inline",
+        onSubmit: this.handleSubmit
+      }, _react["default"].createElement(FormItem, {
+        validateStatus: userNameError ? 'error' : '',
+        help: userNameError || ''
+      }, getFieldDecorator('userName', {
+        rules: [{
+          required: true,
+          message: 'Please input your username!'
+        }]
+      })(_react["default"].createElement(_input["default"], {
+        prefix: _react["default"].createElement(_icon["default"], {
+          type: "person_outline",
+          style: {
+            color: 'rgba(0,0,0,.25)'
+          }
+        }),
+        placeholder: "Username"
+      }))), _react["default"].createElement(FormItem, {
+        validateStatus: passwordError ? 'error' : '',
+        help: passwordError || ''
+      }, getFieldDecorator('password', {
+        rules: [{
+          required: true,
+          message: 'Please input your Password!'
+        }]
+      })(_react["default"].createElement(_input["default"], {
+        prefix: _react["default"].createElement(_icon["default"], {
+          type: "lock_outline",
+          style: {
+            color: 'rgba(0,0,0,.25)'
+          }
+        }),
+        type: "password",
+        placeholder: "Password"
+      }))), _react["default"].createElement(FormItem, null, _react["default"].createElement(_button["default"], {
+        type: "primary",
+        htmlType: "submit",
+        disabled: hasErrors(getFieldsError())
+      }, "Log in")));
+    }
+  }]);
+  return HorizontalLoginForm;
+}(_react["default"].Component);
+
+var WrappedHorizontalLoginForm = _form["default"].create()(HorizontalLoginForm);
+
+var __Demo = _react["default"].createElement(WrappedHorizontalLoginForm, null);
+
+var _default = __Demo;
+exports["default"] = _default;

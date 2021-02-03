@@ -1,0 +1,105 @@
+3ed2e437db6312023e3ac4764e340981
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _ = _interopRequireDefault(require(".."));
+
+var _modal = _interopRequireDefault(require("../../modal"));
+
+var _button = _interopRequireDefault(require("../../button"));
+
+var _class, _temp;
+
+var Context = (0, _react.createContext)('');
+var injectModal = _["default"].injectModal,
+    useModal = _["default"].useModal;
+
+var ModalContent = function ModalContent() {
+  var context = (0, _react.useContext)(Context);
+  return context ? "Modal with context<".concat(context, ">") : 'Modal without context';
+};
+
+var openModal = function openModal(modal, title) {
+  modal.open({
+    title: title,
+    children: _react["default"].createElement(ModalContent, null),
+    onOk: function onOk() {
+      return _modal["default"].confirm('This is normal Modal confirm');
+    }
+  });
+};
+
+var InnerModal = function InnerModal() {
+  var modal = useModal();
+  var handleClick = (0, _react.useCallback)(function () {
+    return openModal(modal, 'Inner');
+  }, []);
+  return _react["default"].createElement(_button["default"], {
+    onClick: handleClick
+  }, "Open inner modal");
+};
+
+var ModalProviderTest = injectModal(_class = (_temp =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(ModalProviderTest, _React$Component);
+
+  function ModalProviderTest() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, ModalProviderTest);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(ModalProviderTest)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleClick", function () {
+      var modal = _this.props.Modal;
+      openModal(modal, 'Outer');
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(ModalProviderTest, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement(_button["default"], {
+        onClick: this.handleClick
+      }, "Open outer modal"), _react["default"].createElement(Context.Provider, {
+        value: "provider"
+      }, _react["default"].createElement(_["default"], null, _react["default"].createElement(InnerModal, null))));
+    }
+  }]);
+  return ModalProviderTest;
+}(_react["default"].Component), _temp)) || _class;
+
+var _default = ModalProviderTest;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1vZGFsUHJvdmlkZXJUZXN0LmpzIl0sIm5hbWVzIjpbIkNvbnRleHQiLCJpbmplY3RNb2RhbCIsIk1vZGFsUHJvdmlkZXIiLCJ1c2VNb2RhbCIsIk1vZGFsQ29udGVudCIsImNvbnRleHQiLCJvcGVuTW9kYWwiLCJtb2RhbCIsInRpdGxlIiwib3BlbiIsImNoaWxkcmVuIiwib25PayIsIk1vZGFsIiwiY29uZmlybSIsIklubmVyTW9kYWwiLCJoYW5kbGVDbGljayIsIk1vZGFsUHJvdmlkZXJUZXN0IiwicHJvcHMiLCJSZWFjdCIsIkNvbXBvbmVudCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOztBQUNBOzs7O0FBRUEsSUFBTUEsT0FBTyxHQUFHLDBCQUFjLEVBQWQsQ0FBaEI7SUFFUUMsVyxHQUEwQkMsWSxDQUExQkQsVztJQUFhRSxRLEdBQWFELFksQ0FBYkMsUTs7QUFFckIsSUFBTUMsWUFBWSxHQUFHLFNBQWZBLFlBQWUsR0FBTTtBQUN6QixNQUFNQyxPQUFPLEdBQUcsdUJBQVdMLE9BQVgsQ0FBaEI7QUFDQSxTQUFPSyxPQUFPLGdDQUF5QkEsT0FBekIsU0FBc0MsdUJBQXBEO0FBQ0QsQ0FIRDs7QUFLQSxJQUFNQyxTQUFTLEdBQUcsU0FBWkEsU0FBWSxDQUFDQyxLQUFELEVBQVFDLEtBQVIsRUFBa0I7QUFDbENELEVBQUFBLEtBQUssQ0FBQ0UsSUFBTixDQUFXO0FBQ1RELElBQUFBLEtBQUssRUFBTEEsS0FEUztBQUVURSxJQUFBQSxRQUFRLEVBQUUsZ0NBQUMsWUFBRCxPQUZEO0FBR1RDLElBQUFBLElBQUksRUFBRTtBQUFBLGFBQU1DLGtCQUFNQyxPQUFOLENBQWMsOEJBQWQsQ0FBTjtBQUFBO0FBSEcsR0FBWDtBQUtELENBTkQ7O0FBUUEsSUFBTUMsVUFBVSxHQUFHLFNBQWJBLFVBQWEsR0FBTTtBQUN2QixNQUFNUCxLQUFLLEdBQUdKLFFBQVEsRUFBdEI7QUFDQSxNQUFNWSxXQUFXLEdBQUcsd0JBQVk7QUFBQSxXQUFNVCxTQUFTLENBQUNDLEtBQUQsRUFBUSxPQUFSLENBQWY7QUFBQSxHQUFaLEVBQTZDLEVBQTdDLENBQXBCO0FBQ0EsU0FBTyxnQ0FBQyxrQkFBRDtBQUFRLElBQUEsT0FBTyxFQUFFUTtBQUFqQix3QkFBUDtBQUNELENBSkQ7O0lBT01DLGlCLEdBRExmLFc7Ozs7Ozs7Ozs7Ozs7Ozs7O29HQUVlLFlBQU07QUFBQSxVQUNITSxLQURHLEdBQ08sTUFBS1UsS0FEWixDQUNWTCxLQURVO0FBRWxCTixNQUFBQSxTQUFTLENBQUNDLEtBQUQsRUFBUSxPQUFSLENBQVQ7QUFDRCxLOzs7Ozs7NkJBRVE7QUFDUCxhQUNFLGdDQUFDLGlCQUFELENBQU8sUUFBUCxRQUNFLGdDQUFDLGtCQUFEO0FBQVEsUUFBQSxPQUFPLEVBQUUsS0FBS1E7QUFBdEIsNEJBREYsRUFFRSxnQ0FBQyxPQUFELENBQVMsUUFBVDtBQUFrQixRQUFBLEtBQUssRUFBQztBQUF4QixTQUNFLGdDQUFDLFlBQUQsUUFDRSxnQ0FBQyxVQUFELE9BREYsQ0FERixDQUZGLENBREY7QUFVRDs7O0VBakI2Qkcsa0JBQU1DLFM7O2VBb0J2QkgsaUIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QsIHsgY3JlYXRlQ29udGV4dCwgdXNlQ29udGV4dCwgdXNlQ2FsbGJhY2sgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgTW9kYWxQcm92aWRlciBmcm9tICcuLic7XG5pbXBvcnQgTW9kYWwgZnJvbSAnLi4vLi4vbW9kYWwnO1xuaW1wb3J0IEJ1dHRvbiBmcm9tICcuLi8uLi9idXR0b24nO1xuXG5jb25zdCBDb250ZXh0ID0gY3JlYXRlQ29udGV4dCgnJyk7XG5cbmNvbnN0IHsgaW5qZWN0TW9kYWwsIHVzZU1vZGFsIH0gPSBNb2RhbFByb3ZpZGVyO1xuXG5jb25zdCBNb2RhbENvbnRlbnQgPSAoKSA9PiB7XG4gIGNvbnN0IGNvbnRleHQgPSB1c2VDb250ZXh0KENvbnRleHQpO1xuICByZXR1cm4gY29udGV4dCA/IGBNb2RhbCB3aXRoIGNvbnRleHQ8JHtjb250ZXh0fT5gIDogJ01vZGFsIHdpdGhvdXQgY29udGV4dCc7XG59O1xuXG5jb25zdCBvcGVuTW9kYWwgPSAobW9kYWwsIHRpdGxlKSA9PiB7XG4gIG1vZGFsLm9wZW4oe1xuICAgIHRpdGxlLFxuICAgIGNoaWxkcmVuOiA8TW9kYWxDb250ZW50IC8+LFxuICAgIG9uT2s6ICgpID0+IE1vZGFsLmNvbmZpcm0oJ1RoaXMgaXMgbm9ybWFsIE1vZGFsIGNvbmZpcm0nKSxcbiAgfSk7XG59O1xuXG5jb25zdCBJbm5lck1vZGFsID0gKCkgPT4ge1xuICBjb25zdCBtb2RhbCA9IHVzZU1vZGFsKCk7XG4gIGNvbnN0IGhhbmRsZUNsaWNrID0gdXNlQ2FsbGJhY2soKCkgPT4gb3Blbk1vZGFsKG1vZGFsLCAnSW5uZXInKSwgW10pO1xuICByZXR1cm4gPEJ1dHRvbiBvbkNsaWNrPXtoYW5kbGVDbGlja30+T3BlbiBpbm5lciBtb2RhbDwvQnV0dG9uPjtcbn07XG5cbkBpbmplY3RNb2RhbFxuY2xhc3MgTW9kYWxQcm92aWRlclRlc3QgZXh0ZW5kcyBSZWFjdC5Db21wb25lbnQge1xuICBoYW5kbGVDbGljayA9ICgpID0+IHtcbiAgICBjb25zdCB7IE1vZGFsOiBtb2RhbCB9ID0gdGhpcy5wcm9wcztcbiAgICBvcGVuTW9kYWwobW9kYWwsICdPdXRlcicpO1xuICB9O1xuXG4gIHJlbmRlcigpIHtcbiAgICByZXR1cm4gKFxuICAgICAgPFJlYWN0LkZyYWdtZW50PlxuICAgICAgICA8QnV0dG9uIG9uQ2xpY2s9e3RoaXMuaGFuZGxlQ2xpY2t9Pk9wZW4gb3V0ZXIgbW9kYWw8L0J1dHRvbj5cbiAgICAgICAgPENvbnRleHQuUHJvdmlkZXIgdmFsdWU9XCJwcm92aWRlclwiPlxuICAgICAgICAgIDxNb2RhbFByb3ZpZGVyPlxuICAgICAgICAgICAgPElubmVyTW9kYWwgLz5cbiAgICAgICAgICA8L01vZGFsUHJvdmlkZXI+XG4gICAgICAgIDwvQ29udGV4dC5Qcm92aWRlcj5cbiAgICAgIDwvUmVhY3QuRnJhZ21lbnQ+XG4gICAgKTtcbiAgfVxufVxuXG5leHBvcnQgZGVmYXVsdCBNb2RhbFByb3ZpZGVyVGVzdDtcbiJdfQ==

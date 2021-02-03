@@ -310,6 +310,7 @@
         "en": "By using custom components, we can integrate table with react-dnd to implement drag sorting.\n"
       },
       "order": 25,
+      "height": 500,
       "screenshot": ""
     },
     {
@@ -338,6 +339,7 @@
       },
       "order": 27,
       "height": 620,
+      "ignores": ["theme1", "theme3", "theme4"],
       "screenshot": ""
     },
     {

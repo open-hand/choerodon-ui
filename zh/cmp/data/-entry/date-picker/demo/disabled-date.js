@@ -43,21 +43,26 @@ function disabledRangeTime(_, type) {
 
 ReactDOM.render(
   <div>
-    <DatePicker
-      format="YYYY-MM-DD HH:mm:ss"
-      disabledDate={disabledDate}
-      disabledTime={disabledDateTime}
-      showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
-    />
-    <br />
-    <MonthPicker disabledDate={disabledDate} placeholder="Select month" />
-    <br />
+    <div style={{ marginBottom: 10 }}>
+      <DatePicker
+        format="YYYY-MM-DD HH:mm:ss"
+        disabledDate={disabledDate}
+        disabledTime={disabledDateTime}
+        showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
+      />
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <MonthPicker disabledDate={disabledDate} placeholder="Select month" />
+    </div>
     <RangePicker
       disabledDate={disabledDate}
       disabledTime={disabledRangeTime}
       showTime={{
         hideDisabledOptions: true,
-        defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')],
+        defaultValue: [
+          moment('00:00:00', 'HH:mm:ss'),
+          moment('11:59:59', 'HH:mm:ss'),
+        ],
       }}
       format="YYYY-MM-DD HH:mm:ss"
     />

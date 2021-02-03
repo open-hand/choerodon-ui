@@ -1,0 +1,18 @@
+1c69a9352a09334666adc47e4e5c67cd
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var _default = {
+  saveRef: function saveRef(name) {
+    var _this = this;
+
+    return function (node) {
+      _this[name] = node;
+    };
+  }
+};
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIlJlZk1peGluLmpzeCJdLCJuYW1lcyI6WyJzYXZlUmVmIiwibmFtZSIsIm5vZGUiXSwibWFwcGluZ3MiOiI7Ozs7OztlQUFlO0FBQ2JBLEVBQUFBLE9BRGEsbUJBQ0xDLElBREssRUFDQztBQUFBOztBQUNaLFdBQU8sVUFBQUMsSUFBSSxFQUFJO0FBQ2IsTUFBQSxLQUFJLENBQUNELElBQUQsQ0FBSixHQUFhQyxJQUFiO0FBQ0QsS0FGRDtBQUdEO0FBTFksQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IHtcbiAgc2F2ZVJlZihuYW1lKSB7XG4gICAgcmV0dXJuIG5vZGUgPT4ge1xuICAgICAgdGhpc1tuYW1lXSA9IG5vZGU7XG4gICAgfTtcbiAgfSxcbn07XG4iXX0=

@@ -1,0 +1,31 @@
+0eb0064bcfdbd1962c938ea89055cf4f
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "TabPane", {
+  enumerable: true,
+  get: function get() {
+    return _TabPane["default"];
+  }
+});
+Object.defineProperty(exports, "TabContent", {
+  enumerable: true,
+  get: function get() {
+    return _TabContent["default"];
+  }
+});
+exports["default"] = void 0;
+
+var _Tabs = _interopRequireDefault(require("./Tabs"));
+
+var _TabPane = _interopRequireDefault(require("./TabPane"));
+
+var _TabContent = _interopRequireDefault(require("./TabContent"));
+
+var _default = _Tabs["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzeCJdLCJuYW1lcyI6WyJUYWJzIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFDQTs7ZUFFZUEsZ0IiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgVGFicyBmcm9tICcuL1RhYnMnO1xuaW1wb3J0IFRhYlBhbmUgZnJvbSAnLi9UYWJQYW5lJztcbmltcG9ydCBUYWJDb250ZW50IGZyb20gJy4vVGFiQ29udGVudCc7XG5cbmV4cG9ydCBkZWZhdWx0IFRhYnM7XG5leHBvcnQgeyBUYWJQYW5lLCBUYWJDb250ZW50IH07XG4iXX0=

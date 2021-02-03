@@ -1,0 +1,32 @@
+389cd95cfcf1601a0042154abb300cec
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _progress = _interopRequireDefault(require("../../../components-pro/progress"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_progress["default"], {
+  value: 40
+}), _react["default"].createElement(_progress["default"], {
+  value: 50,
+  status: "active"
+}), _react["default"].createElement(_progress["default"], {
+  value: 70,
+  status: "exception"
+}), _react["default"].createElement(_progress["default"], {
+  value: 50,
+  status: "success"
+}), _react["default"].createElement(_progress["default"], {
+  value: 40,
+  showInfo: false
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

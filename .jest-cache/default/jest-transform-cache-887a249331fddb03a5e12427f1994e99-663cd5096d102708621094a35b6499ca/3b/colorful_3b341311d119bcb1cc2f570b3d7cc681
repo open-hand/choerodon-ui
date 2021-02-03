@@ -1,0 +1,56 @@
+1acccba3c48087f87693d7a60b6d87d2
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _tag = _interopRequireDefault(require("../../../components/tag"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement("h4", {
+  style: {
+    marginBottom: 16
+  }
+}, "Presets:"), _react["default"].createElement("div", null, _react["default"].createElement(_tag["default"], {
+  color: "magenta"
+}, "magenta"), _react["default"].createElement(_tag["default"], {
+  color: "red"
+}, "red"), _react["default"].createElement(_tag["default"], {
+  color: "volcano"
+}, "volcano"), _react["default"].createElement(_tag["default"], {
+  color: "orange"
+}, "orange"), _react["default"].createElement(_tag["default"], {
+  color: "gold"
+}, "gold"), _react["default"].createElement(_tag["default"], {
+  color: "lime"
+}, "lime"), _react["default"].createElement(_tag["default"], {
+  color: "green"
+}, "green"), _react["default"].createElement(_tag["default"], {
+  color: "cyan"
+}, "cyan"), _react["default"].createElement(_tag["default"], {
+  color: "blue"
+}, "blue"), _react["default"].createElement(_tag["default"], {
+  color: "geekblue"
+}, "geekblue"), _react["default"].createElement(_tag["default"], {
+  color: "purple"
+}, "purple")), _react["default"].createElement("h4", {
+  style: {
+    margin: '16px 0'
+  }
+}, "Custom:"), _react["default"].createElement("div", null, _react["default"].createElement(_tag["default"], {
+  color: "#f50"
+}, "#f50"), _react["default"].createElement(_tag["default"], {
+  color: "#2db7f5"
+}, "#2db7f5"), _react["default"].createElement(_tag["default"], {
+  color: "#87d068"
+}, "#87d068"), _react["default"].createElement(_tag["default"], {
+  color: "#108ee9"
+}, "#108ee9")));
+
+var _default = __Demo;
+exports["default"] = _default;

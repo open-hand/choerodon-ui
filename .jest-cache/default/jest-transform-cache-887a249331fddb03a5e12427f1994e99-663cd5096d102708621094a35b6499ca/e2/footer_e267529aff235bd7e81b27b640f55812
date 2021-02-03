@@ -1,0 +1,76 @@
+26a34fb6a195b99a831c59c764f521b6
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _modal = _interopRequireDefault(require("../../../components-pro/modal"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var key1 = _modal["default"].key();
+
+var key2 = _modal["default"].key();
+
+var key3 = _modal["default"].key();
+
+var modal;
+
+function closeModal() {
+  modal.close();
+}
+
+function openModal() {
+  modal = _modal["default"].open({
+    key: key1,
+    title: 'Custom Footer',
+    children: _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents...")),
+    footer: _react["default"].createElement(_button["default"], {
+      onClick: closeModal
+    }, "\u5173\u95ED")
+  });
+}
+
+function openNoFooter() {
+  _modal["default"].open({
+    key: key2,
+    title: 'No Footer',
+    maskClosable: true,
+    destroyOnClose: true,
+    children: _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents...")),
+    footer: null
+  });
+}
+
+function openMoreButtons() {
+  _modal["default"].open({
+    key: key3,
+    title: 'More Buttons',
+    maskClosable: true,
+    destroyOnClose: true,
+    drawer: true,
+    children: _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents...")),
+    footer: function footer(okBtn, cancelBtn) {
+      return _react["default"].createElement("div", null, okBtn, _react["default"].createElement(_button["default"], {
+        color: "primary"
+      }, "Custom"), cancelBtn);
+    }
+  });
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], {
+  onClick: openModal
+}, "Custom"), _react["default"].createElement(_button["default"], {
+  onClick: openNoFooter
+}, "No Footer"), _react["default"].createElement(_button["default"], {
+  onClick: openMoreButtons
+}, "More Buttons"));
+
+var _default = __Demo;
+exports["default"] = _default;

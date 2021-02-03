@@ -1,0 +1,650 @@
+670e2681584a3fb6ebad162bd8fcfc7a
+"use strict";
+
+/* istanbul ignore next */
+function cov_15ww96bxxh() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/spin/index.tsx";
+  var hash = "ec9a34ab98b11a26afa71757d44e6f5ba084bb98";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/spin/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 16
+        },
+        end: {
+          line: 10,
+          column: 81
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 32
+        },
+        end: {
+          line: 12,
+          column: 113
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 23
+        },
+        end: {
+          line: 14,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 20
+        },
+        end: {
+          line: 16,
+          column: 89
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 34
+        },
+        end: {
+          line: 18,
+          column: 117
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 23
+        },
+        end: {
+          line: 20,
+          column: 95
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 17
+        },
+        end: {
+          line: 22,
+          column: 83
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 13
+        },
+        end: {
+          line: 24,
+          column: 29
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 13
+        },
+        end: {
+          line: 26,
+          column: 53
+        }
+      },
+      "12": {
+        start: {
+          line: 28,
+          column: 17
+        },
+        end: {
+          line: 28,
+          column: 38
+        }
+      },
+      "13": {
+        start: {
+          line: 30,
+          column: 12
+        },
+        end: {
+          line: 30,
+          column: 68
+        }
+      },
+      "14": {
+        start: {
+          line: 32,
+          column: 25
+        },
+        end: {
+          line: 32,
+          column: 88
+        }
+      },
+      "15": {
+        start: {
+          line: 36,
+          column: 0
+        },
+        end: {
+          line: 62,
+          column: 32
+        }
+      },
+      "16": {
+        start: {
+          line: 37,
+          column: 2
+        },
+        end: {
+          line: 37,
+          column: 54
+        }
+      },
+      "17": {
+        start: {
+          line: 40,
+          column: 4
+        },
+        end: {
+          line: 40,
+          column: 49
+        }
+      },
+      "18": {
+        start: {
+          line: 41,
+          column: 4
+        },
+        end: {
+          line: 41,
+          column: 124
+        }
+      },
+      "19": {
+        start: {
+          line: 44,
+          column: 2
+        },
+        end: {
+          line: 60,
+          column: 6
+        }
+      },
+      "20": {
+        start: {
+          line: 47,
+          column: 24
+        },
+        end: {
+          line: 47,
+          column: 34
+        }
+      },
+      "21": {
+        start: {
+          line: 48,
+          column: 20
+        },
+        end: {
+          line: 48,
+          column: 39
+        }
+      },
+      "22": {
+        start: {
+          line: 49,
+          column: 23
+        },
+        end: {
+          line: 49,
+          column: 90
+        }
+      },
+      "23": {
+        start: {
+          line: 50,
+          column: 18
+        },
+        end: {
+          line: 50,
+          column: 20
+        }
+      },
+      "24": {
+        start: {
+          line: 52,
+          column: 6
+        },
+        end: {
+          line: 56,
+          column: 7
+        }
+      },
+      "25": {
+        start: {
+          line: 53,
+          column: 8
+        },
+        end: {
+          line: 55,
+          column: 9
+        }
+      },
+      "26": {
+        start: {
+          line: 58,
+          column: 6
+        },
+        end: {
+          line: 58,
+          column: 113
+        }
+      },
+      "27": {
+        start: {
+          line: 61,
+          column: 2
+        },
+        end: {
+          line: 61,
+          column: 14
+        }
+      },
+      "28": {
+        start: {
+          line: 64,
+          column: 0
+        },
+        end: {
+          line: 64,
+          column: 26
+        }
+      },
+      "29": {
+        start: {
+          line: 65,
+          column: 0
+        },
+        end: {
+          line: 65,
+          column: 59
+        }
+      },
+      "30": {
+        start: {
+          line: 66,
+          column: 15
+        },
+        end: {
+          line: 66,
+          column: 19
+        }
+      },
+      "31": {
+        start: {
+          line: 67,
+          column: 0
+        },
+        end: {
+          line: 67,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 36,
+            column: 0
+          },
+          end: {
+            line: 36,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 36,
+            column: 29
+          },
+          end: {
+            line: 62,
+            column: 1
+          }
+        },
+        line: 36
+      },
+      "1": {
+        name: "Spin",
+        decl: {
+          start: {
+            line: 39,
+            column: 11
+          },
+          end: {
+            line: 39,
+            column: 15
+          }
+        },
+        loc: {
+          start: {
+            line: 39,
+            column: 18
+          },
+          end: {
+            line: 42,
+            column: 3
+          }
+        },
+        line: 39
+      },
+      "2": {
+        name: "render",
+        decl: {
+          start: {
+            line: 46,
+            column: 20
+          },
+          end: {
+            line: 46,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 46,
+            column: 29
+          },
+          end: {
+            line: 59,
+            column: 5
+          }
+        },
+        line: 46
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 52,
+            column: 6
+          },
+          end: {
+            line: 56,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 52,
+            column: 6
+          },
+          end: {
+            line: 56,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 52,
+            column: 6
+          },
+          end: {
+            line: 56,
+            column: 7
+          }
+        }],
+        line: 52
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    b: {
+      "0": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "ec9a34ab98b11a26afa71757d44e6f5ba084bb98"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_15ww96bxxh = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_15ww96bxxh();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_15ww96bxxh().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_15ww96bxxh().s[2]++;
+exports["default"] = void 0;
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _objectWithoutProperties2 =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties")));
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[9]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _tslib =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[10]++, require("tslib"));
+
+var _react =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[11]++, _interopRequireDefault(require("react")));
+
+var _mobxReact =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[12]++, require("mobx-react"));
+
+var _spin =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[13]++, _interopRequireDefault(require("choerodon-ui/lib/spin")));
+
+var _DataSetComponent2 =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[14]++, _interopRequireDefault(require("../data-set/DataSetComponent")));
+
+var Spin =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_15ww96bxxh().s[15]++, function (_DataSetComponent) {
+  /* istanbul ignore next */
+  cov_15ww96bxxh().f[0]++;
+  cov_15ww96bxxh().s[16]++;
+  (0, _inherits2["default"])(Spin, _DataSetComponent);
+
+  function Spin() {
+    /* istanbul ignore next */
+    cov_15ww96bxxh().f[1]++;
+    cov_15ww96bxxh().s[17]++;
+    (0, _classCallCheck2["default"])(this, Spin);
+
+    /* istanbul ignore next */
+    cov_15ww96bxxh().s[18]++;
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Spin).apply(this, arguments));
+  }
+
+  /* istanbul ignore next */
+  cov_15ww96bxxh().s[19]++;
+  (0, _createClass2["default"])(Spin, [{
+    key: "render",
+    value: function render() {
+      /* istanbul ignore next */
+      cov_15ww96bxxh().f[2]++;
+
+      var _this$props =
+      /* istanbul ignore next */
+      (cov_15ww96bxxh().s[20]++, this.props),
+          dataSet =
+      /* istanbul ignore next */
+      (cov_15ww96bxxh().s[21]++, _this$props.dataSet),
+          otherProps =
+      /* istanbul ignore next */
+      (cov_15ww96bxxh().s[22]++, (0, _objectWithoutProperties2["default"])(_this$props, ["dataSet"]));
+
+      var props =
+      /* istanbul ignore next */
+      (cov_15ww96bxxh().s[23]++, {});
+
+      /* istanbul ignore next */
+      cov_15ww96bxxh().s[24]++;
+
+      if (dataSet) {
+        /* istanbul ignore next */
+        cov_15ww96bxxh().b[0][0]++;
+        cov_15ww96bxxh().s[25]++;
+        props.spinning = dataSet.status !== "ready"
+        /* ready */
+        ;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_15ww96bxxh().b[0][1]++;
+      }
+
+      cov_15ww96bxxh().s[26]++;
+      return _react["default"].createElement(_spin["default"], (0, _extends2["default"])({}, otherProps, props));
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_15ww96bxxh().s[27]++;
+  return Spin;
+}(_DataSetComponent2["default"]));
+
+/* istanbul ignore next */
+cov_15ww96bxxh().s[28]++;
+Spin.displayName = 'Spin';
+
+/* istanbul ignore next */
+cov_15ww96bxxh().s[29]++;
+Spin = (0, _tslib.__decorate)([_mobxReact.observer], Spin);
+
+var _default =
+/* istanbul ignore next */
+(cov_15ww96bxxh().s[30]++, Spin);
+
+/* istanbul ignore next */
+cov_15ww96bxxh().s[31]++;
+exports["default"] = _default;

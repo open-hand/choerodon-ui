@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/trigger-field/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,wB","sourcesContent":["import TriggerField from './TriggerField';\n\nexport default TriggerField;\n"]}

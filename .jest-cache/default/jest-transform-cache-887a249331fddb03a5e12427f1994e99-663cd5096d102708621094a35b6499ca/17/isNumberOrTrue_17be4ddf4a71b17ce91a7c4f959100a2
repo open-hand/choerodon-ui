@@ -1,0 +1,154 @@
+994d8de86e0cfb85cbb5315489ed14e6
+"use strict";
+
+/* istanbul ignore next */
+function cov_2gxgeq97oz() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/utils/isNumberOrTrue.ts";
+  var hash = "5676768ec20597b758a862945416d88610209696";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/utils/isNumberOrTrue.ts",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 36
+        }
+      },
+      "2": {
+        start: {
+          line: 9,
+          column: 2
+        },
+        end: {
+          line: 9,
+          column: 32
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "isNumberOrTrue",
+        decl: {
+          start: {
+            line: 8,
+            column: 9
+          },
+          end: {
+            line: 8,
+            column: 23
+          }
+        },
+        loc: {
+          start: {
+            line: 8,
+            column: 31
+          },
+          end: {
+            line: 10,
+            column: 1
+          }
+        },
+        line: 8
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 9,
+            column: 9
+          },
+          end: {
+            line: 9,
+            column: 31
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 9,
+            column: 9
+          },
+          end: {
+            line: 9,
+            column: 16
+          }
+        }, {
+          start: {
+            line: 9,
+            column: 20
+          },
+          end: {
+            line: 9,
+            column: 31
+          }
+        }],
+        line: 9
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "5676768ec20597b758a862945416d88610209696"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_2gxgeq97oz = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_2gxgeq97oz();
+cov_2gxgeq97oz().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2gxgeq97oz().s[1]++;
+exports["default"] = isNumberOrTrue;
+
+function isNumberOrTrue(value) {
+  /* istanbul ignore next */
+  cov_2gxgeq97oz().f[0]++;
+  cov_2gxgeq97oz().s[2]++;
+  return (
+    /* istanbul ignore next */
+    (cov_2gxgeq97oz().b[0][0]++, !!value) ||
+    /* istanbul ignore next */
+    (cov_2gxgeq97oz().b[0][1]++, value === 0)
+  );
+}

@@ -1,0 +1,60 @@
+4364644141440ae3778de8566e776528
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = rangeUnderflow;
+
+var _moment = require("moment");
+
+var _isNil = _interopRequireDefault(require("lodash/isNil"));
+
+var _isEmpty = _interopRequireDefault(require("../../_util/isEmpty"));
+
+var _ValidationResult = _interopRequireDefault(require("../ValidationResult"));
+
+var _localeContext = require("../../locale-context");
+
+var _formatReactTemplate = _interopRequireDefault(require("../../formatter/formatReactTemplate"));
+
+var _utils = require("../../field/utils");
+
+var isUnderflow = function isUnderflow(value, min, range) {
+  if (range) {
+    return (0, _utils.toRangeValue)(value, range).some(function (item) {
+      return !(0, _isEmpty["default"])(item) && Number(item) < Number(min);
+    });
+  }
+
+  return !(0, _isEmpty["default"])(value) && Number(value) < Number(min);
+};
+
+function rangeUnderflow(value, props) {
+  var min = props.min,
+      label = props.label,
+      format = props.format,
+      defaultValidationMessages = props.defaultValidationMessages,
+      range = props.range;
+
+  if (!(0, _isNil["default"])(min) && isUnderflow(value, min, range)) {
+    var injectionOptions = {
+      min: (0, _moment.isMoment)(min) ? min.format(format) : min,
+      label: label
+    };
+    var ruleName = 'rangeUnderflow';
+    var _defaultValidationMes = defaultValidationMessages[ruleName],
+        validationMessage = _defaultValidationMes === void 0 ? (0, _localeContext.$l)('Validator', 'range_underflow') : _defaultValidationMes;
+    return new _ValidationResult["default"]({
+      validationMessage: (0, _formatReactTemplate["default"])(validationMessage, injectionOptions),
+      injectionOptions: injectionOptions,
+      value: value,
+      ruleName: ruleName
+    });
+  }
+
+  return true;
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby92YWxpZGF0b3IvcnVsZXMvcmFuZ2VVbmRlcmZsb3cudHN4Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOztBQUNBOztBQUNBOztBQUVBOztBQUNBOztBQUVBLElBQU0sV0FBVyxHQUFHLFNBQWQsV0FBYyxDQUFDLEtBQUQsRUFBUSxHQUFSLEVBQWEsS0FBYixFQUFzQjtBQUN4QyxNQUFJLEtBQUosRUFBVztBQUNULFdBQU8seUJBQWEsS0FBYixFQUFvQixLQUFwQixFQUEyQixJQUEzQixDQUFnQyxVQUFBLElBQUk7QUFBQSxhQUFJLENBQUMseUJBQVEsSUFBUixDQUFELElBQWtCLE1BQU0sQ0FBQyxJQUFELENBQU4sR0FBZSxNQUFNLENBQUMsR0FBRCxDQUEzQztBQUFBLEtBQXBDLENBQVA7QUFDRDs7QUFDRCxTQUFPLENBQUMseUJBQVEsS0FBUixDQUFELElBQW1CLE1BQU0sQ0FBQyxLQUFELENBQU4sR0FBZ0IsTUFBTSxDQUFDLEdBQUQsQ0FBaEQ7QUFDRCxDQUxEOztBQU9jLFNBQVUsY0FBVixDQUF5QixLQUF6QixFQUFxQyxLQUFyQyxFQUEwRDtBQUFBLE1BQzlELEdBRDhELEdBQ0wsS0FESyxDQUM5RCxHQUQ4RDtBQUFBLE1BQ3pELEtBRHlELEdBQ0wsS0FESyxDQUN6RCxLQUR5RDtBQUFBLE1BQ2xELE1BRGtELEdBQ0wsS0FESyxDQUNsRCxNQURrRDtBQUFBLE1BQzFDLHlCQUQwQyxHQUNMLEtBREssQ0FDMUMseUJBRDBDO0FBQUEsTUFDZixLQURlLEdBQ0wsS0FESyxDQUNmLEtBRGU7O0FBRXRFLE1BQUksQ0FBQyx1QkFBTSxHQUFOLENBQUQsSUFBZSxXQUFXLENBQUMsS0FBRCxFQUFRLEdBQVIsRUFBYSxLQUFiLENBQTlCLEVBQW1EO0FBQ2pELFFBQU0sZ0JBQWdCLEdBQUc7QUFBRSxNQUFBLEdBQUcsRUFBRSxzQkFBUyxHQUFULElBQWdCLEdBQUcsQ0FBQyxNQUFKLENBQVcsTUFBWCxDQUFoQixHQUFxQyxHQUE1QztBQUFpRCxNQUFBLEtBQUssRUFBTDtBQUFqRCxLQUF6QjtBQUNBLFFBQU0sUUFBUSxHQUFHLGdCQUFqQjtBQUZpRCxnQ0FLN0MseUJBTDZDLENBSTlDLFFBSjhDO0FBQUEsUUFJbkMsaUJBSm1DLHNDQUlmLHVCQUFHLFdBQUgsRUFBZ0IsaUJBQWhCLENBSmU7QUFNakQsV0FBTyxJQUFJLDRCQUFKLENBQXFCO0FBQzFCLE1BQUEsaUJBQWlCLEVBQUUscUNBQW9CLGlCQUFwQixFQUF1QyxnQkFBdkMsQ0FETztBQUUxQixNQUFBLGdCQUFnQixFQUFoQixnQkFGMEI7QUFHMUIsTUFBQSxLQUFLLEVBQUwsS0FIMEI7QUFJMUIsTUFBQSxRQUFRLEVBQVI7QUFKMEIsS0FBckIsQ0FBUDtBQU1EOztBQUNELFNBQU8sSUFBUDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgaXNNb21lbnQgfSBmcm9tICdtb21lbnQnO1xuaW1wb3J0IGlzTmlsIGZyb20gJ2xvZGFzaC9pc05pbCc7XG5pbXBvcnQgaXNFbXB0eSBmcm9tICcuLi8uLi9fdXRpbC9pc0VtcHR5JztcbmltcG9ydCBWYWxpZGF0aW9uUmVzdWx0IGZyb20gJy4uL1ZhbGlkYXRpb25SZXN1bHQnO1xuaW1wb3J0IHsgJGwgfSBmcm9tICcuLi8uLi9sb2NhbGUtY29udGV4dCc7XG5pbXBvcnQgeyBtZXRob2RSZXR1cm4sIFZhbGlkYXRvclByb3BzIH0gZnJvbSAnLic7XG5pbXBvcnQgZm9ybWF0UmVhY3RUZW1wbGF0ZSBmcm9tICcuLi8uLi9mb3JtYXR0ZXIvZm9ybWF0UmVhY3RUZW1wbGF0ZSc7XG5pbXBvcnQgeyB0b1JhbmdlVmFsdWUgfSBmcm9tICcuLi8uLi9maWVsZC91dGlscyc7XG5cbmNvbnN0IGlzVW5kZXJmbG93ID0gKHZhbHVlLCBtaW4sIHJhbmdlKSA9PiB7XG4gIGlmIChyYW5nZSkge1xuICAgIHJldHVybiB0b1JhbmdlVmFsdWUodmFsdWUsIHJhbmdlKS5zb21lKGl0ZW0gPT4gIWlzRW1wdHkoaXRlbSkgJiYgTnVtYmVyKGl0ZW0pIDwgTnVtYmVyKG1pbikpO1xuICB9XG4gIHJldHVybiAhaXNFbXB0eSh2YWx1ZSkgJiYgTnVtYmVyKHZhbHVlKSA8IE51bWJlcihtaW4pO1xufTtcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gcmFuZ2VVbmRlcmZsb3codmFsdWU6IGFueSwgcHJvcHM6IFZhbGlkYXRvclByb3BzKTogbWV0aG9kUmV0dXJuIHtcbiAgY29uc3QgeyBtaW4sIGxhYmVsLCBmb3JtYXQsIGRlZmF1bHRWYWxpZGF0aW9uTWVzc2FnZXMsIHJhbmdlIH0gPSBwcm9wcztcbiAgaWYgKCFpc05pbChtaW4pICYmIGlzVW5kZXJmbG93KHZhbHVlLCBtaW4sIHJhbmdlKSkge1xuICAgIGNvbnN0IGluamVjdGlvbk9wdGlvbnMgPSB7IG1pbjogaXNNb21lbnQobWluKSA/IG1pbi5mb3JtYXQoZm9ybWF0KSA6IG1pbiwgbGFiZWwgfTtcbiAgICBjb25zdCBydWxlTmFtZSA9ICdyYW5nZVVuZGVyZmxvdyc7XG4gICAgY29uc3Qge1xuICAgICAgW3J1bGVOYW1lXTogdmFsaWRhdGlvbk1lc3NhZ2UgPSAkbCgnVmFsaWRhdG9yJywgJ3JhbmdlX3VuZGVyZmxvdycpLFxuICAgIH0gPSBkZWZhdWx0VmFsaWRhdGlvbk1lc3NhZ2VzO1xuICAgIHJldHVybiBuZXcgVmFsaWRhdGlvblJlc3VsdCh7XG4gICAgICB2YWxpZGF0aW9uTWVzc2FnZTogZm9ybWF0UmVhY3RUZW1wbGF0ZSh2YWxpZGF0aW9uTWVzc2FnZSwgaW5qZWN0aW9uT3B0aW9ucyksXG4gICAgICBpbmplY3Rpb25PcHRpb25zLFxuICAgICAgdmFsdWUsXG4gICAgICBydWxlTmFtZSxcbiAgICB9KTtcbiAgfVxuICByZXR1cm4gdHJ1ZTtcbn1cbiJdfQ==

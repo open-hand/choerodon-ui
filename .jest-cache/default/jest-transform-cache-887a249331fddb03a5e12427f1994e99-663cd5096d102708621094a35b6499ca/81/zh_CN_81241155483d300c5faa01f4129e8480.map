@@ -1,0 +1,1 @@
+{"version":3,"sources":["zh_CN.jsx"],"names":["pleaseSelect"],"mappings":";;;;;;eAAe;AACbA,EAAAA,YAAY,EAAC;AADA,C","sourcesContent":["export default {\n  pleaseSelect:'请选择'\n};\n"]}

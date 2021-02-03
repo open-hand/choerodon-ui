@@ -1,0 +1,134 @@
+c91573de338df8d60b8ed17687dd75ab
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _table = _interopRequireDefault(require("../../../components/table"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var columns = [{
+  title: 'Name',
+  dataIndex: 'name'
+}, {
+  title: 'Age',
+  dataIndex: 'age'
+}, {
+  title: 'Address',
+  dataIndex: 'address'
+}];
+var data = [];
+
+for (var i = 0; i < 46; i++) {
+  data.push({
+    key: i,
+    name: "Edward King ".concat(i),
+    age: 32,
+    address: "London, Park Lane no. ".concat(i)
+  });
+}
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      selectedRowKeys: [],
+      // Check here to configure the default column
+      loading: false
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "start", function () {
+      _this.setState({
+        loading: true
+      }); // ajax request after empty completing
+
+
+      setTimeout(function () {
+        _this.setState({
+          selectedRowKeys: [],
+          loading: false
+        });
+      }, 1000);
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "onSelectChange", function (selectedRowKeys) {
+      console.log('selectedRowKeys changed: ', selectedRowKeys);
+
+      _this.setState({
+        selectedRowKeys: selectedRowKeys
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          loading = _this$state.loading,
+          selectedRowKeys = _this$state.selectedRowKeys;
+      var rowSelection = {
+        selectedRowKeys: selectedRowKeys,
+        onChange: this.onSelectChange
+      };
+      var hasSelected = selectedRowKeys.length > 0;
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        style: {
+          marginBottom: 16
+        }
+      }, _react["default"].createElement(_button["default"], {
+        type: "primary",
+        onClick: this.start,
+        disabled: !hasSelected,
+        loading: loading
+      }, "Reload"), _react["default"].createElement("span", {
+        style: {
+          marginLeft: 8
+        }
+      }, hasSelected ? "Selected ".concat(selectedRowKeys.length, " items") : '')), _react["default"].createElement(_table["default"], {
+        rowSelection: rowSelection,
+        columns: columns,
+        dataSource: data
+      }));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

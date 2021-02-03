@@ -1,0 +1,43 @@
+3a90a8e5deaf3eb5afc5b586982acab0
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _badge = _interopRequireDefault(require("../../../components/badge"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_badge["default"], {
+  status: "success"
+}), _react["default"].createElement(_badge["default"], {
+  status: "error"
+}), _react["default"].createElement(_badge["default"], {
+  status: "default"
+}), _react["default"].createElement(_badge["default"], {
+  status: "processing"
+}), _react["default"].createElement(_badge["default"], {
+  status: "warning"
+}), _react["default"].createElement("br", null), _react["default"].createElement(_badge["default"], {
+  status: "success",
+  text: "Success"
+}), _react["default"].createElement("br", null), _react["default"].createElement(_badge["default"], {
+  status: "error",
+  text: "Error"
+}), _react["default"].createElement("br", null), _react["default"].createElement(_badge["default"], {
+  status: "default",
+  text: "Default"
+}), _react["default"].createElement("br", null), _react["default"].createElement(_badge["default"], {
+  status: "processing",
+  text: "Processing"
+}), _react["default"].createElement("br", null), _react["default"].createElement(_badge["default"], {
+  status: "warning",
+  text: "Warning"
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

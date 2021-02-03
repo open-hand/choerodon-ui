@@ -1,0 +1,1 @@
+{"version":3,"sources":["locale-context/locale.jsx"],"names":["zh_CN"],"mappings":";;;;;;;;;AAAA,IAAA,MAAA,GAAA,sBAAA,CAAA,OAAA,CAAA,SAAA,CAAA,CAAA;;eACeA,MAAAA,CAAAA,SAAAA,C","sourcesContent":["import zh_CN from './zh_CN';\nexport default zh_CN;\n"]}

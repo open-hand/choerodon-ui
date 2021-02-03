@@ -1,0 +1,88 @@
+21e8fa87866f55a7ff150df1c159c6bb
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _timePicker = _interopRequireDefault(require("../../../components/time-picker"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var TimePickerAddonDemo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(TimePickerAddonDemo, _React$Component);
+
+  function TimePickerAddonDemo() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, TimePickerAddonDemo);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(TimePickerAddonDemo)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      open: false
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleOpenChange", function (open) {
+      _this.setState({
+        open: open
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleClose", function () {
+      return _this.setState({
+        open: false
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(TimePickerAddonDemo, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return _react["default"].createElement(_timePicker["default"], {
+        open: this.state.open,
+        onOpenChange: this.handleOpenChange,
+        addon: function addon() {
+          return _react["default"].createElement(_button["default"], {
+            size: "small",
+            type: "primary",
+            onClick: _this2.handleClose
+          }, "Ok");
+        }
+      });
+    }
+  }]);
+  return TimePickerAddonDemo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(TimePickerAddonDemo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

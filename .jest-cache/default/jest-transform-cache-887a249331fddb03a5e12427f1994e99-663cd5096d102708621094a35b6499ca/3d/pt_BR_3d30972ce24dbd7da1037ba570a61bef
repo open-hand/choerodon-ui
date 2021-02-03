@@ -1,0 +1,114 @@
+7388de55db7df3abfc89d8f5543375d5
+"use strict";
+
+/* istanbul ignore next */
+function cov_d4y4s9y0c() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/pt_BR.tsx";
+  var hash = "863fa702e00d5b11bcfed977166d26fd80985b6b";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/pt_BR.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 28
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 13
+        },
+        end: {
+          line: 9,
+          column: 1
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 15
+        },
+        end: {
+          line: 10,
+          column: 21
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 0
+        },
+        end: {
+          line: 11,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "863fa702e00d5b11bcfed977166d26fd80985b6b"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_d4y4s9y0c = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_d4y4s9y0c();
+cov_d4y4s9y0c().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_d4y4s9y0c().s[1]++;
+exports["default"] = void 0;
+var locale =
+/* istanbul ignore next */
+(cov_d4y4s9y0c().s[2]++, {
+  placeholder: 'Hora'
+});
+
+var _default =
+/* istanbul ignore next */
+(cov_d4y4s9y0c().s[3]++, locale);
+
+/* istanbul ignore next */
+cov_d4y4s9y0c().s[4]++;
+exports["default"] = _default;

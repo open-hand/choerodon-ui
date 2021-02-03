@@ -1,0 +1,127 @@
+6a5e380ddc6b08945c819fcac686971e
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _radio = _interopRequireDefault(require("../../../components/radio"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _select = _interopRequireDefault(require("../../../components/select"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Option = _select["default"].Option;
+var children = [];
+
+for (var i = 10; i < 36; i++) {
+  children.push(_react["default"].createElement(Option, {
+    key: i.toString(36) + i
+  }, i.toString(36) + i));
+}
+
+function handleChange(value) {
+  console.log("Selected: ".concat(value));
+}
+
+var SelectSizesDemo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(SelectSizesDemo, _React$Component);
+
+  function SelectSizesDemo() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, SelectSizesDemo);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(SelectSizesDemo)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      size: 'default'
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleSizeChange", function (e) {
+      _this.setState({
+        size: e.target.value
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(SelectSizesDemo, [{
+    key: "render",
+    value: function render() {
+      var size = this.state.size;
+      return _react["default"].createElement("div", null, _react["default"].createElement(_radio["default"].Group, {
+        value: size,
+        onChange: this.handleSizeChange
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "large"
+      }, "Large"), _react["default"].createElement(_radio["default"].Button, {
+        value: "default"
+      }, "Default"), _react["default"].createElement(_radio["default"].Button, {
+        value: "small"
+      }, "Small")), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement(_select["default"], {
+        size: size,
+        defaultValue: "a1",
+        onChange: handleChange,
+        style: {
+          width: 200
+        }
+      }, children), _react["default"].createElement("br", null), _react["default"].createElement(_select["default"], {
+        mode: "combobox",
+        size: size,
+        defaultValue: "a1",
+        onChange: handleChange,
+        style: {
+          width: 200
+        }
+      }, children), _react["default"].createElement("br", null), _react["default"].createElement(_select["default"], {
+        mode: "multiple",
+        size: size,
+        placeholder: "Please select",
+        defaultValue: ['a10', 'c12'],
+        onChange: handleChange,
+        style: {
+          width: '100%'
+        }
+      }, children), _react["default"].createElement("br", null), _react["default"].createElement(_select["default"], {
+        mode: "tags",
+        size: size,
+        placeholder: "Please select",
+        defaultValue: ['a10', 'c12'],
+        onChange: handleChange,
+        style: {
+          width: '100%'
+        }
+      }, children));
+    }
+  }]);
+  return SelectSizesDemo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(SelectSizesDemo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

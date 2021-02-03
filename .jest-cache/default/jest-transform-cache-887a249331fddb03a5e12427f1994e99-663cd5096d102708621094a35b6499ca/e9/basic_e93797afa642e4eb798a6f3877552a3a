@@ -1,0 +1,27 @@
+c61fba33f77c257e85cbead4d8a2479e
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _popover = _interopRequireDefault(require("../../../components/popover"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var content = _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Content"), _react["default"].createElement("p", null, "Content"));
+
+var __Demo = _react["default"].createElement(_popover["default"], {
+  content: content,
+  title: "Title"
+}, _react["default"].createElement(_button["default"], {
+  type: "primary"
+}, "Hover me"));
+
+var _default = __Demo;
+exports["default"] = _default;

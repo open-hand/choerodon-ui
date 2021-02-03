@@ -1,0 +1,89 @@
+a7d5a8e0092160ca514dc2ea1efb328d
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var Paragraph =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(Paragraph, _React$Component);
+
+  function Paragraph() {
+    (0, _classCallCheck2["default"])(this, Paragraph);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Paragraph).apply(this, arguments));
+  }
+
+  (0, _createClass2["default"])(Paragraph, [{
+    key: "getWidth",
+    value: function getWidth(index) {
+      var _this$props = this.props,
+          width = _this$props.width,
+          _this$props$rows = _this$props.rows,
+          rows = _this$props$rows === void 0 ? 2 : _this$props$rows;
+
+      if (Array.isArray(width)) {
+        return width[index];
+      } // last paragraph
+
+
+      if (rows - 1 === index) {
+        return width;
+      }
+
+      return undefined;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var _this$props2 = this.props,
+          prefixCls = _this$props2.prefixCls,
+          className = _this$props2.className,
+          style = _this$props2.style,
+          rows = _this$props2.rows;
+      var rowList = (0, _toConsumableArray2["default"])(Array(rows)).map(function (_, index) {
+        return (// eslint-disable-next-line react/no-array-index-key
+          React.createElement("li", {
+            key: index,
+            style: {
+              width: _this.getWidth(index)
+            }
+          })
+        );
+      });
+      return React.createElement("ul", {
+        className: (0, _classnames["default"])(prefixCls, className),
+        style: style
+      }, rowList);
+    }
+  }]);
+  return Paragraph;
+}(React.Component);
+
+var _default = Paragraph;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNrZWxldG9uL1BhcmFncmFwaC5qcyJdLCJuYW1lcyI6WyJQYXJhZ3JhcGgiLCJSZWFjdCIsIkNvbXBvbmVudCIsImluZGV4Iiwid2lkdGgiLCJyb3dzIiwiQXJyYXkiLCJwcmVmaXhDbHMiLCJjbGFzc05hbWUiLCJzdHlsZSIsInJvd0xpc3QiLCJrZXkiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsSUFBQSxLQUFBLEdBQUEsdUJBQUEsQ0FBQSxPQUFBLENBQUEsT0FBQSxDQUFBLENBQUE7O0FBQ0EsSUFBQSxXQUFBLEdBQUEsc0JBQUEsQ0FBQSxPQUFBLENBQUEsWUFBQSxDQUFBLENBQUE7O0lBQ01BLFM7Ozs7Ozs7Ozs7Ozs2QkFDT0csSyxFQUFPO0FBQUEsVUFBQSxXQUFBLEdBQ2dCLEtBRGhCLEtBQUE7QUFBQSxVQUNKQyxLQURJLEdBQUEsV0FBQSxDQUFBLEtBQUE7QUFBQSxVQUFBLGdCQUFBLEdBQUEsV0FBQSxDQUFBLElBQUE7QUFBQSxVQUNHQyxJQURILEdBQUEsZ0JBQUEsS0FBQSxLQUFBLENBQUEsR0FBQSxDQUFBLEdBQUEsZ0JBQUE7O0FBRVosVUFBSUMsS0FBSyxDQUFMQSxPQUFBQSxDQUFKLEtBQUlBLENBQUosRUFBMEI7QUFDdEIsZUFBT0YsS0FBSyxDQUFaLEtBQVksQ0FBWjtBQUhRLE9BQUEsQ0FLWjs7O0FBQ0EsVUFBSUMsSUFBSSxHQUFKQSxDQUFBQSxLQUFKLEtBQUEsRUFBd0I7QUFDcEIsZUFBQSxLQUFBO0FBQ0g7O0FBQ0QsYUFBQSxTQUFBO0FBQ0g7Ozs2QkFDUTtBQUFBLFVBQUEsS0FBQSxHQUFBLElBQUE7O0FBQUEsVUFBQSxZQUFBLEdBQ3lDLEtBRHpDLEtBQUE7QUFBQSxVQUNHRSxTQURILEdBQUEsWUFBQSxDQUFBLFNBQUE7QUFBQSxVQUNjQyxTQURkLEdBQUEsWUFBQSxDQUFBLFNBQUE7QUFBQSxVQUN5QkMsS0FEekIsR0FBQSxZQUFBLENBQUEsS0FBQTtBQUFBLFVBQ2dDSixJQURoQyxHQUFBLFlBQUEsQ0FBQSxJQUFBO0FBRUwsVUFBTUssT0FBTyxHQUFHLENBQUEsR0FBQSxtQkFBQSxDQUFBLFNBQUEsQ0FBQSxFQUFJSixLQUFLLENBQVQsSUFBUyxDQUFULEVBQUEsR0FBQSxDQUFxQixVQUFBLENBQUEsRUFBQSxLQUFBLEVBQUE7QUFBQSxlQUNyQztBQUNBTCxVQUFBQSxLQUFLLENBQUxBLGFBQUFBLENBQUFBLElBQUFBLEVBQTBCO0FBQUVVLFlBQUFBLEdBQUcsRUFBTCxLQUFBO0FBQWNGLFlBQUFBLEtBQUssRUFBRTtBQUFFTCxjQUFBQSxLQUFLLEVBQUUsS0FBSSxDQUFKLFFBQUEsQ0FBQSxLQUFBO0FBQVQ7QUFBckIsV0FBMUJIO0FBRnFDO0FBQXJDLE9BQWdCLENBQWhCO0FBR0EsYUFBUSxLQUFLLENBQUwsYUFBQSxDQUFBLElBQUEsRUFBMEI7QUFBRU8sUUFBQUEsU0FBUyxFQUFFLENBQUEsR0FBQSxXQUFBLENBQUEsU0FBQSxDQUFBLEVBQUEsU0FBQSxFQUFiLFNBQWEsQ0FBYjtBQUErQ0MsUUFBQUEsS0FBSyxFQUFFQTtBQUF0RCxPQUExQixFQUFSLE9BQVEsQ0FBUjtBQUNIOzs7RUFsQm1CUixLQUFLLENBQUNDLFM7O2VBb0JmRixTIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IGNsYXNzTmFtZXMgZnJvbSAnY2xhc3NuYW1lcyc7XG5jbGFzcyBQYXJhZ3JhcGggZXh0ZW5kcyBSZWFjdC5Db21wb25lbnQge1xuICAgIGdldFdpZHRoKGluZGV4KSB7XG4gICAgICAgIGNvbnN0IHsgd2lkdGgsIHJvd3MgPSAyIH0gPSB0aGlzLnByb3BzO1xuICAgICAgICBpZiAoQXJyYXkuaXNBcnJheSh3aWR0aCkpIHtcbiAgICAgICAgICAgIHJldHVybiB3aWR0aFtpbmRleF07XG4gICAgICAgIH1cbiAgICAgICAgLy8gbGFzdCBwYXJhZ3JhcGhcbiAgICAgICAgaWYgKHJvd3MgLSAxID09PSBpbmRleCkge1xuICAgICAgICAgICAgcmV0dXJuIHdpZHRoO1xuICAgICAgICB9XG4gICAgICAgIHJldHVybiB1bmRlZmluZWQ7XG4gICAgfVxuICAgIHJlbmRlcigpIHtcbiAgICAgICAgY29uc3QgeyBwcmVmaXhDbHMsIGNsYXNzTmFtZSwgc3R5bGUsIHJvd3MgfSA9IHRoaXMucHJvcHM7XG4gICAgICAgIGNvbnN0IHJvd0xpc3QgPSBbLi4uQXJyYXkocm93cyldLm1hcCgoXywgaW5kZXgpID0+IChcbiAgICAgICAgLy8gZXNsaW50LWRpc2FibGUtbmV4dC1saW5lIHJlYWN0L25vLWFycmF5LWluZGV4LWtleVxuICAgICAgICBSZWFjdC5jcmVhdGVFbGVtZW50KFwibGlcIiwgeyBrZXk6IGluZGV4LCBzdHlsZTogeyB3aWR0aDogdGhpcy5nZXRXaWR0aChpbmRleCkgfSB9KSkpO1xuICAgICAgICByZXR1cm4gKFJlYWN0LmNyZWF0ZUVsZW1lbnQoXCJ1bFwiLCB7IGNsYXNzTmFtZTogY2xhc3NOYW1lcyhwcmVmaXhDbHMsIGNsYXNzTmFtZSksIHN0eWxlOiBzdHlsZSB9LCByb3dMaXN0KSk7XG4gICAgfVxufVxuZXhwb3J0IGRlZmF1bHQgUGFyYWdyYXBoO1xuIl19

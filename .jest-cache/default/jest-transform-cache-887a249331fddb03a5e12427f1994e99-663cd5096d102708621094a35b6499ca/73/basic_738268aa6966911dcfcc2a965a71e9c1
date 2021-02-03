@@ -1,0 +1,22 @@
+bef027d4e9c1fc12f9cb25c82edd9a51
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _backTop = _interopRequireDefault(require("../../../components/back-top"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_backTop["default"], null), "Scroll down to see the bottom-right", _react["default"].createElement("strong", {
+  style: {
+    color: 'rgba(64, 64, 64, 0.6)'
+  }
+}, " gray "), "button.");
+
+var _default = __Demo;
+exports["default"] = _default;

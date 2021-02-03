@@ -1,0 +1,54 @@
+8de9ae85e9b9884d492fea3a0214bda8
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _dropdown = _interopRequireDefault(require("../../../components-pro/dropdown"));
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _menu = _interopRequireDefault(require("../../../components-pro/menu"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var menu = _react["default"].createElement(_menu["default"], null, _react["default"].createElement(_menu["default"].Item, null, _react["default"].createElement("a", {
+  target: "_blank",
+  rel: "noopener noreferrer",
+  href: "https://choerodon.io"
+}, "1st menu item")), _react["default"].createElement(_menu["default"].Item, null, _react["default"].createElement("a", {
+  target: "_blank",
+  rel: "noopener noreferrer",
+  href: "https://choerodon.io"
+}, "2nd menu item")), _react["default"].createElement(_menu["default"].Item, null, _react["default"].createElement("a", {
+  target: "_blank",
+  rel: "noopener noreferrer",
+  href: "https://choerodon.io"
+}, "3rd menu item")));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_dropdown["default"], {
+  overlay: menu,
+  placement: "bottomLeft"
+}, _react["default"].createElement(_button["default"], null, "bottomLeft")), _react["default"].createElement(_dropdown["default"], {
+  overlay: menu,
+  placement: "bottomCenter"
+}, _react["default"].createElement(_button["default"], null, "bottomCenter")), _react["default"].createElement(_dropdown["default"], {
+  overlay: menu,
+  placement: "bottomRight"
+}, _react["default"].createElement(_button["default"], null, "bottomRight")), _react["default"].createElement("br", null), _react["default"].createElement(_dropdown["default"], {
+  overlay: menu,
+  placement: "topLeft"
+}, _react["default"].createElement(_button["default"], null, "topLeft")), _react["default"].createElement(_dropdown["default"], {
+  overlay: menu,
+  placement: "topCenter"
+}, _react["default"].createElement(_button["default"], null, "topCenter")), _react["default"].createElement(_dropdown["default"], {
+  overlay: menu,
+  placement: "topRight"
+}, _react["default"].createElement(_button["default"], null, "topRight")));
+
+var _default = __Demo;
+exports["default"] = _default;

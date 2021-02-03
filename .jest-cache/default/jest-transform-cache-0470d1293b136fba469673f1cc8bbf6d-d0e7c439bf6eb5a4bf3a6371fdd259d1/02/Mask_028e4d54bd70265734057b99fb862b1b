@@ -1,0 +1,421 @@
+d4fa26225b36275d29b7f6f0a3a3c2d8
+"use strict";
+
+/* istanbul ignore next */
+var cov_v05pirob0 = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/modal-container/Mask.tsx";
+  var hash = "0100c21d934820016b3a4f29d419fadfc0688004";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/modal-container/Mask.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 23
+        },
+        end: {
+          line: 10,
+          column: 95
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 20
+        },
+        end: {
+          line: 12,
+          column: 89
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 34
+        },
+        end: {
+          line: 14,
+          column: 117
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 23
+        },
+        end: {
+          line: 16,
+          column: 95
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 17
+        },
+        end: {
+          line: 18,
+          column: 83
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 13
+        },
+        end: {
+          line: 20,
+          column: 53
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 22
+        },
+        end: {
+          line: 22,
+          column: 78
+        }
+      },
+      "10": {
+        start: {
+          line: 26,
+          column: 0
+        },
+        end: {
+          line: 41,
+          column: 29
+        }
+      },
+      "11": {
+        start: {
+          line: 27,
+          column: 2
+        },
+        end: {
+          line: 27,
+          column: 51
+        }
+      },
+      "12": {
+        start: {
+          line: 30,
+          column: 4
+        },
+        end: {
+          line: 30,
+          column: 49
+        }
+      },
+      "13": {
+        start: {
+          line: 31,
+          column: 4
+        },
+        end: {
+          line: 31,
+          column: 124
+        }
+      },
+      "14": {
+        start: {
+          line: 34,
+          column: 2
+        },
+        end: {
+          line: 39,
+          column: 6
+        }
+      },
+      "15": {
+        start: {
+          line: 37,
+          column: 6
+        },
+        end: {
+          line: 37,
+          column: 75
+        }
+      },
+      "16": {
+        start: {
+          line: 40,
+          column: 2
+        },
+        end: {
+          line: 40,
+          column: 14
+        }
+      },
+      "17": {
+        start: {
+          line: 43,
+          column: 0
+        },
+        end: {
+          line: 43,
+          column: 26
+        }
+      },
+      "18": {
+        start: {
+          line: 44,
+          column: 0
+        },
+        end: {
+          line: 44,
+          column: 26
+        }
+      },
+      "19": {
+        start: {
+          line: 45,
+          column: 0
+        },
+        end: {
+          line: 47,
+          column: 2
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 26,
+            column: 0
+          },
+          end: {
+            line: 26,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 26,
+            column: 26
+          },
+          end: {
+            line: 41,
+            column: 1
+          }
+        },
+        line: 26
+      },
+      "1": {
+        name: "Mask",
+        decl: {
+          start: {
+            line: 29,
+            column: 11
+          },
+          end: {
+            line: 29,
+            column: 15
+          }
+        },
+        loc: {
+          start: {
+            line: 29,
+            column: 18
+          },
+          end: {
+            line: 32,
+            column: 3
+          }
+        },
+        line: 29
+      },
+      "2": {
+        name: "render",
+        decl: {
+          start: {
+            line: 36,
+            column: 20
+          },
+          end: {
+            line: 36,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 36,
+            column: 29
+          },
+          end: {
+            line: 38,
+            column: 5
+          }
+        },
+        line: 36
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "0100c21d934820016b3a4f29d419fadfc0688004"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_v05pirob0.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_v05pirob0.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_v05pirob0.s[2]++;
+exports["default"] = void 0;
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_v05pirob0.s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_v05pirob0.s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_v05pirob0.s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_v05pirob0.s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_v05pirob0.s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _react =
+/* istanbul ignore next */
+(cov_v05pirob0.s[8]++, _interopRequireDefault(require("react")));
+
+var _ViewComponent2 =
+/* istanbul ignore next */
+(cov_v05pirob0.s[9]++, _interopRequireDefault(require("../core/ViewComponent")));
+
+var Mask =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_v05pirob0.s[10]++, function (_ViewComponent) {
+  /* istanbul ignore next */
+  cov_v05pirob0.f[0]++;
+  cov_v05pirob0.s[11]++;
+  (0, _inherits2["default"])(Mask, _ViewComponent);
+
+  function Mask() {
+    /* istanbul ignore next */
+    cov_v05pirob0.f[1]++;
+    cov_v05pirob0.s[12]++;
+    (0, _classCallCheck2["default"])(this, Mask);
+
+    /* istanbul ignore next */
+    cov_v05pirob0.s[13]++;
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Mask).apply(this, arguments));
+  }
+
+  /* istanbul ignore next */
+  cov_v05pirob0.s[14]++;
+  (0, _createClass2["default"])(Mask, [{
+    key: "render",
+    value: function render() {
+      /* istanbul ignore next */
+      cov_v05pirob0.f[2]++;
+      cov_v05pirob0.s[15]++;
+      return _react["default"].createElement("div", this.getMergedProps());
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_v05pirob0.s[16]++;
+  return Mask;
+}(_ViewComponent2["default"]));
+
+/* istanbul ignore next */
+cov_v05pirob0.s[17]++;
+exports["default"] = Mask;
+
+/* istanbul ignore next */
+cov_v05pirob0.s[18]++;
+Mask.displayName = 'Mask';
+
+/* istanbul ignore next */
+cov_v05pirob0.s[19]++;
+Mask.defaultProps = {
+  suffixCls: 'mask'
+};

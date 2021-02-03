@@ -1,0 +1,32 @@
+6da8c9192fbd12c2c1cd0b1ef91a78bd
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _upload = _interopRequireDefault(require("../../../components-pro/upload"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var props = {
+  headers: {
+    'Access-Control-Allow-Origin': '*'
+  },
+  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+  multiple: true,
+  accept: ['image/*'],
+  uploadImmediately: false,
+  extra: _react["default"].createElement("p", null, "\u8BF7\u4E0A\u4F20\u56FE\u7247\u6587\u4EF6(jpg, jpeg, png...)"),
+  onUploadSuccess: function onUploadSuccess(response) {
+    return console.log(response);
+  }
+};
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_upload["default"], props));
+
+var _default = __Demo;
+exports["default"] = _default;

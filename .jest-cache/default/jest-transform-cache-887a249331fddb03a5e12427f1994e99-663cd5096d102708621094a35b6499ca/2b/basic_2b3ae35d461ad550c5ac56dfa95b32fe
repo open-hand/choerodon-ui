@@ -1,0 +1,33 @@
+0a692f60bd4cb6dc3b024cb02b0858fd
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components-pro/row"));
+
+var _col = _interopRequireDefault(require("../../../components-pro/col"));
+
+var _currency = _interopRequireDefault(require("../../../components-pro/currency"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_row["default"], {
+  gutter: 10
+}, _react["default"].createElement(_col["default"], {
+  span: 12
+}, _react["default"].createElement(_currency["default"], {
+  defaultValue: 10000
+})), _react["default"].createElement(_col["default"], {
+  span: 12
+}, _react["default"].createElement(_currency["default"], {
+  currency: "CNY",
+  defaultValue: 10000
+}))));
+
+var _default = __Demo;
+exports["default"] = _default;

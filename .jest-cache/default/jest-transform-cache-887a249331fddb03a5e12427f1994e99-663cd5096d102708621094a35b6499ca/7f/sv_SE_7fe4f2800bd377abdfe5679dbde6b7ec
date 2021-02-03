@@ -1,0 +1,114 @@
+80aacd269eb60e73e5944f9b0b7911e9
+"use strict";
+
+/* istanbul ignore next */
+function cov_13qjk9qhs0() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/sv_SE.tsx";
+  var hash = "3f7d2b0ce2d9960fe64313a96e92b7a505463f3a";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/sv_SE.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 28
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 13
+        },
+        end: {
+          line: 9,
+          column: 1
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 15
+        },
+        end: {
+          line: 10,
+          column: 21
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 0
+        },
+        end: {
+          line: 11,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "3f7d2b0ce2d9960fe64313a96e92b7a505463f3a"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_13qjk9qhs0 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_13qjk9qhs0();
+cov_13qjk9qhs0().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_13qjk9qhs0().s[1]++;
+exports["default"] = void 0;
+var locale =
+/* istanbul ignore next */
+(cov_13qjk9qhs0().s[2]++, {
+  placeholder: 'Välj tid'
+});
+
+var _default =
+/* istanbul ignore next */
+(cov_13qjk9qhs0().s[3]++, locale);
+
+/* istanbul ignore next */
+cov_13qjk9qhs0().s[4]++;
+exports["default"] = _default;

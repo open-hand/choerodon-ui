@@ -1,0 +1,530 @@
+bac9ae290b2175ab3fae58c654e5f7ed
+"use strict";
+
+/* istanbul ignore next */
+function cov_22rmalp25p() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/utils/toggleClass.ts";
+  var hash = "0e4217356d01675232284f588d79797988d237f9";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/utils/toggleClass.ts",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 28
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 14
+        },
+        end: {
+          line: 8,
+          column: 32
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 18
+        },
+        end: {
+          line: 16,
+          column: 1
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 2
+        },
+        end: {
+          line: 15,
+          column: 3
+        }
+      },
+      "5": {
+        start: {
+          line: 12,
+          column: 4
+        },
+        end: {
+          line: 12,
+          column: 43
+        }
+      },
+      "6": {
+        start: {
+          line: 14,
+          column: 4
+        },
+        end: {
+          line: 14,
+          column: 46
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 15
+        },
+        end: {
+          line: 32,
+          column: 1
+        }
+      },
+      "8": {
+        start: {
+          line: 19,
+          column: 2
+        },
+        end: {
+          line: 21,
+          column: 3
+        }
+      },
+      "9": {
+        start: {
+          line: 20,
+          column: 4
+        },
+        end: {
+          line: 20,
+          column: 11
+        }
+      },
+      "10": {
+        start: {
+          line: 23,
+          column: 2
+        },
+        end: {
+          line: 29,
+          column: 3
+        }
+      },
+      "11": {
+        start: {
+          line: 24,
+          column: 4
+        },
+        end: {
+          line: 24,
+          column: 16
+        }
+      },
+      "12": {
+        start: {
+          line: 25,
+          column: 4
+        },
+        end: {
+          line: 27,
+          column: 7
+        }
+      },
+      "13": {
+        start: {
+          line: 26,
+          column: 6
+        },
+        end: {
+          line: 26,
+          column: 46
+        }
+      },
+      "14": {
+        start: {
+          line: 28,
+          column: 4
+        },
+        end: {
+          line: 28,
+          column: 11
+        }
+      },
+      "15": {
+        start: {
+          line: 31,
+          column: 2
+        },
+        end: {
+          line: 31,
+          column: 42
+        }
+      },
+      "16": {
+        start: {
+          line: 34,
+          column: 0
+        },
+        end: {
+          line: 34,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "toggleClass",
+        decl: {
+          start: {
+            line: 10,
+            column: 27
+          },
+          end: {
+            line: 10,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 10,
+            column: 67
+          },
+          end: {
+            line: 16,
+            column: 1
+          }
+        },
+        line: 10
+      },
+      "1": {
+        name: "_default",
+        decl: {
+          start: {
+            line: 18,
+            column: 24
+          },
+          end: {
+            line: 18,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 18,
+            column: 61
+          },
+          end: {
+            line: 32,
+            column: 1
+          }
+        },
+        line: 18
+      },
+      "2": {
+        name: "(anonymous_2)",
+        decl: {
+          start: {
+            line: 25,
+            column: 29
+          },
+          end: {
+            line: 25,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 25,
+            column: 45
+          },
+          end: {
+            line: 27,
+            column: 5
+          }
+        },
+        line: 25
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 11,
+            column: 2
+          },
+          end: {
+            line: 15,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 11,
+            column: 2
+          },
+          end: {
+            line: 15,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 11,
+            column: 2
+          },
+          end: {
+            line: 15,
+            column: 3
+          }
+        }],
+        line: 11
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 19,
+            column: 2
+          },
+          end: {
+            line: 21,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 19,
+            column: 2
+          },
+          end: {
+            line: 21,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 19,
+            column: 2
+          },
+          end: {
+            line: 21,
+            column: 3
+          }
+        }],
+        line: 19
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 23,
+            column: 2
+          },
+          end: {
+            line: 29,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 23,
+            column: 2
+          },
+          end: {
+            line: 29,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 23,
+            column: 2
+          },
+          end: {
+            line: 29,
+            column: 3
+          }
+        }],
+        line: 23
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 23,
+            column: 6
+          },
+          end: {
+            line: 23,
+            column: 81
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 23,
+            column: 6
+          },
+          end: {
+            line: 23,
+            column: 25
+          }
+        }, {
+          start: {
+            line: 23,
+            column: 29
+          },
+          end: {
+            line: 23,
+            column: 81
+          }
+        }],
+        line: 23
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "0e4217356d01675232284f588d79797988d237f9"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_22rmalp25p = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_22rmalp25p();
+cov_22rmalp25p().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_22rmalp25p().s[1]++;
+exports["default"] = void 0;
+
+var _domLib =
+/* istanbul ignore next */
+(cov_22rmalp25p().s[2]++, require("dom-lib"));
+
+/* istanbul ignore next */
+cov_22rmalp25p().s[3]++;
+
+var toggleClass = function toggleClass(node, className, condition) {
+  /* istanbul ignore next */
+  cov_22rmalp25p().f[0]++;
+  cov_22rmalp25p().s[4]++;
+
+  if (condition) {
+    /* istanbul ignore next */
+    cov_22rmalp25p().b[0][0]++;
+    cov_22rmalp25p().s[5]++;
+    (0, _domLib.addClass)(node, className);
+  } else {
+    /* istanbul ignore next */
+    cov_22rmalp25p().b[0][1]++;
+    cov_22rmalp25p().s[6]++;
+    (0, _domLib.removeClass)(node, className);
+  }
+};
+
+/* istanbul ignore next */
+cov_22rmalp25p().s[7]++;
+
+var _default = function _default(node, className, condition) {
+  /* istanbul ignore next */
+  cov_22rmalp25p().f[1]++;
+  cov_22rmalp25p().s[8]++;
+
+  if (!node) {
+    /* istanbul ignore next */
+    cov_22rmalp25p().b[1][0]++;
+    cov_22rmalp25p().s[9]++;
+    return;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_22rmalp25p().b[1][1]++;
+  }
+
+  cov_22rmalp25p().s[10]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_22rmalp25p().b[3][0]++, Array.isArray(node)) ||
+  /* istanbul ignore next */
+  (cov_22rmalp25p().b[3][1]++, Object.getPrototypeOf(node).hasOwnProperty('length'))) {
+    /* istanbul ignore next */
+    cov_22rmalp25p().b[2][0]++;
+    cov_22rmalp25p().s[11]++;
+    node = node;
+
+    /* istanbul ignore next */
+    cov_22rmalp25p().s[12]++;
+    Array.from(node).forEach(function (item) {
+      /* istanbul ignore next */
+      cov_22rmalp25p().f[2]++;
+      cov_22rmalp25p().s[13]++;
+      toggleClass(item, className, condition);
+    });
+
+    /* istanbul ignore next */
+    cov_22rmalp25p().s[14]++;
+    return;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_22rmalp25p().b[2][1]++;
+  }
+
+  cov_22rmalp25p().s[15]++;
+  toggleClass(node, className, condition);
+};
+
+/* istanbul ignore next */
+cov_22rmalp25p().s[16]++;
+exports["default"] = _default;

@@ -1,0 +1,51 @@
+0b90d476fd1d3c2ef8468dee29fefdbf
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toEditorState = toEditorState;
+Object.defineProperty(exports, "toString", {
+  enumerable: true,
+  get: function get() {
+    return _exportContent["default"];
+  }
+});
+Object.defineProperty(exports, "getMentions", {
+  enumerable: true,
+  get: function get() {
+    return _getMentions["default"];
+  }
+});
+Object.defineProperty(exports, "Nav", {
+  enumerable: true,
+  get: function get() {
+    return _Nav["default"];
+  }
+});
+exports["default"] = void 0;
+
+var _draftJs = require("draft-js");
+
+var _Mention = _interopRequireDefault(require("./component/Mention.react"));
+
+var _exportContent = _interopRequireDefault(require("./utils/exportContent"));
+
+var _getMentions = _interopRequireDefault(require("./utils/getMentions"));
+
+var _Nav = _interopRequireDefault(require("./component/Nav.react"));
+
+// export this package's api
+function toEditorState(text) {
+  return _draftJs.ContentState.createFromText(text);
+}
+
+_Mention["default"].Nav = _Nav["default"];
+_Mention["default"].toString = _exportContent["default"];
+_Mention["default"].toEditorState = toEditorState;
+_Mention["default"].getMentions = _getMentions["default"];
+var _default = _Mention["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzeCJdLCJuYW1lcyI6WyJ0b0VkaXRvclN0YXRlIiwidGV4dCIsIkNvbnRlbnRTdGF0ZSIsImNyZWF0ZUZyb21UZXh0IiwiTWVudGlvbiIsIk5hdiIsInRvU3RyaW5nIiwiZ2V0TWVudGlvbnMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFMQTtBQU9BLFNBQVNBLGFBQVQsQ0FBdUJDLElBQXZCLEVBQTZCO0FBQzNCLFNBQU9DLHNCQUFhQyxjQUFiLENBQTRCRixJQUE1QixDQUFQO0FBQ0Q7O0FBRURHLG9CQUFRQyxHQUFSLEdBQWNBLGVBQWQ7QUFDQUQsb0JBQVFFLFFBQVIsR0FBbUJBLHlCQUFuQjtBQUNBRixvQkFBUUosYUFBUixHQUF3QkEsYUFBeEI7QUFDQUksb0JBQVFHLFdBQVIsR0FBc0JBLHVCQUF0QjtlQVNlSCxtQiIsInNvdXJjZXNDb250ZW50IjpbIi8vIGV4cG9ydCB0aGlzIHBhY2thZ2UncyBhcGlcbmltcG9ydCB7IENvbnRlbnRTdGF0ZSB9IGZyb20gJ2RyYWZ0LWpzJztcbmltcG9ydCBNZW50aW9uIGZyb20gJy4vY29tcG9uZW50L01lbnRpb24ucmVhY3QnO1xuaW1wb3J0IHRvU3RyaW5nIGZyb20gJy4vdXRpbHMvZXhwb3J0Q29udGVudCc7XG5pbXBvcnQgZ2V0TWVudGlvbnMgZnJvbSAnLi91dGlscy9nZXRNZW50aW9ucyc7XG5pbXBvcnQgTmF2IGZyb20gJy4vY29tcG9uZW50L05hdi5yZWFjdCc7XG5cbmZ1bmN0aW9uIHRvRWRpdG9yU3RhdGUodGV4dCkge1xuICByZXR1cm4gQ29udGVudFN0YXRlLmNyZWF0ZUZyb21UZXh0KHRleHQpO1xufVxuXG5NZW50aW9uLk5hdiA9IE5hdjtcbk1lbnRpb24udG9TdHJpbmcgPSB0b1N0cmluZztcbk1lbnRpb24udG9FZGl0b3JTdGF0ZSA9IHRvRWRpdG9yU3RhdGU7XG5NZW50aW9uLmdldE1lbnRpb25zID0gZ2V0TWVudGlvbnM7XG5cbmV4cG9ydCB7XG4gIE5hdixcbiAgdG9TdHJpbmcsXG4gIHRvRWRpdG9yU3RhdGUsXG4gIGdldE1lbnRpb25zLFxufTtcblxuZXhwb3J0IGRlZmF1bHQgTWVudGlvbjtcbiJdfQ==

@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/collapse/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAKe,oB","sourcesContent":["import Collapse from './Collapse';\n\nexport { CollapseProps, PanelProps } from './Collapse';\nexport { CollapsePanelProps } from './CollapsePanel';\n\nexport default Collapse;\n"]}

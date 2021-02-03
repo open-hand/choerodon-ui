@@ -1,0 +1,22 @@
+55ccb20652c1286e065f71abdae25fd3
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _breadcrumb = _interopRequireDefault(require("../../../components/breadcrumb"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_breadcrumb["default"], null, _react["default"].createElement(_breadcrumb["default"].Item, null, "Home"), _react["default"].createElement(_breadcrumb["default"].Item, null, _react["default"].createElement("a", {
+  href: ""
+}, "Application Center")), _react["default"].createElement(_breadcrumb["default"].Item, null, _react["default"].createElement("a", {
+  href: ""
+}, "Application List")), _react["default"].createElement(_breadcrumb["default"].Item, null, "An Application"));
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,3654 @@
+da47e494005dceb506d2534d5e0fa93e
+"use strict";
+
+/* istanbul ignore next */
+var cov_55urvry3s = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/date-picker/DaysView.tsx";
+  var hash = "472cf0c10fb035f51c6a7ffeddb1189672d34da6";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/date-picker/DaysView.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 42
+        }
+      },
+      "3": {
+        start: {
+          line: 9,
+          column: 0
+        },
+        end: {
+          line: 9,
+          column: 28
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 21
+        },
+        end: {
+          line: 11,
+          column: 92
+        }
+      },
+      "5": {
+        start: {
+          line: 13,
+          column: 23
+        },
+        end: {
+          line: 13,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 15,
+          column: 23
+        },
+        end: {
+          line: 15,
+          column: 95
+        }
+      },
+      "7": {
+        start: {
+          line: 17,
+          column: 20
+        },
+        end: {
+          line: 17,
+          column: 89
+        }
+      },
+      "8": {
+        start: {
+          line: 19,
+          column: 34
+        },
+        end: {
+          line: 19,
+          column: 117
+        }
+      },
+      "9": {
+        start: {
+          line: 21,
+          column: 23
+        },
+        end: {
+          line: 21,
+          column: 95
+        }
+      },
+      "10": {
+        start: {
+          line: 23,
+          column: 17
+        },
+        end: {
+          line: 23,
+          column: 83
+        }
+      },
+      "11": {
+        start: {
+          line: 25,
+          column: 13
+        },
+        end: {
+          line: 25,
+          column: 29
+        }
+      },
+      "12": {
+        start: {
+          line: 27,
+          column: 13
+        },
+        end: {
+          line: 27,
+          column: 53
+        }
+      },
+      "13": {
+        start: {
+          line: 29,
+          column: 17
+        },
+        end: {
+          line: 29,
+          column: 62
+        }
+      },
+      "14": {
+        start: {
+          line: 31,
+          column: 14
+        },
+        end: {
+          line: 31,
+          column: 55
+        }
+      },
+      "15": {
+        start: {
+          line: 33,
+          column: 18
+        },
+        end: {
+          line: 33,
+          column: 63
+        }
+      },
+      "16": {
+        start: {
+          line: 35,
+          column: 12
+        },
+        end: {
+          line: 35,
+          column: 58
+        }
+      },
+      "17": {
+        start: {
+          line: 37,
+          column: 22
+        },
+        end: {
+          line: 37,
+          column: 78
+        }
+      },
+      "18": {
+        start: {
+          line: 39,
+          column: 16
+        },
+        end: {
+          line: 39,
+          column: 68
+        }
+      },
+      "19": {
+        start: {
+          line: 41,
+          column: 12
+        },
+        end: {
+          line: 41,
+          column: 54
+        }
+      },
+      "20": {
+        start: {
+          line: 43,
+          column: 21
+        },
+        end: {
+          line: 43,
+          column: 49
+        }
+      },
+      "21": {
+        start: {
+          line: 45,
+          column: 20
+        },
+        end: {
+          line: 45,
+          column: 52
+        }
+      },
+      "22": {
+        start: {
+          line: 48,
+          column: 2
+        },
+        end: {
+          line: 48,
+          column: 14
+        }
+      },
+      "23": {
+        start: {
+          line: 53,
+          column: 0
+        },
+        end: {
+          line: 364,
+          column: 29
+        }
+      },
+      "24": {
+        start: {
+          line: 54,
+          column: 2
+        },
+        end: {
+          line: 54,
+          column: 55
+        }
+      },
+      "25": {
+        start: {
+          line: 57,
+          column: 4
+        },
+        end: {
+          line: 57,
+          column: 53
+        }
+      },
+      "26": {
+        start: {
+          line: 58,
+          column: 4
+        },
+        end: {
+          line: 58,
+          column: 128
+        }
+      },
+      "27": {
+        start: {
+          line: 61,
+          column: 2
+        },
+        end: {
+          line: 362,
+          column: 6
+        }
+      },
+      "28": {
+        start: {
+          line: 64,
+          column: 22
+        },
+        end: {
+          line: 64,
+          column: 36
+        }
+      },
+      "29": {
+        start: {
+          line: 65,
+          column: 22
+        },
+        end: {
+          line: 65,
+          column: 42
+        }
+      },
+      "30": {
+        start: {
+          line: 66,
+          column: 24
+        },
+        end: {
+          line: 66,
+          column: 93
+        }
+      },
+      "31": {
+        start: {
+          line: 67,
+          column: 6
+        },
+        end: {
+          line: 69,
+          column: 70
+        }
+      },
+      "32": {
+        start: {
+          line: 74,
+          column: 6
+        },
+        end: {
+          line: 76,
+          column: 8
+        }
+      },
+      "33": {
+        start: {
+          line: 81,
+          column: 6
+        },
+        end: {
+          line: 83,
+          column: 8
+        }
+      },
+      "34": {
+        start: {
+          line: 88,
+          column: 6
+        },
+        end: {
+          line: 90,
+          column: 8
+        }
+      },
+      "35": {
+        start: {
+          line: 95,
+          column: 6
+        },
+        end: {
+          line: 97,
+          column: 8
+        }
+      },
+      "36": {
+        start: {
+          line: 102,
+          column: 6
+        },
+        end: {
+          line: 104,
+          column: 8
+        }
+      },
+      "37": {
+        start: {
+          line: 109,
+          column: 6
+        },
+        end: {
+          line: 111,
+          column: 8
+        }
+      },
+      "38": {
+        start: {
+          line: 116,
+          column: 6
+        },
+        end: {
+          line: 116,
+          column: 38
+        }
+      },
+      "39": {
+        start: {
+          line: 117,
+          column: 6
+        },
+        end: {
+          line: 117,
+          column: 64
+        }
+      },
+      "40": {
+        start: {
+          line: 122,
+          column: 6
+        },
+        end: {
+          line: 122,
+          column: 38
+        }
+      },
+      "41": {
+        start: {
+          line: 123,
+          column: 6
+        },
+        end: {
+          line: 123,
+          column: 62
+        }
+      },
+      "42": {
+        start: {
+          line: 128,
+          column: 6
+        },
+        end: {
+          line: 128,
+          column: 38
+        }
+      },
+      "43": {
+        start: {
+          line: 130,
+          column: 6
+        },
+        end: {
+          line: 136,
+          column: 7
+        }
+      },
+      "44": {
+        start: {
+          line: 131,
+          column: 8
+        },
+        end: {
+          line: 133,
+          column: 10
+        }
+      },
+      "45": {
+        start: {
+          line: 135,
+          column: 8
+        },
+        end: {
+          line: 135,
+          column: 70
+        }
+      },
+      "46": {
+        start: {
+          line: 141,
+          column: 6
+        },
+        end: {
+          line: 141,
+          column: 38
+        }
+      },
+      "47": {
+        start: {
+          line: 143,
+          column: 6
+        },
+        end: {
+          line: 145,
+          column: 7
+        }
+      },
+      "48": {
+        start: {
+          line: 144,
+          column: 8
+        },
+        end: {
+          line: 144,
+          column: 65
+        }
+      },
+      "49": {
+        start: {
+          line: 150,
+          column: 6
+        },
+        end: {
+          line: 150,
+          column: 38
+        }
+      },
+      "50": {
+        start: {
+          line: 151,
+          column: 6
+        },
+        end: {
+          line: 151,
+          column: 68
+        }
+      },
+      "51": {
+        start: {
+          line: 156,
+          column: 6
+        },
+        end: {
+          line: 156,
+          column: 38
+        }
+      },
+      "52": {
+        start: {
+          line: 157,
+          column: 6
+        },
+        end: {
+          line: 157,
+          column: 63
+        }
+      },
+      "53": {
+        start: {
+          line: 162,
+          column: 6
+        },
+        end: {
+          line: 162,
+          column: 38
+        }
+      },
+      "54": {
+        start: {
+          line: 163,
+          column: 6
+        },
+        end: {
+          line: 163,
+          column: 85
+        }
+      },
+      "55": {
+        start: {
+          line: 168,
+          column: 6
+        },
+        end: {
+          line: 168,
+          column: 38
+        }
+      },
+      "56": {
+        start: {
+          line: 169,
+          column: 6
+        },
+        end: {
+          line: 169,
+          column: 80
+        }
+      },
+      "57": {
+        start: {
+          line: 174,
+          column: 6
+        },
+        end: {
+          line: 174,
+          column: 25
+        }
+      },
+      "58": {
+        start: {
+          line: 175,
+          column: 6
+        },
+        end: {
+          line: 175,
+          column: 35
+        }
+      },
+      "59": {
+        start: {
+          line: 180,
+          column: 6
+        },
+        end: {
+          line: 180,
+          column: 24
+        }
+      },
+      "60": {
+        start: {
+          line: 185,
+          column: 33
+        },
+        end: {
+          line: 185,
+          column: 52
+        }
+      },
+      "61": {
+        start: {
+          line: 186,
+          column: 21
+        },
+        end: {
+          line: 186,
+          column: 94
+        }
+      },
+      "62": {
+        start: {
+          line: 187,
+          column: 6
+        },
+        end: {
+          line: 187,
+          column: 21
+        }
+      },
+      "63": {
+        start: {
+          line: 192,
+          column: 34
+        },
+        end: {
+          line: 192,
+          column: 65
+        }
+      },
+      "64": {
+        start: {
+          line: 193,
+          column: 33
+        },
+        end: {
+          line: 193,
+          column: 108
+        }
+      },
+      "65": {
+        start: {
+          line: 194,
+          column: 6
+        },
+        end: {
+          line: 194,
+          column: 47
+        }
+      },
+      "66": {
+        start: {
+          line: 199,
+          column: 34
+        },
+        end: {
+          line: 199,
+          column: 61
+        }
+      },
+      "67": {
+        start: {
+          line: 200,
+          column: 29
+        },
+        end: {
+          line: 200,
+          column: 104
+        }
+      },
+      "68": {
+        start: {
+          line: 201,
+          column: 6
+        },
+        end: {
+          line: 201,
+          column: 29
+        }
+      },
+      "69": {
+        start: {
+          line: 206,
+          column: 22
+        },
+        end: {
+          line: 206,
+          column: 36
+        }
+      },
+      "70": {
+        start: {
+          line: 207,
+          column: 17
+        },
+        end: {
+          line: 207,
+          column: 32
+        }
+      },
+      "71": {
+        start: {
+          line: 208,
+          column: 6
+        },
+        end: {
+          line: 236,
+          column: 11
+        }
+      },
+      "72": {
+        start: {
+          line: 241,
+          column: 6
+        },
+        end: {
+          line: 243,
+          column: 29
+        }
+      },
+      "73": {
+        start: {
+          line: 248,
+          column: 6
+        },
+        end: {
+          line: 251,
+          column: 105
+        }
+      },
+      "74": {
+        start: {
+          line: 256,
+          column: 6
+        },
+        end: {
+          line: 256,
+          column: 127
+        }
+      },
+      "75": {
+        start: {
+          line: 261,
+          column: 22
+        },
+        end: {
+          line: 261,
+          column: 36
+        }
+      },
+      "76": {
+        start: {
+          line: 262,
+          column: 6
+        },
+        end: {
+          line: 266,
+          column: 57
+        }
+      },
+      "77": {
+        start: {
+          line: 271,
+          column: 6
+        },
+        end: {
+          line: 271,
+          column: 58
+        }
+      },
+      "78": {
+        start: {
+          line: 276,
+          column: 22
+        },
+        end: {
+          line: 276,
+          column: 36
+        }
+      },
+      "79": {
+        start: {
+          line: 277,
+          column: 6
+        },
+        end: {
+          line: 279,
+          column: 15
+        }
+      },
+      "80": {
+        start: {
+          line: 284,
+          column: 21
+        },
+        end: {
+          line: 284,
+          column: 50
+        }
+      },
+      "81": {
+        start: {
+          line: 285,
+          column: 6
+        },
+        end: {
+          line: 285,
+          column: 64
+        }
+      },
+      "82": {
+        start: {
+          line: 290,
+          column: 22
+        },
+        end: {
+          line: 290,
+          column: 36
+        }
+      },
+      "83": {
+        start: {
+          line: 291,
+          column: 24
+        },
+        end: {
+          line: 291,
+          column: 34
+        }
+      },
+      "84": {
+        start: {
+          line: 292,
+          column: 17
+        },
+        end: {
+          line: 292,
+          column: 33
+        }
+      },
+      "85": {
+        start: {
+          line: 293,
+          column: 33
+        },
+        end: {
+          line: 293,
+          column: 53
+        }
+      },
+      "86": {
+        start: {
+          line: 294,
+          column: 21
+        },
+        end: {
+          line: 294,
+          column: 93
+        }
+      },
+      "87": {
+        start: {
+          line: 295,
+          column: 34
+        },
+        end: {
+          line: 295,
+          column: 57
+        }
+      },
+      "88": {
+        start: {
+          line: 296,
+          column: 24
+        },
+        end: {
+          line: 296,
+          column: 98
+        }
+      },
+      "89": {
+        start: {
+          line: 297,
+          column: 21
+        },
+        end: {
+          line: 297,
+          column: 33
+        }
+      },
+      "90": {
+        start: {
+          line: 298,
+          column: 22
+        },
+        end: {
+          line: 298,
+          column: 44
+        }
+      },
+      "91": {
+        start: {
+          line: 299,
+          column: 24
+        },
+        end: {
+          line: 299,
+          column: 35
+        }
+      },
+      "92": {
+        start: {
+          line: 300,
+          column: 25
+        },
+        end: {
+          line: 300,
+          column: 37
+        }
+      },
+      "93": {
+        start: {
+          line: 301,
+          column: 20
+        },
+        end: {
+          line: 301,
+          column: 50
+        }
+      },
+      "94": {
+        start: {
+          line: 302,
+          column: 17
+        },
+        end: {
+          line: 302,
+          column: 19
+        }
+      },
+      "95": {
+        start: {
+          line: 303,
+          column: 18
+        },
+        end: {
+          line: 303,
+          column: 20
+        }
+      },
+      "96": {
+        start: {
+          line: 305,
+          column: 6
+        },
+        end: {
+          line: 332,
+          column: 7
+        }
+      },
+      "97": {
+        start: {
+          line: 308,
+          column: 26
+        },
+        end: {
+          line: 308,
+          column: 43
+        }
+      },
+      "98": {
+        start: {
+          line: 309,
+          column: 25
+        },
+        end: {
+          line: 309,
+          column: 60
+        }
+      },
+      "99": {
+        start: {
+          line: 310,
+          column: 24
+        },
+        end: {
+          line: 310,
+          column: 815
+        }
+      },
+      "100": {
+        start: {
+          line: 311,
+          column: 19
+        },
+        end: {
+          line: 311,
+          column: 45
+        }
+      },
+      "101": {
+        start: {
+          line: 312,
+          column: 23
+        },
+        end: {
+          line: 316,
+          column: 9
+        }
+      },
+      "102": {
+        start: {
+          line: 318,
+          column: 8
+        },
+        end: {
+          line: 320,
+          column: 9
+        }
+      },
+      "103": {
+        start: {
+          line: 319,
+          column: 10
+        },
+        end: {
+          line: 319,
+          column: 74
+        }
+      },
+      "104": {
+        start: {
+          line: 322,
+          column: 8
+        },
+        end: {
+          line: 322,
+          column: 68
+        }
+      },
+      "105": {
+        start: {
+          line: 324,
+          column: 8
+        },
+        end: {
+          line: 329,
+          column: 9
+        }
+      },
+      "106": {
+        start: {
+          line: 325,
+          column: 10
+        },
+        end: {
+          line: 327,
+          column: 21
+        }
+      },
+      "107": {
+        start: {
+          line: 328,
+          column: 10
+        },
+        end: {
+          line: 328,
+          column: 21
+        }
+      },
+      "108": {
+        start: {
+          line: 331,
+          column: 8
+        },
+        end: {
+          line: 331,
+          column: 30
+        }
+      },
+      "109": {
+        start: {
+          line: 334,
+          column: 6
+        },
+        end: {
+          line: 334,
+          column: 18
+        }
+      },
+      "110": {
+        start: {
+          line: 339,
+          column: 6
+        },
+        end: {
+          line: 339,
+          column: 53
+        }
+      },
+      "111": {
+        start: {
+          line: 344,
+          column: 19
+        },
+        end: {
+          line: 344,
+          column: 47
+        }
+      },
+      "112": {
+        start: {
+          line: 345,
+          column: 17
+        },
+        end: {
+          line: 345,
+          column: 37
+        }
+      },
+      "113": {
+        start: {
+          line: 346,
+          column: 18
+        },
+        end: {
+          line: 346,
+          column: 41
+        }
+      },
+      "114": {
+        start: {
+          line: 347,
+          column: 16
+        },
+        end: {
+          line: 347,
+          column: 18
+        }
+      },
+      "115": {
+        start: {
+          line: 348,
+          column: 14
+        },
+        end: {
+          line: 348,
+          column: 15
+        }
+      },
+      "116": {
+        start: {
+          line: 349,
+          column: 6
+        },
+        end: {
+          line: 354,
+          column: 9
+        }
+      },
+      "117": {
+        start: {
+          line: 350,
+          column: 8
+        },
+        end: {
+          line: 353,
+          column: 16
+        }
+      },
+      "118": {
+        start: {
+          line: 355,
+          column: 6
+        },
+        end: {
+          line: 355,
+          column: 17
+        }
+      },
+      "119": {
+        start: {
+          line: 360,
+          column: 6
+        },
+        end: {
+          line: 360,
+          column: 37
+        }
+      },
+      "120": {
+        start: {
+          line: 363,
+          column: 2
+        },
+        end: {
+          line: 363,
+          column: 18
+        }
+      },
+      "121": {
+        start: {
+          line: 366,
+          column: 0
+        },
+        end: {
+          line: 366,
+          column: 30
+        }
+      },
+      "122": {
+        start: {
+          line: 367,
+          column: 0
+        },
+        end: {
+          line: 367,
+          column: 34
+        }
+      },
+      "123": {
+        start: {
+          line: 368,
+          column: 0
+        },
+        end: {
+          line: 375,
+          column: 41
+        }
+      },
+      "124": {
+        start: {
+          line: 376,
+          column: 0
+        },
+        end: {
+          line: 378,
+          column: 2
+        }
+      },
+      "125": {
+        start: {
+          line: 379,
+          column: 0
+        },
+        end: {
+          line: 381,
+          column: 1
+        }
+      },
+      "126": {
+        start: {
+          line: 382,
+          column: 0
+        },
+        end: {
+          line: 382,
+          column: 96
+        }
+      },
+      "127": {
+        start: {
+          line: 383,
+          column: 0
+        },
+        end: {
+          line: 383,
+          column: 97
+        }
+      },
+      "128": {
+        start: {
+          line: 384,
+          column: 0
+        },
+        end: {
+          line: 384,
+          column: 94
+        }
+      },
+      "129": {
+        start: {
+          line: 385,
+          column: 0
+        },
+        end: {
+          line: 385,
+          column: 93
+        }
+      },
+      "130": {
+        start: {
+          line: 386,
+          column: 0
+        },
+        end: {
+          line: 386,
+          column: 96
+        }
+      },
+      "131": {
+        start: {
+          line: 387,
+          column: 0
+        },
+        end: {
+          line: 387,
+          column: 97
+        }
+      },
+      "132": {
+        start: {
+          line: 388,
+          column: 0
+        },
+        end: {
+          line: 388,
+          column: 87
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "alwaysValidDate",
+        decl: {
+          start: {
+            line: 47,
+            column: 9
+          },
+          end: {
+            line: 47,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 47,
+            column: 27
+          },
+          end: {
+            line: 49,
+            column: 1
+          }
+        },
+        line: 47
+      },
+      "1": {
+        name: "(anonymous_1)",
+        decl: {
+          start: {
+            line: 53,
+            column: 0
+          },
+          end: {
+            line: 53,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 53,
+            column: 26
+          },
+          end: {
+            line: 364,
+            column: 1
+          }
+        },
+        line: 53
+      },
+      "2": {
+        name: "DaysView",
+        decl: {
+          start: {
+            line: 56,
+            column: 11
+          },
+          end: {
+            line: 56,
+            column: 19
+          }
+        },
+        loc: {
+          start: {
+            line: 56,
+            column: 22
+          },
+          end: {
+            line: 59,
+            column: 3
+          }
+        },
+        line: 56
+      },
+      "3": {
+        name: "render",
+        decl: {
+          start: {
+            line: 63,
+            column: 20
+          },
+          end: {
+            line: 63,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 63,
+            column: 29
+          },
+          end: {
+            line: 70,
+            column: 5
+          }
+        },
+        line: 63
+      },
+      "4": {
+        name: "handlePrevYearClick",
+        decl: {
+          start: {
+            line: 73,
+            column: 20
+          },
+          end: {
+            line: 73,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 73,
+            column: 42
+          },
+          end: {
+            line: 77,
+            column: 5
+          }
+        },
+        line: 73
+      },
+      "5": {
+        name: "handlePrevMonthClick",
+        decl: {
+          start: {
+            line: 80,
+            column: 20
+          },
+          end: {
+            line: 80,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 80,
+            column: 43
+          },
+          end: {
+            line: 84,
+            column: 5
+          }
+        },
+        line: 80
+      },
+      "6": {
+        name: "handleMonthSelect",
+        decl: {
+          start: {
+            line: 87,
+            column: 20
+          },
+          end: {
+            line: 87,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 87,
+            column: 40
+          },
+          end: {
+            line: 91,
+            column: 5
+          }
+        },
+        line: 87
+      },
+      "7": {
+        name: "handleYearSelect",
+        decl: {
+          start: {
+            line: 94,
+            column: 20
+          },
+          end: {
+            line: 94,
+            column: 36
+          }
+        },
+        loc: {
+          start: {
+            line: 94,
+            column: 39
+          },
+          end: {
+            line: 98,
+            column: 5
+          }
+        },
+        line: 94
+      },
+      "8": {
+        name: "handleNextYearClick",
+        decl: {
+          start: {
+            line: 101,
+            column: 20
+          },
+          end: {
+            line: 101,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 101,
+            column: 42
+          },
+          end: {
+            line: 105,
+            column: 5
+          }
+        },
+        line: 101
+      },
+      "9": {
+        name: "handleNextMonthClick",
+        decl: {
+          start: {
+            line: 108,
+            column: 20
+          },
+          end: {
+            line: 108,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 108,
+            column: 43
+          },
+          end: {
+            line: 112,
+            column: 5
+          }
+        },
+        line: 108
+      },
+      "10": {
+        name: "handleKeyDownHome",
+        decl: {
+          start: {
+            line: 115,
+            column: 20
+          },
+          end: {
+            line: 115,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 115,
+            column: 41
+          },
+          end: {
+            line: 118,
+            column: 5
+          }
+        },
+        line: 115
+      },
+      "11": {
+        name: "handleKeyDownEnd",
+        decl: {
+          start: {
+            line: 121,
+            column: 20
+          },
+          end: {
+            line: 121,
+            column: 36
+          }
+        },
+        loc: {
+          start: {
+            line: 121,
+            column: 40
+          },
+          end: {
+            line: 124,
+            column: 5
+          }
+        },
+        line: 121
+      },
+      "12": {
+        name: "handleKeyDownLeft",
+        decl: {
+          start: {
+            line: 127,
+            column: 20
+          },
+          end: {
+            line: 127,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 127,
+            column: 41
+          },
+          end: {
+            line: 137,
+            column: 5
+          }
+        },
+        line: 127
+      },
+      "13": {
+        name: "handleKeyDownRight",
+        decl: {
+          start: {
+            line: 140,
+            column: 20
+          },
+          end: {
+            line: 140,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 140,
+            column: 42
+          },
+          end: {
+            line: 146,
+            column: 5
+          }
+        },
+        line: 140
+      },
+      "14": {
+        name: "handleKeyDownUp",
+        decl: {
+          start: {
+            line: 149,
+            column: 20
+          },
+          end: {
+            line: 149,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 149,
+            column: 39
+          },
+          end: {
+            line: 152,
+            column: 5
+          }
+        },
+        line: 149
+      },
+      "15": {
+        name: "handleKeyDownDown",
+        decl: {
+          start: {
+            line: 155,
+            column: 20
+          },
+          end: {
+            line: 155,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 155,
+            column: 41
+          },
+          end: {
+            line: 158,
+            column: 5
+          }
+        },
+        line: 155
+      },
+      "16": {
+        name: "handleKeyDownPageUp",
+        decl: {
+          start: {
+            line: 161,
+            column: 20
+          },
+          end: {
+            line: 161,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 161,
+            column: 43
+          },
+          end: {
+            line: 164,
+            column: 5
+          }
+        },
+        line: 161
+      },
+      "17": {
+        name: "handleKeyDownPageDown",
+        decl: {
+          start: {
+            line: 167,
+            column: 20
+          },
+          end: {
+            line: 167,
+            column: 41
+          }
+        },
+        loc: {
+          start: {
+            line: 167,
+            column: 45
+          },
+          end: {
+            line: 170,
+            column: 5
+          }
+        },
+        line: 167
+      },
+      "18": {
+        name: "handleKeyDownEnter",
+        decl: {
+          start: {
+            line: 173,
+            column: 20
+          },
+          end: {
+            line: 173,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 173,
+            column: 42
+          },
+          end: {
+            line: 176,
+            column: 5
+          }
+        },
+        line: 173
+      },
+      "19": {
+        name: "handleCellClick",
+        decl: {
+          start: {
+            line: 179,
+            column: 20
+          },
+          end: {
+            line: 179,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 179,
+            column: 42
+          },
+          end: {
+            line: 181,
+            column: 5
+          }
+        },
+        line: 179
+      },
+      "20": {
+        name: "choose",
+        decl: {
+          start: {
+            line: 184,
+            column: 20
+          },
+          end: {
+            line: 184,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 184,
+            column: 33
+          },
+          end: {
+            line: 188,
+            column: 5
+          }
+        },
+        line: 184
+      },
+      "21": {
+        name: "changeSelectedDate",
+        decl: {
+          start: {
+            line: 191,
+            column: 20
+          },
+          end: {
+            line: 191,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 191,
+            column: 59
+          },
+          end: {
+            line: 195,
+            column: 5
+          }
+        },
+        line: 191
+      },
+      "22": {
+        name: "changeViewMode",
+        decl: {
+          start: {
+            line: 198,
+            column: 20
+          },
+          end: {
+            line: 198,
+            column: 34
+          }
+        },
+        loc: {
+          start: {
+            line: 198,
+            column: 41
+          },
+          end: {
+            line: 202,
+            column: 5
+          }
+        },
+        line: 198
+      },
+      "23": {
+        name: "renderHeader",
+        decl: {
+          start: {
+            line: 205,
+            column: 20
+          },
+          end: {
+            line: 205,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 205,
+            column: 35
+          },
+          end: {
+            line: 237,
+            column: 5
+          }
+        },
+        line: 205
+      },
+      "24": {
+        name: "renderBody",
+        decl: {
+          start: {
+            line: 240,
+            column: 20
+          },
+          end: {
+            line: 240,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 240,
+            column: 33
+          },
+          end: {
+            line: 244,
+            column: 5
+          }
+        },
+        line: 240
+      },
+      "25": {
+        name: "renderPanel",
+        decl: {
+          start: {
+            line: 247,
+            column: 20
+          },
+          end: {
+            line: 247,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 247,
+            column: 34
+          },
+          end: {
+            line: 252,
+            column: 5
+          }
+        },
+        line: 247
+      },
+      "26": {
+        name: "renderPanelHead",
+        decl: {
+          start: {
+            line: 255,
+            column: 20
+          },
+          end: {
+            line: 255,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 255,
+            column: 38
+          },
+          end: {
+            line: 257,
+            column: 5
+          }
+        },
+        line: 255
+      },
+      "27": {
+        name: "renderFooter",
+        decl: {
+          start: {
+            line: 260,
+            column: 20
+          },
+          end: {
+            line: 260,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 260,
+            column: 35
+          },
+          end: {
+            line: 267,
+            column: 5
+          }
+        },
+        line: 260
+      },
+      "28": {
+        name: "renderCell",
+        decl: {
+          start: {
+            line: 270,
+            column: 20
+          },
+          end: {
+            line: 270,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 270,
+            column: 38
+          },
+          end: {
+            line: 272,
+            column: 5
+          }
+        },
+        line: 270
+      },
+      "29": {
+        name: "renderInner",
+        decl: {
+          start: {
+            line: 275,
+            column: 20
+          },
+          end: {
+            line: 275,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 275,
+            column: 38
+          },
+          end: {
+            line: 280,
+            column: 5
+          }
+        },
+        line: 275
+      },
+      "30": {
+        name: "getFirstDay",
+        decl: {
+          start: {
+            line: 283,
+            column: 20
+          },
+          end: {
+            line: 283,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 283,
+            column: 38
+          },
+          end: {
+            line: 286,
+            column: 5
+          }
+        },
+        line: 283
+      },
+      "31": {
+        name: "renderPanelBody",
+        decl: {
+          start: {
+            line: 289,
+            column: 20
+          },
+          end: {
+            line: 289,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 289,
+            column: 38
+          },
+          end: {
+            line: 335,
+            column: 5
+          }
+        },
+        line: 289
+      },
+      "32": {
+        name: "getPanelClass",
+        decl: {
+          start: {
+            line: 338,
+            column: 20
+          },
+          end: {
+            line: 338,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 338,
+            column: 36
+          },
+          end: {
+            line: 340,
+            column: 5
+          }
+        },
+        line: 338
+      },
+      "33": {
+        name: "getDaysOfWeek",
+        decl: {
+          start: {
+            line: 343,
+            column: 20
+          },
+          end: {
+            line: 343,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 343,
+            column: 36
+          },
+          end: {
+            line: 356,
+            column: 5
+          }
+        },
+        line: 343
+      },
+      "34": {
+        name: "(anonymous_34)",
+        decl: {
+          start: {
+            line: 349,
+            column: 19
+          },
+          end: {
+            line: 349,
+            column: 20
+          }
+        },
+        loc: {
+          start: {
+            line: 349,
+            column: 34
+          },
+          end: {
+            line: 354,
+            column: 7
+          }
+        },
+        line: 349
+      },
+      "35": {
+        name: "getCloneDate",
+        decl: {
+          start: {
+            line: 359,
+            column: 20
+          },
+          end: {
+            line: 359,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 359,
+            column: 35
+          },
+          end: {
+            line: 361,
+            column: 5
+          }
+        },
+        line: 359
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 130,
+            column: 6
+          },
+          end: {
+            line: 136,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 130,
+            column: 6
+          },
+          end: {
+            line: 136,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 130,
+            column: 6
+          },
+          end: {
+            line: 136,
+            column: 7
+          }
+        }],
+        line: 130
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 143,
+            column: 6
+          },
+          end: {
+            line: 145,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 143,
+            column: 6
+          },
+          end: {
+            line: 145,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 143,
+            column: 6
+          },
+          end: {
+            line: 145,
+            column: 7
+          }
+        }],
+        line: 143
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 163,
+            column: 62
+          },
+          end: {
+            line: 163,
+            column: 82
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 163,
+            column: 73
+          },
+          end: {
+            line: 163,
+            column: 76
+          }
+        }, {
+          start: {
+            line: 163,
+            column: 79
+          },
+          end: {
+            line: 163,
+            column: 82
+          }
+        }],
+        line: 163
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 169,
+            column: 57
+          },
+          end: {
+            line: 169,
+            column: 77
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 169,
+            column: 68
+          },
+          end: {
+            line: 169,
+            column: 71
+          }
+        }, {
+          start: {
+            line: 169,
+            column: 74
+          },
+          end: {
+            line: 169,
+            column: 77
+          }
+        }],
+        line: 169
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 186,
+            column: 21
+          },
+          end: {
+            line: 186,
+            column: 94
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 186,
+            column: 55
+          },
+          end: {
+            line: 186,
+            column: 71
+          }
+        }, {
+          start: {
+            line: 186,
+            column: 74
+          },
+          end: {
+            line: 186,
+            column: 94
+          }
+        }],
+        line: 186
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 193,
+            column: 33
+          },
+          end: {
+            line: 193,
+            column: 108
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 193,
+            column: 68
+          },
+          end: {
+            line: 193,
+            column: 84
+          }
+        }, {
+          start: {
+            line: 193,
+            column: 87
+          },
+          end: {
+            line: 193,
+            column: 108
+          }
+        }],
+        line: 193
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 200,
+            column: 29
+          },
+          end: {
+            line: 200,
+            column: 104
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 200,
+            column: 64
+          },
+          end: {
+            line: 200,
+            column: 80
+          }
+        }, {
+          start: {
+            line: 200,
+            column: 83
+          },
+          end: {
+            line: 200,
+            column: 104
+          }
+        }],
+        line: 200
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 294,
+            column: 21
+          },
+          end: {
+            line: 294,
+            column: 93
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 294,
+            column: 55
+          },
+          end: {
+            line: 294,
+            column: 70
+          }
+        }, {
+          start: {
+            line: 294,
+            column: 73
+          },
+          end: {
+            line: 294,
+            column: 93
+          }
+        }],
+        line: 294
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 296,
+            column: 24
+          },
+          end: {
+            line: 296,
+            column: 98
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 296,
+            column: 59
+          },
+          end: {
+            line: 296,
+            column: 74
+          }
+        }, {
+          start: {
+            line: 296,
+            column: 77
+          },
+          end: {
+            line: 296,
+            column: 98
+          }
+        }],
+        line: 296
+      },
+      "9": {
+        loc: {
+          start: {
+            line: 310,
+            column: 178
+          },
+          end: {
+            line: 310,
+            column: 280
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 310,
+            column: 178
+          },
+          end: {
+            line: 310,
+            column: 208
+          }
+        }, {
+          start: {
+            line: 310,
+            column: 212
+          },
+          end: {
+            line: 310,
+            column: 244
+          }
+        }, {
+          start: {
+            line: 310,
+            column: 248
+          },
+          end: {
+            line: 310,
+            column: 280
+          }
+        }],
+        line: 310
+      },
+      "10": {
+        loc: {
+          start: {
+            line: 310,
+            column: 359
+          },
+          end: {
+            line: 310,
+            column: 461
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 310,
+            column: 359
+          },
+          end: {
+            line: 310,
+            column: 389
+          }
+        }, {
+          start: {
+            line: 310,
+            column: 393
+          },
+          end: {
+            line: 310,
+            column: 425
+          }
+        }, {
+          start: {
+            line: 310,
+            column: 429
+          },
+          end: {
+            line: 310,
+            column: 461
+          }
+        }],
+        line: 310
+      },
+      "11": {
+        loc: {
+          start: {
+            line: 318,
+            column: 8
+          },
+          end: {
+            line: 320,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 318,
+            column: 8
+          },
+          end: {
+            line: 320,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 318,
+            column: 8
+          },
+          end: {
+            line: 320,
+            column: 9
+          }
+        }],
+        line: 318
+      },
+      "12": {
+        loc: {
+          start: {
+            line: 324,
+            column: 8
+          },
+          end: {
+            line: 329,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 324,
+            column: 8
+          },
+          end: {
+            line: 329,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 324,
+            column: 8
+          },
+          end: {
+            line: 329,
+            column: 9
+          }
+        }],
+        line: 324
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0,
+      "81": 0,
+      "82": 0,
+      "83": 0,
+      "84": 0,
+      "85": 0,
+      "86": 0,
+      "87": 0,
+      "88": 0,
+      "89": 0,
+      "90": 0,
+      "91": 0,
+      "92": 0,
+      "93": 0,
+      "94": 0,
+      "95": 0,
+      "96": 0,
+      "97": 0,
+      "98": 0,
+      "99": 0,
+      "100": 0,
+      "101": 0,
+      "102": 0,
+      "103": 0,
+      "104": 0,
+      "105": 0,
+      "106": 0,
+      "107": 0,
+      "108": 0,
+      "109": 0,
+      "110": 0,
+      "111": 0,
+      "112": 0,
+      "113": 0,
+      "114": 0,
+      "115": 0,
+      "116": 0,
+      "117": 0,
+      "118": 0,
+      "119": 0,
+      "120": 0,
+      "121": 0,
+      "122": 0,
+      "123": 0,
+      "124": 0,
+      "125": 0,
+      "126": 0,
+      "127": 0,
+      "128": 0,
+      "129": 0,
+      "130": 0,
+      "131": 0,
+      "132": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0],
+      "9": [0, 0, 0],
+      "10": [0, 0, 0],
+      "11": [0, 0],
+      "12": [0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "472cf0c10fb035f51c6a7ffeddb1189672d34da6"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_55urvry3s.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_55urvry3s.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_55urvry3s.s[2]++;
+exports.alwaysValidDate = alwaysValidDate;
+
+/* istanbul ignore next */
+cov_55urvry3s.s[3]++;
+exports["default"] = void 0;
+
+var _objectSpread2 =
+/* istanbul ignore next */
+(cov_55urvry3s.s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2")));
+
+var _defineProperty2 =
+/* istanbul ignore next */
+(cov_55urvry3s.s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/defineProperty")));
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_55urvry3s.s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_55urvry3s.s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_55urvry3s.s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_55urvry3s.s[9]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_55urvry3s.s[10]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _tslib =
+/* istanbul ignore next */
+(cov_55urvry3s.s[11]++, require("tslib"));
+
+var _react =
+/* istanbul ignore next */
+(cov_55urvry3s.s[12]++, _interopRequireDefault(require("react")));
+
+var _propTypes =
+/* istanbul ignore next */
+(cov_55urvry3s.s[13]++, _interopRequireDefault(require("prop-types")));
+
+var _moment =
+/* istanbul ignore next */
+(cov_55urvry3s.s[14]++, _interopRequireDefault(require("moment")));
+
+var _classnames =
+/* istanbul ignore next */
+(cov_55urvry3s.s[15]++, _interopRequireDefault(require("classnames")));
+
+var _noop =
+/* istanbul ignore next */
+(cov_55urvry3s.s[16]++, _interopRequireDefault(require("lodash/noop")));
+
+var _ViewComponent2 =
+/* istanbul ignore next */
+(cov_55urvry3s.s[17]++, _interopRequireDefault(require("../core/ViewComponent")));
+
+var _autobind =
+/* istanbul ignore next */
+(cov_55urvry3s.s[18]++, _interopRequireDefault(require("../_util/autobind")));
+
+var _icon =
+/* istanbul ignore next */
+(cov_55urvry3s.s[19]++, _interopRequireDefault(require("../icon")));
+
+var _localeContext =
+/* istanbul ignore next */
+(cov_55urvry3s.s[20]++, require("../locale-context"));
+
+var _EventManager =
+/* istanbul ignore next */
+(cov_55urvry3s.s[21]++, require("../_util/EventManager"));
+
+function alwaysValidDate() {
+  /* istanbul ignore next */
+  cov_55urvry3s.f[0]++;
+  cov_55urvry3s.s[22]++;
+  return true;
+}
+
+var DaysView =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_55urvry3s.s[23]++, function (_ViewComponent) {
+  /* istanbul ignore next */
+  cov_55urvry3s.f[1]++;
+  cov_55urvry3s.s[24]++;
+  (0, _inherits2["default"])(DaysView, _ViewComponent);
+
+  function DaysView() {
+    /* istanbul ignore next */
+    cov_55urvry3s.f[2]++;
+    cov_55urvry3s.s[25]++;
+    (0, _classCallCheck2["default"])(this, DaysView);
+
+    /* istanbul ignore next */
+    cov_55urvry3s.s[26]++;
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(DaysView).apply(this, arguments));
+  }
+
+  /* istanbul ignore next */
+  cov_55urvry3s.s[27]++;
+  (0, _createClass2["default"])(DaysView, [{
+    key: "render",
+    value: function render() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[3]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[28]++, this.prefixCls),
+          className =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[29]++, this.props.className);
+      var classString =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[30]++, (0, _classnames["default"])("".concat(prefixCls, "-view"), className));
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[31]++;
+      return _react["default"].createElement("div", {
+        className: classString
+      }, this.renderHeader(), this.renderBody(), this.renderFooter());
+    }
+  }, {
+    key: "handlePrevYearClick",
+    value: function handlePrevYearClick() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[4]++;
+      cov_55urvry3s.s[32]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, 'y'), "year"
+      /* year */
+      );
+    }
+  }, {
+    key: "handlePrevMonthClick",
+    value: function handlePrevMonthClick() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[5]++;
+      cov_55urvry3s.s[33]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, 'M'), "month"
+      /* month */
+      );
+    }
+  }, {
+    key: "handleMonthSelect",
+    value: function handleMonthSelect() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[6]++;
+      cov_55urvry3s.s[34]++;
+      this.changeViewMode("month"
+      /* month */
+      );
+    }
+  }, {
+    key: "handleYearSelect",
+    value: function handleYearSelect() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[7]++;
+      cov_55urvry3s.s[35]++;
+      this.changeViewMode("year"
+      /* year */
+      );
+    }
+  }, {
+    key: "handleNextYearClick",
+    value: function handleNextYearClick() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[8]++;
+      cov_55urvry3s.s[36]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, 'y'), "year"
+      /* year */
+      );
+    }
+  }, {
+    key: "handleNextMonthClick",
+    value: function handleNextMonthClick() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[9]++;
+      cov_55urvry3s.s[37]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, 'M'), "month"
+      /* month */
+      );
+    }
+  }, {
+    key: "handleKeyDownHome",
+    value: function handleKeyDownHome(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[10]++;
+      cov_55urvry3s.s[38]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[39]++;
+      this.changeSelectedDate(this.getCloneDate().startOf('M'));
+    }
+  }, {
+    key: "handleKeyDownEnd",
+    value: function handleKeyDownEnd(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[11]++;
+      cov_55urvry3s.s[40]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[41]++;
+      this.changeSelectedDate(this.getCloneDate().endOf('M'));
+    }
+  }, {
+    key: "handleKeyDownLeft",
+    value: function handleKeyDownLeft(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[12]++;
+      cov_55urvry3s.s[42]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[43]++;
+
+      if (e.altKey) {
+        /* istanbul ignore next */
+        cov_55urvry3s.b[0][0]++;
+        cov_55urvry3s.s[44]++;
+        this.changeViewMode("month"
+        /* month */
+        );
+      } else {
+        /* istanbul ignore next */
+        cov_55urvry3s.b[0][1]++;
+        cov_55urvry3s.s[45]++;
+        this.changeSelectedDate(this.getCloneDate().subtract(1, 'd'));
+      }
+    }
+  }, {
+    key: "handleKeyDownRight",
+    value: function handleKeyDownRight(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[13]++;
+      cov_55urvry3s.s[46]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[47]++;
+
+      if (!e.altKey) {
+        /* istanbul ignore next */
+        cov_55urvry3s.b[1][0]++;
+        cov_55urvry3s.s[48]++;
+        this.changeSelectedDate(this.getCloneDate().add(1, 'd'));
+      } else
+      /* istanbul ignore next */
+      {
+        cov_55urvry3s.b[1][1]++;
+      }
+    }
+  }, {
+    key: "handleKeyDownUp",
+    value: function handleKeyDownUp(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[14]++;
+      cov_55urvry3s.s[49]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[50]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, 'w'));
+    }
+  }, {
+    key: "handleKeyDownDown",
+    value: function handleKeyDownDown(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[15]++;
+      cov_55urvry3s.s[51]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[52]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, 'w'));
+    }
+  }, {
+    key: "handleKeyDownPageUp",
+    value: function handleKeyDownPageUp(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[16]++;
+      cov_55urvry3s.s[53]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[54]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, e.altKey ?
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[2][0]++, 'y') :
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[2][1]++, 'M')));
+    }
+  }, {
+    key: "handleKeyDownPageDown",
+    value: function handleKeyDownPageDown(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[17]++;
+      cov_55urvry3s.s[55]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[56]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, e.altKey ?
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[3][0]++, 'y') :
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[3][1]++, 'M')));
+    }
+  }, {
+    key: "handleKeyDownEnter",
+    value: function handleKeyDownEnter(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[18]++;
+      cov_55urvry3s.s[57]++;
+      e.preventDefault();
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[58]++;
+      this.choose(this.props.date);
+    }
+  }, {
+    key: "handleCellClick",
+    value: function handleCellClick(date) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[19]++;
+      cov_55urvry3s.s[59]++;
+      this.choose(date);
+    }
+  }, {
+    key: "choose",
+    value: function choose(date) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[20]++;
+
+      var _this$props$onSelect =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[60]++, this.props.onSelect),
+          onSelect =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[61]++, _this$props$onSelect === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[4][0]++, _noop["default"]) :
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[4][1]++, _this$props$onSelect));
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[62]++;
+      onSelect(date);
+    }
+  }, {
+    key: "changeSelectedDate",
+    value: function changeSelectedDate(selectedDate, mode) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[21]++;
+
+      var _this$props$onSelecte =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[63]++, this.props.onSelectedDateChange),
+          onSelectedDateChange =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[64]++, _this$props$onSelecte === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[5][0]++, _noop["default"]) :
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[5][1]++, _this$props$onSelecte));
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[65]++;
+      onSelectedDateChange(selectedDate, mode);
+    }
+  }, {
+    key: "changeViewMode",
+    value: function changeViewMode(mode) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[22]++;
+
+      var _this$props$onViewMod =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[66]++, this.props.onViewModeChange),
+          onViewModeChange =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[67]++, _this$props$onViewMod === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[6][0]++, _noop["default"]) :
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[6][1]++, _this$props$onViewMod));
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[68]++;
+      onViewModeChange(mode);
+    }
+  }, {
+    key: "renderHeader",
+    value: function renderHeader() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[23]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[69]++, this.prefixCls),
+          date =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[70]++, this.props.date);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[71]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-header")
+      }, _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-prev-year"),
+        onClick: this.handlePrevYearClick
+      }, _react["default"].createElement(_icon["default"], {
+        type: "first_page"
+      })), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-prev-month"),
+        onClick: this.handlePrevMonthClick
+      }, _react["default"].createElement(_icon["default"], {
+        type: "navigate_before"
+      })), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-view-select"),
+        onClick: this.handleMonthSelect
+      }, date.localeData().monthsShort(date)), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-view-select"),
+        onClick: this.handleYearSelect
+      }, date.year()), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-next-year")
+      }, _react["default"].createElement(_icon["default"], {
+        type: "last_page",
+        onClick: this.handleNextYearClick
+      })), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-next-month"),
+        onClick: this.handleNextMonthClick
+      }, _react["default"].createElement(_icon["default"], {
+        type: "navigate_next"
+      })));
+    }
+  }, {
+    key: "renderBody",
+    value: function renderBody() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[24]++;
+      cov_55urvry3s.s[72]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(this.prefixCls, "-body")
+      }, this.renderPanel());
+    }
+  }, {
+    key: "renderPanel",
+    value: function renderPanel() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[25]++;
+      cov_55urvry3s.s[73]++;
+      return _react["default"].createElement("table", {
+        className: this.getPanelClass(),
+        cellSpacing: 0
+      }, this.renderPanelHead(), _react["default"].createElement("tbody", null, this.renderPanelBody()));
+    }
+  }, {
+    key: "renderPanelHead",
+    value: function renderPanelHead() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[26]++;
+      cov_55urvry3s.s[74]++;
+      return _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.getDaysOfWeek()));
+    }
+  }, {
+    key: "renderFooter",
+    value: function renderFooter() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[27]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[75]++, this.prefixCls);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[76]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-footer")
+      }, _react["default"].createElement("a", {
+        onClick: this.choose.bind(this, (0, _moment["default"])().startOf('d'))
+      }, (0, _localeContext.$l)('DatePicker', 'today')));
+    }
+  }, {
+    key: "renderCell",
+    value: function renderCell(props) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[28]++;
+      cov_55urvry3s.s[77]++;
+      return _react["default"].createElement("td", props);
+    }
+  }, {
+    key: "renderInner",
+    value: function renderInner(text) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[29]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[78]++, this.prefixCls);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[79]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-cell-inner")
+      }, text);
+    }
+  }, {
+    key: "getFirstDay",
+    value: function getFirstDay(date) {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[30]++;
+      var firstDay =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[80]++, date.clone().subtract(1, 'M'));
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[81]++;
+      return firstDay.date(firstDay.daysInMonth()).startOf('w');
+    }
+  }, {
+    key: "renderPanelBody",
+    value: function renderPanelBody() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[31]++;
+
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[82]++, this.prefixCls),
+          _this$props =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[83]++, this.props),
+          date =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[84]++, _this$props.date),
+          _this$props$renderer =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[85]++, _this$props.renderer),
+          renderer =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[86]++, _this$props$renderer === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[7][0]++, this.renderCell) :
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[7][1]++, _this$props$renderer)),
+          _this$props$isValidDa =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[87]++, _this$props.isValidDate),
+          isValidDate =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[88]++, _this$props$isValidDa === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[8][0]++, alwaysValidDate) :
+      /* istanbul ignore next */
+      (cov_55urvry3s.b[8][1]++, _this$props$isValidDa));
+
+      var selected =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[89]++, date.clone());
+      var prevMonth =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[90]++, this.getFirstDay(date));
+      var currentYear =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[91]++, date.year());
+      var currentMonth =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[92]++, date.month());
+      var lastDay =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[93]++, prevMonth.clone().add(42, 'd'));
+      var rows =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[94]++, []);
+      var cells =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[95]++, []);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[96]++;
+
+      while (prevMonth.isBefore(lastDay)) {
+        var _classNames;
+
+        var currentDate =
+        /* istanbul ignore next */
+        (cov_55urvry3s.s[97]++, prevMonth.clone());
+        var isDisabled =
+        /* istanbul ignore next */
+        (cov_55urvry3s.s[98]++, !isValidDate(currentDate, selected));
+        var className =
+        /* istanbul ignore next */
+        (cov_55urvry3s.s[99]++, (0, _classnames["default"])("".concat(prefixCls, "-cell"), (_classNames = {}, (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-old"),
+        /* istanbul ignore next */
+        (cov_55urvry3s.b[9][0]++, prevMonth.year() < currentYear) ||
+        /* istanbul ignore next */
+        (cov_55urvry3s.b[9][1]++, prevMonth.year() === currentYear) &&
+        /* istanbul ignore next */
+        (cov_55urvry3s.b[9][2]++, prevMonth.month() < currentMonth)), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-new"),
+        /* istanbul ignore next */
+        (cov_55urvry3s.b[10][0]++, prevMonth.year() > currentYear) ||
+        /* istanbul ignore next */
+        (cov_55urvry3s.b[10][1]++, prevMonth.year() === currentYear) &&
+        /* istanbul ignore next */
+        (cov_55urvry3s.b[10][2]++, prevMonth.month() > currentMonth)), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-selected"), prevMonth.isSame(selected, 'd')), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-today"), prevMonth.isSame((0, _moment["default"])(), 'd')), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-disabled"), isDisabled), _classNames)));
+        var text =
+        /* istanbul ignore next */
+        (cov_55urvry3s.s[100]++, String(currentDate.date()));
+        var dayProps =
+        /* istanbul ignore next */
+        (cov_55urvry3s.s[101]++, {
+          key: prevMonth.format('M_D'),
+          className: className,
+          children: this.renderInner(text)
+        });
+
+        /* istanbul ignore next */
+        cov_55urvry3s.s[102]++;
+
+        if (!isDisabled) {
+          /* istanbul ignore next */
+          cov_55urvry3s.b[11][0]++;
+          cov_55urvry3s.s[103]++;
+          dayProps.onClick = this.handleCellClick.bind(this, currentDate);
+        } else
+        /* istanbul ignore next */
+        {
+          cov_55urvry3s.b[11][1]++;
+        }
+
+        cov_55urvry3s.s[104]++;
+        cells.push(renderer(dayProps, text, currentDate, selected));
+
+        /* istanbul ignore next */
+        cov_55urvry3s.s[105]++;
+
+        if (cells.length === 7) {
+          /* istanbul ignore next */
+          cov_55urvry3s.b[12][0]++;
+          cov_55urvry3s.s[106]++;
+          rows.push(_react["default"].createElement("tr", {
+            key: prevMonth.format('M_D')
+          }, cells));
+
+          /* istanbul ignore next */
+          cov_55urvry3s.s[107]++;
+          cells = [];
+        } else
+        /* istanbul ignore next */
+        {
+          cov_55urvry3s.b[12][1]++;
+        }
+
+        cov_55urvry3s.s[108]++;
+        prevMonth.add(1, 'd');
+      }
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[109]++;
+      return rows;
+    }
+  }, {
+    key: "getPanelClass",
+    value: function getPanelClass() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[32]++;
+      cov_55urvry3s.s[110]++;
+      return "".concat(this.prefixCls, "-day-panel");
+    }
+  }, {
+    key: "getDaysOfWeek",
+    value: function getDaysOfWeek() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[33]++;
+      var locale =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[111]++, this.props.date.localeData());
+      var days =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[112]++, locale.weekdaysMin());
+      var first =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[113]++, locale.firstDayOfWeek());
+      var dow =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[114]++, []);
+      var i =
+      /* istanbul ignore next */
+      (cov_55urvry3s.s[115]++, 0);
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[116]++;
+      days.forEach(function (day) {
+        /* istanbul ignore next */
+        cov_55urvry3s.f[34]++;
+        cov_55urvry3s.s[117]++;
+        dow[(7 + i++ - first) % 7] = _react["default"].createElement("th", {
+          key: day,
+          title: day
+        }, day);
+      });
+
+      /* istanbul ignore next */
+      cov_55urvry3s.s[118]++;
+      return dow;
+    }
+  }, {
+    key: "getCloneDate",
+    value: function getCloneDate() {
+      /* istanbul ignore next */
+      cov_55urvry3s.f[35]++;
+      cov_55urvry3s.s[119]++;
+      return this.props.date.clone();
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_55urvry3s.s[120]++;
+  return DaysView;
+}(_ViewComponent2["default"]));
+
+/* istanbul ignore next */
+cov_55urvry3s.s[121]++;
+exports["default"] = DaysView;
+
+/* istanbul ignore next */
+cov_55urvry3s.s[122]++;
+DaysView.displayName = 'DaysView';
+
+/* istanbul ignore next */
+cov_55urvry3s.s[123]++;
+DaysView.propTypes = (0, _objectSpread2["default"])({
+  date: _propTypes["default"].object,
+  renderer: _propTypes["default"].func,
+  isValidDate: _propTypes["default"].func,
+  onSelect: _propTypes["default"].func,
+  onSelectedDateChange: _propTypes["default"].func,
+  onViewModeChange: _propTypes["default"].func
+}, _ViewComponent2["default"].propTypes);
+
+/* istanbul ignore next */
+cov_55urvry3s.s[124]++;
+DaysView.defaultProps = {
+  suffixCls: 'calendar'
+};
+
+/* istanbul ignore next */
+cov_55urvry3s.s[125]++;
+DaysView.type = "date"
+/* date */
+;
+
+/* istanbul ignore next */
+cov_55urvry3s.s[126]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handlePrevYearClick", null);
+
+/* istanbul ignore next */
+cov_55urvry3s.s[127]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handlePrevMonthClick", null);
+
+/* istanbul ignore next */
+cov_55urvry3s.s[128]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handleMonthSelect", null);
+
+/* istanbul ignore next */
+cov_55urvry3s.s[129]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handleYearSelect", null);
+
+/* istanbul ignore next */
+cov_55urvry3s.s[130]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handleNextYearClick", null);
+
+/* istanbul ignore next */
+cov_55urvry3s.s[131]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handleNextMonthClick", null);
+
+/* istanbul ignore next */
+cov_55urvry3s.s[132]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "renderCell", null);

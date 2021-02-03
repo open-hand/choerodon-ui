@@ -11,14 +11,14 @@ const { Option } = SelectBox;
 
 const optionData = [
   { text: 'Jack', value: 'jack' },
-  { text: 'Huazhen', value: 'huazhen' },
+  { text: 'Zhangsan', value: 'zhangsan' },
   { text: 'Lucy', value: 'lucy' },
   { text: 'Niu', value: 'jiaqin' },
   { text: 'Shao', value: 'shao' },
 ];
 
 const data = [{
-  'first-name': 'huazhen',
+  'first-name': 'zhangsan',
   'last-name': 'wu',
 }];
 

@@ -1,0 +1,46 @@
+b98ecf4ab7f649a23175e38037fb10f0
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = tooLong;
+
+var _isEmpty = _interopRequireDefault(require("../../_util/isEmpty"));
+
+var _ValidationResult = _interopRequireDefault(require("../ValidationResult"));
+
+var _localeContext = require("../../locale-context");
+
+var _formatReactTemplate = _interopRequireDefault(require("../../formatter/formatReactTemplate"));
+
+function tooLong(value, props) {
+  var maxLength = props.maxLength,
+      defaultValidationMessages = props.defaultValidationMessages;
+
+  if (!(0, _isEmpty["default"])(value)) {
+    var _value$toString = value.toString(),
+        length = _value$toString.length;
+
+    if (!!maxLength && maxLength > 0 && length > maxLength) {
+      var injectionOptions = {
+        maxLength: maxLength,
+        length: length
+      };
+      var ruleName = 'tooLong';
+      var _defaultValidationMes = defaultValidationMessages[ruleName],
+          validationMessage = _defaultValidationMes === void 0 ? (0, _localeContext.$l)('Validator', 'too_long') : _defaultValidationMes;
+      return new _ValidationResult["default"]({
+        validationMessage: (0, _formatReactTemplate["default"])(validationMessage, injectionOptions),
+        injectionOptions: injectionOptions,
+        value: value,
+        ruleName: ruleName
+      });
+    }
+  }
+
+  return true;
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby92YWxpZGF0b3IvcnVsZXMvdG9vTG9uZy50c3giXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7O0FBRUE7O0FBRWMsU0FBVSxPQUFWLENBQWtCLEtBQWxCLEVBQThCLEtBQTlCLEVBQW1EO0FBQUEsTUFDdkQsU0FEdUQsR0FDZCxLQURjLENBQ3ZELFNBRHVEO0FBQUEsTUFDNUMseUJBRDRDLEdBQ2QsS0FEYyxDQUM1Qyx5QkFENEM7O0FBRS9ELE1BQUksQ0FBQyx5QkFBUSxLQUFSLENBQUwsRUFBcUI7QUFBQSwwQkFDQSxLQUFLLENBQUMsUUFBTixFQURBO0FBQUEsUUFDWCxNQURXLG1CQUNYLE1BRFc7O0FBRW5CLFFBQUksQ0FBQyxDQUFDLFNBQUYsSUFBZSxTQUFTLEdBQUcsQ0FBM0IsSUFBZ0MsTUFBTSxHQUFHLFNBQTdDLEVBQXdEO0FBQ3RELFVBQU0sZ0JBQWdCLEdBQUc7QUFBRSxRQUFBLFNBQVMsRUFBVCxTQUFGO0FBQWEsUUFBQSxNQUFNLEVBQU47QUFBYixPQUF6QjtBQUNBLFVBQU0sUUFBUSxHQUFHLFNBQWpCO0FBRnNELGtDQUtsRCx5QkFMa0QsQ0FJbkQsUUFKbUQ7QUFBQSxVQUl4QyxpQkFKd0Msc0NBSXBCLHVCQUFHLFdBQUgsRUFBZ0IsVUFBaEIsQ0FKb0I7QUFNdEQsYUFBTyxJQUFJLDRCQUFKLENBQXFCO0FBQzFCLFFBQUEsaUJBQWlCLEVBQUUscUNBQW9CLGlCQUFwQixFQUF1QyxnQkFBdkMsQ0FETztBQUUxQixRQUFBLGdCQUFnQixFQUFoQixnQkFGMEI7QUFHMUIsUUFBQSxLQUFLLEVBQUwsS0FIMEI7QUFJMUIsUUFBQSxRQUFRLEVBQVI7QUFKMEIsT0FBckIsQ0FBUDtBQU1EO0FBQ0Y7O0FBQ0QsU0FBTyxJQUFQO0FBQ0QiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgaXNFbXB0eSBmcm9tICcuLi8uLi9fdXRpbC9pc0VtcHR5JztcbmltcG9ydCBWYWxpZGF0aW9uUmVzdWx0IGZyb20gJy4uL1ZhbGlkYXRpb25SZXN1bHQnO1xuaW1wb3J0IHsgJGwgfSBmcm9tICcuLi8uLi9sb2NhbGUtY29udGV4dCc7XG5pbXBvcnQgeyBtZXRob2RSZXR1cm4sIFZhbGlkYXRvclByb3BzIH0gZnJvbSAnLic7XG5pbXBvcnQgZm9ybWF0UmVhY3RUZW1wbGF0ZSBmcm9tICcuLi8uLi9mb3JtYXR0ZXIvZm9ybWF0UmVhY3RUZW1wbGF0ZSc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHRvb0xvbmcodmFsdWU6IGFueSwgcHJvcHM6IFZhbGlkYXRvclByb3BzKTogbWV0aG9kUmV0dXJuIHtcbiAgY29uc3QgeyBtYXhMZW5ndGgsIGRlZmF1bHRWYWxpZGF0aW9uTWVzc2FnZXMgfSA9IHByb3BzO1xuICBpZiAoIWlzRW1wdHkodmFsdWUpKSB7XG4gICAgY29uc3QgeyBsZW5ndGggfSA9IHZhbHVlLnRvU3RyaW5nKCk7XG4gICAgaWYgKCEhbWF4TGVuZ3RoICYmIG1heExlbmd0aCA+IDAgJiYgbGVuZ3RoID4gbWF4TGVuZ3RoKSB7XG4gICAgICBjb25zdCBpbmplY3Rpb25PcHRpb25zID0geyBtYXhMZW5ndGgsIGxlbmd0aCB9O1xuICAgICAgY29uc3QgcnVsZU5hbWUgPSAndG9vTG9uZyc7XG4gICAgICBjb25zdCB7XG4gICAgICAgIFtydWxlTmFtZV06IHZhbGlkYXRpb25NZXNzYWdlID0gJGwoJ1ZhbGlkYXRvcicsICd0b29fbG9uZycpLFxuICAgICAgfSA9IGRlZmF1bHRWYWxpZGF0aW9uTWVzc2FnZXM7XG4gICAgICByZXR1cm4gbmV3IFZhbGlkYXRpb25SZXN1bHQoe1xuICAgICAgICB2YWxpZGF0aW9uTWVzc2FnZTogZm9ybWF0UmVhY3RUZW1wbGF0ZSh2YWxpZGF0aW9uTWVzc2FnZSwgaW5qZWN0aW9uT3B0aW9ucyksXG4gICAgICAgIGluamVjdGlvbk9wdGlvbnMsXG4gICAgICAgIHZhbHVlLFxuICAgICAgICBydWxlTmFtZSxcbiAgICAgIH0pO1xuICAgIH1cbiAgfVxuICByZXR1cm4gdHJ1ZTtcbn1cbiJdfQ==

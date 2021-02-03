@@ -1,0 +1,2897 @@
+9a0ebc7f8811c26c9cc70a96bdb2f949
+"use strict";
+
+/* istanbul ignore next */
+function cov_1indac0jbc() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/text-area/calculateNodeHeight.tsx";
+  var hash = "61c945d8c3ff143f72a1830f712abc222b45362c";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/text-area/calculateNodeHeight.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 41
+        }
+      },
+      "2": {
+        start: {
+          line: 12,
+          column: 28
+        },
+        end: {
+          line: 12,
+          column: 284
+        }
+      },
+      "3": {
+        start: {
+          line: 13,
+          column: 19
+        },
+        end: {
+          line: 13,
+          column: 251
+        }
+      },
+      "4": {
+        start: {
+          line: 14,
+          column: 25
+        },
+        end: {
+          line: 14,
+          column: 27
+        }
+      },
+      "5": {
+        start: {
+          line: 18,
+          column: 17
+        },
+        end: {
+          line: 18,
+          column: 90
+        }
+      },
+      "6": {
+        start: {
+          line: 19,
+          column: 16
+        },
+        end: {
+          line: 19,
+          column: 105
+        }
+      },
+      "7": {
+        start: {
+          line: 21,
+          column: 2
+        },
+        end: {
+          line: 23,
+          column: 3
+        }
+      },
+      "8": {
+        start: {
+          line: 22,
+          column: 4
+        },
+        end: {
+          line: 22,
+          column: 39
+        }
+      },
+      "9": {
+        start: {
+          line: 25,
+          column: 14
+        },
+        end: {
+          line: 25,
+          column: 43
+        }
+      },
+      "10": {
+        start: {
+          line: 26,
+          column: 18
+        },
+        end: {
+          line: 26,
+          column: 147
+        }
+      },
+      "11": {
+        start: {
+          line: 27,
+          column: 20
+        },
+        end: {
+          line: 27,
+          column: 124
+        }
+      },
+      "12": {
+        start: {
+          line: 28,
+          column: 19
+        },
+        end: {
+          line: 28,
+          column: 133
+        }
+      },
+      "13": {
+        start: {
+          line: 29,
+          column: 20
+        },
+        end: {
+          line: 31,
+          column: 14
+        }
+      },
+      "14": {
+        start: {
+          line: 30,
+          column: 4
+        },
+        end: {
+          line: 30,
+          column: 69
+        }
+      },
+      "15": {
+        start: {
+          line: 32,
+          column: 17
+        },
+        end: {
+          line: 37,
+          column: 3
+        }
+      },
+      "16": {
+        start: {
+          line: 39,
+          column: 2
+        },
+        end: {
+          line: 41,
+          column: 3
+        }
+      },
+      "17": {
+        start: {
+          line: 40,
+          column: 4
+        },
+        end: {
+          line: 40,
+          column: 43
+        }
+      },
+      "18": {
+        start: {
+          line: 43,
+          column: 2
+        },
+        end: {
+          line: 43,
+          column: 18
+        }
+      },
+      "19": {
+        start: {
+          line: 47,
+          column: 17
+        },
+        end: {
+          line: 47,
+          column: 90
+        }
+      },
+      "20": {
+        start: {
+          line: 48,
+          column: 16
+        },
+        end: {
+          line: 48,
+          column: 88
+        }
+      },
+      "21": {
+        start: {
+          line: 49,
+          column: 16
+        },
+        end: {
+          line: 49,
+          column: 88
+        }
+      },
+      "22": {
+        start: {
+          line: 50,
+          column: 16
+        },
+        end: {
+          line: 50,
+          column: 88
+        }
+      },
+      "23": {
+        start: {
+          line: 51,
+          column: 16
+        },
+        end: {
+          line: 51,
+          column: 88
+        }
+      },
+      "24": {
+        start: {
+          line: 53,
+          column: 2
+        },
+        end: {
+          line: 56,
+          column: 3
+        }
+      },
+      "25": {
+        start: {
+          line: 54,
+          column: 4
+        },
+        end: {
+          line: 54,
+          column: 56
+        }
+      },
+      "26": {
+        start: {
+          line: 55,
+          column: 4
+        },
+        end: {
+          line: 55,
+          column: 46
+        }
+      },
+      "27": {
+        start: {
+          line: 59,
+          column: 2
+        },
+        end: {
+          line: 63,
+          column: 3
+        }
+      },
+      "28": {
+        start: {
+          line: 60,
+          column: 4
+        },
+        end: {
+          line: 60,
+          column: 73
+        }
+      },
+      "29": {
+        start: {
+          line: 62,
+          column: 4
+        },
+        end: {
+          line: 62,
+          column: 43
+        }
+      },
+      "30": {
+        start: {
+          line: 67,
+          column: 30
+        },
+        end: {
+          line: 67,
+          column: 72
+        }
+      },
+      "31": {
+        start: {
+          line: 68,
+          column: 20
+        },
+        end: {
+          line: 68,
+          column: 53
+        }
+      },
+      "32": {
+        start: {
+          line: 69,
+          column: 19
+        },
+        end: {
+          line: 69,
+          column: 51
+        }
+      },
+      "33": {
+        start: {
+          line: 70,
+          column: 18
+        },
+        end: {
+          line: 70,
+          column: 49
+        }
+      },
+      "34": {
+        start: {
+          line: 71,
+          column: 20
+        },
+        end: {
+          line: 71,
+          column: 53
+        }
+      },
+      "35": {
+        start: {
+          line: 76,
+          column: 2
+        },
+        end: {
+          line: 76,
+          column: 98
+        }
+      },
+      "36": {
+        start: {
+          line: 77,
+          column: 2
+        },
+        end: {
+          line: 77,
+          column: 74
+        }
+      },
+      "37": {
+        start: {
+          line: 78,
+          column: 18
+        },
+        end: {
+          line: 78,
+          column: 41
+        }
+      },
+      "38": {
+        start: {
+          line: 79,
+          column: 18
+        },
+        end: {
+          line: 79,
+          column: 41
+        }
+      },
+      "39": {
+        start: {
+          line: 80,
+          column: 17
+        },
+        end: {
+          line: 80,
+          column: 40
+        }
+      },
+      "40": {
+        start: {
+          line: 81,
+          column: 17
+        },
+        end: {
+          line: 81,
+          column: 40
+        }
+      },
+      "41": {
+        start: {
+          line: 82,
+          column: 15
+        },
+        end: {
+          line: 82,
+          column: 42
+        }
+      },
+      "42": {
+        start: {
+          line: 83,
+          column: 14
+        },
+        end: {
+          line: 83,
+          column: 40
+        }
+      },
+      "43": {
+        start: {
+          line: 87,
+          column: 2
+        },
+        end: {
+          line: 95,
+          column: 3
+        }
+      },
+      "44": {
+        start: {
+          line: 89,
+          column: 4
+        },
+        end: {
+          line: 89,
+          column: 25
+        }
+      },
+      "45": {
+        start: {
+          line: 90,
+          column: 4
+        },
+        end: {
+          line: 90,
+          column: 24
+        }
+      },
+      "46": {
+        start: {
+          line: 91,
+          column: 9
+        },
+        end: {
+          line: 95,
+          column: 3
+        }
+      },
+      "47": {
+        start: {
+          line: 93,
+          column: 4
+        },
+        end: {
+          line: 93,
+          column: 26
+        }
+      },
+      "48": {
+        start: {
+          line: 94,
+          column: 4
+        },
+        end: {
+          line: 94,
+          column: 25
+        }
+      },
+      "49": {
+        start: {
+          line: 97,
+          column: 2
+        },
+        end: {
+          line: 122,
+          column: 3
+        }
+      },
+      "50": {
+        start: {
+          line: 99,
+          column: 4
+        },
+        end: {
+          line: 99,
+          column: 31
+        }
+      },
+      "51": {
+        start: {
+          line: 100,
+          column: 26
+        },
+        end: {
+          line: 100,
+          column: 67
+        }
+      },
+      "52": {
+        start: {
+          line: 102,
+          column: 4
+        },
+        end: {
+          line: 110,
+          column: 5
+        }
+      },
+      "53": {
+        start: {
+          line: 103,
+          column: 6
+        },
+        end: {
+          line: 103,
+          column: 44
+        }
+      },
+      "54": {
+        start: {
+          line: 105,
+          column: 6
+        },
+        end: {
+          line: 107,
+          column: 7
+        }
+      },
+      "55": {
+        start: {
+          line: 106,
+          column: 8
+        },
+        end: {
+          line: 106,
+          column: 57
+        }
+      },
+      "56": {
+        start: {
+          line: 109,
+          column: 6
+        },
+        end: {
+          line: 109,
+          column: 43
+        }
+      },
+      "57": {
+        start: {
+          line: 112,
+          column: 4
+        },
+        end: {
+          line: 121,
+          column: 5
+        }
+      },
+      "58": {
+        start: {
+          line: 113,
+          column: 6
+        },
+        end: {
+          line: 113,
+          column: 44
+        }
+      },
+      "59": {
+        start: {
+          line: 115,
+          column: 6
+        },
+        end: {
+          line: 117,
+          column: 7
+        }
+      },
+      "60": {
+        start: {
+          line: 116,
+          column: 8
+        },
+        end: {
+          line: 116,
+          column: 57
+        }
+      },
+      "61": {
+        start: {
+          line: 119,
+          column: 6
+        },
+        end: {
+          line: 119,
+          column: 53
+        }
+      },
+      "62": {
+        start: {
+          line: 120,
+          column: 6
+        },
+        end: {
+          line: 120,
+          column: 43
+        }
+      },
+      "63": {
+        start: {
+          line: 124,
+          column: 2
+        },
+        end: {
+          line: 149,
+          column: 3
+        }
+      },
+      "64": {
+        start: {
+          line: 126,
+          column: 4
+        },
+        end: {
+          line: 126,
+          column: 31
+        }
+      },
+      "65": {
+        start: {
+          line: 127,
+          column: 25
+        },
+        end: {
+          line: 127,
+          column: 65
+        }
+      },
+      "66": {
+        start: {
+          line: 129,
+          column: 4
+        },
+        end: {
+          line: 137,
+          column: 5
+        }
+      },
+      "67": {
+        start: {
+          line: 130,
+          column: 6
+        },
+        end: {
+          line: 130,
+          column: 42
+        }
+      },
+      "68": {
+        start: {
+          line: 132,
+          column: 6
+        },
+        end: {
+          line: 134,
+          column: 7
+        }
+      },
+      "69": {
+        start: {
+          line: 133,
+          column: 8
+        },
+        end: {
+          line: 133,
+          column: 55
+        }
+      },
+      "70": {
+        start: {
+          line: 136,
+          column: 6
+        },
+        end: {
+          line: 136,
+          column: 40
+        }
+      },
+      "71": {
+        start: {
+          line: 139,
+          column: 4
+        },
+        end: {
+          line: 148,
+          column: 5
+        }
+      },
+      "72": {
+        start: {
+          line: 140,
+          column: 6
+        },
+        end: {
+          line: 140,
+          column: 42
+        }
+      },
+      "73": {
+        start: {
+          line: 142,
+          column: 6
+        },
+        end: {
+          line: 144,
+          column: 7
+        }
+      },
+      "74": {
+        start: {
+          line: 143,
+          column: 8
+        },
+        end: {
+          line: 143,
+          column: 55
+        }
+      },
+      "75": {
+        start: {
+          line: 146,
+          column: 6
+        },
+        end: {
+          line: 146,
+          column: 51
+        }
+      },
+      "76": {
+        start: {
+          line: 147,
+          column: 6
+        },
+        end: {
+          line: 147,
+          column: 40
+        }
+      },
+      "77": {
+        start: {
+          line: 152,
+          column: 2
+        },
+        end: {
+          line: 154,
+          column: 3
+        }
+      },
+      "78": {
+        start: {
+          line: 153,
+          column: 4
+        },
+        end: {
+          line: 153,
+          column: 25
+        }
+      },
+      "79": {
+        start: {
+          line: 156,
+          column: 2
+        },
+        end: {
+          line: 158,
+          column: 3
+        }
+      },
+      "80": {
+        start: {
+          line: 157,
+          column: 4
+        },
+        end: {
+          line: 157,
+          column: 25
+        }
+      },
+      "81": {
+        start: {
+          line: 160,
+          column: 2
+        },
+        end: {
+          line: 169,
+          column: 4
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "calculateNodeStyling",
+        decl: {
+          start: {
+            line: 17,
+            column: 9
+          },
+          end: {
+            line: 17,
+            column: 29
+          }
+        },
+        loc: {
+          start: {
+            line: 17,
+            column: 36
+          },
+          end: {
+            line: 44,
+            column: 1
+          }
+        },
+        line: 17
+      },
+      "1": {
+        name: "(anonymous_1)",
+        decl: {
+          start: {
+            line: 29,
+            column: 37
+          },
+          end: {
+            line: 29,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 29,
+            column: 53
+          },
+          end: {
+            line: 31,
+            column: 3
+          }
+        },
+        line: 29
+      },
+      "2": {
+        name: "calculateNodeHeight",
+        decl: {
+          start: {
+            line: 46,
+            column: 9
+          },
+          end: {
+            line: 46,
+            column: 28
+          }
+        },
+        loc: {
+          start: {
+            line: 46,
+            column: 41
+          },
+          end: {
+            line: 170,
+            column: 1
+          }
+        },
+        line: 46
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 18,
+            column: 17
+          },
+          end: {
+            line: 18,
+            column: 90
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 18,
+            column: 70
+          },
+          end: {
+            line: 18,
+            column: 82
+          }
+        }, {
+          start: {
+            line: 18,
+            column: 85
+          },
+          end: {
+            line: 18,
+            column: 90
+          }
+        }],
+        line: 18
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 18,
+            column: 17
+          },
+          end: {
+            line: 18,
+            column: 67
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 18,
+            column: 17
+          },
+          end: {
+            line: 18,
+            column: 37
+          }
+        }, {
+          start: {
+            line: 18,
+            column: 41
+          },
+          end: {
+            line: 18,
+            column: 67
+          }
+        }],
+        line: 18
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 19,
+            column: 16
+          },
+          end: {
+            line: 19,
+            column: 105
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 19,
+            column: 16
+          },
+          end: {
+            line: 19,
+            column: 39
+          }
+        }, {
+          start: {
+            line: 19,
+            column: 43
+          },
+          end: {
+            line: 19,
+            column: 76
+          }
+        }, {
+          start: {
+            line: 19,
+            column: 80
+          },
+          end: {
+            line: 19,
+            column: 105
+          }
+        }],
+        line: 19
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 23,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 23,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 23,
+            column: 3
+          }
+        }],
+        line: 21
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 21,
+            column: 6
+          },
+          end: {
+            line: 21,
+            column: 45
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 21,
+            column: 6
+          },
+          end: {
+            line: 21,
+            column: 14
+          }
+        }, {
+          start: {
+            line: 21,
+            column: 18
+          },
+          end: {
+            line: 21,
+            column: 45
+          }
+        }],
+        line: 21
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 26,
+            column: 18
+          },
+          end: {
+            line: 26,
+            column: 147
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 26,
+            column: 18
+          },
+          end: {
+            line: 26,
+            column: 54
+          }
+        }, {
+          start: {
+            line: 26,
+            column: 58
+          },
+          end: {
+            line: 26,
+            column: 99
+          }
+        }, {
+          start: {
+            line: 26,
+            column: 103
+          },
+          end: {
+            line: 26,
+            column: 147
+          }
+        }],
+        line: 26
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 39,
+            column: 2
+          },
+          end: {
+            line: 41,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 39,
+            column: 2
+          },
+          end: {
+            line: 41,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 39,
+            column: 2
+          },
+          end: {
+            line: 41,
+            column: 3
+          }
+        }],
+        line: 39
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 39,
+            column: 6
+          },
+          end: {
+            line: 39,
+            column: 25
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 39,
+            column: 6
+          },
+          end: {
+            line: 39,
+            column: 14
+          }
+        }, {
+          start: {
+            line: 39,
+            column: 18
+          },
+          end: {
+            line: 39,
+            column: 25
+          }
+        }],
+        line: 39
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 47,
+            column: 17
+          },
+          end: {
+            line: 47,
+            column: 90
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 47,
+            column: 70
+          },
+          end: {
+            line: 47,
+            column: 82
+          }
+        }, {
+          start: {
+            line: 47,
+            column: 85
+          },
+          end: {
+            line: 47,
+            column: 90
+          }
+        }],
+        line: 47
+      },
+      "9": {
+        loc: {
+          start: {
+            line: 47,
+            column: 17
+          },
+          end: {
+            line: 47,
+            column: 67
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 47,
+            column: 17
+          },
+          end: {
+            line: 47,
+            column: 37
+          }
+        }, {
+          start: {
+            line: 47,
+            column: 41
+          },
+          end: {
+            line: 47,
+            column: 67
+          }
+        }],
+        line: 47
+      },
+      "10": {
+        loc: {
+          start: {
+            line: 48,
+            column: 16
+          },
+          end: {
+            line: 48,
+            column: 88
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 48,
+            column: 69
+          },
+          end: {
+            line: 48,
+            column: 81
+          }
+        }, {
+          start: {
+            line: 48,
+            column: 84
+          },
+          end: {
+            line: 48,
+            column: 88
+          }
+        }],
+        line: 48
+      },
+      "11": {
+        loc: {
+          start: {
+            line: 48,
+            column: 16
+          },
+          end: {
+            line: 48,
+            column: 66
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 48,
+            column: 16
+          },
+          end: {
+            line: 48,
+            column: 36
+          }
+        }, {
+          start: {
+            line: 48,
+            column: 40
+          },
+          end: {
+            line: 48,
+            column: 66
+          }
+        }],
+        line: 48
+      },
+      "12": {
+        loc: {
+          start: {
+            line: 49,
+            column: 16
+          },
+          end: {
+            line: 49,
+            column: 88
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 49,
+            column: 69
+          },
+          end: {
+            line: 49,
+            column: 81
+          }
+        }, {
+          start: {
+            line: 49,
+            column: 84
+          },
+          end: {
+            line: 49,
+            column: 88
+          }
+        }],
+        line: 49
+      },
+      "13": {
+        loc: {
+          start: {
+            line: 49,
+            column: 16
+          },
+          end: {
+            line: 49,
+            column: 66
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 49,
+            column: 16
+          },
+          end: {
+            line: 49,
+            column: 36
+          }
+        }, {
+          start: {
+            line: 49,
+            column: 40
+          },
+          end: {
+            line: 49,
+            column: 66
+          }
+        }],
+        line: 49
+      },
+      "14": {
+        loc: {
+          start: {
+            line: 50,
+            column: 16
+          },
+          end: {
+            line: 50,
+            column: 88
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 50,
+            column: 69
+          },
+          end: {
+            line: 50,
+            column: 81
+          }
+        }, {
+          start: {
+            line: 50,
+            column: 84
+          },
+          end: {
+            line: 50,
+            column: 88
+          }
+        }],
+        line: 50
+      },
+      "15": {
+        loc: {
+          start: {
+            line: 50,
+            column: 16
+          },
+          end: {
+            line: 50,
+            column: 66
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 50,
+            column: 16
+          },
+          end: {
+            line: 50,
+            column: 36
+          }
+        }, {
+          start: {
+            line: 50,
+            column: 40
+          },
+          end: {
+            line: 50,
+            column: 66
+          }
+        }],
+        line: 50
+      },
+      "16": {
+        loc: {
+          start: {
+            line: 51,
+            column: 16
+          },
+          end: {
+            line: 51,
+            column: 88
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 51,
+            column: 69
+          },
+          end: {
+            line: 51,
+            column: 81
+          }
+        }, {
+          start: {
+            line: 51,
+            column: 84
+          },
+          end: {
+            line: 51,
+            column: 88
+          }
+        }],
+        line: 51
+      },
+      "17": {
+        loc: {
+          start: {
+            line: 51,
+            column: 16
+          },
+          end: {
+            line: 51,
+            column: 66
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 51,
+            column: 16
+          },
+          end: {
+            line: 51,
+            column: 36
+          }
+        }, {
+          start: {
+            line: 51,
+            column: 40
+          },
+          end: {
+            line: 51,
+            column: 66
+          }
+        }],
+        line: 51
+      },
+      "18": {
+        loc: {
+          start: {
+            line: 53,
+            column: 2
+          },
+          end: {
+            line: 56,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 53,
+            column: 2
+          },
+          end: {
+            line: 56,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 53,
+            column: 2
+          },
+          end: {
+            line: 56,
+            column: 3
+          }
+        }],
+        line: 53
+      },
+      "19": {
+        loc: {
+          start: {
+            line: 59,
+            column: 2
+          },
+          end: {
+            line: 63,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 59,
+            column: 2
+          },
+          end: {
+            line: 63,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 59,
+            column: 2
+          },
+          end: {
+            line: 63,
+            column: 3
+          }
+        }],
+        line: 59
+      },
+      "20": {
+        loc: {
+          start: {
+            line: 77,
+            column: 25
+          },
+          end: {
+            line: 77,
+            column: 73
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 77,
+            column: 25
+          },
+          end: {
+            line: 77,
+            column: 41
+          }
+        }, {
+          start: {
+            line: 77,
+            column: 45
+          },
+          end: {
+            line: 77,
+            column: 67
+          }
+        }, {
+          start: {
+            line: 77,
+            column: 71
+          },
+          end: {
+            line: 77,
+            column: 73
+          }
+        }],
+        line: 77
+      },
+      "21": {
+        loc: {
+          start: {
+            line: 87,
+            column: 2
+          },
+          end: {
+            line: 95,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 87,
+            column: 2
+          },
+          end: {
+            line: 95,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 87,
+            column: 2
+          },
+          end: {
+            line: 95,
+            column: 3
+          }
+        }],
+        line: 87
+      },
+      "22": {
+        loc: {
+          start: {
+            line: 91,
+            column: 9
+          },
+          end: {
+            line: 95,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 91,
+            column: 9
+          },
+          end: {
+            line: 95,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 91,
+            column: 9
+          },
+          end: {
+            line: 95,
+            column: 3
+          }
+        }],
+        line: 91
+      },
+      "23": {
+        loc: {
+          start: {
+            line: 97,
+            column: 2
+          },
+          end: {
+            line: 122,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 97,
+            column: 2
+          },
+          end: {
+            line: 122,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 97,
+            column: 2
+          },
+          end: {
+            line: 122,
+            column: 3
+          }
+        }],
+        line: 97
+      },
+      "24": {
+        loc: {
+          start: {
+            line: 97,
+            column: 6
+          },
+          end: {
+            line: 97,
+            column: 42
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 97,
+            column: 6
+          },
+          end: {
+            line: 97,
+            column: 22
+          }
+        }, {
+          start: {
+            line: 97,
+            column: 26
+          },
+          end: {
+            line: 97,
+            column: 42
+          }
+        }],
+        line: 97
+      },
+      "25": {
+        loc: {
+          start: {
+            line: 102,
+            column: 4
+          },
+          end: {
+            line: 110,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 102,
+            column: 4
+          },
+          end: {
+            line: 110,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 102,
+            column: 4
+          },
+          end: {
+            line: 110,
+            column: 5
+          }
+        }],
+        line: 102
+      },
+      "26": {
+        loc: {
+          start: {
+            line: 105,
+            column: 6
+          },
+          end: {
+            line: 107,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 105,
+            column: 6
+          },
+          end: {
+            line: 107,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 105,
+            column: 6
+          },
+          end: {
+            line: 107,
+            column: 7
+          }
+        }],
+        line: 105
+      },
+      "27": {
+        loc: {
+          start: {
+            line: 112,
+            column: 4
+          },
+          end: {
+            line: 121,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 112,
+            column: 4
+          },
+          end: {
+            line: 121,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 112,
+            column: 4
+          },
+          end: {
+            line: 121,
+            column: 5
+          }
+        }],
+        line: 112
+      },
+      "28": {
+        loc: {
+          start: {
+            line: 115,
+            column: 6
+          },
+          end: {
+            line: 117,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 115,
+            column: 6
+          },
+          end: {
+            line: 117,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 115,
+            column: 6
+          },
+          end: {
+            line: 117,
+            column: 7
+          }
+        }],
+        line: 115
+      },
+      "29": {
+        loc: {
+          start: {
+            line: 119,
+            column: 18
+          },
+          end: {
+            line: 119,
+            column: 52
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 119,
+            column: 39
+          },
+          end: {
+            line: 119,
+            column: 41
+          }
+        }, {
+          start: {
+            line: 119,
+            column: 44
+          },
+          end: {
+            line: 119,
+            column: 52
+          }
+        }],
+        line: 119
+      },
+      "30": {
+        loc: {
+          start: {
+            line: 124,
+            column: 2
+          },
+          end: {
+            line: 149,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 124,
+            column: 2
+          },
+          end: {
+            line: 149,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 124,
+            column: 2
+          },
+          end: {
+            line: 149,
+            column: 3
+          }
+        }],
+        line: 124
+      },
+      "31": {
+        loc: {
+          start: {
+            line: 124,
+            column: 6
+          },
+          end: {
+            line: 124,
+            column: 42
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 124,
+            column: 6
+          },
+          end: {
+            line: 124,
+            column: 22
+          }
+        }, {
+          start: {
+            line: 124,
+            column: 26
+          },
+          end: {
+            line: 124,
+            column: 42
+          }
+        }],
+        line: 124
+      },
+      "32": {
+        loc: {
+          start: {
+            line: 129,
+            column: 4
+          },
+          end: {
+            line: 137,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 129,
+            column: 4
+          },
+          end: {
+            line: 137,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 129,
+            column: 4
+          },
+          end: {
+            line: 137,
+            column: 5
+          }
+        }],
+        line: 129
+      },
+      "33": {
+        loc: {
+          start: {
+            line: 132,
+            column: 6
+          },
+          end: {
+            line: 134,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 132,
+            column: 6
+          },
+          end: {
+            line: 134,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 132,
+            column: 6
+          },
+          end: {
+            line: 134,
+            column: 7
+          }
+        }],
+        line: 132
+      },
+      "34": {
+        loc: {
+          start: {
+            line: 139,
+            column: 4
+          },
+          end: {
+            line: 148,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 139,
+            column: 4
+          },
+          end: {
+            line: 148,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 139,
+            column: 4
+          },
+          end: {
+            line: 148,
+            column: 5
+          }
+        }],
+        line: 139
+      },
+      "35": {
+        loc: {
+          start: {
+            line: 142,
+            column: 6
+          },
+          end: {
+            line: 144,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 142,
+            column: 6
+          },
+          end: {
+            line: 144,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 142,
+            column: 6
+          },
+          end: {
+            line: 144,
+            column: 7
+          }
+        }],
+        line: 142
+      },
+      "36": {
+        loc: {
+          start: {
+            line: 146,
+            column: 18
+          },
+          end: {
+            line: 146,
+            column: 50
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 146,
+            column: 37
+          },
+          end: {
+            line: 146,
+            column: 39
+          }
+        }, {
+          start: {
+            line: 146,
+            column: 42
+          },
+          end: {
+            line: 146,
+            column: 50
+          }
+        }],
+        line: 146
+      },
+      "37": {
+        loc: {
+          start: {
+            line: 152,
+            column: 2
+          },
+          end: {
+            line: 154,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 152,
+            column: 2
+          },
+          end: {
+            line: 154,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 152,
+            column: 2
+          },
+          end: {
+            line: 154,
+            column: 3
+          }
+        }],
+        line: 152
+      },
+      "38": {
+        loc: {
+          start: {
+            line: 156,
+            column: 2
+          },
+          end: {
+            line: 158,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 156,
+            column: 2
+          },
+          end: {
+            line: 158,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 156,
+            column: 2
+          },
+          end: {
+            line: 158,
+            column: 3
+          }
+        }],
+        line: 156
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0,
+      "81": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0],
+      "9": [0, 0],
+      "10": [0, 0],
+      "11": [0, 0],
+      "12": [0, 0],
+      "13": [0, 0],
+      "14": [0, 0],
+      "15": [0, 0],
+      "16": [0, 0],
+      "17": [0, 0],
+      "18": [0, 0],
+      "19": [0, 0],
+      "20": [0, 0, 0],
+      "21": [0, 0],
+      "22": [0, 0],
+      "23": [0, 0],
+      "24": [0, 0],
+      "25": [0, 0],
+      "26": [0, 0],
+      "27": [0, 0],
+      "28": [0, 0],
+      "29": [0, 0],
+      "30": [0, 0],
+      "31": [0, 0],
+      "32": [0, 0],
+      "33": [0, 0],
+      "34": [0, 0],
+      "35": [0, 0],
+      "36": [0, 0],
+      "37": [0, 0],
+      "38": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "61c945d8c3ff143f72a1830f712abc222b45362c"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_1indac0jbc = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_1indac0jbc();
+cov_1indac0jbc().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1indac0jbc().s[1]++;
+exports["default"] = calculateNodeHeight; // Thanks to https://github.com/andreypopp/react-textarea-autosize/
+
+/**
+ * calculateNodeHeight(uiTextNode, useCache = false)
+ */
+
+var HIDDEN_TEXTAREA_STYLE =
+/* istanbul ignore next */
+(cov_1indac0jbc().s[2]++, "\n  min-height:0 !important;\n  max-height:none !important;\n  height:0 !important;\n  visibility:hidden !important;\n  overflow:hidden !important;\n  position:absolute !important;\n  z-index:-1000 !important;\n  top:0 !important;\n  right:0 !important\n");
+var SIZING_STYLE =
+/* istanbul ignore next */
+(cov_1indac0jbc().s[3]++, ['letter-spacing', 'line-height', 'padding-top', 'padding-bottom', 'font-family', 'font-weight', 'font-size', 'text-rendering', 'text-transform', 'width', 'text-indent', 'padding-left', 'padding-right', 'border-width', 'box-sizing']);
+var computedStyleCache =
+/* istanbul ignore next */
+(cov_1indac0jbc().s[4]++, {});
+var hiddenTextarea;
+
+function calculateNodeStyling(node) {
+  /* istanbul ignore next */
+  cov_1indac0jbc().f[0]++;
+  var useCache =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[5]++,
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[1][0]++, arguments.length > 1) &&
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[1][1]++, arguments[1] !== undefined) ?
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[0][0]++, arguments[1]) :
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[0][1]++, false));
+  var nodeRef =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[6]++,
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[2][0]++, node.getAttribute('id')) ||
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[2][1]++, node.getAttribute('data-reactid')) ||
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[2][2]++, node.getAttribute('name')));
+
+  /* istanbul ignore next */
+  cov_1indac0jbc().s[7]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[4][0]++, useCache) &&
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[4][1]++, computedStyleCache[nodeRef])) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[3][0]++;
+    cov_1indac0jbc().s[8]++;
+    return computedStyleCache[nodeRef];
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1indac0jbc().b[3][1]++;
+  }
+
+  var style =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[9]++, window.getComputedStyle(node));
+  var boxSizing =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[10]++,
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[5][0]++, style.getPropertyValue('box-sizing')) ||
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[5][1]++, style.getPropertyValue('-moz-box-sizing')) ||
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[5][2]++, style.getPropertyValue('-webkit-box-sizing')));
+  var paddingSize =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[11]++, parseFloat(style.getPropertyValue('padding-bottom')) + parseFloat(style.getPropertyValue('padding-top')));
+  var borderSize =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[12]++, parseFloat(style.getPropertyValue('border-bottom-width')) + parseFloat(style.getPropertyValue('border-top-width')));
+  var sizingStyle =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[13]++, SIZING_STYLE.map(function (name) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().f[1]++;
+    cov_1indac0jbc().s[14]++;
+    return "".concat(name, ":").concat(style.getPropertyValue(name));
+  }).join(';'));
+  var nodeInfo =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[15]++, {
+    sizingStyle: sizingStyle,
+    paddingSize: paddingSize,
+    borderSize: borderSize,
+    boxSizing: boxSizing
+  });
+
+  /* istanbul ignore next */
+  cov_1indac0jbc().s[16]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[7][0]++, useCache) &&
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[7][1]++, nodeRef)) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[6][0]++;
+    cov_1indac0jbc().s[17]++;
+    computedStyleCache[nodeRef] = nodeInfo;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1indac0jbc().b[6][1]++;
+  }
+
+  cov_1indac0jbc().s[18]++;
+  return nodeInfo;
+}
+
+function calculateNodeHeight(uiTextNode) {
+  /* istanbul ignore next */
+  cov_1indac0jbc().f[2]++;
+  var useCache =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[19]++,
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[9][0]++, arguments.length > 1) &&
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[9][1]++, arguments[1] !== undefined) ?
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[8][0]++, arguments[1]) :
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[8][1]++, false));
+  var minRows =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[20]++,
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[11][0]++, arguments.length > 2) &&
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[11][1]++, arguments[2] !== undefined) ?
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[10][0]++, arguments[2]) :
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[10][1]++, null));
+  var maxRows =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[21]++,
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[13][0]++, arguments.length > 3) &&
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[13][1]++, arguments[3] !== undefined) ?
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[12][0]++, arguments[3]) :
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[12][1]++, null));
+  var minCols =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[22]++,
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[15][0]++, arguments.length > 4) &&
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[15][1]++, arguments[4] !== undefined) ?
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[14][0]++, arguments[4]) :
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[14][1]++, null));
+  var maxCols =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[23]++,
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[17][0]++, arguments.length > 5) &&
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[17][1]++, arguments[5] !== undefined) ?
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[16][0]++, arguments[5]) :
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[16][1]++, null));
+
+  /* istanbul ignore next */
+  cov_1indac0jbc().s[24]++;
+
+  if (!hiddenTextarea) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[18][0]++;
+    cov_1indac0jbc().s[25]++;
+    hiddenTextarea = document.createElement('textarea');
+
+    /* istanbul ignore next */
+    cov_1indac0jbc().s[26]++;
+    document.body.appendChild(hiddenTextarea);
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1indac0jbc().b[18][1]++;
+  } // Fix wrap="off" issue
+
+
+  cov_1indac0jbc().s[27]++;
+
+  if (uiTextNode.getAttribute('wrap')) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[19][0]++;
+    cov_1indac0jbc().s[28]++;
+    hiddenTextarea.setAttribute('wrap', uiTextNode.getAttribute('wrap'));
+  } else {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[19][1]++;
+    cov_1indac0jbc().s[29]++;
+    hiddenTextarea.removeAttribute('wrap');
+  } // Copy all CSS properties that have an impact on the height of the content in
+  // the textbox
+
+
+  var _calculateNodeStyling =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[30]++, calculateNodeStyling(uiTextNode, useCache)),
+      paddingSize =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[31]++, _calculateNodeStyling.paddingSize),
+      borderSize =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[32]++, _calculateNodeStyling.borderSize),
+      boxSizing =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[33]++, _calculateNodeStyling.boxSizing),
+      sizingStyle =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[34]++, _calculateNodeStyling.sizingStyle); // Need to have the overflow attribute to hide the scrollbar otherwise
+  // text-lines will not calculated properly as the shadow will technically be
+  // narrower for content
+
+
+  /* istanbul ignore next */
+  cov_1indac0jbc().s[35]++;
+  hiddenTextarea.setAttribute('style', "".concat(sizingStyle, ";").concat(HIDDEN_TEXTAREA_STYLE));
+
+  /* istanbul ignore next */
+  cov_1indac0jbc().s[36]++;
+  hiddenTextarea.value =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[20][0]++, uiTextNode.value) ||
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[20][1]++, uiTextNode.placeholder) ||
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[20][2]++, '');
+  var minHeight =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[37]++, Number.MIN_SAFE_INTEGER);
+  var maxHeight =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[38]++, Number.MAX_SAFE_INTEGER);
+  var minWidth =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[39]++, Number.MIN_SAFE_INTEGER);
+  var maxWidth =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[40]++, Number.MAX_SAFE_INTEGER);
+  var height =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[41]++, hiddenTextarea.scrollHeight);
+  var width =
+  /* istanbul ignore next */
+  (cov_1indac0jbc().s[42]++, hiddenTextarea.scrollWidth);
+  var overflowY;
+  var overflowX;
+
+  /* istanbul ignore next */
+  cov_1indac0jbc().s[43]++;
+
+  if (boxSizing === 'border-box') {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[21][0]++;
+    cov_1indac0jbc().s[44]++;
+    // border-box: add border, since height = content + padding + border
+    height += borderSize;
+
+    /* istanbul ignore next */
+    cov_1indac0jbc().s[45]++;
+    width += borderSize;
+  } else {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[21][1]++;
+    cov_1indac0jbc().s[46]++;
+
+    if (boxSizing === 'content-box') {
+      /* istanbul ignore next */
+      cov_1indac0jbc().b[22][0]++;
+      cov_1indac0jbc().s[47]++;
+      // remove padding, since height = content
+      height -= paddingSize;
+
+      /* istanbul ignore next */
+      cov_1indac0jbc().s[48]++;
+      width -= paddingSize;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_1indac0jbc().b[22][1]++;
+    }
+  }
+
+  /* istanbul ignore next */
+  cov_1indac0jbc().s[49]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[24][0]++, minRows !== null) ||
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[24][1]++, maxRows !== null)) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[23][0]++;
+    cov_1indac0jbc().s[50]++;
+    // measure height of a textarea with a single row
+    hiddenTextarea.value = ' ';
+    var singleRowHeight =
+    /* istanbul ignore next */
+    (cov_1indac0jbc().s[51]++, hiddenTextarea.scrollHeight - paddingSize);
+
+    /* istanbul ignore next */
+    cov_1indac0jbc().s[52]++;
+
+    if (minRows !== null) {
+      /* istanbul ignore next */
+      cov_1indac0jbc().b[25][0]++;
+      cov_1indac0jbc().s[53]++;
+      minHeight = singleRowHeight * minRows;
+
+      /* istanbul ignore next */
+      cov_1indac0jbc().s[54]++;
+
+      if (boxSizing === 'border-box') {
+        /* istanbul ignore next */
+        cov_1indac0jbc().b[26][0]++;
+        cov_1indac0jbc().s[55]++;
+        minHeight = minHeight + paddingSize + borderSize;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_1indac0jbc().b[26][1]++;
+      }
+
+      cov_1indac0jbc().s[56]++;
+      height = Math.max(minHeight, height);
+    } else
+    /* istanbul ignore next */
+    {
+      cov_1indac0jbc().b[25][1]++;
+    }
+
+    cov_1indac0jbc().s[57]++;
+
+    if (maxRows !== null) {
+      /* istanbul ignore next */
+      cov_1indac0jbc().b[27][0]++;
+      cov_1indac0jbc().s[58]++;
+      maxHeight = singleRowHeight * maxRows;
+
+      /* istanbul ignore next */
+      cov_1indac0jbc().s[59]++;
+
+      if (boxSizing === 'border-box') {
+        /* istanbul ignore next */
+        cov_1indac0jbc().b[28][0]++;
+        cov_1indac0jbc().s[60]++;
+        maxHeight = maxHeight + paddingSize + borderSize;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_1indac0jbc().b[28][1]++;
+      }
+
+      cov_1indac0jbc().s[61]++;
+      overflowY = height > maxHeight ?
+      /* istanbul ignore next */
+      (cov_1indac0jbc().b[29][0]++, '') :
+      /* istanbul ignore next */
+      (cov_1indac0jbc().b[29][1]++, 'hidden');
+
+      /* istanbul ignore next */
+      cov_1indac0jbc().s[62]++;
+      height = Math.min(maxHeight, height);
+    } else
+    /* istanbul ignore next */
+    {
+      cov_1indac0jbc().b[27][1]++;
+    }
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1indac0jbc().b[23][1]++;
+  }
+
+  cov_1indac0jbc().s[63]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[31][0]++, minCols !== null) ||
+  /* istanbul ignore next */
+  (cov_1indac0jbc().b[31][1]++, maxCols !== null)) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[30][0]++;
+    cov_1indac0jbc().s[64]++;
+    // measure height of a textarea with a single row
+    hiddenTextarea.value = ' ';
+    var singleRowWidth =
+    /* istanbul ignore next */
+    (cov_1indac0jbc().s[65]++, hiddenTextarea.scrollWidth - paddingSize);
+
+    /* istanbul ignore next */
+    cov_1indac0jbc().s[66]++;
+
+    if (minCols !== null) {
+      /* istanbul ignore next */
+      cov_1indac0jbc().b[32][0]++;
+      cov_1indac0jbc().s[67]++;
+      minWidth = singleRowWidth * minCols;
+
+      /* istanbul ignore next */
+      cov_1indac0jbc().s[68]++;
+
+      if (boxSizing === 'border-box') {
+        /* istanbul ignore next */
+        cov_1indac0jbc().b[33][0]++;
+        cov_1indac0jbc().s[69]++;
+        minWidth = minWidth + paddingSize + borderSize;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_1indac0jbc().b[33][1]++;
+      }
+
+      cov_1indac0jbc().s[70]++;
+      width = Math.max(minWidth, width);
+    } else
+    /* istanbul ignore next */
+    {
+      cov_1indac0jbc().b[32][1]++;
+    }
+
+    cov_1indac0jbc().s[71]++;
+
+    if (maxCols !== null) {
+      /* istanbul ignore next */
+      cov_1indac0jbc().b[34][0]++;
+      cov_1indac0jbc().s[72]++;
+      maxWidth = singleRowWidth * maxCols;
+
+      /* istanbul ignore next */
+      cov_1indac0jbc().s[73]++;
+
+      if (boxSizing === 'border-box') {
+        /* istanbul ignore next */
+        cov_1indac0jbc().b[35][0]++;
+        cov_1indac0jbc().s[74]++;
+        maxWidth = maxWidth + paddingSize + borderSize;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_1indac0jbc().b[35][1]++;
+      }
+
+      cov_1indac0jbc().s[75]++;
+      overflowX = width > maxWidth ?
+      /* istanbul ignore next */
+      (cov_1indac0jbc().b[36][0]++, '') :
+      /* istanbul ignore next */
+      (cov_1indac0jbc().b[36][1]++, 'hidden');
+
+      /* istanbul ignore next */
+      cov_1indac0jbc().s[76]++;
+      width = Math.min(maxWidth, width);
+    } else
+    /* istanbul ignore next */
+    {
+      cov_1indac0jbc().b[34][1]++;
+    }
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1indac0jbc().b[30][1]++;
+  } // Remove scroll bar flash when autosize without maxRows
+
+
+  cov_1indac0jbc().s[77]++;
+
+  if (!maxRows) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[37][0]++;
+    cov_1indac0jbc().s[78]++;
+    overflowY = 'hidden';
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1indac0jbc().b[37][1]++;
+  }
+
+  cov_1indac0jbc().s[79]++;
+
+  if (!maxCols) {
+    /* istanbul ignore next */
+    cov_1indac0jbc().b[38][0]++;
+    cov_1indac0jbc().s[80]++;
+    overflowX = 'hidden';
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1indac0jbc().b[38][1]++;
+  }
+
+  cov_1indac0jbc().s[81]++;
+  return {
+    height: height,
+    minHeight: minHeight,
+    maxHeight: maxHeight,
+    overflowY: overflowY,
+    width: width,
+    minWidth: minWidth,
+    maxWidth: maxWidth,
+    overflowX: overflowX
+  };
+}

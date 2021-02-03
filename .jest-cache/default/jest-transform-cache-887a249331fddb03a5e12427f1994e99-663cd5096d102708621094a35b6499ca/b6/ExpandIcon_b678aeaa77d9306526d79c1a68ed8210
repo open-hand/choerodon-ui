@@ -1,0 +1,117 @@
+cfae259c4bfb9b90eda34b50c0a2a4ad
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _isEqual = _interopRequireDefault(require("lodash/isEqual"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var ExpandIcon =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2["default"])(ExpandIcon, _Component);
+
+  var _super = _createSuper(ExpandIcon);
+
+  function ExpandIcon() {
+    (0, _classCallCheck2["default"])(this, ExpandIcon);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2["default"])(ExpandIcon, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(nextProps) {
+      return !(0, _isEqual["default"])(nextProps, this.props);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          expandable = _this$props.expandable,
+          prefixCls = _this$props.prefixCls,
+          onExpand = _this$props.onExpand,
+          needIndentSpaced = _this$props.needIndentSpaced,
+          expanded = _this$props.expanded,
+          record = _this$props.record;
+
+      if (expandable) {
+        var expandClassName = expanded ? 'expanded' : 'collapsed';
+        return _react["default"].createElement("span", {
+          className: "".concat(prefixCls, "-expand-icon ").concat(prefixCls, "-").concat(expandClassName),
+          onClick: function onClick(e) {
+            return onExpand(record, e);
+          }
+        });
+      } else if (needIndentSpaced) {
+        return _react["default"].createElement("span", {
+          className: "".concat(prefixCls, "-expand-icon ").concat(prefixCls, "-spaced")
+        });
+      }
+
+      return null;
+    }
+  }]);
+  return ExpandIcon;
+}(_react.Component);
+
+exports["default"] = ExpandIcon;
+(0, _defineProperty2["default"])(ExpandIcon, "propTypes", {
+  record: _propTypes["default"].object,
+  prefixCls: _propTypes["default"].string,
+  expandable: _propTypes["default"].any,
+  expanded: _propTypes["default"].bool,
+  needIndentSpaced: _propTypes["default"].bool,
+  onExpand: _propTypes["default"].func
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkV4cGFuZEljb24uanN4Il0sIm5hbWVzIjpbIkV4cGFuZEljb24iLCJuZXh0UHJvcHMiLCJwcm9wcyIsImV4cGFuZGFibGUiLCJwcmVmaXhDbHMiLCJvbkV4cGFuZCIsIm5lZWRJbmRlbnRTcGFjZWQiLCJleHBhbmRlZCIsInJlY29yZCIsImV4cGFuZENsYXNzTmFtZSIsImUiLCJDb21wb25lbnQiLCJQcm9wVHlwZXMiLCJvYmplY3QiLCJzdHJpbmciLCJhbnkiLCJib29sIiwiZnVuYyJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFDQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztJQUVxQkEsVTs7Ozs7Ozs7Ozs7Ozs7MENBVUdDLFMsRUFBVztBQUMvQixhQUFPLENBQUMseUJBQWFBLFNBQWIsRUFBd0IsS0FBS0MsS0FBN0IsQ0FBUjtBQUNEOzs7NkJBRVE7QUFBQSx3QkFDeUUsS0FBS0EsS0FEOUU7QUFBQSxVQUNDQyxVQURELGVBQ0NBLFVBREQ7QUFBQSxVQUNhQyxTQURiLGVBQ2FBLFNBRGI7QUFBQSxVQUN3QkMsUUFEeEIsZUFDd0JBLFFBRHhCO0FBQUEsVUFDa0NDLGdCQURsQyxlQUNrQ0EsZ0JBRGxDO0FBQUEsVUFDb0RDLFFBRHBELGVBQ29EQSxRQURwRDtBQUFBLFVBQzhEQyxNQUQ5RCxlQUM4REEsTUFEOUQ7O0FBRVAsVUFBSUwsVUFBSixFQUFnQjtBQUNkLFlBQU1NLGVBQWUsR0FBR0YsUUFBUSxHQUFHLFVBQUgsR0FBZ0IsV0FBaEQ7QUFDQSxlQUNFO0FBQ0UsVUFBQSxTQUFTLFlBQUtILFNBQUwsMEJBQThCQSxTQUE5QixjQUEyQ0ssZUFBM0MsQ0FEWDtBQUVFLFVBQUEsT0FBTyxFQUFFLGlCQUFDQyxDQUFEO0FBQUEsbUJBQU9MLFFBQVEsQ0FBQ0csTUFBRCxFQUFTRSxDQUFULENBQWY7QUFBQTtBQUZYLFVBREY7QUFNRCxPQVJELE1BUU8sSUFBSUosZ0JBQUosRUFBc0I7QUFDM0IsZUFBTztBQUFNLFVBQUEsU0FBUyxZQUFLRixTQUFMLDBCQUE4QkEsU0FBOUI7QUFBZixVQUFQO0FBQ0Q7O0FBQ0QsYUFBTyxJQUFQO0FBQ0Q7OztFQTVCcUNPLGdCOzs7aUNBQW5CWCxVLGVBQ0E7QUFDakJRLEVBQUFBLE1BQU0sRUFBRUksc0JBQVVDLE1BREQ7QUFFakJULEVBQUFBLFNBQVMsRUFBRVEsc0JBQVVFLE1BRko7QUFHakJYLEVBQUFBLFVBQVUsRUFBRVMsc0JBQVVHLEdBSEw7QUFJakJSLEVBQUFBLFFBQVEsRUFBRUssc0JBQVVJLElBSkg7QUFLakJWLEVBQUFBLGdCQUFnQixFQUFFTSxzQkFBVUksSUFMWDtBQU1qQlgsRUFBQUEsUUFBUSxFQUFFTyxzQkFBVUs7QUFOSCxDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7IENvbXBvbmVudCB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCBQcm9wVHlwZXMgZnJvbSAncHJvcC10eXBlcyc7XG5pbXBvcnQgc2hhbGxvd2VxdWFsIGZyb20gJ2xvZGFzaC9pc0VxdWFsJztcblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgRXhwYW5kSWNvbiBleHRlbmRzIENvbXBvbmVudCB7XG4gIHN0YXRpYyBwcm9wVHlwZXMgPSB7XG4gICAgcmVjb3JkOiBQcm9wVHlwZXMub2JqZWN0LFxuICAgIHByZWZpeENsczogUHJvcFR5cGVzLnN0cmluZyxcbiAgICBleHBhbmRhYmxlOiBQcm9wVHlwZXMuYW55LFxuICAgIGV4cGFuZGVkOiBQcm9wVHlwZXMuYm9vbCxcbiAgICBuZWVkSW5kZW50U3BhY2VkOiBQcm9wVHlwZXMuYm9vbCxcbiAgICBvbkV4cGFuZDogUHJvcFR5cGVzLmZ1bmMsXG4gIH07XG5cbiAgc2hvdWxkQ29tcG9uZW50VXBkYXRlKG5leHRQcm9wcykge1xuICAgIHJldHVybiAhc2hhbGxvd2VxdWFsKG5leHRQcm9wcywgdGhpcy5wcm9wcyk7XG4gIH1cblxuICByZW5kZXIoKSB7XG4gICAgY29uc3QgeyBleHBhbmRhYmxlLCBwcmVmaXhDbHMsIG9uRXhwYW5kLCBuZWVkSW5kZW50U3BhY2VkLCBleHBhbmRlZCwgcmVjb3JkIH0gPSB0aGlzLnByb3BzO1xuICAgIGlmIChleHBhbmRhYmxlKSB7XG4gICAgICBjb25zdCBleHBhbmRDbGFzc05hbWUgPSBleHBhbmRlZCA/ICdleHBhbmRlZCcgOiAnY29sbGFwc2VkJztcbiAgICAgIHJldHVybiAoXG4gICAgICAgIDxzcGFuXG4gICAgICAgICAgY2xhc3NOYW1lPXtgJHtwcmVmaXhDbHN9LWV4cGFuZC1pY29uICR7cHJlZml4Q2xzfS0ke2V4cGFuZENsYXNzTmFtZX1gfVxuICAgICAgICAgIG9uQ2xpY2s9eyhlKSA9PiBvbkV4cGFuZChyZWNvcmQsIGUpfVxuICAgICAgICAvPlxuICAgICAgKTtcbiAgICB9IGVsc2UgaWYgKG5lZWRJbmRlbnRTcGFjZWQpIHtcbiAgICAgIHJldHVybiA8c3BhbiBjbGFzc05hbWU9e2Ake3ByZWZpeENsc30tZXhwYW5kLWljb24gJHtwcmVmaXhDbHN9LXNwYWNlZGB9IC8+O1xuICAgIH1cbiAgICByZXR1cm4gbnVsbDtcbiAgfVxufVxuIl19

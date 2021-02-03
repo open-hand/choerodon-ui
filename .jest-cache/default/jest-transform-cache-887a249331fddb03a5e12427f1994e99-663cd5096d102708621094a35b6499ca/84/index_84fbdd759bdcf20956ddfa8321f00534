@@ -1,0 +1,28 @@
+e170b353ba8c2fe8d836c590814fbf4d
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.$l = $l;
+exports["default"] = void 0;
+
+var _LocaleContext = _interopRequireDefault(require("./LocaleContext"));
+
+var _formatReactTemplate = _interopRequireDefault(require("../formatter/formatReactTemplate"));
+
+function $l(component, key, injectionOptions) {
+  var locale = _LocaleContext["default"].get(component, key);
+
+  if (injectionOptions) {
+    return (0, _formatReactTemplate["default"])(locale, injectionOptions);
+  }
+
+  return locale;
+}
+
+var _default = _LocaleContext["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvY2FsZS1jb250ZXh0L2luZGV4LmpzIl0sIm5hbWVzIjpbImxvY2FsZSIsImxvY2FsZUNvbnRleHQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQSxJQUFBLGNBQUEsR0FBQSxzQkFBQSxDQUFBLE9BQUEsQ0FBQSxpQkFBQSxDQUFBLENBQUE7O0FBQ0EsSUFBQSxvQkFBQSxHQUFBLHNCQUFBLENBQUEsT0FBQSxDQUFBLGtDQUFBLENBQUEsQ0FBQTs7QUFDTyxTQUFBLEVBQUEsQ0FBQSxTQUFBLEVBQUEsR0FBQSxFQUFBLGdCQUFBLEVBQThDO0FBQ2pELE1BQU1BLE1BQU0sR0FBR0MsY0FBQUEsQ0FBQUEsU0FBQUEsQ0FBQUEsQ0FBQUEsR0FBQUEsQ0FBQUEsU0FBQUEsRUFBZixHQUFlQSxDQUFmOztBQUNBLE1BQUEsZ0JBQUEsRUFBc0I7QUFDbEIsV0FBTyxDQUFBLEdBQUEsb0JBQUEsQ0FBQSxTQUFBLENBQUEsRUFBQSxNQUFBLEVBQVAsZ0JBQU8sQ0FBUDtBQUNIOztBQUNELFNBQUEsTUFBQTtBQUNIOztlQUNjQSxjQUFBQSxDQUFBQSxTQUFBQSxDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGxvY2FsZUNvbnRleHQgZnJvbSAnLi9Mb2NhbGVDb250ZXh0JztcbmltcG9ydCBmb3JtYXRSZWFjdFRlbXBsYXRlIGZyb20gJy4uL2Zvcm1hdHRlci9mb3JtYXRSZWFjdFRlbXBsYXRlJztcbmV4cG9ydCBmdW5jdGlvbiAkbChjb21wb25lbnQsIGtleSwgaW5qZWN0aW9uT3B0aW9ucykge1xuICAgIGNvbnN0IGxvY2FsZSA9IGxvY2FsZUNvbnRleHQuZ2V0KGNvbXBvbmVudCwga2V5KTtcbiAgICBpZiAoaW5qZWN0aW9uT3B0aW9ucykge1xuICAgICAgICByZXR1cm4gZm9ybWF0UmVhY3RUZW1wbGF0ZShsb2NhbGUsIGluamVjdGlvbk9wdGlvbnMpO1xuICAgIH1cbiAgICByZXR1cm4gbG9jYWxlO1xufVxuZXhwb3J0IGRlZmF1bHQgbG9jYWxlQ29udGV4dDtcbiJdfQ==

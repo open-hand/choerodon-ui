@@ -1,0 +1,80 @@
+5ac67e574a0a6483d2e46fea431dcc6d
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _modal = _interopRequireDefault(require("../../../components-pro/modal"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var key1 = _modal["default"].key();
+
+var key2 = _modal["default"].key();
+
+var key3 = _modal["default"].key();
+
+function openSubModal2() {
+  return new Promise(function (resolve) {
+    _modal["default"].open({
+      key: key3,
+      title: 'Sub Mode 2',
+      style: {
+        width: 600
+      },
+      drawer: true,
+      drawerTransitionName: 'slide-left',
+      children: _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Open Sub Modal2..."), _react["default"].createElement("p", null, "Open Sub Modal2...")),
+      onOk: resolve
+    });
+  });
+}
+
+function openSubModal1() {
+  return new Promise(function (resolve) {
+    _modal["default"].open({
+      key: key2,
+      title: 'Sub Mode 1',
+      drawer: true,
+      style: {
+        width: 600
+      },
+      children: _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], {
+        onClick: openSubModal2
+      }, "Open Sub Modal2..."), _react["default"].createElement("p", null, "Open Sub Modal1..."), _react["default"].createElement("p", null, "Open Sub Modal1...")),
+      onOk: resolve,
+      onCancel: resolve
+    });
+  });
+}
+
+function openModal() {
+  _modal["default"].open({
+    closable: true,
+    key: key1,
+    title: 'Multilayer',
+    drawer: true,
+    style: {
+      width: 300
+    },
+    children: _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], {
+      onClick: openSubModal1
+    }, "Open Sub Modal1..."), _react["default"].createElement("p", null, "Modal..."), _react["default"].createElement("p", null, "Modal...")),
+    afterClose: function afterClose() {
+      window.console.log('after close');
+    }
+  });
+}
+
+var __Demo = _react["default"].createElement(_button["default"], {
+  onClick: openModal
+}, "Drawer");
+
+var _default = __Demo;
+exports["default"] = _default;

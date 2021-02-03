@@ -1,0 +1,119 @@
+c069086a6eaa246ded9206bc843f638f
+"use strict";
+
+/* istanbul ignore next */
+function cov_ofpazjn9n() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/code-area/utils.tsx";
+  var hash = "29a02f5d6b8dcb4fb1a943a2d66b8234b975aa96";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/code-area/utils.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 54
+        }
+      },
+      "2": {
+        start: {
+          line: 15,
+          column: 2
+        },
+        end: {
+          line: 15,
+          column: 39
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "removeUnprintableChar",
+        decl: {
+          start: {
+            line: 14,
+            column: 9
+          },
+          end: {
+            line: 14,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 14,
+            column: 37
+          },
+          end: {
+            line: 16,
+            column: 1
+          }
+        },
+        line: 14
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "29a02f5d6b8dcb4fb1a943a2d66b8234b975aa96"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_ofpazjn9n = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_ofpazjn9n();
+cov_ofpazjn9n().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_ofpazjn9n().s[1]++;
+exports.removeUnprintableChar = removeUnprintableChar;
+/**
+ * 去除字符串中所有不可打印字符并返回结果
+ *
+ * @param {string} text 可能含有不可打印字符的字符串
+ * @returns {string} 不含不可打印字符的字符串
+ */
+
+function removeUnprintableChar(text) {
+  /* istanbul ignore next */
+  cov_ofpazjn9n().f[0]++;
+  cov_ofpazjn9n().s[2]++;
+  return text.replace(/\s*\n\s*/g, '');
+}

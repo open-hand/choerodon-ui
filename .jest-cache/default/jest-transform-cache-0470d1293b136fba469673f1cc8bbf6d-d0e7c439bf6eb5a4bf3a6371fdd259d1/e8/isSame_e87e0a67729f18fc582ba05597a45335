@@ -1,0 +1,204 @@
+ae671fff6e4af3dc68efcc80e9ee26d8
+"use strict";
+
+/* istanbul ignore next */
+var cov_20dmrqmscd = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/_util/isSame.tsx";
+  var hash = "ec27413a40d0a20da8bff2b1a1f80b4b97548671";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/_util/isSame.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 15
+        },
+        end: {
+          line: 10,
+          column: 64
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 15
+        },
+        end: {
+          line: 12,
+          column: 59
+        }
+      },
+      "5": {
+        start: {
+          line: 15,
+          column: 2
+        },
+        end: {
+          line: 15,
+          column: 130
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "isSame",
+        decl: {
+          start: {
+            line: 14,
+            column: 9
+          },
+          end: {
+            line: 14,
+            column: 15
+          }
+        },
+        loc: {
+          start: {
+            line: 14,
+            column: 36
+          },
+          end: {
+            line: 16,
+            column: 1
+          }
+        },
+        line: 14
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 15,
+            column: 9
+          },
+          end: {
+            line: 15,
+            column: 129
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 15,
+            column: 9
+          },
+          end: {
+            line: 15,
+            column: 43
+          }
+        }, {
+          start: {
+            line: 15,
+            column: 47
+          },
+          end: {
+            line: 15,
+            column: 81
+          }
+        }, {
+          start: {
+            line: 15,
+            column: 85
+          },
+          end: {
+            line: 15,
+            column: 129
+          }
+        }],
+        line: 15
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "ec27413a40d0a20da8bff2b1a1f80b4b97548671"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_20dmrqmscd.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_20dmrqmscd.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_20dmrqmscd.s[2]++;
+exports["default"] = isSame;
+
+var _isEqual =
+/* istanbul ignore next */
+(cov_20dmrqmscd.s[3]++, _interopRequireDefault(require("lodash/isEqual")));
+
+var _isEmpty =
+/* istanbul ignore next */
+(cov_20dmrqmscd.s[4]++, _interopRequireDefault(require("./isEmpty")));
+
+function isSame(newValue, oldValue) {
+  /* istanbul ignore next */
+  cov_20dmrqmscd.f[0]++;
+  cov_20dmrqmscd.s[5]++;
+  return (
+    /* istanbul ignore next */
+    (cov_20dmrqmscd.b[0][0]++, (0, _isEmpty["default"])(newValue)) &&
+    /* istanbul ignore next */
+    (cov_20dmrqmscd.b[0][1]++, (0, _isEmpty["default"])(oldValue)) ||
+    /* istanbul ignore next */
+    (cov_20dmrqmscd.b[0][2]++, (0, _isEqual["default"])(newValue, oldValue))
+  );
+}

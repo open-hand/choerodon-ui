@@ -1,0 +1,2723 @@
+7ce5ccf1f0fb59df49410593ad986b0e
+"use strict";
+
+/* istanbul ignore next */
+function cov_230qubbsyv() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/trigger-field/TriggerField.tsx";
+  var hash = "96f3f8781aeae4caf796b875a1a5ad7151764c21";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/trigger-field/TriggerField.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 21
+        },
+        end: {
+          line: 10,
+          column: 92
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 23
+        },
+        end: {
+          line: 12,
+          column: 95
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 23
+        },
+        end: {
+          line: 14,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 20
+        },
+        end: {
+          line: 16,
+          column: 89
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 34
+        },
+        end: {
+          line: 18,
+          column: 117
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 23
+        },
+        end: {
+          line: 20,
+          column: 95
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 12
+        },
+        end: {
+          line: 22,
+          column: 73
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 17
+        },
+        end: {
+          line: 24,
+          column: 83
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 13
+        },
+        end: {
+          line: 26,
+          column: 29
+        }
+      },
+      "12": {
+        start: {
+          line: 28,
+          column: 13
+        },
+        end: {
+          line: 28,
+          column: 53
+        }
+      },
+      "13": {
+        start: {
+          line: 30,
+          column: 16
+        },
+        end: {
+          line: 30,
+          column: 36
+        }
+      },
+      "14": {
+        start: {
+          line: 32,
+          column: 17
+        },
+        end: {
+          line: 32,
+          column: 62
+        }
+      },
+      "15": {
+        start: {
+          line: 34,
+          column: 12
+        },
+        end: {
+          line: 34,
+          column: 58
+        }
+      },
+      "16": {
+        start: {
+          line: 36,
+          column: 12
+        },
+        end: {
+          line: 36,
+          column: 58
+        }
+      },
+      "17": {
+        start: {
+          line: 38,
+          column: 12
+        },
+        end: {
+          line: 38,
+          column: 27
+        }
+      },
+      "18": {
+        start: {
+          line: 40,
+          column: 17
+        },
+        end: {
+          line: 40,
+          column: 38
+        }
+      },
+      "19": {
+        start: {
+          line: 42,
+          column: 15
+        },
+        end: {
+          line: 42,
+          column: 68
+        }
+      },
+      "20": {
+        start: {
+          line: 44,
+          column: 18
+        },
+        end: {
+          line: 44,
+          column: 52
+        }
+      },
+      "21": {
+        start: {
+          line: 46,
+          column: 16
+        },
+        end: {
+          line: 46,
+          column: 68
+        }
+      },
+      "22": {
+        start: {
+          line: 48,
+          column: 12
+        },
+        end: {
+          line: 48,
+          column: 54
+        }
+      },
+      "23": {
+        start: {
+          line: 50,
+          column: 18
+        },
+        end: {
+          line: 50,
+          column: 72
+        }
+      },
+      "24": {
+        start: {
+          line: 52,
+          column: 26
+        },
+        end: {
+          line: 85,
+          column: 1
+        }
+      },
+      "25": {
+        start: {
+          line: 89,
+          column: 0
+        },
+        end: {
+          line: 261,
+          column: 24
+        }
+      },
+      "26": {
+        start: {
+          line: 90,
+          column: 2
+        },
+        end: {
+          line: 90,
+          column: 55
+        }
+      },
+      "27": {
+        start: {
+          line: 95,
+          column: 4
+        },
+        end: {
+          line: 95,
+          column: 57
+        }
+      },
+      "28": {
+        start: {
+          line: 96,
+          column: 4
+        },
+        end: {
+          line: 96,
+          column: 137
+        }
+      },
+      "29": {
+        start: {
+          line: 97,
+          column: 4
+        },
+        end: {
+          line: 97,
+          column: 51
+        }
+      },
+      "30": {
+        start: {
+          line: 99,
+          column: 4
+        },
+        end: {
+          line: 99,
+          column: 26
+        }
+      },
+      "31": {
+        start: {
+          line: 101,
+          column: 4
+        },
+        end: {
+          line: 101,
+          column: 17
+        }
+      },
+      "32": {
+        start: {
+          line: 104,
+          column: 2
+        },
+        end: {
+          line: 259,
+          column: 6
+        }
+      },
+      "33": {
+        start: {
+          line: 107,
+          column: 6
+        },
+        end: {
+          line: 107,
+          column: 162
+        }
+      },
+      "34": {
+        start: {
+          line: 112,
+          column: 6
+        },
+        end: {
+          line: 112,
+          column: 35
+        }
+      },
+      "35": {
+        start: {
+          line: 117,
+          column: 6
+        },
+        end: {
+          line: 117,
+          column: 46
+        }
+      },
+      "36": {
+        start: {
+          line: 122,
+          column: 6
+        },
+        end: {
+          line: 122,
+          column: 268
+        }
+      },
+      "37": {
+        start: {
+          line: 127,
+          column: 6
+        },
+        end: {
+          line: 127,
+          column: 16
+        }
+      },
+      "38": {
+        start: {
+          line: 132,
+          column: 19
+        },
+        end: {
+          line: 132,
+          column: 23
+        }
+      },
+      "39": {
+        start: {
+          line: 134,
+          column: 22
+        },
+        end: {
+          line: 134,
+          column: 36
+        }
+      },
+      "40": {
+        start: {
+          line: 135,
+          column: 24
+        },
+        end: {
+          line: 135,
+          column: 34
+        }
+      },
+      "41": {
+        start: {
+          line: 136,
+          column: 21
+        },
+        end: {
+          line: 136,
+          column: 41
+        }
+      },
+      "42": {
+        start: {
+          line: 137,
+          column: 23
+        },
+        end: {
+          line: 137,
+          column: 45
+        }
+      },
+      "43": {
+        start: {
+          line: 138,
+          column: 25
+        },
+        end: {
+          line: 138,
+          column: 49
+        }
+      },
+      "44": {
+        start: {
+          line: 139,
+          column: 19
+        },
+        end: {
+          line: 139,
+          column: 37
+        }
+      },
+      "45": {
+        start: {
+          line: 140,
+          column: 20
+        },
+        end: {
+          line: 140,
+          column: 39
+        }
+      },
+      "46": {
+        start: {
+          line: 141,
+          column: 29
+        },
+        end: {
+          line: 141,
+          column: 57
+        }
+      },
+      "47": {
+        start: {
+          line: 142,
+          column: 31
+        },
+        end: {
+          line: 142,
+          column: 61
+        }
+      },
+      "48": {
+        start: {
+          line: 145,
+          column: 6
+        },
+        end: {
+          line: 153,
+          column: 7
+        }
+      },
+      "49": {
+        start: {
+          line: 146,
+          column: 8
+        },
+        end: {
+          line: 150,
+          column: 9
+        }
+      },
+      "50": {
+        start: {
+          line: 147,
+          column: 10
+        },
+        end: {
+          line: 147,
+          column: 55
+        }
+      },
+      "51": {
+        start: {
+          line: 149,
+          column: 10
+        },
+        end: {
+          line: 149,
+          column: 33
+        }
+      },
+      "52": {
+        start: {
+          line: 152,
+          column: 8
+        },
+        end: {
+          line: 152,
+          column: 41
+        }
+      },
+      "53": {
+        start: {
+          line: 155,
+          column: 6
+        },
+        end: {
+          line: 176,
+          column: 27
+        }
+      },
+      "54": {
+        start: {
+          line: 157,
+          column: 10
+        },
+        end: {
+          line: 157,
+          column: 39
+        }
+      },
+      "55": {
+        start: {
+          line: 183,
+          column: 22
+        },
+        end: {
+          line: 183,
+          column: 36
+        }
+      },
+      "56": {
+        start: {
+          line: 185,
+          column: 6
+        },
+        end: {
+          line: 187,
+          column: 7
+        }
+      },
+      "57": {
+        start: {
+          line: 185,
+          column: 22
+        },
+        end: {
+          line: 185,
+          column: 38
+        }
+      },
+      "58": {
+        start: {
+          line: 185,
+          column: 47
+        },
+        end: {
+          line: 185,
+          column: 62
+        }
+      },
+      "59": {
+        start: {
+          line: 185,
+          column: 71
+        },
+        end: {
+          line: 185,
+          column: 72
+        }
+      },
+      "60": {
+        start: {
+          line: 186,
+          column: 8
+        },
+        end: {
+          line: 186,
+          column: 37
+        }
+      },
+      "61": {
+        start: {
+          line: 189,
+          column: 6
+        },
+        end: {
+          line: 189,
+          column: 395
+        }
+      },
+      "62": {
+        start: {
+          line: 194,
+          column: 22
+        },
+        end: {
+          line: 194,
+          column: 36
+        }
+      },
+      "63": {
+        start: {
+          line: 195,
+          column: 6
+        },
+        end: {
+          line: 198,
+          column: 9
+        }
+      },
+      "64": {
+        start: {
+          line: 203,
+          column: 6
+        },
+        end: {
+          line: 203,
+          column: 29
+        }
+      },
+      "65": {
+        start: {
+          line: 208,
+          column: 6
+        },
+        end: {
+          line: 208,
+          column: 25
+        }
+      },
+      "66": {
+        start: {
+          line: 209,
+          column: 34
+        },
+        end: {
+          line: 209,
+          column: 56
+        }
+      },
+      "67": {
+        start: {
+          line: 210,
+          column: 24
+        },
+        end: {
+          line: 210,
+          column: 99
+        }
+      },
+      "68": {
+        start: {
+          line: 211,
+          column: 6
+        },
+        end: {
+          line: 211,
+          column: 21
+        }
+      },
+      "69": {
+        start: {
+          line: 216,
+          column: 6
+        },
+        end: {
+          line: 216,
+          column: 29
+        }
+      },
+      "70": {
+        start: {
+          line: 217,
+          column: 34
+        },
+        end: {
+          line: 217,
+          column: 64
+        }
+      },
+      "71": {
+        start: {
+          line: 218,
+          column: 32
+        },
+        end: {
+          line: 218,
+          column: 107
+        }
+      },
+      "72": {
+        start: {
+          line: 219,
+          column: 6
+        },
+        end: {
+          line: 219,
+          column: 34
+        }
+      },
+      "73": {
+        start: {
+          line: 224,
+          column: 6
+        },
+        end: {
+          line: 226,
+          column: 7
+        }
+      },
+      "74": {
+        start: {
+          line: 225,
+          column: 8
+        },
+        end: {
+          line: 225,
+          column: 39
+        }
+      },
+      "75": {
+        start: {
+          line: 231,
+          column: 19
+        },
+        end: {
+          line: 231,
+          column: 23
+        }
+      },
+      "76": {
+        start: {
+          line: 233,
+          column: 6
+        },
+        end: {
+          line: 233,
+          column: 30
+        }
+      },
+      "77": {
+        start: {
+          line: 235,
+          column: 6
+        },
+        end: {
+          line: 239,
+          column: 7
+        }
+      },
+      "78": {
+        start: {
+          line: 236,
+          column: 8
+        },
+        end: {
+          line: 238,
+          column: 11
+        }
+      },
+      "79": {
+        start: {
+          line: 237,
+          column: 10
+        },
+        end: {
+          line: 237,
+          column: 32
+        }
+      },
+      "80": {
+        start: {
+          line: 244,
+          column: 19
+        },
+        end: {
+          line: 244,
+          column: 23
+        }
+      },
+      "81": {
+        start: {
+          line: 246,
+          column: 6
+        },
+        end: {
+          line: 246,
+          column: 30
+        }
+      },
+      "82": {
+        start: {
+          line: 248,
+          column: 6
+        },
+        end: {
+          line: 252,
+          column: 7
+        }
+      },
+      "83": {
+        start: {
+          line: 249,
+          column: 8
+        },
+        end: {
+          line: 251,
+          column: 11
+        }
+      },
+      "84": {
+        start: {
+          line: 250,
+          column: 10
+        },
+        end: {
+          line: 250,
+          column: 33
+        }
+      },
+      "85": {
+        start: {
+          line: 257,
+          column: 6
+        },
+        end: {
+          line: 257,
+          column: 29
+        }
+      },
+      "86": {
+        start: {
+          line: 260,
+          column: 2
+        },
+        end: {
+          line: 260,
+          column: 22
+        }
+      },
+      "87": {
+        start: {
+          line: 263,
+          column: 0
+        },
+        end: {
+          line: 263,
+          column: 34
+        }
+      },
+      "88": {
+        start: {
+          line: 264,
+          column: 0
+        },
+        end: {
+          line: 264,
+          column: 42
+        }
+      },
+      "89": {
+        start: {
+          line: 265,
+          column: 0
+        },
+        end: {
+          line: 303,
+          column: 36
+        }
+      },
+      "90": {
+        start: {
+          line: 304,
+          column: 0
+        },
+        end: {
+          line: 310,
+          column: 3
+        }
+      },
+      "91": {
+        start: {
+          line: 311,
+          column: 0
+        },
+        end: {
+          line: 311,
+          column: 89
+        }
+      },
+      "92": {
+        start: {
+          line: 312,
+          column: 0
+        },
+        end: {
+          line: 312,
+          column: 80
+        }
+      },
+      "93": {
+        start: {
+          line: 313,
+          column: 0
+        },
+        end: {
+          line: 313,
+          column: 81
+        }
+      },
+      "94": {
+        start: {
+          line: 314,
+          column: 0
+        },
+        end: {
+          line: 314,
+          column: 95
+        }
+      },
+      "95": {
+        start: {
+          line: 315,
+          column: 0
+        },
+        end: {
+          line: 315,
+          column: 100
+        }
+      },
+      "96": {
+        start: {
+          line: 316,
+          column: 0
+        },
+        end: {
+          line: 316,
+          column: 101
+        }
+      },
+      "97": {
+        start: {
+          line: 317,
+          column: 0
+        },
+        end: {
+          line: 317,
+          column: 104
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 89,
+            column: 0
+          },
+          end: {
+            line: 89,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 89,
+            column: 22
+          },
+          end: {
+            line: 261,
+            column: 1
+          }
+        },
+        line: 89
+      },
+      "1": {
+        name: "TriggerField",
+        decl: {
+          start: {
+            line: 92,
+            column: 11
+          },
+          end: {
+            line: 92,
+            column: 23
+          }
+        },
+        loc: {
+          start: {
+            line: 92,
+            column: 40
+          },
+          end: {
+            line: 102,
+            column: 3
+          }
+        },
+        line: 92
+      },
+      "2": {
+        name: "isValidationMessageHidden",
+        decl: {
+          start: {
+            line: 106,
+            column: 20
+          },
+          end: {
+            line: 106,
+            column: 45
+          }
+        },
+        loc: {
+          start: {
+            line: 106,
+            column: 55
+          },
+          end: {
+            line: 108,
+            column: 5
+          }
+        },
+        line: 106
+      },
+      "3": {
+        name: "setPopup",
+        decl: {
+          start: {
+            line: 111,
+            column: 20
+          },
+          end: {
+            line: 111,
+            column: 28
+          }
+        },
+        loc: {
+          start: {
+            line: 111,
+            column: 41
+          },
+          end: {
+            line: 113,
+            column: 5
+          }
+        },
+        line: 111
+      },
+      "4": {
+        name: "getRootDomNode",
+        decl: {
+          start: {
+            line: 116,
+            column: 20
+          },
+          end: {
+            line: 116,
+            column: 34
+          }
+        },
+        loc: {
+          start: {
+            line: 116,
+            column: 37
+          },
+          end: {
+            line: 118,
+            column: 5
+          }
+        },
+        line: 116
+      },
+      "5": {
+        name: "getOtherProps",
+        decl: {
+          start: {
+            line: 121,
+            column: 20
+          },
+          end: {
+            line: 121,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 121,
+            column: 36
+          },
+          end: {
+            line: 123,
+            column: 5
+          }
+        },
+        line: 121
+      },
+      "6": {
+        name: "getPopupProps",
+        decl: {
+          start: {
+            line: 126,
+            column: 20
+          },
+          end: {
+            line: 126,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 126,
+            column: 36
+          },
+          end: {
+            line: 128,
+            column: 5
+          }
+        },
+        line: 126
+      },
+      "7": {
+        name: "getWrappedEditor",
+        decl: {
+          start: {
+            line: 131,
+            column: 20
+          },
+          end: {
+            line: 131,
+            column: 36
+          }
+        },
+        loc: {
+          start: {
+            line: 131,
+            column: 39
+          },
+          end: {
+            line: 177,
+            column: 5
+          }
+        },
+        line: 131
+      },
+      "8": {
+        name: "ref",
+        decl: {
+          start: {
+            line: 156,
+            column: 22
+          },
+          end: {
+            line: 156,
+            column: 25
+          }
+        },
+        loc: {
+          start: {
+            line: 156,
+            column: 32
+          },
+          end: {
+            line: 158,
+            column: 9
+          }
+        },
+        line: 156
+      },
+      "9": {
+        name: "getWrapperClassNames",
+        decl: {
+          start: {
+            line: 180,
+            column: 20
+          },
+          end: {
+            line: 180,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 180,
+            column: 43
+          },
+          end: {
+            line: 190,
+            column: 5
+          }
+        },
+        line: 180
+      },
+      "10": {
+        name: "getDefaultSuffix",
+        decl: {
+          start: {
+            line: 193,
+            column: 20
+          },
+          end: {
+            line: 193,
+            column: 36
+          }
+        },
+        loc: {
+          start: {
+            line: 193,
+            column: 39
+          },
+          end: {
+            line: 199,
+            column: 5
+          }
+        },
+        line: 193
+      },
+      "11": {
+        name: "handleTagAnimateEnd",
+        decl: {
+          start: {
+            line: 202,
+            column: 20
+          },
+          end: {
+            line: 202,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 202,
+            column: 42
+          },
+          end: {
+            line: 204,
+            column: 5
+          }
+        },
+        line: 202
+      },
+      "12": {
+        name: "handlePopupMouseDown",
+        decl: {
+          start: {
+            line: 207,
+            column: 20
+          },
+          end: {
+            line: 207,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 207,
+            column: 44
+          },
+          end: {
+            line: 212,
+            column: 5
+          }
+        },
+        line: 207
+      },
+      "13": {
+        name: "handlePopupHiddenChange",
+        decl: {
+          start: {
+            line: 215,
+            column: 20
+          },
+          end: {
+            line: 215,
+            column: 43
+          }
+        },
+        loc: {
+          start: {
+            line: 215,
+            column: 52
+          },
+          end: {
+            line: 220,
+            column: 5
+          }
+        },
+        line: 215
+      },
+      "14": {
+        name: "forcePopupAlign",
+        decl: {
+          start: {
+            line: 223,
+            column: 20
+          },
+          end: {
+            line: 223,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 223,
+            column: 38
+          },
+          end: {
+            line: 227,
+            column: 5
+          }
+        },
+        line: 223
+      },
+      "15": {
+        name: "expand",
+        decl: {
+          start: {
+            line: 230,
+            column: 20
+          },
+          end: {
+            line: 230,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 230,
+            column: 29
+          },
+          end: {
+            line: 240,
+            column: 5
+          }
+        },
+        line: 230
+      },
+      "16": {
+        name: "(anonymous_16)",
+        decl: {
+          start: {
+            line: 236,
+            column: 58
+          },
+          end: {
+            line: 236,
+            column: 59
+          }
+        },
+        loc: {
+          start: {
+            line: 236,
+            column: 70
+          },
+          end: {
+            line: 238,
+            column: 9
+          }
+        },
+        line: 236
+      },
+      "17": {
+        name: "collapse",
+        decl: {
+          start: {
+            line: 243,
+            column: 20
+          },
+          end: {
+            line: 243,
+            column: 28
+          }
+        },
+        loc: {
+          start: {
+            line: 243,
+            column: 31
+          },
+          end: {
+            line: 253,
+            column: 5
+          }
+        },
+        line: 243
+      },
+      "18": {
+        name: "(anonymous_18)",
+        decl: {
+          start: {
+            line: 249,
+            column: 60
+          },
+          end: {
+            line: 249,
+            column: 61
+          }
+        },
+        loc: {
+          start: {
+            line: 249,
+            column: 72
+          },
+          end: {
+            line: 251,
+            column: 9
+          }
+        },
+        line: 249
+      },
+      "19": {
+        name: "get",
+        decl: {
+          start: {
+            line: 256,
+            column: 18
+          },
+          end: {
+            line: 256,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 256,
+            column: 24
+          },
+          end: {
+            line: 258,
+            column: 5
+          }
+        },
+        line: 256
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 107,
+            column: 13
+          },
+          end: {
+            line: 107,
+            column: 161
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 107,
+            column: 13
+          },
+          end: {
+            line: 107,
+            column: 147
+          }
+        }, {
+          start: {
+            line: 107,
+            column: 151
+          },
+          end: {
+            line: 107,
+            column: 161
+          }
+        }],
+        line: 107
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 145,
+            column: 6
+          },
+          end: {
+            line: 153,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 145,
+            column: 6
+          },
+          end: {
+            line: 153,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 145,
+            column: 6
+          },
+          end: {
+            line: 153,
+            column: 7
+          }
+        }],
+        line: 145
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 146,
+            column: 8
+          },
+          end: {
+            line: 150,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 146,
+            column: 8
+          },
+          end: {
+            line: 150,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 146,
+            column: 8
+          },
+          end: {
+            line: 150,
+            column: 9
+          }
+        }],
+        line: 146
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 159,
+            column: 16
+          },
+          end: {
+            line: 159,
+            column: 69
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 159,
+            column: 57
+          },
+          end: {
+            line: 159,
+            column: 59
+          }
+        }, {
+          start: {
+            line: 159,
+            column: 62
+          },
+          end: {
+            line: 159,
+            column: 69
+          }
+        }],
+        line: 159
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 159,
+            column: 16
+          },
+          end: {
+            line: 159,
+            column: 54
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 159,
+            column: 16
+          },
+          end: {
+            line: 159,
+            column: 33
+          }
+        }, {
+          start: {
+            line: 159,
+            column: 37
+          },
+          end: {
+            line: 159,
+            column: 54
+          }
+        }],
+        line: 159
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 169,
+            column: 21
+          },
+          end: {
+            line: 169,
+            column: 42
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 169,
+            column: 21
+          },
+          end: {
+            line: 169,
+            column: 27
+          }
+        }, {
+          start: {
+            line: 169,
+            column: 31
+          },
+          end: {
+            line: 169,
+            column: 42
+          }
+        }],
+        line: 169
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 189,
+            column: 347
+          },
+          end: {
+            line: 189,
+            column: 383
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 189,
+            column: 347
+          },
+          end: {
+            line: 189,
+            column: 365
+          }
+        }, {
+          start: {
+            line: 189,
+            column: 369
+          },
+          end: {
+            line: 189,
+            column: 383
+          }
+        }],
+        line: 189
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 210,
+            column: 24
+          },
+          end: {
+            line: 210,
+            column: 99
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 210,
+            column: 59
+          },
+          end: {
+            line: 210,
+            column: 75
+          }
+        }, {
+          start: {
+            line: 210,
+            column: 78
+          },
+          end: {
+            line: 210,
+            column: 99
+          }
+        }],
+        line: 210
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 218,
+            column: 32
+          },
+          end: {
+            line: 218,
+            column: 107
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 218,
+            column: 67
+          },
+          end: {
+            line: 218,
+            column: 83
+          }
+        }, {
+          start: {
+            line: 218,
+            column: 86
+          },
+          end: {
+            line: 218,
+            column: 107
+          }
+        }],
+        line: 218
+      },
+      "9": {
+        loc: {
+          start: {
+            line: 224,
+            column: 6
+          },
+          end: {
+            line: 226,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 224,
+            column: 6
+          },
+          end: {
+            line: 226,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 224,
+            column: 6
+          },
+          end: {
+            line: 226,
+            column: 7
+          }
+        }],
+        line: 224
+      },
+      "10": {
+        loc: {
+          start: {
+            line: 235,
+            column: 6
+          },
+          end: {
+            line: 239,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 235,
+            column: 6
+          },
+          end: {
+            line: 239,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 235,
+            column: 6
+          },
+          end: {
+            line: 239,
+            column: 7
+          }
+        }],
+        line: 235
+      },
+      "11": {
+        loc: {
+          start: {
+            line: 235,
+            column: 10
+          },
+          end: {
+            line: 235,
+            column: 43
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 235,
+            column: 10
+          },
+          end: {
+            line: 235,
+            column: 28
+          }
+        }, {
+          start: {
+            line: 235,
+            column: 32
+          },
+          end: {
+            line: 235,
+            column: 43
+          }
+        }],
+        line: 235
+      },
+      "12": {
+        loc: {
+          start: {
+            line: 248,
+            column: 6
+          },
+          end: {
+            line: 252,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 248,
+            column: 6
+          },
+          end: {
+            line: 252,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 248,
+            column: 6
+          },
+          end: {
+            line: 252,
+            column: 7
+          }
+        }],
+        line: 248
+      },
+      "13": {
+        loc: {
+          start: {
+            line: 248,
+            column: 10
+          },
+          end: {
+            line: 248,
+            column: 42
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 248,
+            column: 10
+          },
+          end: {
+            line: 248,
+            column: 28
+          }
+        }, {
+          start: {
+            line: 248,
+            column: 32
+          },
+          end: {
+            line: 248,
+            column: 42
+          }
+        }],
+        line: 248
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0,
+      "81": 0,
+      "82": 0,
+      "83": 0,
+      "84": 0,
+      "85": 0,
+      "86": 0,
+      "87": 0,
+      "88": 0,
+      "89": 0,
+      "90": 0,
+      "91": 0,
+      "92": 0,
+      "93": 0,
+      "94": 0,
+      "95": 0,
+      "96": 0,
+      "97": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0],
+      "9": [0, 0],
+      "10": [0, 0],
+      "11": [0, 0],
+      "12": [0, 0],
+      "13": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "96f3f8781aeae4caf796b875a1a5ad7151764c21"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_230qubbsyv = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_230qubbsyv();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[2]++;
+exports["default"] = void 0;
+
+var _objectSpread2 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2")));
+
+var _defineProperty2 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/defineProperty")));
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _get3 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[9]++, _interopRequireDefault(require("@babel/runtime/helpers/get")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[10]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _tslib =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[11]++, require("tslib"));
+
+var _react =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[12]++, _interopRequireDefault(require("react")));
+
+var _reactDom =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[13]++, require("react-dom"));
+
+var _propTypes =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[14]++, _interopRequireDefault(require("prop-types")));
+
+var _omit =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[15]++, _interopRequireDefault(require("lodash/omit")));
+
+var _noop =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[16]++, _interopRequireDefault(require("lodash/noop")));
+
+var _mobx =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[17]++, require("mobx"));
+
+var _mobxReact =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[18]++, require("mobx-react"));
+
+var _Trigger =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[19]++, _interopRequireDefault(require("../trigger/Trigger")));
+
+var _TextField2 =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[20]++, require("../text-field/TextField"));
+
+var _autobind =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[21]++, _interopRequireDefault(require("../_util/autobind")));
+
+var _icon =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[22]++, _interopRequireDefault(require("../icon")));
+
+var _TaskRunner =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[23]++, _interopRequireDefault(require("../_util/TaskRunner")));
+
+var BUILT_IN_PLACEMENTS =
+/* istanbul ignore next */
+(cov_230qubbsyv().s[24]++, {
+  bottomLeft: {
+    points: ['tl', 'bl'],
+    offset: [0, 4],
+    overflow: {
+      adjustX: 1,
+      adjustY: 1
+    }
+  },
+  bottomRight: {
+    points: ['tr', 'br'],
+    offset: [0, 4],
+    overflow: {
+      adjustX: 1,
+      adjustY: 1
+    }
+  },
+  topLeft: {
+    points: ['bl', 'tl'],
+    offset: [0, -4],
+    overflow: {
+      adjustX: 1,
+      adjustY: 1
+    }
+  },
+  topRight: {
+    points: ['br', 'tr'],
+    offset: [0, -4],
+    overflow: {
+      adjustX: 1,
+      adjustY: 1
+    }
+  }
+});
+var TriggerField =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_230qubbsyv().s[25]++, function (_TextField) {
+  /* istanbul ignore next */
+  cov_230qubbsyv().f[0]++;
+  cov_230qubbsyv().s[26]++;
+  (0, _inherits2["default"])(TriggerField, _TextField);
+
+  function TriggerField(props, context) {
+    /* istanbul ignore next */
+    cov_230qubbsyv().f[1]++;
+
+    var _this;
+
+    /* istanbul ignore next */
+    cov_230qubbsyv().s[27]++;
+    (0, _classCallCheck2["default"])(this, TriggerField);
+
+    /* istanbul ignore next */
+    cov_230qubbsyv().s[28]++;
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(TriggerField).call(this, props, context));
+
+    /* istanbul ignore next */
+    cov_230qubbsyv().s[29]++;
+    _this.popupTask = new _TaskRunner["default"]();
+
+    /* istanbul ignore next */
+    cov_230qubbsyv().s[30]++;
+
+    _this.setPopup(false);
+
+    /* istanbul ignore next */
+    cov_230qubbsyv().s[31]++;
+    return _this;
+  }
+
+  /* istanbul ignore next */
+  cov_230qubbsyv().s[32]++;
+  (0, _createClass2["default"])(TriggerField, [{
+    key: "isValidationMessageHidden",
+    value: function isValidationMessageHidden(message) {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[2]++;
+      cov_230qubbsyv().s[33]++;
+      return (
+        /* istanbul ignore next */
+        (cov_230qubbsyv().b[0][0]++, (0, _get3["default"])((0, _getPrototypeOf2["default"])(TriggerField.prototype), "isValidationMessageHidden", this).call(this, message)) ||
+        /* istanbul ignore next */
+        (cov_230qubbsyv().b[0][1]++, this.popup)
+      );
+    }
+  }, {
+    key: "setPopup",
+    value: function setPopup(statePopup) {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[3]++;
+      cov_230qubbsyv().s[34]++;
+      this.statePopup = statePopup;
+    }
+  }, {
+    key: "getRootDomNode",
+    value: function getRootDomNode() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[4]++;
+      cov_230qubbsyv().s[35]++;
+      return (0, _reactDom.findDOMNode)(this);
+    }
+  }, {
+    key: "getOtherProps",
+    value: function getOtherProps() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[5]++;
+      cov_230qubbsyv().s[36]++;
+      return (0, _omit["default"])((0, _get3["default"])((0, _getPrototypeOf2["default"])(TriggerField.prototype), "getOtherProps", this).call(this), ['popupContent', 'popupCls', 'editable', 'trigger', 'triggerShowDelay', 'triggerHiddenDelay', 'onPopupHiddenChange']);
+    }
+  }, {
+    key: "getPopupProps",
+    value: function getPopupProps() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[6]++;
+      cov_230qubbsyv().s[37]++;
+      return {};
+    }
+  }, {
+    key: "getWrappedEditor",
+    value: function getWrappedEditor() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[7]++;
+
+      var _this2 =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[38]++, this);
+
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[39]++, this.prefixCls),
+          _this$props =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[40]++, this.props),
+          popupCls =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[41]++, _this$props.popupCls),
+          popupStyle =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[42]++, _this$props.popupStyle),
+          popupContent =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[43]++, _this$props.popupContent),
+          hidden =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[44]++, _this$props.hidden),
+          trigger =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[45]++, _this$props.trigger),
+          triggerShowDelay =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[46]++, _this$props.triggerShowDelay),
+          triggerHiddenDelay =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[47]++, _this$props.triggerHiddenDelay);
+
+      var content;
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[48]++;
+
+      if (popupContent !== undefined) {
+        /* istanbul ignore next */
+        cov_230qubbsyv().b[1][0]++;
+        cov_230qubbsyv().s[49]++;
+
+        if (popupContent instanceof Function) {
+          /* istanbul ignore next */
+          cov_230qubbsyv().b[2][0]++;
+          cov_230qubbsyv().s[50]++;
+          content = popupContent(this.getPopupProps());
+        } else {
+          /* istanbul ignore next */
+          cov_230qubbsyv().b[2][1]++;
+          cov_230qubbsyv().s[51]++;
+          content = popupContent;
+        }
+      } else {
+        /* istanbul ignore next */
+        cov_230qubbsyv().b[1][1]++;
+        cov_230qubbsyv().s[52]++;
+        content = this.getPopupContent();
+      }
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[53]++;
+      return _react["default"].createElement(_Trigger["default"], {
+        ref: function ref(node) {
+          /* istanbul ignore next */
+          cov_230qubbsyv().f[8]++;
+          cov_230qubbsyv().s[54]++;
+          return _this2.trigger = node;
+        },
+        action:
+        /* istanbul ignore next */
+        (cov_230qubbsyv().b[4][0]++, this.isReadOnly()) ||
+        /* istanbul ignore next */
+        (cov_230qubbsyv().b[4][1]++, this.isDisabled()) ?
+        /* istanbul ignore next */
+        (cov_230qubbsyv().b[3][0]++, []) :
+        /* istanbul ignore next */
+        (cov_230qubbsyv().b[3][1]++, trigger),
+        focusDelay: triggerShowDelay,
+        blurDelay: triggerHiddenDelay,
+        mouseEnterDelay: triggerShowDelay,
+        mouseLeaveDelay: triggerHiddenDelay,
+        prefixCls: prefixCls,
+        popupCls: popupCls,
+        popupStyle: popupStyle,
+        popupContent: content,
+        popupPlacement: "bottomLeft",
+        popupHidden:
+        /* istanbul ignore next */
+        (cov_230qubbsyv().b[5][0]++, hidden) ||
+        /* istanbul ignore next */
+        (cov_230qubbsyv().b[5][1]++, !this.popup),
+        builtinPlacements: BUILT_IN_PLACEMENTS,
+        onPopupAnimateAppear: this.handlePopupAnimateAppear,
+        onPopupAnimateEnd: this.handlePopupAnimateEnd,
+        onPopupHiddenChange: this.handlePopupHiddenChange,
+        getPopupStyleFromAlign: this.getPopupStyleFromAlign,
+        getRootDomNode: this.getRootDomNode
+      }, this.getEditor());
+    }
+  }, {
+    key: "getWrapperClassNames",
+    value: function getWrapperClassNames() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[9]++;
+
+      var _get2, _ref;
+
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[55]++, this.prefixCls);
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[56]++;
+
+      for (var _len =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[57]++, arguments.length), args =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[58]++, new Array(_len)), _key =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[59]++, 0); _key < _len; _key++) {
+        /* istanbul ignore next */
+        cov_230qubbsyv().s[60]++;
+        args[_key] = arguments[_key];
+      }
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[61]++;
+      return (_get2 = (0, _get3["default"])((0, _getPrototypeOf2["default"])(TriggerField.prototype), "getWrapperClassNames", this)).call.apply(_get2, [this].concat(args, [(_ref = {}, (0, _defineProperty2["default"])(_ref, "".concat(prefixCls, "-expand"), this.popup), (0, _defineProperty2["default"])(_ref, "".concat(prefixCls, "-not-editable"),
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[6][0]++, !this.isDisabled()) &&
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[6][1]++, !this.editable)), _ref)]));
+    }
+  }, {
+    key: "getDefaultSuffix",
+    value: function getDefaultSuffix() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[10]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[62]++, this.prefixCls);
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[63]++;
+      return _react["default"].createElement(_icon["default"], {
+        type: this.getTriggerIconFont(),
+        className: "".concat(prefixCls, "-trigger")
+      });
+    }
+  }, {
+    key: "handleTagAnimateEnd",
+    value: function handleTagAnimateEnd() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[11]++;
+      cov_230qubbsyv().s[64]++;
+      this.forcePopupAlign();
+    }
+  }, {
+    key: "handlePopupMouseDown",
+    value: function handlePopupMouseDown(e) {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[12]++;
+      cov_230qubbsyv().s[65]++;
+      e.preventDefault();
+
+      var _this$props$onMouseDo =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[66]++, this.props.onMouseDown),
+          onMouseDown =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[67]++, _this$props$onMouseDo === void 0 ?
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[7][0]++, _noop["default"]) :
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[7][1]++, _this$props$onMouseDo));
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[68]++;
+      onMouseDown(e);
+    }
+  }, {
+    key: "handlePopupHiddenChange",
+    value: function handlePopupHiddenChange(hidden) {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[13]++;
+      cov_230qubbsyv().s[69]++;
+      this.setPopup(!hidden);
+
+      var _this$props$onPopupHi =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[70]++, this.props.onPopupHiddenChange),
+          onPopupHiddenChange =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[71]++, _this$props$onPopupHi === void 0 ?
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[8][0]++, _noop["default"]) :
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[8][1]++, _this$props$onPopupHi));
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[72]++;
+      onPopupHiddenChange(hidden);
+    }
+  }, {
+    key: "forcePopupAlign",
+    value: function forcePopupAlign() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[14]++;
+      cov_230qubbsyv().s[73]++;
+
+      if (this.trigger) {
+        /* istanbul ignore next */
+        cov_230qubbsyv().b[9][0]++;
+        cov_230qubbsyv().s[74]++;
+        this.trigger.forcePopupAlign();
+      } else
+      /* istanbul ignore next */
+      {
+        cov_230qubbsyv().b[9][1]++;
+      }
+    }
+  }, {
+    key: "expand",
+    value: function expand() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[15]++;
+
+      var _this3 =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[75]++, this);
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[76]++;
+      this.popupTask.cancel();
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[77]++;
+
+      if (
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[11][0]++, !this.isReadOnly()) &&
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[11][1]++, !this.popup)) {
+        /* istanbul ignore next */
+        cov_230qubbsyv().b[10][0]++;
+        cov_230qubbsyv().s[78]++;
+        this.popupTask.delay(this.props.triggerShowDelay, function () {
+          /* istanbul ignore next */
+          cov_230qubbsyv().f[16]++;
+          cov_230qubbsyv().s[79]++;
+
+          _this3.setPopup(true);
+        });
+      } else
+      /* istanbul ignore next */
+      {
+        cov_230qubbsyv().b[10][1]++;
+      }
+    }
+  }, {
+    key: "collapse",
+    value: function collapse() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[17]++;
+
+      var _this4 =
+      /* istanbul ignore next */
+      (cov_230qubbsyv().s[80]++, this);
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[81]++;
+      this.popupTask.cancel();
+
+      /* istanbul ignore next */
+      cov_230qubbsyv().s[82]++;
+
+      if (
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[13][0]++, !this.isReadOnly()) &&
+      /* istanbul ignore next */
+      (cov_230qubbsyv().b[13][1]++, this.popup)) {
+        /* istanbul ignore next */
+        cov_230qubbsyv().b[12][0]++;
+        cov_230qubbsyv().s[83]++;
+        this.popupTask.delay(this.props.triggerHiddenDelay, function () {
+          /* istanbul ignore next */
+          cov_230qubbsyv().f[18]++;
+          cov_230qubbsyv().s[84]++;
+
+          _this4.setPopup(false);
+        });
+      } else
+      /* istanbul ignore next */
+      {
+        cov_230qubbsyv().b[12][1]++;
+      }
+    }
+  }, {
+    key: "popup",
+    get: function get() {
+      /* istanbul ignore next */
+      cov_230qubbsyv().f[19]++;
+      cov_230qubbsyv().s[85]++;
+      return this.statePopup;
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_230qubbsyv().s[86]++;
+  return TriggerField;
+}(_TextField2.TextField));
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[87]++;
+exports["default"] = TriggerField;
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[88]++;
+TriggerField.displayName = 'TriggerField';
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[89]++;
+TriggerField.propTypes = (0, _objectSpread2["default"])({
+  /**
+   * 下拉框的自定义内容
+   */
+  popupContent: _propTypes["default"].element,
+
+  /**
+   * 下拉框的自定义样式名
+   */
+  popupCls: _propTypes["default"].string,
+
+  /**
+   * 下拉框的内链样式
+   */
+  popupStyle: _propTypes["default"].object,
+
+  /**
+   * 触发下拉框的方式
+   * 可选值：click | focus | hover | contextMenu
+   */
+  trigger: _mobxReact.PropTypes.arrayOrObservableArrayOf(_propTypes["default"].string),
+
+  /**
+   * 下拉框显示延迟
+   * @defualt 150
+   */
+  triggerShowDelay: _propTypes["default"].number,
+
+  /**
+   * 下拉框隐藏延迟
+   * @defualt 50
+   */
+  triggerHiddenDelay: _propTypes["default"].number,
+
+  /**
+   * 下拉框变化钩子
+   */
+  onPopupHiddenChange: _propTypes["default"].func
+}, _TextField2.TextField.propTypes);
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[90]++;
+TriggerField.defaultProps = (0, _objectSpread2["default"])({}, _TextField2.TextField.defaultProps, {
+  suffixCls: 'trigger',
+  clearButton: true,
+  trigger: ['focus', 'click'],
+  triggerShowDelay: 150,
+  triggerHiddenDelay: 50
+});
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[91]++;
+(0, _tslib.__decorate)([_mobx.observable], TriggerField.prototype, "statePopup", void 0);
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[92]++;
+(0, _tslib.__decorate)([_mobx.computed], TriggerField.prototype, "popup", null);
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[93]++;
+(0, _tslib.__decorate)([_mobx.action], TriggerField.prototype, "setPopup", null);
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[94]++;
+(0, _tslib.__decorate)([_autobind["default"]], TriggerField.prototype, "getRootDomNode", null);
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[95]++;
+(0, _tslib.__decorate)([_autobind["default"]], TriggerField.prototype, "handleTagAnimateEnd", null);
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[96]++;
+(0, _tslib.__decorate)([_autobind["default"]], TriggerField.prototype, "handlePopupMouseDown", null);
+
+/* istanbul ignore next */
+cov_230qubbsyv().s[97]++;
+(0, _tslib.__decorate)([_autobind["default"]], TriggerField.prototype, "handlePopupHiddenChange", null);

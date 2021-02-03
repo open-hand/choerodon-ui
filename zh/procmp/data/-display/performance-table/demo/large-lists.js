@@ -10,50 +10,49 @@ const LargeListsTable = () => {
       title: 'Id',
       dataIndex: 'id',
       key: 'id',
-      width: 70, 
-      align: "center", 
+      width: 70,
       fixed: true,
     },
     {
       title: '姓',
       dataIndex: 'lastName',
       key: 'lastName',
-      width: 150, 
-    },  
+      width: 150,
+    },
     {
       title: '名',
       dataIndex: 'firstName',
       key: 'firstName',
-      width: 150, 
+      width: 150,
     },
     {
       title: '城市',
       dataIndex: 'city',
       key: 'city',
-      width: 300, 
-    },       
+      width: 300,
+    },
     {
       title: '街道',
       dataIndex: 'street',
       key: 'street',
-      width: 300, 
-    },            
+      width: 300,
+    },
     {
       title: '公司',
       dataIndex: 'companyName',
       key: 'companyName',
       width: 300,
-    },      
+    },
   ];
 
   useEffect(() => {
     fetch('../data/fakeLargeData.json')
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setFakeLargeData(data);
       });
   }, []);
-  
+
   return (
     <div>
       <PerformanceTable
@@ -62,7 +61,7 @@ const LargeListsTable = () => {
         height={400}
         data={fakeLargeData}
         ref={tableRef}
-        onRowClick={data => {
+        onRowClick={(data) => {
           console.log(data);
         }}
       />

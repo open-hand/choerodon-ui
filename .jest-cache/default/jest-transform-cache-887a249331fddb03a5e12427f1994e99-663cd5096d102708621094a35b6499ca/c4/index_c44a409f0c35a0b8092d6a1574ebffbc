@@ -1,0 +1,31 @@
+7936c51d50a77c668000488118576a28
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "TabPane", {
+  enumerable: true,
+  get: function get() {
+    return _TabPane["default"];
+  }
+});
+Object.defineProperty(exports, "TabContent", {
+  enumerable: true,
+  get: function get() {
+    return _TabContent["default"];
+  }
+});
+exports["default"] = void 0;
+
+var _Tabs = _interopRequireDefault(require("./Tabs"));
+
+var _TabPane = _interopRequireDefault(require("./TabPane"));
+
+var _TabContent = _interopRequireDefault(require("./TabContent"));
+
+var _default = _Tabs["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhYnMvaW5kZXguanN4Il0sIm5hbWVzIjpbIlRhYnMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLElBQUEsS0FBQSxHQUFBLHNCQUFBLENBQUEsT0FBQSxDQUFBLFFBQUEsQ0FBQSxDQUFBOztBQUNBLElBQUEsUUFBQSxHQUFBLHNCQUFBLENBQUEsT0FBQSxDQUFBLFdBQUEsQ0FBQSxDQUFBOztBQUNBLElBQUEsV0FBQSxHQUFBLHNCQUFBLENBQUEsT0FBQSxDQUFBLGNBQUEsQ0FBQSxDQUFBOztlQUVlQSxLQUFBQSxDQUFBQSxTQUFBQSxDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFRhYnMgZnJvbSAnLi9UYWJzJztcbmltcG9ydCBUYWJQYW5lIGZyb20gJy4vVGFiUGFuZSc7XG5pbXBvcnQgVGFiQ29udGVudCBmcm9tICcuL1RhYkNvbnRlbnQnO1xuXG5leHBvcnQgZGVmYXVsdCBUYWJzO1xuZXhwb3J0IHsgVGFiUGFuZSwgVGFiQ29udGVudCB9O1xuIl19

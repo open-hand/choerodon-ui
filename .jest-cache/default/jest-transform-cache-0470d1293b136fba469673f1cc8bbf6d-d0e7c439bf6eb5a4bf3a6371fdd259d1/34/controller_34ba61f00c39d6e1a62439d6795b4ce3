@@ -1,0 +1,99 @@
+06da934eace506cffa78e0d3d435ba09
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _progress = _interopRequireDefault(require("../../../components-pro/progress"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App(props) {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(App).call(this, props));
+    _this.state = {
+      completed: 0,
+      status: 'active'
+    };
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.timer = setTimeout(function () {
+        return _this2.progress(5);
+      }, 1000);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearTimeout(this.timer);
+    }
+  }, {
+    key: "progress",
+    value: function progress(completed) {
+      var _this3 = this;
+
+      if (completed > 100) {
+        this.setState({
+          completed: 100,
+          status: 'success'
+        });
+      } else {
+        this.setState({
+          completed: completed
+        });
+        var diff = Math.round(Math.random() * 10);
+        this.timer = setTimeout(function () {
+          return _this3.progress(completed + diff);
+        }, 1000);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement(_progress["default"], {
+        value: this.state.completed,
+        status: this.state.status
+      }), _react["default"].createElement(_progress["default"], {
+        type: "circle",
+        value: this.state.completed,
+        status: this.state.status
+      }), _react["default"].createElement(_progress["default"], {
+        type: "dashboard",
+        value: this.state.completed,
+        status: this.state.status
+      }));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

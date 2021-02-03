@@ -4,7 +4,7 @@ import { RichText, DataSet, Modal } from 'choerodon-ui/pro';
 import { Icon } from 'choerodon-ui';
 import { observer } from 'mobx-react';
 
-const defaultValue = [{ 'insert': 'defaultValue' }];
+const defaultValue = [{ insert: 'defaultValue' }];
 
 const style = { height: 200 };
 
@@ -16,9 +16,7 @@ const { RichTextViewer } = RichText;
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
-    fields: [
-      { name: 'content', type: 'object', defaultValue, required: true },
-    ],
+    fields: [{ name: 'content', type: 'object', defaultValue, required: true }],
   });
 
   handleFullScreenClick = () => {
@@ -27,7 +25,12 @@ class App extends React.Component {
       key: modalKey,
       title: 'Full screen',
       children: (
-        <RichText toolbar={this.renderCustomToolbar} dataSet={this.ds} name="content" style={{ height: 600 }} />
+        <RichText
+          toolbar={this.renderCustomToolbar}
+          dataSet={this.ds}
+          name="content"
+          style={{ height: 600 }}
+        />
       ),
       fullScreen: true,
     });
@@ -47,7 +50,12 @@ class App extends React.Component {
         <button type="button" className="ql-image" />
         <button type="button" className="ql-link" />
         <select className="ql-color" />
-        <button type="button" className="ql-fullScreen" style={{ outline: 'none' }} onClick={this.handleFullScreenClick}>
+        <button
+          type="button"
+          className="ql-fullScreen"
+          style={{ outline: 'none' }}
+          onClick={this.handleFullScreenClick}
+        >
           <Icon type="zoom_out_map" style={{ marginTop: -5 }} />
         </button>
       </div>
@@ -55,11 +63,29 @@ class App extends React.Component {
   };
 
   render() {
-    return <>
-      <RichText toolbar={this.renderCustomToolbar} dataSet={this.ds} name="content" style={style} />
-      <div style={{ height: 50, lineHeight: '50px' }}>RichTextViewer:</div>
-      <RichTextViewer style={{ width: '100%', overflow: 'scroll',border: '1px solid rgba(0, 0, 0, 0.2)', height: 200, padding: '0.12rem 0.15rem' }} deltaOps={this.ds.current.get('content')} />
-    </>;
+    return (
+      <>
+        <div style={{ height: 200 }}>
+          <RichText
+            toolbar={this.renderCustomToolbar}
+            dataSet={this.ds}
+            name="content"
+            style={style}
+          />
+        </div>
+        <div style={{ height: 50, lineHeight: '50px' }}>RichTextViewer:</div>
+        <RichTextViewer
+          style={{
+            width: '100%',
+            overflow: 'scroll',
+            border: '1px solid rgba(0, 0, 0, 0.2)',
+            height: 200,
+            padding: '0.12rem 0.15rem',
+          }}
+          deltaOps={this.ds.current.get('content')}
+        />
+      </>
+    );
   }
 }
 

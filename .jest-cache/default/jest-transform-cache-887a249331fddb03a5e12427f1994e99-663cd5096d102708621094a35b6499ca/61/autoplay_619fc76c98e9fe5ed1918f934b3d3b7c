@@ -1,0 +1,20 @@
+3693c9f492b331f05e0a75df59c597b0
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _carousel = _interopRequireDefault(require("../../../components/carousel"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_carousel["default"], {
+  autoplay: true
+}, _react["default"].createElement("div", null, _react["default"].createElement("h3", null, "1")), _react["default"].createElement("div", null, _react["default"].createElement("h3", null, "2")), _react["default"].createElement("div", null, _react["default"].createElement("h3", null, "3")), _react["default"].createElement("div", null, _react["default"].createElement("h3", null, "4")));
+
+var _default = __Demo;
+exports["default"] = _default;

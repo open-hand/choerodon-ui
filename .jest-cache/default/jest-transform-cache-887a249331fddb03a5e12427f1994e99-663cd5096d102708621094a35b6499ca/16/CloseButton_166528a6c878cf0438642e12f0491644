@@ -1,0 +1,68 @@
+7a405bc1be410818493de2762d421d3c
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _icon = _interopRequireDefault(require("../icon"));
+
+var _EventManager = require("../_util/EventManager");
+
+var CloseButton =
+/*#__PURE__*/
+function (_PureComponent) {
+  (0, _inherits2["default"])(CloseButton, _PureComponent);
+
+  function CloseButton() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, CloseButton);
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(CloseButton).apply(this, arguments));
+
+    _this.handleClick = function (e) {
+      (0, _EventManager.stopEvent)(e);
+      var _this$props = _this.props,
+          onClose = _this$props.onClose,
+          value = _this$props.value,
+          index = _this$props.index;
+      onClose(e, value, index);
+    };
+
+    return _this;
+  }
+
+  (0, _createClass2["default"])(CloseButton, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_icon["default"], {
+        type: "cancel",
+        onClick: this.handleClick,
+        onFocus: _EventManager.stopPropagation,
+        onMouseDown: _EventManager.stopEvent,
+        tabIndex: -1
+      });
+    }
+  }]);
+  return CloseButton;
+}(_react.PureComponent);
+
+exports["default"] = CloseButton;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby9maWVsZC9DbG9zZUJ1dHRvbi50c3giXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7O0lBUXFCLFc7Ozs7O0FBQXJCLHlCQUFBO0FBQUE7O0FBQUE7OztBQUNFLFVBQUEsV0FBQSxHQUFjLFVBQUMsQ0FBRCxFQUFNO0FBQ2xCLG1DQUFVLENBQVY7QUFEa0Isd0JBRWdCLE1BQUssS0FGckI7QUFBQSxVQUVWLE9BRlUsZUFFVixPQUZVO0FBQUEsVUFFRCxLQUZDLGVBRUQsS0FGQztBQUFBLFVBRU0sS0FGTixlQUVNLEtBRk47QUFHbEIsTUFBQSxPQUFPLENBQUMsQ0FBRCxFQUFJLEtBQUosRUFBVyxLQUFYLENBQVA7QUFDRCxLQUpEOztBQURGO0FBWUM7Ozs7NkJBTE87QUFDSixhQUNFLGtCQUFBLGFBQUEsQ0FBQyxnQkFBRCxFQUFLO0FBQUMsUUFBQSxJQUFJLEVBQUMsUUFBTjtBQUFlLFFBQUEsT0FBTyxFQUFFLEtBQUssV0FBN0I7QUFBMEMsUUFBQSxPQUFPLEVBQUUsNkJBQW5EO0FBQW9FLFFBQUEsV0FBVyxFQUFFLHVCQUFqRjtBQUE0RixRQUFBLFFBQVEsRUFBRSxDQUFDO0FBQXZHLE9BQUwsQ0FERjtBQUdEOzs7RUFYc0Msb0IiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QsIHsgUHVyZUNvbXBvbmVudCB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCBJY29uIGZyb20gJy4uL2ljb24nO1xuaW1wb3J0IHsgc3RvcEV2ZW50LCBzdG9wUHJvcGFnYXRpb24gfSBmcm9tICcuLi9fdXRpbC9FdmVudE1hbmFnZXInO1xuXG5leHBvcnQgaW50ZXJmYWNlIENsb3NlQnV0dG9uUHJvcHMge1xuICB2YWx1ZTogYW55O1xuICBpbmRleDogbnVtYmVyO1xuICBvbkNsb3NlOiAoZSwgdmFsdWU6IGFueSwgaW5kZXg6IG51bWJlcikgPT4gdm9pZDtcbn1cblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgQ2xvc2VCdXR0b24gZXh0ZW5kcyBQdXJlQ29tcG9uZW50PENsb3NlQnV0dG9uUHJvcHM+IHtcbiAgaGFuZGxlQ2xpY2sgPSAoZSkgPT4ge1xuICAgIHN0b3BFdmVudChlKTtcbiAgICBjb25zdCB7IG9uQ2xvc2UsIHZhbHVlLCBpbmRleCB9ID0gdGhpcy5wcm9wcztcbiAgICBvbkNsb3NlKGUsIHZhbHVlLCBpbmRleCk7XG4gIH07XG5cbiAgcmVuZGVyKCkge1xuICAgIHJldHVybiAoXG4gICAgICA8SWNvbiB0eXBlPVwiY2FuY2VsXCIgb25DbGljaz17dGhpcy5oYW5kbGVDbGlja30gb25Gb2N1cz17c3RvcFByb3BhZ2F0aW9ufSBvbk1vdXNlRG93bj17c3RvcEV2ZW50fSB0YWJJbmRleD17LTF9IC8+XG4gICAgKTtcbiAgfVxufVxuIl19

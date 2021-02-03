@@ -1,0 +1,114 @@
+8d857e342ae0f3c64c93b142bceeb1c4
+"use strict";
+
+/* istanbul ignore next */
+function cov_osi9mi3yr() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/bg_BG.tsx";
+  var hash = "a3ab6a903e9700f6388dec18afa31f0aa7cc8f7e";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/bg_BG.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 28
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 13
+        },
+        end: {
+          line: 9,
+          column: 1
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 15
+        },
+        end: {
+          line: 10,
+          column: 21
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 0
+        },
+        end: {
+          line: 11,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "a3ab6a903e9700f6388dec18afa31f0aa7cc8f7e"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_osi9mi3yr = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_osi9mi3yr();
+cov_osi9mi3yr().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_osi9mi3yr().s[1]++;
+exports["default"] = void 0;
+var locale =
+/* istanbul ignore next */
+(cov_osi9mi3yr().s[2]++, {
+  placeholder: 'Избор на час'
+});
+
+var _default =
+/* istanbul ignore next */
+(cov_osi9mi3yr().s[3]++, locale);
+
+/* istanbul ignore next */
+cov_osi9mi3yr().s[4]++;
+exports["default"] = _default;

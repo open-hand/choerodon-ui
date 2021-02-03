@@ -1,0 +1,1 @@
+{"version":3,"sources":["align/index.jsx"],"names":["Align"],"mappings":";;;;;;;;;AAAA,IAAA,MAAA,GAAA,sBAAA,CAAA,OAAA,CAAA,SAAA,CAAA,CAAA;;eACeA,MAAAA,CAAAA,SAAAA,C","sourcesContent":["import Align from './Align';\nexport default Align;\n"]}

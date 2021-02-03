@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.jsx"],"names":["Steps","Step"],"mappings":";;;;;;;;;;;;;;;AAAA;;AACA;;AAEAA,kBAAMC,IAAN,GAAaA,gBAAb;eAGeD,iB","sourcesContent":["import Steps from './Steps';\nimport Step from './Step';\n\nSteps.Step = Step;\n\nexport { Step };\nexport default Steps;\n"]}

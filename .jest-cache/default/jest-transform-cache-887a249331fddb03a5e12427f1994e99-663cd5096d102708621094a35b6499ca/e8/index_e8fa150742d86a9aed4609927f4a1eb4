@@ -1,0 +1,160 @@
+025f942800e2dbe783075d9e5ddf0864
+"use strict";
+
+/* istanbul ignore next */
+function cov_1ihd0gmyk5() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/layout/index.tsx";
+  var hash = "6961b8a62df0a0f1cf056ebeafe338948e596bd9";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/layout/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 14
+        },
+        end: {
+          line: 10,
+          column: 57
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 13
+        },
+        end: {
+          line: 12,
+          column: 55
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 0
+        },
+        end: {
+          line: 14,
+          column: 45
+        }
+      },
+      "6": {
+        start: {
+          line: 15,
+          column: 15
+        },
+        end: {
+          line: 15,
+          column: 33
+        }
+      },
+      "7": {
+        start: {
+          line: 16,
+          column: 0
+        },
+        end: {
+          line: 16,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "6961b8a62df0a0f1cf056ebeafe338948e596bd9"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_1ihd0gmyk5 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_1ihd0gmyk5();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_1ihd0gmyk5().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_1ihd0gmyk5().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1ihd0gmyk5().s[2]++;
+exports["default"] = void 0;
+
+var _layout =
+/* istanbul ignore next */
+(cov_1ihd0gmyk5().s[3]++, _interopRequireDefault(require("./layout")));
+
+var _Sider =
+/* istanbul ignore next */
+(cov_1ihd0gmyk5().s[4]++, _interopRequireDefault(require("./Sider")));
+
+/* istanbul ignore next */
+cov_1ihd0gmyk5().s[5]++;
+_layout["default"].Sider = _Sider["default"];
+
+var _default =
+/* istanbul ignore next */
+(cov_1ihd0gmyk5().s[6]++, _layout["default"]);
+
+/* istanbul ignore next */
+cov_1ihd0gmyk5().s[7]++;
+exports["default"] = _default;

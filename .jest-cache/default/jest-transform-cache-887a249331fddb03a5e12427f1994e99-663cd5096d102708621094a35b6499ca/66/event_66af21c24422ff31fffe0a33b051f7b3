@@ -1,0 +1,47 @@
+6d061745f158934a2161658aae4cf6df
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _dropdown = _interopRequireDefault(require("../../../components/dropdown"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _menu = _interopRequireDefault(require("../../../components/menu"));
+
+var _message2 = _interopRequireDefault(require("../../../components/message"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var onClick = function onClick(_ref) {
+  var key = _ref.key;
+
+  _message2["default"].info("Click on item ".concat(key));
+};
+
+var menu = _react["default"].createElement(_menu["default"], {
+  onClick: onClick
+}, _react["default"].createElement(_menu["default"].Item, {
+  key: "1"
+}, "1st menu item"), _react["default"].createElement(_menu["default"].Item, {
+  key: "2"
+}, "2nd memu item"), _react["default"].createElement(_menu["default"].Item, {
+  key: "3"
+}, "3rd menu item"));
+
+var __Demo = _react["default"].createElement(_dropdown["default"], {
+  overlay: menu
+}, _react["default"].createElement("a", {
+  className: "c7n-dropdown-link",
+  href: "#"
+}, "Hover me, Click menu item ", _react["default"].createElement(_icon["default"], {
+  type: "arrow_drop_down"
+})));
+
+var _default = __Demo;
+exports["default"] = _default;

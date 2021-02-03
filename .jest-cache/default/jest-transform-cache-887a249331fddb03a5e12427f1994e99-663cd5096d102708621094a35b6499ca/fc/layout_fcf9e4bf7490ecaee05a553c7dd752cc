@@ -1,0 +1,110 @@
+98b5b193797ebd14cdfc8a33c679f8dc
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _radio = _interopRequireDefault(require("../../../components/radio"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _form = _interopRequireDefault(require("../../../components/form"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var FormItem = _form["default"].Item;
+
+var FormLayoutDemo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(FormLayoutDemo, _React$Component);
+
+  function FormLayoutDemo() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, FormLayoutDemo);
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(FormLayoutDemo).call(this));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleFormLayoutChange", function (e) {
+      _this.setState({
+        formLayout: e.target.value
+      });
+    });
+    _this.state = {
+      formLayout: 'horizontal'
+    };
+    return _this;
+  }
+
+  (0, _createClass2["default"])(FormLayoutDemo, [{
+    key: "render",
+    value: function render() {
+      var formLayout = this.state.formLayout;
+      var formItemLayout = formLayout === 'horizontal' ? {
+        labelCol: {
+          span: 4
+        },
+        wrapperCol: {
+          span: 14
+        }
+      } : null;
+      var buttonItemLayout = formLayout === 'horizontal' ? {
+        wrapperCol: {
+          span: 14,
+          offset: 4
+        }
+      } : null;
+      return _react["default"].createElement("div", null, _react["default"].createElement(_form["default"], {
+        layout: formLayout
+      }, _react["default"].createElement(FormItem, (0, _extends2["default"])({
+        label: "Form Layout"
+      }, formItemLayout), _react["default"].createElement(_radio["default"].Group, {
+        defaultValue: "horizontal",
+        onChange: this.handleFormLayoutChange
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "horizontal"
+      }, "Horizontal"), _react["default"].createElement(_radio["default"].Button, {
+        value: "vertical"
+      }, "Vertical"), _react["default"].createElement(_radio["default"].Button, {
+        value: "inline"
+      }, "Inline"))), _react["default"].createElement(FormItem, (0, _extends2["default"])({
+        label: "Field A"
+      }, formItemLayout), _react["default"].createElement(_input["default"], {
+        placeholder: "input placeholder"
+      })), _react["default"].createElement(FormItem, (0, _extends2["default"])({
+        label: "Field B"
+      }, formItemLayout), _react["default"].createElement(_input["default"], {
+        placeholder: "input placeholder"
+      })), _react["default"].createElement(FormItem, buttonItemLayout, _react["default"].createElement(_button["default"], {
+        type: "primary"
+      }, "Submit"))));
+    }
+  }]);
+  return FormLayoutDemo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(FormLayoutDemo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,14 @@
+6da137bf70cd85341949ed5e5d1e0afb
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _ = _interopRequireDefault(require(".."));
+
+var _focusTest = _interopRequireDefault(require("../../../tests/shared/focusTest"));
+
+var MonthPicker = _["default"].MonthPicker;
+describe('MonthPicker', function () {
+  (0, _focusTest["default"])(MonthPicker);
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIk1vbnRoUGlja2VyLnRlc3QuanMiXSwibmFtZXMiOlsiTW9udGhQaWNrZXIiLCJEYXRlUGlja2VyIiwiZGVzY3JpYmUiXSwibWFwcGluZ3MiOiI7Ozs7QUFBQTs7QUFDQTs7SUFFUUEsVyxHQUFnQkMsWSxDQUFoQkQsVztBQUVSRSxRQUFRLENBQUMsYUFBRCxFQUFnQixZQUFNO0FBQzVCLDZCQUFVRixXQUFWO0FBQ0QsQ0FGTyxDQUFSIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IERhdGVQaWNrZXIgZnJvbSAnLi4nO1xuaW1wb3J0IGZvY3VzVGVzdCBmcm9tICcuLi8uLi8uLi90ZXN0cy9zaGFyZWQvZm9jdXNUZXN0JztcblxuY29uc3QgeyBNb250aFBpY2tlciB9ID0gRGF0ZVBpY2tlcjtcblxuZGVzY3JpYmUoJ01vbnRoUGlja2VyJywgKCkgPT4ge1xuICBmb2N1c1Rlc3QoTW9udGhQaWNrZXIpO1xufSk7XG4iXX0=

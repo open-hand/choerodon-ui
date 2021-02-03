@@ -1,0 +1,56 @@
+a32fcfb0fb6fc91c9569e476d6b4bb48
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _cascader = _interopRequireDefault(require("../../../components/cascader"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var options = [{
+  value: 'zhejiang',
+  label: 'Zhejiang',
+  children: [{
+    value: 'hangzhou',
+    label: 'Hangzhou',
+    children: [{
+      value: 'xihu',
+      label: 'West Lake'
+    }]
+  }]
+}, {
+  value: 'jiangsu',
+  label: 'Jiangsu',
+  children: [{
+    value: 'nanjing',
+    label: 'Nanjing',
+    children: [{
+      value: 'zhonghuamen',
+      label: 'Zhong Hua Men'
+    }]
+  }]
+}];
+
+function onChange(value) {
+  console.log(value);
+} // Just show the latest item.
+
+
+function displayRender(label) {
+  return label[label.length - 1];
+}
+
+var __Demo = _react["default"].createElement(_cascader["default"], {
+  options: options,
+  expandTrigger: "hover",
+  displayRender: displayRender,
+  onChange: onChange
+});
+
+var _default = __Demo;
+exports["default"] = _default;

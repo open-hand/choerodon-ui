@@ -1,0 +1,49 @@
+6d9a356baa5a6fee14997ad89085a146
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _list = _interopRequireDefault(require("../../../components/list"));
+
+var _card = _interopRequireDefault(require("../../../components/card"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var data = [{
+  title: 'Title 1'
+}, {
+  title: 'Title 2'
+}, {
+  title: 'Title 3'
+}, {
+  title: 'Title 4'
+}, {
+  title: 'Title 5'
+}, {
+  title: 'Title 6'
+}, {
+  title: 'Title 7'
+}, {
+  title: 'Title 8'
+}];
+
+var __Demo = _react["default"].createElement(_list["default"], {
+  grid: {
+    gutter: 16,
+    column: 4
+  },
+  dataSource: data,
+  renderItem: function renderItem(item) {
+    return _react["default"].createElement(_list["default"].Item, null, _react["default"].createElement(_card["default"], {
+      title: item.title
+    }, "Card content"));
+  }
+});
+
+var _default = __Demo;
+exports["default"] = _default;

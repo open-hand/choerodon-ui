@@ -1,0 +1,60 @@
+dbd8d5ba034c2a845c23d245f73133a9
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var App =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  (0, _inherits2["default"])(App, _React$PureComponent);
+
+  function App() {
+    (0, _classCallCheck2["default"])(this, App);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(App).apply(this, arguments));
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], null, "\u9ED8\u8BA4\u53EF\u9009\u62E9\u6309\u94AE"), _react["default"].createElement(_button["default"], {
+        disabled: true
+      }, "\u4E0D\u53EF\u9009\u62E9\u6309\u94AE"), _react["default"].createElement(_button["default"], {
+        color: "primary",
+        disabled: true
+      }, "\u4E0D\u53EF\u9009\u62E9\u6309\u94AE"), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement(_button["default"], {
+        funcType: "flat",
+        color: "primary",
+        disabled: true
+      }, "\u4E0D\u53EF\u9009\u62E9\u6309\u94AE"), _react["default"].createElement(_button["default"], {
+        funcType: "flat",
+        icon: "save",
+        disabled: true
+      }));
+    }
+  }]);
+  return App;
+}(_react["default"].PureComponent);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

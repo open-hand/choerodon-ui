@@ -1,0 +1,60 @@
+da76d12f338f8b57db775bb853351662
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _pagination = _interopRequireDefault(require("../../../components/pagination"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function showTotal(total) {
+  return "\u603B\u5171 ".concat(total, " \u6761");
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_pagination["default"], {
+  tiny: false,
+  size: "large",
+  total: 50,
+  showTotal: false,
+  showSizeChanger: false
+}), _react["default"].createElement(_pagination["default"], {
+  tiny: false,
+  size: "large",
+  total: 50,
+  showTotal: false,
+  showSizeChanger: true,
+  showQuickJumper: true
+}), _react["default"].createElement(_pagination["default"], {
+  tiny: false,
+  size: "large",
+  total: 50,
+  showTotal: showTotal,
+  showSizeChanger: false
+}), _react["default"].createElement(_pagination["default"], {
+  tiny: false,
+  size: "small",
+  total: 50,
+  showTotal: false,
+  showSizeChanger: false
+}), _react["default"].createElement(_pagination["default"], {
+  tiny: false,
+  size: "small",
+  total: 50,
+  showTotal: false,
+  showSizeChanger: true,
+  showQuickJumper: true
+}), _react["default"].createElement(_pagination["default"], {
+  tiny: false,
+  size: "small",
+  total: 50,
+  showTotal: showTotal,
+  showSizeChanger: false
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

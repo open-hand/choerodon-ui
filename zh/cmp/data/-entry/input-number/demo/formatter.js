@@ -8,21 +8,26 @@ function onChange(value) {
 
 ReactDOM.render(
   <div>
-    <InputNumber
-      defaultValue={1000}
-      label="金额"
-      formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-      parser={value => value.replace(/\$\s?|(,*)/g, '')}
-      onChange={onChange}
-    />
+    <div style={{ marginBottom: 10 }}>
+      <InputNumber
+        defaultValue={1000}
+        label="金额"
+        formatter={(value) =>
+          `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }
+        parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+        onChange={onChange}
+      />
+    </div>
     <InputNumber
       defaultValue={100}
       label="百分比"
       min={0}
       max={100}
-      formatter={value => `${value}%`}
-      parser={value => value.replace('%', '')}
+      formatter={(value) => `${value}%`}
+      parser={(value) => value.replace('%', '')}
       onChange={onChange}
     />
   </div>,
-  document.getElementById('container'));
+  document.getElementById('container'),
+);

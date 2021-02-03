@@ -1,0 +1,122 @@
+ad5733961b7be13d06fd86f6b9496711
+"use strict";
+
+/* istanbul ignore next */
+var cov_vxwpfpysk = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/button/index.tsx";
+  var hash = "58c3145dc36a1b6e7283b2e7c2b48ee2eaa8427f";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/button/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 14
+        },
+        end: {
+          line: 10,
+          column: 57
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 15
+        },
+        end: {
+          line: 12,
+          column: 33
+        }
+      },
+      "5": {
+        start: {
+          line: 13,
+          column: 0
+        },
+        end: {
+          line: 13,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "58c3145dc36a1b6e7283b2e7c2b48ee2eaa8427f"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_vxwpfpysk.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_vxwpfpysk.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_vxwpfpysk.s[2]++;
+exports["default"] = void 0;
+
+var _Button =
+/* istanbul ignore next */
+(cov_vxwpfpysk.s[3]++, _interopRequireDefault(require("./Button")));
+
+var _default =
+/* istanbul ignore next */
+(cov_vxwpfpysk.s[4]++, _Button["default"]);
+
+/* istanbul ignore next */
+cov_vxwpfpysk.s[5]++;
+exports["default"] = _default;

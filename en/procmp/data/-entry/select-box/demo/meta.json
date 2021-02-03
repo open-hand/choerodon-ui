@@ -22,11 +22,11 @@
     {
       "filename": "controlled.js",
       "title": {
-        "zh": "受控按钮选则框",
+        "zh": "受控按钮选择框",
         "en": "Controlled SelectBox"
       },
       "description": {
-        "zh": "受控按钮选则框。\n",
+        "zh": "受控按钮选择框。\n",
         "en": "Controlled SelectBox.\n"
       },
       "order": 1,

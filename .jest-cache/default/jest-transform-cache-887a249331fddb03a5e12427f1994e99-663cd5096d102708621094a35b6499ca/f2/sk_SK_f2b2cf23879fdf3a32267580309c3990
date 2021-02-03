@@ -1,0 +1,182 @@
+77363b19b56b682a333a6bd393446cca
+"use strict";
+
+/* istanbul ignore next */
+function cov_2ojyt7c2w0() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/date-picker/locale/sk_SK.tsx";
+  var hash = "ab2b06bc6545f9c8cf23262022c4c3e1f138ffb8";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/date-picker/locale/sk_SK.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 21
+        },
+        end: {
+          line: 10,
+          column: 92
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 13
+        },
+        end: {
+          line: 12,
+          column: 89
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 79
+        }
+      },
+      "6": {
+        start: {
+          line: 17,
+          column: 13
+        },
+        end: {
+          line: 23,
+          column: 1
+        }
+      },
+      "7": {
+        start: {
+          line: 25,
+          column: 15
+        },
+        end: {
+          line: 25,
+          column: 21
+        }
+      },
+      "8": {
+        start: {
+          line: 26,
+          column: 0
+        },
+        end: {
+          line: 26,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "ab2b06bc6545f9c8cf23262022c4c3e1f138ffb8"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_2ojyt7c2w0 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_2ojyt7c2w0();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_2ojyt7c2w0().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_2ojyt7c2w0().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2ojyt7c2w0().s[2]++;
+exports["default"] = void 0;
+
+var _objectSpread2 =
+/* istanbul ignore next */
+(cov_2ojyt7c2w0().s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2")));
+
+var _sk_SK =
+/* istanbul ignore next */
+(cov_2ojyt7c2w0().s[4]++, _interopRequireDefault(require("../../rc-components/calendar/locale/sk_SK")));
+
+var _sk_SK2 =
+/* istanbul ignore next */
+(cov_2ojyt7c2w0().s[5]++, _interopRequireDefault(require("../../time-picker/locale/sk_SK"))); // 统一合并为完整的 Locale
+
+
+var locale =
+/* istanbul ignore next */
+(cov_2ojyt7c2w0().s[6]++, {
+  lang: (0, _objectSpread2["default"])({
+    placeholder: 'Vybrať dátum',
+    rangePlaceholder: ['Od', 'Do']
+  }, _sk_SK["default"]),
+  timePickerLocale: (0, _objectSpread2["default"])({}, _sk_SK2["default"])
+}); // All settings at:
+
+var _default =
+/* istanbul ignore next */
+(cov_2ojyt7c2w0().s[7]++, locale);
+
+/* istanbul ignore next */
+cov_2ojyt7c2w0().s[8]++;
+exports["default"] = _default;

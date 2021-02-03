@@ -11,7 +11,6 @@ const Table = () => {
       dataIndex: 'id',
       key: 'id',
       width: 70,
-      align: "center",
       fixed: true,
     },
     {
@@ -48,8 +47,8 @@ const Table = () => {
 
   useEffect(() => {
     fetch('../data/fakeLargeData.json')
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setFakeLargeData(data);
       });
   }, []);
@@ -61,7 +60,7 @@ const Table = () => {
         height={400}
         data={fakeLargeData.slice(0, 20)}
         ref={tableRef}
-        onRowClick={data => {
+        onRowClick={(data) => {
           console.log(data);
         }}
       />

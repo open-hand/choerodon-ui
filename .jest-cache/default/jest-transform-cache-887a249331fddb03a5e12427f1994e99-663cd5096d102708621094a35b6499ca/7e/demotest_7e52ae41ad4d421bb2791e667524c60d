@@ -1,0 +1,9 @@
+f0b81cf051033de8921775ee5b6e60ab
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
+
+(0, _demoTest["default"])('locale-provider');
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsaUJBQVQiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZGVtb1Rlc3QgZnJvbSAnLi4vLi4vLi4vdGVzdHMvc2hhcmVkL2RlbW9UZXN0JztcblxuZGVtb1Rlc3QoJ2xvY2FsZS1wcm92aWRlcicpO1xuIl19

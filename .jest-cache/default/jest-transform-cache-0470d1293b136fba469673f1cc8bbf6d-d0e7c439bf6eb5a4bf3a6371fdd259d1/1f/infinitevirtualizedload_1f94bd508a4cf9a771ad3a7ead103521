@@ -1,0 +1,234 @@
+bff6b16784776befa9e7050a4601fdaf
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _spin = _interopRequireDefault(require("../../../components/spin"));
+
+var _list = _interopRequireDefault(require("../../../components/list"));
+
+var _avatar = _interopRequireDefault(require("../../../components/avatar"));
+
+var _message2 = _interopRequireDefault(require("../../../components/message"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reqwest = _interopRequireDefault(require("reqwest"));
+
+var _WindowScroller = _interopRequireDefault(require("react-virtualized/dist/commonjs/WindowScroller"));
+
+var _AutoSizer = _interopRequireDefault(require("react-virtualized/dist/commonjs/AutoSizer"));
+
+var _List2 = _interopRequireDefault(require("react-virtualized/dist/commonjs/List"));
+
+var _InfiniteLoader = _interopRequireDefault(require("react-virtualized/dist/commonjs/InfiniteLoader"));
+
+var fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
+
+var VirtualizedExample =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(VirtualizedExample, _React$Component);
+
+  function VirtualizedExample() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, VirtualizedExample);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(VirtualizedExample)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      data: [],
+      loading: false
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "loadedRowsMap", {});
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "getData", function (callback) {
+      (0, _reqwest["default"])({
+        url: fakeDataUrl,
+        type: 'json',
+        method: 'get',
+        contentType: 'application/json',
+        success: function success(res) {
+          callback(res);
+        }
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleInfiniteOnLoad", function (_ref) {
+      var startIndex = _ref.startIndex,
+          stopIndex = _ref.stopIndex;
+      var data = _this.state.data;
+
+      _this.setState({
+        loading: true
+      });
+
+      for (var i = startIndex; i <= stopIndex; i++) {
+        // 1 means loading
+        _this.loadedRowsMap[i] = 1;
+      }
+
+      if (data.length > 19) {
+        _message2["default"].warning('Virtualized List loaded all');
+
+        _this.setState({
+          loading: false
+        });
+
+        return;
+      }
+
+      _this.getData(function (res) {
+        data = data.concat(res.results);
+
+        _this.setState({
+          data: data,
+          loading: false
+        });
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "isRowLoaded", function (_ref2) {
+      var index = _ref2.index;
+      return !!_this.loadedRowsMap[index];
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "renderItem", function (_ref3) {
+      var index = _ref3.index,
+          key = _ref3.key,
+          style = _ref3.style;
+      var data = _this.state.data;
+      var item = data[index];
+      return _react["default"].createElement(_list["default"].Item, {
+        key: key,
+        style: style
+      }, _react["default"].createElement(_list["default"].Item.Meta, {
+        avatar: _react["default"].createElement(_avatar["default"], {
+          src: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        }),
+        title: _react["default"].createElement("a", {
+          href: "https://choerodon.github.io/choerodon-ui/"
+        }, item.name.last),
+        description: item.email
+      }), _react["default"].createElement("div", null, "Content"));
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(VirtualizedExample, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      this.getData(function (res) {
+        _this2.setState({
+          data: res.results
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var data = this.state.data;
+
+      var vlist = function vlist(_ref4) {
+        var height = _ref4.height,
+            isScrolling = _ref4.isScrolling,
+            onChildScroll = _ref4.onChildScroll,
+            scrollTop = _ref4.scrollTop,
+            onRowsRendered = _ref4.onRowsRendered,
+            width = _ref4.width;
+        return _react["default"].createElement(_List2["default"], {
+          autoHeight: true,
+          height: height,
+          isScrolling: isScrolling,
+          onScroll: onChildScroll,
+          overscanRowCount: 2,
+          rowCount: data.length,
+          rowHeight: 73,
+          rowRenderer: _this3.renderItem,
+          onRowsRendered: onRowsRendered,
+          scrollTop: scrollTop,
+          width: width
+        });
+      };
+
+      var autoSize = function autoSize(_ref5) {
+        var height = _ref5.height,
+            isScrolling = _ref5.isScrolling,
+            onChildScroll = _ref5.onChildScroll,
+            scrollTop = _ref5.scrollTop,
+            onRowsRendered = _ref5.onRowsRendered;
+        return _react["default"].createElement(_AutoSizer["default"], {
+          disableHeight: true
+        }, function (_ref6) {
+          var width = _ref6.width;
+          return vlist({
+            height: height,
+            isScrolling: isScrolling,
+            onChildScroll: onChildScroll,
+            scrollTop: scrollTop,
+            onRowsRendered: onRowsRendered,
+            width: width
+          });
+        });
+      };
+
+      var infiniteLoader = function infiniteLoader(_ref7) {
+        var height = _ref7.height,
+            isScrolling = _ref7.isScrolling,
+            onChildScroll = _ref7.onChildScroll,
+            scrollTop = _ref7.scrollTop;
+        return _react["default"].createElement(_InfiniteLoader["default"], {
+          isRowLoaded: _this3.isRowLoaded,
+          loadMoreRows: _this3.handleInfiniteOnLoad,
+          rowCount: data.length
+        }, function (_ref8) {
+          var onRowsRendered = _ref8.onRowsRendered;
+          return autoSize({
+            height: height,
+            isScrolling: isScrolling,
+            onChildScroll: onChildScroll,
+            scrollTop: scrollTop,
+            onRowsRendered: onRowsRendered
+          });
+        });
+      };
+
+      return _react["default"].createElement(_list["default"], null, data.length > 0 && _react["default"].createElement(_WindowScroller["default"], {
+        scrollElement: null
+      }, infiniteLoader), this.state.loading && _react["default"].createElement(_spin["default"], {
+        className: "demo-loading"
+      }));
+    }
+  }]);
+  return VirtualizedExample;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(VirtualizedExample, null);
+
+var _default = __Demo;
+exports["default"] = _default;

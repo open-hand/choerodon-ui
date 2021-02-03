@@ -1,0 +1,38 @@
+73b21baedf6a36c9fdb66be99bf8d0d6
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _dropdown = _interopRequireDefault(require("../../../components/dropdown"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _menu = _interopRequireDefault(require("../../../components/menu"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var SubMenu = _menu["default"].SubMenu;
+
+var menu = _react["default"].createElement(_menu["default"], null, _react["default"].createElement(_menu["default"].Item, null, "1st menu item"), _react["default"].createElement(_menu["default"].Item, null, "2nd menu item"), _react["default"].createElement(SubMenu, {
+  title: "sub menu"
+}, _react["default"].createElement(_menu["default"].Item, null, "3rd menu item"), _react["default"].createElement(_menu["default"].Item, null, "4th menu item")), _react["default"].createElement(SubMenu, {
+  title: "disabled sub menu",
+  disabled: true
+}, _react["default"].createElement(_menu["default"].Item, null, "5d menu item"), _react["default"].createElement(_menu["default"].Item, null, "6th menu item")));
+
+var __Demo = _react["default"].createElement(_dropdown["default"], {
+  overlay: menu
+}, _react["default"].createElement("a", {
+  className: "c7n-dropdown-link",
+  href: "#"
+}, "Cascading menu ", _react["default"].createElement(_icon["default"], {
+  type: "arrow_drop_down"
+})));
+
+var _default = __Demo;
+exports["default"] = _default;

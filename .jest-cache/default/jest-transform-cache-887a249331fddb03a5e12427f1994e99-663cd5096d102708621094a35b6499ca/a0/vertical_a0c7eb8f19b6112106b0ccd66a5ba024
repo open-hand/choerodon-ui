@@ -1,0 +1,32 @@
+f0d7e0a5782c515a4d87996bcf08c7dc
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _steps = _interopRequireDefault(require("../../../components/steps"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Step = _steps["default"].Step;
+
+var __Demo = _react["default"].createElement(_steps["default"], {
+  direction: "vertical",
+  current: 1
+}, _react["default"].createElement(Step, {
+  title: "Finished",
+  description: "This is a description."
+}), _react["default"].createElement(Step, {
+  title: "In Progress",
+  description: "This is a description."
+}), _react["default"].createElement(Step, {
+  title: "Waiting",
+  description: "This is a description."
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

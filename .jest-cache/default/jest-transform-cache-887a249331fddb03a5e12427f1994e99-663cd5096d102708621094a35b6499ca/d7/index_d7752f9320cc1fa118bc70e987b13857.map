@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/animate/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,mB","sourcesContent":["import Animate from 'choerodon-ui/lib/animate';\n\nexport default Animate;\n"]}

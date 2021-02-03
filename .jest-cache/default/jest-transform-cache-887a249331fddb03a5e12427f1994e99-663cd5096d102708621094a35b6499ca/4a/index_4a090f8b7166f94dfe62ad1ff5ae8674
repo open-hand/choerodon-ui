@@ -1,0 +1,52 @@
+9929da70a5201b11be77c190932cd1d4
+"use strict";
+
+/* istanbul ignore next */
+function cov_1lffj1pmzx() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/skeleton/style/index.ts";
+  var hash = "d5f1e393be239cc11c567c90924189c07f3549aa";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/skeleton/style/index.ts",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 3,
+          column: 43
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "d5f1e393be239cc11c567c90924189c07f3549aa"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_1lffj1pmzx = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_1lffj1pmzx();
+cov_1lffj1pmzx().s[0]++;
+
+require("choerodon-ui/lib/skeleton/style");

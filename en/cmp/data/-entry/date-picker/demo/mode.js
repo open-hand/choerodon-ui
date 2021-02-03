@@ -7,7 +7,7 @@ const { RangePicker } = DatePicker;
 class ControlledDatePicker extends React.Component {
   state = { mode: 'time' };
 
-  handleOpenChange = open => {
+  handleOpenChange = (open) => {
     if (open) {
       this.setState({ mode: 'time' });
     }
@@ -38,7 +38,10 @@ class ControlledRangePicker extends React.Component {
   handlePanelChange = (value, mode) => {
     this.setState({
       value,
-      mode: [mode[0] === 'date' ? 'month' : mode[0], mode[1] === 'date' ? 'month' : mode[1]],
+      mode: [
+        mode[0] === 'date' ? 'month' : mode[0],
+        mode[1] === 'date' ? 'month' : mode[1],
+      ],
     });
   };
 
@@ -58,8 +61,9 @@ class ControlledRangePicker extends React.Component {
 
 ReactDOM.render(
   <div>
-    <ControlledDatePicker />
-    <br />
+    <div style={{ marginBottom: 10 }}>
+      <ControlledDatePicker />
+    </div>
     <ControlledRangePicker />
   </div>,
   document.getElementById('container'),

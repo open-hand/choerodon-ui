@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/select-box/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,qB","sourcesContent":["import SelectBox from './SelectBox';\n\nexport default SelectBox;\n"]}

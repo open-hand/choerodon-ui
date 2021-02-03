@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.jsx"],"names":["Collapse","Panel"],"mappings":";;;;;;;;;AAAA;;eAEeA,oB;;AACR,IAAMC,KAAK,GAAGD,qBAASC,KAAvB","sourcesContent":["import Collapse from './Collapse';\n\nexport default Collapse;\nexport const Panel = Collapse.Panel;\n"]}

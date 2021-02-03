@@ -1,0 +1,310 @@
+d55d4d6c85b362d5d24250100fe363b3
+"use strict";
+
+/* istanbul ignore next */
+function cov_2nufqz9zyz() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/isFlexSupported.tsx";
+  var hash = "bdd6de208fa75f108bc11f105983caf85b8771ec";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/isFlexSupported.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 37
+        }
+      },
+      "2": {
+        start: {
+          line: 9,
+          column: 2
+        },
+        end: {
+          line: 12,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 26
+        },
+        end: {
+          line: 10,
+          column: 57
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 4
+        },
+        end: {
+          line: 11,
+          column: 156
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 2
+        },
+        end: {
+          line: 14,
+          column: 15
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "isFlexSupported",
+        decl: {
+          start: {
+            line: 8,
+            column: 9
+          },
+          end: {
+            line: 8,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 8,
+            column: 27
+          },
+          end: {
+            line: 15,
+            column: 1
+          }
+        },
+        line: 8
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 9,
+            column: 2
+          },
+          end: {
+            line: 12,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 9,
+            column: 2
+          },
+          end: {
+            line: 12,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 9,
+            column: 2
+          },
+          end: {
+            line: 12,
+            column: 3
+          }
+        }],
+        line: 9
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 9,
+            column: 6
+          },
+          end: {
+            line: 9,
+            column: 89
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 9,
+            column: 6
+          },
+          end: {
+            line: 9,
+            column: 35
+          }
+        }, {
+          start: {
+            line: 9,
+            column: 39
+          },
+          end: {
+            line: 9,
+            column: 54
+          }
+        }, {
+          start: {
+            line: 9,
+            column: 58
+          },
+          end: {
+            line: 9,
+            column: 89
+          }
+        }],
+        line: 9
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 11,
+            column: 11
+          },
+          end: {
+            line: 11,
+            column: 155
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 11,
+            column: 11
+          },
+          end: {
+            line: 11,
+            column: 42
+          }
+        }, {
+          start: {
+            line: 11,
+            column: 46
+          },
+          end: {
+            line: 11,
+            column: 83
+          }
+        }, {
+          start: {
+            line: 11,
+            column: 87
+          },
+          end: {
+            line: 11,
+            column: 118
+          }
+        }, {
+          start: {
+            line: 11,
+            column: 122
+          },
+          end: {
+            line: 11,
+            column: 155
+          }
+        }],
+        line: 11
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0, 0],
+      "2": [0, 0, 0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "bdd6de208fa75f108bc11f105983caf85b8771ec"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_2nufqz9zyz = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_2nufqz9zyz();
+cov_2nufqz9zyz().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2nufqz9zyz().s[1]++;
+exports["default"] = isFlexSupported;
+
+function isFlexSupported() {
+  /* istanbul ignore next */
+  cov_2nufqz9zyz().f[0]++;
+  cov_2nufqz9zyz().s[2]++;
+
+  if (
+  /* istanbul ignore next */
+  (cov_2nufqz9zyz().b[1][0]++, typeof window !== 'undefined') &&
+  /* istanbul ignore next */
+  (cov_2nufqz9zyz().b[1][1]++, window.document) &&
+  /* istanbul ignore next */
+  (cov_2nufqz9zyz().b[1][2]++, window.document.documentElement)) {
+    /* istanbul ignore next */
+    cov_2nufqz9zyz().b[0][0]++;
+    var documentElement =
+    /* istanbul ignore next */
+    (cov_2nufqz9zyz().s[3]++, window.document.documentElement);
+
+    /* istanbul ignore next */
+    cov_2nufqz9zyz().s[4]++;
+    return (
+      /* istanbul ignore next */
+      (cov_2nufqz9zyz().b[2][0]++, 'flex' in documentElement.style) ||
+      /* istanbul ignore next */
+      (cov_2nufqz9zyz().b[2][1]++, 'webkitFlex' in documentElement.style) ||
+      /* istanbul ignore next */
+      (cov_2nufqz9zyz().b[2][2]++, 'Flex' in documentElement.style) ||
+      /* istanbul ignore next */
+      (cov_2nufqz9zyz().b[2][3]++, 'msFlex' in documentElement.style)
+    );
+  } else
+  /* istanbul ignore next */
+  {
+    cov_2nufqz9zyz().b[0][1]++;
+  }
+
+  cov_2nufqz9zyz().s[5]++;
+  return false;
+}

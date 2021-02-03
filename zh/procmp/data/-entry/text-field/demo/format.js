@@ -20,7 +20,7 @@ class App extends React.Component {
       {
         name: 'first-name',
         type: 'string',
-        defaultValue: 'huazhen',
+        defaultValue: 'zhangsan',
         required: true,
         format: 'uppercase',
       },

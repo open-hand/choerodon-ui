@@ -1,0 +1,111 @@
+c6840dad5faaaf20ff18802d9c6ed259
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _transfer = _interopRequireDefault(require("../../../components/transfer"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      mockData: [],
+      targetKeys: []
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "getMock", function () {
+      var targetKeys = [];
+      var mockData = [];
+
+      for (var i = 0; i < 20; i++) {
+        var data = {
+          key: i.toString(),
+          title: "content".concat(i + 1),
+          description: "description of content".concat(i + 1),
+          chosen: Math.random() * 2 > 1
+        };
+
+        if (data.chosen) {
+          targetKeys.push(data.key);
+        }
+
+        mockData.push(data);
+      }
+
+      _this.setState({
+        mockData: mockData,
+        targetKeys: targetKeys
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "filterOption", function (inputValue, option) {
+      return option.description.indexOf(inputValue) > -1;
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleChange", function (targetKeys) {
+      _this.setState({
+        targetKeys: targetKeys
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getMock();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_transfer["default"], {
+        dataSource: this.state.mockData,
+        showSearch: true,
+        filterOption: this.filterOption,
+        targetKeys: this.state.targetKeys,
+        onChange: this.handleChange,
+        render: function render(item) {
+          return item.title;
+        }
+      });
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

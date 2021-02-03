@@ -1,0 +1,36 @@
+39d7a3325c13b448a56a4d6d6d954697
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _configure = require("../configure");
+
+var Icon = function Icon(props) {
+  var iconfontPrefix = (0, _configure.getConfig)('iconfontPrefix');
+  var type = props.type,
+      _props$className = props.className,
+      className = _props$className === void 0 ? '' : _props$className,
+      otherProps = (0, _objectWithoutProperties2["default"])(props, ["type", "className"]);
+  var classString = (0, _classnames["default"])(iconfontPrefix, "".concat(iconfontPrefix, "-").concat(type), className);
+  return _react["default"].createElement("i", (0, _extends2["default"])({}, otherProps, {
+    className: classString
+  }));
+};
+
+Icon.displayName = 'Icon';
+var _default = Icon;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzL2ljb24vaW5kZXgudHN4Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFDQTs7QUFlQSxJQUFNLElBQUksR0FBRyxTQUFTLElBQVQsQ0FBYyxLQUFkLEVBQThCO0FBQ3pDLE1BQU0sY0FBYyxHQUFHLDBCQUFVLGdCQUFWLENBQXZCO0FBRHlDLE1BRWpDLElBRmlDLEdBRU8sS0FGUCxDQUVqQyxJQUZpQztBQUFBLHlCQUVPLEtBRlAsQ0FFM0IsU0FGMkI7QUFBQSxNQUUzQixTQUYyQixpQ0FFZixFQUZlO0FBQUEsTUFFUixVQUZRLDZDQUVPLEtBRlA7QUFHekMsTUFBTSxXQUFXLEdBQUcsNEJBQVcsY0FBWCxZQUE4QixjQUE5QixjQUFnRCxJQUFoRCxHQUF3RCxTQUF4RCxDQUFwQjtBQUNBLFNBQU8sa0JBQUEsYUFBQSxDQUFBLEdBQUEsRUFBQSwwQkFBQSxFQUFBLEVBQU8sVUFBUCxFQUFpQjtBQUFFLElBQUEsU0FBUyxFQUFFO0FBQWIsR0FBakIsQ0FBQSxDQUFQO0FBQ0QsQ0FMRDs7QUFPQSxJQUFJLENBQUMsV0FBTCxHQUFtQixNQUFuQjtlQUVlLEkiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QsIHsgQ1NTUHJvcGVydGllcywgRm9jdXNFdmVudEhhbmRsZXIsIE1vdXNlRXZlbnRIYW5kbGVyIH0gZnJvbSAncmVhY3QnO1xuaW1wb3J0IGNsYXNzTmFtZXMgZnJvbSAnY2xhc3NuYW1lcyc7XG5pbXBvcnQgeyBnZXRDb25maWcgfSBmcm9tICcuLi9jb25maWd1cmUnO1xuXG5leHBvcnQgaW50ZXJmYWNlIEljb25Qcm9wcyB7XG4gIHR5cGU6IHN0cmluZztcbiAgY2xhc3NOYW1lPzogc3RyaW5nO1xuICB0aXRsZT86IHN0cmluZztcbiAgb25DbGljaz86IE1vdXNlRXZlbnRIYW5kbGVyPGFueT47XG4gIG9uRm9jdXM/OiBGb2N1c0V2ZW50SGFuZGxlcjxhbnk+O1xuICBvbk1vdXNlRG93bj86IE1vdXNlRXZlbnRIYW5kbGVyPGFueT47XG4gIG9uTW91c2VVcD86IE1vdXNlRXZlbnRIYW5kbGVyPGFueT47XG4gIG9uTW91c2VMZWF2ZT86IE1vdXNlRXZlbnRIYW5kbGVyPGFueT47XG4gIHN0eWxlPzogQ1NTUHJvcGVydGllcztcbiAgdGFiSW5kZXg/OiBudW1iZXI7XG59XG5cbmNvbnN0IEljb24gPSBmdW5jdGlvbiBJY29uKHByb3BzOiBJY29uUHJvcHMpIHtcbiAgY29uc3QgaWNvbmZvbnRQcmVmaXggPSBnZXRDb25maWcoJ2ljb25mb250UHJlZml4Jyk7XG4gIGNvbnN0IHsgdHlwZSwgY2xhc3NOYW1lID0gJycsIC4uLm90aGVyUHJvcHMgfSA9IHByb3BzO1xuICBjb25zdCBjbGFzc1N0cmluZyA9IGNsYXNzTmFtZXMoaWNvbmZvbnRQcmVmaXgsIGAke2ljb25mb250UHJlZml4fS0ke3R5cGV9YCwgY2xhc3NOYW1lKTtcbiAgcmV0dXJuIDxpIHsuLi5vdGhlclByb3BzfSBjbGFzc05hbWU9e2NsYXNzU3RyaW5nfSAvPjtcbn07XG5cbkljb24uZGlzcGxheU5hbWUgPSAnSWNvbic7XG5cbmV4cG9ydCBkZWZhdWx0IEljb247XG4iXX0=

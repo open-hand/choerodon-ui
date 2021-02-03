@@ -15,14 +15,15 @@ function onOk(value) {
 
 ReactDOM.render(
   <div>
-    <DatePicker
-      showTime
-      format="YYYY-MM-DD HH:mm:ss"
-      placeholder="Select Time"
-      onChange={onChange}
-      onOk={onOk}
-    />
-    <br />
+    <div style={{ marginBottom: 10 }}>
+      <DatePicker
+        showTime
+        format="YYYY-MM-DD HH:mm:ss"
+        placeholder="Select Time"
+        onChange={onChange}
+        onOk={onOk}
+      />
+    </div>
     <RangePicker
       showTime={{ format: 'HH:mm' }}
       format="YYYY-MM-DD HH:mm"

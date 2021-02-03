@@ -1,0 +1,18 @@
+72d8e64e110ff9ef4aa258694040b998
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _radio = _interopRequireDefault(require("../../../components/radio"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_radio["default"], null, "Radio");
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/radio/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,iB","sourcesContent":["import ObserverRadio from './Radio';\n\nexport default ObserverRadio;\n"]}

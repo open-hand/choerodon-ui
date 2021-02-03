@@ -1,0 +1,459 @@
+d4813045e832cd8b7e1ea5306382c064
+"use strict";
+
+/* istanbul ignore next */
+function cov_9ofuft258() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/transfer/TransferOperation.tsx";
+  var hash = "25df7f95d98f27f6a3bbfa1b8408808f16248e77";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/transfer/TransferOperation.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 39
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 53
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 12
+        },
+        end: {
+          line: 12,
+          column: 58
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 58
+        }
+      },
+      "6": {
+        start: {
+          line: 17,
+          column: 26
+        },
+        end: {
+          line: 17,
+          column: 42
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 19
+        },
+        end: {
+          line: 18,
+          column: 86
+        }
+      },
+      "8": {
+        start: {
+          line: 19,
+          column: 27
+        },
+        end: {
+          line: 19,
+          column: 44
+        }
+      },
+      "9": {
+        start: {
+          line: 20,
+          column: 20
+        },
+        end: {
+          line: 20,
+          column: 89
+        }
+      },
+      "10": {
+        start: {
+          line: 21,
+          column: 19
+        },
+        end: {
+          line: 21,
+          column: 35
+        }
+      },
+      "11": {
+        start: {
+          line: 22,
+          column: 20
+        },
+        end: {
+          line: 22,
+          column: 37
+        }
+      },
+      "12": {
+        start: {
+          line: 23,
+          column: 18
+        },
+        end: {
+          line: 23,
+          column: 33
+        }
+      },
+      "13": {
+        start: {
+          line: 24,
+          column: 17
+        },
+        end: {
+          line: 24,
+          column: 31
+        }
+      },
+      "14": {
+        start: {
+          line: 26,
+          column: 2
+        },
+        end: {
+          line: 50,
+          column: 3
+        }
+      },
+      "15": {
+        start: {
+          line: 27,
+          column: 4
+        },
+        end: {
+          line: 49,
+          column: 8
+        }
+      },
+      "16": {
+        start: {
+          line: 52,
+          column: 2
+        },
+        end: {
+          line: 52,
+          column: 14
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "TransferOperation",
+        decl: {
+          start: {
+            line: 16,
+            column: 9
+          },
+          end: {
+            line: 16,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 16,
+            column: 34
+          },
+          end: {
+            line: 53,
+            column: 1
+          }
+        },
+        line: 16
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 18,
+            column: 19
+          },
+          end: {
+            line: 18,
+            column: 86
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 18,
+            column: 50
+          },
+          end: {
+            line: 18,
+            column: 66
+          }
+        }, {
+          start: {
+            line: 18,
+            column: 69
+          },
+          end: {
+            line: 18,
+            column: 86
+          }
+        }],
+        line: 18
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 20,
+            column: 20
+          },
+          end: {
+            line: 20,
+            column: 89
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 20,
+            column: 52
+          },
+          end: {
+            line: 20,
+            column: 68
+          }
+        }, {
+          start: {
+            line: 20,
+            column: 71
+          },
+          end: {
+            line: 20,
+            column: 89
+          }
+        }],
+        line: 20
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 26,
+            column: 2
+          },
+          end: {
+            line: 50,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 26,
+            column: 2
+          },
+          end: {
+            line: 50,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 26,
+            column: 2
+          },
+          end: {
+            line: 50,
+            column: 3
+          }
+        }],
+        line: 26
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "25df7f95d98f27f6a3bbfa1b8408808f16248e77"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_9ofuft258 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_9ofuft258();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_9ofuft258().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_9ofuft258().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_9ofuft258().s[2]++;
+exports["default"] = TransferOperation;
+
+var _react =
+/* istanbul ignore next */
+(cov_9ofuft258().s[3]++, _interopRequireDefault(require("react")));
+
+var _noop =
+/* istanbul ignore next */
+(cov_9ofuft258().s[4]++, _interopRequireDefault(require("lodash/noop")));
+
+var _button =
+/* istanbul ignore next */
+(cov_9ofuft258().s[5]++, _interopRequireDefault(require("../button")));
+
+function TransferOperation(props) {
+  /* istanbul ignore next */
+  cov_9ofuft258().f[0]++;
+
+  var _props$moveToLeft =
+  /* istanbul ignore next */
+  (cov_9ofuft258().s[6]++, props.moveToLeft),
+      moveToLeft =
+  /* istanbul ignore next */
+  (cov_9ofuft258().s[7]++, _props$moveToLeft === void 0 ?
+  /* istanbul ignore next */
+  (cov_9ofuft258().b[0][0]++, _noop["default"]) :
+  /* istanbul ignore next */
+  (cov_9ofuft258().b[0][1]++, _props$moveToLeft)),
+      _props$moveToRight =
+  /* istanbul ignore next */
+  (cov_9ofuft258().s[8]++, props.moveToRight),
+      moveToRight =
+  /* istanbul ignore next */
+  (cov_9ofuft258().s[9]++, _props$moveToRight === void 0 ?
+  /* istanbul ignore next */
+  (cov_9ofuft258().b[1][0]++, _noop["default"]) :
+  /* istanbul ignore next */
+  (cov_9ofuft258().b[1][1]++, _props$moveToRight)),
+      leftActive =
+  /* istanbul ignore next */
+  (cov_9ofuft258().s[10]++, props.leftActive),
+      rightActive =
+  /* istanbul ignore next */
+  (cov_9ofuft258().s[11]++, props.rightActive),
+      className =
+  /* istanbul ignore next */
+  (cov_9ofuft258().s[12]++, props.className),
+      multiple =
+  /* istanbul ignore next */
+  (cov_9ofuft258().s[13]++, props.multiple);
+
+  /* istanbul ignore next */
+  cov_9ofuft258().s[14]++;
+
+  if (multiple) {
+    /* istanbul ignore next */
+    cov_9ofuft258().b[2][0]++;
+    cov_9ofuft258().s[15]++;
+    return _react["default"].createElement("div", {
+      className: className
+    }, _react["default"].createElement(_button["default"], {
+      color: "primary"
+      /* primary */
+      ,
+      size: "small"
+      /* small */
+      ,
+      disabled: !leftActive,
+      onClick: moveToLeft,
+      icon: "navigate_before"
+    }), _react["default"].createElement(_button["default"], {
+      color: "primary"
+      /* primary */
+      ,
+      size: "small"
+      /* small */
+      ,
+      disabled: !rightActive,
+      onClick: moveToRight,
+      icon: "navigate_next"
+    }));
+  } else
+  /* istanbul ignore next */
+  {
+    cov_9ofuft258().b[2][1]++;
+  }
+
+  cov_9ofuft258().s[16]++;
+  return null;
+}

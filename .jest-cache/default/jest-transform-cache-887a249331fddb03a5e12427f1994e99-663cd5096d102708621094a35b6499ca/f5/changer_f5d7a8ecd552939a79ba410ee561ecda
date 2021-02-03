@@ -1,0 +1,29 @@
+477693fe4da810d6dd3fc6be680f667b
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _pagination = _interopRequireDefault(require("../../../components/pagination"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function onShowSizeChange(current, pageSize) {
+  console.log(current, pageSize);
+}
+
+var __Demo = _react["default"].createElement(_pagination["default"], {
+  tiny: false,
+  showSizeChangerLabel: false,
+  showTotal: false,
+  onShowSizeChange: onShowSizeChange,
+  defaultCurrent: 3,
+  total: 500
+});
+
+var _default = __Demo;
+exports["default"] = _default;

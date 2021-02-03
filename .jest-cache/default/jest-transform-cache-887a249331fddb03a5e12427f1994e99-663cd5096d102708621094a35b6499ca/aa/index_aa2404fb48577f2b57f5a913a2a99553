@@ -1,0 +1,15 @@
+859132582a32ead9c3d418b3b2b51626
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _Align = _interopRequireDefault(require("./Align"));
+
+var _default = _Align["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzL2FsaWduL2luZGV4LnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFBQTs7ZUFFZSxpQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBBbGlnbiBmcm9tICcuL0FsaWduJztcblxuZXhwb3J0IGRlZmF1bHQgQWxpZ247XG4iXX0=

@@ -1,0 +1,36 @@
+dccbc11a4f1713a25b9d48b721cc32ad
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components-pro/row"));
+
+var _col = _interopRequireDefault(require("../../../components-pro/col"));
+
+var _numberField = _interopRequireDefault(require("../../../components-pro/number-field"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function log(value) {
+  console.log(value);
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_row["default"], {
+  gutter: 10
+}, _react["default"].createElement(_col["default"], {
+  span: 12
+}, _react["default"].createElement(_numberField["default"], {
+  placeholder: "\u975E\u4E25\u683C\u6B65\u8DDD,\u53EF\u4EE5\u8F93\u5165\u5C0F\u6570\u4EE5\u53CA\u6574\u6570",
+  nonStrictStep: true,
+  step: 3,
+  defaultValue: 5,
+  onChange: log
+}))));
+
+var _default = __Demo;
+exports["default"] = _default;

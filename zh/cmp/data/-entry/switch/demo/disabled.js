@@ -5,20 +5,26 @@ import { Switch, Button } from 'choerodon-ui';
 class App extends React.Component {
   state = {
     disabled: true,
-  }
+  };
 
   toggle = () => {
     this.setState({
       disabled: !this.state.disabled,
     });
-  }
+  };
 
   render() {
     return (
       <div>
         <Switch disabled={this.state.disabled} defaultChecked />
         <br />
-        <Button type="primary" onClick={this.toggle}>Toggle disabled</Button>
+        <Button
+          style={{ marginTop: '10px' }}
+          type="primary"
+          onClick={this.toggle}
+        >
+          Toggle disabled
+        </Button>
       </div>
     );
   }

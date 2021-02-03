@@ -1,0 +1,16 @@
+import CalendarLocale from '../../rc-components/calendar/locale/bg_BG';
+import TimePickerLocale from '../../time-picker/locale/bg_BG';
+// Merge into a locale object
+const locale = {
+    lang: {
+        placeholder: 'Избор на дата',
+        rangePlaceholder: ['Начална', 'Крайна'],
+        ...CalendarLocale,
+    },
+    timePickerLocale: {
+        ...TimePickerLocale,
+    },
+};
+// All settings at:
+export default locale;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiL1VzZXJzL2h1aWh1YXdrL0RvY3VtZW50cy9vcHQvY2hvZXJvZG9uLXVpL2NvbXBvbmVudHMvZGF0ZS1waWNrZXIvbG9jYWxlL2JnX0JHLnRzeCIsIm1hcHBpbmdzIjoiQUFBQSxPQUFPLGNBQWMsTUFBTSwyQ0FBMkMsQ0FBQztBQUN2RSxPQUFPLGdCQUFnQixNQUFNLGdDQUFnQyxDQUFDO0FBRTlELDZCQUE2QjtBQUM3QixNQUFNLE1BQU0sR0FBRztJQUNiLElBQUksRUFBRTtRQUNKLFdBQVcsRUFBRSxlQUFlO1FBQzVCLGdCQUFnQixFQUFFLENBQUMsU0FBUyxFQUFFLFFBQVEsQ0FBQztRQUN2QyxHQUFHLGNBQWM7S0FDbEI7SUFDRCxnQkFBZ0IsRUFBRTtRQUNoQixHQUFHLGdCQUFnQjtLQUNwQjtDQUNGLENBQUM7QUFFRixtQkFBbUI7QUFFbkIsZUFBZSxNQUFNLENBQUMiLCJuYW1lcyI6W10sInNvdXJjZXMiOlsiL1VzZXJzL2h1aWh1YXdrL0RvY3VtZW50cy9vcHQvY2hvZXJvZG9uLXVpL2NvbXBvbmVudHMvZGF0ZS1waWNrZXIvbG9jYWxlL2JnX0JHLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgQ2FsZW5kYXJMb2NhbGUgZnJvbSAnLi4vLi4vcmMtY29tcG9uZW50cy9jYWxlbmRhci9sb2NhbGUvYmdfQkcnO1xuaW1wb3J0IFRpbWVQaWNrZXJMb2NhbGUgZnJvbSAnLi4vLi4vdGltZS1waWNrZXIvbG9jYWxlL2JnX0JHJztcblxuLy8gTWVyZ2UgaW50byBhIGxvY2FsZSBvYmplY3RcbmNvbnN0IGxvY2FsZSA9IHtcbiAgbGFuZzoge1xuICAgIHBsYWNlaG9sZGVyOiAn0JjQt9Cx0L7RgCDQvdCwINC00LDRgtCwJyxcbiAgICByYW5nZVBsYWNlaG9sZGVyOiBbJ9Cd0LDRh9Cw0LvQvdCwJywgJ9Ca0YDQsNC50L3QsCddLFxuICAgIC4uLkNhbGVuZGFyTG9jYWxlLFxuICB9LFxuICB0aW1lUGlja2VyTG9jYWxlOiB7XG4gICAgLi4uVGltZVBpY2tlckxvY2FsZSxcbiAgfSxcbn07XG5cbi8vIEFsbCBzZXR0aW5ncyBhdDpcblxuZXhwb3J0IGRlZmF1bHQgbG9jYWxlO1xuIl0sInZlcnNpb24iOjN9

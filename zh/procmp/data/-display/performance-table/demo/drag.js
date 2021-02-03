@@ -98,12 +98,12 @@ function DraggableCell({ children, onDrag, _id, rowData, ...rest }) {
 }
 
 function sort(source, sourceId, targetId) {
-  const nextData = source.filter((item) => item.id !== sourceId);
-  const dragItem = source.find((item) => item.id === sourceId);
-  const index = nextData.findIndex((item) => item.id === targetId);
-
-  nextData.splice(index + 1, 0, dragItem);
-  return nextData;
+  const colSource = source.slice();
+  const sourceIdIndex = colSource.findIndex((item) => item.id === sourceId);
+  const targetIdIndex = colSource.findIndex((item) => item.id === targetId);
+  const [removed] = colSource.splice(sourceIdIndex, 1);
+  colSource.splice(targetIdIndex, 0, removed);
+  return colSource;
 }
 
 function DraggableTable() {

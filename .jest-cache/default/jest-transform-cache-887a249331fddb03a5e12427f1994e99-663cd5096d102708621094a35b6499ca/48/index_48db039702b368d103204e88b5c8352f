@@ -1,0 +1,18 @@
+c0f265fd6fb021eccf9d79a3e9e6703b
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _Upload = _interopRequireDefault(require("./Upload"));
+
+var _Dragger = _interopRequireDefault(require("./Dragger"));
+
+_Upload["default"].Dragger = _Dragger["default"];
+var _default = _Upload["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzL3VwbG9hZC9pbmRleC50c3giXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBS0EsbUJBQU8sT0FBUCxHQUFpQixtQkFBakI7ZUFDZSxrQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBVcGxvYWQgZnJvbSAnLi9VcGxvYWQnO1xuaW1wb3J0IERyYWdnZXIgZnJvbSAnLi9EcmFnZ2VyJztcblxuZXhwb3J0IHsgVXBsb2FkUHJvcHMsIFVwbG9hZExpc3RQcm9wcywgVXBsb2FkQ2hhbmdlUGFyYW0gfSBmcm9tICcuL2ludGVyZmFjZSc7XG5leHBvcnQgeyBEcmFnZ2VyUHJvcHMgfSBmcm9tICcuL0RyYWdnZXInO1xuXG5VcGxvYWQuRHJhZ2dlciA9IERyYWdnZXI7XG5leHBvcnQgZGVmYXVsdCBVcGxvYWQ7XG4iXX0=

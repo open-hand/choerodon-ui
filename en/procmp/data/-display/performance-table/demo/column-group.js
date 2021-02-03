@@ -17,7 +17,6 @@ class FixedColumnTable extends React.Component {
         dataIndex: 'id',
         key: 'id',
         width: 70,
-        align: 'center',
         verticalAlign: 'middle',
         fixed: true,
       },
@@ -83,7 +82,7 @@ class FixedColumnTable extends React.Component {
         headerHeight={80}
         data={this.state.data}
         columns={columns}
-        onRowClick={data => {
+        onRowClick={(data) => {
           console.log(data);
         }}
       />

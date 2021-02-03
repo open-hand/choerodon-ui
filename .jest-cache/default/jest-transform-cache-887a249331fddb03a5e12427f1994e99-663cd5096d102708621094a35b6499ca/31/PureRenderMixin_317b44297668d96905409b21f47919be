@@ -1,0 +1,53 @@
+973b41bf2233bea1671afb76cbf40c59
+"use strict";
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ReactComponentWithPureRenderMixin
+ */
+
+var shallowEqual = require('lodash/isEqual');
+
+function shallowCompare(instance, nextProps, nextState) {
+  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
+}
+/**
+ * If your React component's render function is "pure", e.g. it will render the
+ * same result given the same props and state, provide this mixin for a
+ * considerable performance boost.
+ *
+ * Most React components have pure render functions.
+ *
+ * Example:
+ *
+ *   var ReactComponentWithPureRenderMixin =
+ *     require('ReactComponentWithPureRenderMixin');
+ *   React.createClass({
+ *     mixins: [ReactComponentWithPureRenderMixin],
+ *
+ *     render: function() {
+ *       return <div className={this.props.className}>foo</div>;
+ *     }
+ *   });
+ *
+ * Note: This only checks shallow equality for props and state. If these contain
+ * complex data structures this mixin may have false-negatives for deeper
+ * differences. Only mixin to components which have simple props and state, or
+ * use `forceUpdate()` when you know deep data structures have changed.
+ *
+ * See https://facebook.github.io/react/docs/pure-render-mixin.html
+ */
+
+
+var ReactComponentWithPureRenderMixin = {
+  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+};
+module.exports = ReactComponentWithPureRenderMixin;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWwvUHVyZVJlbmRlck1peGluLmpzeCJdLCJuYW1lcyI6WyJzaGFsbG93RXF1YWwiLCJyZXF1aXJlIiwiaW5zdGFuY2UiLCJSZWFjdENvbXBvbmVudFdpdGhQdXJlUmVuZGVyTWl4aW4iLCJzaG91bGRDb21wb25lbnRVcGRhdGUiLCJzaGFsbG93Q29tcGFyZSIsIm1vZHVsZSJdLCJtYXBwaW5ncyI6IjtBQUFBOzs7Ozs7Ozs7OztBQVdBLElBQU1BLFlBQVksR0FBR0MsT0FBTyxDQUE1QixnQkFBNEIsQ0FBNUI7O0FBRUEsU0FBQSxjQUFBLENBQUEsUUFBQSxFQUFBLFNBQUEsRUFBQSxTQUFBLEVBQXdEO0FBQ3RELFNBQU8sQ0FBQ0QsWUFBWSxDQUFDRSxRQUFRLENBQVQsS0FBQSxFQUFiLFNBQWEsQ0FBYixJQUE0QyxDQUFDRixZQUFZLENBQUNFLFFBQVEsQ0FBVCxLQUFBLEVBQWhFLFNBQWdFLENBQWhFO0FBQ0Q7QUFFRDs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQTBCQSxJQUFNQyxpQ0FBaUMsR0FBRztBQUN4Q0MsRUFBQUEscUJBRHdDLEVBQUEsU0FBQSxxQkFBQSxDQUFBLFNBQUEsRUFBQSxTQUFBLEVBQ0k7QUFDMUMsV0FBT0MsY0FBYyxDQUFBLElBQUEsRUFBQSxTQUFBLEVBQXJCLFNBQXFCLENBQXJCO0FBQ0Q7QUFIdUMsQ0FBMUM7QUFNQUMsTUFBTSxDQUFOQSxPQUFBQSxHQUFBQSxpQ0FBQUEiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIENvcHlyaWdodCAyMDEzLXByZXNlbnQsIEZhY2Vib29rLCBJbmMuXG4gKiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICpcbiAqIFRoaXMgc291cmNlIGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRC1zdHlsZSBsaWNlbnNlIGZvdW5kIGluIHRoZVxuICogTElDRU5TRSBmaWxlIGluIHRoZSByb290IGRpcmVjdG9yeSBvZiB0aGlzIHNvdXJjZSB0cmVlLiBBbiBhZGRpdGlvbmFsIGdyYW50XG4gKiBvZiBwYXRlbnQgcmlnaHRzIGNhbiBiZSBmb3VuZCBpbiB0aGUgUEFURU5UUyBmaWxlIGluIHRoZSBzYW1lIGRpcmVjdG9yeS5cbiAqXG4gKiBAcHJvdmlkZXNNb2R1bGUgUmVhY3RDb21wb25lbnRXaXRoUHVyZVJlbmRlck1peGluXG4gKi9cblxuY29uc3Qgc2hhbGxvd0VxdWFsID0gcmVxdWlyZSgnbG9kYXNoL2lzRXF1YWwnKTtcblxuZnVuY3Rpb24gc2hhbGxvd0NvbXBhcmUoaW5zdGFuY2UsIG5leHRQcm9wcywgbmV4dFN0YXRlKSB7XG4gIHJldHVybiAhc2hhbGxvd0VxdWFsKGluc3RhbmNlLnByb3BzLCBuZXh0UHJvcHMpIHx8ICFzaGFsbG93RXF1YWwoaW5zdGFuY2Uuc3RhdGUsIG5leHRTdGF0ZSk7XG59XG5cbi8qKlxuICogSWYgeW91ciBSZWFjdCBjb21wb25lbnQncyByZW5kZXIgZnVuY3Rpb24gaXMgXCJwdXJlXCIsIGUuZy4gaXQgd2lsbCByZW5kZXIgdGhlXG4gKiBzYW1lIHJlc3VsdCBnaXZlbiB0aGUgc2FtZSBwcm9wcyBhbmQgc3RhdGUsIHByb3ZpZGUgdGhpcyBtaXhpbiBmb3IgYVxuICogY29uc2lkZXJhYmxlIHBlcmZvcm1hbmNlIGJvb3N0LlxuICpcbiAqIE1vc3QgUmVhY3QgY29tcG9uZW50cyBoYXZlIHB1cmUgcmVuZGVyIGZ1bmN0aW9ucy5cbiAqXG4gKiBFeGFtcGxlOlxuICpcbiAqICAgdmFyIFJlYWN0Q29tcG9uZW50V2l0aFB1cmVSZW5kZXJNaXhpbiA9XG4gKiAgICAgcmVxdWlyZSgnUmVhY3RDb21wb25lbnRXaXRoUHVyZVJlbmRlck1peGluJyk7XG4gKiAgIFJlYWN0LmNyZWF0ZUNsYXNzKHtcbiAqICAgICBtaXhpbnM6IFtSZWFjdENvbXBvbmVudFdpdGhQdXJlUmVuZGVyTWl4aW5dLFxuICpcbiAqICAgICByZW5kZXI6IGZ1bmN0aW9uKCkge1xuICogICAgICAgcmV0dXJuIDxkaXYgY2xhc3NOYW1lPXt0aGlzLnByb3BzLmNsYXNzTmFtZX0+Zm9vPC9kaXY+O1xuICogICAgIH1cbiAqICAgfSk7XG4gKlxuICogTm90ZTogVGhpcyBvbmx5IGNoZWNrcyBzaGFsbG93IGVxdWFsaXR5IGZvciBwcm9wcyBhbmQgc3RhdGUuIElmIHRoZXNlIGNvbnRhaW5cbiAqIGNvbXBsZXggZGF0YSBzdHJ1Y3R1cmVzIHRoaXMgbWl4aW4gbWF5IGhhdmUgZmFsc2UtbmVnYXRpdmVzIGZvciBkZWVwZXJcbiAqIGRpZmZlcmVuY2VzLiBPbmx5IG1peGluIHRvIGNvbXBvbmVudHMgd2hpY2ggaGF2ZSBzaW1wbGUgcHJvcHMgYW5kIHN0YXRlLCBvclxuICogdXNlIGBmb3JjZVVwZGF0ZSgpYCB3aGVuIHlvdSBrbm93IGRlZXAgZGF0YSBzdHJ1Y3R1cmVzIGhhdmUgY2hhbmdlZC5cbiAqXG4gKiBTZWUgaHR0cHM6Ly9mYWNlYm9vay5naXRodWIuaW8vcmVhY3QvZG9jcy9wdXJlLXJlbmRlci1taXhpbi5odG1sXG4gKi9cbmNvbnN0IFJlYWN0Q29tcG9uZW50V2l0aFB1cmVSZW5kZXJNaXhpbiA9IHtcbiAgc2hvdWxkQ29tcG9uZW50VXBkYXRlKG5leHRQcm9wcywgbmV4dFN0YXRlKSB7XG4gICAgcmV0dXJuIHNoYWxsb3dDb21wYXJlKHRoaXMsIG5leHRQcm9wcywgbmV4dFN0YXRlKTtcbiAgfSxcbn07XG5cbm1vZHVsZS5leHBvcnRzID0gUmVhY3RDb21wb25lbnRXaXRoUHVyZVJlbmRlck1peGluO1xuIl19

@@ -1,0 +1,310 @@
+e058bfb8328e3db778269fa11f0fcb7b
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _table = _interopRequireDefault(require("../../../components/table"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _radio = _interopRequireDefault(require("../../../components/radio"));
+
+var _switch = _interopRequireDefault(require("../../../components/switch"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _divider = _interopRequireDefault(require("../../../components/divider"));
+
+var _form = _interopRequireDefault(require("../../../components/form"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var FormItem = _form["default"].Item;
+var columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+  key: 'name',
+  width: 150,
+  render: function render(text) {
+    return _react["default"].createElement("a", {
+      href: "#"
+    }, text);
+  }
+}, {
+  title: 'Age',
+  dataIndex: 'age',
+  key: 'age',
+  width: 70
+}, {
+  title: 'Address',
+  dataIndex: 'address',
+  key: 'address'
+}, {
+  title: 'Action',
+  key: 'action',
+  width: 360,
+  render: function render(text, record) {
+    return _react["default"].createElement("span", null, _react["default"].createElement("a", {
+      href: "#"
+    }, "Action \u4E00 ", record.name), _react["default"].createElement(_divider["default"], {
+      type: "vertical"
+    }), _react["default"].createElement("a", {
+      href: "#"
+    }, "Delete"), _react["default"].createElement(_divider["default"], {
+      type: "vertical"
+    }), _react["default"].createElement("a", {
+      href: "#",
+      className: "c7n-dropdown-link"
+    }, "More actions ", _react["default"].createElement(_icon["default"], {
+      type: "down"
+    })));
+  }
+}];
+var data = [];
+
+for (var i = 1; i <= 10; i++) {
+  data.push({
+    key: i,
+    name: 'John Brown',
+    age: "".concat(i, "2"),
+    address: "New York No. ".concat(i, " Lake Park"),
+    description: "My name is John Brown, I am ".concat(i, "2 years old, living in New York No. ").concat(i, " Lake Park.")
+  });
+}
+
+var expandedRowRender = function expandedRowRender(record) {
+  return _react["default"].createElement("p", null, record.description);
+};
+
+var title = function title() {
+  return 'Here is title';
+};
+
+var showHeader = true;
+
+var footer = function footer() {
+  return 'Here is footer';
+};
+
+var scroll = {
+  y: 240
+};
+var pagination = {
+  position: 'bottom'
+};
+
+var Demo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(Demo, _React$Component);
+
+  var _super = _createSuper(Demo);
+
+  function Demo() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, Demo);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      bordered: false,
+      loading: false,
+      pagination: pagination,
+      size: 'default',
+      expandedRowRender: expandedRowRender,
+      title: undefined,
+      showHeader: showHeader,
+      footer: footer,
+      rowSelection: {},
+      scroll: undefined
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleToggle", function (prop) {
+      return function (enable) {
+        _this.setState((0, _defineProperty2["default"])({}, prop, enable));
+      };
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleSizeChange", function (e) {
+      _this.setState({
+        size: e.target.value
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleExpandChange", function (enable) {
+      _this.setState({
+        expandedRowRender: enable ? expandedRowRender : undefined
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleTitleChange", function (enable) {
+      _this.setState({
+        title: enable ? title : undefined
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleHeaderChange", function (enable) {
+      _this.setState({
+        showHeader: enable ? showHeader : false
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleFooterChange", function (enable) {
+      _this.setState({
+        footer: enable ? footer : undefined
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleRowSelectionChange", function (enable) {
+      _this.setState({
+        rowSelection: enable ? {} : undefined
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleScollChange", function (enable) {
+      _this.setState({
+        scroll: enable ? scroll : undefined
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handlePaginationChange", function (e) {
+      var value = e.target.value;
+
+      _this.setState({
+        pagination: value === 'none' ? false : {
+          position: value
+        }
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(Demo, [{
+    key: "render",
+    value: function render() {
+      var state = this.state;
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        className: "components-table-demo-control-bar"
+      }, _react["default"].createElement(_form["default"], {
+        layout: "inline"
+      }, _react["default"].createElement(FormItem, {
+        label: "Bordered"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: state.bordered,
+        onChange: this.handleToggle('bordered')
+      })), _react["default"].createElement(FormItem, {
+        label: "loading"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: state.loading,
+        onChange: this.handleToggle('loading')
+      })), _react["default"].createElement(FormItem, {
+        label: "Title"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: !!state.title,
+        onChange: this.handleTitleChange
+      })), _react["default"].createElement(FormItem, {
+        label: "Column Header"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: !!state.showHeader,
+        onChange: this.handleHeaderChange
+      })), _react["default"].createElement(FormItem, {
+        label: "Footer"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: !!state.footer,
+        onChange: this.handleFooterChange
+      })), _react["default"].createElement(FormItem, {
+        label: "Expandable"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: !!state.expandedRowRender,
+        onChange: this.handleExpandChange
+      })), _react["default"].createElement(FormItem, {
+        label: "Checkbox"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: !!state.rowSelection,
+        onChange: this.handleRowSelectionChange
+      })), _react["default"].createElement(FormItem, {
+        label: "Fixed Header"
+      }, _react["default"].createElement(_switch["default"], {
+        checked: !!state.scroll,
+        onChange: this.handleScollChange
+      })), _react["default"].createElement(FormItem, {
+        label: "Size"
+      }, _react["default"].createElement(_radio["default"].Group, {
+        size: "default",
+        value: state.size,
+        onChange: this.handleSizeChange
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "default"
+      }, "Default"), _react["default"].createElement(_radio["default"].Button, {
+        value: "large"
+      }, "Large"), _react["default"].createElement(_radio["default"].Button, {
+        value: "small"
+      }, "Small"))), _react["default"].createElement(FormItem, {
+        label: "Pagination"
+      }, _react["default"].createElement(_radio["default"].Group, {
+        value: state.pagination ? state.pagination.position : 'none',
+        onChange: this.handlePaginationChange
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "top"
+      }, "Top"), _react["default"].createElement(_radio["default"].Button, {
+        value: "bottom"
+      }, "Bottom"), _react["default"].createElement(_radio["default"].Button, {
+        value: "both"
+      }, "Both"), _react["default"].createElement(_radio["default"].Button, {
+        value: "none"
+      }, "None"))))), _react["default"].createElement(_table["default"], (0, _extends2["default"])({}, this.state, {
+        columns: columns,
+        dataSource: data
+      })));
+    }
+  }]);
+  return Demo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(Demo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

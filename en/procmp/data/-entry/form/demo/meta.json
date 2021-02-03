@@ -85,6 +85,7 @@
         "zh": "垂直布局",
         "en": "Vertical Layout"
       },
+      "ignores": ["theme1", "theme3"],
       "description": {
         "zh": "垂直布局。\n",
         "en": "Vertical Layout.\n"
@@ -119,6 +120,7 @@
         "zh": "浮动标签。\n",
         "en": "Float Label.\n"
       },
+      "ignores": ["theme1", "theme3"],
       "order": 6,
       "screenshot": "",
       "height": 644,
@@ -197,7 +199,8 @@
       "order": 10,
       "screenshot": "",
       "height": 123,
-      "category": "pro"
+      "category": "pro",
+      "ignores": ["theme1", "theme3"]
     },
     {
       "filename": "virtualGroup.js",

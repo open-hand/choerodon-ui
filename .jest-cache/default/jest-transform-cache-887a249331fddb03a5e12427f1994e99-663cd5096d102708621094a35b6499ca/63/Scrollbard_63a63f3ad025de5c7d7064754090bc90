@@ -1,0 +1,36 @@
+affc9bed967752e371ff992e72617930
+"use strict";
+
+/* istanbul ignore next */
+function cov_1hbxae6o5l() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/Scrollbar.d.ts";
+  var hash = "3358666ef7a6eaa21e965d18bd12792645943b86";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/Scrollbar.d.ts",
+    statementMap: {},
+    fnMap: {},
+    branchMap: {},
+    s: {},
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "3358666ef7a6eaa21e965d18bd12792645943b86"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_1hbxae6o5l = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_1hbxae6o5l();

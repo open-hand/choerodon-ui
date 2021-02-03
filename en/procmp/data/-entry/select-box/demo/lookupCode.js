@@ -25,9 +25,23 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER', defaultValue: 'F' },
-      { name: 'sex2', type: 'string', lookupUrl: '/common/code/HR.EMPLOYEE_GENDER/' },
-      { name: 'lov', type: 'string', lovCode: 'LOV_CODE', defaultValue: 'SYS.PROFILE_LEVEL_ID' },
+      {
+        name: 'sex',
+        type: 'string',
+        lookupCode: 'HR.EMPLOYEE_GENDER',
+        defaultValue: 'F',
+      },
+      {
+        name: 'sex2',
+        type: 'string',
+        lookupUrl: '/common/code/HR.EMPLOYEE_GENDER/',
+      },
+      {
+        name: 'lov',
+        type: 'string',
+        lovCode: 'LOV_CODE',
+        defaultValue: 'SYS.PROFILE_LEVEL_ID',
+      },
       {
         name: 'lov2',
         type: 'string',
@@ -43,19 +57,26 @@ class App extends React.Component {
 
   changeLookupCode = () => {
     this.flag = !this.flag;
-    this.ds.getField('sex').set('lookupCode', this.flag ? 'SYS.USER_STATUS' : 'HR.EMPLOYEE_GENDER');
+    this.ds
+      .getField('sex')
+      .set('lookupCode', this.flag ? 'SYS.USER_STATUS' : 'HR.EMPLOYEE_GENDER');
   };
 
   render() {
     return (
       <Row gutter={10}>
-        <Col span={6}>
-          <SelectBox dataSet={this.ds} name="sex" placeholder="请选择" onOption={handleOption} />
+        <Col span={8}>
+          <SelectBox
+            dataSet={this.ds}
+            name="sex"
+            placeholder="请选择"
+            onOption={handleOption}
+          />
         </Col>
-        <Col span={6}>
+        <Col span={8}>
           <Button onClick={this.changeLookupCode}>修改lookupCode</Button>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <SelectBox dataSet={this.ds} name="sex2" placeholder="请选择" />
         </Col>
         <Col span={12}>

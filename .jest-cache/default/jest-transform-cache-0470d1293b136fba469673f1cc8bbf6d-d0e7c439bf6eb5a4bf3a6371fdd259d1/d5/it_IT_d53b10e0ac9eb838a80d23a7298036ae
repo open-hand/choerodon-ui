@@ -1,0 +1,124 @@
+e7b20c300ba0f8e33bbfc9b5dab716b2
+"use strict";
+
+/* istanbul ignore next */
+var cov_28jh1qw0wx = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/it_IT.tsx";
+  var hash = "24848b02a2d98e16e326ebb93aced5f1188c3822";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/it_IT.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 78
+        }
+      },
+      "4": {
+        start: {
+          line: 13,
+          column: 15
+        },
+        end: {
+          line: 13,
+          column: 32
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 0
+        },
+        end: {
+          line: 14,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "24848b02a2d98e16e326ebb93aced5f1188c3822"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_28jh1qw0wx.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_28jh1qw0wx.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_28jh1qw0wx.s[2]++;
+exports["default"] = void 0;
+
+var _it_IT =
+/* istanbul ignore next */
+(cov_28jh1qw0wx.s[3]++, _interopRequireDefault(require("../../date-picker/locale/it_IT")));
+/* eslint-disable camelcase */
+
+
+var _default =
+/* istanbul ignore next */
+(cov_28jh1qw0wx.s[4]++, _it_IT["default"]);
+
+/* istanbul ignore next */
+cov_28jh1qw0wx.s[5]++;
+exports["default"] = _default;

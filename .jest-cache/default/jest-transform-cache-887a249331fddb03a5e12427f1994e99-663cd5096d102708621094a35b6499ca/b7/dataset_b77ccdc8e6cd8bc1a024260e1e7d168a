@@ -1,0 +1,162 @@
+5bf272d54bbafb5d4c8659fa82096bfa
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components-pro/row"));
+
+var _col = _interopRequireDefault(require("../../../components-pro/col"));
+
+var _intlField = _interopRequireDefault(require("../../../components-pro/intl-field"));
+
+var _dataSet = _interopRequireDefault(require("../../../components-pro/data-set"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+function handleDataSetChange(_ref) {
+  var record = _ref.record,
+      name = _ref.name,
+      value = _ref.value,
+      oldValue = _ref.oldValue;
+  console.log('[dataset newValue]', value, '[oldValue]', oldValue, "[record.get('".concat(name, "')]"), record.get(name));
+}
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  var _super = _createSuper(App);
+
+  function App() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds", new _dataSet["default"]({
+      primaryKey: 'pk',
+      data: [{
+        'first-name': '吴'
+      }],
+      tlsUrl: '/dataset/user/languages',
+      fields: [{
+        name: 'first-name',
+        type: 'intl',
+        defaultValue: 'Huazhen',
+        required: true
+      }, {
+        name: 'last-name',
+        type: 'intl',
+        maxLength: 5,
+        required: true
+      }],
+      events: {
+        update: handleDataSetChange
+      }
+    }));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds2", new _dataSet["default"]({
+      lang: 'en_GB',
+      primaryKey: 'pk',
+      data: [{}],
+      tlsUrl: '/dataset/user/languages',
+      fields: [{
+        name: 'first-name',
+        type: 'intl',
+        required: true
+      }],
+      events: {
+        update: handleDataSetChange
+      }
+    }));
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_row["default"], {
+        gutter: 10
+      }, _react["default"].createElement(_col["default"], {
+        span: 8
+      }, _react["default"].createElement(_intlField["default"], {
+        dataSet: this.ds,
+        name: "first-name"
+      })), _react["default"].createElement(_col["default"], {
+        span: 8
+      }, _react["default"].createElement(_intlField["default"], {
+        placeholder: "\u9ED8\u8BA4\u82F1\u6587",
+        dataSet: this.ds2,
+        name: "first-name"
+      })), _react["default"].createElement(_col["default"], {
+        span: 8
+      }, _react["default"].createElement(_intlField["default"], {
+        placeholder: "\u9650\u5236\u8F93\u5165\u957F\u5EA6",
+        dataSet: this.ds,
+        name: "last-name",
+        maxLengths: {
+          en_GB: 5,
+          en_US: 10
+        }
+      })));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

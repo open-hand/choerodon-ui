@@ -1,0 +1,58 @@
+460e145d552a514ffec36a508d566e1c
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _modal = _interopRequireDefault(require("../../../components-pro/modal"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function doConfirm() {
+  _modal["default"].confirm({
+    title: 'Confirm',
+    children: _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents..."), _react["default"].createElement("p", null, "Some contents..."))
+  }).then(function (button) {
+    _modal["default"].info("Click ".concat(button));
+  });
+}
+
+function info() {
+  _modal["default"].info({
+    title: 'This is title',
+    children: '您的订单已经提交!'
+  });
+}
+
+function success() {
+  _modal["default"].success('订单提交成功!');
+}
+
+function error() {
+  _modal["default"].error('订单提交失败!');
+}
+
+function warning() {
+  _modal["default"].warning('订单信息不完整!');
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], {
+  onClick: doConfirm
+}, "Confirm"), _react["default"].createElement(_button["default"], {
+  onClick: info
+}, "Info"), _react["default"].createElement(_button["default"], {
+  onClick: success
+}, "Success"), _react["default"].createElement(_button["default"], {
+  onClick: error
+}, "Error"), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement(_button["default"], {
+  onClick: warning
+}, "Warning"));
+
+var _default = __Demo;
+exports["default"] = _default;

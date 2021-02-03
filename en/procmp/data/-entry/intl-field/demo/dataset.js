@@ -22,7 +22,7 @@ class App extends React.Component {
       {
         name: 'first-name',
         type: 'intl',
-        defaultValue: 'Huazhen',
+        defaultValue: 'Zhangsan',
         required: true,
       },
       {

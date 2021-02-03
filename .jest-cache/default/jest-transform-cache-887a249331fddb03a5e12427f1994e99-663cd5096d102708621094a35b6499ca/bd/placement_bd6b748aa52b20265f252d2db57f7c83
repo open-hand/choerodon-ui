@@ -1,0 +1,123 @@
+5113c038247f4262c38e5de33bbee794
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _popconfirm = _interopRequireDefault(require("../../../components/popconfirm"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _message2 = _interopRequireDefault(require("../../../components/message"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var text = 'Are you sure delete this task?';
+
+function confirm() {
+  _message2["default"].info('Click on Yes.');
+}
+
+var __Demo = _react["default"].createElement("div", {
+  className: "demo"
+}, _react["default"].createElement("div", {
+  style: {
+    marginLeft: 70,
+    whiteSpace: 'nowrap'
+  }
+}, _react["default"].createElement(_popconfirm["default"], {
+  placement: "topLeft",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "TL")), _react["default"].createElement(_popconfirm["default"], {
+  placement: "top",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "Top")), _react["default"].createElement(_popconfirm["default"], {
+  placement: "topRight",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "TR"))), _react["default"].createElement("div", {
+  style: {
+    width: 70,
+    "float": 'left'
+  }
+}, _react["default"].createElement(_popconfirm["default"], {
+  placement: "leftTop",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "LT")), _react["default"].createElement(_popconfirm["default"], {
+  placement: "left",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "Left")), _react["default"].createElement(_popconfirm["default"], {
+  placement: "leftBottom",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "LB"))), _react["default"].createElement("div", {
+  style: {
+    width: 70,
+    marginLeft: 304
+  }
+}, _react["default"].createElement(_popconfirm["default"], {
+  placement: "rightTop",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "RT")), _react["default"].createElement(_popconfirm["default"], {
+  placement: "right",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "Right")), _react["default"].createElement(_popconfirm["default"], {
+  placement: "rightBottom",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "RB"))), _react["default"].createElement("div", {
+  style: {
+    marginLeft: 70,
+    clear: 'both',
+    whiteSpace: 'nowrap'
+  }
+}, _react["default"].createElement(_popconfirm["default"], {
+  placement: "bottomLeft",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "BL")), _react["default"].createElement(_popconfirm["default"], {
+  placement: "bottom",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "Bottom")), _react["default"].createElement(_popconfirm["default"], {
+  placement: "bottomRight",
+  title: text,
+  onConfirm: confirm,
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement(_button["default"], null, "BR"))));
+
+var _default = __Demo;
+exports["default"] = _default;

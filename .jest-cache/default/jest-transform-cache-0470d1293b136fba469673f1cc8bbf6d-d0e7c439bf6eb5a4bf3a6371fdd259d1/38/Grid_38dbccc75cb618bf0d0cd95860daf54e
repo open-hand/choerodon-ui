@@ -1,0 +1,330 @@
+8b153a2a93c907730a3781bbc342efa9
+"use strict";
+
+/* istanbul ignore next */
+var cov_2antdqyy01 = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/card/Grid.tsx";
+  var hash = "ed58c8893a18ff9031043b3ffcf2fe13574c32b6";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/card/Grid.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 16
+        },
+        end: {
+          line: 10,
+          column: 81
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 32
+        },
+        end: {
+          line: 12,
+          column: 113
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 13
+        },
+        end: {
+          line: 14,
+          column: 53
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 18
+        },
+        end: {
+          line: 16,
+          column: 63
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 17
+        },
+        end: {
+          line: 18,
+          column: 40
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 11
+        },
+        end: {
+          line: 29,
+          column: 1
+        }
+      },
+      "9": {
+        start: {
+          line: 21,
+          column: 27
+        },
+        end: {
+          line: 21,
+          column: 42
+        }
+      },
+      "10": {
+        start: {
+          line: 22,
+          column: 18
+        },
+        end: {
+          line: 22,
+          column: 33
+        }
+      },
+      "11": {
+        start: {
+          line: 23,
+          column: 15
+        },
+        end: {
+          line: 23,
+          column: 91
+        }
+      },
+      "12": {
+        start: {
+          line: 24,
+          column: 18
+        },
+        end: {
+          line: 24,
+          column: 74
+        }
+      },
+      "13": {
+        start: {
+          line: 25,
+          column: 20
+        },
+        end: {
+          line: 25,
+          column: 89
+        }
+      },
+      "14": {
+        start: {
+          line: 26,
+          column: 2
+        },
+        end: {
+          line: 28,
+          column: 6
+        }
+      },
+      "15": {
+        start: {
+          line: 31,
+          column: 0
+        },
+        end: {
+          line: 31,
+          column: 30
+        }
+      },
+      "16": {
+        start: {
+          line: 32,
+          column: 15
+        },
+        end: {
+          line: 32,
+          column: 19
+        }
+      },
+      "17": {
+        start: {
+          line: 33,
+          column: 0
+        },
+        end: {
+          line: 33,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "Grid",
+        decl: {
+          start: {
+            line: 20,
+            column: 20
+          },
+          end: {
+            line: 20,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 20,
+            column: 32
+          },
+          end: {
+            line: 29,
+            column: 1
+          }
+        },
+        line: 20
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "ed58c8893a18ff9031043b3ffcf2fe13574c32b6"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_2antdqyy01.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_2antdqyy01.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2antdqyy01.s[2]++;
+exports["default"] = void 0;
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_2antdqyy01.s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _objectWithoutProperties2 =
+/* istanbul ignore next */
+(cov_2antdqyy01.s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties")));
+
+var _react =
+/* istanbul ignore next */
+(cov_2antdqyy01.s[5]++, _interopRequireDefault(require("react")));
+
+var _classnames =
+/* istanbul ignore next */
+(cov_2antdqyy01.s[6]++, _interopRequireDefault(require("classnames")));
+
+var _configure =
+/* istanbul ignore next */
+(cov_2antdqyy01.s[7]++, require("../configure"));
+
+/* istanbul ignore next */
+cov_2antdqyy01.s[8]++;
+
+var Grid = function Grid(props) {
+  /* istanbul ignore next */
+  cov_2antdqyy01.f[0]++;
+  var customizePrefixCls =
+  /* istanbul ignore next */
+  (cov_2antdqyy01.s[9]++, props.prefixCls),
+      className =
+  /* istanbul ignore next */
+  (cov_2antdqyy01.s[10]++, props.className),
+      others =
+  /* istanbul ignore next */
+  (cov_2antdqyy01.s[11]++, (0, _objectWithoutProperties2["default"])(props, ["prefixCls", "className"]));
+  var prefixCls =
+  /* istanbul ignore next */
+  (cov_2antdqyy01.s[12]++, (0, _configure.getPrefixCls)('card', customizePrefixCls));
+  var classString =
+  /* istanbul ignore next */
+  (cov_2antdqyy01.s[13]++, (0, _classnames["default"])("".concat(prefixCls, "-grid"), className));
+
+  /* istanbul ignore next */
+  cov_2antdqyy01.s[14]++;
+  return _react["default"].createElement("div", (0, _extends2["default"])({}, others, {
+    className: classString
+  }));
+};
+
+/* istanbul ignore next */
+cov_2antdqyy01.s[15]++;
+Grid.displayName = 'CardGrid';
+
+var _default =
+/* istanbul ignore next */
+(cov_2antdqyy01.s[16]++, Grid);
+
+/* istanbul ignore next */
+cov_2antdqyy01.s[17]++;
+exports["default"] = _default;

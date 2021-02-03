@@ -5,7 +5,7 @@ import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
 const { Option } = Select;
 
 const data = [{
-  'first-name': 'huazhen',
+  'first-name': 'zhangsan',
 }];
 
 class App extends React.Component {

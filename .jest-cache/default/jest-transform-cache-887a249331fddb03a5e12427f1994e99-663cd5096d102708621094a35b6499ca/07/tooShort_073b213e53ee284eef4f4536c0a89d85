@@ -1,0 +1,531 @@
+cbb8534dbd97cb3f00e8cba71e518739
+"use strict";
+
+/* istanbul ignore next */
+function cov_12nos4yezh() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/validator/rules/tooShort.tsx";
+  var hash = "bd3194e2f215236f0b308399945ed29bc8e2e007";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/validator/rules/tooShort.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 30
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 15
+        },
+        end: {
+          line: 10,
+          column: 69
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 24
+        },
+        end: {
+          line: 12,
+          column: 78
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 21
+        },
+        end: {
+          line: 14,
+          column: 52
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 27
+        },
+        end: {
+          line: 16,
+          column: 97
+        }
+      },
+      "7": {
+        start: {
+          line: 19,
+          column: 18
+        },
+        end: {
+          line: 19,
+          column: 33
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 34
+        },
+        end: {
+          line: 20,
+          column: 65
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 2
+        },
+        end: {
+          line: 41,
+          column: 3
+        }
+      },
+      "10": {
+        start: {
+          line: 23,
+          column: 26
+        },
+        end: {
+          line: 23,
+          column: 42
+        }
+      },
+      "11": {
+        start: {
+          line: 24,
+          column: 17
+        },
+        end: {
+          line: 24,
+          column: 39
+        }
+      },
+      "12": {
+        start: {
+          line: 26,
+          column: 4
+        },
+        end: {
+          line: 40,
+          column: 5
+        }
+      },
+      "13": {
+        start: {
+          line: 27,
+          column: 29
+        },
+        end: {
+          line: 30,
+          column: 7
+        }
+      },
+      "14": {
+        start: {
+          line: 31,
+          column: 21
+        },
+        end: {
+          line: 31,
+          column: 31
+        }
+      },
+      "15": {
+        start: {
+          line: 32,
+          column: 34
+        },
+        end: {
+          line: 32,
+          column: 69
+        }
+      },
+      "16": {
+        start: {
+          line: 33,
+          column: 30
+        },
+        end: {
+          line: 33,
+          column: 137
+        }
+      },
+      "17": {
+        start: {
+          line: 34,
+          column: 6
+        },
+        end: {
+          line: 39,
+          column: 9
+        }
+      },
+      "18": {
+        start: {
+          line: 43,
+          column: 2
+        },
+        end: {
+          line: 43,
+          column: 14
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "tooShort",
+        decl: {
+          start: {
+            line: 18,
+            column: 9
+          },
+          end: {
+            line: 18,
+            column: 17
+          }
+        },
+        loc: {
+          start: {
+            line: 18,
+            column: 32
+          },
+          end: {
+            line: 44,
+            column: 1
+          }
+        },
+        line: 18
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 22,
+            column: 2
+          },
+          end: {
+            line: 41,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 22,
+            column: 2
+          },
+          end: {
+            line: 41,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 22,
+            column: 2
+          },
+          end: {
+            line: 41,
+            column: 3
+          }
+        }],
+        line: 22
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 26,
+            column: 4
+          },
+          end: {
+            line: 40,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 26,
+            column: 4
+          },
+          end: {
+            line: 40,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 26,
+            column: 4
+          },
+          end: {
+            line: 40,
+            column: 5
+          }
+        }],
+        line: 26
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 26,
+            column: 8
+          },
+          end: {
+            line: 26,
+            column: 58
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 26,
+            column: 8
+          },
+          end: {
+            line: 26,
+            column: 19
+          }
+        }, {
+          start: {
+            line: 26,
+            column: 23
+          },
+          end: {
+            line: 26,
+            column: 36
+          }
+        }, {
+          start: {
+            line: 26,
+            column: 40
+          },
+          end: {
+            line: 26,
+            column: 58
+          }
+        }],
+        line: 26
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 33,
+            column: 30
+          },
+          end: {
+            line: 33,
+            column: 137
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 33,
+            column: 65
+          },
+          end: {
+            line: 33,
+            column: 113
+          }
+        }, {
+          start: {
+            line: 33,
+            column: 116
+          },
+          end: {
+            line: 33,
+            column: 137
+          }
+        }],
+        line: 33
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0, 0],
+      "3": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "bd3194e2f215236f0b308399945ed29bc8e2e007"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_12nos4yezh = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_12nos4yezh();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_12nos4yezh().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_12nos4yezh().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_12nos4yezh().s[2]++;
+exports["default"] = tooShort;
+
+var _isEmpty =
+/* istanbul ignore next */
+(cov_12nos4yezh().s[3]++, _interopRequireDefault(require("../../_util/isEmpty")));
+
+var _ValidationResult =
+/* istanbul ignore next */
+(cov_12nos4yezh().s[4]++, _interopRequireDefault(require("../ValidationResult")));
+
+var _localeContext =
+/* istanbul ignore next */
+(cov_12nos4yezh().s[5]++, require("../../locale-context"));
+
+var _formatReactTemplate =
+/* istanbul ignore next */
+(cov_12nos4yezh().s[6]++, _interopRequireDefault(require("../../formatter/formatReactTemplate")));
+
+function tooShort(value, props) {
+  /* istanbul ignore next */
+  cov_12nos4yezh().f[0]++;
+  var minLength =
+  /* istanbul ignore next */
+  (cov_12nos4yezh().s[7]++, props.minLength),
+      defaultValidationMessages =
+  /* istanbul ignore next */
+  (cov_12nos4yezh().s[8]++, props.defaultValidationMessages);
+
+  /* istanbul ignore next */
+  cov_12nos4yezh().s[9]++;
+
+  if (!(0, _isEmpty["default"])(value)) {
+    /* istanbul ignore next */
+    cov_12nos4yezh().b[0][0]++;
+
+    var _value$toString =
+    /* istanbul ignore next */
+    (cov_12nos4yezh().s[10]++, value.toString()),
+        length =
+    /* istanbul ignore next */
+    (cov_12nos4yezh().s[11]++, _value$toString.length);
+
+    /* istanbul ignore next */
+    cov_12nos4yezh().s[12]++;
+
+    if (
+    /* istanbul ignore next */
+    (cov_12nos4yezh().b[2][0]++, !!minLength) &&
+    /* istanbul ignore next */
+    (cov_12nos4yezh().b[2][1]++, minLength > 0) &&
+    /* istanbul ignore next */
+    (cov_12nos4yezh().b[2][2]++, length < minLength)) {
+      /* istanbul ignore next */
+      cov_12nos4yezh().b[1][0]++;
+      var injectionOptions =
+      /* istanbul ignore next */
+      (cov_12nos4yezh().s[13]++, {
+        minLength: minLength,
+        length: length
+      });
+      var ruleName =
+      /* istanbul ignore next */
+      (cov_12nos4yezh().s[14]++, 'tooShort');
+
+      var _defaultValidationMes =
+      /* istanbul ignore next */
+      (cov_12nos4yezh().s[15]++, defaultValidationMessages[ruleName]),
+          validationMessage =
+      /* istanbul ignore next */
+      (cov_12nos4yezh().s[16]++, _defaultValidationMes === void 0 ?
+      /* istanbul ignore next */
+      (cov_12nos4yezh().b[3][0]++, (0, _localeContext.$l)('Validator', 'too_short')) :
+      /* istanbul ignore next */
+      (cov_12nos4yezh().b[3][1]++, _defaultValidationMes));
+
+      /* istanbul ignore next */
+      cov_12nos4yezh().s[17]++;
+      return new _ValidationResult["default"]({
+        validationMessage: (0, _formatReactTemplate["default"])(validationMessage, injectionOptions),
+        injectionOptions: injectionOptions,
+        value: value,
+        ruleName: ruleName
+      });
+    } else
+    /* istanbul ignore next */
+    {
+      cov_12nos4yezh().b[1][1]++;
+    }
+  } else
+  /* istanbul ignore next */
+  {
+    cov_12nos4yezh().b[0][1]++;
+  }
+
+  cov_12nos4yezh().s[18]++;
+  return true;
+}

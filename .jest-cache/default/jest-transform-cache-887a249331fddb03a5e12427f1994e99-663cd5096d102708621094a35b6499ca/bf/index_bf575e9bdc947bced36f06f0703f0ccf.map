@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/pagination/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAGe,sB","sourcesContent":["import Pagination from './Pagination';\n\nexport { PaginationProps } from './Pagination';\nexport default Pagination;\n"]}

@@ -1,0 +1,132 @@
+eeca3da3df0781f66cf9baea273b2441
+"use strict";
+
+/* istanbul ignore next */
+function cov_29zof409rn() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/ru_RU.tsx";
+  var hash = "c89aa31e2d714a898f62a03a5d6897b5f076487f";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/ru_RU.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 78
+        }
+      },
+      "4": {
+        start: {
+          line: 13,
+          column: 15
+        },
+        end: {
+          line: 13,
+          column: 32
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 0
+        },
+        end: {
+          line: 14,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "c89aa31e2d714a898f62a03a5d6897b5f076487f"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_29zof409rn = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_29zof409rn();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_29zof409rn().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_29zof409rn().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_29zof409rn().s[2]++;
+exports["default"] = void 0;
+
+var _ru_RU =
+/* istanbul ignore next */
+(cov_29zof409rn().s[3]++, _interopRequireDefault(require("../../date-picker/locale/ru_RU")));
+/* eslint-disable camelcase */
+
+
+var _default =
+/* istanbul ignore next */
+(cov_29zof409rn().s[4]++, _ru_RU["default"]);
+
+/* istanbul ignore next */
+cov_29zof409rn().s[5]++;
+exports["default"] = _default;

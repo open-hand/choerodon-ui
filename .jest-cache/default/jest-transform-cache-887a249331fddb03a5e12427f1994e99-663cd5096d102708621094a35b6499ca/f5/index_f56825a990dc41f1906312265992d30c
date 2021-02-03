@@ -1,0 +1,160 @@
+49c5ccde012d6ffb434488f6cb418261
+"use strict";
+
+/* istanbul ignore next */
+function cov_23ik0h7kwa() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/statistic/index.tsx";
+  var hash = "99123b38302bdf34a3790c059a8bf4297a102fac";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/statistic/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 17
+        },
+        end: {
+          line: 10,
+          column: 63
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 17
+        },
+        end: {
+          line: 12,
+          column: 63
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 0
+        },
+        end: {
+          line: 14,
+          column: 56
+        }
+      },
+      "6": {
+        start: {
+          line: 15,
+          column: 15
+        },
+        end: {
+          line: 15,
+          column: 36
+        }
+      },
+      "7": {
+        start: {
+          line: 16,
+          column: 0
+        },
+        end: {
+          line: 16,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "99123b38302bdf34a3790c059a8bf4297a102fac"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_23ik0h7kwa = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_23ik0h7kwa();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_23ik0h7kwa().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_23ik0h7kwa().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_23ik0h7kwa().s[2]++;
+exports["default"] = void 0;
+
+var _Statistic =
+/* istanbul ignore next */
+(cov_23ik0h7kwa().s[3]++, _interopRequireDefault(require("./Statistic")));
+
+var _Countdown =
+/* istanbul ignore next */
+(cov_23ik0h7kwa().s[4]++, _interopRequireDefault(require("./Countdown")));
+
+/* istanbul ignore next */
+cov_23ik0h7kwa().s[5]++;
+_Statistic["default"].Countdown = _Countdown["default"];
+
+var _default =
+/* istanbul ignore next */
+(cov_23ik0h7kwa().s[6]++, _Statistic["default"]);
+
+/* istanbul ignore next */
+cov_23ik0h7kwa().s[7]++;
+exports["default"] = _default;

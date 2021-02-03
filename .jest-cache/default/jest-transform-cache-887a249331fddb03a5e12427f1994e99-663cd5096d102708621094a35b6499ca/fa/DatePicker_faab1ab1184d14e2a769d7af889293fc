@@ -1,0 +1,96 @@
+3c050c2ddcb2e2b19b37699ac58307f5
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _ = _interopRequireDefault(require(".."));
+
+var _dataSet = _interopRequireDefault(require("../../data-set"));
+
+function handleDataSetChange(_ref) {
+  var value = _ref.value,
+      oldValue = _ref.oldValue;
+  // eslint-disable-next-line no-console
+  console.log('[dataset newValue]', value && value.format(), '[oldValue]', oldValue && oldValue.format());
+}
+
+function rangeValidator(value, name) {
+  // eslint-disable-next-line no-console
+  console.log("[validation ".concat(name, " value]"), value);
+  return true;
+}
+
+var DatePickerTest =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(DatePickerTest, _React$Component);
+
+  function DatePickerTest() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, DatePickerTest);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(DatePickerTest)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds", new _dataSet["default"]({
+      autoCreate: true,
+      fields: [{
+        name: 'date',
+        type: 'date',
+        range: ['start', 'end'],
+        defaultValue: {
+          start: '1984-11-22',
+          end: '2020-02-09'
+        },
+        required: true,
+        validator: rangeValidator
+      }],
+      events: {
+        update: handleDataSetChange
+      }
+    }));
+    return _this;
+  }
+
+  (0, _createClass2["default"])(DatePickerTest, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement(_["default"], {
+        dataSet: this.ds,
+        name: "date",
+        placeholder: ['Start Date', 'End Date']
+      });
+    }
+  }]);
+  return DatePickerTest;
+}(_react["default"].Component);
+
+var _default = DatePickerTest;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkRhdGVQaWNrZXIuanMiXSwibmFtZXMiOlsiaGFuZGxlRGF0YVNldENoYW5nZSIsInZhbHVlIiwib2xkVmFsdWUiLCJjb25zb2xlIiwibG9nIiwiZm9ybWF0IiwicmFuZ2VWYWxpZGF0b3IiLCJuYW1lIiwiRGF0ZVBpY2tlclRlc3QiLCJEYXRhU2V0IiwiYXV0b0NyZWF0ZSIsImZpZWxkcyIsInR5cGUiLCJyYW5nZSIsImRlZmF1bHRWYWx1ZSIsInN0YXJ0IiwiZW5kIiwicmVxdWlyZWQiLCJ2YWxpZGF0b3IiLCJldmVudHMiLCJ1cGRhdGUiLCJkcyIsIlJlYWN0IiwiQ29tcG9uZW50Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOztBQUVBLFNBQVNBLG1CQUFULE9BQWtEO0FBQUEsTUFBbkJDLEtBQW1CLFFBQW5CQSxLQUFtQjtBQUFBLE1BQVpDLFFBQVksUUFBWkEsUUFBWTtBQUNoRDtBQUNBQyxFQUFBQSxPQUFPLENBQUNDLEdBQVIsQ0FDRSxvQkFERixFQUVFSCxLQUFLLElBQUlBLEtBQUssQ0FBQ0ksTUFBTixFQUZYLEVBR0UsWUFIRixFQUlFSCxRQUFRLElBQUlBLFFBQVEsQ0FBQ0csTUFBVCxFQUpkO0FBTUQ7O0FBRUQsU0FBU0MsY0FBVCxDQUF3QkwsS0FBeEIsRUFBK0JNLElBQS9CLEVBQXFDO0FBQ25DO0FBQ0FKLEVBQUFBLE9BQU8sQ0FBQ0MsR0FBUix1QkFBMkJHLElBQTNCLGNBQTBDTixLQUExQztBQUNBLFNBQU8sSUFBUDtBQUNEOztJQUVLTyxjOzs7Ozs7Ozs7Ozs7Ozs7OzsyRkFDQyxJQUFJQyxtQkFBSixDQUFZO0FBQ2ZDLE1BQUFBLFVBQVUsRUFBRSxJQURHO0FBRWZDLE1BQUFBLE1BQU0sRUFBRSxDQUNOO0FBQ0VKLFFBQUFBLElBQUksRUFBRSxNQURSO0FBRUVLLFFBQUFBLElBQUksRUFBRSxNQUZSO0FBR0VDLFFBQUFBLEtBQUssRUFBRSxDQUFDLE9BQUQsRUFBVSxLQUFWLENBSFQ7QUFJRUMsUUFBQUEsWUFBWSxFQUFFO0FBQUVDLFVBQUFBLEtBQUssRUFBRSxZQUFUO0FBQXVCQyxVQUFBQSxHQUFHLEVBQUU7QUFBNUIsU0FKaEI7QUFLRUMsUUFBQUEsUUFBUSxFQUFFLElBTFo7QUFNRUMsUUFBQUEsU0FBUyxFQUFFWjtBQU5iLE9BRE0sQ0FGTztBQVlmYSxNQUFBQSxNQUFNLEVBQUU7QUFDTkMsUUFBQUEsTUFBTSxFQUFFcEI7QUFERjtBQVpPLEtBQVosQzs7Ozs7OzZCQWlCSTtBQUNQLGFBQU8sZ0NBQUMsWUFBRDtBQUFZLFFBQUEsT0FBTyxFQUFFLEtBQUtxQixFQUExQjtBQUE4QixRQUFBLElBQUksRUFBQyxNQUFuQztBQUEwQyxRQUFBLFdBQVcsRUFBRSxDQUFDLFlBQUQsRUFBZSxVQUFmO0FBQXZELFFBQVA7QUFDRDs7O0VBcEIwQkMsa0JBQU1DLFM7O2VBdUJwQmYsYyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCc7XG5pbXBvcnQgRGF0ZVBpY2tlciBmcm9tICcuLic7XG5pbXBvcnQgRGF0YVNldCBmcm9tICcuLi8uLi9kYXRhLXNldCc7XG5cbmZ1bmN0aW9uIGhhbmRsZURhdGFTZXRDaGFuZ2UoeyB2YWx1ZSwgb2xkVmFsdWUgfSkge1xuICAvLyBlc2xpbnQtZGlzYWJsZS1uZXh0LWxpbmUgbm8tY29uc29sZVxuICBjb25zb2xlLmxvZyhcbiAgICAnW2RhdGFzZXQgbmV3VmFsdWVdJyxcbiAgICB2YWx1ZSAmJiB2YWx1ZS5mb3JtYXQoKSxcbiAgICAnW29sZFZhbHVlXScsXG4gICAgb2xkVmFsdWUgJiYgb2xkVmFsdWUuZm9ybWF0KCksXG4gICk7XG59XG5cbmZ1bmN0aW9uIHJhbmdlVmFsaWRhdG9yKHZhbHVlLCBuYW1lKSB7XG4gIC8vIGVzbGludC1kaXNhYmxlLW5leHQtbGluZSBuby1jb25zb2xlXG4gIGNvbnNvbGUubG9nKGBbdmFsaWRhdGlvbiAke25hbWV9IHZhbHVlXWAsIHZhbHVlKTtcbiAgcmV0dXJuIHRydWU7XG59XG5cbmNsYXNzIERhdGVQaWNrZXJUZXN0IGV4dGVuZHMgUmVhY3QuQ29tcG9uZW50IHtcbiAgZHMgPSBuZXcgRGF0YVNldCh7XG4gICAgYXV0b0NyZWF0ZTogdHJ1ZSxcbiAgICBmaWVsZHM6IFtcbiAgICAgIHtcbiAgICAgICAgbmFtZTogJ2RhdGUnLFxuICAgICAgICB0eXBlOiAnZGF0ZScsXG4gICAgICAgIHJhbmdlOiBbJ3N0YXJ0JywgJ2VuZCddLFxuICAgICAgICBkZWZhdWx0VmFsdWU6IHsgc3RhcnQ6ICcxOTg0LTExLTIyJywgZW5kOiAnMjAyMC0wMi0wOScgfSxcbiAgICAgICAgcmVxdWlyZWQ6IHRydWUsXG4gICAgICAgIHZhbGlkYXRvcjogcmFuZ2VWYWxpZGF0b3IsXG4gICAgICB9LFxuICAgIF0sXG4gICAgZXZlbnRzOiB7XG4gICAgICB1cGRhdGU6IGhhbmRsZURhdGFTZXRDaGFuZ2UsXG4gICAgfSxcbiAgfSk7XG5cbiAgcmVuZGVyKCkge1xuICAgIHJldHVybiA8RGF0ZVBpY2tlciBkYXRhU2V0PXt0aGlzLmRzfSBuYW1lPVwiZGF0ZVwiIHBsYWNlaG9sZGVyPXtbJ1N0YXJ0IERhdGUnLCAnRW5kIERhdGUnXX0gLz47XG4gIH1cbn1cblxuZXhwb3J0IGRlZmF1bHQgRGF0ZVBpY2tlclRlc3Q7XG4iXX0=

@@ -1,0 +1,73 @@
+d9e0adbf2a8fb533f697fa91153f197f
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("../../../components-pro/icon"));
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var App =
+/*#__PURE__*/
+function (_React$PureComponent) {
+  (0, _inherits2["default"])(App, _React$PureComponent);
+
+  function App() {
+    (0, _classCallCheck2["default"])(this, App);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(App).apply(this, arguments));
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], {
+        icon: "save"
+      }, false), _react["default"].createElement(_button["default"], null, _react["default"].createElement(_icon["default"], {
+        type: "save"
+      })), _react["default"].createElement(_button["default"], {
+        funcType: "flat",
+        color: "primary",
+        icon: "save"
+      }, "\u4FDD\u5B58"), _react["default"].createElement(_button["default"], {
+        icon: "sync"
+      }), _react["default"].createElement(_button["default"], {
+        funcType: "flat",
+        icon: "sync"
+      }), _react["default"].createElement(_button["default"], {
+        funcType: "flat",
+        icon: "search",
+        color: "primary"
+      }), _react["default"].createElement(_button["default"], {
+        funcType: "flat",
+        icon: "close",
+        style: {
+          color: '#e12330'
+        },
+        disabled: true
+      }));
+    }
+  }]);
+  return App;
+}(_react["default"].PureComponent);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

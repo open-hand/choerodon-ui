@@ -6,7 +6,7 @@ const { Option } = Select;
 
 const data = [
   {
-    'last-name': 'huazhen',
+    'last-name': 'zhangsan',
   },
 ];
 
@@ -38,7 +38,7 @@ class App extends React.Component {
         >
           <Option value="jack">Jack</Option>
           <Option value="lucy">Lucy</Option>
-          <Option value="huazhen">Huazhen</Option>
+          <Option value="zhangsan">Zhangsan</Option>
         </Select>
         <Button style={{ marginLeft: 10 }} onClick={this.handleClick}>
           切换过滤条件

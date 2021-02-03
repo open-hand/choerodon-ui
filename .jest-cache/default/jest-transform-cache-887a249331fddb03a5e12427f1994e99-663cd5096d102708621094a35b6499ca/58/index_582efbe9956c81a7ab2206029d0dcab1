@@ -1,0 +1,33 @@
+b808fd9bbf16da94095845ba13279522
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "Column", {
+  enumerable: true,
+  get: function get() {
+    return _Column["default"];
+  }
+});
+Object.defineProperty(exports, "ColumnGroup", {
+  enumerable: true,
+  get: function get() {
+    return _ColumnGroup["default"];
+  }
+});
+exports["default"] = void 0;
+
+var _Table = _interopRequireDefault(require("./Table"));
+
+var _Column = _interopRequireDefault(require("./Column"));
+
+var _ColumnGroup = _interopRequireDefault(require("./ColumnGroup"));
+
+_Table["default"].Column = _Column["default"];
+_Table["default"].ColumnGroup = _ColumnGroup["default"];
+var _default = _Table["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzeCJdLCJuYW1lcyI6WyJUYWJsZSIsIkNvbHVtbiIsIkNvbHVtbkdyb3VwIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFDQTs7QUFFQUEsa0JBQU1DLE1BQU4sR0FBZUEsa0JBQWY7QUFDQUQsa0JBQU1FLFdBQU4sR0FBb0JBLHVCQUFwQjtlQUVlRixpQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBUYWJsZSBmcm9tICcuL1RhYmxlJztcbmltcG9ydCBDb2x1bW4gZnJvbSAnLi9Db2x1bW4nO1xuaW1wb3J0IENvbHVtbkdyb3VwIGZyb20gJy4vQ29sdW1uR3JvdXAnO1xuXG5UYWJsZS5Db2x1bW4gPSBDb2x1bW47XG5UYWJsZS5Db2x1bW5Hcm91cCA9IENvbHVtbkdyb3VwO1xuXG5leHBvcnQgZGVmYXVsdCBUYWJsZTtcbmV4cG9ydCB7IENvbHVtbiwgQ29sdW1uR3JvdXAgfTtcbiJdfQ==

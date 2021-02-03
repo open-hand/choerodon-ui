@@ -1,0 +1,76 @@
+dc8ee36a1d4fa045767cd0ca455952b2
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _cascader = _interopRequireDefault(require("../../../components/cascader"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var options = [{
+  value: 'zhejiang',
+  label: 'Zhejiang',
+  children: [{
+    value: 'hangzhou',
+    label: 'Hangzhou',
+    children: [{
+      value: 'xihu',
+      label: 'West Lake',
+      code: 752100
+    }]
+  }]
+}, {
+  value: 'jiangsu',
+  label: 'Jiangsu',
+  children: [{
+    value: 'nanjing',
+    label: 'Nanjing',
+    children: [{
+      value: 'zhonghuamen',
+      label: 'Zhong Hua Men',
+      code: 453400
+    }]
+  }]
+}];
+
+function handleAreaClick(e, label, option) {
+  e.stopPropagation();
+  console.log('clicked', label, option);
+}
+
+var displayRender = function displayRender(labels, selectedOptions) {
+  return labels.map(function (label, i) {
+    var option = selectedOptions[i];
+
+    if (i === labels.length - 1) {
+      return _react["default"].createElement("span", {
+        key: option.value
+      }, label, " (", _react["default"].createElement("a", {
+        onClick: function onClick(e) {
+          return handleAreaClick(e, label, option);
+        }
+      }, option.code), ")");
+    }
+
+    return _react["default"].createElement("span", {
+      key: option.value
+    }, label, " / ");
+  });
+};
+
+var __Demo = _react["default"].createElement(_cascader["default"], {
+  options: options,
+  defaultValue: ['zhejiang', 'hangzhou', 'xihu'],
+  displayRender: displayRender,
+  style: {
+    width: '100%'
+  }
+});
+
+var _default = __Demo;
+exports["default"] = _default;

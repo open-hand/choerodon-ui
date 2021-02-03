@@ -1,0 +1,98 @@
+6adbc408260a9b6fd72713247a7b01c0
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _codeArea = _interopRequireDefault(require("../../../components-pro/code-area"));
+
+var _dataSet = _interopRequireDefault(require("../../../components-pro/data-set"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _JSFormatter = _interopRequireDefault(require("../../../components-pro/code-area/formatters/JSFormatter"));
+
+require("../../../components-pro/code-area/lint/javascript");
+
+// 引入格式化器
+// 引入 javascript lint
+// 处理 codemirror 的SSR问题， 如无需SSR，请用import代替require;
+if (typeof window !== 'undefined') {
+  // 提供对应语言的语法高亮
+  require('codemirror/mode/javascript/javascript');
+}
+
+var options = {
+  mode: 'javascript'
+};
+var jsText = "function getOptions() {\n  var options = {\n    \"compilerOptions\": {\n      \"strictNullChecks\": true,\n      \"moduleResolution\": \"node\",\n      \"allowSyntheticDefaultImports\": true,\n      \"experimentalDecorators\": true,\n      \"jsx\": \"preserve\",\n      \"noUnusedParameters\": true,\n      \"noUnusedLocals\": true,\n      \"declaration\": true,\n      \"target\": \"es6\",\n      \"lib\": [\n        \"dom\",\n        \"dom.iterable\",\n        \"es7\",\n        \"es2017.object\"\n      ]\n    },\n    \"exclude\": [\n      \"node_modules\",\n      \"lib\",\n      \"es\"\n    ]\n  };\n\n  return options;\n}\n";
+var jsStyle = {
+  height: 500
+};
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "ds", new _dataSet["default"]({
+      autoCreate: true,
+      fields: [{
+        name: 'content',
+        type: 'string',
+        defaultValue: jsText,
+        required: true
+      }]
+    }));
+    return _this;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Javascript"), _react["default"].createElement(_codeArea["default"], {
+        dataSet: this.ds,
+        name: "content",
+        style: jsStyle,
+        formatter: _JSFormatter["default"],
+        options: options
+      }));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

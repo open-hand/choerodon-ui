@@ -26,11 +26,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Switch dataSet={this.ds} name="bind" value="A" />
-        <Switch dataSet={this.ds} name="bind" value="B" />
-        <Switch dataSet={this.ds} name="bind" value="C" />
-        <Switch dataSet={this.ds} name="bind2" />
-        <Switch dataSet={this.ds} name="bind3" />
+        <Switch style={{margin:'.1rem'}}  dataSet={this.ds} name="bind" value="A" />
+        <Switch style={{margin:'.1rem'}}  dataSet={this.ds} name="bind" value="B" />
+        <Switch style={{margin:'.1rem'}}  dataSet={this.ds} name="bind" value="C" />
+        <Switch style={{margin:'.1rem'}}  dataSet={this.ds} name="bind2" />
+        <Switch style={{margin:'.1rem'}}  dataSet={this.ds} name="bind3" />
       </div>
     );
   }

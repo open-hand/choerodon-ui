@@ -1,0 +1,205 @@
+1f0985da46803e180578144cc9ef4b3d
+"use strict";
+
+/* istanbul ignore next */
+var cov_1ia5e8wh04 = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/uk_UA.tsx";
+  var hash = "986982c203f6d4080030c2d1e33a20f27c3f8cbd";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/uk_UA.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 88
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 14
+        },
+        end: {
+          line: 12,
+          column: 76
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 76
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 14
+        },
+        end: {
+          line: 16,
+          column: 73
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 15
+        },
+        end: {
+          line: 56,
+          column: 1
+        }
+      },
+      "8": {
+        start: {
+          line: 57,
+          column: 0
+        },
+        end: {
+          line: 57,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "986982c203f6d4080030c2d1e33a20f27c3f8cbd"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_1ia5e8wh04.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_1ia5e8wh04.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1ia5e8wh04.s[2]++;
+exports["default"] = void 0;
+
+var _uk_UA =
+/* istanbul ignore next */
+(cov_1ia5e8wh04.s[3]++, _interopRequireDefault(require("../rc-components/pagination/locale/uk_UA")));
+
+var _uk_UA2 =
+/* istanbul ignore next */
+(cov_1ia5e8wh04.s[4]++, _interopRequireDefault(require("../date-picker/locale/uk_UA")));
+
+var _uk_UA3 =
+/* istanbul ignore next */
+(cov_1ia5e8wh04.s[5]++, _interopRequireDefault(require("../time-picker/locale/uk_UA")));
+
+var _uk_UA4 =
+/* istanbul ignore next */
+(cov_1ia5e8wh04.s[6]++, _interopRequireDefault(require("../calendar/locale/uk_UA")));
+
+var _default =
+/* istanbul ignore next */
+(cov_1ia5e8wh04.s[7]++, {
+  locale: 'uk',
+  Pagination: _uk_UA["default"],
+  DatePicker: _uk_UA2["default"],
+  TimePicker: _uk_UA3["default"],
+  Calendar: _uk_UA4["default"],
+  Table: {
+    filterTitle: 'Фільтрувати',
+    filterConfirm: 'OK',
+    filterReset: 'Скинути',
+    emptyText: 'Даних немає',
+    selectAll: 'Обрати всі',
+    selectInvert: 'Інвертувати вибір'
+  },
+  Modal: {
+    okText: 'Гаразд',
+    cancelText: 'Скасувати',
+    justOkText: 'Гаразд'
+  },
+  Popconfirm: {
+    okText: 'Гаразд',
+    cancelText: 'Скасувати'
+  },
+  Transfer: {
+    notFoundContent: 'Нічого не знайдено',
+    searchPlaceholder: 'Введіть текст для пошуку',
+    itemUnit: 'item',
+    itemsUnit: 'items'
+  },
+  Select: {
+    notFoundContent: 'Нічого не знайдено'
+  },
+  Upload: {
+    uploading: 'Завантаження ...',
+    removeFile: 'Видалити файл',
+    uploadError: 'Помилка завантаження',
+    previewFile: 'Попередній перегляд файлу'
+  }
+});
+
+/* istanbul ignore next */
+cov_1ia5e8wh04.s[8]++;
+exports["default"] = _default;

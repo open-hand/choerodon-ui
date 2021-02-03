@@ -1,0 +1,48 @@
+678406277dbf14f0761faae2508bf2bb
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _datePicker = _interopRequireDefault(require("../../../components/date-picker"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var RangePicker = _datePicker["default"].RangePicker;
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_datePicker["default"], {
+  dateRender: function dateRender(current) {
+    var style = {};
+
+    if (current.date() === 1) {
+      style.border = '1px solid #1890ff';
+      style.borderRadius = '50%';
+    }
+
+    return _react["default"].createElement("div", {
+      className: "c7n-calendar-date",
+      style: style
+    }, current.date());
+  }
+}), _react["default"].createElement(RangePicker, {
+  dateRender: function dateRender(current) {
+    var style = {};
+
+    if (current.date() === 1) {
+      style.border = '1px solid #1890ff';
+      style.borderRadius = '50%';
+    }
+
+    return _react["default"].createElement("div", {
+      className: "c7n-calendar-date",
+      style: style
+    }, current.date());
+  }
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

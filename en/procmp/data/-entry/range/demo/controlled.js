@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Range, TextField } from 'choerodon-ui/pro';
+import { Range, TextField, Row, Col } from 'choerodon-ui/pro';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,20 +15,27 @@ class App extends React.Component {
     this.setState({
       value,
     });
-  }
+  };
 
   render() {
     return (
-      <div>
-        <Range onChange={this.handleChange} value={this.state.value} name="range" min={10} max={50} step={1} />
-        <TextField style={{ margin: '0.2rem 0 0 0' }} value={this.state.value} />
-      </div>
+      <Row>
+        <Col span={4}>
+          <TextField value={this.state.value} />
+        </Col>
+        <Col span={20}>
+          <Range
+            onChange={this.handleChange}
+            value={this.state.value}
+            name="range"
+            min={10}
+            max={50}
+            step={1}
+          />
+        </Col>
+      </Row>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
-
+ReactDOM.render(<App />, document.getElementById('container'));

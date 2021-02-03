@@ -1,0 +1,106 @@
+42d2f05ed9f8518a7e191fd93f38980f
+"use strict";
+
+/* istanbul ignore next */
+var cov_12jrh9hdmh = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/row/index.tsx";
+  var hash = "467090e6fff3fe994dac76f421fa58ce2c0fdb80";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/row/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 28
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 12
+        },
+        end: {
+          line: 8,
+          column: 30
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 15
+        },
+        end: {
+          line: 10,
+          column: 24
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 0
+        },
+        end: {
+          line: 11,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "467090e6fff3fe994dac76f421fa58ce2c0fdb80"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+cov_12jrh9hdmh.s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_12jrh9hdmh.s[1]++;
+exports["default"] = void 0;
+
+var _grid =
+/* istanbul ignore next */
+(cov_12jrh9hdmh.s[2]++, require("../grid"));
+
+var _default =
+/* istanbul ignore next */
+(cov_12jrh9hdmh.s[3]++, _grid.Row);
+
+/* istanbul ignore next */
+cov_12jrh9hdmh.s[4]++;
+exports["default"] = _default;

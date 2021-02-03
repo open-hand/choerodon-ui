@@ -1,0 +1,69 @@
+9f63a61b6aaf9a12eef5d8bc02db48c9
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _tslib = require("tslib");
+
+var _react = _interopRequireDefault(require("react"));
+
+var _mobxReact = require("mobx-react");
+
+var _spin = _interopRequireDefault(require("choerodon-ui/lib/spin"));
+
+var _DataSetComponent2 = _interopRequireDefault(require("../data-set/DataSetComponent"));
+
+var Spin =
+/*#__PURE__*/
+function (_DataSetComponent) {
+  (0, _inherits2["default"])(Spin, _DataSetComponent);
+
+  function Spin() {
+    (0, _classCallCheck2["default"])(this, Spin);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Spin).apply(this, arguments));
+  }
+
+  (0, _createClass2["default"])(Spin, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          dataSet = _this$props.dataSet,
+          otherProps = (0, _objectWithoutProperties2["default"])(_this$props, ["dataSet"]);
+      var props = {};
+
+      if (dataSet) {
+        props.spinning = dataSet.status !== "ready"
+        /* ready */
+        ;
+      }
+
+      return _react["default"].createElement(_spin["default"], (0, _extends2["default"])({}, otherProps, props));
+    }
+  }]);
+  return Spin;
+}(_DataSetComponent2["default"]);
+
+Spin.displayName = 'Spin';
+Spin = (0, _tslib.__decorate)([_mobxReact.observer], Spin);
+var _default = Spin;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby9zcGluL2luZGV4LnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7O0FBRUE7O0FBTUEsSUFBcUIsSUFBckI7QUFBQTtBQUFBO0FBQUE7O0FBQUE7QUFBQTtBQUFBO0FBQUE7O0FBQUE7QUFBQTtBQUFBLDZCQUdRO0FBQUEsd0JBQytCLEtBQUssS0FEcEM7QUFBQSxVQUNJLE9BREosZUFDSSxPQURKO0FBQUEsVUFDZ0IsVUFEaEI7QUFFSixVQUFNLEtBQUssR0FBYyxFQUF6Qjs7QUFDQSxVQUFJLE9BQUosRUFBYTtBQUNYLFFBQUEsS0FBSyxDQUFDLFFBQU4sR0FBaUIsT0FBTyxDQUFDLE1BQVIsS0FBYztBQUFBO0FBQS9CO0FBQ0Q7O0FBQ0QsYUFBTyxrQkFBQSxhQUFBLENBQUMsZ0JBQUQsRUFBUSwwQkFBQSxFQUFBLEVBQUssVUFBTCxFQUFxQixLQUFyQixDQUFSLENBQVA7QUFDRDtBQVZIO0FBQUE7QUFBQSxFQUFrQyw2QkFBbEMsQ0FBQTs7QUFDUyxJQUFBLENBQUEsV0FBQSxHQUFjLE1BQWQ7QUFEWSxJQUFJLEdBQUEsdUJBQUEsQ0FEeEIsbUJBQ3dCLENBQUEsRUFBSixJQUFJLENBQUo7ZUFBQSxJIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCB7IG9ic2VydmVyIH0gZnJvbSAnbW9ieC1yZWFjdCc7XG5pbXBvcnQgQzdOU3BpbiwgeyBTcGluUHJvcHMgYXMgQzdOU3BpblByb3BzIH0gZnJvbSAnY2hvZXJvZG9uLXVpL2xpYi9zcGluJztcbmltcG9ydCB7IERhdGFTZXRTdGF0dXMgfSBmcm9tICcuLi9kYXRhLXNldC9lbnVtJztcbmltcG9ydCBEYXRhU2V0Q29tcG9uZW50LCB7IERhdGFTZXRDb21wb25lbnRQcm9wcyB9IGZyb20gJy4uL2RhdGEtc2V0L0RhdGFTZXRDb21wb25lbnQnO1xuXG5leHBvcnQgaW50ZXJmYWNlIFNwaW5Qcm9wcyBleHRlbmRzIEM3TlNwaW5Qcm9wcywgRGF0YVNldENvbXBvbmVudFByb3BzIHtcbn1cblxuQG9ic2VydmVyXG5leHBvcnQgZGVmYXVsdCBjbGFzcyBTcGluIGV4dGVuZHMgRGF0YVNldENvbXBvbmVudDxTcGluUHJvcHM+IHtcbiAgc3RhdGljIGRpc3BsYXlOYW1lID0gJ1NwaW4nO1xuXG4gIHJlbmRlcigpIHtcbiAgICBjb25zdCB7IGRhdGFTZXQsIC4uLm90aGVyUHJvcHMgfSA9IHRoaXMucHJvcHM7XG4gICAgY29uc3QgcHJvcHM6IFNwaW5Qcm9wcyA9IHt9O1xuICAgIGlmIChkYXRhU2V0KSB7XG4gICAgICBwcm9wcy5zcGlubmluZyA9IGRhdGFTZXQuc3RhdHVzICE9PSBEYXRhU2V0U3RhdHVzLnJlYWR5O1xuICAgIH1cbiAgICByZXR1cm4gPEM3TlNwaW4gey4uLm90aGVyUHJvcHN9IHsuLi5wcm9wc30gLz47XG4gIH1cbn1cbiJdfQ==

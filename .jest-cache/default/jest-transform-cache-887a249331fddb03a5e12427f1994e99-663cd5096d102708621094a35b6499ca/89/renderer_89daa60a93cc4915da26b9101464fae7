@@ -1,0 +1,39 @@
+3ea3a30c25cd3fcb897fcd068b5ab373
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _datePicker = _interopRequireDefault(require("../../../components-pro/date-picker"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function dayRenderer(props, text, currentDate) {
+  var dayInWeek = currentDate.get('d');
+
+  if (dayInWeek === 0 || dayInWeek === 1) {
+    props.style = {
+      color: 'red'
+    };
+  }
+
+  return _react["default"].createElement("td", props);
+}
+
+function cellRenderer(view) {
+  if (view === 'date') {
+    return dayRenderer;
+  }
+}
+
+var __Demo = _react["default"].createElement(_datePicker["default"], {
+  placeholder: "Select date",
+  cellRenderer: cellRenderer
+});
+
+var _default = __Demo;
+exports["default"] = _default;

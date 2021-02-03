@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/table/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,iB","sourcesContent":["import Table from './Table';\n\nexport default Table;\n"]}

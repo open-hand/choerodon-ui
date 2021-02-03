@@ -1,0 +1,3677 @@
+34d023010f5444d65eb79351c0cd5b53
+"use strict";
+
+/* istanbul ignore next */
+function cov_55urvry3s() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/date-picker/DaysView.tsx";
+  var hash = "b59206eaefcc44a67e9336a1607ab51ff6b5855e";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/date-picker/DaysView.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 42
+        }
+      },
+      "3": {
+        start: {
+          line: 9,
+          column: 0
+        },
+        end: {
+          line: 9,
+          column: 28
+        }
+      },
+      "4": {
+        start: {
+          line: 11,
+          column: 21
+        },
+        end: {
+          line: 11,
+          column: 92
+        }
+      },
+      "5": {
+        start: {
+          line: 13,
+          column: 23
+        },
+        end: {
+          line: 13,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 15,
+          column: 16
+        },
+        end: {
+          line: 15,
+          column: 81
+        }
+      },
+      "7": {
+        start: {
+          line: 17,
+          column: 23
+        },
+        end: {
+          line: 17,
+          column: 95
+        }
+      },
+      "8": {
+        start: {
+          line: 19,
+          column: 20
+        },
+        end: {
+          line: 19,
+          column: 89
+        }
+      },
+      "9": {
+        start: {
+          line: 21,
+          column: 34
+        },
+        end: {
+          line: 21,
+          column: 117
+        }
+      },
+      "10": {
+        start: {
+          line: 23,
+          column: 23
+        },
+        end: {
+          line: 23,
+          column: 95
+        }
+      },
+      "11": {
+        start: {
+          line: 25,
+          column: 17
+        },
+        end: {
+          line: 25,
+          column: 83
+        }
+      },
+      "12": {
+        start: {
+          line: 27,
+          column: 13
+        },
+        end: {
+          line: 27,
+          column: 29
+        }
+      },
+      "13": {
+        start: {
+          line: 29,
+          column: 13
+        },
+        end: {
+          line: 29,
+          column: 53
+        }
+      },
+      "14": {
+        start: {
+          line: 31,
+          column: 17
+        },
+        end: {
+          line: 31,
+          column: 62
+        }
+      },
+      "15": {
+        start: {
+          line: 33,
+          column: 14
+        },
+        end: {
+          line: 33,
+          column: 55
+        }
+      },
+      "16": {
+        start: {
+          line: 35,
+          column: 18
+        },
+        end: {
+          line: 35,
+          column: 63
+        }
+      },
+      "17": {
+        start: {
+          line: 37,
+          column: 12
+        },
+        end: {
+          line: 37,
+          column: 58
+        }
+      },
+      "18": {
+        start: {
+          line: 39,
+          column: 22
+        },
+        end: {
+          line: 39,
+          column: 78
+        }
+      },
+      "19": {
+        start: {
+          line: 41,
+          column: 16
+        },
+        end: {
+          line: 41,
+          column: 68
+        }
+      },
+      "20": {
+        start: {
+          line: 43,
+          column: 12
+        },
+        end: {
+          line: 43,
+          column: 54
+        }
+      },
+      "21": {
+        start: {
+          line: 45,
+          column: 21
+        },
+        end: {
+          line: 45,
+          column: 49
+        }
+      },
+      "22": {
+        start: {
+          line: 47,
+          column: 20
+        },
+        end: {
+          line: 47,
+          column: 52
+        }
+      },
+      "23": {
+        start: {
+          line: 50,
+          column: 2
+        },
+        end: {
+          line: 50,
+          column: 14
+        }
+      },
+      "24": {
+        start: {
+          line: 55,
+          column: 0
+        },
+        end: {
+          line: 366,
+          column: 29
+        }
+      },
+      "25": {
+        start: {
+          line: 56,
+          column: 2
+        },
+        end: {
+          line: 56,
+          column: 55
+        }
+      },
+      "26": {
+        start: {
+          line: 59,
+          column: 4
+        },
+        end: {
+          line: 59,
+          column: 53
+        }
+      },
+      "27": {
+        start: {
+          line: 60,
+          column: 4
+        },
+        end: {
+          line: 60,
+          column: 128
+        }
+      },
+      "28": {
+        start: {
+          line: 63,
+          column: 2
+        },
+        end: {
+          line: 364,
+          column: 6
+        }
+      },
+      "29": {
+        start: {
+          line: 66,
+          column: 22
+        },
+        end: {
+          line: 66,
+          column: 36
+        }
+      },
+      "30": {
+        start: {
+          line: 67,
+          column: 22
+        },
+        end: {
+          line: 67,
+          column: 42
+        }
+      },
+      "31": {
+        start: {
+          line: 68,
+          column: 24
+        },
+        end: {
+          line: 68,
+          column: 93
+        }
+      },
+      "32": {
+        start: {
+          line: 69,
+          column: 6
+        },
+        end: {
+          line: 71,
+          column: 70
+        }
+      },
+      "33": {
+        start: {
+          line: 76,
+          column: 6
+        },
+        end: {
+          line: 78,
+          column: 8
+        }
+      },
+      "34": {
+        start: {
+          line: 83,
+          column: 6
+        },
+        end: {
+          line: 85,
+          column: 8
+        }
+      },
+      "35": {
+        start: {
+          line: 90,
+          column: 6
+        },
+        end: {
+          line: 92,
+          column: 8
+        }
+      },
+      "36": {
+        start: {
+          line: 97,
+          column: 6
+        },
+        end: {
+          line: 99,
+          column: 8
+        }
+      },
+      "37": {
+        start: {
+          line: 104,
+          column: 6
+        },
+        end: {
+          line: 106,
+          column: 8
+        }
+      },
+      "38": {
+        start: {
+          line: 111,
+          column: 6
+        },
+        end: {
+          line: 113,
+          column: 8
+        }
+      },
+      "39": {
+        start: {
+          line: 118,
+          column: 6
+        },
+        end: {
+          line: 118,
+          column: 38
+        }
+      },
+      "40": {
+        start: {
+          line: 119,
+          column: 6
+        },
+        end: {
+          line: 119,
+          column: 64
+        }
+      },
+      "41": {
+        start: {
+          line: 124,
+          column: 6
+        },
+        end: {
+          line: 124,
+          column: 38
+        }
+      },
+      "42": {
+        start: {
+          line: 125,
+          column: 6
+        },
+        end: {
+          line: 125,
+          column: 62
+        }
+      },
+      "43": {
+        start: {
+          line: 130,
+          column: 6
+        },
+        end: {
+          line: 130,
+          column: 38
+        }
+      },
+      "44": {
+        start: {
+          line: 132,
+          column: 6
+        },
+        end: {
+          line: 138,
+          column: 7
+        }
+      },
+      "45": {
+        start: {
+          line: 133,
+          column: 8
+        },
+        end: {
+          line: 135,
+          column: 10
+        }
+      },
+      "46": {
+        start: {
+          line: 137,
+          column: 8
+        },
+        end: {
+          line: 137,
+          column: 70
+        }
+      },
+      "47": {
+        start: {
+          line: 143,
+          column: 6
+        },
+        end: {
+          line: 143,
+          column: 38
+        }
+      },
+      "48": {
+        start: {
+          line: 145,
+          column: 6
+        },
+        end: {
+          line: 147,
+          column: 7
+        }
+      },
+      "49": {
+        start: {
+          line: 146,
+          column: 8
+        },
+        end: {
+          line: 146,
+          column: 65
+        }
+      },
+      "50": {
+        start: {
+          line: 152,
+          column: 6
+        },
+        end: {
+          line: 152,
+          column: 38
+        }
+      },
+      "51": {
+        start: {
+          line: 153,
+          column: 6
+        },
+        end: {
+          line: 153,
+          column: 68
+        }
+      },
+      "52": {
+        start: {
+          line: 158,
+          column: 6
+        },
+        end: {
+          line: 158,
+          column: 38
+        }
+      },
+      "53": {
+        start: {
+          line: 159,
+          column: 6
+        },
+        end: {
+          line: 159,
+          column: 63
+        }
+      },
+      "54": {
+        start: {
+          line: 164,
+          column: 6
+        },
+        end: {
+          line: 164,
+          column: 38
+        }
+      },
+      "55": {
+        start: {
+          line: 165,
+          column: 6
+        },
+        end: {
+          line: 165,
+          column: 85
+        }
+      },
+      "56": {
+        start: {
+          line: 170,
+          column: 6
+        },
+        end: {
+          line: 170,
+          column: 38
+        }
+      },
+      "57": {
+        start: {
+          line: 171,
+          column: 6
+        },
+        end: {
+          line: 171,
+          column: 80
+        }
+      },
+      "58": {
+        start: {
+          line: 176,
+          column: 6
+        },
+        end: {
+          line: 176,
+          column: 25
+        }
+      },
+      "59": {
+        start: {
+          line: 177,
+          column: 6
+        },
+        end: {
+          line: 177,
+          column: 35
+        }
+      },
+      "60": {
+        start: {
+          line: 182,
+          column: 6
+        },
+        end: {
+          line: 182,
+          column: 24
+        }
+      },
+      "61": {
+        start: {
+          line: 187,
+          column: 33
+        },
+        end: {
+          line: 187,
+          column: 52
+        }
+      },
+      "62": {
+        start: {
+          line: 188,
+          column: 21
+        },
+        end: {
+          line: 188,
+          column: 94
+        }
+      },
+      "63": {
+        start: {
+          line: 189,
+          column: 6
+        },
+        end: {
+          line: 189,
+          column: 21
+        }
+      },
+      "64": {
+        start: {
+          line: 194,
+          column: 34
+        },
+        end: {
+          line: 194,
+          column: 65
+        }
+      },
+      "65": {
+        start: {
+          line: 195,
+          column: 33
+        },
+        end: {
+          line: 195,
+          column: 108
+        }
+      },
+      "66": {
+        start: {
+          line: 196,
+          column: 6
+        },
+        end: {
+          line: 196,
+          column: 47
+        }
+      },
+      "67": {
+        start: {
+          line: 201,
+          column: 34
+        },
+        end: {
+          line: 201,
+          column: 61
+        }
+      },
+      "68": {
+        start: {
+          line: 202,
+          column: 29
+        },
+        end: {
+          line: 202,
+          column: 104
+        }
+      },
+      "69": {
+        start: {
+          line: 203,
+          column: 6
+        },
+        end: {
+          line: 203,
+          column: 29
+        }
+      },
+      "70": {
+        start: {
+          line: 208,
+          column: 22
+        },
+        end: {
+          line: 208,
+          column: 36
+        }
+      },
+      "71": {
+        start: {
+          line: 209,
+          column: 17
+        },
+        end: {
+          line: 209,
+          column: 32
+        }
+      },
+      "72": {
+        start: {
+          line: 210,
+          column: 6
+        },
+        end: {
+          line: 238,
+          column: 11
+        }
+      },
+      "73": {
+        start: {
+          line: 243,
+          column: 6
+        },
+        end: {
+          line: 245,
+          column: 29
+        }
+      },
+      "74": {
+        start: {
+          line: 250,
+          column: 6
+        },
+        end: {
+          line: 253,
+          column: 105
+        }
+      },
+      "75": {
+        start: {
+          line: 258,
+          column: 6
+        },
+        end: {
+          line: 258,
+          column: 127
+        }
+      },
+      "76": {
+        start: {
+          line: 263,
+          column: 22
+        },
+        end: {
+          line: 263,
+          column: 36
+        }
+      },
+      "77": {
+        start: {
+          line: 264,
+          column: 6
+        },
+        end: {
+          line: 268,
+          column: 57
+        }
+      },
+      "78": {
+        start: {
+          line: 273,
+          column: 6
+        },
+        end: {
+          line: 273,
+          column: 89
+        }
+      },
+      "79": {
+        start: {
+          line: 278,
+          column: 22
+        },
+        end: {
+          line: 278,
+          column: 36
+        }
+      },
+      "80": {
+        start: {
+          line: 279,
+          column: 6
+        },
+        end: {
+          line: 281,
+          column: 15
+        }
+      },
+      "81": {
+        start: {
+          line: 286,
+          column: 21
+        },
+        end: {
+          line: 286,
+          column: 50
+        }
+      },
+      "82": {
+        start: {
+          line: 287,
+          column: 6
+        },
+        end: {
+          line: 287,
+          column: 64
+        }
+      },
+      "83": {
+        start: {
+          line: 292,
+          column: 22
+        },
+        end: {
+          line: 292,
+          column: 36
+        }
+      },
+      "84": {
+        start: {
+          line: 293,
+          column: 24
+        },
+        end: {
+          line: 293,
+          column: 34
+        }
+      },
+      "85": {
+        start: {
+          line: 294,
+          column: 17
+        },
+        end: {
+          line: 294,
+          column: 33
+        }
+      },
+      "86": {
+        start: {
+          line: 295,
+          column: 33
+        },
+        end: {
+          line: 295,
+          column: 53
+        }
+      },
+      "87": {
+        start: {
+          line: 296,
+          column: 21
+        },
+        end: {
+          line: 296,
+          column: 93
+        }
+      },
+      "88": {
+        start: {
+          line: 297,
+          column: 34
+        },
+        end: {
+          line: 297,
+          column: 57
+        }
+      },
+      "89": {
+        start: {
+          line: 298,
+          column: 24
+        },
+        end: {
+          line: 298,
+          column: 98
+        }
+      },
+      "90": {
+        start: {
+          line: 299,
+          column: 21
+        },
+        end: {
+          line: 299,
+          column: 33
+        }
+      },
+      "91": {
+        start: {
+          line: 300,
+          column: 22
+        },
+        end: {
+          line: 300,
+          column: 44
+        }
+      },
+      "92": {
+        start: {
+          line: 301,
+          column: 24
+        },
+        end: {
+          line: 301,
+          column: 35
+        }
+      },
+      "93": {
+        start: {
+          line: 302,
+          column: 25
+        },
+        end: {
+          line: 302,
+          column: 37
+        }
+      },
+      "94": {
+        start: {
+          line: 303,
+          column: 20
+        },
+        end: {
+          line: 303,
+          column: 50
+        }
+      },
+      "95": {
+        start: {
+          line: 304,
+          column: 17
+        },
+        end: {
+          line: 304,
+          column: 19
+        }
+      },
+      "96": {
+        start: {
+          line: 305,
+          column: 18
+        },
+        end: {
+          line: 305,
+          column: 20
+        }
+      },
+      "97": {
+        start: {
+          line: 307,
+          column: 6
+        },
+        end: {
+          line: 334,
+          column: 7
+        }
+      },
+      "98": {
+        start: {
+          line: 310,
+          column: 26
+        },
+        end: {
+          line: 310,
+          column: 43
+        }
+      },
+      "99": {
+        start: {
+          line: 311,
+          column: 25
+        },
+        end: {
+          line: 311,
+          column: 60
+        }
+      },
+      "100": {
+        start: {
+          line: 312,
+          column: 24
+        },
+        end: {
+          line: 312,
+          column: 815
+        }
+      },
+      "101": {
+        start: {
+          line: 313,
+          column: 19
+        },
+        end: {
+          line: 313,
+          column: 45
+        }
+      },
+      "102": {
+        start: {
+          line: 314,
+          column: 23
+        },
+        end: {
+          line: 318,
+          column: 9
+        }
+      },
+      "103": {
+        start: {
+          line: 320,
+          column: 8
+        },
+        end: {
+          line: 322,
+          column: 9
+        }
+      },
+      "104": {
+        start: {
+          line: 321,
+          column: 10
+        },
+        end: {
+          line: 321,
+          column: 74
+        }
+      },
+      "105": {
+        start: {
+          line: 324,
+          column: 8
+        },
+        end: {
+          line: 324,
+          column: 68
+        }
+      },
+      "106": {
+        start: {
+          line: 326,
+          column: 8
+        },
+        end: {
+          line: 331,
+          column: 9
+        }
+      },
+      "107": {
+        start: {
+          line: 327,
+          column: 10
+        },
+        end: {
+          line: 329,
+          column: 21
+        }
+      },
+      "108": {
+        start: {
+          line: 330,
+          column: 10
+        },
+        end: {
+          line: 330,
+          column: 21
+        }
+      },
+      "109": {
+        start: {
+          line: 333,
+          column: 8
+        },
+        end: {
+          line: 333,
+          column: 30
+        }
+      },
+      "110": {
+        start: {
+          line: 336,
+          column: 6
+        },
+        end: {
+          line: 336,
+          column: 18
+        }
+      },
+      "111": {
+        start: {
+          line: 341,
+          column: 6
+        },
+        end: {
+          line: 341,
+          column: 53
+        }
+      },
+      "112": {
+        start: {
+          line: 346,
+          column: 19
+        },
+        end: {
+          line: 346,
+          column: 47
+        }
+      },
+      "113": {
+        start: {
+          line: 347,
+          column: 17
+        },
+        end: {
+          line: 347,
+          column: 37
+        }
+      },
+      "114": {
+        start: {
+          line: 348,
+          column: 18
+        },
+        end: {
+          line: 348,
+          column: 41
+        }
+      },
+      "115": {
+        start: {
+          line: 349,
+          column: 16
+        },
+        end: {
+          line: 349,
+          column: 18
+        }
+      },
+      "116": {
+        start: {
+          line: 350,
+          column: 14
+        },
+        end: {
+          line: 350,
+          column: 15
+        }
+      },
+      "117": {
+        start: {
+          line: 351,
+          column: 6
+        },
+        end: {
+          line: 356,
+          column: 9
+        }
+      },
+      "118": {
+        start: {
+          line: 352,
+          column: 8
+        },
+        end: {
+          line: 355,
+          column: 16
+        }
+      },
+      "119": {
+        start: {
+          line: 357,
+          column: 6
+        },
+        end: {
+          line: 357,
+          column: 17
+        }
+      },
+      "120": {
+        start: {
+          line: 362,
+          column: 6
+        },
+        end: {
+          line: 362,
+          column: 37
+        }
+      },
+      "121": {
+        start: {
+          line: 365,
+          column: 2
+        },
+        end: {
+          line: 365,
+          column: 18
+        }
+      },
+      "122": {
+        start: {
+          line: 368,
+          column: 0
+        },
+        end: {
+          line: 368,
+          column: 30
+        }
+      },
+      "123": {
+        start: {
+          line: 369,
+          column: 0
+        },
+        end: {
+          line: 369,
+          column: 34
+        }
+      },
+      "124": {
+        start: {
+          line: 370,
+          column: 0
+        },
+        end: {
+          line: 377,
+          column: 41
+        }
+      },
+      "125": {
+        start: {
+          line: 378,
+          column: 0
+        },
+        end: {
+          line: 380,
+          column: 2
+        }
+      },
+      "126": {
+        start: {
+          line: 381,
+          column: 0
+        },
+        end: {
+          line: 383,
+          column: 1
+        }
+      },
+      "127": {
+        start: {
+          line: 384,
+          column: 0
+        },
+        end: {
+          line: 384,
+          column: 96
+        }
+      },
+      "128": {
+        start: {
+          line: 385,
+          column: 0
+        },
+        end: {
+          line: 385,
+          column: 97
+        }
+      },
+      "129": {
+        start: {
+          line: 386,
+          column: 0
+        },
+        end: {
+          line: 386,
+          column: 94
+        }
+      },
+      "130": {
+        start: {
+          line: 387,
+          column: 0
+        },
+        end: {
+          line: 387,
+          column: 93
+        }
+      },
+      "131": {
+        start: {
+          line: 388,
+          column: 0
+        },
+        end: {
+          line: 388,
+          column: 96
+        }
+      },
+      "132": {
+        start: {
+          line: 389,
+          column: 0
+        },
+        end: {
+          line: 389,
+          column: 97
+        }
+      },
+      "133": {
+        start: {
+          line: 390,
+          column: 0
+        },
+        end: {
+          line: 390,
+          column: 87
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "alwaysValidDate",
+        decl: {
+          start: {
+            line: 49,
+            column: 9
+          },
+          end: {
+            line: 49,
+            column: 24
+          }
+        },
+        loc: {
+          start: {
+            line: 49,
+            column: 27
+          },
+          end: {
+            line: 51,
+            column: 1
+          }
+        },
+        line: 49
+      },
+      "1": {
+        name: "(anonymous_1)",
+        decl: {
+          start: {
+            line: 55,
+            column: 0
+          },
+          end: {
+            line: 55,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 55,
+            column: 26
+          },
+          end: {
+            line: 366,
+            column: 1
+          }
+        },
+        line: 55
+      },
+      "2": {
+        name: "DaysView",
+        decl: {
+          start: {
+            line: 58,
+            column: 11
+          },
+          end: {
+            line: 58,
+            column: 19
+          }
+        },
+        loc: {
+          start: {
+            line: 58,
+            column: 22
+          },
+          end: {
+            line: 61,
+            column: 3
+          }
+        },
+        line: 58
+      },
+      "3": {
+        name: "render",
+        decl: {
+          start: {
+            line: 65,
+            column: 20
+          },
+          end: {
+            line: 65,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 65,
+            column: 29
+          },
+          end: {
+            line: 72,
+            column: 5
+          }
+        },
+        line: 65
+      },
+      "4": {
+        name: "handlePrevYearClick",
+        decl: {
+          start: {
+            line: 75,
+            column: 20
+          },
+          end: {
+            line: 75,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 75,
+            column: 42
+          },
+          end: {
+            line: 79,
+            column: 5
+          }
+        },
+        line: 75
+      },
+      "5": {
+        name: "handlePrevMonthClick",
+        decl: {
+          start: {
+            line: 82,
+            column: 20
+          },
+          end: {
+            line: 82,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 82,
+            column: 43
+          },
+          end: {
+            line: 86,
+            column: 5
+          }
+        },
+        line: 82
+      },
+      "6": {
+        name: "handleMonthSelect",
+        decl: {
+          start: {
+            line: 89,
+            column: 20
+          },
+          end: {
+            line: 89,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 89,
+            column: 40
+          },
+          end: {
+            line: 93,
+            column: 5
+          }
+        },
+        line: 89
+      },
+      "7": {
+        name: "handleYearSelect",
+        decl: {
+          start: {
+            line: 96,
+            column: 20
+          },
+          end: {
+            line: 96,
+            column: 36
+          }
+        },
+        loc: {
+          start: {
+            line: 96,
+            column: 39
+          },
+          end: {
+            line: 100,
+            column: 5
+          }
+        },
+        line: 96
+      },
+      "8": {
+        name: "handleNextYearClick",
+        decl: {
+          start: {
+            line: 103,
+            column: 20
+          },
+          end: {
+            line: 103,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 103,
+            column: 42
+          },
+          end: {
+            line: 107,
+            column: 5
+          }
+        },
+        line: 103
+      },
+      "9": {
+        name: "handleNextMonthClick",
+        decl: {
+          start: {
+            line: 110,
+            column: 20
+          },
+          end: {
+            line: 110,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 110,
+            column: 43
+          },
+          end: {
+            line: 114,
+            column: 5
+          }
+        },
+        line: 110
+      },
+      "10": {
+        name: "handleKeyDownHome",
+        decl: {
+          start: {
+            line: 117,
+            column: 20
+          },
+          end: {
+            line: 117,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 117,
+            column: 41
+          },
+          end: {
+            line: 120,
+            column: 5
+          }
+        },
+        line: 117
+      },
+      "11": {
+        name: "handleKeyDownEnd",
+        decl: {
+          start: {
+            line: 123,
+            column: 20
+          },
+          end: {
+            line: 123,
+            column: 36
+          }
+        },
+        loc: {
+          start: {
+            line: 123,
+            column: 40
+          },
+          end: {
+            line: 126,
+            column: 5
+          }
+        },
+        line: 123
+      },
+      "12": {
+        name: "handleKeyDownLeft",
+        decl: {
+          start: {
+            line: 129,
+            column: 20
+          },
+          end: {
+            line: 129,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 129,
+            column: 41
+          },
+          end: {
+            line: 139,
+            column: 5
+          }
+        },
+        line: 129
+      },
+      "13": {
+        name: "handleKeyDownRight",
+        decl: {
+          start: {
+            line: 142,
+            column: 20
+          },
+          end: {
+            line: 142,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 142,
+            column: 42
+          },
+          end: {
+            line: 148,
+            column: 5
+          }
+        },
+        line: 142
+      },
+      "14": {
+        name: "handleKeyDownUp",
+        decl: {
+          start: {
+            line: 151,
+            column: 20
+          },
+          end: {
+            line: 151,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 151,
+            column: 39
+          },
+          end: {
+            line: 154,
+            column: 5
+          }
+        },
+        line: 151
+      },
+      "15": {
+        name: "handleKeyDownDown",
+        decl: {
+          start: {
+            line: 157,
+            column: 20
+          },
+          end: {
+            line: 157,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 157,
+            column: 41
+          },
+          end: {
+            line: 160,
+            column: 5
+          }
+        },
+        line: 157
+      },
+      "16": {
+        name: "handleKeyDownPageUp",
+        decl: {
+          start: {
+            line: 163,
+            column: 20
+          },
+          end: {
+            line: 163,
+            column: 39
+          }
+        },
+        loc: {
+          start: {
+            line: 163,
+            column: 43
+          },
+          end: {
+            line: 166,
+            column: 5
+          }
+        },
+        line: 163
+      },
+      "17": {
+        name: "handleKeyDownPageDown",
+        decl: {
+          start: {
+            line: 169,
+            column: 20
+          },
+          end: {
+            line: 169,
+            column: 41
+          }
+        },
+        loc: {
+          start: {
+            line: 169,
+            column: 45
+          },
+          end: {
+            line: 172,
+            column: 5
+          }
+        },
+        line: 169
+      },
+      "18": {
+        name: "handleKeyDownEnter",
+        decl: {
+          start: {
+            line: 175,
+            column: 20
+          },
+          end: {
+            line: 175,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 175,
+            column: 42
+          },
+          end: {
+            line: 178,
+            column: 5
+          }
+        },
+        line: 175
+      },
+      "19": {
+        name: "handleCellClick",
+        decl: {
+          start: {
+            line: 181,
+            column: 20
+          },
+          end: {
+            line: 181,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 181,
+            column: 42
+          },
+          end: {
+            line: 183,
+            column: 5
+          }
+        },
+        line: 181
+      },
+      "20": {
+        name: "choose",
+        decl: {
+          start: {
+            line: 186,
+            column: 20
+          },
+          end: {
+            line: 186,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 186,
+            column: 33
+          },
+          end: {
+            line: 190,
+            column: 5
+          }
+        },
+        line: 186
+      },
+      "21": {
+        name: "changeSelectedDate",
+        decl: {
+          start: {
+            line: 193,
+            column: 20
+          },
+          end: {
+            line: 193,
+            column: 38
+          }
+        },
+        loc: {
+          start: {
+            line: 193,
+            column: 59
+          },
+          end: {
+            line: 197,
+            column: 5
+          }
+        },
+        line: 193
+      },
+      "22": {
+        name: "changeViewMode",
+        decl: {
+          start: {
+            line: 200,
+            column: 20
+          },
+          end: {
+            line: 200,
+            column: 34
+          }
+        },
+        loc: {
+          start: {
+            line: 200,
+            column: 41
+          },
+          end: {
+            line: 204,
+            column: 5
+          }
+        },
+        line: 200
+      },
+      "23": {
+        name: "renderHeader",
+        decl: {
+          start: {
+            line: 207,
+            column: 20
+          },
+          end: {
+            line: 207,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 207,
+            column: 35
+          },
+          end: {
+            line: 239,
+            column: 5
+          }
+        },
+        line: 207
+      },
+      "24": {
+        name: "renderBody",
+        decl: {
+          start: {
+            line: 242,
+            column: 20
+          },
+          end: {
+            line: 242,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 242,
+            column: 33
+          },
+          end: {
+            line: 246,
+            column: 5
+          }
+        },
+        line: 242
+      },
+      "25": {
+        name: "renderPanel",
+        decl: {
+          start: {
+            line: 249,
+            column: 20
+          },
+          end: {
+            line: 249,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 249,
+            column: 34
+          },
+          end: {
+            line: 254,
+            column: 5
+          }
+        },
+        line: 249
+      },
+      "26": {
+        name: "renderPanelHead",
+        decl: {
+          start: {
+            line: 257,
+            column: 20
+          },
+          end: {
+            line: 257,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 257,
+            column: 38
+          },
+          end: {
+            line: 259,
+            column: 5
+          }
+        },
+        line: 257
+      },
+      "27": {
+        name: "renderFooter",
+        decl: {
+          start: {
+            line: 262,
+            column: 20
+          },
+          end: {
+            line: 262,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 262,
+            column: 35
+          },
+          end: {
+            line: 269,
+            column: 5
+          }
+        },
+        line: 262
+      },
+      "28": {
+        name: "renderCell",
+        decl: {
+          start: {
+            line: 272,
+            column: 20
+          },
+          end: {
+            line: 272,
+            column: 30
+          }
+        },
+        loc: {
+          start: {
+            line: 272,
+            column: 38
+          },
+          end: {
+            line: 274,
+            column: 5
+          }
+        },
+        line: 272
+      },
+      "29": {
+        name: "renderInner",
+        decl: {
+          start: {
+            line: 277,
+            column: 20
+          },
+          end: {
+            line: 277,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 277,
+            column: 38
+          },
+          end: {
+            line: 282,
+            column: 5
+          }
+        },
+        line: 277
+      },
+      "30": {
+        name: "getFirstDay",
+        decl: {
+          start: {
+            line: 285,
+            column: 20
+          },
+          end: {
+            line: 285,
+            column: 31
+          }
+        },
+        loc: {
+          start: {
+            line: 285,
+            column: 38
+          },
+          end: {
+            line: 288,
+            column: 5
+          }
+        },
+        line: 285
+      },
+      "31": {
+        name: "renderPanelBody",
+        decl: {
+          start: {
+            line: 291,
+            column: 20
+          },
+          end: {
+            line: 291,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 291,
+            column: 38
+          },
+          end: {
+            line: 337,
+            column: 5
+          }
+        },
+        line: 291
+      },
+      "32": {
+        name: "getPanelClass",
+        decl: {
+          start: {
+            line: 340,
+            column: 20
+          },
+          end: {
+            line: 340,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 340,
+            column: 36
+          },
+          end: {
+            line: 342,
+            column: 5
+          }
+        },
+        line: 340
+      },
+      "33": {
+        name: "getDaysOfWeek",
+        decl: {
+          start: {
+            line: 345,
+            column: 20
+          },
+          end: {
+            line: 345,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 345,
+            column: 36
+          },
+          end: {
+            line: 358,
+            column: 5
+          }
+        },
+        line: 345
+      },
+      "34": {
+        name: "(anonymous_34)",
+        decl: {
+          start: {
+            line: 351,
+            column: 19
+          },
+          end: {
+            line: 351,
+            column: 20
+          }
+        },
+        loc: {
+          start: {
+            line: 351,
+            column: 34
+          },
+          end: {
+            line: 356,
+            column: 7
+          }
+        },
+        line: 351
+      },
+      "35": {
+        name: "getCloneDate",
+        decl: {
+          start: {
+            line: 361,
+            column: 20
+          },
+          end: {
+            line: 361,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 361,
+            column: 35
+          },
+          end: {
+            line: 363,
+            column: 5
+          }
+        },
+        line: 361
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 132,
+            column: 6
+          },
+          end: {
+            line: 138,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 132,
+            column: 6
+          },
+          end: {
+            line: 138,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 132,
+            column: 6
+          },
+          end: {
+            line: 138,
+            column: 7
+          }
+        }],
+        line: 132
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 145,
+            column: 6
+          },
+          end: {
+            line: 147,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 145,
+            column: 6
+          },
+          end: {
+            line: 147,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 145,
+            column: 6
+          },
+          end: {
+            line: 147,
+            column: 7
+          }
+        }],
+        line: 145
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 165,
+            column: 62
+          },
+          end: {
+            line: 165,
+            column: 82
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 165,
+            column: 73
+          },
+          end: {
+            line: 165,
+            column: 76
+          }
+        }, {
+          start: {
+            line: 165,
+            column: 79
+          },
+          end: {
+            line: 165,
+            column: 82
+          }
+        }],
+        line: 165
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 171,
+            column: 57
+          },
+          end: {
+            line: 171,
+            column: 77
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 171,
+            column: 68
+          },
+          end: {
+            line: 171,
+            column: 71
+          }
+        }, {
+          start: {
+            line: 171,
+            column: 74
+          },
+          end: {
+            line: 171,
+            column: 77
+          }
+        }],
+        line: 171
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 188,
+            column: 21
+          },
+          end: {
+            line: 188,
+            column: 94
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 188,
+            column: 55
+          },
+          end: {
+            line: 188,
+            column: 71
+          }
+        }, {
+          start: {
+            line: 188,
+            column: 74
+          },
+          end: {
+            line: 188,
+            column: 94
+          }
+        }],
+        line: 188
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 195,
+            column: 33
+          },
+          end: {
+            line: 195,
+            column: 108
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 195,
+            column: 68
+          },
+          end: {
+            line: 195,
+            column: 84
+          }
+        }, {
+          start: {
+            line: 195,
+            column: 87
+          },
+          end: {
+            line: 195,
+            column: 108
+          }
+        }],
+        line: 195
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 202,
+            column: 29
+          },
+          end: {
+            line: 202,
+            column: 104
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 202,
+            column: 64
+          },
+          end: {
+            line: 202,
+            column: 80
+          }
+        }, {
+          start: {
+            line: 202,
+            column: 83
+          },
+          end: {
+            line: 202,
+            column: 104
+          }
+        }],
+        line: 202
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 296,
+            column: 21
+          },
+          end: {
+            line: 296,
+            column: 93
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 296,
+            column: 55
+          },
+          end: {
+            line: 296,
+            column: 70
+          }
+        }, {
+          start: {
+            line: 296,
+            column: 73
+          },
+          end: {
+            line: 296,
+            column: 93
+          }
+        }],
+        line: 296
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 298,
+            column: 24
+          },
+          end: {
+            line: 298,
+            column: 98
+          }
+        },
+        type: "cond-expr",
+        locations: [{
+          start: {
+            line: 298,
+            column: 59
+          },
+          end: {
+            line: 298,
+            column: 74
+          }
+        }, {
+          start: {
+            line: 298,
+            column: 77
+          },
+          end: {
+            line: 298,
+            column: 98
+          }
+        }],
+        line: 298
+      },
+      "9": {
+        loc: {
+          start: {
+            line: 312,
+            column: 178
+          },
+          end: {
+            line: 312,
+            column: 280
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 312,
+            column: 178
+          },
+          end: {
+            line: 312,
+            column: 208
+          }
+        }, {
+          start: {
+            line: 312,
+            column: 212
+          },
+          end: {
+            line: 312,
+            column: 244
+          }
+        }, {
+          start: {
+            line: 312,
+            column: 248
+          },
+          end: {
+            line: 312,
+            column: 280
+          }
+        }],
+        line: 312
+      },
+      "10": {
+        loc: {
+          start: {
+            line: 312,
+            column: 359
+          },
+          end: {
+            line: 312,
+            column: 461
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 312,
+            column: 359
+          },
+          end: {
+            line: 312,
+            column: 389
+          }
+        }, {
+          start: {
+            line: 312,
+            column: 393
+          },
+          end: {
+            line: 312,
+            column: 425
+          }
+        }, {
+          start: {
+            line: 312,
+            column: 429
+          },
+          end: {
+            line: 312,
+            column: 461
+          }
+        }],
+        line: 312
+      },
+      "11": {
+        loc: {
+          start: {
+            line: 320,
+            column: 8
+          },
+          end: {
+            line: 322,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 320,
+            column: 8
+          },
+          end: {
+            line: 322,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 320,
+            column: 8
+          },
+          end: {
+            line: 322,
+            column: 9
+          }
+        }],
+        line: 320
+      },
+      "12": {
+        loc: {
+          start: {
+            line: 326,
+            column: 8
+          },
+          end: {
+            line: 331,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 326,
+            column: 8
+          },
+          end: {
+            line: 331,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 326,
+            column: 8
+          },
+          end: {
+            line: 331,
+            column: 9
+          }
+        }],
+        line: 326
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0,
+      "81": 0,
+      "82": 0,
+      "83": 0,
+      "84": 0,
+      "85": 0,
+      "86": 0,
+      "87": 0,
+      "88": 0,
+      "89": 0,
+      "90": 0,
+      "91": 0,
+      "92": 0,
+      "93": 0,
+      "94": 0,
+      "95": 0,
+      "96": 0,
+      "97": 0,
+      "98": 0,
+      "99": 0,
+      "100": 0,
+      "101": 0,
+      "102": 0,
+      "103": 0,
+      "104": 0,
+      "105": 0,
+      "106": 0,
+      "107": 0,
+      "108": 0,
+      "109": 0,
+      "110": 0,
+      "111": 0,
+      "112": 0,
+      "113": 0,
+      "114": 0,
+      "115": 0,
+      "116": 0,
+      "117": 0,
+      "118": 0,
+      "119": 0,
+      "120": 0,
+      "121": 0,
+      "122": 0,
+      "123": 0,
+      "124": 0,
+      "125": 0,
+      "126": 0,
+      "127": 0,
+      "128": 0,
+      "129": 0,
+      "130": 0,
+      "131": 0,
+      "132": 0,
+      "133": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0],
+      "9": [0, 0, 0],
+      "10": [0, 0, 0],
+      "11": [0, 0],
+      "12": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "b59206eaefcc44a67e9336a1607ab51ff6b5855e"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_55urvry3s = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_55urvry3s();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_55urvry3s().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_55urvry3s().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_55urvry3s().s[2]++;
+exports.alwaysValidDate = alwaysValidDate;
+
+/* istanbul ignore next */
+cov_55urvry3s().s[3]++;
+exports["default"] = void 0;
+
+var _objectSpread2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2")));
+
+var _defineProperty2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/defineProperty")));
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[9]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[10]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[11]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _tslib =
+/* istanbul ignore next */
+(cov_55urvry3s().s[12]++, require("tslib"));
+
+var _react =
+/* istanbul ignore next */
+(cov_55urvry3s().s[13]++, _interopRequireDefault(require("react")));
+
+var _propTypes =
+/* istanbul ignore next */
+(cov_55urvry3s().s[14]++, _interopRequireDefault(require("prop-types")));
+
+var _moment =
+/* istanbul ignore next */
+(cov_55urvry3s().s[15]++, _interopRequireDefault(require("moment")));
+
+var _classnames =
+/* istanbul ignore next */
+(cov_55urvry3s().s[16]++, _interopRequireDefault(require("classnames")));
+
+var _noop =
+/* istanbul ignore next */
+(cov_55urvry3s().s[17]++, _interopRequireDefault(require("lodash/noop")));
+
+var _ViewComponent2 =
+/* istanbul ignore next */
+(cov_55urvry3s().s[18]++, _interopRequireDefault(require("../core/ViewComponent")));
+
+var _autobind =
+/* istanbul ignore next */
+(cov_55urvry3s().s[19]++, _interopRequireDefault(require("../_util/autobind")));
+
+var _icon =
+/* istanbul ignore next */
+(cov_55urvry3s().s[20]++, _interopRequireDefault(require("../icon")));
+
+var _localeContext =
+/* istanbul ignore next */
+(cov_55urvry3s().s[21]++, require("../locale-context"));
+
+var _EventManager =
+/* istanbul ignore next */
+(cov_55urvry3s().s[22]++, require("../_util/EventManager"));
+
+function alwaysValidDate() {
+  /* istanbul ignore next */
+  cov_55urvry3s().f[0]++;
+  cov_55urvry3s().s[23]++;
+  return true;
+}
+
+var DaysView =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_55urvry3s().s[24]++, function (_ViewComponent) {
+  /* istanbul ignore next */
+  cov_55urvry3s().f[1]++;
+  cov_55urvry3s().s[25]++;
+  (0, _inherits2["default"])(DaysView, _ViewComponent);
+
+  function DaysView() {
+    /* istanbul ignore next */
+    cov_55urvry3s().f[2]++;
+    cov_55urvry3s().s[26]++;
+    (0, _classCallCheck2["default"])(this, DaysView);
+
+    /* istanbul ignore next */
+    cov_55urvry3s().s[27]++;
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(DaysView).apply(this, arguments));
+  }
+
+  /* istanbul ignore next */
+  cov_55urvry3s().s[28]++;
+  (0, _createClass2["default"])(DaysView, [{
+    key: "render",
+    value: function render() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[3]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[29]++, this.prefixCls),
+          className =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[30]++, this.props.className);
+      var classString =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[31]++, (0, _classnames["default"])("".concat(prefixCls, "-view"), className));
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[32]++;
+      return _react["default"].createElement("div", {
+        className: classString
+      }, this.renderHeader(), this.renderBody(), this.renderFooter());
+    }
+  }, {
+    key: "handlePrevYearClick",
+    value: function handlePrevYearClick() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[4]++;
+      cov_55urvry3s().s[33]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, 'y'), "year"
+      /* year */
+      );
+    }
+  }, {
+    key: "handlePrevMonthClick",
+    value: function handlePrevMonthClick() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[5]++;
+      cov_55urvry3s().s[34]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, 'M'), "month"
+      /* month */
+      );
+    }
+  }, {
+    key: "handleMonthSelect",
+    value: function handleMonthSelect() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[6]++;
+      cov_55urvry3s().s[35]++;
+      this.changeViewMode("month"
+      /* month */
+      );
+    }
+  }, {
+    key: "handleYearSelect",
+    value: function handleYearSelect() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[7]++;
+      cov_55urvry3s().s[36]++;
+      this.changeViewMode("year"
+      /* year */
+      );
+    }
+  }, {
+    key: "handleNextYearClick",
+    value: function handleNextYearClick() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[8]++;
+      cov_55urvry3s().s[37]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, 'y'), "year"
+      /* year */
+      );
+    }
+  }, {
+    key: "handleNextMonthClick",
+    value: function handleNextMonthClick() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[9]++;
+      cov_55urvry3s().s[38]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, 'M'), "month"
+      /* month */
+      );
+    }
+  }, {
+    key: "handleKeyDownHome",
+    value: function handleKeyDownHome(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[10]++;
+      cov_55urvry3s().s[39]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[40]++;
+      this.changeSelectedDate(this.getCloneDate().startOf('M'));
+    }
+  }, {
+    key: "handleKeyDownEnd",
+    value: function handleKeyDownEnd(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[11]++;
+      cov_55urvry3s().s[41]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[42]++;
+      this.changeSelectedDate(this.getCloneDate().endOf('M'));
+    }
+  }, {
+    key: "handleKeyDownLeft",
+    value: function handleKeyDownLeft(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[12]++;
+      cov_55urvry3s().s[43]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[44]++;
+
+      if (e.altKey) {
+        /* istanbul ignore next */
+        cov_55urvry3s().b[0][0]++;
+        cov_55urvry3s().s[45]++;
+        this.changeViewMode("month"
+        /* month */
+        );
+      } else {
+        /* istanbul ignore next */
+        cov_55urvry3s().b[0][1]++;
+        cov_55urvry3s().s[46]++;
+        this.changeSelectedDate(this.getCloneDate().subtract(1, 'd'));
+      }
+    }
+  }, {
+    key: "handleKeyDownRight",
+    value: function handleKeyDownRight(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[13]++;
+      cov_55urvry3s().s[47]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[48]++;
+
+      if (!e.altKey) {
+        /* istanbul ignore next */
+        cov_55urvry3s().b[1][0]++;
+        cov_55urvry3s().s[49]++;
+        this.changeSelectedDate(this.getCloneDate().add(1, 'd'));
+      } else
+      /* istanbul ignore next */
+      {
+        cov_55urvry3s().b[1][1]++;
+      }
+    }
+  }, {
+    key: "handleKeyDownUp",
+    value: function handleKeyDownUp(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[14]++;
+      cov_55urvry3s().s[50]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[51]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, 'w'));
+    }
+  }, {
+    key: "handleKeyDownDown",
+    value: function handleKeyDownDown(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[15]++;
+      cov_55urvry3s().s[52]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[53]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, 'w'));
+    }
+  }, {
+    key: "handleKeyDownPageUp",
+    value: function handleKeyDownPageUp(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[16]++;
+      cov_55urvry3s().s[54]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[55]++;
+      this.changeSelectedDate(this.getCloneDate().subtract(1, e.altKey ?
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[2][0]++, 'y') :
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[2][1]++, 'M')));
+    }
+  }, {
+    key: "handleKeyDownPageDown",
+    value: function handleKeyDownPageDown(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[17]++;
+      cov_55urvry3s().s[56]++;
+      (0, _EventManager.stopEvent)(e);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[57]++;
+      this.changeSelectedDate(this.getCloneDate().add(1, e.altKey ?
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[3][0]++, 'y') :
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[3][1]++, 'M')));
+    }
+  }, {
+    key: "handleKeyDownEnter",
+    value: function handleKeyDownEnter(e) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[18]++;
+      cov_55urvry3s().s[58]++;
+      e.preventDefault();
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[59]++;
+      this.choose(this.props.date);
+    }
+  }, {
+    key: "handleCellClick",
+    value: function handleCellClick(date) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[19]++;
+      cov_55urvry3s().s[60]++;
+      this.choose(date);
+    }
+  }, {
+    key: "choose",
+    value: function choose(date) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[20]++;
+
+      var _this$props$onSelect =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[61]++, this.props.onSelect),
+          onSelect =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[62]++, _this$props$onSelect === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[4][0]++, _noop["default"]) :
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[4][1]++, _this$props$onSelect));
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[63]++;
+      onSelect(date);
+    }
+  }, {
+    key: "changeSelectedDate",
+    value: function changeSelectedDate(selectedDate, mode) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[21]++;
+
+      var _this$props$onSelecte =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[64]++, this.props.onSelectedDateChange),
+          onSelectedDateChange =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[65]++, _this$props$onSelecte === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[5][0]++, _noop["default"]) :
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[5][1]++, _this$props$onSelecte));
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[66]++;
+      onSelectedDateChange(selectedDate, mode);
+    }
+  }, {
+    key: "changeViewMode",
+    value: function changeViewMode(mode) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[22]++;
+
+      var _this$props$onViewMod =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[67]++, this.props.onViewModeChange),
+          onViewModeChange =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[68]++, _this$props$onViewMod === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[6][0]++, _noop["default"]) :
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[6][1]++, _this$props$onViewMod));
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[69]++;
+      onViewModeChange(mode);
+    }
+  }, {
+    key: "renderHeader",
+    value: function renderHeader() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[23]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[70]++, this.prefixCls),
+          date =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[71]++, this.props.date);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[72]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-header")
+      }, _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-prev-year"),
+        onClick: this.handlePrevYearClick
+      }, _react["default"].createElement(_icon["default"], {
+        type: "first_page"
+      })), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-prev-month"),
+        onClick: this.handlePrevMonthClick
+      }, _react["default"].createElement(_icon["default"], {
+        type: "navigate_before"
+      })), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-view-select"),
+        onClick: this.handleMonthSelect
+      }, date.localeData().monthsShort(date)), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-view-select"),
+        onClick: this.handleYearSelect
+      }, date.year()), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-next-year")
+      }, _react["default"].createElement(_icon["default"], {
+        type: "last_page",
+        onClick: this.handleNextYearClick
+      })), _react["default"].createElement("a", {
+        className: "".concat(prefixCls, "-next-month"),
+        onClick: this.handleNextMonthClick
+      }, _react["default"].createElement(_icon["default"], {
+        type: "navigate_next"
+      })));
+    }
+  }, {
+    key: "renderBody",
+    value: function renderBody() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[24]++;
+      cov_55urvry3s().s[73]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(this.prefixCls, "-body")
+      }, this.renderPanel());
+    }
+  }, {
+    key: "renderPanel",
+    value: function renderPanel() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[25]++;
+      cov_55urvry3s().s[74]++;
+      return _react["default"].createElement("table", {
+        className: this.getPanelClass(),
+        cellSpacing: 0
+      }, this.renderPanelHead(), _react["default"].createElement("tbody", null, this.renderPanelBody()));
+    }
+  }, {
+    key: "renderPanelHead",
+    value: function renderPanelHead() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[26]++;
+      cov_55urvry3s().s[75]++;
+      return _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.getDaysOfWeek()));
+    }
+  }, {
+    key: "renderFooter",
+    value: function renderFooter() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[27]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[76]++, this.prefixCls);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[77]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-footer")
+      }, _react["default"].createElement("a", {
+        onClick: this.choose.bind(this, (0, _moment["default"])().startOf('d'))
+      }, (0, _localeContext.$l)('DatePicker', 'today')));
+    }
+  }, {
+    key: "renderCell",
+    value: function renderCell(props) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[28]++;
+      cov_55urvry3s().s[78]++;
+      return _react["default"].createElement("td", (0, _extends2["default"])({}, props));
+    }
+  }, {
+    key: "renderInner",
+    value: function renderInner(text) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[29]++;
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[79]++, this.prefixCls);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[80]++;
+      return _react["default"].createElement("div", {
+        className: "".concat(prefixCls, "-cell-inner")
+      }, text);
+    }
+  }, {
+    key: "getFirstDay",
+    value: function getFirstDay(date) {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[30]++;
+      var firstDay =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[81]++, date.clone().subtract(1, 'M'));
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[82]++;
+      return firstDay.date(firstDay.daysInMonth()).startOf('w');
+    }
+  }, {
+    key: "renderPanelBody",
+    value: function renderPanelBody() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[31]++;
+
+      var prefixCls =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[83]++, this.prefixCls),
+          _this$props =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[84]++, this.props),
+          date =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[85]++, _this$props.date),
+          _this$props$renderer =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[86]++, _this$props.renderer),
+          renderer =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[87]++, _this$props$renderer === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[7][0]++, this.renderCell) :
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[7][1]++, _this$props$renderer)),
+          _this$props$isValidDa =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[88]++, _this$props.isValidDate),
+          isValidDate =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[89]++, _this$props$isValidDa === void 0 ?
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[8][0]++, alwaysValidDate) :
+      /* istanbul ignore next */
+      (cov_55urvry3s().b[8][1]++, _this$props$isValidDa));
+
+      var selected =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[90]++, date.clone());
+      var prevMonth =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[91]++, this.getFirstDay(date));
+      var currentYear =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[92]++, date.year());
+      var currentMonth =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[93]++, date.month());
+      var lastDay =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[94]++, prevMonth.clone().add(42, 'd'));
+      var rows =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[95]++, []);
+      var cells =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[96]++, []);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[97]++;
+
+      while (prevMonth.isBefore(lastDay)) {
+        var _classNames;
+
+        var currentDate =
+        /* istanbul ignore next */
+        (cov_55urvry3s().s[98]++, prevMonth.clone());
+        var isDisabled =
+        /* istanbul ignore next */
+        (cov_55urvry3s().s[99]++, !isValidDate(currentDate, selected));
+        var className =
+        /* istanbul ignore next */
+        (cov_55urvry3s().s[100]++, (0, _classnames["default"])("".concat(prefixCls, "-cell"), (_classNames = {}, (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-old"),
+        /* istanbul ignore next */
+        (cov_55urvry3s().b[9][0]++, prevMonth.year() < currentYear) ||
+        /* istanbul ignore next */
+        (cov_55urvry3s().b[9][1]++, prevMonth.year() === currentYear) &&
+        /* istanbul ignore next */
+        (cov_55urvry3s().b[9][2]++, prevMonth.month() < currentMonth)), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-new"),
+        /* istanbul ignore next */
+        (cov_55urvry3s().b[10][0]++, prevMonth.year() > currentYear) ||
+        /* istanbul ignore next */
+        (cov_55urvry3s().b[10][1]++, prevMonth.year() === currentYear) &&
+        /* istanbul ignore next */
+        (cov_55urvry3s().b[10][2]++, prevMonth.month() > currentMonth)), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-selected"), prevMonth.isSame(selected, 'd')), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-today"), prevMonth.isSame((0, _moment["default"])(), 'd')), (0, _defineProperty2["default"])(_classNames, "".concat(prefixCls, "-disabled"), isDisabled), _classNames)));
+        var text =
+        /* istanbul ignore next */
+        (cov_55urvry3s().s[101]++, String(currentDate.date()));
+        var dayProps =
+        /* istanbul ignore next */
+        (cov_55urvry3s().s[102]++, {
+          key: prevMonth.format('M_D'),
+          className: className,
+          children: this.renderInner(text)
+        });
+
+        /* istanbul ignore next */
+        cov_55urvry3s().s[103]++;
+
+        if (!isDisabled) {
+          /* istanbul ignore next */
+          cov_55urvry3s().b[11][0]++;
+          cov_55urvry3s().s[104]++;
+          dayProps.onClick = this.handleCellClick.bind(this, currentDate);
+        } else
+        /* istanbul ignore next */
+        {
+          cov_55urvry3s().b[11][1]++;
+        }
+
+        cov_55urvry3s().s[105]++;
+        cells.push(renderer(dayProps, text, currentDate, selected));
+
+        /* istanbul ignore next */
+        cov_55urvry3s().s[106]++;
+
+        if (cells.length === 7) {
+          /* istanbul ignore next */
+          cov_55urvry3s().b[12][0]++;
+          cov_55urvry3s().s[107]++;
+          rows.push(_react["default"].createElement("tr", {
+            key: prevMonth.format('M_D')
+          }, cells));
+
+          /* istanbul ignore next */
+          cov_55urvry3s().s[108]++;
+          cells = [];
+        } else
+        /* istanbul ignore next */
+        {
+          cov_55urvry3s().b[12][1]++;
+        }
+
+        cov_55urvry3s().s[109]++;
+        prevMonth.add(1, 'd');
+      }
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[110]++;
+      return rows;
+    }
+  }, {
+    key: "getPanelClass",
+    value: function getPanelClass() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[32]++;
+      cov_55urvry3s().s[111]++;
+      return "".concat(this.prefixCls, "-day-panel");
+    }
+  }, {
+    key: "getDaysOfWeek",
+    value: function getDaysOfWeek() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[33]++;
+      var locale =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[112]++, this.props.date.localeData());
+      var days =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[113]++, locale.weekdaysMin());
+      var first =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[114]++, locale.firstDayOfWeek());
+      var dow =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[115]++, []);
+      var i =
+      /* istanbul ignore next */
+      (cov_55urvry3s().s[116]++, 0);
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[117]++;
+      days.forEach(function (day) {
+        /* istanbul ignore next */
+        cov_55urvry3s().f[34]++;
+        cov_55urvry3s().s[118]++;
+        dow[(7 + i++ - first) % 7] = _react["default"].createElement("th", {
+          key: day,
+          title: day
+        }, day);
+      });
+
+      /* istanbul ignore next */
+      cov_55urvry3s().s[119]++;
+      return dow;
+    }
+  }, {
+    key: "getCloneDate",
+    value: function getCloneDate() {
+      /* istanbul ignore next */
+      cov_55urvry3s().f[35]++;
+      cov_55urvry3s().s[120]++;
+      return this.props.date.clone();
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_55urvry3s().s[121]++;
+  return DaysView;
+}(_ViewComponent2["default"]));
+
+/* istanbul ignore next */
+cov_55urvry3s().s[122]++;
+exports["default"] = DaysView;
+
+/* istanbul ignore next */
+cov_55urvry3s().s[123]++;
+DaysView.displayName = 'DaysView';
+
+/* istanbul ignore next */
+cov_55urvry3s().s[124]++;
+DaysView.propTypes = (0, _objectSpread2["default"])({
+  date: _propTypes["default"].object,
+  renderer: _propTypes["default"].func,
+  isValidDate: _propTypes["default"].func,
+  onSelect: _propTypes["default"].func,
+  onSelectedDateChange: _propTypes["default"].func,
+  onViewModeChange: _propTypes["default"].func
+}, _ViewComponent2["default"].propTypes);
+
+/* istanbul ignore next */
+cov_55urvry3s().s[125]++;
+DaysView.defaultProps = {
+  suffixCls: 'calendar'
+};
+
+/* istanbul ignore next */
+cov_55urvry3s().s[126]++;
+DaysView.type = "date"
+/* date */
+;
+
+/* istanbul ignore next */
+cov_55urvry3s().s[127]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handlePrevYearClick", null);
+
+/* istanbul ignore next */
+cov_55urvry3s().s[128]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handlePrevMonthClick", null);
+
+/* istanbul ignore next */
+cov_55urvry3s().s[129]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handleMonthSelect", null);
+
+/* istanbul ignore next */
+cov_55urvry3s().s[130]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handleYearSelect", null);
+
+/* istanbul ignore next */
+cov_55urvry3s().s[131]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handleNextYearClick", null);
+
+/* istanbul ignore next */
+cov_55urvry3s().s[132]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "handleNextMonthClick", null);
+
+/* istanbul ignore next */
+cov_55urvry3s().s[133]++;
+(0, _tslib.__decorate)([_autobind["default"]], DaysView.prototype, "renderCell", null);

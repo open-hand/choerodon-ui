@@ -1,0 +1,204 @@
+a31ec94841613ed292da981b692b614f
+"use strict";
+
+/* istanbul ignore next */
+function cov_1rn3ljg9xh() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/mediaQueryListPolyfill.tsx";
+  var hash = "17259dcb73d24efbfe77759755f2f18212c45da9";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/mediaQueryListPolyfill.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 36
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 25
+        },
+        end: {
+          line: 16,
+          column: 1
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 2
+        },
+        end: {
+          line: 15,
+          column: 4
+        }
+      },
+      "4": {
+        start: {
+          line: 18,
+          column: 0
+        },
+        end: {
+          line: 18,
+          column: 48
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "matchMediaPolifill",
+        decl: {
+          start: {
+            line: 8,
+            column: 34
+          },
+          end: {
+            line: 8,
+            column: 52
+          }
+        },
+        loc: {
+          start: {
+            line: 8,
+            column: 65
+          },
+          end: {
+            line: 16,
+            column: 1
+          }
+        },
+        line: 8
+      },
+      "1": {
+        name: "addListener",
+        decl: {
+          start: {
+            line: 13,
+            column: 26
+          },
+          end: {
+            line: 13,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 13,
+            column: 40
+          },
+          end: {
+            line: 13,
+            column: 42
+          }
+        },
+        line: 13
+      },
+      "2": {
+        name: "removeListener",
+        decl: {
+          start: {
+            line: 14,
+            column: 29
+          },
+          end: {
+            line: 14,
+            column: 43
+          }
+        },
+        loc: {
+          start: {
+            line: 14,
+            column: 46
+          },
+          end: {
+            line: 14,
+            column: 48
+          }
+        },
+        line: 14
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "17259dcb73d24efbfe77759755f2f18212c45da9"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_1rn3ljg9xh = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_1rn3ljg9xh();
+cov_1rn3ljg9xh().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1rn3ljg9xh().s[1]++;
+exports.matchMediaPolifill = void 0;
+
+/* istanbul ignore next */
+cov_1rn3ljg9xh().s[2]++;
+
+var matchMediaPolifill = function matchMediaPolifill(mediaQuery) {
+  /* istanbul ignore next */
+  cov_1rn3ljg9xh().f[0]++;
+  cov_1rn3ljg9xh().s[3]++;
+  // console.warn('`matchMedia` is not supported!');
+  return {
+    media: mediaQuery,
+    matches: false,
+    addListener: function addListener() {
+      /* istanbul ignore next */
+      cov_1rn3ljg9xh().f[1]++;
+    },
+    removeListener: function removeListener() {
+      /* istanbul ignore next */
+      cov_1rn3ljg9xh().f[2]++;
+    }
+  };
+};
+
+/* istanbul ignore next */
+cov_1rn3ljg9xh().s[4]++;
+exports.matchMediaPolifill = matchMediaPolifill;

@@ -1,0 +1,112 @@
+5b371c2c804474f51373f83089a8e319
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _autoComplete = _interopRequireDefault(require("../../../components/auto-complete"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Option = _autoComplete["default"].Option;
+var OptGroup = _autoComplete["default"].OptGroup;
+var dataSource = [{
+  title: '话题',
+  children: [{
+    title: 'AntDesign',
+    count: 10000
+  }, {
+    title: 'AntDesign UI',
+    count: 10600
+  }]
+}, {
+  title: '问题',
+  children: [{
+    title: 'AntDesign UI 有多好',
+    count: 60100
+  }, {
+    title: 'AntDesign 是啥',
+    count: 30010
+  }]
+}, {
+  title: '文章',
+  children: [{
+    title: 'AntDesign 是一个设计语言',
+    count: 100000
+  }]
+}];
+
+function renderTitle(title) {
+  return _react["default"].createElement("span", null, title, _react["default"].createElement("a", {
+    style: {
+      "float": 'right'
+    },
+    href: "https://www.google.com/search?q=choerodon",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "\u66F4\u591A"));
+}
+
+var options = dataSource.map(function (group) {
+  return _react["default"].createElement(OptGroup, {
+    key: group.title,
+    label: renderTitle(group.title)
+  }, group.children.map(function (opt) {
+    return _react["default"].createElement(Option, {
+      key: opt.title,
+      value: opt.title
+    }, opt.title, _react["default"].createElement("span", {
+      className: "certain-search-item-count"
+    }, opt.count, " \u4EBA \u5173\u6CE8"));
+  }));
+}).concat([_react["default"].createElement(Option, {
+  disabled: true,
+  key: "all",
+  className: "show-all"
+}, _react["default"].createElement("a", {
+  href: "https://www.google.com/search?q=choerodon",
+  target: "_blank",
+  rel: "noopener noreferrer"
+}, "\u67E5\u770B\u6240\u6709\u7ED3\u679C"))]);
+
+function Complete() {
+  return _react["default"].createElement("div", {
+    className: "certain-category-search-wrapper",
+    style: {
+      width: 250
+    }
+  }, _react["default"].createElement(_autoComplete["default"], {
+    className: "certain-category-search",
+    dropdownClassName: "certain-category-search-dropdown",
+    dropdownMatchSelectWidth: false,
+    dropdownStyle: {
+      width: 300
+    },
+    style: {
+      width: '100%'
+    },
+    dataSource: options,
+    placeholder: "input here",
+    optionLabelProp: "value"
+  }, _react["default"].createElement(_input["default"], {
+    suffix: _react["default"].createElement(_button["default"], {
+      shape: "circle",
+      size: "small",
+      funcType: "flat",
+      icon: "search"
+    })
+  })));
+}
+
+var __Demo = _react["default"].createElement(Complete, null);
+
+var _default = __Demo;
+exports["default"] = _default;

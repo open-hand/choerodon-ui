@@ -1,0 +1,217 @@
+ac26f4f9300b7f5d1058b1b4196ffb72
+"use strict";
+
+/* istanbul ignore next */
+function cov_2l7kmnvai8() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/nl_NL.tsx";
+  var hash = "31b231a04ea62e17d29fd9dc8479b3e9e42584f2";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/nl_NL.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 88
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 14
+        },
+        end: {
+          line: 12,
+          column: 76
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 76
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 14
+        },
+        end: {
+          line: 16,
+          column: 73
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 15
+        },
+        end: {
+          line: 60,
+          column: 1
+        }
+      },
+      "8": {
+        start: {
+          line: 61,
+          column: 0
+        },
+        end: {
+          line: 61,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "31b231a04ea62e17d29fd9dc8479b3e9e42584f2"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_2l7kmnvai8 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_2l7kmnvai8();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_2l7kmnvai8().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_2l7kmnvai8().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2l7kmnvai8().s[2]++;
+exports["default"] = void 0;
+
+var _nl_NL =
+/* istanbul ignore next */
+(cov_2l7kmnvai8().s[3]++, _interopRequireDefault(require("../rc-components/pagination/locale/nl_NL")));
+
+var _nl_NL2 =
+/* istanbul ignore next */
+(cov_2l7kmnvai8().s[4]++, _interopRequireDefault(require("../date-picker/locale/nl_NL")));
+
+var _nl_NL3 =
+/* istanbul ignore next */
+(cov_2l7kmnvai8().s[5]++, _interopRequireDefault(require("../time-picker/locale/nl_NL")));
+
+var _nl_NL4 =
+/* istanbul ignore next */
+(cov_2l7kmnvai8().s[6]++, _interopRequireDefault(require("../calendar/locale/nl_NL")));
+
+var _default =
+/* istanbul ignore next */
+(cov_2l7kmnvai8().s[7]++, {
+  locale: 'nl',
+  Pagination: _nl_NL["default"],
+  DatePicker: _nl_NL2["default"],
+  TimePicker: _nl_NL3["default"],
+  Calendar: _nl_NL4["default"],
+  Table: {
+    filterTitle: 'Filteren',
+    filterConfirm: 'OK',
+    filterReset: 'Reset',
+    emptyText: 'Geen gegevens',
+    selectAll: 'Selecteer huidige pagina',
+    selectInvert: 'Deselecteer huidige pagina'
+  },
+  Modal: {
+    okText: 'OK',
+    cancelText: 'Annuleren',
+    justOkText: 'OK'
+  },
+  Popconfirm: {
+    okText: 'OK',
+    cancelText: 'Annuleren'
+  },
+  Transfer: {
+    notFoundContent: 'Niet gevonden',
+    searchPlaceholder: 'Zoeken',
+    itemUnit: 'item',
+    itemsUnit: 'items'
+  },
+  Select: {
+    notFoundContent: 'Niet gevonden'
+  },
+  Upload: {
+    uploading: 'Uploaden...',
+    removeFile: 'Verwijder bestand',
+    uploadError: 'Fout tijdens uploaden',
+    previewFile: 'Bekijk bestand'
+  },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold'
+  }
+});
+
+/* istanbul ignore next */
+cov_2l7kmnvai8().s[8]++;
+exports["default"] = _default;

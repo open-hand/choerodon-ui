@@ -1,0 +1,44 @@
+58da8f8c2fd4f50423f589c753a4a85d
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _list = _interopRequireDefault(require("../../../components/list"));
+
+var _avatar = _interopRequireDefault(require("../../../components/avatar"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var data = [{
+  title: 'Choerodon UI Title 1'
+}, {
+  title: 'Choerodon UI Title 2'
+}, {
+  title: 'Choerodon UI Title 3'
+}, {
+  title: 'Choerodon UI Title 4'
+}];
+
+var __Demo = _react["default"].createElement(_list["default"], {
+  itemLayout: "horizontal",
+  dataSource: data,
+  renderItem: function renderItem(item) {
+    return _react["default"].createElement(_list["default"].Item, null, _react["default"].createElement(_list["default"].Item.Meta, {
+      avatar: _react["default"].createElement(_avatar["default"], {
+        src: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+      }),
+      title: _react["default"].createElement("a", {
+        href: "https://choerodon.github.io/choerodon-ui/"
+      }, item.title),
+      description: "Choerodon"
+    }));
+  }
+});
+
+var _default = __Demo;
+exports["default"] = _default;

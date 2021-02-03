@@ -1,0 +1,20 @@
+1fe0132fefe22d12362355adb7426627
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _spin = _interopRequireDefault(require("../../../components/spin"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", {
+  className: "example"
+}, _react["default"].createElement(_spin["default"], null));
+
+var _default = __Demo;
+exports["default"] = _default;

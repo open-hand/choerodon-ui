@@ -1,0 +1,1 @@
+{"version":3,"sources":["_util/normalizeLanguage.jsx"],"names":["language"],"mappings":";;;;;;;AAAe,SAAA,iBAAA,CAAA,QAAA,EAAqC;AAChD,SAAOA,QAAQ,IAAIA,QAAQ,CAARA,OAAAA,CAAAA,GAAAA,EAAAA,GAAAA,EAAnB,WAAmBA,EAAnB;AACH","sourcesContent":["export default function normalizeLanguage(language) {\n    return language && language.replace('_', '-').toLowerCase();\n}\n"]}

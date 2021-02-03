@@ -1,0 +1,36 @@
+35fd9c2787bec3eb3fdd025c85a0c4f9
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _slider = _interopRequireDefault(require("../../../components/slider"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function onChange(value) {
+  console.log('onChange: ', value);
+}
+
+function onAfterChange(value) {
+  console.log('onAfterChange: ', value);
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_slider["default"], {
+  defaultValue: 30,
+  onChange: onChange,
+  onAfterChange: onAfterChange
+}), _react["default"].createElement(_slider["default"], {
+  range: true,
+  step: 10,
+  defaultValue: [20, 50],
+  onChange: onChange,
+  onAfterChange: onAfterChange
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

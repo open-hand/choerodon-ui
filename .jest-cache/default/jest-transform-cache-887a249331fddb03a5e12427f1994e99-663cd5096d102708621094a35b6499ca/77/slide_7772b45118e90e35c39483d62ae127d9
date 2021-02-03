@@ -1,0 +1,118 @@
+164c74ee3acdb2854cc1527fbf520248
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _radio = _interopRequireDefault(require("../../../components/radio"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _tabs = _interopRequireDefault(require("../../../components/tabs"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var TabPane = _tabs["default"].TabPane;
+
+var SlidingTabsDemo =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(SlidingTabsDemo, _React$Component);
+
+  function SlidingTabsDemo(props) {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, SlidingTabsDemo);
+    _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(SlidingTabsDemo).call(this, props));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleModeChange", function (e) {
+      var mode = e.target.value;
+
+      _this.setState({
+        mode: mode
+      });
+    });
+    _this.state = {
+      mode: 'top'
+    };
+    return _this;
+  }
+
+  (0, _createClass2["default"])(SlidingTabsDemo, [{
+    key: "render",
+    value: function render() {
+      var mode = this.state.mode;
+      return _react["default"].createElement("div", null, _react["default"].createElement(_radio["default"].Group, {
+        onChange: this.handleModeChange,
+        value: mode,
+        style: {
+          marginBottom: 8
+        }
+      }, _react["default"].createElement(_radio["default"].Button, {
+        value: "top"
+      }, "Horizontal"), _react["default"].createElement(_radio["default"].Button, {
+        value: "left"
+      }, "Vertical")), _react["default"].createElement(_tabs["default"], {
+        defaultActiveKey: "1",
+        tabPosition: mode,
+        style: {
+          height: 220
+        }
+      }, _react["default"].createElement(TabPane, {
+        tab: "Tab 1",
+        key: "1"
+      }, "Content of tab 1"), _react["default"].createElement(TabPane, {
+        tab: "Tab 2",
+        key: "2"
+      }, "Content of tab 2"), _react["default"].createElement(TabPane, {
+        tab: "Tab 3",
+        key: "3"
+      }, "Content of tab 3"), _react["default"].createElement(TabPane, {
+        tab: "Tab 4",
+        key: "4"
+      }, "Content of tab 4"), _react["default"].createElement(TabPane, {
+        tab: "Tab 5",
+        key: "5"
+      }, "Content of tab 5"), _react["default"].createElement(TabPane, {
+        tab: "Tab 6",
+        key: "6"
+      }, "Content of tab 6"), _react["default"].createElement(TabPane, {
+        tab: "Tab 7",
+        key: "7"
+      }, "Content of tab 7"), _react["default"].createElement(TabPane, {
+        tab: "Tab 8",
+        key: "8"
+      }, "Content of tab 8"), _react["default"].createElement(TabPane, {
+        tab: "Tab 9",
+        key: "9"
+      }, "Content of tab 9"), _react["default"].createElement(TabPane, {
+        tab: "Tab 10",
+        key: "10"
+      }, "Content of tab 10"), _react["default"].createElement(TabPane, {
+        tab: "Tab 11",
+        key: "11"
+      }, "Content of tab 11")));
+    }
+  }]);
+  return SlidingTabsDemo;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(SlidingTabsDemo, null);
+
+var _default = __Demo;
+exports["default"] = _default;

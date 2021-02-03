@@ -1,0 +1,220 @@
+189f7fbc30935cfcd832df50fa93a97c
+"use strict";
+
+/* istanbul ignore next */
+function cov_1aks2g8c73() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/grid/index.tsx";
+  var hash = "d7b8da20092db12ae6a139896cf0f0e1fe7997b0";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/grid/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 13,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 11,
+          column: 4
+        },
+        end: {
+          line: 11,
+          column: 27
+        }
+      },
+      "4": {
+        start: {
+          line: 14,
+          column: 0
+        },
+        end: {
+          line: 19,
+          column: 3
+        }
+      },
+      "5": {
+        start: {
+          line: 17,
+          column: 4
+        },
+        end: {
+          line: 17,
+          column: 27
+        }
+      },
+      "6": {
+        start: {
+          line: 21,
+          column: 11
+        },
+        end: {
+          line: 21,
+          column: 51
+        }
+      },
+      "7": {
+        start: {
+          line: 23,
+          column: 11
+        },
+        end: {
+          line: 23,
+          column: 51
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "get",
+        decl: {
+          start: {
+            line: 10,
+            column: 16
+          },
+          end: {
+            line: 10,
+            column: 19
+          }
+        },
+        loc: {
+          start: {
+            line: 10,
+            column: 22
+          },
+          end: {
+            line: 12,
+            column: 3
+          }
+        },
+        line: 10
+      },
+      "1": {
+        name: "get",
+        decl: {
+          start: {
+            line: 16,
+            column: 16
+          },
+          end: {
+            line: 16,
+            column: 19
+          }
+        },
+        loc: {
+          start: {
+            line: 16,
+            column: 22
+          },
+          end: {
+            line: 18,
+            column: 3
+          }
+        },
+        line: 16
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0
+    },
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "d7b8da20092db12ae6a139896cf0f0e1fe7997b0"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_1aks2g8c73 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_1aks2g8c73();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_1aks2g8c73().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_1aks2g8c73().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1aks2g8c73().s[2]++;
+Object.defineProperty(exports, "Row", {
+  enumerable: true,
+  get: function get() {
+    /* istanbul ignore next */
+    cov_1aks2g8c73().f[0]++;
+    cov_1aks2g8c73().s[3]++;
+    return _row["default"];
+  }
+});
+
+/* istanbul ignore next */
+cov_1aks2g8c73().s[4]++;
+Object.defineProperty(exports, "Col", {
+  enumerable: true,
+  get: function get() {
+    /* istanbul ignore next */
+    cov_1aks2g8c73().f[1]++;
+    cov_1aks2g8c73().s[5]++;
+    return _col["default"];
+  }
+});
+
+var _row =
+/* istanbul ignore next */
+(cov_1aks2g8c73().s[6]++, _interopRequireDefault(require("./row")));
+
+var _col =
+/* istanbul ignore next */
+(cov_1aks2g8c73().s[7]++, _interopRequireDefault(require("./col")));

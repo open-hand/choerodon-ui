@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { PerformanceTable } from 'choerodon-ui/pro';
 
@@ -17,7 +17,6 @@ class AffixHorizontalScrollbarTable extends React.Component {
         dataIndex: 'id',
         key: 'id',
         width: 70,
-        align: "center",
         fixed: true,
       },
       {
@@ -69,15 +68,18 @@ class AffixHorizontalScrollbarTable extends React.Component {
           affixHorizontalScrollbar
           data={this.state.data}
           columns={columns}
-          onRowClick={data => {
+          onRowClick={(data) => {
             console.log(data);
           }}
         />
-        <div style={{ height: 2000 }}>
+        <div style={{ height: 1000 }}>
           <hr />
         </div>
       </div>
     );
   }
 }
-ReactDOM.render(<AffixHorizontalScrollbarTable />, document.getElementById('container'));
+ReactDOM.render(
+  <AffixHorizontalScrollbarTable />,
+  document.getElementById('container'),
+);

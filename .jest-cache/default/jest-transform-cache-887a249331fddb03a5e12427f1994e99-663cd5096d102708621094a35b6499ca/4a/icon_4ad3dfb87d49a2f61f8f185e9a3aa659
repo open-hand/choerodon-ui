@@ -1,0 +1,54 @@
+83e48d9c82a2d35a13e9e7174a16d233
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _alert = _interopRequireDefault(require("../../../components/alert"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_alert["default"], {
+  message: "Success Tips",
+  type: "success",
+  showIcon: true
+}), _react["default"].createElement(_alert["default"], {
+  message: "Informational Notes",
+  type: "info",
+  showIcon: true
+}), _react["default"].createElement(_alert["default"], {
+  message: "Warning",
+  type: "warning",
+  showIcon: true
+}), _react["default"].createElement(_alert["default"], {
+  message: "Error",
+  type: "error",
+  showIcon: true
+}), _react["default"].createElement(_alert["default"], {
+  message: "Success Tips",
+  description: "Detailed description and advices about successful copywriting.",
+  type: "success",
+  showIcon: true
+}), _react["default"].createElement(_alert["default"], {
+  message: "Informational Notes",
+  description: "Additional description and informations about copywriting.",
+  type: "info",
+  showIcon: true
+}), _react["default"].createElement(_alert["default"], {
+  message: "Warning",
+  description: "This is a warning notice about copywriting.",
+  type: "warning",
+  showIcon: true
+}), _react["default"].createElement(_alert["default"], {
+  message: "Error",
+  description: "This is an error message about copywriting.",
+  type: "error",
+  showIcon: true
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

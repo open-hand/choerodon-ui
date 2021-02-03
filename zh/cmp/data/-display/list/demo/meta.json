@@ -16,6 +16,7 @@
       },
       "order": 0,
       "height": 1166,
+      "ignores": ["theme1", "theme3"],
       "screenshot": ""
     },
     {

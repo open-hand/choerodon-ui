@@ -1,0 +1,76 @@
+c2c9c90f5fdefe46dd5d471be59e659d
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _select = _interopRequireDefault(require("../../../components/select"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Option = _select["default"].Option;
+
+var selectBefore = _react["default"].createElement(_select["default"], {
+  defaultValue: "Http://",
+  style: {
+    width: 90
+  }
+}, _react["default"].createElement(Option, {
+  value: "Http://"
+}, "Http://"), _react["default"].createElement(Option, {
+  value: "Https://"
+}, "Https://"));
+
+var selectAfter = _react["default"].createElement(_select["default"], {
+  defaultValue: ".com",
+  style: {
+    width: 80
+  }
+}, _react["default"].createElement(Option, {
+  value: ".com"
+}, ".com"), _react["default"].createElement(Option, {
+  value: ".jp"
+}, ".jp"), _react["default"].createElement(Option, {
+  value: ".cn"
+}, ".cn"), _react["default"].createElement(Option, {
+  value: ".org"
+}, ".org"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement("div", {
+  style: {
+    marginBottom: 16
+  }
+}, _react["default"].createElement(_input["default"], {
+  addonBefore: "Http://",
+  addonAfter: ".com",
+  defaultValue: "mysite",
+  maxLength: 30
+})), _react["default"].createElement("div", {
+  style: {
+    marginBottom: 16
+  }
+}, _react["default"].createElement(_input["default"], {
+  addonBefore: selectBefore,
+  addonAfter: selectAfter,
+  defaultValue: "mysite"
+})), _react["default"].createElement("div", {
+  style: {
+    marginBottom: 16
+  }
+}, _react["default"].createElement(_input["default"], {
+  addonAfter: _react["default"].createElement(_icon["default"], {
+    type: "setting"
+  }),
+  label: "mysite"
+})));
+
+var _default = __Demo;
+exports["default"] = _default;

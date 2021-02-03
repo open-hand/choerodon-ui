@@ -9,12 +9,23 @@ const dateFormat = 'YYYY/MM/DD';
 const monthFormat = 'YYYY/MM';
 ReactDOM.render(
   <div>
-    <DatePicker defaultValue={moment('2015/01/01', dateFormat)} format={dateFormat} />
-    <br />
-    <MonthPicker defaultValue={moment('2015/01', monthFormat)} format={monthFormat} />
-    <br />
+    <div style={{ marginBottom: 10 }}>
+      <DatePicker
+        defaultValue={moment('2015/01/01', dateFormat)}
+        format={dateFormat}
+      />
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <MonthPicker
+        defaultValue={moment('2015/01', monthFormat)}
+        format={monthFormat}
+      />
+    </div>
     <RangePicker
-      defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+      defaultValue={[
+        moment('2015/01/01', dateFormat),
+        moment('2015/01/01', dateFormat),
+      ]}
       format={dateFormat}
     />
   </div>,

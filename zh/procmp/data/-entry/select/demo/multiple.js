@@ -80,7 +80,6 @@ class App extends React.Component {
             searchable
             placeholder="多选+搜索"
             onChange={handleChange}
-            style={{ height: 30 }}
           >
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>

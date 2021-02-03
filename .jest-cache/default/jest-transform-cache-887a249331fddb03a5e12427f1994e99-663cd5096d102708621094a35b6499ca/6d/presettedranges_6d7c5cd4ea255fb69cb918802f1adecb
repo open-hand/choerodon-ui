@@ -1,0 +1,41 @@
+ab7131b5aa76d6352987e548770eb170
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _datePicker = _interopRequireDefault(require("../../../components/date-picker"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var RangePicker = _datePicker["default"].RangePicker;
+
+function onChange(dates, dateStrings) {
+  console.log('From: ', dates[0], ', to: ', dates[1]);
+  console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(RangePicker, {
+  ranges: {
+    Today: [(0, _moment["default"])(), (0, _moment["default"])()],
+    'This Month': [(0, _moment["default"])(), (0, _moment["default"])().endOf('month')]
+  },
+  onChange: onChange
+}), _react["default"].createElement("br", null), _react["default"].createElement(RangePicker, {
+  ranges: {
+    Today: [(0, _moment["default"])(), (0, _moment["default"])()],
+    'This Month': [(0, _moment["default"])(), (0, _moment["default"])().endOf('month')]
+  },
+  showTime: true,
+  format: "YYYY/MM/DD HH:mm:ss",
+  onChange: onChange
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

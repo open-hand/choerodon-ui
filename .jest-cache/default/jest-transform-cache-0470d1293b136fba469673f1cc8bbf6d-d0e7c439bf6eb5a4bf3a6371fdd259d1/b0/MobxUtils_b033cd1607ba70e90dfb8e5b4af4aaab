@@ -1,0 +1,524 @@
+a6f5db30fe4a7f0e2d474a1266eabc1c
+"use strict";
+
+/* istanbul ignore next */
+var cov_1dvnmz35u0 = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/_util/MobxUtils.tsx";
+  var hash = "a0a16fd2be6d1cde0403939243151c53603e723c";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/_util/MobxUtils.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 26
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 26
+        }
+      },
+      "3": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 32
+        }
+      },
+      "4": {
+        start: {
+          line: 10,
+          column: 12
+        },
+        end: {
+          line: 10,
+          column: 27
+        }
+      },
+      "5": {
+        start: {
+          line: 13,
+          column: 2
+        },
+        end: {
+          line: 15,
+          column: 3
+        }
+      },
+      "6": {
+        start: {
+          line: 14,
+          column: 4
+        },
+        end: {
+          line: 14,
+          column: 36
+        }
+      },
+      "7": {
+        start: {
+          line: 17,
+          column: 2
+        },
+        end: {
+          line: 17,
+          column: 18
+        }
+      },
+      "8": {
+        start: {
+          line: 21,
+          column: 2
+        },
+        end: {
+          line: 27,
+          column: 3
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 4
+        },
+        end: {
+          line: 24,
+          column: 7
+        }
+      },
+      "10": {
+        start: {
+          line: 23,
+          column: 6
+        },
+        end: {
+          line: 23,
+          column: 38
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 4
+        },
+        end: {
+          line: 26,
+          column: 21
+        }
+      },
+      "12": {
+        start: {
+          line: 31,
+          column: 2
+        },
+        end: {
+          line: 37,
+          column: 3
+        }
+      },
+      "13": {
+        start: {
+          line: 32,
+          column: 4
+        },
+        end: {
+          line: 34,
+          column: 7
+        }
+      },
+      "14": {
+        start: {
+          line: 33,
+          column: 6
+        },
+        end: {
+          line: 33,
+          column: 34
+        }
+      },
+      "15": {
+        start: {
+          line: 36,
+          column: 4
+        },
+        end: {
+          line: 36,
+          column: 20
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "mobxGet",
+        decl: {
+          start: {
+            line: 12,
+            column: 9
+          },
+          end: {
+            line: 12,
+            column: 16
+          }
+        },
+        loc: {
+          start: {
+            line: 12,
+            column: 27
+          },
+          end: {
+            line: 18,
+            column: 1
+          }
+        },
+        line: 12
+      },
+      "1": {
+        name: "mobxSet",
+        decl: {
+          start: {
+            line: 20,
+            column: 9
+          },
+          end: {
+            line: 20,
+            column: 16
+          }
+        },
+        loc: {
+          start: {
+            line: 20,
+            column: 34
+          },
+          end: {
+            line: 28,
+            column: 1
+          }
+        },
+        line: 20
+      },
+      "2": {
+        name: "(anonymous_2)",
+        decl: {
+          start: {
+            line: 22,
+            column: 27
+          },
+          end: {
+            line: 22,
+            column: 28
+          }
+        },
+        loc: {
+          start: {
+            line: 22,
+            column: 39
+          },
+          end: {
+            line: 24,
+            column: 5
+          }
+        },
+        line: 22
+      },
+      "3": {
+        name: "mobxRemove",
+        decl: {
+          start: {
+            line: 30,
+            column: 9
+          },
+          end: {
+            line: 30,
+            column: 19
+          }
+        },
+        loc: {
+          start: {
+            line: 30,
+            column: 30
+          },
+          end: {
+            line: 38,
+            column: 1
+          }
+        },
+        line: 30
+      },
+      "4": {
+        name: "(anonymous_4)",
+        decl: {
+          start: {
+            line: 32,
+            column: 27
+          },
+          end: {
+            line: 32,
+            column: 28
+          }
+        },
+        loc: {
+          start: {
+            line: 32,
+            column: 39
+          },
+          end: {
+            line: 34,
+            column: 5
+          }
+        },
+        line: 32
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 13,
+            column: 2
+          },
+          end: {
+            line: 15,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 13,
+            column: 2
+          },
+          end: {
+            line: 15,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 13,
+            column: 2
+          },
+          end: {
+            line: 15,
+            column: 3
+          }
+        }],
+        line: 13
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 27,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 27,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 27,
+            column: 3
+          }
+        }],
+        line: 21
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 31,
+            column: 2
+          },
+          end: {
+            line: 37,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 31,
+            column: 2
+          },
+          end: {
+            line: 37,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 31,
+            column: 2
+          },
+          end: {
+            line: 37,
+            column: 3
+          }
+        }],
+        line: 31
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "a0a16fd2be6d1cde0403939243151c53603e723c"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+cov_1dvnmz35u0.s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1dvnmz35u0.s[1]++;
+exports.mobxGet = mobxGet;
+
+/* istanbul ignore next */
+cov_1dvnmz35u0.s[2]++;
+exports.mobxSet = mobxSet;
+
+/* istanbul ignore next */
+cov_1dvnmz35u0.s[3]++;
+exports.mobxRemove = mobxRemove;
+
+var _mobx =
+/* istanbul ignore next */
+(cov_1dvnmz35u0.s[4]++, require("mobx"));
+
+function mobxGet(obj, key) {
+  /* istanbul ignore next */
+  cov_1dvnmz35u0.f[0]++;
+  cov_1dvnmz35u0.s[5]++;
+
+  if ((0, _mobx.isObservableObject)(obj)) {
+    /* istanbul ignore next */
+    cov_1dvnmz35u0.b[0][0]++;
+    cov_1dvnmz35u0.s[6]++;
+    return (0, _mobx.get)(obj, key);
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1dvnmz35u0.b[0][1]++;
+  }
+
+  cov_1dvnmz35u0.s[7]++;
+  return obj[key];
+}
+
+function mobxSet(obj, key, value) {
+  /* istanbul ignore next */
+  cov_1dvnmz35u0.f[1]++;
+  cov_1dvnmz35u0.s[8]++;
+
+  if ((0, _mobx.isObservableObject)(obj)) {
+    /* istanbul ignore next */
+    cov_1dvnmz35u0.b[1][0]++;
+    cov_1dvnmz35u0.s[9]++;
+    (0, _mobx.runInAction)(function () {
+      /* istanbul ignore next */
+      cov_1dvnmz35u0.f[2]++;
+      cov_1dvnmz35u0.s[10]++;
+      (0, _mobx.set)(obj, key, value);
+    });
+  } else {
+    /* istanbul ignore next */
+    cov_1dvnmz35u0.b[1][1]++;
+    cov_1dvnmz35u0.s[11]++;
+    obj[key] = value;
+  }
+}
+
+function mobxRemove(obj, key) {
+  /* istanbul ignore next */
+  cov_1dvnmz35u0.f[3]++;
+  cov_1dvnmz35u0.s[12]++;
+
+  if ((0, _mobx.isObservableObject)(obj)) {
+    /* istanbul ignore next */
+    cov_1dvnmz35u0.b[2][0]++;
+    cov_1dvnmz35u0.s[13]++;
+    (0, _mobx.runInAction)(function () {
+      /* istanbul ignore next */
+      cov_1dvnmz35u0.f[4]++;
+      cov_1dvnmz35u0.s[14]++;
+      (0, _mobx.remove)(obj, key);
+    });
+  } else {
+    /* istanbul ignore next */
+    cov_1dvnmz35u0.b[2][1]++;
+    cov_1dvnmz35u0.s[15]++;
+    delete obj[key];
+  }
+}

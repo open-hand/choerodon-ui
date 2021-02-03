@@ -1,0 +1,16 @@
+98b29df36b09159ef5e8467a1cf493ec
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _Upload = _interopRequireDefault(require("./Upload"));
+
+// export this package's api
+var _default = _Upload["default"];
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzeCJdLCJuYW1lcyI6WyJVcGxvYWQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7OztBQUNBOztBQURBO2VBR2VBLGtCIiwic291cmNlc0NvbnRlbnQiOlsiLy8gZXhwb3J0IHRoaXMgcGFja2FnZSdzIGFwaVxuaW1wb3J0IFVwbG9hZCBmcm9tICcuL1VwbG9hZCc7XG5cbmV4cG9ydCBkZWZhdWx0IFVwbG9hZDtcbiJdfQ==

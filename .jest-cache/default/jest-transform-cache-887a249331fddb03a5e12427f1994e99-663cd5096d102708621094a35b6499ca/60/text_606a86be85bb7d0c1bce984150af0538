@@ -1,0 +1,31 @@
+b82bbb403af9768fc49c7fc3569bd1c3
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("../../../components-pro/icon"));
+
+var _switch = _interopRequireDefault(require("../../../components-pro/switch"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_switch["default"], {
+  unCheckedChildren: "\u5173",
+  defaultChecked: true
+}, "\u5F00"), _react["default"].createElement("br", null), _react["default"].createElement(_switch["default"], {
+  unCheckedChildren: "0"
+}, "1"), _react["default"].createElement("br", null), _react["default"].createElement(_switch["default"], {
+  unCheckedChildren: _react["default"].createElement(_icon["default"], {
+    type: "close"
+  })
+}, _react["default"].createElement(_icon["default"], {
+  type: "check"
+})));
+
+var _default = __Demo;
+exports["default"] = _default;

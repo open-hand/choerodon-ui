@@ -1,0 +1,50 @@
+050d6bca72bfd51a69273a18825827b2
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _dropdown = _interopRequireDefault(require("../../../components/dropdown"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _menu = _interopRequireDefault(require("../../../components/menu"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var menu = _react["default"].createElement(_menu["default"], null, _react["default"].createElement(_menu["default"].Item, {
+  key: "0"
+}, _react["default"].createElement("a", {
+  href: "https://choerodon.io/"
+}, "1st menu item")), _react["default"].createElement(_menu["default"].Item, {
+  key: "1"
+}, _react["default"].createElement("a", {
+  href: "https://choerodon.io/"
+}, "2nd menu item")), _react["default"].createElement(_menu["default"].Divider, null), _react["default"].createElement(_menu["default"].Item, {
+  key: "3"
+}, "3rd menu item"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_dropdown["default"], {
+  overlay: menu,
+  trigger: ['click']
+}, _react["default"].createElement("a", {
+  className: "c7n-dropdown-link",
+  href: "#"
+}, "Click me ", _react["default"].createElement(_icon["default"], {
+  type: "arrow_drop_down"
+}))), _react["default"].createElement(_dropdown["default"], {
+  overlay: menu,
+  trigger: "click"
+}, _react["default"].createElement(_button["default"], {
+  shape: "circle",
+  icon: "more_vert"
+})));
+
+var _default = __Demo;
+exports["default"] = _default;

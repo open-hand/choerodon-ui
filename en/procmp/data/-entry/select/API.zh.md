@@ -8,6 +8,7 @@ title: API
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | combo                     | 复合输入值                                                                                                                                                                  | boolean                                                        | false                                                                       |
 | searchable                | 是否可搜索                                                                                                                                                                  | boolean                                                        | false                                                                       |
+| reverse                | 是否显示多选反向                                                                                                                                                                  | boolean                                                        | true                                                                       |
 | searchMatcher             | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。                                                                                                                | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField).indexOf(text) !== -1 |
 | optionsFilter             | 选项过滤                                                                                                                                                                    | (record) => boolean                                            |                                                                             |
 | checkValueOnOptionsChange | 当选项改变时，检查并清除不在选项中的值                                                                                                                                      | boolean                                                        | true                                                                        |
@@ -18,7 +19,7 @@ title: API
 | optionRenderer            | 渲染 Option 本文的钩子                                                                                                                                                      | ({ record, text, value }) => ReactNode                         |                                                                             |
 | notFoundContent           | 当下拉列表为空时显示的内容                                                                                                                                                  | ReactNode                                                      |                                                                             |
 | onOption                  | 设置选项属性，如 disabled    
-| commonItem | 设置常用项 | Array&lt;string&gt; | undefined |
+| commonItem | 设置常用项 | Array&lt;string&gt; | |
 | maxCommonTagPlaceholder | 设置常用项标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
 | maxCommonTagCount | 设置常用项标签最大数量 | number |  |
 | maxCommonTagTextLength | 设置常用项标签文案最大长度 | number |  |                                                                                                                          | ({ dataSet, record })) => object                               |                                                                             |
@@ -28,20 +29,14 @@ title: API
 
 ### Select.OptGroup
 
-| 参数  | 说明       | 类型   | 默认值 |
-| ----- | ---------- | ------ | ------ |
-| label | 选项组标题 | string |        |
+| 参数  | 说明       | 类型   |
+| ----- | ---------- | ------ |
+| label | 选项组标题 | string |
 
 ### Select.Option
 
-| 参数     | 说明   | 类型    | 默认值 |
-| -------- | ------ | ------- | ------ |
-| value    | 选项值 | any     |        |
-| disabled | 禁用   | boolean |        |
+| 参数     | 说明   | 类型    |
+| -------- | ------ | ------- |
+| value    | 选项值 | any     |
+| disabled | 禁用   | boolean |
 
-<style>
-.code-box-demo .c7n-pro-select-wrapper,
-.code-box-demo .c7n-pro-btn-wrapper {
-  margin-bottom: .1rem;
-}
-</style>

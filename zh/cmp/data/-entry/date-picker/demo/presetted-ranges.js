@@ -12,13 +12,20 @@ function onChange(dates, dateStrings) {
 
 ReactDOM.render(
   <div>
+    <div style={{ marginBottom: 10 }}>
+      <RangePicker
+        ranges={{
+          Today: [moment(), moment()],
+          'This Month': [moment(), moment().endOf('month')],
+        }}
+        onChange={onChange}
+      />
+    </div>
     <RangePicker
-      ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
-      onChange={onChange}
-    />
-    <br />
-    <RangePicker
-      ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
+      ranges={{
+        Today: [moment(), moment()],
+        'This Month': [moment(), moment().endOf('month')],
+      }}
       showTime
       format="YYYY/MM/DD HH:mm:ss"
       onChange={onChange}

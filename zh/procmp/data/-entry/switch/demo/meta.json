@@ -90,6 +90,7 @@
         "en": "`size=\"large\"` represents a large sized switch.`size=\"small\"` represents a small sized switch.\n , defalut size is `default`\n"
       },
       "order": 5,
+      "ignores": ["theme1", "theme3", "theme4"],
       "screenshot": "",
       "height": 165,
       "category": "pro"

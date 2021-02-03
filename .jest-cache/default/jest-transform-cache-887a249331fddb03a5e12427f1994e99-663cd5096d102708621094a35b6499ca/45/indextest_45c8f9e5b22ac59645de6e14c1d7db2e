@@ -1,0 +1,13 @@
+66be6d95bd9f2b41aa2554dbf63d6ccf
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _ = _interopRequireDefault(require(".."));
+
+var _focusTest = _interopRequireDefault(require("../../../tests/shared/focusTest"));
+
+describe('Rate', function () {
+  (0, _focusTest["default"])(_["default"]);
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRlc3QuanMiXSwibmFtZXMiOlsiZGVzY3JpYmUiLCJSYXRlIl0sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBQ0E7O0FBRUFBLFFBQVEsQ0FBQyxNQUFELEVBQVMsWUFBTTtBQUNyQiw2QkFBVUMsWUFBVjtBQUNELENBRk8sQ0FBUiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSYXRlIGZyb20gJy4uJztcbmltcG9ydCBmb2N1c1Rlc3QgZnJvbSAnLi4vLi4vLi4vdGVzdHMvc2hhcmVkL2ZvY3VzVGVzdCc7XG5cbmRlc2NyaWJlKCdSYXRlJywgKCkgPT4ge1xuICBmb2N1c1Rlc3QoUmF0ZSk7XG59KTtcbiJdfQ==

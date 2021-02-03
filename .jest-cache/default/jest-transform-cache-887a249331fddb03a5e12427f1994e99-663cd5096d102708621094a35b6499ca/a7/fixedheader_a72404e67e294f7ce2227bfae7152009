@@ -1,0 +1,50 @@
+e7df947795aa48c591ff605f2b70e4ce
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _table = _interopRequireDefault(require("../../../components/table"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+  width: 150
+}, {
+  title: 'Age',
+  dataIndex: 'age',
+  width: 150
+}, {
+  title: 'Address',
+  dataIndex: 'address'
+}];
+var data = [];
+
+for (var i = 0; i < 100; i++) {
+  data.push({
+    key: i,
+    name: "Edward King ".concat(i),
+    age: 32,
+    address: "London, Park Lane no. ".concat(i)
+  });
+}
+
+var __Demo = _react["default"].createElement(_table["default"], {
+  columns: columns,
+  dataSource: data,
+  pagination: {
+    pageSize: 50
+  },
+  scroll: {
+    y: 240
+  }
+});
+
+var _default = __Demo;
+exports["default"] = _default;

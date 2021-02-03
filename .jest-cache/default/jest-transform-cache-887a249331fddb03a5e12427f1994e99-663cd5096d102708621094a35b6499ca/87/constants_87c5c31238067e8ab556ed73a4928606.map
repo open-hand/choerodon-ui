@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/form/constants.tsx"],"names":[],"mappings":";;;;;;AAAO,IAAM,eAAe,GAAG,aAAxB;;AACA,IAAM,eAAe,GAAG,cAAxB","sourcesContent":["export const FIELD_META_PROP = 'data-__meta';\nexport const FIELD_DATA_PROP = 'data-__field';\n"]}

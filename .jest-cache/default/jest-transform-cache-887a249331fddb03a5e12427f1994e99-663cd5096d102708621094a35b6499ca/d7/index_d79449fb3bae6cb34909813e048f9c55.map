@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.jsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;AACA;;AACA","sourcesContent":["// export this package's api\nimport createForm from './createForm';\nimport createFormField from './createFormField';\n\nexport { createForm, createFormField };\n"]}

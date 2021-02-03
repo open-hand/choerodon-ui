@@ -1,0 +1,315 @@
+5b1befddc952bec75c40f57936cf718a
+"use strict";
+
+/* istanbul ignore next */
+var cov_ylg60n6al = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/table/ColumnGroup.tsx";
+  var hash = "49720c097c22e67769ec4c882173360bd257fb36";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/table/ColumnGroup.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 23
+        },
+        end: {
+          line: 10,
+          column: 95
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 34
+        },
+        end: {
+          line: 12,
+          column: 117
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 23
+        },
+        end: {
+          line: 14,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 17
+        },
+        end: {
+          line: 16,
+          column: 83
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 13
+        },
+        end: {
+          line: 18,
+          column: 29
+        }
+      },
+      "8": {
+        start: {
+          line: 22,
+          column: 0
+        },
+        end: {
+          line: 31,
+          column: 19
+        }
+      },
+      "9": {
+        start: {
+          line: 23,
+          column: 2
+        },
+        end: {
+          line: 23,
+          column: 54
+        }
+      },
+      "10": {
+        start: {
+          line: 26,
+          column: 4
+        },
+        end: {
+          line: 26,
+          column: 56
+        }
+      },
+      "11": {
+        start: {
+          line: 27,
+          column: 4
+        },
+        end: {
+          line: 27,
+          column: 131
+        }
+      },
+      "12": {
+        start: {
+          line: 30,
+          column: 2
+        },
+        end: {
+          line: 30,
+          column: 21
+        }
+      },
+      "13": {
+        start: {
+          line: 33,
+          column: 0
+        },
+        end: {
+          line: 33,
+          column: 33
+        }
+      },
+      "14": {
+        start: {
+          line: 34,
+          column: 0
+        },
+        end: {
+          line: 34,
+          column: 44
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 22,
+            column: 0
+          },
+          end: {
+            line: 22,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 22,
+            column: 22
+          },
+          end: {
+            line: 31,
+            column: 1
+          }
+        },
+        line: 22
+      },
+      "1": {
+        name: "ColumnGroup",
+        decl: {
+          start: {
+            line: 25,
+            column: 11
+          },
+          end: {
+            line: 25,
+            column: 22
+          }
+        },
+        loc: {
+          start: {
+            line: 25,
+            column: 25
+          },
+          end: {
+            line: 28,
+            column: 3
+          }
+        },
+        line: 25
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0
+    },
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "49720c097c22e67769ec4c882173360bd257fb36"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_ylg60n6al.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_ylg60n6al.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_ylg60n6al.s[2]++;
+exports["default"] = void 0;
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_ylg60n6al.s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_ylg60n6al.s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_ylg60n6al.s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_ylg60n6al.s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _react =
+/* istanbul ignore next */
+(cov_ylg60n6al.s[7]++, require("react"));
+
+var ColumnGroup =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_ylg60n6al.s[8]++, function (_Component) {
+  /* istanbul ignore next */
+  cov_ylg60n6al.f[0]++;
+  cov_ylg60n6al.s[9]++;
+  (0, _inherits2["default"])(ColumnGroup, _Component);
+
+  function ColumnGroup() {
+    /* istanbul ignore next */
+    cov_ylg60n6al.f[1]++;
+    cov_ylg60n6al.s[10]++;
+    (0, _classCallCheck2["default"])(this, ColumnGroup);
+
+    /* istanbul ignore next */
+    cov_ylg60n6al.s[11]++;
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(ColumnGroup).apply(this, arguments));
+  }
+
+  /* istanbul ignore next */
+  cov_ylg60n6al.s[12]++;
+  return ColumnGroup;
+}(_react.Component));
+
+/* istanbul ignore next */
+cov_ylg60n6al.s[13]++;
+exports["default"] = ColumnGroup;
+
+/* istanbul ignore next */
+cov_ylg60n6al.s[14]++;
+ColumnGroup.__ANT_TABLE_COLUMN_GROUP = true;

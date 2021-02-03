@@ -1,0 +1,217 @@
+7a374da00bd790f8227956a268edfea1
+"use strict";
+
+/* istanbul ignore next */
+function cov_2cqxk3zlu0() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/tr_TR.tsx";
+  var hash = "f888c4bac18734f438aa9c8467e0e9b72e167666";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/tr_TR.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 88
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 14
+        },
+        end: {
+          line: 12,
+          column: 76
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 76
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 14
+        },
+        end: {
+          line: 16,
+          column: 73
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 15
+        },
+        end: {
+          line: 60,
+          column: 1
+        }
+      },
+      "8": {
+        start: {
+          line: 61,
+          column: 0
+        },
+        end: {
+          line: 61,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "f888c4bac18734f438aa9c8467e0e9b72e167666"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_2cqxk3zlu0 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_2cqxk3zlu0();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_2cqxk3zlu0().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_2cqxk3zlu0().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2cqxk3zlu0().s[2]++;
+exports["default"] = void 0;
+
+var _tr_TR =
+/* istanbul ignore next */
+(cov_2cqxk3zlu0().s[3]++, _interopRequireDefault(require("../rc-components/pagination/locale/tr_TR")));
+
+var _tr_TR2 =
+/* istanbul ignore next */
+(cov_2cqxk3zlu0().s[4]++, _interopRequireDefault(require("../date-picker/locale/tr_TR")));
+
+var _tr_TR3 =
+/* istanbul ignore next */
+(cov_2cqxk3zlu0().s[5]++, _interopRequireDefault(require("../time-picker/locale/tr_TR")));
+
+var _tr_TR4 =
+/* istanbul ignore next */
+(cov_2cqxk3zlu0().s[6]++, _interopRequireDefault(require("../calendar/locale/tr_TR")));
+
+var _default =
+/* istanbul ignore next */
+(cov_2cqxk3zlu0().s[7]++, {
+  locale: 'tr',
+  Pagination: _tr_TR["default"],
+  DatePicker: _tr_TR2["default"],
+  TimePicker: _tr_TR3["default"],
+  Calendar: _tr_TR4["default"],
+  Table: {
+    filterTitle: 'Menü Filtrele',
+    filterConfirm: 'Tamam',
+    filterReset: 'Sıfırla',
+    emptyText: 'Veri Yok',
+    selectAll: 'Hepsini Seç',
+    selectInvert: 'Tersini Seç'
+  },
+  Modal: {
+    okText: 'Tamam',
+    cancelText: 'İptal',
+    justOkText: 'Tamam'
+  },
+  Popconfirm: {
+    okText: 'Tamam',
+    cancelText: 'İptal'
+  },
+  Transfer: {
+    notFoundContent: 'Bulunamadı',
+    searchPlaceholder: 'Arama',
+    itemUnit: 'Öğe',
+    itemsUnit: 'Öğeler'
+  },
+  Select: {
+    notFoundContent: 'Bulunamadı'
+  },
+  Upload: {
+    uploading: 'Yükleniyor...',
+    removeFile: "Dosyay\u0131 kald\u0131r",
+    uploadError: 'Yükleme Hatası',
+    previewFile: "Dosyay\u0131 \xD6nizle"
+  },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold'
+  }
+});
+
+/* istanbul ignore next */
+cov_2cqxk3zlu0().s[8]++;
+exports["default"] = _default;

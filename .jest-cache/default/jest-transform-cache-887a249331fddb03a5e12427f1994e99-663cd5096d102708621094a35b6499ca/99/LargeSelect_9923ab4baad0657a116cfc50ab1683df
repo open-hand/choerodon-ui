@@ -1,0 +1,446 @@
+66729cb4b977b92edf0a4346534c8914
+"use strict";
+
+/* istanbul ignore next */
+function cov_8l38jxxf9() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/pagination/LargeSelect.tsx";
+  var hash = "d6fde73e1e1ff4d2ee92a392d2efd07a1c732462";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/pagination/LargeSelect.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 30
+        },
+        end: {
+          line: 3,
+          column: 86
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 29
+        },
+        end: {
+          line: 5,
+          column: 84
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 0
+        },
+        end: {
+          line: 9,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 0
+        },
+        end: {
+          line: 10,
+          column: 28
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 16
+        },
+        end: {
+          line: 12,
+          column: 81
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 23
+        },
+        end: {
+          line: 14,
+          column: 95
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 20
+        },
+        end: {
+          line: 16,
+          column: 89
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 34
+        },
+        end: {
+          line: 18,
+          column: 117
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 23
+        },
+        end: {
+          line: 20,
+          column: 95
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 17
+        },
+        end: {
+          line: 22,
+          column: 83
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 13
+        },
+        end: {
+          line: 24,
+          column: 54
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 14
+        },
+        end: {
+          line: 26,
+          column: 58
+        }
+      },
+      "12": {
+        start: {
+          line: 30,
+          column: 0
+        },
+        end: {
+          line: 49,
+          column: 19
+        }
+      },
+      "13": {
+        start: {
+          line: 31,
+          column: 2
+        },
+        end: {
+          line: 31,
+          column: 54
+        }
+      },
+      "14": {
+        start: {
+          line: 34,
+          column: 4
+        },
+        end: {
+          line: 34,
+          column: 56
+        }
+      },
+      "15": {
+        start: {
+          line: 35,
+          column: 4
+        },
+        end: {
+          line: 35,
+          column: 131
+        }
+      },
+      "16": {
+        start: {
+          line: 38,
+          column: 2
+        },
+        end: {
+          line: 47,
+          column: 6
+        }
+      },
+      "17": {
+        start: {
+          line: 41,
+          column: 6
+        },
+        end: {
+          line: 45,
+          column: 22
+        }
+      },
+      "18": {
+        start: {
+          line: 48,
+          column: 2
+        },
+        end: {
+          line: 48,
+          column: 21
+        }
+      },
+      "19": {
+        start: {
+          line: 51,
+          column: 0
+        },
+        end: {
+          line: 51,
+          column: 33
+        }
+      },
+      "20": {
+        start: {
+          line: 52,
+          column: 0
+        },
+        end: {
+          line: 52,
+          column: 47
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "(anonymous_0)",
+        decl: {
+          start: {
+            line: 30,
+            column: 0
+          },
+          end: {
+            line: 30,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 30,
+            column: 22
+          },
+          end: {
+            line: 49,
+            column: 1
+          }
+        },
+        line: 30
+      },
+      "1": {
+        name: "LargeSelect",
+        decl: {
+          start: {
+            line: 33,
+            column: 11
+          },
+          end: {
+            line: 33,
+            column: 22
+          }
+        },
+        loc: {
+          start: {
+            line: 33,
+            column: 25
+          },
+          end: {
+            line: 36,
+            column: 3
+          }
+        },
+        line: 33
+      },
+      "2": {
+        name: "render",
+        decl: {
+          start: {
+            line: 40,
+            column: 20
+          },
+          end: {
+            line: 40,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 40,
+            column: 29
+          },
+          end: {
+            line: 46,
+            column: 5
+          }
+        },
+        line: 40
+      }
+    },
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "d6fde73e1e1ff4d2ee92a392d2efd07a1c732462"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_8l38jxxf9 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_8l38jxxf9();
+
+var _interopRequireWildcard =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[0]++, require("@babel/runtime/helpers/interopRequireWildcard"));
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[1]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_8l38jxxf9().s[2]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_8l38jxxf9().s[3]++;
+exports["default"] = void 0;
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[9]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _react =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[10]++, _interopRequireWildcard(require("react")));
+
+var _select =
+/* istanbul ignore next */
+(cov_8l38jxxf9().s[11]++, _interopRequireDefault(require("../select")));
+
+var LargeSelect =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_8l38jxxf9().s[12]++, function (_Component) {
+  /* istanbul ignore next */
+  cov_8l38jxxf9().f[0]++;
+  cov_8l38jxxf9().s[13]++;
+  (0, _inherits2["default"])(LargeSelect, _Component);
+
+  function LargeSelect() {
+    /* istanbul ignore next */
+    cov_8l38jxxf9().f[1]++;
+    cov_8l38jxxf9().s[14]++;
+    (0, _classCallCheck2["default"])(this, LargeSelect);
+
+    /* istanbul ignore next */
+    cov_8l38jxxf9().s[15]++;
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(LargeSelect).apply(this, arguments));
+  }
+
+  /* istanbul ignore next */
+  cov_8l38jxxf9().s[16]++;
+  (0, _createClass2["default"])(LargeSelect, [{
+    key: "render",
+    value: function render() {
+      /* istanbul ignore next */
+      cov_8l38jxxf9().f[2]++;
+      cov_8l38jxxf9().s[17]++;
+      return _react["default"].createElement(_select["default"], (0, _extends2["default"])({
+        size: "large"
+        /* large */
+
+      }, this.props));
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_8l38jxxf9().s[18]++;
+  return LargeSelect;
+}(_react.Component));
+
+/* istanbul ignore next */
+cov_8l38jxxf9().s[19]++;
+exports["default"] = LargeSelect;
+
+/* istanbul ignore next */
+cov_8l38jxxf9().s[20]++;
+LargeSelect.Option = _select["default"].Option;

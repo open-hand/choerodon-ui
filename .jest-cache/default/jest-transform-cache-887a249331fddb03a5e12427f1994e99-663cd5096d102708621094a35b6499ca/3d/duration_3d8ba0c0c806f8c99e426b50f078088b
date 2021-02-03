@@ -1,0 +1,26 @@
+916bdb8be9aa6beb5a35c64a0f4c6d6c
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _message2 = _interopRequireDefault(require("../../../components/message"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var success = function success() {
+  _message2["default"].success('This is a prompt message for success, and it will disappear in 10 seconds', 10);
+};
+
+var __Demo = _react["default"].createElement(_button["default"], {
+  onClick: success
+}, "Customized display duration");
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,219 @@
+1602710cde44b5e50bdd042cfaf5cdb4
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _form = _interopRequireDefault(require("../../../components/form"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var FormItem = _form["default"].Item;
+var uuid = 0;
+
+var DynamicFieldSet =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(DynamicFieldSet, _React$Component);
+
+  var _super = _createSuper(DynamicFieldSet);
+
+  function DynamicFieldSet() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, DynamicFieldSet);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "remove", function (k) {
+      var form = _this.props.form; // can use data-binding to get
+
+      var keys = form.getFieldValue('keys'); // We need at least one passenger
+
+      if (keys.length === 1) {
+        return;
+      } // can use data-binding to set
+
+
+      form.setFieldsValue({
+        keys: keys.filter(function (key) {
+          return key !== k;
+        })
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "add", function () {
+      var form = _this.props.form; // can use data-binding to get
+
+      var keys = form.getFieldValue('keys');
+      var nextKeys = keys.concat(uuid);
+      uuid++; // can use data-binding to set
+      // important! notify form to detect changes
+
+      form.setFieldsValue({
+        keys: nextKeys
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleSubmit", function (e) {
+      e.preventDefault();
+
+      _this.props.form.validateFields(function (err, values) {
+        if (!err) {
+          console.log('Received values of form: ', values);
+        }
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(DynamicFieldSet, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props$form = this.props.form,
+          getFieldDecorator = _this$props$form.getFieldDecorator,
+          getFieldValue = _this$props$form.getFieldValue;
+      var formItemLayout = {
+        labelCol: {
+          xs: {
+            span: 24
+          },
+          sm: {
+            span: 4
+          }
+        },
+        wrapperCol: {
+          xs: {
+            span: 24
+          },
+          sm: {
+            span: 20
+          }
+        }
+      };
+      var formItemLayoutWithOutLabel = {
+        wrapperCol: {
+          xs: {
+            span: 24,
+            offset: 0
+          },
+          sm: {
+            span: 20,
+            offset: 4
+          }
+        }
+      };
+      getFieldDecorator('keys', {
+        initialValue: []
+      });
+      var keys = getFieldValue('keys');
+      var formItems = keys.map(function (k, index) {
+        return _react["default"].createElement(FormItem, (0, _extends2["default"])({}, index === 0 ? formItemLayout : formItemLayoutWithOutLabel, {
+          label: index === 0 ? 'Passengers' : '',
+          required: false,
+          key: k
+        }), getFieldDecorator("names[".concat(k, "]"), {
+          validateTrigger: ['onChange', 'onBlur'],
+          rules: [{
+            required: true,
+            whitespace: true,
+            message: "Please input passenger's name or delete this field."
+          }]
+        })(_react["default"].createElement(_input["default"], {
+          placeholder: "passenger name",
+          style: {
+            width: '60%',
+            marginRight: 8
+          }
+        })), keys.length > 1 ? _react["default"].createElement(_icon["default"], {
+          className: "dynamic-delete-button",
+          type: "minus-circle-o",
+          disabled: keys.length === 1,
+          onClick: function onClick() {
+            return _this2.remove(k);
+          }
+        }) : null);
+      });
+      return _react["default"].createElement(_form["default"], {
+        onSubmit: this.handleSubmit
+      }, formItems, _react["default"].createElement(FormItem, formItemLayoutWithOutLabel, _react["default"].createElement(_button["default"], {
+        type: "dashed",
+        onClick: this.add,
+        style: {
+          width: '60%'
+        }
+      }, _react["default"].createElement(_icon["default"], {
+        type: "plus"
+      }), " Add field")), _react["default"].createElement(FormItem, formItemLayoutWithOutLabel, _react["default"].createElement(_button["default"], {
+        type: "primary",
+        htmlType: "submit"
+      }, "Submit")));
+    }
+  }]);
+  return DynamicFieldSet;
+}(_react["default"].Component);
+
+var WrappedDynamicFieldSet = _form["default"].create()(DynamicFieldSet);
+
+var __Demo = _react["default"].createElement(WrappedDynamicFieldSet, null);
+
+var _default = __Demo;
+exports["default"] = _default;

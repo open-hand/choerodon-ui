@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/notification/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,wB","sourcesContent":["import Notification from 'choerodon-ui/lib/notification';\n\nexport default Notification;\n"]}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.jsx"],"names":["Upload"],"mappings":";;;;;;;;;AACA;;AADA;eAGeA,kB","sourcesContent":["// export this package's api\nimport Upload from './Upload';\n\nexport default Upload;\n"]}

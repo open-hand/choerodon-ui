@@ -1,0 +1,24 @@
+7edc66457299255dfc73cafb51f0c57d
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _iconPicker = _interopRequireDefault(require("../../../components-pro/icon-picker"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function handleChange(value, oldValue) {
+  console.log('[datepicker]', value, '[oldValue]', oldValue);
+}
+
+var __Demo = _react["default"].createElement(_iconPicker["default"], {
+  onChange: handleChange
+});
+
+var _default = __Demo;
+exports["default"] = _default;

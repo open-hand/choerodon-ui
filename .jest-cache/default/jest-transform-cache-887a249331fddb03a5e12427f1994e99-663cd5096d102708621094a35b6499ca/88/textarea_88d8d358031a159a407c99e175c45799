@@ -1,0 +1,25 @@
+2fbd9fb54da2df640e9c198da425e748
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var TextArea = _input["default"].TextArea;
+
+var __Demo = _react["default"].createElement(TextArea, {
+  rows: 4,
+  maxLength: 20,
+  label: "textarea",
+  placeholder: "textarea usage"
+});
+
+var _default = __Demo;
+exports["default"] = _default;

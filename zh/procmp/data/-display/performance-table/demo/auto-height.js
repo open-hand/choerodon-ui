@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { PerformanceTable } from 'choerodon-ui/pro';
 
@@ -17,7 +17,6 @@ class AutoHeightTable extends React.Component {
         dataIndex: 'id',
         key: 'id',
         width: 70,
-        align: "center",
         fixed: true,
       },
       {
@@ -62,7 +61,7 @@ class AutoHeightTable extends React.Component {
           columns={columns}
           autoHeight
           data={this.state.data}
-          onRowClick={data => {
+          onRowClick={(data) => {
             console.log(data);
           }}
         />

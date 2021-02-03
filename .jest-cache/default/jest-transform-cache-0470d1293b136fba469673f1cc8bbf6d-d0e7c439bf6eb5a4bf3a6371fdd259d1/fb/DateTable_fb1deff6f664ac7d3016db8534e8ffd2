@@ -1,0 +1,55 @@
+9dbd2faf257fa3b05540d8390f7161db
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _DateTHead = _interopRequireDefault(require("./DateTHead"));
+
+var _DateTBody = _interopRequireDefault(require("./DateTBody"));
+
+var DateTable =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2["default"])(DateTable, _Component);
+
+  function DateTable() {
+    (0, _classCallCheck2["default"])(this, DateTable);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(DateTable).apply(this, arguments));
+  }
+
+  (0, _createClass2["default"])(DateTable, [{
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var prefixCls = props.prefixCls;
+      return _react["default"].createElement("table", {
+        className: "".concat(prefixCls, "-table"),
+        cellSpacing: "0",
+        role: "grid"
+      }, _react["default"].createElement(_DateTHead["default"], props), _react["default"].createElement(_DateTBody["default"], props));
+    }
+  }]);
+  return DateTable;
+}(_react.Component);
+
+exports["default"] = DateTable;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkRhdGVUYWJsZS5qc3giXSwibmFtZXMiOlsiRGF0ZVRhYmxlIiwicHJvcHMiLCJwcmVmaXhDbHMiLCJDb21wb25lbnQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOztJQUdNQSxTOzs7Ozs7Ozs7Ozs7NkJBQ0s7QUFDUCxVQUFNQyxLQUFLLEdBQUcsS0FBS0EsS0FBbkI7QUFDQSxVQUFNQyxTQUFTLEdBQUdELEtBQUssQ0FBQ0MsU0FBeEI7QUFDQSxhQUFRO0FBQU8sUUFBQSxTQUFTLFlBQU9BLFNBQVAsV0FBaEI7QUFBMEMsUUFBQSxXQUFXLEVBQUMsR0FBdEQ7QUFBMEQsUUFBQSxJQUFJLEVBQUM7QUFBL0QsU0FDTixnQ0FBQyxxQkFBRCxFQUFlRCxLQUFmLENBRE0sRUFFTixnQ0FBQyxxQkFBRCxFQUFlQSxLQUFmLENBRk0sQ0FBUjtBQUlEOzs7RUFScUJFLGdCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7IENvbXBvbmVudCB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCBEYXRlVEhlYWQgZnJvbSAnLi9EYXRlVEhlYWQnO1xuaW1wb3J0IERhdGVUQm9keSBmcm9tICcuL0RhdGVUQm9keSc7XG5cbmV4cG9ydCBkZWZhdWx0XG5jbGFzcyBEYXRlVGFibGUgZXh0ZW5kcyBDb21wb25lbnQge1xuICByZW5kZXIoKSB7XG4gICAgY29uc3QgcHJvcHMgPSB0aGlzLnByb3BzO1xuICAgIGNvbnN0IHByZWZpeENscyA9IHByb3BzLnByZWZpeENscztcbiAgICByZXR1cm4gKDx0YWJsZSBjbGFzc05hbWUgPSB7YCR7cHJlZml4Q2xzfS10YWJsZWB9IGNlbGxTcGFjaW5nPVwiMFwiIHJvbGU9XCJncmlkXCI+XG4gICAgICA8RGF0ZVRIZWFkIHsuLi5wcm9wc30vPlxuICAgICAgPERhdGVUQm9keSB7Li4ucHJvcHN9Lz5cbiAgICA8L3RhYmxlPik7XG4gIH1cbn1cbiJdfQ==

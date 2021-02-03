@@ -24,7 +24,8 @@ class App extends React.Component {
     ],
     events: {
       select: ({ record, dataSet }) => console.log('select', record, dataSet),
-      unSelect: ({ record, dataSet }) => console.log('unSelect', record, dataSet),
+      unSelect: ({ record, dataSet }) =>
+        console.log('unSelect', record, dataSet),
     },
   });
 
@@ -36,7 +37,6 @@ class App extends React.Component {
             <Tree
               dataSet={this.ds}
               checkable
-              showLine
               draggable
               showIcon
               renderer={nodeRenderer}
@@ -48,7 +48,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container'),
-);
+ReactDOM.render(<App />, document.getElementById('container'));

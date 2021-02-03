@@ -1,0 +1,45 @@
+f0e1b0949219c936973a215256a3ba15
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _popover = _interopRequireDefault(require("../../../components/popover"));
+
+var _steps = _interopRequireDefault(require("../../../components/steps"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Step = _steps["default"].Step;
+
+var customDot = function customDot(dot, _ref) {
+  var status = _ref.status,
+      index = _ref.index;
+  return _react["default"].createElement(_popover["default"], {
+    content: _react["default"].createElement("span", null, "step ", index, " status: ", status)
+  }, dot);
+};
+
+var __Demo = _react["default"].createElement(_steps["default"], {
+  current: 1,
+  progressDot: customDot
+}, _react["default"].createElement(Step, {
+  title: "Finished",
+  description: "You can hover on the dot."
+}), _react["default"].createElement(Step, {
+  title: "In Progress",
+  description: "You can hover on the dot."
+}), _react["default"].createElement(Step, {
+  title: "Waiting",
+  description: "You can hover on the dot."
+}), _react["default"].createElement(Step, {
+  title: "Waiting",
+  description: "You can hover on the dot."
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

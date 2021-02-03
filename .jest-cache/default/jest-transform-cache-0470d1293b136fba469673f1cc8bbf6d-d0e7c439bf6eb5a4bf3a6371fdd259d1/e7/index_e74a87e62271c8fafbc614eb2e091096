@@ -1,0 +1,260 @@
+093fd9c0e1ee2fb14fcc981730a814f1
+"use strict";
+
+/* istanbul ignore next */
+var cov_1lpku5o5f2 = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/date-picker/index.tsx";
+  var hash = "950fcffb20fd0162903e527f0191febd98ad7806";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/date-picker/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 16
+        },
+        end: {
+          line: 10,
+          column: 81
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 20
+        },
+        end: {
+          line: 12,
+          column: 69
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 18
+        },
+        end: {
+          line: 14,
+          column: 65
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 19
+        },
+        end: {
+          line: 16,
+          column: 67
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 18
+        },
+        end: {
+          line: 18,
+          column: 65
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 16
+        },
+        end: {
+          line: 20,
+          column: 76
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 21
+        },
+        end: {
+          line: 22,
+          column: 95
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 17
+        },
+        end: {
+          line: 24,
+          column: 97
+        }
+      },
+      "11": {
+        start: {
+          line: 25,
+          column: 18
+        },
+        end: {
+          line: 25,
+          column: 114
+        }
+      },
+      "12": {
+        start: {
+          line: 26,
+          column: 0
+        },
+        end: {
+          line: 30,
+          column: 3
+        }
+      },
+      "13": {
+        start: {
+          line: 31,
+          column: 15
+        },
+        end: {
+          line: 31,
+          column: 25
+        }
+      },
+      "14": {
+        start: {
+          line: 32,
+          column: 0
+        },
+        end: {
+          line: 32,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "950fcffb20fd0162903e527f0191febd98ad7806"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_1lpku5o5f2.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1lpku5o5f2.s[2]++;
+exports["default"] = void 0;
+
+var _extends2 =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/extends")));
+
+var _createPicker =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[4]++, _interopRequireDefault(require("./createPicker")));
+
+var _wrapPicker =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[5]++, _interopRequireDefault(require("./wrapPicker")));
+
+var _RangePicker =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[6]++, _interopRequireDefault(require("./RangePicker")));
+
+var _WeekPicker =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[7]++, _interopRequireDefault(require("./WeekPicker")));
+
+var _calendar =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[8]++, _interopRequireDefault(require("../rc-components/calendar")));
+
+var _MonthCalendar =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[9]++, _interopRequireDefault(require("../rc-components/calendar/MonthCalendar")));
+
+var DatePicker =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[10]++, (0, _wrapPicker["default"])((0, _createPicker["default"])(_calendar["default"])));
+var MonthPicker =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[11]++, (0, _wrapPicker["default"])((0, _createPicker["default"])(_MonthCalendar["default"]), 'YYYY-MM'));
+
+/* istanbul ignore next */
+cov_1lpku5o5f2.s[12]++;
+(0, _extends2["default"])(DatePicker, {
+  RangePicker: (0, _wrapPicker["default"])(_RangePicker["default"]),
+  MonthPicker: MonthPicker,
+  WeekPicker: (0, _wrapPicker["default"])(_WeekPicker["default"], 'gggg-wo')
+});
+
+var _default =
+/* istanbul ignore next */
+(cov_1lpku5o5f2.s[13]++, DatePicker);
+
+/* istanbul ignore next */
+cov_1lpku5o5f2.s[14]++;
+exports["default"] = _default;

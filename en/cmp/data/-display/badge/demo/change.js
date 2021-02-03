@@ -23,7 +23,7 @@ class Demo extends React.Component {
     this.setState({ count });
   };
 
-  onChange = show => {
+  onChange = (show) => {
     this.setState({ show });
   };
 
@@ -36,10 +36,10 @@ class Demo extends React.Component {
           </Badge>
           <ButtonGroup>
             <Button onClick={this.decline}>
-              <Icon type="minus" />
+              <Icon type="keyboard_arrow_down" />
             </Button>
             <Button onClick={this.increase}>
-              <Icon type="plus" />
+              <Icon type="keyboard_arrow_up" />
             </Button>
           </ButtonGroup>
         </div>

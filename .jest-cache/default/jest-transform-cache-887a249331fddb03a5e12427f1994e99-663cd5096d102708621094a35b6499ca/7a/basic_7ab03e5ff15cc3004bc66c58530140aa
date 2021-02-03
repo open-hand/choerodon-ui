@@ -1,0 +1,21 @@
+b127001df2043e247cc4c79ef955def2
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _alert = _interopRequireDefault(require("../../../components/alert"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_alert["default"], {
+  message: "Success Text",
+  type: "success"
+});
+
+var _default = __Demo;
+exports["default"] = _default;

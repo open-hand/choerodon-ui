@@ -1,0 +1,14 @@
+c8fab762305634ff48217ebd2ecec680
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var _default = {
+  zh_CN: '简体中文',
+  en_GB: 'English',
+  en_US: 'English(US)'
+};
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9odWlodWF3ay9Eb2N1bWVudHMvb3B0L2Nob2Vyb2Rvbi11aS9jb21wb25lbnRzLXByby9sb2NhbGUtY29udGV4dC9zdXBwb3J0cy50c3giXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7O2VBSWU7QUFDYixFQUFBLEtBQUssRUFBRSxNQURNO0FBRWIsRUFBQSxLQUFLLEVBQUUsU0FGTTtBQUdiLEVBQUEsS0FBSyxFQUFFO0FBSE0sQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB0eXBlIFN1cHBvcnRzID0ge1xuICBba2V5OiBzdHJpbmddOiBzdHJpbmc7XG59XG5cbmV4cG9ydCBkZWZhdWx0IHtcbiAgemhfQ046ICfnroDkvZPkuK3mlocnLFxuICBlbl9HQjogJ0VuZ2xpc2gnLFxuICBlbl9VUzogJ0VuZ2xpc2goVVMpJyxcbn07XG4iXX0=

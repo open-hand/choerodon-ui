@@ -1,0 +1,126 @@
+1f6ba4ba07698550a678dd84bdc2c465
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _switch = _interopRequireDefault(require("../../../components/switch"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _menu = _interopRequireDefault(require("../../../components/menu"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var SubMenu = _menu["default"].SubMenu;
+
+var Sider =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(Sider, _React$Component);
+
+  function Sider() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, Sider);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(Sider)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      mode: 'inline'
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "changeMode", function (value) {
+      _this.setState({
+        mode: value ? 'vertical' : 'inline'
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(Sider, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement(_switch["default"], {
+        onChange: this.changeMode
+      }), " Change Mode", _react["default"].createElement("span", {
+        className: "c7n-divider",
+        style: {
+          margin: '0 1em'
+        }
+      }), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement(_menu["default"], {
+        style: {
+          width: 256
+        },
+        defaultSelectedKeys: ['1'],
+        defaultOpenKeys: ['sub1'],
+        mode: this.state.mode
+      }, _react["default"].createElement(_menu["default"].Item, {
+        key: "1"
+      }, _react["default"].createElement(_icon["default"], {
+        type: "mail_outline"
+      }), "Navigation One"), _react["default"].createElement(_menu["default"].Item, {
+        key: "2"
+      }, _react["default"].createElement(_icon["default"], {
+        type: "perm_contact_calendar"
+      }), "Navigation Two"), _react["default"].createElement(SubMenu, {
+        key: "sub1",
+        title: _react["default"].createElement("span", null, _react["default"].createElement(_icon["default"], {
+          type: "apps"
+        }), _react["default"].createElement("span", null, "Navigation Three"))
+      }, _react["default"].createElement(_menu["default"].Item, {
+        key: "3"
+      }, "Option 3"), _react["default"].createElement(_menu["default"].Item, {
+        key: "4"
+      }, "Option 4"), _react["default"].createElement(SubMenu, {
+        key: "sub1-2",
+        title: "Submenu"
+      }, _react["default"].createElement(_menu["default"].Item, {
+        key: "5"
+      }, "Option 5"), _react["default"].createElement(_menu["default"].Item, {
+        key: "6"
+      }, "Option 6"))), _react["default"].createElement(SubMenu, {
+        key: "sub2",
+        title: _react["default"].createElement("span", null, _react["default"].createElement(_icon["default"], {
+          type: "settings"
+        }), _react["default"].createElement("span", null, "Navigation Four"))
+      }, _react["default"].createElement(_menu["default"].Item, {
+        key: "7"
+      }, "Option 7"), _react["default"].createElement(_menu["default"].Item, {
+        key: "8"
+      }, "Option 8"), _react["default"].createElement(_menu["default"].Item, {
+        key: "9"
+      }, "Option 9"), _react["default"].createElement(_menu["default"].Item, {
+        key: "10"
+      }, "Option 10"))));
+    }
+  }]);
+  return Sider;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(Sider, null);
+
+var _default = __Demo;
+exports["default"] = _default;

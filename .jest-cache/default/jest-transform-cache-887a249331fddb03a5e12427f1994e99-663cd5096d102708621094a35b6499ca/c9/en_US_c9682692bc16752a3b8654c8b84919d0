@@ -1,0 +1,13 @@
+4b94158344f027f4e45940e974ed6972
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var locale = {
+  placeholder: 'Select time'
+};
+var _default = locale;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRpbWUtcGlja2VyL2xvY2FsZS9lbl9VUy5qcyJdLCJuYW1lcyI6WyJsb2NhbGUiLCJwbGFjZWhvbGRlciJdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQUEsSUFBTUEsTUFBTSxHQUFHO0FBQ1hDLEVBQUFBLFdBQVcsRUFBRTtBQURGLENBQWY7ZUFHZUQsTSIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IGxvY2FsZSA9IHtcbiAgICBwbGFjZWhvbGRlcjogJ1NlbGVjdCB0aW1lJyxcbn07XG5leHBvcnQgZGVmYXVsdCBsb2NhbGU7XG4iXX0=

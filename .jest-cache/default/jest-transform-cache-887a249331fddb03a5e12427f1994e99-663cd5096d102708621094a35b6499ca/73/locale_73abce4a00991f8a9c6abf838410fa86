@@ -1,0 +1,24 @@
+3c24d910495324dd4f0ef4b2b2e0ae01
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _popconfirm = _interopRequireDefault(require("../../../components/popconfirm"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_popconfirm["default"], {
+  title: "Are you sure\uFF1F",
+  okText: "Yes",
+  cancelText: "No"
+}, _react["default"].createElement("a", {
+  href: "#"
+}, "Delete"));
+
+var _default = __Demo;
+exports["default"] = _default;

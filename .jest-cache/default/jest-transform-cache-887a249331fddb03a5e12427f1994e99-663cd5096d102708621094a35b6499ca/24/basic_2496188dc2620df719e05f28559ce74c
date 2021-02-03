@@ -1,0 +1,25 @@
+dbb7de1089b11762772fa1dc737478f2
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _switch = _interopRequireDefault(require("../../../components/switch"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function onChange(checked) {
+  console.log("switch to ".concat(checked));
+}
+
+var __Demo = _react["default"].createElement(_switch["default"], {
+  defaultChecked: true,
+  onChange: onChange
+});
+
+var _default = __Demo;
+exports["default"] = _default;

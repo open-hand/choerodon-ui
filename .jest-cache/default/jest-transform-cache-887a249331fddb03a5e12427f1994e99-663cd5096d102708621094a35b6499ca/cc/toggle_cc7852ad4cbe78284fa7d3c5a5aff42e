@@ -1,0 +1,348 @@
+c85decfc138c29c5463f1119dfebf1e7
+"use strict";
+
+/* istanbul ignore next */
+function cov_25vno79ckp() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/utils/toggle.ts";
+  var hash = "d222de69664c74977add32374d08c983839bef72";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/performance-table/utils/toggle.ts",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 26
+        },
+        end: {
+          line: 10,
+          column: 101
+        }
+      },
+      "4": {
+        start: {
+          line: 18,
+          column: 2
+        },
+        end: {
+          line: 27,
+          column: 4
+        }
+      },
+      "5": {
+        start: {
+          line: 19,
+          column: 18
+        },
+        end: {
+          line: 19,
+          column: 77
+        }
+      },
+      "6": {
+        start: {
+          line: 20,
+          column: 4
+        },
+        end: {
+          line: 26,
+          column: 6
+        }
+      },
+      "7": {
+        start: {
+          line: 21,
+          column: 6
+        },
+        end: {
+          line: 25,
+          column: 7
+        }
+      },
+      "8": {
+        start: {
+          line: 22,
+          column: 8
+        },
+        end: {
+          line: 22,
+          column: 70
+        }
+      },
+      "9": {
+        start: {
+          line: 24,
+          column: 8
+        },
+        end: {
+          line: 24,
+          column: 70
+        }
+      },
+      "10": {
+        start: {
+          line: 30,
+          column: 15
+        },
+        end: {
+          line: 30,
+          column: 21
+        }
+      },
+      "11": {
+        start: {
+          line: 31,
+          column: 0
+        },
+        end: {
+          line: 31,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "toggle",
+        decl: {
+          start: {
+            line: 17,
+            column: 9
+          },
+          end: {
+            line: 17,
+            column: 15
+          }
+        },
+        loc: {
+          start: {
+            line: 17,
+            column: 22
+          },
+          end: {
+            line: 28,
+            column: 1
+          }
+        },
+        line: 17
+      },
+      "1": {
+        name: "(anonymous_1)",
+        decl: {
+          start: {
+            line: 18,
+            column: 9
+          },
+          end: {
+            line: 18,
+            column: 10
+          }
+        },
+        loc: {
+          start: {
+            line: 18,
+            column: 34
+          },
+          end: {
+            line: 27,
+            column: 3
+          }
+        },
+        line: 18
+      },
+      "2": {
+        name: "(anonymous_2)",
+        decl: {
+          start: {
+            line: 20,
+            column: 11
+          },
+          end: {
+            line: 20,
+            column: 12
+          }
+        },
+        loc: {
+          start: {
+            line: 20,
+            column: 32
+          },
+          end: {
+            line: 26,
+            column: 5
+          }
+        },
+        line: 20
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 21,
+            column: 6
+          },
+          end: {
+            line: 25,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 21,
+            column: 6
+          },
+          end: {
+            line: 25,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 21,
+            column: 6
+          },
+          end: {
+            line: 25,
+            column: 7
+          }
+        }],
+        line: 21
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    b: {
+      "0": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "d222de69664c74977add32374d08c983839bef72"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_25vno79ckp = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_25vno79ckp();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_25vno79ckp().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_25vno79ckp().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_25vno79ckp().s[2]++;
+exports["default"] = void 0;
+
+var _toConsumableArray2 =
+/* istanbul ignore next */
+(cov_25vno79ckp().s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray")));
+/**
+ * 根据条件，选择性调用 a 与 b 其中一个方法。
+ * @param a
+ * @param b
+ */
+
+
+function toggle(a, b) {
+  /* istanbul ignore next */
+  cov_25vno79ckp().f[0]++;
+  cov_25vno79ckp().s[4]++;
+  return function (target, value) {
+    /* istanbul ignore next */
+    cov_25vno79ckp().f[1]++;
+    var options =
+    /* istanbul ignore next */
+    (cov_25vno79ckp().s[5]++, [target].concat((0, _toConsumableArray2["default"])(value)));
+
+    /* istanbul ignore next */
+    cov_25vno79ckp().s[6]++;
+    return function (condition) {
+      /* istanbul ignore next */
+      cov_25vno79ckp().f[2]++;
+      cov_25vno79ckp().s[7]++;
+
+      if (condition) {
+        /* istanbul ignore next */
+        cov_25vno79ckp().b[0][0]++;
+        cov_25vno79ckp().s[8]++;
+        a.apply(void 0, (0, _toConsumableArray2["default"])(options));
+      } else {
+        /* istanbul ignore next */
+        cov_25vno79ckp().b[0][1]++;
+        cov_25vno79ckp().s[9]++;
+        b.apply(void 0, (0, _toConsumableArray2["default"])(options));
+      }
+    };
+  };
+}
+
+var _default =
+/* istanbul ignore next */
+(cov_25vno79ckp().s[10]++, toggle);
+
+/* istanbul ignore next */
+cov_25vno79ckp().s[11]++;
+exports["default"] = _default;

@@ -1,0 +1,267 @@
+054717a9f2d39cdc0a1f4cab97d6aa82
+"use strict";
+
+/* istanbul ignore next */
+function cov_13sx5g38vk() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/locale-context/en_US.tsx";
+  var hash = "df8879d13ebad7885d336442b81bf773a144cb62";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/locale-context/en_US.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 28
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 13
+        },
+        end: {
+          line: 162,
+          column: 1
+        }
+      },
+      "3": {
+        start: {
+          line: 163,
+          column: 15
+        },
+        end: {
+          line: 163,
+          column: 21
+        }
+      },
+      "4": {
+        start: {
+          line: 164,
+          column: 0
+        },
+        end: {
+          line: 164,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "df8879d13ebad7885d336442b81bf773a144cb62"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_13sx5g38vk = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_13sx5g38vk();
+cov_13sx5g38vk().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_13sx5g38vk().s[1]++;
+exports["default"] = void 0;
+var locale =
+/* istanbul ignore next */
+(cov_13sx5g38vk().s[2]++, {
+  lang: "en_US"
+  /* en_US */
+  ,
+  Table: {
+    show_cached_seletion: 'Show all selected records',
+    hide_cached_seletion: 'Hide all selected records',
+    edit_button: 'Edit',
+    create_button: 'Create',
+    save_button: 'Save',
+    cancel_button: 'Cancel',
+    delete_button: 'Delete',
+    remove_button: 'Remove',
+    reset_button: 'Reset',
+    query_button: 'Query',
+    expand_button: 'Expand',
+    collapse_button: 'Collapse',
+    export_button: 'Export',
+    more_button: 'Others',
+    advanced_search: 'Advanced Search',
+    dirty_info: 'Display condition has changed.',
+    restore: 'Restore',
+    empty_data: 'No data',
+    choose_export_columns: 'Please select the column to export',
+    column_name: 'Column Name',
+    filter_bar_placeholder: 'Table Filter',
+    advanced_query: 'Advanced Query',
+    advanced_query_conditions: 'Advanced Queries',
+    more: 'More',
+    max_export: 'Maximum Export Quantity'
+  },
+  Pagination: {
+    page: 'Page',
+    jump_to: 'Jump to',
+    jump_to_confirm: 'Confirm',
+    records_per_page: 'Number of items per page：'
+  },
+  Upload: {
+    file_selection: 'Select File',
+    click_to_upload: 'Click to Upload',
+    upload_success: 'Upload successfully',
+    upload_failure: 'Fail to upload',
+    no_file: 'No File',
+    been_uploaded: 'File uploaded',
+    upload_path_unset: 'Upload path unset',
+    not_acceptable_prompt: 'Upload List contains unacceptable file, accept:',
+    file_list_max_length: 'Number of files exceeded the maximum'
+  },
+  Modal: {
+    ok: 'OK',
+    cancel: 'Cancel'
+  },
+  DataSet: {
+    unsaved_data_confirm: "There's unsaved data, continue?",
+    invalid_query_dataset: 'Invalid query DataSet.',
+    delete_selected_row_confirm: 'Are you sure to delete the selected row?',
+    delete_all_row_confirm: 'Are you sure to delete all rows?',
+    query_failure: 'Fail to query data.',
+    submit_success: 'Submit successfully.',
+    submit_failure: 'Fail to submit data.',
+    cannot_add_record_when_head_no_current: "Can't create new row record when head record unselected."
+  },
+  DatePicker: {
+    value_missing_no_label: 'Please choose a date.',
+    value_missing: 'Please select {label}.',
+    type_mismatch: 'Please enter a valid date.',
+    ok: 'OK',
+    today: 'Today',
+    now: 'Now',
+    this_week: 'This week'
+  },
+  EmailField: {
+    value_missing_no_label: 'Please input an email address.',
+    value_missing: 'Please input {label}.',
+    type_mismatch: 'Please input a valid email address.'
+  },
+  IntlField: {
+    modal_title: 'Input multi-language information.'
+  },
+  NumberField: {
+    value_missing_no_label: 'Please input a number.',
+    value_missing: 'Please input {label}.'
+  },
+  Radio: {
+    value_missing_no_label: 'Please make a choice.',
+    value_missing: 'Please select {label}.'
+  },
+  SelectBox: {
+    value_missing_no_label: 'Please make a choice.',
+    value_missing: 'Please select {label}.'
+  },
+  Select: {
+    value_missing_no_label: 'Please make a choice.',
+    value_missing: 'Please select {label}.',
+    no_matching_results: 'No matching results.',
+    select_all: 'Select All',
+    unselect_all: 'None',
+    common_item: 'Common Items'
+  },
+  Lov: {
+    choose: 'Choose'
+  },
+  Transfer: {
+    items: 'items'
+  },
+  UrlField: {
+    value_missing_no_label: 'Please input a url address.',
+    value_missing: 'Please input {label}.',
+    type_mismatch: 'Please input a valid url address.'
+  },
+  ColorPicker: {
+    value_missing_no_label: 'Please select a color.',
+    value_missing: 'Please select {label}.',
+    type_mismatch: 'Please select a valid color.'
+  },
+  Validator: {
+    bad_input: 'Please input a number.',
+    pattern_mismatch: 'Please input a valid value.',
+    range_overflow: '{label} must be less than or equal to {max}.',
+    range_underflow: '{label} must be greater than or equal to {min}.',
+    step_mismatch: 'Please input a valid value. The closest valid value is {0}.',
+    step_mismatch_between: 'Please input a valid value. The two closest valid values are {0} and {1}.',
+    too_long: 'Please decrease the length of the value down to {maxLength} or less characters (You have input {length} characters).',
+    too_short: 'Please increase the length of the value down to {minLength} or more characters (You have input {length} characters).',
+    type_mismatch: 'Please input a value to match the given type.',
+    value_missing_no_label: 'Please input a value.',
+    value_missing: 'Please input {label}.',
+    unique: 'The value is duplicate, please input another one.',
+    unknown: 'Unknown error.'
+  },
+  Icon: {
+    icons: ' Icons',
+    whatsNew: 'New',
+    direction: 'Directional',
+    suggestion: 'Suggested',
+    edit: 'Editor',
+    data: 'Data',
+    other: 'Application',
+    series: 'Series'
+  },
+  Cascader: {
+    please_select: 'Please select',
+    value_missing_no_label: 'Please make a choice.',
+    value_missing: 'Please select {label}.',
+    select_all: 'Select All',
+    unselect_all: 'None'
+  },
+  Screening: {
+    selected: 'Selected',
+    pack_up: 'Pack up',
+    more: 'More',
+    multi_select: 'Multi-select',
+    confirm: 'Confirm',
+    cancel: 'Cancel'
+  }
+});
+
+var _default =
+/* istanbul ignore next */
+(cov_13sx5g38vk().s[3]++, locale);
+
+/* istanbul ignore next */
+cov_13sx5g38vk().s[4]++;
+exports["default"] = _default;

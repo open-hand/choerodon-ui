@@ -1,0 +1,83 @@
+0e9b0228eab61fcedbede26b7331b7c4
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _tooltip = _interopRequireDefault(require("../../../components/tooltip"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var text = _react["default"].createElement("span", null, "prompt text");
+
+var buttonWidth = 70;
+
+var __Demo = _react["default"].createElement("div", {
+  className: "demo"
+}, _react["default"].createElement("div", {
+  style: {
+    marginLeft: buttonWidth,
+    whiteSpace: 'nowrap'
+  }
+}, _react["default"].createElement(_tooltip["default"], {
+  placement: "topLeft",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "TL")), _react["default"].createElement(_tooltip["default"], {
+  placement: "top",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "Top")), _react["default"].createElement(_tooltip["default"], {
+  placement: "topRight",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "TR"))), _react["default"].createElement("div", {
+  style: {
+    width: buttonWidth,
+    "float": 'left'
+  }
+}, _react["default"].createElement(_tooltip["default"], {
+  placement: "leftTop",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "LT")), _react["default"].createElement(_tooltip["default"], {
+  placement: "left",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "Left")), _react["default"].createElement(_tooltip["default"], {
+  placement: "leftBottom",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "LB"))), _react["default"].createElement("div", {
+  style: {
+    width: buttonWidth,
+    marginLeft: buttonWidth * 4 + 24
+  }
+}, _react["default"].createElement(_tooltip["default"], {
+  placement: "rightTop",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "RT")), _react["default"].createElement(_tooltip["default"], {
+  placement: "right",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "Right")), _react["default"].createElement(_tooltip["default"], {
+  placement: "rightBottom",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "RB"))), _react["default"].createElement("div", {
+  style: {
+    marginLeft: buttonWidth,
+    clear: 'both',
+    whiteSpace: 'nowrap'
+  }
+}, _react["default"].createElement(_tooltip["default"], {
+  placement: "bottomLeft",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "BL")), _react["default"].createElement(_tooltip["default"], {
+  placement: "bottom",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "Bottom")), _react["default"].createElement(_tooltip["default"], {
+  placement: "bottomRight",
+  title: text
+}, _react["default"].createElement(_button["default"], null, "BR"))));
+
+var _default = __Demo;
+exports["default"] = _default;

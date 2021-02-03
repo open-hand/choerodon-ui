@@ -1,0 +1,18 @@
+6f8875e6adbb3cf45c4382d8f54f586a
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _rate = _interopRequireDefault(require("../../../components/rate"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_rate["default"], null);
+
+var _default = __Demo;
+exports["default"] = _default;

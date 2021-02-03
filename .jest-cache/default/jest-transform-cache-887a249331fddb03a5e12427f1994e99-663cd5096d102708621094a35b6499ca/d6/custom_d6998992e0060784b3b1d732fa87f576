@@ -1,0 +1,28 @@
+55ec7a7afac16346c4cb5b3e7cf84792
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _timeline = _interopRequireDefault(require("../../../components/timeline"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_timeline["default"], null, _react["default"].createElement(_timeline["default"].Item, null, "Create a services site 2015-09-01"), _react["default"].createElement(_timeline["default"].Item, null, "Solve initial network problems 2015-09-01"), _react["default"].createElement(_timeline["default"].Item, {
+  dot: _react["default"].createElement(_icon["default"], {
+    type: "clock-circle-o",
+    style: {
+      fontSize: '16px'
+    }
+  }),
+  color: "red"
+}, "Technical testing 2015-09-01"), _react["default"].createElement(_timeline["default"].Item, null, "Network problems being solved 2015-09-01"));
+
+var _default = __Demo;
+exports["default"] = _default;

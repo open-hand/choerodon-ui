@@ -1,0 +1,17 @@
+9be86b897af3849700511afdf2667af2
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.simulateCode = void 0;
+
+var simulateCode = function simulateCode(wrapper, keycode) {
+  wrapper.find('input').simulate('keydown', {
+    keyCode: keycode
+  });
+  jest.runAllTimers();
+};
+
+exports.simulateCode = simulateCode;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWxzLmpzIl0sIm5hbWVzIjpbInNpbXVsYXRlQ29kZSIsIndyYXBwZXIiLCJrZXljb2RlIiwiZmluZCIsInNpbXVsYXRlIiwia2V5Q29kZSIsImplc3QiLCJydW5BbGxUaW1lcnMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBTyxJQUFNQSxZQUFZLEdBQUcsU0FBZkEsWUFBZSxDQUFDQyxPQUFELEVBQVVDLE9BQVYsRUFBc0I7QUFDaERELEVBQUFBLE9BQU8sQ0FBQ0UsSUFBUixDQUFhLE9BQWIsRUFBc0JDLFFBQXRCLENBQStCLFNBQS9CLEVBQTBDO0FBQUVDLElBQUFBLE9BQU8sRUFBRUg7QUFBWCxHQUExQztBQUNBSSxFQUFBQSxJQUFJLENBQUNDLFlBQUw7QUFDRCxDQUhNIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IHNpbXVsYXRlQ29kZSA9ICh3cmFwcGVyLCBrZXljb2RlKSA9PiB7XG4gIHdyYXBwZXIuZmluZCgnaW5wdXQnKS5zaW11bGF0ZSgna2V5ZG93bicsIHsga2V5Q29kZToga2V5Y29kZSB9KTtcbiAgamVzdC5ydW5BbGxUaW1lcnMoKTtcbn07XG4iXX0=

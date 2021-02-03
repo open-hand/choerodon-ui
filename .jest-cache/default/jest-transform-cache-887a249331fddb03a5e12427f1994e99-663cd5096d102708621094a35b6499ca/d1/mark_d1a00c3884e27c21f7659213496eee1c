@@ -1,0 +1,49 @@
+830ebf02fb8d2ea83c7f70faac36ccd4
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _slider = _interopRequireDefault(require("../../../components/slider"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var marks = {
+  0: '0°C',
+  26: '26°C',
+  37: '37°C',
+  100: {
+    style: {
+      color: '#f50'
+    },
+    label: _react["default"].createElement("strong", null, "100\xB0C")
+  }
+};
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "included=true"), _react["default"].createElement(_slider["default"], {
+  marks: marks,
+  defaultValue: 37
+}), _react["default"].createElement(_slider["default"], {
+  range: true,
+  marks: marks,
+  defaultValue: [26, 37]
+}), _react["default"].createElement("h4", null, "included=false"), _react["default"].createElement(_slider["default"], {
+  marks: marks,
+  included: false,
+  defaultValue: 37
+}), _react["default"].createElement("h4", null, "marks & step"), _react["default"].createElement(_slider["default"], {
+  marks: marks,
+  step: 10,
+  defaultValue: 37
+}), _react["default"].createElement("h4", null, "step=null"), _react["default"].createElement(_slider["default"], {
+  marks: marks,
+  step: null,
+  defaultValue: 37
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

@@ -1,0 +1,535 @@
+b3aa85b9ccd98a2fa86f8ad50e1893f6
+"use strict";
+
+/* istanbul ignore next */
+function cov_1t8ut3d292() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/isCssAnimationSupported.tsx";
+  var hash = "264dd976532e589d26037d88dfe7d6055b3fc810";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/isCssAnimationSupported.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 28
+        }
+      },
+      "2": {
+        start: {
+          line: 10,
+          column: 2
+        },
+        end: {
+          line: 12,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 11,
+          column: 4
+        },
+        end: {
+          line: 11,
+          column: 21
+        }
+      },
+      "4": {
+        start: {
+          line: 14,
+          column: 20
+        },
+        end: {
+          line: 14,
+          column: 54
+        }
+      },
+      "5": {
+        start: {
+          line: 15,
+          column: 12
+        },
+        end: {
+          line: 15,
+          column: 41
+        }
+      },
+      "6": {
+        start: {
+          line: 17,
+          column: 2
+        },
+        end: {
+          line: 19,
+          column: 3
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 4
+        },
+        end: {
+          line: 18,
+          column: 21
+        }
+      },
+      "8": {
+        start: {
+          line: 21,
+          column: 2
+        },
+        end: {
+          line: 28,
+          column: 3
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 4
+        },
+        end: {
+          line: 27,
+          column: 5
+        }
+      },
+      "10": {
+        start: {
+          line: 22,
+          column: 17
+        },
+        end: {
+          line: 22,
+          column: 18
+        }
+      },
+      "11": {
+        start: {
+          line: 23,
+          column: 6
+        },
+        end: {
+          line: 26,
+          column: 7
+        }
+      },
+      "12": {
+        start: {
+          line: 24,
+          column: 8
+        },
+        end: {
+          line: 24,
+          column: 25
+        }
+      },
+      "13": {
+        start: {
+          line: 25,
+          column: 8
+        },
+        end: {
+          line: 25,
+          column: 14
+        }
+      },
+      "14": {
+        start: {
+          line: 30,
+          column: 2
+        },
+        end: {
+          line: 30,
+          column: 33
+        }
+      },
+      "15": {
+        start: {
+          line: 31,
+          column: 2
+        },
+        end: {
+          line: 31,
+          column: 19
+        }
+      },
+      "16": {
+        start: {
+          line: 34,
+          column: 15
+        },
+        end: {
+          line: 34,
+          column: 38
+        }
+      },
+      "17": {
+        start: {
+          line: 35,
+          column: 0
+        },
+        end: {
+          line: 35,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "isCssAnimationSupported",
+        decl: {
+          start: {
+            line: 9,
+            column: 9
+          },
+          end: {
+            line: 9,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 9,
+            column: 35
+          },
+          end: {
+            line: 32,
+            column: 1
+          }
+        },
+        line: 9
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 10,
+            column: 2
+          },
+          end: {
+            line: 12,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 10,
+            column: 2
+          },
+          end: {
+            line: 12,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 10,
+            column: 2
+          },
+          end: {
+            line: 12,
+            column: 3
+          }
+        }],
+        line: 10
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 17,
+            column: 2
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 17,
+            column: 2
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 17,
+            column: 2
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        }],
+        line: 17
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 28,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 28,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 28,
+            column: 3
+          }
+        }],
+        line: 21
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 23,
+            column: 6
+          },
+          end: {
+            line: 26,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 23,
+            column: 6
+          },
+          end: {
+            line: 26,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 23,
+            column: 6
+          },
+          end: {
+            line: 26,
+            column: 7
+          }
+        }],
+        line: 23
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 30,
+            column: 14
+          },
+          end: {
+            line: 30,
+            column: 32
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 30,
+            column: 14
+          },
+          end: {
+            line: 30,
+            column: 23
+          }
+        }, {
+          start: {
+            line: 30,
+            column: 27
+          },
+          end: {
+            line: 30,
+            column: 32
+          }
+        }],
+        line: 30
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "264dd976532e589d26037d88dfe7d6055b3fc810"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_1t8ut3d292 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_1t8ut3d292();
+cov_1t8ut3d292().s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_1t8ut3d292().s[1]++;
+exports["default"] = void 0;
+var animation;
+
+function isCssAnimationSupported() {
+  /* istanbul ignore next */
+  cov_1t8ut3d292().f[0]++;
+  cov_1t8ut3d292().s[2]++;
+
+  if (animation !== undefined) {
+    /* istanbul ignore next */
+    cov_1t8ut3d292().b[0][0]++;
+    cov_1t8ut3d292().s[3]++;
+    return animation;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1t8ut3d292().b[0][1]++;
+  }
+
+  var domPrefixes =
+  /* istanbul ignore next */
+  (cov_1t8ut3d292().s[4]++, 'Webkit Moz O ms Khtml'.split(' '));
+  var elm =
+  /* istanbul ignore next */
+  (cov_1t8ut3d292().s[5]++, document.createElement('div'));
+
+  /* istanbul ignore next */
+  cov_1t8ut3d292().s[6]++;
+
+  if (elm.style.animationName !== undefined) {
+    /* istanbul ignore next */
+    cov_1t8ut3d292().b[1][0]++;
+    cov_1t8ut3d292().s[7]++;
+    animation = true;
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1t8ut3d292().b[1][1]++;
+  }
+
+  cov_1t8ut3d292().s[8]++;
+
+  if (animation !== undefined) {
+    /* istanbul ignore next */
+    cov_1t8ut3d292().b[2][0]++;
+    cov_1t8ut3d292().s[9]++;
+
+    for (var i =
+    /* istanbul ignore next */
+    (cov_1t8ut3d292().s[10]++, 0); i < domPrefixes.length; i++) {
+      /* istanbul ignore next */
+      cov_1t8ut3d292().s[11]++;
+
+      if (elm.style["".concat(domPrefixes[i], "AnimationName")] !== undefined) {
+        /* istanbul ignore next */
+        cov_1t8ut3d292().b[3][0]++;
+        cov_1t8ut3d292().s[12]++;
+        animation = true;
+
+        /* istanbul ignore next */
+        cov_1t8ut3d292().s[13]++;
+        break;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_1t8ut3d292().b[3][1]++;
+      }
+    }
+  } else
+  /* istanbul ignore next */
+  {
+    cov_1t8ut3d292().b[2][1]++;
+  }
+
+  cov_1t8ut3d292().s[14]++;
+  animation =
+  /* istanbul ignore next */
+  (cov_1t8ut3d292().b[4][0]++, animation) ||
+  /* istanbul ignore next */
+  (cov_1t8ut3d292().b[4][1]++, false);
+
+  /* istanbul ignore next */
+  cov_1t8ut3d292().s[15]++;
+  return animation;
+}
+
+var _default =
+/* istanbul ignore next */
+(cov_1t8ut3d292().s[16]++, isCssAnimationSupported);
+
+/* istanbul ignore next */
+cov_1t8ut3d292().s[17]++;
+exports["default"] = _default;

@@ -88,7 +88,7 @@ class App extends React.Component {
         summaryBar={[
           'age',
           ({ dataSet }) => {
-            return { label: '测试是', value: 123123 };
+            return { label: '测试', value: '值' };
           },
         ]}
       />

@@ -22,7 +22,7 @@
     {
       "filename": "checkexpand.js",
       "title": {
-        "zh": "check和expand使用以及与dataset关联",
+        "zh": "check和expand使用",
         "en": "check and expand use in tree and relevance with dataSet"
       },
       "description": {

@@ -1,0 +1,11 @@
+9779369a79bbb85b3191376580faa8cf
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _ = _interopRequireDefault(require(".."));
+
+var _mountTest = _interopRequireDefault(require("../../../tests/shared/mountTest"));
+
+(0, _mountTest["default"])(_["default"]);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRlc3QuanMiXSwibmFtZXMiOlsiTW9kYWxDb250YWluZXIiXSwibWFwcGluZ3MiOiI7Ozs7QUFBQTs7QUFDQTs7QUFFQSwyQkFBVUEsWUFBViIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBNb2RhbENvbnRhaW5lciBmcm9tICcuLic7XG5pbXBvcnQgbW91bnRUZXN0IGZyb20gJy4uLy4uLy4uL3Rlc3RzL3NoYXJlZC9tb3VudFRlc3QnO1xuXG5tb3VudFRlc3QoTW9kYWxDb250YWluZXIpO1xuIl19

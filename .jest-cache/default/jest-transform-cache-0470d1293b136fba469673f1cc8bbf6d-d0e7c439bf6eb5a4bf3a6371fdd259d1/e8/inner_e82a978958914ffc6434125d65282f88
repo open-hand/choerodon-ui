@@ -1,0 +1,42 @@
+d5fa2eab9173bfad1635b2d9961cae2b
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _card = _interopRequireDefault(require("../../../components/card"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement(_card["default"], {
+  title: "Card title"
+}, _react["default"].createElement("p", {
+  style: {
+    fontSize: 14,
+    color: 'rgba(0, 0, 0, 0.85)',
+    marginBottom: 16,
+    fontWeight: 500
+  }
+}, "Group title"), _react["default"].createElement(_card["default"], {
+  type: "inner",
+  title: "Inner Card title",
+  extra: _react["default"].createElement("a", {
+    href: "#"
+  }, "More")
+}, "Inner Card content"), _react["default"].createElement(_card["default"], {
+  style: {
+    marginTop: 16
+  },
+  type: "inner",
+  title: "Inner Card title",
+  extra: _react["default"].createElement("a", {
+    href: "#"
+  }, "More")
+}, "Inner Card content"));
+
+var _default = __Demo;
+exports["default"] = _default;

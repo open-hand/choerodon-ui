@@ -1,0 +1,157 @@
+0043b80bd659e1af1a09cce927133282
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _tooltip = _interopRequireDefault(require("../../../components/tooltip"));
+
+var _tag = _interopRequireDefault(require("../../../components/tag"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var EditableTagGroup =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(EditableTagGroup, _React$Component);
+
+  function EditableTagGroup() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, EditableTagGroup);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(EditableTagGroup)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      tags: ['Unremovable', 'Tag 2', 'Tag 3'],
+      inputVisible: false,
+      inputValue: ''
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleClose", function (removedTag) {
+      var tags = _this.state.tags.filter(function (tag) {
+        return tag !== removedTag;
+      });
+
+      console.log(tags);
+
+      _this.setState({
+        tags: tags
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "showInput", function () {
+      _this.setState({
+        inputVisible: true
+      }, function () {
+        return _this.input.focus();
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleInputChange", function (e) {
+      _this.setState({
+        inputValue: e.target.value
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "handleInputConfirm", function () {
+      var state = _this.state;
+      var inputValue = state.inputValue;
+      var tags = state.tags;
+
+      if (inputValue && tags.indexOf(inputValue) === -1) {
+        tags = [].concat((0, _toConsumableArray2["default"])(tags), [inputValue]);
+      }
+
+      console.log(tags);
+
+      _this.setState({
+        tags: tags,
+        inputVisible: false,
+        inputValue: ''
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "saveInputRef", function (input) {
+      return _this.input = input;
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(EditableTagGroup, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$state = this.state,
+          tags = _this$state.tags,
+          inputVisible = _this$state.inputVisible,
+          inputValue = _this$state.inputValue;
+      return _react["default"].createElement("div", null, tags.map(function (tag, index) {
+        var isLongTag = tag.length > 20;
+
+        var tagElem = _react["default"].createElement(_tag["default"], {
+          key: tag,
+          closable: index !== 0,
+          afterClose: function afterClose() {
+            return _this2.handleClose(tag);
+          }
+        }, isLongTag ? "".concat(tag.slice(0, 20), "...") : tag);
+
+        return isLongTag ? _react["default"].createElement(_tooltip["default"], {
+          title: tag,
+          key: tag
+        }, tagElem) : tagElem;
+      }), inputVisible && _react["default"].createElement(_input["default"], {
+        ref: this.saveInputRef,
+        type: "text",
+        size: "small",
+        style: {
+          width: 78
+        },
+        value: inputValue,
+        onChange: this.handleInputChange,
+        onBlur: this.handleInputConfirm,
+        onPressEnter: this.handleInputConfirm
+      }), !inputVisible && _react["default"].createElement(_tag["default"], {
+        onClick: this.showInput,
+        style: {
+          background: '#fff',
+          borderStyle: 'dashed'
+        }
+      }, _react["default"].createElement(_icon["default"], {
+        type: "plus"
+      }), " New Tag"));
+    }
+  }]);
+  return EditableTagGroup;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(EditableTagGroup, null);
+
+var _default = __Demo;
+exports["default"] = _default;

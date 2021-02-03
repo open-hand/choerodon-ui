@@ -1,0 +1,28 @@
+3a87887ad474e90111543de2cab5bc99
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _inputNumber = _interopRequireDefault(require("../../../components/input-number"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function onChange(value) {
+  console.log('changed', value);
+}
+
+var __Demo = _react["default"].createElement(_inputNumber["default"], {
+  label: "\u6570\u5B57",
+  min: 1,
+  max: 10,
+  defaultValue: 3,
+  onChange: onChange
+});
+
+var _default = __Demo;
+exports["default"] = _default;

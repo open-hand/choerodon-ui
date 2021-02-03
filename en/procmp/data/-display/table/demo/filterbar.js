@@ -11,7 +11,12 @@ const config = {
     { name: 'name', type: 'string', label: '姓名', defaultValue: 'Hugh' },
     { name: 'age', type: 'number', label: '年龄' },
     { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
-    { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
+    {
+      name: 'sex',
+      type: 'string',
+      label: '性别',
+      lookupCode: 'HR.EMPLOYEE_GENDER',
+    },
     { name: 'date.startDate', type: 'date', label: '开始日期' },
     {
       name: 'sexMultiple',
@@ -25,8 +30,18 @@ const config = {
     { name: 'userid', type: 'string', label: '编号', required: true },
     { name: 'name', type: 'string', label: '姓名' },
     { name: 'age', type: 'number', label: '年龄', max: 100, step: 1 },
-    { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
-    { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
+    {
+      name: 'sex',
+      type: 'string',
+      label: '性别',
+      lookupCode: 'HR.EMPLOYEE_GENDER',
+    },
+    {
+      name: 'date.startDate',
+      type: 'date',
+      label: '开始日期',
+      defaultValue: new Date(),
+    },
     {
       name: 'sexMultiple',
       type: 'string',
@@ -36,13 +51,17 @@ const config = {
     },
   ],
   events: {
-    query: ({ params, data }) => console.log('filterbar query parameter', params, data),
+    query: ({ params, data }) =>
+      console.log('filterbar query parameter', params, data),
   },
 };
 
 class App extends React.Component {
   handleClick = () =>
-    this.setState({ show: !this.state.show, ds: this.state.show ? this.ds2 : this.ds1 });
+    this.setState({
+      show: !this.state.show,
+      ds: this.state.show ? this.ds2 : this.ds1,
+    });
 
   handleSearchAge = () => {
     const {
@@ -79,16 +98,16 @@ class App extends React.Component {
     return [
       {
         header: '组合',
-        children: [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }],
+        children: [{ name: 'name', width: 450 }, { name: 'age' }],
       },
       {
         header: '组合3',
         children: [
           {
             header: '组合2',
-            children: [{ name: 'sex', editor: true }, { name: 'date.startDate', editor: true }],
+            children: [{ name: 'sex' }, { name: 'date.startDate' }],
           },
-          { name: 'sexMultiple', editor: true },
+          { name: 'sexMultiple' },
         ],
       },
       this.state.show ? { header: '操作' } : null,

@@ -1,0 +1,24 @@
+2602c6219da8d786350217cf2cd985d7
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _divider = _interopRequireDefault(require("../../../components/divider"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo."), _react["default"].createElement(_divider["default"], null), _react["default"].createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo."), _react["default"].createElement(_divider["default"], null, "With Text"), _react["default"].createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo."), _react["default"].createElement(_divider["default"], {
+  dashed: true
+}), _react["default"].createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo."), _react["default"].createElement(_divider["default"], {
+  orientation: "left"
+}, "With Text"), _react["default"].createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo."), _react["default"].createElement(_divider["default"], {
+  orientation: "right"
+}, "With Text"), _react["default"].createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo."));
+
+var _default = __Demo;
+exports["default"] = _default;

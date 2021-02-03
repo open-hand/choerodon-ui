@@ -1,0 +1,31 @@
+8f12e5734230731457d69c78c9b38003
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _input = _interopRequireDefault(require("../../../components/input"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", {
+  className: "example-input"
+}, _react["default"].createElement(_input["default"], {
+  size: "large",
+  placeholder: "large size",
+  label: "Large",
+  maxLength: "20"
+}), _react["default"].createElement(_input["default"], {
+  placeholder: "default size"
+}), _react["default"].createElement(_input["default"], {
+  size: "small",
+  placeholder: "small size",
+  label: "small"
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

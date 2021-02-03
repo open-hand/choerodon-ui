@@ -1,0 +1,185 @@
+2cf5e0e028f6eb2494d8f96b5eee2e72
+"use strict";
+
+/* istanbul ignore next */
+var cov_2pr94aegeu = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/date-picker/locale/sl_SI.tsx";
+  var hash = "9ed94e14f479d9ad7d9b072b05886e5aef7df8db";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/date-picker/locale/sl_SI.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 21
+        },
+        end: {
+          line: 10,
+          column: 92
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 13
+        },
+        end: {
+          line: 12,
+          column: 78
+        }
+      },
+      "5": {
+        start: {
+          line: 15,
+          column: 13
+        },
+        end: {
+          line: 47,
+          column: 1
+        }
+      },
+      "6": {
+        start: {
+          line: 49,
+          column: 15
+        },
+        end: {
+          line: 49,
+          column: 21
+        }
+      },
+      "7": {
+        start: {
+          line: 50,
+          column: 0
+        },
+        end: {
+          line: 50,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "9ed94e14f479d9ad7d9b072b05886e5aef7df8db"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_2pr94aegeu.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_2pr94aegeu.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2pr94aegeu.s[2]++;
+exports["default"] = void 0;
+
+var _objectSpread2 =
+/* istanbul ignore next */
+(cov_2pr94aegeu.s[3]++, _interopRequireDefault(require("@babel/runtime/helpers/objectSpread2")));
+
+var _sl_SI =
+/* istanbul ignore next */
+(cov_2pr94aegeu.s[4]++, _interopRequireDefault(require("../../time-picker/locale/sl_SI"))); // Merge into a locale object
+
+
+var locale =
+/* istanbul ignore next */
+(cov_2pr94aegeu.s[5]++, {
+  lang: {
+    placeholder: 'Izberite datum',
+    rangePlaceholder: ['Začetni datum', 'Končni datum'],
+    today: 'Danes',
+    now: 'Trenutno',
+    backToToday: 'Nazaj na trenutni datum',
+    ok: 'Ok',
+    clear: 'Počisti',
+    month: 'Mesec',
+    year: 'Leto',
+    timeSelect: 'Izberi čas',
+    dateSelect: 'Izberi datum',
+    monthSelect: 'Izberite mesec',
+    yearSelect: 'Izberite leto',
+    decadeSelect: 'Izberite desetletje',
+    yearFormat: 'YYYY',
+    dateFormat: 'D.M.YYYY',
+    dayFormat: 'D',
+    dateTimeFormat: 'D.M.YYYY HH:mm:ss',
+    monthFormat: 'MMMM',
+    monthBeforeYear: true,
+    previousMonth: 'Prejšnji mesec (PageUp)',
+    nextMonth: 'Naslednji mesec (PageDown)',
+    previousYear: 'Lansko leto (Control + left)',
+    nextYear: 'Naslednje leto (Control + right)',
+    previousDecade: 'Prejšnje desetletje',
+    nextDecade: 'Naslednje desetletje',
+    previousCentury: 'Zadnje stoletje',
+    nextCentury: 'Naslednje stoletje'
+  },
+  timePickerLocale: (0, _objectSpread2["default"])({}, _sl_SI["default"])
+}); // All settings at:
+
+var _default =
+/* istanbul ignore next */
+(cov_2pr94aegeu.s[6]++, locale);
+
+/* istanbul ignore next */
+cov_2pr94aegeu.s[7]++;
+exports["default"] = _default;

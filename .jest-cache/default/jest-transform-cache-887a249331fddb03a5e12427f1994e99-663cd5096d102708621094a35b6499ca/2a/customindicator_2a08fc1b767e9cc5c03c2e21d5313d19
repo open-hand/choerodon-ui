@@ -1,0 +1,30 @@
+913ea609db3a5ff86d6078dc5d79fcba
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _spin = _interopRequireDefault(require("../../../components/spin"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var c7nIcon = _react["default"].createElement("span", {
+  className: "custom-spin-dot"
+}, _react["default"].createElement("i", null), _react["default"].createElement("i", null), _react["default"].createElement("i", null), _react["default"].createElement("i", null));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_spin["default"], {
+  indicator: c7nIcon,
+  size: "small"
+}), _react["default"].createElement(_spin["default"], {
+  indicator: c7nIcon
+}), _react["default"].createElement(_spin["default"], {
+  indicator: c7nIcon,
+  size: "large"
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

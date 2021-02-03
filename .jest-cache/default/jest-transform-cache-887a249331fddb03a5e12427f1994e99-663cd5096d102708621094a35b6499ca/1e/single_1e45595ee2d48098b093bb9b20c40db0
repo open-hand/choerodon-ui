@@ -1,0 +1,33 @@
+991ad58f988cdce635cd660f51b81364
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _transfer = _interopRequireDefault(require("../../../components-pro/transfer"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function handleChange(value, oldValue) {
+  console.log('[basic new]', value, '[basic old]', oldValue);
+}
+
+var Option = _transfer["default"].Option;
+
+var __Demo = _react["default"].createElement(_transfer["default"], {
+  multiple: false,
+  onChange: handleChange
+}, _react["default"].createElement(Option, {
+  value: "jack"
+}, "Jack"), _react["default"].createElement(Option, {
+  value: "lucy"
+}, "Lucy"), _react["default"].createElement(Option, {
+  value: "wu"
+}, "Wu"));
+
+var _default = __Demo;
+exports["default"] = _default;

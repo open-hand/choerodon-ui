@@ -1,0 +1,1 @@
+{"version":3,"sources":["locale-context/supports.jsx"],"names":["zh_CN","en_GB","en_US"],"mappings":";;;;;;eAAe;AACXA,EAAAA,KAAK,EADM,MAAA;AAEXC,EAAAA,KAAK,EAFM,SAAA;AAGXC,EAAAA,KAAK,EAAE;AAHI,C","sourcesContent":["export default {\n    zh_CN: '简体中文',\n    en_GB: 'English',\n    en_US: 'English(US)',\n};\n"]}

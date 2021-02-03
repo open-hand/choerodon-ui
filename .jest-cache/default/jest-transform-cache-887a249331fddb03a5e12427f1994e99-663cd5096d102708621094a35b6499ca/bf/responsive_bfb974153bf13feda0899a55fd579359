@@ -1,0 +1,82 @@
+292535a625ac0692b65ab984e54fc0bd
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _menu = _interopRequireDefault(require("../../../components/menu"));
+
+var _icon = _interopRequireDefault(require("../../../components/icon"));
+
+var _layout = _interopRequireDefault(require("../../../components/layout"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Header = _layout["default"].Header,
+    Content = _layout["default"].Content,
+    Footer = _layout["default"].Footer,
+    Sider = _layout["default"].Sider;
+
+var __Demo = _react["default"].createElement(_layout["default"], null, _react["default"].createElement(Sider, {
+  breakpoint: "lg",
+  collapsedWidth: "0",
+  onCollapse: function onCollapse(collapsed, type) {
+    console.log(collapsed, type);
+  }
+}, _react["default"].createElement("div", {
+  className: "logo"
+}), _react["default"].createElement(_menu["default"], {
+  theme: "dark",
+  mode: "inline",
+  defaultSelectedKeys: ['4']
+}, _react["default"].createElement(_menu["default"].Item, {
+  key: "1"
+}, _react["default"].createElement(_icon["default"], {
+  type: "user"
+}), _react["default"].createElement("span", {
+  className: "nav-text"
+}, "nav 1")), _react["default"].createElement(_menu["default"].Item, {
+  key: "2"
+}, _react["default"].createElement(_icon["default"], {
+  type: "video-camera"
+}), _react["default"].createElement("span", {
+  className: "nav-text"
+}, "nav 2")), _react["default"].createElement(_menu["default"].Item, {
+  key: "3"
+}, _react["default"].createElement(_icon["default"], {
+  type: "upload"
+}), _react["default"].createElement("span", {
+  className: "nav-text"
+}, "nav 3")), _react["default"].createElement(_menu["default"].Item, {
+  key: "4"
+}, _react["default"].createElement(_icon["default"], {
+  type: "user"
+}), _react["default"].createElement("span", {
+  className: "nav-text"
+}, "nav 4")))), _react["default"].createElement(_layout["default"], null, _react["default"].createElement(Header, {
+  style: {
+    background: '#fff',
+    padding: 0
+  }
+}), _react["default"].createElement(Content, {
+  style: {
+    margin: '24px 16px 0'
+  }
+}, _react["default"].createElement("div", {
+  style: {
+    padding: 24,
+    background: '#fff',
+    minHeight: 360
+  }
+}, "content")), _react["default"].createElement(Footer, {
+  style: {
+    textAlign: 'center'
+  }
+}, "Choerodon UI")));
+
+var _default = __Demo;
+exports["default"] = _default;

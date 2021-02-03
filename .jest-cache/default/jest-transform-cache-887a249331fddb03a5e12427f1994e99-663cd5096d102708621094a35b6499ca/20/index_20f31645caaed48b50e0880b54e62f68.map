@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/icon/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,gB","sourcesContent":["import Icon from 'choerodon-ui/lib/icon';\n\nexport default Icon;\n"]}

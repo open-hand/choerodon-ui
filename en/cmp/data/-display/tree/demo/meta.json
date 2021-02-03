@@ -56,6 +56,7 @@
         "zh": "点击展开节点，动态加载数据。\n",
         "en": "To load data asynchronously when click to expand a treeNode.\n"
       },
+      "ignores": ["theme1", "theme3"],
       "order": 3,
       "height": 345,
       "screenshot": ""
@@ -84,6 +85,7 @@
         "zh": "带连接线的树。\n",
         "en": "Tree With Line\n"
       },
+      "ignores": ["theme1", "theme3", "theme4"],
       "order": 5,
       "height": 300,
       "screenshot": ""
@@ -98,6 +100,7 @@
         "zh": "可以针对不同节点采用样式覆盖的方式定制图标。\n",
         "en": "You can customize icons for different nodes by styles override.\n"
       },
+      "ignores": ["theme1", "theme3", "theme4"],
       "order": 6,
       "height": 261,
       "screenshot": ""

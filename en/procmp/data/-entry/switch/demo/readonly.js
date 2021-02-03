@@ -15,11 +15,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Switch name="rd" disabled />
+        <Switch style={{margin:'.1rem'}}  name="rd" disabled />
         <br />
-        <Switch name="rd" readOnly />
+        <Switch style={{margin:'.1rem'}}  name="rd" readOnly />
         <br />
-        <Switch dataSet={this.ds} name="rd" value="C" />
+        <Switch style={{margin:'.1rem'}}  dataSet={this.ds} name="rd" value="C" />
       </div>
     );
   }

@@ -1,0 +1,55 @@
+f944459d31f863eb7ae446fcd1d8dcd4
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _row = _interopRequireDefault(require("../../../components-pro/row"));
+
+var _col = _interopRequireDefault(require("../../../components-pro/col"));
+
+var _selectBox = _interopRequireDefault(require("../../../components-pro/select-box"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function handleChange(value, oldValue) {
+  console.log('[button new]', value, '[button old]', oldValue);
+}
+
+var Option = _selectBox["default"].Option;
+
+var __Demo = _react["default"].createElement(_row["default"], {
+  gutter: 10
+}, _react["default"].createElement(_col["default"], {
+  span: 12
+}, _react["default"].createElement(_selectBox["default"], {
+  vertical: true,
+  mode: "button",
+  onChange: handleChange
+}, _react["default"].createElement(Option, {
+  value: "jack"
+}, "Jack"), _react["default"].createElement(Option, {
+  value: "lucy"
+}, "Lucy"), _react["default"].createElement(Option, {
+  value: "wu"
+}, "Wu"))), _react["default"].createElement(_col["default"], {
+  span: 12
+}, _react["default"].createElement(_selectBox["default"], {
+  vertical: true,
+  mode: "button",
+  multiple: true,
+  onChange: handleChange
+}, _react["default"].createElement(Option, {
+  value: "jack"
+}, "Jack"), _react["default"].createElement(Option, {
+  value: "lucy"
+}, "Lucy"), _react["default"].createElement(Option, {
+  value: "wu"
+}, "Wu"))));
+
+var _default = __Demo;
+exports["default"] = _default;

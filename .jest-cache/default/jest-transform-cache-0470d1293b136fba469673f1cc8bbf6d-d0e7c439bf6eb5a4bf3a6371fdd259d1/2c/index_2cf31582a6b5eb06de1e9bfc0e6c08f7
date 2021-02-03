@@ -1,0 +1,152 @@
+fa549cbf7ec12fb35eaf4e2623ab422a
+"use strict";
+
+/* istanbul ignore next */
+var cov_11ew25o7xx = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/upload/index.tsx";
+  var hash = "ebac4a4902dd9f4c9ec5ffdb3e7988604edbc760";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/upload/index.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 14
+        },
+        end: {
+          line: 10,
+          column: 57
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 15
+        },
+        end: {
+          line: 12,
+          column: 59
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 0
+        },
+        end: {
+          line: 14,
+          column: 49
+        }
+      },
+      "6": {
+        start: {
+          line: 15,
+          column: 15
+        },
+        end: {
+          line: 15,
+          column: 33
+        }
+      },
+      "7": {
+        start: {
+          line: 16,
+          column: 0
+        },
+        end: {
+          line: 16,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "ebac4a4902dd9f4c9ec5ffdb3e7988604edbc760"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_11ew25o7xx.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_11ew25o7xx.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_11ew25o7xx.s[2]++;
+exports["default"] = void 0;
+
+var _Upload =
+/* istanbul ignore next */
+(cov_11ew25o7xx.s[3]++, _interopRequireDefault(require("./Upload")));
+
+var _Dragger =
+/* istanbul ignore next */
+(cov_11ew25o7xx.s[4]++, _interopRequireDefault(require("./Dragger")));
+
+/* istanbul ignore next */
+cov_11ew25o7xx.s[5]++;
+_Upload["default"].Dragger = _Dragger["default"];
+
+var _default =
+/* istanbul ignore next */
+(cov_11ew25o7xx.s[6]++, _Upload["default"]);
+
+/* istanbul ignore next */
+cov_11ew25o7xx.s[7]++;
+exports["default"] = _default;

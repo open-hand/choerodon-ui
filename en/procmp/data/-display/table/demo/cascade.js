@@ -4,7 +4,6 @@ import {
   DataSet,
   Table,
   TextField,
-  DateTimePicker,
   Modal,
   Button,
   Lov,
@@ -31,7 +30,7 @@ class App extends React.Component {
     dataToJSON: 'normal',
     queryUrl: '/dataset/user/queries',
     cascadeParams(parent) {
-      console.log('cascadeParams',parent.toData())
+      console.log('cascadeParams', parent.toData());
       // 级联查询参数 (record, primaryKey) => object
       return {
         __parent: parent.toData(),
@@ -39,7 +38,7 @@ class App extends React.Component {
     },
     fields: [
       { name: 'name', type: 'string', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'age', type: 'number', label: '年龄', step: 1 },
       {
         name: 'sex',
         type: 'string',
@@ -49,7 +48,8 @@ class App extends React.Component {
       },
     ],
     events: {
-      query: ({ params, data }) => console.log('friend query parameter', params, data),
+      query: ({ params, data }) =>
+        console.log('friend query parameter', params, data),
     },
   });
 
@@ -58,7 +58,7 @@ class App extends React.Component {
     selection: 'single',
     fields: [
       { name: 'name', type: 'string', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'age', type: 'number', label: '年龄', step: 1 },
       {
         name: 'sex',
         type: 'string',
@@ -78,7 +78,7 @@ class App extends React.Component {
     autoCreate: true,
     fields: [
       { name: 'name', type: 'intl', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'age', type: 'number', label: '年龄', step: 1 },
       {
         name: 'sex',
         type: 'string',
@@ -92,7 +92,8 @@ class App extends React.Component {
     },
     events: {
       indexChange: ({ record }) =>
-        record && console.log('enemyRecord cascadeParent', record.cascadeParent),
+        record &&
+        console.log('enemyRecord cascadeParent', record.cascadeParent),
     },
   });
 
@@ -139,7 +140,42 @@ class App extends React.Component {
     },
   });
 
-  openModal = record => {
+  toDataButton = (
+    <Button onClick={this.toData} key="toData">
+      toData
+    </Button>
+  );
+
+  toJSONDataButton = (
+    <Button onClick={this.toJSONData} key="toJSONData">
+      toJSONData
+    </Button>
+  );
+
+  createButton = (
+    <Button icon="playlist_add" onClick={this.createUser} key="add">
+      新增
+    </Button>
+  );
+
+  createUser = () => {
+    this.openModal(this.userDs.create({}, 0));
+    this.friendsDs.create({});
+  };
+
+  editUser = () => {
+    this.openModal();
+  };
+
+  toData = () => {
+    console.log('toData', this.userDs.toData());
+  };
+
+  toJSONData = () => {
+    console.log('toJSONData', this.userDs.toJSONData());
+  };
+
+  openModal = (record) => {
     let isCancel = false;
     Modal.open({
       drawer: true,
@@ -159,7 +195,11 @@ class App extends React.Component {
             </Table>
           </TabPane>
           <TabPane tab="Friends(F)">
-            <Table dataSet={this.friendsDs} rowHeight={40} filter={femaleFilter}> 
+            <Table
+              dataSet={this.friendsDs}
+              rowHeight={40}
+              filter={femaleFilter}
+            >
               <Column name="name" editor={editorRenderer} sortable />
               <Column name="age" editor sortable />
               <Column name="sex" editor width={150} />
@@ -172,44 +212,16 @@ class App extends React.Component {
     });
   };
 
-  createUser = () => {
-    this.openModal(this.userDs.create({}, 0));
-    this.friendsDs.create({});
-  };
-
-  editUser = () => {
-    this.openModal();
-  };
-
-  toData = () => {
-    console.log('toData', this.userDs.toData());
-  };
-
-  toJSONData = () => {
-    console.log('toJSONData', this.userDs.toJSONData());
-  };
-
   renderEdit = () => {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} size="small" />;
+    return (
+      <Button
+        funcType="flat"
+        icon="mode_edit"
+        onClick={this.editUser}
+        size="small"
+      />
+    );
   };
-
-  createButton = (
-    <Button icon="playlist_add" onClick={this.createUser} key="add">
-      新增
-    </Button>
-  );
-
-  toDataButton = (
-    <Button onClick={this.toData} key="toData">
-      toData
-    </Button>
-  );
-
-  toJSONDataButton = (
-    <Button onClick={this.toJSONData} key="toJSONData">
-      toJSONData
-    </Button>
-  );
 
   render() {
     const buttons = [
@@ -226,14 +238,18 @@ class App extends React.Component {
         <Column name="age" editor width={150} />
         <Column name="enable" editor width={50} />
         <Column name="name" editor width={150} />
-        <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />
+        <Column
+          header="编辑Friends"
+          align="center"
+          renderer={this.renderEdit}
+          lock="right"
+        />
       </Table>,
       <Table
         key="cascade1"
         header="Cascade Level 1"
         buttons={['add', 'delete']}
         dataSet={this.enemyDs}
-        pagination={{ position: 'both' }}
       >
         <Column name="name" editor sortable />
         <Column name="age" editor sortable />
@@ -245,12 +261,16 @@ class App extends React.Component {
         buttons={[
           'add',
           'delete',
-          <Lov dataSet={this.enemyFriendsDs} name="code" mode="button" clearButton={false}>
+          <Lov
+            dataSet={this.enemyFriendsDs}
+            name="code"
+            mode="button"
+            clearButton={false}
+          >
             Lov
           </Lov>,
         ]}
         dataSet={this.enemyFriendsDs}
-        pagination={{ position: 'top' }}
       >
         <Column name="name" editor={editorRenderer} sortable />
         <Column name="age" editor sortable />

@@ -1,0 +1,217 @@
+a0617633c833fc252673641fb9bf3378
+"use strict";
+
+/* istanbul ignore next */
+function cov_iylwg58h6() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/sr_RS.tsx";
+  var hash = "05e7b7cbfae285dee7c763e229796ca065459302";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/locale-provider/sr_RS.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 13
+        },
+        end: {
+          line: 10,
+          column: 88
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 14
+        },
+        end: {
+          line: 12,
+          column: 76
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 14
+        },
+        end: {
+          line: 14,
+          column: 76
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 14
+        },
+        end: {
+          line: 16,
+          column: 73
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 15
+        },
+        end: {
+          line: 60,
+          column: 1
+        }
+      },
+      "8": {
+        start: {
+          line: 61,
+          column: 0
+        },
+        end: {
+          line: 61,
+          column: 30
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "05e7b7cbfae285dee7c763e229796ca065459302"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_iylwg58h6 = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_iylwg58h6();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_iylwg58h6().s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_iylwg58h6().s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_iylwg58h6().s[2]++;
+exports["default"] = void 0;
+
+var _sr_RS =
+/* istanbul ignore next */
+(cov_iylwg58h6().s[3]++, _interopRequireDefault(require("../rc-components/pagination/locale/sr_RS")));
+
+var _sr_RS2 =
+/* istanbul ignore next */
+(cov_iylwg58h6().s[4]++, _interopRequireDefault(require("../date-picker/locale/sr_RS")));
+
+var _sr_RS3 =
+/* istanbul ignore next */
+(cov_iylwg58h6().s[5]++, _interopRequireDefault(require("../time-picker/locale/sr_RS")));
+
+var _sr_RS4 =
+/* istanbul ignore next */
+(cov_iylwg58h6().s[6]++, _interopRequireDefault(require("../calendar/locale/sr_RS")));
+
+var _default =
+/* istanbul ignore next */
+(cov_iylwg58h6().s[7]++, {
+  locale: 'sr',
+  Pagination: _sr_RS["default"],
+  DatePicker: _sr_RS2["default"],
+  TimePicker: _sr_RS3["default"],
+  Calendar: _sr_RS4["default"],
+  Table: {
+    filterTitle: 'Filter',
+    filterConfirm: 'Primeni filter',
+    filterReset: 'Resetuj filter',
+    emptyText: 'Nema podataka',
+    selectAll: 'Obeleži sve na trenutnoj strani',
+    selectInvert: 'Obrni selekciju na trenutnoj stranici'
+  },
+  Modal: {
+    okText: 'U redu',
+    cancelText: 'Otkaži',
+    justOkText: 'U redu'
+  },
+  Popconfirm: {
+    okText: 'U redu',
+    cancelText: 'Otkaži'
+  },
+  Transfer: {
+    notFoundContent: 'Nisu pronađeni rezultati pretrage',
+    searchPlaceholder: 'Pretražite ovde',
+    itemUnit: 'stavka',
+    itemsUnit: 'stavki'
+  },
+  Select: {
+    notFoundContent: 'Nije pronađeno'
+  },
+  Upload: {
+    uploading: 'Slanje...',
+    removeFile: 'Ukloni fajl',
+    uploadError: 'Greška prilikom slanja',
+    previewFile: 'Pogledaj fajl'
+  },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold'
+  }
+});
+
+/* istanbul ignore next */
+cov_iylwg58h6().s[8]++;
+exports["default"] = _default;

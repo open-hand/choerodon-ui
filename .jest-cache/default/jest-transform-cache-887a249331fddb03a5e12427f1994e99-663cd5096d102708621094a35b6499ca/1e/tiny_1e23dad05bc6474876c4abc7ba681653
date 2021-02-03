@@ -1,0 +1,31 @@
+c6878af3c1e55ff9d87ac8a59fc2e425
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _pagination = _interopRequireDefault(require("../../../components/pagination"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function showTotal(total) {
+  return "Total ".concat(total, " items");
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_pagination["default"], {
+  total: 50
+}), _react["default"].createElement(_pagination["default"], {
+  total: 50,
+  showSizeChanger: true,
+  showQuickJumper: true
+}), _react["default"].createElement(_pagination["default"], {
+  total: 50,
+  showTotal: showTotal
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

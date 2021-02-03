@@ -1,0 +1,256 @@
+974658c2f01e117d3887594a8fa66c6e
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _localeProvider = _interopRequireDefault(require("../../../components/locale-provider"));
+
+var _radio = _interopRequireDefault(require("../../../components/radio"));
+
+var _table = _interopRequireDefault(require("../../../components/table"));
+
+var _calendar = _interopRequireDefault(require("../../../components/calendar"));
+
+var _transfer = _interopRequireDefault(require("../../../components/transfer"));
+
+var _popconfirm = _interopRequireDefault(require("../../../components/popconfirm"));
+
+var _button = _interopRequireDefault(require("../../../components/button"));
+
+var _timePicker = _interopRequireDefault(require("../../../components/time-picker"));
+
+var _pagination = _interopRequireDefault(require("../../../components/pagination"));
+
+var _modal = _interopRequireDefault(require("../../../components/modal"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _datePicker = _interopRequireDefault(require("../../../components/date-picker"));
+
+var _select = _interopRequireDefault(require("../../../components/select"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _zh_CN = _interopRequireDefault(require("../../../components/locale-provider/zh_CN"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
+require("moment/locale/zh-cn");
+
+_moment["default"].locale('en');
+
+var Option = _select["default"].Option;
+var RangePicker = _datePicker["default"].RangePicker;
+var columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+  filters: [{
+    text: 'filter1',
+    value: 'filter1'
+  }]
+}, {
+  title: 'Age',
+  dataIndex: 'age'
+}];
+
+var Page =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(Page, _React$Component);
+
+  function Page() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, Page);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(Page)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "state", {
+      visible: false
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "showModal", function () {
+      _this.setState({
+        visible: true
+      });
+    });
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "hideModal", function () {
+      _this.setState({
+        visible: false
+      });
+    });
+    return _this;
+  }
+
+  (0, _createClass2["default"])(Page, [{
+    key: "render",
+    value: function render() {
+      var info = function info() {
+        _modal["default"].info({
+          title: 'some info',
+          content: 'some info'
+        });
+      };
+
+      var confirm = function confirm() {
+        _modal["default"].confirm({
+          title: 'some info',
+          content: 'some info'
+        });
+      };
+
+      return _react["default"].createElement("div", {
+        className: "locale-components"
+      }, _react["default"].createElement("div", {
+        className: "example"
+      }, _react["default"].createElement(_pagination["default"], {
+        defaultCurrent: 1,
+        total: 50,
+        showSizeChanger: true
+      })), _react["default"].createElement("div", {
+        className: "example"
+      }, _react["default"].createElement(_select["default"], {
+        showSearch: true,
+        style: {
+          width: 200
+        }
+      }, _react["default"].createElement(Option, {
+        value: "jack"
+      }, "jack"), _react["default"].createElement(Option, {
+        value: "lucy"
+      }, "lucy")), _react["default"].createElement(_datePicker["default"], null), _react["default"].createElement(_timePicker["default"], null), _react["default"].createElement(RangePicker, {
+        style: {
+          width: 200
+        }
+      })), _react["default"].createElement("div", {
+        className: "example"
+      }, _react["default"].createElement(_button["default"], {
+        type: "primary",
+        onClick: this.showModal
+      }, "Show Modal"), _react["default"].createElement(_button["default"], {
+        onClick: info
+      }, "Show info"), _react["default"].createElement(_button["default"], {
+        onClick: confirm
+      }, "Show confirm"), _react["default"].createElement(_popconfirm["default"], {
+        title: "Question?"
+      }, _react["default"].createElement("a", {
+        href: "#"
+      }, "Click to confirm"))), _react["default"].createElement("div", {
+        className: "example"
+      }, _react["default"].createElement(_transfer["default"], {
+        dataSource: [],
+        showSearch: true,
+        targetKeys: [],
+        render: function render(item) {
+          return item.title;
+        }
+      })), _react["default"].createElement("div", {
+        style: {
+          width: 319,
+          border: '1px solid #d9d9d9',
+          borderRadius: 4
+        }
+      }, _react["default"].createElement(_calendar["default"], {
+        fullscreen: false,
+        value: (0, _moment["default"])()
+      })), _react["default"].createElement("div", {
+        className: "example"
+      }, _react["default"].createElement(_table["default"], {
+        dataSource: [],
+        columns: columns
+      })), _react["default"].createElement(_modal["default"], {
+        title: "Locale Modal",
+        visible: this.state.visible,
+        onCancel: this.hideModal
+      }, _react["default"].createElement("p", null, "Locale Modal")));
+    }
+  }]);
+  return Page;
+}(_react["default"].Component);
+
+var forceRerender = 0;
+
+var App =
+/*#__PURE__*/
+function (_React$Component2) {
+  (0, _inherits2["default"])(App, _React$Component2);
+
+  function App() {
+    var _this2;
+
+    (0, _classCallCheck2["default"])(this, App);
+    _this2 = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf3["default"])(App).call(this));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this2), "changeLocale", function (e) {
+      var localeValue = e.target.value;
+
+      _this2.setState({
+        locale: localeValue
+      });
+
+      if (!localeValue) {
+        _moment["default"].locale('en');
+      } else {
+        _moment["default"].locale('zh-cn');
+      }
+    });
+    _this2.state = {
+      locale: null
+    };
+    return _this2;
+  }
+
+  (0, _createClass2["default"])(App, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        className: "change-locale"
+      }, _react["default"].createElement("span", {
+        style: {
+          marginRight: 16
+        }
+      }, "Change locale of components: "), _react["default"].createElement(_radio["default"].Group, {
+        defaultValue: null,
+        onChange: this.changeLocale
+      }, _react["default"].createElement(_radio["default"].Button, {
+        key: "en",
+        value: null
+      }, "English"), _react["default"].createElement(_radio["default"].Button, {
+        key: "cn",
+        value: _zh_CN["default"]
+      }, "\u4E2D\u6587"))), _react["default"].createElement(_localeProvider["default"], {
+        locale: this.state.locale
+      }, _react["default"].createElement(Page, {
+        key: forceRerender++
+        /* HACK: just refresh in production environment */
+
+      })));
+    }
+  }]);
+  return App;
+}(_react["default"].Component);
+
+var __Demo = _react["default"].createElement(App, null);
+
+var _default = __Demo;
+exports["default"] = _default;

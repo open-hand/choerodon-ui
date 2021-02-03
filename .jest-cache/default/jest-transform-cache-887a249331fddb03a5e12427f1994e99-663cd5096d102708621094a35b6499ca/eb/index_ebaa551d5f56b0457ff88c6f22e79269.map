@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/output/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,kB","sourcesContent":["import Output from './Output';\n\nexport default Output;\n"]}

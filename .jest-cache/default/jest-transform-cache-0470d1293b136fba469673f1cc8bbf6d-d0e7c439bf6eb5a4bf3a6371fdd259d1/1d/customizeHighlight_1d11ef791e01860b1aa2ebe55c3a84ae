@@ -1,0 +1,42 @@
+63ac9d2fd1e5c9953a29ac834ef323a7
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _anchor = _interopRequireDefault(require("../../../components/anchor"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var Link = _anchor["default"].Link;
+
+var getCurrentAnchor = function getCurrentAnchor() {
+  return '#components-anchor-demo-static';
+};
+
+var __Demo = _react["default"].createElement(_anchor["default"], {
+  affix: false,
+  getCurrentAnchor: getCurrentAnchor
+}, _react["default"].createElement(Link, {
+  href: "#components-anchor-demo-basic",
+  title: "Basic demo"
+}), _react["default"].createElement(Link, {
+  href: "#components-anchor-demo-static",
+  title: "Static demo"
+}), _react["default"].createElement(Link, {
+  href: "#API",
+  title: "API"
+}, _react["default"].createElement(Link, {
+  href: "#Anchor-Props",
+  title: "Anchor Props"
+}), _react["default"].createElement(Link, {
+  href: "#Link-Props",
+  title: "Link Props"
+})));
+
+var _default = __Demo;
+exports["default"] = _default;

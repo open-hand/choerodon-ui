@@ -1,0 +1,26 @@
+bf6d8f70519bd4cdb1c24b06d218c3a5
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var _default = {
+  // Options.jsx
+  items_per_page: '条/页',
+  label_items_per_page: '每页行数',
+  jump_to: '跳至',
+  jump_to_confirm: '确定',
+  page: '页',
+  // Pagination.jsx
+  first_page: '首页',
+  last_page: '末页',
+  prev_page: '上一页',
+  next_page: '下一页',
+  prev_5: '向前 5 页',
+  next_5: '向后 5 页',
+  prev_3: '向前 3 页',
+  next_3: '向后 3 页'
+};
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInpoX0NOLmpzeCJdLCJuYW1lcyI6WyJpdGVtc19wZXJfcGFnZSIsImxhYmVsX2l0ZW1zX3Blcl9wYWdlIiwianVtcF90byIsImp1bXBfdG9fY29uZmlybSIsInBhZ2UiLCJmaXJzdF9wYWdlIiwibGFzdF9wYWdlIiwicHJldl9wYWdlIiwibmV4dF9wYWdlIiwicHJldl81IiwibmV4dF81IiwicHJldl8zIiwibmV4dF8zIl0sIm1hcHBpbmdzIjoiOzs7Ozs7ZUFBZTtBQUNiO0FBQ0FBLEVBQUFBLGNBQWMsRUFBRSxLQUZIO0FBR2JDLEVBQUFBLG9CQUFvQixFQUFFLE1BSFQ7QUFJYkMsRUFBQUEsT0FBTyxFQUFFLElBSkk7QUFLYkMsRUFBQUEsZUFBZSxFQUFFLElBTEo7QUFNYkMsRUFBQUEsSUFBSSxFQUFFLEdBTk87QUFRYjtBQUNBQyxFQUFBQSxVQUFVLEVBQUUsSUFUQztBQVViQyxFQUFBQSxTQUFTLEVBQUUsSUFWRTtBQVdiQyxFQUFBQSxTQUFTLEVBQUUsS0FYRTtBQVliQyxFQUFBQSxTQUFTLEVBQUUsS0FaRTtBQWFiQyxFQUFBQSxNQUFNLEVBQUUsUUFiSztBQWNiQyxFQUFBQSxNQUFNLEVBQUUsUUFkSztBQWViQyxFQUFBQSxNQUFNLEVBQUUsUUFmSztBQWdCYkMsRUFBQUEsTUFBTSxFQUFFO0FBaEJLLEMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZGVmYXVsdCB7XG4gIC8vIE9wdGlvbnMuanN4XG4gIGl0ZW1zX3Blcl9wYWdlOiAn5p2hL+mhtScsXG4gIGxhYmVsX2l0ZW1zX3Blcl9wYWdlOiAn5q+P6aG16KGM5pWwJyxcbiAganVtcF90bzogJ+i3s+iHsycsXG4gIGp1bXBfdG9fY29uZmlybTogJ+ehruWumicsXG4gIHBhZ2U6ICfpobUnLFxuXG4gIC8vIFBhZ2luYXRpb24uanN4XG4gIGZpcnN0X3BhZ2U6ICfpppbpobUnLFxuICBsYXN0X3BhZ2U6ICfmnKvpobUnLFxuICBwcmV2X3BhZ2U6ICfkuIrkuIDpobUnLFxuICBuZXh0X3BhZ2U6ICfkuIvkuIDpobUnLFxuICBwcmV2XzU6ICflkJHliY0gNSDpobUnLFxuICBuZXh0XzU6ICflkJHlkI4gNSDpobUnLFxuICBwcmV2XzM6ICflkJHliY0gMyDpobUnLFxuICBuZXh0XzM6ICflkJHlkI4gMyDpobUnLFxufTtcbiJdfQ==

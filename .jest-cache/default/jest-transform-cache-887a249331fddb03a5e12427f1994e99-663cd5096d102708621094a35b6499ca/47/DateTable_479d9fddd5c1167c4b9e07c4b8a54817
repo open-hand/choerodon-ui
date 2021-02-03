@@ -1,0 +1,86 @@
+b1ff07d898f8ddcbb678e0462cb79277
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _DateTHead = _interopRequireDefault(require("./DateTHead"));
+
+var _DateTBody = _interopRequireDefault(require("./DateTBody"));
+
+function _createSuper(Derived) {
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return function () {
+    var Super = (0, _getPrototypeOf2["default"])(Derived),
+        result;
+
+    if (isNativeReflectConstruct()) {
+      var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var DateTable =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inherits2["default"])(DateTable, _Component);
+
+  var _super = _createSuper(DateTable);
+
+  function DateTable() {
+    (0, _classCallCheck2["default"])(this, DateTable);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2["default"])(DateTable, [{
+    key: "render",
+    value: function render() {
+      var props = this.props;
+      var prefixCls = props.prefixCls;
+      return _react["default"].createElement("table", {
+        className: "".concat(prefixCls, "-table"),
+        cellSpacing: "0",
+        role: "grid"
+      }, _react["default"].createElement(_DateTHead["default"], props), _react["default"].createElement(_DateTBody["default"], props));
+    }
+  }]);
+  return DateTable;
+}(_react.Component);
+
+exports["default"] = DateTable;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkRhdGVUYWJsZS5qc3giXSwibmFtZXMiOlsiRGF0ZVRhYmxlIiwicHJvcHMiLCJwcmVmaXhDbHMiLCJDb21wb25lbnQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0lBR01BLFM7Ozs7Ozs7Ozs7Ozs7OzZCQUNLO0FBQ1AsVUFBTUMsS0FBSyxHQUFHLEtBQUtBLEtBQW5CO0FBQ0EsVUFBTUMsU0FBUyxHQUFHRCxLQUFLLENBQUNDLFNBQXhCO0FBQ0EsYUFBUTtBQUFPLFFBQUEsU0FBUyxZQUFPQSxTQUFQLFdBQWhCO0FBQTBDLFFBQUEsV0FBVyxFQUFDLEdBQXREO0FBQTBELFFBQUEsSUFBSSxFQUFDO0FBQS9ELFNBQ04sZ0NBQUMscUJBQUQsRUFBZUQsS0FBZixDQURNLEVBRU4sZ0NBQUMscUJBQUQsRUFBZUEsS0FBZixDQUZNLENBQVI7QUFJRDs7O0VBUnFCRSxnQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyBDb21wb25lbnQgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgRGF0ZVRIZWFkIGZyb20gJy4vRGF0ZVRIZWFkJztcbmltcG9ydCBEYXRlVEJvZHkgZnJvbSAnLi9EYXRlVEJvZHknO1xuXG5leHBvcnQgZGVmYXVsdFxuY2xhc3MgRGF0ZVRhYmxlIGV4dGVuZHMgQ29tcG9uZW50IHtcbiAgcmVuZGVyKCkge1xuICAgIGNvbnN0IHByb3BzID0gdGhpcy5wcm9wcztcbiAgICBjb25zdCBwcmVmaXhDbHMgPSBwcm9wcy5wcmVmaXhDbHM7XG4gICAgcmV0dXJuICg8dGFibGUgY2xhc3NOYW1lID0ge2Ake3ByZWZpeENsc30tdGFibGVgfSBjZWxsU3BhY2luZz1cIjBcIiByb2xlPVwiZ3JpZFwiPlxuICAgICAgPERhdGVUSGVhZCB7Li4ucHJvcHN9Lz5cbiAgICAgIDxEYXRlVEJvZHkgey4uLnByb3BzfS8+XG4gICAgPC90YWJsZT4pO1xuICB9XG59XG4iXX0=

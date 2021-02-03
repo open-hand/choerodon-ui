@@ -1,0 +1,479 @@
+427b5b6283d2bc049d1ee1c7d6337204
+"use strict";
+
+/* istanbul ignore next */
+var cov_2nnx598vxe = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/_util/exception.tsx";
+  var hash = "72de8eb7d5f4ea0dcafa785a08cbcf9b3175ade5";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/_util/exception.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 29
+        },
+        end: {
+          line: 3,
+          column: 84
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 3
+        }
+      },
+      "2": {
+        start: {
+          line: 8,
+          column: 0
+        },
+        end: {
+          line: 8,
+          column: 28
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 16
+        },
+        end: {
+          line: 10,
+          column: 66
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 15
+        },
+        end: {
+          line: 26,
+          column: 1
+        }
+      },
+      "5": {
+        start: {
+          line: 13,
+          column: 2
+        },
+        end: {
+          line: 19,
+          column: 3
+        }
+      },
+      "6": {
+        start: {
+          line: 14,
+          column: 4
+        },
+        end: {
+          line: 14,
+          column: 23
+        }
+      },
+      "7": {
+        start: {
+          line: 15,
+          column: 9
+        },
+        end: {
+          line: 19,
+          column: 3
+        }
+      },
+      "8": {
+        start: {
+          line: 16,
+          column: 4
+        },
+        end: {
+          line: 16,
+          column: 31
+        }
+      },
+      "9": {
+        start: {
+          line: 17,
+          column: 9
+        },
+        end: {
+          line: 19,
+          column: 3
+        }
+      },
+      "10": {
+        start: {
+          line: 18,
+          column: 4
+        },
+        end: {
+          line: 18,
+          column: 31
+        }
+      },
+      "11": {
+        start: {
+          line: 21,
+          column: 2
+        },
+        end: {
+          line: 23,
+          column: 3
+        }
+      },
+      "12": {
+        start: {
+          line: 22,
+          column: 4
+        },
+        end: {
+          line: 22,
+          column: 21
+        }
+      },
+      "13": {
+        start: {
+          line: 25,
+          column: 2
+        },
+        end: {
+          line: 25,
+          column: 24
+        }
+      },
+      "14": {
+        start: {
+          line: 28,
+          column: 0
+        },
+        end: {
+          line: 28,
+          column: 30
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "_default",
+        decl: {
+          start: {
+            line: 12,
+            column: 24
+          },
+          end: {
+            line: 12,
+            column: 32
+          }
+        },
+        loc: {
+          start: {
+            line: 12,
+            column: 52
+          },
+          end: {
+            line: 26,
+            column: 1
+          }
+        },
+        line: 12
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 13,
+            column: 2
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 13,
+            column: 2
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 13,
+            column: 2
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        }],
+        line: 13
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 15,
+            column: 9
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 15,
+            column: 9
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 15,
+            column: 9
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        }],
+        line: 15
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 17,
+            column: 9
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 17,
+            column: 9
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 17,
+            column: 9
+          },
+          end: {
+            line: 19,
+            column: 3
+          }
+        }],
+        line: 17
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 17,
+            column: 13
+          },
+          end: {
+            line: 17,
+            column: 27
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 17,
+            column: 13
+          },
+          end: {
+            line: 17,
+            column: 14
+          }
+        }, {
+          start: {
+            line: 17,
+            column: 18
+          },
+          end: {
+            line: 17,
+            column: 27
+          }
+        }],
+        line: 17
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 23,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 23,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 21,
+            column: 2
+          },
+          end: {
+            line: 23,
+            column: 3
+          }
+        }],
+        line: 21
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "72de8eb7d5f4ea0dcafa785a08cbcf9b3175ade5"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_2nnx598vxe.s[0]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_2nnx598vxe.s[1]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_2nnx598vxe.s[2]++;
+exports["default"] = void 0;
+
+var _isString =
+/* istanbul ignore next */
+(cov_2nnx598vxe.s[3]++, _interopRequireDefault(require("lodash/isString")));
+
+/* istanbul ignore next */
+cov_2nnx598vxe.s[4]++;
+
+var _default = function _default(e, defaultMessage) {
+  /* istanbul ignore next */
+  cov_2nnx598vxe.f[0]++;
+  cov_2nnx598vxe.s[5]++;
+
+  if ((0, _isString["default"])(e)) {
+    /* istanbul ignore next */
+    cov_2nnx598vxe.b[0][0]++;
+    cov_2nnx598vxe.s[6]++;
+    defaultMessage = e;
+  } else {
+    /* istanbul ignore next */
+    cov_2nnx598vxe.b[0][1]++;
+    cov_2nnx598vxe.s[7]++;
+
+    if (e instanceof Error) {
+      /* istanbul ignore next */
+      cov_2nnx598vxe.b[1][0]++;
+      cov_2nnx598vxe.s[8]++;
+      defaultMessage = e.message;
+    } else {
+      /* istanbul ignore next */
+      cov_2nnx598vxe.b[1][1]++;
+      cov_2nnx598vxe.s[9]++;
+
+      if (
+      /* istanbul ignore next */
+      (cov_2nnx598vxe.b[3][0]++, e) &&
+      /* istanbul ignore next */
+      (cov_2nnx598vxe.b[3][1]++, e.message)) {
+        /* istanbul ignore next */
+        cov_2nnx598vxe.b[2][0]++;
+        cov_2nnx598vxe.s[10]++;
+        defaultMessage = e.message;
+      } else
+      /* istanbul ignore next */
+      {
+        cov_2nnx598vxe.b[2][1]++;
+      }
+    }
+  }
+
+  /* istanbul ignore next */
+  cov_2nnx598vxe.s[11]++;
+
+  if (typeof console !== 'undefined') {
+    /* istanbul ignore next */
+    cov_2nnx598vxe.b[4][0]++;
+    cov_2nnx598vxe.s[12]++;
+    console.error(e);
+  } else
+  /* istanbul ignore next */
+  {
+    cov_2nnx598vxe.b[4][1]++;
+  }
+
+  cov_2nnx598vxe.s[13]++;
+  return defaultMessage;
+};
+
+/* istanbul ignore next */
+cov_2nnx598vxe.s[14]++;
+exports["default"] = _default;

@@ -1,0 +1,30 @@
+e31dd27016c317e88907dfde4adc24a0
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _button = _interopRequireDefault(require("../../../components-pro/button"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_button["default"], {
+  href: "https://choerodon.io",
+  target: "_blank"
+}, "\u8DF3\u8F6C\u6309\u94AE"), _react["default"].createElement(_button["default"], {
+  funcType: "flat",
+  href: "https://choerodon.io",
+  target: "_blank"
+}, "\u8DF3\u8F6C\u6309\u94AE"), _react["default"].createElement(_button["default"], {
+  funcType: "flat",
+  href: "https://choerodon.io",
+  target: "_blank",
+  icon: "link"
+}));
+
+var _default = __Demo;
+exports["default"] = _default;

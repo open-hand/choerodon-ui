@@ -1,0 +1,195 @@
+df63bf04727b00441ef52df179ac87b8
+"use strict";
+
+/* istanbul ignore next */
+var cov_8b92nw0hc = function () {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/triggerEvent.tsx";
+  var hash = "265885b3cbfa28e7a371f6f7e12db18d834a94ad";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/_util/triggerEvent.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 0
+        },
+        end: {
+          line: 5,
+          column: 3
+        }
+      },
+      "1": {
+        start: {
+          line: 6,
+          column: 0
+        },
+        end: {
+          line: 6,
+          column: 34
+        }
+      },
+      "2": {
+        start: {
+          line: 9,
+          column: 2
+        },
+        end: {
+          line: 14,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 11,
+          column: 12
+        },
+        end: {
+          line: 11,
+          column: 46
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 4
+        },
+        end: {
+          line: 12,
+          column: 35
+        }
+      },
+      "5": {
+        start: {
+          line: 13,
+          column: 4
+        },
+        end: {
+          line: 13,
+          column: 24
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "triggerEvent",
+        decl: {
+          start: {
+            line: 8,
+            column: 9
+          },
+          end: {
+            line: 8,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 8,
+            column: 32
+          },
+          end: {
+            line: 15,
+            column: 1
+          }
+        },
+        line: 8
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 9,
+            column: 2
+          },
+          end: {
+            line: 14,
+            column: 3
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 9,
+            column: 2
+          },
+          end: {
+            line: 14,
+            column: 3
+          }
+        }, {
+          start: {
+            line: 9,
+            column: 2
+          },
+          end: {
+            line: 14,
+            column: 3
+          }
+        }],
+        line: 9
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    f: {
+      "0": 0
+    },
+    b: {
+      "0": [0, 0]
+    },
+    _coverageSchema: "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+    hash: "265885b3cbfa28e7a371f6f7e12db18d834a94ad"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (coverage[path] && coverage[path].hash === hash) {
+    return coverage[path];
+  }
+
+  return coverage[path] = coverageData;
+}();
+
+cov_8b92nw0hc.s[0]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_8b92nw0hc.s[1]++;
+exports["default"] = triggerEvent;
+
+function triggerEvent(el, type) {
+  /* istanbul ignore next */
+  cov_8b92nw0hc.f[0]++;
+  cov_8b92nw0hc.s[2]++;
+
+  if ('createEvent' in document) {
+    /* istanbul ignore next */
+    cov_8b92nw0hc.b[0][0]++;
+    // modern browsers, IE9+
+    var e =
+    /* istanbul ignore next */
+    (cov_8b92nw0hc.s[3]++, document.createEvent('HTMLEvents'));
+
+    /* istanbul ignore next */
+    cov_8b92nw0hc.s[4]++;
+    e.initEvent(type, false, true);
+
+    /* istanbul ignore next */
+    cov_8b92nw0hc.s[5]++;
+    el.dispatchEvent(e);
+  } else
+  /* istanbul ignore next */
+  {
+    cov_8b92nw0hc.b[0][1]++;
+  }
+}

@@ -1,0 +1,39 @@
+aacde1a197428ca43230dc7ecfe2eb76
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _checkBox = _interopRequireDefault(require("../../../components-pro/check-box"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function handleChange(value, oldValue) {
+  console.log('[basic]', value, '[oldValue]', oldValue);
+}
+
+var __Demo = _react["default"].createElement("div", null, _react["default"].createElement(_checkBox["default"], {
+  name: "base",
+  value: "A",
+  onChange: handleChange,
+  defaultChecked: true
+}, "A"), _react["default"].createElement(_checkBox["default"], {
+  name: "base",
+  value: "B",
+  onChange: handleChange
+}, "B"), _react["default"].createElement(_checkBox["default"], {
+  name: "base",
+  value: "C",
+  onChange: handleChange
+}, "C"), _react["default"].createElement(_checkBox["default"], {
+  name: "base",
+  value: "C",
+  onChange: handleChange
+}, "C"));
+
+var _default = __Demo;
+exports["default"] = _default;

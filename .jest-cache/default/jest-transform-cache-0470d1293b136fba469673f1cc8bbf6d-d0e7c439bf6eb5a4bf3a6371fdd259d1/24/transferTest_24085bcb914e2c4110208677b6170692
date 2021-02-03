@@ -1,0 +1,60 @@
+ec1a4b1c2a752948c1557cb4fc2928dc
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _ = _interopRequireDefault(require(".."));
+
+var handleChange = function handleChange(value) {
+  return value;
+};
+
+var Option = _["default"].Option; // eslint-disable-next-line react/prefer-stateless-function
+
+var TransferTest =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2["default"])(TransferTest, _React$Component);
+
+  function TransferTest() {
+    (0, _classCallCheck2["default"])(this, TransferTest);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(TransferTest).apply(this, arguments));
+  }
+
+  (0, _createClass2["default"])(TransferTest, [{
+    key: "render",
+    value: function render() {
+      return _react["default"].createElement("div", null, _react["default"].createElement(_["default"], {
+        onChange: handleChange,
+        titles: ['Source', 'Target']
+      }, _react["default"].createElement(Option, {
+        value: "jack"
+      }, "Jack"), _react["default"].createElement(Option, {
+        value: "lucy"
+      }, "Lucy"), _react["default"].createElement(Option, {
+        value: "wu"
+      }, "Wu")));
+    }
+  }]);
+  return TransferTest;
+}(_react["default"].Component);
+
+exports["default"] = TransferTest;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRyYW5zZmVyVGVzdC5qcyJdLCJuYW1lcyI6WyJoYW5kbGVDaGFuZ2UiLCJ2YWx1ZSIsIk9wdGlvbiIsIlRyYW5zZmVyIiwiVHJhbnNmZXJUZXN0IiwiUmVhY3QiLCJDb21wb25lbnQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFFQSxJQUFNQSxZQUFZLEdBQUcsU0FBZkEsWUFBZSxDQUFBQyxLQUFLLEVBQUk7QUFDNUIsU0FBT0EsS0FBUDtBQUNELENBRkQ7O0lBSVFDLE0sR0FBV0MsWSxDQUFYRCxNLEVBRVI7O0lBQ3FCRSxZOzs7Ozs7Ozs7Ozs7NkJBQ1Y7QUFDUCxhQUNFLDZDQUNFLGdDQUFDLFlBQUQ7QUFBVSxRQUFBLFFBQVEsRUFBRUosWUFBcEI7QUFBa0MsUUFBQSxNQUFNLEVBQUUsQ0FBQyxRQUFELEVBQVcsUUFBWDtBQUExQyxTQUNFLGdDQUFDLE1BQUQ7QUFBUSxRQUFBLEtBQUssRUFBQztBQUFkLGdCQURGLEVBRUUsZ0NBQUMsTUFBRDtBQUFRLFFBQUEsS0FBSyxFQUFDO0FBQWQsZ0JBRkYsRUFHRSxnQ0FBQyxNQUFEO0FBQVEsUUFBQSxLQUFLLEVBQUM7QUFBZCxjQUhGLENBREYsQ0FERjtBQVNEOzs7RUFYdUNLLGtCQUFNQyxTIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCBUcmFuc2ZlciBmcm9tICcuLic7XG5cbmNvbnN0IGhhbmRsZUNoYW5nZSA9IHZhbHVlID0+IHtcbiAgcmV0dXJuIHZhbHVlO1xufTtcblxuY29uc3QgeyBPcHRpb24gfSA9IFRyYW5zZmVyO1xuXG4vLyBlc2xpbnQtZGlzYWJsZS1uZXh0LWxpbmUgcmVhY3QvcHJlZmVyLXN0YXRlbGVzcy1mdW5jdGlvblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgVHJhbnNmZXJUZXN0IGV4dGVuZHMgUmVhY3QuQ29tcG9uZW50IHtcbiAgcmVuZGVyKCkge1xuICAgIHJldHVybiAoXG4gICAgICA8ZGl2PlxuICAgICAgICA8VHJhbnNmZXIgb25DaGFuZ2U9e2hhbmRsZUNoYW5nZX0gdGl0bGVzPXtbJ1NvdXJjZScsICdUYXJnZXQnXX0+XG4gICAgICAgICAgPE9wdGlvbiB2YWx1ZT1cImphY2tcIj5KYWNrPC9PcHRpb24+XG4gICAgICAgICAgPE9wdGlvbiB2YWx1ZT1cImx1Y3lcIj5MdWN5PC9PcHRpb24+XG4gICAgICAgICAgPE9wdGlvbiB2YWx1ZT1cInd1XCI+V3U8L09wdGlvbj5cbiAgICAgICAgPC9UcmFuc2Zlcj5cbiAgICAgIDwvZGl2PlxuICAgICk7XG4gIH1cbn1cbiJdfQ==

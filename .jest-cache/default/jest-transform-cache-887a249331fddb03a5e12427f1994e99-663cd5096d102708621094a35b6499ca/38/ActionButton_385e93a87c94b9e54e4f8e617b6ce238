@@ -1,0 +1,1984 @@
+f7b9fced688ccc1f02cae162840898b6
+"use strict";
+
+/* istanbul ignore next */
+function cov_7jqfxcx4m() {
+  var path = "/Users/huihuawk/Documents/opt/choerodon-ui/components/modal/ActionButton.tsx";
+  var hash = "af938f35409f8c7d9d23860de15e7bbe3f056862";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "/Users/huihuawk/Documents/opt/choerodon-ui/components/modal/ActionButton.tsx",
+    statementMap: {
+      "0": {
+        start: {
+          line: 3,
+          column: 30
+        },
+        end: {
+          line: 3,
+          column: 86
+        }
+      },
+      "1": {
+        start: {
+          line: 5,
+          column: 29
+        },
+        end: {
+          line: 5,
+          column: 84
+        }
+      },
+      "2": {
+        start: {
+          line: 7,
+          column: 0
+        },
+        end: {
+          line: 9,
+          column: 3
+        }
+      },
+      "3": {
+        start: {
+          line: 10,
+          column: 0
+        },
+        end: {
+          line: 10,
+          column: 28
+        }
+      },
+      "4": {
+        start: {
+          line: 12,
+          column: 23
+        },
+        end: {
+          line: 12,
+          column: 95
+        }
+      },
+      "5": {
+        start: {
+          line: 14,
+          column: 20
+        },
+        end: {
+          line: 14,
+          column: 89
+        }
+      },
+      "6": {
+        start: {
+          line: 16,
+          column: 17
+        },
+        end: {
+          line: 16,
+          column: 83
+        }
+      },
+      "7": {
+        start: {
+          line: 18,
+          column: 34
+        },
+        end: {
+          line: 18,
+          column: 117
+        }
+      },
+      "8": {
+        start: {
+          line: 20,
+          column: 23
+        },
+        end: {
+          line: 20,
+          column: 95
+        }
+      },
+      "9": {
+        start: {
+          line: 22,
+          column: 13
+        },
+        end: {
+          line: 22,
+          column: 54
+        }
+      },
+      "10": {
+        start: {
+          line: 24,
+          column: 16
+        },
+        end: {
+          line: 24,
+          column: 36
+        }
+      },
+      "11": {
+        start: {
+          line: 26,
+          column: 14
+        },
+        end: {
+          line: 26,
+          column: 58
+        }
+      },
+      "12": {
+        start: {
+          line: 30,
+          column: 4
+        },
+        end: {
+          line: 30,
+          column: 75
+        }
+      },
+      "13": {
+        start: {
+          line: 30,
+          column: 62
+        },
+        end: {
+          line: 30,
+          column: 75
+        }
+      },
+      "14": {
+        start: {
+          line: 31,
+          column: 4
+        },
+        end: {
+          line: 31,
+          column: 45
+        }
+      },
+      "15": {
+        start: {
+          line: 31,
+          column: 32
+        },
+        end: {
+          line: 31,
+          column: 45
+        }
+      },
+      "16": {
+        start: {
+          line: 32,
+          column: 4
+        },
+        end: {
+          line: 32,
+          column: 49
+        }
+      },
+      "17": {
+        start: {
+          line: 32,
+          column: 37
+        },
+        end: {
+          line: 32,
+          column: 49
+        }
+      },
+      "18": {
+        start: {
+          line: 34,
+          column: 4
+        },
+        end: {
+          line: 39,
+          column: 5
+        }
+      },
+      "19": {
+        start: {
+          line: 35,
+          column: 6
+        },
+        end: {
+          line: 35,
+          column: 80
+        }
+      },
+      "20": {
+        start: {
+          line: 36,
+          column: 6
+        },
+        end: {
+          line: 36,
+          column: 18
+        }
+      },
+      "21": {
+        start: {
+          line: 38,
+          column: 6
+        },
+        end: {
+          line: 38,
+          column: 19
+        }
+      },
+      "22": {
+        start: {
+          line: 42,
+          column: 2
+        },
+        end: {
+          line: 54,
+          column: 4
+        }
+      },
+      "23": {
+        start: {
+          line: 43,
+          column: 16
+        },
+        end: {
+          line: 43,
+          column: 57
+        }
+      },
+      "24": {
+        start: {
+          line: 46,
+          column: 4
+        },
+        end: {
+          line: 51,
+          column: 5
+        }
+      },
+      "25": {
+        start: {
+          line: 47,
+          column: 22
+        },
+        end: {
+          line: 47,
+          column: 72
+        }
+      },
+      "26": {
+        start: {
+          line: 48,
+          column: 6
+        },
+        end: {
+          line: 48,
+          column: 62
+        }
+      },
+      "27": {
+        start: {
+          line: 50,
+          column: 6
+        },
+        end: {
+          line: 50,
+          column: 44
+        }
+      },
+      "28": {
+        start: {
+          line: 53,
+          column: 4
+        },
+        end: {
+          line: 53,
+          column: 69
+        }
+      },
+      "29": {
+        start: {
+          line: 59,
+          column: 0
+        },
+        end: {
+          line: 157,
+          column: 19
+        }
+      },
+      "30": {
+        start: {
+          line: 60,
+          column: 2
+        },
+        end: {
+          line: 60,
+          column: 55
+        }
+      },
+      "31": {
+        start: {
+          line: 62,
+          column: 15
+        },
+        end: {
+          line: 62,
+          column: 41
+        }
+      },
+      "32": {
+        start: {
+          line: 67,
+          column: 4
+        },
+        end: {
+          line: 67,
+          column: 57
+        }
+      },
+      "33": {
+        start: {
+          line: 68,
+          column: 4
+        },
+        end: {
+          line: 68,
+          column: 37
+        }
+      },
+      "34": {
+        start: {
+          line: 70,
+          column: 4
+        },
+        end: {
+          line: 105,
+          column: 6
+        }
+      },
+      "35": {
+        start: {
+          line: 71,
+          column: 21
+        },
+        end: {
+          line: 71,
+          column: 35
+        }
+      },
+      "36": {
+        start: {
+          line: 72,
+          column: 23
+        },
+        end: {
+          line: 72,
+          column: 39
+        }
+      },
+      "37": {
+        start: {
+          line: 74,
+          column: 6
+        },
+        end: {
+          line: 104,
+          column: 7
+        }
+      },
+      "38": {
+        start: {
+          line: 77,
+          column: 8
+        },
+        end: {
+          line: 85,
+          column: 9
+        }
+      },
+      "39": {
+        start: {
+          line: 78,
+          column: 10
+        },
+        end: {
+          line: 78,
+          column: 37
+        }
+      },
+      "40": {
+        start: {
+          line: 80,
+          column: 10
+        },
+        end: {
+          line: 80,
+          column: 27
+        }
+      },
+      "41": {
+        start: {
+          line: 82,
+          column: 10
+        },
+        end: {
+          line: 84,
+          column: 11
+        }
+      },
+      "42": {
+        start: {
+          line: 83,
+          column: 12
+        },
+        end: {
+          line: 83,
+          column: 25
+        }
+      },
+      "43": {
+        start: {
+          line: 87,
+          column: 8
+        },
+        end: {
+          line: 101,
+          column: 9
+        }
+      },
+      "44": {
+        start: {
+          line: 88,
+          column: 10
+        },
+        end: {
+          line: 90,
+          column: 13
+        }
+      },
+      "45": {
+        start: {
+          line: 92,
+          column: 10
+        },
+        end: {
+          line: 100,
+          column: 13
+        }
+      },
+      "46": {
+        start: {
+          line: 95,
+          column: 12
+        },
+        end: {
+          line: 95,
+          column: 48
+        }
+      },
+      "47": {
+        start: {
+          line: 97,
+          column: 12
+        },
+        end: {
+          line: 99,
+          column: 15
+        }
+      },
+      "48": {
+        start: {
+          line: 103,
+          column: 8
+        },
+        end: {
+          line: 103,
+          column: 21
+        }
+      },
+      "49": {
+        start: {
+          line: 107,
+          column: 4
+        },
+        end: {
+          line: 109,
+          column: 6
+        }
+      },
+      "50": {
+        start: {
+          line: 110,
+          column: 4
+        },
+        end: {
+          line: 110,
+          column: 17
+        }
+      },
+      "51": {
+        start: {
+          line: 113,
+          column: 2
+        },
+        end: {
+          line: 155,
+          column: 6
+        }
+      },
+      "52": {
+        start: {
+          line: 116,
+          column: 22
+        },
+        end: {
+          line: 116,
+          column: 42
+        }
+      },
+      "53": {
+        start: {
+          line: 118,
+          column: 6
+        },
+        end: {
+          line: 123,
+          column: 7
+        }
+      },
+      "54": {
+        start: {
+          line: 119,
+          column: 20
+        },
+        end: {
+          line: 119,
+          column: 52
+        }
+      },
+      "55": {
+        start: {
+          line: 120,
+          column: 8
+        },
+        end: {
+          line: 122,
+          column: 11
+        }
+      },
+      "56": {
+        start: {
+          line: 121,
+          column: 10
+        },
+        end: {
+          line: 121,
+          column: 31
+        }
+      },
+      "57": {
+        start: {
+          line: 128,
+          column: 6
+        },
+        end: {
+          line: 128,
+          column: 35
+        }
+      },
+      "58": {
+        start: {
+          line: 133,
+          column: 19
+        },
+        end: {
+          line: 133,
+          column: 23
+        }
+      },
+      "59": {
+        start: {
+          line: 135,
+          column: 24
+        },
+        end: {
+          line: 135,
+          column: 34
+        }
+      },
+      "60": {
+        start: {
+          line: 136,
+          column: 20
+        },
+        end: {
+          line: 136,
+          column: 39
+        }
+      },
+      "61": {
+        start: {
+          line: 137,
+          column: 24
+        },
+        end: {
+          line: 137,
+          column: 47
+        }
+      },
+      "62": {
+        start: {
+          line: 138,
+          column: 20
+        },
+        end: {
+          line: 138,
+          column: 38
+        }
+      },
+      "63": {
+        start: {
+          line: 140,
+          column: 25
+        },
+        end: {
+          line: 145,
+          column: 26
+        }
+      },
+      "64": {
+        start: {
+          line: 143,
+          column: 10
+        },
+        end: {
+          line: 143,
+          column: 38
+        }
+      },
+      "65": {
+        start: {
+          line: 147,
+          column: 6
+        },
+        end: {
+          line: 153,
+          column: 24
+        }
+      },
+      "66": {
+        start: {
+          line: 151,
+          column: 10
+        },
+        end: {
+          line: 151,
+          column: 34
+        }
+      },
+      "67": {
+        start: {
+          line: 156,
+          column: 2
+        },
+        end: {
+          line: 156,
+          column: 22
+        }
+      },
+      "68": {
+        start: {
+          line: 159,
+          column: 0
+        },
+        end: {
+          line: 159,
+          column: 34
+        }
+      }
+    },
+    fnMap: {
+      "0": {
+        name: "_createSuper",
+        decl: {
+          start: {
+            line: 28,
+            column: 9
+          },
+          end: {
+            line: 28,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 28,
+            column: 31
+          },
+          end: {
+            line: 55,
+            column: 1
+          }
+        },
+        line: 28
+      },
+      "1": {
+        name: "isNativeReflectConstruct",
+        decl: {
+          start: {
+            line: 29,
+            column: 11
+          },
+          end: {
+            line: 29,
+            column: 35
+          }
+        },
+        loc: {
+          start: {
+            line: 29,
+            column: 38
+          },
+          end: {
+            line: 40,
+            column: 3
+          }
+        },
+        line: 29
+      },
+      "2": {
+        name: "(anonymous_2)",
+        decl: {
+          start: {
+            line: 35,
+            column: 63
+          },
+          end: {
+            line: 35,
+            column: 64
+          }
+        },
+        loc: {
+          start: {
+            line: 35,
+            column: 75
+          },
+          end: {
+            line: 35,
+            column: 77
+          }
+        },
+        line: 35
+      },
+      "3": {
+        name: "(anonymous_3)",
+        decl: {
+          start: {
+            line: 42,
+            column: 9
+          },
+          end: {
+            line: 42,
+            column: 10
+          }
+        },
+        loc: {
+          start: {
+            line: 42,
+            column: 21
+          },
+          end: {
+            line: 54,
+            column: 3
+          }
+        },
+        line: 42
+      },
+      "4": {
+        name: "(anonymous_4)",
+        decl: {
+          start: {
+            line: 59,
+            column: 0
+          },
+          end: {
+            line: 59,
+            column: 1
+          }
+        },
+        loc: {
+          start: {
+            line: 59,
+            column: 22
+          },
+          end: {
+            line: 157,
+            column: 1
+          }
+        },
+        line: 59
+      },
+      "5": {
+        name: "ActionButton",
+        decl: {
+          start: {
+            line: 64,
+            column: 11
+          },
+          end: {
+            line: 64,
+            column: 23
+          }
+        },
+        loc: {
+          start: {
+            line: 64,
+            column: 31
+          },
+          end: {
+            line: 111,
+            column: 3
+          }
+        },
+        line: 64
+      },
+      "6": {
+        name: "(anonymous_6)",
+        decl: {
+          start: {
+            line: 70,
+            column: 20
+          },
+          end: {
+            line: 70,
+            column: 21
+          }
+        },
+        loc: {
+          start: {
+            line: 70,
+            column: 37
+          },
+          end: {
+            line: 105,
+            column: 5
+          }
+        },
+        line: 70
+      },
+      "7": {
+        name: "(anonymous_7)",
+        decl: {
+          start: {
+            line: 92,
+            column: 19
+          },
+          end: {
+            line: 92,
+            column: 20
+          }
+        },
+        loc: {
+          start: {
+            line: 92,
+            column: 31
+          },
+          end: {
+            line: 96,
+            column: 11
+          }
+        },
+        line: 92
+      },
+      "8": {
+        name: "(anonymous_8)",
+        decl: {
+          start: {
+            line: 96,
+            column: 13
+          },
+          end: {
+            line: 96,
+            column: 14
+          }
+        },
+        loc: {
+          start: {
+            line: 96,
+            column: 25
+          },
+          end: {
+            line: 100,
+            column: 11
+          }
+        },
+        line: 96
+      },
+      "9": {
+        name: "componentDidMount",
+        decl: {
+          start: {
+            line: 115,
+            column: 20
+          },
+          end: {
+            line: 115,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 115,
+            column: 40
+          },
+          end: {
+            line: 124,
+            column: 5
+          }
+        },
+        line: 115
+      },
+      "10": {
+        name: "(anonymous_10)",
+        decl: {
+          start: {
+            line: 120,
+            column: 36
+          },
+          end: {
+            line: 120,
+            column: 37
+          }
+        },
+        loc: {
+          start: {
+            line: 120,
+            column: 48
+          },
+          end: {
+            line: 122,
+            column: 9
+          }
+        },
+        line: 120
+      },
+      "11": {
+        name: "componentWillUnmount",
+        decl: {
+          start: {
+            line: 127,
+            column: 20
+          },
+          end: {
+            line: 127,
+            column: 40
+          }
+        },
+        loc: {
+          start: {
+            line: 127,
+            column: 43
+          },
+          end: {
+            line: 129,
+            column: 5
+          }
+        },
+        line: 127
+      },
+      "12": {
+        name: "render",
+        decl: {
+          start: {
+            line: 132,
+            column: 20
+          },
+          end: {
+            line: 132,
+            column: 26
+          }
+        },
+        loc: {
+          start: {
+            line: 132,
+            column: 29
+          },
+          end: {
+            line: 154,
+            column: 5
+          }
+        },
+        line: 132
+      },
+      "13": {
+        name: "onClick",
+        decl: {
+          start: {
+            line: 142,
+            column: 26
+          },
+          end: {
+            line: 142,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 142,
+            column: 36
+          },
+          end: {
+            line: 144,
+            column: 9
+          }
+        },
+        line: 142
+      },
+      "14": {
+        name: "onClick",
+        decl: {
+          start: {
+            line: 150,
+            column: 26
+          },
+          end: {
+            line: 150,
+            column: 33
+          }
+        },
+        loc: {
+          start: {
+            line: 150,
+            column: 36
+          },
+          end: {
+            line: 152,
+            column: 9
+          }
+        },
+        line: 150
+      }
+    },
+    branchMap: {
+      "0": {
+        loc: {
+          start: {
+            line: 30,
+            column: 4
+          },
+          end: {
+            line: 30,
+            column: 75
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 30,
+            column: 4
+          },
+          end: {
+            line: 30,
+            column: 75
+          }
+        }, {
+          start: {
+            line: 30,
+            column: 4
+          },
+          end: {
+            line: 30,
+            column: 75
+          }
+        }],
+        line: 30
+      },
+      "1": {
+        loc: {
+          start: {
+            line: 30,
+            column: 8
+          },
+          end: {
+            line: 30,
+            column: 60
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 30,
+            column: 8
+          },
+          end: {
+            line: 30,
+            column: 38
+          }
+        }, {
+          start: {
+            line: 30,
+            column: 42
+          },
+          end: {
+            line: 30,
+            column: 60
+          }
+        }],
+        line: 30
+      },
+      "2": {
+        loc: {
+          start: {
+            line: 31,
+            column: 4
+          },
+          end: {
+            line: 31,
+            column: 45
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 31,
+            column: 4
+          },
+          end: {
+            line: 31,
+            column: 45
+          }
+        }, {
+          start: {
+            line: 31,
+            column: 4
+          },
+          end: {
+            line: 31,
+            column: 45
+          }
+        }],
+        line: 31
+      },
+      "3": {
+        loc: {
+          start: {
+            line: 32,
+            column: 4
+          },
+          end: {
+            line: 32,
+            column: 49
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 32,
+            column: 4
+          },
+          end: {
+            line: 32,
+            column: 49
+          }
+        }, {
+          start: {
+            line: 32,
+            column: 4
+          },
+          end: {
+            line: 32,
+            column: 49
+          }
+        }],
+        line: 32
+      },
+      "4": {
+        loc: {
+          start: {
+            line: 46,
+            column: 4
+          },
+          end: {
+            line: 51,
+            column: 5
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 46,
+            column: 4
+          },
+          end: {
+            line: 51,
+            column: 5
+          }
+        }, {
+          start: {
+            line: 46,
+            column: 4
+          },
+          end: {
+            line: 51,
+            column: 5
+          }
+        }],
+        line: 46
+      },
+      "5": {
+        loc: {
+          start: {
+            line: 74,
+            column: 6
+          },
+          end: {
+            line: 104,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 74,
+            column: 6
+          },
+          end: {
+            line: 104,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 74,
+            column: 6
+          },
+          end: {
+            line: 104,
+            column: 7
+          }
+        }],
+        line: 74
+      },
+      "6": {
+        loc: {
+          start: {
+            line: 77,
+            column: 8
+          },
+          end: {
+            line: 85,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 77,
+            column: 8
+          },
+          end: {
+            line: 85,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 77,
+            column: 8
+          },
+          end: {
+            line: 85,
+            column: 9
+          }
+        }],
+        line: 77
+      },
+      "7": {
+        loc: {
+          start: {
+            line: 82,
+            column: 10
+          },
+          end: {
+            line: 84,
+            column: 11
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 82,
+            column: 10
+          },
+          end: {
+            line: 84,
+            column: 11
+          }
+        }, {
+          start: {
+            line: 82,
+            column: 10
+          },
+          end: {
+            line: 84,
+            column: 11
+          }
+        }],
+        line: 82
+      },
+      "8": {
+        loc: {
+          start: {
+            line: 87,
+            column: 8
+          },
+          end: {
+            line: 101,
+            column: 9
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 87,
+            column: 8
+          },
+          end: {
+            line: 101,
+            column: 9
+          }
+        }, {
+          start: {
+            line: 87,
+            column: 8
+          },
+          end: {
+            line: 101,
+            column: 9
+          }
+        }],
+        line: 87
+      },
+      "9": {
+        loc: {
+          start: {
+            line: 87,
+            column: 12
+          },
+          end: {
+            line: 87,
+            column: 27
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 87,
+            column: 12
+          },
+          end: {
+            line: 87,
+            column: 15
+          }
+        }, {
+          start: {
+            line: 87,
+            column: 19
+          },
+          end: {
+            line: 87,
+            column: 27
+          }
+        }],
+        line: 87
+      },
+      "10": {
+        loc: {
+          start: {
+            line: 118,
+            column: 6
+          },
+          end: {
+            line: 123,
+            column: 7
+          }
+        },
+        type: "if",
+        locations: [{
+          start: {
+            line: 118,
+            column: 6
+          },
+          end: {
+            line: 123,
+            column: 7
+          }
+        }, {
+          start: {
+            line: 118,
+            column: 6
+          },
+          end: {
+            line: 123,
+            column: 7
+          }
+        }],
+        line: 118
+      },
+      "11": {
+        loc: {
+          start: {
+            line: 140,
+            column: 25
+          },
+          end: {
+            line: 145,
+            column: 26
+          }
+        },
+        type: "binary-expr",
+        locations: [{
+          start: {
+            line: 140,
+            column: 25
+          },
+          end: {
+            line: 140,
+            column: 36
+          }
+        }, {
+          start: {
+            line: 140,
+            column: 40
+          },
+          end: {
+            line: 145,
+            column: 26
+          }
+        }],
+        line: 140
+      }
+    },
+    s: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0
+    },
+    f: {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0
+    },
+    b: {
+      "0": [0, 0],
+      "1": [0, 0],
+      "2": [0, 0],
+      "3": [0, 0],
+      "4": [0, 0],
+      "5": [0, 0],
+      "6": [0, 0],
+      "7": [0, 0],
+      "8": [0, 0],
+      "9": [0, 0],
+      "10": [0, 0],
+      "11": [0, 0]
+    },
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "af938f35409f8c7d9d23860de15e7bbe3f056862"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+
+  var actualCoverage = coverage[path];
+
+  cov_7jqfxcx4m = function () {
+    return actualCoverage;
+  };
+
+  return actualCoverage;
+}
+
+cov_7jqfxcx4m();
+
+var _interopRequireWildcard =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[0]++, require("@babel/runtime/helpers/interopRequireWildcard"));
+
+var _interopRequireDefault =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[1]++, require("@babel/runtime/helpers/interopRequireDefault"));
+
+/* istanbul ignore next */
+cov_7jqfxcx4m().s[2]++;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/* istanbul ignore next */
+cov_7jqfxcx4m().s[3]++;
+exports["default"] = void 0;
+
+var _classCallCheck2 =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[4]++, _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck")));
+
+var _createClass2 =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[5]++, _interopRequireDefault(require("@babel/runtime/helpers/createClass")));
+
+var _inherits2 =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[6]++, _interopRequireDefault(require("@babel/runtime/helpers/inherits")));
+
+var _possibleConstructorReturn2 =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[7]++, _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn")));
+
+var _getPrototypeOf2 =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[8]++, _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf")));
+
+var _react =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[9]++, _interopRequireWildcard(require("react")));
+
+var _reactDom =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[10]++, require("react-dom"));
+
+var _button =
+/* istanbul ignore next */
+(cov_7jqfxcx4m().s[11]++, _interopRequireDefault(require("../button")));
+
+function _createSuper(Derived) {
+  /* istanbul ignore next */
+  cov_7jqfxcx4m().f[0]++;
+
+  function isNativeReflectConstruct() {
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().f[1]++;
+    cov_7jqfxcx4m().s[12]++;
+
+    if (
+    /* istanbul ignore next */
+    (cov_7jqfxcx4m().b[1][0]++, typeof Reflect === "undefined") ||
+    /* istanbul ignore next */
+    (cov_7jqfxcx4m().b[1][1]++, !Reflect.construct)) {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().b[0][0]++;
+      cov_7jqfxcx4m().s[13]++;
+      return false;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_7jqfxcx4m().b[0][1]++;
+    }
+
+    cov_7jqfxcx4m().s[14]++;
+
+    if (Reflect.construct.sham) {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().b[2][0]++;
+      cov_7jqfxcx4m().s[15]++;
+      return false;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_7jqfxcx4m().b[2][1]++;
+    }
+
+    cov_7jqfxcx4m().s[16]++;
+
+    if (typeof Proxy === "function") {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().b[3][0]++;
+      cov_7jqfxcx4m().s[17]++;
+      return true;
+    } else
+    /* istanbul ignore next */
+    {
+      cov_7jqfxcx4m().b[3][1]++;
+    }
+
+    cov_7jqfxcx4m().s[18]++;
+
+    try {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().s[19]++;
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {
+        /* istanbul ignore next */
+        cov_7jqfxcx4m().f[2]++;
+      }));
+
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().s[20]++;
+      return true;
+    } catch (e) {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().s[21]++;
+      return false;
+    }
+  }
+
+  /* istanbul ignore next */
+  cov_7jqfxcx4m().s[22]++;
+  return function () {
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().f[3]++;
+    var Super =
+    /* istanbul ignore next */
+    (cov_7jqfxcx4m().s[23]++, (0, _getPrototypeOf2["default"])(Derived)),
+        result;
+
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().s[24]++;
+
+    if (isNativeReflectConstruct()) {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().b[4][0]++;
+      var NewTarget =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[25]++, (0, _getPrototypeOf2["default"])(this).constructor);
+
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().s[26]++;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().b[4][1]++;
+      cov_7jqfxcx4m().s[27]++;
+      result = Super.apply(this, arguments);
+    }
+
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().s[28]++;
+    return (0, _possibleConstructorReturn2["default"])(this, result);
+  };
+}
+
+var ActionButton =
+/* istanbul ignore next */
+(
+/*#__PURE__*/
+cov_7jqfxcx4m().s[29]++, function (_Component) {
+  /* istanbul ignore next */
+  cov_7jqfxcx4m().f[4]++;
+  cov_7jqfxcx4m().s[30]++;
+  (0, _inherits2["default"])(ActionButton, _Component);
+
+  var _super =
+  /* istanbul ignore next */
+  (cov_7jqfxcx4m().s[31]++, _createSuper(ActionButton));
+
+  function ActionButton(props) {
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().f[5]++;
+
+    var _this;
+
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().s[32]++;
+    (0, _classCallCheck2["default"])(this, ActionButton);
+
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().s[33]++;
+    _this = _super.call(this, props);
+
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().s[34]++;
+
+    _this.onClick = function (props) {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().f[6]++;
+      var actionFn =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[35]++, props.actionFn),
+          closeModal =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[36]++, props.closeModal);
+
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().s[37]++;
+
+      if (actionFn) {
+        /* istanbul ignore next */
+        cov_7jqfxcx4m().b[5][0]++;
+        var ret;
+
+        /* istanbul ignore next */
+        cov_7jqfxcx4m().s[38]++;
+
+        if (actionFn.length) {
+          /* istanbul ignore next */
+          cov_7jqfxcx4m().b[6][0]++;
+          cov_7jqfxcx4m().s[39]++;
+          ret = actionFn(closeModal);
+        } else {
+          /* istanbul ignore next */
+          cov_7jqfxcx4m().b[6][1]++;
+          cov_7jqfxcx4m().s[40]++;
+          ret = actionFn();
+
+          /* istanbul ignore next */
+          cov_7jqfxcx4m().s[41]++;
+
+          if (!ret) {
+            /* istanbul ignore next */
+            cov_7jqfxcx4m().b[7][0]++;
+            cov_7jqfxcx4m().s[42]++;
+            closeModal();
+          } else
+          /* istanbul ignore next */
+          {
+            cov_7jqfxcx4m().b[7][1]++;
+          }
+        }
+
+        /* istanbul ignore next */
+        cov_7jqfxcx4m().s[43]++;
+
+        if (
+        /* istanbul ignore next */
+        (cov_7jqfxcx4m().b[9][0]++, ret) &&
+        /* istanbul ignore next */
+        (cov_7jqfxcx4m().b[9][1]++, ret.then)) {
+          /* istanbul ignore next */
+          cov_7jqfxcx4m().b[8][0]++;
+          cov_7jqfxcx4m().s[44]++;
+
+          _this.setState({
+            loading: true
+          });
+
+          /* istanbul ignore next */
+          cov_7jqfxcx4m().s[45]++;
+          ret.then(function () {
+            /* istanbul ignore next */
+            cov_7jqfxcx4m().f[7]++;
+            cov_7jqfxcx4m().s[46]++;
+            // It's unnecessary to set loading=false, for the Modal will be unmounted after close.
+            // this.setState({ loading: false });
+            closeModal.apply(void 0, arguments);
+          }, function () {
+            /* istanbul ignore next */
+            cov_7jqfxcx4m().f[8]++;
+            cov_7jqfxcx4m().s[47]++;
+
+            _this.setState({
+              loading: false
+            });
+          });
+        } else
+        /* istanbul ignore next */
+        {
+          cov_7jqfxcx4m().b[8][1]++;
+        }
+      } else {
+        /* istanbul ignore next */
+        cov_7jqfxcx4m().b[5][1]++;
+        cov_7jqfxcx4m().s[48]++;
+        closeModal();
+      }
+    };
+
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().s[49]++;
+    _this.state = {
+      loading: false
+    };
+
+    /* istanbul ignore next */
+    cov_7jqfxcx4m().s[50]++;
+    return _this;
+  }
+
+  /* istanbul ignore next */
+  cov_7jqfxcx4m().s[51]++;
+  (0, _createClass2["default"])(ActionButton, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().f[9]++;
+      var autoFocus =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[52]++, this.props.autoFocus);
+
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().s[53]++;
+
+      if (autoFocus) {
+        /* istanbul ignore next */
+        cov_7jqfxcx4m().b[10][0]++;
+        var $this =
+        /* istanbul ignore next */
+        (cov_7jqfxcx4m().s[54]++, (0, _reactDom.findDOMNode)(this));
+
+        /* istanbul ignore next */
+        cov_7jqfxcx4m().s[55]++;
+        this.timeoutId = setTimeout(function () {
+          /* istanbul ignore next */
+          cov_7jqfxcx4m().f[10]++;
+          cov_7jqfxcx4m().s[56]++;
+          return $this.focus();
+        });
+      } else
+      /* istanbul ignore next */
+      {
+        cov_7jqfxcx4m().b[10][1]++;
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().f[11]++;
+      cov_7jqfxcx4m().s[57]++;
+      clearTimeout(this.timeoutId);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().f[12]++;
+
+      var _this2 =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[58]++, this);
+
+      var _this$props =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[59]++, this.props),
+          okProps =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[60]++, _this$props.okProps),
+          cancelProps =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[61]++, _this$props.cancelProps);
+
+      var loading =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[62]++, this.state.loading);
+      var cancelButton =
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().s[63]++,
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().b[11][0]++, cancelProps) &&
+      /* istanbul ignore next */
+      (cov_7jqfxcx4m().b[11][1]++, _react["default"].createElement(_button["default"], {
+        disabled: loading,
+        onClick: function onClick() {
+          /* istanbul ignore next */
+          cov_7jqfxcx4m().f[13]++;
+          cov_7jqfxcx4m().s[64]++;
+
+          _this2.onClick(cancelProps);
+        }
+      }, cancelProps.text)));
+
+      /* istanbul ignore next */
+      cov_7jqfxcx4m().s[65]++;
+      return _react["default"].createElement("div", null, cancelButton, _react["default"].createElement(_button["default"], {
+        loading: loading,
+        type: okProps.type,
+        onClick: function onClick() {
+          /* istanbul ignore next */
+          cov_7jqfxcx4m().f[14]++;
+          cov_7jqfxcx4m().s[66]++;
+
+          _this2.onClick(okProps);
+        }
+      }, okProps.text));
+    }
+  }]);
+
+  /* istanbul ignore next */
+  cov_7jqfxcx4m().s[67]++;
+  return ActionButton;
+}(_react.Component));
+
+/* istanbul ignore next */
+cov_7jqfxcx4m().s[68]++;
+exports["default"] = ActionButton;

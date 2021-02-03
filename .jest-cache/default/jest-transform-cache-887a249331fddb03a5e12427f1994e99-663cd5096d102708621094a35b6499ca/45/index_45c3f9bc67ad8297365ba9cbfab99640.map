@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/menu/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,gB","sourcesContent":["import Menu from 'choerodon-ui/lib/menu';\n\nexport default Menu;\n"]}

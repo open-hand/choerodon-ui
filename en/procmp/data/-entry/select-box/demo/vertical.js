@@ -10,14 +10,20 @@ const { Option } = SelectBox;
 
 ReactDOM.render(
   <Row gutter={10}>
-    <Col span={12}>
+    <Col span={2}>
+      <h3>single</h3>
+    </Col>
+    <Col span={2}>
       <SelectBox vertical mode="button" onChange={handleChange}>
         <Option value="jack">Jack</Option>
         <Option value="lucy">Lucy</Option>
         <Option value="wu">Wu</Option>
       </SelectBox>
     </Col>
-    <Col span={12}>
+    <Col span={2}>
+      <h3>multiple</h3>
+    </Col>
+    <Col span={2}>
       <SelectBox vertical mode="button" multiple onChange={handleChange}>
         <Option value="jack">Jack</Option>
         <Option value="lucy">Lucy</Option>
@@ -25,5 +31,5 @@ ReactDOM.render(
       </SelectBox>
     </Col>
   </Row>,
-  document.getElementById('container')
+  document.getElementById('container'),
 );
