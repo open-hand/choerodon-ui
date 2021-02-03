@@ -15,9 +15,13 @@ timeline: true
 
 ---
 
+## 1.0.0
+
+`2021-02-02`
+
 - 🌟 `configure`: 新增 selectReverse，tableAutoHeightDiff 全局属性。
 - 🌟 `<pro>Select`: 新增 reverse 属性控制多选是否可反选。
-- 🌟 `<pro>Modal`: 新增 header，drawerOffset，okButton，cancelButton，contentStyle，bodyStyle属性。
+- 🌟 `<pro>Modal`: 新增 header，drawerOffset，okButton，cancelButton，contentStyle，bodyStyle 属性。
 - 🌟 `<pro>DataSet`: 新增 beforeRemove 事件。
 - 🌟 `<pro>DataSet`: 新增 validateBeforeQuery 属性。
 - 🌟 `<pro>DataSet`: query 方法新增 params 参数。
@@ -41,6 +45,7 @@ timeline: true
 - 🐞 `<pro>Record`: 修复 validate 错误的传参导致提交数据错误。
 - 🐞 `<pro>Lov`: 修复多选弹窗列表取消勾选值后确认选值更改无效问题。
 - 🐞 `<pro>Table`: 修复 buttons 不存在时 summaryBar 不渲染的问题。
+- 🐞 `<pro>Pagination`: 修复页码 undefined 快速跳转报错问题。
 - 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。
 - 🐞 `<pro>Modal`: 修复在多个 ModalProvider 中分别同时打开多个 Modal 时显示问题。
 - 🐞 `<pro>Form`: 修复清空数据源时表单控件值未清空的问题。

@@ -6,6 +6,7 @@ import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
+import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import isString from 'lodash/isString';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
@@ -207,7 +208,11 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     return value
   }
 
-  jumpPage = debounce(value => this.handlePagerClick(value), 200);
+  jumpPage = debounce(value => {
+    if (!isNil(value)) {
+      this.handlePagerClick(value)
+    }
+  }, 200);
 
   /**
    * 快速跳至 input 事件

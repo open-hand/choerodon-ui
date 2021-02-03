@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.0.0
+
+`2021-02-02`
+
 - 🌟 `configure`: Added `selectReverse` `tableAutoHeightDiff` global configuration.
 - 🌟 `<pro>Select`: Added `reverse` attribute to control whether multiple selection can be reversed.
 - 🌟 `<pro>Modal`: Added `header`, `drawerOffset`, `okButton`, `cancelButton`, `contentStyle`, `bodyStyle` attributes.
@@ -41,20 +45,21 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the issue that confirming the change is invalid after unchecking the value.
 - 🐞 `<pro>Table`: Fixed the problem that `summaryBar` does not render when buttons do not exist.
 - 🐞 `<pro>Record`: Fixed the error of submitting data caused by incorrect `validate` parameter passing.
+- 🐞 `<pro>Pagination`: Fixed page number undefined quick jump error.
 - 🐞 `<pro>Pagination`: Fixed the issue that `modifiedCheckMessage` is invalid when the page number is switched.
-- 🐞 `<pro>Modal`: Fix the display problem when multiple Modal are opened simultaneously in multiple ModalProviders.
-- 🐞 `<pro>Form`: Fix the problem that the form control values are not cleared when clearing the dataset.
-- 🐞 `<pro>DataSet.Field`: Fix the problem that the defaultValue property of dynamicProps does not take effect.
-- 🐞 `<pro>DataSet`: Fix the problem in splice method.
-- 🐞 `<pro>DataSet`: Fix the problem of querying parent cascade records for deep cascade records.
+- 🐞 `<pro>Modal`: Fixed the display problem when multiple Modal are opened simultaneously in multiple ModalProviders.
+- 🐞 `<pro>Form`: Fixed the problem that the form control values are not cleared when clearing the dataset.
+- 🐞 `<pro>DataSet.Field`: Fixed the problem that the defaultValue property of dynamicProps does not take effect.
+- 🐞 `<pro>DataSet`: Fixed the problem in splice method.
+- 🐞 `<pro>DataSet`: Fixed the problem of querying parent cascade records for deep cascade records.
 - 🐞 `<pro>DataSet`: When the Boolean value type is not set, it will be set to false by default.
-- 🐞 `<pro>DataSet.Record`: Optimize isExpanded attribute controlled.
-- 🐞 `<pro>Validator`: Fix the problem of passing value by combining unique validation object type fields.
-- 🐞 `<pro>DataSet.Record`: Fix the problem that the `getCascadeRecords` method may have an endless loop.
+- 🐞 `<pro>DataSet.Record`: Fixed the problem that the `getCascadeRecords` method may have an endless loop.
+- 🐞 `<pro>DataSet.Record`: Optimized isExpanded attribute controlled.
+- 🐞 `<pro>Validator`: Fixed the problem of passing value by combining unique validation object type fields.
 
 ## 0.8.78
 
-`2020-01-10`
+`2021-01-10`
 
 - 🌟 `configure`: Added `modalAutoCenter`, `modalKeyboard`, `tableKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
 - 🌟 `Tabs`: Added `keyboard` property.
