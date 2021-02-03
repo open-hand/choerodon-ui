@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Select`: Added `selectAllButton` property.
+- 🌟 `<pro>SelectBox`: implement the `optionRenderer` `optionsFilter` `searchable` properties.
+
 ## 1.0.0
 
 `2021-02-02`
@@ -26,8 +29,6 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `validateBeforeQuery` property.
 - 🌟 `<pro>DataSet`: Added `params` parameter to `query` method.
 - 🌟 `<pro>DataSet.Field`: Added `lookupBatchAxiosConfig` property.
-- 🌟 `<pro>Select`: Added `selectAllButton` property.
-- 🌟 `<pro>SelectBox`: implement the `optionRenderer` `optionsFilter` `searchable` properties.
 - 💄 `Collapse`: Optimized icon style.
 - 💄 `<pro>DataSet`: Optimized placeholder priority.
 - 💄 `<pro>Select`: Optimized the situation where the corresponding value is not found in the data source, and it is directly displayed empty. Now the return value is displayed.
