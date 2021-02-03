@@ -22,6 +22,8 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 validateBeforeQuery 属性。
 - 🌟 `<pro>DataSet`: query 方法新增 params 参数。
 - 🌟 `<pro>DataSet.Field`: 新增 lookupBatchAxiosConfig 属性。
+- 🌟 `<pro>Select`: 新增 selectAllButton 属性。
+- 🌟 `<pro>SelectBox`:实现 optionRenderer optionsFilter searchable 属性。
 - 💄 `Collapse`: 优化 Collapse 自定义 icon 样式。
 - 💄 `<pro>DataSet`: 优化 placeholder 优先级。
 - 💄 `<pro>Select`: 优化在数据源中找不到对应值时直接显示空的情况，现在显示返回值。

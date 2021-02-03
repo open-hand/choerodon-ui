@@ -61,7 +61,7 @@ class App extends React.Component {
             <SelectBox name="first-name" />
           </Col>
           <Col span={12}>
-            <SelectBox name="last-name">
+            <SelectBox name="last-name" selectAllButton labelLayout="float">
               <Option value="jack">Jack</Option>
               <Option value="lucy">Lucy</Option>
               <Option value="wu">Wu</Option>

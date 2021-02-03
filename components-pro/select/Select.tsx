@@ -14,7 +14,6 @@ import Tag from 'choerodon-ui/lib/tag';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import classNames from 'classnames';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
@@ -33,8 +32,6 @@ import isSame from '../_util/isSame';
 import isSameLike from '../_util/isSameLike';
 import { Renderer } from '../field/FormField';
 import isIE from '../_util/isIE';
-import CloseButton from '../field/CloseButton';
-import Tooltip from '../tooltip';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -144,8 +141,13 @@ export interface SelectProps extends TriggerFieldProps {
    */
   dropdownMatchSelectWidth?: boolean;
   /**
-   * 多选是否开启反选
+   * 多选时显示全选按钮;
    * @default true
+   */
+  selectAllButton?: boolean;
+  /**
+   * 多选是否开启反选
+   * @default false
    */
   reverse?: boolean;
   /**
@@ -255,6 +257,16 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * 下拉时自动重新查询
      */
     noCache: PropTypes.bool,
+    /**
+     * 多选时显示全选按钮;
+     * @default true
+     */
+    selectAllButton: PropTypes.bool,
+    /**
+     * 多选是否开启反选
+     * @default false
+     */
+    reverse: PropTypes.bool,
     ...TriggerField.propTypes,
   };
 
@@ -265,6 +277,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     searchable: false,
     checkValueOnOptionsChange: true,
     onOption: defaultOnOption,
+    selectAllButton: true,
   };
 
   static Option = Option;
@@ -348,7 +361,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @computed
   get searchable(): boolean {
-    return !!this.props.searchable;
+    return !!this.observableProps.searchable;
   }
 
   @computed
@@ -488,6 +501,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       'notFoundContent',
       'onOption',
       'noCache',
+      'reverse',
+      'selectAllButton',
     ]);
     return otherProps;
   }
@@ -502,6 +517,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       primitiveValue: props.primitiveValue,
       searchMatcher: props.searchMatcher,
       paramMatcher: props.paramMatcher,
+      searchable: props.searchable,
+      dropdownMatchSelectWidth: props.dropdownMatchSelectWidth,
+      selectReverse: props.reverse,
     };
   }
 
@@ -548,28 +566,28 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     if (commonItem) {
       const valueLength = commonItem.length;
       const tags = commonItem.slice(0, maxCommonTagCount).map((item) => {
-          let text = item;
-          let textRecord: Record;
-          options.map((record) => {
-            if (record.get(valueField) === item) {
-              text = maxCommonTagTextLength &&
-              isString(record.get(textField)) &&
-              record.get(textField).length > maxCommonTagTextLength
-                ? `${record.get(textField).slice(0, maxCommonTagTextLength)}...`
-                : record.get(textField);
-              textRecord = record;
-            }
-            return null;
-          });
-          return (<Tag
-            key={item}
-            className={values.includes(item) ? `${this.prefixCls}-common-item ${this.prefixCls}-common-item-selected` : `${this.prefixCls}-common-item`}
-            // @ts-ignore
-            onClick={() => this.handleCommonItemClick(textRecord)}
-          >
-            {text}
-          </Tag>);
+        let text = item;
+        let textRecord: Record;
+        options.map((record) => {
+          if (record.get(valueField) === item) {
+            text = maxCommonTagTextLength &&
+            isString(record.get(textField)) &&
+            record.get(textField).length > maxCommonTagTextLength
+              ? `${record.get(textField).slice(0, maxCommonTagTextLength)}...`
+              : record.get(textField);
+            textRecord = record;
+          }
+          return null;
         });
+        return (<Tag
+          key={item}
+          className={values.includes(item) ? `${this.prefixCls}-common-item ${this.prefixCls}-common-item-selected` : `${this.prefixCls}-common-item`}
+          // @ts-ignore
+          onClick={() => this.handleCommonItemClick(textRecord)}
+        >
+          {text}
+        </Tag>);
+      });
       if (valueLength > maxCommonTagCount) {
         let content: ReactNode = `+ ${valueLength - Number(maxCommonTagCount)} ...`;
         if (maxCommonTagPlaceholder) {
@@ -610,8 +628,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     /**
      * fixed when ie the scroll width would cover the item width
      */
-    const IeMenuStyle = !this.dropdownMatchSelectWidth && isIE() ? {padding: '.08rem'} : {} ;
-    const IeItemStyle = !this.dropdownMatchSelectWidth && isIE() ? {overflow:'visible'} : {} ;
+    const IeMenuStyle = !this.dropdownMatchSelectWidth && isIE() ? { padding: '.08rem' } : {};
+    const IeItemStyle = !this.dropdownMatchSelectWidth && isIE() ? { overflow: 'visible' } : {};
     this.filteredOptions.forEach(record => {
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
@@ -655,7 +673,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         ? optionRenderer({ dataSet: options, record, text, value })
         : text;
       const option: ReactElement = (
-        <Item style={IeItemStyle} {...optionProps}   key={key} value={record} disabled={optionDisabled}>
+        <Item style={IeItemStyle} {...optionProps} key={key} value={record} disabled={optionDisabled}>
           {itemContent}
         </Item>
       );
@@ -683,7 +701,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         selectedKeys={selectedKeys}
         prefixCls={this.getMenuPrefixCls()}
         onClick={this.handleMenuClick}
-        style={{...IeMenuStyle,...dropdownMenuStyle}}
+        style={{ ...IeMenuStyle, ...dropdownMenuStyle }}
         focusable={false}
         {...menuProps}
       >
@@ -703,26 +721,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @computed
   get dropdownMatchSelectWidth(): boolean | undefined {
-    if ('dropdownMatchSelectWidth' in this.props) {
-      return this.props.dropdownMatchSelectWidth;
-    }
-    const dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth');
-    if (dropdownMatchSelectWidth === false) {
-      return false;
-    }
-    return true;
+    const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') } = this.observableProps;
+    return dropdownMatchSelectWidth;
   }
 
   @computed
   get selectReverse(): boolean | undefined {
-    if ('reverse' in this.props) {
-      return this.props.reverse;
-    }
-    const selectReverse = getConfig('selectReverse');
-    if (selectReverse === false) {
-      return false;
-    }
-    return true;
+    const { selectReverse = getConfig('selectReverse') } = this.observableProps;
+    return selectReverse;
   }
 
   @computed
@@ -731,24 +737,29 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     return options.status === DataSetStatus.loading || (!!field && field.pending.length > 0);
   }
 
+  renderSelectAll(): ReactNode {
+    const { selectAllButton } = this.props;
+    if (this.multiple && selectAllButton) {
+      return (
+        <div key="check-all" className={`${this.prefixCls}-select-all-none`}>
+          <span onClick={this.chooseAll}>{$l('Select', 'select_all')}</span>
+          {this.selectReverse && <span onClick={this.chooseRe}>{$l('Select', 'select_re')}</span>}
+          <span onClick={this.unChooseAll}>{$l('Select', 'unselect_all')}</span>
+        </div>
+      );
+    }
+  }
+
   getPopupContent(): ReactNode {
     const menu = (
       <Spin key="menu" spinning={this.loading}>
         {this.getMenu()}
       </Spin>
     );
-    if (this.multiple) {
-      return [
-        <div key="check-all" className={`${this.prefixCls}-select-all-none`}>
-          <span onClick={this.chooseAll}>{$l('Select', 'select_all')}</span>
-          {this.selectReverse && <span onClick={this.chooseRe}>{$l('Select', 'select_re')}</span>}
-          <span onClick={this.unChooseAll}>{$l('Select', 'unselect_all')}</span>
-        </div>,
-        menu,
-      ];
-    }
-
-    return menu;
+    return [
+      this.renderSelectAll(),
+      menu,
+    ];
   }
 
   @autobind
@@ -776,8 +787,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     /**
      * 修复ie出现点击backSpace的页面回到上一页问题
      */
-    if (isIE()){
-      if(e.keyCode === KeyCode.BACKSPACE){
+    if (isIE()) {
+      if (e.keyCode === KeyCode.BACKSPACE) {
         e.preventDefault();
       }
     }
@@ -818,97 +829,15 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     super.handleKeyDown(e);
   }
 
-  renderMultipleValues(readOnly?: boolean) {
-    const values = this.getValues();
-    const valueLength = values.length;
+  isMultipleBlockDisabled(v) {
     const {
-      prefixCls,
-      range,
       options,
-      props: { maxTagCount = valueLength, maxTagPlaceholder, onOption },
+      props: { onOption },
     } = this;
-    const { validationResults } = this.validator;
-    const repeats: Map<any, number> = new Map<any, number>();
-    const blockClassName = classNames(
-      {
-        [`${prefixCls}-multiple-block-disabled`]: this.isDisabled(),
-      },
-      `${prefixCls}-multiple-block`,
-    );
-    this.mutipleValidateMessageLength = 0;
-    const tags = values.slice(0, maxTagCount).map(v => {
-      const key = this.getValueKey(v);
-      const repeat = repeats.get(key) || 0;
-      const text = range ? this.renderRangeValue(true, v, repeat) : this.processRenderer(v, repeat);
-      const findRecord = this.findByValue(v);
-      const optionProps = findRecord ? onOption({ dataSet: options, record:findRecord }): undefined;
-      const optionDisabled = (optionProps && optionProps.disabled);
-      const itemDisabled = findRecord?.toData().__disabled === true || optionDisabled || this.isDisabled();
-      const itemBlockClassName = classNames(
-        {
-          [`${prefixCls}-multiple-block-disabled`]: itemDisabled,
-        },
-        `${prefixCls}-multiple-block`,
-      );
-      repeats.set(key, repeat + 1);
-      if (!isNil(text)) {
-        const validationResult = validationResults.find(error => error.value === v);
-        const className = classNames(
-          {
-            [`${prefixCls}-multiple-block-invalid`]: validationResult,
-          },
-          itemBlockClassName,
-        );
-        const validationMessage =
-          validationResult && this.renderValidationMessage(validationResult);
-        if(validationMessage){
-            this.mutipleValidateMessageLength++
-        }
-        const closeBtn = !itemDisabled && !this.isReadOnly() && (
-          <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />
-        );
-        const inner = readOnly ? (
-          <span className={className}>{text}</span>
-        ) : (
-          <li className={className}>
-            <div>{text}</div>
-            {closeBtn}
-          </li>
-        );
-        return (
-          <Tooltip
-            suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-            key={`${key}-${repeat}`}
-            title={validationMessage}
-            theme="light"
-            placement="bottomLeft"
-            hidden={this.isValidationMessageHidden(validationMessage)}
-          >
-            {inner}
-          </Tooltip>
-        );
-      }
-      return undefined;
-    });
-
-    if (valueLength > maxTagCount) {
-      let content: ReactNode = `+ ${valueLength - maxTagCount} ...`;
-      if (maxTagPlaceholder) {
-        const omittedValues = values.slice(maxTagCount, valueLength);
-        content =
-          typeof maxTagPlaceholder === 'function'
-            // @ts-ignore
-            ? maxTagPlaceholder(omittedValues)
-            : maxTagPlaceholder;
-      }
-      tags.push(
-        <li key="maxTagPlaceholder" className={blockClassName}>
-          <div>{content}</div>
-        </li>,
-      );
-    }
-
-    return tags;
+    const findRecord = this.findByValue(v);
+    const optionProps = findRecord ? onOption({ dataSet: options, record: findRecord }) : undefined;
+    const optionDisabled = (optionProps && optionProps.disabled);
+    return findRecord?.toData().__disabled === true || optionDisabled || this.isDisabled();
   }
 
   handleKeyDownFirstLast(e, menu: Menu, direction: number) {
@@ -1084,7 +1013,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
-  handlePopupAnimateAppear() {}
+  handlePopupAnimateAppear() {
+  }
 
   getValueKey(v) {
     if (isArrayLike(v)) {
@@ -1096,7 +1026,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @autobind
-  handlePopupAnimateEnd(_key, _exists) {}
+  handlePopupAnimateEnd(_key, _exists) {
+  }
 
   @autobind
   handleMenuClick({
@@ -1177,7 +1108,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
 
-
   processRecordToObject(record: Record) {
     const { primitive, valueField } = this;
     // 如果为原始值那么 restricted 失效
@@ -1229,7 +1159,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const valuesDisabled = values.slice(0, maxTagCount).filter(v => {
         const recordItem = this.findByValue(v);
         const findRecord = this.findByValue(v);
-        const optionProps = findRecord ? onOption({ dataSet: options, record:findRecord }): undefined;
+        const optionProps = findRecord ? onOption({ dataSet: options, record: findRecord }) : undefined;
         const optionDisabled = (optionProps && optionProps.disabled);
         return recordItem?.toData().__disabled === true || optionDisabled;
       });
