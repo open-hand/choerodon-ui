@@ -83,7 +83,7 @@ class App extends React.Component {
         <Col span={12}>
           <Select dataSet={this.ds} name="sex2" placeholder="请选择" />
         </Col>
-        <Col span={12}>
+        <Col span={24}>
           <Select 
             dataSet={this.ds} 
             name="lov2" 
@@ -91,6 +91,7 @@ class App extends React.Component {
             maxTagCount={2} 
             maxTagTextLength={3} 
             maxTagPlaceholder={restValues => `+${restValues.length}...`}
+            style={{ width: '100%' }}
           />
         </Col>
       </Row>

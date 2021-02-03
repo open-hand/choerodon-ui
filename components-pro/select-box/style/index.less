@@ -1,5 +1,6 @@
 @import '../../../components/style/themes/default';
 @import '../../../components/style/mixins/index';
+@import '../../select/style/mixin';
 @import '../../field/style/mixin';
 
 @select-box-prefix: ~'@{c7n-pro-prefix}-select-box';
@@ -12,7 +13,7 @@
   display: inline-block;
   line-height: 28 / 13;
 
-  &-float-label .@{field-label-prefix-cls}-wrapper {
+  &-float-label > .@{field-label-prefix-cls}-wrapper {
     left: 0;
     border: none;
     transform-origin: @float-label-transform-origin-high;
@@ -116,4 +117,11 @@
       }
     }
   }
+
+  &-wrapper .@{c7n-pro-prefix}-input-wrapper {
+    display: block;
+    margin-bottom: .1rem;
+  }
+
+  .select-all;
 }

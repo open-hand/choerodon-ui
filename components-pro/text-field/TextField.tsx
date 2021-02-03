@@ -16,7 +16,7 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
-import isIE from "../_util/isIE";
+import isIE from '../_util/isIE';
 import Icon from '../icon';
 import { ValidatorProps } from '../validator/rules';
 import { preventDefault, stopPropagation } from '../_util/EventManager';
@@ -255,10 +255,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
     // 修复ie下出现多层model导致的输入框遮盖问题
     // fixed the input would shadow each other in ie brower
-    const  ZIndexOfIEProps:{style:CSSProperties}|{}  = isIE() ? {style:{zIndex:'auto'}}:{};
+    const ZIndexOfIEProps: { style: CSSProperties } | {} = isIE() ? { style: { zIndex: 'auto' } } : {};
 
     const element = (
-      <span  key="element" {...wrapperProps}>
+      <span key="element" {...wrapperProps}>
         {multipleHolder}
         {otherPrevNode}
         {placeholderDiv}
@@ -373,17 +373,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
             rangeTarget === undefined || !this.isFocused
               ? ''
               : this.text === undefined
-                ? rangeTarget === 0
-                  ? startValue
-                  : endValue
-                : this.text
+              ? rangeTarget === 0
+                ? startValue
+                : endValue
+              : this.text
           }
           placeholder={
             rangeTarget === undefined || !this.isFocused
               ? ''
               : rangeTarget === 0
-                ? startPlaceholder
-                : endPlaceHolder
+              ? startPlaceholder
+              : endPlaceHolder
           }
           readOnly={this.isReadOnly()}
           style={editorStyle}
@@ -480,58 +480,38 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const otherProps = this.getOtherProps();
     const { height } = (style || {}) as CSSProperties;
     if (multiple) {
-      if (isFlat) {
-        return (
-          <div key="text" className={otherProps.className}>
-            <Tooltip title={this.getMultipleText()}>
-              <Animate
-                component="ul"
-                componentProps={{
-                  ref: this.saveTagContainer,
-                  onScroll: stopPropagation,
-                  style:
-                    height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
-                }}
-                // transitionName="zoom"
-                exclusive
-                onEnd={this.handleTagAnimateEnd}
-                onEnter={this.handleTagAnimateEnter}
-              >
-                {this.renderMultipleValues()}
-                {range
-                  ? this.renderRangeEditor(otherProps)
-                  : this.renderMultipleEditor({
-                    ...otherProps,
-                    className: `${prefixCls}-multiple-input`,
-                  } as T)}
-              </Animate>
-            </Tooltip>
-          </div>
-        );
-      }
+      const tags = (
+        <Animate
+          component="ul"
+          componentProps={{
+            ref: this.saveTagContainer,
+            onScroll: stopPropagation,
+            style:
+              height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
+          }}
+          transitionName="zoom"
+          exclusive
+          onEnd={this.handleTagAnimateEnd}
+          onEnter={this.handleTagAnimateEnter}
+        >
+          {this.renderMultipleValues()}
+          {range
+            ? this.renderRangeEditor(otherProps)
+            : this.renderMultipleEditor({
+              ...otherProps,
+              className: `${prefixCls}-multiple-input`,
+            } as T)}
+        </Animate>
+      );
       return (
         <div key="text" className={otherProps.className}>
-          <Animate
-            component="ul"
-            componentProps={{
-              ref: this.saveTagContainer,
-              onScroll: stopPropagation,
-              style:
-                height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
-            }}
-            // transitionName="zoom"
-            exclusive
-            onEnd={this.handleTagAnimateEnd}
-            onEnter={this.handleTagAnimateEnter}
-          >
-            {this.renderMultipleValues()}
-            {range
-              ? this.renderRangeEditor(otherProps)
-              : this.renderMultipleEditor({
-                ...otherProps,
-                className: `${prefixCls}-multiple-input`,
-              } as T)}
-          </Animate>
+          {
+            isFlat ? (
+              <Tooltip title={this.getMultipleText()}>
+                {tags}
+              </Tooltip>
+            ) : tags
+          }
         </div>
       );
     }
@@ -713,7 +693,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.afterRemoveValue(value, -1);
   }
 
-  handleTagAnimateEnd() { }
+  handleTagAnimateEnd() {
+  }
 
   @autobind
   handleTagAnimateEnter() {
@@ -783,11 +764,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           default:
         }
       }
-    }else if(isIE()){
+    } else if (isIE()) {
       /**
        * 修复ie出现点击backSpace的页面回到上一页问题
        */
-      if(e.keyCode === KeyCode.BACKSPACE){
+      if (e.keyCode === KeyCode.BACKSPACE) {
         e.preventDefault();
       }
     }

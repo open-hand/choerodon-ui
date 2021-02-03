@@ -418,8 +418,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     );
   }
 
-  isDisabled() {
-    const { disabled } = this.props;
+  isDisabled(): boolean {
+    const { disabled = false } = this.props;
     return disabled;
   }
 

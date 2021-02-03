@@ -435,19 +435,19 @@ export default class Form extends DataSetComponent<FormProps> {
   get separateSpacing(): SeparateSpacing | undefined {
     const { separateSpacing } = this.props;
     if (separateSpacing && (separateSpacing.width || separateSpacing.height)) {
-      const separateSpacingCopy = { width: 0, height: 0 }
+      const separateSpacingCopy = { width: 0, height: 0 };
       if (separateSpacing.width) {
-        separateSpacingCopy.width = separateSpacing.width
+        separateSpacingCopy.width = separateSpacing.width;
       }
       if (separateSpacing.height) {
-        separateSpacingCopy.height = separateSpacing.height
+        separateSpacingCopy.height = separateSpacing.height;
       }
-      return separateSpacingCopy
+      return separateSpacingCopy;
     }
     return undefined;
   }
 
-  isDisabled() {
+  isDisabled(): boolean {
     return super.isDisabled() || this.context.disabled;
   }
 
@@ -687,7 +687,7 @@ export default class Form extends DataSetComponent<FormProps> {
             className={labelClassName}
             rowSpan={rowSpan}
             style={this.labelLayout === LabelLayout.horizontal
-              && separateSpacingWidth
+            && separateSpacingWidth
               ? { paddingLeft: pxToRem(separateSpacingWidth + 5) } : undefined}
           >
             <label title={isString(label) ? label : ''}>
@@ -715,7 +715,7 @@ export default class Form extends DataSetComponent<FormProps> {
           rowSpan={rowSpan}
           className={fieldClassName}
           style={this.labelLayout === LabelLayout.horizontal
-            && separateSpacingWidth
+          && separateSpacingWidth
             ? { paddingRight: pxToRem(separateSpacingWidth + 5) } : undefined}
         >
           {labelLayout === LabelLayout.vertical && (
@@ -736,12 +736,12 @@ export default class Form extends DataSetComponent<FormProps> {
     const labelWidthProcess = (widthInner: number) => {
       if (isNumber(widthInner)) {
         if (this.labelLayout === LabelLayout.horizontal) {
-          return separateSpacingWidth + widthInner
+          return separateSpacingWidth + widthInner;
         }
-        return widthInner
+        return widthInner;
       }
-      return separateSpacingWidth + defaultLabelWidth
-    }
+      return separateSpacingWidth + defaultLabelWidth;
+    };
     if (!noLabel) {
       for (let i = 0; i < columns; i++) {
         cols.push(
@@ -764,12 +764,12 @@ export default class Form extends DataSetComponent<FormProps> {
         tableStyle = {
           borderCollapse: 'separate',
           borderSpacing: `0rem ${pxToRem(this.separateSpacing.height)}`,
-        }
+        };
       } else {
         tableStyle = {
           borderCollapse: 'separate',
           borderSpacing: `${pxToRem(this.separateSpacing.width)} ${pxToRem(this.separateSpacing.height)}`,
-        }
+        };
       }
     }
 

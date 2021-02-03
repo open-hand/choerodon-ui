@@ -224,7 +224,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     }
   }
 
-  isDisabled() {
+  isDisabled(): boolean {
     const { disabled } = this.context;
     return disabled || super.isDisabled() || this.loading;
   }
@@ -272,8 +272,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const buttonIcon: any = this.loading ? (
       <Progress key="loading" type={ProgressType.loading} size={Size.small} />
     ) : (
-        icon && <Icon type={icon} />
-      );
+      icon && <Icon type={icon} />
+    );
     const hasString = Children.toArray(children).some(child => isString(child));
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();

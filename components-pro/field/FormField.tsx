@@ -822,7 +822,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return (
       (this.getProp('readOnly') as boolean) ||
       this.pristine ||
-      (this.isControlled && !this.props.onChange)
+      (this.isControlled && !this.props.onChange && !this.props.onInput)
     );
   }
 
@@ -1060,7 +1060,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         currency,
       };
       const value = this.getValue();
-      return formatCurrency(value, lang, formatOptions)
+      return formatCurrency(value, lang, formatOptions);
     }
   }
 
@@ -1179,6 +1179,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return v;
   }
 
+  isMultipleBlockDisabled(_v): boolean {
+    return this.isDisabled();
+  }
+
   renderMultipleValues(readOnly?: boolean) {
     const values = this.getValues();
     const valueLength = values.length;
@@ -1196,25 +1200,27 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       `${prefixCls}-multiple-block`,
     );
     this.mutipleValidateMessageLength = 0;
-    const tags = values.slice(0, maxTagCount).map(v => {
+    const tags = values.slice(0, maxTagCount).map((v, index) => {
       const key = this.getValueKey(v);
       const repeat = repeats.get(key) || 0;
       const text = range ? this.renderRangeValue(true, v, repeat) : this.processRenderer(v, repeat);
       repeats.set(key, repeat + 1);
       if (!isNil(text)) {
         const validationResult = validationResults.find(error => error.value === v);
+        const disabled = this.isMultipleBlockDisabled(v);
         const className = classNames(
           {
             [`${prefixCls}-multiple-block-invalid`]: validationResult,
+            [`${prefixCls}-multiple-block-disabled`]: disabled,
           },
-          blockClassName,
+          `${prefixCls}-multiple-block`,
         );
         const validationMessage =
           validationResult && this.renderValidationMessage(validationResult);
-        if(validationMessage){
-            this.mutipleValidateMessageLength++
+        if (validationMessage) {
+          this.mutipleValidateMessageLength++;
         }
-        const closeBtn = !this.isDisabled() && !this.isReadOnly() && (
+        const closeBtn = !disabled && !this.isReadOnly() && (
           <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />
         );
         const inner = readOnly ? (
@@ -1228,7 +1234,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         return (
           <Tooltip
             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-            key={`${key}-${repeat}`}
+            key={String(index)}
             title={validationMessage}
             theme="light"
             placement="bottomLeft"
@@ -1292,7 +1298,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return !invalid;
   }
 
-  isDisabled() {
+  isDisabled(): boolean {
     const { disabled } = this.context;
     if (disabled || this.getProp('disabled')) {
       return true;
@@ -1362,7 +1368,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           <Tooltip
             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
             title={
-              (!!(this.multiple && this.getValues().length) && !customValidator || this.mutipleValidateMessageLength  > 0) ||
+              (!!(this.multiple && this.getValues().length) && !customValidator || this.mutipleValidateMessageLength > 0) ||
               this.isValidationMessageHidden(validationMessage)
                 ? null
                 : validationMessage
