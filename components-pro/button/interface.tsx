@@ -1,9 +1,8 @@
 export {
-    ButtonProps,
+  ButtonProps,
 } from './Button';
 export {
-    ButtonColor,
-    FuncType,
-    ButtonWaitType,
-    ButtonType,
-} from './enum'
+  ButtonColor,
+  FuncType,
+  ButtonType,
+} from './enum';

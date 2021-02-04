@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Select`: 新增 selectAllButton 属性。
 - 🌟 `<pro>SelectBox`:实现 optionsFilter searchable 属性。
+- 🌟 `<pro>TextField`: 新增 valueChangeAction、wait、waitType 属性。
 - 💄 `<pro>Trigger`: 优化性能。
 - 💄 `<pro>Table`: boolean 类型的查询字段默认显示为下拉框。
 - 🐞 `<pro>Table`: 修复过滤条多语言问题。

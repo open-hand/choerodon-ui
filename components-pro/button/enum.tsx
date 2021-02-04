@@ -21,7 +21,3 @@ export const enum ButtonType {
   reset = 'reset',
 }
 
-export const enum ButtonWaitType {
-  throttle = 'throttle',
-  debounce = 'debounce',
-}
