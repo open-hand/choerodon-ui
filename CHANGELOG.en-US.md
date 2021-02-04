@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>Select`: Added `selectAllButton` property.
 - 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
 - 💄 `<pro>Trigger`: Optimize the performance.
+- 💄 `<pro>Table`: The query field of boolean type is displayed as `Select` by default.
 
 ## 1.0.0
 

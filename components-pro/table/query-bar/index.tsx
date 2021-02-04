@@ -1,11 +1,4 @@
-import React, {
-  cloneElement,
-  Component,
-  isValidElement,
-  MouseEventHandler,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
 import isObject from 'lodash/isObject';
@@ -22,16 +15,16 @@ import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
 import Table, {
   Buttons,
+  DynamicFilterBarConfig,
   SummaryBar,
   SummaryBarHook,
   TableButtonProps,
   TableQueryBarHook,
   TableQueryBarHookProps,
-  DynamicFilterBarConfig,
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
 import { ButtonType } from '../../button/enum';
-import { DataSetStatus, FieldType, ExportMode } from '../../data-set/enum';
+import { DataSetStatus, ExportMode, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
 import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
@@ -597,7 +590,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           list.push(
             isValidElement(element)
               ? cloneElement(element, props)
-              : cloneElement(getEditorByField(field, queryBar === TableQueryBarType.filterBar), {
+              : cloneElement(getEditorByField(field, true, queryBar === TableQueryBarType.filterBar), {
                 ...props,
                 ...(isObject(element) ? element : {}),
               }),

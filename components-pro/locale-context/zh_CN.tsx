@@ -46,6 +46,8 @@ const locale: Locale = {
     whether_delete_filter: '是否删除筛选记录',
     filter_name: '筛选名称',
     please_enter: '请输入',
+    query_option_yes: '是',
+    query_option_no: '否',
   },
   Pagination: {
     page: '页',

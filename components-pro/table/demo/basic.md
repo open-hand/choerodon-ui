@@ -148,6 +148,7 @@ class App extends React.Component {
       },
     },
     queryFields: [
+      { name: 'enable', type: 'boolean', label: '是否开启' },
       { name: 'name', type: 'string', label: '姓名', defaultValue: 'Hugh' },
       { name: 'age', type: 'number', label: '年龄' },
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
