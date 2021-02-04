@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/month-picker/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,uB","sourcesContent":["import MonthPicker from './MonthPicker';\n\nexport default MonthPicker;\n"]}

@@ -6,7 +6,12 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'first-name', type: 'string', defaultValue: 'Zhangsan', required: true },
+      {
+        name: 'first-name',
+        type: 'string',
+        defaultValue: 'Zhangsan',
+        required: true,
+      },
     ],
   });
 
@@ -15,7 +20,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

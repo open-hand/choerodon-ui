@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/check-box/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,oB","sourcesContent":["import ObserverCheckBox from './CheckBox';\n\nexport default ObserverCheckBox;\n"]}

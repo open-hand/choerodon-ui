@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/rc-components/tree/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AAAA;;AACA;;eAGe,gB","sourcesContent":["import Tree, { TreeProps } from './Tree';\nimport TreeNode, { TreeNodeProps } from './TreeNode';\n\nexport { TreeNode, TreeProps, TreeNodeProps };\nexport default Tree;\n"]}

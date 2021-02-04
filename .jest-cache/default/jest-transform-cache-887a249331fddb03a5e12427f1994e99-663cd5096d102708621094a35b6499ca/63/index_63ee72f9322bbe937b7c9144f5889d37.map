@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/email-field/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,sB","sourcesContent":["import EmailField from './EmailField';\n\nexport default EmailField;\n"]}

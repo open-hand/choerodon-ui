@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/rc-components/dialog/index.tsx"],"names":[],"mappings":";;;;;;;;;AACA;;AADA;eAGe,sB","sourcesContent":["// export this package's api\nimport DialogWrap from './DialogWrap';\n\nexport default DialogWrap;\n"]}

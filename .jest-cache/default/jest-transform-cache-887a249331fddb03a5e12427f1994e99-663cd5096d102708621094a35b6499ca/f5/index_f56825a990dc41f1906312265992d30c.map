@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/statistic/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;AACA;;AAEA,sBAAU,SAAV,GAAsB,qBAAtB;eAEe,qB","sourcesContent":["import Statistic from './Statistic';\nimport Countdown from './Countdown';\n\nStatistic.Countdown = Countdown;\n\nexport default Statistic;\n"]}

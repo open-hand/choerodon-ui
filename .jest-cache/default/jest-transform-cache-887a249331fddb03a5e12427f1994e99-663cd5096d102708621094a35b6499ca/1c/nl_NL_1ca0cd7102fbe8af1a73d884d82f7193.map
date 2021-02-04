@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/nl_NL.tsx"],"names":[],"mappings":";;;;;;;;;AACA;;AADA;eAGe,iB","sourcesContent":["/* eslint-disable camelcase */\nimport nl_NL from '../../date-picker/locale/nl_NL';\n\nexport default nl_NL;\n"]}

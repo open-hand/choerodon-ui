@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/fi_FI.tsx"],"names":[],"mappings":";;;;;;;;;AACA;;AADA;eAGe,iB","sourcesContent":["/* eslint-disable camelcase */\nimport fi_FI from '../../date-picker/locale/fi_FI';\n\nexport default fi_FI;\n"]}

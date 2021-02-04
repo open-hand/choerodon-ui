@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/progress/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,oB","sourcesContent":["import Progress from './Progress';\n\nexport default Progress;\n"]}

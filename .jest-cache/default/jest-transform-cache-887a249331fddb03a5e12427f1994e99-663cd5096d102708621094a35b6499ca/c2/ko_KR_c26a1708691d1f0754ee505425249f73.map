@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/ko_KR.tsx"],"names":[],"mappings":";;;;;;;;;AACA;;AADA;eAGe,iB","sourcesContent":["/* eslint-disable camelcase */\nimport ko_KR from '../../date-picker/locale/ko_KR';\n\nexport default ko_KR;\n"]}

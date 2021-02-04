@@ -3,7 +3,14 @@ import ReactDOM from 'react-dom';
 import { DataSet, Transfer, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
-  console.log('[dataset newValue]', value, '[oldValue]', oldValue, '[record.get(name)]', record.get(name));
+  console.log(
+    '[dataset newValue]',
+    value,
+    '[oldValue]',
+    oldValue,
+    '[record.get(name)]',
+    record.get(name),
+  );
 }
 
 const { Option } = Transfer;
@@ -16,10 +23,12 @@ const optionData = [
   { text: 'Shao', value: 'shao' },
 ];
 
-const data = [{
-  'first-name': 'zhangsan',
-  'last-name': 'wu',
-}];
+const data = [
+  {
+    'first-name': 'zhangsan',
+    'last-name': 'wu',
+  },
+];
 
 class App extends React.Component {
   optionDs = new DataSet({
@@ -30,7 +39,14 @@ class App extends React.Component {
   ds = new DataSet({
     data,
     fields: [
-      { name: 'first-name', type: 'string', label: '名', textField: 'text', valueField: 'value', options: this.optionDs },
+      {
+        name: 'first-name',
+        type: 'string',
+        label: '名',
+        textField: 'text',
+        valueField: 'value',
+        options: this.optionDs,
+      },
       { name: 'last-name', type: 'string', label: '姓' },
     ],
     events: {
@@ -52,7 +68,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

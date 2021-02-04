@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/select/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,kB","sourcesContent":["import ObserverSelect from './Select';\n\nexport default ObserverSelect;\n"]}

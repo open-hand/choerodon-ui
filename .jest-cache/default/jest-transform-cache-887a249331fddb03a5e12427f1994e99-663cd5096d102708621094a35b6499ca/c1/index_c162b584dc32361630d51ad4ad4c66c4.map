@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/core/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,yB","sourcesContent":["import ViewComponent from './ViewComponent';\n\nexport default ViewComponent;\n"]}

@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/fr_BE.tsx"],"names":[],"mappings":";;;;;;;;;AACA;;AADA;eAGe,iB","sourcesContent":["/* eslint-disable camelcase */\nimport fr_BE from '../../date-picker/locale/fr_BE';\n\nexport default fr_BE;\n"]}

@@ -1,1 +1,0 @@
-{"version":3,"sources":["animate/index.jsx"],"names":["Animate"],"mappings":";;;;;;;;;AAAA,IAAA,QAAA,GAAA,sBAAA,CAAA,OAAA,CAAA,WAAA,CAAA,CAAA;;eACeA,QAAAA,CAAAA,SAAAA,C","sourcesContent":["import Animate from './Animate';\nexport default Animate;\n"]}

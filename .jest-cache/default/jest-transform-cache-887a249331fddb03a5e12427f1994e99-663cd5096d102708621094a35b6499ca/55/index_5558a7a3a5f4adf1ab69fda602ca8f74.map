@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/option/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,kB","sourcesContent":["import Option from './Option';\n\nexport default Option;\n"]}

@@ -4,23 +4,28 @@ import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
 
 const { Option } = Select;
 
-const data = [{
-  'first-name': 'zhangsan',
-}];
+const data = [
+  {
+    'first-name': 'zhangsan',
+  },
+];
 
 class App extends React.Component {
   ds = new DataSet({
     data,
-    fields: [
-      { name: 'first-name', readOnly: true },
-    ],
+    fields: [{ name: 'first-name', readOnly: true }],
   });
 
   render() {
     return (
       <Row gutter={10}>
         <Col span={12}>
-          <Select name="last-name" placeholder="请选择" readOnly defaultValue="jack">
+          <Select
+            name="last-name"
+            placeholder="请选择"
+            readOnly
+            defaultValue="jack"
+          >
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
             <Option value="wu">Wu</Option>
@@ -34,7 +39,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

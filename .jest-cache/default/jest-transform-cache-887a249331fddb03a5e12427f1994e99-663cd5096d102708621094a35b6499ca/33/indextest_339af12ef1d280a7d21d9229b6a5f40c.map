@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.test.js"],"names":["describe","Switch"],"mappings":";;;;AAAA;;AACA;;AAEAA,QAAQ,CAAC,QAAD,EAAW,YAAM;AACvB,6BAAUC,YAAV;AACD,CAFO,CAAR","sourcesContent":["import Switch from '..';\nimport focusTest from '../../../tests/shared/focusTest';\n\ndescribe('Switch', () => {\n  focusTest(Switch);\n});\n"]}

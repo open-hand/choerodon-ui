@@ -31,14 +31,6 @@ class App extends React.Component {
         valueField: 'value',
         options: this.optionDs,
       },
-      { name: 'date.startDate', type: 'date', label: '开始日期' },
-      {
-        name: 'sexMultiple',
-        type: 'string',
-        label: '性别（多值）',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-        multiple: true,
-      },
     ],
     fields: [
       { name: 'userid', type: 'string', label: '编号', required: true },
@@ -115,7 +107,7 @@ class App extends React.Component {
         dataSet={this.ds}
         queryBar={this.renderBar}
         columns={this.columns}
-        queryFieldsLimit={3}
+        queryFieldsLimit={2}
       />
     );
   }

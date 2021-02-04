@@ -23,3 +23,5 @@ order: 0
 **处理方案** 
 
 > 根据具体场景及需求使用基础表格或大数据表格
+
+> 相关教程：[Table](/zh/tutorials/table-advance)

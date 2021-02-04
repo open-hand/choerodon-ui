@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/validator/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,oB","sourcesContent":["import Validator from './Validity';\n\nexport default Validator;\n"]}

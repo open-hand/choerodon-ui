@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/timeline/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAKe,oB","sourcesContent":["import Timeline from './Timeline';\n\nexport { TimelineProps } from './Timeline';\nexport { TimeLineItemProps } from './TimelineItem';\n\nexport default Timeline;\n"]}

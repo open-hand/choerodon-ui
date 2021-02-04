@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.jsx"],"names":["module","exports","require"],"mappings":";;AAAAA,MAAM,CAACC,OAAP,GAAiBC,OAAO,CAAC,UAAD,CAAxB","sourcesContent":["module.exports = require('./Switch');\n"]}

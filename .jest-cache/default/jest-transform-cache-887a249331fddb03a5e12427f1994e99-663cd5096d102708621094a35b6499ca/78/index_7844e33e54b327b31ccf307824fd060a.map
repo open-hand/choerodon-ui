@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/get-config/index.tsx"],"names":[],"mappings":";;;;;;;AAAA;;eAEe,oB","sourcesContent":["import { getConfig } from '../configure';\n\nexport default getConfig;\n"]}

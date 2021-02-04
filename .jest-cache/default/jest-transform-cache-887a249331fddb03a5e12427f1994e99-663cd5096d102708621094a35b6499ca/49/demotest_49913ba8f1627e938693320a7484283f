@@ -1,9 +1,0 @@
-b9d11d29f18b3c2e0b19afcfa0776b18
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
-
-(0, _demoTest["default"])('card');
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsTUFBVCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBkZW1vVGVzdCBmcm9tICcuLi8uLi8uLi90ZXN0cy9zaGFyZWQvZGVtb1Rlc3QnO1xuXG5kZW1vVGVzdCgnY2FyZCcpO1xuIl19

@@ -90,7 +90,6 @@ class App extends React.Component {
         buttons={['add']}
         dataSet={this.ds}
         queryBar="professionalBar"
-        border={false}
         columns={this.columns}
         queryFieldsLimit={2}
       />

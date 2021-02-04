@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/calendar/locale/ar_EG.tsx"],"names":[],"mappings":";;;;;;;;;AACA;;AADA;eAGe,iB","sourcesContent":["/* eslint-disable camelcase */\nimport ar_EG from '../../date-picker/locale/ar_EG';\n\nexport default ar_EG;\n"]}

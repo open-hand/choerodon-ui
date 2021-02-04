@@ -1,9 +1,0 @@
-a7fd2fb0102ae36c4134214ce6cb2d38
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
-
-(0, _demoTest["default"])('icon-picker-pro');
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsaUJBQVQiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZGVtb1Rlc3QgZnJvbSAnLi4vLi4vLi4vdGVzdHMvc2hhcmVkL2RlbW9UZXN0JztcblxuZGVtb1Rlc3QoJ2ljb24tcGlja2VyLXBybycpO1xuIl19

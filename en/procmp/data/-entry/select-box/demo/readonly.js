@@ -12,9 +12,11 @@ const optionData = [
   { text: 'Shao', value: 'shao' },
 ];
 
-const data = [{
-  name: 'zhangsan',
-}];
+const data = [
+  {
+    name: 'zhangsan',
+  },
+];
 
 class App extends React.Component {
   optionDs = new DataSet({
@@ -25,7 +27,13 @@ class App extends React.Component {
   ds = new DataSet({
     data,
     fields: [
-      { name: 'name', textField: 'text', valueField: 'value', options: this.optionDs, readOnly: true },
+      {
+        name: 'name',
+        textField: 'text',
+        valueField: 'value',
+        options: this.optionDs,
+        readOnly: true,
+      },
     ],
   });
 
@@ -47,7 +55,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/form/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAKe,gB","sourcesContent":["import Form from './Form';\n\nexport { FormProps, FormComponentProps, FormCreateOption, ValidateCallback, ValidationRule } from './Form';\nexport { FormItemProps } from './FormItem';\n\nexport default Form;\n"]}

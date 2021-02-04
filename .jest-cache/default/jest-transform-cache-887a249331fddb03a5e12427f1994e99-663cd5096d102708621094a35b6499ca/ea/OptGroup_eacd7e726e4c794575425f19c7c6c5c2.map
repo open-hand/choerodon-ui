@@ -1,1 +1,0 @@
-{"version":3,"sources":["OptGroup.jsx"],"names":["OptGroup","Component"],"mappings":";;;;;;;;;;;;;;;;;;;AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAEqBA,Q;;;;;;;;;;;;;EAAiBC,gB;;;iCAAjBD,Q,sBACO,I","sourcesContent":["import React, { Component } from 'react';\n\nexport default class OptGroup extends Component {\n  static isSelectOptGroup = true;\n}\n"]}

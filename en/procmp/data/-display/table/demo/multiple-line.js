@@ -12,12 +12,6 @@ class App extends React.Component {
     pageSize: 5,
     fields: [
       {
-        name: 'userid',
-        type: 'string',
-        label: '编号',
-        required: true,
-      },
-      {
         name: 'name',
         type: 'intl',
         label: '姓名',
@@ -58,14 +52,6 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
         required: true,
       },
-      {
-        name: 'sexMultiple',
-        type: 'string',
-        label: '性别（多值）',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-        multiple: true,
-      },
-      { name: 'enable', type: 'boolean', label: '是否开启' },
     ],
     events: {
       submit: ({ data }) => console.log('submit data', data),
@@ -87,10 +73,7 @@ class App extends React.Component {
     const buttons = ['add', 'save', 'delete', 'reset', this.toJSONButton];
     return (
       <Table key="user" buttons={buttons} dataSet={this.userDs}>
-        <Column name="userid" />
         <Column name="age" />
-        <Column name="enable" />
-        <Column name="sexMultiple" />
         <Column name="name" editor />
         <Column name="code" editor width={300} />
       </Table>

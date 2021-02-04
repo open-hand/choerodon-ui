@@ -164,7 +164,7 @@ class App extends React.Component {
         expandIcon={expandicon}
         expandedRowRenderer={expandedRowRenderer}
       >
-        <Column name="text" renderer={iconRenderer} width={450} />
+        <Column name="text" renderer={iconRenderer} width={250} />
         <Column name="url" />
         <Column name="ischecked" />
         <Column name="expand" />

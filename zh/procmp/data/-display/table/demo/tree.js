@@ -120,10 +120,10 @@ class App extends React.Component {
         border={border}
         expandedRowRenderer={expandedRender && expandedRowRenderer}
       >
-        <Column name="text" renderer={iconRenderer} width={450} />
-        <Column name="url" />
-        <Column name="ischecked" />
-        <Column name="expand" />
+        <Column name="text" editor renderer={iconRenderer} width={250} />
+        <Column name="url" editor />
+        <Column name="ischecked" editor />
+        <Column name="expand" editor />
         <Column header="权限设置" width={150} align="center" />
       </Table>
     );

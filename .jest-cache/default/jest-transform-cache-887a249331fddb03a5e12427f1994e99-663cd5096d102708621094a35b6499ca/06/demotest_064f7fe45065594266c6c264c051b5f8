@@ -1,9 +1,0 @@
-8d483b0656c6ff67c1664d00a47b58c2
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
-
-(0, _demoTest["default"])('text-area-pro');
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsZUFBVCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBkZW1vVGVzdCBmcm9tICcuLi8uLi8uLi90ZXN0cy9zaGFyZWQvZGVtb1Rlc3QnO1xuXG5kZW1vVGVzdCgndGV4dC1hcmVhLXBybycpO1xuIl19

@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/version/index.tsx"],"names":[],"mappings":";;;;;;;AAAA;;eAEe,gB","sourcesContent":["import { version } from '../../package.json';\n\nexport default version;\n"]}

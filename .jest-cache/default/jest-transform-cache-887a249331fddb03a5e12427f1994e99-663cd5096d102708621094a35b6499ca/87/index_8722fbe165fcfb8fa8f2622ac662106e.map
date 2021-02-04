@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/grid/index.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;AAAA;;AACA","sourcesContent":["import Row from 'choerodon-ui/lib/grid/row';\nimport Col from 'choerodon-ui/lib/grid/col';\n\nexport {\n  Row,\n  Col,\n};\n"]}

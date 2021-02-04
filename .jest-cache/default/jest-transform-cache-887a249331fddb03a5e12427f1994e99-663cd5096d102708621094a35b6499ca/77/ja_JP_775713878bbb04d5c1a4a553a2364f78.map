@@ -1,1 +1,0 @@
-{"version":3,"sources":["ja_JP.jsx"],"names":["pleaseSelect"],"mappings":";;;;;;eAAe;AACbA,EAAAA,YAAY,EAAC;AADA,C","sourcesContent":["export default {\n  pleaseSelect:'選んでください'\n};\n"]}

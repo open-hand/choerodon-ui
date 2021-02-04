@@ -123,6 +123,51 @@
       "screenshot": "",
       "height": 169,
       "category": "pro"
+    },
+    {
+      "filename": "filter.js",
+      "title": {
+        "zh": "过滤",
+        "en": "Filter"
+      },
+      "description": {
+        "zh": "通过属性 optionsFilter 过滤选项。\n",
+        "en": "Through the property `optionsFilter` the options will be filtered.\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "height": 219,
+      "category": "pro"
+    },
+    {
+      "filename": "optionRenderer.js",
+      "title": {
+        "zh": "optionRenderer 输入属性",
+        "en": "optionRenderer Input Property"
+      },
+      "description": {
+        "zh": "通过属性 optionRenderer 自定义选项。\n",
+        "en": "Use `optionRenderer` input property.\n"
+      },
+      "order": 9,
+      "screenshot": "",
+      "height": 219,
+      "category": "pro"
+    },
+    {
+      "filename": "searchable.js",
+      "title": {
+        "zh": "可搜索",
+        "en": "Searchable"
+      },
+      "description": {
+        "zh": "可搜索。\n",
+        "en": "Searchable.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 219,
+      "category": "pro"
     }
   ]
 }

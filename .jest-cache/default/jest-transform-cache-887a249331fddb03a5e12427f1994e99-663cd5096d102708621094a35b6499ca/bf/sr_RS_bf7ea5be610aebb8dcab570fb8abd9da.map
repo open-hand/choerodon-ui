@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/sr_RS.tsx"],"names":[],"mappings":";;;;;;AAAA,IAAM,MAAM,GAAG;AACb,EAAA,WAAW,EAAE;AADA,CAAf;eAIe,M","sourcesContent":["const locale = {\n  placeholder: 'Izaberite vreme',\n};\n\nexport default locale;\n"]}

@@ -11,12 +11,12 @@
         "en": "Basic"
       },
       "description": {
-        "zh": "最简单的表格。\n",
+        "zh": "最简单的表格示例。\n",
         "en": "The most sample usage.\n"
       },
       "order": 0,
       "screenshot": "",
-      "height": 480,
+      "height": 450,
       "category": "pro"
     },
     {
@@ -26,8 +26,8 @@
         "en": "Cascade"
       },
       "description": {
-        "zh": "级联。\n",
-        "en": "Cascade.\n"
+        "zh": "头行场景，级联列表。子表格依赖于头表格参数查询。使用 DataSet children 属性关联数据集。\n",
+        "en": "Header scene, cascading list. The sub-table depends on the head table parameter query. Use the DataSet children property to associate the dataset.\n"
       },
       "order": 1,
       "screenshot": "",
@@ -41,7 +41,7 @@
         "en": "Pristine"
       },
       "description": {
-        "zh": "显示原始值。\n",
+        "zh": "使用 pristine 属性控制修改后仍显示原始值。\n",
         "en": "Pristine.\n"
       },
       "order": 2,
@@ -56,12 +56,27 @@
         "en": "Inline Edit"
       },
       "description": {
-        "zh": "行内编辑。\n",
+        "zh": "editMode 为 inline 的单行编辑模式。\n",
         "en": "Inline Edit.\n"
       },
       "order": 3,
       "screenshot": "",
       "height": 454,
+      "category": "pro"
+    },
+    {
+      "filename": "custom-inline.js",
+      "title": {
+        "zh": "自定义行内编辑",
+        "en": "Custom inline"
+      },
+      "description": {
+        "zh": "通过 editor 自定义控制行内编辑\n",
+        "en": "Custom inline.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 425,
       "category": "pro"
     },
     {
@@ -71,12 +86,42 @@
         "en": "Tree Data"
       },
       "description": {
-        "zh": "树形数据。\n",
+        "zh": "树形 Table 的功能展示。\n",
         "en": "Tree Data.\n"
       },
-      "order": 4,
+      "order": 5,
       "screenshot": "",
       "height": 680,
+      "category": "pro"
+    },
+    {
+      "filename": "tree-async.js",
+      "title": {
+        "zh": "树形数据异步懒加载",
+        "en": "Tree Data"
+      },
+      "description": {
+        "zh": "点击展开图标时异步加载子数据。\n",
+        "en": "Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.onExpand event trigger\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 485,
+      "category": "pro"
+    },
+    {
+      "filename": "tree-async-paging.js",
+      "title": {
+        "zh": "树形数据异步分页",
+        "en": "Tree Data"
+      },
+      "description": {
+        "zh": "异步加载数据并对父亲节点进行分页处理。\n",
+        "en": "Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.onExpand event trigger，parent paging\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 485,
       "category": "pro"
     },
     {
@@ -86,10 +131,10 @@
         "en": "Grouped Columns"
       },
       "description": {
-        "zh": "组合列。\n",
+        "zh": "组合表头展示列信息。\n",
         "en": "Grouped Columns.\n"
       },
-      "order": 5,
+      "order": 8,
       "screenshot": "",
       "height": 540,
       "category": "pro"
@@ -101,10 +146,10 @@
         "en": "Grouped Rows"
       },
       "description": {
-        "zh": "组合行。\n",
+        "zh": "通过隐藏行实现行合并展示。\n",
         "en": "Grouped Rows.\n"
       },
-      "order": 5,
+      "order": 9,
       "screenshot": "",
       "height": 450,
       "category": "pro"
@@ -116,10 +161,10 @@
         "en": "Advanced Search Bar"
       },
       "description": {
-        "zh": "高级搜索条。\n",
+        "zh": "Table queryBar 设为 advancedBar 展示高级搜索条。\n",
         "en": "Advanced Search Bar.\n"
       },
-      "order": 6,
+      "order": 10,
       "screenshot": "",
       "height": 480,
       "ignores": ["theme1", "theme3"],
@@ -132,13 +177,44 @@
         "en": "Filter Bar"
       },
       "description": {
-        "zh": "过滤条。\n",
+        "zh": "Table queryBar 设为 bar 展示过滤条。\n",
         "en": "Filter Bar.\n"
       },
-      "order": 7,
+      "order": 11,
       "screenshot": "",
       "height": 558,
       "ignores": ["theme1", "theme3"],
+      "category": "pro"
+    },
+    {
+      "filename": "professional-bar.js",
+      "title": {
+        "zh": "专业搜索条",
+        "en": "Professional Search Bar"
+      },
+      "description": {
+        "zh": "Table queryBar 设为 professionalBar 展示专业搜索条。\n",
+        "en": "Professional Search Bar.\n"
+      },
+      "order": 12,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    },
+    {
+      "filename": "dyfilter-bar.js",
+      "title": {
+        "zh": "动态筛选条",
+        "en": "Dynamic filter bar"
+      },
+      "description": {
+        "zh": "Table queryBar 设为 filterBar，查询条件为无边框可动态配置筛选条，结合后端标准接口可实现筛选列表保存。\n",
+        "en": "There is no border to dynamically filter the bar, combined with the back-end standard interface to realize the preservation of the filter list.\n"
+      },
+      "order": 13,
+      "screenshot": "",
+      "height": 570,
+      "ignores": ["theme1", "theme3", "theme4"],
       "category": "pro"
     },
     {
@@ -148,12 +224,12 @@
         "en": "Customize Search Bar"
       },
       "description": {
-        "zh": "自定义搜索条。\n",
+        "zh": "queryBar 采用钩子类型自定义搜索条，预置搜索条组件可导出配合使用。\n",
         "en": "Customize Search Bar.\n"
       },
-      "order": 8,
+      "order": 14,
       "screenshot": "",
-      "height": 575,
+      "height": 625,
       "category": "pro"
     },
     {
@@ -163,27 +239,12 @@
         "en": "Customize Query DataSet"
       },
       "description": {
-        "zh": "自定义查询 DataSet。\n",
+        "zh": "自定义列表头部查询 DataSet，更灵活处理查询数据源逻辑。\n",
         "en": "Customize Query DataSet.\n"
       },
-      "order": 9,
+      "order": 15,
       "screenshot": "",
-      "height": 435,
-      "category": "pro"
-    },
-    {
-      "filename": "custom-inline.js",
-      "title": {
-        "zh": "自定义行内编辑",
-        "en": "Custom inline"
-      },
-      "description": {
-        "zh": "自定义行内编辑\n",
-        "en": "Custom inline.\n"
-      },
-      "order": 10,
-      "screenshot": "",
-      "height": 425,
+      "height": 485,
       "category": "pro"
     },
     {
@@ -193,27 +254,57 @@
         "en": "Spin"
       },
       "description": {
-        "zh": "Table Spin 受控。\n",
+        "zh": "Table Spin 受控与自定义渲染展示。\n",
         "en": "Table Spin.\n"
       },
-      "order": 11,
+      "order": 16,
       "screenshot": "",
-      "height": 525,
+      "height": 500,
       "category": "pro"
     },
     {
-      "filename": "tree-async.js",
+      "filename": "mobx-action.js",
       "title": {
-        "zh": "树形数据异步懒加载",
-        "en": "Tree Data"
+        "zh": "按钮受控",
+        "en": "Button controlled"
       },
       "description": {
-        "zh": "异步懒加载实现\n",
-        "en": "Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.onExpand event trigger\n"
+        "zh": "结合 mobx 处理一些按钮状态控制，避免在事件中使用 state 导致性能问题。\n",
+        "en": "Combined with mobx to handle some button state control.\n"
       },
-      "order": 12,
+      "order": 17,
       "screenshot": "",
       "height": 485,
+      "category": "pro"
+    },
+    {
+      "filename": "dynamic-editor.js",
+      "title": {
+        "zh": "动态配置字段编辑器",
+        "en": "Switch editor"
+      },
+      "description": {
+        "zh": "动态切换字段编辑器，根据字段`基础`的值来改变字段`性别`编辑器为 lov 或 select。\n",
+        "en": "Switch field editor to lov /select. based on other field values.\n"
+      },
+      "order": 18,
+      "screenshot": "",
+      "height": 290,
+      "category": "pro"
+    },
+    {
+      "filename": "autoHeight.js",
+      "title": {
+        "zh": "自适应高度",
+        "en": "AutoHeight"
+      },
+      "description": {
+        "zh": "通过 autoHeight 使得表格可以自适应容器高度，内容超出表内滚动。(需要父级元素非仅由 Table 撑开)。\n\nautoHeight 属性:\n\n| 类型 | 默认值 / 自定义 |\n| --- |  --- |\n| boolean | false |\n| boolean | true = { type: 'minHeight', diff: 80 } |\n| object | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数) } |\n",
+        "en": "AutoHeight.\n"
+      },
+      "order": 19,
+      "screenshot": "",
+      "height": 643,
       "category": "pro"
     },
     {
@@ -226,69 +317,9 @@
         "zh": "虚拟滚动，virtual 配合 height 使用。\n\n当前版本还有一些问题，拖动滚动不顺滑等，非必需情况（大数据需求并同时对功能性需求很高）下使用建议不使用。\n\n后续会不断完善此功能，感谢理解。\n",
         "en": "Virtual Scroll.\n"
       },
-      "order": 13,
+      "order": 20,
       "screenshot": "",
       "height": 488,
-      "category": "pro"
-    },
-    {
-      "filename": "mobx-action.js",
-      "title": {
-        "zh": "按钮受控",
-        "en": "Button controlled"
-      },
-      "description": {
-        "zh": "结合 mobx 处理一些按钮状态控制。\n",
-        "en": "Combined with mobx to handle some button state control.\n"
-      },
-      "order": 14,
-      "screenshot": "",
-      "height": 425,
-      "category": "pro"
-    },
-    {
-      "filename": "dynamic-editor.js",
-      "title": {
-        "zh": "切换字段编辑器",
-        "en": "Switch editor"
-      },
-      "description": {
-        "zh": "切换字段编辑器，根据其他字段值决定为 lov / select.\n",
-        "en": "Switch field editor to lov /select. based on other field values.\n"
-      },
-      "order": 15,
-      "screenshot": "",
-      "height": 290,
-      "category": "pro"
-    },
-    {
-      "filename": "tree-async-paging.js",
-      "title": {
-        "zh": "树形数据异步分页",
-        "en": "Tree Data"
-      },
-      "description": {
-        "zh": "异步懒加载实现，以及对于父亲节点分页处理\n",
-        "en": "Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.onExpand event trigger，parent paging\n"
-      },
-      "order": 16,
-      "screenshot": "",
-      "height": 485,
-      "category": "pro"
-    },
-    {
-      "filename": "autoHeight.js",
-      "title": {
-        "zh": "自适应高度",
-        "en": "AutoHeight"
-      },
-      "description": {
-        "zh": "自适应高度(需要父级元素非仅由 Table 撑开)。\n\nautoHeight:\n\n| 类型 | —— | 默认值 / 自定义 |\n| --- | --- |  --- |\n| boolean |  | false |\n| boolean |  | true = { type: 'minHeight', diff: 80 } |\n| object |  | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数) } |\n",
-        "en": "AutoHeight.\n"
-      },
-      "order": 17,
-      "screenshot": "",
-      "height": 643,
       "category": "pro"
     },
     {
@@ -298,10 +329,10 @@
         "en": "useMouseBatchChoose"
       },
       "description": {
-        "zh": "点击开始的rowbox,将鼠标移动到结束的rowbox上,对两个rowbox之间的选项进行选中。\n",
+        "zh": "在 rowbox 列上鼠标保持按下拖拉,对两个 rowbox 之间的行进行批量勾选。\n",
         "en": "Click the starting rowbox, move the mouse to the ending rowbox, and select the options between the two rowboxes.\n"
       },
-      "order": 18,
+      "order": 21,
       "screenshot": "",
       "height": 680,
       "ignores": ["theme1", "theme3", "theme4"],
@@ -314,10 +345,10 @@
         "en": "Drag"
       },
       "description": {
-        "zh": "点击对应按钮查看不同类型拖拽示例。\n",
+        "zh": "拖拽集成，点击对应按钮查看不同类型拖拽示例。\n",
         "en": " Click on the corresponding button to see different types of drag and drop examples.\n"
       },
-      "order": 19,
+      "order": 22,
       "screenshot": "",
       "height": 535,
       "category": "pro"
@@ -329,10 +360,10 @@
         "en": "headerEditor"
       },
       "description": {
-        "zh": "可以编辑修改表头，现在支持列的header编辑以及列的位置切换修改。能够结合拖拽以及编辑触发对应的事件,目前只支持带有name的列，排序和table header 修改，如果header是字符串则可以修改。\n",
+        "zh": "支持对列 header 编辑以及列的位置拖拽修改，触发对应的事件获取信息进行处理。\n",
         "en": "you can edit the header of table, now we support edit with the order of header and the tiltle of header to edit . The event would be active when drag the column and edit the header.\n"
       },
-      "order": 20,
+      "order": 23,
       "screenshot": "",
       "height": 535,
       "category": "pro"
@@ -344,72 +375,41 @@
         "en": "Drag Render"
       },
       "description": {
-        "zh": "可以通过rowDragRender里面方法进行对于整体的拖拽控制，比如droppableProps，droppableProps 控制是否可以拖动和放入等,可以查看react-beautiful-dnd。\n",
+        "zh": "可以通过 rowDragRender 里面方法进行对于整体的拖拽控制，如 droppableProps，droppableProps 控制是否可以拖动和放入等。\n 更多查看 react-beautiful-dnd。\n",
         "en": "You can use the rowDragRender method to control the overall drag and drop, such as droppableProps, droppableProps control whether you can drag and drop, etc., you can check react-beautiful-dnd.\n"
       },
-      "order": 21,
+      "order": 24,
       "screenshot": "",
-      "height": 535,
+      "height": 500,
       "category": "pro"
     },
     {
       "filename": "summary-bars.js",
       "title": {
-        "zh": "汇总条",
+        "zh": "头部汇总条",
         "en": "Summary Bar"
       },
       "description": {
-        "zh": "头部汇总条。\n",
+        "zh": "对字段进行头部汇总展示。\n",
         "en": "Summary Bar.\n"
       },
-      "order": 22,
+      "order": 25,
       "screenshot": "",
       "height": 450,
       "ignores": ["theme4"],
       "category": "pro"
     },
     {
-      "filename": "professional-bar.js",
-      "title": {
-        "zh": "专业搜索条",
-        "en": "Professional Search Bar"
-      },
-      "description": {
-        "zh": "专业搜索条。\n",
-        "en": "Professional Search Bar.\n"
-      },
-      "order": 23,
-      "screenshot": "",
-      "height": 480,
-      "category": "pro"
-    },
-    {
       "filename": "multiple-line.js",
       "title": {
-        "zh": "单列多行编辑",
+        "zh": "单列多行编辑展示",
         "en": "Multiple Line Editor"
       },
       "description": {
-        "zh": "单列一行多字段编辑。\n",
+        "zh": "单元格内多字段分行编辑展示。\n",
         "en": "Multiple Line Editor\n"
       },
-      "order": 23,
-      "screenshot": "",
-      "height": 570,
-      "ignores": ["theme1", "theme3", "theme4"],
-      "category": "pro"
-    },
-    {
-      "filename": "dyfilter-bar.js",
-      "title": {
-        "zh": "动态筛选条",
-        "en": "Dynamic filter bar"
-      },
-      "description": {
-        "zh": "无边框可动态筛选条，结合后端标准接口可实现筛选列表保存。\n",
-        "en": "There is no border to dynamically filter the bar, combined with the back-end standard interface to realize the preservation of the filter list.\n"
-      },
-      "order": 24,
+      "order": 26,
       "screenshot": "",
       "height": 570,
       "ignores": ["theme1", "theme3", "theme4"],

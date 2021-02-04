@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/table/TableContext.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAGe,kBAAM,aAAN,CAAgD,EAAhD,C","sourcesContent":["import React from 'react';\nimport TableStore from './TableStore';\n\nexport default React.createContext<{ tableStore: TableStore }>({} as any);\n"]}

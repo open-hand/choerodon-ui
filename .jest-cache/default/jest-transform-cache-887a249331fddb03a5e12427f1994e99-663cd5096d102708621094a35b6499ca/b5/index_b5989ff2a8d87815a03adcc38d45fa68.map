@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/currency/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,oB","sourcesContent":["import Currency from './Currency';\n\nexport default Currency;\n"]}

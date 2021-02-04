@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/year-picker/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,sB","sourcesContent":["import YearPicker from './YearPicker';\n\nexport default YearPicker;\n"]}

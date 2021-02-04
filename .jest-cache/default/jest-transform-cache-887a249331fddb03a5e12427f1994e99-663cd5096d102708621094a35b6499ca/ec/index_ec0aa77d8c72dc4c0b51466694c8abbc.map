@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/cascader/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,oB","sourcesContent":["import ObserverCascader from './Cascader';\n\nexport default ObserverCascader;\n"]}

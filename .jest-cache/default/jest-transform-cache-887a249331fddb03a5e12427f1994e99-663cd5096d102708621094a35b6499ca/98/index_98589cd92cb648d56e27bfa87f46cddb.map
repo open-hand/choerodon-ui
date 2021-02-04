@@ -1,1 +1,0 @@
-{"version":3,"sources":["col/index.js"],"names":["Col"],"mappings":";;;;;;;AAAA,IAAA,KAAA,GAAA,OAAA,CAAA,SAAA,CAAA;;eACeA,KAAAA,CAAAA,G","sourcesContent":["import { Col } from '../grid';\nexport default Col;\n"]}

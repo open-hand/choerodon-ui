@@ -50,7 +50,12 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col span={8}>
-          <Select dataSet={this.ds} name="first-name" searchable searchMatcher={searchMatcher}>
+          <Select
+            dataSet={this.ds}
+            name="first-name"
+            searchable
+            searchMatcher={searchMatcher}
+          >
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
             <Option value="zhangsan">Zhangsan</Option>

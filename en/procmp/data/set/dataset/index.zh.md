@@ -26,7 +26,7 @@ abstract: true
 | autoLocateAfterRemove | 当前数据被删除后自动定位到其他记录 | boolean | true |
 | validateBeforeQuery | 查询时是否校验查询字段或查询数据集 | boolean | true |
 | selection | 选择的模式, 可选值: false 'multiple' 'single' | boolean \| string | multiple |
-| modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | false |
+| modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | true |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
 | paging | 是否分页，`server` 主要为 Table 的 Tree 模式服务，约定 total 为根节点数目，index 的定位都是基于根节点，为 `server` 时候保证同时存在 idField 和 parentField (根节点为空或者 undefined) 不然表现和原有版本一致 | boolean \| 'server'| true |

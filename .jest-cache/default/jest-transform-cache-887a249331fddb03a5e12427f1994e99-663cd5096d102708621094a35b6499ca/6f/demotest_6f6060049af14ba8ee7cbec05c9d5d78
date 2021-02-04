@@ -1,9 +1,0 @@
-35092da2af2220d188596111627c3dc2
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
-
-(0, _demoTest["default"])('back-top');
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsVUFBVCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBkZW1vVGVzdCBmcm9tICcuLi8uLi8uLi90ZXN0cy9zaGFyZWQvZGVtb1Rlc3QnO1xuXG5kZW1vVGVzdCgnYmFjay10b3AnKTtcbiJdfQ==

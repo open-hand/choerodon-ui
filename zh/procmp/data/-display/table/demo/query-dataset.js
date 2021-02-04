@@ -47,8 +47,18 @@ class App extends React.Component {
       { name: 'userid', type: 'string', label: '编号', required: true },
       { name: 'name', type: 'string', label: '姓名' },
       { name: 'age', type: 'number', label: '年龄', max: 100, step: 1 },
-      { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
-      { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
+      {
+        name: 'sex',
+        type: 'string',
+        label: '性别',
+        lookupCode: 'HR.EMPLOYEE_GENDER',
+      },
+      {
+        name: 'date.startDate',
+        type: 'date',
+        label: '开始日期',
+        defaultValue: new Date(),
+      },
       {
         name: 'sexMultiple',
         type: 'string',
@@ -58,14 +68,15 @@ class App extends React.Component {
       },
     ],
     events: {
-      query: ({ params, data }) => console.log('customize qds query parameter', params, data),
+      query: ({ params, data }) =>
+        console.log('customize qds query parameter', params, data),
     },
   });
 
   render() {
     return (
       <Table dataSet={this.ds}>
-        <Column name="name" editor width={450} />
+        <Column name="name" editor width={150} />
         <Column name="age" editor />
         <Column name="sex" editor />
         <Column name="date.startDate" editor />

@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.jsx"],"names":["Tree","TreeNode"],"mappings":";;;;;;;;;;;;;;;AAAA;;AACA;;AAEAA,iBAAKC,QAAL,GAAgBA,oBAAhB;eAGeD,gB","sourcesContent":["import Tree from './Tree';\nimport TreeNode from './TreeNode';\n\nTree.TreeNode = TreeNode;\n\nexport { TreeNode };\nexport default Tree;\n"]}

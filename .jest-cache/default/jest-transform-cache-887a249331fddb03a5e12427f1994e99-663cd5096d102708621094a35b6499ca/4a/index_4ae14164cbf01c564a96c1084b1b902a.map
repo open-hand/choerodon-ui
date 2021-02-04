@@ -1,1 +1,0 @@
-{"version":3,"sources":["rc-components/tree/index.js"],"names":["Tree"],"mappings":";;;;;;;;;;;;;;;AAAA,IAAA,KAAA,GAAA,sBAAA,CAAA,OAAA,CAAA,QAAA,CAAA,CAAA;;AACA,IAAA,SAAA,GAAA,sBAAA,CAAA,OAAA,CAAA,YAAA,CAAA,CAAA;;eAEeA,KAAAA,CAAAA,SAAAA,C","sourcesContent":["import Tree from './Tree';\nimport TreeNode from './TreeNode';\nexport { TreeNode };\nexport default Tree;\n"]}

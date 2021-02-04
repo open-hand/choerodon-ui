@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/col/index.tsx"],"names":[],"mappings":";;;;;;;AAAA;;eAIe,S","sourcesContent":["import { Col, ColProps, ColSize } from '../grid';\n\nexport { ColProps, ColSize };\n\nexport default Col;\n"]}

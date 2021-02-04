@@ -87,6 +87,7 @@ class App extends React.Component {
   ];
 
   ds1 = new DataSet(config);
+
   ds2 = new DataSet(config);
 
   state = {
@@ -95,22 +96,13 @@ class App extends React.Component {
   };
 
   getColumns() {
+    const { show } = this.state;
     return [
-      {
-        header: '组合',
-        children: [{ name: 'name', width: 450 }, { name: 'age' }],
-      },
-      {
-        header: '组合3',
-        children: [
-          {
-            header: '组合2',
-            children: [{ name: 'sex' }, { name: 'date.startDate' }],
-          },
-          { name: 'sexMultiple' },
-        ],
-      },
-      this.state.show ? { header: '操作' } : null,
+      { name: 'name', width: 250 },
+      { name: 'age' },
+      { name: 'sex' },
+      { name: 'sexMultiple' },
+      show ? { header: '操作' } : null,
     ];
   }
 

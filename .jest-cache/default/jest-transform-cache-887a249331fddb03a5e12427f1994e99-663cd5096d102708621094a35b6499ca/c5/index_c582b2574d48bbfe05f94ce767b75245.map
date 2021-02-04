@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components-pro/tabs/index.tsx"],"names":[],"mappings":";;;;;;;;;AAAA;;eAEe,gB","sourcesContent":["import Tabs from 'choerodon-ui/lib/tabs';\n\nexport default Tabs;\n"]}

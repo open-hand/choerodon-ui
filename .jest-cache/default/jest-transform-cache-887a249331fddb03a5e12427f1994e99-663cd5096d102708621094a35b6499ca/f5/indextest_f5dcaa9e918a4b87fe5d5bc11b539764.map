@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.test.js"],"names":["describe","TreeSelect"],"mappings":";;;;AAAA;;AACA;;AAEAA,QAAQ,CAAC,YAAD,EAAe,YAAM;AAC3B,6BAAUC,YAAV;AACD,CAFO,CAAR","sourcesContent":["import TreeSelect from '..';\nimport focusTest from '../../../tests/shared/focusTest';\n\ndescribe('TreeSelect', () => {\n  focusTest(TreeSelect);\n});\n"]}

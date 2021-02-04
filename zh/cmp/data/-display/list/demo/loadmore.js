@@ -91,7 +91,7 @@ class LoadMoreList extends React.Component {
                 <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
               }
               title={
-                <a href="https://choerodon.github.io/choerodon-ui/">
+                <a href="https://open-hand.github.io/choerodon-ui/">
                   {item.name.last}
                 </a>
               }

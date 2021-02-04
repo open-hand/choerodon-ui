@@ -1,1 +1,0 @@
-{"version":3,"sources":["message/index.js"],"names":["message"],"mappings":";;;;;;;;;AAAA,IAAA,QAAA,GAAA,sBAAA,CAAA,OAAA,CAAA,sBAAA,CAAA,CAAA;;eACeA,QAAAA,CAAAA,SAAAA,C","sourcesContent":["import message from '../../../lib/message';\nexport default message;\n"]}

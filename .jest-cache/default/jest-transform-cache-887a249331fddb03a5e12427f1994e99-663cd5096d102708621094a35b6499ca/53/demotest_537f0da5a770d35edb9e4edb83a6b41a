@@ -1,9 +1,0 @@
-843159248253ef7a1b9378e0f63a8761
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
-
-(0, _demoTest["default"])('cascader-field-pro');
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsb0JBQVQiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZGVtb1Rlc3QgZnJvbSAnLi4vLi4vLi4vdGVzdHMvc2hhcmVkL2RlbW9UZXN0JztcblxuZGVtb1Rlc3QoJ2Nhc2NhZGVyLWZpZWxkLXBybycpO1xuIl19

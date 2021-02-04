@@ -3,14 +3,26 @@ import ReactDOM from 'react-dom';
 import { DataSet, TextField } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
-  console.log('[dataset newValue]', value, '[oldValue]', oldValue, `[record.get('${name}')]`, record.get(name));
+  console.log(
+    '[dataset newValue]',
+    value,
+    '[oldValue]',
+    oldValue,
+    `[record.get('${name}')]`,
+    record.get(name),
+  );
 }
 
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'first-name', type: 'string', defaultValue: 'Zhangsan', readOnly: true },
+      {
+        name: 'first-name',
+        type: 'string',
+        defaultValue: 'Zhangsan',
+        readOnly: true,
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -22,7 +34,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

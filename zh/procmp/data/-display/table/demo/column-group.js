@@ -40,7 +40,7 @@ class App extends React.Component {
     return (
       <Table dataSet={this.ds}>
         <Column header="组合">
-          <Column name="name" width={450} />
+          <Column name="name" width={100} />
           <Column name="age" />
         </Column>
         <Column header="组合3">

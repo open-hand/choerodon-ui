@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { List, Avatar, Icon } from 'choerodon-ui';
 
 const listData = [];
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 5; i += 1) {
   listData.push({
-    href: 'https://choerodon.github.io/choerodon-ui/',
+    href: 'https://open-hand.github.io/choerodon-ui/',
     title: `choerodon ui part ${i}`,
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
     description:

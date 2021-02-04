@@ -1,9 +1,0 @@
-5c5f40af44f0fc5fc6c1efd26e39ee8a
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _demoTest = _interopRequireDefault(require("../../../tests/shared/demoTest"));
-
-(0, _demoTest["default"])('number-field-pro');
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRlbW8udGVzdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUE7O0FBRUEsMEJBQVMsa0JBQVQiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZGVtb1Rlc3QgZnJvbSAnLi4vLi4vLi4vdGVzdHMvc2hhcmVkL2RlbW9UZXN0JztcblxuZGVtb1Rlc3QoJ251bWJlci1maWVsZC1wcm8nKTtcbiJdfQ==

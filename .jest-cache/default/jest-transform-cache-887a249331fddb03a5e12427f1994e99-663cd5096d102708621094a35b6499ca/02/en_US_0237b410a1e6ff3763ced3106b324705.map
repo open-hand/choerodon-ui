@@ -1,1 +1,0 @@
-{"version":3,"sources":["en_US.jsx"],"names":["pleaseSelect"],"mappings":";;;;;;eAAe;AACbA,EAAAA,YAAY,EAAC;AADA,C","sourcesContent":["export default {\n  pleaseSelect:'Please select'\n};\n"]}

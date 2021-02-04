@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/huihuawk/Documents/opt/choerodon-ui/components/time-picker/locale/ru_RU.tsx"],"names":[],"mappings":";;;;;;;AAAA;;;AAGA,IAAM,MAAM,GAAG;AACb,EAAA,WAAW,EAAE;AADA,CAAf;eAIe,M","sourcesContent":["/**\n * Created by Andrey Gayvoronsky on 13/04/16.\n */\nconst locale = {\n  placeholder: 'Выберите время',\n};\n\nexport default locale;\n"]}

@@ -36,14 +36,6 @@ class App extends React.Component {
         step: 1,
         help: '用户年龄，可以排序',
       },
-      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
-      {
-        name: 'sexMultiple',
-        type: 'string',
-        label: '性别（多值）',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-        multiple: true,
-      },
     ],
   });
 
@@ -103,9 +95,7 @@ class App extends React.Component {
           sortable
         />
         <Column name="age" editor width={150} sortable />
-        <Column name="enable" editor width={50} minWidth={50} lock />
         <Column name="name" editor width={150} sortable />
-        <Column name="code" editor width={150} sortable />
       </Table>
     );
   }
