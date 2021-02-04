@@ -10,7 +10,7 @@ function isWindow(obj) {
   return obj != null && obj === obj.window;
 }
 
-type FirstParam<T extends (...args: any) => any> = T extends (arg1: infer A, ...rest: any) => any
+type FirstParam<T extends (...args: any[]) => any> = T extends (arg1: infer A, ...rest: any[]) => any
   ? A
   : never;
 
@@ -18,7 +18,7 @@ export interface AlignProps {
   childrenProps?: object;
   align: object;
   target?: () => Node | Window;
-  onAlign?: (source: Element | Text | null, align: object, target: Node | Window) => void;
+  onAlign?: (source: Element | Text | null, align: object, target: Node | Window, translate: { x: number, y: number }) => void;
   monitorBufferTime?: number;
   monitorWindowResize?: boolean;
   hidden?: boolean;
@@ -54,7 +54,23 @@ export default class Align extends Component<AlignProps, any> {
     if (!hidden) {
       const source = findDOMNode(this);
       const ref = target();
-      onAlign(source, domAlign(source, ref, align), ref);
+      const result = domAlign(source, ref, align);
+      const translate = {
+        x: 0,
+        y: 0,
+      };
+      const { points, overflow: { adjustX, adjustY } } = result;
+      if (source && ref && (adjustX || adjustY) && (points.includes('bc') || points.includes('tc'))) {
+        const r1 = (source as HTMLElement).getBoundingClientRect();
+        const r2 = (ref as HTMLElement).getBoundingClientRect();
+        if (adjustX) {
+          translate.x = r1.left + r1.width / 2 - r2.left - r2.width / 2;
+        }
+        if (adjustY) {
+          translate.y = r1.top + r1.height / 2 - r2.top - r2.height / 2;
+        }
+      }
+      onAlign(source, result, ref, translate);
     }
   }
 

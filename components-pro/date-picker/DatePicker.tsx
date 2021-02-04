@@ -27,6 +27,7 @@ import { $l } from '../locale-context';
 import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
+import Field from '../data-set/Field';
 
 export type RenderFunction = (
   props: object,
@@ -238,16 +239,23 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return mode;
   }
 
-  checkMoment(item) {
-    if (!isNil(item) && !isMoment(item)) {
-      warning(false, `DatePicker: The value of DatePicker is not moment.`);
-      const format = this.getDateFormat();
-      if (item instanceof Date) {
-        item = moment(item).format(format);
-      }
-      return moment(item, format);
+  toMoment(item: Moment | Date | string | undefined, field: Field | undefined = this.field, noCheck = false): Moment | undefined {
+    if (isNil(item)) {
+      return undefined;
     }
-    return item;
+    if (isMoment(item)) {
+      return item;
+    }
+    warning(noCheck, `DatePicker: The value of DatePicker is not moment.`);
+    const format = this.getDateFormat(field);
+    if (item instanceof Date) {
+      item = moment(item).format(format);
+    }
+    return moment(item, format);
+  }
+
+  checkMoment(item) {
+    return this.toMoment(item);
   }
 
   // 避免出现影响过多组件使用继承覆盖原有方法 Fix onchange moment use ValueOf to get the Timestamp compare
@@ -312,18 +320,28 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return this.getValidDate(moment().startOf('d'));
   }
 
-  getLimit(minOrMax: 'min' | 'max') {
+  getLimit(minOrMax: 'min' | 'max'): Moment | undefined {
     const limit = this.getProp(minOrMax);
     if (!isNil(limit)) {
       const { record } = this;
-      if (record && isString(limit) && record.getField(limit)) {
-        return record.get(limit) ? this.getLimitWithType(moment(record.get(limit)), minOrMax) : record.get(limit);
+      if (record && isString(limit)) {
+        const field = record.getField(limit);
+        if (field) {
+          const value = record.get(limit);
+          if (value) {
+            const momentValue = this.toMoment(value, field, true);
+            if (momentValue) {
+              return this.getLimitWithType(momentValue, minOrMax);
+            }
+          }
+          return undefined;
+        }
       }
       return this.getLimitWithType(moment(limit), minOrMax);
     }
   }
 
-  getLimitWithType(limit: Moment, minOrMax: 'min' | 'max') {
+  getLimitWithType(limit: Moment, minOrMax: 'min' | 'max'): Moment {
     if (minOrMax === 'min') {
       return limit.startOf('d');
     }
@@ -541,7 +559,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   /**
-   * 
+   *
    * @param date 返回的时间
    * @param expand 是否保持时间选择器的展开
    */
