@@ -1,8 +1,6 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
-// @ts-ignore
-import CSSMotion from 'rc-animate/lib/CSSMotion';
-// @ts-ignore
+import CSSMotion from 'rc-motion';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { FlattenNode } from './interface';
 import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
@@ -12,23 +10,22 @@ interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;
   motion?: any;
   motionNodes?: FlattenNode[];
+  onMotionStart: () => void;
   onMotionEnd: () => void;
   motionType?: 'show' | 'hide';
 
   treeNodeRequiredProps: TreeNodeRequiredProps;
 }
-// @ts-ignore
-const MotionTreeNode: React.ForwardRefRenderFunction<
-  CSSMotion,
-  MotionTreeNodeProps
-> = (
+
+const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeNodeProps> = (
   {
     className,
     style,
     motion,
     motionNodes,
     motionType,
-    onMotionEnd,
+    onMotionStart: onOriginMotionStart,
+    onMotionEnd: onOriginMotionEnd,
     active,
     treeNodeRequiredProps,
     ...props
@@ -36,14 +33,35 @@ const MotionTreeNode: React.ForwardRefRenderFunction<
   ref,
 ) => {
   const [visible, setVisible] = React.useState(true);
-  // @ts-ignore
   const { prefixCls } = React.useContext(TreeContext);
 
-  React.useEffect(() => {
+  const motionedRef = React.useRef(false);
+
+  const onMotionEnd = () => {
+    if (!motionedRef.current) {
+      onOriginMotionEnd();
+    }
+    motionedRef.current = true;
+  };
+
+  useEffect(() => {
     if (motionNodes && motionType === 'hide' && visible) {
       setVisible(false);
     }
   }, [motionNodes]);
+
+  useEffect(() => {
+    // Trigger motion only when patched
+    if (motionNodes) {
+      onOriginMotionStart();
+    }
+
+    return () => {
+      if (motionNodes) {
+        onMotionEnd();
+      }
+    };
+  }, []);
 
   if (motionNodes) {
     return (
@@ -58,10 +76,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<
         {({ className: motionClassName, style: motionStyle }, motionRef) => (
           <div
             ref={motionRef}
-            className={classNames(
-              `${prefixCls}-treenode-motion`,
-              motionClassName,
-            )}
+            className={classNames(`${prefixCls}-treenode-motion`, motionClassName)}
             style={motionStyle}
           >
             {motionNodes.map((treeNode: FlattenNode) => {
@@ -72,10 +87,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<
               } = treeNode;
               delete restProps.children;
 
-              const treeNodeProps = getTreeNodeProps(
-                key,
-                treeNodeRequiredProps,
-              );
+              const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
 
               return (
                 <TreeNode
@@ -94,15 +106,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<
       </CSSMotion>
     );
   }
-  return (
-    <TreeNode
-      domRef={ref}
-      className={className}
-      style={style}
-      {...props}
-      active={active}
-    />
-  );
+  return <TreeNode domRef={ref} className={className} style={style} {...props} active={active} />;
 };
 
 MotionTreeNode.displayName = 'MotionTreeNode';

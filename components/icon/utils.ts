@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import warn from 'rc-util/lib/warning';
 import { insertCss } from 'insert-css';
+import warn from '../_util/warning';
 import generateColor from './generate';
 import { AbstractNode, IconDefinition } from './interface';
 
