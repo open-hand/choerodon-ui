@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import shallowEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import isElement from 'lodash/isElement';
-import ClassNames from 'classnames'
+import ClassNames from 'classnames';
 import Align from 'choerodon-ui/lib/align';
 import Portal from 'choerodon-ui/lib/rc-components/util/Portal';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -18,7 +18,7 @@ let popupContainer;
 /**
  * 记录ID生成器
  */
-const PopupKeyGen: IterableIterator<string> = (function*(start: number) {
+const PopupKeyGen: IterableIterator<string> = (function* (start: number) {
   while (true) {
     yield `popup-key-${start++}`;
   }
@@ -26,7 +26,7 @@ const PopupKeyGen: IterableIterator<string> = (function*(start: number) {
 
 export interface PopupProps extends ViewComponentProps {
   align: object;
-  onAlign?: (source: Node, align: object, target: Node | Window) => void;
+  onAlign?: (source: Node, align: object, target: Node | Window, translate: { x: number, y: number }) => void;
   getRootDomNode?: () => Node;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   transitionName?: string;
@@ -158,7 +158,7 @@ export default class Popup extends ViewComponent<PopupProps> {
   }
 
   @autobind
-  onAlign(source, align, target) {
+  onAlign(source, align, target, translate) {
     const { getClassNameFromAlign = noop, getStyleFromAlign = noop, onAlign = noop } = this.props;
     const currentAlignClassName = getClassNameFromAlign(align);
     if (this.currentAlignClassName !== currentAlignClassName) {
@@ -170,7 +170,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       this.currentAlignStyle = currentAlignStyle;
       Object.assign(source.style, currentAlignStyle);
     }
-    onAlign(source, align, target);
+    onAlign(source, align, target, translate);
   }
 
   forceAlign() {

@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Select`: 新增 selectAllButton 属性。
 - 🌟 `<pro>SelectBox`:实现 optionsFilter searchable 属性。
+- 💄 `<pro>Trigger`: 优化性能。
 
 ## 1.0.0
 

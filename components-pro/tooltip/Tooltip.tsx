@@ -1,5 +1,4 @@
-import React, { Children, Component, isValidElement, useRef, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Button from 'choerodon-ui/lib/button';
@@ -7,6 +6,7 @@ import noop from 'lodash/noop';
 import Trigger, { TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
+import autobind from '../_util/autobind';
 
 export type TooltipPlacement =
   | 'top'
@@ -62,7 +62,7 @@ const splitObject = (obj: any, keys: string[]) => {
 };
 
 /**
- * Fix the tooltip won't hide when child element is button 
+ * Fix the tooltip won't hide when child element is button
  * @param element ReactElement
  */
 function getDisabledCompatobleChildren(element: React.ReactElement<any>) {
@@ -108,74 +108,21 @@ function getDisabledCompatobleChildren(element: React.ReactElement<any>) {
   return element;
 }
 
-// 获取一个组件的位置
-export const getElementPosition = (element: HTMLElement) => {
-  return element.getBoundingClientRect();
-};
-
-
 const PopupContent: React.FC<{
-  title: React.ReactNode | RenderFunction;
+  content: React.ReactNode;
   prefixCls: string;
   theme?: TooltipTheme;
-  overlay: React.ReactNode | RenderFunction;
-  target: any;
-  currentStatus: boolean,
-  placement?: TooltipPlacement;
+  translate: { x: number, y: number }
 }> = (props) => {
-  const { title, prefixCls, overlay, theme, target, currentStatus, placement } = props;
-  const ref = useRef<HTMLDivElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (placement !== 'bottom' && placement !== 'top') {
-      return;
-    }
-
-    const targetElement = ReactDOM.findDOMNode(target) as HTMLElement;
-    const pop = wrapperRef.current?.parentElement as HTMLElement;
-    if (ref.current && targetElement && pop && wrapperRef.current) {
-      // 计算阈值
-      const targetDomRect = getElementPosition(targetElement);
-      const targetDomRectLeft = targetDomRect.width / 2 + targetDomRect.left;
-      const popStyleLeft = (pop.style.left ? Number(pop.style.left.split('px')[0]) : 0);
-      const popLeft = pop.clientWidth / 2 + popStyleLeft;
-
-      if (Math.abs(targetDomRectLeft - popLeft) > 10) {
-        if (popStyleLeft < targetDomRect.left) {
-          const gap = targetDomRectLeft - popStyleLeft;
-          ref.current.style.left = `${gap}px`;
-        }
-      }
-    }
-    return () => {
-      if (ref.current) {
-        ref.current.style.left = '';
-      }
-
-    };
-  }, [currentStatus]);
-
-  if (!title) {
-    return null;
-  }
-
-  let content: any = '';
-  if (typeof overlay === 'function') {
-    content = overlay();
-  } else if (overlay) {
-    content = overlay;
-  } else {
-    content = title || '';
-  }
+  const { content, prefixCls, theme, translate: { x, y } } = props;
 
   const arrowCls = `${prefixCls}-popup-arrow`;
   const contentCls = `${prefixCls}-popup-inner`;
-
+  const arrowStyle = x || y ? { marginLeft: -x, marginTop: -y } : undefined;
   return (
-    <div ref={wrapperRef}>
-      <div ref={ref} className={`${arrowCls} ${arrowCls}-${theme}`} key="arrow" />
-      <div className={`${contentCls} ${contentCls}-${theme}`} key="content">
+    <div>
+      <div className={`${arrowCls} ${arrowCls}-${theme}`} style={arrowStyle} />
+      <div className={`${contentCls} ${contentCls}-${theme}`}>
         {content}
       </div>
     </div>
@@ -229,12 +176,9 @@ export default class Tooltip extends Component<TooltipProps, any> {
     trigger: [Action.hover],
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentStatus: props.defaultHidden,
-    };
-  }
+  state = {
+    translate: { x: 0, y: 0 },
+  };
 
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
@@ -253,13 +197,33 @@ export default class Tooltip extends Component<TooltipProps, any> {
     );
   }
 
+  getContent() {
+    const { title, overlay } = this.props;
+    if (typeof overlay === 'function') {
+      return overlay();
+    }
+    if (overlay) {
+      return overlay;
+    }
+    return title;
+  }
+
+  @autobind
+  handlePopupAlign(_source, _align, _target, translate) {
+    const { translate: { x, y } } = this.state;
+    if (x !== translate.x || y !== translate.y) {
+      this.setState({
+        translate,
+      });
+    }
+  }
 
   render() {
+    const { translate } = this.state;
     const {
       prefixCls,
-      props: { children, placement, title, overlay, theme, onHiddenChange, trigger, defaultHidden, hidden, ...restProps },
+      props: { children, placement, theme, onHiddenChange, trigger, defaultHidden, hidden, ...restProps },
     } = this;
-    const { currentStatus } = this.state;
     const child = Children.map(children, node => {
       node = getDisabledCompatobleChildren(
         isValidElement(node) ? node : <span key={`text-${node}`}>{node}</span>,
@@ -271,7 +235,8 @@ export default class Tooltip extends Component<TooltipProps, any> {
     if ('hidden' in this.props) {
       extraProps.popupHidden = hidden;
     }
-    return (
+    const content = this.getContent();
+    return content ? (
       <Trigger
         prefixCls={prefixCls}
         action={trigger}
@@ -279,28 +244,20 @@ export default class Tooltip extends Component<TooltipProps, any> {
         popupPlacement={placement}
         popupContent={
           <PopupContent
-            target={this}
-            overlay={overlay}
-            title={title}
+            content={content}
             theme={theme}
             prefixCls={prefixCls}
-            placement={placement}
-            currentStatus={currentStatus}
-          />}
-        onPopupHiddenChange={(hide) => {
-          this.setState({
-            currentStatus: !hide,
-          });
-          if (onHiddenChange) {
-            onHiddenChange(hide);
-          }
-        }}
+            translate={translate}
+          />
+        }
+        onPopupHiddenChange={onHiddenChange}
+        onPopupAlign={this.handlePopupAlign}
         defaultPopupHidden={defaultHidden}
         onMouseDown={noop}
         {...extraProps}
       >
         {child}
       </Trigger>
-    );
+    ) : child;
   }
 }
