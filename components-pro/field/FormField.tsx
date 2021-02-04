@@ -804,8 +804,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     e.stopPropagation();
   }
 
-  getDateFormat(): string {
-    return getDateFormatByField(this.field, this.getFieldType());
+  getDateFormat(field: Field | undefined = this.field): string {
+    return getDateFormatByField(field, this.getFieldType(field));
   }
 
   processValue(value: any): string {
@@ -1329,8 +1329,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     this.validator.reset();
   }
 
-  getFieldType(): FieldType {
-    const { field } = this;
+  getFieldType(field: Field | undefined = this.field): FieldType {
     return (field && field.get('type')) || FieldType.string;
   }
 

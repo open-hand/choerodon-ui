@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Select`: Added `selectAllButton` property.
 - 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
+- 💄 `<pro>Trigger`: Optimize the performance.
 
 ## 1.0.0
 
