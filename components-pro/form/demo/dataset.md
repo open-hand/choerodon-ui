@@ -84,7 +84,7 @@ class App extends React.Component {
       {
         name: 'language',
         type: 'string',
-        label: '语言',
+        label: '语言（labelWidth为auto自适应）',
         required: true,
         help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
       },
@@ -106,7 +106,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Form dataSet={this.ds} labelLayout="float" style={{ width: '4.5rem' }}>
+      <Form dataSet={this.ds} style={{ width: '4.5rem' }} labelWidth="auto">
         <TextField name="phone" />
         <Password name="password" />
         <Password name="confirmPassword" />

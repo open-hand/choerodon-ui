@@ -12,7 +12,7 @@ export const defaultColumns: number = 1;
 export const FIELD_SUFFIX = 'field';
 
 export function normalizeLabelWidth(labelWidth, columns) {
-  if (isNumber(labelWidth)) {
+  if (isNumber(labelWidth) || labelWidth === 'auto') {
     return new Array(columns).fill(labelWidth);
   }
   const labelWidths = new Array(columns).fill(defaultLabelWidth);
