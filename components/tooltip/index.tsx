@@ -1,14 +1,6 @@
-import React, {
-  cloneElement,
-  Component,
-  CSSProperties,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import getPlacements, { AdjustOverflow, PlacementsConfig } from './placements';
-import Button from '../button/index';
 import RcTooltip from '../rc-components/tooltip';
 import { getPrefixCls } from '../configure';
 
@@ -84,6 +76,8 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   private tooltip: any;
 
+  state: { visible: boolean };
+
   constructor(props: TooltipProps) {
     super(props);
 
@@ -139,18 +133,15 @@ export default class Tooltip extends Component<TooltipProps, any> {
   // mouse events don't trigger at disabled button in Chrome
   // https://github.com/react-component/tooltip/issues/18
   getDisabledCompatibleChildren(element: ReactElement<any>) {
-    const elementType = element.type as any
-    if (
-      (( elementType.__Pro_BUTTON === true ||
-        elementType.__Pro_SWITCH === true ||
-        elementType.__Pro_CHECKBOX === true || 
-        (element.type as typeof Button).__ANT_BUTTON || 
-        element.type === 'button') &&
-        element.props.disabled 
-      ) &&
-      element.props.disabled &&
-      this.isHoverTrigger()
-    ) {
+    const elementType = element.type as any;
+    if ((
+      elementType.__PRO_BUTTON ||
+      elementType.__PRO_SWITCH ||
+      elementType.__PRO_CHECKBOX ||
+      elementType.__PRO_RADIO ||
+      elementType.__C7N_BUTTON ||
+      elementType === 'button'
+    ) && element.props.disabled && this.isHoverTrigger()) {
       // Pick some layout related style properties up to span
 
       const { picked, omited } = splitObject(element.props.style, [

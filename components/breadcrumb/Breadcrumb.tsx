@@ -2,7 +2,7 @@ import React, { Children, cloneElement, Component, CSSProperties, ReactNode } fr
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from '../_util/warning';
-import BreadcrumbItem from './BreadcrumbItem';
+import BreadcrumbItem, { BreadcrumbItemProps } from './BreadcrumbItem';
 import { getPrefixCls } from '../configure';
 
 export interface Route {
@@ -88,7 +88,7 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
         }
         return (
           <BreadcrumbItem separator={separator} key={route.breadcrumbName || path}>
-            {itemRender(route, params, routes, paths)}
+            {itemRender(route, params, routes!, paths)}
           </BreadcrumbItem>
         );
       });
@@ -98,10 +98,10 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
           return element;
         }
         warning(
-          element.type && element.type.__ANT_BREADCRUMB_ITEM,
-          "Breadcrumb only accepts Breadcrumb.Item as it's children",
+          element.type && element.type.__C7N_BREADCRUMB_ITEM,
+          'Breadcrumb only accepts Breadcrumb.Item as it\'s children',
         );
-        return cloneElement(element, {
+        return cloneElement<BreadcrumbItemProps>(element, {
           separator,
           key: index,
         });

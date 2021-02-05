@@ -442,7 +442,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       renderer: noop,
     };
 
-    if (editor.type === (ObserverSelect as any)) {
+    if ((editor.type as any).__PRO_SELECT) {
       (editorProps as SelectProps).dropdownMenuStyle = this.props.dropdownMenuStyle;
       (editorProps as SelectProps).dropdownMatchSelectWidth = false;
     }

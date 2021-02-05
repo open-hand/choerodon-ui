@@ -54,6 +54,12 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     suffixCls: 'radio',
   };
 
+  // eslint-disable-next-line camelcase
+  static __PRO_RADIO = true;
+
+  // eslint-disable-next-line camelcase
+  static __IS_IN_CELL_EDITOR = true;
+
   type: string = 'radio';
 
   @computed
@@ -95,7 +101,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
         {this.getTextNode()}
         {this.renderFloatLabel()}
       </label>
-      {super.hasFloatLabel ? this.renderSwitchFloatLabel(): undefined }  
+      {super.hasFloatLabel ? this.renderSwitchFloatLabel(): undefined }
       </>
     );
   }
@@ -202,4 +208,10 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 @observer
 export default class ObserverRadio extends Radio<RadioProps> {
   static defaultProps = Radio.defaultProps;
+
+  // eslint-disable-next-line camelcase
+  static __PRO_RADIO = true;
+
+  // eslint-disable-next-line camelcase
+  static __IS_IN_CELL_EDITOR = true;
 }

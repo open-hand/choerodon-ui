@@ -1,7 +1,6 @@
-import * as React from 'react';
+import React, { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import classNames from 'classnames';
-
-import { svgBaseProps, warning, useInsertStyles } from './utils';
+import { svgBaseProps, useInsertStyles, warning } from './utils';
 
 export interface IconBaseProps extends React.HTMLProps<HTMLSpanElement> {
   spin?: boolean;
@@ -12,18 +11,22 @@ export interface CustomIconComponentProps {
   width: string | number;
   height: string | number;
   fill: string;
-  viewBox?: string;
+  viewBox?: string | undefined;
   className?: string;
-  style?: React.CSSProperties;
+  style?: React.CSSProperties | undefined;
 }
 
 export interface IconComponentProps extends IconBaseProps {
-  viewBox?: string;
+  viewBox?: string | undefined;
   component?: React.ComponentType<CustomIconComponentProps | React.SVGProps<SVGSVGElement>>;
   ariaLabel?: React.AriaAttributes['aria-label'];
 }
 
-const Icon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) => {
+export interface IIcon extends ForwardRefExoticComponent<PropsWithoutRef<IconComponentProps> & RefAttributes<HTMLSpanElement>> {
+  __C7N_ICON?: boolean;
+}
+
+const Icon: IIcon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) => {
   const {
     // affect outter <i>...</i>
     className,
@@ -59,7 +62,7 @@ const Icon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) 
     'c7nicon-spin': !!spin,
   });
 
-  const svgStyle = rotate
+  const svgStyle: React.CSSProperties | undefined = rotate
     ? {
       msTransform: `rotate(${rotate}deg)`,
       transform: `rotate(${rotate}deg)`,
@@ -67,8 +70,10 @@ const Icon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) 
     : undefined;
 
 
-
-  const innerSvgProps: CustomIconComponentProps = {
+  const innerSvgProps: CustomIconComponentProps & {
+    'aria-hidden': string;
+    focusable: string;
+  } = {
     ...svgBaseProps,
     className: svgClassString,
     style: svgStyle,
@@ -105,7 +110,7 @@ const Icon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) 
     }
 
     return null;
-  }
+  };
 
   let iconTabIndex = tabIndex;
   if (iconTabIndex === undefined && onClick) {
@@ -127,5 +132,7 @@ const Icon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) 
 });
 
 Icon.displayName = 'SvgIcon';
+
+Icon.__C7N_ICON = true;
 
 export default Icon;

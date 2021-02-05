@@ -51,7 +51,7 @@ export default class Button extends Component<ButtonProps, any> {
 
   static Group: typeof Group;
 
-  static __ANT_BUTTON = true;
+  static __C7N_BUTTON = true;
 
   static defaultProps = {
     loading: false,

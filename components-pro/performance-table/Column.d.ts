@@ -12,7 +12,11 @@ export interface ColumnProps {
   colSpan?: number;
   treeCol?: boolean;
   onResize?: (columnWidth?: number, dataIndex?: string) => void;
-  render?: (rowData: any, rowIndex: number, dataIndex?: string) => ReactNode;
+  render?: (props: { rowData: any, rowIndex: number, dataIndex?: string | undefined }) => ReactNode;
+  dataIndex?: string;
+  title?: ReactNode | (() => ReactNode);
+  children?: ColumnProps[];
+  type?: 'ColumnGroup';
 }
 
 declare const Column: React.ComponentType<ColumnProps>;

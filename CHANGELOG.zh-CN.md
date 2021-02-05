@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Trigger`: 优化性能。
 - 💄 `<pro>Tree`: 优化性能。
 - 💄 `<pro>Table`: boolean 类型的查询字段默认显示为下拉框。
+- 💄 `<pro>Table`: 优化性能， 行选择框操作时不触发当前行的变更。
 - 🐞 `<pro>Table`: 修复过滤条多语言问题。
 
 ## 1.0.0

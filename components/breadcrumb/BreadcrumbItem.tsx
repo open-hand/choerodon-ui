@@ -5,7 +5,7 @@ import { Placements } from '../dropdown/enum';
 import { getPrefixCls } from '../configure';
 import Icon from '../icon';
 import List, { ListProps } from '../list';
-import buildPlacements from './placements'
+import buildPlacements from './placements';
 
 
 export interface menuListItemProps {
@@ -24,10 +24,11 @@ export interface BreadcrumbItemProps {
   listProps?: ListProps;
   menuList?: menuListItemProps[];
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
+  children?;
 }
 
 interface BreadcrumbItemInterface extends React.FC<BreadcrumbItemProps> {
-  __ANT_BREADCRUMB_ITEM: boolean;
+  __C7N_BREADCRUMB_ITEM?: boolean;
 }
 
 const BreadcrumbItem: BreadcrumbItemInterface = ({
@@ -41,13 +42,13 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
   ...restProps
 }) => {
   const prefixCls = getPrefixCls('breadcrumb', customizePrefixCls);
-  const [active, setActive] = useState(false)
-  const isMenuListOn = !!(menuList && menuList.length > 0);
-  const onVisibleChange = async (visible: boolean) => {
-    if (menuList.length > 0) {
-      setActive(visible)
+  const [active, setActive] = useState(false);
+  const isMenuListOn = menuList ? menuList.length > 0 : false;
+  const onVisibleChange = useCallback(async (visible: boolean) => {
+    if (isMenuListOn) {
+      setActive(visible);
     }
-  }
+  }, [isMenuListOn]);
   /**
    * 渲染Link
    * @param childrenLink
@@ -59,14 +60,14 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
         <a className={`${prefixCls}-${classNameLink}`} {...restPropsLink}>
           {childrenLink}
         </a>
-      )
+      );
     }
     return (
       <span className={`${prefixCls}-${classNameLink}`} {...restPropsLink}>
         {childrenLink}
       </span>
-    )
-  }
+    );
+  };
 
   /**
    * 渲染List列表
@@ -78,15 +79,15 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
       {...listProps}
       dataSource={menuList}
       renderItem={item => {
-        const { href } = item
-        const { listChildren, listItemName, ...listRestProps } = item
+        const { href } = item;
+        const { listChildren, listItemName, ...listRestProps } = item;
         let titleItem = listItemName || href;
         titleItem = listChildren ? listChildren({ href, listItemName }) : listItemName;
         return (
           <List.Item>
             {renderLink(titleItem, listRestProps, 'overlay-menu-list-item', 'href')}
           </List.Item>
-        )
+        );
       }}
     />
   );
@@ -95,13 +96,13 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
 
   const onOverlayClick = useCallback(() => {
     setTimeout(() => {
-      setActive(false)
-    }, 300)
-  }, [])
+      setActive(false);
+    }, 300);
+  }, []);
 
   const renderBreadcrumbMenu = (linkItem: React.ReactNode) => {
     if (overlayMenu) {
-      const buildASPlacements = buildPlacements as unknown as Placements
+      const buildASPlacements = buildPlacements as unknown as Placements;
       const dropDownProps = {
         overlayClassName: isMenuListOn ? `${prefixCls}-overlay-popup` : undefined,
         onOverlayClick,
@@ -110,7 +111,7 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
         onVisibleChange,
         overlayPlacements: buildASPlacements,
         ...dropdownProps,
-      }
+      };
       return (
         <DropDown {...dropDownProps}>
           <span className={classNames(`${prefixCls}-overlay-link`, {
@@ -124,13 +125,12 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
             })} />
           </span>
         </DropDown>
-      )
+      );
     }
     return linkItem;
-  }
+  };
 
   let link: string | React.ReactNode = renderLink(children, restProps, `link`, 'href');
-
 
 
   // wrap to dropDown
@@ -147,8 +147,8 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
     );
   }
   return null;
-}
+};
 
-BreadcrumbItem.__ANT_BREADCRUMB_ITEM = true;
+BreadcrumbItem.__C7N_BREADCRUMB_ITEM = true;
 
 export default BreadcrumbItem;

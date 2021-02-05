@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Trigger`: Optimize the performance.
 - 💄 `<pro>Tree`: Optimize the performance.
 - 💄 `<pro>Table`: The query field of boolean type is displayed as `Select` by default.
+- 💄 `<pro>Table`: Optimize performance, the current row will not be changed when the row selection box is operated.
 - 🐞 `<pro>Table`: Fix the multilingual problem of the filter bar.
 
 ## 1.0.0

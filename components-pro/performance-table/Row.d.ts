@@ -8,7 +8,7 @@ export interface RowProps extends StandardProps {
   top?: number;
   isHeaderRow?: boolean;
   rowRef?: React.Ref<any>;
-  className?: string;
+  className?: string | undefined;
   classPrefix?: string;
   style?: React.CSSProperties;
 }

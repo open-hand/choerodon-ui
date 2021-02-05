@@ -17,4 +17,6 @@ export default class Option extends Component<OptionProps, any> {
      */
     value: PropTypes.any,
   };
+
+  static __PRO_OPTION = true;
 }

@@ -10,41 +10,32 @@ import omit from 'lodash/omit';
 import merge from 'lodash/merge';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
-import {
-  addStyle,
-  getWidth,
-  getHeight,
-  WheelHandler,
-  scrollLeft,
-  scrollTop,
-  on,
-  getOffset,
-} from 'dom-lib';
+import { addStyle, getHeight, getOffset, getWidth, on, scrollLeft, scrollTop, WheelHandler } from 'dom-lib';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import LocaleReceiver from 'choerodon-ui/lib/locale-provider/LocaleReceiver';
-import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider'
+import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider';
 import defaultLocale from 'choerodon-ui/lib/locale-provider/default';
 import Row from './Row';
 import CellGroup from './CellGroup';
 import Scrollbar from './Scrollbar';
 import TableContext from './TableContext';
-import { SCROLLBAR_WIDTH, CELL_PADDING_HEIGHT } from './constants';
+import { CELL_PADDING_HEIGHT, SCROLLBAR_WIDTH } from './constants';
 import {
-  getTotalByColumns,
-  mergeCells,
-  getUnhandledProps,
+  cancelAnimationTimeout,
   defaultClassPrefix,
-  toggleClass,
+  findAllParents,
+  findRowKeys,
   flattenData,
+  getTotalByColumns,
+  getUnhandledProps,
+  isNumberOrTrue,
+  isRTL,
+  mergeCells,
   prefix,
   requestAnimationTimeout,
-  cancelAnimationTimeout,
-  isRTL,
-  isNumberOrTrue,
-  findRowKeys,
-  findAllParents,
-  shouldShowRowByExpanded,
   resetLeftForCells,
+  shouldShowRowByExpanded,
+  toggleClass,
 } from './utils';
 
 import { TableProps } from './Table.d';
@@ -54,6 +45,7 @@ import ColumnGroup from './ColumnGroup';
 import Column from './Column';
 import Cell from './Cell';
 import HeaderCell from './HeaderCell';
+import { ColumnProps } from './Column.d';
 
 interface TableRowProps extends RowProps {
   key?: string | number;
@@ -120,7 +112,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     data: PropTypes.arrayOf(PropTypes.object),
     defaultExpandAllRows: PropTypes.bool,
     defaultExpandedRowKeys: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     ),
     defaultSortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     disabledScroll: PropTypes.bool,
@@ -159,7 +151,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     onExpandChange: PropTypes.func,
     onTouchStart: PropTypes.func,
     onTouchMove: PropTypes.func,
-    onDataUpdated: PropTypes.func
+    onDataUpdated: PropTypes.func,
   };
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table'),
@@ -375,12 +367,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     if (
       // 当 Table 的 data 发生变化，需要重新计算高度
-    data !== this.props.data ||
+      data !== this.props.data ||
       // 当 Table 内容区的高度发生变化需要重新计算
       height !== this.props.height ||
       // 当 Table 内容区的高度发生变化需要重新计算
       prevState.contentHeight !== this.state.contentHeight ||
-    // 当 expandedRowKeys 发生变化，需要重新计算 Table 高度，如果重算会导致滚动条不显示。
+      // 当 expandedRowKeys 发生变化，需要重新计算 Table 高度，如果重算会导致滚动条不显示。
       prevState.expandedRowKeys !== this.state.expandedRowKeys ||
       prevProps.expandedRowKeys !== this.props.expandedRowKeys
     ) {
@@ -467,7 +459,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    * 处理columns json -> reactNode
    * @param columns
    */
-  processTableColumns(columns) {
+  processTableColumns(columns?: ColumnProps[]) {
     return columns && columns.map((column) => {
       const dataKey = column.dataIndex;
       if (column.type === 'ColumnGroup') {
@@ -479,7 +471,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           {
             // @ts-ignore
             <HeaderCell>
-              {isFunction(column.title) ? column.title() : column.title}
+              {typeof column.title === 'function' ? column.title() : column.title}
             </HeaderCell>
           }
           {typeof column.render === 'function' ? (
@@ -513,30 +505,32 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
 
     const flattenColumns = children.map((column: React.ReactElement) => {
-      if (column?.type === ColumnGroup) {
-        const { header, children: childColumns, align, fixed, verticalAlign } = column?.props;
-        return childColumns.map((childColumn, index) => {
-          // 把 ColumnGroup 设置的属性覆盖到 Column
-          const groupCellProps: any = {
-            align,
-            fixed,
-            verticalAlign,
-          };
+      if (column) {
+        if ((column.type as any)?.__PRO_TABLE_COLUMN_GROUP) {
+          const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
+          return childColumns.map((childColumn, index) => {
+            // 把 ColumnGroup 设置的属性覆盖到 Column
+            const groupCellProps: any = {
+              align,
+              fixed,
+              verticalAlign,
+            };
 
-          /**
-           * 为分组中的第一列设置属性:
-           * groupCount: 分组子项个数
-           * groupHeader: 分组标题
-           * resizable: 设置为不可自定义列宽
-           */
-          if (index === 0) {
-            groupCellProps.groupCount = childColumns.length;
-            groupCellProps.groupHeader = header;
-            groupCellProps.resizable = false;
-          }
+            /**
+             * 为分组中的第一列设置属性:
+             * groupCount: 分组子项个数
+             * groupHeader: 分组标题
+             * resizable: 设置为不可自定义列宽
+             */
+            if (index === 0) {
+              groupCellProps.groupCount = childColumns.length;
+              groupCellProps.groupHeader = header;
+              groupCellProps.resizable = false;
+            }
 
-          return React.cloneElement(childColumn, groupCellProps);
-        });
+            return React.cloneElement(childColumn, groupCellProps);
+          });
+        }
       }
       return column;
     });
@@ -1006,7 +1000,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   // @ts-ignore
-  addPrefix = (name: string):string => prefix(this.props.classPrefix)(name);
+  addPrefix = (name: string): string => prefix(this.props.classPrefix)(name);
 
   calculateRowMaxHeight() {
     const { wordWrap } = this.props;
@@ -1217,7 +1211,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const rowProps: TableRowProps = {
       ...props,
       // @ts-ignore
-      rowRef: this.bindTableRowsRef(props.key, rowData),
+      rowRef: this.bindTableRowsRef(props.key!, rowData),
       onClick: this.bindRowClick(rowData),
       onContextMenu: this.bindRowContextMenu(rowData),
     };
@@ -1230,7 +1224,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const cell = bodyCells[i];
       cells.push(
         // @ts-ignore
-        React.cloneElement(cell, {
+        React.cloneElement<any>(cell, {
           hasChildren,
           rowData,
           wordWrap,
@@ -1349,7 +1343,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { renderRowExpanded, rowExpandedHeight } = this.props;
     const styles = { height: rowExpandedHeight };
 
-    if (typeof renderRowExpanded === 'function') {
+    if (isFunction(renderRowExpanded)) {
       return (
         <div className={this.addPrefix('row-expanded')} style={styles}>
           {renderRowExpanded(rowData)}
@@ -1444,8 +1438,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       let top = 0; // Row position
       const minTop = Math.abs(this.scrollY);
       // @ts-ignore
-      const maxTop = minTop + height + rowExpandedHeight;
-      const isCustomRowHeight = typeof rowHeight === 'function';
+      const maxTop = minTop + height + rowExpandedHeight!;
+      const isCustomRowHeight = isFunction(rowHeight);
       const isUncertainHeight = !!(renderRowExpanded || isCustomRowHeight || isTree);
 
       /**
@@ -1471,7 +1465,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               : rowHeight;
             if (shouldRenderExpandedRow) {
               // @ts-ignore
-              nextRowHeight += rowExpandedHeight;
+              nextRowHeight += rowExpandedHeight!;
             }
           }
 
@@ -1644,7 +1638,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    *  show loading
    */
   renderLoading(locale: PerformanceTableLocal) {
-    const {loading, loadAnimation, renderLoading } = this.props;
+    const { loading, loadAnimation, renderLoading } = this.props;
 
     if (!loadAnimation && !loading) {
       return null;

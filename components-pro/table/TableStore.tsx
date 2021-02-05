@@ -87,6 +87,7 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           disabled={!record.selectable}
+          data-selection-key={SELECTION_KEY}
           value
         />
       );
@@ -100,6 +101,7 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           disabled={!record.selectable}
+          data-selection-key={SELECTION_KEY}
           value
         />
       );
@@ -150,7 +152,7 @@ function normalizeColumns(
   const leftFixedColumns: any[] = [];
   const rightFixedColumns: any[] = [];
   Children.forEach(elements, element => {
-    if (!isValidElement(element) || element.type !== Column) {
+    if (!isValidElement(element)  || !(element.type as typeof Column).__PRO_TABLE_COLUMN) {
       return;
     }
     const { props, key } = element;

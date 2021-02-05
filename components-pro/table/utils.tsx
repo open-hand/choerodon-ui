@@ -4,13 +4,10 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box/CheckBox';
-import Switch from '../switch/Switch';
-import ObserverRadio from '../radio/Radio';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import Field from '../data-set/Field';
 import ObserverSelect from '../select/Select';
 import Option from '../option/Option';
-import SelectBox from '../select-box/SelectBox';
 import Lov from '../lov/Lov';
 import ObserverNumberField from '../number-field/NumberField';
 import Currency from '../currency/Currency';
@@ -141,14 +138,7 @@ export function getEditorByColumnAndRecord(
 
 export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
   if (element) {
-    switch (element.type as any) {
-      case ObserverCheckBox:
-      case ObserverRadio:
-      case Switch:
-      case SelectBox:
-        return true;
-      default:
-    }
+    return !!(element.type as any).__IS_IN_CELL_EDITOR;
   }
   return false;
 }

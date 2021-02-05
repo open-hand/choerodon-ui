@@ -104,42 +104,68 @@ export interface MouseEventComponentProps {
    * 单击回调
    */
   onClick?: MouseEventHandler<any>;
+  onClickCapture?: MouseEventHandler<any>;
   /**
    * 双击回调
    */
   onDoubleClick?: MouseEventHandler<any>;
+  onDoubleClickCapture?: MouseEventHandler<any>;
   /**
    * 右点击回调
    */
   onContextMenu?: MouseEventHandler<any>;
+  onContextMenuCapture?: MouseEventHandler<any>;
+  onDrag?: MouseEventHandler<any>;
+  onDragCapture?: MouseEventHandler<any>;
+  onDragEnd?: MouseEventHandler<any>;
+  onDragEndCapture?: MouseEventHandler<any>;
+  onDragEnter?: MouseEventHandler<any>;
+  onDragEnterCapture?: MouseEventHandler<any>;
+  onDragExit?: MouseEventHandler<any>;
+  onDragExitCapture?: MouseEventHandler<any>;
+  onDragLeave?: MouseEventHandler<any>;
+  onDragLeaveCapture?: MouseEventHandler<any>;
+  onDragOver?: MouseEventHandler<any>;
+  onDragOverCapture?: MouseEventHandler<any>;
+  onDragStart?: MouseEventHandler<any>;
+  onDragStartCapture?: MouseEventHandler<any>;
+  onDrop?: MouseEventHandler<any>;
+  onDropCapture?: MouseEventHandler<any>;
   /**
    * 鼠标抬起回调
    */
   onMouseUp?: MouseEventHandler<any>;
+  onMouseUpCapture?: MouseEventHandler<any>;
   /**
    * 鼠标点下回调
    */
   onMouseDown?: MouseEventHandler<any>;
+  onMouseDownCapture?: MouseEventHandler<any>;
   /**
    * 鼠标移动回调
    */
   onMouseMove?: MouseEventHandler<any>;
+  onMouseMoveCapture?: MouseEventHandler<any>;
   /**
    * 鼠标进入回调
    */
   onMouseEnter?: MouseEventHandler<any>;
+  onMouseEnterCapture?: MouseEventHandler<any>;
   /**
    * 鼠标离开回调
    */
   onMouseLeave?: MouseEventHandler<any>;
+  onMouseLeaveCapture?: MouseEventHandler<any>;
   /**
    * 鼠标进入回调，与onMouseEnter区别在于鼠标进入子节点时会触发onMouseOut
    */
   onMouseOver?: MouseEventHandler<any>;
+  onMouseOverCapture?: MouseEventHandler<any>;
   /**
    * 鼠标离开回调，与onMouseLeave区别在于子节点的onMouseout会冒泡触发本回调
    */
   onMouseOut?: MouseEventHandler<any>;
+  onMouseOutCapture?: MouseEventHandler<any>;
 }
 
 /** 响应键盘事件组件 */

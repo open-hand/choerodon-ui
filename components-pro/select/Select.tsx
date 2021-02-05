@@ -284,6 +284,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   static OptGroup = OptGroup;
 
+  static __PRO_SELECT = true;
+
   comboOptions: DataSet = new DataSet();
 
   menu?: Menu | null;
@@ -1313,4 +1315,6 @@ export default class ObserverSelect extends Select<SelectProps> {
   static Option = Option;
 
   static OptGroup = OptGroup;
+
+  static __PRO_SELECT = true;
 }
