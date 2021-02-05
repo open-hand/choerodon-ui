@@ -1,10 +1,12 @@
 import React, { createElement, CSSProperties, isValidElement, ReactNode } from 'react';
+import { Cancelable, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
+import debounce from 'lodash/debounce';
 import isArrayLike from 'lodash/isArrayLike';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -13,6 +15,7 @@ import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import { WaitType } from '../core/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
@@ -23,7 +26,7 @@ import { preventDefault, stopPropagation } from '../_util/EventManager';
 import measureTextWidth from '../_util/measureTextWidth';
 import Animate from '../animate';
 import Tooltip from '../tooltip/Tooltip';
-import { GroupItemCategory } from './enum';
+import { GroupItemCategory, ValueChangeAction } from './enum';
 import { ShowHelp } from '../field/enum';
 import { FieldFormat } from '../data-set/enum';
 
@@ -88,6 +91,19 @@ export interface TextFieldProps extends FormFieldProps {
    * 是否是筛选条 flat 模式
    */
   isFlat?: boolean;
+  /**
+   * 触发值变更的动作， default: blur
+   */
+  valueChangeAction?: ValueChangeAction;
+  /**
+   * 值变更间隔时间，只有在valueChangeAction为input时起作用
+   */
+  wait?: number;
+  /**
+   * 值变更间隔类型，可选值：throttle | debounce
+   * @default throttle
+   */
+  waitType?: WaitType;
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -142,6 +158,19 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
      * 是否是筛选条 flat 模式
      */
     isFlat: PropTypes.bool,
+    /**
+     * 触发值变更的动作， default: blur
+     */
+    valueChangeAction: PropTypes.oneOf([ValueChangeAction.input, ValueChangeAction.blur]),
+    /**
+     * 值变更间隔时间，只有在valueChangeAction为input时起作用
+     */
+    wait: PropTypes.number,
+    /**
+     * 值变更间隔类型，可选值：throttle | debounce
+     * @default throttle
+     */
+    waitType: PropTypes.oneOf([WaitType.throttle, WaitType.debounce]),
     ...FormField.propTypes,
   };
 
@@ -150,6 +179,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     suffixCls: 'input',
     clearButton: false,
     multiple: false,
+    valueChangeAction: ValueChangeAction.blur,
+    waitType: WaitType.debounce,
   };
 
   @observable text?: string;
@@ -157,6 +188,28 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   type: string = 'text';
 
   tagContainer: HTMLUListElement | null;
+
+  handleChangeWait: Function & Cancelable;
+
+  constructor(props, context) {
+    super(props, context);
+    this.handleChangeWait = this.getHandleChange(props);
+  }
+
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    super.componentWillReceiveProps(nextProps, nextContext);
+    const { wait, waitType } = this.props;
+    if (wait !== nextProps.wait || waitType !== nextProps.waitType) {
+      this.handleChangeWait = this.getHandleChange(nextProps);
+    }
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    this.handleChangeWait.cancel();
+  }
+
 
   @autobind
   saveTagContainer(node) {
@@ -194,6 +247,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'maxLengths',
       'autoComplete',
       'isFlat',
+      'valueChangeAction',
+      'wait',
+      'waitType',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
@@ -831,6 +887,22 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
+  getHandleChange(props): Function & Cancelable {
+    const { wait, waitType } = props;
+    if (wait && waitType) {
+      const options: DebounceSettings = { leading: true, trailing: true };
+      if (waitType === WaitType.throttle) {
+        options.trailing = false;
+        options.maxWait = wait;
+      } else if (waitType === WaitType.debounce) {
+        options.leading = false;
+      }
+      return debounce(this.prepareSetValue, wait, options);
+    }
+    return debounce(this.prepareSetValue, 0);
+  }
+
+
   @autobind
   handleChange(e) {
     const {
@@ -838,6 +910,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       type,
       target: { value },
     } = e;
+    const { valueChangeAction } = this.props;
     if (type === 'compositionend') {
       this.lock = false;
     }
@@ -850,8 +923,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         target.setSelectionRange(selectionEnd, selectionEnd);
       }
       this.setText(restricted);
+      if (valueChangeAction === ValueChangeAction.input) {
+        this.handleChangeWait(restricted);
+      }
     } else {
       this.setText(value);
+      if (valueChangeAction === ValueChangeAction.input) {
+        this.handleChangeWait(value);
+      }
     }
   }
 

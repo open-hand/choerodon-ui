@@ -1,7 +1,7 @@
-export { Size } from './enum';
+export { Size, WaitType } from './enum';
 export {
-    ViewComponentProps,
-    ElementProps,
-    MouseEventComponentProps,
-    KeyboardEventComponentProps,
+  ViewComponentProps,
+  ElementProps,
+  MouseEventComponentProps,
+  KeyboardEventComponentProps,
 } from './ViewComponent';

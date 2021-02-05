@@ -9,6 +9,7 @@ import ObserverRadio from '../radio/Radio';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import Field from '../data-set/Field';
 import ObserverSelect from '../select/Select';
+import Option from '../option/Option';
 import SelectBox from '../select-box/SelectBox';
 import Lov from '../lov/Lov';
 import ObserverNumberField from '../number-field/NumberField';
@@ -30,8 +31,9 @@ import Output from '../output/Output';
 import DataSet from '../data-set/DataSet';
 import TableStore from './TableStore';
 import { TablePaginationConfig } from './Table';
+import { $l } from '../locale-context';
 
-export function getEditorByField(field: Field, isFlat?: boolean ): ReactElement<FormFieldProps> {
+export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
   const lookupUrl = field.get('lookupUrl');
   const lovCode = field.get('lovCode');
@@ -54,7 +56,12 @@ export function getEditorByField(field: Field, isFlat?: boolean ): ReactElement<
   }
   switch (type) {
     case FieldType.boolean:
-      return <ObserverCheckBox />;
+      return isQueryField ? (
+        <ObserverSelect clearButton>
+          <Option value>{$l('Table', 'query_option_yes')}</Option>
+          <Option value={false}>{$l('Table', 'query_option_no')}</Option>
+        </ObserverSelect>
+      ) : <ObserverCheckBox />;
     case FieldType.number:
       return <ObserverNumberField  {...flatProps} />;
     case FieldType.currency:
@@ -195,7 +202,7 @@ export function findFirstFocusableInvalidElement(node: HTMLElement): HTMLElement
 }
 
 export function isCanEdictingRow(element): boolean {
-  const sibling: HTMLTableRowElement | null = element
+  const sibling: HTMLTableRowElement | null = element;
   if (
     !sibling ||
     ('index' in sibling.dataset &&
@@ -310,7 +317,7 @@ export function reorderingColumns(newColumns: ColumnProps[], originalColumns: Co
     const nameColumns = originalColumns.filter(columnItem => getColumnChildrenValue('name', columnItem));
     const noNameColumns = originalColumns.filter(columnItem => !getColumnChildrenValue('name', columnItem));
     if (nameColumns && newColumns && nameColumns.length > 0 && newColumns.length > 0) {
-      const newColumnsStr = newColumns.map(function(obj) {
+      const newColumnsStr = newColumns.map(function (obj) {
         return getColumnChildrenValue('name', obj);
       }).join(',');
       const newColumnsNameArray = newColumnsStr.split(',');

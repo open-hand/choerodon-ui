@@ -6,6 +6,10 @@ declare module 'react-lazy-load';
 
 declare module 'dom-closest';
 
+declare module 'insert-css';
+
+declare module 'rc-virtual-list';
+
 declare module 'lodash/noop' {
   export default function(...args: any[]): any;
 }

@@ -17,7 +17,12 @@ timeline: true
 
 - 🌟 `<pro>Select`: Added `selectAllButton` property.
 - 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
+- 🌟 `<pro>TextField`: Added `valueChangeAction`, `wait`, `waitType` properties.
+- 🌟 `<pro>Form`: `labelWidth` added `auto` value.
 - 💄 `<pro>Trigger`: Optimize the performance.
+- 💄 `<pro>Tree`: Optimize the performance.
+- 💄 `<pro>Table`: The query field of boolean type is displayed as `Select` by default.
+- 🐞 `<pro>Table`: Fix the multilingual problem of the filter bar.
 
 ## 1.0.0
 

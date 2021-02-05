@@ -430,7 +430,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   getFieldEditor(props, selectField: Field): ReactElement<FormFieldProps> {
-    const editor: ReactElement<FormFieldProps> = getEditorByField(selectField);
+    const editor: ReactElement<FormFieldProps> = getEditorByField(selectField, true);
     const editorProps: FormFieldProps = {
       ...props,
       key: 'value',

@@ -46,6 +46,8 @@ const locale: Locale = {
     whether_delete_filter: 'フィルタレコードを削除するかどうか',
     filter_name: 'フィルタ名',
     please_enter: '入ってください',
+    query_option_yes: 'はい',
+    query_option_no: 'いいえ',
   },
   Pagination: {
     page: 'ページ',

@@ -1,7 +1,8 @@
 export {
-    GroupItemCategory,
+  GroupItemCategory,
+  ValueChangeAction,
 } from './enum';
 
-export { 
-    TextFieldProps,
-} from './TextField'
+export {
+  TextFieldProps,
+} from './TextField';

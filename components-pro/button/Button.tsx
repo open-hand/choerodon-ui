@@ -12,9 +12,9 @@ import Icon from '../icon';
 import FormContext from '../form/FormContext';
 import Progress from '../progress';
 import Ripple from '../ripple';
-import { ButtonColor, ButtonType, ButtonWaitType, FuncType } from './enum';
+import { ButtonColor, ButtonType, FuncType } from './enum';
 import { DataSetStatus } from '../data-set/enum';
-import { Size } from '../core/enum';
+import { WaitType, Size } from '../core/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import autobind from '../_util/autobind';
 
@@ -58,7 +58,7 @@ export interface ButtonProps extends DataSetComponentProps {
    * 点击间隔类型，可选值：throttle | debounce
    * @default throttle
    */
-  waitType?: ButtonWaitType;
+  waitType?: WaitType;
 }
 
 @observer
@@ -119,14 +119,14 @@ export default class Button extends DataSetComponent<ButtonProps> {
      * 点击间隔类型，可选值：throttle | debounce
      * @default throttle
      */
-    waitType: PropTypes.oneOf([ButtonWaitType.throttle, ButtonWaitType.debounce]),
+    waitType: PropTypes.oneOf([WaitType.throttle, WaitType.debounce]),
     ...DataSetComponent.propTypes,
   };
 
   static defaultProps = {
     suffixCls: 'btn',
     type: ButtonType.button,
-    waitType: ButtonWaitType.throttle,
+    waitType: WaitType.throttle,
   };
 
   @computed
@@ -186,10 +186,10 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const { wait, waitType } = props;
     if (wait && waitType) {
       const options: DebounceSettings = { leading: true, trailing: true };
-      if (waitType === ButtonWaitType.throttle) {
+      if (waitType === WaitType.throttle) {
         options.trailing = false;
         options.maxWait = wait;
-      } else if (waitType === ButtonWaitType.debounce) {
+      } else if (waitType === WaitType.debounce) {
         options.leading = false;
       }
       return debounce(this.handleClick, wait, options);

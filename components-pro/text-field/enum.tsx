@@ -4,3 +4,8 @@ export const enum GroupItemCategory {
   help = 'help',
   input = 'input',
 }
+
+export const enum ValueChangeAction {
+  blur = 'blur',
+  input = 'input',
+}

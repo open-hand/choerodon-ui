@@ -46,6 +46,8 @@ const locale: Locale = {
     whether_delete_filter: 'Whether to delete the filter record',
     filter_name: 'Filter name',
     please_enter: 'Please enter',
+    query_option_yes: 'Yes',
+    query_option_no: 'No',
   },
   Pagination: {
     page: 'Page',

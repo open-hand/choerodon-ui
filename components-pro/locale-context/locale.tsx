@@ -47,6 +47,8 @@ export interface Locale {
     whether_delete_filter;
     filter_name;
     please_enter;
+    query_option_yes;
+    query_option_no;
   };
   Pagination: {
     page;

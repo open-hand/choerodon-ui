@@ -14,7 +14,7 @@ title:
 Controlled TextField
 
 ````jsx
-import { TextField } from 'choerodon-ui/pro';
+import { TextField, Row, Col } from 'choerodon-ui/pro';
 
 class App extends React.Component {
   constructor(props) {
@@ -36,7 +36,16 @@ class App extends React.Component {
   }
 
   render() {
-    return <TextField value={this.state.value} onChange={this.handleChange} onInput={this.handleInput} />;
+    return (
+      <Row gutter={10}>
+        <Col span={8}>
+          <TextField value={this.state.value} onChange={this.handleChange} onInput={this.handleInput} />
+        </Col>
+        <Col span={8}>
+          <TextField value={this.state.value} onChange={this.handleChange} onInput={this.handleInput} valueChangeAction="input" wait={300} />
+        </Col>
+      </Row>
+    );
   }
 }
 

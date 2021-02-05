@@ -20,7 +20,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'phone', defaultValue: '15888888888', type: 'string', label: '手机号' },
+      { name: 'phone', defaultValue: '15888888888', type: 'string', label: '手机号', required: true },
       { name: 'age', defaultValue: 18, type: 'number', label: '年龄' },
       { name: 'sex', defaultValue: 'F', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
       { name: 'language', defaultValue: 'zh-CN', type: 'string', label: '语言' },

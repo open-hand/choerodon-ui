@@ -1,13 +1,13 @@
 import React, {
   Children,
+  cloneElement,
   createElement,
+  CSSProperties,
   FormEvent,
   FormEventHandler,
   isValidElement,
   ReactElement,
   ReactNode,
-  CSSProperties,
-  cloneElement,
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -34,12 +34,12 @@ import Record from '../data-set/Record';
 import { LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
 import {
   defaultColumns,
+  defaultExcludeUseColonTag,
   defaultLabelWidth,
   FIELD_SUFFIX,
+  findFirstInvalidElement,
   getProperty,
   normalizeLabelWidth,
-  defaultExcludeUseColonTag,
-  findFirstInvalidElement,
 } from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
 
@@ -53,7 +53,7 @@ const NameGen: IterableIterator<string> = (function* (start: number) {
   }
 })(0);
 
-export type LabelWidth = number | number[];
+export type LabelWidth = number | 'auto' | (number | 'auto')[];
 
 export type LabelWidthType = LabelWidth | { [key in ResponsiveKeys]: LabelWidth };
 export type LabelAlignType = LabelAlign | { [key in ResponsiveKeys]: LabelAlign };
@@ -154,7 +154,8 @@ export interface FormProps extends DataSetComponentProps {
 
 const labelWidthPropTypes = PropTypes.oneOfType([
   PropTypes.number,
-  PropTypes.arrayOf(PropTypes.number),
+  PropTypes.oneOf(['auto']),
+  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])])),
 ]);
 const labelAlignPropTypes = PropTypes.oneOf([LabelAlign.left, LabelAlign.center, LabelAlign.right]);
 const labelLayoutPropTypes = PropTypes.oneOf([
@@ -381,6 +382,9 @@ export default class Form extends DataSetComponent<FormProps> {
   @computed
   get labelWidth(): LabelWidth {
     const { labelWidth } = this.observableProps;
+    if (labelWidth === 'auto') {
+      return labelWidth;
+    }
     if (isNumber(labelWidth) || isArrayLike(labelWidth)) {
       return labelWidth;
     }
@@ -433,16 +437,15 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @computed
   get separateSpacing(): SeparateSpacing | undefined {
-    const { separateSpacing } = this.props;
-    if (separateSpacing && (separateSpacing.width || separateSpacing.height)) {
-      const separateSpacingCopy = { width: 0, height: 0 };
-      if (separateSpacing.width) {
-        separateSpacingCopy.width = separateSpacing.width;
+    const { separateSpacing } = this.observableProps;
+    if (separateSpacing) {
+      const { width = 0, height = 0 } = separateSpacing;
+      if (width || height) {
+        return {
+          width,
+          height,
+        };
       }
-      if (separateSpacing.height) {
-        separateSpacingCopy.height = separateSpacing.height;
-      }
-      return separateSpacingCopy;
     }
     return undefined;
   }
@@ -463,6 +466,7 @@ export default class Form extends DataSetComponent<FormProps> {
       columns: props.columns,
       useColon: props.useColon,
       excludeUseColonTagList: props.excludeUseColonTagList,
+      separateSpacing: props.separateSpacing,
     };
   }
 
@@ -758,28 +762,29 @@ export default class Form extends DataSetComponent<FormProps> {
     }
 
     let tableStyle: CSSProperties | undefined;
-
-    if (this.separateSpacing) {
+    const { separateSpacing } = this;
+    if (separateSpacing) {
       if (this.labelLayout === LabelLayout.horizontal) {
         tableStyle = {
           borderCollapse: 'separate',
-          borderSpacing: `0rem ${pxToRem(this.separateSpacing.height)}`,
+          borderSpacing: `0rem ${pxToRem(separateSpacing.height)}`,
         };
       } else {
         tableStyle = {
           borderCollapse: 'separate',
-          borderSpacing: `${pxToRem(this.separateSpacing.width)} ${pxToRem(this.separateSpacing.height)}`,
+          borderSpacing: `${pxToRem(separateSpacing.width)} ${pxToRem(separateSpacing.height)}`,
         };
       }
     }
 
+    const isAutoWidth = this.labelWidth === 'auto' || (isArrayLike(this.labelWidth) && this.labelWidth.some(w => w === 'auto'));
 
     return [
       this.getHeader(),
-      (<table style={tableStyle} key="form-body">
+      <table style={tableStyle} key="form-body" className={`${isAutoWidth ? 'auto-width' : ''}`}>
         {cols.length ? <colgroup>{cols}</colgroup> : undefined}
         <tbody>{rows}</tbody>
-      </table>),
+      </table>,
     ];
   }
 
