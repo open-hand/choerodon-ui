@@ -1,7 +1,6 @@
 import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Button from 'choerodon-ui/lib/button';
 import noop from 'lodash/noop';
 import Trigger, { TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
@@ -67,14 +66,14 @@ const splitObject = (obj: any, keys: string[]) => {
  */
 function getDisabledCompatobleChildren(element: React.ReactElement<any>) {
   const elementType = element.type as any;
-  if (
-    (elementType.__Pro_BUTTON === true ||
-      elementType.__Pro_SWITCH === true ||
-      elementType.__Pro_CHECKBOX === true ||
-      (element.type as typeof Button).__ANT_BUTTON ||
-      element.type === 'button') &&
-    element.props.disabled
-  ) {
+  if ((
+    elementType.__PRO_BUTTON ||
+    elementType.__PRO_SWITCH ||
+    elementType.__PRO_CHECKBOX ||
+    elementType.__PRO_RADIO ||
+    elementType.__C7N_BUTTON ||
+    elementType === 'button'
+  ) && element.props.disabled) {
     const { picked, ommitted } = splitObject(element.props.style, [
       'position',
       'left',

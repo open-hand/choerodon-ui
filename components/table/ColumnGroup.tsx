@@ -5,5 +5,5 @@ export interface ColumnGroupProps {
 }
 
 export default class ColumnGroup extends Component<ColumnGroupProps, ComponentState> {
-  static __ANT_TABLE_COLUMN_GROUP = true;
+  static __C7N_TABLE_COLUMN_GROUP = true;
 }

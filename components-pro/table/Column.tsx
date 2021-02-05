@@ -203,6 +203,8 @@ export default class Column extends Component<ColumnPropsInner, ComponentState> 
     children: PropTypes.array,
   };
 
+  static __PRO_TABLE_COLUMN = true;
+
   static defaultProps = {
     hidden: false,
     lock: false,

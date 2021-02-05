@@ -12,7 +12,10 @@ export default class Switch extends CheckBox<CheckBoxProps> {
    * tooltip disable sign
    */
   // eslint-disable-next-line camelcase
-  static __Pro_SWITCH = true;
+  static __PRO_SWITCH = true;
+
+  // eslint-disable-next-line camelcase
+  static __IS_IN_CELL_EDITOR = true;
 
   static defaultProps = {
     ...CheckBox.defaultProps,

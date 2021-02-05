@@ -15,7 +15,7 @@ import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
 import { ColumnLock, DragColumnAlign, SelectionMode } from './enum';
 import { findFirstFocusableElement, getColumnKey, isDisabledRow, isSelectedRow } from './utils';
-import { DRAG_KEY, EXPAND_KEY } from './TableStore';
+import { DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
 import { RecordStatus } from '../data-set/enum';
@@ -160,7 +160,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       record,
       record: { dataSet },
     } = this.props;
-    if (dataSet && !isDisabledRow(record)) {
+    if (dataSet && !isDisabledRow(record) && e.target.dataset.selectionKey !== SELECTION_KEY) {
       dataSet.current = record;
     }
     const { onClickCapture } = this.rowExternalProps;
@@ -204,14 +204,14 @@ export default class TableRow extends Component<TableRowProps, any> {
   focusRow(row: HTMLTableRowElement | null) {
     if (row) {
       const {
-        tableStore: { node, overflowY, currentEditorName, inlineEdit},
+        tableStore: { node, overflowY, currentEditorName, inlineEdit },
       } = this.context;
       const { lock, record } = this.props;
       /**
        * 判断是否为ie浏览器
        */
-      // @ts-ignore
-      const isIE:boolean = !!window.ActiveXObject || "ActiveXObject" in window
+        // @ts-ignore
+      const isIE: boolean = !!window.ActiveXObject || 'ActiveXObject' in window;
       // 当不是为lock 和 当前不是编辑状态的时候
       if (!lock && !currentEditorName) {
         const { element } = node;
@@ -402,7 +402,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   render() {
-    const { prefixCls, columns, record, lock, hidden, index, provided, snapshot, dragColumnAlign, className} = this.props;
+    const { prefixCls, columns, record, lock, hidden, index, provided, snapshot, dragColumnAlign, className } = this.props;
     const {
       tableStore: {
         rowHeight,
@@ -417,12 +417,12 @@ export default class TableRow extends Component<TableRowProps, any> {
         props: { onRow, rowRenderer, selectionMode },
       },
     } = this.context;
-    const { dataSet, isCurrent, key, id } = record;
-    const rowExternalProps = {
+    const { key, id } = record;
+    const rowExternalProps: any = {
       ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}),
       ...(typeof onRow === 'function'
         ? onRow({
-          dataSet: dataSet!,
+          dataSet: record.dataSet!,
           record,
           expandedRow: false,
           index,
@@ -431,20 +431,19 @@ export default class TableRow extends Component<TableRowProps, any> {
     };
     this.rowExternalProps = rowExternalProps;
     const disabled = isDisabledRow(record);
-    const selected = isSelectedRow(record);
     const rowPrefixCls = `${prefixCls}-row`;
     const classString = classNames(
       rowPrefixCls,
       {
-        [`${rowPrefixCls}-current`]: highLightRow && isCurrent,
+        [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent, // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
         [`${rowPrefixCls}-hover`]: highLightRow && this.isHover,
         [`${rowPrefixCls}-highlight`]: highLightRow,
-        [`${rowPrefixCls}-selected`]: selectedHighLightRow && selected,
+        [`${rowPrefixCls}-selected`]: selectedHighLightRow && isSelectedRow(record),
         [`${rowPrefixCls}-disabled`]: disabled,
         [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && (mouseBatchChooseIdList || []).includes(id),
-        [`${rowPrefixCls}-expanded`]:this.isExpanded,
-        [`${className}`]: className , // 增加可以自定义类名满足拖拽功能
+        [`${rowPrefixCls}-expanded`]: this.isExpanded,
       },
+      className, // 增加可以自定义类名满足拖拽功能
       rowExternalProps.className,
     );
     const rowProps: HTMLProps<HTMLTableRowElement> & {

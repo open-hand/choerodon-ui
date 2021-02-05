@@ -13,4 +13,6 @@ export default class OptGroup extends Component<OptGroupProps> {
   static propTypes = {
     label: PropTypes.string,
   };
+
+  static __PRO_OPT_GROUP = true;
 }

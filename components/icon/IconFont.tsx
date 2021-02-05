@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import Icon, { IconBaseProps } from './Icon';
 
 const customCache = new Set<string>();
@@ -10,6 +10,10 @@ export interface CustomIconOptions {
 
 export interface IconFontProps extends IconBaseProps {
   type: string;
+}
+
+export interface IIconFont extends ForwardRefExoticComponent<PropsWithoutRef<IconFontProps> & RefAttributes<HTMLSpanElement>> {
+  __C7N_ICON?: boolean;
 }
 
 function isValidCustomScriptUrl(scriptUrl: string): boolean {
@@ -39,7 +43,7 @@ function createScriptUrlElements(scriptUrls: string[], index: number = 0): void 
   }
 }
 
-export default function create(options: CustomIconOptions = {}): React.SFC<IconFontProps> {
+export default function create(options: CustomIconOptions = {}): IIconFont {
   const { scriptUrl, extraCommonProps = {} } = options;
 
   /**
@@ -62,7 +66,7 @@ export default function create(options: CustomIconOptions = {}): React.SFC<IconF
     }
   }
 
-  const Iconfont = React.forwardRef<HTMLSpanElement, IconFontProps>((props, ref) => {
+  const Iconfont: IIconFont = React.forwardRef<HTMLSpanElement, IconFontProps>((props, ref) => {
     const { type, children, ...restProps } = props;
 
     // children > type
@@ -81,6 +85,7 @@ export default function create(options: CustomIconOptions = {}): React.SFC<IconF
   });
 
   Iconfont.displayName = 'SvgIcon';
+  Iconfont.__C7N_ICON = true;
 
   return Iconfont;
 }

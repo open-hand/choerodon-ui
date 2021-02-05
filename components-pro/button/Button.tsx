@@ -66,7 +66,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   static displayName = 'Button';
 
   // eslint-disable-next-line camelcase
-  static __Pro_BUTTON = true;
+  static __PRO_BUTTON = true;
 
   static contextType = FormContext;
 
@@ -261,7 +261,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
         [`${prefixCls}-${color}`]: color,
         [`${prefixCls}-icon-only`]: icon
           ? childrenCount === 0 || children === false
-          : childrenCount === 1 && (children as any).type === Icon,
+          : childrenCount === 1 && (children as any).type && (children as any).type.__C7N_ICON,
       },
       ...props,
     );

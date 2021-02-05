@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { ColumnGroupProps } from './ColumnGroup.d';
@@ -7,7 +7,11 @@ import { defaultClassPrefix, prefix } from './utils';
 const classPrefix = defaultClassPrefix('performance-table-column-group');
 const addPrefix = (name: string) => prefix(classPrefix)(name);
 
-const ColumnGroup = React.forwardRef((props: ColumnGroupProps, ref: React.Ref<HTMLDivElement>) => {
+export interface IColumnGroup extends ForwardRefExoticComponent<PropsWithoutRef<ColumnGroupProps> & RefAttributes<HTMLDivElement>> {
+  __PRO_TABLE_COLUMN_GROUP?: boolean;
+}
+
+const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupProps>((props, ref) => {
   const { header, className, children, headerHeight = 80, verticalAlign, width, ...rest } = props;
   const height = headerHeight / 2;
   const styles: React.CSSProperties = {
@@ -44,6 +48,8 @@ const ColumnGroup = React.forwardRef((props: ColumnGroupProps, ref: React.Ref<HT
 });
 
 ColumnGroup.displayName = 'ColumnGroup';
+
+ColumnGroup.__PRO_TABLE_COLUMN_GROUP = true;
 
 ColumnGroup.propTypes = {
   header: PropTypes.node,

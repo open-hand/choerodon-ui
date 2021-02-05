@@ -1,13 +1,4 @@
-import React, {
-  cloneElement,
-  Component,
-  CSSProperties,
-  HTMLProps,
-  isValidElement,
-  MouseEventHandler,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
@@ -26,15 +17,7 @@ import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import {
-  findCell,
-  findFirstFocusableElement,
-  getAlignByField,
-  getColumnKey,
-  getEditorByColumnAndRecord,
-  isDisabledRow,
-  isRadio,
-} from './utils';
+import { findCell, findFirstFocusableElement, getAlignByField, getColumnKey, getEditorByColumnAndRecord, isDisabledRow, isRadio } from './utils';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { ColumnAlign, ColumnLock, TableColumnTooltip, TableCommandType } from './enum';
 import ObserverCheckBox from '../check-box/CheckBox';
@@ -47,7 +30,7 @@ import { DataSetEvents, RecordStatus } from '../data-set/enum';
 import { LabelLayout } from '../form/enum';
 import { Commands, TableButtonProps } from './Table';
 import autobind from '../_util/autobind';
-import { DRAG_KEY } from './TableStore';
+import { DRAG_KEY, SELECTION_KEY } from './TableStore';
 
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
@@ -207,7 +190,7 @@ export default class TableCell extends Component<TableCellProps> {
       column,
       column: { lock },
     } = this.props;
-    if (!isDisabledRow(record) && (!inlineEdit || record.editing)) {
+    if (column.key !== SELECTION_KEY && !isDisabledRow(record) && (!inlineEdit || record.editing)) {
       dataSet.current = record;
       this.showEditor(e.currentTarget, lock);
       if (!this.cellEditor || isRadio(this.cellEditor)) {

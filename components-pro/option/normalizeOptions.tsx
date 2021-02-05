@@ -18,7 +18,7 @@ function getOptionsFromChildren(
     Children.forEach(elements, child => {
       if (isValidElement(child)) {
         const { type } = child;
-        if (type === OptGroup) {
+        if ((type as typeof OptGroup).__PRO_OPT_GROUP) {
           const props = child.props as OptGroupProps & { children };
           getOptionsFromChildren(
             props.children,
@@ -29,7 +29,7 @@ function getOptionsFromChildren(
             disabledField,
             groups.concat(props.label || ''),
           );
-        } else if (type === Option) {
+        } else if ((type as typeof Option).__PRO_OPTION) {
           const { value, children, disabled } = child.props as OptionProps & { children };
           data.push(
             groups.reduce(

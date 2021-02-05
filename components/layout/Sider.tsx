@@ -65,7 +65,7 @@ const generateId = (() => {
 export default class Sider extends Component<SiderProps, SiderState> {
   static displayName = 'LayoutSider';
 
-  static __ANT_LAYOUT_SIDER: any = true;
+  static __C7N_LAYOUT_SIDER: any = true;
 
   static defaultProps = {
     collapsible: false,

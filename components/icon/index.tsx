@@ -30,9 +30,9 @@ const Icon = function Icon(props: IconProps) {
     typeof window !== 'undefined' &&
     typeof document.createElement === 'function'
   ) {
-    const SvgIcon = createFromIconfontCN({ scriptUrl })
+    const SvgIcon = createFromIconfontCN({ scriptUrl });
     if (SvgIcon) {
-      return <SvgIcon type={type} width={width} height={height} />
+      return <SvgIcon type={type} width={width} height={height} />;
     }
   }
   return <i {...otherProps} className={classString} />;
@@ -40,5 +40,6 @@ const Icon = function Icon(props: IconProps) {
 
 Icon.displayName = 'Icon';
 Icon.createFromIconfontCN = createFromIconfontCN;
+Icon.__C7N_ICON = true;
 
 export default Icon;

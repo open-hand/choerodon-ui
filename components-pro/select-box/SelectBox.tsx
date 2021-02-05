@@ -53,6 +53,9 @@ export default class SelectBox extends Select<SelectBoxProps> {
 
   static OptGroup = OptGroup;
 
+  // eslint-disable-next-line camelcase
+  static __IS_IN_CELL_EDITOR = true;
+
   @computed
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');

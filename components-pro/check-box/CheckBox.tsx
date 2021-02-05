@@ -45,7 +45,10 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
    * tooltip disable sign
    */
   // eslint-disable-next-line camelcase
-  static __Pro_CHECKBOX = true;
+  static __PRO_CHECKBOX = true;
+
+  // eslint-disable-next-line camelcase
+  static __IS_IN_CELL_EDITOR = true;
 
   static defaultProps = {
     ...Radio.defaultProps,
@@ -174,4 +177,10 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
 @observer
 export default class ObserverCheckBox extends CheckBox<CheckBoxProps> {
   static defaultProps = CheckBox.defaultProps;
+
+  // eslint-disable-next-line camelcase
+  static __PRO_CHECKBOX = true;
+
+  // eslint-disable-next-line camelcase
+  static __IS_IN_CELL_EDITOR = true;
 }
