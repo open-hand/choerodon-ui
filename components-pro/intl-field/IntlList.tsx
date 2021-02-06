@@ -13,6 +13,8 @@ export interface IntlListProps {
   name?: string;
   lang: Lang;
   maxLengths?: object;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 @observer
@@ -42,7 +44,7 @@ export default class IntlList extends Component<IntlListProps> {
   }
 
   render() {
-    const { record } = this.props;
-    return <Form record={record}>{this.renderOptions()}</Form>;
+    const { record, disabled, readOnly } = this.props;
+    return <Form disabled={disabled} readOnly={readOnly} record={record}>{this.renderOptions()}</Form>;
   }
 }

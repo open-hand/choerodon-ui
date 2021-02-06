@@ -56,7 +56,7 @@ export default class IntlField extends TextField<IntlFieldProps> {
 
       this.modal = open({
         title: $l('IntlField', 'modal_title'),
-        children: <IntlList record={record} name={name} lang={lang} maxLengths={maxLengthList} />,
+        children: <IntlList readOnly={this.isReadOnly()} disabled={this.isDisabled()} record={record} name={name} lang={lang} maxLengths={maxLengthList} />,
         onClose: this.handleIntlListClose,
         onOk: this.handleIntlListOk,
         onCancel: this.handleIntlListCancel,
@@ -132,10 +132,10 @@ export default class IntlField extends TextField<IntlFieldProps> {
       this.loading ? (
         <Progress size={Size.small} type={ProgressType.loading} />
       ) : (
-        suffix || <Icon type="language" />
+        suffix || <Icon className={`${this.prefixCls}-intl`} type="language" />
       ),
       {
-        onClick: this.isDisabled() || this.isReadOnly() ? undefined : this.openModal,
+        onClick: this.openModal,
       },
     );
   }
