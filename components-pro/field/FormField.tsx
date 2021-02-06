@@ -819,7 +819,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   isReadOnly(): boolean {
+    const { readOnly } = this.context;
     return (
+      readOnly ||
       (this.getProp('readOnly') as boolean) ||
       this.pristine ||
       (this.isControlled && !this.props.onChange && !this.props.onInput)

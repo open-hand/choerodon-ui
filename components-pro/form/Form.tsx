@@ -120,6 +120,10 @@ export interface FormProps extends DataSetComponentProps {
    */
   header?: string;
   /**
+   * 只读
+   */
+  readOnly?: boolean;
+  /**
    * 对照record在DataSet中的index
    * @default dataSet.currentIndex
    */
@@ -191,6 +195,10 @@ export default class Form extends DataSetComponent<FormProps> {
      * Ajax提交时的参数回调
      */
     processParams: PropTypes.func,
+    /**
+     * 只读
+     */
+    readOnly: PropTypes.bool,
     /**
      * 内部控件的标签的宽度
      */
@@ -454,6 +462,10 @@ export default class Form extends DataSetComponent<FormProps> {
     return super.isDisabled() || this.context.disabled;
   }
 
+  isReadOnly() {
+    return this.props.readOnly || this.context.readOnly;
+  }
+
   getObservableProps(props, context) {
     return {
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
@@ -627,7 +639,7 @@ export default class Form extends DataSetComponent<FormProps> {
       const label = getProperty(props, 'label', dataSet, record);
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
-      const readOnly = getProperty(props, 'readOnly', dataSet, record);
+      const readOnly = getProperty(props, 'readOnly', dataSet, record) || this.isReadOnly();
       const {
         rowSpan = 1,
         colSpan = 1,
@@ -810,6 +822,7 @@ export default class Form extends DataSetComponent<FormProps> {
       labelLayout,
       pristine,
       disabled: this.isDisabled(),
+      readOnly: this.isReadOnly(),
     };
     let children: ReactNode = this.rasterizedChildren();
     if (!formNode) {
