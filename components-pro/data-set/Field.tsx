@@ -37,6 +37,9 @@ function isEqualDynamicProps(oldProps, newProps) {
     return true;
   }
   if (isObject(newProps) && isObject(oldProps) && Object.keys(newProps).length) {
+    if(Object.keys(newProps).length !== Object.keys(toJS(oldProps)).length){
+      return false
+    }
     return Object.keys(newProps).every(key => {
       const value = newProps[key];
       const oldValue = oldProps[key];
@@ -648,8 +651,8 @@ export default class Field {
     const textField = this.get('textField');
     const valueField = this.get('valueField');
     const { lookup, options } = this;
-    if (lookup) {
-      return this.getLookupText(value,showValueIfNotFound)
+    if (lookup && !isObject(value)) {
+      return this.getLookupText(value, showValueIfNotFound);
     }
     if (options) {
       const found = options.find(record => isSameLike(record.get(valueField), value));
