@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, computed, get, set } from 'mobx';
+import { computed, get } from 'mobx';
 import classNames from 'classnames';
 import isNil from 'lodash/isNil';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -95,14 +95,6 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     }
   }
 
-  @autobind
-  handleResizeEnd() {
-    const { tableStore: { autoFootHeight, rowHeight } } = this.context;
-    if (rowHeight === 'auto' || autoFootHeight) {
-      this.syncFixedTableRowHeight();
-    }
-  }
-
   getCol(column, width): ReactNode {
     if (!column.hidden) {
       const { prefixCls } = this.props;
@@ -112,7 +104,6 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
           prefixCls={prefixCls}
           width={width}
           minWidth={minColumnWidth(column)}
-          onResizeEnd={this.handleResizeEnd}
         />
       );
     }
@@ -209,38 +200,5 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     );
 
     return [editors, table];
-  }
-
-  @action
-  syncFixedTableRowHeight() {
-    const { prefixCls, hasFooter, hasBody, hasHeader } = this.props;
-    if (this.tableWrapper) {
-      const { tableStore } = this.context;
-      const {
-        lockColumnsHeadRowsHeight,
-        lockColumnsBodyRowsHeight,
-        lockColumnsFootRowsHeight,
-      } = tableStore;
-      if (hasHeader) {
-        const headRows = Array.from<HTMLTableRowElement>(
-          this.tableWrapper.querySelectorAll('thead tr'),
-        );
-        headRows.forEach((row, index) => set(lockColumnsHeadRowsHeight, index, row.offsetHeight));
-      }
-      if (hasBody) {
-        const bodyRows = Array.from<HTMLTableRowElement>(
-          this.tableWrapper.querySelectorAll(`.${prefixCls}-row`),
-        );
-        bodyRows.forEach(row =>
-          set(lockColumnsBodyRowsHeight, row.dataset.index, row.offsetHeight),
-        );
-      }
-      if (hasFooter) {
-        const footRows = Array.from<HTMLTableRowElement>(
-          this.tableWrapper.querySelectorAll('tfoot tr'),
-        );
-        footRows.forEach((row, index) => set(lockColumnsFootRowsHeight, index, row.offsetHeight));
-      }
-    }
   }
 }

@@ -19,6 +19,7 @@ import { DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
 import { RecordStatus } from '../data-set/enum';
+import ResizeObservedRow from './ResizeObservedRow';
 
 export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -26,8 +27,8 @@ export interface TableRowProps extends ElementProps {
   record: Record;
   indentSize: number;
   index: number;
-  snapshot: DraggableStateSnapshot;
-  provided: DraggableProvided;
+  snapshot?: DraggableStateSnapshot;
+  provided?: DraggableProvided;
   dragColumnAlign?: DragColumnAlign;
 }
 
@@ -175,6 +176,17 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (typeof onClick === 'function') {
       return onClick(e);
     }
+  }
+
+  @autobind
+  handleResize(index: Key, height: number) {
+    this.setRowHeight(index, height);
+  }
+
+  @action
+  setRowHeight(index: Key, height: number) {
+    const { tableStore } = this.context;
+    set(tableStore.lockColumnsBodyRowsHeight, index, height);
   }
 
   @autobind
@@ -452,7 +464,9 @@ export default class TableRow extends Component<TableRowProps, any> {
     } = {
       ref: (ref) => {
         this.saveRef(ref);
-        provided.innerRef(ref);
+        if (provided) {
+          provided.innerRef(ref);
+        }
       },
       className: classString,
       style: { ...rowExternalProps.style },
@@ -476,10 +490,8 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (hidden) {
       rowProps.style.display = 'none';
     }
-    if (lock) {
-      if (rowHeight === 'auto') {
-        rowProps.style.height = pxToRem(get(lockColumnsBodyRowsHeight, key) as number);
-      }
+    if (lock && rowHeight === 'auto') {
+      rowProps.style.height = pxToRem(get(lockColumnsBodyRowsHeight, key) as number);
     }
     if (selectionMode === SelectionMode.click) {
       rowProps.onClick = this.handleSelectionByClick;
@@ -490,7 +502,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     }
 
     const getCellWithDrag = (columnItem: ColumnProps, indexItem: number) => {
-      return this.getCell(columnItem, indexItem, snapshot.isDragging);
+      return this.getCell(columnItem, indexItem, snapshot && snapshot.isDragging);
     };
 
     const filterDrag = (columnItem: ColumnProps) => {
@@ -499,17 +511,24 @@ export default class TableRow extends Component<TableRowProps, any> {
       }
       return true;
     };
-    return [
+    const tr = (
       <tr
         key={key}
         {...rowExternalProps}
         {...rowProps}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
+        {...(provided && provided.draggableProps)}
+        {...(provided && provided.dragHandleProps)}
         style={rowProps.style}
       >
         {columns.filter(filterDrag).map(getCellWithDrag)}
-      </tr>,
+      </tr>
+    );
+    return [
+      !lock && rowHeight === 'auto' ? (
+        <ResizeObservedRow onResize={this.handleResize} rowIndex={key}>
+          {tr}
+        </ResizeObservedRow>
+      ) : tr,
       ...this.renderExpandRow(),
     ];
   }

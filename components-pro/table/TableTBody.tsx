@@ -4,14 +4,7 @@ import { observer } from 'mobx-react';
 import { action, computed } from 'mobx';
 import classes from 'component-classes';
 import raf from 'raf';
-import {
-  Droppable,
-  Draggable,
-  DraggableProvided,
-  DraggableStateSnapshot,
-  DroppableProvided,
-  DraggableRubric,
-} from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import isFunction from 'lodash/isFunction';
@@ -110,11 +103,16 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     const rows = data.length
       ? this.getRows(rowData, leafColumns, true, lock)
       : this.getEmptyRow(leafColumns, lock);
-    const body = (
+    const isDropDisabled = (dragColumnAlign || propsDragColumnAlign) ? !(dragColumnAlign && propsDragColumnAlign) : !dragRow;
+    const body = isDropDisabled ? (
+      <tbody ref={lock ? undefined : this.saveRef} className={`${prefixCls}-tbody`}>
+        {rows}
+      </tbody>
+    ) : (
       <Droppable
         droppableId="table"
         key="table"
-        isDropDisabled={(dragColumnAlign || propsDragColumnAlign) ? !(dragColumnAlign && propsDragColumnAlign) : !dragRow}
+        isDropDisabled={isDropDisabled}
         renderClone={(
           provided: DraggableProvided,
           snapshot: DraggableStateSnapshot,
@@ -166,8 +164,8 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
             }}
             {...droppableProvided.droppableProps}
             className={`${prefixCls}-tbody`}>
-          {rows}
-          {droppableProvided.placeholder}
+            {rows}
+            {droppableProvided.placeholder}
           </tbody>
         )}
       </Droppable>
@@ -286,11 +284,25 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
         {this.renderExpandedRows}
       </ExpandedRow>
     );
-    return (
+    const isDragDisabled = (dragColumnAlign || propsDragColumnAlign) ? !(dragColumnAlign && propsDragColumnAlign) : !dragRow;
+    return isDragDisabled ? (
+      <TableRow
+        key={record.key}
+        hidden={!expanded}
+        lock={lock}
+        indentSize={indentSize}
+        prefixCls={prefixCls}
+        columns={columns}
+        record={record}
+        index={index}
+      >
+        {children}
+      </TableRow>
+    ) : (
       <Draggable
         draggableId={record.key.toString()}
         index={index}
-        isDragDisabled={(dragColumnAlign || propsDragColumnAlign) ? !(dragColumnAlign && propsDragColumnAlign) : !dragRow}
+        isDragDisabled={isDragDisabled}
         key={record.key}
       >
         {(

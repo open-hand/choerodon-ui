@@ -651,8 +651,8 @@ export default class Field {
     const textField = this.get('textField');
     const valueField = this.get('valueField');
     const { lookup, options } = this;
-    if (lookup) {
-      return this.getLookupText(value,showValueIfNotFound)
+    if (lookup && !isObject(value)) {
+      return this.getLookupText(value, showValueIfNotFound);
     }
     if (options) {
       const found = options.find(record => isSameLike(record.get(valueField), value));

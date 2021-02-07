@@ -24,7 +24,12 @@ timeline: true
 - 💄 `<pro>Table`: boolean 类型的查询字段默认显示为下拉框。
 - 💄 `<pro>Table`: 优化性能， 行选择框操作时不触发当前行的变更。
 - 💄 `<pro>IntlField`: 优化 intl disabled 和 readOnly 的值展现形式。
+- 💄 `<pro>Table`: 优化行列拖拽未开启时的性能。
+- 💄 `<pro>Table`: 优化自动行高时锁定列同步行高的性能。
+- 🐞 `<pro>Table`: 修复最后一列无法调整列宽的问题。
+- 🐞 `<pro>Table`: 修复拖拽列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复过滤条多语言问题。
+- 🐞 `<pro>Field`: 修复切换数据源时错误的返回对象渲染，更新 Table 动态编辑器 demo。
 - 🐞 `<pro>DataSet`: 修复动态设置lovPara后,lookupData等部分情况下还是使用以前的数据的问题。
 
 ## 1.0.0
