@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>IntlField`: 优化 intl disabled 和 readOnly 的值展现形式。
 - 💄 `<pro>Table`: 优化行列拖拽未开启时的性能。
 - 💄 `<pro>Table`: 优化自动行高时锁定列同步行高的性能。
+- 💄 `<pro>DataSet`: 优化性能。
 - 🐞 `<pro>Table`: 修复最后一列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复拖拽列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复过滤条多语言问题。

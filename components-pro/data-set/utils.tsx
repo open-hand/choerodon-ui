@@ -71,9 +71,9 @@ export function processToJSON(value) {
 
 export const arrayMove = (array: Record[], from: number, to: number) => {
   const startIndex = to < 0 ? array.length + to : to;
-  const item = array.splice(from, 1)[0]
-  array.splice(startIndex, 0, item)
-}
+  const item = array.splice(from, 1)[0];
+  array.splice(startIndex, 0, item);
+};
 
 function processOne(value: any, field: Field, checkRange: boolean = true) {
   if (!isEmpty(value)) {
@@ -166,10 +166,10 @@ const processRangeToText = (resultValue, field): string => {
       ? item.format()
       : isObject(item)
         ? item[field.get('textField')]
-        : item.toString()
-    return valueRange
-  }).join(`~`)
-}
+        : item.toString();
+    return valueRange;
+  }).join(`~`);
+};
 
 export function processExportValue(value: any, field?: Field): any {
   if (field) {
@@ -188,36 +188,36 @@ export function processExportValue(value: any, field?: Field): any {
     }
     if (isArray(value) && (multiple || !range)) {
       if (field && !_isEmpty(field.lookup)) {
-        return value.map(item => field.getText(processOne(item, field))).join(',')
+        return value.map(item => field.getText(processOne(item, field))).join(',');
       }
       return value.map(item => {
-        const itemValue = processOne(item, field)
+        const itemValue = processOne(item, field);
         if (field && field.get('textField') && itemValue && isObject(itemValue)) {
-          return itemValue[field.get('textField')]
+          return itemValue[field.get('textField')];
         }
-        return itemValue
+        return itemValue;
       }).join(',');
     }
     if (isArray(value) && multiple && range) {
       if (field && !_isEmpty(field.lookup)) {
-        return value.map(item => field.getText(processRangeToText(processOne(item, field), field))).join(',')
+        return value.map(item => field.getText(processRangeToText(processOne(item, field), field))).join(',');
       }
       return value.map(item => {
-        return processRangeToText(processOne(item, field), field)
+        return processRangeToText(processOne(item, field), field);
       }).join(',');
     }
     if (field && !_isEmpty(field.lookup)) {
-      return field.getText(processOne(value, field))
+      return field.getText(processOne(value, field));
     }
-    const resultValue = processOne(value, field)
+    const resultValue = processOne(value, field);
     if (isMoment(resultValue)) {
-      return resultValue.format()
+      return resultValue.format();
     }
     if (field && field.get('textField') && resultValue && isObject(resultValue)) {
       if (range && isArrayLike(resultValue)) {
         return processRangeToText(resultValue, field);
       }
-      return resultValue[field.get('textField')]
+      return resultValue[field.get('textField')];
     }
     return resultValue;
   }
@@ -233,19 +233,19 @@ export function processExportValue(value: any, field?: Field): any {
 export function getSplitValue(dataItem: any, name: string, isBind: boolean = true): any {
   const nameArray = name.split('.');
   if (nameArray.length > 1) {
-    let levelValue = dataItem
+    let levelValue = dataItem;
     for (let i = 0; i < nameArray.length; i++) {
       if (!isObject(levelValue)) {
         break;
       }
       if (isBind || i !== 0) {
-        levelValue = levelValue[nameArray[i]]
+        levelValue = levelValue[nameArray[i]];
       }
     }
     return levelValue;
   }
   if (isBind) {
-    return dataItem[name]
+    return dataItem[name];
   }
   return dataItem;
 }
@@ -280,11 +280,11 @@ export function sortTree(children: Record[], orderField: Field): Record[] {
 
 // 递归生成树获取树形结构数据
 function availableTree(idField, parentField, parentId, allData) {
-  let result = []
+  let result = [];
   allData.forEach(element => {
     if (element[parentField] === parentId) {
       const childresult = availableTree(idField, parentField, element[idField], allData);
-      result = result.concat(element).concat(childresult)
+      result = result.concat(element).concat(childresult);
     }
   });
   return result;
@@ -293,20 +293,20 @@ function availableTree(idField, parentField, parentId, allData) {
 
 // 获取单个页面能够展示的数据
 export function sliceTree(idField, parentField, allData, pageSize) {
-  let availableTreeData = []
+  let availableTreeData = [];
   if (allData.length) {
-    let parentLength = 0
+    let parentLength = 0;
     allData.forEach((item) => {
       if (item) {
         if (isNil(item[parentField]) && !isNil(idField) && parentLength < pageSize) {
-          parentLength++
-          const childresult = availableTree(idField, parentField, item[idField], allData)
-          availableTreeData = availableTreeData.concat(item).concat(childresult)
+          parentLength++;
+          const childresult = availableTree(idField, parentField, item[idField], allData);
+          availableTreeData = availableTreeData.concat(item).concat(childresult);
         }
       }
-    })
+    });
   }
-  return availableTreeData
+  return availableTreeData;
 }
 
 export function checkParentByInsert({ parent }: DataSet) {
@@ -358,7 +358,7 @@ export function checkFieldType(value: any, field: Field): boolean {
       const fieldType = getBaseType(field.type);
       const valueType =
         field.type === FieldType.boolean &&
-          [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
+        [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -378,6 +378,7 @@ export function checkFieldType(value: any, field: Field): boolean {
 }
 
 let iframe;
+
 /**
  * 目前定义为服务端请求的方法
  * @param url 导出地址
@@ -537,7 +538,7 @@ export function axiosConfigAdapter(
   };
 
   const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
-    getConfig('transport') || {};
+  getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
   if (globalConfig) {
     Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params, options));
@@ -557,9 +558,9 @@ export function axiosConfigAdapter(
 // 查询顶层父亲节点
 export function findRootParent(children: Record) {
   if (children.parent) {
-    return findRootParent(children.parent)
+    return findRootParent(children.parent);
   }
-  return children
+  return children;
 }
 
 export function prepareForSubmit(
@@ -653,11 +654,11 @@ export function processIntlField(
   callback: (name: string, props: FieldProps) => Field,
   dataSet?: DataSet,
 ): Field {
-  const tlsKey = getConfig('tlsKey');
-  const { supports } = localeContext;
-  const languages = Object.keys(supports);
-  const { type, dynamicProps } = fieldProps;
-  if (type === FieldType.intl) {
+  if (fieldProps.type === FieldType.intl) {
+    const { dynamicProps } = fieldProps;
+    const tlsKey = getConfig('tlsKey');
+    const { supports } = localeContext;
+    const languages = Object.keys(supports);
     languages.forEach(language =>
       callback(`${tlsKey}.${name}.${language}`, {
         type: FieldType.string,

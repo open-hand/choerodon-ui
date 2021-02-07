@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>IntlField`: Optimized the value display form of intl disabled and readOnly.
 - 💄 `<pro>Table`: Optimized the performance when row and column drag is not turned on.
 - 💄 `<pro>Table`: Optimized the performance of locking column synchronization row height during automatic row height.
+- 💄 `<pro>DataSet`: Optimized performance.
 - 🐞 `<pro>Table`: Fixed the problem that the width of the last column cannot be adjusted.
 - 🐞 `<pro>Table`: Fixed the problem that the column width cannot be adjusted by dragging the column.
 - 🐞 `<pro>Table`: Fixed the multilingual problem of the filter bar.

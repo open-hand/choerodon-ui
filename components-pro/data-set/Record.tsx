@@ -58,9 +58,39 @@ export default class Record {
 
   cascading = {};
 
-  @observable pristineData: object;
-
   @observable data: object;
+
+  @observable dirtyData: ObservableMap<string, any>;
+
+  @computed
+  get pristineData(): object {
+    const dirtyData = {};
+    [...this.dirtyData.entries()].forEach(([key, value]) => ObjectChainValue.set(dirtyData, key, value));
+    return merge({}, this.data, dirtyData);
+  }
+
+  set pristineData(data: object) {
+    runInAction(() => {
+      const { dirtyData } = this;
+      const dirtyKeys = [...dirtyData.keys()];
+      if (dirtyKeys.length) {
+        const newData = {};
+        dirtyKeys.forEach((key) => {
+          const item = ObjectChainValue.get(this.data, key);
+          ObjectChainValue.set(newData, key, item);
+          const newItem = ObjectChainValue.get(data, key);
+          if (isSame(item, newItem)) {
+            dirtyData.delete(key);
+          } else {
+            dirtyData.set(key, newItem);
+          }
+        });
+        this.data = merge({}, data, newData);
+      } else {
+        this.data = data;
+      }
+    });
+  }
 
   @observable status: RecordStatus;
 
@@ -262,8 +292,8 @@ export default class Record {
 
   @computed
   get dirty(): boolean {
-    const { fields, status, dataSet } = this;
-    if (status === RecordStatus.update || [...fields.values()].some(({ dirty }) => dirty)) {
+    const { fields, status, dataSet, dirtyData } = this;
+    if (status === RecordStatus.update || dirtyData.size > 0 || [...fields.values()].some(({ dirty }) => dirty)) {
       return true;
     }
     if (dataSet) {
@@ -299,6 +329,7 @@ export default class Record {
       this.isCached = false;
       this.id = IDGen.next().value;
       this.data = initData;
+      this.dirtyData = observable.map<string, any>();
       if (dataSet) {
         this.dataSet = dataSet;
         const { fields } = dataSet;
@@ -306,9 +337,7 @@ export default class Record {
           this.initFields(fields);
         }
       }
-      const d = this.processData(initData);
-      this.pristineData = d;
-      this.data = d;
+      this.data = this.processData(initData);
     });
   }
 
@@ -447,13 +476,16 @@ export default class Record {
       if (!isSame(newValue, oldValue)) {
         const { fields } = this;
         ObjectChainValue.set(this.data, fieldName, newValue, fields);
-        const pristineValue = toJS(this.getPristineValue(fieldName));
-        if (isSame(pristineValue, newValue)) {
-          if (this.status === RecordStatus.update && [...fields.values()].every(f => !f.dirty)) {
+        if (!(this.dirtyData.has(fieldName))) {
+          this.dirtyData.set(fieldName, oldValue);
+          if (this.status === RecordStatus.sync) {
+            this.status = RecordStatus.update;
+          }
+        } else if (isSame(toJS(this.dirtyData.get(fieldName)), newValue)) {
+          this.dirtyData.delete(fieldName);
+          if (this.status === RecordStatus.update && this.dirtyData.size === 0 && [...fields.values()].every(f => !f.dirty)) {
             this.status = RecordStatus.sync;
           }
-        } else if (this.status === RecordStatus.sync) {
-          this.status = RecordStatus.update;
         }
         const { dataSet } = this;
         if (dataSet) {
@@ -484,18 +516,13 @@ export default class Record {
     return this;
   }
 
-  getPristineValue(fieldName?: string): any {
-    return getRecordValue.call(
-      this,
-      this.pristineData,
-      (child, checkField) => child.getPristineValue(checkField),
-      fieldName,
-    );
+  getPristineValue(fieldName: string): any {
+    return this.dirtyData.has(fieldName) ? this.dirtyData.get(fieldName) : this.get(fieldName);
   }
 
   @action
   init(item: string | object, value?: any): Record {
-    const { fields, pristineData, data } = this;
+    const { fields, data, dirtyData } = this;
     if (isString(item)) {
       let fieldName: string = item;
       const field = this.getField(fieldName) || this.addField(fieldName);
@@ -504,7 +531,8 @@ export default class Record {
       if (bind) {
         fieldName = bind;
       }
-      ObjectChainValue.set(pristineData, fieldName, newValue, fields);
+
+      dirtyData.delete(fieldName);
       ObjectChainValue.set(data, fieldName, newValue, fields);
       field.commit();
     } else if (isPlainObject(item)) {
@@ -710,11 +738,12 @@ export default class Record {
   @action
   private addField(name: string, fieldProps: FieldProps = {}): Field {
     const { dataSet } = this;
+    fieldProps.name = name;
     return processIntlField(
       name,
       fieldProps,
       (langName, langProps) => {
-        const field = new Field({ ...langProps, name: langName }, dataSet, this);
+        const field = new Field(langProps, dataSet, this);
         this.fields.set(langName, field);
         return field;
       },
