@@ -13,12 +13,12 @@ import classes from 'component-classes';
 import { action, toJS } from 'mobx';
 import {
   DragDropContext,
-  DropResult,
-  ResponderProvided,
-  DroppableProps,
   DraggableProps,
   DraggableRubric,
   DraggableStateSnapshot,
+  DroppableProps,
+  DropResult,
+  ResponderProvided,
 } from 'react-beautiful-dnd';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -45,17 +45,17 @@ import TableTBody from './TableTBody';
 import TableFooter from './TableFooter';
 import {
   ColumnLock,
+  ColumnsEditType,
+  DragColumnAlign,
   ScrollPosition,
   SelectionMode,
+  TableAutoHeightType,
   TableButtonType,
   TableCommandType,
   TableEditMode,
   TableMode,
   TablePaginationPosition,
   TableQueryBarType,
-  TableAutoHeightType,
-  DragColumnAlign,
-  ColumnsEditType,
 } from './enum';
 import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
@@ -194,13 +194,13 @@ export interface DragRender {
   droppableProps?: DroppableProps;
   draggableProps?: DraggableProps;
   renderClone?: ((dragRenderProps: DragTableRowProps) => ReactElement<any>) | ((dragRenderProps: DragTableHeaderCellProps) => ReactElement<any>);
-  renderIcon?: ((rowRenderIcon:RowRenderIcon) => ReactElement<any>) | ((columnRenderIcon:ColumnRenderIcon) => ReactElement<any>);
+  renderIcon?: ((rowRenderIcon: RowRenderIcon) => ReactElement<any>) | ((columnRenderIcon: ColumnRenderIcon) => ReactElement<any>);
 }
 
 export interface ChangeColumns {
-  column:ColumnProps;
-  columns:ColumnProps[];
-  type:ColumnsEditType;
+  column: ColumnProps;
+  columns: ColumnProps[];
+  type: ColumnsEditType;
 }
 
 let _instance;
@@ -470,23 +470,23 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 优先级高于colums，可以实现表头文字修改和列的位置修改
    */
-  columnsMergeCoverage?:ColumnProps[];
+  columnsMergeCoverage?: ColumnProps[];
   /**
    * 拖拽列和修改表头触发事件
    */
-  columnsOnChange?:(change:ChangeColumns) => void;
+  columnsOnChange?: (change: ChangeColumns) => void;
   /**
    * 合并列信息选择，目前可以选择表头文字或者表的位置进行合并。
-  */
-  columnsEditType?:ColumnsEditType,
+   */
+  columnsEditType?: ColumnsEditType,
   /**
    * 拖拽触发事件位置切换前回调
    */
-  onDragEndBefore?:(dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void,
+  onDragEndBefore?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void,
   /**
    * 是否开启关闭快捷键（只关闭新加组合快捷键）
-  */
-  keyboard?:boolean,
+   */
+  keyboard?: boolean,
   /*
    * 筛选条属性配置
    */
@@ -642,7 +642,7 @@ export default class Table extends DataSetComponent<TableProps> {
     autoHeight: false,
     autoMaxWidth: false,
     autoFootHeight: false,
-    columnsMergeCoverage:[],
+    columnsMergeCoverage: [],
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -749,20 +749,20 @@ export default class Table extends DataSetComponent<TableProps> {
       try {
         const { dataSet } = this.props;
         const ctrlKey = e.ctrlKey || e.metaKey;
-        const altKey = e.altKey ;
+        const altKey = e.altKey;
         const shiftKey = e.shiftKey;
         switch (e.keyCode) {
           case KeyCode.UP:
-            if(shiftKey && keyboard){
+            if (shiftKey && keyboard) {
               this.handleKeyDownUpShift(e);
-            }else{
+            } else {
               this.handleKeyDownUp(e);
             }
             break;
           case KeyCode.DOWN:
-            if(shiftKey && keyboard){
+            if (shiftKey && keyboard) {
               this.handleKeyDownDownShift(e);
-            }else{
+            } else {
               this.handleKeyDownDown(e);
             }
             break;
@@ -793,10 +793,10 @@ export default class Table extends DataSetComponent<TableProps> {
             if (altKey === true && keyboard) this.handleKeyDownCTRLN(e);
             break;
           case KeyCode.D:
-            if(ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
+            if (ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
             break;
           case KeyCode.DELETE:
-            if(altKey === true && keyboard) this.handleKeyDownCTRLDELETE(e);
+            if (altKey === true && keyboard) this.handleKeyDownCTRLDELETE(e);
             break;
           default:
         }
@@ -882,7 +882,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const editeColumn = tableStore.columns
               .filter((column) => !!column.editor)
               .reduce((accumulator, nowValue) => [...accumulator, nowValue.name], [])
-              .filter((v) => !(v === null || v === undefined || v === ''))
+              .filter((v) => !(v === null || v === undefined || v === ''));
             if (editeColumn && editeColumn.length > 0) {
               editeColumn.forEach(element => {
                 if (element) {
@@ -893,7 +893,7 @@ export default class Table extends DataSetComponent<TableProps> {
             // remove the unique name of fields
             const uniqueFieldIterator = new Map([...dataSet.fields.entries()]
               .filter(([_key, field]) => !!field.get('unique'))).keys();
-            const uniqueFieldNames = Array.from(uniqueFieldIterator)
+            const uniqueFieldNames = Array.from(uniqueFieldIterator);
             if (uniqueFieldNames && uniqueFieldNames.length > 0) {
               uniqueFieldNames.forEach(element => {
                 if (element) {
@@ -909,14 +909,12 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
 
-
-
   async handleKeyDownCTRLDELETE(e) {
     e.preventDefault();
     const {
       tableStore: { dataSet },
     } = this;
-    dataSet.delete(dataSet.selected)
+    dataSet.delete(dataSet.selected);
   }
 
   async handleKeyDownUp(e): Promise<void | Record> {
@@ -933,7 +931,7 @@ export default class Table extends DataSetComponent<TableProps> {
         returnRecod = this.focusRow(this.lastRow);
       }
       if (returnRecod) {
-        return Promise.resolve(returnRecod)
+        return Promise.resolve(returnRecod);
       }
     }
     return Promise.reject();
@@ -953,7 +951,7 @@ export default class Table extends DataSetComponent<TableProps> {
         returnRecod = this.focusRow(this.firstRow);
       }
       if (returnRecod) {
-        return Promise.resolve(returnRecod)
+        return Promise.resolve(returnRecod);
       }
     }
     return Promise.reject();
@@ -1277,8 +1275,8 @@ export default class Table extends DataSetComponent<TableProps> {
                   {isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
                   {dragRow && dragColumnAlign === DragColumnAlign.left && isAnyColumnsLeftLock && this.getLeftFixedTable(DragColumnAlign.left)}
                   {dragRow && dragColumnAlign === DragColumnAlign.right && isAnyColumnsRightLock && this.getRightFixedTable(DragColumnAlign.right)}
-                  <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                 </div>
+                <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                 {this.getFooter()}
               </div>
             </Spin>
@@ -1297,7 +1295,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   reorderColumns(columns: ColumnProps[], startIndex: number, endIndex: number) {
     const { columnsOnChange } = this.props;
-    if(startIndex !== endIndex){
+    if (startIndex !== endIndex) {
       const cloneColumns = columns.slice();
       const [dropItem] = cloneColumns.slice(endIndex, endIndex + 1);
       const [dragItem] = cloneColumns.slice(startIndex, startIndex + 1);
@@ -1319,8 +1317,8 @@ export default class Table extends DataSetComponent<TableProps> {
         const [removed] = columns.splice(startIndex, 1);
         if (columns.length) {
           columns.splice(endIndex, 0, removed);
-          if(columnsOnChange){
-            columnsOnChange({column:toJS(removed),columns:toJS(columns),type:ColumnsEditType.order})
+          if (columnsOnChange) {
+            columnsOnChange({ column: toJS(removed), columns: toJS(columns), type: ColumnsEditType.order });
           }
         }
       }
@@ -1335,21 +1333,21 @@ export default class Table extends DataSetComponent<TableProps> {
       if (dropResult && dropResult.destination) {
         return ((typeof (dropResult as DropResult).source.index === 'number')
           && (typeof (dropResult as DropResult).destination === 'object')
-          && (typeof (dropResult as DropResult).destination!.index === 'number'))
+          && (typeof (dropResult as DropResult).destination!.index === 'number'));
       }
-    }
+    };
 
-    let resultBefore
+    let resultBefore;
     if (onDragEndBefore) {
-      const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided)
+      const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided);
       if (result === false) {
-        return
+        return;
       }
       if (result && isDropresult(result)) {
         resultBefore = result;
       }
     }
-    resultBefore = resultDrag
+    resultBefore = resultDrag;
     if (resultBefore && resultBefore.destination) {
       if (resultBefore.destination.droppableId === 'table') {
         this.reorderDataSet(
@@ -1744,7 +1742,7 @@ export default class Table extends DataSetComponent<TableProps> {
           lock={lock}
           height={bodyHeight}
           onScroll={this.handleBodyScroll}
-          dragColumnAlign = {dragColumnAlign}
+          dragColumnAlign={dragColumnAlign}
         >
           {this.renderTable(false, true, false, lock, dragColumnAlign)}
         </TableBody>
@@ -1780,10 +1778,8 @@ export default class Table extends DataSetComponent<TableProps> {
       [`${prefixCls}-drag-left`]: isDragLeft,
     });
     let styleNOShadow = {};
-    if (isDragLeft) {
-      if (this.tableStore.leftLeafColumns.length !== 1) {
-        styleNOShadow = { boxShadow: 'none' };
-      }
+    if (isDragLeft && this.tableStore.leftLeafColumns.length !== 1) {
+      styleNOShadow = { boxShadow: 'none' };
     }
     return <div style={styleNOShadow} className={FixedTableClassName}>{table}</div>;
   }
@@ -1802,8 +1798,12 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       prefixCls,
       props: { indentSize, style },
+      tableStore: { dragColumnAlign: propsDragColumnAlign, dragRow },
     } = this;
-    return (
+    const isDragDisabled = (dragColumnAlign || propsDragColumnAlign) ? !(dragColumnAlign && propsDragColumnAlign) : !dragRow;
+    return isDragDisabled ? (
+      <TableTBody key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} style={style} dragColumnAlign={dragColumnAlign} />
+    ) : (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <TableTBody key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} style={style} dragColumnAlign={dragColumnAlign} />
       </DragDropContext>
@@ -1814,8 +1814,12 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       prefixCls,
       props: { dataSet },
+      tableStore: { dragColumn, columnMaxDeep },
     } = this;
-    return (
+    const isDragDisabled = !dragColumn || columnMaxDeep > 1;
+    return isDragDisabled ? (
+      <TableHeader key="thead" prefixCls={prefixCls} lock={lock} dataSet={dataSet} dragColumnAlign={dragColumnAlign} />
+    ) : (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <TableHeader key="thead" prefixCls={prefixCls} lock={lock} dataSet={dataSet} dragColumnAlign={dragColumnAlign} />
       </DragDropContext>
@@ -1863,15 +1867,15 @@ export default class Table extends DataSetComponent<TableProps> {
           return parentHeight - (tableTop - parentTop) - diff - paddingBottomPx - paddingTopPx;
         }
         let maxHeight = parentHeight - (tableTop - parentTop) - diff - paddingBottomPx - paddingTopPx;
-        if(tableBodyWrap) {
-          tableBodyWrap.style.maxHeight =  pxToRem(maxHeight) || '';
+        if (tableBodyWrap) {
+          tableBodyWrap.style.maxHeight = pxToRem(maxHeight) || '';
         }
         maxHeight -= measureScrollbar();
-        if(fixedColumnsBodyLeft){
-          fixedColumnsBodyLeft.style.maxHeight =  pxToRem(maxHeight) || '';
+        if (fixedColumnsBodyLeft) {
+          fixedColumnsBodyLeft.style.maxHeight = pxToRem(maxHeight) || '';
         }
-        if(fixedColumnsBodyRight) {
-          fixedColumnsBodyRight.style.maxHeight =  pxToRem(maxHeight) || '';
+        if (fixedColumnsBodyRight) {
+          fixedColumnsBodyRight.style.maxHeight = pxToRem(maxHeight) || '';
         }
         return parentHeight - (tableTop - parentTop) - diff || 0;
       }

@@ -1,6 +1,6 @@
 import React, { cloneElement, Component, CSSProperties, isValidElement } from 'react';
 import PropTypes from 'prop-types';
-import { action, set, toJS, observable, runInAction } from 'mobx';
+import { action, observable, runInAction, set, toJS } from 'mobx';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
@@ -8,10 +8,7 @@ import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import classes from 'component-classes';
-import {
-  DraggableProvided,
-  DraggableStateSnapshot,
-} from 'react-beautiful-dnd';
+import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { isFunction, isNil } from 'lodash';
 import { ColumnProps, minColumnWidth } from './Column';
@@ -25,7 +22,7 @@ import { ColumnAlign, ColumnsEditType, DragColumnAlign } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
 import autobind from '../_util/autobind';
-import { SELECTION_KEY, DRAG_KEY } from './TableStore';
+import { DRAG_KEY, SELECTION_KEY } from './TableStore';
 import ObserverTextField from '../text-field/TextField';
 
 export interface TableHeaderCellProps extends ElementProps {
@@ -36,8 +33,8 @@ export interface TableHeaderCellProps extends ElementProps {
   rowSpan?: number;
   colSpan?: number;
   getHeaderNode: () => HTMLTableSectionElement | null;
-  snapshot: DraggableStateSnapshot,
-  provided: DraggableProvided;
+  snapshot?: DraggableStateSnapshot,
+  provided?: DraggableProvided;
 }
 
 @observer
@@ -100,20 +97,37 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   @autobind
   handleLeftResize(e) {
     const { prevColumn } = this.props;
+    const { tableStore: { props: { autoMaxWidth } } } = this.context;
     this.setResizeColumn(prevColumn);
-    e.persist();
-    this.setresizeStart(e);
+    if (autoMaxWidth) {
+      e.persist();
+      this.delayResizeStart(e);
+    } else {
+      this.resizeStart(e);
+    }
+  }
+
+  @autobind
+  handleStopResize() {
+    if (this.delayResizeStart) {
+      this.delayResizeStart.cancel();
+    }
   }
 
   @autobind
   handleRightResize(e) {
     const { resizeColumn } = this.props;
+    const { tableStore: { props: { autoMaxWidth } } } = this.context;
     this.setResizeColumn(resizeColumn);
-    e.persist();
-    this.setresizeStart(e);
+    if (autoMaxWidth) {
+      e.persist();
+      this.delayResizeStart(e);
+    } else {
+      this.resizeStart(e);
+    }
   }
 
-  private setresizeStart = debounce(
+  private delayResizeStart = debounce(
     (e) => {
       this.resizeStart(e);
     },
@@ -122,16 +136,16 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   @autobind
   handleLeftDoubleClick(_e) {
-    if (this.setresizeStart) {
-      this.setresizeStart.cancel();
+    if (this.delayResizeStart) {
+      this.delayResizeStart.cancel();
       this.resizeDoubleClick();
     }
   }
 
   @autobind
   handleRightDoubleClick(_e) {
-    if (this.setresizeStart) {
-      this.setresizeStart.cancel();
+    if (this.delayResizeStart) {
+      this.delayResizeStart.cancel();
       this.resizeDoubleClick();
     }
   }
@@ -141,8 +155,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   resizeDoubleClick(): void {
     const column = this.resizeColumn;
     const { prefixCls } = this.props;
-    const { tableStore: { props: { autoMaxWidth }, node: { element } } } = this.context;
-    if (autoMaxWidth && column) {
+    const { tableStore: { node: { element } } } = this.context;
+    if (column) {
       const maxWidth = Math.max(
         ...[
           ...element.querySelectorAll(`td[data-index=${getColumnKey(column)}] > .${prefixCls}-cell-inner`),
@@ -212,12 +226,10 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         node: { resizeLine },
       },
     } = this.context;
-    const { left: rectLeft, width } = resizeLine.offsetParent.getBoundingClientRect();
+    const { left: rectLeft } = resizeLine.offsetParent.getBoundingClientRect();
     left -= rectLeft;
     if (left < 0) {
       left = 0;
-    } else if (left >= width) {
-      left = width - 1;
     }
     resizeLine.style.left = pxToRem(left) || null;
     return left + rectLeft;
@@ -225,21 +237,24 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   renderResizer() {
     const { prevColumn, column, prefixCls } = this.props;
+    const { tableStore: { props: { autoMaxWidth } } } = this.context;
     const resizerPrefixCls = `${prefixCls}-resizer`;
     const pre = prevColumn && prevColumn.resizable && (
       <div
         key="pre"
         className={`${resizerPrefixCls} ${resizerPrefixCls}-left`}
-        onDoubleClick={this.handleLeftDoubleClick}
+        onDoubleClick={autoMaxWidth ? this.handleLeftDoubleClick : undefined}
         onMouseDown={this.handleLeftResize}
+        onMouseUp={autoMaxWidth ? this.handleStopResize : undefined}
       />
     );
     const next = column.resizable && (
       <div
         key="next"
         className={`${resizerPrefixCls} ${resizerPrefixCls}-right`}
-        onDoubleClick={this.handleRightDoubleClick}
+        onDoubleClick={autoMaxWidth ? this.handleRightDoubleClick : undefined}
         onMouseDown={this.handleRightResize}
+        onMouseUp={autoMaxWidth ? this.handleStopResize : undefined}
       />
     );
 
@@ -452,32 +467,30 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         innerProps.children.push(sortableIcon);
       }
     }
-    if (dragColumn && provided.draggableProps.style) {
+    if (dragColumn && provided && provided.draggableProps.style) {
       cellStyle = { ...omit(cellStyle, ['width', 'height']), ...provided.draggableProps.style, cursor: 'move' };
     }
     return (
       <th
         className={classList.join(' ')}
         rowSpan={rowSpan}
-        ref={(ref) => {
-          if (ref) {
-            provided.innerRef(ref);
-          }
-        }}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
+        ref={provided && provided.innerRef}
+        {...(provided && provided.draggableProps)}
         colSpan={colSpan}
         data-index={getColumnKey(column)}
         style={cellStyle}
       >
-        <div {...innerProps} />
-        {columnResizable && !dragColumn && this.renderResizer()}
+        <div
+          {...innerProps}
+          {...(provided && provided.dragHandleProps)}
+        />
+        {columnResizable && this.renderResizer()}
       </th>
     );
   }
 
   componentWillUnmount() {
     this.resizeEvent.clear();
-    this.setresizeStart.cancel();
+    this.delayResizeStart.cancel();
   }
 }
