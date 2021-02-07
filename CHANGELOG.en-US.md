@@ -30,7 +30,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem that the column width cannot be adjusted by dragging the column.
 - 🐞 `<pro>Table`: Fixed the multilingual problem of the filter bar.
 - 🐞 `<pro>Field`: Fixed the wrong return object rendering when switching data sources.
-
+- 🐞 `<pro>DataSet`: Fix the problem that the previous data is still used in some cases such as lookupData after dynamically setting lovPara.
 ## 1.0.0
 
 `2021-02-02`
