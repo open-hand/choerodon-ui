@@ -24,6 +24,10 @@ timeline: true
 - 💄 `<pro>Table`: The query field of boolean type is displayed as `Select` by default.
 - 💄 `<pro>Table`: Optimized performance, the current row will not be changed when the row selection box is operated.
 - 💄 `<pro>IntlField`: Optimized the value display form of intl disabled and readOnly.
+- 💄 `<pro>Table`: Optimize the performance when row and column drag is not turned on.
+- 💄 `<pro>Table`: Optimize the performance of locking column synchronization row height during automatic row height.
+- 🐞 `<pro>Table`: Fix the problem that the width of the last column cannot be adjusted.
+- 🐞 `<pro>Table`: Fix the problem that the column width cannot be adjusted by dragging the column.
 - 🐞 `<pro>Table`: Fix the multilingual problem of the filter bar.
 
 ## 1.0.0

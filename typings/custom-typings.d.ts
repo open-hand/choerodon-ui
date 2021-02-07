@@ -1,3 +1,5 @@
+declare module 'component-classes';
+
 declare module 'css-animation';
 
 declare module 'array-tree-filter';

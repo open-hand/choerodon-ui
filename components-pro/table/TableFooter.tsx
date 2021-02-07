@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component, Key } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { computed, get } from 'mobx';
+import { action, computed, get, set } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { ColumnLock,DragColumnAlign } from './enum';
+import { ColumnLock, DragColumnAlign } from './enum';
 import DataSet from '../data-set/DataSet';
 import TableFooterCell from './TableFooterCell';
 import { getColumnKey } from './utils';
-import {DRAG_KEY} from './TableStore';
+import { DRAG_KEY } from './TableStore';
+import autobind from '../_util/autobind';
+import ResizeObservedRow from './ResizeObservedRow';
 
 export interface TableFooterProps extends ElementProps {
   dataSet: DataSet;
   lock?: ColumnLock | boolean;
-  dragColumnAlign?:DragColumnAlign;
+  dragColumnAlign?: DragColumnAlign;
 }
 
 @observer
@@ -28,10 +30,22 @@ export default class TableFooter extends Component<TableFooterProps, any> {
       PropTypes.bool,
       PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
     ]),
-    dragColumnAlign:PropTypes.oneOf([DragColumnAlign.right, DragColumnAlign.left]),
+    dragColumnAlign: PropTypes.oneOf([DragColumnAlign.right, DragColumnAlign.left]),
   };
 
   static contextType = TableContext;
+
+  @autobind
+  handleResize(index: Key, height: number) {
+    this.setRowHeight(index, height);
+  }
+
+  @action
+  setRowHeight(index: Key, height: number) {
+    const { tableStore } = this.context;
+    set(tableStore.lockColumnsFootRowsHeight, index, height);
+  }
+
 
   render() {
     const { prefixCls, lock, dataSet } = this.props;
@@ -56,16 +70,25 @@ export default class TableFooter extends Component<TableFooterProps, any> {
         </th>,
       );
     }
+    const tr = (
+      <tr
+        style={{
+          height:
+            lock && (rowHeight === 'auto' || autoFootHeight) ? pxToRem(get(lockColumnsFootRowsHeight, 0)) : undefined,
+        }}
+      >
+        {tds}
+      </tr>
+    );
     return (
       <tfoot className={`${prefixCls}-tfoot`}>
-        <tr
-          style={{
-            height:
-              lock && (rowHeight === 'auto' || autoFootHeight) ? pxToRem(get(lockColumnsFootRowsHeight, 0)) : undefined,
-          }}
-        >
-          {tds}
-        </tr>
+        {
+          !lock && (rowHeight === 'auto' || autoFootHeight) ? (
+            <ResizeObservedRow onResize={this.handleResize} rowIndex={0}>
+              {tr}
+            </ResizeObservedRow>
+          ) : tr
+        }
       </tfoot>
     );
   }
@@ -74,13 +97,13 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   get leafColumns(): ColumnProps[] {
     const { tableStore } = this.context;
     const { lock } = this.props;
-    const filterDrag = (columnItem:ColumnProps):boolean => {
-      const {dragColumnAlign} = this.props
-      if(dragColumnAlign){
-        return columnItem.key === DRAG_KEY
+    const filterDrag = (columnItem: ColumnProps): boolean => {
+      const { dragColumnAlign } = this.props;
+      if (dragColumnAlign) {
+        return columnItem.key === DRAG_KEY;
       }
-      return true
-    }
+      return true;
+    };
     if (lock === 'right') {
       return tableStore.rightLeafColumns.filter(filterDrag).filter(({ hidden }) => !hidden);
     }
