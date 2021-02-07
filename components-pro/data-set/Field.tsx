@@ -1,4 +1,4 @@
-import { action, computed, get, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
+import { action, computed, get, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
 import isFunction from 'lodash/isFunction';
 import isEqual from 'lodash/isEqual';
@@ -17,7 +17,7 @@ import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, F
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { findBindFields, getLimit, processValue } from './utils';
+import { getLimit, processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -216,14 +216,14 @@ export type FieldProps = {
    * LOV查询请求地址
    */
   lovQueryUrl?:
-  | string
-  | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
+    | string
+    | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
   /**
    * 值列表请求的axiosConfig
    */
   lookupAxiosConfig?:
-  | AxiosRequestConfig
-  | ((props: {
+    | AxiosRequestConfig
+    | ((props: {
     params?: any;
     dataSet?: DataSet;
     record?: Record;
@@ -237,8 +237,8 @@ export type FieldProps = {
    * LOV查询请求的钩子
    */
   lovQueryAxiosConfig?:
-  | AxiosRequestConfig
-  | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
+    | AxiosRequestConfig
+    | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
   /**
    * 批量值列表请求的axiosConfig
    */
@@ -251,8 +251,8 @@ export type FieldProps = {
    * 动态属性
    */
   dynamicProps?:
-  | ((props: DynamicPropsArguments) => FieldProps | undefined)
-  | { [key: string]: (DynamicPropsArguments) => any; };
+    | ((props: DynamicPropsArguments) => FieldProps | undefined)
+    | { [key: string]: (DynamicPropsArguments) => any; };
   /**
    * 快码和LOV查询时的级联参数映射
    * @example
@@ -311,17 +311,50 @@ export default class Field {
 
   record?: Record;
 
-  pristineProps: FieldProps;
+  validator: Validator;
 
-  validator: Validator = new Validator(this);
-
-  pending: PromiseQueue = new PromiseQueue();
+  pending: PromiseQueue;
 
   lastDynamicProps: any = {};
 
   isDynamicPropsComputing: boolean = false;
 
   @observable props: FieldProps & { [key: string]: any; };
+
+  @observable dirtyProps: Partial<FieldProps>;
+
+  @computed
+  get pristineProps(): FieldProps {
+    return {
+      ...this.props,
+      ...this.dirtyProps,
+    };
+  }
+
+  set pristineProps(props: FieldProps) {
+    runInAction(() => {
+      const { dirtyProps } = this;
+      const dirtyKeys = Object.keys(dirtyProps);
+      if (dirtyKeys.length) {
+        const newProps = {};
+        dirtyKeys.forEach((key) => {
+          const item = this.props[key];
+          newProps[key] = item;
+          if (isSame(item, props[key])) {
+            delete dirtyProps[key];
+          } else {
+            dirtyProps[key] = props[key];
+          }
+        });
+        this.props = {
+          ...props,
+          ...newProps,
+        };
+      } else {
+        this.props = props;
+      }
+    });
+  }
 
   @computed
   get lookup(): object[] | undefined {
@@ -377,23 +410,8 @@ export default class Field {
       return intlFields.some(langField => langField.dirty);
     }
     if (record) {
-      const pristineValue = toJS(record.getPristineValue(name));
-      const value = toJS(record.get(name));
-      if (isObject(pristineValue) && isObject(value)) {
-        if (isEqual(pristineValue, value)) {
-          return false;
-        }
-        try {
-          const fields = findBindFields(this, record.fields, true);
-          if (fields.length) {
-            return fields.some(({ dirty }) => dirty);
-          }
-        } catch (e) {
-          console.error(e);
-          return true;
-        }
-      }
-      return !isSame(pristineValue, value);
+      const { dirtyData } = record;
+      return [...dirtyData.keys()].some(key => key === name || key.startsWith(`${name}.`));
     }
     return false;
   }
@@ -431,12 +449,17 @@ export default class Field {
 
   constructor(props: FieldProps = {}, dataSet?: DataSet, record?: Record) {
     runInAction(() => {
+      this.validator = new Validator(this);
+      this.pending = new PromiseQueue();
       this.dataSet = dataSet;
       this.record = record;
-      this.pristineProps = props;
+      this.dirtyProps = {};
       this.props = props;
-      this.fetchLookup();
-      this.fetchLovConfig();
+      // 优化性能，没有动态属性时不用处理， 直接使用dsField
+      if (!record || this.getProp('dynamicProps')) {
+        this.fetchLookup();
+        this.fetchLovConfig();
+      }
     });
   }
 
@@ -550,12 +573,15 @@ export default class Field {
   set(propsName: string, value: any): void {
     const oldValue = this.get(propsName);
     if (!isEqualDynamicProps(oldValue, value)) {
+      if (!(propsName in this.dirtyProps)) {
+        set(this.dirtyProps, propsName, oldValue);
+      } else if (isSame(toJS(this.dirtyProps[propsName]), value)) {
+        remove(this.dirtyProps, propsName);
+      }
       set(this.props, propsName, value);
       const { record, dataSet, name } = this;
-      if (record) {
-        if (propsName === 'type') {
-          record.set(name, processValue(record.get(name), this));
-        }
+      if (record && propsName === 'type') {
+        record.set(name, processValue(record.get(name), this));
       }
       if (dataSet) {
         dataSet.fireEvent(DataSetEvents.fieldChange, {
@@ -649,7 +675,7 @@ export default class Field {
     const valueField = this.get('valueField');
     const { lookup, options } = this;
     if (lookup) {
-      return this.getLookupText(value,showValueIfNotFound)
+      return this.getLookupText(value, showValueIfNotFound);
     }
     if (options) {
       const found = options.find(record => isSameLike(record.get(valueField), value));
@@ -676,7 +702,8 @@ export default class Field {
    */
   @action
   reset(): void {
-    this.props = this.pristineProps;
+    Object.assign(this.props, this.dirtyProps);
+    this.dirtyProps = {};
   }
 
   @action
