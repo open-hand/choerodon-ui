@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized performance, the current row will not be changed when the row selection box is operated.
 - 💄 `<pro>IntlField`: Optimized the value display form of intl disabled and readOnly.
 - 🐞 `<pro>Table`: Fix the multilingual problem of the filter bar.
+- 🐞 `<pro>DataSet`: Fix the problem that the previous data is still used in some cases such as lookupData after dynamically setting lovPara.
 
 ## 1.0.0
 
