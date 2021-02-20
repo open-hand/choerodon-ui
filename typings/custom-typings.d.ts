@@ -10,7 +10,7 @@ declare module 'dom-closest';
 
 declare module 'insert-css';
 
-declare module 'rc-virtual-list';
+declare module 'rc-motion';
 
 declare module 'raf';
 

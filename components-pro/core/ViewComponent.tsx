@@ -115,22 +115,6 @@ export interface MouseEventComponentProps {
    */
   onContextMenu?: MouseEventHandler<any>;
   onContextMenuCapture?: MouseEventHandler<any>;
-  onDrag?: MouseEventHandler<any>;
-  onDragCapture?: MouseEventHandler<any>;
-  onDragEnd?: MouseEventHandler<any>;
-  onDragEndCapture?: MouseEventHandler<any>;
-  onDragEnter?: MouseEventHandler<any>;
-  onDragEnterCapture?: MouseEventHandler<any>;
-  onDragExit?: MouseEventHandler<any>;
-  onDragExitCapture?: MouseEventHandler<any>;
-  onDragLeave?: MouseEventHandler<any>;
-  onDragLeaveCapture?: MouseEventHandler<any>;
-  onDragOver?: MouseEventHandler<any>;
-  onDragOverCapture?: MouseEventHandler<any>;
-  onDragStart?: MouseEventHandler<any>;
-  onDragStartCapture?: MouseEventHandler<any>;
-  onDrop?: MouseEventHandler<any>;
-  onDropCapture?: MouseEventHandler<any>;
   /**
    * 鼠标抬起回调
    */

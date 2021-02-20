@@ -502,7 +502,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     }
 
     const getCellWithDrag = (columnItem: ColumnProps, indexItem: number) => {
-      return this.getCell(columnItem, indexItem, snapshot && snapshot.isDragging);
+      return this.getCell(columnItem, indexItem, snapshot ? snapshot.isDragging : false);
     };
 
     const filterDrag = (columnItem: ColumnProps) => {

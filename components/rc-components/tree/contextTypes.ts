@@ -3,15 +3,7 @@
  * When util.js imports the TreeNode for tree generate will cause treeContextTypes be empty.
  */
 import React from 'react';
-import {
-  IconType,
-  Key,
-  DataEntity,
-  EventDataNode,
-  NodeInstance,
-  DataNode,
-  Direction,
-} from './interface';
+import { DataEntity, DataNode, Direction, EventDataNode, IconType, Key, NodeInstance } from './interface';
 
 export type NodeMouseEventParams<T = HTMLSpanElement> = {
   event: React.MouseEvent<T>;
@@ -28,40 +20,40 @@ export type NodeMouseEventHandler<T = HTMLSpanElement> = (
 ) => void;
 export type NodeDragEventHandler<T = HTMLDivElement> = (
   e: React.MouseEvent<T>,
-  node: NodeInstance,
+  node: NodeInstance | null,
   outsideTree?: boolean,
 ) => void;
 
 export interface TreeContextProps {
   prefixCls: string;
-  selectable: boolean;
-  showIcon: boolean;
+  selectable?: boolean;
+  showIcon?: boolean;
   icon: IconType;
   switcherIcon: IconType;
-  draggable: ((node: DataNode) => boolean) | boolean;
+  draggable?: ((node?: DataNode) => boolean) | boolean;
   checkable: boolean | React.ReactNode;
-  checkStrictly: boolean;
-  disabled: boolean;
+  checkStrictly?: boolean;
+  disabled?: boolean;
   keyEntities: Record<Key, DataEntity>;
   // for details see comment in Tree.state (Tree.tsx)
-  dropLevelOffset?: number;
+  dropLevelOffset?: number | null;
   dropContainerKey: Key | null;
   dropTargetKey: Key | null;
   dropPosition: -1 | 0 | 1 | null;
   indent: number | null;
-  dropIndicatorRender: (props: {
-    dropPosition: -1 | 0 | 1;
-    dropLevelOffset: number;
-    indent;
-    prefixCls;
+  dropIndicatorRender?: (props: {
+    dropPosition: -1 | 0 | 1 | null;
+    dropLevelOffset: number | undefined | null;
+    indent: number | null;
+    prefixCls: string;
     direction: Direction;
   }) => React.ReactNode;
   dragOverNodeKey: Key | null;
   direction: Direction;
 
-  loadData: (treeNode: EventDataNode) => Promise<void>;
-  filterTreeNode: (treeNode: EventDataNode) => boolean;
-  titleRender?: (node: DataNode) => React.ReactNode;
+  loadData?: (treeNode: EventDataNode) => Promise<void>;
+  filterTreeNode?: (treeNode: EventDataNode) => boolean;
+  titleRender?: (node?: DataNode) => React.ReactNode;
 
   onNodeClick: NodeMouseEventHandler;
   onNodeDoubleClick: NodeMouseEventHandler;
@@ -84,4 +76,4 @@ export interface TreeContextProps {
   onNodeDrop: NodeDragEventHandler;
 }
 
-export const TreeContext: React.Context<TreeContextProps | null> = React.createContext(null);
+export const TreeContext: React.Context<TreeContextProps> = React.createContext<TreeContextProps>({} as TreeContextProps);

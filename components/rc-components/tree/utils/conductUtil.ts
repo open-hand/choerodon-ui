@@ -55,12 +55,12 @@ function fillConductCheck(
       const { parent, node } = entity;
 
       // Skip if no need to check
-      if (syntheticGetCheckDisabled(node) || !entity.parent || visitedKeys.has(entity.parent.key)) {
+      if (syntheticGetCheckDisabled(node) || !parent || visitedKeys.has(parent.key)) {
         return;
       }
 
       // Skip if parent is disabled
-      if (syntheticGetCheckDisabled(entity.parent.node)) {
+      if (syntheticGetCheckDisabled(parent.node)) {
         visitedKeys.add(parent.key);
         return;
       }
@@ -134,12 +134,12 @@ function cleanConductCheck(
       const { parent, node } = entity;
 
       // Skip if no need to check
-      if (syntheticGetCheckDisabled(node) || !entity.parent || visitedKeys.has(entity.parent.key)) {
+      if (syntheticGetCheckDisabled(node) || !parent || visitedKeys.has(parent.key)) {
         return;
       }
 
       // Skip if parent is disabled
-      if (syntheticGetCheckDisabled(entity.parent.node)) {
+      if (syntheticGetCheckDisabled(parent.node)) {
         visitedKeys.add(parent.key);
         return;
       }
@@ -216,7 +216,7 @@ export function conductCheck(
     const entity = keyEntities[key];
     const { level } = entity;
 
-    let levelSet: Set<DataEntity> = levelEntities.get(level);
+    let levelSet: Set<DataEntity> | undefined = levelEntities.get(level);
     if (!levelSet) {
       levelSet = new Set();
       levelEntities.set(level, levelSet);

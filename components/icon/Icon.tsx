@@ -71,8 +71,8 @@ const Icon: IIcon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props
 
 
   const innerSvgProps: CustomIconComponentProps & {
-    'aria-hidden': string;
-    focusable: string;
+    'aria-hidden': boolean | 'false' | 'true';
+    focusable: boolean | 'auto' | 'false' | 'true';
   } = {
     ...svgBaseProps,
     className: svgClassString,
