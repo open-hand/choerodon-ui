@@ -3,6 +3,7 @@ import { insertCss } from 'insert-css';
 import warn from '../_util/warning';
 import generateColor from './generate';
 import { AbstractNode, IconDefinition } from './interface';
+import { CustomIconComponentProps } from './Icon';
 
 export function warning(valid: boolean, message: string) {
   warn(valid, `[@c7n/icons] ${message}`);
@@ -76,7 +77,10 @@ export function normalizeTwoToneColors(
 
 // These props make sure that the SVG behaviours like general text.
 // Reference: https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4
-export const svgBaseProps = {
+export const svgBaseProps: CustomIconComponentProps & {
+  'aria-hidden': boolean | 'false' | 'true';
+  focusable: boolean | 'auto' | 'false' | 'true';
+} = {
   width: '1em',
   height: '1em',
   fill: 'currentColor',

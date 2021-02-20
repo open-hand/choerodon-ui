@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import Icon from '../icon';
 import { conductExpandParent } from '../rc-components/tree/util';
-import { EventDataNode, DataNode } from '../rc-components/tree/interface';
+import { EventDataNode, DataNode, Key } from '../rc-components/tree/interface';
 import { convertDataToEntities, convertTreeToData } from '../rc-components/tree/utils/treeUtil';
 import { getPrefixCls } from '../configure';
 
@@ -18,8 +18,8 @@ export interface DirectoryTreeProps extends TreeProps {
 }
 
 export interface DirectoryTreeState {
-  expandedKeys?: string[];
-  selectedKeys?: string[];
+  expandedKeys?: Key[];
+  selectedKeys?: Key[];
 }
 
 function getIcon(props: C7ndTreeNodeAttribute): React.ReactNode {
@@ -54,7 +54,7 @@ class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeSta
   }
 
   state: DirectoryTreeState;
-  
+
   tree: Tree;
 
 

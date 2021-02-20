@@ -9,15 +9,15 @@ import { TreeContext } from './contextTypes';
 interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;
   motion?: any;
-  motionNodes?: FlattenNode[];
+  motionNodes?: FlattenNode[] | null;
   onMotionStart: () => void;
   onMotionEnd: () => void;
-  motionType?: 'show' | 'hide';
+  motionType?: 'show' | 'hide' | null;
 
   treeNodeRequiredProps: TreeNodeRequiredProps;
 }
 
-const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeNodeProps> = (
+const MotionTreeNode: React.RefForwardingComponent<HTMLDivElement, MotionTreeNodeProps> = (
   {
     className,
     style,
@@ -64,6 +64,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
   }, []);
 
   if (motionNodes) {
+
     return (
       <CSSMotion
         ref={ref}
@@ -87,7 +88,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
               } = treeNode;
               delete restProps.children;
 
-              const treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
+              const treeNodeProps = getTreeNodeProps(key!, treeNodeRequiredProps);
 
               return (
                 <TreeNode
@@ -95,7 +96,7 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
                   {...treeNodeProps}
                   active={active}
                   data={treeNode.data}
-                  key={key}
+                  key={key!}
                   isStart={isStart}
                   isEnd={isEnd}
                 />
@@ -111,6 +112,6 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
 
 MotionTreeNode.displayName = 'MotionTreeNode';
 
-const RefMotionTreeNode = React.forwardRef(MotionTreeNode);
+const RefMotionTreeNode = React.forwardRef<HTMLDivElement, MotionTreeNodeProps>(MotionTreeNode);
 
 export default RefMotionTreeNode;

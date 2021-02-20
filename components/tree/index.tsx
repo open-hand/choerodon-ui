@@ -1,23 +1,15 @@
-import React, {
-  cloneElement,
-  Component,
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-  MouseEvent,
-  DragEvent,
-} from 'react';
+import React, { cloneElement, Component, CSSProperties, DragEvent, MouseEvent, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import DirectoryTree from './DirectoryTree';
 import animation from '../_util/openAnimation';
 import RcTree, { TreeNode, TreeProps as RcTreeProps } from '../rc-components/tree';
-import {TreeNodeProps} from '../rc-components/tree/TreeNode'
+import { TreeNodeProps } from '../rc-components/tree/TreeNode';
 import Icon from '../icon';
 import Progress from '../progress';
 import { ProgressType } from '../progress/enum';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
-import { EventDataNode, DataNode } from '../rc-components/tree/interface';
+import { DataNode, EventDataNode, Key } from '../rc-components/tree/interface';
 
 export { TreeNode };
 
@@ -130,13 +122,13 @@ export interface TreeProps extends Omit<RcTreeProps, 'prefixCls'> {
   /** 默认展开指定的树节点 */
   defaultExpandedKeys?: string[];
   /** （受控）展开指定的树节点 */
-  expandedKeys?: string[];
+  expandedKeys?: Key[];
   /** （受控）选中复选框的树节点 */
   checkedKeys?: string[] | { checked: string[]; halfChecked: string[] };
   /** 默认选中复选框的树节点 */
   defaultCheckedKeys?: string[];
   /** （受控）设置选中的树节点 */
-  selectedKeys?: string[];
+  selectedKeys?: Key[];
   /** 默认选中的树节点 */
   defaultSelectedKeys?: string[];
   selectable?: boolean;

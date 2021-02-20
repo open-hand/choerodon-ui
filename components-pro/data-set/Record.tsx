@@ -516,8 +516,8 @@ export default class Record {
     return this;
   }
 
-  getPristineValue(fieldName: string): any {
-    return this.dirtyData.has(fieldName) ? this.dirtyData.get(fieldName) : this.get(fieldName);
+  getPristineValue(fieldName?: string): any {
+    return fieldName && this.dirtyData.has(fieldName) ? this.dirtyData.get(fieldName) : this.get(fieldName);
   }
 
   @action

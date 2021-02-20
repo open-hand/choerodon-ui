@@ -5,14 +5,14 @@ import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
 
 export function toArray(children) {
-  const ret = [];
+  const ret: any[] = [];
 
   Children.forEach(children, (c) => ret.push(c));
 
   return ret;
 }
 
-export function getKey(key: Key, pos: string) {
+export function getKey(key: Key | null | undefined, pos: string) {
   if (key !== null && key !== undefined) {
     return key;
   }
@@ -25,7 +25,7 @@ export function getKey(key: Key, pos: string) {
 export function warningWithoutKey(treeData: DataNode[] = []) {
   const keys: Map<string, boolean> = new Map();
 
-  function dig(list: DataNode[], path: string = '') {
+  function dig(list: DataNode[] | undefined, path: string = '') {
     (list || []).forEach(treeNode => {
       const { key, children } = treeNode;
       warning(
@@ -54,29 +54,29 @@ export function convertTreeToData(rootNodes: React.ReactNode): DataNode[] {
   function dig(node: React.ReactNode): DataNode[] {
     const treeNodes = toArray(node) as NodeElement[];
     return treeNodes
-      .map(treeNode => {
+      .reduce<DataNode[]>((array, treeNode) => {
         // Filter invalidate node
         if (!isTreeNode(treeNode)) {
           warning(!treeNode, 'Tree/TreeNode can only accept TreeNode as children.');
-          return null;
+        } else {
+
+          const { key } = treeNode;
+          const { children, ...rest } = treeNode.props;
+
+          const dataNode: DataNode = {
+            key,
+            ...rest,
+          } as DataNode;
+
+          const parsedChildren = dig(children);
+          if (parsedChildren.length) {
+            dataNode.children = parsedChildren;
+          }
+          array.push(dataNode);
         }
 
-        const { key } = treeNode;
-        const { children, ...rest } = treeNode.props;
-
-        const dataNode: DataNode = {
-          key,
-          ...rest,
-        };
-
-        const parsedChildren = dig(children);
-        if (parsedChildren.length) {
-          dataNode.children = parsedChildren;
-        }
-
-        return dataNode;
-      })
-      .filter((dataNode: DataNode) => dataNode);
+        return array;
+      }, []);
   }
 
   return dig(rootNodes);
@@ -95,7 +95,7 @@ export function flattenTreeData(
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
   const flattenList: FlattenNode[] = [];
 
-  function dig(list: DataNode[], parent: FlattenNode = null): FlattenNode[] {
+  function dig(list: DataNode[], parent: FlattenNode | null = null): FlattenNode[] {
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode.key, pos);
@@ -109,7 +109,7 @@ export function flattenTreeData(
         data: treeNode,
         isStart: [...(parent ? parent.isStart : []), index === 0],
         isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
-      };
+      } as FlattenNode;
 
       flattenList.push(flattenNode);
 
@@ -136,26 +136,28 @@ interface TraverseDataNodesConfig {
   externalGetKey?: ExternalGetKey;
 }
 
+export type CallbackData = {
+  node: DataNode;
+  index: number;
+  pos: string;
+  key: Key;
+  parentPos: string | number;
+  level: number;
+};
+
 /**
  * Traverse all the data by `treeData`.
  * Please not use it out of the `rc-tree` since we may refactor this code.
  */
 export function traverseDataNodes(
   dataNodes: DataNode[],
-  callback: (data: {
-    node: DataNode;
-    index: number;
-    pos: string;
-    key: Key;
-    parentPos: string | number;
-    level: number;
-  }) => void,
+  callback: (data: CallbackData) => void,
   // To avoid too many params, let use config instead of origin param
   config?: TraverseDataNodesConfig | ExternalGetKey,
 ) {
   // Init config
-  let externalGetKey: ExternalGetKey = null;
-  let childrenPropName: string;
+  let externalGetKey: ExternalGetKey | undefined | null = null;
+  let childrenPropName: string | undefined;
 
   const configType = typeof config;
 
@@ -166,8 +168,6 @@ export function traverseDataNodes(
     ({ childrenPropName, externalGetKey } = config as TraverseDataNodesConfig);
   }
 
-  childrenPropName = childrenPropName || 'children';
-
   // Get keys
   let syntheticGetKey: (node: DataNode, pos?: string) => Key;
   if (externalGetKey) {
@@ -177,29 +177,29 @@ export function traverseDataNodes(
       syntheticGetKey = (node: DataNode) => (externalGetKey as GetKey<DataNode>)(node);
     }
   } else {
-    syntheticGetKey = (node, pos) => getKey(node.key, pos);
+    syntheticGetKey = (node: DataNode, pos: string) => getKey(node.key, pos);
   }
 
   // Process
   function processNode(
-    node: DataNode,
+    node: DataNode | null,
     index?: number,
-    parent?: { node: DataNode; pos: string; level: number },
+    parent?: { node: DataNode | null; pos: string; level: number },
   ) {
-    const children = node ? node[childrenPropName] : dataNodes;
-    const pos = node ? getPosition(parent.pos, index) : '0';
+    const children = node ? node[childrenPropName || 'children'] : dataNodes;
+    const pos = node && parent ? getPosition(parent.pos, index) : '0';
 
     // Process node if is not root
-    if (node) {
+    if (node && parent) {
       const key: Key = syntheticGetKey(node, pos);
-      const data = {
+      const data: CallbackData = {
         node,
         index,
         pos,
         key,
         parentPos: parent.node ? parent.pos : null,
         level: parent.level + 1,
-      };
+      } as CallbackData;
 
       callback(data);
     }
@@ -359,7 +359,7 @@ export function convertNodePropsToEventData(props: TreeNodeProps): EventDataNode
     active,
   } = props;
 
-  const eventData = {
+  const eventData: EventDataNode = {
     ...data,
     expanded,
     selected,
@@ -372,7 +372,7 @@ export function convertNodePropsToEventData(props: TreeNodeProps): EventDataNode
     dragOverGapBottom,
     pos,
     active,
-  };
+  } as EventDataNode;
 
   if (!('props' in eventData)) {
     Object.defineProperty(eventData, 'props', {

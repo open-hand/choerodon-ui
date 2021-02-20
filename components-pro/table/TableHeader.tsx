@@ -129,7 +129,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
             <TableHeaderRow
               key={String(rowIndex)}
               rowIndex={rowIndex}
-              columnResizable={columnResizable}
               tds={tds}
               rows={rows}
             />
@@ -179,7 +178,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
               <TableHeaderRow
                 key={String(rowIndex)}
                 rowIndex={rowIndex}
-                columnResizable={columnResizable}
                 tds={tds}
                 rows={rows}
                 droppableProvided={droppableProvided}

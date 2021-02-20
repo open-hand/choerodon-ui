@@ -10,7 +10,7 @@ export interface DataNode {
   disableCheckbox?: boolean;
   icon?: IconType;
   isLeaf?: boolean;
-  key: string | number;
+  key: string | number | null;
   title?: React.ReactNode;
   selectable?: boolean;
   switcherIcon?: IconType;
@@ -67,7 +67,7 @@ export interface DataEntity extends Omit<Entity, 'node' | 'parent' | 'children'>
 
 export interface FlattenNode {
   parent: FlattenNode | null;
-  children: FlattenNode[];
+  children: FlattenNode[] | null;
   pos: string;
   data: DataNode;
   isStart: boolean[];

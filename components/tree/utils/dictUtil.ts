@@ -1,4 +1,4 @@
-import { DataNode } from '../../rc-components/tree/interface';
+import { DataNode, Key } from '../../rc-components/tree/interface';
 
 enum Record {
   None,
@@ -23,7 +23,7 @@ function traverseNodesKey(
 /** 计算选中范围，只考虑expanded情况以优化性能 */
 export function calcRangeKeys(
   treeData: DataNode[],
-  expandedKeys: string[],
+  expandedKeys: Key[],
   startKey?: string,
   endKey?: string,
 ): string[] {
