@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
 - 🌟 `<pro>TextField`: Added `valueChangeAction`, `wait`, `waitType` properties.
 - 🌟 `<pro>Form`: `labelWidth` added `auto` value.
+- 🌟 `<pro>Table`: Added `HTML title` to the column header when the `tooltip` attribute exists in `column`.
 - 💄 `<pro>Trigger`: Optimized the performance.
 - 💄 `<pro>Tree`: Optimized the performance.
 - 💄 `<pro>Table`: The query field of boolean type is displayed as `Select` by default.

@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, CSSProperties, isValidElement } from 'react';
+import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, observable, runInAction, set, toJS } from 'mobx';
 import classNames from 'classnames';
@@ -18,7 +18,7 @@ import Icon from '../icon';
 import DataSet from '../data-set/DataSet';
 import EventManager from '../_util/EventManager';
 import { getAlignByField, getColumnKey, getHeader } from './utils';
-import { ColumnAlign, ColumnsEditType, DragColumnAlign } from './enum';
+import { ColumnAlign, ColumnsEditType, DragColumnAlign, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
 import autobind from '../_util/autobind';
@@ -284,6 +284,88 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     this.setEditing(false);
   }
 
+  /**
+   * 处理列头单元格
+   * @param text
+   * @param iconQuantity
+   */
+  getHeaderCellNode(text: ReactNode, iconQuantity: number): ReactNode {
+    const { prefixCls, column, dataSet } = this.props;
+    const {
+      tableStore: {
+        dragColumn,
+        headersEditable,
+      },
+    } = this.context;
+    const { name, align, children, command, tooltip } = column;
+
+    const hasTitle = tooltip && tooltip !== TableColumnTooltip.none;
+
+    if (isValidElement(text)) {
+      if (hasTitle && typeof text.props.children === 'string') {
+        return cloneElement(text, { key: 'text', title: text.props.children });
+      }
+      return cloneElement(text, { key: 'text' });
+    }
+
+    if (isString(text) || (isNil(text) && headersEditable)) {
+      const widthEdit = iconQuantity
+        ? `calc(100% - ${pxToRem(iconQuantity * 24)})`
+        : headersEditable && !!name ? `100%` : undefined;
+
+      const spanStyle: CSSProperties = {
+        display: 'inline-block',
+        maxWidth: widthEdit,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      };
+
+      const alignStyle = align || (command || (children && children.length) ? ColumnAlign.center : getAlignByField(dataSet.getField(name)));
+
+      if (headersEditable && !!name) {
+        const editProps = {
+          defaultValue: text,
+          value: text,
+          onChange: this.onChangeHeader,
+          key: 'text',
+          style: { width: widthEdit },
+          className: `${prefixCls}-cell-inner-edit`,
+        };
+        if (dragColumn) {
+          return <ObserverTextField {...editProps} />;
+        }
+        // 当为null 和 undefined 也可以编辑
+        if (!text) {
+          spanStyle.height = '100%';
+        }
+
+        return this.editing ? (
+          <ObserverTextField
+            autoFocus
+            onBlur={this.onHeaderBlur}
+            {...editProps}
+          />
+        ) : (
+          <span onClick={() => this.setEditing(true)} title={hasTitle ? text || undefined : undefined} style={spanStyle} key="text">
+            {text}
+          </span>
+        );
+      }
+      // 当文字在左边无法查看到icon处理
+      if (alignStyle !== ColumnAlign.right && iconQuantity) {
+        return (
+          <span key="text" title={hasTitle ? text || undefined : undefined} style={spanStyle}>
+            {text}
+          </span>
+        );
+      }
+
+      return <span key="text" title={hasTitle ? text || undefined : undefined}>{text}</span>;
+    }
+
+    return text;
+  };
+
 
   render() {
     const { column, prefixCls, dataSet, rowSpan, colSpan, provided, snapshot } = this.props;
@@ -327,11 +409,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
     const headerNode = getHeader(column, dataSet);
 
-    // 计数有多少个icon
-    let iconQuantity = 0;
-    let helpIcon;
-    let sortableIcon;
-    // 帮助按钮
+    // 计数有多少个 icon
+    let iconQuantity: number = 0;
+    let helpIcon: ReactElement | undefined;
+    let sortIcon: ReactElement | undefined;
+
     if (showHelp !== ShowHelp.none) {
       const fieldHelp = defaultTo(field && field.get('help'), help);
       if (fieldHelp) {
@@ -340,67 +422,16 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
             <Icon type="help_outline" className={`${prefixCls}-help-icon`} />
           </Tooltip>
         );
-        iconQuantity += 24;
+        iconQuantity += 1;
       }
     }
+
     // 排序按钮
     if (sortable && name) {
       const sortProps = headersEditable ? { onClick: this.handleClick } : {};
-      iconQuantity += 18;
-      sortableIcon = <Icon key="sort" type="arrow_upward" className={`${sortPrefixCls}-icon`} {...sortProps} />;
+      sortIcon = <Icon key="sort" type="arrow_upward" className={`${sortPrefixCls}-icon`} {...sortProps} />;
+      iconQuantity += 1;
     }
-
-    const headerChildren = (headerChild) => {
-      if (isValidElement(headerChild)) {
-        return cloneElement(headerChild, { key: 'text' });
-      }
-      if (isString(headerChild) || (isNil(headerChild) && headersEditable)) {
-        const widthEdit = iconQuantity
-          ? `calc(100% - ${pxToRem(iconQuantity)})`
-          : headersEditable && !!name ? `100%` : undefined;
-        const spanStyle: CSSProperties = {
-          display: 'inline-block',
-          maxWidth: widthEdit,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-        };
-        if (headersEditable && !!name) {
-          const editProps = {
-            defaultValue: headerChild,
-            value: headerChild,
-            onChange: this.onChangeHeader,
-            key: 'text',
-            style: { width: widthEdit },
-            className: `${prefixCls}-cell-inner-edit`,
-          };
-          if (dragColumn) {
-            return (
-              <ObserverTextField
-                {...editProps}
-              />
-            );
-          }
-          // 当为null 和 undefined 也可以编辑
-          if (!headerChild) {
-            spanStyle.height = '100%';
-          }
-          return (this.editing ? <ObserverTextField
-            autoFocus
-            onBlur={this.onHeaderBlur}
-            {...editProps}
-          /> : <span onClick={() => {
-            this.setEditing(true);
-          }} style={spanStyle} key="text">{headerChild}</span>);
-        }
-        // 当文字在左边无法查看到icon处理
-        if (cellStyle.textAlign !== ColumnAlign.right && iconQuantity) {
-          return <span key="text" style={spanStyle}>{headerChild}</span>;
-        }
-
-        return (<span key="text">{headerNode}</span>);
-      }
-      return headerChild;
-    };
 
     const innerProps: any = {
       className: classNames(`${prefixCls}-cell-inner`, {
@@ -409,9 +440,34 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         [`${prefixCls}-cell-editing`]: this.editing,
       }),
       children: [
-        headerChildren(headerNode),
+        this.getHeaderCellNode(headerNode, iconQuantity),
       ],
     };
+
+    if (helpIcon) {
+      if (cellStyle.textAlign === ColumnAlign.right) {
+        innerProps.children.unshift(helpIcon);
+      } else {
+        innerProps.children.push(helpIcon);
+      }
+    }
+
+    if (sortIcon) {
+      if (field) {
+        const { order } = field;
+        if (order) {
+          classList.push(`${sortPrefixCls}-${order}`);
+        }
+      }
+      if (!headersEditable) {
+        innerProps.onClick = this.handleClick;
+      }
+      if (cellStyle.textAlign === ColumnAlign.right) {
+        innerProps.children.unshift(sortIcon);
+      } else {
+        innerProps.children.push(sortIcon);
+      }
+    }
 
     if (rowHeight !== 'auto') {
       const rowHeightDIV = headersEditable ? pxToRem(rowHeight + 4) : pxToRem(rowHeight);
@@ -443,33 +499,10 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       innerProps.children.push(dragIcon());
     }
 
-    if (helpIcon) {
-      if (cellStyle.textAlign === ColumnAlign.right) {
-        innerProps.children.unshift(helpIcon);
-      } else {
-        innerProps.children.push(helpIcon);
-      }
-    }
-
-    if (sortableIcon) {
-      if (field) {
-        const { order } = field;
-        if (order) {
-          classList.push(`${sortPrefixCls}-${order}`);
-        }
-      }
-      if (!headersEditable) {
-        innerProps.onClick = this.handleClick;
-      }
-      if (cellStyle.textAlign === ColumnAlign.right) {
-        innerProps.children.unshift(sortableIcon);
-      } else {
-        innerProps.children.push(sortableIcon);
-      }
-    }
     if (dragColumn && provided && provided.draggableProps.style) {
       cellStyle = { ...omit(cellStyle, ['width', 'height']), ...provided.draggableProps.style, cursor: 'move' };
     }
+
     return (
       <th
         className={classList.join(' ')}
