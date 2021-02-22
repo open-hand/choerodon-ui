@@ -3,6 +3,7 @@ import { action, computed, observable, runInAction, set } from 'mobx';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import defer from 'lodash/defer';
+import isNumber from 'lodash/isNumber';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
@@ -480,7 +481,7 @@ export default class TableStore {
 
   @computed
   get overflowX(): boolean {
-    if (this.width) {
+    if (isNumber(this.width)) {
       return this.totalLeafColumnsWidth > this.width;
     }
     return false;

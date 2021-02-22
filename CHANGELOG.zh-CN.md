@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复最后一列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复拖拽列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复过滤条多语言问题。
+- 🐞 `<pro>Table`: 修复在 modal 中可能出现的 overflowX 计算问题。
 - 🐞 `<pro>Field`: 修复切换数据源时错误的返回对象渲染，更新 Table 动态编辑器 demo。
 - 🐞 `<pro>DataSet`: 修复动态设置lovPara后,lookupData等部分情况下还是使用以前的数据的问题。
 
