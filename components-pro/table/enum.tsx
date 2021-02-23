@@ -82,9 +82,13 @@ export const enum TableAutoHeightType {
   minHeight = 'minHeight',
 }
 
-export const enum  ColumnsEditType{
+export const enum ColumnsEditType {
   header = 'header',
   order = 'order',
   all = 'all',
 }
 
+export const enum HighLightRowType {
+  click = 'click',
+  focus = 'focus',
+}

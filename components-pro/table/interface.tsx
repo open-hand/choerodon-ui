@@ -20,6 +20,7 @@ export {
   TableColumnTooltip,
   TableAutoHeightType,
   ColumnsEditType,
+  HighLightRowType,
 } from './enum';
 
 export {

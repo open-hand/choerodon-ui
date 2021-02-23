@@ -20,14 +20,15 @@ timeline: true
 - 🌟 `<pro>TextField`: 新增 valueChangeAction、wait、waitType 属性。
 - 🌟 `<pro>Form`: labelWidth 新增 auto 值。
 - 🌟 `<pro>Table`: column 存在 tooltip 属性时列头添加 HTML title。
+- 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。
 - 💄 `<pro>Tree`: 优化性能。
 - 💄 `<pro>Table`: boolean 类型的查询字段默认显示为下拉框。
-- 💄 `<pro>Table`: 优化性能， 行选择框操作时不触发当前行的变更。
-- 💄 `<pro>IntlField`: 优化 intl disabled 和 readOnly 的值展现形式。
+- 💄 `<pro>Table`: 优化性能，行选择框操作时不触发当前行的变更。
 - 💄 `<pro>Table`: 优化行列拖拽未开启时的性能。
 - 💄 `<pro>Table`: 优化自动行高时锁定列同步行高的性能。
-- 💄 `<pro>DataSet`: 优化性能。
+- 💄`<pro>Table`: 扩展 highLightRow 属性支持 focus、click 独立交互。
+- 💄 `<pro>IntlField`: 优化 intl disabled 和 readOnly 的值展现形式。
 - 🐞 `<pro>Table`: 修复最后一列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复拖拽列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复过滤条多语言问题。
