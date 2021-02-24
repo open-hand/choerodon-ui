@@ -145,7 +145,8 @@ export interface TreeProps {
   virtual?: boolean;
 
   // direction for drag logic
-  direction?: Direction
+  direction?: Direction;
+  ripple?: boolean;
 }
 
 interface TreeState {
@@ -1288,6 +1289,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropIndicatorRender,
       onContextMenu,
       direction,
+      ripple,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -1317,6 +1319,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           filterTreeNode,
 
           titleRender,
+          ripple,
 
           onNodeClick: this.onNodeClick,
           onNodeDoubleClick: this.onNodeDoubleClick,

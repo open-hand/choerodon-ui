@@ -35,7 +35,7 @@ class App extends React.Component {
         <Col span={8}>
           <Select placeholder="请选择" onChange={handleChange}>
             <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
+            <Option value="lucy"><b style={{ color: '#08c' }}>Lucy</b></Option>
             {this.state.visible && (
               <Option value="wu" disabled>
                 Wu

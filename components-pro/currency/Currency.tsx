@@ -23,6 +23,7 @@ export default class Currency extends NumberField<CurrencyProps> {
 
   getFormatOptions(): FormatNumberFuncOptions {
     return {
+      lang: this.lang,
       options: {
         currency: this.getProp('currency'),
       },

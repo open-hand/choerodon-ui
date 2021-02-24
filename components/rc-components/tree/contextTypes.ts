@@ -54,6 +54,7 @@ export interface TreeContextProps {
   loadData?: (treeNode: EventDataNode) => Promise<void>;
   filterTreeNode?: (treeNode: EventDataNode) => boolean;
   titleRender?: (node?: DataNode) => React.ReactNode;
+  ripple?: boolean;
 
   onNodeClick: NodeMouseEventHandler;
   onNodeDoubleClick: NodeMouseEventHandler;

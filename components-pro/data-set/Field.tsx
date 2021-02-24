@@ -153,6 +153,14 @@ export type FieldProps = {
    */
   valueField?: string;
   /**
+   * 树形值列表的值字段，默认值为`value`
+   */
+  idField?: string;
+  /**
+   * 树形值列表的父值字段
+   */
+  parentField?: string;
+  /**
    *  类型为boolean时，true对应的值
    */
   trueValue?: string | number | boolean;
@@ -380,11 +388,15 @@ export default class Field {
     lookupStore.getAxiosConfig(this);
     const { lookup } = this;
     if (lookup) {
+      const parentField = this.get('parentField');
+      const idField = this.get('idField') || this.get('valueField');
       const selection = this.get('multiple') ? DataSetSelection.multiple : DataSetSelection.single;
       return new DataSet({
         data: lookup,
         paging: false,
         selection,
+        idField,
+        parentField,
       });
     }
     return undefined;

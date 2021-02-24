@@ -359,7 +359,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @observable rangeTarget?: 0 | 1;
 
-  @observable rangeValue?: [any, any];
+  @observable rangeValue?: [any, any] | undefined;
 
   @computed
   get validator(): Validator {
@@ -812,6 +812,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (!isNil(value)) {
       if (isMoment(value)) {
         return (value as Moment).format(this.getDateFormat());
+      }
+      if (isValidElement(value)) {
+        // For Select's Option and TreeSelect's TreeNode which type may be ReactElement
+        // @ts-ignore
+        return value;
       }
       return value.toString();
     }
@@ -1336,8 +1341,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   getProp(propName: string) {
-    const { field } = this;
-    return defaultTo(field && field.get(propName), this.props[propName]);
+    const { field, observableProps } = this;
+    return defaultTo(field && field.get(propName), propName in observableProps ? observableProps[propName] : this.props[propName]);
   }
 
   render() {
