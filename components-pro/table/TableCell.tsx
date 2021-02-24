@@ -26,7 +26,7 @@ import { ShowHelp } from '../field/enum';
 import Button, { ButtonProps } from '../button/Button';
 import { $l } from '../locale-context';
 import Tooltip from '../tooltip/Tooltip';
-import { DataSetEvents, RecordStatus } from '../data-set/enum';
+import { DataSetEvents, FieldType, RecordStatus } from '../data-set/enum';
 import { LabelLayout } from '../form/enum';
 import { Commands, TableButtonProps } from './Table';
 import autobind from '../_util/autobind';
@@ -448,8 +448,14 @@ export default class TableCell extends Component<TableCellProps> {
       innerProps.onKeyDown = this.handleEditorKeyDown;
     }
     if (rowHeight !== 'auto') {
+      const isCheckBox = field && field.type === FieldType.boolean || key === SELECTION_KEY;
+      const borderPadding = isCheckBox ? 4 : 2;
+      const heightPx = rows > 0 ? (rowHeight + 2) * rows + 1 : rowHeight;
+      const lineHeightPx = hasEditor ? rowHeight - borderPadding :
+        isCheckBox ? rowHeight - borderPadding : rowHeight;
       innerProps.style = {
-        height: pxToRem(rows > 0 ? (rowHeight + 2) * rows + 1 : rowHeight),
+        height: pxToRem(heightPx),
+        lineHeight: rows > 0 ? 'inherit' : pxToRem(lineHeightPx),
       };
       // 处理多行横向滚动lock列高度
       if (tableStore.multiLineHeight.length && lock) {

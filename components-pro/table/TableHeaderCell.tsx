@@ -470,9 +470,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     }
 
     if (rowHeight !== 'auto') {
-      const rowHeightDIV = headersEditable ? pxToRem(rowHeight + 4) : pxToRem(rowHeight);
+      const heightPx = headersEditable ? rowHeight + 4 : rowHeight;
+      const lineHeightPx = headersEditable ? rowHeight + 4 : rowHeight - 2;
       innerProps.style = {
-        height: rowHeightDIV,
+        height: pxToRem(heightPx),
+        lineHeight: pxToRem(column.key !== SELECTION_KEY ? lineHeightPx : rowHeight - 4),
       };
     }
     const dragIcon = () => {

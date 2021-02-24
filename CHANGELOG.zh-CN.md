@@ -24,11 +24,12 @@ timeline: true
 - 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。
 - 💄 `<pro>Tree`: 优化性能。
+- 💄 `<pro>Table`: 优化行样式，确保垂直居中。
 - 💄 `<pro>Table`: boolean 类型的查询字段默认显示为下拉框。
 - 💄 `<pro>Table`: 优化性能，行选择框操作时不触发当前行的变更。
 - 💄 `<pro>Table`: 优化行列拖拽未开启时的性能。
 - 💄 `<pro>Table`: 优化自动行高时锁定列同步行高的性能。
-- 💄`<pro>Table`: 扩展 highLightRow 属性支持 focus、click 独立交互。
+- 💄 `<pro>Table`: 扩展 highLightRow 属性支持 focus、click 独立交互。
 - 💄 `<pro>IntlField`: 优化 intl disabled 和 readOnly 的值展现形式。
 - 🐞 `<pro>Table`: 修复最后一列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复拖拽列无法调整列宽的问题。
