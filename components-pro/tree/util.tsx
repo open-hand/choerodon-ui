@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
-import { TreeNodeProps,EventDataNode } from 'choerodon-ui/lib/tree';
+import { EventDataNode, TreeNodeProps } from 'choerodon-ui/lib/tree';
 import Record from '../data-set/Record';
 import DataSet from '../data-set/DataSet';
 
 export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
+
 export interface DataNode {
   children?: DataNode[];
   key: string | number;
@@ -46,23 +47,27 @@ export type NodeRenderer = (props: {
 export type TreeNodeRenderer = ((props: {
   record?: Record | null;
   dataSet?: DataSet | null;
-}) => TreeNodeRendererProps ) | (((props:{record?: Record | null;
-  dataSet?: DataSet | null;}) => {})) | (() => ({}))
+}) => TreeNodeRendererProps) | (((props: {
+  record?: Record | null;
+  dataSet?: DataSet | null;
+}) => {})) | (() => ({}))
 
 export function getKey(record, idField) {
-  return String(idField ? record.get(idField) : record.id);
+  return String(idField ? record.get(idField) : record.key);
 }
 
-function getTreeNode(record, children, idField, text,treeNodeRendererProps,loadData):DataNode {
+function getTreeNode(record, children, idField, text, treeNodeProps, loadData, filterText): DataNode {
   const key = getKey(record, idField);
   return (
     {
-      title:text,
-      isLeaf:!loadData && !record.children,
+      title: text,
+      isLeaf: !loadData && (filterText ? (!children || !children.length) : !record.children || !record.children.length),
       children,
-      ...treeNodeRendererProps,
-      selectable:!!(record.dataSet.selection?record.selectable:false),
-      eventKey:key,
+      record,
+      ...record.get('__treeNodeProps'),
+      ...treeNodeProps,
+      selectable: record.dataSet.selection ? record.selectable : false,
+      eventKey: key,
       key,
     }
   );
@@ -73,26 +78,40 @@ export function getTreeNodes(
   records: Record[] = [],
   forceRenderKeys: string[],
   renderer: NodeRenderer,
-  treeNodeRenderer:TreeNodeRenderer,
-  loadData?:(treeNode: EventDataNode) => Promise<void>,
+  onTreeNode: TreeNodeRenderer,
+  loadData?: (treeNode: EventDataNode) => Promise<void>,
   titleField?: string,
+  defaultExpandAll?: boolean,
+  optionsFilter?: (record: Record, index: number, array: Record[]) => boolean,
+  searchMatcher?: (record: Record, text?: string) => boolean,
+  filterText?: string,
 ) {
   const { idField } = dataSet.props;
-  return records.map(record => {
-    if(record.status !== 'delete'){
-        const children =
-        forceRenderKeys.indexOf(getKey(record, idField)) !== -1
-          ? getTreeNodes(dataSet, record.children, forceRenderKeys, renderer,treeNodeRenderer,loadData)
+  return records.reduce<DataNode[]>((array, record, index) => {
+    if (record.status !== 'delete') {
+      const children =
+        defaultExpandAll || forceRenderKeys.indexOf(getKey(record, idField)) !== -1 || filterText
+          ? getTreeNodes(dataSet, record.children, forceRenderKeys, renderer, onTreeNode, loadData, titleField, defaultExpandAll, optionsFilter, searchMatcher, filterText)
           : null;
-      return getTreeNode(
-        record,
-        children,
-        idField,
-        renderer({ dataSet, record, text: record.get(titleField) }),
-        treeNodeRenderer({ dataSet, record}),
-        loadData,
-      );
+      if (!searchMatcher || !filterText || (children && children.length) || searchMatcher(record, filterText)) {
+        if ((!optionsFilter || optionsFilter(record, index, records))) {
+          const node = getTreeNode(
+            record,
+            children,
+            idField,
+            renderer({ dataSet, record, text: record.get(titleField) }),
+            onTreeNode({ dataSet, record }),
+            loadData,
+            filterText,
+          );
+          if (node) {
+            array.push(node);
+          }
+        } else if (children) {
+          array.push(...children);
+        }
+      }
     }
-    return null
-  });
+    return array;
+  }, []);
 }

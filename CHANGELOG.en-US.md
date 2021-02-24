@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>TreeSelect`: Added TreeSelect component.
 - 🌟 `<pro>Select`: Added `selectAllButton` property.
 - 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
 - 🌟 `<pro>TextField`: Added `valueChangeAction`, `wait`, `waitType` properties.
@@ -36,6 +37,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fixed incorrect application of `defaultValidationMessages` during dataSet binding.
 - 🐞 `<pro>Field`: Fixed the wrong return object rendering when switching data sources.
 - 🐞 `<pro>DataSet`: Fixed the problem that the previous data is still used in some cases such as lookupData after dynamically setting lovPara.
+- 🐞 `<pro>Currency`: Fix the problem that currency cannot be formatted according to the locale.
 
 ## 1.0.0
 

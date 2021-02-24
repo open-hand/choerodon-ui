@@ -33,7 +33,7 @@ const MotionTreeNode: React.RefForwardingComponent<HTMLDivElement, MotionTreeNod
   ref,
 ) => {
   const [visible, setVisible] = React.useState(true);
-  const { prefixCls } = React.useContext(TreeContext);
+  const { prefixCls, ripple } = React.useContext(TreeContext);
 
   const motionedRef = React.useRef(false);
 
@@ -99,6 +99,7 @@ const MotionTreeNode: React.RefForwardingComponent<HTMLDivElement, MotionTreeNod
                   key={key!}
                   isStart={isStart}
                   isEnd={isEnd}
+                  ripple={ripple}
                 />
               );
             })}

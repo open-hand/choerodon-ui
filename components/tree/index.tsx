@@ -13,10 +13,9 @@ import { DataNode, EventDataNode, Key } from '../rc-components/tree/interface';
 
 export { TreeNode };
 
-export {EventDataNode,DataNode,TreeNodeProps}
+export { EventDataNode, DataNode, TreeNodeProps };
 
 export { ExpandAction as DirectoryTreeExpandAction, DirectoryTreeProps } from './DirectoryTree';
-
 
 
 export interface C7ndTreeNodeAttribute {
@@ -55,10 +54,12 @@ export interface C7nTreeNodeProps {
   selectable?: boolean;
   icon?: ((treeNode: C7ndTreeNodeAttribute) => ReactNode) | ReactNode;
   children?: ReactNode;
+
   [customProp: string]: any;
 }
 
-export interface C7nTreeNode extends Component<C7nTreeNodeProps, {}> {}
+export interface C7nTreeNode extends Component<C7nTreeNodeProps, {}> {
+}
 
 export interface C7nTreeNodeBaseEvent {
   node: C7nTreeNode;
@@ -120,26 +121,24 @@ export interface TreeProps extends Omit<RcTreeProps, 'prefixCls'> {
   /** 默认展开对应树节点 */
   defaultExpandParent?: boolean;
   /** 默认展开指定的树节点 */
-  defaultExpandedKeys?: string[];
+  defaultExpandedKeys?: Key[];
   /** （受控）展开指定的树节点 */
   expandedKeys?: Key[];
   /** （受控）选中复选框的树节点 */
-  checkedKeys?: string[] | { checked: string[]; halfChecked: string[] };
+  checkedKeys?: Key[] | { checked: Key[]; halfChecked: Key[] };
   /** 默认选中复选框的树节点 */
-  defaultCheckedKeys?: string[];
+  defaultCheckedKeys?: Key[];
   /** （受控）设置选中的树节点 */
   selectedKeys?: Key[];
   /** 默认选中的树节点 */
-  defaultSelectedKeys?: string[];
+  defaultSelectedKeys?: Key[];
   selectable?: boolean;
-  /** 点击树节点触发 */
-  filterC7nTreeNode?: (node: C7nTreeNode) => boolean;
   loadedKeys?: string[];
   /** 设置节点可拖拽（IE>8） */
   draggable?: boolean;
   style?: CSSProperties;
   showIcon?: boolean;
-  icon?: ((nodeProps: C7ndTreeNodeAttribute) =>ReactNode) | ReactNode;
+  icon?: ((nodeProps: C7ndTreeNodeAttribute) => ReactNode) | ReactNode;
   switcherIcon?: ReactElement<any>;
   prefixCls?: string;
   children?: ReactNode;
@@ -190,11 +189,11 @@ export default class Tree extends Component<TreeProps, any> {
     return <Icon type="arrow_drop_down" className={switcherCls} />;
   };
 
-    tree: any;
+  tree: any;
 
-    setTreeRef = (node: any) => {
-      this.tree = node;
-    };
+  setTreeRef = (node: any) => {
+    this.tree = node;
+  };
 
   getPrefixCls() {
     const { prefixCls } = this.props;
@@ -212,7 +211,7 @@ export default class Tree extends Component<TreeProps, any> {
         ref={this.setTreeRef}
         {...props}
         className={classNames(!showIcon && `${prefixCls}-icon-hide`, className)}
-        checkable={checkable ? <span className={`${prefixCls}-checkbox-inner`} /> : 0 }
+        checkable={checkable ? <span className={`${prefixCls}-checkbox-inner`} /> : 0}
         switcherIcon={this.renderSwitcherIcon}
         prefixCls={prefixCls}
       >

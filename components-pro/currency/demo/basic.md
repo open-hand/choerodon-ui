@@ -19,11 +19,14 @@ import { Currency, Row, Col } from 'choerodon-ui/pro';
 ReactDOM.render(
   <div>
     <Row gutter={10}>
-      <Col span={12}>
-        <Currency defaultValue={10000} />
+      <Col span={8}>
+        <Currency defaultValue={123456.789} />
       </Col>
-      <Col span={12}>
-        <Currency currency="CNY" defaultValue={10000} />
+      <Col span={8}>
+        <Currency currency="CNY" defaultValue={123456.789} />
+      </Col>
+      <Col span={8}>
+        <Currency currency="EUR" lang="de-DE" defaultValue={123456.789} />
       </Col>
     </Row>
   </div>,

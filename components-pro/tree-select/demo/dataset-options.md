@@ -14,7 +14,7 @@ title:
 DataSet Options
 
 ```jsx
-import { DataSet, Select, Row, Col, Button } from 'choerodon-ui/pro';
+import { DataSet, TreeSelect, Row, Col, Button } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -30,18 +30,20 @@ function handleDataSetChange({ record, name, value, oldValue }) {
 class App extends React.Component {
   optionDs = new DataSet({
     selection: 'single',
-    queryUrl: '/dataset/user/queries',
+    queryUrl: '/tree.mock',
     autoQuery: true,
+    idField: 'id',
+    parentField: 'parentId',
   });
 
   ds = new DataSet({
     fields: [
       {
         name: 'user',
-        type: 'string',
+        type: 'number',
         multiple: true,
-        textField: 'name',
-        valueField: 'userid',
+        textField: 'text',
+        valueField: 'id',
         label: '用户',
         options: this.optionDs,
       },
@@ -54,10 +56,10 @@ class App extends React.Component {
   changeOptions = () => {
     this.ds.addField('account', {
       name: 'account',
-      type: 'string',
+      type: 'number',
       multiple: true,
-      textField: 'name',
-      valueField: 'userid',
+      textField: 'text',
+      valueField: 'id',
       label: '账户',
       options: this.optionDs,
     });
@@ -67,14 +69,13 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={8}>
-          <Select
-            optionsFilter={record => record.get('sex') === 'F'}
+          <TreeSelect
             dataSet={this.ds}
             name="user"
           />
         </Col>
         <Col span={8}>
-          <Select dataSet={this.ds} name="account" />
+          <TreeSelect dataSet={this.ds} name="account" />
         </Col>
         <Col span={8}>
           <Button onClick={this.changeOptions}>切换选项</Button>

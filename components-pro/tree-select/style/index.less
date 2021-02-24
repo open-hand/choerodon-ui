@@ -1,0 +1,64 @@
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../trigger-field/style/mixin';
+@import '../../field/style/mixin';
+@import '../../select/style/mixin';
+
+@tree-select-prefix: ~'@{c7n-pro-prefix}-tree-select';
+
+.@{tree-select-prefix} {
+  .trigger;
+
+  margin: 0;
+
+  &-disabled {
+    i {
+      color: @input-border-color;
+    }
+  }
+
+  &-trigger {
+    transition: transform 0.3s;
+  }
+
+  &-expand &-trigger {
+    transform: rotate(180deg);
+
+    &-common-item-wrapper {
+      display: none !important;
+    }
+  }
+
+  &-dropdown-menu {
+    &-item {
+      width: 100%;
+
+      &.@{c7n-prefix}-tree-treenode-selected {
+        background-color: @item-focus-bg;
+      }
+
+      .@{c7n-prefix}-tree-node-content-wrapper {
+        background-color: transparent !important;
+      }
+    }
+    .dropdown-menu;
+  }
+
+  .select-all;
+
+  &-common-item {
+    margin-top: 0.04rem;
+    color: @label-color;
+    background: @component-background;
+  }
+
+  &-common-item-selected {
+    color: @primary-color;
+  }
+
+  &-common-item-label {
+    display: inline-block;
+    margin-top: 0.04rem;
+    margin-right: 0.04rem;
+  }
+}
