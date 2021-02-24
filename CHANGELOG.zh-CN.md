@@ -19,20 +19,23 @@ timeline: true
 - 🌟 `<pro>SelectBox`:实现 optionsFilter searchable 属性。
 - 🌟 `<pro>TextField`: 新增 valueChangeAction、wait、waitType 属性。
 - 🌟 `<pro>Form`: labelWidth 新增 auto 值。
+- 🌟 `<pro>Table`: column 存在 tooltip 属性时列头添加 HTML title。
+- 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。
 - 💄 `<pro>Tree`: 优化性能。
 - 💄 `<pro>Table`: boolean 类型的查询字段默认显示为下拉框。
-- 💄 `<pro>Table`: 优化性能， 行选择框操作时不触发当前行的变更。
-- 💄 `<pro>IntlField`: 优化 intl disabled 和 readOnly 的值展现形式。
+- 💄 `<pro>Table`: 优化性能，行选择框操作时不触发当前行的变更。
 - 💄 `<pro>Table`: 优化行列拖拽未开启时的性能。
 - 💄 `<pro>Table`: 优化自动行高时锁定列同步行高的性能。
-- 💄 `<pro>DataSet`: 优化性能。
+- 💄`<pro>Table`: 扩展 highLightRow 属性支持 focus、click 独立交互。
+- 💄 `<pro>IntlField`: 优化 intl disabled 和 readOnly 的值展现形式。
 - 🐞 `<pro>Table`: 修复最后一列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复拖拽列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复过滤条多语言问题。
 - 🐞 `<pro>Table`: 修复在 modal 中可能出现的 overflowX 计算问题。
+- 🐞 `<pro>FormField`: 修复数据源绑定时错误应用 defaultValidationMessages。
 - 🐞 `<pro>Field`: 修复切换数据源时错误的返回对象渲染，更新 Table 动态编辑器 demo。
-- 🐞 `<pro>DataSet`: 修复动态设置lovPara后,lookupData等部分情况下还是使用以前的数据的问题。
+- 🐞 `<pro>DataSet`: 修复动态设置 lovPara 后，lookupData 部分情况下还是使用以前数据的问题。
 
 ## 1.0.0
 

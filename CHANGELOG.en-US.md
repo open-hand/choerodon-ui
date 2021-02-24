@@ -19,6 +19,8 @@ timeline: true
 - 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
 - 🌟 `<pro>TextField`: Added `valueChangeAction`, `wait`, `waitType` properties.
 - 🌟 `<pro>Form`: `labelWidth` added `auto` value.
+- 🌟 `<pro>Table`: Added `HTML title` to the column header when the `tooltip` attribute exists in `column`.
+- 💄 `<pro>DataSet`: Optimized performance.
 - 💄 `<pro>Trigger`: Optimized the performance.
 - 💄 `<pro>Tree`: Optimized the performance.
 - 💄 `<pro>Table`: The query field of boolean type is displayed as `Select` by default.
@@ -26,13 +28,15 @@ timeline: true
 - 💄 `<pro>IntlField`: Optimized the value display form of intl disabled and readOnly.
 - 💄 `<pro>Table`: Optimized the performance when row and column drag is not turned on.
 - 💄 `<pro>Table`: Optimized the performance of locking column synchronization row height during automatic row height.
-- 💄 `<pro>DataSet`: Optimized performance.
+- 💄 `<pro>Table`: Extend the `highLightRow` property to support independent interaction of `focus` and `click`.
 - 🐞 `<pro>Table`: Fixed the problem that the width of the last column cannot be adjusted.
 - 🐞 `<pro>Table`: Fixed the problem that the column width cannot be adjusted by dragging the column.
 - 🐞 `<pro>Table`: Fixed the multilingual problem of the filter bar.
 - 🐞 `<pro>Table`: Fixed the overflowX calculation problem that may occur in `Modal`.
+- 🐞 `<pro>FormField`: Fixed incorrect application of `defaultValidationMessages` during dataSet binding.
 - 🐞 `<pro>Field`: Fixed the wrong return object rendering when switching data sources.
-- 🐞 `<pro>DataSet`: Fix the problem that the previous data is still used in some cases such as lookupData after dynamically setting lovPara.
+- 🐞 `<pro>DataSet`: Fixed the problem that the previous data is still used in some cases such as lookupData after dynamically setting lovPara.
+
 ## 1.0.0
 
 `2021-02-02`

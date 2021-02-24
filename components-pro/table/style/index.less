@@ -398,6 +398,16 @@
     }
   }
 
+  &-row-clicked,
+  &-row-clicked:hover {
+    &.@{table-prefix-cls}-row-highlight,
+    &.@{table-prefix-cls}-row-highlight + .@{table-prefix-cls}-expanded-row {
+      & > td {
+        background-color: @table-current-row-bg;
+      }
+    }
+  }
+
   &-row-selected&-row:hover {
     &,
     & + .@{table-prefix-cls}-expanded-row {

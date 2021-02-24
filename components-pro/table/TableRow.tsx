@@ -13,7 +13,7 @@ import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
-import { ColumnLock, DragColumnAlign, SelectionMode } from './enum';
+import { ColumnLock, DragColumnAlign, HighLightRowType, SelectionMode } from './enum';
 import { findFirstFocusableElement, getColumnKey, isDisabledRow, isSelectedRow } from './utils';
 import { DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
@@ -88,6 +88,36 @@ export default class TableRow extends Component<TableRowProps, any> {
     const { tableStore } = this.context;
     const { record } = this.props;
     return tableStore.isRowHover(record);
+  }
+
+  @computed
+  get isClicked(): boolean {
+    const { tableStore } = this.context;
+    const { record } = this.props;
+    return tableStore.isRowClick(record);
+  }
+
+  set isClicked(click: boolean) {
+    const { tableStore } = this.context;
+    if (tableStore.highLightRow) {
+      const { record } = this.props;
+      tableStore.setRowClicked(record, click);
+    }
+  }
+
+  @computed
+  get isHighLightRow(): boolean {
+    const {
+      tableStore: { highLightRow },
+      tableStore,
+    } = this.context;
+    if (highLightRow === false) {
+      return false;
+    }
+    if (highLightRow === HighLightRowType.click) {
+      return highLightRow && tableStore.isRowHighLight && this.isClicked;
+    }
+    return highLightRow && tableStore.isRowHighLight;
   }
 
   set isHover(hover: boolean) {
@@ -173,6 +203,16 @@ export default class TableRow extends Component<TableRowProps, any> {
   @autobind
   handleClick(e) {
     const { onClick } = this.rowExternalProps;
+    const {
+      tableStore: {
+        highLightRow,
+      },
+      tableStore,
+    } = this.context;
+    if (highLightRow !== true) {
+      this.isClicked = true;
+      tableStore.setRowHighLight(true);
+    }
     if (typeof onClick === 'function') {
       return onClick(e);
     }
@@ -449,7 +489,8 @@ export default class TableRow extends Component<TableRowProps, any> {
       {
         [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent, // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
         [`${rowPrefixCls}-hover`]: highLightRow && this.isHover,
-        [`${rowPrefixCls}-highlight`]: highLightRow,
+        [`${rowPrefixCls}-clicked`]: highLightRow === HighLightRowType.click && this.isClicked,
+        [`${rowPrefixCls}-highlight`]: this.isHighLightRow,
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && isSelectedRow(record),
         [`${rowPrefixCls}-disabled`]: disabled,
         [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && (mouseBatchChooseIdList || []).includes(id),

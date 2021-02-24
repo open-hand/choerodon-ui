@@ -227,9 +227,13 @@ export default class TableStore {
 
   @observable hoverRow?: Record;
 
+  @observable clickRow?: Record;
+
   @observable currentEditorName?: string;
 
   @observable styledHidden?: boolean;
+
+  @observable rowHighLight: boolean;
 
   mouseBatchChooseStartId: number = 0;
 
@@ -356,14 +360,15 @@ export default class TableStore {
   }
 
   @computed
-  get highLightRow(): boolean {
+  get highLightRow(): boolean | string {
     if ('highLightRow' in this.props) {
       return this.props.highLightRow;
     }
-    if (getConfig('tableHighLightRow') === false) {
+    const tableHighLightRow = getConfig('tableHighLightRow');
+    if (tableHighLightRow === false) {
       return false;
     }
-    return true;
+    return tableHighLightRow;
   }
 
   @computed
@@ -748,6 +753,7 @@ export default class TableStore {
       this.expandedRows = [];
       this.columnDeep = 0;
       this.multiLineHeight = [];
+      this.rowHighLight = false;
     });
     this.setProps(node.props);
   }
@@ -823,6 +829,25 @@ export default class TableStore {
 
   isRowHover(record: Record): boolean {
     return this.hoverRow === record;
+  }
+
+  isRowClick(record: Record): boolean {
+    return this.clickRow === record;
+  }
+
+  @action
+  setRowClicked(record: Record, click: boolean) {
+    this.clickRow = click ? record : undefined;
+  }
+
+  @computed
+  get isRowHighLight() {
+    return this.rowHighLight || this.highLightRow === true;
+  }
+
+  @action
+  setRowHighLight(highLight: boolean) {
+    this.rowHighLight = highLight;
   }
 
   @action

@@ -47,6 +47,7 @@ import {
   ColumnLock,
   ColumnsEditType,
   DragColumnAlign,
+  HighLightRowType,
   ScrollPosition,
   SelectionMode,
   TableAutoHeightType,
@@ -398,7 +399,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 高亮行
    */
-  highLightRow?: boolean;
+  highLightRow?: boolean | HighLightRowType;
   /**
    * 勾选高亮行
    */
@@ -591,7 +592,7 @@ export default class Table extends DataSetComponent<TableProps> {
     editMode: PropTypes.oneOf([TableEditMode.inline, TableEditMode.cell]),
     filterBarFieldName: PropTypes.string,
     filterBarPlaceholder: PropTypes.string,
-    highLightRow: PropTypes.bool,
+    highLightRow: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([HighLightRowType.focus, HighLightRowType.click])]),
     selectedHighLightRow: PropTypes.bool,
     autoMaxWidth: PropTypes.bool,
     /**

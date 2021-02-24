@@ -365,6 +365,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   get validator(): Validator {
     const { field } = this;
     if (field) {
+      if (!field.get('defaultValidationMessages')) {
+        field.validator.props.defaultValidationMessages = this.getValidatorProps().defaultValidationMessages;
+      }
       return field.validator;
     }
     return new Validator(undefined, this);
@@ -513,6 +516,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
    */
   multiLineValidator(field): Validator {
     if (field) {
+      if (!field.get('defaultValidationMessages')) {
+        field.validator.props.defaultValidationMessages = this.getValidatorProps().defaultValidationMessages;
+      }
       return field.validator;
     }
     return new Validator(undefined, this);
