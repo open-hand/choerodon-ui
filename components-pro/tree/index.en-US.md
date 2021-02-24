@@ -20,7 +20,7 @@ Almost anything can be represented in a tree structure. Examples include directo
 | defaultExpandedKeys | defalut expand these node dataSetbind expandField ignore it  | string[]	| [] |
 | defaultCheckedKeys | defalut check these node when dataSet bind checkField ignore it  | string[] | [] |
 | defaultSelectKeys | defalut select these node when dataSet bind idField ignore it | string[] | [] |
-| treeNodeRenderer |  customize cover Tree node props  | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
+| onTreeNode |  customize cover Tree node props  | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
 
 
 ### TreeNodeRenderer props

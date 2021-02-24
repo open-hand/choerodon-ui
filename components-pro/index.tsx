@@ -128,8 +128,10 @@ export { default as PerformanceTable } from './performance-table';
 
 export { default as RichText } from './rich-text';
 
-export { default as Screening} from './screening';
+export { default as Screening } from './screening';
 
 export { default as injectModal } from './inject-modal';
 
 export { default as useModal } from './use-modal';
+
+export { default as TreeSelect } from './tree-select';

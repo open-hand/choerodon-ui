@@ -56,7 +56,7 @@ export class AutoComplete<T extends AutoCompleteProps> extends Select<T> {
     super.handleChange(e);
   }
 
-  choose(record?: Record | null) {
+  choose(record?: Record | Record[] | null) {
     this.isChoose = true;
     super.choose(record);
   }

@@ -282,6 +282,15 @@ export default class Record {
   }
 
   @computed
+  get parents(): Record[] {
+    const { parent } = this;
+    if (parent) {
+      return [parent, ...parent.parents];
+    }
+    return [];
+  }
+
+  @computed
   get level(): number {
     const { parent } = this;
     if (parent) {
@@ -709,6 +718,18 @@ export default class Record {
 
   getState(key: string) {
     return this.state.get(key);
+  }
+
+  treeReduce<U>(
+    fn: (previousValue: U, record: Record) => U,
+    initialValue: U,
+  ): U {
+    const newValue = fn(initialValue, this);
+    const { children } = this;
+    if (children) {
+      return children.reduce<U>((childValue, r) => r.treeReduce(fn, childValue), newValue);
+    }
+    return newValue;
   }
 
   @action

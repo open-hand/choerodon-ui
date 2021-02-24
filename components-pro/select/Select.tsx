@@ -49,7 +49,7 @@ function defaultSearchMatcher({ record, text, textField }) {
   return record.get(textField).indexOf(text) !== -1;
 }
 
-const disabledField = '__disabled';
+export const disabledField = '__disabled';
 
 function defaultOnOption({ record }) {
   return {
@@ -258,6 +258,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      */
     noCache: PropTypes.bool,
     /**
+     * 下拉框匹配输入框宽度
+     * @default true
+     */
+    dropdownMatchSelectWidth: PropTypes.bool,
+    /**
      * 多选时显示全选按钮;
      * @default true
      */
@@ -324,9 +329,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     return this.comboOptions.filter(record => !this.isSelected(record))[0];
   }
 
+  @computed
   get filteredOptions(): Record[] {
-    const { optionsWithCombo, text } = this;
-    return this.filterData(optionsWithCombo, text);
+    const { text } = this;
+    const { optionsWithCombo, observableProps: { optionsFilter } } = this;
+    return this.searchData(optionsFilter ? optionsWithCombo.filter(optionsFilter) : optionsWithCombo, text);
   }
 
   @computed
@@ -522,6 +529,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       searchable: props.searchable,
       dropdownMatchSelectWidth: props.dropdownMatchSelectWidth,
       selectReverse: props.reverse,
+      optionsFilter: props.optionsFilter,
     };
   }
 
@@ -768,14 +776,17 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   getPopupStyleFromAlign(target): CSSProperties | undefined {
     const { isFlat } = this.props;
     if (target) {
-      if (this.dropdownMatchSelectWidth && !isFlat) {
+      const width = pxToRem(target.getBoundingClientRect().width);
+      if (width !== undefined) {
+        if (this.dropdownMatchSelectWidth && !isFlat) {
+          return {
+            width,
+          };
+        }
         return {
-          width: pxToRem(target.getBoundingClientRect().width),
+          minWidth: width,
         };
       }
-      return {
-        minWidth: pxToRem(target.getBoundingClientRect().width),
-      };
     }
   }
 
@@ -839,7 +850,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const findRecord = this.findByValue(v);
     const optionProps = findRecord ? onOption({ dataSet: options, record: findRecord }) : undefined;
     const optionDisabled = (optionProps && optionProps.disabled);
-    return findRecord?.toData().__disabled === true || optionDisabled || this.isDisabled();
+    return (findRecord && findRecord.get(disabledField) === true) || optionDisabled || this.isDisabled();
   }
 
   handleKeyDownFirstLast(e, menu: Menu, direction: number) {
@@ -1053,25 +1064,33 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
-  handleOptionSelect(record: Record) {
-    this.prepareSetValue(this.processRecordToObject(record));
+  handleOptionSelect(record: Record | Record[]) {
+    this.prepareSetValue(...(isArrayLike(record) ? record.map(this.processRecordToObject, this) : [this.processRecordToObject(record)]));
   }
 
-  handleOptionUnSelect(record: Record) {
+  handleOptionUnSelect(record: Record | Record[]) {
     const { valueField } = this;
-    const newValue = record.get(valueField);
-    this.removeValue(newValue, -1);
+    const newValues = isArrayLike(record) ? record.map(r => r.get(valueField)) : [record.get(valueField)];
+    this.removeValues(newValues, -1);
+  }
+
+  handleSearch(_text?: string) {
   }
 
   @action
   setText(text?: string): void {
     super.setText(text);
-    if (this.searchable && isString(this.searchMatcher)) {
+    if (this.searchable) {
       this.doSearch(text);
     }
   }
 
-  doSearch = debounce(value => this.searchRemote(value), 500);
+  doSearch = debounce(value => {
+    if (isString(this.searchMatcher)) {
+      this.searchRemote(value);
+    }
+    this.handleSearch(value);
+  }, 500);
 
   searchRemote(value) {
     const { field, searchMatcher } = this;
@@ -1163,7 +1182,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         const findRecord = this.findByValue(v);
         const optionProps = findRecord ? onOption({ dataSet: options, record: findRecord }) : undefined;
         const optionDisabled = (optionProps && optionProps.disabled);
-        return recordItem?.toData().__disabled === true || optionDisabled;
+        return (recordItem && recordItem.get(disabledField) === true) || optionDisabled;
       });
       const multipleValue = valuesDisabled.length > 0 ? valuesDisabled : this.emptyValue;
       this.setValue(multipleValue);
@@ -1187,13 +1206,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     this.resetFilter();
   }
 
-  unChoose(record?: Record | null) {
+  unChoose(record?: Record | Record[] | null) {
     if (record) {
       this.handleOptionUnSelect(record);
     }
   }
 
-  choose(record?: Record | null) {
+  choose(record?: Record | Record[] | null) {
     if (!this.multiple) {
       this.collapse();
     }
@@ -1213,7 +1232,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const optionDisabled = (optionProps && optionProps.disabled);
       return !optionDisabled;
     });
-    this.setValue(selectedOptions.map(this.processRecordToObject, this));
+    this.choose(selectedOptions);
   }
 
   /**
@@ -1292,19 +1311,23 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     });
   }
 
-  filterData(data: Record[], text?: string): Record[] {
+  searchData(data: Record[], text?: string): Record[] {
+    const {
+      searchable,
+      searchMatcher,
+    } = this;
+    return searchable && text && typeof searchMatcher === 'function' ? data.filter((r) => this.matchRecordBySearch(r, text)) : data;
+  }
+
+  @autobind
+  matchRecordBySearch(record: Record, text?: string): boolean {
     const {
       textField,
       valueField,
       searchable,
       searchMatcher,
-      props: { optionsFilter },
     } = this;
-    data = optionsFilter ? data.filter(optionsFilter!) : data;
-    if (searchable && text && typeof searchMatcher === 'function') {
-      return data.filter(record => searchMatcher({ record, text, textField, valueField }));
-    }
-    return data;
+    return !(searchable && text && typeof searchMatcher === 'function') || searchMatcher({ record, text, textField, valueField });
   }
 }
 

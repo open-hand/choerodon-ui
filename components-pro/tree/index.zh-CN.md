@@ -21,7 +21,7 @@ subtitle: 树形控件
 | defaultExpandedKeys | 默认展开指定的树节点当dataSet绑定expandField 时候忽略 | string[]	| [] |
 | defaultCheckedKeys | 默认选中复选框的树节点当dataSet绑定checkField 时候忽略 | string[] | [] |
 | defaultSelectKeys | 默认选择节点当，默认绑定dataSet的 idField | string[] | [] |
-| treeNodeRenderer | 对于Treenode 结点的渲染覆盖 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
+| onTreeNode | 对于 TreeNode 结点的属性覆盖 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
 
 ### TreeNodeRenderer Props
 
