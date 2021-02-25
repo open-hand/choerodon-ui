@@ -62,9 +62,7 @@
     }
 
     &-drawer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
+      flex-shrink: 0;
       text-align: left;
     }
 
@@ -128,11 +126,20 @@
     left: 0;
     width: auto;
 
+    .@{modal-prefix-cls}-content {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      border-radius: @border-radius-base;
+    }
+
+    .@{modal-prefix-cls}-body {
+      flex-grow: 1;
+      max-height: none;
+    }
+
     .@{modal-prefix-cls}-footer {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
+      flex-shrink: 0;
     }
   }
 

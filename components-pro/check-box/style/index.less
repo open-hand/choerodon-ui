@@ -75,7 +75,7 @@
     @indeterminate-height: (@checkbox-size / 14) * 1;
     position: absolute;
     top: (@checkbox-size - 0.05rem - @indeterminate-height) / 2;
-    left: (@checkbox-size - 0.03rem - @indeterminate-width) / 2;
+    left: (@checkbox-size - @indeterminate-width - @checkbox-border-width * 2) / 2;
     width: @indeterminate-width;
     height: @indeterminate-height;
     transform: scale(1) !important;

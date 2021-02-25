@@ -95,6 +95,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
       'unCheckedValue',
       'unCheckedChildren',
       'indeterminate',
+      'isFlat',
     ]);
   }
 
