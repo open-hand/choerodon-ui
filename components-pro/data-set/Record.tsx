@@ -64,9 +64,10 @@ export default class Record {
 
   @computed
   get pristineData(): object {
-    const dirtyData = {};
-    [...this.dirtyData.entries()].forEach(([key, value]) => ObjectChainValue.set(dirtyData, key, value));
-    return merge({}, this.data, dirtyData);
+    return [...this.dirtyData.entries()].reduce<object>((data, [key, value]) => {
+      ObjectChainValue.set(data, key, value);
+      return data;
+    }, toJS(this.data));
   }
 
   set pristineData(data: object) {
