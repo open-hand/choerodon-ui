@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。
 - 💄 `<pro>Tree`: 优化性能。
+- 💄 `<pro>Modal`: 优化 footer 为 null 时全屏显示和抽屉的样式。
 - 💄 `<pro>Table`: 优化行样式，确保垂直居中。
 - 💄 `<pro>Table`: boolean 类型的查询字段默认显示为下拉框。
 - 💄 `<pro>Table`: 优化性能，行选择框操作时不触发当前行的变更。

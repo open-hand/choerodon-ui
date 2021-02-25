@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimized performance.
 - 💄 `<pro>Trigger`: Optimized the performance.
 - 💄 `<pro>Tree`: Optimized the performance.
+- 💄 `<pro>Modal`: Optimized the style of `fullscreen` display and `drawer` when `footer` is null.
 - 💄 `<pro>Table`: Optimized the row style to ensure vertical centering.
 - 💄 `<pro>Table`: The query field of boolean type is displayed as `Select` by default.
 - 💄 `<pro>Table`: Optimized performance, the current row will not be changed when the row selection box is operated.

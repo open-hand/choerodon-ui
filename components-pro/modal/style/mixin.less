@@ -56,7 +56,15 @@
     }
   }
   &-drawer &-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     border-radius: @border-radius-base;
+  }
+
+  &-drawer &-body {
+    flex-grow: 1;
+    max-height: none;
   }
 }
 
