@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the performance when row and column drag is not turned on.
 - 💄 `<pro>Table`: Optimized the performance of locking column synchronization row height during automatic row height.
 - 💄 `<pro>Table`: Extend the `highLightRow` property to support independent interaction of `focus` and `click`.
+- 🐞 `Collapse`: Extend the issue that `expandIconPosition` is invalid.
 - 🐞 `<pro>Table`: Fixed the problem that the width of the last column cannot be adjusted.
 - 🐞 `<pro>Table`: Fixed the problem that the column width cannot be adjusted by dragging the column.
 - 🐞 `<pro>Table`: Fixed the multilingual problem of the filter bar.

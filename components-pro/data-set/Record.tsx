@@ -483,7 +483,7 @@ export default class Record {
       }
       const oldValue = toJS(this.get(fieldName));
       const newValue = processValue(value, field);
-      if (!isSame(newValue, oldValue)) {
+      if (!isSame(processToJSON(oldValue), processToJSON(newValue))) {
         const { fields } = this;
         ObjectChainValue.set(this.data, fieldName, newValue, fields);
         if (!(this.dirtyData.has(fieldName))) {

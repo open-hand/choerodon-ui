@@ -81,21 +81,14 @@ export default class CollapsePanel extends Component {
       [`${prefixCls}-collapsed`]: !isActive,
     });
 
-    let icon = <i className={iconCls} />;
-
-    if (trigger === 'icon') {
-      icon = (<span className={`${prefixCls}-expand-icon-wrapper`} onClick={this.handleItemClick.bind(this)}>
-        <i className={iconCls} />
-      </span>);
-    }
+    let icon = null;
 
     if (showArrow) {
-      if (typeof expandIcon === 'function') {
-        icon = trigger === 'icon' ? (
-          <span className={`${prefixCls}-expand-icon-wrapper`} onClick={this.handleItemClick.bind(this)}>
-        {expandIcon(this.props)}
-      </span>) : expandIcon(this.props);
-      }
+      icon = (
+        <span className={`${prefixCls}-expand-icon-wrapper`} onClick={trigger === 'icon' ? this.handleItemClick.bind(this) : noop}>
+          {typeof expandIcon === 'function' ? expandIcon(this.props) : <i className={iconCls} />}
+        </span>
+      );
     }
 
     return (
