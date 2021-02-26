@@ -13,6 +13,7 @@ import throttleAdapterEnhancer from '../axios/throttleAdapterEnhancer';
 import PromiseMerger from '../_util/PromiseMerger';
 
 const adapter = throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter!));
+const noCacheAdapter = throttleAdapterEnhancer(axios.defaults.adapter!);
 
 export type responseData = object[];
 export type responseType = responseData | undefined;
@@ -34,7 +35,7 @@ export class LookupCodeStore {
     getConfig('lookupCache'),
   );
 
-  async fetchLookupData(
+  fetchLookupData(
     key: AxiosRequestConfig | string,
     axiosConfig: AxiosRequestConfig = {},
   ): Promise<responseType> {
@@ -49,19 +50,19 @@ export class LookupCodeStore {
       config = key as AxiosRequestConfig;
     }
     if (config.url) {
-      let data: responseData | undefined;
       // SSR do not fetch the lookup
       if (typeof window !== 'undefined') {
-        const result: any = await this.axios(config);
-        if (result) {
-          data = generateResponseData(result, getConfig('dataKey'));
-        }
+        return this.axios(config).then((result) => {
+          if (result) {
+            return generateResponseData(result, getConfig('dataKey'));
+          }
+        });
       }
-      return data;
     }
+    return Promise.resolve<responseType>(undefined);
   }
 
-  async fetchLookupDataInBatch(code: string, lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig): Promise<responseType> {
+  fetchLookupDataInBatch(code: string, lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig): Promise<responseType> {
     return this.merger.add(code, lookupBatchAxiosConfig);
   }
 
@@ -75,10 +76,9 @@ export class LookupCodeStore {
       params,
       lookupCode: field.get('lookupCode'),
     });
-    const noCacheAdapter = throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter!, { enabledByDefault: !noCache }));
     return {
-      adapter: noCache ? noCacheAdapter : adapter,
       ...config,
+      adapter: config.adapter || (noCache ? noCacheAdapter : adapter),
       url: config.url || this.getUrl(field),
       method: config.method || getConfig('lookupAxiosMethod') || 'post',
       params: config.params || params,

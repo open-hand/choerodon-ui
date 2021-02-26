@@ -96,10 +96,10 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     const { prefixCls, lock, indentSize, dragColumnAlign } = this.props;
     const { leafColumns, leafColumnsBody } = this;
     const {
-      tableStore: { data, dragColumnAlign: propsDragColumnAlign, props: { virtual, rowDragRender = {} }, dataSet, height, dragRow },
+      tableStore: { data, dragColumnAlign: propsDragColumnAlign, virtual, props: { rowDragRender = {} }, dataSet, dragRow },
     } = this.context;
     const { droppableProps, renderClone } = rowDragRender;
-    const rowData = virtual && height ? this.processData() : data;
+    const rowData = virtual ? this.processData() : data;
     const rows = data.length
       ? this.getRows(rowData, leafColumns, true, lock)
       : this.getEmptyRow(leafColumns, lock);

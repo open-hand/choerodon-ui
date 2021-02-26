@@ -109,10 +109,10 @@ class App extends React.Component {
     name: 'user',
     autoQuery: true,
     exportMode:'client',
-    pageSize: 5,
+    pageSize: 1000,
     transport: {
       read: {
-        url: '/dataset/user/queries',
+        url: '/dataset/large-user/queries',
       },
       create: {
         url: '/dataset/user/mutations',
@@ -407,13 +407,7 @@ class App extends React.Component {
         autoMaxWidth={true}
         header="User"
         style={{ height: 200 }}
-        onRow={({ dataSet, record, index, expandedRow }) => {
-          if (index === 2) {
-            return {
-              style: { height: 50 },
-            };
-          }
-        }}
+        virtual
       >
         <Column
           name="userid"

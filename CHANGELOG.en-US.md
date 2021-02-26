@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>TextField`: Added `valueChangeAction`, `wait`, `waitType` properties.
 - 🌟 `<pro>Form`: `labelWidth` added `auto` value.
 - 🌟 `<pro>Table`: Added `HTML title` to the column header when the `tooltip` attribute exists in `column`.
+- 💄 `<pro>Table`: Optimize performance and fix the problem that the editor cannot be displayed in virtual scrolling.
 - 💄 `<pro>DataSet`: Optimized performance.
 - 💄 `<pro>Trigger`: Optimized the performance.
 - 💄 `<pro>Tree`: Optimized the performance.
