@@ -70,6 +70,7 @@ import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import { findIndexedSibling, getHeight, getPaginationPosition, isCanEdictingRow } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
+import VirtualWrapper from './VirtualWrapper';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
 
@@ -670,17 +671,9 @@ export default class Table extends DataSetComponent<TableProps> {
 
   lastScrollLeft: number;
 
-  lastScrollTop: number;
-
   scrollPosition: ScrollPosition;
 
-  refUpperPlaceholder: Array<HTMLDivElement | null> = [];
-
-  refUnderPlaceholder: Array<HTMLDivElement | null> = [];
-
   refSpin: HTMLDivElement | null = null;
-
-  refScroll: HTMLDivElement | null = null;
 
   get currentRow(): HTMLTableRowElement | null {
     return this.element.querySelector(
@@ -1190,6 +1183,9 @@ export default class Table extends DataSetComponent<TableProps> {
   componentWillUnmount() {
     this.processDataSetListener(false);
     document.removeEventListener('pointerup', this.handleDragMouseUp);
+    if (this.scrollId !== undefined) {
+      raf.cancel(this.scrollId);
+    }
   }
 
   processDataSetListener(flag: boolean) {
@@ -1209,11 +1205,10 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       prefixCls,
       tableStore,
-      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock, dragRow, dragColumnAlign },
+      tableStore: { virtual, overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock, dragRow, dragColumnAlign },
       props: {
         style,
         spin,
-        virtual,
         virtualSpin,
         buttons,
         queryFields,
@@ -1249,26 +1244,30 @@ export default class Table extends DataSetComponent<TableProps> {
               filterBarPlaceholder={filterBarPlaceholder}
             />
             <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
-              {virtual && <div
-                ref={(node) => this.refSpin = node}
-                style={{
-                  display: 'none',
-                }}
-              >
-                {virtualSpin && <Spin
-                  key="virtual"
-                  spinning
-                  style={{
-                    height: pxToRem(styleHeight),
-                    lineHeight: pxToRem(styleHeight),
-                    position: 'absolute',
-                    width: '100%',
-                    zIndex: 4,
-                  }}
-                  {...tableSpinProps}
-                  {...spin}
-                />}
-              </div>}
+              {
+                virtual && (
+                  <div
+                    ref={(node) => this.refSpin = node}
+                    style={{
+                      display: 'none',
+                    }}
+                  >
+                    {virtualSpin && <Spin
+                      key="virtual"
+                      spinning
+                      style={{
+                        height: pxToRem(styleHeight),
+                        lineHeight: pxToRem(styleHeight),
+                        position: 'absolute',
+                        width: '100%',
+                        zIndex: 4,
+                      }}
+                      {...tableSpinProps}
+                      {...spin}
+                    />}
+                  </div>
+                )
+              }
               <div {...this.getOtherProps()}>
                 <div className={`${prefixCls}-content`}>
                   {content}
@@ -1375,9 +1374,6 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   handleBodyScroll(e: React.SyntheticEvent) {
-    if (this.scrollId !== undefined) {
-      raf.cancel(this.scrollId);
-    }
     const { currentTarget } = e;
     e.persist();
     this.scrollId = raf(() => {
@@ -1396,12 +1392,11 @@ export default class Table extends DataSetComponent<TableProps> {
   handleBodyScrollTop(e, currentTarget) {
     const { target } = e;
     const {
-      tableStore: { rowHeight, height },
-      observableProps: { dataSet },
-      props: { virtual, autoHeight },
+      props: { autoHeight },
+      tableStore: { virtual, height, lastScrollTop },
     } = this;
     if (
-      (this.tableStore.height === undefined && !autoHeight) ||
+      (height === undefined && !autoHeight) ||
       currentTarget !== target ||
       target === this.tableFootWrap
     ) {
@@ -1413,7 +1408,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const fixedColumnsBodyRight = this.fixedColumnsBodyRight;
     const dragColumnsBodyRight = this.dragColumnsBodyRight;
     const { scrollTop } = target;
-    if (scrollTop !== this.lastScrollTop) {
+    if (scrollTop !== lastScrollTop) {
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = scrollTop;
       }
@@ -1436,26 +1431,8 @@ export default class Table extends DataSetComponent<TableProps> {
         this.refSpin!.style.display = 'block';
         this.setSpin();
       }
-    }
-    if (virtual) {
-      const startIndex = Math.max(Math.round((scrollTop / Number(rowHeight)) - 3), 0);
-      const endIndex = Math.min(Math.round((scrollTop + height) / Number(rowHeight) + 2), dataSet.length);
-      this.refUpperPlaceholder.map(upperNode => {
-        if (upperNode) {
-          upperNode.style.height = `${startIndex * Number(rowHeight)}px`;
-          upperNode.style.display = startIndex === 0 ? 'none' : 'block';
-        }
-        return null;
-      });
-      this.refUnderPlaceholder.map(underNode => {
-        if (underNode) {
-          underNode.style.display = endIndex === dataSet.length ? 'none' : 'block';
-        }
-        return null;
-      });
       this.tableStore.setLastScrollTop(scrollTop);
     }
-    this.lastScrollTop = scrollTop;
   }
 
   handleBodyScrollLeft(e, currentTarget) {
@@ -1520,11 +1497,6 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  @autobind
-  saveRef(node) {
-    this.refScroll = node;
-  }
-
   renderTable(
     hasHeader: boolean,
     hasBody: boolean,
@@ -1534,74 +1506,74 @@ export default class Table extends DataSetComponent<TableProps> {
   ): ReactNode {
     const {
       prefixCls,
-      tableStore: { rowHeight, height },
-      observableProps: { dataSet },
-      props: { virtual },
+      tableStore: { virtual },
     } = this;
 
-    const virtualH = Math.round(dataSet.length * Number(rowHeight));
-
-    return virtual && height ?
-      (
-        <>
-          <TableWrapper
-            prefixCls={prefixCls}
-            key="tableWrapper-header"
-            lock={lock}
-            hasBody={hasBody}
-            hasHeader={hasHeader}
-            hasFooter={hasFooter}
-            dragColumnAlign={dragColumnAlign}
-          >
-            {hasHeader && this.getTableHeader(lock, dragColumnAlign)}
-          </TableWrapper>
-          {hasBody &&
-          <div
-            className={`${prefixCls}-tbody-wrapper`}
-            style={{ height: virtualH }}
-            ref={this.saveRef}
-          >
-            <div className='refUpperPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUpperPlaceholder.push(node)} />
+    return virtual ? (
+      <>
+        {
+          hasHeader && (
             <TableWrapper
               prefixCls={prefixCls}
-              key="tableWrapper-body"
+              key="tableWrapper-header"
               lock={lock}
               hasBody={hasBody}
               hasHeader={hasHeader}
               hasFooter={hasFooter}
               dragColumnAlign={dragColumnAlign}
             >
-              {hasBody && this.getTableBody(lock, dragColumnAlign)}
+              {this.getTableHeader(lock, dragColumnAlign)}
             </TableWrapper>
-            <div className='refUnderPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUnderPlaceholder.push(node)} />
-          </div>}
-          <TableWrapper
-            prefixCls={prefixCls}
-            key="tableWrapper-footer"
-            lock={lock}
-            hasBody={hasBody}
-            hasHeader={hasFooter}
-            hasFooter={hasFooter}
-            dragColumnAlign={dragColumnAlign}
-          >
-            {hasFooter && this.getTableFooter(lock, dragColumnAlign)}
-          </TableWrapper>
-        </>
-      ) : (
-        <TableWrapper
-          prefixCls={prefixCls}
-          key="tableWrapper"
-          lock={lock}
-          hasBody={hasBody}
-          hasHeader={hasHeader}
-          hasFooter={hasFooter}
-          dragColumnAlign={dragColumnAlign}
-        >
-          {hasHeader && this.getTableHeader(lock, dragColumnAlign)}
-          {hasBody && this.getTableBody(lock, dragColumnAlign)}
-          {hasFooter && this.getTableFooter(lock, dragColumnAlign)}
-        </TableWrapper>
-      );
+          )
+        }
+        {
+          hasBody && (
+            <VirtualWrapper prefixCls={prefixCls}>
+              <TableWrapper
+                prefixCls={prefixCls}
+                key="tableWrapper-body"
+                lock={lock}
+                hasBody={hasBody}
+                hasHeader={hasHeader}
+                hasFooter={hasFooter}
+                dragColumnAlign={dragColumnAlign}
+              >
+                {this.getTableBody(lock, dragColumnAlign)}
+              </TableWrapper>
+            </VirtualWrapper>
+          )
+        }
+        {
+          hasFooter && (
+            <TableWrapper
+              prefixCls={prefixCls}
+              key="tableWrapper-footer"
+              lock={lock}
+              hasBody={hasBody}
+              hasHeader={hasFooter}
+              hasFooter={hasFooter}
+              dragColumnAlign={dragColumnAlign}
+            >
+              {this.getTableFooter(lock, dragColumnAlign)}
+            </TableWrapper>
+          )
+        }
+      </>
+    ) : (
+      <TableWrapper
+        prefixCls={prefixCls}
+        key="tableWrapper"
+        lock={lock}
+        hasBody={hasBody}
+        hasHeader={hasHeader}
+        hasFooter={hasFooter}
+        dragColumnAlign={dragColumnAlign}
+      >
+        {hasHeader && this.getTableHeader(lock, dragColumnAlign)}
+        {hasBody && this.getTableBody(lock, dragColumnAlign)}
+        {hasFooter && this.getTableFooter(lock, dragColumnAlign)}
+      </TableWrapper>
+    );
   }
 
   getHeader(): ReactNode {

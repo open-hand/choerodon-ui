@@ -1,4 +1,4 @@
-import { action, computed, isArrayLike, isObservableArray, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
+import { action, computed, isArrayLike, isObservableArray, isObservableObject, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
@@ -329,7 +329,7 @@ export default class Record {
 
   constructor(data: object = {}, dataSet?: DataSet) {
     runInAction(() => {
-      const initData = toJS(data);
+      const initData = isObservableObject(data) ? toJS(data) : data;
       this.state = observable.map<string, any>();
       this.fields = observable.map<string, Field>();
       this.status = RecordStatus.add;

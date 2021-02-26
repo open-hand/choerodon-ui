@@ -23,7 +23,7 @@ import { DataSet, Table } from 'choerodon-ui/pro';
 class App extends React.Component {
   userDs = new DataSet({
     primaryKey: 'userid',
-    name: 'user',
+    name: 'large-user',
     autoQuery: true,
     pageSize: 10,
     fields: [

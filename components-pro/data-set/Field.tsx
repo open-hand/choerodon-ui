@@ -1,10 +1,10 @@
 import { action, computed, get, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
+import raf from 'raf';
 import isFunction from 'lodash/isFunction';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
-import defer from 'lodash/defer';
 import unionBy from 'lodash/unionBy';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -328,6 +328,8 @@ export default class Field {
 
   lastDynamicProps: any = {};
 
+  changingProps: any = {};
+
   isDynamicPropsComputing: boolean = false;
 
   @observable props: FieldProps & { [key: string]: any; };
@@ -386,7 +388,7 @@ export default class Field {
     }
     // 确保 lookup 相关配置介入观察
     lookupStore.getAxiosConfig(this);
-    const { lookup } = this;
+    const { lookup, type } = this;
     if (lookup) {
       const parentField = this.get('parentField');
       const idField = this.get('idField') || this.get('valueField');
@@ -398,6 +400,12 @@ export default class Field {
         idField,
         parentField,
       });
+    }
+    const lovCode = this.get('lovCode');
+    if (lovCode) {
+      if (type === FieldType.object || type === FieldType.auto) {
+        return lovCodeStore.getLovDataSet(lovCode, this);
+      }
     }
     return undefined;
   }
@@ -470,10 +478,12 @@ export default class Field {
       this.record = record;
       this.dirtyProps = {};
       this.props = props;
-      // 优化性能，没有动态属性时不用处理， 直接使用dsField
-      if (!record || this.getProp('dynamicProps')) {
-        this.fetchLookup();
-        this.fetchLovConfig();
+      // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
+      if (!this.getProp('options') && (!record || this.getProp('dynamicProps'))) {
+        raf(() => {
+          this.fetchLookup();
+          this.fetchLovConfig();
+        });
       }
     });
   }
@@ -926,16 +936,10 @@ export default class Field {
     return result;
   }
 
-  async fetchLovConfig() {
+  fetchLovConfig() {
     const lovCode = this.get('lovCode');
     if (lovCode) {
-      await this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
-      if (this.type === FieldType.object || this.type === FieldType.auto) {
-        const options = lovCodeStore.getLovDataSet(lovCode, this);
-        if (options) {
-          this.set('options', options);
-        }
-      }
+      this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
     }
   }
 
@@ -969,22 +973,20 @@ export default class Field {
   }
 
   private checkDynamicProp(propsName, newProp) {
-    // if (propsName in this.lastDynamicProps) {
     const oldProp = this.lastDynamicProps[propsName];
-    if (!isEqualDynamicProps(oldProp, newProp)) {
-      defer(
-        action(() => {
-          if (propsName in this.validator.props || propsName === 'validator') {
-            this.validator.reset();
-            // validator && DynamicProps 存在 reset 后需要重新校验该条 record 对应字段校验
-            // if (this.record) this.record.validate();
-            // this.checkValidity();
-          }
-          this.handlePropChange(propsName, newProp, oldProp);
-        }),
-      );
+    if (this.changingProps[propsName] && !isEqualDynamicProps(oldProp, newProp)) {
+      this.changingProps[propsName] = true;
+      runInAction(() => {
+        if (propsName in this.validator.props || propsName === 'validator') {
+          this.validator.reset();
+          // validator && DynamicProps 存在 reset 后需要重新校验该条 record 对应字段校验
+          // if (this.record) this.record.validate();
+          // this.checkValidity();
+        }
+        this.handlePropChange(propsName, newProp, oldProp);
+      });
+      this.changingProps[propsName] = false;
     }
-    // }
     this.lastDynamicProps[propsName] = newProp;
   }
 

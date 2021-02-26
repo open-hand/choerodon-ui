@@ -153,7 +153,7 @@ function normalizeColumns(
   const leftFixedColumns: any[] = [];
   const rightFixedColumns: any[] = [];
   Children.forEach(elements, element => {
-    if (!isValidElement(element)  || !(element.type as typeof Column).__PRO_TABLE_COLUMN) {
+    if (!isValidElement(element) || !(element.type as typeof Column).__PRO_TABLE_COLUMN) {
       return;
     }
     const { props, key } = element;
@@ -215,7 +215,7 @@ export default class TableStore {
 
   @observable height?: number;
 
-  @observable lastScrollTop?: number;
+  @observable lastScrollTop: number;
 
   @observable lockColumnsBodyRowsHeight: any;
 
@@ -252,6 +252,29 @@ export default class TableStore {
   @computed
   get dataSet(): DataSet {
     return this.props.dataSet;
+  }
+
+  @computed
+  get virtual(): boolean {
+    return this.props.virtual && !!this.height && isNumber(this.rowHeight);
+  }
+
+  @computed
+  get virtualHeight(): number {
+    const { rowHeight, dataSet } = this;
+    return Math.round(dataSet.length * Number(rowHeight));
+  }
+
+  @computed
+  get virtualStartIndex(): number {
+    const { rowHeight, lastScrollTop } = this;
+    return Math.max(Math.round((lastScrollTop / Number(rowHeight)) - 3), 0);
+  }
+
+  @computed
+  get virtualTop(): number {
+    const { rowHeight, virtualStartIndex } = this;
+    return virtualStartIndex * Number(rowHeight);
   }
 
   get hidden(): boolean {
@@ -752,6 +775,7 @@ export default class TableStore {
       this.node = node;
       this.expandedRows = [];
       this.columnDeep = 0;
+      this.lastScrollTop = 0;
       this.multiLineHeight = [];
       this.rowHighLight = false;
     });
