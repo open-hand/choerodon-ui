@@ -12,6 +12,8 @@ components-pro/rich-text/utils/*.tsx
 !components/*/demo/*
 !components-pro/*/__tests__/**/*.js
 !components-pro/*/demo/*
+components/form/__tests__/type.js
+site/theme/mock/performance-data/*.js
 !.*.js
 tests/jest/*
 gulpfile.js

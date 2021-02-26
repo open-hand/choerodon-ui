@@ -1190,6 +1190,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
               eventNode,
               !checkedKeys.includes(activeKey!),
             );
+            event.preventDefault();
           } else if (
             !checkable &&
             selectable &&
@@ -1197,6 +1198,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             eventNode.selectable !== false
           ) {
             this.onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
+            event.preventDefault();
           }
           break;
         }
