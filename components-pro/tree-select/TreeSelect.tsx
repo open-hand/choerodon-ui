@@ -200,6 +200,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     }
     return (
       <Tree
+        ref={this.saveMenu}
         ripple
         disabled={menuDisabled}
         onSelect={this.handleTreeSelect}

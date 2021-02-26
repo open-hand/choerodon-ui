@@ -200,6 +200,11 @@ export default class Tree extends Component<TreeProps, any> {
     return getPrefixCls('tree', prefixCls);
   }
 
+  onKeyDown(e) {
+    this.tree.onKeyDown(e);
+    return true;
+  }
+
   render() {
     const props = this.props;
     const { className, showIcon, children } = props;
