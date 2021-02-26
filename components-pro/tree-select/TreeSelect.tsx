@@ -42,14 +42,16 @@ export default class TreeSelect extends Select<TreeSelectProps> {
 
   @observable expandedKeys: string[] | undefined;
 
-  stateForceRenderKeys: string[] = [];
+  stateForceRenderKeys: Key[] = [];
 
   @computed
   get forceRenderKeys() {
     if (this.expandedKeys) {
       this.stateForceRenderKeys = [
-        ...new Set<string>([...this.stateForceRenderKeys, ...this.expandedKeys]),
+        ...new Set<Key>([...this.stateForceRenderKeys, ...this.expandedKeys]),
       ];
+    } else {
+      this.stateForceRenderKeys = this.props.treeDefaultExpandedKeys || [];
     }
     return this.stateForceRenderKeys;
   }
@@ -200,6 +202,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     }
     return (
       <Tree
+        ref={this.saveMenu}
         ripple
         disabled={menuDisabled}
         onSelect={this.handleTreeSelect}

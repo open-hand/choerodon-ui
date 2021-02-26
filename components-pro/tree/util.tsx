@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { Key, ReactNode } from 'react';
 import { EventDataNode, TreeNodeProps } from 'choerodon-ui/lib/tree';
 import Record from '../data-set/Record';
 import DataSet from '../data-set/DataSet';
@@ -76,7 +76,7 @@ function getTreeNode(record, children, idField, text, treeNodeProps, loadData, f
 export function getTreeNodes(
   dataSet: DataSet,
   records: Record[] = [],
-  forceRenderKeys: string[],
+  forceRenderKeys: Key[],
   renderer: NodeRenderer,
   onTreeNode: TreeNodeRenderer,
   loadData?: (treeNode: EventDataNode) => Promise<void>,
