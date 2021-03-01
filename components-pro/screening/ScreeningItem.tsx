@@ -610,6 +610,7 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
 
   getObservableProps(props, context) {
     return {
+      ...super.getObservableProps(props, context),
       name: props.name,
       record: 'record' in props ? props.record : context.record,
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,

@@ -157,6 +157,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       loading = props.loading;
     }
     return {
+      ...super.getObservableProps(props, context),
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
       loading,
       type: props.type,

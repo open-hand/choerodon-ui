@@ -22,7 +22,7 @@ import 'moment/locale/zh-cn';
 return <LocaleProvider locale={zh_CN}><App /></LocaleProvider>;
 ```
 
-我们提供了英语，中文，俄语，法语，德语等多种语言支持，所有语言包可以在 [这里](https://github.com/choerodon/choerodon-ui/blob/master/components/locale-provider/) 找到。
+我们提供了英语，中文，俄语，法语，德语等多种语言支持，所有语言包可以在 [这里](https://github.com/open-hand/choerodon-ui/blob/master/components/locale-provider/) 找到。
 
 注意：如果你需要使用 UMD 版的 dist 文件，应该引入 `choerodon-ui/dist/choerodon-ui-with-locales.js`，同时引入 moment 对应的 locale，然后按以下方式使用：
 
@@ -36,7 +36,7 @@ return <LocaleProvider locale={locales.en_US}><App /></LocaleProvider>;
 
 ### 增加语言包
 
-如果你找不到你需要的语言包，欢迎你在 [英文语言包](https://github.com/choerodon/choerodon-ui/blob/master/components/locale-provider/en_US.tsx) 的基础上创建一个新的语言包，并给我们 Pull Request。
+如果你找不到你需要的语言包，欢迎你在 [英文语言包](https://github.com/open-hand/choerodon-ui/blob/master/components/locale-provider/en_US.tsx) 的基础上创建一个新的语言包，并给我们 Pull Request。
 
 ### 其他国际化需求
 

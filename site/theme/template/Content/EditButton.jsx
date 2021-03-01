@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tooltip, Icon } from 'choerodon-ui';
 
-const branchUrl = 'https://github.com/choerodon/choerodon-ui/edit/master/';
+const branchUrl = 'https://github.com/open-hand/choerodon-ui/edit/master/';
 
 export default function EditButton({ title, filename }) {
   return (

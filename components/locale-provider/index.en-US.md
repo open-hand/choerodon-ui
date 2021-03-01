@@ -21,7 +21,7 @@ import 'moment/locale/fr';
 return <LocaleProvider locale={fr_FR}><App /></LocaleProvider>;
 ```
 
-We provide some locale like English, Chinese, Russian, German, French and etc, all locale packages can be found in [here](https://github.com/choerodon/choerodon-ui/blob/master/components/locale-provider/).
+We provide some locale like English, Chinese, Russian, German, French and etc, all locale packages can be found in [here](https://github.com/open-hand/choerodon-ui/blob/master/components/locale-provider/).
 
 Note: if you need to use choerodon-ui's UMD dist file, please use `choerodon-ui/dist/choerodon-ui-with-locales.js` and corresponding moment locale:
 
@@ -35,7 +35,7 @@ return <LocaleProvider locale={locales.fr_FR}><App /></LocaleProvider>;
 
 ### Add a new language
 
-If you can't find your language, you are welcome to create a locale package based on [en_US](https://github.com/choerodon/choerodon-ui/blob/master/components/locale-provider/en_US.tsx) and send us a pull request.
+If you can't find your language, you are welcome to create a locale package based on [en_US](https://github.com/open-hand/choerodon-ui/blob/master/components/locale-provider/en_US.tsx) and send us a pull request.
 
 ### Other localization needs
 

@@ -91,8 +91,9 @@ export default class TimesView extends DaysView {
     this.panel = node;
   }
 
-  getObservableProps(props) {
+  getObservableProps(props, context) {
     return {
+      ...super.getObservableProps(props, context),
       format: props.format,
     };
   }

@@ -29,7 +29,7 @@ ReactDOM.render(
   <div>
     <Tag>Tag 1</Tag>
     <Tag>
-      <a href="https://github.com/choerodon/choerodon-ui">Link</a>
+      <a href="https://github.com/open-hand/choerodon-ui">Link</a>
     </Tag>
     <Tag closable onClose={log}>
       Tag 2
