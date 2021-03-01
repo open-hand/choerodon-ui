@@ -11,7 +11,10 @@ import DataSet from '../data-set';
 import { FieldType } from '../data-set/enum';
 
 
+const defaultMatcher = (value: string, inputText: string) => value.indexOf(inputText) !== -1;
+
 export interface AutoCompleteProps extends SelectProps {
+  matcher: (value: string, inputText: string) => boolean;
 }
 
 export class AutoComplete<T extends AutoCompleteProps> extends Select<T> {
@@ -32,6 +35,7 @@ export class AutoComplete<T extends AutoCompleteProps> extends Select<T> {
     ...Select.defaultProps,
     searchable: true,
     suffixCls: 'auto-complete',
+    matcher: defaultMatcher,
   };
 
   getTriggerIconFont() {
@@ -56,7 +60,7 @@ export class AutoComplete<T extends AutoCompleteProps> extends Select<T> {
     super.handleChange(e);
   }
 
-  choose(record?: Record | Record[] | null) {
+  choose(record?: Record | null) {
     this.isChoose = true;
     super.choose(record);
   }
@@ -95,7 +99,7 @@ export class AutoComplete<T extends AutoCompleteProps> extends Select<T> {
       options,
       textField,
       valueField,
-      props: { dropdownMenuStyle, optionRenderer, onOption },
+      props: { dropdownMenuStyle, optionRenderer, onOption, matcher = defaultMatcher },
     } = this;
     const inputText = this.text || this.inputText;
 
@@ -110,7 +114,7 @@ export class AutoComplete<T extends AutoCompleteProps> extends Select<T> {
 
       const value = record.get(valueField);
       // 判断是否符合自动补全的条件
-      if (inputText && value.indexOf(inputText) === -1) {
+      if (inputText && !matcher(value, inputText)) {
         return;
       }
 
