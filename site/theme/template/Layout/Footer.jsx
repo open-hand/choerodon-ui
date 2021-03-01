@@ -26,7 +26,7 @@ class Footer extends React.Component {
               <div className="footer-center">
                 <h2><FormattedMessage id="app.footer.help" /></h2>
                 <div>
-                  <a target="_blank " href="https://github.com/choerodon/choerodon-ui">
+                  <a target="_blank " href="https://github.com/open-hand/choerodon-ui">
                     GitLab
                   </a>
                 </div>
@@ -36,7 +36,7 @@ class Footer extends React.Component {
                   </a>
                 </div>
                 <div>
-                  <a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues">
+                  <a target="_blank" rel="noopener noreferrer" href="https://github.com/open-hand/choerodon-ui/issues">
                     <FormattedMessage id="app.footer.issues" />
                   </a>
                 </div>

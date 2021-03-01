@@ -58,7 +58,7 @@ const menu = (
       </a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui">
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/open-hand/choerodon-ui">
         3rd menu item
       </a>
     </Menu.Item>

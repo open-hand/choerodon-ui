@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>TextField`: 新增 valueChangeAction、wait、waitType 属性。
 - 🌟 `<pro>Form`: labelWidth 新增 auto 值。
 - 🌟 `<pro>Table`: column 存在 tooltip 属性时列头添加 HTML title。
+- 🌟 `<pro>LocaleContext`: 新增 setNumberFormatLanguage 方法。
 - 💄 `<pro>Table`: 优化性能，修复虚拟滚动无法显示编辑器的问题。
 - 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。

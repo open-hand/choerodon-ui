@@ -11,7 +11,7 @@ Ant Design 设计规范上支持一定程度的样式定制，以满足业务和
 
 choerodon-ui 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，并定义了一系列全局/组件的样式变量，你可以根据需求进行相应调整。
 
-- [默认样式变量](https://github.com/choerodon/choerodon-ui/blob/master/components/style/themes/default.less)
+- [默认样式变量](https://github.com/open-hand/choerodon-ui/blob/master/components/style/themes/default.less)
 
 如果以上变量不能满足你的定制需求，可以给我们提 issue。
 

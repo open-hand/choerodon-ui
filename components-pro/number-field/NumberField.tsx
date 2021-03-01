@@ -21,6 +21,8 @@ import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 import { ValidatorProps } from '../validator/rules';
 import defaultFormatNumber from '../formatter/formatNumber';
+import { Lang } from '../locale-context/enum';
+import localeContext from '../locale-context/LocaleContext';
 
 function getCurrentValidValue(value: string): number {
   return Number(value.replace(/\.$/, '')) || 0;
@@ -99,7 +101,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     longPressPlus: PropTypes.bool,
     /**
      * 是否开启长按步距增加
-    */
+     */
     formatterOptions: PropTypes.object,
     ...TextField.propTypes,
   };
@@ -111,6 +113,23 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   };
 
   static format = defaultFormatNumber;
+
+  @computed
+  get lang(): Lang {
+    const { lang } = this.observableProps;
+    if (lang) {
+      return lang;
+    }
+    const { dataSet } = this;
+    if (dataSet && dataSet.lang) {
+      return dataSet.lang;
+    }
+    const { numberFormatLanguage, locale } = localeContext;
+    if (numberFormatLanguage) {
+      return numberFormatLanguage;
+    }
+    return locale.lang;
+  }
 
   @computed
   get defaultValidationMessages(): ValidationMessages {

@@ -49,7 +49,7 @@ class Banner extends React.PureComponent {
               <Link className="banner-btn components" to={utils.getLocalizedPathname('/docs/react/introduce', isZhCN)}>
                 <FormattedMessage id="app.home.getting-started" />
               </Link>
-              <a className="banner-btn github" target="_black" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui">
+              <a className="banner-btn github" target="_black" rel="noopener noreferrer" href="https://github.com/open-hand/choerodon-ui">
                 Github
               </a>
             </div>

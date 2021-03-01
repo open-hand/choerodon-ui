@@ -146,7 +146,7 @@ subtitle: 表格
 
 ### DragRender
 
-可以满足自定义更多的渲染需求，注意会覆盖默认值，建议阅读 中文地址[react-beautiful-dnd](https://github.com/chinanf-boy/react-beautiful-dnd-zh)或者英文地址[react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) 以及当前table[代码示例](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/table/TableTBody.tsx)
+可以满足自定义更多的渲染需求，注意会覆盖默认值，建议阅读 中文地址[react-beautiful-dnd](https://github.com/chinanf-boy/react-beautiful-dnd-zh)或者英文地址[react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) 以及当前table[代码示例](https://github.com/open-hand/choerodon-ui/blob/master/components-pro/table/TableTBody.tsx)
 
 可以注意一下设置
 新增拖拽例的key值 DRAG_KEY = '__drag-column__';
