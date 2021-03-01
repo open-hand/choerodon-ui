@@ -11,7 +11,7 @@ exports[`renders ./components/tag/demo/basic.md correctly 1`] = `
     class="c7n-tag"
   >
     <a
-      href="https://github.com/choerodon/choerodon-ui"
+      href="https://github.com/open-hand/choerodon-ui"
     >
       Link
     </a>

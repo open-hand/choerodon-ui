@@ -468,6 +468,7 @@ export default class Form extends DataSetComponent<FormProps> {
 
   getObservableProps(props, context) {
     return {
+      ...super.getObservableProps(props, context),
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
       record: 'record' in props ? props.record : context.record,
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),

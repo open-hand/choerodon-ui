@@ -11,7 +11,7 @@ Ant Design allows you to customize some basic design aspects in order to meet th
 
 We are using [Less](http://lesscss.org/) as the development language for styling. A set of less variables are defined for each design aspect that can be customized to your needs.
 
-- [Default Variables](https://github.com/choerodon/choerodon-ui/blob/master/components/style/themes/default.less)
+- [Default Variables](https://github.com/open-hand/choerodon-ui/blob/master/components/style/themes/default.less)
 
 Please report an issue if the existing list of variables is not enough for you.
 

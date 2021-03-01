@@ -2,7 +2,7 @@ import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler,
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import merge from 'lodash/merge';
@@ -301,10 +301,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     return getProPrefixCls(suffixCls!, prefixCls);
   }
 
+  @computed
   get lang(): Lang {
-    const { lang } = this.props;
+    const { lang } = this.observableProps;
     if (lang) {
-      return lang!;
+      return lang;
     }
     return localeContext.locale.lang;
   }
@@ -325,8 +326,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     };
   }
 
-  getObservableProps(_props, _context: any) {
-    return {};
+  getObservableProps(props, _context: any) {
+    return {
+      lang: props.lang,
+    };
   }
 
   @action

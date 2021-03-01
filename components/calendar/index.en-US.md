@@ -38,7 +38,7 @@ When data is in the form of dates, such as schedules, timetables, prices calenda
 | defaultValue | The date selected by default | [moment](http://momentjs.com/) | default date |
 | disabledDate | Function that specifies the dates that cannot be selected | (currentDate: moment) => boolean | - |
 | fullscreen | Whether to display in full-screen | boolean | `true` |
-| locale | The calendar's locale | object | [default](https://github.com/choerodon/choerodon-ui/blob/master/components/date-picker/locale/example.json) |
+| locale | The calendar's locale | object | [default](https://github.com/open-hand/choerodon-ui/blob/master/components/date-picker/locale/example.json) |
 | mode | The display mode of the calendar | `month` \| `year` | `month` |
 | monthCellRender | Customize the display of the month cell, the returned content will be appended to the cell | function(date: moment): ReactNode | - |
 | monthFullCellRender | Customize the display of the month cell, the returned content will override the cell | function(date: moment): ReactNode | - |
