@@ -919,7 +919,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (this.multiple) {
       const oldValues = this.getValues();
       if (values.length) {
-        this.setValue([...oldValues, ...values]);
+        this.setValue([...new Set([...oldValues, ...values])]);
       } else if (!oldValues.length) {
         this.setValue(this.emptyValue);
       }

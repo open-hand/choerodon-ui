@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableParityRow` property.
 - 🌟 `<pro>TreeSelect`: Added TreeSelect component.
 - 🌟 `<pro>Select`: Added `selectAllButton` property.
 - 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
@@ -26,7 +27,6 @@ timeline: true
 - 🌟 `<pro>Tree`: Added `async` attribute to simplify asynchronous loading scheme.
 - 🌟 `<pro>Table`: Added `treeAsync` and `treeLoadData` properties to simplify the asynchronous loading scheme.
 - 🌟 `<pro>Table`: Added `parityRow` property.
-- 🌟 `configure`: Added `tableParityRow` property.
 - 💄 `<pro>Table`: Optimize performance and fix the problem that the editor cannot be displayed in virtual scrolling.
 - 💄 `<pro>DataSet`: Optimized performance.
 - 💄 `<pro>Trigger`: Optimized the performance.
@@ -39,9 +39,9 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the performance when row and column drag is not turned on.
 - 💄 `<pro>Table`: Optimized the performance of locking column synchronization row height during automatic row height.
 - 💄 `<pro>Table`: Extend the `highLightRow` property to support independent interaction of `focus` and `click`.
-- 🐞 `Collapse`: Extend the issue that `expandIconPosition` is invalid.
-- 🐞 `<pro>Table`: Fix the problem that the total height of the virtual scroll is incorrect when there are temporarily removed records.
-- 🐞 `<pro>Table`: Fix the problem that the select all button is invalid when the selected records are displayed in other pages.
+- 🐞 `Collapse`: Fixed the issue that `expandIconPosition` is invalid.
+- 🐞 `<pro>Table`: Fixed the problem that the total height of the virtual scroll is incorrect when there are temporarily removed records.
+- 🐞 `<pro>Table`: Fixed the problem that the select all button is invalid when the selected records are displayed in other pages.
 - 🐞 `<pro>Table`: Fixed the problem that the width of the last column cannot be adjusted.
 - 🐞 `<pro>Table`: Fixed the problem that the column width cannot be adjusted by dragging the column.
 - 🐞 `<pro>Table`: Fixed the multilingual problem of the filter bar.

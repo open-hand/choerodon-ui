@@ -855,20 +855,23 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   handleKeyDownFirstLast(e, menu: Menu, direction: number) {
     stopEvent(e);
-    const children = menu.getFlatInstanceArray();
-    const activeItem = children[direction < 0 ? 0 : children.length - 1];
-    if (activeItem) {
-      if (!this.editable || this.popup) {
-        updateActiveKey(menu, activeItem.props.eventKey);
-      }
-      if (!this.editable && !this.popup) {
-        this.choose(activeItem.props.value);
+    // TreeSelect event conflict
+    if (!menu.tree) {
+      const children = menu.getFlatInstanceArray();
+      const activeItem = children[direction < 0 ? 0 : children.length - 1];
+      if (activeItem) {
+        if (!this.editable || this.popup) {
+          updateActiveKey(menu, activeItem.props.eventKey);
+        }
+        if (!this.editable && !this.popup) {
+          this.choose(activeItem.props.value);
+        }
       }
     }
   }
 
   handleKeyDownPrevNext(e, menu: Menu, direction: number) {
-    if (!this.multiple && !this.editable) {
+    if (!this.multiple && !this.editable && !menu.tree) {
       const activeItem = menu.step(direction);
       if (activeItem) {
         updateActiveKey(menu, activeItem.props.eventKey);
