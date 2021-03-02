@@ -407,6 +407,7 @@ class App extends React.Component {
         autoMaxWidth={true}
         header="User"
         style={{ height: 200 }}
+        rowNumber
         virtual
         parityRow
       >

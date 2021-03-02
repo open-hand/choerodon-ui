@@ -26,7 +26,7 @@ timeline: true
 - 🌟 `<pro>LocaleContext`: 新增 setNumberFormatLanguage 方法。
 - 🌟 `<pro>Tree`: 新增 async 属性，简化异步加载方案。
 - 🌟 `<pro>Table`: 新增 treeAsync 和 treeLoadData 属性，简化异步加载方案。
-- 🌟 `<pro>Table`: 新增 parityRow 属性。
+- 🌟 `<pro>Table`: 新增 parityRow 和 rowNumber 属性。
 - 💄 `<pro>Table`: 优化性能，修复虚拟滚动无法显示编辑器的问题。
 - 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。
