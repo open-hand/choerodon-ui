@@ -1,7 +1,9 @@
 export const enum DataSetEvents {
   query = 'query',
   beforeLoad = 'beforeLoad',
+  beforeAppend = 'beforeAppend',
   load = 'load',
+  append = 'append',
   loadFailed = 'loadFailed',
   submit = 'submit',
   submitSuccess = 'submitSuccess',

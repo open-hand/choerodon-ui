@@ -187,7 +187,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       this.matchRecordBySearch,
       text,
     );
-    if (!treeData.length) {
+    if (!treeData || !treeData.length) {
       return (
         <div className={menuPrefixCls}>
           <div className={`${menuPrefixCls}-item ${menuPrefixCls}-item-disabled`}>

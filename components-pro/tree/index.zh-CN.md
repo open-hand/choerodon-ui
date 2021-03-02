@@ -22,6 +22,7 @@ subtitle: 树形控件
 | defaultCheckedKeys | 默认选中复选框的树节点当dataSet绑定checkField 时候忽略 | string[] | [] |
 | defaultSelectKeys | 默认选择节点当，默认绑定dataSet的 idField | string[] | [] |
 | onTreeNode | 对于 TreeNode 结点的属性覆盖 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
+| async | 异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
 
 ### TreeNodeRenderer Props
 

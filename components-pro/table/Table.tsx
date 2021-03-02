@@ -489,10 +489,18 @@ export interface TableProps extends DataSetComponentProps {
    * 是否开启关闭快捷键（只关闭新加组合快捷键）
    */
   keyboard?: boolean,
-  /*
+  /**
    * 筛选条属性配置
    */
   dynamicFilterBar?: DynamicFilterBarConfig,
+  /**
+   * 异步树
+   */
+  treeAsync?: boolean;
+  /**
+   * 树节点展开时，加载数据钩子
+   */
+  treeLoadData?: ({ record, dataSet }) => Promise<any>,
 }
 
 @observer

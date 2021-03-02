@@ -31,7 +31,7 @@ subtitle: 树形控件
 | draggable | 设置节点可拖拽（IE>8） | boolean | false |
 | expandedKeys | （受控）展开指定的树节点 | string\[] | \[] |
 | filterTreeNode | 按需筛选树节点（高亮），返回 true | function(node) | - |
-| loadData | 异步加载数据 | function(node) | - |
+| loadData | 异步加载数据 | (node) => Promise | - |
 | loadedKeys | （受控）已经加载的节点，需要配合 `loadData` 使用 | string\[] | \[] |
 | multiple | 支持点选多个节点（节点本身） | boolean | false |
 | selectable | 是否可选中 | boolean | true |

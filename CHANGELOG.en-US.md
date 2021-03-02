@@ -23,6 +23,8 @@ timeline: true
 - 🌟 `<pro>Table`: Added `HTML title` to the column header when the `tooltip` attribute exists in `column`.
 - 🌟 `<pro>AutoComplete`: Added `matcher` property.
 - 🌟 `<pro>LocaleContext`: Added `setNumberFormatLanguage` method.
+- 🌟 `<pro>Tree`: Added `async` attribute to simplify asynchronous loading scheme.
+- 🌟 `<pro>Table`: Added `treeAsync` and `treeLoadData` properties to simplify the asynchronous loading scheme.
 - 💄 `<pro>Table`: Optimize performance and fix the problem that the editor cannot be displayed in virtual scrolling.
 - 💄 `<pro>DataSet`: Optimized performance.
 - 💄 `<pro>Trigger`: Optimized the performance.
