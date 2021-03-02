@@ -406,6 +406,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   selectedHighLightRow?: boolean;
   /**
+   * 奇偶行
+   */
+  parityRow?: boolean;
+  /**
    * 可调整列宽
    */
   columnResizable?: boolean;
@@ -603,6 +607,7 @@ export default class Table extends DataSetComponent<TableProps> {
     filterBarPlaceholder: PropTypes.string,
     highLightRow: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([HighLightRowType.focus, HighLightRowType.click])]),
     selectedHighLightRow: PropTypes.bool,
+    parityRow: PropTypes.bool,
     autoMaxWidth: PropTypes.bool,
     /**
      * 设置drag框体位置
@@ -1105,10 +1110,11 @@ export default class Table extends DataSetComponent<TableProps> {
   getClassName(): string | undefined {
     const {
       prefixCls,
-      tableStore: { border, rowHeight },
+      tableStore: { border, rowHeight, parityRow },
     } = this;
     return super.getClassName(`${prefixCls}-scroll-position-left`, {
       [`${prefixCls}-bordered`]: border,
+      [`${prefixCls}-parity-row`]: parityRow,
       [`${prefixCls}-row-height-fixed`]: isNumber(rowHeight),
     });
   }
@@ -1675,7 +1681,7 @@ export default class Table extends DataSetComponent<TableProps> {
         tableHeadRef = node => (this.tableHeadWrap = node);
         tableFootRef = node => (this.tableFootWrap = node);
         tableBodyRef = node => (this.tableBodyWrap = node);
-      } else if (lock === 'right') {
+      } else if (lock === ColumnLock.right) {
         tableBodyRef = (node) => {
           this.fixedColumnsBodyRight = node;
           if (node) {

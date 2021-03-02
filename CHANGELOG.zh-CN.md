@@ -25,6 +25,8 @@ timeline: true
 - 🌟 `<pro>LocaleContext`: 新增 setNumberFormatLanguage 方法。
 - 🌟 `<pro>Tree`: 新增 async 属性，简化异步加载方案。
 - 🌟 `<pro>Table`: 新增 treeAsync 和 treeLoadData 属性，简化异步加载方案。
+- 🌟 `<pro>Table`: 新增 parityRow 属性。
+- 🌟 `configure`: 新增 tableParityRow 属性。
 - 💄 `<pro>Table`: 优化性能，修复虚拟滚动无法显示编辑器的问题。
 - 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。
@@ -38,6 +40,8 @@ timeline: true
 - 💄 `<pro>Table`: 扩展 highLightRow 属性支持 focus、click 独立交互。
 - 💄 `<pro>IntlField`: 优化 intl disabled 和 readOnly 的值展现形式。
 - 🐞 `Collapse`: 修复 expandIconPosition 无效问题。
+- 🐞 `<pro>Table`: 修复虚拟滚动在有临时移除的记录时总高度错误的问题。
+- 🐞 `<pro>Table`: 修复全选按钮在其他分页有选择记录显示时点击无效的问题。
 - 🐞 `<pro>Table`: 修复最后一列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复拖拽列无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复过滤条多语言问题。
