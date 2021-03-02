@@ -72,7 +72,8 @@ subtitle: 表格
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |
 | dynamicFilterBar | `queryBar`为`filterBar`时筛选条属性配置 | DynamicFilterBarConfig | |
 | treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | |
-| treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
+| treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | boolean |  |
+| rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

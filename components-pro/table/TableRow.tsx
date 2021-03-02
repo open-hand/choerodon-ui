@@ -256,7 +256,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       tableStore: { leafColumns, rightLeafColumns },
     } = this.context;
     const columnIndex =
-      lock === 'right' ? index + leafColumns.length - rightLeafColumns.length : index;
+      lock === ColumnLock.right ? index + leafColumns.length - rightLeafColumns.length : index;
     return (
       <TableCell
         key={getColumnKey(column)}

@@ -50,7 +50,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   get leafColumns(): ColumnProps[] {
     const { tableStore } = this.context;
     const { lock } = this.props;
-    if (lock === 'right') {
+    if (lock === ColumnLock.right) {
       return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
     }
     if (lock) {
