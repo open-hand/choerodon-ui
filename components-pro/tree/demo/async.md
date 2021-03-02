@@ -82,7 +82,7 @@ const App = () => {
           dataSet={dataSet}
           checkable
           treeNodeRenderer={nodeCover}
-          lazy
+          async
         />
       </Col>
       <Col span={12}>

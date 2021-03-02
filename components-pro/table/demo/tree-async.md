@@ -2,7 +2,7 @@
 order: 12
 title:
   zh-CN: 树形数据异步懒加载
-  en-US: Tree Data
+  en-US: Asynchronous lazy loading Tree Data
 ---
 
 ## zh-CN
@@ -15,9 +15,7 @@ Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.
 
 ```jsx
 import { DataSet, Table, Button, Icon, Row, Col } from 'choerodon-ui/pro';
-import { observer } from 'mobx-react';
 import axios from 'axios';
-import classNames from 'classnames';
 
 const { Column } = Table;
 
