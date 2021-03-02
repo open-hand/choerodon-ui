@@ -104,7 +104,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
       }
       return true;
     };
-    if (lock === 'right') {
+    if (lock === ColumnLock.right) {
       return tableStore.rightLeafColumns.filter(filterDrag).filter(({ hidden }) => !hidden);
     }
     if (lock) {
