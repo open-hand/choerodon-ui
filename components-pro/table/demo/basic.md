@@ -408,6 +408,7 @@ class App extends React.Component {
         header="User"
         style={{ height: 200 }}
         virtual
+        parityRow
       >
         <Column
           name="userid"

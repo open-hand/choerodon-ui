@@ -96,6 +96,7 @@ export type Config = {
   queryBar?: TableQueryBarType | TableQueryBarHook;
   tableBorder?: boolean;
   tableHighLightRow?: boolean;
+  tableParityRow?: boolean;
   tableSelectedHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;
   tableColumnResizable?: boolean;

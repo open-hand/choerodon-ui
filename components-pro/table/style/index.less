@@ -64,6 +64,7 @@
 
       &-edit {
         background-color: transparent;
+
         input {
           font-weight: 700;
           border-color: transparent;
@@ -109,6 +110,7 @@
     position: relative;
     color: @heading-color;
     background-color: @table-header-bg;
+
     &:last-child {
       border-right: none;
     }
@@ -118,6 +120,7 @@
   &-bordered &-thead &-cell-editor:hover {
     border-color: @table-editable-cell-border-color;
     cursor: text;
+
     .icon {
       cursor: pointer;
     }
@@ -205,9 +208,11 @@
 
   &-export-quantity {
     margin-top: .1rem;
+
     span {
       line-height: .3rem
     }
+
     .@{c7n-prefix}-col-18 {
       text-align: right;
     }
@@ -304,8 +309,8 @@
     }
 
     &:not(.@{table-prefix-cls}-scroll-position-left)
-      .@{table-prefix-cls}-fixed-left
-      .@{table-prefix-cls}-cell:last-child {
+    .@{table-prefix-cls}-fixed-left
+    .@{table-prefix-cls}-cell:last-child {
       border-right: none;
     }
 
@@ -324,7 +329,7 @@
     &:not(.@{table-prefix-cls}-scroll-position-right)
     .@{table-prefix-cls}-body
     .@{table-prefix-cls}-cell:last-child {
-      border-left:  @table-border;
+      border-left: @table-border;
     }
   }
 
@@ -369,13 +374,17 @@
     transform: translateX(-50%);
   }
 
+  &-parity-row &-row:nth-child(even) {
+    background-color: @table-even-row-bg;
+  }
+
   &-expanded-row > td {
     background-color: @table-expanded-row-bg;
     border-bottom: @table-border;
   }
 
-  &-row-mouse-batch-choose{
-    background: @table-mouse-batch-choose-bg;
+  &-row-mouse-batch-choose {
+    background-color: @table-mouse-batch-choose-bg;
   }
 
   &-row-highlight&-row:hover,
@@ -560,7 +569,7 @@
         width: 0.01rem;
         height: 0.12rem;
         margin-top: 0.1rem;
-        background: rgba(87,102,121,0.40);
+        background: rgba(87, 102, 121, 0.40);
       }
     }
   }
@@ -622,20 +631,22 @@
   }
 
   &-dynamic-filter-bar {
-    input::-webkit-input-placeholder{   // 谷歌
+    input::-webkit-input-placeholder { // 谷歌
       color: #6A6A6A;
     }
 
-    input:-moz-placeholder{   //火狐
+    input:-moz-placeholder { //火狐
       color: #6A6A6A;
     }
 
-    input::-moz-placeholder{
+    input::-moz-placeholder {
       color: #6A6A6A;
     }
-    input:-ms-input-placeholder{   //微软
+
+    input:-ms-input-placeholder { //微软
       color: #6A6A6A;
     }
+
     .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
       color: #6A6A6A;
     }
@@ -807,20 +818,22 @@
     font-size: 0.12rem;
 
     &-label {
-      input::-webkit-input-placeholder{   // 谷歌
+      input::-webkit-input-placeholder { // 谷歌
         color: transparent;
       }
 
-      input:-moz-placeholder{   //火狐
+      input:-moz-placeholder { //火狐
         color: transparent;
       }
 
-      input::-moz-placeholder{
+      input::-moz-placeholder {
         color: transparent;
       }
-      input:-ms-input-placeholder{   //微软
+
+      input:-ms-input-placeholder { //微软
         color: transparent;
       }
+
       .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
         color: transparent;
       }
@@ -878,24 +891,24 @@
       &-required {
         background-color: #fff;
 
-        & > label::before{   // 谷歌
+        & > label::before { // 谷歌
           display: inline-block;
           width: .08rem;
           margin-left: .04rem;
           color: #d50000;
-          font-family: SimSun,sans-serif;
+          font-family: SimSun, sans-serif;
           //line-height: 1;
           vertical-align: middle;
           content: "*";
         }
 
         .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
-          &::before{
+          &::before {
             display: inline-block;
             width: .08rem;
             margin-left: .04rem;
             color: #d50000;
-            font-family: SimSun,sans-serif;
+            font-family: SimSun, sans-serif;
             //line-height: 1;
             vertical-align: middle;
             content: "*";
@@ -904,26 +917,28 @@
       }
 
       &-multiple {
-        & > label::before{   // 谷歌
+        & > label::before { // 谷歌
           content: "";
         }
       }
 
       &-invalid {
-        input::-webkit-input-placeholder{   // 谷歌
+        input::-webkit-input-placeholder { // 谷歌
           color: @error-color;
         }
 
-        input:-moz-placeholder{   //火狐
+        input:-moz-placeholder { //火狐
           color: @error-color;
         }
 
-        input::-moz-placeholder{
+        input::-moz-placeholder {
           color: @error-color;
         }
-        input:-ms-input-placeholder{   //微软
+
+        input:-ms-input-placeholder { //微软
           color: @error-color;
         }
+
         .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
           color: @error-color;
         }

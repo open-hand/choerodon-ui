@@ -265,8 +265,8 @@ export default class TableStore {
 
   @computed
   get virtualHeight(): number {
-    const { rowHeight, dataSet } = this;
-    return Math.round(dataSet.length * Number(rowHeight));
+    const { rowHeight, data } = this;
+    return Math.round(data.length * Number(rowHeight));
   }
 
   @computed
@@ -396,6 +396,17 @@ export default class TableStore {
       return false;
     }
     return tableHighLightRow;
+  }
+
+  @computed
+  get parityRow(): boolean {
+    if ('parityRow' in this.props) {
+      return this.props.parityRow;
+    }
+    if (getConfig('tableParityRow') === true) {
+      return true;
+    }
+    return false;
   }
 
   @computed
@@ -694,26 +705,20 @@ export default class TableStore {
 
   @computed
   get indeterminate(): boolean {
-    const { dataSet, showCachedSeletion } = this;
+    const { dataSet } = this;
     if (dataSet) {
-      const { length } = dataSet.records.filter(record => record.selectable);
-      const selectedLength = showCachedSeletion
-        ? dataSet.selected.length
-        : dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength !== length;
+      const selectedLength = dataSet.currentSelected.length;
+      return !!selectedLength && selectedLength !== dataSet.records.filter(record => record.selectable).length;
     }
     return false;
   }
 
   @computed
   get allChecked(): boolean {
-    const { dataSet, showCachedSeletion } = this;
+    const { dataSet } = this;
     if (dataSet) {
-      const { length } = dataSet.records.filter(record => record.selectable);
-      const selectedLength = showCachedSeletion
-        ? dataSet.selected.length
-        : dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength === length;
+      const selectedLength = dataSet.currentSelected.length;
+      return !!selectedLength && selectedLength === dataSet.records.filter(record => record.selectable).length;
     }
     return false;
   }
