@@ -189,6 +189,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
       'triggerHiddenDelay',
       'onPopupHiddenChange',
       'getPopupContainer',
+      'extraFooterPlacement',
+      'renderExtraFooter',
+      'treeDefaultExpandedKeys',
+      'treeDefaultExpandAll',
     ]);
   }
 

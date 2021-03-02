@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 tableParityRow 全局属性。
 - 🌟 `<pro>TreeSelect`: 新增 TreeSelect 组件。
 - 🌟 `<pro>Select`: 新增 selectAllButton 属性。
 - 🌟 `<pro>SelectBox`:实现 optionsFilter searchable 属性。
@@ -26,7 +27,6 @@ timeline: true
 - 🌟 `<pro>Tree`: 新增 async 属性，简化异步加载方案。
 - 🌟 `<pro>Table`: 新增 treeAsync 和 treeLoadData 属性，简化异步加载方案。
 - 🌟 `<pro>Table`: 新增 parityRow 属性。
-- 🌟 `configure`: 新增 tableParityRow 属性。
 - 💄 `<pro>Table`: 优化性能，修复虚拟滚动无法显示编辑器的问题。
 - 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。
