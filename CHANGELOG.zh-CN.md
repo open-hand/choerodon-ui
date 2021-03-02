@@ -9,11 +9,15 @@ timeline: true
 
 #### 发布周期
 
-- 修订版本号：每周末会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
-- 次版本号：每月发布一个带有新特性的向下兼容的版本。
+- 修订版本号：日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
+- 次版本号：发布一个带有新特性的向下兼容的版本。
 - 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+
+## 1.1.0
+
+`2021-03-02`
 
 - 🌟 `configure`: 新增 tableParityRow 全局属性。
 - 🌟 `<pro>TreeSelect`: 新增 TreeSelect 组件。
@@ -27,6 +31,7 @@ timeline: true
 - 🌟 `<pro>Tree`: 新增 async 属性，简化异步加载方案。
 - 🌟 `<pro>Table`: 新增 treeAsync 和 treeLoadData 属性，简化异步加载方案。
 - 🌟 `<pro>Table`: 新增 parityRow 和 rowNumber 属性。
+- 💄 优化 TS 枚举类型导出。
 - 💄 `<pro>Table`: 优化性能，修复虚拟滚动无法显示编辑器的问题。
 - 💄 `<pro>DataSet`: 优化性能。
 - 💄 `<pro>Trigger`: 优化性能。
