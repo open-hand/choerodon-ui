@@ -1,18 +1,18 @@
-export const enum Action {
+export enum Action {
   click = 'click',
   focus = 'focus',
   hover = 'hover',
   contextMenu = 'contextMenu',
 }
 
-export const enum ShowAction {
+export enum ShowAction {
   click = 'click',
   focus = 'focus',
   mouseEnter = 'mouseEnter',
   contextMenu = 'contextMenu',
 }
 
-export const enum HideAction {
+export enum HideAction {
   click = 'click',
   blur = 'blur',
   mouseLeave = 'mouseLeave',

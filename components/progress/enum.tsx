@@ -1,18 +1,18 @@
-export const enum ProgressType {
+export enum ProgressType {
   line = 'line',
   circle = 'circle',
   dashboard = 'dashboard',
   loading = 'loading',
 }
 
-export const enum ProgressStatus {
+export enum ProgressStatus {
   normal = 'normal',
   success = 'success',
   active = 'active',
   exception = 'exception',
 }
 
-export const enum ProgressPosition {
+export enum ProgressPosition {
   top = 'top',
   bottom = 'bottom',
   left = 'left',

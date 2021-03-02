@@ -1,4 +1,4 @@
-export const enum ResizeType {
+export enum ResizeType {
   both = 'both',
   vertical = 'vertical',
   horizontal = 'horizontal',

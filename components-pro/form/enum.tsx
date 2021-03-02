@@ -1,10 +1,10 @@
-export const enum LabelAlign {
+export enum LabelAlign {
   left = 'left',
   center = 'center',
   right = 'right',
 }
 
-export const enum LabelLayout {
+export enum LabelLayout {
   horizontal = 'horizontal',
   vertical = 'vertical',
   placeholder = 'placeholder',
@@ -12,7 +12,7 @@ export const enum LabelLayout {
   none = 'none',
 }
 
-export const enum ResponsiveKeys {
+export enum ResponsiveKeys {
   xs = 'xs',
   sm = 'sm',
   md = 'md',

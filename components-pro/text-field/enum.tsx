@@ -1,11 +1,11 @@
-export const enum GroupItemCategory {
+export enum GroupItemCategory {
   before = 'before',
   after = 'after',
   help = 'help',
   input = 'input',
 }
 
-export const enum ValueChangeAction {
+export enum ValueChangeAction {
   blur = 'blur',
   input = 'input',
 }

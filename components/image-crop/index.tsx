@@ -12,7 +12,7 @@ import Upload from '../upload';
 import AvatarUploader from './avatarUpload';
 import { imageCrop } from '../locale-provider'
 
-// ssr 
+// ssr
 if (typeof window !== 'undefined') {
     // 兼容ie11 remove 方法
     (function (arr) {
@@ -77,7 +77,7 @@ const MIN_ROTATE = 0;
 const MAX_ROTATE = 360;
 const ROTATE_STEP = 1;
 
-export const enum shapeCroper {
+export enum shapeCroper {
     rect = 'rect',
     round = 'round',
 }

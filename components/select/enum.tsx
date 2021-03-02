@@ -1,4 +1,4 @@
-export const enum SelectMode {
+export enum SelectMode {
   default = 'default',
   multiple = 'multiple',
   tags = 'tags',

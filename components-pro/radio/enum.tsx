@@ -1,4 +1,4 @@
-export const enum ViewMode {
+export enum ViewMode {
   box = 'box',
   button = 'button',
 }

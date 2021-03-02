@@ -1,4 +1,4 @@
-export const enum ViewMode {
+export enum ViewMode {
   time = 'time',
   dateTime = 'dateTime',
   week = 'week',
@@ -8,7 +8,7 @@ export const enum ViewMode {
   decade = 'decade',
 }
 
-export const enum TimeUnit {
+export enum TimeUnit {
   'hour' = 'h',
   'minute' = 'm',
   'second' = 's',
