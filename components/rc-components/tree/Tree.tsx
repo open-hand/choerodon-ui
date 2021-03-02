@@ -1123,7 +1123,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
     const { activeKey, expandedKeys, checkedKeys } = this.state;
-    const { onKeyDown, checkable, selectable } = this.props;
+    const { onKeyDown, checkable, selectable, loadData } = this.props;
 
     // >>>>>>>>>> Direction
     switch (event.which) {
@@ -1144,9 +1144,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
     const activeItem = this.getActiveItem();
     if (activeItem && activeItem.data) {
       const treeNodeRequiredProps = this.getTreeNodeRequiredProps();
-
       const expandable =
-        activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length;
+        activeItem.data.isLeaf === false || !!(activeItem.data.children || []).length || loadData;
       const eventNode = convertNodePropsToEventData({
         ...getTreeNodeProps(activeKey!, treeNodeRequiredProps as TreeNodeRequiredProps),
         data: activeItem.data,

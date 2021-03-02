@@ -48,6 +48,7 @@ export interface TreeProps extends C7NTreeProps {
    * @deprecated
    */
   treeNodeRenderer?: TreeNodeRenderer;
+  async?: boolean;
 }
 
 export function defaultRenderer({ text }) {
@@ -344,7 +345,8 @@ export default class Tree extends Component<TreeProps> {
     return true;
   }
 
-  handleExpand = (expandedKeys: string[], eventObj: C7nTreeNodeExpandedEvent) => {
+  @autobind
+  handleExpand(expandedKeys: string[], eventObj: C7nTreeNodeExpandedEvent) {
     if (this.setExpand(eventObj)) {
       runInAction(() => {
         this.stateExpandedKeys = expandedKeys;
@@ -353,9 +355,10 @@ export default class Tree extends Component<TreeProps> {
     const { onExpand = noop } = this.props;
     // @ts-ignore
     onExpand(expandedKeys, eventObj);
-  };
+  }
 
-  handleCheck = (checkedKeys: string[], eventObj: TreeNodeCheckedEvent) => {
+  @autobind
+  handleCheck(checkedKeys: string[], eventObj: TreeNodeCheckedEvent) {
     if (this.setCheck(eventObj)) {
       runInAction(() => {
         this.stateCheckedKeys = checkedKeys;
@@ -363,9 +366,10 @@ export default class Tree extends Component<TreeProps> {
     }
     const { onCheck = noop } = this.props;
     onCheck(checkedKeys, eventObj);
-  };
+  }
 
-  handleSelect = (selectedKeys: string[], eventObj: C7nTreeNodeSelectedEvent) => {
+  @autobind
+  handleSelect(selectedKeys: string[], eventObj: C7nTreeNodeSelectedEvent) {
     const { dataSet, onSelect = noop } = this.props;
     if (dataSet) {
       const { idField } = dataSet.props;
@@ -383,10 +387,28 @@ export default class Tree extends Component<TreeProps> {
       }
       onSelect(selectedKeys, eventObj);
     }
-  };
+  }
+
+  @autobind
+  handleLoadData(event): Promise<any> {
+    const { dataSet, loadData } = this.props;
+    const promises: Promise<any>[] = [];
+    if (dataSet) {
+      const { idField, parentField } = dataSet.props;
+      const { record } = event.props;
+      if (idField && parentField && record && !record.children) {
+        const id = record.get(idField);
+        promises.push(dataSet.queryMore(-1, { [parentField]: id }));
+      }
+    }
+    if (loadData) {
+      promises.push(loadData(event));
+    }
+    return Promise.all(promises);
+  }
 
   render() {
-    const { dataSet, renderer = defaultRenderer, titleField, treeNodeRenderer, onTreeNode, loadData, ...otherProps } = this.props;
+    const { dataSet, renderer = defaultRenderer, titleField, treeNodeRenderer, onTreeNode, loadData, async, ...otherProps } = this.props;
     if (dataSet) {
       const { defaultExpandAll } = otherProps;
       const props: TreeProps = {};
@@ -397,17 +419,21 @@ export default class Tree extends Component<TreeProps> {
         renderer,
         // @ts-ignore
         onTreeNode || treeNodeRenderer || defaultNodeCover,
-        loadData,
+        async || !!loadData,
         titleField,
         defaultExpandAll,
-      );
+      ) || [];
       // @ts-ignore
       props.onExpand = this.handleExpand;
       // @ts-ignore
       props.onCheck = this.handleCheck;
       // @ts-ignore
       props.onSelect = this.handleSelect;
-      props.loadData = loadData;
+      if (async) {
+        props.loadData = this.handleLoadData;
+      } else {
+        props.loadData = loadData;
+      }
       props.expandedKeys = this.expandedKeys.slice();
       if (!('checkedKeys' in otherProps)) {
         props.checkedKeys = this.checkedKeys.slice();

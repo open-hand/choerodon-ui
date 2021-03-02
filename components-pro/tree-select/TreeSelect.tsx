@@ -18,6 +18,8 @@ export interface TreeSelectProps extends SelectProps {
   treeCheckable?: boolean;
   treeDefaultExpandAll?: boolean;
   treeDefaultExpandedKeys?: Key[];
+  async?: boolean;
+  loadData?: (node) => Promise<any>
 }
 
 @observer
@@ -151,6 +153,25 @@ export default class TreeSelect extends Select<TreeSelectProps> {
   }
 
   @autobind
+  handleLoadData(event): Promise<any> {
+    const { loadData } = this.props;
+    const dataSet = this.options;
+    const promises: Promise<any>[] = [];
+    if (dataSet) {
+      const { idField, parentField } = dataSet.props;
+      const { record } = event.props;
+      if (idField && parentField && record && !record.children) {
+        const id = record.get(idField);
+        promises.push(dataSet.queryMore(-1, { [parentField]: id }));
+      }
+    }
+    if (loadData) {
+      promises.push(loadData(event));
+    }
+    return Promise.all(promises);
+  }
+
+  @autobind
   getMenu(menuProps: object = {}): ReactNode {
     const {
       options,
@@ -166,6 +187,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       props: {
         dropdownMenuStyle, optionRenderer = defaultRenderer, optionsFilter,
         treeDefaultExpandAll, treeDefaultExpandedKeys, treeCheckable,
+        async, loadData,
       },
     } = this;
     const menuDisabled = this.isDisabled();
@@ -180,14 +202,14 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       optionRenderer,
       // @ts-ignore
       this.handleTreeNode,
-      undefined,
+      async || !!loadData,
       textField,
       treeDefaultExpandAll,
       optionsFilter,
       this.matchRecordBySearch,
       text,
     );
-    if (!treeData.length) {
+    if (!treeData || !treeData.length) {
       return (
         <div className={menuPrefixCls}>
           <div className={`${menuPrefixCls}-item ${menuPrefixCls}-item-disabled`}>
@@ -219,6 +241,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         checkable={'treeCheckable' in this.props ? treeCheckable : multiple}
         className={menuPrefixCls}
         multiple={multiple}
+        loadData={async ? this.handleLoadData : loadData}
         {...props}
         {...menuProps}
       />

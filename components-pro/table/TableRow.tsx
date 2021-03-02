@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { action, computed, get, remove, set } from 'mobx';
 import classNames from 'classnames';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
+import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import omit from 'lodash/omit';
@@ -20,6 +21,7 @@ import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
 import { RecordStatus } from '../data-set/enum';
 import ResizeObservedRow from './ResizeObservedRow';
+import Spin from '../spin';
 
 export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -60,14 +62,32 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @computed
   get expandable(): boolean {
-    const {
-      tableStore: {
-        isTree,
-        props: { expandedRowRenderer },
-      },
-    } = this.context;
+    const { tableStore } = this.context;
     const { record } = this.props;
-    return !!expandedRowRenderer || (isTree && !!record.children);
+    const { isLeaf } = this.rowExternalProps;
+    const {
+      props: { expandedRowRenderer },
+      isTree,
+      canTreeLoadData,
+    } = tableStore;
+    if (isLeaf === true) {
+      return false;
+    }
+    return !!expandedRowRenderer || (isTree && (!!record.children || (canTreeLoadData && !this.isLoaded)));
+  }
+
+  @computed
+  get isLoading(): boolean {
+    const { tableStore } = this.context;
+    const { record } = this.props;
+    return tableStore.isRowPending(record);
+  }
+
+  @computed
+  get isLoaded(): boolean {
+    const { tableStore } = this.context;
+    const { record } = this.props;
+    return tableStore.isRowLoaded(record);
   }
 
   @computed
@@ -324,6 +344,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         cell.focus();
       }
     }
+    this.syncLoadData();
   }
 
   componentDidUpdate() {
@@ -331,6 +352,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (record.isCurrent) {
       this.focusRow(this.node);
     }
+    this.syncLoadData();
   }
 
   @action
@@ -366,9 +388,28 @@ export default class TableRow extends Component<TableRowProps, any> {
     );
   }
 
+  syncLoadData() {
+    if (this.isLoading) return;
+    const { record } = this.props;
+    const {
+      tableStore,
+    } = this.context;
+    const { isExpanded, isLoaded, expandable } = this;
+    const {
+      canTreeLoadData,
+    } = tableStore;
+
+    if (canTreeLoadData && isExpanded && expandable) {
+      if (!record.children && !isLoaded) {
+        tableStore.onTreeNodeLoad({ record });
+      }
+    }
+  }
+
   renderExpandIcon() {
     const { prefixCls, record } = this.props;
     const {
+      tableStore,
       tableStore: { expandIcon },
     } = this.context;
     const { isExpanded: expanded, expandable, handleExpandChange } = this;
@@ -381,6 +422,9 @@ export default class TableRow extends Component<TableRowProps, any> {
         record,
         onExpand: handleExpandChange,
       });
+    }
+    if (tableStore.isRowPending(record)) {
+      return <Spin size={Size.small} />;
     }
     return (
       <ExpandIcon
@@ -471,7 +515,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     } = this.context;
     const { key, id } = record;
     const rowExternalProps: any = {
-      ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}),
+      ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
       ...(typeof onRow === 'function'
         ? onRow({
           dataSet: record.dataSet!,

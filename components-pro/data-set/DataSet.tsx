@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { action, computed, get, IReactionDisposer, isArrayLike, observable, runInAction, set, toJS } from 'mobx';
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import unionBy from 'lodash/unionBy';
 import omit from 'lodash/omit';
 import flatMap from 'lodash/flatMap';
 import isNumber from 'lodash/isNumber';
@@ -61,6 +62,15 @@ function getSpliceRecord(records: Record[], inserts: Record[], fromRecord?: Reco
     }
     return fromRecord;
   }
+}
+
+// bugs in react native
+function fixAxiosConfig(config: AxiosRequestConfig): AxiosRequestConfig {
+  const { method } = config;
+  if (method && method.toLowerCase() === 'get') {
+    delete config.data;
+  }
+  return config;
 }
 
 export type DataSetChildren = { [key: string]: DataSet };
@@ -583,13 +593,7 @@ export default class DataSet extends EventManager {
       if (index !== -1) {
         if (this.paging === 'server') {
           const currentParent = findRootParent(current);
-          let parentIndex = -1;
-          this.treeData.forEach((item, indexTree) => {
-            if (this.indexOf(item) === this.indexOf(currentParent)) {
-              parentIndex = indexTree;
-            }
-          });
-          return parentIndex;
+          return this.treeData.findIndex((item) => item.index === currentParent.index);
         }
         return index + (currentPage - 1) * pageSize;
       }
@@ -850,9 +854,25 @@ export default class DataSet extends EventManager {
     return this.pending.add(this.doQuery(page, params));
   }
 
+  /**
+   * 查询更多记录，查询到的结果会拼接到原有数据之后
+   * @param page 页码
+   * @param params 查询参数
+   * @return Promise
+   */
+  queryMore(page?: number, params?: object): Promise<any> {
+    return this.pending.add(this.doQueryMore(page, params));
+  }
+
   async doQuery(page, params?: object): Promise<any> {
     const data = await this.read(page, params);
     this.loadDataFromResponse(data);
+    return data;
+  }
+
+  async doQueryMore(page, params?: object): Promise<any> {
+    const data = await this.read(page, params);
+    this.appendDataFromResponse(data);
     return data;
   }
 
@@ -1602,7 +1622,7 @@ export default class DataSet extends EventManager {
    */
   getGroups(): string[] {
     return [...this.fields.entries()]
-      .reduce((arr: string[], [name, field]) => {
+      .reduce<string[]>((arr, [name, field]) => {
         const group = field.get('group');
         if (isNumber(group)) {
           arr[group as number] = name;
@@ -1748,6 +1768,21 @@ Then the query method will be auto invoke.`,
     } else {
       this.queryParameter[para] = value;
     }
+  }
+
+  @action
+  appendData(allData: (object | Record)[] = []): DataSet {
+    const {
+      paging,
+      pageSize,
+    } = this;
+    allData = paging ? allData.slice(0, pageSize) : allData;
+    this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: allData });
+    const appendData = this.processData(allData);
+    this.originalData = unionBy(this.originalData, appendData, 'key');
+    this.records = unionBy(this.records, appendData, 'key');
+    this.fireEvent(DataSetEvents.append, { dataSet: this });
+    return this;
   }
 
   @action
@@ -1918,6 +1953,16 @@ Then the query method will be auto invoke.`,
     return this;
   }
 
+  private appendDataFromResponse(resp: any): DataSet {
+    if (resp) {
+      const { dataKey } = this;
+      const data: object[] = generateResponseData(resp, dataKey);
+      this.appendData(data);
+    }
+    return this;
+
+  }
+
   // private groupData(allData: object[]): object[] {
   //   return this.getGroups().reverse()
   //     .reduce((arr, name) => arr.sort(
@@ -1971,9 +2016,11 @@ Then the query method will be auto invoke.`,
             data: newConfig.data,
           });
           if (queryEventResult) {
-            const result = await this.axios(newConfig);
+            const result = await this.axios(fixAxiosConfig(newConfig));
             runInAction(() => {
-              this.currentPage = page;
+              if (page >= 0) {
+                this.currentPage = page;
+              }
             });
             return this.handleLoadSuccess(result);
           }
@@ -2189,16 +2236,18 @@ Then the query method will be auto invoke.`,
 
   /**
    * page相关请求设置
-   * @param page 在那个页面
+   * @param page 在那个页面, 小于0时不分页
    * @param pageSizeInner 页面大小
    */
-  private generatePageQueryString(page: number, pageSizeInner?: number) {
-    const { paging, pageSize } = this;
-    if (isNumber(pageSizeInner)) {
-      return { page, pagesize: pageSizeInner };
-    }
-    if (paging === true || paging === 'server') {
-      return { page, pagesize: pageSize };
+  private generatePageQueryString(page: number, pageSizeInner?: number): { page?: number, pagesize?: number | undefined } {
+    if (page >= 0) {
+      const { paging, pageSize } = this;
+      if (isNumber(pageSizeInner)) {
+        return { page, pagesize: pageSizeInner };
+      }
+      if (paging === true || paging === 'server') {
+        return { page, pagesize: pageSize };
+      }
     }
     return {};
   }
@@ -2221,7 +2270,7 @@ Then the query method will be auto invoke.`,
 
   /**
    * 返回configure 配置的值
-   * @param page 在那个页面
+   * @param page 在那个页面, 小于0时不分页
    * @param pageSizeInner 页面大小
    */
   private generateQueryString(page: number, pageSizeInner?: number) {

@@ -29,6 +29,10 @@ export const DRAG_KEY = '__drag-column__';
 
 export const EXPAND_KEY = '__expand-column__';
 
+export const PENDING_KEY = '__pending__';
+
+export const LOADED_KEY = '__loaded__';
+
 export type HeaderText = { name: string; label: string; };
 
 export const getIdList = (startId: number, endId: number) => {
@@ -849,6 +853,25 @@ export default class TableStore {
     if (onExpand && !disHandler) {
       onExpand(expanded, record);
     }
+    if (expanded && this.canTreeLoadData) {
+      this.onTreeNodeLoad({ record });
+    }
+  }
+
+  isRowPending(record: Record): boolean {
+    return record.getState(PENDING_KEY) === true;
+  }
+
+  setRowPending(record: Record, pending: boolean) {
+    record.setState(PENDING_KEY, pending);
+  }
+
+  isRowLoaded(record: Record): boolean {
+    return record.getState(LOADED_KEY) === true;
+  }
+
+  setRowLoaded(record: Record, pending: boolean) {
+    record.setState(LOADED_KEY, pending);
   }
 
   isRowHover(record: Record): boolean {
@@ -862,6 +885,12 @@ export default class TableStore {
   @action
   setRowClicked(record: Record, click: boolean) {
     this.clickRow = click ? record : undefined;
+  }
+
+  @computed
+  get canTreeLoadData(): boolean {
+    const { treeLoadData, treeAsync } = this.props;
+    return treeAsync || !!treeLoadData;
   }
 
   @computed
@@ -900,6 +929,29 @@ export default class TableStore {
     this.dataSet.records.forEach(record => this.setRowExpanded(record, false));
     this.expandedRows = [];
     this.inBatchExpansion = false;
+  }
+
+  @autobind
+  async onTreeNodeLoad({ record }: { record: Record }): Promise<any> {
+    const { dataSet, treeLoadData, treeAsync } = this.props;
+    const promises: Promise<any>[] = [];
+    this.setRowPending(record, true);
+    if (treeAsync && dataSet) {
+      const { idField, parentField } = dataSet.props;
+      if (idField && parentField && record && !record.children) {
+        const id = record.get(idField);
+        promises.push(dataSet.queryMore(-1, { [parentField]: id }));
+      }
+    }
+    if (treeLoadData) {
+      promises.push(treeLoadData({ record, dataSet }));
+    }
+    try {
+      await Promise.all(promises);
+      this.setRowLoaded(record, true);
+    } finally {
+      this.setRowPending(record, false);
+    }
   }
 
   private getLeafColumns(columns: ColumnProps[]): ColumnProps[] {

@@ -1,5 +1,5 @@
 import React, { Key, ReactNode } from 'react';
-import { EventDataNode, TreeNodeProps } from 'choerodon-ui/lib/tree';
+import { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import Record from '../data-set/Record';
 import DataSet from '../data-set/DataSet';
 
@@ -56,12 +56,12 @@ export function getKey(record, idField) {
   return String(idField ? record.get(idField) : record.key);
 }
 
-function getTreeNode(record, children, idField, text, treeNodeProps, loadData, filterText): DataNode {
+function getTreeNode(record, children, idField, text, treeNodeProps, async, filterText): DataNode {
   const key = getKey(record, idField);
   return (
     {
       title: text,
-      isLeaf: !loadData && (filterText ? (!children || !children.length) : !record.children || !record.children.length),
+      isLeaf: async ? undefined : (filterText ? (!children || !children.length) : !record.children || !record.children.length),
       children,
       record,
       ...record.get('__treeNodeProps'),
@@ -75,11 +75,11 @@ function getTreeNode(record, children, idField, text, treeNodeProps, loadData, f
 
 export function getTreeNodes(
   dataSet: DataSet,
-  records: Record[] = [],
+  records: Record[] | undefined,
   forceRenderKeys: Key[],
   renderer: NodeRenderer,
   onTreeNode: TreeNodeRenderer,
-  loadData?: (treeNode: EventDataNode) => Promise<void>,
+  async?: boolean,
   titleField?: string,
   defaultExpandAll?: boolean,
   optionsFilter?: (record: Record, index: number, array: Record[]) => boolean,
@@ -87,31 +87,34 @@ export function getTreeNodes(
   filterText?: string,
 ) {
   const { idField } = dataSet.props;
-  return records.reduce<DataNode[]>((array, record, index) => {
-    if (record.status !== 'delete') {
-      const children =
-        defaultExpandAll || forceRenderKeys.indexOf(getKey(record, idField)) !== -1 || filterText
-          ? getTreeNodes(dataSet, record.children, forceRenderKeys, renderer, onTreeNode, loadData, titleField, defaultExpandAll, optionsFilter, searchMatcher, filterText)
-          : null;
-      if (!searchMatcher || !filterText || (children && children.length) || searchMatcher(record, filterText)) {
-        if ((!optionsFilter || optionsFilter(record, index, records))) {
-          const node = getTreeNode(
-            record,
-            children,
-            idField,
-            renderer({ dataSet, record, text: record.get(titleField) }),
-            onTreeNode({ dataSet, record }),
-            loadData,
-            filterText,
-          );
-          if (node) {
-            array.push(node);
+  if (records) {
+    return records.reduce<DataNode[]>((array, record, index) => {
+      if (record.status !== 'delete') {
+        const children =
+          defaultExpandAll || forceRenderKeys.indexOf(getKey(record, idField)) !== -1 || filterText
+            ? getTreeNodes(dataSet, record.children, forceRenderKeys, renderer, onTreeNode, async, titleField, defaultExpandAll, optionsFilter, searchMatcher, filterText)
+            : null;
+        if (!searchMatcher || !filterText || (children && children.length) || searchMatcher(record, filterText)) {
+          if ((!optionsFilter || optionsFilter(record, index, records))) {
+            const node = getTreeNode(
+              record,
+              children,
+              idField,
+              renderer({ dataSet, record, text: record.get(titleField) }),
+              onTreeNode({ dataSet, record }),
+              async,
+              filterText,
+            );
+            if (node) {
+              array.push(node);
+            }
+          } else if (children) {
+            array.push(...children);
           }
-        } else if (children) {
-          array.push(...children);
         }
       }
-    }
-    return array;
-  }, []);
+      return array;
+    }, []);
+  }
+  return null;
 }

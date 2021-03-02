@@ -30,7 +30,7 @@ Almost anything can be represented in a tree structure. Examples include directo
 | draggable | Specifies whether this Tree is draggable (IE > 8) | boolean | false |
 | expandedKeys | (Controlled) Specifies the keys of the expanded treeNodes | string\[] | \[] |
 | filterTreeNode | Defines a function to filter (highlight) treeNodes. When the function returns `true`, the corresponding treeNode will be highlighted | function(node) | - |
-| loadData | Load data asynchronously | function(node) | - |
+| loadData | Load data asynchronously | (node) => Promise | - |
 | loadedKeys | (Controlled) Set loaded tree nodes. Need work with `loadData` | string\[] | \[] |
 | multiple | Allows selecting multiple treeNodes | boolean | false |
 | selectable | whether can be selected | boolean | true |
