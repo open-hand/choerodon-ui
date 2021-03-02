@@ -505,6 +505,10 @@ export interface TableProps extends DataSetComponentProps {
    * 树节点展开时，加载数据钩子
    */
   treeLoadData?: ({ record, dataSet }) => Promise<any>,
+  /**
+   * 显示行号
+   */
+  rowNumber?: boolean | ((number: string, numberPath: number[]) => ReactNode);
 }
 
 @observer

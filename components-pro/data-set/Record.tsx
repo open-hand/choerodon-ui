@@ -134,6 +134,18 @@ export default class Record {
   }
 
   @computed
+  get indexInParent(): number {
+    const { parent, dataSet } = this;
+    if (parent && parent.children) {
+      return parent.children.indexOf(this);
+    }
+    if (dataSet) {
+      return dataSet.treeRecords.indexOf(this);
+    }
+    return -1;
+  }
+
+  @computed
   get isRemoved(): boolean {
     return this.status === RecordStatus.delete;
   }
@@ -289,6 +301,11 @@ export default class Record {
       return [parent, ...parent.parents];
     }
     return [];
+  }
+
+  @computed
+  get path(): Record[] {
+    return [...this.parents, this];
   }
 
   @computed

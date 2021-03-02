@@ -122,6 +122,7 @@ class App extends React.Component {
         expandIconColumnIndex={expandIconColumnIndex}
         border={border}
         expandedRowRenderer={expandedRender && expandedRowRenderer}
+        rowNumber
       >
         <Column name="text" editor renderer={iconRenderer} width={450} />
         <Column name="url" editor />

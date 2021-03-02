@@ -14,7 +14,17 @@ import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box';
 import ObserverRadio from '../radio';
 import { DataSetSelection } from '../data-set/enum';
-import { ColumnAlign, ColumnLock, ColumnsEditType, DragColumnAlign, SelectionMode, TableEditMode, TableMode, TableQueryBarType } from './enum';
+import {
+  ColumnAlign,
+  ColumnLock,
+  ColumnsEditType,
+  DragColumnAlign,
+  SelectionMode,
+  TableColumnTooltip,
+  TableEditMode,
+  TableMode,
+  TableQueryBarType,
+} from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader, mergeObject, reorderingColumns } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
@@ -24,6 +34,8 @@ import ColumnGroup from './ColumnGroup';
 import { expandIconProps, TablePaginationConfig } from './Table';
 
 export const SELECTION_KEY = '__selection-column__';
+
+export const ROW_NUMBER_KEY = '__row-number-column__';
 
 export const DRAG_KEY = '__drag-column__';
 
@@ -45,7 +57,19 @@ export const getIdList = (startId: number, endId: number) => {
   return idList;
 };
 
-function renderSelectionBox({ record, store }: { record: any, store: TableStore; }) {
+function getRowNumbers(record?: Record | null, dataSet?: DataSet | null, isTree?: boolean): number[] {
+  if (record && dataSet) {
+    const { paging, currentPage, pageSize } = dataSet;
+    const pageIndex = (isTree ? paging === 'server' : paging) ? (currentPage - 1) * pageSize : 0;
+    if (isTree) {
+      return record.path.map((r, index) => r.indexInParent + 1 + (index === 0 ? pageIndex : 0));
+    }
+    return [record.index + 1 + pageIndex];
+  }
+  return [0];
+}
+
+function renderSelectionBox({ record, store }: { record: any, store: TableStore; }): ReactNode {
   const { dataSet } = record;
   if (dataSet) {
     const { selection } = dataSet;
@@ -554,14 +578,14 @@ export default class TableStore {
     // 分开处理可以满足于只修改表头信息场景不改变顺序
     return observable.array(
       this.addExpandColumn(
-        this.addDragColumn(this.addSelectionColumn(columns
+        this.addDragColumn(this.addRowNumberColumn(this.addSelectionColumn(columns
           ? mergeDefaultProps(columns, this.headersEditable
             ? columnsMergeCoverage
             : undefined)
           : normalizeColumns(children, this.headersEditable
             ? columnsMergeCoverage :
             undefined),
-        )),
+        ))),
       ),
     );
   }
@@ -736,15 +760,14 @@ export default class TableStore {
   get expandIconColumnIndex(): number {
     const {
       expandIconAsCell,
-      props: { expandIconColumnIndex = 0 },
+      dragColumnAlign,
+      dragRow,
+      props: { expandIconColumnIndex = 0, rowNumber },
     } = this;
     if (expandIconAsCell) {
       return 0;
     }
-    if (this.hasRowBox) {
-      return expandIconColumnIndex + 1;
-    }
-    return expandIconColumnIndex;
+    return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && dragRow].filter(Boolean).length;
   }
 
   @computed
@@ -985,6 +1008,31 @@ export default class TableStore {
   }
 
   @autobind
+  renderSelectionBox({ record }): ReactNode {
+    return renderSelectionBox({ record, store: this });
+  }
+
+  @autobind
+  renderRowNumber({ record, dataSet }): ReactNode {
+    const { isTree, props: { rowNumber } } = this;
+    const numbers = getRowNumbers(record, dataSet, isTree);
+    const number = numbers.join('-');
+    if (typeof rowNumber === 'function') {
+      return rowNumber(number, numbers);
+    }
+    return number;
+  }
+
+  @autobind
+  renderDragBox({ record }) {
+    const { rowDragRender } = this.props;
+    if (rowDragRender && isFunction(rowDragRender.renderIcon)) {
+      return rowDragRender.renderIcon({ record });
+    }
+    return (<Icon type="baseline-drag_indicator" />);
+  }
+
+  @autobind
   private multipleSelectionRenderer() {
     return (
       <ObserverCheckBox
@@ -996,6 +1044,24 @@ export default class TableStore {
     );
   }
 
+  private addRowNumberColumn(columns: ColumnProps[]): ColumnProps[] {
+    const { suffixCls, prefixCls, rowNumber } = this.props;
+    if (rowNumber) {
+      const rowNumberColumn: ColumnProps = {
+        key: ROW_NUMBER_KEY,
+        resizable: false,
+        className: `${getProPrefixCls(suffixCls!, prefixCls)}-row-number-column`,
+        renderer: this.renderRowNumber,
+        tooltip: TableColumnTooltip.overflow,
+        align: ColumnAlign.center,
+        width: 50,
+        lock: true,
+      };
+      columns.unshift(rowNumberColumn);
+    }
+    return columns;
+  }
+
   private addSelectionColumn(columns: ColumnProps[]): ColumnProps[] {
     if (this.hasRowBox) {
       const { dataSet } = this;
@@ -1004,7 +1070,7 @@ export default class TableStore {
         key: SELECTION_KEY,
         resizable: false,
         className: `${getProPrefixCls(suffixCls!, prefixCls)}-selection-column`,
-        renderer: ({ record }) => renderSelectionBox({ record, store: this }),
+        renderer: this.renderSelectionBox,
         align: ColumnAlign.center,
         width: 50,
         lock: true,
@@ -1018,14 +1084,6 @@ export default class TableStore {
     return columns;
   }
 
-  renderDragBox({ record }) {
-    const { rowDragRender } = this.props;
-    if (rowDragRender && isFunction(rowDragRender.renderIcon)) {
-      return rowDragRender.renderIcon({ record });
-    }
-    return (<Icon type="baseline-drag_indicator" />);
-  }
-
   private addDragColumn(columns: ColumnProps[]): ColumnProps[] {
     const { dragColumnAlign, dragRow, props: { suffixCls, prefixCls } } = this;
     if (dragColumnAlign && dragRow) {
@@ -1033,7 +1091,7 @@ export default class TableStore {
         key: DRAG_KEY,
         resizable: false,
         className: `${getProPrefixCls(suffixCls!, prefixCls)}-drag-column`,
-        renderer: ({ record }) => this.renderDragBox({ record }),
+        renderer: this.renderDragBox,
         align: ColumnAlign.center,
         width: 50,
       };
