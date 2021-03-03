@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Modal`: Extend `maskClosable`: true / false / click / dblclick.
+
+
 ## 1.1.0
 
 `2021-03-02`

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Modal`: 扩展 maskClosable 可选 true、false、click、dblclick。
+
 ## 1.1.0
 
 `2021-03-02`

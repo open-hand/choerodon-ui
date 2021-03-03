@@ -56,6 +56,7 @@ const App = () => {
       title: 'Basic',
       children: <ModalContent />,
       okText: '确定',
+      maskClosable: 'dblclick',
       okProps: { disabled: true },
     });
   }, [Modal]);
