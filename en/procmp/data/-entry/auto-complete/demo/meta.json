@@ -48,6 +48,21 @@
       "screenshot": "",
       "height": 123,
       "category": "pro"
+    },
+    {
+      "filename": "matcher.js",
+      "title": {
+        "zh": "修改匹配方式",
+        "en": "Modify matching method"
+      },
+      "description": {
+        "zh": "修改匹配方式。例如不区分大小写。\n",
+        "en": "Modify matching method.For example, case insensitive.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 123,
+      "category": "pro"
     }
   ]
 }

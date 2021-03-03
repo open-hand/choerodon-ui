@@ -21,11 +21,15 @@ ReactDOM.render(
   <List
     itemLayout="horizontal"
     dataSource={data}
-    renderItem={item => (
+    renderItem={(item) => (
       <List.Item>
         <List.Item.Meta
-          avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-          title={<a href="https://open-hand.github.io/choerodon-ui/">{item.title}</a>}
+          avatar={
+            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+          }
+          title={
+            <a href="https://open-hand.github.io/choerodon-ui/">{item.title}</a>
+          }
           description="Choerodon"
         />
       </List.Item>

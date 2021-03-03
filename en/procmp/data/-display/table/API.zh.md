@@ -34,7 +34,7 @@ title: API
 | filterBarFieldName    | `queryBar`为`bar`时，直接输入的过滤条件的字段名                                                                                                                                                                                | string                                                                                                 | params |
 | filterBarPlaceholder  | `queryBar`为`bar`时输入框的占位符                                                                                                                                                                                              | string                                                                                                 |          |
 | pagination            | 分页器，参考[配置项](#pagination)或 [pagination](/zh/procmp/navigation/pagination/)，设为 false 时不展示分页                                                                                                                             | object \| false                                                                                        |          |
-| highLightRow          | 当前行高亮                                                                                                                                                                                                                     | boolean                                                                                                | true     |
+| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click  | boolean \| string | true |
 | selectedHighLightRow  | 勾选行高亮                                                                                                                                                                                                                     | boolean                                                                                                | false    |
 | columnResizable       | 可调整列宽                                                                                                                                                                                                                     | boolean                                                                                                | true     |
 | pristine              | 显示原始值                                                                                                                                                                                                                     | boolean                                                                                                | false    |
@@ -58,6 +58,10 @@ title: API
 | onDragEndBefore |完成拖拽后,切换位置之前的触发事件 | (dataSet, columns, resultDrag, provided) => false \| void \|resultDrag   |  |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |
 | dynamicFilterBar | `queryBar` 为 `filterBar` 时筛选条属性配置 | DynamicFilterBarConfig | |
+| treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | |
+| treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
+| parityRow | 奇偶行 | boolean |  |
+| rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
 

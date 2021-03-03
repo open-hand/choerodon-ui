@@ -27,7 +27,9 @@ function passwordValidator(value, name, form) {
 
 function validationRenderer(error, props) {
   if (error.ruleName === 'valueMissing' && props.name === 'password') {
-    return <span style={{ color: 'blue' }}>{error.validationMessage}(自定义)</span>;
+    return (
+      <span style={{ color: 'blue' }}>{error.validationMessage}(自定义)</span>
+    );
   }
 }
 
@@ -39,12 +41,20 @@ const menu = (
       </a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.com.cn/">
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://choerodon.com.cn/"
+      >
         2nd menu item
       </a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui">
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://github.com/choerodon/choerodon-ui"
+      >
         3rd menu item
       </a>
     </Menu.Item>
@@ -60,7 +70,7 @@ const dropdown = (
 );
 
 ReactDOM.render(
-  <Form id="basic" style={{ width: '4rem' }}>
+  <Form id="basic" style={{ width: '4rem' }} labelWidth="auto">
     <TextField
       label="手机号"
       labelWidth={150}
@@ -71,9 +81,14 @@ ReactDOM.render(
       addonBefore="+86"
       addonAfter="中国大陆"
     />
-    <Password label="密码" name="password" required validationRenderer={validationRenderer} />
     <Password
-      label="确认密码"
+      label="密码"
+      name="password"
+      required
+      validationRenderer={validationRenderer}
+    />
+    <Password
+      label="确认密码(label自动宽度)"
       name="confirmPassword"
       required
       validator={passwordValidator}

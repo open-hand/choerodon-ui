@@ -5,7 +5,7 @@ import { DataSet, Table } from 'choerodon-ui/pro';
 class App extends React.Component {
   userDs = new DataSet({
     primaryKey: 'userid',
-    name: 'user',
+    name: 'large-user',
     autoQuery: true,
     pageSize: 10,
     fields: [
@@ -117,51 +117,83 @@ class App extends React.Component {
         multiple: ',',
       },
       { name: 'account', type: 'object', ignore: 'always' },
-      { name: 'enable', type: 'boolean', label: '是否开启', unique: 'uniqueGroup' },
-      { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
-      { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
+      {
+        name: 'enable',
+        type: 'boolean',
+        label: '是否开启',
+        unique: 'uniqueGroup',
+      },
+      {
+        name: 'frozen',
+        type: 'boolean',
+        label: '是否冻结',
+        trueValue: 'Y',
+        falseValue: 'N',
+      },
+      {
+        name: 'date.startDate',
+        type: 'date',
+        label: '开始日期',
+        defaultValue: new Date(),
+      },
       { name: 'date.endDate', type: 'time', range: true, label: '结束日期' },
     ],
   });
 
   render() {
-    const columns = [{
-      name: 'userid',
-    }, {
-      name: 'age',
-    }, {
-      name: 'name',
-    }, {
-      name: 'code_code',
-    }, {
-      name: 'code_select',
-    }, {
-      name: 'codeMultiple',
-    }, {
-      name: 'codeMultiple_code',
-    }, {
-      name: 'sex',
-    }, {
-      name: 'sexMultiple',
-    }, {
-      name: 'accountMultiple',
-    }, {
-      name: 'date.startDate',
-    }, {
-      name: 'date.endDate',
-    }, {
-      name: 'numberMultiple',
-    }, {
-      name: 'frozen',
-    }];
+    const columns = [
+      {
+        name: 'userid',
+      },
+      {
+        name: 'age',
+        editor: true,
+      },
+      {
+        name: 'name',
+        editor: true,
+      },
+      {
+        name: 'code_code',
+      },
+      {
+        name: 'code_select',
+      },
+      {
+        name: 'codeMultiple',
+      },
+      {
+        name: 'codeMultiple_code',
+      },
+      {
+        name: 'sex',
+      },
+      {
+        name: 'sexMultiple',
+      },
+      {
+        name: 'accountMultiple',
+      },
+      {
+        name: 'date.startDate',
+      },
+      {
+        name: 'date.endDate',
+      },
+      {
+        name: 'numberMultiple',
+      },
+      {
+        name: 'frozen',
+      },
+    ];
 
     // 设置 virtualSpin 开启滚动loading效果，与 table spin 效果一致
-    
+
     return (
       <Table
         key="user"
         virtual
-        selectionMode='click'
         dataSet={this.userDs}
         style={{ height: 300 }}
         columns={columns}
@@ -174,4 +206,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('container'));
-

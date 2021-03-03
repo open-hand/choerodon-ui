@@ -424,6 +424,8 @@ class App extends React.Component {
         buttons={buttons}
         dataSet={this.userDs}
         autoMaxWidth
+        parityRow
+        rowNumber
         header="User"
         style={{ height: 400 }}
         onRow={({ dataSet, record, index, expandedRow }) => {

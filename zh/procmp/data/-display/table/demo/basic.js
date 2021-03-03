@@ -49,7 +49,14 @@ class App extends React.Component {
   }
 
   render() {
-    return <Table key="basic" dataSet={this.userDs} columns={this.columns} />;
+    return (
+      <Table
+        key="basic"
+        rowNumber={({ text }) => `#${text}`}
+        dataSet={this.userDs}
+        columns={this.columns}
+      />
+    );
   }
 }
 
