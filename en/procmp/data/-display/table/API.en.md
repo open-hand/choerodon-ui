@@ -34,7 +34,7 @@ title: API
 | filterBarFieldName    | `queryBar`为`bar`时，直接输入的过滤条件的字段名                                                                                                                                                                                | string                                                                                                 | params |
 | filterBarPlaceholder  | `queryBar`为`bar`时输入框的占位符                                                                                                                                                                                              | string                                                                                                 |          |
 | pagination            | 分页器，参考[配置项](#pagination)或 [pagination](/zh/procmp/navigation/pagination/)，设为 false 时不展示分页                                                                                                                             | object \| false                                                                                        |          |
-| highLightRow          | 当前行高亮                                                                                                                                                                                                                     | boolean                                                                                                | true     |
+| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click  | boolean \| string | true |
 | selectedHighLightRow  | 勾选行高亮                                                                                                                                                                                                                     | boolean                                                                                                | false    |
 | columnResizable       | 可调整列宽                                                                                                                                                                                                                     | boolean                                                                                                | true     |
 | pristine              | 显示原始值                                                                                                                                                                                                                     | boolean                                                                                                | false    |
@@ -49,15 +49,19 @@ title: API
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | left \| right |  |
 | dragColumn | 打开列拖拽,组合列无法使用 | boolean | false |
 | dragRow | 行拖拽，实现行的拖拽，会导致拖拽列的一些事件失效，可以用dragColumnAlign来避免，树形数据无法使用 | boolean | false |
-| onDragEnd | 完成拖拽后的触发事件 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
+| onDragEnd | 完成拖拽后的触发事件 | (dataSet, columns, resultDrag, provided) => void |  |
 | columnsDragRender | 控制列的拖拽渲染 | 请查看DragRender[配置项](#dragRender)  |  |
 | rowDragRender | 控制列的拖拽渲染| 请查看DragRender[配置项](#dragRender) |  |
 | columnsMergeCoverage | 优先级高于columns，实现表头文字修改自定义修改和列的位置自定义修改 | ColumnProps[] | [] |
-| columnsOnChange | 拖拽列和修改表头文字触发事件 | (change:{columns:columnProps[]:column:columnProps,type:string}) => void|  |
+| columnsOnChange | 拖拽列和修改表头文字触发事件 | (change: ChangeColumns) => void|  |
 | columnsEditType | 合并列信息选择，目前可以选择表头文字或者表的位置进行合并 | order \| all \| header |  |
-| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   |  |
+| onDragEndBefore |完成拖拽后,切换位置之前的触发事件 | (dataSet, columns, resultDrag, provided) => false \| void \|resultDrag   |  |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |
 | dynamicFilterBar | `queryBar` 为 `filterBar` 时筛选条属性配置 | DynamicFilterBarConfig | |
+| treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | |
+| treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
+| parityRow | 奇偶行 | boolean |  |
+| rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
 

@@ -35,7 +35,7 @@ ReactDOM.render(
     size="large"
     pagination={pagination}
     dataSource={listData}
-    renderItem={item => (
+    renderItem={(item) => (
       <List.Item
         key={item.title}
         actions={[
