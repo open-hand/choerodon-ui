@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export const enum Lang {
+export enum Lang {
   af = 'af',       // 南非荷兰语
   ar_AE = 'ar_AE', // 阿拉伯语（阿拉伯联合酋长国）
   ar_BH = 'ar_BH', // 阿拉伯语（巴林）

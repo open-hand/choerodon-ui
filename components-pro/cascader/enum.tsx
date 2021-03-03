@@ -1,4 +1,4 @@
-export const enum ExpandTrigger {
+export enum ExpandTrigger {
   click = 'click',
   hover = 'hover',
   }

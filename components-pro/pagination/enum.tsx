@@ -1,4 +1,4 @@
-export const enum SizeChangerPosition {
+export enum SizeChangerPosition {
   left = 'left',
   right = 'right',
 }

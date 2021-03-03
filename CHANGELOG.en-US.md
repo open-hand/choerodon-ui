@@ -15,7 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableParityRow` property.
+## 1.1.0
+
+`2021-03-02`
+
+- 🌟 `configure`: Added `tableParityRow` global configuration.
 - 🌟 `<pro>TreeSelect`: Added TreeSelect component.
 - 🌟 `<pro>Select`: Added `selectAllButton` property.
 - 🌟 `<pro>SelectBox`: implement the `optionsFilter` `searchable` properties.
@@ -27,6 +31,7 @@ timeline: true
 - 🌟 `<pro>Tree`: Added `async` attribute to simplify asynchronous loading scheme.
 - 🌟 `<pro>Table`: Added `treeAsync` and `treeLoadData` properties to simplify the asynchronous loading scheme.
 - 🌟 `<pro>Table`: Added `parityRow` `rowNumber` properties.
+- 💄 Optimized the export of TS enumeration types.
 - 💄 `<pro>Table`: Optimize performance and fix the problem that the editor cannot be displayed in virtual scrolling.
 - 💄 `<pro>DataSet`: Optimized performance.
 - 💄 `<pro>Trigger`: Optimized the performance.

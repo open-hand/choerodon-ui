@@ -1,10 +1,10 @@
-export const enum FormLayout {
+export enum FormLayout {
   horizontal = 'horizontal',
   inline = 'inline',
   vertical = 'vertical',
 }
 
-export const enum FormItemValidateStatus {
+export enum FormItemValidateStatus {
   success = 'success',
   warning = 'warning',
   error = 'error',

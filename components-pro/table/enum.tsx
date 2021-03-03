@@ -1,27 +1,27 @@
-export const enum ColumnLock {
+export enum ColumnLock {
   left = 'left',
   right = 'right',
 }
 
-export const enum ColumnAlign {
+export enum ColumnAlign {
   left = 'left',
   center = 'center',
   right = 'right',
 }
 
-export const enum DragColumnAlign {
+export enum DragColumnAlign {
   left = 'left',
   right = 'right',
 }
 
-export const enum ScrollPosition {
+export enum ScrollPosition {
   left = 'left',
   right = 'right',
   both = 'both',
   middle = 'middle',
 }
 
-export const enum SelectionMode {
+export enum SelectionMode {
   rowbox = 'rowbox',
   click = 'click',
   none = 'none',
@@ -46,17 +46,17 @@ export enum TableCommandType {
   delete = 'delete',
 }
 
-export const enum TableMode {
+export enum TableMode {
   list = 'list',
   tree = 'tree',
 }
 
-export const enum TableEditMode {
+export enum TableEditMode {
   cell = 'cell',
   inline = 'inline',
 }
 
-export const enum TableQueryBarType {
+export enum TableQueryBarType {
   normal = 'normal',
   bar = 'bar',
   none = 'none',
@@ -65,30 +65,30 @@ export const enum TableQueryBarType {
   filterBar = 'filterBar',
 }
 
-export const enum TablePaginationPosition {
+export enum TablePaginationPosition {
   top = 'top',
   bottom = 'bottom',
   both = 'both',
 }
 
-export const enum TableColumnTooltip {
+export enum TableColumnTooltip {
   none = 'none',
   always = 'always',
   overflow = 'overflow',
 }
 
-export const enum TableAutoHeightType {
+export enum TableAutoHeightType {
   maxHeight = 'maxHeight',
   minHeight = 'minHeight',
 }
 
-export const enum ColumnsEditType {
+export enum ColumnsEditType {
   header = 'header',
   order = 'order',
   all = 'all',
 }
 
-export const enum HighLightRowType {
+export enum HighLightRowType {
   click = 'click',
   focus = 'focus',
 }

@@ -1,4 +1,4 @@
-export const enum Placements {
+export enum Placements {
   bottomLeft = 'bottomLeft',
   bottomCenter = 'bottomCenter',
   bottomRight = 'bottomRight',

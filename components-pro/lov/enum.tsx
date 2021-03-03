@@ -1,4 +1,4 @@
-export const enum LovFieldType {
+export enum LovFieldType {
   INT = 'INT',
   TEXT = 'TEXT',
   DATE = 'DATE',
@@ -7,17 +7,17 @@ export const enum LovFieldType {
   SELECT = 'SELECT',
 }
 
-export const enum ViewMode {
+export enum ViewMode {
   default = 'default',
   button = 'button',
 }
 
-export const enum TriggerMode {
+export enum TriggerMode {
   icon = 'icon',
   input = 'input',
 }
 
-export const enum PrefixRule {
+export enum PrefixRule {
   start = 'start',
   end = 'end',
   include = 'include',

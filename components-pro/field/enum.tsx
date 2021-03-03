@@ -1,4 +1,4 @@
-export const enum ShowHelp {
+export enum ShowHelp {
   tooltip = 'tooltip',
   newLine = 'newLine',
   none = 'none',

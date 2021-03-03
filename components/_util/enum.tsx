@@ -1,4 +1,4 @@
-export const enum Size {
+export enum Size {
   default = 'default',
   small = 'small',
   large = 'large',

@@ -1,4 +1,4 @@
-export const enum TreeEvent {
+export enum TreeEvent {
   check = 'check',
   select = 'select',
 }

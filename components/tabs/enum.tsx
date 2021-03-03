@@ -1,10 +1,10 @@
-export const enum TabsType {
+export enum TabsType {
   line = 'line',
   card = 'card',
   'editable-card' = 'editable-card',
 }
 
-export const enum TabsPosition {
+export enum TabsPosition {
   top = 'top',
   bottom = 'bottom',
   left = 'left',

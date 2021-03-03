@@ -1,4 +1,4 @@
-export const enum ButtonColor {
+export enum ButtonColor {
   default = 'default',
   primary = 'primary',
   gray = 'gray',
@@ -10,12 +10,12 @@ export const enum ButtonColor {
   dark = 'dark',
 }
 
-export const enum FuncType {
+export enum FuncType {
   flat = 'flat',
   raised = 'raised',
 }
 
-export const enum ButtonType {
+export enum ButtonType {
   button = 'button',
   submit = 'submit',
   reset = 'reset',

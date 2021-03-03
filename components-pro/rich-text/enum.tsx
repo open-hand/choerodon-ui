@@ -1,9 +1,9 @@
-export const enum RichTextToolbarType {
+export enum RichTextToolbarType {
   normal = 'normal',
   none = 'none',
 }
 
-export const enum RichTextMode {
+export enum RichTextMode {
   editor = 'editor',
   preview = 'preview',
 }
