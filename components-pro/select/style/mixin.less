@@ -4,6 +4,7 @@
   &-item-group {
     padding-top: 0.04rem;
     padding-bottom: 0.04rem;
+
     &:not(:last-child) {
       border-bottom: @border-width-base @border-style-base @border-color-base;
     }
@@ -81,9 +82,14 @@
       line-height: 0;
       background-color: @border-color-split;
     }
+
     .@{checkbox-prefix-cls}-wrapper {
       margin-right: 0.08rem;
       user-select: none;
+    }
+
+    &-more {
+      text-align: center;
     }
   }
 }

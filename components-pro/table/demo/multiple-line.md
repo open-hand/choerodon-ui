@@ -41,7 +41,13 @@ class EditButton extends React.Component {
 class App extends React.Component {
   userDs = new DataSet({
     primaryKey: 'userid',
-    name: 'user',
+    transport: {
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
+      },
+    },
     autoQuery: true,
     pageSize: 5,
     fields: [

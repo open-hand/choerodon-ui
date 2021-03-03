@@ -1,5 +1,5 @@
 ---
-order: 10
+order: 11
 title:
   zh-CN: 可搜索
   en-US: Searchable

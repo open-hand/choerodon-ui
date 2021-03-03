@@ -14,7 +14,7 @@ title:
 DataSet Options. 当有分页时，请使用object类型字段，并且通过接口查询出显示值绑定到该字段上， 因为选项只会加载第一页数据，导致没有匹配的显示值。
 
 ```jsx
-import { DataSet, Select, Row, Col, Button } from 'choerodon-ui/pro';
+import { DataSet, SelectBox, Row, Col, Button } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -88,14 +88,14 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={8}>
-          <Select
+          <SelectBox
             optionsFilter={record => record.get('sex') === 'F'}
             dataSet={this.ds}
             name="user"
           />
         </Col>
         <Col span={8}>
-          <Select dataSet={this.ds} name="account" />
+          <SelectBox dataSet={this.ds} name="account" />
         </Col>
         <Col span={8}>
           <Button onClick={this.changeOptions}>切换选项</Button>

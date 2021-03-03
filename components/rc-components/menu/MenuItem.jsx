@@ -19,6 +19,7 @@ const MenuItem = createReactClass({
     children: PropTypes.any,
     selectedKeys: PropTypes.array,
     disabled: PropTypes.bool,
+    checkable: PropTypes.bool,
     title: PropTypes.string,
     onItemHover: PropTypes.func,
     onSelect: PropTypes.func,
@@ -160,8 +161,7 @@ const MenuItem = createReactClass({
       style.paddingLeft = props.inlineIndent * props.level;
     }
 
-    const notFound = props.eventKey === 'NOT_FOUND';
-    const checkbox = props.multiple && !notFound ? <Checkbox disabled={props.disabled} checked={props.isSelected} tabIndex={-1} /> : null;
+    const checkbox = props.multiple && props.checkable !== false ? <Checkbox disabled={props.disabled} checked={props.isSelected} tabIndex={-1} /> : null;
     return (
       <Ripple disabled={props.disabled}>
         <li

@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 5
 title:
   zh-CN: 多选
   en-US: Multiple

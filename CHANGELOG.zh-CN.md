@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Select`: 新增选项分页功能。
 - 💄 `<pro>Modal`: 扩展 maskClosable 可选 true、false、click、dblclick。
+
 
 ## 1.1.0
 

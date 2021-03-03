@@ -106,13 +106,14 @@ class App extends React.Component {
 
   userDs = new DataSet({
     primaryKey: 'userid',
-    name: 'user',
     autoQuery: true,
     exportMode:'client',
-    pageSize: 1000,
+    pageSize: 5,
     transport: {
-      read: {
-        url: '/dataset/large-user/queries',
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
       },
       create: {
         url: '/dataset/user/mutations',
@@ -408,7 +409,6 @@ class App extends React.Component {
         header="User"
         style={{ height: 200 }}
         rowNumber
-        virtual
         parityRow
       >
         <Column

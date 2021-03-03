@@ -24,12 +24,19 @@ class App extends React.Component {
     selection: 'single',
     queryUrl: '/common/code/HR.EMPLOYEE_GENDER/',
     autoQuery: true,
+    pading: false,
   });
 
   userDs = new DataSet({
     autoCreate: true,
     primaryKey: 'userid',
-    name: 'user',
+    transport: {
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
+      },
+    },
     pageSize: 5,
     fields: [
       {

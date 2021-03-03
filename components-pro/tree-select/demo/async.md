@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-数据源选项。
+选项异步加载。当是异步或者有分页时，请使用object类型字段，并且通过接口查询出显示值绑定到该字段上， 因为选项只会加载部分数据，导致没有匹配的显示值。
 
 ## en-US
 
-DataSet Options
+Asynchronous lazy loading Options. 当有分页时，请使用object类型字段，并且通过接口查询出显示值绑定到该字段上， 因为选项只会加载第一页数据，导致没有匹配的显示值。
 
 ```jsx
 import { DataSet, TreeSelect, Row, Col } from 'choerodon-ui/pro';
@@ -54,6 +54,24 @@ class App extends React.Component {
     idField: 'id',
     parentField: 'parentId',
   });
+  
+  pageOptionDs = new DataSet({
+    selection: 'single',
+    transport: {
+      read({ data: { parentId }, params: { page, pagesize } }) {
+        return parentId ? {
+          url: `/tree-async-${parentId}.mock`,
+        } : {
+          url: `/tree-async/${pagesize}/${page}.mock`,
+        }
+      }
+    },
+    autoQuery: true,
+    paging: 'server',
+    pageSize: 5,
+    idField: 'id',
+    parentField: 'parentId',
+  });
 
   ds = new DataSet({
     data: [{
@@ -66,7 +84,7 @@ class App extends React.Component {
         type: 'object',
         textField: 'text',
         valueField: 'id',
-        label: '用户',
+        label: '功能',
         options: this.optionDs,
         ignore: 'always',
       },
@@ -77,7 +95,25 @@ class App extends React.Component {
       {
         name: 'functionName',
         bind: 'function.text',
-      }
+      },
+      {
+        name: 'function2',
+        type: 'object',
+        textField: 'text',
+        valueField: 'id',
+        label: '功能',
+        options: this.pageOptionDs,
+        ignore: 'always',
+        multiple: true,
+      },
+      {
+        name: 'functionId2',
+        bind: 'function2.id',
+      },
+      {
+        name: 'functionName2',
+        bind: 'function2.text',
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -114,7 +150,7 @@ class App extends React.Component {
         <Col span={12}>
           <TreeSelect
             dataSet={this.ds}
-            name="function"
+            name="function2"
             onOption={nodeCover}
             loadData={this.handleLoadData}
           />

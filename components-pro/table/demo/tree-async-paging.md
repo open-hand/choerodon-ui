@@ -27,9 +27,11 @@ class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'id',
     transport: {
-      read({ data: { parentId } }) {
-        return {
-          url: `/tree-async${parentId ? `-${parentId}` : ''}.mock`,
+      read({ data: { parentId }, params: { page, pagesize } }) {
+        return parentId ? {
+          url: `/tree-async-${parentId}.mock`,
+        } : {
+          url: `/tree-async/${pagesize}/${page}.mock`,
         }
       }
     },

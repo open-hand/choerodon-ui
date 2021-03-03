@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Select`: Added option paging function.
 - 💄 `<pro>Modal`: Extend `maskClosable`: true / false / click / dblclick.
 
 
