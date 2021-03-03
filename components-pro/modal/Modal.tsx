@@ -24,7 +24,7 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls } from './utils';
-import { modalChildrenProps } from './interface';
+import { modalChildrenProps, ClosableMode } from './interface';
 
 function fixUnit(n) {
   if (isNumber(n)) {
@@ -51,7 +51,7 @@ export interface ModalProps extends ViewComponentProps {
   closable?: boolean;
   movable?: boolean;
   fullScreen?: boolean;
-  maskClosable?: boolean;
+  maskClosable?: boolean | ClosableMode;
   maskStyle?: CSSProperties;
   autoCenter?: boolean;
   mask?: boolean,
@@ -97,7 +97,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     closable: PropTypes.bool,
     movable: PropTypes.bool,
     fullScreen: PropTypes.bool,
-    maskClosable: PropTypes.bool,
+    maskClosable: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     maskStyle: PropTypes.object,
     mask: PropTypes.bool,
     maskClassName: PropTypes.string,

@@ -15,6 +15,7 @@ import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
 import { suffixCls } from '../modal/utils';
+import { ClosableMode } from '../modal/interface';
 
 const { containerInstances } = ModalManager;
 
@@ -357,6 +358,15 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         hideBodyScrollBar(body);
       }
     }
+    const eventProps: any = {};
+    if (activeModal && activeModal.mask) {
+      const { maskClosable } = activeModal;
+      if (maskClosable === ClosableMode.dblclick) {
+        eventProps.onDoubleClick = this.handleMaskClick;
+      } else {
+        eventProps.onClick = this.handleMaskClick;
+      }
+    }
     return (
       <>
         <Animate
@@ -368,7 +378,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         >
           {
             activeModal && activeModal.mask ? (
-              <Mask style={activeModal.maskStyle} className={activeModal.maskClassName} hidden={hidden} onClick={this.handleMaskClick} onMouseDown={stopEvent} />
+              <Mask style={activeModal.maskStyle} className={activeModal.maskClassName} hidden={hidden} {...eventProps} onMouseDown={stopEvent} />
             ) : <div hidden={hidden} />
           }
         </Animate>

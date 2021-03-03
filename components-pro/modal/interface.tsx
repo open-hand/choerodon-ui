@@ -19,3 +19,8 @@ export type modalChildrenProps = {
     handleOk: (ok: any) => void;
     handleCancel: (cancel: any) => void;
 }
+
+export enum ClosableMode {
+  click = 'click',
+  dblclick = 'dblclick',
+}
