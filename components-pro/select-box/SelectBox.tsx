@@ -15,6 +15,8 @@ import { $l } from '../locale-context';
 import { LabelLayout } from '../form/enum';
 import TextField from '../text-field';
 import Icon from '../icon';
+import Button from '../button/Button';
+import { FuncType } from '../button/enum';
 
 const GroupIdGen = (function* (id) {
   while (true) {
@@ -143,8 +145,15 @@ export default class SelectBox extends Select<SelectBoxProps> {
         {this.renderSelectAll()}
         <Element className={className}>{items}</Element>
         {this.renderFloatLabel()}
+        {options.paging && options.currentPage < options.totalPage && <Button funcType={FuncType.flat} icon="more_horiz" onClick={this.handleQueryMore} />}
       </span>
     );
+  }
+
+  @autobind
+  handleQueryMore() {
+    const { options } = this;
+    options.queryMore(options.currentPage + 1);
   }
 
   @autobind

@@ -26,7 +26,13 @@ class App extends React.Component {
 
   ds = new DataSet({
     primaryKey: 'userid',
-    name: 'user',
+    transport: {
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
+      },
+    },
     autoQuery: true,
     pageSize: 5,
     queryFields: [

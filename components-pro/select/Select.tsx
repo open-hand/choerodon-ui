@@ -19,6 +19,7 @@ import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import Option, { OptionProps } from '../option/Option';
 import OptGroup from '../option/OptGroup';
+import Icon from '../icon';
 import { DataSetStatus, FieldType } from '../data-set/enum';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -49,11 +50,12 @@ function defaultSearchMatcher({ record, text, textField }) {
   return record.get(textField).indexOf(text) !== -1;
 }
 
-export const disabledField = '__disabled';
+export const DISABLED_FIELD = '__disabled';
+export const MORE_KEY = '__more__';
 
 function defaultOnOption({ record }) {
   return {
-    disabled: record.get(disabledField),
+    disabled: record.get(DISABLED_FIELD),
   };
 }
 
@@ -395,7 +397,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     return (
       options ||
       (field && field.options) ||
-      normalizeOptions({ textField, valueField, disabledField, multiple, children })
+      normalizeOptions({ textField, valueField, disabledField: DISABLED_FIELD, multiple, children })
     );
   }
 
@@ -696,12 +698,12 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     });
     if (!optGroups.length) {
       optGroups.push(
-        <Item key="no_data" disabled>
+        <Item key="no_data" disabled checkable={false}>
           {this.loading ? ' ' : this.getNotFoundContent()}
         </Item>,
       );
     }
-
+    const menuPrefix = this.getMenuPrefixCls();
     return (
       <Menu
         ref={this.saveMenu}
@@ -709,13 +711,20 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         defaultActiveFirst
         multiple={this.menuMultiple}
         selectedKeys={selectedKeys}
-        prefixCls={this.getMenuPrefixCls()}
+        prefixCls={menuPrefix}
         onClick={this.handleMenuClick}
         style={{ ...IeMenuStyle, ...dropdownMenuStyle }}
         focusable={false}
         {...menuProps}
       >
         {optGroups}
+        {
+          options.paging && options.currentPage < options.totalPage && (
+            <Item key={MORE_KEY} checkable={false} className={`${menuPrefix}-item-more`}>
+              <Icon type="more_horiz" />
+            </Item>
+          )
+        }
       </Menu>
     );
   }
@@ -850,7 +859,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const findRecord = this.findByValue(v);
     const optionProps = findRecord ? onOption({ dataSet: options, record: findRecord }) : undefined;
     const optionDisabled = (optionProps && optionProps.disabled);
-    return (findRecord && findRecord.get(disabledField) === true) || optionDisabled || this.isDisabled();
+    return (findRecord && findRecord.get(DISABLED_FIELD) === true) || optionDisabled || this.isDisabled();
   }
 
   handleKeyDownFirstLast(e, menu: Menu, direction: number) {
@@ -1047,11 +1056,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   handleMenuClick({
+    key,
     item: {
       props: { value },
     },
   }) {
-    if (this.multiple && this.isSelected(value)) {
+    if (key === MORE_KEY) {
+      this.options.queryMore(this.options.currentPage + 1);
+    } else if (this.multiple && this.isSelected(value)) {
       this.unChoose(value);
     } else {
       this.choose(value);
@@ -1185,7 +1197,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         const findRecord = this.findByValue(v);
         const optionProps = findRecord ? onOption({ dataSet: options, record: findRecord }) : undefined;
         const optionDisabled = (optionProps && optionProps.disabled);
-        return (recordItem && recordItem.get(disabledField) === true) || optionDisabled;
+        return (recordItem && recordItem.get(DISABLED_FIELD) === true) || optionDisabled;
       });
       const multipleValue = valuesDisabled.length > 0 ? valuesDisabled : this.emptyValue;
       this.setValue(multipleValue);

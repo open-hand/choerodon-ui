@@ -223,12 +223,11 @@ export default class Tooltip extends Component<TooltipProps, any> {
       prefixCls,
       props: { children, placement, theme, onHiddenChange, trigger, defaultHidden, hidden, ...restProps },
     } = this;
-    const child = Children.map(children, node => {
-      node = getDisabledCompatobleChildren(
+    const child = Children.map(children, node => (
+      node && getDisabledCompatobleChildren(
         isValidElement(node) ? node : <span key={`text-${node}`}>{node}</span>,
-      );
-      return node;
-    });
+      )
+    ));
 
     const extraProps: TriggerProps = { ...restProps };
     if ('hidden' in this.props) {

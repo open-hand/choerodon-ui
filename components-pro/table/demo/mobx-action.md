@@ -34,7 +34,13 @@ const HeaderButtons = observer(props => {
 const App = observer(() => {
   const userDs = new DataSet({
     primaryKey: 'userid',
-    name: 'user',
+    transport: {
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
+      },
+    },
     autoQuery: true,
     pageSize: 5,
     fields: [

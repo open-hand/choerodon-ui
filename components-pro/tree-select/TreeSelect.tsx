@@ -5,7 +5,7 @@ import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import Tree, { TreeProps } from 'choerodon-ui/lib/tree';
 import TreeNode from './TreeNode';
-import { disabledField, Select, SelectProps } from '../select/Select';
+import { DISABLED_FIELD, MORE_KEY, Select, SelectProps } from '../select/Select';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import normalizeTreeNodes from './normalizeTreeNodes';
@@ -13,6 +13,7 @@ import autobind from '../_util/autobind';
 import isIE from '../_util/isIE';
 import { defaultRenderer } from '../tree';
 import { getTreeNodes } from '../tree/util';
+import Icon from '../icon';
 
 export interface TreeSelectProps extends SelectProps {
   treeCheckable?: boolean;
@@ -82,7 +83,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     return (
       options ||
       (field && field.options) ||
-      normalizeTreeNodes({ textField, valueField, disabledField, parentField, idField, multiple, children })
+      normalizeTreeNodes({ textField, valueField, disabledField: DISABLED_FIELD, parentField, idField, multiple, children })
     );
   }
 
@@ -115,8 +116,11 @@ export default class TreeSelect extends Select<TreeSelectProps> {
 
   @autobind
   handleTreeSelect(_e, { node }) {
-    const { record, disabled } = node;
-    if (!disabled) {
+    const { record, disabled, key } = node;
+    if (key === MORE_KEY) {
+      const { options } = this;
+      options.queryMore(options.currentPage + 1);
+    } else if (!disabled) {
       const { multiple } = this;
       if (multiple) {
         if (this.isSelected(record)) {
@@ -217,6 +221,15 @@ export default class TreeSelect extends Select<TreeSelectProps> {
           </div>
         </div>
       );
+    }
+    if (options.paging && options.currentPage < options.totalPage) {
+      treeData.push({
+        key: MORE_KEY,
+        eventKey: MORE_KEY,
+        title: <Icon type="more_horiz" />,
+        className: `${this.getMenuPrefixCls()}-item ${menuPrefixCls}-item-more`,
+        isLeaf: true,
+      });
     }
     const props: TreeProps = {};
     if (expandedKeys) {

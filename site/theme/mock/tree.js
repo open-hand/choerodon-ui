@@ -30,112 +30,127 @@ const asyncTreeMockEmpty = {
   rows: [],
   success: true,
 };
+const asyncTreeBlock1 = [
+  ...lessTreeMockRootRows,
+  {
+    expand: false,
+    functionCode: 'ATTACH',
+    icon: 'fa fa-cloud-upload',
+    id: 69,
+    ischecked: true,
+    score: 30,
+    shortcutId: null,
+    text: '附件管理',
+    url: null,
+    symbol: '0',
+  },
+  {
+    expand: false,
+    functionCode: 'JOB',
+    icon: 'fa fa-clock-o',
+    id: 16,
+    ischecked: true,
+    score: 40,
+    shortcutId: null,
+    text: '计划任务',
+    url: null,
+    symbol: '0',
+  },
+  {
+    expand: false,
+    functionCode: 'WFL_OFFICE',
+    icon: 'fa fa-user',
+    id: 39,
+    ischecked: true,
+    score: 49,
+    shortcutId: null,
+    text: '工作流',
+    url: null,
+    symbol: '0',
+  },
+];
+const asyncTreeBlock2 = [
+  {
+    expand: false,
+    functionCode: 'WFL',
+    icon: 'fa fa-sitemap',
+    id: 27,
+    ischecked: true,
+    score: 50,
+    shortcutId: null,
+    text: '流程管理',
+    url: null,
+    symbol: '0',
+  },
+  {
+    expand: false,
+    functionCode: 'IF',
+    icon: 'fa fa-plug',
+    id: 45,
+    ischecked: true,
+    score: 80,
+    shortcutId: null,
+    text: '接口管理',
+    url: null,
+    symbol: '0',
+  },
+  {
+    expand: false,
+    functionCode: 'API',
+    icon: 'fa fa-server',
+    id: 49,
+    ischecked: true,
+    score: 90,
+    shortcutId: null,
+    text: '服务管理',
+    url: null,
+    symbol: '0',
+  },
+  {
+    expand: false,
+    functionCode: 'TASK',
+    icon: 'fa fa-tasks',
+    id: 53,
+    ischecked: true,
+    score: 95,
+    shortcutId: null,
+    text: '任务管理',
+    url: null,
+    symbol: '0',
+  },
+  {
+    expand: false,
+    functionCode: 'SYSTEM',
+    icon: 'fa fa-gears',
+    id: 1,
+    ischecked: true,
+    score: 99,
+    shortcutId: null,
+    text: '系统管理',
+    url: null,
+    symbol: '0',
+  },
+];
 const asyncTreeMock = {
   rows: [
-    ...lessTreeMockRootRows,
-    {
-      expand: false,
-      functionCode: 'ATTACH',
-      icon: 'fa fa-cloud-upload',
-      id: 69,
-      ischecked: true,
-      score: 30,
-      shortcutId: null,
-      text: '附件管理',
-      url: null,
-      symbol: '0',
-    },
-    {
-      expand: false,
-      functionCode: 'JOB',
-      icon: 'fa fa-clock-o',
-      id: 16,
-      ischecked: true,
-      score: 40,
-      shortcutId: null,
-      text: '计划任务',
-      url: null,
-      symbol: '0',
-    },
-    {
-      expand: false,
-      functionCode: 'WFL_OFFICE',
-      icon: 'fa fa-user',
-      id: 39,
-      ischecked: true,
-      score: 49,
-      shortcutId: null,
-      text: '工作流',
-      url: null,
-      symbol: '0',
-    },
-    {
-      expand: false,
-      functionCode: 'WFL',
-      icon: 'fa fa-sitemap',
-      id: 27,
-      ischecked: true,
-      score: 50,
-      shortcutId: null,
-      text: '流程管理',
-      url: null,
-      symbol: '0',
-    },
-    {
-      expand: false,
-      functionCode: 'IF',
-      icon: 'fa fa-plug',
-      id: 45,
-      ischecked: true,
-      score: 80,
-      shortcutId: null,
-      text: '接口管理',
-      url: null,
-      symbol: '0',
-    },
-    {
-      expand: false,
-      functionCode: 'API',
-      icon: 'fa fa-server',
-      id: 49,
-      ischecked: true,
-      score: 90,
-      shortcutId: null,
-      text: '服务管理',
-      url: null,
-      symbol: '0',
-    },
-    {
-      expand: false,
-      functionCode: 'TASK',
-      icon: 'fa fa-tasks',
-      id: 53,
-      ischecked: true,
-      score: 95,
-      shortcutId: null,
-      text: '任务管理',
-      url: null,
-      symbol: '0',
-    },
-    {
-      expand: false,
-      functionCode: 'SYSTEM',
-      icon: 'fa fa-gears',
-      id: 1,
-      ischecked: true,
-      score: 99,
-      shortcutId: null,
-      text: '系统管理',
-      url: null,
-      symbol: '0',
-    },
+    ...asyncTreeBlock1,
+    ...asyncTreeBlock2,
   ],
+  success: true,
+  total: 10,
+};
+const asyncTreeMockSize5Page1 = {
+  rows: asyncTreeBlock1,
+  success: true,
+  total: 10,
+};
+const asyncTreeMockSize5Page2 = {
+  rows: asyncTreeBlock2,
   success: true,
   total: 10,
 };
 const asyncTreeMock1 = {
   rows: [
-
     {
       expand: false,
       functionCode: 'SYS_CONFIG',
@@ -1290,6 +1305,11 @@ const mockTemple = {
 const treeRule = /\/tree.mock/;
 const lessTreeRule = /\/tree-less.mock/;
 const asyncRule = /\/tree-async.mock/;
+const asyncRuleSize5Page1 = /\/tree-async\/5\/1.mock/;
+const asyncRuleSize5Page2 = /\/tree-async\/5\/2.mock/;
+const asyncRuleSize10Page1 = /\/tree-async\/10\/1.mock/;
+const asyncRuleSize50Page1 = /\/tree-async\/50\/1.mock/;
+const asyncRuleSize100Page1 = /\/tree-async\/100\/1.mock/;
 const asyncRule1 = /\/tree-async-1.mock/;
 const asyncRule2 = /\/tree-async-2.mock/;
 const asyncRule3 = /\/tree-async-3.mock/;
@@ -1315,6 +1335,11 @@ export default function () {
     Mock.mock(treeRule, mockTemple);
     Mock.mock(lessTreeRule, lessTreeMock);
     Mock.mock(asyncRule, asyncTreeMock);
+    Mock.mock(asyncRuleSize5Page1, asyncTreeMockSize5Page1);
+    Mock.mock(asyncRuleSize5Page2, asyncTreeMockSize5Page2);
+    Mock.mock(asyncRuleSize10Page1, asyncTreeMock);
+    Mock.mock(asyncRuleSize50Page1, asyncTreeMock);
+    Mock.mock(asyncRuleSize100Page1, asyncTreeMock);
     Mock.mock(asyncRule1, asyncTreeMock1);
     Mock.mock(asyncRule2, asyncTreeMock2);
     Mock.mock(asyncRule3, asyncTreeMock3);

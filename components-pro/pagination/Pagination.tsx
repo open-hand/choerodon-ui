@@ -285,7 +285,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   getOptions(): ReactNode {
     const { pageSize } = this;
     const { pageSizeOptions } = this.props;
-    const options = pageSizeOptions || [];
+    const options = (pageSizeOptions || []).slice();
     if (options.indexOf(String(pageSize)) === -1) {
       options.unshift(String(pageSize));
     }

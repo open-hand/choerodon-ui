@@ -23,6 +23,7 @@ const App = () => {
     selection: 'single',
     queryUrl: '/dataset/user/queries',
     autoQuery: true,
+    paging: false,
   });
 
   const ds = new DataSet({

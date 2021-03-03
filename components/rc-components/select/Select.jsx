@@ -1095,6 +1095,7 @@ export default class Select extends Component {
           disabled
           value="NOT_FOUND"
           key="NOT_FOUND"
+          checkable={false}
         >
           {loading.spinning ? '' : notFoundContent}
         </MenuItem>,

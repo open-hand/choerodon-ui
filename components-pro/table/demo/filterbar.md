@@ -18,7 +18,13 @@ import { DataSet, Table, Button } from 'choerodon-ui/pro';
 
 const config = {
   primaryKey: 'userid',
-  name: 'user',
+  transport: {
+    read({ params: { page, pagesize } }) {
+      return {
+        url: `/dataset/user/page/${pagesize}/${page}`,
+      };
+    },
+  },
   autoQuery: true,
   pageSize: 5,
   queryFields: [
