@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Select`: 新增选项分页功能。
 - 💄 `<pro>Modal`: 扩展 maskClosable 可选 true、false、click、dblclick。
+- 💄 `<pro>Form`: 优化 labelLayout 为 placeholder 时候，可以在聚焦时候显示配置的 placeholder 值。
 
 
 ## 1.1.0

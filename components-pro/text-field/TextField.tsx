@@ -29,6 +29,8 @@ import Tooltip from '../tooltip/Tooltip';
 import { GroupItemCategory, ValueChangeAction } from './enum';
 import { ShowHelp } from '../field/enum';
 import { FieldFormat } from '../data-set/enum';
+import { LabelLayout } from '../form/interface';
+import { getProperty } from '../form/utils';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -377,8 +379,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
+  // 处理 form 中的 labelLayout 为 placeholder 情况避免以前 placeholder 和 label 无法区分彼此。
   getPlaceholders(): string[] {
-    const placeholder = this.getProp('placeholder');
+    const {dataSet,record,props} = this
+    const placeholderOrigin = this.getProp('placeholder');
+    const labelLayout = this.labelLayout;
+    const label = getProperty(props, 'label', dataSet, record);
+    const placeholder = label && labelLayout === LabelLayout.placeholder && !this.isFocused ? label : placeholderOrigin || label ;
     const holders: string[] = [];
     return placeholder ? holders.concat(placeholder!) : holders;
   }

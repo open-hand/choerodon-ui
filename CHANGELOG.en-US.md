@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Select`: Added option paging function.
 - 💄 `<pro>Modal`: Extend `maskClosable`: true / false / click / dblclick.
+- 💄 `<pro>Form`: Optimized labelLayout as placeholder, the configured placeholder value can be displayed when focusing.
 
 
 ## 1.1.0

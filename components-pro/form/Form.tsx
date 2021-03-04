@@ -647,7 +647,6 @@ export default class Form extends DataSetComponent<FormProps> {
         newLine,
         className,
         fieldClassName,
-        placeholder,
         ...otherProps
       } = props as any;
       let newColSpan = colSpan;
@@ -718,7 +717,6 @@ export default class Form extends DataSetComponent<FormProps> {
       const fieldElementProps: any = {
         key,
         className: classNames(prefixCls, className),
-        placeholder: label && labelLayout === LabelLayout.placeholder ? label : placeholder,
         ...otherProps,
       };
       if (!isString(type)) {
