@@ -381,9 +381,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   // 处理 form 中的 labelLayout 为 placeholder 情况避免以前 placeholder 和 label 无法区分彼此。
   getPlaceholders(): string[] {
-    const {dataSet,record,props} = this
+    const { dataSet, record, props, labelLayout } = this;
     const placeholderOrigin = this.getProp('placeholder');
-    const labelLayout = this.labelLayout;
     const label = getProperty(props, 'label', dataSet, record);
     const placeholder = label && labelLayout === LabelLayout.placeholder && !this.isFocused ? label : placeholderOrigin || label ;
     const holders: string[] = [];

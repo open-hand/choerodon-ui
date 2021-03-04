@@ -800,7 +800,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   getTriggerIconFont() {
-    return 'baseline-arrow_drop_down';
+    return this.searchable && this.isFocused ? 'search' : 'baseline-arrow_drop_down';
   }
 
   @autobind
@@ -1266,7 +1266,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const value = record.get(valueField);
       const optionDisabled = (optionProps && optionProps.disabled);
       const optionIsSelect = values.includes(value);
-      return !optionDisabled && !optionIsSelect;
+      return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect) ;
     });
     this.setValue(selectedOptions.map(this.processRecordToObject, this));
   }
