@@ -57,7 +57,7 @@ class App extends React.Component {
         <Col span={12}>
           <Select multiple placeholder="多选" onChange={handleChange} defaultValue={['jack', 'wu', 'lucy']}>
             <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
+            <Option disabled value="lucy">Lucy</Option>
             <Option value="wu">Wu</Option>
           </Select>
         </Col>
@@ -118,6 +118,6 @@ class App extends React.Component {
 
 ReactDOM.render(
   <App />,
-  mountNode
+  mountNode,
 );
 ````
