@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>Field`: Fixed the invalid configuration of some `dynamicProps`.
 - 🐞 `<pro>Lov`: Fixed the problem that the query page jumps after selecting a certain page in the default value.
 - 🐞 `<pro>Tootip`: Fixed the component reporting error when children is undefined。
+- 🐞 `<pro>Select`: Fixed the error when the `searchMatcher` default configuration gets the `textField` may be empty.
 
 
 ## 1.1.0

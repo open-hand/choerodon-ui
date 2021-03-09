@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>Field`: 修复部分动态属性配置无效的问题。
 - 🐞 `<pro>Lov`: 修复默认值存在全选某一页后导致的查询跳页问题。
 - 🐞 `<pro>Tootip`: 修复当 Children 为 undefined 时候导致组件报错。
+- 🐞 `<pro>Select`: 修复 searchMatcher 默认配置获取 textField 字段值可能为空时的报错。
 
 
 ## 1.1.0
