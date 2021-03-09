@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>Modal`: Extend `maskClosable`: true / false / click / dblclick.
 - 💄 `<pro>Form`: Optimized `labelLayout` as placeholder, the configured placeholder value can be displayed when focusing.
 - 💄 `<pro>Select`: Optimized the search icon when searching and the unselectable value appears to be deleted when multiple selection is reversed.
+- 🐞 `<pro>Field`: Fixed the invalid configuration of some `dynamicProps`.
 - 🐞 `<pro>Tootip`: Fixed the component reporting error when children is undefined。
 
 
