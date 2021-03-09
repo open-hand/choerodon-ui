@@ -1,7 +1,6 @@
 export {
     LovFieldType,
     ViewMode,
-    TriggerMode,
     PrefixRule,
 } from './enum';
 export {
