@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>Modal`: 扩展 maskClosable 可选 true、false、click、dblclick。
 - 💄 `<pro>Form`: 优化 labelLayout 为 placeholder 时候，可以在聚焦时候显示配置的 placeholder 值。
 - 💄 `<pro>Select`: 优化搜索时候的搜索图标，和多选时候反选不可选值出现被删除。
+- 💄 `<pro>TextArea`: 优化拖拽最小高度防止文字被遮蔽。
 - 💄 `<pro>Lov`: 删除 triggerMode 属性，优化为双击触发弹窗。
 - 💄 `<pro>Lov`: 优化 tableProps 支持 lov Table columns 属性合并。
 - 🐞 `<pro>Field`: 修复部分动态属性配置无效的问题。
