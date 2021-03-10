@@ -12,13 +12,13 @@ export enum ViewMode {
   button = 'button',
 }
 
-export enum TriggerMode {
-  icon = 'icon',
-  input = 'input',
-}
-
 export enum PrefixRule {
   start = 'start',
   end = 'end',
   include = 'include',
+}
+
+export enum SearchAction {
+  blur = 'blur',
+  input = 'input',
 }

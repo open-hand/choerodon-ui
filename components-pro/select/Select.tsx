@@ -47,7 +47,7 @@ function updateActiveKey(menu: Menu, activeKey: string) {
 }
 
 function defaultSearchMatcher({ record, text, textField }) {
-  return record.get(textField).indexOf(text) !== -1;
+  return record.get(textField) && record.get(textField).indexOf(text) !== -1;
 }
 
 export const DISABLED_FIELD = '__disabled';

@@ -2,6 +2,8 @@
 
 @modal-prefix-cls: ~'@{c7n-pro-prefix}-modal';
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
+@select-prefix-cls: ~'@{c7n-pro-prefix}-select';
+@progress-prefix-cls: ~'@{c7n-prefix}-progress';
 
 
 .@{modal-prefix-cls} {
@@ -17,5 +19,13 @@
         }
       }
     }
+  }
+}
+
+.@{select-prefix-cls}-lov-spin {
+  .@{progress-prefix-cls}-inner {
+    width: 0.2rem;
+    height: 0.2rem;
+    margin-right: 0.03rem;
   }
 }

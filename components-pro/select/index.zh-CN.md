@@ -20,7 +20,7 @@ title: Select
 | --- | --- | --- | --- |
 | combo | 复合输入值 | boolean | false |
 | searchable | 是否可搜索 | boolean | false |
-| searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField).indexOf(text) !== -1 |
+| searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField) && record.get(textField).indexOf(text) !== -1 |
 | paramMatcher | 参数匹配器。当为字符串时，进行参数拼接。 | string \| ({ record, text, textField, valueField }) => string | |
 | optionsFilter | 选项过滤 | (record) => boolean |  |
 | checkValueOnOptionsChange | 当选项改变时，检查并清除不在选项中的值 | boolean | true |

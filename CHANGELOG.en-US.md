@@ -16,11 +16,17 @@ timeline: true
 ---
 
 - 🌟 `<pro>Select`: Added option paging function.
+- 🌟 `<pro>Lov`: Added `searchAction` & `fetchSingle` properties.
 - 💄 `<pro>Modal`: Extend `maskClosable`: true / false / click / dblclick.
 - 💄 `<pro>Form`: Optimized `labelLayout` as placeholder, the configured placeholder value can be displayed when focusing.
 - 💄 `<pro>Select`: Optimized the search icon when searching and the unselectable value appears to be deleted when multiple selection is reversed.
 - 💄 `<pro>TextArea`: Optimized minimum drag height to prevent text from being obscured.
+- 💄 `<pro>Lov`: Deleted the `triggerMode` API, and optimized to double-click to trigger the pop-up window.
+- 💄 `<pro>Lov`: Optimized `tableProps` to support lov Table `columns` attribute merging.
+- 🐞 `<pro>Field`: Fixed the invalid configuration of some `dynamicProps`.
+- 🐞 `<pro>Lov`: Fixed the problem that the query page jumps after selecting a certain page in the default value.
 - 🐞 `<pro>Tootip`: Fixed the component reporting error when children is undefined。
+- 🐞 `<pro>Select`: Fixed the error when the `searchMatcher` default configuration gets the `textField` may be empty.
 
 
 ## 1.1.0
