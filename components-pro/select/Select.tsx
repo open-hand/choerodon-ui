@@ -799,7 +799,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
-  getTriggerIconFont() {
+  getTriggerIconFont(): string {
     return this.searchable && this.isFocused ? 'search' : 'baseline-arrow_drop_down';
   }
 

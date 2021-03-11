@@ -155,6 +155,8 @@ const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNo
       return $l('Table', 'empty_data');
     case 'Select':
       return $l('Select', 'no_matching_results');
+    case 'Output':
+      return '';
     default:
   }
 };
