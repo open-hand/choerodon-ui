@@ -433,9 +433,11 @@ export default class Lov extends Select<LovProps> {
 
   getButtonProps() {
     const { className, type } = this.props;
+    const { options } = this;
     const props: ButtonProps = {
       ...Button.defaultProps,
       ...omit(this.getOtherProps(), ['name']),
+      dataSet: options,
       className,
       type,
     };

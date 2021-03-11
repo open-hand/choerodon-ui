@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>Lov`: Deleted the `triggerMode` API, and optimized to double-click to trigger the pop-up window.
 - 💄 `<pro>Lov`: Optimized `tableProps` to support lov Table `columns` attribute merging.
 - 🐞 `<pro>Field`: Fixed the invalid configuration of some `dynamicProps`.
+- 🐞 `<pro>Lov`: Fixed the problem that the value of button mode is invalid.
 - 🐞 `<pro>Lov`: Fixed the problem that the query page jumps after selecting a certain page in the default value.
 - 🐞 `<pro>Tootip`: Fixed the component reporting error when children is undefined。
 - 🐞 `<pro>Select`: Fixed the error when the `searchMatcher` default configuration gets the `textField` may be empty.
