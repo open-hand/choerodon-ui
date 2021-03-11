@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+## 1.1.1
+
+`2021-03-12`
+
+
 - 🌟 `<pro>Select`: Added option paging function.
 - 🌟 `<pro>Lov`: Added `searchAction` & `fetchSingle` properties.
 - 💄 `configure`: Extend the `defaultRenderEmpty` property to support the `Output`.

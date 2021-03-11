@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.1.1
+
+`2021-03-12`
+
 - 🌟 `<pro>Select`: 新增选项分页功能。
 - 🌟 `<pro>Lov`: 新增 searchAction，fetchSingle 属性。
 - 💄 `configure`: 扩展 defaultRenderEmpty 全局属性，支持 Output 组件。
