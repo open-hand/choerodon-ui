@@ -89,6 +89,7 @@ abstract: true
 | --- | --- | --- | --- |
 | ready() | 判断数据源是否准备就绪 |  | Promise |
 | query(page, params) | 查询 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数 | Promise&lt;any&gt; |
+| queryMore(page, params) | 查询更多， 保留原数据 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数  | Promise&lt;any&gt; |
 | submit() | 将数据集中的增删改的记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; `false` - 校验失败，`undefined` - 无数据提交或提交相关配置不全，如没有 submitUrl。 |
 | reset() | 重置更改, 并清除校验状态 |  |  |
 | locate(index) | 定位到指定记录, 如果`paging` 为 `true`和`server`，则做远程查询 为`server`指代的是根节点节点的index坐标| `index` - 记录索引 | Promise&lt;Record&gt; |
@@ -138,6 +139,7 @@ abstract: true
 | bind(ds, name) | 绑定头 DataSet | `ds` - 头 DataSet 对象或 id `name` - 绑定名 |  |
 | setQueryParameter(para, value) | 设置查询参数 | `para` - 参数名 `value` - 参数值 |  |
 | loadData(data, total) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
+| appendData(data, total) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
 
 ### DataSet Events
 
@@ -147,6 +149,8 @@ abstract: true
 | query | 查询事件，返回值为 false 将阻止查询 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 | 是 |
 | beforeLoad | 数据加载前的事件， 用于处理请求数据 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 请求数据 | 是 |
 | load | 数据加载完后事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| beforeAppend | 数据附加前的事件， 用于处理请求数据 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 请求数据 | 是 |
+| append | 数据附加完后事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | loadFailed | 数据加载失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | submit | 提交事件，返回值为 false 将阻止提交 | ({ dataSet, data }) =&gt; boolean | `dataSet` - 数据集 `data` - json 数据 | 是 |
 | submitSuccess | 提交成功事件 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 响应数据 | 是 |

@@ -243,6 +243,21 @@
       "screenshot": "",
       "height": 200,
       "category": "pro"
+    },
+    {
+      "filename": "paging-false.js",
+      "title": {
+        "zh": "禁用分页",
+        "en": "diabled paging"
+      },
+      "description": {
+        "zh": "禁用分页。\n",
+        "en": "diabled paging.\n"
+      },
+      "order": 15,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
     }
   ]
 }

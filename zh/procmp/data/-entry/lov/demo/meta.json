@@ -60,6 +60,21 @@
       "screenshot": "",
       "height": 200,
       "category": "pro"
+    },
+    {
+      "filename": "search-action.js",
+      "title": {
+        "zh": "搜索触发变更的动作",
+        "en": "search action"
+      },
+      "description": {
+        "zh": "搜索触发变更的动作\n",
+        "en": "search action.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
     }
   ]
 }

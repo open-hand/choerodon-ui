@@ -88,6 +88,7 @@ DataSet.
 | --- | --- | --- | --- |
 | ready() | 判断数据源是否准备就绪 |  | Promise |
 | query(page, params) | 查询 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数 | Promise&lt;any&gt; |
+| queryMore(page, params) | 查询更多， 保留原数据 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数  | Promise&lt;any&gt; |
 | submit() | 将数据集中的增删改的记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; `false` - 校验失败，`undefined` - 无数据提交或提交相关配置不全，如没有 submitUrl。 |
 | reset() | 重置更改, 并清除校验状态 |  |  |
 | locate(index) | 定位到指定记录, 如果`paging` 为 `true`和`server`，则做远程查询 为`server`指代的是根节点节点的index坐标| `index` - 记录索引 | Promise&lt;Record&gt; |
@@ -137,6 +138,7 @@ DataSet.
 | bind(ds, name) | 绑定头 DataSet | `ds` - 头 DataSet 对象或 id `name` - 绑定名 |  |
 | setQueryParameter(para, value) | 设置查询参数 | `para` - 参数名 `value` - 参数值 |  |
 | loadData(data, total) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
+| appendData(data, total) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
 
 ### DataSet Events
 
@@ -146,6 +148,8 @@ DataSet.
 | query | 查询事件，返回值为 false 将阻止查询 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 | 是 |
 | beforeLoad | 数据加载前的事件， 用于处理请求数据 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 请求数据 | 是 |
 | load | 数据加载完后事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| beforeAppend | 数据附加前的事件， 用于处理请求数据 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 请求数据 | 是 |
+| append | 数据附加完后事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | loadFailed | 数据加载失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | submit | 提交事件，返回值为 false 将阻止提交 | ({ dataSet, data }) =&gt; boolean | `dataSet` - 数据集 `data` - json 数据 | 是 |
 | submitSuccess | 提交成功事件 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 响应数据 | 是 |
@@ -166,6 +170,8 @@ DataSet.
 
 ### Record Values
 
+> 详细介绍：[Record](/zh/tutorials/dataSet-more#record-%E5%AF%B9%E8%B1%A1)
+
 | 名称           | 说明                                            | 类型                      |
 | -------------- | ----------------------------------------------- | ------------------------- |
 | id             | 唯一 ID，自增长的数字                           | number                    |
@@ -174,16 +180,18 @@ DataSet.
 | selectable     | 可选                                            | observable&lt;boolean&gt; |
 | isSelected     | 是否选中                                        | observable&lt;boolean&gt; |
 | isCurrent      | 是否当前记录                                    | observable&lt;boolean&gt; |
-| children       | 树形子数据集                                    | Record[]\| undefined      |
-| parent         | 树形父数据                                      | Record\| undefined        |
-| previousRecord | 树形中前一条数据                                | Record\| undefined        |
-| nextRecord     | 树形中后一条数据                                | Record\| undefined        |
+| children       | 树形子数据集                                    | Record[] \| undefined      |
+| parent         | 树形父数据                                      | Record \| undefined        |
+| previousRecord | 树形中前一条数据                                | Record \| undefined        |
+| nextRecord     | 树形中后一条数据                                | Record \| undefined        |
 | level          | 树形层级                                        | number                    |
 | dirty          | 数据是否发生变更， 包含级联数据源是否变更       | boolean                   |
-| cascadeParent  | 级联父数据                                      | Record\| undefined        |
+| cascadeParent  | 级联父数据                                      | Record \| undefined        |
 | index          | 在数据源中的索引                                | number                    |
 
 ### Record Methods
+
+> 详细介绍：[Record](/zh/tutorials/dataSet-more#record-%E5%AF%B9%E8%B1%A1)
 
 | 名称 | 说明 | 参数 | 返回值类型 |
 | --- | --- | --- | --- |
@@ -207,6 +215,8 @@ DataSet.
 
 ### Field Props
 
+> 详细介绍：[Field](/zh/tutorials/dataSet-more#fields)
+
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | name | 字段名 | string |  |
@@ -214,7 +224,7 @@ DataSet.
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值: `asc` `desc` | string |  |
 | label | 字段标签 | string |  |
 | labelWidth | 字段标签宽度 | number |  |
-| format | 字符串类型和日期类型字段值格式化。 字符串类型格式化可选值: `'uppercase'` `'lowercase'` `'capitalize'` | string |  |
+| format | 字符串类型和日期类型字段值格式化。 字符串类型格式化可选值: 'uppercase' 'lowercase' 'capitalize' | string |  |
 | pattern | 正则校验 | string \| RegExp |  |
 | maxLength | 最大长度 | number |  |
 | minLength | 最小长度 | number |  |
@@ -246,16 +256,18 @@ DataSet.
 | lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/zh/procmp/configure/configure/#axiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | bind | 内部字段别名绑定 | string |  |
-| dynamicProps | 动态属性对象。对象为字段属性和返回该字段值的钩子的键值对。原对象属性钩子将在 v1.0 版本中废弃。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
+| dynamicProps | [动态属性对象](https://huihuawk.gitee.io/c7n-ui/zh/tutorials/dataSet-more#dynamicprops)。对象为字段属性和返回该字段值的钩子的键值对。原对象属性钩子将在 v1.0 版本中废弃。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |
-| ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | `never` |
+| ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | never |
 | transformRequest | 在发送请求之前对数据进行处理 | (value: any, record: Record) => any |  |
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any, object: any) => any |  |
-| trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
+| trim | 字符串值是否去掉首尾空格，可选值: both \| left \| right \| none | string | both |
 | defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/zh/procmp/configure/configure/#ValidationMessages) | ValidationMessages |  |
 
 ### Field Values
+
+> 详细介绍：[Field](/zh/tutorials/dataSet-more#fields)
 
 | 名称     | 说明     | 类型                      |
 | -------- | -------- | ------------------------- |
@@ -267,13 +279,15 @@ DataSet.
 
 ### Field Methods
 
+> 详细介绍：[Field](/zh/tutorials/dataSet-more#fields)
+
 | 名称 | 说明 | 参数 | 返回值类型 |
 | --- | --- | --- | --- |
 | get(propsName) | 根据属性名获取属性值 | `propsName` - 属性名 | any |
-| set(propsName, value) | 设置属性值 | `propsName` - 属性名；`value` - 属性值 | - |
-| reset() | 重置设置的属性 |  | - |
+| set(propsName, value) | 设置属性值 | `propsName` - 属性名；`value` - 属性值 |  |
+| reset() | 重置设置的属性 |  |  |
 | checkValidity() | 校验字段值 |  | boolean |
-| setLovPara(para, value) | 设置 Lov 的查询参数 | `para` - 参数名；`value` - 参数值 | - |
+| setLovPara(para, value) | 设置 Lov 的查询参数 | `para` - 参数名；`value` - 参数值 |  |
 | getValue() | 获取当前记录的本字段值 | | any |
 | getText(lookupValue) | 根据 lookup 值获取 lookup 描述 | `lookupValue` - lookup 值，默认本字段值 | string |
 | getLookupData(lookupValue) | 根据 lookup 值获取 lookup 数据对象 | `lookupValue` - lookup 值，默认本字段值 | object |
@@ -282,6 +296,8 @@ DataSet.
 | getValidationMessage() | 获取校验信息 |  | string |
 
 ### Transport
+
+> 详细介绍：[Transport](/zh/tutorials/dataSet-more#transport)
 
 | 属性 | 说明 | 类型 |
 | --- | --- | --- |
@@ -305,6 +321,8 @@ DataSet.
 | submitFailed(error) | DataSet 提交失败的反馈, `error` - 异常对象 | Function |
 
 ### DataToJSON
+
+> 详细介绍：[DataToJSON](/zh/tutorials/dataSet-more#datatojson)
 
 | 枚举值 | 说明 |
 | --- | --- |
