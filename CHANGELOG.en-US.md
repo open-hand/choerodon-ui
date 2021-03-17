@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞  `<pro>Form`: Fixed the placeholder in each mode of the form to be filled with label value.
+
 ## 1.1.1
 
 `2021-03-12`
