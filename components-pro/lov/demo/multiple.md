@@ -48,7 +48,7 @@ class App extends React.Component {
   });
 
   render() {
-    return <Lov dataSet={this.ds} name="code" placeholder="复选LOV" />;
+    return <Lov dataSet={this.ds} searchAction="blur" name="code" placeholder="复选LOV" />;
   }
 }
 

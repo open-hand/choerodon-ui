@@ -15,8 +15,24 @@ timeline: true
 
 ---
 
+## 1.1.1
+
+`2021-03-12`
+
 - 🌟 `<pro>Select`: 新增选项分页功能。
+- 🌟 `<pro>Lov`: 新增 searchAction，fetchSingle 属性。
+- 💄 `configure`: 扩展 defaultRenderEmpty 全局属性，支持 Output 组件。
 - 💄 `<pro>Modal`: 扩展 maskClosable 可选 true、false、click、dblclick。
+- 💄 `<pro>Form`: 优化 labelLayout 为 placeholder 时候，可以在聚焦时候显示配置的 placeholder 值。
+- 💄 `<pro>Select`: 优化搜索时候的搜索图标，和多选时候反选不可选值出现被删除。
+- 💄 `<pro>TextArea`: 优化拖拽最小高度防止文字被遮蔽。
+- 💄 `<pro>Lov`: 删除 triggerMode 属性，优化为双击触发弹窗。
+- 💄 `<pro>Lov`: 优化 tableProps 支持 lov Table columns 属性合并。
+- 🐞 `<pro>Field`: 修复部分动态属性配置无效的问题。
+- 🐞 `<pro>Lov`: 修复 button mode 选值无效的问题。
+- 🐞 `<pro>Lov`: 修复默认值存在全选某一页后导致的查询跳页问题。
+- 🐞 `<pro>Tootip`: 修复当 Children 为 undefined 时候导致组件报错。
+- 🐞 `<pro>Select`: 修复 searchMatcher 默认配置获取 textField 字段值可能为空时的报错。
 
 
 ## 1.1.0

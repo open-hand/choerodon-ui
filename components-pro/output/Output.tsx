@@ -59,7 +59,7 @@ export default class Output extends FormField<OutputProps> {
     if (field && field.type === FieldType.boolean) {
       return <ObserverCheckBox disabled checked={value === field.get(BooleanValue.trueValue)} />;
     }
-    return super.defaultRenderer({ text, repeat, maxTagTextLength });
+    return super.defaultRenderer({ text, repeat, maxTagTextLength }) || getConfig('renderEmpty')('Output');
   }
 
   getRenderedValue(): ReactNode {

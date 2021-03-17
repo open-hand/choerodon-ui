@@ -54,18 +54,27 @@ export default class LovView extends Component<LovViewProps> {
   getColumns(): ColumnProps[] | undefined {
     const {
       config: { lovItems },
+      tableProps,
     } = this.props;
     return lovItems
       ? lovItems
         .filter(({ gridField }) => gridField === 'Y')
         .sort(({ gridFieldSequence: seq1 }, { gridFieldSequence: seq2 }) => seq1 - seq2)
-        .map<ColumnProps>(({ display, gridFieldName, gridFieldWidth, gridFieldAlign }) => ({
-          key: gridFieldName,
-          header: display,
-          name: gridFieldName,
-          width: gridFieldWidth,
-          align: gridFieldAlign,
-        }))
+        .map<ColumnProps>(({ display, gridFieldName, gridFieldWidth, gridFieldAlign }) => {
+          let column: ColumnProps | undefined = {};
+          if (tableProps && tableProps.columns) {
+            column = tableProps.columns.find(c => c.name === gridFieldName);
+          }
+          return {
+            ...column,
+            key: gridFieldName,
+            header: display,
+            name: gridFieldName,
+            width: gridFieldWidth,
+            align: gridFieldAlign,
+            editor: false,
+          };
+        })
       : undefined;
   }
 
@@ -96,14 +105,12 @@ export default class LovView extends Component<LovViewProps> {
       config: { queryBar },
       tableProps,
     } = this.props;
-    const lovTablePropsConf = getConfig('lovTableProps');
     if (queryBar) {
       return queryBar;
     }
     if (tableProps && tableProps.queryBar) {
       return tableProps.queryBar;
     }
-    return lovTablePropsConf.queryBar;
   };
 
   render() {
@@ -113,9 +120,7 @@ export default class LovView extends Component<LovViewProps> {
       multiple,
       tableProps,
     } = this.props;
-    const lovTablePropsConf = getConfig('lovTableProps');
     const lovTableProps: TableProps = {
-      ...lovTablePropsConf,
       ...tableProps,
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
@@ -144,7 +149,7 @@ export default class LovView extends Component<LovViewProps> {
 
     // 优化优先级 让 部分tableProps属性 的优先级大于dataSet的设置
     // 目前需要处理 selectionMode
-    Object.assign(lovTableProps, pick({ ...lovTablePropsConf, ...tableProps }, [
+    Object.assign(lovTableProps, pick({ ...tableProps }, [
       'selectionMode',
     ]));
 

@@ -5,6 +5,7 @@ import isFunction from 'lodash/isFunction';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
+import defer from 'lodash/defer';
 import unionBy from 'lodash/unionBy';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -329,6 +330,8 @@ export default class Field {
   lastDynamicProps: any = {};
 
   changingProps: any = {};
+
+  validatorPropKeys: string[] = [];
 
   isDynamicPropsComputing: boolean = false;
 
@@ -833,7 +836,7 @@ export default class Field {
       const multiple = this.get('multiple');
       const unique = this.get('unique');
       const defaultValidationMessages = this.get('defaultValidationMessages');
-      return {
+      const validatorProps = {
         type,
         required,
         record,
@@ -854,6 +857,10 @@ export default class Field {
         format,
         defaultValidationMessages,
       };
+      if (!this.validatorPropKeys.length) {
+        this.validatorPropKeys = Object.keys(validatorProps);
+      }
+      return validatorProps;
     }
   }
 
@@ -974,17 +981,13 @@ export default class Field {
 
   private checkDynamicProp(propsName, newProp) {
     const oldProp = this.lastDynamicProps[propsName];
-    if (this.changingProps[propsName] && !isEqualDynamicProps(oldProp, newProp)) {
+    if (!this.changingProps[propsName] && !isEqualDynamicProps(oldProp, newProp)) {
       this.changingProps[propsName] = true;
-      runInAction(() => {
-        if (propsName in this.validator.props || propsName === 'validator') {
-          this.validator.reset();
-          // validator && DynamicProps 存在 reset 后需要重新校验该条 record 对应字段校验
-          // if (this.record) this.record.validate();
-          // this.checkValidity();
-        }
-        this.handlePropChange(propsName, newProp, oldProp);
-      });
+      if (this.validatorPropKeys.includes(propsName) || propsName === 'validator') {
+        defer(() => this.validator.reset());
+      }
+      this.handlePropChange(propsName, newProp, oldProp);
+
       this.changingProps[propsName] = false;
     }
     this.lastDynamicProps[propsName] = newProp;

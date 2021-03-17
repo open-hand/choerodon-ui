@@ -16,13 +16,14 @@ import LovView from './LovView';
 import { ModalProps } from '../modal/Modal';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
+import Spin from '../spin';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
 import { ParamMatcher, SearchMatcher, Select, SelectProps } from '../select/Select';
-import { ColumnAlign, TableQueryBarType, SelectionMode } from '../table/enum';
-import { FieldType } from '../data-set/enum';
-import { LovFieldType, ViewMode, TriggerMode } from './enum';
+import { ColumnAlign, SelectionMode, TableQueryBarType } from '../table/enum';
+import { DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
+import { LovFieldType, ViewMode, SearchAction } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
@@ -75,8 +76,17 @@ export interface LovProps extends SelectProps, ButtonProps {
   tableProps?: TableProps;
   noCache?: boolean;
   mode?: ViewMode;
-  triggerMode?: TriggerMode;
   lovEvents?: Events;
+  /**
+   * 触发查询变更的动作， default: input
+   */
+  searchAction?: SearchAction;
+  /**
+   * 触发查询获取记录有重复时弹出选择窗口
+   * SearchAction blur 生效
+   * default: false
+   */
+  fetchSingle?: boolean;
 }
 
 @observer
@@ -89,13 +99,19 @@ export default class Lov extends Select<LovProps> {
     modalProps: PropTypes.object,
     tableProps: PropTypes.object,
     noCache: PropTypes.bool,
-    triggerMode: PropTypes.string,
+    fetchSingle: PropTypes.bool,
+    /**
+     * 触发查询变更的动作， default: input
+     */
+    searchAction: PropTypes.oneOf([SearchAction.blur, SearchAction.input]),
   };
 
   static defaultProps = {
     ...Select.defaultProps,
     clearButton: true,
     checkValueOnOptionsChange: false,
+    searchAction: SearchAction.input,
+    fetchSingle: false,
   };
 
   modal;
@@ -120,9 +136,8 @@ export default class Lov extends Select<LovProps> {
   @computed
   get searchable(): boolean {
     const config = this.getConfig();
-    const triggerMode = this.getTriggerMode();
     if (config) {
-      return config.editableFlag === 'Y' && triggerMode !== TriggerMode.input;
+      return config.editableFlag === 'Y';
     }
     return !!this.props.searchable;
   }
@@ -157,6 +172,14 @@ export default class Lov extends Select<LovProps> {
     };
   }
 
+  @autobind
+  getPopupContent(): ReactNode {
+    if (this.props.searchAction === SearchAction.input) {
+      return super.getPopupContent();
+    }
+    return null;
+  }
+
   @computed
   get options(): DataSet {
     const { field, lovCode } = this;
@@ -175,11 +198,12 @@ export default class Lov extends Select<LovProps> {
     return new DataSet();
   }
 
-  private openModal = action(() => {
+  private openModal = action((fetchSingle?: boolean) => {
     const config = this.getConfig();
     const { options, multiple, primitive, valueField } = this;
-    const { tableProps, lovEvents } = this.props;
+    const { lovEvents } = this.props;
     const modalProps = this.getModalProps();
+    const tableProps = this.getTableProps();
     const noCache = this.getProp('noCache');
     if (!this.modal && config && options) {
       const { width, title } = config;
@@ -190,6 +214,8 @@ export default class Lov extends Select<LovProps> {
           this.getValues().map(value => {
             const selected = new Record(primitive ? { [valueField]: value } : toJS(value), options);
             selected.isSelected = true;
+            selected.isCached = true;
+            selected.status = RecordStatus.sync;
             return selected;
           }),
         );
@@ -221,7 +247,7 @@ export default class Lov extends Select<LovProps> {
           ...(modalProps && modalProps.style),
         },
       } as ModalProps & { children; });
-      if (this.resetOptions(noCache)) {
+      if (this.resetOptions(noCache) && fetchSingle !== true) {
         options.query();
       } else if (multiple) {
         options.releaseCachedSelected();
@@ -247,7 +273,9 @@ export default class Lov extends Select<LovProps> {
           textMatcher = paramMatcher({ record, text, textField, valueField }) || text;
         }
         options.setQueryParameter(searchMatcher, textMatcher);
-        options.query();
+        if (this.props.searchAction === SearchAction.input) {
+          options.query();
+        }
       }
     }
   }
@@ -263,19 +291,16 @@ export default class Lov extends Select<LovProps> {
   };
 
   handleLovViewOk = async () => {
-    const { options, multiple, props: { tableProps } } = this;
+    const { options, multiple  } = this;
+    const tableProps = this.getTableProps();
 
     // 根据 mode 进行区分 假如 存在 rowbox 这些 不应该以 current 作为基准
     let selectionMode = {
       selectionMode: multiple ? SelectionMode.rowbox : SelectionMode.none,
-      ...getConfig('lovTableProps'),
       ...tableProps,
     }.selectionMode;
 
-    if ({
-      ...getConfig('lovTableProps'),
-      ...this.props.tableProps,
-    }.alwaysShowRowBox) {
+    if (tableProps.alwaysShowRowBox) {
       selectionMode = SelectionMode.rowbox;
     }
 
@@ -322,6 +347,10 @@ export default class Lov extends Select<LovProps> {
       stopEvent(e);
       this.openModal();
     }
+    if (e.keyCode === KeyCode.ENTER && this.props.searchAction === SearchAction.blur) {
+      stopEvent(e);
+      this.blur();
+    }
     super.handleKeyDown(e);
   }
 
@@ -333,10 +362,32 @@ export default class Lov extends Select<LovProps> {
     super.handleBlur(e);
   }
 
+  getWrapperProps() {
+    return super.getWrapperProps({
+      onDoubleClick: this.handleOpenModal(),
+    });
+  }
+
   syncValueOnBlur(value) {
-    const { mode } = this.props;
+    const { textField } = this;
+    const { mode, searchAction, fetchSingle } = this.props;
     if (mode !== ViewMode.button) {
-      super.syncValueOnBlur(value);
+      let hasRecord: boolean = false;
+      if (this.getValue()) {
+        hasRecord = this.getValue()[textField] === value;
+      }
+      if (searchAction === SearchAction.blur && value && !hasRecord) {
+        this.options.query().then(() => {
+          const length = this.options.length;
+          if ((length > 1 && !fetchSingle) || length === 1) {
+            this.choose(this.options.get(0));
+          } else if (this.options.length && fetchSingle) {
+            this.openModal(fetchSingle);
+          }
+        });
+      } else {
+        super.syncValueOnBlur(value);
+      }
     }
   }
 
@@ -361,35 +412,32 @@ export default class Lov extends Select<LovProps> {
     return [];
   }
 
-  onClick = () => {
-    return this.isDisabled() || this.isReadOnly() ? undefined : this.openModal();
-  };
-
-  getTriggerMode() {
-    const { triggerMode } = this.props;
-    if (triggerMode !== undefined) {
-      return triggerMode;
-    }
-    return getConfig('lovTriggerMode');
-  }
-
   getModalProps() {
     const { modalProps } = this.props;
     return { ...getConfig('lovModalProps'), ...modalProps };
   }
 
+  getTableProps() {
+    const { tableProps } = this.props;
+    return { ...getConfig('lovTableProps'), ...tableProps };
+  }
+
+  @autobind
+  handleOpenModal() {
+    return this.isDisabled() || this.isReadOnly() ? undefined : this.openModal;
+  }
+
   getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), ['modalProps', 'noCache', 'tableProps', 'triggerMode', 'lovEvents']);
-    const triggerMode = this.getTriggerMode();
-    if (triggerMode === TriggerMode.input) otherProps.onClick = this.onClick;
-    return otherProps;
+    return omit(super.getOtherProps(), ['modalProps', 'noCache', 'tableProps', 'lovEvents', 'searchAction', 'fetchSingle']);
   }
 
   getButtonProps() {
     const { className, type } = this.props;
+    const { options } = this;
     const props: ButtonProps = {
       ...Button.defaultProps,
       ...omit(this.getOtherProps(), ['name']),
+      dataSet: options,
       className,
       type,
     };
@@ -400,33 +448,18 @@ export default class Lov extends Select<LovProps> {
     return props;
   }
 
-  getSuffix(): ReactNode {
-    const { suffix } = this.props;
-    return this.wrapperSuffix(suffix || <Icon type="search" />, {
-      onClick: this.isDisabled() || this.isReadOnly() ? undefined : this.openModal,
-    });
+  @computed
+  get loading(): boolean {
+    const { options, props: { searchAction } } = this;
+    return searchAction === SearchAction.blur && options.status === DataSetStatus.loading && !this.popup;
   }
 
-  getInnerSpanButton(): ReactNode {
-    const {
-      props: { clearButton },
-      prefixCls,
-    } = this;
-    if (clearButton && !this.isReadOnly()) {
-      return this.wrapperInnerSpanButton(
-        <Icon
-          type="close"
-          onClick={(e) => {
-            const triggerMode = this.getTriggerMode();
-            if (triggerMode === TriggerMode.input) e.preventDefault();
-            this.handleClearButtonClick();
-          }}
-        />,
-        {
-          className: `${prefixCls}-clear-button`,
-        },
-      );
-    }
+  getSuffix(): ReactNode {
+    const { suffix } = this.props;
+    const icon = this.loading ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
+    return this.wrapperSuffix(suffix || icon, {
+      onClick: this.handleOpenModal(),
+    });
   }
 
   componentWillUnmount() {
@@ -438,8 +471,7 @@ export default class Lov extends Select<LovProps> {
 
   select() {
     const { mode } = this.props;
-    const triggerMode = this.getTriggerMode();
-    if (mode !== ViewMode.button && triggerMode !== TriggerMode.input) {
+    if (mode !== ViewMode.button) {
       super.select();
     }
   }
@@ -452,7 +484,7 @@ export default class Lov extends Select<LovProps> {
           key="lov_button"
           {...this.getButtonProps()}
           disabled={this.isDisabled()}
-          onClick={this.openModal}
+          onClick={() => this.openModal()}
         >
           {children || this.getTextNode() || this.getPlaceholders()[0] || $l('Lov', 'choose')}
         </Button>,
