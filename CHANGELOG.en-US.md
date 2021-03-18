@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added table personalization features, including `customizedCode`, `customizedType`, `columnTitleEditable`, `columnHideable`, `columnDraggable`, `rowDraggable` attributes, deprecated `columnsMergeCoverage`, `columnsOnChange`, `columnsEditType`, `dragColumn`, `dragRow` attributes, and Column added `titleEditable` attributes.
 - 🐞 `<pro>Table`: Fix the border style issue.
 - 🐞 `<pro>Record`: Fix the problem that the rest method cannot restore the recording state.
+- 🐞 `<pro>NumberField`: Fix the problem that long-pressing the increase or decrease value button fails to stop when the verification fails.
 
 ## 1.1.1
 

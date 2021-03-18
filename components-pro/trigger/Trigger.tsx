@@ -170,32 +170,34 @@ export default class Trigger extends Component<TriggerProps> {
   render() {
     const { children } = this.props;
     const popup = this.getPopup();
-    const newChildren = popup ? Children.map(children, child => {
+    const newChildren = Children.map(children, child => {
       if (isValidElement(child)) {
         const newChildProps: any = {};
-        if (this.isContextMenuToShow()) {
-          newChildProps.onContextMenu = this.handleEvent;
+        if (popup) {
+          if (this.isContextMenuToShow()) {
+            newChildProps.onContextMenu = this.handleEvent;
+          }
+          if (this.isClickToHide() || this.isClickToShow()) {
+            newChildProps.onClick = this.handleEvent;
+            newChildProps.onMouseDown = this.handleEvent;
+          }
+          if (this.isMouseEnterToShow()) {
+            newChildProps.onMouseEnter = this.handleEvent;
+          }
+          if (this.isMouseLeaveToHide()) {
+            newChildProps.onMouseLeave = this.handleEvent;
+          }
+          if (this.isFocusToShow() || this.isBlurToHide()) {
+            newChildProps.onFocus = this.handleEvent;
+            newChildProps.onBlur = this.handleEvent;
+          }
+          newChildProps.isClickScrollbar = this.isClickScrollbar;
+          newChildProps.popupHidden = this.popupHidden;
         }
-        if (this.isClickToHide() || this.isClickToShow()) {
-          newChildProps.onClick = this.handleEvent;
-          newChildProps.onMouseDown = this.handleEvent;
-        }
-        if (this.isMouseEnterToShow()) {
-          newChildProps.onMouseEnter = this.handleEvent;
-        }
-        if (this.isMouseLeaveToHide()) {
-          newChildProps.onMouseLeave = this.handleEvent;
-        }
-        if (this.isFocusToShow() || this.isBlurToHide()) {
-          newChildProps.onFocus = this.handleEvent;
-          newChildProps.onBlur = this.handleEvent;
-        }
-        newChildProps.isClickScrollbar = this.isClickScrollbar;
-        newChildProps.popupHidden = this.popupHidden;
         return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
       }
       return child;
-    }) : children;
+    });
     return [newChildren, popup];
   }
 

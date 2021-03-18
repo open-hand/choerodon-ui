@@ -114,6 +114,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   static format = defaultFormatNumber;
 
+  plusElement?: HTMLDivElement | null;
+
+  minusElement?: HTMLDivElement | null;
+
   @computed
   get lang(): Lang {
     const { lang } = this.observableProps;
@@ -206,6 +210,16 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     });
   }
 
+  @autobind
+  savePlusRef(ref) {
+    this.plusElement = ref;
+  }
+
+  @autobind
+  saveMinusRef(ref) {
+    this.minusElement = ref;
+  }
+
   isLowerRange(value1: number, value2: number): boolean {
     return value1 < value2;
   }
@@ -245,22 +259,26 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const { longPressPlus } = this.props;
     const step = this.getProp('step');
     if (step && !range && !this.isReadOnly()) {
-      const plusIconProps = {
+      const plusIconProps: any = {
+        ref: this.savePlusRef,
         key: 'plus',
-        type: 'keyboard_arrow_up',
         className: `${prefixCls}-plus`,
         onMouseDown: longPressPlus ? this.handlePlus : this.handleOncePlus,
       };
-      const minIconProps = {
+      const minIconProps: any = {
+        ref: this.saveMinusRef,
         key: 'minus',
-        type: 'keyboard_arrow_down',
         className: `${prefixCls}-minus`,
         onMouseDown: longPressPlus ? this.handleMinus : this.handleOnceMinus,
       };
       return this.wrapperInnerSpanButton(
         <div>
-          <Icon {...plusIconProps} />
-          <Icon {...minIconProps} />
+          <div {...plusIconProps}>
+            <Icon type="keyboard_arrow_up" />
+          </div>
+          <div {...minIconProps}>
+            <Icon type="keyboard_arrow_down" />
+          </div>
         </div>,
       );
     }
@@ -308,14 +326,18 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     }
   }
 
-  @keepRunning
-  handlePlus() {
-    this.step(true);
+  @keepRunning(function () {
+    return this.plusElement;
+  })
+  handlePlus(_e, isKeeping) {
+    this.step(true, isKeeping);
   }
 
-  @keepRunning
-  handleMinus() {
-    this.step(false);
+  @keepRunning(function () {
+    return this.minusElement;
+  })
+  handleMinus(_e, isKeeping) {
+    this.step(false, isKeeping);
   }
 
   @autobind
@@ -338,7 +360,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return otherProps;
   }
 
-  step(isPlus: boolean) {
+  step(isPlus: boolean, isKeeping?: boolean) {
     const min = defaultTo(this.min, -MAX_SAFE_INTEGER);
     const max = defaultTo(this.max, MAX_SAFE_INTEGER);
     const step = defaultTo(this.getProp('step'), 1);
@@ -383,7 +405,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     // 不要进行对比操作,在table中使用的时候,因为NumberField会作为editor使用,所以在 对第一个cell只点击一次的情况下(例如plus)
     // 此时切换到第二个cell进行编辑，无法进行上次操作(同上次的plus)
     // this.value !== newValue
-    if (this.multiple) {
+    if (this.multiple || isKeeping) {
       this.setText(String(newValue));
     } else {
       this.prepareSetValue(newValue);

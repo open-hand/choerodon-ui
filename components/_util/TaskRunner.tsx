@@ -5,6 +5,8 @@ export default class TaskRunner {
 
   callbacks: (() => any)[] = [];
 
+  isRunning: boolean = false;
+
   constructor(fn?: Function) {
     if (fn) {
       this.fn = fn;
@@ -28,6 +30,7 @@ export default class TaskRunner {
       this.callbacks.push(callback);
     }
     if (this.fn) {
+      this.isRunning = true;
       return new Promise(resolve => {
         this.id = setInterval(() => {
           if (once) {
@@ -43,6 +46,7 @@ export default class TaskRunner {
   }
 
   cancel() {
+    this.isRunning = false;
     if (this.id) {
       clearInterval(this.id);
       delete this.id;

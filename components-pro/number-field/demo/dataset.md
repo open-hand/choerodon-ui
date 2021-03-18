@@ -24,7 +24,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'age', type: 'number', defaultValue: 100000000000000, required: true },
+      { name: 'age', type: 'number', step: 1, required: true, validator: (value) => value > 10 ? '错误' : true  },
     ],
     events: {
       update: handleDataSetChange,

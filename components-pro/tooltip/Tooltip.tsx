@@ -2,7 +2,7 @@ import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import noop from 'lodash/noop';
-import isNil from "lodash/isNil";
+import isNil from 'lodash/isNil';
 import Trigger, { TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
@@ -236,19 +236,21 @@ export default class Tooltip extends Component<TooltipProps, any> {
       extraProps.popupHidden = hidden;
     }
     const content = this.getContent();
-    return content && !isNil(child) ? (
+    return !isNil(child) ? (
       <Trigger
         prefixCls={prefixCls}
         action={trigger}
         builtinPlacements={this.placements}
         popupPlacement={placement}
         popupContent={
-          <PopupContent
-            content={content}
-            theme={theme}
-            prefixCls={prefixCls}
-            translate={translate}
-          />
+          content && (
+            <PopupContent
+              content={content}
+              theme={theme}
+              prefixCls={prefixCls}
+              translate={translate}
+            />
+          )
         }
         onPopupHiddenChange={onHiddenChange}
         onPopupAlign={this.handlePopupAlign}
