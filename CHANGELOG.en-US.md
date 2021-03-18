@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the border style issue.
 - 🐞 `<pro>Record`: Fix the problem that the rest method cannot restore the recording state.
 - 🐞 `<pro>NumberField`: Fix the problem that long-pressing the increase or decrease value button fails to stop when the verification fails.
+- 🐞 `<pro>Form`: Fixed the placeholder in each mode of the form to be filled with label value.
 
 ## 1.1.1
 
