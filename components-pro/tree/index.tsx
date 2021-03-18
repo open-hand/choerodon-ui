@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { action, computed, observable, runInAction } from 'mobx';
 import noop from 'lodash/noop';
 import C7NTree, { C7nTreeNodeProps, DataNode, EventDataNode, TreeNode, TreeProps as C7NTreeProps } from 'choerodon-ui/lib/tree';
-import autobind from 'choerodon-ui/pro/lib/_util/autobind';
+import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import { getKey, getTreeNodes, NodeRenderer, TreeNodeRenderer } from './util';
 import { BooleanValue, DataSetSelection } from '../data-set/enum';

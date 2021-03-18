@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableColumnTitleEditable`, `tableColumnHideable`, `tableColumnDraggable`, `tableRowDraggable`, `tableCustomizedSave`, `tableCustomizedLoad` global properties, and deprecated `tableDragColumn` and `tableDragRow` properties.
+- 🌟 `<pro>Table`: Added table personalization features, including `customizedCode`, `customizedType`, `columnTitleEditable`, `columnHideable`, `columnDraggable`, `rowDraggable` attributes, deprecated `columnsMergeCoverage`, `columnsOnChange`, `columnsEditType`, `dragColumn`, `dragRow` attributes, and Column added `titleEditable` attributes.
+- 🐞 `<pro>Table`: Fix the border style issue.
+- 🐞 `<pro>Record`: Fix the problem that the rest method cannot restore the recording state.
+
 ## 1.1.1
 
 `2021-03-12`

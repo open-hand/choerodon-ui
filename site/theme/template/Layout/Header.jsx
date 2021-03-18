@@ -97,7 +97,7 @@ export default class Header extends React.Component {
       .map(version => <Option value={docVersions[version]} key={version}>{version}</Option>);
     const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/').slice(0, -1).join('/');
     let activeMenuItem = module || 'home';
-    if (activeMenuItem === 'components' || location.pathname === 'changelog') {
+    if (location.pathname === 'changelog') {
       activeMenuItem = 'docs/react';
     }
     const { intl: { locale } } = this.context;
@@ -135,7 +135,17 @@ export default class Header extends React.Component {
         </Menu.Item>
         <Menu.Item key="docs/react">
           <Link to={utils.getLocalizedPathname('/docs/react/introduce', isZhCN)}>
+            <FormattedMessage id="app.header.menu.doc" />
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="components">
+          <Link to={utils.getLocalizedPathname('/components/button/', isZhCN)}>
             <FormattedMessage id="app.header.menu.components" />
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="components-pro">
+          <Link to={utils.getLocalizedPathname('/components-pro/data-set/', isZhCN)}>
+            <FormattedMessage id="app.header.menu.pro-components" />
           </Link>
         </Menu.Item>
       </Menu>,

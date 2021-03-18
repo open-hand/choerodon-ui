@@ -19,22 +19,32 @@ function getActiveMenuItem(props) {
   );
 }
 
-function getModuleData(props) {
-  const { pathname } = props.location;
-  const moduleName = /^\/?components/.test(pathname)
-    ? 'components'
+function getModuleDataByCategory(props) {
+  const { location: { pathname }, picked } = props;
+  const matches = pathname.match(/^\/?(components[^/]*)/);
+  const moduleName = matches
+    ? matches[1]
     : pathname
-        .split('/')
-        .filter(item => item)
-        .slice(0, 2)
-        .join('/');
-  const moduleData =
-    moduleName === 'components' ||
-    moduleName === 'docs/react' ||
-    moduleName === 'changelog' ||
-    moduleName === 'changelog-cn'
-      ? [...props.picked.components, ...props.picked['docs/react'], ...props.picked.changelog]
-      : props.picked[moduleName];
+      .split('/')
+      .filter(item => item)
+      .slice(0, 2)
+      .join('/');
+  switch (moduleName) {
+    case 'components':
+      return picked.components.filter(cmp => cmp.meta.category === 'Components');
+    case 'components-pro':
+      return picked.components.filter(cmp => cmp.meta.category === 'Pro Components');
+    case 'docs/react':
+    case 'changelog':
+    case 'changelog-cn':
+      return [...picked['docs/react'], ...picked.changelog];
+    default:
+      return picked[moduleName];
+  }
+}
+
+function getModuleData(props) {
+  const moduleData = getModuleDataByCategory(props);
   const excludedSuffix = utils.isZhCN(props.location.pathname) ? 'en-US.md' : 'zh-CN.md';
   return moduleData.filter(({ meta }) => !meta.filename.endsWith(excludedSuffix));
 }

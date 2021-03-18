@@ -1,7 +1,7 @@
 import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { getConfig } from '../../configure';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 

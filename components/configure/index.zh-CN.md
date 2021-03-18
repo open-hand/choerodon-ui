@@ -51,7 +51,6 @@ const prefixCls = getConfig('prefixCls');
 | tableSelectedHighLightRow | 默认 Table 当前勾选行高亮 | boolean | false |
 | tableParityRow | 默认 Table 奇偶行 | boolean |  |
 | tableRowHeight | 默认 Table 行高 | auto \| number | 30 |
-| tableColumnResizable | 默认 Table 列可调整列宽 | boolean | true |
 | tableExpandIcon | 默认 Table 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | tableSpinProps | 默认 Table spin 的属性 | SpinProps | { size: Size.default, wrapperClassName: '' } |
 | tableButtonProps | 默认 TableButton 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |
@@ -60,15 +59,20 @@ const prefixCls = getConfig('prefixCls');
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
-| tableDragRow | Table是否开启行拖拽 | boolean | false |
-| tableDragColumn | Table是否开启列拖拽 | boolean | false |
-| tableDragColumnAlign | Table列拖拽的模式 | 'left'\|'right' | - |
+| tableColumnResizable | 默认 Table 列可调整列宽 | boolean | true |
+| tableColumnHideable | 默认 Table 列可调整显示 | boolean | true |
+| tableColumnTitleEditable | 默认 Table 列可编辑标题 | boolean | false |
+| tableColumnDraggable | Table是否开启列拖拽 | boolean | false |
+| tableRowDraggable | Table是否开启行拖拽 | boolean | false |
+| tableDragColumnAlign | Table行拖拽的模式 | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | tableKeyboard | Table 开启或关闭新增的快捷按钮事件 | boolean | false |
 | tableFilterAdapter | Table 筛选条请求适配器 | AxiosRequestConfig | |
 | tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |
 | tableFilterSearchText | Table 筛选条快速搜索参数名 | string | 'params' |
 | tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
+| tableCustomizedSave | Table 个性化保存的钩子 | (code, customized) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
+| tableCustomizedLoad | Table 个性化加载的钩子 | (code) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |

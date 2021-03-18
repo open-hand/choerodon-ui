@@ -1,0 +1,110 @@
+@import '../../../components/style/themes/default';
+
+@table-customization-prefix-cls: ~'@{c7n-pro-prefix}-table-customization';
+
+.@{table-customization-prefix-cls} {
+  &-tree {
+    min-height: .01rem;
+    margin-bottom: .06rem;
+
+    &-treenode {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      padding: 0 0 .04rem;
+      outline: none;
+
+      &-content {
+        position: relative;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        height: .32rem;
+        min-height: .24rem;
+        margin: 0;
+        padding: .04rem 0;
+        color: inherit;
+        line-height: .24rem;
+        background: transparent;
+        border-radius: .02rem 0 0 .02rem;
+      }
+
+      &-title {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        margin-left: .03rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        user-select: none;
+      }
+
+      &-switcher {
+        flex: none;
+        width: .22rem;
+        height: .32rem;
+        margin: 0;
+        padding: .05rem 0;
+        line-height: 1;
+        text-align: center;
+        vertical-align: top;
+        cursor: pointer;
+
+        &-icon {
+          font-size: .18rem;
+          line-height: .22rem;
+
+          &-close {
+            transform: rotate(-180deg);
+          }
+        }
+
+        &-noop {
+          cursor: default;
+        }
+      }
+
+      &-drag-icon {
+        color: @text-color-secondary;
+      }
+
+      &-dragging {
+        background-color: @component-background;
+        box-shadow: @shadow-4;
+      }
+    }
+
+    &-group-header {
+      display: inline-block;
+      margin-bottom: .1rem;
+      margin-left: .03rem;
+      color: @text-color-secondary;
+      font-size: @font-size-sm;
+    }
+  }
+
+  &-panel {
+    &-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: .2rem;
+
+      &::before {
+        display: block;
+        width: .03rem;
+        height: .12rem;
+        margin-right: .06rem;
+        background-color: @primary-color;
+        content: " ";
+      }
+    }
+
+    &-title {
+      flex: 1;
+      font-weight: 400;
+      font-size: .14rem;
+      line-height: .22rem;
+    }
+  }
+}

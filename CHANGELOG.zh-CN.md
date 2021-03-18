@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 tableColumnTitleEditable、tableColumnHideable、tableColumnDraggable、tableRowDraggable、tableCustomizedSave、tableCustomizedLoad 全局属性， 废弃 tableDragColumn、tableDragRow 属性。
+- 🌟 `<pro>Table`: 新增表格个性化功能，包括新增 customizedCode、customizedType、columnTitleEditable、columnHideable、columnDraggable、rowDraggable 属性， 废弃 columnsMergeCoverage、columnsOnChange、columnsEditType、dragColumn、dragRow 属性, Column 新增 titleEditable 属性。
+- 🐞 `<pro>Table`: 修复边框样式问题。
+- 🐞 `<pro>Record`: 修复 rest 方法无法恢复记录状态的问题。
+
 ## 1.1.1
 
 `2021-03-12`

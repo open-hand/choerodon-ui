@@ -1,6 +1,6 @@
 import React, { ReactNode, ReactElement, Key } from 'react';
 import { observer } from 'mobx-react';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import Menu, { Item } from 'choerodon-ui/lib/rc-components/menu';
 import { action } from 'mobx';
 import Record from '../data-set/Record';

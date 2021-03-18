@@ -49,6 +49,12 @@ export interface Locale {
     please_enter;
     query_option_yes;
     query_option_no;
+    customization_settings;
+    column_settings;
+    restore_default;
+    left_lock;
+    right_lock;
+    unlocked;
   };
   Pagination: {
     page;

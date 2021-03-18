@@ -41,6 +41,7 @@ const locale: Locale = {
     rename: '重命名',
     set_default: '设为默认',
     cancel_default: '取消默认',
+    restore_default: '恢复默认',
     filter_rename: '筛选重命名',
     save_filter_as: '筛选另存为',
     whether_delete_filter: '是否删除筛选记录',
@@ -48,6 +49,11 @@ const locale: Locale = {
     please_enter: '请输入',
     query_option_yes: '是',
     query_option_no: '否',
+    customization_settings: '个性化设置',
+    column_settings: '表头设置',
+    left_lock: '左冻结',
+    right_lock: '右冻结',
+    unlocked: '未冻结',
   },
   Pagination: {
     page: '页',
@@ -160,19 +166,19 @@ const locale: Locale = {
     series: '套系类',
   },
   Cascader: {
-    please_select:'请选择',
+    please_select: '请选择',
     value_missing_no_label: '请选择。',
     value_missing: '请选择{label}。',
     select_all: '全选',
     unselect_all: '无',
   },
-  Screening:{
-    selected:'已选',
-    pack_up:'收起',
-    more:'更多',
-    multi_select:'多选',
-    confirm:'确认',
-    cancel:'取消',
+  Screening: {
+    selected: '已选',
+    pack_up: '收起',
+    more: '更多',
+    multi_select: '多选',
+    confirm: '确认',
+    cancel: '取消',
   },
 };
 
