@@ -34,7 +34,7 @@ class App extends React.Component {
   ds = new DataSet({
     data,
     fields: [
-      { name: 'user', type: 'string', textField: 'text', label: '用户', multiple: true },
+      { name: 'user', type: 'string', textField: 'text', label: '用户', multiple: true, required: true },
     ],
     events: {
       update: handleDataSetChange,

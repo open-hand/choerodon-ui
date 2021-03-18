@@ -120,6 +120,7 @@ export type Config = {
   drawerOkFirst?: boolean;
   modalButtonProps?: ButtonProps;
   modalKeyboard?: boolean;
+  modalMaskClosable?: string | boolean;
   buttonFuncType?: FuncType;
   buttonColor?: ButtonColor;
   renderEmpty?: renderEmptyHandler;
@@ -234,6 +235,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['modalAutoCenter', false],
   ['drawerOkFirst', undefined],
   ['modalKeyboard', true],
+  ['modalMaskClosable', false],
   ['buttonColor', ButtonColor.default],
   ['buttonFuncType', FuncType.raised],
   ['feedback', defaultFeedback],

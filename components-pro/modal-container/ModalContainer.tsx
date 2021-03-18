@@ -8,14 +8,13 @@ import EventManager from 'choerodon-ui/lib/_util/EventManager';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import ModalManager, { DrawerOffsets, IModalContainer } from '../modal-manager';
 import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
 import { suffixCls } from '../modal/utils';
-import { ClosableMode } from '../modal/interface';
 
 const { containerInstances } = ModalManager;
 
@@ -199,7 +198,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const { modals } = this.state;
     const modal = findLast(modals, ({ hidden }) => !hidden);
     if (modal) {
-      const { close = noop, onCancel = noop, maskClosable } = modal;
+      const { close = noop, onCancel = noop, maskClosable = getConfig('modalMaskClosable') } = modal;
       if (maskClosable) {
         const ret = await onCancel();
         if (ret !== false) {
@@ -360,8 +359,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     }
     const eventProps: any = {};
     if (activeModal && activeModal.mask) {
-      const { maskClosable } = activeModal;
-      if (maskClosable === ClosableMode.dblclick) {
+      const { maskClosable = getConfig('modalMaskClosable') } = activeModal;
+      if (maskClosable === 'dblclick') {
         eventProps.onDoubleClick = this.handleMaskClick;
       } else {
         eventProps.onClick = this.handleMaskClick;
