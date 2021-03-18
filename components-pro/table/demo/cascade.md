@@ -241,7 +241,7 @@ class App extends React.Component {
       this.toJSONDataButton,
     ];
     return [
-      <Table key="user" buttons={buttons} dataSet={this.userDs} header="User" rowHeight="auto" dragColumn rowNumber={({ text }) => `#${text}`}>
+      <Table key="user" buttons={buttons} dataSet={this.userDs} header="User" rowHeight="auto" columnDraggable rowNumber={({ text }) => `#${text}`}>
         <Column name="userid" editor />
         <Column name="age" editor width={150} />
         <Column name="enable" editor width={50} />

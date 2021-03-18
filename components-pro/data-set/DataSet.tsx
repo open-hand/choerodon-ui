@@ -25,11 +25,13 @@ import {
   doExport,
   findBindFieldBy,
   findRootParent,
+  fixAxiosConfig,
   generateData,
   generateJSONData,
   generateResponseData,
   getFieldSorter,
   getOrderFields,
+  getSpliceRecord,
   getSplitValue,
   isDirtyRecord,
   prepareForSubmit,
@@ -40,6 +42,7 @@ import {
   sortTree,
   useCascade,
   useSelected,
+  normalizeGroups,
 } from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -55,27 +58,11 @@ import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 
-function getSpliceRecord(records: Record[], inserts: Record[], fromRecord?: Record): Record | undefined {
-  if (fromRecord) {
-    if (inserts.includes(fromRecord)) {
-      return getSpliceRecord(records, inserts, records[records.indexOf(fromRecord) + 1]);
-    }
-    return fromRecord;
-  }
-}
-
-// bugs in react native
-function fixAxiosConfig(config: AxiosRequestConfig): AxiosRequestConfig {
-  const { method } = config;
-  if (method && method.toLowerCase() === 'get') {
-    delete config.data;
-  }
-  return config;
-}
-
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
+
+export type Group = { name: string,  value: any, records: Record[], subGroups: Group[] };
 
 export interface DataSetProps {
   /**
@@ -631,6 +618,33 @@ export default class DataSet extends EventManager {
   get paging(): boolean | 'server' {
     const { idField, parentField, paging } = this.props;
     return (paging === `server`) && parentField && idField ? paging : (parentField === undefined || idField === undefined) && !!paging!;
+  }
+
+  @computed
+  get groups() {
+    return [...this.fields.entries()]
+      .reduce<string[]>((arr, [name, field]) => {
+        const group = field.get('group');
+        if (isNumber(group)) {
+          arr[group as number] = name;
+        } else if (group === true && !arr[0]) {
+          arr[0] = name;
+        }
+        return arr;
+      }, [])
+      .filter(group => group !== undefined);
+  }
+
+  @computed
+  get groupedRecords(): Group[] {
+    const { groups, records } = this;
+    return normalizeGroups(groups, records);
+  }
+
+  @computed
+  get groupedTreeRecords(): Group[] {
+    const { groups, treeRecords } = this;
+    return normalizeGroups(groups, treeRecords);
   }
 
   set paging(paging) {
@@ -1621,17 +1635,7 @@ export default class DataSet extends EventManager {
    * @returns 字段名列表
    */
   getGroups(): string[] {
-    return [...this.fields.entries()]
-      .reduce<string[]>((arr, [name, field]) => {
-        const group = field.get('group');
-        if (isNumber(group)) {
-          arr[group as number] = name;
-        } else if (group === true && !arr[0]) {
-          arr[0] = name;
-        }
-        return arr;
-      }, [])
-      .filter(group => group !== undefined);
+    return this.groups;
   }
 
   initFields(fields: FieldProps[]): void {

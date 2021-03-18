@@ -48,6 +48,12 @@ const locale: Locale = {
     please_enter: '入ってください',
     query_option_yes: 'はい',
     query_option_no: 'いいえ',
+    customization_settings: 'カスタマイズの設定',
+    column_settings: 'ヘッダー設定',
+    restore_default: 'デフォルトに戻す',
+    left_lock: '左側をロック',
+    right_lock: '右側をロック',
+    unlocked: 'ロック解除',
   },
   Pagination: {
     page: 'ページ',
@@ -164,19 +170,19 @@ const locale: Locale = {
     series: 'セット',
   },
   Cascader: {
-    please_select:'選んでください',
+    please_select: '選んでください',
     value_missing_no_label: '選択してください。',
     value_missing: '{label}を選択してください。',
     select_all: 'すべて選択',
     unselect_all: 'いや',
   },
-  Screening:{
-    selected:'選択済み',
-    pack_up:'片付け',
-    more:'もっと',
-    multi_select:'複数の選択肢',
-    confirm:'確認',
-    cancel:'キャンセル',
+  Screening: {
+    selected: '選択済み',
+    pack_up: '片付け',
+    more: 'もっと',
+    multi_select: '複数の選択肢',
+    confirm: '確認',
+    cancel: 'キャンセル',
   },
 };
 

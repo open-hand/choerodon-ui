@@ -1,11 +1,11 @@
 import React, { FunctionComponent, ReactElement, useContext, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import TableContext from './TableContext';
-import TableWrapper from './TableWrapper';
+import { TableWrapperProps } from './TableWrapper';
 
 export interface VirtualWrapperProps {
   prefixCls?: string;
-  children?: ReactElement<TableWrapper>
+  children?: ReactElement<TableWrapperProps>
 }
 
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer((props) => {

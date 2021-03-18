@@ -48,6 +48,12 @@ const locale: Locale = {
     please_enter: 'Please enter',
     query_option_yes: 'Yes',
     query_option_no: 'No',
+    customization_settings: 'Settings of customization',
+    column_settings: 'Settings of column',
+    restore_default: 'Restore to default',
+    left_lock: 'Lock on the left',
+    right_lock: 'Lock on the right',
+    unlocked: 'Unlocked',
   },
   Pagination: {
     page: 'Page',

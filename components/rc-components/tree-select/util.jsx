@@ -484,7 +484,7 @@ export function processSimpleTreeData(treeData, format) {
     for (let i = 0; i < array.length; i++) {
       array[i] = { ...array[i] }; // copy, can not corrupts original data
       if (array[i][format.pId] === parent[format.id]) {
-        array[i].key = array[i][format.id];
+        array[i].name = array[i][format.id];
         children.push(array[i]);
         array.splice(i--, 1);
       }

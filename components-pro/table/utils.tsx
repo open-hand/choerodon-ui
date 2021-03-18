@@ -1,4 +1,5 @@
 import React, { isValidElement, Key, ReactElement, ReactNode } from 'react';
+import { DraggingStyle, DropResult, NotDraggingStyle } from 'react-beautiful-dnd';
 import isString from 'lodash/isString';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { ColumnProps } from './Column';
@@ -7,6 +8,7 @@ import ObserverCheckBox from '../check-box/CheckBox';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import Field from '../data-set/Field';
 import ObserverSelect from '../select/Select';
+import TreeSelect from '../tree-select/TreeSelect';
 import Option from '../option/Option';
 import Lov from '../lov/Lov';
 import ObserverNumberField from '../number-field/NumberField';
@@ -29,6 +31,7 @@ import DataSet from '../data-set/DataSet';
 import TableStore from './TableStore';
 import { TablePaginationConfig } from './Table';
 import { $l } from '../locale-context';
+import { TooltipPlacement } from '../tooltip/Tooltip';
 
 export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
@@ -43,6 +46,9 @@ export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: 
     isString(lookupUrl) ||
     (type !== FieldType.object && (lovCode || field.options))
   ) {
+    if (field.get('parentField')) {
+      return <TreeSelect {...flatProps} />;
+    }
     return <ObserverSelect {...flatProps} />;
   }
   if (lovCode) {
@@ -105,6 +111,16 @@ export function getAlignByField(field?: Field): ColumnAlign | undefined {
       default:
     }
   }
+}
+
+export function getPlacementByAlign(align?: ColumnAlign): TooltipPlacement | undefined {
+  if (align === ColumnAlign.center) {
+    return 'bottom';
+  }
+  if (align === ColumnAlign.right) {
+    return 'bottomRight';
+  }
+  return 'bottomLeft';
 }
 
 export function getEditorByColumnAndRecord(
@@ -224,9 +240,12 @@ export function isSelectedRow(record: Record) {
 }
 
 export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
-  const { header, name } = column;
+  const { header, name, title } = column;
   if (typeof header === 'function') {
-    return header(dataSet, name);
+    return header(dataSet, name, title);
+  }
+  if (title !== undefined) {
+    return title;
   }
   if (header !== undefined) {
     return header;
@@ -239,6 +258,17 @@ export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
 
 export function getColumnKey({ name, key }: ColumnProps): Key {
   return key || name!;
+}
+
+export function getColumnLock(lock?: ColumnLock | boolean): ColumnLock | false {
+  if (lock === true) {
+    return ColumnLock.left;
+  }
+  if (lock) {
+    return lock;
+  }
+
+  return false;
 }
 
 export function getPaginationPosition(pagination?: TablePaginationConfig): TablePaginationPosition {
@@ -255,74 +285,16 @@ export function getHeight(el: HTMLElement) {
   return el.getBoundingClientRect().height;
 }
 
-/**
- * 合并指定的对象参数
- * @param keys 需要合并的关键字
- * @param newObj 传入的新对象
- * @param oldObj 返回的旧对象
- */
-export function mergeObject(keys: string[], newObj: object, oldObj: object) {
-  let mergedObj = oldObj;
-  if (keys.length > 0) {
-    keys.forEach(key => {
-      if (key in newObj) {
-        oldObj[key] = newObj[key];
-        mergedObj = { ...oldObj };
-      }
-    });
+
+export function isDropresult(dropResult: any): dropResult is DropResult {
+  if (dropResult && dropResult.destination) {
+    return ((typeof (dropResult as DropResult).source.index === 'number')
+      && (typeof (dropResult as DropResult).destination === 'object')
+      && (typeof (dropResult as DropResult).destination!.index === 'number'));
   }
-  return mergedObj;
+  return false;
 }
 
-/**
- * 更具是否是react节点生成对象返回不同值
- * @param key 返回的属性
- * @param column 可能是reactnode 也可能是columprops 对象
- */
-function getColumnChildrenValue(key: string, column: ColumnProps | ReactElement): string {
-  if (React.isValidElement(column)) {
-    return column.props[key];
-  }
-  return column[key];
+export function isDraggingStyle(style?: DraggingStyle | NotDraggingStyle): style is DraggingStyle {
+  return style ? 'left' in style : false;
 }
-
-/**
- * 如果找不到给js最大值9007199254740991
- */
-export function changeIndexOf(array: string[], value: string): number {
-  if (array.indexOf(value) === -1) {
-    return 9007199254740991;
-  }
-  return array.indexOf(value);
-}
-
-/**
- * 实现首次进入就开始排序
- * @param newColumns 需要这样排序以及合并参数的列表
- * @param originalColumns 原始列表
- */
-export function reorderingColumns(newColumns: ColumnProps[], originalColumns: ColumnProps[]) {
-  if (newColumns && newColumns.length > 0 && originalColumns.length > 0) {
-    // 暂时定性为对存在name的进行排序
-    const nameColumns = originalColumns.filter(columnItem => getColumnChildrenValue('name', columnItem));
-    const noNameColumns = originalColumns.filter(columnItem => !getColumnChildrenValue('name', columnItem));
-    if (nameColumns && newColumns && nameColumns.length > 0 && newColumns.length > 0) {
-      const newColumnsStr = newColumns.map(function (obj) {
-        return getColumnChildrenValue('name', obj);
-      }).join(',');
-      const newColumnsNameArray = newColumnsStr.split(',');
-      if (newColumnsNameArray.length > 0) {
-        nameColumns.sort((prev, next) => {
-          if (getColumnChildrenValue('name', prev) && getColumnChildrenValue('name', next)) {
-            return changeIndexOf(newColumnsNameArray, getColumnChildrenValue('name', prev)) - changeIndexOf(newColumnsNameArray, getColumnChildrenValue('name', next));
-          }
-          return 1;
-        });
-        return [...nameColumns, ...noNameColumns];
-      }
-    }
-  }
-  return originalColumns;
-}
-
-

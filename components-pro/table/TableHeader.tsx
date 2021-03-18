@@ -1,27 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, DetailedHTMLProps } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import { computed } from 'mobx';
-import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
-import isFunction from 'lodash/isFunction';
+import { action, computed } from 'mobx';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import TableContext from './TableContext';
-import { ColumnLock, DragColumnAlign } from './enum';
+import { ColumnLock } from './enum';
 import DataSet from '../data-set/DataSet';
 import { getColumnKey } from './utils';
 import ColumnGroup from './ColumnGroup';
 import autobind from '../_util/autobind';
-import { instance } from './Table';
-import { DRAG_KEY } from './TableStore';
 import TableHeaderRow from './TableHeaderRow';
 
 export interface TableHeaderProps extends ElementProps {
   dataSet: DataSet;
   lock?: ColumnLock | boolean;
-  dragColumnAlign?: DragColumnAlign;
 }
 
 @observer
@@ -34,7 +29,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
       PropTypes.bool,
       PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
     ]),
-    dragColumnAlign: PropTypes.oneOf([DragColumnAlign.right, DragColumnAlign.left]),
   };
 
   static contextType = TableContext;
@@ -53,34 +47,44 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
     return this.node;
   }
 
+  @autobind
+  @action
+  handleTheadMouseEnter() {
+    const {
+      tableStore,
+    } = this.context;
+    tableStore.isHeaderHover = true;
+  }
+
+  @autobind
+  @action
+  handleTheadMouseLeave() {
+    const {
+      tableStore,
+    } = this.context;
+    tableStore.isHeaderHover = false;
+  }
+
   render() {
-    const { prefixCls, lock, dataSet, dragColumnAlign } = this.props;
+    const { prefixCls, lock, dataSet } = this.props;
     const { groupedColumns } = this;
     const {
-      tableStore: { overflowY, columnMaxDeep, columnResizable, dragColumn, props: { columnsDragRender = {} } },
+      tableStore: { overflowX, overflowY, columnResizable, isHeaderHover, columnResizing },
     } = this.context;
-    const { droppableProps, draggableProps, renderClone } = columnsDragRender;
-    const { tableStore } = this.context;
     const rows = this.getTableHeaderRows(groupedColumns);
-    const filterDrag = (columnItem: ColumnGroup): boolean => {
-      if (columnItem && columnItem.column && dragColumnAlign) {
-        return columnItem.column.key === DRAG_KEY;
-      }
-      return true;
-    };
-    tableStore.columnMaxDeep = (rows.length || 0);
     const trs = rows.map((row, rowIndex) => {
       if (row.length) {
         let prevColumn: ColumnProps | undefined;
-        const tds = row.filter(filterDrag).map(({ hidden, column, rowSpan, colSpan, lastLeaf }, index) => {
+        const tds = row.map(({ hidden, column, rowSpan, colSpan, lastLeaf }) => {
           if (!hidden) {
-            const isDragDisabled = getColumnKey(column) === DRAG_KEY || (!dragColumn || columnMaxDeep > 1);
+            const key = String(getColumnKey(column));
             const props: TableHeaderCellProps = {
-              key: getColumnKey(column),
+              key,
               prefixCls,
               dataSet,
               prevColumn,
               column,
+              rowIndex,
               resizeColumn: lastLeaf,
               getHeaderNode: this.getHeaderNode,
             };
@@ -91,27 +95,8 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
               props.colSpan = colSpan;
             }
             prevColumn = lastLeaf;
-            return isDragDisabled ? (
+            return (
               <TableHeaderCell {...props} />
-            ) : (
-              <Draggable
-                draggableId={getColumnKey(column).toString()}
-                index={index}
-                key={getColumnKey(column)}
-                isDragDisabled={isDragDisabled}
-                {...draggableProps}
-              >
-                {(
-                  provided: DraggableProvided,
-                  snapshot: DraggableStateSnapshot,
-                ) => {
-                  props.provided = provided;
-                  props.snapshot = snapshot;
-                  return (
-                    <TableHeaderCell {...props} />
-                  );
-                }}
-              </Draggable>
             );
           }
           return undefined;
@@ -123,77 +108,32 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
             </th>,
           );
         }
-        const isDropDisabled = (!dragColumn || columnMaxDeep > 1);
-        if (isDropDisabled) {
-          return (
-            <TableHeaderRow
-              key={String(rowIndex)}
-              rowIndex={rowIndex}
-              tds={tds}
-              rows={rows}
-            />
-          );
-        }
         return (
-          <Droppable
-            droppableId="tableHeader"
-            key={row.length > 1 ? `tableHeader${rowIndex}` : 'tableHeader'}
-            direction="horizontal"
-            isDropDisabled={isDropDisabled}
-            renderClone={(
-              provided: DraggableProvided,
-              snapshot: DraggableStateSnapshot,
-              rubric: DraggableRubric,
-            ) => {
-              const rowProps = row[rubric.source.index];
-              const { column, rowSpan, colSpan, lastLeaf } = rowProps;
-              const props: TableHeaderCellProps = {
-                key: getColumnKey(column),
-                prefixCls,
-                dataSet,
-                prevColumn,
-                column,
-                resizeColumn: lastLeaf,
-                getHeaderNode: this.getHeaderNode,
-                provided,
-                snapshot,
-              };
-              if (rowSpan > 1) {
-                props.rowSpan = rowSpan;
-              }
-              if (colSpan > 1) {
-                props.colSpan = colSpan;
-              }
-              if (renderClone && isFunction(renderClone)) {
-                return renderClone(props);
-              }
-              return (
-                <TableHeaderCell  {...props} />
-              );
-            }}
-            getContainerForClone={() => instance().headtr}
-            {...droppableProps}
-          >
-            {(droppableProvided: DroppableProvided) =>  (
-              <TableHeaderRow
-                key={String(rowIndex)}
-                rowIndex={rowIndex}
-                tds={tds}
-                rows={rows}
-                droppableProvided={droppableProvided}
-              />
-            )}
-          </Droppable>
+          <TableHeaderRow
+            key={String(rowIndex)}
+            rowIndex={rowIndex}
+            tds={tds}
+            rows={rows}
+            lock={lock}
+          />
         );
       }
       return undefined;
     });
-    const classString = classNames(`${prefixCls}-thead`, {
-      [`${prefixCls}-column-resizable`]: columnResizable,
-      [`${prefixCls}-column-group`]: rows && rows.length > 1,
-    });
+    const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
+      ref: this.saveRef,
+      className: classNames(`${prefixCls}-thead`, {
+        [`${prefixCls}-column-resizable`]: columnResizable,
+        [`${prefixCls}-column-group`]: rows && rows.length > 1,
+        [`${prefixCls}-thead-hover`]: isHeaderHover || columnResizing,
+      }),
+    };
+    if (overflowX) {
+      theadProps.onMouseEnter = this.handleTheadMouseEnter;
+      theadProps.onMouseLeave = this.handleTheadMouseLeave;
+    }
     return (
-      <thead ref={this.saveRef} className={classString}>
+      <thead {...theadProps}>
         {trs}
       </thead>
     );

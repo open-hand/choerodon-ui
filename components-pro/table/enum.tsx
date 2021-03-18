@@ -82,13 +82,16 @@ export enum TableAutoHeightType {
   minHeight = 'minHeight',
 }
 
-export enum ColumnsEditType {
-  header = 'header',
-  order = 'order',
-  all = 'all',
-}
-
 export enum HighLightRowType {
   click = 'click',
   focus = 'focus',
+}
+
+export enum CustomizedType {
+  all = 'all',
+  none = 'none',
+  columnOrder = 'columnOrder',
+  columnWidth = 'columnWidth',
+  columnHeader = 'columnHeader',
+  columnHidden = 'columnHidden',
 }

@@ -19,7 +19,6 @@ export {
   TablePaginationPosition,
   TableColumnTooltip,
   TableAutoHeightType,
-  ColumnsEditType,
   HighLightRowType,
 } from './enum';
 
@@ -52,11 +51,11 @@ export {
   RowRenderIcon,
   ColumnRenderIcon,
   DragRender,
-  ChangeColumns,
   TableProps,
   TableSpinConfig,
   DynamicFilterBarConfig,
   Suffixes,
+  Customized,
 } from './Table';
 
 export {

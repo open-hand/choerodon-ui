@@ -20,16 +20,19 @@
   &-placement-topRight {
     padding-bottom: @tooltip-distance;
   }
+
   &-placement-right,
   &-placement-rightTop,
   &-placement-rightBottom {
     padding-left: @tooltip-distance;
   }
+
   &-placement-bottom,
   &-placement-bottomLeft,
   &-placement-bottomRight {
     padding-top: @tooltip-distance;
   }
+
   &-placement-left,
   &-placement-leftTop,
   &-placement-leftBottom {
@@ -38,15 +41,21 @@
 
   // Wrapper for the tooltip content
   &-inner {
+    min-width: @tooltip-min-width;
     max-width: @tooltip-max-width;
-    min-height: 0.32rem;
+    min-height: @tooltip-min-height;
     padding: 0.06rem 0.08rem;
     color: @tooltip-color;
     text-align: left;
     text-decoration: none;
+    word-wrap: break-word;
     background-color: @tooltip-bg;
-    border-radius: @border-radius-base;
+    border-radius: @border-radius-base * 2;
     box-shadow: @box-shadow-base;
+
+    .@{c7n-pro-prefix}-output {
+      line-height: unset;
+    }
   }
 
   // Arrows
@@ -72,11 +81,11 @@
   }
 
   &-placement-topLeft &-arrow {
-    left: 0.16rem;
+    left: 0.08rem;
   }
 
   &-placement-topRight &-arrow {
-    right: 0.16rem;
+    right: 0.08rem;
   }
 
   &-placement-right &-arrow,
@@ -135,10 +144,10 @@
   }
 
   &-placement-bottomLeft &-arrow {
-    left: 0.16rem;
+    left: 0.08rem;
   }
 
   &-placement-bottomRight &-arrow {
-    right: 0.16rem;
+    right: 0.08rem;
   }
 }

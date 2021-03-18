@@ -50,7 +50,12 @@ subtitle: 表格
 | highLightRow | 当前行高亮, 可选值: boolean \| focus \| click  | boolean \| string | true |
 | selectedHighLightRow | 勾选行高亮 | boolean | false |
 | parityRow | 奇偶行 | boolean |  |
-| columnResizable | 可调整列宽 | boolean | true |
+| columnResizable | 可调整列宽 | boolean |  |
+| columnHideable | 可调整列显示 | boolean | true |
+| columnTitleEditable | 可编辑列标题 | boolean |  |
+| columnDraggable | 列拖拽 | boolean | false |
+| rowDraggable | 行拖拽，实现行的拖拽， 树形数据无法使用 | boolean | false |
+| dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |
 | pristine | 显示原始值 | boolean | false |
 | onExpand | 点击展开图标时触发 | (expanded, record) => void |  |
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | false |
@@ -59,21 +64,17 @@ subtitle: 表格
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | autoMaxWidth | 是否开启双击侧边栏宽度最大自适应,初次双击为最大值再次双击为`minWidth` | boolean | false |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
-| dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |
-| dragColumn | 打开列拖拽,组合列无法使用 | boolean | false |
-| dragRow | 行拖拽，实现行的拖拽，会导致拖拽列的一些事件失效，可以用dragColumnAlign来避免，树形数据无法使用 | boolean | false |
 | onDragEnd | 完成拖拽后的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
 | columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender)  |  |
 | rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender) |  |
-| columnsMergeCoverage | 优先级高于colums，可以实现表头文字修改自定义修改和列的位置自定义修改 | ColumnProps[] | - |
-| columnsOnChange | 拖拽列和修改表头文字触发事件 | `(change:{columns:columnProps[]:colum:columnProps,type:string}) => void` | - |
-| columnsEditType | 合并列信息选择，目前可以选择表头文字或者表的位置进行合并 | `order`  `all`  `header` | `all` |
 | onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   | - |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |
 | dynamicFilterBar | `queryBar`为`filterBar`时筛选条属性配置 | DynamicFilterBarConfig | |
 | treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | |
 | treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | boolean |  |
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
+| customizedType | 可存储的个性化范围， 可选值： `all` `none` `columnOrder` `columnWidth` `columnHeader` `columnHidden` | CustomizedType\| CustomizedType[] | all |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -84,7 +85,8 @@ subtitle: 表格
 | name | 列对照的字段名 | string |  |
 | width | 列宽，不推荐给所有列设置宽度，而是给某一列不设置宽度达到自动宽度的效果 | number |  |
 | minWidth | 最小列宽 | number | 100 |
-| header | 列头 | ReactNode \| (dataSet, name) => ReactNode |  |
+| title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |
+| header | 列头 | ReactNode \| (dataSet, name, title) => ReactNode |  |
 | footer | 列脚 | ReactNode \| (dataSet, name) => ReactNode |  |
 | renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet }) => ReactNode |  |
 | editor | 编辑器, 设为`true`时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。 | FormField \| ((record, name) => FormField \| boolean) \| boolean |  |
@@ -92,6 +94,8 @@ subtitle: 表格
 | align | 文字对齐方式，可选值： `left` `center` `right` | string |  |
 | resizable | 是否可调整宽度 | boolean | true |
 | sortable | 是否可排序（后端请求排序，前端排序请自定义 header 自行实现） | boolean | false |
+| hideable | 是否可隐藏 | boolean |  |
+| titleEditable | 是否可编辑标题 | boolean |  |
 | style | 列单元格内链样式 | object |  |
 | className | 列单元格样式名 | string |  |
 | headerStyle | 列头内链样式 | string |  |

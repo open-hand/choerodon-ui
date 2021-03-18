@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import classNames from 'classnames';
 import raf from 'raf';
+import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
@@ -17,7 +18,16 @@ import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { findCell, findFirstFocusableElement, getAlignByField, getColumnKey, getEditorByColumnAndRecord, isDisabledRow, isRadio } from './utils';
+import {
+  findCell,
+  findFirstFocusableElement,
+  getAlignByField,
+  getColumnKey,
+  getEditorByColumnAndRecord,
+  getPlacementByAlign,
+  isDisabledRow,
+  isRadio,
+} from './utils';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { ColumnAlign, ColumnLock, TableColumnTooltip, TableCommandType } from './enum';
 import ObserverCheckBox from '../check-box/CheckBox';
@@ -36,8 +46,10 @@ export interface TableCellProps extends ElementProps {
   column: ColumnProps;
   record: Record;
   indentSize: number;
+  colSpan: number;
   isDragging: boolean;
   lock?: ColumnLock | boolean;
+  provided?: DraggableProvided;
 }
 
 let inTab: boolean = false;
@@ -80,19 +92,38 @@ export default class TableCell extends Component<TableCellProps> {
     return !pristine && this.cellEditor && !this.cellEditorInCell;
   }
 
+  componentDidMount(): void {
+    this.connect();
+  }
+
+  componentDidUpdate(): void {
+    this.disconnect();
+    this.connect();
+  }
+
+  componentWillUnmount(): void {
+    this.disconnect();
+  }
+
+
   @autobind
   @action
   saveOutput(node) {
-    this.disconnect();
     if (node) {
       this.element = node.element;
+    } else {
+      this.element = null;
+    }
+  }
+
+  connect() {
+    const { column: { tooltip } } = this.props;
+    if (tooltip === TableColumnTooltip.overflow) {
       const {
         tableStore: { dataSet },
       } = this.context;
       dataSet.addEventListener(DataSetEvents.update, this.handleOutputChange);
       this.handleResize();
-    } else {
-      this.element = null;
     }
   }
 
@@ -145,9 +176,6 @@ export default class TableCell extends Component<TableCellProps> {
       const {
         column: { tooltip },
       } = this.props;
-      if (tooltip === TableColumnTooltip.always) {
-        return true;
-      }
       if (tooltip === TableColumnTooltip.overflow) {
         const { clientWidth, scrollWidth } = element;
         return scrollWidth > clientWidth;
@@ -401,7 +429,7 @@ export default class TableCell extends Component<TableCellProps> {
     return renderer;
   }
 
-  getInnerNode(prefixCls, command?: Commands[]) {
+  getInnerNode(prefixCls, command?: Commands[], textAlign?: ColumnAlign) {
     const {
       context: {
         tableStore: {
@@ -464,7 +492,7 @@ export default class TableCell extends Component<TableCellProps> {
           lineHeight: pxToRem(max(tableStore.multiLineHeight) || 0),
         };
       }
-      if ((tooltip && tooltip !== TableColumnTooltip.none) || (key === DRAG_KEY)) {
+      if (tooltip === TableColumnTooltip.overflow || (key === DRAG_KEY)) {
         innerProps.ref = this.saveOutput;
       }
       // 如果为拖拽结点强制给予焦点
@@ -500,8 +528,8 @@ export default class TableCell extends Component<TableCellProps> {
         showHelp={ShowHelp.none}
       />
     );
-    const text = this.overflow ? (
-      <Tooltip key="tooltip" title={cloneElement(output, { ref: null, className: null })}>
+    const text = this.overflow || tooltip === TableColumnTooltip.always ? (
+      <Tooltip key="tooltip" title={cloneElement(output, { ref: null, className: null })} placement={getPlacementByAlign(textAlign)}>
         {output}
       </Tooltip>
     ) : (
@@ -510,14 +538,10 @@ export default class TableCell extends Component<TableCellProps> {
     return [prefix, text];
   }
 
-  componentWillUnmount(): void {
-    this.disconnect();
-  }
-
   render() {
-    const { column, prefixCls, record, isDragging } = this.props;
+    const { column, prefixCls, record, isDragging, provided, colSpan } = this.props;
     const {
-      tableStore: { inlineEdit, pristine },
+      tableStore: { inlineEdit, pristine, node },
     } = this.context;
     const { className, style, align, name, onCell, tooltip } = column;
     const command = this.getCommand();
@@ -535,6 +559,7 @@ export default class TableCell extends Component<TableCellProps> {
       textAlign: align || (command ? ColumnAlign.center : getAlignByField(field)),
       ...style,
       ...cellExternalProps.style,
+      ...(provided && { cursor: 'move' }),
     };
     const classString = classNames(
       cellPrefix,
@@ -550,24 +575,24 @@ export default class TableCell extends Component<TableCellProps> {
     const widthDraggingStyle = (): React.CSSProperties => {
       const draggingStyle: React.CSSProperties = {};
       if (isDragging) {
-        if (column.width) {
-          draggingStyle.width = pxToRem(column.width);
+        const dom = node.element.querySelector(`.${prefixCls}-tbody .${prefixCls}-cell[data-index=${getColumnKey(column)}]`);
+        if (dom) {
+          draggingStyle.width = dom.clientWidth;
+          draggingStyle.whiteSpace = 'nowrap';
         }
-        if (column.minWidth) {
-          draggingStyle.minWidth = pxToRem(column.minWidth);
-        }
-        draggingStyle.whiteSpace = 'nowrap';
       }
       return draggingStyle;
     };
     const td = (
       <td
+        colSpan={colSpan}
         {...cellExternalProps}
         className={classString}
-        style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
         data-index={getColumnKey(column)}
+        {...(provided && provided.dragHandleProps)}
+        style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
       >
-        {this.getInnerNode(cellPrefix, command)}
+        {this.getInnerNode(cellPrefix, command, cellStyle.textAlign as ColumnAlign)}
       </td>
     );
     return tooltip === TableColumnTooltip.overflow ? (

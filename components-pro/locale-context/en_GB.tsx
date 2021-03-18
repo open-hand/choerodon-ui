@@ -27,7 +27,7 @@ const locale: Locale = {
     filter_bar_placeholder: 'Table Filter',
     advanced_query: 'Advanced Query',
     advanced_query_conditions: 'Advanced Queries',
-    max_export:'Maximum Export Quantity',
+    max_export: 'Maximum Export Quantity',
     more: 'More',
     enter_text_filter: 'Enter text to filter',
     clear_filter: 'Clear filter',
@@ -48,6 +48,12 @@ const locale: Locale = {
     please_enter: 'Please enter',
     query_option_yes: 'Yes',
     query_option_no: 'No',
+    customization_settings: 'Settings of customization',
+    column_settings: 'Settings of column',
+    restore_default: 'Restore to default',
+    left_lock: 'Lock on the left',
+    right_lock: 'Lock on the right',
+    unlocked: 'Unlocked',
   },
   Pagination: {
     page: 'Page',
@@ -169,13 +175,13 @@ const locale: Locale = {
     select_all: 'Select All',
     unselect_all: 'None',
   },
-  Screening:{
-    selected:'Selected',
-    pack_up:'Pack up',
-    more:'More',
-    multi_select:'Multi-select',
-    confirm:'Confirm',
-    cancel:'Cancel',
+  Screening: {
+    selected: 'Selected',
+    pack_up: 'Pack up',
+    more: 'More',
+    multi_select: 'Multi-select',
+    confirm: 'Confirm',
+    cancel: 'Cancel',
   },
 };
 

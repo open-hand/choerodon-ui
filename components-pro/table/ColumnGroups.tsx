@@ -22,7 +22,8 @@ export default class ColumnGroups {
 
   @computed
   get lastLeaf(): ColumnProps {
-    return this.columns[this.columns.length - 1].lastLeaf;
+    const avaliableColumns = this.columns.filter(column => !column.hidden);
+    return avaliableColumns[avaliableColumns.length - 1].lastLeaf;
   }
 
   constructor(columns: ColumnProps[]) {

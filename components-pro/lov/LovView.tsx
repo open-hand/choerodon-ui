@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { action } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import { pick } from 'lodash';
+import pick from 'lodash/pick';
 import DataSet from '../data-set/DataSet';
 import Table, { TableProps } from '../table/Table';
 import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
