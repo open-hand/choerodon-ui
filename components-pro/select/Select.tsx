@@ -6,6 +6,7 @@ import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
+import defer from "lodash/defer";
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
@@ -1207,6 +1208,18 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     this.rangeValue = this.isFocused ? [undefined, undefined] : undefined;
     onClear();
     this.removeComboOptions();
+  }
+
+  // 当触发清空操作时候会导致两次触发onchange可搜索不需要设置值
+  setRangeTarget(target) {
+    if (this.text !== undefined) {
+      if (!this.searchable) {
+        this.prepareSetValue(this.text);
+      }
+      this.setText();
+    }
+    super.setRangeTarget(target);
+    defer(() => this.isFocused && this.select());
   }
 
   resetFilter() {

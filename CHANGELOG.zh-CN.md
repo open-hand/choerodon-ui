@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🐞  `<pro>Form`: 修复表单各模式 placeholder 被填充为 label 值。
+- 🐞 `<pro>Select`: 修复可搜索时候，清空按钮会触发两次 onChange。
+- 🐞 `<pro>Form`: 修复表单各模式 placeholder 被填充为 label 值。
 
 ## 1.1.1
 

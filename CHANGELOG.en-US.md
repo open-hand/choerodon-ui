@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🐞  `<pro>Form`: Fixed the placeholder in each mode of the form to be filled with label value.
+- 🐞 `<pro>Select`: Fixed that when searchable, the clear button will trigger onChange twice.
+- 🐞 `<pro>Form`: Fixed the placeholder in each mode of the form to be filled with label value.
 
 ## 1.1.1
 
