@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `tableColumnTitleEditable`, `tableColumnHideable`, `tableColumnDraggable`, `tableRowDraggable`, `tableCustomizedSave`, `tableCustomizedLoad` global properties, and deprecated `tableDragColumn` and `tableDragRow` properties.
 - 🌟 `<pro>Table`: Added table personalization features, including `customizedCode`, `customizedType`, `columnTitleEditable`, `columnHideable`, `columnDraggable`, `rowDraggable` attributes, deprecated `columnsMergeCoverage`, `columnsOnChange`, `columnsEditType`, `dragColumn`, `dragRow` attributes, and Column added `titleEditable` attributes.
 - 🐞 `<pro>Table`: Fix the border style issue.
+- 🐞 `<pro>Select`: Fixed that when searchable, the clear button will trigger onChange twice.
 - 🐞 `<pro>Record`: Fix the problem that the rest method cannot restore the recording state.
 - 🐞 `<pro>NumberField`: Fix the problem that long-pressing the increase or decrease value button fails to stop when the verification fails.
 - 🐞 `<pro>Form`: Fixed the placeholder in each mode of the form to be filled with label value.
