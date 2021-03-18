@@ -14,14 +14,12 @@ import TableEditor from './TableEditor';
 import TableCol from './TableCol';
 import { getColumnKey } from './utils';
 import autobind from '../_util/autobind';
-import { DRAG_KEY } from './TableStore';
 
 export interface TableWrapperProps extends ElementProps {
   lock?: ColumnLock | boolean;
   hasBody?: boolean;
   hasHeader?: boolean;
   hasFooter?: boolean;
-  dragColumnAlign?:DragColumnAlign,
 }
 
 @observer
@@ -112,22 +110,21 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   getColGroup(): ReactNode {
     const { lock, hasHeader, hasFooter } = this.props;
     const {
-      tableStore: { overflowY, overflowX },
+      tableStore: { overflowY, overflowX, customizable, rowDraggable, dragColumnAlign },
     } = this.context;
     let hasEmptyWidth = false;
+    let fixedColumnLength = 1;
+    if (customizable) {
+      fixedColumnLength += 1;
+    }
+    if (rowDraggable && dragColumnAlign === DragColumnAlign.right) {
+      fixedColumnLength += 1;
+    }
 
-    const filterDrag = (columnItem: ColumnProps) => {
-      const { dragColumnAlign } = this.props;
-      if (dragColumnAlign) {
-        return columnItem.key === DRAG_KEY;
-      }
-      return true;
-    };
-
-    const cols = this.leafColumns.filter(filterDrag).map((column, index, array) => {
+    const cols = this.leafColumns.map((column, index, array) => {
       let width = get(column, 'width');
       if (!overflowX) {
-        if (!hasEmptyWidth && index === array.length - 1) {
+        if (!hasEmptyWidth && index === array.length - fixedColumnLength) {
           width = undefined;
         } else if (isNil(width)) {
           hasEmptyWidth = true;
@@ -155,19 +152,11 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   @computed
   get tableWidth() {
-    const { lock, hasBody, dragColumnAlign } = this.props;
+    const { lock, hasBody } = this.props;
     const {
-      tableStore: { overflowY, overflowX, columns },
+      tableStore: { overflowY, overflowX },
     } = this.context;
 
-    if (dragColumnAlign && columns && columns.length > 0) {
-      const dragColumns = columns.filter((columnItem) => {
-        return columnItem.key === DRAG_KEY;
-      });
-      if (dragColumns.length > 0) {
-        return dragColumns[0].width;
-      }
-    }
     if (overflowX) {
       let tableWidth = this.leafColumnsWidth;
       if (tableWidth !== undefined && overflowY && lock !== ColumnLock.left && !hasBody) {
@@ -175,7 +164,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
       }
       return pxToRem(tableWidth);
     }
-    return '100%';
+    return '100.1%';
   }
 
   render() {

@@ -7,16 +7,15 @@ import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import omit from 'lodash/omit';
 import { ColumnProps } from './Column';
 import TableCell from './TableCell';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
-import { ColumnLock, DragColumnAlign, HighLightRowType, SelectionMode } from './enum';
+import { ColumnLock, HighLightRowType, DragColumnAlign, SelectionMode } from './enum';
 import { findFirstFocusableElement, getColumnKey, isDisabledRow, isSelectedRow } from './utils';
-import { DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
+import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
 import { RecordStatus } from '../data-set/enum';
@@ -31,7 +30,6 @@ export interface TableRowProps extends ElementProps {
   index: number;
   snapshot?: DraggableStateSnapshot;
   provided?: DraggableProvided;
-  dragColumnAlign?: DragColumnAlign;
 }
 
 @observer
@@ -47,7 +45,6 @@ export default class TableRow extends Component<TableRowProps, any> {
     columns: PropTypes.array.isRequired,
     record: PropTypes.instanceOf(Record).isRequired,
     indentSize: PropTypes.number.isRequired,
-    dragColumnAlign: PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
   };
 
   static contextType = TableContext;
@@ -250,27 +247,32 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @autobind
-  getCell(column: ColumnProps, index: number, isDragging: boolean): ReactNode {
-    const { prefixCls, record, indentSize, lock, dragColumnAlign } = this.props;
-    const {
-      tableStore: { leafColumns, rightLeafColumns },
-    } = this.context;
-    const columnIndex =
-      lock === ColumnLock.right ? index + leafColumns.length - rightLeafColumns.length : index;
-    return (
-      <TableCell
-        key={getColumnKey(column)}
-        prefixCls={prefixCls}
-        column={column}
-        record={record}
-        indentSize={indentSize}
-        isDragging={isDragging}
-        lock={lock}
-        style={dragColumnAlign && column.key === DRAG_KEY ? { cursor: 'move' } : {}}
-      >
-        {this.hasExpandIcon(columnIndex) && this.renderExpandIcon()}
-      </TableCell>
-    );
+  getCell(column: ColumnProps, index: number, columns: ColumnProps[]): ReactNode {
+    const key = getColumnKey(column);
+    if (key !== CUSTOMIZED_KEY) {
+      const { prefixCls, record, indentSize, lock, provided, snapshot } = this.props;
+      const {
+        tableStore: { leafColumns, rightLeafColumns, customizable, rowDraggable, dragColumnAlign },
+      } = this.context;
+      const columnIndex =
+        lock === ColumnLock.right ? index + leafColumns.length - rightLeafColumns.length : index;
+      const isDragging = snapshot ? snapshot.isDragging : false;
+      return (
+        <TableCell
+          key={key}
+          prefixCls={prefixCls}
+          column={column}
+          record={record}
+          indentSize={indentSize}
+          isDragging={isDragging}
+          lock={lock}
+          provided={key === DRAG_KEY ? provided : undefined}
+          colSpan={customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && index === columns.length - 2 ? 2 : 1}
+        >
+          {this.hasExpandIcon(columnIndex) && this.renderExpandIcon()}
+        </TableCell>
+      );
+    }
   }
 
   focusRow(row: HTMLTableRowElement | null) {
@@ -498,7 +500,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   render() {
-    const { prefixCls, columns, record, lock, hidden, index, provided, snapshot, dragColumnAlign, className } = this.props;
+    const { prefixCls, columns, record, lock, hidden, index, provided, className } = this.props;
     const {
       tableStore: {
         rowHeight,
@@ -508,8 +510,10 @@ export default class TableRow extends Component<TableRowProps, any> {
         selectedHighLightRow,
         mouseBatchChooseIdList,
         mouseBatchChooseState,
-        dragColumnAlign: dragColumnAlignProps,
-        dragRow,
+        dragColumnAlign,
+        rowDraggable,
+        totalLeafColumnsWidth,
+        width,
         props: { onRow, rowRenderer, selectionMode },
       },
     } = this.context;
@@ -565,12 +569,6 @@ export default class TableRow extends Component<TableRowProps, any> {
       rowProps.onMouseEnter = this.handleMouseEnter;
       rowProps.onMouseLeave = this.handleMouseLeave;
     }
-    if (dragRow && provided && provided.draggableProps) {
-      rowProps.style = { ...provided.draggableProps.style, ...rowExternalProps.style, cursor: 'move' };
-      if (!dragColumnAlign && dragColumnAlignProps) {
-        rowProps.style = omit(rowProps.style, ['cursor']);
-      }
-    }
 
     if (hidden) {
       rowProps.style.display = 'none';
@@ -585,27 +583,22 @@ export default class TableRow extends Component<TableRowProps, any> {
     } else if (selectionMode === SelectionMode.mousedown) {
       rowProps.onMouseDown = this.handleSelectionByMouseDown;
     }
-
-    const getCellWithDrag = (columnItem: ColumnProps, indexItem: number) => {
-      return this.getCell(columnItem, indexItem, snapshot ? snapshot.isDragging : false);
-    };
-
-    const filterDrag = (columnItem: ColumnProps) => {
-      if (dragColumnAlign) {
-        return columnItem.key === DRAG_KEY;
+    if (rowDraggable && provided) {
+      Object.assign(rowProps, provided.draggableProps);
+      rowProps.style = { ...provided.draggableProps.style, ...rowExternalProps.style, width: Math.max(totalLeafColumnsWidth, width) };
+      if (!dragColumnAlign) {
+        rowProps.style.cursor = 'move';
+        Object.assign(rowProps, provided.dragHandleProps);
       }
-      return true;
-    };
+    }
+
     const tr = (
       <tr
         key={key}
         {...rowExternalProps}
         {...rowProps}
-        {...(provided && provided.draggableProps)}
-        {...(provided && provided.dragHandleProps)}
-        style={rowProps.style}
       >
-        {columns.filter(filterDrag).map(getCellWithDrag)}
+        {columns.map(this.getCell)}
       </tr>
     );
     return [

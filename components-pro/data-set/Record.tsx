@@ -31,6 +31,7 @@ import DataSetSnapshot from './DataSetSnapshot';
 import localeContext from '../locale-context';
 import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
 import isSame from '../_util/isSame';
+import { treeReduce } from '../_util/treeUtils';
 
 /**
  * 记录ID生成器
@@ -633,6 +634,7 @@ export default class Record {
     }
     if (isRemoved || dirty) {
       this.data = toJS(this.pristineData);
+      this.dirtyData.clear();
       this.memo = undefined;
       if (dataSet && !dataSet.resetInBatch) {
         dataSet.fireEvent(DataSetEvents.reset, { records: [this], dataSet });
@@ -742,12 +744,7 @@ export default class Record {
     fn: (previousValue: U, record: Record) => U,
     initialValue: U,
   ): U {
-    const newValue = fn(initialValue, this);
-    const { children } = this;
-    if (children) {
-      return children.reduce<U>((childValue, r) => r.treeReduce(fn, childValue), newValue);
-    }
-    return newValue;
+    return treeReduce<U, Record>([this], fn, initialValue);
   }
 
   @action

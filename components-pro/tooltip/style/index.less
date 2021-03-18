@@ -3,42 +3,58 @@
 
 @tooltip-prefix-cls: ~'@{c7n-pro-prefix}-tooltip';
 
-@square-root-two: 1.414;
-
 // Base class
 .@{tooltip-prefix-cls}-popup {
   .reset-component;
   position: absolute;
   z-index: 1;
   display: block;
-  max-width: @tooltip-max-width;
   background-color: transparent;
-  border-radius: 0.04rem;
   box-shadow: none;
   visibility: visible;
-  filter: drop-shadow(0 0.01rem 0.01rem rgba(0, 0, 0, 0.2));
 
   &-hidden {
     display: none;
   }
 
+  &-placement-top,
+  &-placement-topLeft,
+  &-placement-topRight {
+    padding-bottom: @tooltip-distance;
+  }
+
+  &-placement-right,
+  &-placement-rightTop,
+  &-placement-rightBottom {
+    padding-left: @tooltip-distance;
+  }
+
+  &-placement-bottom,
+  &-placement-bottomLeft,
+  &-placement-bottomRight {
+    padding-top: @tooltip-distance;
+  }
+
+  &-placement-left,
+  &-placement-leftTop,
+  &-placement-leftBottom {
+    padding-right: @tooltip-distance;
+  }
+
   // Wrapper for the tooltip content
   &-inner {
-    position: relative;
     min-width: @tooltip-min-width;
+    max-width: @tooltip-max-width;
     min-height: @tooltip-min-height;
     padding: 0.06rem 0.08rem;
+    color: @tooltip-color;
     text-align: left;
     text-decoration: none;
     word-wrap: break-word;
-    border-radius: 0.04rem;
-    box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.2), 0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14),
-      0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.12);
+    background-color: @tooltip-bg;
+    border-radius: @border-radius-base * 2;
+    box-shadow: @box-shadow-base;
 
-    &-dark {
-      color: @tooltip-color;
-      background-color: @tooltip-bg;
-    }
 
     &-light {
       color: @tooltip-color-light;
@@ -53,136 +69,109 @@
   // Arrows
   &-arrow {
     position: absolute;
-    z-index: 1;
-    width: @tooltip-arrow-width;
-    height: @tooltip-arrow-width;
-    background-color: @tooltip-bg;
-
-    // 暗色主题用border实现箭头
-    // 因为背景色有透明度, 无法使用两个div互相覆盖的方法
-    // TODO: 使用div + rotate + border, 利用父元素的filter实现阴影效果
-    &-dark {
-      width: 0;
-      height: 0;
-      background-color: transparent;
-      border-color: transparent;
-      border-style: solid;
-      border-width: @tooltip-arrow-width / @square-root-two;
-      border-bottom-color: @tooltip-arrow-color;
-      border-left-color: @tooltip-arrow-color;
-      transform-origin: 0 0;
-    }
-
-    // 两色主题用div和transform: rotate()实现箭头, 前后覆盖
-    // 因为需要的阴影效果要加在底部,
-    // 因此当placement为top*时也要保证底部阴影对顶部的效果, 需要一个完整的div
-    &-light {
-      width: @tooltip-arrow-width * @square-root-two;
-      height: @tooltip-arrow-width * @square-root-two;
-    }
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
   }
 
   &-placement-top &-arrow,
   &-placement-topLeft &-arrow,
   &-placement-topRight &-arrow {
-    &-dark {
-      bottom: -@tooltip-arrow-width * @square-root-two;
-      transform: translateX(-50%) rotate(-45deg);
-    }
+    bottom: @tooltip-distance - @tooltip-arrow-width;
+    border-width: @tooltip-arrow-width @tooltip-arrow-width 0;
+    border-top-color: @tooltip-arrow-color;
 
     &-light {
-      bottom: 0;
-      background-color: @tooltip-arrow-color-light;
-      transform: translate(-50%, 50%) rotate(45deg);
+      border-top-color: @tooltip-arrow-color-light;
     }
   }
 
   &-placement-top &-arrow {
     left: 50%;
+    margin-left: -@tooltip-arrow-width;
   }
 
   &-placement-topLeft &-arrow {
-    left: 0.16rem;
+    left: 0.08rem;
   }
 
   &-placement-topRight &-arrow {
-    right: 0.16rem;
+    right: 0.08rem;
   }
 
   &-placement-right &-arrow,
   &-placement-rightTop &-arrow,
   &-placement-rightBottom &-arrow {
-    &-dark {
-      transform: translateY(-@tooltip-arrow-width) rotate(45deg);
-    }
+    left: @tooltip-distance - @tooltip-arrow-width;
+    border-width: @tooltip-arrow-width @tooltip-arrow-width @tooltip-arrow-width 0;
+    border-right-color: @tooltip-arrow-color;
 
     &-light {
-      background-color: @tooltip-arrow-color-light;
-      transform: translate(-50%, -50%) rotate(-45deg);
+      border-right-color: @tooltip-arrow-color-light;
     }
   }
 
   &-placement-right &-arrow {
     top: 50%;
+    margin-top: -@tooltip-arrow-width;
   }
 
   &-placement-rightTop &-arrow {
-    top: 35%;
+    top: 0.08rem;
   }
 
   &-placement-rightBottom &-arrow {
-    top: 65%;
+    bottom: 0.08rem;
   }
 
   &-placement-left &-arrow,
   &-placement-leftTop &-arrow,
   &-placement-leftBottom &-arrow {
-    &-dark {
-      right: -@tooltip-arrow-width * @square-root-two;
-      transform: translateY(@tooltip-arrow-width) rotate(-135deg);
-    }
+    right: @tooltip-distance - @tooltip-arrow-width;
+    border-width: @tooltip-arrow-width 0 @tooltip-arrow-width @tooltip-arrow-width;
+    border-left-color: @tooltip-arrow-color;
 
     &-light {
-      right: 0;
-      background-color: @tooltip-arrow-color-light;
-      transform: translate(50%, -50%) rotate(45deg);
+      border-left-color: @tooltip-arrow-color-light;
     }
   }
 
   &-placement-left &-arrow {
     top: 50%;
+    margin-top: -@tooltip-arrow-width;
   }
 
   &-placement-leftTop &-arrow {
-    top: 35%;
+    top: 0.08rem;
   }
 
   &-placement-leftBottom &-arrow {
-    top: 65%;
+    bottom: 0.08rem;
   }
 
   &-placement-bottom &-arrow,
   &-placement-bottomLeft &-arrow,
   &-placement-bottomRight &-arrow {
-    &-dark {
-      transform: translateX(50%) rotate(135deg);
-    }
+    top: @tooltip-distance - @tooltip-arrow-width;
+    border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;
+    border-bottom-color: @tooltip-arrow-color;
 
     &-light {
-      background-color: @tooltip-arrow-color-light;
-      transform: translate(-50%, -50%) rotate(45deg);
+      border-bottom-color: @tooltip-arrow-color-light;
     }
   }
 
   &-placement-bottom &-arrow {
     left: 50%;
+    margin-left: -@tooltip-arrow-width;
   }
 
   &-placement-bottomLeft &-arrow {
-    left: 0.16rem;
+    left: 0.08rem;
   }
 
   &-placement-bottomRight &-arrow {
-    right: 0.16rem;
+    right: 0.08rem;
   }
 }

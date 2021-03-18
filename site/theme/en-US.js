@@ -11,7 +11,9 @@ export default {
   messages: {
     'app.header.menu.home': 'Home',
     'app.header.menu.gitee': 'Gitee',
+    'app.header.menu.doc': 'Document',
     'app.header.menu.components': 'Components',
+    'app.header.menu.pro-components': 'Pro Components',
     'app.header.lang': '中文',
     'app.content.edit-page': 'Edit this page on GitHub!',
     'app.component.examples': 'Examples',
@@ -22,7 +24,7 @@ export default {
     'app.demo.stackblitz': 'Open in Stackblitz',
     'app.home.based-on-ant-design': '——based on Ant Design@3.4.0',
     'app.home.introduce':
-      "Choerodon UI is a set of React components based on Ant Design Components that implement Google's material design for developing and serving enterprise back-end products.",
+      'Choerodon UI is a set of React components based on Ant Design Components that implement Google\'s material design for developing and serving enterprise back-end products.',
     'app.home.feature': 'Feature',
     'app.home.getting-started': 'Getting Started',
     'app.footer.resources': 'Resources',

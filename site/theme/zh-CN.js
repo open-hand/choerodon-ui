@@ -13,7 +13,9 @@ export default {
   messages: {
     'app.header.menu.home': '首页',
     'app.header.menu.gitee': '国内镜像',
+    'app.header.menu.doc': '文档',
     'app.header.menu.components': '组件',
+    'app.header.menu.pro-components': 'Pro组件',
     'app.header.lang': 'English',
     'app.content.edit-page': '在 Github 上编辑此页！',
     'app.component.examples': '代码演示',

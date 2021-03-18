@@ -1,5 +1,7 @@
 import React, { Children, isValidElement, ReactNode } from 'react';
-import { action, computed, observable, runInAction, set } from 'mobx';
+import { action, computed, get, isArrayLike, observable, runInAction, set } from 'mobx';
+import sortBy from 'lodash/sortBy';
+import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import defer from 'lodash/defer';
@@ -9,6 +11,7 @@ import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
 import Column, { ColumnProps, columnWidth } from './Column';
+import CustomizationSettings from './customization-settings/CustomizationSettings';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box';
@@ -17,7 +20,7 @@ import { DataSetSelection } from '../data-set/enum';
 import {
   ColumnAlign,
   ColumnLock,
-  ColumnsEditType,
+  CustomizedType,
   DragColumnAlign,
   SelectionMode,
   TableColumnTooltip,
@@ -26,12 +29,15 @@ import {
   TableQueryBarType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getColumnKey, getHeader, mergeObject, reorderingColumns } from './utils';
+import { getColumnKey, getColumnLock, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
 import ColumnGroup from './ColumnGroup';
-import { expandIconProps, TablePaginationConfig } from './Table';
+import { Customized, expandIconProps, TablePaginationConfig } from './Table';
+import { Size } from '../core/enum';
+import { $l } from '../locale-context';
+import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
 
 export const SELECTION_KEY = '__selection-column__';
 
@@ -41,11 +47,17 @@ export const DRAG_KEY = '__drag-column__';
 
 export const EXPAND_KEY = '__expand-column__';
 
+export const CUSTOMIZED_KEY = '__customized-column__';
+
 export const PENDING_KEY = '__pending__';
 
 export const LOADED_KEY = '__loaded__';
 
 export type HeaderText = { name: string; label: string; };
+
+function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
+  return Boolean(column);
+}
 
 export const getIdList = (startId: number, endId: number) => {
   const idList: any[] = [];
@@ -138,83 +150,120 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
   }
 }
 
-function mergeDefaultProps(columns: ColumnProps[], columnsMergeCoverage?: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
-  const columnsNew: any[] = [];
-  const leftFixedColumns: any[] = [];
-  const rightFixedColumns: any[] = [];
-  columns.forEach((column: ColumnProps) => {
+export function mergeDefaultProps(
+  originalColumns: ColumnProps[],
+  customizedColumns?: object,
+  parent: ColumnProps | null = null,
+  defaultKey: number[] = [0],
+): ColumnProps[] {
+  const columns: any[] = [];
+  const leftColumns: any[] = [];
+  const rightColumns: any[] = [];
+  const columnSort = {
+    left: 0,
+    center: 0,
+    right: 0,
+  };
+  originalColumns.forEach((column, index) => {
     if (isPlainObject(column)) {
-      let newColumn: ColumnProps = { ...Column.defaultProps, ...column };
+      const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
       if (isNil(getColumnKey(newColumn))) {
         newColumn.key = `anonymous-${defaultKey[0]++}`;
       }
-      const { children } = newColumn;
-      if (children) {
-        newColumn.children = mergeDefaultProps(children, columnsMergeCoverage, defaultKey);
+      if (customizedColumns) {
+        Object.assign(newColumn, customizedColumns[getColumnKey(newColumn).toString()]);
       }
-      // TODO 后续可以加key
-      if (columnsMergeCoverage && columnsMergeCoverage.length > 0) {
-        const mergeItem = columnsMergeCoverage.find(columnItem => columnItem.name === column.name);
-        if (mergeItem) {
-          newColumn = mergeObject(['header'], mergeItem, column);
+      if (parent) {
+        newColumn.lock = parent.lock;
+      }
+      if (newColumn.sort === undefined) {
+        if (parent) {
+          newColumn.sort = index;
+        } else {
+          newColumn.sort = columnSort[getColumnLock(newColumn.lock) || 'center']++;
         }
       }
-      if (newColumn.lock === ColumnLock.left || newColumn.lock === true) {
-        leftFixedColumns.push(newColumn);
-      } else if (newColumn.lock === ColumnLock.right) {
-        rightFixedColumns.push(newColumn);
+      const { children } = newColumn;
+      if (children) {
+        newColumn.children = mergeDefaultProps(children, customizedColumns, newColumn, defaultKey);
+      }
+      if (parent || !newColumn.lock) {
+        columns.push(newColumn);
+      } else if (newColumn.lock === true || newColumn.lock === ColumnLock.left) {
+        leftColumns.push(newColumn);
       } else {
-        columnsNew.push(newColumn);
+        rightColumns.push(newColumn);
       }
     }
-  });
-  return leftFixedColumns.concat(columnsNew, rightFixedColumns);
+  }, []);
+  if (parent) {
+    return sortBy(columns, ({ sort }) => sort);
+  }
+  return [
+    ...sortBy(leftColumns, ({ sort }) => sort),
+    ...sortBy(columns, ({ sort }) => sort),
+    ...sortBy(rightColumns, ({ sort }) => sort),
+  ];
 }
 
-function normalizeColumns(
+export function normalizeColumns(
   elements: ReactNode,
-  columnsMergeCoverage?: ColumnProps[],
+  customizedColumns?: object,
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
 ) {
   const columns: any[] = [];
-  const leftFixedColumns: any[] = [];
-  const rightFixedColumns: any[] = [];
-  Children.forEach(elements, element => {
+  const leftColumns: any[] = [];
+  const rightColumns: any[] = [];
+  const columnSort = {
+    left: 0,
+    center: 0,
+    right: 0,
+  };
+  Children.forEach(elements, (element, index) => {
     if (!isValidElement(element) || !(element.type as typeof Column).__PRO_TABLE_COLUMN) {
       return;
     }
     const { props, key } = element;
-    let column: any = {
+    const column: any = {
       ...props,
     };
     if (isNil(getColumnKey(column))) {
       column.key = `anonymous-${defaultKey[0]++}`;
     }
+    if (customizedColumns) {
+      Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
+    }
     if (parent) {
       column.lock = parent.lock;
     }
-    column.children = normalizeColumns(column.children, columnsMergeCoverage, column, defaultKey);
+    if (column.sort === undefined) {
+      if (parent) {
+        column.sort = index;
+      } else {
+        column.sort = columnSort[getColumnLock(column.lock) || 'center']++;
+      }
+    }
+    column.children = normalizeColumns(column.children, customizedColumns, column, defaultKey);
     if (key) {
       column.key = key;
     }
-    // 后续可以加key
-    if (columnsMergeCoverage && columnsMergeCoverage.length > 0) {
-      const mergeItem = columnsMergeCoverage.find(columnItem => columnItem.name === column.name);
-      if (mergeItem) {
-        column = mergeObject(['header'], mergeItem, column);
-      }
-    }
-
-    if (column.lock === ColumnLock.left || column.lock === true) {
-      leftFixedColumns.push(column);
-    } else if (column.lock === ColumnLock.right) {
-      rightFixedColumns.push(column);
-    } else {
+    if (parent || !column.lock) {
       columns.push(column);
+    } else if (column.lock === true || column.lock === ColumnLock.left) {
+      leftColumns.push(column);
+    } else {
+      rightColumns.push(column);
     }
   });
-  return leftFixedColumns.concat(columns, rightFixedColumns);
+  if (parent) {
+    return sortBy(columns, ({ sort }) => sort);
+  }
+  return [
+    ...sortBy(leftColumns, ({ sort }) => sort),
+    ...sortBy(columns, ({ sort }) => sort),
+    ...sortBy(rightColumns, ({ sort }) => sort),
+  ];
 }
 
 async function getHeaderTexts(
@@ -237,6 +286,12 @@ export default class TableStore {
 
   @observable props: any;
 
+  @observable customized: Customized;
+
+  @observable loading?: boolean;
+
+  @observable originalColumns: ColumnProps[];
+
   @observable bodyHeight: number;
 
   @observable width?: number;
@@ -252,6 +307,8 @@ export default class TableStore {
   @observable lockColumnsHeadRowsHeight: any;
 
   @observable expandedRows: (string | number)[];
+
+  @observable isHeaderHover?: boolean;
 
   @observable hoverRow?: Record;
 
@@ -271,15 +328,48 @@ export default class TableStore {
 
   @observable mouseBatchChooseIdList?: number[];
 
-  @observable columnDeep: number;
-
   @observable multiLineHeight: number[];
+
+  @observable columnResizing?: boolean;
 
   inBatchExpansion: boolean = false;
 
   @computed
   get dataSet(): DataSet {
     return this.props.dataSet;
+  }
+
+  @computed
+  get prefixCls() {
+    const { suffixCls, prefixCls } = this.props;
+    return getProPrefixCls(suffixCls!, prefixCls);
+  }
+
+  @computed
+  get customizable(): boolean {
+    return this.columnTitleEditable || this.columnDraggable;
+  }
+
+  @computed
+  get customizedType(): CustomizedType[] {
+    const { customizedType } = this.props;
+    if (isArrayLike(customizedType)) {
+      return customizedType;
+    }
+    if (customizedType === CustomizedType.none) {
+      return [];
+    }
+    if (customizedType === CustomizedType.all) {
+      return [
+        CustomizedType.columnOrder,
+        CustomizedType.columnWidth,
+        CustomizedType.columnHidden,
+        CustomizedType.columnHeader,
+      ];
+    }
+    return [
+      customizedType,
+    ];
   }
 
   @computed
@@ -348,6 +438,31 @@ export default class TableStore {
   }
 
   @computed
+  get columnHideable(): boolean {
+    if ('columnHideable' in this.props) {
+      return this.props.columnHideable;
+    }
+    if (getConfig('tableColumnHideable') === false) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * 表头支持编辑
+   */
+  @computed
+  get columnTitleEditable(): boolean {
+    if ('columnTitleEditable' in this.props) {
+      return this.props.columnTitleEditable;
+    }
+    if (getConfig('tableColumnTitleEditable') === false) {
+      return false;
+    }
+    return false;
+  }
+
+  @computed
   get pagination(): TablePaginationConfig | false | undefined {
     if ('pagination' in this.props) {
       return this.props.pagination;
@@ -364,25 +479,40 @@ export default class TableStore {
   }
 
   @computed
-  get dragColumn(): boolean | undefined {
-    if (this.columnMaxDeep > 1) {
-      return false;
+  get columnDraggable(): boolean {
+    if ('columnDraggable' in this.props) {
+      return this.props.columnDraggable;
     }
     if ('dragColumn' in this.props) {
       return this.props.dragColumn;
     }
-    return getConfig('tableDragColumn');
+    if (getConfig('tableColumnDraggable') === true) {
+      return true;
+    }
+    if (getConfig('tableDragColumn') === true) {
+      return true;
+    }
+    return false;
   }
 
   @computed
-  get dragRow(): boolean | undefined {
+  get rowDraggable(): boolean {
     if (this.isTree) {
       return false;
+    }
+    if ('rowDraggable' in this.props) {
+      return this.props.rowDraggable;
     }
     if ('dragRow' in this.props) {
       return this.props.dragRow;
     }
-    return getConfig('tableDragRow');
+    if (getConfig('tableRowDraggable') === true) {
+      return true;
+    }
+    if (getConfig('tableDragRow') === true) {
+      return true;
+    }
+    return false;
   }
 
   @computed
@@ -564,57 +694,132 @@ export default class TableStore {
     );
   }
 
+  @autobind
+  customizedColumnHeader() {
+    return <CustomizationColumnHeader onHeaderClick={this.openCustomizationModal} />;
+  }
+
+  @computed
+  get customizedColumn(): ColumnProps | undefined {
+    if (this.customizable && (!this.rowDraggable || this.dragColumnAlign !== DragColumnAlign.right)) {
+      return {
+        key: CUSTOMIZED_KEY,
+        resizable: false,
+        titleEditable: false,
+        align: ColumnAlign.center,
+        width: 50,
+        lock: ColumnLock.right,
+        header: this.customizedColumnHeader,
+      };
+    }
+    return undefined;
+  }
+
+  @computed
+  get expandColumn(): ColumnProps | undefined {
+    if (this.expandIconAsCell) {
+      return {
+        key: EXPAND_KEY,
+        resizable: false,
+        titleEditable: false,
+        align: ColumnAlign.center,
+        width: 50,
+        lock: true,
+      };
+    }
+    return undefined;
+  }
+
+  @computed
+  get rowNumberColumn(): ColumnProps | undefined {
+    const { rowNumber } = this.props;
+    if (rowNumber) {
+      return {
+        key: ROW_NUMBER_KEY,
+        resizable: false,
+        titleEditable: false,
+        className: `${this.prefixCls}-row-number-column`,
+        renderer: this.renderRowNumber,
+        tooltip: TableColumnTooltip.overflow,
+        align: ColumnAlign.center,
+        width: 50,
+        lock: true,
+      };
+    }
+    return undefined;
+  }
+
+  @computed
+  get selectionColumn(): ColumnProps | undefined {
+    if (this.hasRowBox) {
+      const { dataSet, prefixCls } = this;
+      const selectionColumn: ColumnProps = {
+        key: SELECTION_KEY,
+        resizable: false,
+        titleEditable: false,
+        className: `${prefixCls}-selection-column`,
+        renderer: this.renderSelectionBox,
+        align: ColumnAlign.center,
+        width: 50,
+        lock: true,
+      };
+      if (dataSet && dataSet.selection === DataSetSelection.multiple) {
+        selectionColumn.header = this.multipleSelectionRenderer;
+        selectionColumn.footer = this.multipleSelectionRenderer;
+      }
+      return selectionColumn;
+    }
+    return undefined;
+  }
+
+  @computed
+  get draggableColumn(): ColumnProps | undefined {
+    const { dragColumnAlign, rowDraggable, prefixCls } = this;
+    if (dragColumnAlign && rowDraggable) {
+      const draggableColumn: ColumnProps = {
+        key: DRAG_KEY,
+        resizable: false,
+        titleEditable: false,
+        className: `${prefixCls}-drag-column`,
+        renderer: this.renderDragBox,
+        align: ColumnAlign.center,
+        width: 50,
+      };
+      if (dragColumnAlign === DragColumnAlign.left) {
+        draggableColumn.lock = ColumnLock.left;
+      }
+
+      if (dragColumnAlign === DragColumnAlign.right) {
+        draggableColumn.lock = ColumnLock.right;
+        draggableColumn.header = this.customizable && this.customizedColumnHeader;
+      }
+      return draggableColumn;
+    }
+    return undefined;
+  }
+
   @computed
   get columns(): ColumnProps[] {
-    const { columnsMergeCoverage } = this.props;
-    let { columns, children } = this.props;
-    if (this.headersOrderable) {
-      if (columnsMergeCoverage && columns) {
-        columns = reorderingColumns(columnsMergeCoverage, columns);
-      } else {
-        children = reorderingColumns(columnsMergeCoverage, children);
-      }
-    }
-    // 分开处理可以满足于只修改表头信息场景不改变顺序
-    return observable.array(
-      this.addExpandColumn(
-        this.addDragColumn(this.addRowNumberColumn(this.addSelectionColumn(columns
-          ? mergeDefaultProps(columns, this.headersEditable
-            ? columnsMergeCoverage
-            : undefined)
-          : normalizeColumns(children, this.headersEditable
-            ? columnsMergeCoverage :
-            undefined),
-        ))),
-      ),
-    );
-  }
-
-  set columns(columns: ColumnProps[]) {
-    runInAction(() => {
-      set(this.props, 'columns', columns);
-    });
-  }
-
-  /**
-   * 表头支持编辑
-   */
-  @computed
-  get headersEditable() {
-    return (this.props.columnsEditType === ColumnsEditType.header || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage;
-  }
-
-  /**
-   * 表头支持排序
-   */
-  @computed
-  get headersOrderable() {
-    return (this.props.columnsEditType === ColumnsEditType.order || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage;
+    const { dragColumnAlign, originalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn, customizedColumn } = this;
+    return observable.array([
+      expandColumn,
+      dragColumnAlign === DragColumnAlign.left ? draggableColumn : undefined,
+      rowNumberColumn,
+      selectionColumn,
+      ...originalColumns,
+      customizedColumn,
+      dragColumnAlign === DragColumnAlign.right ? draggableColumn : undefined,
+    ]).filter<ColumnProps>(columnFilter);
   }
 
   @computed
   get leftColumns(): ColumnProps[] {
     return this.columns.filter(column => column.lock === ColumnLock.left || column.lock === true);
+  }
+
+  @computed
+  get centerColumns(): ColumnProps[] {
+    return this.columns.filter(column => !column.lock);
   }
 
   @computed
@@ -761,29 +966,18 @@ export default class TableStore {
     const {
       expandIconAsCell,
       dragColumnAlign,
-      dragRow,
+      rowDraggable,
       props: { expandIconColumnIndex = 0, rowNumber },
     } = this;
     if (expandIconAsCell) {
       return 0;
     }
-    return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && dragRow].filter(Boolean).length;
+    return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable].filter(Boolean).length;
   }
 
   @computed
   get inlineEdit() {
     return this.props.editMode === TableEditMode.inline;
-  }
-
-  @computed
-  get columnMaxDeep() {
-    return this.columnDeep;
-  }
-
-  set columnMaxDeep(deep: number) {
-    runInAction(() => {
-      this.columnDeep = Math.max(this.columnDeep, deep);
-    });
   }
 
   private handleSelectAllChange = action(value => {
@@ -806,15 +1000,19 @@ export default class TableStore {
       this.lockColumnsFootRowsHeight = {};
       this.node = node;
       this.expandedRows = [];
-      this.columnDeep = 0;
       this.lastScrollTop = 0;
       this.multiLineHeight = [];
       this.rowHighLight = false;
+      this.originalColumns = [];
+      this.customized = { columns: {} };
+      this.setProps(node.props);
+      this.loadCustomized().then(() => {
+        this.initColumns();
+      });
     });
-    this.setProps(node.props);
   }
 
-  async getColumnHeaders(): Promise<HeaderText[]> {
+  getColumnHeaders(): Promise<HeaderText[]> {
     const { leafNamedColumns, dataSet } = this;
     return getHeaderTexts(dataSet, leafNamedColumns.slice());
   }
@@ -851,6 +1049,15 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
+  }
+
+  @action
+  initColumns() {
+    const { customized: { columns: customizedColumns } } = this;
+    const { columns, children } = this.props;
+    this.originalColumns = columns
+      ? mergeDefaultProps(columns, customizedColumns)
+      : normalizeColumns(children, customizedColumns);
   }
 
   isRowExpanded(record: Record): boolean {
@@ -994,19 +1201,6 @@ export default class TableStore {
     return leafColumns;
   }
 
-  private addExpandColumn(columns: ColumnProps[]): ColumnProps[] {
-    if (this.expandIconAsCell) {
-      columns.unshift({
-        key: EXPAND_KEY,
-        resizable: false,
-        align: ColumnAlign.center,
-        width: 50,
-        lock: true,
-      });
-    }
-    return columns;
-  }
-
   @autobind
   renderSelectionBox({ record }): ReactNode {
     return renderSelectionBox({ record, store: this });
@@ -1029,7 +1223,69 @@ export default class TableStore {
     if (rowDragRender && isFunction(rowDragRender.renderIcon)) {
       return rowDragRender.renderIcon({ record });
     }
-    return (<Icon type="baseline-drag_indicator" />);
+    return <Icon type="baseline-drag_indicator" />;
+  }
+
+  @action
+  changeCustomizedColumnValue(type: CustomizedType, column: ColumnProps, value: object) {
+    const { customized: { columns }, customizedType } = this;
+    set(column, value);
+    if (customizedType.includes(type)) {
+      const columnKey = getColumnKey(column).toString();
+      const oldCustomized = get(columns, columnKey);
+      set(columns, columnKey, {
+        ...oldCustomized,
+        ...value,
+      });
+      this.saveCustomizedDebounce();
+    }
+  }
+
+  @action
+  saveCustomized(customized?: Customized | null) {
+    const { customizedCode } = this.props;
+    if (customized) {
+      this.customized = customized;
+    }
+    if (customizedCode) {
+      const tableCustomizedSave = getConfig('tableCustomizedSave');
+      tableCustomizedSave(customizedCode, this.customized);
+    }
+  };
+
+  saveCustomizedDebounce = debounce(this.saveCustomized, 1000);
+
+  @autobind
+  openCustomizationModal(modal) {
+    modal.open({
+      drawer: true,
+      size: Size.small,
+      title: $l('Table', 'customization_settings'),
+      children: <CustomizationSettings />,
+      okText: $l('Table', 'save_button'),
+    });
+  }
+
+  async loadCustomized() {
+    const { customizedCode } = this.props;
+    if (customizedCode) {
+      const tableCustomizedLoad = getConfig('tableCustomizedLoad');
+      runInAction(() => {
+        this.loading = true;
+      });
+      try {
+        const customized = await tableCustomizedLoad(customizedCode);
+        if (customized) {
+          runInAction(() => {
+            this.customized = customized;
+          });
+        }
+      } finally {
+        runInAction(() => {
+          this.loading = false;
+        });
+      }
+    }
   }
 
   @autobind
@@ -1042,71 +1298,6 @@ export default class TableStore {
         value
       />
     );
-  }
-
-  private addRowNumberColumn(columns: ColumnProps[]): ColumnProps[] {
-    const { suffixCls, prefixCls, rowNumber } = this.props;
-    if (rowNumber) {
-      const rowNumberColumn: ColumnProps = {
-        key: ROW_NUMBER_KEY,
-        resizable: false,
-        className: `${getProPrefixCls(suffixCls!, prefixCls)}-row-number-column`,
-        renderer: this.renderRowNumber,
-        tooltip: TableColumnTooltip.overflow,
-        align: ColumnAlign.center,
-        width: 50,
-        lock: true,
-      };
-      columns.unshift(rowNumberColumn);
-    }
-    return columns;
-  }
-
-  private addSelectionColumn(columns: ColumnProps[]): ColumnProps[] {
-    if (this.hasRowBox) {
-      const { dataSet } = this;
-      const { suffixCls, prefixCls } = this.props;
-      const selectionColumn: ColumnProps = {
-        key: SELECTION_KEY,
-        resizable: false,
-        className: `${getProPrefixCls(suffixCls!, prefixCls)}-selection-column`,
-        renderer: this.renderSelectionBox,
-        align: ColumnAlign.center,
-        width: 50,
-        lock: true,
-      };
-      if (dataSet && dataSet.selection === DataSetSelection.multiple) {
-        selectionColumn.header = this.multipleSelectionRenderer;
-        selectionColumn.footer = this.multipleSelectionRenderer;
-      }
-      columns.unshift(selectionColumn);
-    }
-    return columns;
-  }
-
-  private addDragColumn(columns: ColumnProps[]): ColumnProps[] {
-    const { dragColumnAlign, dragRow, props: { suffixCls, prefixCls } } = this;
-    if (dragColumnAlign && dragRow) {
-      const dragColumn: ColumnProps = {
-        key: DRAG_KEY,
-        resizable: false,
-        className: `${getProPrefixCls(suffixCls!, prefixCls)}-drag-column`,
-        renderer: this.renderDragBox,
-        align: ColumnAlign.center,
-        width: 50,
-      };
-      if (dragColumnAlign === DragColumnAlign.left) {
-        dragColumn.lock = ColumnLock.left;
-        columns.unshift(dragColumn);
-      }
-
-      if (dragColumnAlign === DragColumnAlign.right) {
-        dragColumn.lock = ColumnLock.right;
-        columns.push(dragColumn);
-      }
-
-    }
-    return columns;
   }
 
 }

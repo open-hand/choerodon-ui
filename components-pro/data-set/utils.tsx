@@ -10,10 +10,10 @@ import isNumber from 'lodash/isNumber';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import isNil from 'lodash/isNil';
-import { isEmpty as _isEmpty } from 'lodash';
+import _isEmpty from 'lodash/isEmpty';
 import Field, { DynamicPropsArguments, FieldProps, Fields } from './Field';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
-import DataSet from './DataSet';
+import DataSet, { Group } from './DataSet';
 import Record from './Record';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
@@ -774,4 +774,78 @@ export function generateJSONData(
 
 export function isDirtyRecord(record) {
   return record.status !== RecordStatus.sync || record.dirty;
+}
+
+export function getSpliceRecord(records: Record[], inserts: Record[], fromRecord?: Record): Record | undefined {
+  if (fromRecord) {
+    if (inserts.includes(fromRecord)) {
+      return getSpliceRecord(records, inserts, records[records.indexOf(fromRecord) + 1]);
+    }
+    return fromRecord;
+  }
+}
+
+// bugs in react native
+export function fixAxiosConfig(config: AxiosRequestConfig): AxiosRequestConfig {
+  const { method } = config;
+  if (method && method.toLowerCase() === 'get') {
+    delete config.data;
+  }
+  return config;
+}
+
+const EMPTY_GROUP_KEY = '__empty_group__';
+
+export function normalizeGroups(groups: string[], records: Record[]): Group[] {
+  const optGroups: Group[] = [];
+  const restRecords: Record[] = [];
+  records.forEach((record) => {
+    let previousGroup: Group | undefined;
+    groups.every((key) => {
+      const label = record.get(key);
+      if (label !== undefined) {
+        if (!previousGroup) {
+          previousGroup = optGroups.find(item => item.value === label);
+          if (!previousGroup) {
+            previousGroup = {
+              name: key,
+              value: label,
+              records: [],
+              subGroups: [],
+            };
+            optGroups.push(previousGroup);
+          }
+        } else {
+          const { subGroups } = previousGroup;
+          previousGroup = subGroups.find(item => item.value === label);
+          if (!previousGroup) {
+            previousGroup = {
+              name: key,
+              value: label,
+              records: [],
+              subGroups: [],
+            };
+            subGroups.push(previousGroup);
+          }
+        }
+        return true;
+      }
+      return false;
+    });
+    if (previousGroup) {
+      const { records: groupRecords } = previousGroup;
+      groupRecords.push(record);
+    } else {
+      restRecords.push(record);
+    }
+  });
+  if (restRecords.length) {
+    optGroups.push({
+      name: EMPTY_GROUP_KEY,
+      value: undefined,
+      records: restRecords,
+      subGroups: [],
+    });
+  }
+  return optGroups;
 }

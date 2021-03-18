@@ -1,6 +1,8 @@
+import { Key } from 'react';
 import { computed } from 'mobx';
 import { ColumnProps } from './Column';
 import ColumnGroups from './ColumnGroups';
+import { getColumnKey } from './utils';
 
 export default class ColumnGroup {
   column: ColumnProps;
@@ -8,6 +10,11 @@ export default class ColumnGroup {
   children?: ColumnGroups;
 
   parent: ColumnGroups;
+
+  @computed
+  get key(): Key {
+    return getColumnKey(this.column);
+  }
 
   @computed
   get rowSpan(): number {
