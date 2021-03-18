@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复边框样式问题。
 - 🐞 `<pro>Record`: 修复 rest 方法无法恢复记录状态的问题。
 - 🐞 `<pro>NumberField`: 修复长按增减值按钮在出现校验失败时无法停止的问题。
+- 🐞 `<pro>Form`: 修复表单各模式 placeholder 被填充为 label 值。
 
 ## 1.1.1
 

@@ -384,7 +384,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { dataSet, record, props, labelLayout } = this;
     const placeholderOrigin = this.getProp('placeholder');
     const label = getProperty(props, 'label', dataSet, record);
-    const placeholder = label && labelLayout === LabelLayout.placeholder && !this.isFocused ? label : placeholderOrigin || label ;
+    let placeholder = placeholderOrigin 
+    if (labelLayout === LabelLayout.placeholder) {
+      placeholder = label && !this.isFocused ? label : placeholderOrigin || label ;
+    }
     const holders: string[] = [];
     return placeholder ? holders.concat(placeholder!) : holders;
   }
