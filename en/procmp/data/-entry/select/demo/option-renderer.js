@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DataSet, Select, Button, Row, Col, Menu, Tooltip, Icon } from 'choerodon-ui/pro';
-
-const Item = Menu.Item;
+import { DataSet, Select, Row, Col, Tooltip, Icon } from 'choerodon-ui/pro';
 
 const App = () => {
   const optionDs = new DataSet({
     selection: 'single',
     queryUrl: '/dataset/user/queries',
     autoQuery: true,
+    paging: false,
   });
 
   const ds = new DataSet({

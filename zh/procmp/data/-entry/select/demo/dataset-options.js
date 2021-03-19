@@ -16,11 +16,56 @@ function handleDataSetChange({ record, name, value, oldValue }) {
 class App extends React.Component {
   optionDs = new DataSet({
     selection: 'single',
-    queryUrl: '/dataset/user/queries',
+    transport: {
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
+      },
+    },
     autoQuery: true,
   });
 
   ds = new DataSet({
+    data: [
+      { userid: '15', name: '戴刚' }
+    ],
+    fields: [
+      {
+        name: 'user',
+        type: 'object',
+        textField: 'name',
+        valueField: 'userid',
+        label: '用户',
+        options: this.optionDs,
+        ignore: 'always',
+      },
+      {
+        name: 'account',
+        multiple: true,
+      },
+      {
+        name: 'name',
+        bind: 'user.name'
+      },
+      {
+        name: 'userid',
+        bind: 'user.userid'
+      }
+    ],
+    events: {
+      update: handleDataSetChange,
+    },
+  });
+
+  optionNoPageDs = new DataSet({
+    selection: 'single',
+    queryUrl: '/dataset/user/queries',
+    autoQuery: true,
+    paging: false,
+  });
+
+  dsOne = new DataSet({
     fields: [
       {
         name: 'user',
@@ -28,12 +73,9 @@ class App extends React.Component {
         textField: 'name',
         valueField: 'userid',
         label: '用户',
-        options: this.optionDs,
+        options: this.optionNoPageDs,
       },
     ],
-    events: {
-      update: handleDataSetChange,
-    },
   });
 
   changeOptions = () => {
@@ -49,22 +91,38 @@ class App extends React.Component {
 
   render() {
     return (
-      <Row gutter={10}>
-        <Col span={8}>
-          <Select
-            multiple
-            optionsFilter={record => record.get('sex') === 'F'}
-            dataSet={this.ds}
-            name="user"
-          />
-        </Col>
-        <Col span={8}>
-          <Select multiple dataSet={this.ds} name="account" />
-        </Col>
-        <Col span={8}>
-          <Button onClick={this.changeOptions}>切换选项</Button>
-        </Col>
-      </Row>
+      <>
+        <Row span={8}>
+          分页加载：
+        </Row>
+        <Row gutter={10}>
+          <Col span={8}>
+            <Select
+              multiple
+              optionsFilter={record => record.get('sex') === 'F'}
+              dataSet={this.ds}
+              name="user"
+            />
+          </Col>
+          <Col span={8}>
+            <Select multiple dataSet={this.ds} name="account" />
+          </Col>
+          <Col span={8}>
+            <Button onClick={this.changeOptions}>切换选项</Button>
+          </Col>
+        </Row>
+        <Row span={8}>
+          不分页：
+        </Row>
+        <Row gutter={10}>
+          <Col span={8}>
+            <Select
+              dataSet={this.dsOne}
+              name="user"
+            />
+          </Col>
+        </Row>
+      </>
     );
   }
 }

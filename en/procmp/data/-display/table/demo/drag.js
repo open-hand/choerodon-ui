@@ -26,13 +26,6 @@ class EditButton extends React.Component {
 
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dragColumnAlign: undefined,
-    };
-  }
-
   userDs = new DataSet({
     primaryKey: 'userid',
     name: 'user',
@@ -71,6 +64,12 @@ class App extends React.Component {
     },
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      dragColumnAlign: undefined,
+    };
+  }
 
   openModal = (record, isNew) => {
     let isCancel = false;
@@ -127,8 +126,9 @@ class App extends React.Component {
 
   render() {
     const buttons = [this.leftDrag, this.noneDrag, this.rightDrag, 'save', 'delete', 'reset'];
+    const { dragColumnAlign } = this.state;
     return (
-      <Table dragColumnAlign={this.state.dragColumnAlign} dragRow={true} dragColumn={true} key="user" buttons={buttons} dataSet={this.userDs} pristine>
+      <Table dragColumnAlign={dragColumnAlign} rowDraggable columnDraggable key="user" buttons={buttons} dataSet={this.userDs} pristine>
         <Column name="userid" />
         <Column name="age" />
         <Column name="enable" />

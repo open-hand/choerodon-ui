@@ -43,7 +43,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={12}>
-          <Lov dataSet={this.ds} name="code" noCache triggerMode='input' tableProps={{ selectionMode: 'rowbox' }} />
+          <Lov dataSet={this.ds} name="code" noCache tableProps={{ selectionMode: 'rowbox' }} />
         </Col>
         <Col span={12}>
           <Lov dataSet={this.ds} name="code_string" />

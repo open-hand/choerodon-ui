@@ -23,18 +23,6 @@ const App = () => {
     ],
   });
 
-  const renderer = ({ text }) => (
-    <div style={{ width: '100%' }}>
-      {text && <Icon type="people" />} {text}
-    </div>
-  );
-
-  const optionRenderer = ({ text }) => (
-    <Tooltip title={text} placement="left">
-      {renderer({ text })}
-    </Tooltip>
-  );
-
   return (
     <Row gutter={10}>
       <Col span={8}>

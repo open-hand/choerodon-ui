@@ -107,15 +107,7 @@ class App extends React.Component {
   render() {
     const buttons = ['save', 'delete', 'reset'];
     return (
-      <Table
-        rowDragRender={{ renderClone: this.renderDragRow }}
-        dragColumnAlign="left"
-        dragRow={true}
-        key="user"
-        buttons={buttons}
-        dataSet={this.userDs}
-        pristine
-      >
+      <Table rowDragRender={{ renderClone: this.renderDragRow }} dragColumnAlign="left" rowDraggable key="user" buttons={buttons} dataSet={this.userDs} pristine>
         <Column name="userid" />
         <Column name="age" />
         <Column name="enable" />

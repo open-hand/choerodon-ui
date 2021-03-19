@@ -71,7 +71,7 @@
         "en": "DataSet Options"
       },
       "description": {
-        "zh": "数据源选项。\n",
+        "zh": "数据源选项。当有分页时，请使用 object 类型字段，并且通过接口查询出显示值绑定到该字段上， 因为选项只会加载第一页数据，导致没有匹配的显示值。\n\n",
         "en": "DataSet Options\n"
       },
       "order": 4,
@@ -240,21 +240,6 @@
         "en": "DataSet group.\n"
       },
       "order": 14,
-      "screenshot": "",
-      "height": 200,
-      "category": "pro"
-    },
-    {
-      "filename": "paging-false.js",
-      "title": {
-        "zh": "禁用分页",
-        "en": "diabled paging"
-      },
-      "description": {
-        "zh": "禁用分页。\n",
-        "en": "diabled paging.\n"
-      },
-      "order": 15,
       "screenshot": "",
       "height": 200,
       "category": "pro"

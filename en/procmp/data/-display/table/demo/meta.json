@@ -354,14 +354,14 @@
       "category": "pro"
     },
     {
-      "filename": "edit-column.js",
+      "filename": "customized.js",
       "title": {
-        "zh": "表头编辑",
-        "en": "headerEditor"
+        "zh": "用户个性化",
+        "en": "Customized"
       },
       "description": {
-        "zh": "支持对列 header 编辑以及列的位置拖拽修改，触发对应的事件获取信息进行处理。\n",
-        "en": "you can edit the header of table, now we support edit with the order of header and the tiltle of header to edit . The event would be active when drag the column and edit the header.\n"
+        "zh": "支持对列的各项属性进行配置并个性化存储。\n",
+        "en": "Support the configuration and personalized storage of each attribute of the column.\n"
       },
       "order": 23,
       "screenshot": "",
