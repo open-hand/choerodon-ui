@@ -15,12 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnTitleEditable`, `tableColumnHideable`, `tableColumnDraggable`, `tableRowDraggable`, `tableCustomizedSave`, `tableCustomizedLoad` global properties, and deprecated `tableDragColumn` and `tableDragRow` properties.
+## 1.2.0
+
+`2021-03-18`
+
+- 🌟 `configure`: Added `tableColumnTitleEditable`, `tableColumnHideable`, `tableColumnDraggable`, `tableRowDraggable`, `tableCustomizedSave`, `tableCustomizedLoad`, `modalMaskClosable` global properties, and deprecated `tableDragColumn`, `tableDragRow`, `lovTriggerMode` properties.
 - 🌟 `<pro>Table`: Added table personalization features, including `customizedCode`, `customizedType`, `columnTitleEditable`, `columnHideable`, `columnDraggable`, `rowDraggable` attributes, deprecated `columnsMergeCoverage`, `columnsOnChange`, `columnsEditType`, `dragColumn`, `dragRow` attributes, and Column added `titleEditable` attributes.
-- 🐞 `<pro>Table`: Fix the border style issue.
+- 🐞 `<pro>Table`: Fixed the border style issue.
 - 🐞 `<pro>Select`: Fixed that when searchable, the clear button will trigger onChange twice.
-- 🐞 `<pro>Record`: Fix the problem that the rest method cannot restore the recording state.
-- 🐞 `<pro>NumberField`: Fix the problem that long-pressing the increase or decrease value button fails to stop when the verification fails.
+- 🐞 `<pro>Record`: Fixed the problem that the reset method cannot restore the recording state.
+- 🐞 `<pro>NumberField`: Fixed the problem that long-pressing the increase or decrease value button fails to stop when the verification fails.
 - 🐞 `<pro>Form`: Fixed the placeholder in each mode of the form to be filled with label value.
 
 ## 1.1.1

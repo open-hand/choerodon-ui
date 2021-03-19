@@ -28,21 +28,16 @@ import {
 
 const { Column } = Table;
 
-class EditButton extends React.Component {
-  handleClick = e => {
-    const { record, onClick } = this.props;
+const EditButton = (props) => {
+  const handleClick = e => {
+    const { record, onClick } = props;
     onClick(record, e);
   };
 
-  render() {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.handleClick} size="small" />;
-  }
-}
-
-
+  return <Button funcType="flat" icon="mode_edit" onClick={handleClick} size="small" />;
+};
 
 class App extends React.Component {
-
   userDs = new DataSet({
     primaryKey: 'userid',
     transport: {
@@ -87,6 +82,12 @@ class App extends React.Component {
     },
   });
 
+  columnsDragRender = { renderIcon: () => <Icon type="open_with" /> };
+
+  editUser = record => {
+    this.openModal(record);
+  };
+
   openModal = (record, isNew) => {
     let isCancel = false;
     Modal.open({
@@ -101,13 +102,11 @@ class App extends React.Component {
         </Form>
       ),
       onOk: () => this.userDs.submit(),
-      onCancel: () => (isCancel = true),
+      onCancel: () => {
+        isCancel = true;
+      },
       afterClose: () => isCancel && isNew && this.userDs.remove(record),
     });
-  };
-
-  editUser = record => {
-    this.openModal(record);
   };
 
   renderEdit = ({ record }) => {
@@ -116,9 +115,8 @@ class App extends React.Component {
 
   renderName = ({ text }) => {
     return new Array(3).fill(text).join(' ');
-  }
+  };
 
-  columnsDragRender = { renderIcon: () => <Icon type="open_with" /> }
 
   render() {
     return (

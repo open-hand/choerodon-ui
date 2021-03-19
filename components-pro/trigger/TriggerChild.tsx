@@ -42,8 +42,7 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
         if (popupHidden) {
           isClickScrollbar.value = false;
         }
-        const { value } = isClickScrollbar;
-        if (value) {
+        if (isClickScrollbar && isClickScrollbar.value) {
           e.target.focus();
           return;
         }

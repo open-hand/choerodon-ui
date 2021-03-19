@@ -24,7 +24,7 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls } from './utils';
-import { modalChildrenProps, ClosableMode } from './interface';
+import { modalChildrenProps } from './interface';
 
 function fixUnit(n) {
   if (isNumber(n)) {
@@ -51,7 +51,7 @@ export interface ModalProps extends ViewComponentProps {
   closable?: boolean;
   movable?: boolean;
   fullScreen?: boolean;
-  maskClosable?: boolean | ClosableMode;
+  maskClosable?: boolean | 'click' | 'dblclick';
   maskStyle?: CSSProperties;
   autoCenter?: boolean;
   mask?: boolean,
@@ -118,7 +118,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     okCancel: PropTypes.bool,
     drawer: PropTypes.bool,
     drawerOffset: PropTypes.number,
-    drawerTransitionName: PropTypes.oneOf(['slide-up', 'slide-right', 'slide-down', 'slide-up']),
+    drawerTransitionName: PropTypes.oneOf(['slide-up', 'slide-right', 'slide-down', 'slide-up', 'slide-left']),
     // title: PropTypes.node,
     // 此处原本允许title传入node，但是类型为PropTypes.node时无法正确继承ViewComponent
     // 父类中的title指的是HTML元素的title属性，此处title指modal标题，产生歧义，暂时设置为string
@@ -135,7 +135,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     suffixCls,
     closable: false,
     movable: true,
-    maskClosable: false,
     mask: true,
     keyboardClosable: true,
     okButton: true,

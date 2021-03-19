@@ -528,7 +528,7 @@ export default class TableCell extends Component<TableCellProps> {
         showHelp={ShowHelp.none}
       />
     );
-    const text = this.overflow || tooltip === TableColumnTooltip.always ? (
+    const text = tooltip === TableColumnTooltip.always || this.overflow ? (
       <Tooltip key="tooltip" title={cloneElement(output, { ref: null, className: null })} placement={getPlacementByAlign(textAlign)}>
         {output}
       </Tooltip>

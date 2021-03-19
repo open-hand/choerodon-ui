@@ -62,21 +62,40 @@ class App extends React.Component {
         name: 'name',
         bind: 'user.name'
       },
-       {
-         name: 'userid',
-         bind: 'user.userid'
-       }
+      {
+        name: 'userid',
+        bind: 'user.userid'
+      }
     ],
     events: {
       update: handleDataSetChange,
     },
   });
 
+  optionNoPageDs = new DataSet({
+    selection: 'single',
+    queryUrl: '/dataset/user/queries',
+    autoQuery: true,
+    paging: false,
+  });
+
+  dsOne = new DataSet({
+    fields: [
+      {
+        name: 'user',
+        type: 'string',
+        textField: 'name',
+        valueField: 'userid',
+        label: '用户',
+        options: this.optionNoPageDs,
+      },
+    ],
+  });
+
   changeOptions = () => {
     this.ds.addField('account', {
       name: 'account',
       type: 'string',
-      multiple: true,
       textField: 'name',
       valueField: 'userid',
       label: '账户',
@@ -86,24 +105,43 @@ class App extends React.Component {
 
   render() {
     return (
-      <Row gutter={10}>
-        <Col span={8}>
-          <Select
-            optionsFilter={record => record.get('sex') === 'F'}
-            dataSet={this.ds}
-            name="user"
-          />
-        </Col>
-        <Col span={8}>
-          <Select dataSet={this.ds} name="account" />
-        </Col>
-        <Col span={8}>
-          <Button onClick={this.changeOptions}>切换选项</Button>
-        </Col>
-      </Row>
+      <>
+        <Row span={8}>
+          分页加载：
+        </Row>
+        <Row gutter={10}>
+
+          <Col span={8}>
+            <Select
+              multiple
+              optionsFilter={record => record.get('sex') === 'F'}
+              dataSet={this.ds}
+              name="user"
+            />
+          </Col>
+          <Col span={8}>
+            <Select multiple dataSet={this.ds} name="account" />
+          </Col>
+          <Col span={8}>
+            <Button onClick={this.changeOptions}>切换选项</Button>
+          </Col>
+        </Row>
+        <Row span={8}>
+           不分页：
+        </Row>
+        <Row gutter={10}>
+          <Col span={8}>
+            <Select
+              dataSet={this.dsOne}
+              name="user"
+            />
+          </Col>
+        </Row>
+      </>
     );
   }
 }
+
 
 ReactDOM.render(<App />, mountNode);
 ```
