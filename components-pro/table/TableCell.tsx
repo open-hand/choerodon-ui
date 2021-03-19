@@ -23,10 +23,12 @@ import {
   findFirstFocusableElement,
   getAlignByField,
   getColumnKey,
+  getColumnLock,
   getEditorByColumnAndRecord,
   getPlacementByAlign,
   isDisabledRow,
   isRadio,
+  isStickySupport,
 } from './utils';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { ColumnAlign, ColumnLock, TableColumnTooltip, TableCommandType } from './enum';
@@ -221,7 +223,7 @@ export default class TableCell extends Component<TableCellProps> {
     if (column.key !== SELECTION_KEY && !isDisabledRow(record) && (!inlineEdit || record.editing)) {
       dataSet.current = record;
       this.showEditor(e.currentTarget, lock);
-      if (!this.cellEditor || isRadio(this.cellEditor)) {
+      if (!isStickySupport() && (!this.cellEditor || isRadio(this.cellEditor))) {
         const cell = findCell(tableStore, prefixCls, getColumnKey(column), lock);
         if (cell && !cell.contains(document.activeElement)) {
           const node = findFirstFocusableElement(cell);
@@ -472,7 +474,7 @@ export default class TableCell extends Component<TableCellProps> {
       }
     }
 
-    if (!hasEditor) {
+    if (!isStickySupport() && !hasEditor) {
       innerProps.onKeyDown = this.handleEditorKeyDown;
     }
     if (rowHeight !== 'auto') {
@@ -539,11 +541,12 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   render() {
-    const { column, prefixCls, record, isDragging, provided, colSpan } = this.props;
+    const { column, prefixCls, record, isDragging, provided, colSpan, style: propsStyle, className: propsClassName } = this.props;
     const {
-      tableStore: { inlineEdit, pristine, node },
+      tableStore,
     } = this.context;
-    const { className, style, align, name, onCell, tooltip } = column;
+    const { inlineEdit, pristine, node } = tableStore;
+    const { className, style, align, name, onCell, tooltip, lock } = column;
     const command = this.getCommand();
     const field = name ? record.getField(name) : undefined;
     const cellPrefix = `${prefixCls}-cell`;
@@ -561,6 +564,7 @@ export default class TableCell extends Component<TableCellProps> {
       ...cellExternalProps.style,
       ...(provided && { cursor: 'move' }),
     };
+    const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classString = classNames(
       cellPrefix,
       {
@@ -568,8 +572,10 @@ export default class TableCell extends Component<TableCellProps> {
         [`${cellPrefix}-required`]: field && !inlineEdit && field.required,
         [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
         [`${cellPrefix}-multiLine`]: field && field.get('multiLine'),
+        [`${cellPrefix}-fix-${columnLock}`]: columnLock,
       },
       className,
+      propsClassName,
       cellExternalProps.className,
     );
     const widthDraggingStyle = (): React.CSSProperties => {
@@ -590,7 +596,7 @@ export default class TableCell extends Component<TableCellProps> {
         className={classString}
         data-index={getColumnKey(column)}
         {...(provided && provided.dragHandleProps)}
-        style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
+        style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...propsStyle }}
       >
         {this.getInnerNode(cellPrefix, command, cellStyle.textAlign as ColumnAlign)}
       </td>

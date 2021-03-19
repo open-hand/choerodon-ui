@@ -31,11 +31,11 @@ export default class TableBody extends Component<TableBodyProps> {
   render() {
     const { children, lock, prefixCls, height, onScroll } = this.props;
     const {
-      tableStore: { leftLeafColumnsWidth, rightLeafColumnsWidth, hasFooter, overflowY },
+      tableStore: { leftLeafColumnsWidth, rightLeafColumnsWidth, hasFooter, overflowY, overflowX },
     } = this.context;
     const fixedLeft = lock === true || lock === ColumnLock.left;
     const scrollbar = measureScrollbar();
-    const hasFooterAndNotLock = !lock && hasFooter && scrollbar;
+    const hasFooterAndNotLock = !lock && hasFooter && overflowX && scrollbar;
     const tableBody = (
       <div
         ref={this.saveRef}

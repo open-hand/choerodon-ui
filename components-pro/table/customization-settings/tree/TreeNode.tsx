@@ -53,7 +53,7 @@ const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
 
   function getIcon() {
     if (provided) {
-      const iconProps = provided.dragHandleProps;
+      const iconProps = { ...provided.dragHandleProps, style: { cursor: 'move' } };
       if (isFunction(renderIcon)) {
         const icon = renderIcon({ dataSet, column: record.toData(), snapshot });
         if (isValidElement(icon)) {

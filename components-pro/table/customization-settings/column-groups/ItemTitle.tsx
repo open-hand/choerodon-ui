@@ -44,7 +44,7 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
             autoFocus
           />
         ) : (
-          <span {...(provided && provided.dragHandleProps)}>{header}</span>
+          <span {...(provided && provided.dragHandleProps)} style={provided ? { cursor: 'move' } : undefined}>{header}</span>
         )
       }
       {

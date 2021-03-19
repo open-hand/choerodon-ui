@@ -1,6 +1,6 @@
 import { Key } from 'react';
 import { computed } from 'mobx';
-import { ColumnProps } from './Column';
+import { ColumnProps, columnWidth } from './Column';
 import ColumnGroups from './ColumnGroups';
 import { getColumnKey } from './utils';
 
@@ -39,6 +39,11 @@ export default class ColumnGroup {
   @computed
   get lastLeaf(): ColumnProps {
     return this.children ? this.children.lastLeaf : this.column;
+  }
+
+  @computed
+  get width(): number {
+    return this.children ? this.children.width : columnWidth(this.column);
   }
 
   constructor(column: ColumnProps, parent: ColumnGroups) {

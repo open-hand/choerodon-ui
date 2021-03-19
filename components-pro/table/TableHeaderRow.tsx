@@ -7,6 +7,7 @@ import { ColumnLock } from './enum';
 import ColumnGroup from './ColumnGroup';
 import TableContext from './TableContext';
 import autobind from '../_util/autobind';
+import { isStickySupport } from './utils';
 
 export interface TableHeaderRowProps {
   rowIndex: number;
@@ -60,7 +61,7 @@ export default class TableHeaderRow extends Component<TableHeaderRowProps> {
     const {
       tableStore: { rowHeight },
     } = this.context;
-    const needStoreRowHeight = rowHeight === 'auto' || rows.length > 1
+    const needStoreRowHeight = !isStickySupport() && (rowHeight === 'auto' || rows.length > 1);
     const tr = (
       <tr
         style={{

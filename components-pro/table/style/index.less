@@ -101,6 +101,14 @@
         vertical-align: middle;
       }
     }
+
+    &-fix-left,
+    &-fix-right {
+      position: sticky !important;
+      z-index: 2;
+      background-image: linear-gradient(to right, @component-background 0%, @component-background 100%);
+      background-blend-mode: multiply;
+    }
   }
 
   &-thead &-cell,
@@ -169,7 +177,7 @@
   &-editor {
     position: absolute;
     left: -1000rem;
-    z-index: 1;
+    z-index: 3;
 
     > * {
       display: block !important;
@@ -253,11 +261,51 @@
     box-shadow: none;
   }
 
+  &-cell-fix-left-last,
+  &-cell-fix-right-first {
+    &::after {
+      position: absolute;
+      top: 0;
+      bottom: -.01rem;
+      width: .3rem;
+      transition: box-shadow .3s;
+      content: "";
+      pointer-events: none;
+    }
+  }
+
+  &-cell-fix-left-last::after {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  &-cell-fix-right-first::after {
+    left: 0;
+    transform: translateX(-100%);
+  }
+
+  &-scroll-position-right &-cell-fix-left-last::after,
+  &-scroll-position-middle &-cell-fix-left-last::after {
+    box-shadow: inset 0.06rem 0 0.06rem -0.04rem @shadow-color;
+  }
+
+  &-scroll-position-left &-cell-fix-right-first::after,
+  &-scroll-position-middle &-cell-fix-right-first::after {
+    box-shadow: inset -0.06rem 0 0.06rem -0.04rem @shadow-color;
+  }
+
   &-bordered {
     &.@{table-prefix-cls},
     .@{table-prefix-cls}-filter-bar {
-      border-right: @table-border;
       border-left: @table-border;
+    }
+
+    .@{table-prefix-cls}-filter-bar,
+    .@{table-prefix-cls}-head,
+    .@{table-prefix-cls}-body,
+    .@{table-prefix-cls}-foot,
+    .@{table-prefix-cls}-empty-row {
+      border-right: @table-border;
     }
 
     .@{table-prefix-cls}-footer {
@@ -314,7 +362,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 3;
     display: none;
     width: 0.01rem;
     background-color: @table-split-color;
@@ -334,7 +382,7 @@
     transform: translateX(-50%);
   }
 
-  &-parity-row &-row:nth-child(even) {
+  &-parity-row &-row:nth-child(even) > td {
     background-color: @table-even-row-bg;
   }
 
@@ -347,8 +395,10 @@
     background-color: @table-mouse-batch-choose-bg;
   }
 
-  &-row-highlight&-row:hover,
-  &-row-hover {
+  &-row:hover,
+  &-row-hover,
+  &-parity-row &-row:nth-child(even):hover,
+  &-parity-row &-row-hover:nth-child(even) {
     &,
     & + .@{table-prefix-cls}-expanded-row {
       & > td {
@@ -358,7 +408,8 @@
   }
 
   &-row-current,
-  &-row-current:hover {
+  &-row-current:hover,
+  &-parity-row &-row-current:nth-child(even) {
     &.@{table-prefix-cls}-row-highlight,
     &.@{table-prefix-cls}-row-highlight + .@{table-prefix-cls}-expanded-row {
       & > td {
@@ -368,7 +419,8 @@
   }
 
   &-row-clicked,
-  &-row-clicked:hover {
+  &-row-clicked:hover,
+  &-parity-row &-row-clicked:nth-child(even) {
     &.@{table-prefix-cls}-row-highlight,
     &.@{table-prefix-cls}-row-highlight + .@{table-prefix-cls}-expanded-row {
       & > td {
@@ -377,7 +429,8 @@
     }
   }
 
-  &-row-selected&-row:hover {
+  &-row-selected&-row:hover,
+  &-parity-row &-row-selected&-row:nth-child(even):hover {
     &,
     & + .@{table-prefix-cls}-expanded-row {
       & > td {
@@ -386,7 +439,8 @@
     }
   }
 
-  &-row-selected {
+  &-row-selected,
+  &-parity-row &-row-selected:nth-child(even) {
     &,
     & + .@{table-prefix-cls}-expanded-row {
       & > td {

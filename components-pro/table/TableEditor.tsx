@@ -11,7 +11,7 @@ import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import { FormField, FormFieldProps } from '../field/FormField';
 import TableContext from './TableContext';
-import { findCell, findIndexedSibling, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isRadio } from './utils';
+import { findCell, findIndexedSibling, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isRadio, isStickySupport } from './utils';
 import { stopEvent } from '../_util/EventManager';
 import { ShowHelp } from '../field/enum';
 import autobind from '../_util/autobind';
@@ -35,7 +35,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   editor: FormField<FormFieldProps> | null;
 
   // find this parent tr node
-  parentTrNode?: (Node & ParentNode ) | null | undefined;
+  parentTrNode?: (Node & ParentNode) | null | undefined;
 
   editing: boolean = false;
 
@@ -149,7 +149,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           stopEvent(e);
           break;
         case KeyCode.D:
-          if(ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
+          if (ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
           break;
         case KeyCode.S:
           if (ctrlKey === true && keyboard) this.handleKeyDownCTRLS(e);
@@ -324,14 +324,17 @@ export default class TableEditor extends Component<TableEditorProps> {
       const { tableStore } = this.context;
       if (tableStore.currentEditorName === name || tableStore.currentEditRecord) {
         this.currentEditorName = name;
-        const cell = findCell(tableStore, prefixCls, getColumnKey(column), lock);
+        const cell: HTMLTableCellElement | undefined = findCell(tableStore, prefixCls, getColumnKey(column), !isStickySupport() && lock);
         if (cell) {
           this.editing = true;
-          this.parentTrNode = cell.parentNode?.parentNode;
-          const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = cell;
+          const parentNode: HTMLTableRowElement | null = cell.parentNode as (HTMLTableRowElement | null);
+          this.parentTrNode = parentNode && parentNode.parentNode;
+          const { offsetLeft, offsetTop, offsetWidth, offsetHeight, offsetParent } = cell;
+          const left = parentNode && offsetParent === parentNode ? parentNode.offsetLeft : offsetLeft;
+          const top = parentNode && offsetParent === parentNode ? parentNode.offsetTop : offsetTop;
           props.style = {
-            left: pxToRem(offsetLeft),
-            top: pxToRem(offsetTop),
+            left: pxToRem(left),
+            top: pxToRem(top),
           };
           editorProps.style = {
             ...editor.props.style,

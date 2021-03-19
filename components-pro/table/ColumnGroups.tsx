@@ -26,6 +26,11 @@ export default class ColumnGroups {
     return avaliableColumns[avaliableColumns.length - 1].lastLeaf;
   }
 
+  @computed
+  get width(): number {
+    return this.columns.reduce((sum, { width }) => sum + width, 0);
+  }
+
   constructor(columns: ColumnProps[]) {
     this.columns = columns.map(col => new ColumnGroup(col, this));
   }

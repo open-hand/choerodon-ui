@@ -19,7 +19,7 @@ import Icon from '../icon';
 import DataSet from '../data-set/DataSet';
 import Field from '../data-set/Field';
 import EventManager from '../_util/EventManager';
-import { getAlignByField, getColumnKey, getHeader, getPlacementByAlign } from './utils';
+import { getAlignByField, getColumnKey, getColumnLock, getHeader, getPlacementByAlign, isStickySupport } from './utils';
 import { ColumnAlign, CustomizedType, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
@@ -32,7 +32,6 @@ export interface TableHeaderCellProps extends ElementProps {
   resizeColumn?: ColumnProps;
   rowSpan?: number;
   colSpan?: number;
-  rowIndex: number;
   getHeaderNode: () => HTMLTableSectionElement | null;
 }
 
@@ -328,13 +327,12 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   render() {
-    const { column, prefixCls, dataSet, rowSpan, colSpan } = this.props;
+    const { column, prefixCls, dataSet, rowSpan, colSpan, style, className } = this.props;
+    const { tableStore } = this.context;
     const {
-      tableStore: {
-        rowHeight,
-        columnResizable,
-      },
-    } = this.context;
+      rowHeight,
+      columnResizable,
+    } = tableStore;
     const {
       headerClassName,
       headerStyle = {},
@@ -343,9 +341,17 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       children,
       command,
       tooltip,
+      lock,
     } = column;
     const columnKey = getColumnKey(column);
+    const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classList: string[] = [`${prefixCls}-cell`];
+    if (columnLock) {
+      classList.push(`${prefixCls}-cell-fix-${columnLock}`);
+    }
+    if (className) {
+      classList.push(className);
+    }
     const field = dataSet.getField(name);
     if (headerClassName) {
       classList.push(headerClassName);
@@ -355,6 +361,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       textAlign: align ||
         (command || (children && children.length) ? ColumnAlign.center : getAlignByField(field)),
       ...headerStyle,
+      ...style,
     };
 
     const header = getHeader(column, dataSet);

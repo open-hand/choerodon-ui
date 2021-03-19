@@ -845,6 +845,13 @@ export default class TableStore {
   }
 
   @computed
+  get centerGroupedColumns(): ColumnGroup[] {
+    return this.groupedColumns.filter(
+      ({ column: { lock } }) => !lock,
+    );
+  }
+
+  @computed
   get rightGroupedColumns(): ColumnGroup[] {
     return this.groupedColumns.filter(({ column: { lock } }) => lock === ColumnLock.right);
   }
@@ -857,6 +864,11 @@ export default class TableStore {
   @computed
   get leftLeafColumns(): ColumnProps[] {
     return this.getLeafColumns(this.leftColumns);
+  }
+
+  @computed
+  get centerLeafColumns(): ColumnProps[] {
+    return this.getLeafColumns(this.centerColumns);
   }
 
   @computed

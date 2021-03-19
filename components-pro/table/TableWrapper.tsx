@@ -12,7 +12,7 @@ import { ColumnProps, minColumnWidth } from './Column';
 import { ColumnLock, DragColumnAlign } from './enum';
 import TableEditor from './TableEditor';
 import TableCol from './TableCol';
-import { getColumnKey } from './utils';
+import { getColumnKey, isStickySupport } from './utils';
 import autobind from '../_util/autobind';
 
 export interface TableWrapperProps extends ElementProps {
@@ -73,7 +73,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
       default:
         return tableStore.leafColumns.filter(
           ({ editor, name, hidden, lock: columnLock }) =>
-            editor && name && !hidden && (!columnLock || !tableStore.overflowX),
+            editor && name && !hidden && (isStickySupport() || !columnLock || !tableStore.overflowX),
         );
     }
   }
@@ -164,7 +164,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
       }
       return pxToRem(tableWidth);
     }
-    return '100.1%';
+    return '100%';
   }
 
   render() {
