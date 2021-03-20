@@ -489,10 +489,7 @@ export default class TableStore {
     if (getConfig('tableColumnDraggable') === true) {
       return true;
     }
-    if (getConfig('tableDragColumn') === true) {
-      return true;
-    }
-    return false;
+    return getConfig('tableDragColumn') === true;
   }
 
   @computed
@@ -509,10 +506,7 @@ export default class TableStore {
     if (getConfig('tableRowDraggable') === true) {
       return true;
     }
-    if (getConfig('tableDragRow') === true) {
-      return true;
-    }
-    return false;
+    return getConfig('tableDragRow') === true;
   }
 
   @computed
@@ -557,10 +551,7 @@ export default class TableStore {
     if ('parityRow' in this.props) {
       return this.props.parityRow;
     }
-    if (getConfig('tableParityRow') === true) {
-      return true;
-    }
-    return false;
+    return getConfig('tableParityRow') === true;
   }
 
   @computed
@@ -568,10 +559,7 @@ export default class TableStore {
     if ('autoFocus' in this.props) {
       return this.props.autoFocus;
     }
-    if (getConfig('tableAutoFocus') === false) {
-      return false;
-    }
-    return true;
+    return getConfig('tableAutoFocus') !== false;
   }
 
   @computed
@@ -579,10 +567,7 @@ export default class TableStore {
     if ('selectedHighLightRow' in this.props) {
       return this.props.selectedHighLightRow;
     }
-    if (getConfig('tableSelectedHighLightRow') === false) {
-      return false;
-    }
-    return true;
+    return getConfig('tableSelectedHighLightRow') !== false;
   }
 
   @computed
@@ -590,10 +575,7 @@ export default class TableStore {
     if ('editorNextKeyEnterDown' in this.props) {
       return this.props.editorNextKeyEnterDown;
     }
-    if (getConfig('tableEditorNextKeyEnterDown') === false) {
-      return false;
-    }
-    return true;
+    return getConfig('tableEditorNextKeyEnterDown') !== false;
   }
 
   @computed
@@ -601,10 +583,7 @@ export default class TableStore {
     if ('border' in this.props) {
       return this.props.border;
     }
-    if (getConfig('tableBorder') === false) {
-      return false;
-    }
-    return true;
+    return getConfig('tableBorder') !== false;
   }
 
   @computed
@@ -1275,6 +1254,9 @@ export default class TableStore {
       title: $l('Table', 'customization_settings'),
       children: <CustomizationSettings />,
       okText: $l('Table', 'save_button'),
+      bodyStyle: {
+        overflow: 'hidden auto',
+      },
     });
   }
 

@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, FunctionComponent, isValidElement, ReactNode, useCallback, useContext, useState } from 'react';
+import React, { Children, cloneElement, FunctionComponent, isValidElement, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DraggableProvided, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
@@ -11,7 +11,9 @@ import TableContext from '../../TableContext';
 export interface TreeNodeProps {
   renderer: (record: Record, provided?: DraggableProvided) => ReactNode;
   record: Record;
-  suffix: (record: Record) => ReactNode;
+  index: number;
+  records: Record[];
+  suffix: (record: Record, index, records: Record[]) => ReactNode;
   className?: string;
   isLeaf?: boolean;
   hidden?: boolean;
@@ -24,16 +26,24 @@ const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
   const { tableStore: { dataSet, prefixCls, columnDraggable, props: { columnsDragRender = {} } } } = useContext(TableContext);
   const { droppableProps, renderClone, renderIcon } = columnsDragRender;
   const selfPrefixCls = `${prefixCls}-customization-tree-treenode`;
-  const { renderer, suffix, children, className, isLeaf, hidden, record, provided, snapshot } = props;
+  const { renderer, suffix, children, className, isLeaf, hidden, record, index, records, provided, snapshot } = props;
+  const sort = record.get('sort');
   const isExpanded = defaultTo(record.getState('expanded'), true);
   const [expended, setExpanded] = useState(isExpanded);
+  const [isHover, setIsHover] = useState(false);
   const toggleExpanded = useCallback(() => {
     record.setState('expanded', !isExpanded);
     if (!expended) {
       setExpanded(true);
     }
   }, [record, isExpanded, expended]);
+  const handleMouseEnter = useCallback(() => setIsHover(true), []);
+  const handleMouseLeave = useCallback(() => setIsHover(false), []);
   const { isDragging } = snapshot || {};
+
+  useEffect(() => {
+    setIsHover(false);
+  }, [sort]);
 
   function renderSwitcherIcon() {
     return !isLeaf && (
@@ -73,7 +83,12 @@ const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
       {...(provided && provided.draggableProps)}
       className={classNames({ [`${selfPrefixCls}-dragging`]: isDragging })}
     >
-      <div className={classNames(selfPrefixCls, className)} style={{ display: hidden ? 'none' : '' }}>
+      <div
+        className={classNames(selfPrefixCls, className, { [`${selfPrefixCls}-hover`]: isHover })}
+        style={{ display: hidden ? 'none' : '' }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <div className={`${selfPrefixCls}-content`}>
           {getIcon()}
           <div className={`${selfPrefixCls}-title`}>
@@ -82,7 +97,7 @@ const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
               {renderSwitcherIcon()}
             </span>
           </div>
-          {suffix(record)}
+          {suffix(record, index, records)}
         </div>
       </div>
       {

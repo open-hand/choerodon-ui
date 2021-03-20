@@ -3,6 +3,7 @@ order: 20
 title:
   zh-CN: 用户个性化
   en-US: Customized
+only: true
 ---
 
 ## zh-CN

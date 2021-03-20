@@ -11,7 +11,7 @@ export interface SubGroupsProps {
   records: Record[];
   onDragEnd: (result: DropResult, provided: ResponderProvided) => void;
   treeNodeRenderer: (record: Record, provided: DraggableProvided) => ReactNode;
-  treeNodeSuffix: (record: Record) => ReactNode;
+  treeNodeSuffix: (record: Record, index: number, records: Record[]) => ReactNode;
 }
 
 const SubGroups: FunctionComponent<SubGroupsProps> = observer<SubGroupsProps>((props) => {
@@ -20,16 +20,18 @@ const SubGroups: FunctionComponent<SubGroupsProps> = observer<SubGroupsProps>((p
   return (
     <>
       {
-        sortBy(records, [r => r.get('sort')]).map<ReactElement<SubGroupProps | TreeNodeProps | DraggableProps>>((record, index) => {
+        sortBy(records, [r => r.get('sort')]).map<ReactElement<SubGroupProps | TreeNodeProps | DraggableProps>>((record, index, list) => {
           const children = (
             record.children ? (
               <SubGroup
                 key={record.key}
                 record={record}
-                records={record.children}
+                childrenRecords={record.children}
                 onDragEnd={onDragEnd}
                 treeNodeRenderer={treeNodeRenderer}
                 treeNodeSuffix={treeNodeSuffix}
+                index={index}
+                records={list}
                 {...rest}
               />
             ) : (
@@ -39,6 +41,8 @@ const SubGroups: FunctionComponent<SubGroupsProps> = observer<SubGroupsProps>((p
                 isLeaf
                 renderer={treeNodeRenderer}
                 suffix={treeNodeSuffix}
+                index={index}
+                records={list}
                 {...rest}
               />
             )

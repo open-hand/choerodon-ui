@@ -12,7 +12,7 @@ export interface GroupProps {
   value?: any;
   onDragEnd: (result: DropResult, provided: ResponderProvided) => void;
   treeNodeRenderer: (record: Record, provided: DraggableProvided) => ReactNode;
-  treeNodeSuffix: (record: Record) => ReactNode;
+  treeNodeSuffix: (record: Record, index: number, records: Record[]) => ReactNode;
 }
 
 const Group: FunctionComponent<GroupProps> = observer((props) => {

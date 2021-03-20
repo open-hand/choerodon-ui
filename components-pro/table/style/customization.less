@@ -8,11 +8,38 @@
     margin-bottom: .06rem;
 
     &-treenode {
+      position: relative;
       display: flex;
       align-items: flex-start;
       width: 100%;
-      padding: 0 0 .04rem;
+      padding: .03rem 0 .03rem;
       outline: none;
+
+      &-hover-button {
+        visibility: hidden;
+        transition: none;
+
+        .@{iconfont-css-prefix} {
+          transition: none;
+        }
+      }
+
+      &-hover &-hover-button {
+        visibility: visible;
+      }
+
+      &-hover {
+        &::before {
+          position: absolute;
+          top: 0;
+          right: -100%;
+          bottom: 0;
+          left: -100%;
+          display: block;
+          background-color: @item-hover-bg;
+          content: "";
+        }
+      }
 
       &-content {
         position: relative;
@@ -56,7 +83,7 @@
           line-height: .22rem;
 
           &-close {
-            transform: rotate(-180deg);
+            transform: rotate(-90deg);
           }
         }
 
