@@ -7,10 +7,10 @@ import Group, { GroupProps } from './Group';
 import { ColumnLock } from '../../enum';
 import { $l } from '../../../locale-context';
 import ItemTitle from './ItemTitle';
-import Switch from '../../../switch/Switch';
 import TableContext from '../../TableContext';
 import DataSet from '../../../data-set/DataSet';
 import Record from '../../../data-set/Record';
+import ItemSuffix from './ItemSuffix';
 
 export interface ColumnGroupsProps {
   dataSet: DataSet;
@@ -19,7 +19,7 @@ export interface ColumnGroupsProps {
 const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroupsProps>((props) => {
   const { dataSet } = props;
   const { groupedTreeRecords } = dataSet;
-  const { tableStore: { columnDraggable, columnHideable, prefixCls } } = useContext(TableContext);
+  const { tableStore: { columnDraggable, prefixCls } } = useContext(TableContext);
   const groups = useMemo(() => {
     const array: { value: ColumnLock | false, records: Record[] }[] = [
       { value: ColumnLock.left, records: [] },
@@ -101,11 +101,9 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
       provided={provided}
     />
   ), []);
-  const treeNodeSuffix = useCallback((record: Record) => (
-    columnHideable && record.get('hideable') !== false && (
-      <Switch record={record} disabled={record.parent && record.parent.get('hidden')} name="hidden" value={false} unCheckedValue />
-    )
-  ), [columnHideable]);
+  const treeNodeSuffix = useCallback((record: Record, index: number, records: Record[]) => (
+    <ItemSuffix record={record} index={index} records={records} groups={groups} />
+  ), [groups]);
 
   function getGroupHeader(lock: ColumnLock | boolean) {
     switch (lock) {

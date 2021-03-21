@@ -423,7 +423,7 @@ class App extends React.Component {
           sortable
         />
         <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
-        <Column name="email" editor={() => { return <AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} /> }} />
+        <Column name="email" lock editor={() => { return <AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} /> }} />
         <Column name="enable" editor width={50} minWidth={50} lock />
         <Column name="name" editor width={150} sortable tooltip="always" />
         <Column name="code" editor width={150} sortable />

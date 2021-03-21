@@ -101,7 +101,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
 
     warning(
       !('inlineCollapsed' in props && props.mode !== 'inline'),
-      "`inlineCollapsed` should only be used when Menu's `mode` is inline.",
+      '`inlineCollapsed` should only be used when Menu\'s `mode` is inline.',
     );
 
     let openKeys;

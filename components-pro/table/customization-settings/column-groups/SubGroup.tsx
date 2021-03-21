@@ -8,14 +8,16 @@ import Record from '../../../data-set/Record';
 
 export interface SubGroupProps {
   record: Record;
+  childrenRecords: Record[];
   records: Record[];
+  index: number;
   onDragEnd: (result: DropResult, provided: ResponderProvided) => void;
   treeNodeRenderer: (record: Record, provided: DraggableProvided) => ReactNode;
-  treeNodeSuffix: (record: Record) => ReactNode;
+  treeNodeSuffix: (record: Record, index: number, records: Record[]) => ReactNode;
 }
 
 const SubGroup: FunctionComponent<SubGroupProps> = observer((props) => {
-  const { treeNodeRenderer, treeNodeSuffix, records, onDragEnd, ...rest } = props;
+  const { treeNodeRenderer, treeNodeSuffix, childrenRecords, onDragEnd, ...rest } = props;
   const { tableStore } = useContext(TableContext);
   const treeNode = (
     <TreeNode
@@ -25,7 +27,7 @@ const SubGroup: FunctionComponent<SubGroupProps> = observer((props) => {
       suffix={treeNodeSuffix}
     >
       <SubGroups
-        records={records}
+        records={childrenRecords}
         onDragEnd={onDragEnd}
         treeNodeRenderer={treeNodeRenderer}
         treeNodeSuffix={treeNodeSuffix}

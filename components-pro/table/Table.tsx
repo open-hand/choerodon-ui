@@ -67,7 +67,7 @@ import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
-import { findIndexedSibling, getHeight, getPaginationPosition, isCanEdictingRow, isDropresult } from './utils';
+import { findIndexedSibling, getHeight, getPaginationPosition, isCanEdictingRow, isDropresult, isStickySupport } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
@@ -1245,7 +1245,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       prefixCls,
       tableStore,
-      tableStore: { virtual, overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      tableStore: { virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
         style,
         spin,
@@ -1310,10 +1310,14 @@ export default class Table extends DataSetComponent<TableProps> {
                   )
                 }
                 <div {...this.getOtherProps()}>
-                  <div className={`${prefixCls}-content`}>
+                  <div
+                    className={`${prefixCls}-content`}
+                    style={isStickySupport() && overflowX && !overflowY ? { overflow: 'auto hidden' } : undefined}
+                    onScroll={this.handleBodyScroll}
+                  >
                     {content}
-                    {isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
-                    {isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+                    {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
+                    {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
                   </div>
                   <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                   {this.getFooter()}
@@ -1364,11 +1368,16 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   handleBodyScroll(e: React.SyntheticEvent) {
     const { currentTarget } = e;
-    e.persist();
-    this.scrollId = raf(() => {
+    const handle = () => {
       this.handleBodyScrollTop(e, currentTarget);
       this.handleBodyScrollLeft(e, currentTarget);
-    });
+    };
+    if (isStickySupport()) {
+      handle();
+    } else {
+      e.persist();
+      this.scrollId = raf(handle);
+    }
   }
 
   /**
@@ -1385,6 +1394,7 @@ export default class Table extends DataSetComponent<TableProps> {
       tableStore: { virtual, height, lastScrollTop },
     } = this;
     if (
+      (isStickySupport() && !virtual) ||
       (height === undefined && !autoHeight) ||
       currentTarget !== target ||
       target === this.tableFootWrap
@@ -1631,7 +1641,7 @@ export default class Table extends DataSetComponent<TableProps> {
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
-    if (overflowX || height !== undefined || autoHeight) {
+    if ((!isStickySupport() && overflowX) || height !== undefined || autoHeight) {
       const { lockColumnsBodyRowsHeight, rowHeight, leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = this.tableStore;
       let bodyHeight = height;
       let tableHeadRef;

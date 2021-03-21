@@ -127,7 +127,7 @@ class App extends React.Component {
             <Column name="name" tooltip="overflow" renderer={this.renderName} />
           </Column>
         </Column>
-        <Column header="操作" align="center" renderer={this.renderEdit} />
+        <Column header="操作" align="center" renderer={this.renderEdit} footer="---" />
         <Column header="组合" titleEditable={false}>
           <Column name="age" help="help" sortable tooltip="always" />
           <Column name="enable" tooltip="overflow" hideable={false} />

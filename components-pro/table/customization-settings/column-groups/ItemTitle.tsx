@@ -1,12 +1,9 @@
-import React, { FunctionComponent, isValidElement, useCallback, useContext, useState } from 'react';
+import React, { FunctionComponent, isValidElement, useCallback, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { DraggableProvided } from 'react-beautiful-dnd';
-import Button from '../../../button/Button';
 import ObserverTextField from '../../../text-field/TextField';
-import { ButtonColor, FuncType } from '../../../button/enum';
 import { getHeader } from '../../utils';
 import TableContext from '../../TableContext';
-import { Size } from '../../../core/enum';
 import Record from '../../../data-set/Record';
 
 export interface ItemTitleProps {
@@ -16,11 +13,10 @@ export interface ItemTitleProps {
 
 const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
   const { record, provided } = props;
-  const { tableStore: { dataSet, columnTitleEditable, prefixCls } } = useContext(TableContext);
-  const [editing, setEditing] = useState(false);
-  const handleEdit = useCallback(() => setEditing(true), []);
+  const { tableStore: { dataSet, columnTitleEditable } } = useContext(TableContext);
+  const editing = record.getState('editing');
   const handleEditBlur = useCallback(() => {
-    setEditing(false);
+    record.setState('editing', false)
   }, []);
   const handleHeaderChange = useCallback((value) => {
     record.set('title', value);
@@ -44,19 +40,7 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
             autoFocus
           />
         ) : (
-          <span {...(provided && provided.dragHandleProps)}>{header}</span>
-        )
-      }
-      {
-        !editing && titleEditable && (
-          <Button
-            className={`${prefixCls}-customization-tree-treenode-edit-btn`}
-            funcType={FuncType.flat}
-            icon="mode_edit"
-            color={ButtonColor.primary}
-            size={Size.small}
-            onClick={handleEdit}
-          />
+          <span {...(provided && provided.dragHandleProps)} style={provided ? { cursor: 'move' } : undefined}>{header}</span>
         )
       }
     </>

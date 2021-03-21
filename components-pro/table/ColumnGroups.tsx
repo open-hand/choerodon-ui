@@ -5,6 +5,8 @@ import ColumnGroup from './ColumnGroup';
 export default class ColumnGroups {
   columns: ColumnGroup[];
 
+  parent?: ColumnGroup;
+
   @computed
   get wide(): number {
     return this.columns.reduce((sum, { colSpan, hidden }) => (hidden ? sum : sum + colSpan), 0);
@@ -26,7 +28,40 @@ export default class ColumnGroups {
     return avaliableColumns[avaliableColumns.length - 1].lastLeaf;
   }
 
-  constructor(columns: ColumnProps[]) {
-    this.columns = columns.map(col => new ColumnGroup(col, this));
+  @computed
+  get width(): number {
+    return this.columns.reduce((sum, { width }) => sum + width, 0);
+  }
+
+  @computed
+  get left(): number {
+    const { parent } = this;
+    if (parent) {
+      return parent.left;
+    }
+    return 0;
+  }
+
+  @computed
+  get right(): number {
+    const { parent } = this;
+    if (parent) {
+      return parent.right;
+    }
+    return 0;
+  }
+
+  constructor(columns: ColumnProps[], parent?: ColumnGroup) {
+    this.parent = parent;
+    let prev: ColumnGroup | undefined;
+    this.columns = columns.map(col => {
+      const group = new ColumnGroup(col, this);
+      if (prev) {
+        prev.next = group;
+        group.prev = prev;
+      }
+      prev = group;
+      return group;
+    });
   }
 }

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
+
 ## 1.2.0
 
 `2021-03-18`

@@ -1,18 +1,20 @@
-import React, { Component, DetailedHTMLProps } from 'react';
+import React, { Component, DetailedHTMLProps, ReactElement, ThHTMLAttributes } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import { action, computed } from 'mobx';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import TableContext from './TableContext';
 import { ColumnLock } from './enum';
 import DataSet from '../data-set/DataSet';
-import { getColumnKey } from './utils';
+import { getColumnKey, getColumnLock, isStickySupport } from './utils';
 import ColumnGroup from './ColumnGroup';
 import autobind from '../_util/autobind';
-import TableHeaderRow from './TableHeaderRow';
+import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow';
 
 export interface TableHeaderProps extends ElementProps {
   dataSet: DataSet;
@@ -65,18 +67,20 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
     tableStore.isHeaderHover = false;
   }
 
-  render() {
+  getTrs(): (ReactElement<TableHeaderRowProps> | undefined)[] {
     const { prefixCls, lock, dataSet } = this.props;
-    const { groupedColumns } = this;
     const {
-      tableStore: { overflowX, overflowY, columnResizable, isHeaderHover, columnResizing },
+      tableStore,
     } = this.context;
-    const rows = this.getTableHeaderRows(groupedColumns);
-    const trs = rows.map((row, rowIndex) => {
+    const rows = this.getTableHeaderRows(this.groupedColumns);
+    return rows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
       if (row.length) {
+        const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && lock !== ColumnLock.left;
         let prevColumn: ColumnProps | undefined;
-        const tds = row.map(({ hidden, column, rowSpan, colSpan, lastLeaf, children }) => {
-          if (!hidden) {
+        const placeholderWidth = hasPlaceholder ? measureScrollbar() : 0;
+        const tds = row.map((col, index, cols) => {
+          if (!col.hidden) {
+            const { column, rowSpan, colSpan, lastLeaf, children } = col;
             const key = String(getColumnKey(column));
             const props: TableHeaderCellProps = {
               key,
@@ -84,7 +88,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
               dataSet,
               prevColumn,
               column,
-              rowIndex,
               resizeColumn: lastLeaf,
               getHeaderNode: this.getHeaderNode,
             };
@@ -95,15 +98,47 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
               props.colSpan = colSpan;
             }
             prevColumn = lastLeaf;
+            if (isStickySupport() && tableStore.overflowX) {
+              const columnLock = getColumnLock(column.lock);
+              if (columnLock === ColumnLock.left) {
+                props.style = {
+                  left: pxToRem(col.left)!,
+                };
+                const next = cols[index + 1];
+                if (!next || getColumnLock(next.column.lock) !== ColumnLock.left) {
+                  props.className = `${prefixCls}-cell-fix-left-last`;
+                }
+              } else if (columnLock === ColumnLock.right) {
+                props.style = {
+                  right: pxToRem(col.right + placeholderWidth)!,
+                };
+                const prev = cols[index - 1];
+                if (!prev || prev.column.lock !== ColumnLock.right) {
+                  props.className = `${prefixCls}-cell-fix-right-first`;
+                }
+              }
+            }
             return (
               <TableHeaderCell {...props} />
             );
           }
           return undefined;
         });
-        if (overflowY && lock !== ColumnLock.left && rowIndex === 0) {
+        if (hasPlaceholder) {
+          const placeHolderProps: DetailedHTMLProps<ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement> = {
+            key: 'fixed-column',
+            rowSpan: rows.length,
+          };
+          const classList = [`${prefixCls}-cell`];
+          if (isStickySupport() && tableStore.overflowX) {
+            placeHolderProps.style = { right: 0 };
+            classList.push(`${prefixCls}-cell-fix-right`);
+          }
+          placeHolderProps.className = classList.join(' ');
           tds.push(
-            <th key="fixed-column" className={`${prefixCls}-cell`} rowSpan={rows.length}>
+            <th
+              {...placeHolderProps}
+            >
               &nbsp;
             </th>,
           );
@@ -120,15 +155,23 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
       }
       return undefined;
     });
+  }
+
+  render() {
+    const { prefixCls } = this.props;
+    const {
+      tableStore: { overflowX, columnResizable, isHeaderHover, columnResizing, props: { border } },
+    } = this.context;
+    const trs = this.getTrs();
     const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
       ref: this.saveRef,
       className: classNames(`${prefixCls}-thead`, {
         [`${prefixCls}-column-resizable`]: columnResizable,
-        [`${prefixCls}-column-group`]: rows && rows.length > 1,
+        [`${prefixCls}-column-group`]: trs && trs.length > 1,
         [`${prefixCls}-thead-hover`]: isHeaderHover || columnResizing,
       }),
     };
-    if (overflowX) {
+    if (!isStickySupport() && overflowX && !border) {
       theadProps.onMouseEnter = this.handleTheadMouseEnter;
       theadProps.onMouseLeave = this.handleTheadMouseLeave;
     }

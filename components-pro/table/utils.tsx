@@ -298,3 +298,24 @@ export function isDropresult(dropResult: any): dropResult is DropResult {
 export function isDraggingStyle(style?: DraggingStyle | NotDraggingStyle): style is DraggingStyle {
   return style ? 'left' in style : false;
 }
+
+let STICKY_SUPPORT;
+
+export function isStickySupport(): boolean {
+  if (STICKY_SUPPORT !== undefined) {
+    return STICKY_SUPPORT;
+  }
+  if (typeof window !== 'undefined') {
+    const vendorList = ['', '-webkit-', '-ms-', '-moz-', '-o-'];
+    const stickyElement = document.createElement('div');
+    STICKY_SUPPORT = vendorList.some((vendor) => {
+      stickyElement.style.position = `${vendor}sticky`;
+      if (stickyElement.style.position !== '') {
+        return true;
+      }
+      return false;
+    });
+    return STICKY_SUPPORT;
+  }
+  return true;
+}
