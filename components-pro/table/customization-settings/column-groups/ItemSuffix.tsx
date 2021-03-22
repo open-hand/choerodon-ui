@@ -12,6 +12,7 @@ import TableContext from '../../TableContext';
 import Record from '../../../data-set/Record';
 import { ColumnLock } from '../../enum';
 import { Placements } from '../../../dropdown/enum';
+import { $l } from '../../../locale-context';
 
 const { Item } = Menu;
 
@@ -90,20 +91,20 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
     const lock = record.get('lock');
     return (
       <Menu onClick={handleMenuClick}>
-        <Item key="rename">重新命名</Item>
+        <Item key="rename">{$l('Table', 'rename')}</Item>
         {
           !record.parent && (
             lock ? (
-              <Item key="unlock">取消冻结</Item>
+              <Item key="unlock">{$l('Table', 'unlock')}</Item>
             ) : [
-              <Item key="left">左侧冻结</Item>,
-              <Item key="right">右侧冻结</Item>,
+              <Item key="left">{$l('Table', 'left_lock')}</Item>,
+              <Item key="right">{$l('Table', 'right_lock')}</Item>,
             ]
           )
         }
-        {index > 1 && <Item key='top'>置顶</Item>}
-        {index > 0 && <Item key="up">前置一列</Item>}
-        {index < records.length - 1 && <Item key="down">后置一列</Item>}
+        {index > 1 && <Item key='top'>{$l('Table', 'top')}</Item>}
+        {index > 0 && <Item key="up">{$l('Table', 'up')}</Item>}
+        {index < records.length - 1 && <Item key="down">{$l('Table', 'down')}</Item>}
       </Menu>
     );
   }, [record, index, records, handleMenuClick]);
