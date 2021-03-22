@@ -2,6 +2,7 @@ import React, { cloneElement, Component, isValidElement, ReactElement } from 're
 import PropTypes from 'prop-types';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
+import classNames from 'classnames';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -318,7 +319,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         column: { lock, name },
       } = this.props;
       const props: any = {
-        className: `${prefixCls}-editor`,
+        className: classNames(`${prefixCls}-editor`, { [`${prefixCls}-editor-lock`]: isStickySupport() && lock }),
       };
       const editorProps: any = {};
       const { tableStore } = this.context;
