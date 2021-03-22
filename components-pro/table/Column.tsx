@@ -228,13 +228,13 @@ export default class Column extends Component<ColumnPropsInner, ComponentState> 
   };
 }
 
-export function minColumnWidth(col) {
+export function minColumnWidth(col): number {
   const hidden = get(col, 'hidden');
   if (hidden) {
     return 0;
   }
-  const width = get(col, 'width');
-  const min = get(col, 'minWidth');
+  const width: number | undefined = get(col, 'width');
+  const min: number | undefined = get(col, 'minWidth');
   const minWidth = min === undefined ? defaultMinWidth : min;
   if (width === undefined) {
     return minWidth;
@@ -242,14 +242,14 @@ export function minColumnWidth(col) {
   return Math.min(width, minWidth);
 }
 
-export function columnWidth(col) {
+export function columnWidth(col): number {
   const hidden = get(col, 'hidden');
   if (hidden) {
     return 0;
   }
-  const width = get(col, 'width');
+  const width: number | undefined = get(col, 'width');
   if (width === undefined) {
-    const minWidth = get(col, 'minWidth');
+    const minWidth: number | undefined = get(col, 'minWidth');
     if (minWidth === undefined) {
       return defaultMinWidth;
     }

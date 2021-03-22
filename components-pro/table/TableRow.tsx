@@ -7,14 +7,14 @@ import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { ColumnProps } from './Column';
-import TableCell from './TableCell';
+import { ColumnProps, columnWidth } from './Column';
+import TableCell, { TableCellProps } from './TableCell';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
-import { ColumnLock, HighLightRowType, DragColumnAlign, SelectionMode } from './enum';
-import { findFirstFocusableElement, getColumnKey, isDisabledRow, isSelectedRow } from './utils';
+import { ColumnLock, DragColumnAlign, HighLightRowType, SelectionMode } from './enum';
+import { findFirstFocusableElement, getColumnKey, getColumnLock, isDisabledRow, isSelectedRow, isStickySupport } from './utils';
 import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
@@ -247,32 +247,28 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @autobind
-  getCell(column: ColumnProps, index: number, columns: ColumnProps[]): ReactNode {
-    const key = getColumnKey(column);
-    if (key !== CUSTOMIZED_KEY) {
-      const { prefixCls, record, indentSize, lock, provided, snapshot } = this.props;
-      const {
-        tableStore: { leafColumns, rightLeafColumns, customizable, rowDraggable, dragColumnAlign },
-      } = this.context;
-      const columnIndex =
-        lock === ColumnLock.right ? index + leafColumns.length - rightLeafColumns.length : index;
-      const isDragging = snapshot ? snapshot.isDragging : false;
-      return (
-        <TableCell
-          key={key}
-          prefixCls={prefixCls}
-          column={column}
-          record={record}
-          indentSize={indentSize}
-          isDragging={isDragging}
-          lock={lock}
-          provided={key === DRAG_KEY ? provided : undefined}
-          colSpan={customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && index === columns.length - 2 ? 2 : 1}
-        >
-          {this.hasExpandIcon(columnIndex) && this.renderExpandIcon()}
-        </TableCell>
-      );
-    }
+  getCell(column: ColumnProps, index: number, props: Partial<TableCellProps>): ReactNode {
+    const { prefixCls, record, indentSize, lock, provided, snapshot } = this.props;
+    const {
+      tableStore: { leafColumns, rightLeafColumns },
+    } = this.context;
+    const columnIndex =
+      lock === ColumnLock.right ? index + leafColumns.length - rightLeafColumns.length : index;
+    const isDragging = snapshot ? snapshot.isDragging : false;
+    return (
+      <TableCell
+        prefixCls={prefixCls}
+        column={column}
+        record={record}
+        indentSize={indentSize}
+        isDragging={isDragging}
+        lock={lock}
+        provided={props.key === DRAG_KEY ? provided : undefined}
+        {...props}
+      >
+        {this.hasExpandIcon(columnIndex) && this.renderExpandIcon()}
+      </TableCell>
+    );
   }
 
   focusRow(row: HTMLTableRowElement | null) {
@@ -367,7 +363,9 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (!tableStore.isRowExpanded(record)) {
       tableStore.setRowExpanded(record, false, true);
     }
-    remove(tableStore.lockColumnsBodyRowsHeight, this.rowKey);
+    if (!isStickySupport()) {
+      remove(tableStore.lockColumnsBodyRowsHeight, this.rowKey);
+    }
   }
 
   handleSelection() {
@@ -499,24 +497,77 @@ export default class TableRow extends Component<TableRowProps, any> {
     return expandRows;
   }
 
+  getColumns() {
+    const { columns, prefixCls, lock } = this.props;
+    const { tableStore } = this.context;
+    const { customizable, rowDraggable, dragColumnAlign } = tableStore;
+    let leftWidth = 0;
+    let rightWidth = isStickySupport() && tableStore.overflowX ? tableStore.rightLeafColumnsWidth : 0;
+    const columnLength = columns.length;
+    return columns.map((column, index, cols) => {
+      const key = getColumnKey(column);
+      if (key !== CUSTOMIZED_KEY) {
+        const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && index === columnLength - 2 ? 2 : 1;
+        const props: Partial<TableCellProps> = {
+          key,
+        };
+        if (colSpan > 1) {
+          props.colSpan = colSpan;
+        }
+        if (isStickySupport() && tableStore.overflowX) {
+          const columnLock = getColumnLock(column.lock);
+          if (columnLock === ColumnLock.left) {
+            props.style = {
+              left: pxToRem(leftWidth)!,
+            };
+            const next = cols[index + 1];
+            if (!next || getColumnLock(next.lock) !== ColumnLock.left) {
+              props.className = `${prefixCls}-cell-fix-left-last`;
+            }
+            leftWidth += columnWidth(column);
+          } else if (columnLock === ColumnLock.right) {
+            rightWidth -= columnWidth(column);
+            const prev = cols[index - 1];
+            if (!prev || prev.lock !== ColumnLock.right) {
+              props.className = `${prefixCls}-cell-fix-right-first`;
+            }
+            if (colSpan > 1) {
+              for (let i = 1; i < colSpan; i++) {
+                const next = cols[index + i];
+                if (next) {
+                  rightWidth -= columnWidth(next);
+                }
+              }
+            }
+            props.style = {
+              right: pxToRem(rightWidth)!,
+            };
+          }
+        }
+        return this.getCell(column, index, props);
+      }
+      return undefined;
+    });
+  }
+
   render() {
-    const { prefixCls, columns, record, lock, hidden, index, provided, className } = this.props;
+    const { prefixCls, record, lock, hidden, index, provided, className } = this.props;
     const {
-      tableStore: {
-        rowHeight,
-        lockColumnsBodyRowsHeight,
-        overflowX,
-        highLightRow,
-        selectedHighLightRow,
-        mouseBatchChooseIdList,
-        mouseBatchChooseState,
-        dragColumnAlign,
-        rowDraggable,
-        totalLeafColumnsWidth,
-        width,
-        props: { onRow, rowRenderer, selectionMode },
-      },
+      tableStore,
     } = this.context;
+    const {
+      rowHeight,
+      overflowX,
+      highLightRow,
+      selectedHighLightRow,
+      mouseBatchChooseIdList,
+      mouseBatchChooseState,
+      dragColumnAlign,
+      rowDraggable,
+      totalLeafColumnsWidth,
+      width,
+      props: { onRow, rowRenderer, selectionMode },
+    } = tableStore;
     const { key, id } = record;
     const rowExternalProps: any = {
       ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
@@ -565,7 +616,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       disabled,
       'data-index': id,
     };
-    if (overflowX) {
+    if (!isStickySupport() && overflowX) {
       rowProps.onMouseEnter = this.handleMouseEnter;
       rowProps.onMouseLeave = this.handleMouseLeave;
     }
@@ -573,8 +624,8 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (hidden) {
       rowProps.style.display = 'none';
     }
-    if (lock && rowHeight === 'auto') {
-      rowProps.style.height = pxToRem(get(lockColumnsBodyRowsHeight, key) as number);
+    if (!isStickySupport() && lock && rowHeight === 'auto') {
+      rowProps.style.height = pxToRem(get(tableStore.lockColumnsBodyRowsHeight, key) as number);
     }
     if (selectionMode === SelectionMode.click) {
       rowProps.onClick = this.handleSelectionByClick;
@@ -598,11 +649,11 @@ export default class TableRow extends Component<TableRowProps, any> {
         {...rowExternalProps}
         {...rowProps}
       >
-        {columns.map(this.getCell)}
+        {this.getColumns()}
       </tr>
     );
     return [
-      !lock && rowHeight === 'auto' ? (
+      !isStickySupport() && !lock && rowHeight === 'auto' ? (
         <ResizeObservedRow onResize={this.handleResize} rowIndex={key}>
           {tr}
         </ResizeObservedRow>

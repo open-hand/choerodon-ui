@@ -10,7 +10,7 @@ export interface TriggerChildProps {
   onMouseLeave?: hook;
   onFocus?: hook;
   onBlur?: hook;
-  isClickScrollbar: {
+  isClickScrollbar?: {
     value: boolean | undefined
   };
   popupHidden?: boolean,
@@ -38,13 +38,15 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
     const createChains = eventName => e => {
       if (eventName === 'Blur') {
         const { isClickScrollbar, popupHidden } = this.props;
-        // 判断是否已经关闭
-        if (popupHidden) {
-          isClickScrollbar.value = false;
-        }
-        if (isClickScrollbar && isClickScrollbar.value) {
-          e.target.focus();
-          return;
+        if (isClickScrollbar) {
+          // 判断是否已经关闭
+          if (popupHidden) {
+            isClickScrollbar.value = false;
+          }
+          if (isClickScrollbar.value) {
+            e.target.focus();
+            return;
+          }
         }
       }
       const { [`on${eventName}`]: handle, children } = this.props as { [key: string]: any };
