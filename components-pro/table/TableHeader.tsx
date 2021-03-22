@@ -131,8 +131,14 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
           };
           const classList = [`${prefixCls}-cell`];
           if (isStickySupport() && tableStore.overflowX) {
-            placeHolderProps.style = { right: 0 };
-            classList.push(`${prefixCls}-cell-fix-right`);
+            const hasColRightLock = tds.some(td => {
+              if (td) {
+                return td.props.column.lock === ColumnLock.right;
+              }
+              return false;
+            });
+            placeHolderProps.style = hasColRightLock ? { right: 0 } : {};
+            classList.push(`${prefixCls}-cell-fix-right ${prefixCls}-cell-scrollbar`);
           }
           placeHolderProps.className = classList.join(' ');
           tds.push(
