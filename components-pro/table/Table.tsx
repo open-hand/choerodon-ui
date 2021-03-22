@@ -1790,10 +1790,10 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getContentHeight() {
-    const { wrapper, element, props: { autoHeight }, tableBodyWrap, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
+    const { wrapper, element, prefixCls, props: { autoHeight }, tableBodyWrap } = this;
     if (autoHeight) {
       const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
-      const { paddingBottom, paddingTop } = wrapper.parentNode.style;
+      const { paddingBottom } = wrapper.parentNode.style;
       const { top: tableTop } = element.getBoundingClientRect();
       let diff = getConfig('tableAutoHeightDiff') || 80;
       let type = TableAutoHeightType.minHeight;
@@ -1802,23 +1802,33 @@ export default class Table extends DataSetComponent<TableProps> {
         diff = autoHeight.diff || diff;
       }
       const paddingBottomPx = toPx(paddingBottom) || 0;
-      const paddingTopPx = toPx(paddingTop) || 0;
       if (wrapper) {
         if (type === TableAutoHeightType.minHeight) {
-          return parentHeight - (tableTop - parentTop) - diff - paddingBottomPx - paddingTopPx;
+          return parentHeight - (tableTop - parentTop) - diff - paddingBottomPx;
         }
-        let maxHeight = parentHeight - (tableTop - parentTop) - diff - paddingBottomPx - paddingTopPx;
+        const maxHeight = parentHeight - (tableTop - parentTop) - diff - paddingBottomPx;
+        // 保证max高度和Height维持一致防止scroll问题 maxHeight - 外框paddingBottom 以及 diff 和其他 tableBody 以外的高度。
         if (tableBodyWrap) {
-          tableBodyWrap.style.maxHeight = pxToRem(maxHeight) || '';
+          let maxBodyHeight = maxHeight;
+          const tableHeader: HTMLTableSectionElement | null = element.querySelector(
+            `.${prefixCls}-thead`,
+          );
+          const tableFooter: HTMLTableSectionElement | null = element.querySelector(
+            `.${prefixCls}-footer`,
+          );
+          const tableFootWrap: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+          if (tableHeader) {
+            maxBodyHeight -= getHeight(tableHeader);
+          }
+          if (tableFooter) {
+            maxBodyHeight -= getHeight(tableFooter);
+          }
+          if (tableFootWrap) {
+            maxBodyHeight -= getHeight(tableFootWrap);
+          }
+          tableBodyWrap.style.maxHeight = pxToRem(maxBodyHeight) || '';
         }
-        maxHeight -= measureScrollbar();
-        if (fixedColumnsBodyLeft) {
-          fixedColumnsBodyLeft.style.maxHeight = pxToRem(maxHeight) || '';
-        }
-        if (fixedColumnsBodyRight) {
-          fixedColumnsBodyRight.style.maxHeight = pxToRem(maxHeight) || '';
-        }
-        return parentHeight - (tableTop - parentTop) - diff || 0;
+        return maxHeight || 0;
       }
     }
     return this.getStyleHeight();

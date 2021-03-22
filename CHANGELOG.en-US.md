@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
+- 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 
 ## 1.2.0
 
