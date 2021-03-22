@@ -138,7 +138,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
               return false;
             });
             placeHolderProps.style = hasColRightLock ? { right: 0 } : {};
-            classList.push(`${prefixCls}-cell-fix-right ${prefixCls}-cell-scrollbar`);
+            classList.push(`${prefixCls}-cell-fix-right`);
           }
           placeHolderProps.className = classList.join(' ');
           tds.push(
