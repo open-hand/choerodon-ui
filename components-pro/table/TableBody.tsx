@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import raf from 'raf';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import autobind from '../_util/autobind';
@@ -20,11 +21,29 @@ export default class TableBody extends Component<TableBodyProps> {
 
   static contextType = TableContext;
 
+  element: HTMLDivElement | null;
+
   @autobind
   saveRef(node: HTMLDivElement | null) {
     const { getRef } = this.props;
     if (getRef) {
       getRef(node);
+    }
+    this.element = node;
+  }
+
+  componentDidUpdate(): void {
+    const { element } = this;
+    if (element) {
+      const { scrollHeight, clientHeight } = element;
+      // Fixed vertical scrollbar not displayed in Chrome when scrollHeight - clientHeight < scrollbarHeight
+      if (scrollHeight > clientHeight && scrollHeight - clientHeight < measureScrollbar()) {
+        const { overflow } = element.style;
+        element.style.overflow = 'scroll';
+        raf(() => {
+          element.style.overflow = overflow;
+        });
+      }
     }
   }
 
