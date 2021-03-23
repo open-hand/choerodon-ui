@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useContext } from 'react';
+import React, { FunctionComponent, ReactElement, useCallback, useContext } from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import { ClickParam } from 'choerodon-ui/lib/menu';
@@ -89,7 +89,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
   }), [record, index, changeLock, changeIndex]);
   const getTreeNodesMenus = useCallback(() => {
     const lock = record.get('lock');
-    const menus = [];
+    const menus:ReactElement<any>[] = [];
     if (columnTitleEditable && record.get('titleEditable') !== false) {
       menus.push(<Item key="rename">{$l('Table', 'rename')}</Item>);
     }
@@ -127,7 +127,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
     <>
       {
         menu && (
-          <Dropdown overlay={getTreeNodesMenus()} placement={Placements.bottomRight}>
+          <Dropdown overlay={menu} placement={Placements.bottomRight}>
             <Button
               funcType={FuncType.flat}
               size={Size.small}
