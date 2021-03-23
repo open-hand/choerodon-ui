@@ -431,10 +431,7 @@ export default class TableStore {
     if ('columnResizable' in this.props) {
       return this.props.columnResizable;
     }
-    if (getConfig('tableColumnResizable') === false) {
-      return false;
-    }
-    return true;
+    return getConfig('tableColumnResizable') !== false;
   }
 
   @computed
@@ -442,10 +439,7 @@ export default class TableStore {
     if ('columnHideable' in this.props) {
       return this.props.columnHideable;
     }
-    if (getConfig('tableColumnHideable') === false) {
-      return false;
-    }
-    return true;
+    return getConfig('tableColumnHideable') !== false;
   }
 
   /**
@@ -456,10 +450,7 @@ export default class TableStore {
     if ('columnTitleEditable' in this.props) {
       return this.props.columnTitleEditable;
     }
-    if (getConfig('tableColumnTitleEditable') === false) {
-      return false;
-    }
-    return false;
+    return getConfig('tableColumnTitleEditable') === true;
   }
 
   @computed
@@ -1271,7 +1262,7 @@ export default class TableStore {
         const customized = await tableCustomizedLoad(customizedCode);
         if (customized) {
           runInAction(() => {
-            this.customized = customized;
+            this.customized = { columns: {}, ...customized };
           });
         }
       } finally {
