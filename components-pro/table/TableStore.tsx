@@ -228,7 +228,9 @@ export function normalizeColumns(
     const column: any = {
       ...props,
     };
-    if (isNil(getColumnKey(column))) {
+    if (key) {
+      column.key = key;
+    } else if (isNil(getColumnKey(column))) {
       column.key = `anonymous-${defaultKey[0]++}`;
     }
     if (customizedColumns) {
@@ -245,9 +247,6 @@ export function normalizeColumns(
       }
     }
     column.children = normalizeColumns(column.children, customizedColumns, column, defaultKey);
-    if (key) {
-      column.key = key;
-    }
     if (parent || !column.lock) {
       columns.push(column);
     } else if (column.lock === true || column.lock === ColumnLock.left) {
