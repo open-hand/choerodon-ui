@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Cascader`: 新增 `searchable`, `searchMatcher` 实现可搜索配置。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
 - 🐞 `<pro>Table`: 修复表格中 `autoHeight` 的计算问题 。
 
