@@ -95,11 +95,9 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   getCol(column, width): ReactNode {
     if (!column.hidden) {
-      const { prefixCls } = this.props;
       return (
         <TableCol
           key={getColumnKey(column)}
-          prefixCls={prefixCls}
           width={width}
           minWidth={minColumnWidth(column)}
         />
@@ -139,9 +137,8 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   }
 
   getEditors() {
-    const { prefixCls } = this.props;
     return this.leafEditorColumns.map(column => (
-      <TableEditor key={column.name} prefixCls={prefixCls} column={column} />
+      <TableEditor key={column.name} column={column} />
     ));
   }
 
@@ -168,9 +165,9 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   }
 
   render() {
-    const { children, lock, hasBody, prefixCls } = this.props;
+    const { children, lock, hasBody } = this.props;
     const {
-      tableStore: { overflowY, height },
+      tableStore: { overflowY, height, prefixCls },
     } = this.context;
     const editors = hasBody && this.getEditors();
     const className = classNames({

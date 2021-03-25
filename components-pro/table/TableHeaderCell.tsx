@@ -149,9 +149,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   @action
   resizeDoubleClick(): void {
     const column = this.resizeColumn;
-    const { prefixCls } = this.props;
     const { tableStore } = this.context;
-    const { node: { element } } = tableStore;
+    const { prefixCls, node: { element } } = tableStore;
     if (column) {
       const maxWidth = Math.max(
         ...[
@@ -174,11 +173,10 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   @action
   resizeStart(e): void {
-    const { prefixCls } = this.props;
     const {
       tableStore,
     } = this.context;
-    const { node: { element } } = tableStore;
+    const { prefixCls, node: { element } } = tableStore;
     tableStore.columnResizing = true;
     classes(element).add(`${prefixCls}-resizing`);
     delete this.resizePosition;
@@ -202,12 +200,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   @autobind
   @action
   resizeEnd(): void {
-    const { prefixCls } = this.props;
     const {
       tableStore,
     } = this.context;
     const {
-      node: { element },
+      prefixCls, node: { element },
     } = tableStore;
     tableStore.columnResizing = false;
     classes(element).remove(`${prefixCls}-resizing`);
@@ -240,8 +237,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   renderResizer() {
-    const { prevColumn, column, prefixCls } = this.props;
-    const { tableStore: { props: { autoMaxWidth } } } = this.context;
+    const { prevColumn, column } = this.props;
+    const { tableStore: { prefixCls, props: { autoMaxWidth } } } = this.context;
     const resizerPrefixCls = `${prefixCls}-resizer`;
     const pre = prevColumn && prevColumn.resizable && (
       <div
@@ -298,7 +295,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   getHelpIcon(field?: Field) {
-    const { column, prefixCls } = this.props;
+    const { column } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     const {
       help,
       showHelp,
@@ -316,7 +314,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   getSortIcon() {
-    const { column, prefixCls } = this.props;
+    const { column } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     const {
       sortable,
       name,
@@ -327,9 +326,10 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   render() {
-    const { column, prefixCls, dataSet, rowSpan, colSpan, style, className } = this.props;
+    const { column, dataSet, rowSpan, colSpan, style, className } = this.props;
     const { tableStore } = this.context;
     const {
+      prefixCls,
       rowHeight,
       columnResizable,
     } = tableStore;

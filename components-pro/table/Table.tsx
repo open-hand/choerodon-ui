@@ -700,20 +700,23 @@ export default class Table extends DataSetComponent<TableProps> {
   refSpin: HTMLDivElement | null = null;
 
   get currentRow(): HTMLTableRowElement | null {
+    const { tableStore: { prefixCls } } = this;
     return this.element.querySelector(
-      `.${this.prefixCls}-row-current`,
+      `.${prefixCls}-row-current`,
     ) as HTMLTableRowElement | null;
   }
 
   get firstRow(): HTMLTableRowElement | null {
+    const { tableStore: { prefixCls } } = this;
     return this.element.querySelector(
-      `.${this.prefixCls}-row:first-child`,
+      `.${prefixCls}-row:first-child`,
     ) as HTMLTableRowElement | null;
   }
 
   get lastRow(): HTMLTableRowElement | null {
+    const { tableStore: { prefixCls } } = this;
     return this.element.querySelector(
-      `.${this.prefixCls}-row:last-child`,
+      `.${prefixCls}-row:last-child`,
     ) as HTMLTableRowElement | null;
   }
 
@@ -1127,8 +1130,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getClassName(): string | undefined {
     const {
-      prefixCls,
-      tableStore: { border, rowHeight, parityRow },
+      tableStore: { prefixCls, border, rowHeight, parityRow },
     } = this;
     return super.getClassName(`${prefixCls}-scroll-position-left`, {
       [`${prefixCls}-bordered`]: border,
@@ -1243,9 +1245,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      prefixCls,
       tableStore,
-      tableStore: { virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      tableStore: { prefixCls, virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
         style,
         spin,
@@ -1273,7 +1274,6 @@ export default class Table extends DataSetComponent<TableProps> {
             <ModalProvider>
               {this.getHeader()}
               <TableQueryBar
-                prefixCls={prefixCls}
                 buttons={buttons}
                 pagination={pagination}
                 queryFields={queryFields}
@@ -1476,7 +1476,7 @@ export default class Table extends DataSetComponent<TableProps> {
   setScrollPosition(position: ScrollPosition): void {
     if (this.scrollPosition !== position) {
       this.scrollPosition = position;
-      const { prefixCls } = this;
+      const { prefixCls } = this.tableStore;
       const cls = classes(this.element).remove(new RegExp(`^${prefixCls}-scroll-position-.+$`));
       if (position === ScrollPosition.both) {
         cls.add(`${prefixCls}-scroll-position-left`).add(`${prefixCls}-scroll-position-right`);
@@ -1493,7 +1493,6 @@ export default class Table extends DataSetComponent<TableProps> {
     lock?: ColumnLock | boolean,
   ): ReactNode {
     const {
-      prefixCls,
       tableStore: { virtual },
     } = this;
 
@@ -1502,7 +1501,6 @@ export default class Table extends DataSetComponent<TableProps> {
         {
           hasHeader && (
             <TableWrapper
-              prefixCls={prefixCls}
               key="tableWrapper-header"
               lock={lock}
               hasBody={hasBody}
@@ -1515,9 +1513,8 @@ export default class Table extends DataSetComponent<TableProps> {
         }
         {
           hasBody && (
-            <VirtualWrapper prefixCls={prefixCls}>
+            <VirtualWrapper>
               <TableWrapper
-                prefixCls={prefixCls}
                 key="tableWrapper-body"
                 lock={lock}
                 hasBody={hasBody}
@@ -1532,7 +1529,6 @@ export default class Table extends DataSetComponent<TableProps> {
         {
           hasFooter && (
             <TableWrapper
-              prefixCls={prefixCls}
               key="tableWrapper-footer"
               lock={lock}
               hasBody={hasBody}
@@ -1546,7 +1542,6 @@ export default class Table extends DataSetComponent<TableProps> {
       </>
     ) : (
       <TableWrapper
-        prefixCls={prefixCls}
         key="tableWrapper"
         lock={lock}
         hasBody={hasBody}
@@ -1562,10 +1557,10 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getHeader(): ReactNode {
     const {
-      prefixCls,
       props: { header, dataSet },
     } = this;
     if (header) {
+      const { prefixCls } = this.tableStore;
       const data = dataSet ? dataSet.records : [];
       return (
         <div key="header" className={`${prefixCls}-header`}>
@@ -1577,10 +1572,10 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getFooter(): ReactNode | undefined {
     const {
-      prefixCls,
       props: { footer, dataSet },
     } = this;
     if (footer) {
+      const { prefixCls } = this.tableStore;
       const data = dataSet ? dataSet.records : [];
       return (
         <div key="footer" className={`${prefixCls}-footer`}>
@@ -1592,9 +1587,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getPagination(position: TablePaginationPosition): ReactElement<PaginationProps> | undefined {
     const {
-      prefixCls,
       props: { dataSet },
-      tableStore: { pagination },
+      tableStore: { prefixCls, pagination },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
       const paginationPosition = getPaginationPosition(pagination);
@@ -1617,10 +1611,9 @@ export default class Table extends DataSetComponent<TableProps> {
   getCacheSelectionSwitch() {
     const {
       props: { dataSet },
-      prefixCls,
     } = this;
     if (dataSet && dataSet.cacheSelectionKeys && dataSet.cachedSelected.length) {
-      const { showCachedSeletion } = this.tableStore;
+      const { prefixCls, showCachedSeletion } = this.tableStore;
       return (
         <Tooltip
           title={$l('Table', showCachedSeletion ? 'hide_cached_seletion' : 'show_cached_seletion')}
@@ -1636,13 +1629,13 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTable(lock?: ColumnLock | boolean): ReactNode {
-    const { prefixCls, props: { autoHeight } } = this;
+    const { autoHeight } = this.props;
     const { overflowX, height, hasFooter: footer } = this.tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
     if ((!isStickySupport() && overflowX) || height !== undefined || autoHeight) {
-      const { lockColumnsBodyRowsHeight, rowHeight, leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = this.tableStore;
+      const { prefixCls, lockColumnsBodyRowsHeight, rowHeight, leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = this.tableStore;
       let bodyHeight = height;
       let tableHeadRef;
       let tableBodyRef;
@@ -1695,7 +1688,6 @@ export default class Table extends DataSetComponent<TableProps> {
         <TableBody
           key="tableBody"
           getRef={tableBodyRef}
-          prefixCls={prefixCls}
           lock={lock}
           height={bodyHeight}
           onScroll={this.handleBodyScroll}
@@ -1724,32 +1716,29 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getLeftFixedTable(): ReactNode {
-    const { overflowX, height } = this.tableStore;
+    const { overflowX, height, prefixCls } = this.tableStore;
     if (!overflowX && height === undefined) {
       return;
     }
-    const { prefixCls } = this;
     const table = this.getTable(ColumnLock.left);
     return <div className={`${prefixCls}-fixed-left`}>{table}</div>;
   }
 
   getRightFixedTable(): ReactNode | undefined {
-    const { overflowX, height } = this.tableStore;
+    const { overflowX, height, prefixCls } = this.tableStore;
     if (!overflowX && height === undefined) {
       return;
     }
-    const { prefixCls } = this;
     const table = this.getTable(ColumnLock.right);
     return <div className={`${prefixCls}-fixed-right`}>{table}</div>;
   }
 
   getTableBody(lock?: ColumnLock | boolean): ReactNode {
     const {
-      prefixCls,
       props: { indentSize, style },
       tableStore: { rowDraggable },
     } = this;
-    const body = <TableTBody key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} style={style} />;
+    const body = <TableTBody key="tbody" lock={lock} indentSize={indentSize!} style={style} />;
     return rowDraggable ? (
       <DragDropContext onDragEnd={this.handleDragEnd}>
         {body}
@@ -1759,20 +1748,18 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getTableHeader(lock?: ColumnLock | boolean): ReactNode {
     const {
-      prefixCls,
       props: { dataSet },
     } = this;
     return (
-      <TableHeader key="thead" prefixCls={prefixCls} lock={lock} dataSet={dataSet} />
+      <TableHeader key="thead" lock={lock} dataSet={dataSet} />
     );
   }
 
   getTableFooter(lock?: ColumnLock | boolean): ReactNode {
     const {
-      prefixCls,
       props: { dataSet },
     } = this;
-    return <TableFooter key="tfoot" prefixCls={prefixCls} lock={lock} dataSet={dataSet} />;
+    return <TableFooter key="tfoot" lock={lock} dataSet={dataSet} />;
   }
 
   getStyleHeight(): number | undefined {
@@ -1790,7 +1777,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getContentHeight() {
-    const { wrapper, element, prefixCls, props: { autoHeight }, tableBodyWrap } = this;
+    const { wrapper, element, props: { autoHeight }, tableBodyWrap, tableStore: { prefixCls } } = this;
     if (autoHeight) {
       const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
       const { paddingBottom } = wrapper.parentNode.style;
@@ -1840,7 +1827,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const { element, tableStore } = this;
     if (element) {
       tableStore.width = Math.floor(width);
-      const { prefixCls } = this;
+      const { prefixCls } = tableStore;
       let height = this.getContentHeight();
       if (element && isNumber(height)) {
         const tableTitle: HTMLDivElement | null = element.querySelector(`.${prefixCls}-title`);

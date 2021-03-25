@@ -11,7 +11,8 @@ import { BooleanValue, FieldType } from '../data-set/enum';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { processFieldValue } from '../data-set/utils';
 
-export interface OutputProps extends FormFieldProps {}
+export interface OutputProps extends FormFieldProps {
+}
 
 @observer
 export default class Output extends FormField<OutputProps> {
@@ -28,7 +29,8 @@ export default class Output extends FormField<OutputProps> {
   }
 
   @autobind
-  handleChange() {}
+  handleChange() {
+  }
 
   getOtherProps() {
     return omit(super.getOtherProps(), ['name']);

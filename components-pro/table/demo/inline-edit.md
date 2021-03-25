@@ -14,7 +14,7 @@ title:
 Inline Edit.
 
 ```jsx
-import { DataSet, Table, Button } from 'choerodon-ui/pro';
+import { DataSet, Table, Button, TextArea } from 'choerodon-ui/pro';
 
 const { Column } = Table;
 
@@ -159,7 +159,7 @@ class App extends React.Component {
         <Column name="userid" style={{ color: 'red' }} editor width={150} lock sortable />
         <Column name="enable" editor width={50} minWidth={50} lock />
         <Column name="age" editor width={150} sortable />
-        <Column name="name" editor width={150} sortable />
+        <Column name="name" editor={<TextArea />} width={150} sortable />
         <Column name="code" editor width={150} sortable />
         <Column name="code_code" editor width={150} />
         <Column name="code_select" editor width={150} />

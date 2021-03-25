@@ -24,6 +24,7 @@ import { Lang } from '../locale-context/enum';
 import formatNumber from '../formatter/formatNumber';
 import formatCurrency from '../formatter/formatCurrency';
 import { getPrecision } from '../number-field/utils';
+import { FormatNumberFuncOptions } from '../number-field/NumberField';
 
 export function useNormal(dataToJSON: DataToJSON): boolean {
   return [DataToJSON.normal, DataToJSON['normal-self']].includes(dataToJSON);
@@ -697,20 +698,38 @@ export function findBindFieldBy(myField: Field, fields: Fields, prop: string): F
   });
 }
 
-export function processFieldValue(value, field: Field, lang: Lang, showValueIfNotFound?: boolean) {
+function processNumberOptions(field: Field, options: Intl.NumberFormatOptions) {
+  const precision = field.get('precision');
+  const numberGrouping = field.get('numberGrouping');
+  if (isNumber(precision)) {
+    options.minimumFractionDigits = precision;
+    options.maximumFractionDigits = precision;
+  }
+  if (numberGrouping === false) {
+    options.useGrouping = false;
+  }
+  return options;
+}
+
+export function processFieldValue(value, field: Field, defaultLang: Lang, showValueIfNotFound?: boolean) {
   const { type } = field;
+  const formatterOptions: FormatNumberFuncOptions = field.get('formatterOptions') || {};
+  const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
   if (type === FieldType.number) {
-    const precision = getPrecision(value || 0);
-    const options = {
-      minimumFractionDigits: precision,
-      maximumFractionDigits: precision,
-    };
-    return formatNumber(value, lang, options);
+    const precisionInValue = getPrecision(value || 0);
+
+    return formatNumber(value, formatterOptions.lang || numberFieldFormatterOptions.lang || defaultLang, processNumberOptions(field, {
+      minimumFractionDigits: precisionInValue,
+      maximumFractionDigits: precisionInValue,
+      ...numberFieldFormatterOptions.options,
+      ...formatterOptions.options,
+    }));
   }
   if (type === FieldType.currency) {
-    return formatCurrency(value, lang, {
+    return formatCurrency(value, formatterOptions.lang || defaultLang, processNumberOptions(field, {
       currency: field.get('currency'),
-    });
+      ...formatterOptions.options,
+    }));
   }
   return field.getText(value, showValueIfNotFound);
 }

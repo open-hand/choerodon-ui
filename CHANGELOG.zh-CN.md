@@ -15,7 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet.Field`: 新增 precision, numberGrouping 属性。
+- 🌟 `<pro>NumberField`: 新增 precision, numberGrouping 属性。
+- 🌟 `<pro>TextArea`: 新增 onResize 钩子。
 - 🌟 `<pro>PerformanceTable`: 新增与 DataSet 数据源结合 demo。
+- 💄 `<pro>Table`: 当编辑器为 TextArea 时，行高可随 TextArea 大小的变更调整大小。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
 - 💄 `<pro>PerformanceTable`: 优化样式，加载条。
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格问题。

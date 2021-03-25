@@ -126,6 +126,14 @@ export type FieldProps = {
    */
   min?: MomentInput | null;
   /**
+   * 小数点精度
+   */
+  precision?: number;
+  /**
+   * 千分位分组显示
+   */
+  numberGrouping?: boolean;
+  /**
    * 校验器
    */
   validator?: CustomValidator;

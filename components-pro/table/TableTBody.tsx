@@ -34,7 +34,6 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
       PropTypes.bool,
       PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
     ]),
-    prefixCls: PropTypes.string,
     indentSize: PropTypes.number.isRequired,
   };
 
@@ -91,10 +90,10 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   }
 
   render() {
-    const { prefixCls, lock, indentSize } = this.props;
+    const { lock, indentSize } = this.props;
     const { leafColumns, leafColumnsBody } = this;
     const {
-      tableStore: { node, data, virtual, props: { rowDragRender = {} }, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth, overflowX },
+      tableStore: { prefixCls, node, data, virtual, props: { rowDragRender = {} }, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth, overflowX },
     } = this.context;
     const { droppableProps, renderClone } = rowDragRender;
     const rowData = virtual ? this.processData() : data;
@@ -141,7 +140,6 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
               hidden={false}
               lock={false}
               indentSize={indentSize}
-              prefixCls={prefixCls}
               columns={leafColumnsBody}
               record={record}
               index={record.id}
@@ -208,7 +206,8 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   }
 
   componentDidUpdate() {
-    const { lock, prefixCls } = this.props;
+    const { lock } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     if (!lock) {
       const {
         tableStore: { node },
@@ -233,9 +232,9 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
 
   getEmptyRow(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode | undefined {
     const {
-      tableStore: { dataSet, emptyText, width },
+      tableStore: { prefixCls, dataSet, emptyText, width },
     } = this.context;
-    const { prefixCls, style } = this.props;
+    const { style } = this.props;
     let tableWidth = width;
     if (style && style.width) {
       tableWidth = toPx(style?.width) || width;
@@ -275,7 +274,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     expanded?: boolean,
     lock?: ColumnLock | boolean,
   ): ReactNode {
-    const { prefixCls, indentSize } = this.props;
+    const { indentSize } = this.props;
     const {
       tableStore: { isTree, props: { rowDragRender = {} }, rowDraggable, dragColumnAlign },
     } = this.context;
@@ -302,7 +301,6 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
             hidden={!expanded}
             lock={lock}
             indentSize={indentSize}
-            prefixCls={prefixCls}
             columns={columns}
             record={record}
             index={index}
@@ -318,7 +316,6 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
         hidden={!expanded}
         lock={lock}
         indentSize={indentSize}
-        prefixCls={prefixCls}
         columns={columns}
         record={record}
         index={index}

@@ -8,7 +8,6 @@ import TableContext from './TableContext';
 import { ColumnLock } from './enum';
 
 export interface TableBodyProps {
-  prefixCls?: string;
   lock?: ColumnLock | boolean;
   height?: number;
   getRef?: (node: HTMLDivElement | null) => void;
@@ -48,9 +47,9 @@ export default class TableBody extends Component<TableBodyProps> {
   }
 
   render() {
-    const { children, lock, prefixCls, height, onScroll } = this.props;
+    const { children, lock, height, onScroll } = this.props;
     const {
-      tableStore: { leftLeafColumnsWidth, rightLeafColumnsWidth, hasFooter, overflowY, overflowX },
+      tableStore: { prefixCls, leftLeafColumnsWidth, rightLeafColumnsWidth, hasFooter, overflowY, overflowX },
     } = this.context;
     const fixedLeft = lock === true || lock === ColumnLock.left;
     const scrollbar = measureScrollbar();

@@ -384,8 +384,12 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     otherProps.ref = this.elementReference;
     otherProps.disabled = this.isDisabled();
     otherProps.className = this.getClassName();
+    otherProps.style = {};
     if ('height' in style) {
-      otherProps.style = { height: style.height };
+      otherProps.style.height = style.height;
+    }
+    if ('minHeight' in style) {
+      otherProps.style.minHeight = style.minHeight;
     }
     otherProps.lang = normalizeLanguage(lang);
     return otherProps;
@@ -408,7 +412,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       ...props,
     };
     if (style) {
-      wrapperProps.style = omit(style, 'height');
+      wrapperProps.style = omit(style, ['height', 'minHeight']);
     }
     return wrapperProps;
   }
