@@ -41,11 +41,11 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
   }
 
   render() {
-    const { column, prefixCls, dataSet, style, className, colSpan } = this.props;
+    const { column, dataSet, style, className, colSpan } = this.props;
     const {
       tableStore,
     } = this.context;
-    const { rowHeight, autoFootHeight } = tableStore;
+    const { prefixCls, rowHeight, autoFootHeight } = tableStore;
     const { footer, footerClassName, footerStyle = {}, align, name, command, lock } = column;
     const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classString = classNames(`${prefixCls}-cell`, {

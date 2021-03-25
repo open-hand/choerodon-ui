@@ -15,7 +15,13 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableCustomizable` property.
+- 🌟 `<pro>Table`: Added `customizable` property.
+- 🌟 `<pro>DataSet.Field`: Added `precision`, `numberGrouping` properties.
+- 🌟 `<pro>NumberField`: Added `precision`, `numberGrouping` properties.
+- 🌟 `<pro>TextArea`: Added `onResize` hook.
 - 🌟 `<pro>PerformanceTable`: Added demo combined with `DataSet`.
+- 💄 `<pro>Table`: When the editor is TextArea, the line height can be adjusted with the TextArea resizing.
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
 - 🐞 `<pro>PerformanceTable`: Fixed the big data table problem.

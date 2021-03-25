@@ -89,7 +89,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
   }), [record, index, changeLock, changeIndex]);
   const getTreeNodesMenus = useCallback(() => {
     const lock = record.get('lock');
-    const menus:ReactElement<any>[] = [];
+    const menus: ReactElement<any>[] = [];
     if (columnTitleEditable && record.get('titleEditable') !== false) {
       menus.push(<Item key="rename">{$l('Table', 'rename')}</Item>);
     }
@@ -116,7 +116,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
     }
     if (menus.length) {
       return (
-        <Menu onClick={handleMenuClick}>
+        <Menu prefixCls={`${prefixCls}-customization-dropdown-menu`} onClick={handleMenuClick}>
           {menus}
         </Menu>
       );

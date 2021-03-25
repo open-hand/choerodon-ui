@@ -152,7 +152,7 @@ export function getEditorByColumnAndRecord(
   }
 }
 
-export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
+export function isInCellEditor(element?: ReactElement<FormFieldProps>): boolean {
   if (element) {
     return !!(element.type as any).__IS_IN_CELL_EDITOR;
   }
@@ -164,7 +164,7 @@ export function findCell(
   prefixCls?: string,
   name?: Key,
   lock?: ColumnLock | boolean,
-): HTMLTableCellElement | undefined {
+): HTMLSpanElement | undefined {
   const { node, dataSet, overflowX, currentEditRecord } = tableStore;
   const current = currentEditRecord || dataSet.current;
   const tableCellPrefixCls = `${prefixCls}-cell`;

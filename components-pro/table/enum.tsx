@@ -86,12 +86,3 @@ export enum HighLightRowType {
   click = 'click',
   focus = 'focus',
 }
-
-export enum CustomizedType {
-  all = 'all',
-  none = 'none',
-  columnOrder = 'columnOrder',
-  columnWidth = 'columnWidth',
-  columnHeader = 'columnHeader',
-  columnHidden = 'columnHidden',
-}

@@ -68,7 +68,15 @@ export interface NumberFieldProps extends TextFieldProps {
   /**
    *是否长按按钮按步距增加
    */
-  longPressPlus: boolean;
+  longPressPlus?: boolean;
+  /**
+   * 小数点精度
+   */
+  precision?: number;
+  /**
+   * 千分位分组显示
+   */
+  numberGrouping?: boolean;
 }
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
@@ -356,6 +364,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       'formatter',
       'formatterOptions',
       'longPressPlus',
+      'precision',
+      'numberGrouping',
     ]);
     return otherProps;
   }
@@ -437,28 +447,30 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getFormatOptions(value?: number): FormatNumberFuncOptions {
-    const precision = getPrecision(isNil(value) ? this.getValue() || 0 : value);
-    const defaultOptions = {
-      lang: this.lang,
-      options: {
-        minimumFractionDigits: precision,
-        maximumFractionDigits: precision,
-      },
-    };
-
+    const precisionInValue = getPrecision(isNil(value) ? this.getValue() || 0 : value);
     const formatterOptions: FormatNumberFuncOptions = this.getProp('formatterOptions') || {};
     const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
-    if (formatterOptions) {
-      return {
-        lang: formatterOptions.lang || numberFieldFormatterOptions.lang || defaultOptions.lang,
-        options: {
-          ...defaultOptions.options,
-          ...numberFieldFormatterOptions.options,
-          ...formatterOptions.options,
-        },
-      };
+    const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || this.lang;
+    const options: Intl.NumberFormatOptions = {
+      minimumFractionDigits: precisionInValue,
+      maximumFractionDigits: precisionInValue,
+      ...numberFieldFormatterOptions.options,
+      ...formatterOptions.options,
+    };
+
+    const precision = this.getProp('precision');
+    const numberGrouping = this.getProp('numberGrouping');
+    if (isNumber(precision)) {
+      options.minimumFractionDigits = precision;
+      options.maximumFractionDigits = precision;
     }
-    return defaultOptions;
+    if (numberGrouping === false) {
+      options.useGrouping = false;
+    }
+    return {
+      lang,
+      options,
+    };
   }
 
   getFormatter() {

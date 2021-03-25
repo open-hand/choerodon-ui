@@ -1,6 +1,6 @@
 import React, { cloneElement, Component, isValidElement, ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { runInAction } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
@@ -12,13 +12,19 @@ import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import { FormField, FormFieldProps } from '../field/FormField';
 import TableContext from './TableContext';
-import { findCell, findIndexedSibling, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isRadio, isStickySupport } from './utils';
+import { findCell, findIndexedSibling, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isInCellEditor, isStickySupport } from './utils';
 import { stopEvent } from '../_util/EventManager';
 import { ShowHelp } from '../field/enum';
 import autobind from '../_util/autobind';
+import { TextAreaProps } from '../text-area/TextArea';
+import { ResizeType } from '../text-area/enum';
 
 export interface TableEditorProps extends ElementProps {
   column: ColumnProps;
+}
+
+function isTextArea(editor: ReactElement<FormFieldProps>): editor is ReactElement<TextAreaProps> {
+  return (editor.type as any).__PRO_TEXTAREA;
 }
 
 @observer
@@ -35,12 +41,64 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   editor: FormField<FormFieldProps> | null;
 
-  // find this parent tr node
-  parentTrNode?: (Node & ParentNode) | null | undefined;
+  wrap: HTMLDivElement | null;
 
-  editing: boolean = false;
+  @observable observableProps: any;
 
-  currentEditorName?: string;
+  @computed
+  get cellNode(): HTMLSpanElement | undefined {
+    const { tableStore } = this.context;
+    const { column } = this.observableProps;
+    if (tableStore.currentEditorName === column.name || tableStore.currentEditRecord) {
+      return findCell(tableStore, tableStore.prefixCls, getColumnKey(column), !isStickySupport() && column.lock);
+    }
+    return undefined;
+  }
+
+  @computed
+  get editing(): boolean {
+    return !!this.cellNode;
+  }
+
+  @computed
+  get currentEditorName(): string | undefined {
+    if (this.cellNode) {
+      const { column: { name } } = this.observableProps;
+      return name;
+    }
+    return undefined;
+  }
+
+  constructor(props, context) {
+    super(props, context);
+    runInAction(() => {
+      this.setObservableProps(props, context);
+    });
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    this.updateObservableProps(nextProps, nextContext);
+  }
+
+
+  getObservableProps(props, _context: any) {
+    return {
+      column: props.column,
+    };
+  }
+
+  @action
+  setObservableProps(props, context: any) {
+    this.observableProps = this.getObservableProps(props, context);
+  }
+
+  @action
+  updateObservableProps(props, context: any) {
+    Object.assign(
+      this.observableProps,
+      this.getObservableProps(props, context),
+    );
+  }
 
   @autobind
   onWindowResize() {
@@ -53,7 +111,7 @@ export default class TableEditor extends Component<TableEditorProps> {
    */
   @autobind
   onWindowClick(e) {
-    const { prefixCls } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     if (e.target.className !== `${prefixCls}-content` && e.target.className !== `${prefixCls}-body`) {
       this.handleEditorBlur(e);
     }
@@ -80,6 +138,23 @@ export default class TableEditor extends Component<TableEditorProps> {
   @autobind
   saveRef(node) {
     this.editor = node;
+    if (node) {
+      node.focus();
+    }
+  }
+
+  @autobind
+  saveWrap(node) {
+    this.wrap = node;
+  }
+
+  alignEditor() {
+    const { editing, wrap, cellNode } = this;
+    if (editing && wrap && cellNode) {
+      const { offsetTop, offsetParent } = cellNode;
+      const parentNode: HTMLTableCellElement | null = cellNode.parentNode as (HTMLTableCellElement | null);
+      wrap.style.top = pxToRem(parentNode && offsetParent === parentNode ? parentNode.offsetTop + offsetTop : offsetTop)!;
+    }
   }
 
   @autobind
@@ -95,23 +170,29 @@ export default class TableEditor extends Component<TableEditorProps> {
   @autobind
   handleKeyDownCTRLD(e) {
     e.preventDefault();
-    const { parentTrNode: currentElementSibling, context: { tableStore } } = this;
+    const { cellNode, context: { tableStore } } = this;
     const { column: { name } } = this.props;
     const { dataSet } = tableStore;
-    if (currentElementSibling && tableStore && dataSet) {
-      const previousElementSibling = findIndexedSibling(currentElementSibling, -1);
-      if (previousElementSibling) {
-        const { index } = previousElementSibling.dataset;
-        const { index: currentIndex } = (currentElementSibling as HTMLTableRowElement).dataset;
-        if (index && currentIndex) {
-          const record = dataSet.findRecordById(index);
-          const currentRecord = dataSet.findRecordById(currentIndex);
-          if (record && currentRecord && tableStore) {
-            const cloneRecordData = record.clone().toData() || {};
-            const dealCloneRecordData = {};
-            if (name) {
-              dealCloneRecordData[name] = cloneRecordData[name];
-              currentRecord.set(dealCloneRecordData);
+    if (cellNode && tableStore && dataSet) {
+      const parentTdNode = cellNode.parentNode;
+      if (parentTdNode) {
+        const parentTrNode = parentTdNode.parentNode;
+        if (parentTrNode) {
+          const previousElementSibling = findIndexedSibling(parentTrNode, -1);
+          if (previousElementSibling) {
+            const { index } = previousElementSibling.dataset;
+            const { index: currentIndex } = (parentTrNode as HTMLTableRowElement).dataset;
+            if (index && currentIndex) {
+              const record = dataSet.findRecordById(index);
+              const currentRecord = dataSet.findRecordById(currentIndex);
+              if (record && currentRecord && tableStore) {
+                const cloneRecordData = record.clone().toData() || {};
+                const dealCloneRecordData = {};
+                if (name) {
+                  dealCloneRecordData[name] = cloneRecordData[name];
+                  currentRecord.set(dealCloneRecordData);
+                }
+              }
             }
           }
         }
@@ -137,10 +218,9 @@ export default class TableEditor extends Component<TableEditorProps> {
       switch (e.keyCode) {
         case KeyCode.ESC:
         case KeyCode.TAB: {
-          const { prefixCls, column } = this.props;
-          const cell = findCell(tableStore, prefixCls, getColumnKey(column));
-          if (cell) {
-            cell.focus();
+          const { cellNode } = this;
+          if (cellNode) {
+            cellNode.focus();
           }
           this.hideEditor();
           break;
@@ -203,6 +283,25 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   @autobind
+  handleEditorResize(width, height, target) {
+    const { editorProps } = this;
+    const { column: { name } } = this.props;
+    const { tableStore: { currentEditRecord, dataSet, rowHeight } } = this.context;
+    if (editorProps) {
+      const { onResize = noop } = editorProps;
+      onResize(width, height, target);
+      const current = currentEditRecord || dataSet.current;
+      if (current && name && (rowHeight !== height || current.getState(`__column_resize_height_${name}`) !== undefined)) {
+        current.setState(`__column_resize_height_${name}`, height);
+      }
+      if (currentEditRecord) {
+        currentEditRecord.setState('__column_resize_height', height);
+      }
+      this.alignEditor();
+    }
+  }
+
+  @autobind
   hideEditor() {
     if (this.editing) {
       const { tableStore } = this.context;
@@ -223,9 +322,9 @@ export default class TableEditor extends Component<TableEditorProps> {
    * 渲染多行编辑单元格
    */
   renderMultiLineEditor(): ReactElement<FormFieldProps> | undefined {
-    const { column: { name }, prefixCls } = this.props;
+    const { column: { name } } = this.props;
     const {
-      tableStore: { dataSet, currentEditRecord, rowHeight, inlineEdit },
+      tableStore: { dataSet, currentEditRecord, rowHeight, inlineEdit, prefixCls },
     } = this.context;
     const record = currentEditRecord || dataSet.current;
     const multiLineFields = dataSet.props.fields.map(field => {
@@ -248,7 +347,7 @@ export default class TableEditor extends Component<TableEditorProps> {
               const newEditorProps = {
                 ...otherProps,
                 style,
-                ref: index === 0 ? this.saveRef : '',
+                ref: index === 0 ? this.saveRef : undefined,
                 record,
                 name: fields.get('name'),
                 onKeyDown: this.handleEditorKeyDown,
@@ -275,18 +374,19 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   renderEditor(): ReactElement<FormFieldProps> | undefined {
-    const { column } = this.props;
+    const { column } = this.observableProps;
     const {
-      tableStore: { dataSet, currentEditRecord, rowHeight, pristine, inlineEdit },
+      tableStore: { dataSet, currentEditRecord, currentEditorName, rowHeight, pristine, inlineEdit },
     } = this.context;
+    const { name } = column;
     const record = currentEditRecord || dataSet.current;
-    const field = record?.getField(column.name);
+    const field = record?.getField(name);
     // 多行编辑拦截返回渲染器
     if (!pristine && field && field.get('multiLine')) {
       return this.renderMultiLineEditor();
     }
     const cellEditor = getEditorByColumnAndRecord(column, record);
-    if (!pristine && isValidElement(cellEditor) && !isRadio(cellEditor)) {
+    if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
       this.editorProps = cellEditor.props;
       const { style = {}, ...otherProps } = this.editorProps;
       if (rowHeight !== 'auto') {
@@ -295,11 +395,11 @@ export default class TableEditor extends Component<TableEditorProps> {
       const newEditorProps = {
         ...otherProps,
         style,
-        ref: this.saveRef,
+        ref: currentEditorName === name ? this.saveRef : undefined,
         record,
-        name: column.name,
+        name,
         onKeyDown: this.handleEditorKeyDown,
-        onEnterDown: this.handleEditorKeyEnterDown,
+        onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
         onBlur: this.handleEditorBlur,
         tabIndex: -1,
         showHelp: ShowHelp.none,
@@ -314,51 +414,49 @@ export default class TableEditor extends Component<TableEditorProps> {
     const editor = this.renderEditor();
     if (editor) {
       const {
-        prefixCls,
-        column,
         column: { lock, name },
-      } = this.props;
+      } = this.observableProps;
+      const { tableStore } = this.context;
+      const { prefixCls, currentEditRecord, currentEditorName } = tableStore;
       const props: any = {
         className: classNames(`${prefixCls}-editor`, { [`${prefixCls}-editor-lock`]: isStickySupport() && lock }),
       };
       const editorProps: any = {};
-      const { tableStore } = this.context;
-      if (tableStore.currentEditorName === name || tableStore.currentEditRecord) {
-        this.currentEditorName = name;
-        const cell: HTMLTableCellElement | undefined = findCell(tableStore, prefixCls, getColumnKey(column), !isStickySupport() && lock);
-        if (cell) {
-          this.editing = true;
-          const parentNode: HTMLTableRowElement | null = cell.parentNode as (HTMLTableRowElement | null);
-          this.parentTrNode = parentNode && parentNode.parentNode;
-          const { offsetLeft, offsetTop, offsetWidth, offsetHeight, offsetParent } = cell;
-          const left = parentNode && offsetParent === parentNode ? parentNode.offsetLeft : offsetLeft;
-          const top = parentNode && offsetParent === parentNode ? parentNode.offsetTop : offsetTop;
-          props.style = {
-            left: pxToRem(left),
-            top: pxToRem(top),
-          };
-          editorProps.style = {
-            ...editor.props.style,
-            width: pxToRem(offsetWidth),
-            height: pxToRem(offsetHeight),
-          };
+      const { cellNode } = this;
+      if (cellNode) {
+        if (isTextArea(editor) && !editor.props.resize) {
+          const { rowHeight } = tableStore;
+          editorProps.resize = ResizeType.vertical;
+          if (rowHeight !== 'auto') {
+            editorProps.style = {
+              ...editor.props.style,
+              minHeight: pxToRem(rowHeight),
+            };
+          }
+          editorProps.onResize = this.handleEditorResize;
         }
-      } else if (this.editing) {
-        this.editing = false;
+        const parentNode: HTMLTableCellElement | null = cellNode.parentNode as (HTMLTableCellElement | null);
+        const { offsetLeft, offsetTop, offsetWidth, offsetHeight, offsetParent } = cellNode;
+        const left = parentNode && offsetParent === parentNode ? parentNode.offsetLeft + offsetLeft : offsetLeft;
+        const top = parentNode && offsetParent === parentNode ? parentNode.offsetTop + offsetTop : offsetTop;
+        props.style = {
+          left: pxToRem(left),
+          top: pxToRem(top),
+        };
+        // reposition in inline-edit
+        if (currentEditRecord && currentEditorName !== name && currentEditRecord.getState('__column_resize_height')) {
+          editorProps.style = {};
+        }
+        editorProps.style = {
+          ...editor.props.style,
+          width: pxToRem(offsetWidth),
+          height: pxToRem(offsetHeight),
+        };
+      } else {
         editorProps.onFocus = this.handleEditorFocus;
       }
-      return <div {...props}>{cloneElement(editor, editorProps)}</div>;
+      return <div {...props} ref={this.saveWrap}>{cloneElement(editor, editorProps)}</div>;
     }
     return null;
-  }
-
-  componentDidUpdate() {
-    const {
-      column: { name },
-    } = this.props;
-    const { tableStore } = this.context;
-    if (this.editor && this.editing && tableStore.currentEditorName === name) {
-      this.editor.focus();
-    }
   }
 }

@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react';
-import { NumberField, NumberFieldProps, FormatNumberFuncOptions } from '../number-field/NumberField';
+import isNumber from 'lodash/isNumber';
+import { FormatNumberFuncOptions, NumberField, NumberFieldProps } from '../number-field/NumberField';
 import { FieldType } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';
 
@@ -22,11 +23,25 @@ export default class Currency extends NumberField<CurrencyProps> {
   }
 
   getFormatOptions(): FormatNumberFuncOptions {
+    const formatterOptions: FormatNumberFuncOptions = this.getProp('formatterOptions') || {};
+    const lang = formatterOptions.lang || this.lang;
+    const options: Intl.NumberFormatOptions = {
+      currency: this.getProp('currency'),
+      ...formatterOptions.options,
+    };
+
+    const precision = this.getProp('precision');
+    const numberGrouping = this.getProp('numberGrouping');
+    if (isNumber(precision)) {
+      options.minimumFractionDigits = precision;
+      options.maximumFractionDigits = precision;
+    }
+    if (numberGrouping === false) {
+      options.useGrouping = false;
+    }
     return {
-      lang: this.lang,
-      options: {
-        currency: this.getProp('currency'),
-      },
+      lang,
+      options,
     };
   }
 }
