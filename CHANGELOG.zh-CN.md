@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 tableCustomizable 属性。
+- 🌟 `<pro>Table`: 新增 customizable 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 precision, numberGrouping 属性。
 - 🌟 `<pro>NumberField`: 新增 precision, numberGrouping 属性。
 - 🌟 `<pro>TextArea`: 新增 onResize 钩子。
@@ -30,7 +32,7 @@ timeline: true
 `2021-03-18`
 
 - 🌟 `configure`: 新增 tableColumnTitleEditable、tableColumnHideable、tableColumnDraggable、tableRowDraggable、tableCustomizedSave、tableCustomizedLoad, modalMaskClosable 全局属性， 废弃 tableDragColumn、tableDragRow、 lovTriggerMode 属性。
-- 🌟 `<pro>Table`: 新增表格个性化功能，包括新增 customizedCode、customizedType、columnTitleEditable、columnHideable、columnDraggable、rowDraggable 属性， 废弃 columnsMergeCoverage、columnsOnChange、columnsEditType、dragColumn、dragRow 属性, Column 新增 titleEditable 属性。
+- 🌟 `<pro>Table`: 新增表格个性化功能，包括新增 customizedCode、columnTitleEditable、columnHideable、columnDraggable、rowDraggable 属性， 废弃 columnsMergeCoverage、columnsOnChange、columnsEditType、dragColumn、dragRow 属性, Column 新增 titleEditable 属性。
 - 🐞 `<pro>Table`: 修复边框样式问题。
 - 🐞 `<pro>Select`: 修复可搜索时候，清空按钮会触发两次 onChange。
 - 🐞 `<pro>Record`: 修复 reset 方法无法恢复记录状态的问题。

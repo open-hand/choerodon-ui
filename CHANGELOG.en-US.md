@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableCustomizable` property.
+- 🌟 `<pro>Table`: Added `customizable` property.
 - 🌟 `<pro>DataSet.Field`: Added `precision`, `numberGrouping` properties.
 - 🌟 `<pro>NumberField`: Added `precision`, `numberGrouping` properties.
 - 🌟 `<pro>TextArea`: Added `onResize` hook.

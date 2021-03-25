@@ -45,7 +45,6 @@ import TableTBody from './TableTBody';
 import TableFooter from './TableFooter';
 import {
   ColumnLock,
-  CustomizedType,
   DragColumnAlign,
   HighLightRowType,
   ScrollPosition,
@@ -509,9 +508,9 @@ export interface TableProps extends DataSetComponentProps {
    */
   customizedCode?: string;
   /**
-   * 个性化类型
+   * 是否显示个性化设置入口按钮
    */
-  customizedType?: CustomizedType | CustomizedType[];
+  customizable?: string;
   /**
    * @deprecated
    * 同 columnDraggable
@@ -672,7 +671,6 @@ export default class Table extends DataSetComponent<TableProps> {
     autoHeight: false,
     autoMaxWidth: true,
     autoFootHeight: false,
-    customizedType: CustomizedType.all,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1115,8 +1113,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'rowNumber',
       'treeAsync',
       'treeLoadData',
+      'customizable',
       'customizedCode',
-      'customizedType',
       'dragColumn',
       'dragRow',
     ]);

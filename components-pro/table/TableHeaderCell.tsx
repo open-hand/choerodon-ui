@@ -20,7 +20,7 @@ import DataSet from '../data-set/DataSet';
 import Field from '../data-set/Field';
 import EventManager from '../_util/EventManager';
 import { getAlignByField, getColumnKey, getColumnLock, getHeader, getPlacementByAlign, isStickySupport } from './utils';
-import { ColumnAlign, CustomizedType, TableColumnTooltip } from './enum';
+import { ColumnAlign, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import autobind from '../_util/autobind';
@@ -160,11 +160,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         column.width ? column.width : 0,
       );
       if (maxWidth !== column.width) {
-        tableStore.changeCustomizedColumnValue(CustomizedType.columnWidth, column, {
+        tableStore.changeCustomizedColumnValue(column, {
           width: maxWidth,
         });
       } else if (column.minWidth) {
-        tableStore.changeCustomizedColumnValue(CustomizedType.columnWidth, column, {
+        tableStore.changeCustomizedColumnValue(column, {
           width: column.minWidth,
         });
       }
@@ -213,7 +213,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     if (this.resizePosition && column) {
       const newWidth = Math.round(Math.max(this.resizePosition - this.resizeBoundary, minColumnWidth(column)));
       if (newWidth !== column.width) {
-        tableStore.changeCustomizedColumnValue(CustomizedType.columnWidth, column, {
+        tableStore.changeCustomizedColumnValue(column, {
           width: newWidth,
         });
       }

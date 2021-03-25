@@ -111,6 +111,7 @@ export type Config = {
   tableFilterSuffix?: Suffixes[];
   tableFilterSearchText?: string;
   tableAutoHeightDiff?: number;
+  tableCustomizable?: boolean;
   tableCustomizedSave?: (code: string, customized: Customized) => void;
   tableCustomizedLoad?: (code: string) => Promise<Customized | null>;
   pagination?: TablePaginationConfig | false;

@@ -1,5 +1,5 @@
 import React, { Children, isValidElement, ReactNode } from 'react';
-import { action, computed, get, isArrayLike, observable, runInAction, set } from 'mobx';
+import { action, computed, get, observable, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -20,7 +20,6 @@ import { DataSetSelection } from '../data-set/enum';
 import {
   ColumnAlign,
   ColumnLock,
-  CustomizedType,
   DragColumnAlign,
   SelectionMode,
   TableColumnTooltip,
@@ -346,29 +345,13 @@ export default class TableStore {
 
   @computed
   get customizable(): boolean {
-    return this.columnTitleEditable || this.columnDraggable;
-  }
-
-  @computed
-  get customizedType(): CustomizedType[] {
-    const { customizedType } = this.props;
-    if (isArrayLike(customizedType)) {
-      return customizedType;
+    if (this.columnTitleEditable || this.columnDraggable || this.columnHideable) {
+      if ('customizable' in this.props) {
+        return this.props.customizable;
+      }
+      return getConfig('tableCustomizable');
     }
-    if (customizedType === CustomizedType.none) {
-      return [];
-    }
-    if (customizedType === CustomizedType.all) {
-      return [
-        CustomizedType.columnOrder,
-        CustomizedType.columnWidth,
-        CustomizedType.columnHidden,
-        CustomizedType.columnHeader,
-      ];
-    }
-    return [
-      customizedType,
-    ];
+    return false;
   }
 
   @computed
@@ -1208,18 +1191,16 @@ export default class TableStore {
   }
 
   @action
-  changeCustomizedColumnValue(type: CustomizedType, column: ColumnProps, value: object) {
-    const { customized: { columns }, customizedType } = this;
+  changeCustomizedColumnValue(column: ColumnProps, value: object) {
+    const { customized: { columns } } = this;
     set(column, value);
-    if (customizedType.includes(type)) {
-      const columnKey = getColumnKey(column).toString();
-      const oldCustomized = get(columns, columnKey);
-      set(columns, columnKey, {
-        ...oldCustomized,
-        ...value,
-      });
-      this.saveCustomizedDebounce();
-    }
+    const columnKey = getColumnKey(column).toString();
+    const oldCustomized = get(columns, columnKey);
+    set(columns, columnKey, {
+      ...oldCustomized,
+      ...value,
+    });
+    this.saveCustomizedDebounce();
   }
 
   @action
