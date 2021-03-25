@@ -1,9 +1,13 @@
 @import '../../../components/style/themes/default';
 
 &-table {
-  border: 1px solid @border-color-base;
+  border-top: 1px solid @border-color-base;
   position: relative;
   overflow: hidden;
+
+  &-bordered {
+    border: 1px solid @border-color-base;
+  }
 
   &-column-resizing {
     cursor: col-resize;
@@ -20,17 +24,17 @@
   }
 
   &-hover &-row:hover {
-   background: @performance-table-header-bg;
+    background: @performance-table-header-bg;
   }
-  
+
   &-hover &-row-header:hover {
-   background: @performance-table-header-bg;
+    background: @performance-table-header-bg;
   }
 
   &-hover &-row:hover &-cell-group {
-   background: @performance-table-header-bg;
+    background: @performance-table-header-bg;
   }
-  
+
   &-hover &-row:hover &-cell {
     background: @performance-table-header-bg;
   }
@@ -39,9 +43,13 @@
     background: @performance-table-header-bg;
   }
 
+  &-row-header:hover &-cell {
+    border-right: .01rem solid @border-color-base;
+  }
+
   &-row-header &-cell {
     background: @performance-table-header-bg;
-    border-right: .01rem solid @border-color-base;
+    font-weight: bold;
 
     &-last {
       border-right: none;
@@ -52,13 +60,13 @@
     .box-shadow(0, 2px, 3px, rgba(0, 0, 0, 0.28));
     z-index: 5;
   }
-  
+
   &-hover &-row:hover &-cell-group {
-   background: @performance-table-header-bg;
+    background: @performance-table-header-bg;
   }
-  
+
   &-hover &-row:hover &-cell {
-   background: @performance-table-header-bg;
+    background: @performance-table-header-bg;
   }
 
   &-header-row-wrapper {
@@ -148,11 +156,11 @@
       }
 
       &-icon-sort {
-        font-family: icomoon!important;
+        font-family: icomoon !important;
 
         &::after {
           content: "\E5D8";
-          color: rgba(0,0,0,.45);
+          color: rgba(0, 0, 0, .45);
           opacity: 0;
         }
       }
@@ -195,7 +203,6 @@
       position: absolute;
       z-index: 4;
       background: @body-background;
-      margin-left: 10px;
     }
 
     &-left-shadow {
@@ -244,7 +251,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.5);
   }
 
   &-loader {

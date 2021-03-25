@@ -15,7 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>PerformanceTable`: 新增与 DataSet 数据源结合 demo。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
+- 💄 `<pro>PerformanceTable`: 优化样式，加载条。
+- 🐞 `<pro>PerformanceTable`: 修复大数据表格问题。
 - 🐞 `<pro>Table`: 修复表格中 `autoHeight` 的计算问题 。
 
 ## 1.2.0
