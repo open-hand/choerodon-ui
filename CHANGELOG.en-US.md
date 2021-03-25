@@ -15,7 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>PerformanceTable`: Added demo combined with `DataSet`.
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
+- 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
+- 🐞 `<pro>PerformanceTable`: Fixed the big data table problem.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 
 ## 1.2.0

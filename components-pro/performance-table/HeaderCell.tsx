@@ -19,6 +19,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     sortType: PropTypes.oneOf(['desc', 'asc']),
     sortable: PropTypes.bool,
     resizable: PropTypes.bool,
+    minWidth: PropTypes.number,
     onColumnResizeStart: PropTypes.func,
     onColumnResizeEnd: PropTypes.func,
     onResize: PropTypes.func,
@@ -75,7 +76,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
   addPrefix = (name: string) => prefix(this.props.classPrefix)(name);
 
   renderResizeSpanner() {
-    const { resizable, left, onColumnResizeMove, fixed, headerHeight } = this.props;
+    const { resizable, left, onColumnResizeMove, fixed, headerHeight, minWidth } = this.props;
     const { columnWidth } = this.state;
 
     if (!resizable) {
@@ -89,6 +90,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
         columnLeft={left}
         columnFixed={fixed}
         height={headerHeight ? headerHeight - 1 : undefined}
+        minWidth={minWidth}
         onColumnResizeMove={onColumnResizeMove}
         onColumnResizeStart={this.handleColumnResizeStart}
         onColumnResizeEnd={this.handleColumnResizeEnd}
@@ -122,6 +124,8 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
       left,
       sortable,
       classPrefix,
+      sortColumn,
+      sortType,
       ...rest
     } = this.props;
 
@@ -130,9 +134,21 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     });
     const unhandledProps = getUnhandledProps(HeaderCell, rest);
 
+    let ariaSort;
+
+    if (sortColumn === dataKey) {
+      ariaSort = 'other';
+      if (sortType === 'asc') {
+        ariaSort = 'ascending';
+      } else if (sortType === 'desc') {
+        ariaSort = 'descending';
+      }
+    }
+
     return (
       <div className={classes}>
         <Cell
+          aria-sort={ariaSort}
           {...unhandledProps}
           width={width}
           dataKey={dataKey}

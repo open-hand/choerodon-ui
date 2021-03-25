@@ -46,6 +46,7 @@ import Column from './Column';
 import Cell from './Cell';
 import HeaderCell from './HeaderCell';
 import { ColumnProps } from './Column.d';
+import Spin from '../spin';
 
 interface TableRowProps extends RowProps {
   key?: string | number;
@@ -158,8 +159,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     data: [],
     defaultSortType: SORT_TYPE.DESC,
     height: 200,
-    rowHeight: 30,
-    headerHeight: 30,
+    rowHeight: 33,
+    headerHeight: 33,
     minHeight: 0,
     rowExpandedHeight: 100,
     hover: true,
@@ -175,7 +176,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     },
     clickScrollLength: {
       horizontal: 100,
-      vertical: 30,
+      vertical: 33,
     },
   };
 
@@ -504,7 +505,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return children as React.ReactNodeArray;
     }
 
-    const flattenColumns = children.map((column: React.ReactElement) => {
+    // Fix that the `ColumnGroup` array cannot be rendered in the Table
+    const flattenColumns = flatten(children).map((column: React.ReactElement) => {
       if (column) {
         if ((column.type as any)?.__PRO_TABLE_COLUMN_GROUP) {
           const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
@@ -601,6 +603,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
         const cellProps = {
           ...omit(column.props, ['children']),
+          'aria-colindex': index + 1, // Use ARIA to improve accessibility
           left,
           index,
           headerHeight,
@@ -613,9 +616,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
         if (showHeader && headerHeight) {
           const headerCellProps = {
+            // index 用于拖拽列宽时候（Resizable column），定义的序号
             index,
             dataKey: columnChildren[1].props.dataKey,
             isHeaderCell: true,
+            minWidth: column.props.minWidth,
             sortable: column.props.sortable,
             onSortColumn: this.handleSortColumn,
             sortType: this.getSortType(),
@@ -1077,7 +1082,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   calculateTableContextHeight(prevProps?: TableProps) {
     const table = this.tableRef.current;
     const rows = table.querySelectorAll(`.${this.addPrefix('row')}`) || [];
-    const { height, autoHeight, rowHeight } = this.props;
+    const { height, autoHeight, rowHeight, affixHeader } = this.props;
     const headerHeight = this.getTableHeaderHeight();
     const contentHeight = rows.length
       ? Array.from(rows)
@@ -1085,7 +1090,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         .reduce((x, y) => x + y)
       : 0;
 
-    const nextContentHeight = contentHeight - headerHeight;
+    // 当设置 affixHeader 属性后要减掉两个 header 的高度
+    const nextContentHeight = contentHeight - (affixHeader ? headerHeight * 2 : headerHeight);
 
     if (nextContentHeight !== this.state.contentHeight) {
       this.setState({ contentHeight: nextContentHeight });
@@ -1210,7 +1216,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const rowProps: TableRowProps = {
       ...props,
-      // @ts-ignore
+      // Fixed Row missing custom rowKey
+      key: nextRowKey,
+      'aria-rowindex': (props.key as number) + 2,
       rowRef: this.bindTableRowsRef(props.key!, rowData),
       onClick: this.bindRowClick(rowData),
       onContextMenu: this.bindRowContextMenu(rowData),
@@ -1316,13 +1324,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               fixed="right"
               style={
                 this.isRTL()
-                  ? { right: 0 - rowRight - SCROLLBAR_WIDTH }
+                  ? { right: 0 - rowRight }
                   : { left: width - fixedRightCellGroupWidth - SCROLLBAR_WIDTH }
               }
               height={props.isHeaderRow ? props.headerHeight : props.height}
-              width={fixedRightCellGroupWidth}
+              width={fixedRightCellGroupWidth + SCROLLBAR_WIDTH}
             >
-              {mergeCells(resetLeftForCells(fixedRightCells))}
+              {mergeCells(resetLeftForCells(fixedRightCells, SCROLLBAR_WIDTH))}
             </CellGroup>
           ) : null}
 
@@ -1371,6 +1379,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const top = typeof affixHeader === 'number' ? affixHeader : 0;
     const headerHeight = this.getTableHeaderHeight();
     const rowProps: TableRowProps = {
+      'aria-rowindex': 1,
       rowRef: this.tableHeaderRef,
       width: rowWidth,
       height: this.getRowHeight(),
@@ -1401,7 +1410,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return (
       <React.Fragment>
         {(affixHeader === 0 || affixHeader) && header}
-        <div className={this.addPrefix('header-row-wrapper')} ref={this.headerWrapperRef}>
+        <div
+          role="rowgroup"
+          className={this.addPrefix('header-row-wrapper')}
+          ref={this.headerWrapperRef}
+        >
           {this.renderRow(rowProps, headerCells)}
         </div>
       </React.Fragment>
@@ -1556,6 +1569,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           return (
             <div
               ref={this.tableBodyRef}
+              role="rowgroup"
               className={this.addPrefix('body-row-wrapper')}
               style={bodyStyles}
               onScroll={this.handleBodyScroll}
@@ -1572,7 +1586,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
               {this.renderInfo(locale)}
               {this.renderScrollbar()}
-              {this.renderLoading(locale)}
+              {this.renderLoading()}
             </div>
           );
         }}
@@ -1637,18 +1651,26 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   /**
    *  show loading
    */
-  renderLoading(locale: PerformanceTableLocal) {
+  renderLoading() {
     const { loading, loadAnimation, renderLoading } = this.props;
 
     if (!loadAnimation && !loading) {
       return null;
     }
 
+    // old Spin
+    // const loadingElement = (
+    //   <div className={this.addPrefix('loader-wrapper')}>
+    //     <div className={this.addPrefix('loader')}>
+    //       <i className={this.addPrefix('loader-icon')} />
+    //       <span className={this.addPrefix('loader-text')}>{locale.loading}</span>
+    //     </div>
+    //   </div>
+    // );
     const loadingElement = (
       <div className={this.addPrefix('loader-wrapper')}>
         <div className={this.addPrefix('loader')}>
-          <i className={this.addPrefix('loader-icon')} />
-          <span className={this.addPrefix('loader-text')}>{locale.loading}</span>
+          <Spin />
         </div>
       </div>
     );
@@ -1661,6 +1683,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       children,
       columns,
       className,
+      data,
       width = 0,
       style,
       isTree = false,
@@ -1706,7 +1729,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           hasCustomTreeCol,
         }}
       >
-        <div role="grid" {...unhandled} className={clesses} style={styles} ref={this.tableRef}>
+        <div
+          role={isTree ? 'treegrid' : 'grid'}
+          // The aria-rowcount is specified on the element with the table.
+          // Its value is an integer equal to the total number of rows available, including header rows.
+          aria-rowcount={data.length + 1}
+          aria-colcount={this._cacheChildrenSize}
+          {...unhandled}
+          className={clesses}
+          style={styles}
+          ref={this.tableRef}
+        >
           {showHeader && this.renderTableHeader(headerCells, rowWidth)}
           {columns && columns.length ? this.renderTableBody(bodyCells, rowWidth) : children && this.renderTableBody(bodyCells, rowWidth)}
           {showHeader && this.renderMouseArea()}
