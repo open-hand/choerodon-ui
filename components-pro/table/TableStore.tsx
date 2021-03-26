@@ -971,6 +971,14 @@ export default class TableStore {
     });
   }
 
+  getColumnTooltip(column: ColumnProps): TableColumnTooltip {
+    const { tooltip } = column;
+    if (tooltip) {
+      return tooltip;
+    }
+    return getConfig('tableColumnTooltip');
+  }
+
   getColumnHeaders(): Promise<HeaderText[]> {
     const { leafNamedColumns, dataSet } = this;
     return getHeaderTexts(dataSet, leafNamedColumns.slice());

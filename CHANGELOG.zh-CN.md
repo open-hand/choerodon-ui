@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableCustomizable 属性。
+- 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip 属性。
 - 🌟 `<pro>Table`: 新增 customizable 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 precision, numberGrouping 属性。
 - 🌟 `<pro>NumberField`: 新增 precision, numberGrouping 属性。
