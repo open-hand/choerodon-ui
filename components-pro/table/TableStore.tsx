@@ -17,16 +17,7 @@ import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box';
 import ObserverRadio from '../radio';
 import { DataSetSelection } from '../data-set/enum';
-import {
-  ColumnAlign,
-  ColumnLock,
-  DragColumnAlign,
-  SelectionMode,
-  TableColumnTooltip,
-  TableEditMode,
-  TableMode,
-  TableQueryBarType,
-} from './enum';
+import { ColumnAlign, ColumnLock, DragColumnAlign, SelectionMode, TableColumnTooltip, TableEditMode, TableMode, TableQueryBarType } from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getColumnLock, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
@@ -970,9 +961,13 @@ export default class TableStore {
       this.originalColumns = [];
       this.customized = { columns: {} };
       this.setProps(node.props);
-      this.loadCustomized().then(() => {
+      if (this.customizable) {
+        this.loadCustomized().then(() => {
+          this.initColumns();
+        });
+      } else {
         this.initColumns();
-      });
+      }
     });
   }
 
@@ -1017,8 +1012,9 @@ export default class TableStore {
 
   @action
   initColumns() {
-    const { customized: { columns: customizedColumns } } = this;
+    const { customized, customizable } = this;
     const { columns, children } = this.props;
+    const customizedColumns = customizable ? customized.columns : undefined;
     this.originalColumns = columns
       ? mergeDefaultProps(columns, customizedColumns)
       : normalizeColumns(children, customizedColumns);
@@ -1205,13 +1201,15 @@ export default class TableStore {
 
   @action
   saveCustomized(customized?: Customized | null) {
-    const { customizedCode } = this.props;
-    if (customized) {
-      this.customized = customized;
-    }
-    if (customizedCode) {
-      const tableCustomizedSave = getConfig('tableCustomizedSave');
-      tableCustomizedSave(customizedCode, this.customized);
+    if (this.customizable) {
+      const { customizedCode } = this.props;
+      if (customized) {
+        this.customized = customized;
+      }
+      if (customizedCode) {
+        const tableCustomizedSave = getConfig('tableCustomizedSave');
+        tableCustomizedSave(customizedCode, this.customized);
+      }
     }
   };
 
@@ -1233,7 +1231,7 @@ export default class TableStore {
 
   async loadCustomized() {
     const { customizedCode } = this.props;
-    if (customizedCode) {
+    if (this.customizable && customizedCode) {
       const tableCustomizedLoad = getConfig('tableCustomizedLoad');
       runInAction(() => {
         this.loading = true;
