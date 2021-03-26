@@ -159,7 +159,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
           <span className={`${prefixCls}-professional-query-bar-button`}>
             {moreFieldsButton}
             {this.getResetButton()}
-            <Button color={ButtonColor.primary} onClick={this.handleQuery}>
+            <Button color={ButtonColor.primary} wait={500} onClick={this.handleQuery}>
               {$l('Table', 'query_button')}
             </Button>
           </span>
