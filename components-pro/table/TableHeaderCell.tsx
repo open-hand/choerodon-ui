@@ -283,10 +283,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   computeOverFlow(): boolean {
     const { element } = this;
     if (element && element.textContent) {
-      const {
-        column: { tooltip },
-      } = this.props;
-      if (tooltip === TableColumnTooltip.overflow) {
+      const { column } = this.props;
+      const { tableStore } = this.context;
+      if (tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow) {
         const { clientWidth, scrollWidth } = element;
         return scrollWidth > clientWidth;
       }
@@ -340,9 +339,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       align,
       children,
       command,
-      tooltip,
       lock,
     } = column;
+    const tooltip = tableStore.getColumnTooltip(column);
     const columnKey = getColumnKey(column);
     const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classList: string[] = [`${prefixCls}-cell`];

@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableCustomizable` property.
+- 🌟 `configure`: Added `tableCustomizable`, `tableColumnTooltip` properties.
 - 🌟 `<pro>Table`: Added `customizable` property.
 - 🌟 `<pro>DataSet.Field`: Added `precision`, `numberGrouping` properties.
 - 🌟 `<pro>NumberField`: Added `precision`, `numberGrouping` properties.

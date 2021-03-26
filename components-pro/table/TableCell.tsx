@@ -118,11 +118,10 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   connect() {
-    const { column: { tooltip } } = this.props;
-    if (tooltip === TableColumnTooltip.overflow) {
-      const {
-        tableStore: { dataSet },
-      } = this.context;
+    const { column } = this.props;
+    const { tableStore } = this.context;
+    if (tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow) {
+      const { dataSet } = tableStore;
       dataSet.addEventListener(DataSetEvents.update, this.handleOutputChange);
       this.handleResize();
     }
@@ -174,10 +173,9 @@ export default class TableCell extends Component<TableCellProps> {
   computeOverFlow(): boolean {
     const { element } = this;
     if (element && element.textContent) {
-      const {
-        column: { tooltip },
-      } = this.props;
-      if (tooltip === TableColumnTooltip.overflow) {
+      const { column } = this.props;
+      const { tableStore } = this.context;
+      if (tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow) {
         const { clientWidth, scrollWidth } = element;
         return scrollWidth > clientWidth;
       }
@@ -447,7 +445,8 @@ export default class TableCell extends Component<TableCellProps> {
       return children;
     }
     const { column, record, indentSize, lock } = this.props;
-    const { name, tooltip, key } = column;
+    const { name, key } = column;
+    const tooltip = tableStore.getColumnTooltip(column);
     const { hasEditor } = this;
     // 计算多行编辑单元格高度
     const field = record.getField(name);
@@ -552,7 +551,7 @@ export default class TableCell extends Component<TableCellProps> {
       tableStore,
     } = this.context;
     const { prefixCls, inlineEdit, pristine, node } = tableStore;
-    const { className, style, align, name, onCell, tooltip, lock } = column;
+    const { className, style, align, name, onCell, lock } = column;
     const command = this.getCommand();
     const field = name ? record.getField(name) : undefined;
     const cellPrefix = `${prefixCls}-cell`;
@@ -607,7 +606,7 @@ export default class TableCell extends Component<TableCellProps> {
         {this.getInnerNode(cellPrefix, command, cellStyle.textAlign as ColumnAlign)}
       </td>
     );
-    return tooltip === TableColumnTooltip.overflow ? (
+    return tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow ? (
       <ReactResizeObserver onResize={this.handleResize} resizeProp="width">
         {td}
       </ReactResizeObserver>
