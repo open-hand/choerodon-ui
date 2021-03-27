@@ -522,6 +522,10 @@ export interface TableProps extends DataSetComponentProps {
    * 同 rowDraggable
    */
   dragRow?: boolean;
+  /**
+   * 客户端导出一次查询数量配置
+   */
+  clientExportQuantity?: number;
 }
 
 @observer
@@ -654,6 +658,10 @@ export default class Table extends DataSetComponent<TableProps> {
      * 是否单独处理column footer
      */
     autoFootHeight: PropTypes.bool,
+    /**
+     * 客户端查询导出，查询数目设置
+     */
+    clientExportQuantity: PropTypes.number,
     ...DataSetComponent.propTypes,
   };
 
@@ -673,6 +681,7 @@ export default class Table extends DataSetComponent<TableProps> {
     autoMaxWidth: true,
     autoFootHeight: false,
     customizedType: CustomizedType.all,
+    clientExportQuantity: 100,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1116,6 +1125,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'customizedType',
       'dragColumn',
       'dragRow',
+      'clientExportQuantity',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -1258,6 +1268,7 @@ export default class Table extends DataSetComponent<TableProps> {
         filterBarPlaceholder,
         summaryBar,
         dynamicFilterBar,
+        clientExportQuantity,
       },
     } = this;
     const content = this.getTable();
@@ -1273,6 +1284,7 @@ export default class Table extends DataSetComponent<TableProps> {
             <ModalProvider>
               {this.getHeader()}
               <TableQueryBar
+                clientExportQuantity={clientExportQuantity}
                 prefixCls={prefixCls}
                 buttons={buttons}
                 pagination={pagination}
@@ -1545,19 +1557,19 @@ export default class Table extends DataSetComponent<TableProps> {
         }
       </>
     ) : (
-      <TableWrapper
-        prefixCls={prefixCls}
-        key="tableWrapper"
-        lock={lock}
-        hasBody={hasBody}
-        hasHeader={hasHeader}
-        hasFooter={hasFooter}
-      >
-        {hasHeader && this.getTableHeader(lock)}
-        {hasBody && this.getTableBody(lock)}
-        {hasFooter && this.getTableFooter(lock)}
-      </TableWrapper>
-    );
+        <TableWrapper
+          prefixCls={prefixCls}
+          key="tableWrapper"
+          lock={lock}
+          hasBody={hasBody}
+          hasHeader={hasHeader}
+          hasFooter={hasFooter}
+        >
+          {hasHeader && this.getTableHeader(lock)}
+          {hasBody && this.getTableBody(lock)}
+          {hasFooter && this.getTableFooter(lock)}
+        </TableWrapper>
+      );
   }
 
   getHeader(): ReactNode {

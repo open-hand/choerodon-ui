@@ -11,6 +11,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
+import XLSX from 'xlsx';
 import Field, { DynamicPropsArguments, FieldProps, Fields } from './Field';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet, { Group } from './DataSet';
@@ -848,4 +849,16 @@ export function normalizeGroups(groups: string[], records: Record[]): Group[] {
     });
   }
   return optGroups;
+}
+
+/**
+ * 
+ * @param data 导出需要导出的数据
+ * @param excelname 导出表单的名字
+ */
+export function exportExcel(data, excelName){
+  const ws = XLSX.utils.json_to_sheet(data, { skipHeader: true }); /* 新建空workbook，然后加入worksheet */
+  const wb = XLSX.utils.book_new();  /* 新建book */
+  XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */
+  XLSX.writeFile(wb, `${excelName}.xlsx`); /* 写文件(book,xlsx文件名称) */
 }

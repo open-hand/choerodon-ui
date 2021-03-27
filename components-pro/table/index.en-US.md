@@ -75,6 +75,7 @@ subtitle: 表格
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | customizedType | 可存储的个性化范围， 可选值： `all` `none` `columnOrder` `columnWidth` `columnHeader` `columnHidden` | CustomizedType\| CustomizedType[] | all |
+| clientExportQuantity | 导出一次轮询数量 | number | 100 |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

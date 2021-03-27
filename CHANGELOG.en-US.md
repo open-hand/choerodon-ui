@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added `clientExportQuantity` to configure the number of export queries.
 - 🌟 `<pro>Cascader`: Added `searchable`, `searchMatcher` properties to searchable the options;
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.

@@ -11,6 +11,7 @@ export {
   FieldTrim,
   FieldFormat,
   DataToJSON,
+  DataSetExportStatus,
 } from './enum';
 export {
   DataSetChildren,
@@ -36,3 +37,4 @@ export {
   TransportType,
   TransportProps,
 } from './Transport';
+

@@ -18,6 +18,7 @@ export interface Locale {
     expand_button;
     collapse_button;
     export_button;
+    defalut_export;
     more_button;
     advanced_search;
     dirty_info;
@@ -28,7 +29,14 @@ export interface Locale {
     filter_bar_placeholder;
     advanced_query;
     advanced_query_conditions;
-    max_export;
+    export_failed;
+    download_button;
+    export_success;
+    export_ing;
+    retry_button;
+    file_name;
+    export_break;
+    export_operating,
     more;
     enter_text_filter;
     clear_filter;
@@ -166,14 +174,14 @@ export interface Locale {
     other;
     series;
   };
-  Cascader:{
+  Cascader: {
     please_select;
     value_missing_no_label;
     value_missing;
     select_all;
     unselect_all;
   };
-  Screening:{
+  Screening: {
     selected;
     pack_up;
     more;
