@@ -40,6 +40,14 @@ export enum DataSetStatus {
   ready = 'ready',
 }
 
+export enum DataSetExportStatus {
+  exporting = 'exporting',
+  success = 'success',
+  progressing = 'progressing',
+  start = 'start',
+  failed = 'failed',
+}
+
 export enum RecordStatus {
   delete = 'delete',
   update = 'update',

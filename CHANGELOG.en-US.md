@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added `clientExportQuantity` to configure the number of export queries.
+- 🌟 `<pro>Cascader`: Added `searchable`, `searchMatcher` properties to searchable the options;
 - 🌟 `configure`: Added `tableCustomizable`, `tableColumnTooltip` properties.
 - 🌟 `<pro>Table`: Added `customizable` property.
 - 🌟 `<pro>DataSet.Field`: Added `precision`, `numberGrouping` properties.

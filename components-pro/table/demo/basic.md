@@ -410,7 +410,7 @@ class App extends React.Component {
         key="user"
         buttons={buttons}
         dataSet={this.userDs}
-        autoMaxWidth={true}
+        autoMaxWidth
         header="User"
         style={{ height: 200 }}
         rowNumber

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 新增 `clientExportQuantity` 配置客户端导出查询数量和轮询导出。
+- 🌟 `<pro>Cascader`: 新增 `searchable`, `searchMatcher` 实现可搜索配置。
 - 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip 属性。
 - 🌟 `<pro>Table`: 新增 customizable 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 precision, numberGrouping 属性。
