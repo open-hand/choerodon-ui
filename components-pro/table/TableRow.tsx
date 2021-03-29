@@ -37,7 +37,6 @@ export default class TableRow extends Component<TableRowProps, any> {
   static displayName = 'TableRow';
 
   static propTypes = {
-    prefixCls: PropTypes.string,
     lock: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
@@ -248,7 +247,7 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @autobind
   getCell(column: ColumnProps, index: number, props: Partial<TableCellProps>): ReactNode {
-    const { prefixCls, record, indentSize, lock, provided, snapshot } = this.props;
+    const { record, indentSize, lock, provided, snapshot } = this.props;
     const {
       tableStore: { leafColumns, rightLeafColumns },
     } = this.context;
@@ -257,7 +256,6 @@ export default class TableRow extends Component<TableRowProps, any> {
     const isDragging = snapshot ? snapshot.isDragging : false;
     return (
       <TableCell
-        prefixCls={prefixCls}
         column={column}
         record={record}
         indentSize={indentSize}
@@ -407,10 +405,10 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   renderExpandIcon() {
-    const { prefixCls, record } = this.props;
+    const { record } = this.props;
     const {
       tableStore,
-      tableStore: { expandIcon },
+      tableStore: { prefixCls, expandIcon },
     } = this.context;
     const { isExpanded: expanded, expandable, handleExpandChange } = this;
     if (typeof expandIcon === 'function') {
@@ -439,11 +437,12 @@ export default class TableRow extends Component<TableRowProps, any> {
   renderExpandRow(): ReactNode[] {
     const {
       isExpanded,
-      props: { children, columns, record, prefixCls, index },
+      props: { children, columns, record, index },
     } = this;
     const { tableStore } = this.context;
     const {
       props: { expandedRowRenderer, onRow },
+      prefixCls,
       expandIconAsCell,
       overflowX,
     } = tableStore;
@@ -498,9 +497,9 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   getColumns() {
-    const { columns, prefixCls, lock } = this.props;
+    const { columns, lock } = this.props;
     const { tableStore } = this.context;
-    const { customizable, rowDraggable, dragColumnAlign } = tableStore;
+    const { prefixCls, customizable, rowDraggable, dragColumnAlign } = tableStore;
     let leftWidth = 0;
     let rightWidth = isStickySupport() && tableStore.overflowX ? tableStore.rightLeafColumnsWidth : 0;
     const columnLength = columns.length;
@@ -551,11 +550,12 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   render() {
-    const { prefixCls, record, lock, hidden, index, provided, className } = this.props;
+    const { record, lock, hidden, index, provided, className } = this.props;
     const {
       tableStore,
     } = this.context;
     const {
+      prefixCls,
       rowHeight,
       overflowX,
       highLightRow,

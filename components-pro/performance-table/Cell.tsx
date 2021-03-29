@@ -121,6 +121,7 @@ class Cell extends React.PureComponent<CellProps> {
       depth,
       verticalAlign,
       expanded,
+      onClick, // Fix sortColumn not getting fired in Gatsby production build
       ...rest
     } = this.props;
 
@@ -147,7 +148,7 @@ class Cell extends React.PureComponent<CellProps> {
       width,
       height: nextHeight,
       textAlign: align,
-      [rtl ? 'paddingRight' : 'paddingLeft']: this.isTreeCol() ? depth * LAYER_WIDTH + 10 : null,
+      [rtl ? 'paddingRight' : 'paddingLeft']: this.isTreeCol() ? depth! * LAYER_WIDTH + 10 : null,
       ...style,
     };
 
@@ -182,6 +183,7 @@ class Cell extends React.PureComponent<CellProps> {
       <div
         role={isHeaderCell ? 'columnheader' : 'gridcell'}
         {...unhandledProps}
+        onClick={onClick}
         className={classes}
         style={styles}
       >

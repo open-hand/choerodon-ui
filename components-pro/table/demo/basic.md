@@ -18,6 +18,7 @@ import {
   DataSet,
   Table,
   NumberField,
+  TextArea,
   DateTimePicker,
   SelectBox,
   Modal,
@@ -170,6 +171,10 @@ class App extends React.Component {
         label: '姓名',
         dynamicProps: nameDynamicProps,
         ignore: 'clean',
+      },
+      {
+        name: 'description',
+        label: '描述',
       },
       {
         name: 'age',
@@ -426,6 +431,7 @@ class App extends React.Component {
         <Column name="email" lock editor={() => { return <AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} /> }} />
         <Column name="enable" editor width={50} minWidth={50} lock />
         <Column name="name" editor width={150} sortable tooltip="always" />
+        <Column name="description" editor={<TextArea />} width={150} sortable />
         <Column name="code" editor width={150} sortable />
         <Column name="code_code" editor width={150} tooltip="overflow" />
         <Column name="code_select" editor width={150} />

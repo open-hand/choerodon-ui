@@ -97,8 +97,13 @@ function mergeCells(cells) {
         }
       }
 
-      // @ts-ignore
-      nextCells.push(cloneCell(cells[i], { width: nextWidth }));
+      nextCells.push(
+        // @ts-ignore
+        cloneCell(cells[i], {
+          width: nextWidth,
+          'aria-colspan': colSpan && nextWidth > width ? colSpan : undefined
+        })
+      );
       continue;
     }
     // @ts-ignore

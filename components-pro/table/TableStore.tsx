@@ -1,5 +1,5 @@
 import React, { Children, isValidElement, ReactNode } from 'react';
-import { action, computed, get, isArrayLike, observable, runInAction, set } from 'mobx';
+import { action, computed, get, observable, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -17,17 +17,7 @@ import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box';
 import ObserverRadio from '../radio';
 import { DataSetSelection } from '../data-set/enum';
-import {
-  ColumnAlign,
-  ColumnLock,
-  CustomizedType,
-  DragColumnAlign,
-  SelectionMode,
-  TableColumnTooltip,
-  TableEditMode,
-  TableMode,
-  TableQueryBarType,
-} from './enum';
+import { ColumnAlign, ColumnLock, DragColumnAlign, SelectionMode, TableColumnTooltip, TableEditMode, TableMode, TableQueryBarType } from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getColumnLock, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
@@ -228,7 +218,9 @@ export function normalizeColumns(
     const column: any = {
       ...props,
     };
-    if (isNil(getColumnKey(column))) {
+    if (key) {
+      column.key = key;
+    } else if (isNil(getColumnKey(column))) {
       column.key = `anonymous-${defaultKey[0]++}`;
     }
     if (customizedColumns) {
@@ -245,9 +237,6 @@ export function normalizeColumns(
       }
     }
     column.children = normalizeColumns(column.children, customizedColumns, column, defaultKey);
-    if (key) {
-      column.key = key;
-    }
     if (parent || !column.lock) {
       columns.push(column);
     } else if (column.lock === true || column.lock === ColumnLock.left) {
@@ -347,29 +336,13 @@ export default class TableStore {
 
   @computed
   get customizable(): boolean {
-    return this.columnTitleEditable || this.columnDraggable;
-  }
-
-  @computed
-  get customizedType(): CustomizedType[] {
-    const { customizedType } = this.props;
-    if (isArrayLike(customizedType)) {
-      return customizedType;
+    if (this.columnTitleEditable || this.columnDraggable || this.columnHideable) {
+      if ('customizable' in this.props) {
+        return this.props.customizable;
+      }
+      return getConfig('tableCustomizable');
     }
-    if (customizedType === CustomizedType.none) {
-      return [];
-    }
-    if (customizedType === CustomizedType.all) {
-      return [
-        CustomizedType.columnOrder,
-        CustomizedType.columnWidth,
-        CustomizedType.columnHidden,
-        CustomizedType.columnHeader,
-      ];
-    }
-    return [
-      customizedType,
-    ];
+    return false;
   }
 
   @computed
@@ -431,10 +404,7 @@ export default class TableStore {
     if ('columnResizable' in this.props) {
       return this.props.columnResizable;
     }
-    if (getConfig('tableColumnResizable') === false) {
-      return false;
-    }
-    return true;
+    return getConfig('tableColumnResizable') !== false;
   }
 
   @computed
@@ -442,10 +412,7 @@ export default class TableStore {
     if ('columnHideable' in this.props) {
       return this.props.columnHideable;
     }
-    if (getConfig('tableColumnHideable') === false) {
-      return false;
-    }
-    return true;
+    return getConfig('tableColumnHideable') !== false;
   }
 
   /**
@@ -456,10 +423,7 @@ export default class TableStore {
     if ('columnTitleEditable' in this.props) {
       return this.props.columnTitleEditable;
     }
-    if (getConfig('tableColumnTitleEditable') === false) {
-      return false;
-    }
-    return false;
+    return getConfig('tableColumnTitleEditable') === true;
   }
 
   @computed
@@ -997,10 +961,22 @@ export default class TableStore {
       this.originalColumns = [];
       this.customized = { columns: {} };
       this.setProps(node.props);
-      this.loadCustomized().then(() => {
+      if (this.customizable) {
+        this.loadCustomized().then(() => {
+          this.initColumns();
+        });
+      } else {
         this.initColumns();
-      });
+      }
     });
+  }
+
+  getColumnTooltip(column: ColumnProps): TableColumnTooltip {
+    const { tooltip } = column;
+    if (tooltip) {
+      return tooltip;
+    }
+    return getConfig('tableColumnTooltip');
   }
 
   getColumnHeaders(): Promise<HeaderText[]> {
@@ -1044,8 +1020,9 @@ export default class TableStore {
 
   @action
   initColumns() {
-    const { customized: { columns: customizedColumns } } = this;
+    const { customized, customizable } = this;
     const { columns, children } = this.props;
+    const customizedColumns = customizable ? customized.columns : undefined;
     this.originalColumns = columns
       ? mergeDefaultProps(columns, customizedColumns)
       : normalizeColumns(children, customizedColumns);
@@ -1218,29 +1195,29 @@ export default class TableStore {
   }
 
   @action
-  changeCustomizedColumnValue(type: CustomizedType, column: ColumnProps, value: object) {
-    const { customized: { columns }, customizedType } = this;
+  changeCustomizedColumnValue(column: ColumnProps, value: object) {
+    const { customized: { columns } } = this;
     set(column, value);
-    if (customizedType.includes(type)) {
-      const columnKey = getColumnKey(column).toString();
-      const oldCustomized = get(columns, columnKey);
-      set(columns, columnKey, {
-        ...oldCustomized,
-        ...value,
-      });
-      this.saveCustomizedDebounce();
-    }
+    const columnKey = getColumnKey(column).toString();
+    const oldCustomized = get(columns, columnKey);
+    set(columns, columnKey, {
+      ...oldCustomized,
+      ...value,
+    });
+    this.saveCustomizedDebounce();
   }
 
   @action
   saveCustomized(customized?: Customized | null) {
-    const { customizedCode } = this.props;
-    if (customized) {
-      this.customized = customized;
-    }
-    if (customizedCode) {
-      const tableCustomizedSave = getConfig('tableCustomizedSave');
-      tableCustomizedSave(customizedCode, this.customized);
+    if (this.customizable) {
+      const { customizedCode } = this.props;
+      if (customized) {
+        this.customized = customized;
+      }
+      if (customizedCode) {
+        const tableCustomizedSave = getConfig('tableCustomizedSave');
+        tableCustomizedSave(customizedCode, this.customized);
+      }
     }
   };
 
@@ -1262,7 +1239,7 @@ export default class TableStore {
 
   async loadCustomized() {
     const { customizedCode } = this.props;
-    if (customizedCode) {
+    if (this.customizable && customizedCode) {
       const tableCustomizedLoad = getConfig('tableCustomizedLoad');
       runInAction(() => {
         this.loading = true;
@@ -1271,7 +1248,7 @@ export default class TableStore {
         const customized = await tableCustomizedLoad(customizedCode);
         if (customized) {
           runInAction(() => {
-            this.customized = customized;
+            this.customized = { columns: {}, ...customized };
           });
         }
       } finally {

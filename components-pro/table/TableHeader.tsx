@@ -26,7 +26,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   static displayName = 'TableHeader';
 
   static propTypes = {
-    prefixCls: PropTypes.string,
     lock: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
@@ -68,10 +67,11 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   }
 
   getTrs(): (ReactElement<TableHeaderRowProps> | undefined)[] {
-    const { prefixCls, lock, dataSet } = this.props;
+    const { lock, dataSet } = this.props;
     const {
       tableStore,
     } = this.context;
+    const { prefixCls } = tableStore;
     const rows = this.getTableHeaderRows(this.groupedColumns);
     return rows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
       if (row.length) {
@@ -84,7 +84,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
             const key = String(getColumnKey(column));
             const props: TableHeaderCellProps = {
               key,
-              prefixCls,
               dataSet,
               prevColumn,
               column,
@@ -131,7 +130,13 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
           };
           const classList = [`${prefixCls}-cell`];
           if (isStickySupport() && tableStore.overflowX) {
-            placeHolderProps.style = { right: 0 };
+            const hasColRightLock = tds.some(td => {
+              if (td) {
+                return td.props.column.lock === ColumnLock.right;
+              }
+              return false;
+            });
+            placeHolderProps.style = hasColRightLock ? { right: 0 } : {};
             classList.push(`${prefixCls}-cell-fix-right`);
           }
           placeHolderProps.className = classList.join(' ');
@@ -158,9 +163,8 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   }
 
   render() {
-    const { prefixCls } = this.props;
     const {
-      tableStore: { overflowX, columnResizable, isHeaderHover, columnResizing, props: { border } },
+      tableStore: { prefixCls, overflowX, columnResizable, isHeaderHover, columnResizing, props: { border } },
     } = this.context;
     const trs = this.getTrs();
     const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {

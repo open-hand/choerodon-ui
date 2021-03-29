@@ -25,7 +25,6 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   static displayName = 'TableFooter';
 
   static propTypes = {
-    prefixCls: PropTypes.string,
     lock: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
@@ -46,9 +45,9 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   }
 
   getTds() {
-    const { prefixCls, lock, dataSet } = this.props;
+    const { lock, dataSet } = this.props;
     const { tableStore } = this.context;
-    const { customizable, rowDraggable, dragColumnAlign } = tableStore;
+    const { prefixCls, customizable, rowDraggable, dragColumnAlign } = tableStore;
     const hasPlaceholder = tableStore.overflowY && lock !== ColumnLock.left;
     let leftWidth = 0;
     let rightWidth = isStickySupport() && tableStore.overflowX ? tableStore.rightLeafColumnsWidth + (hasPlaceholder ? measureScrollbar() : 0) : 0;
@@ -93,7 +92,6 @@ export default class TableFooter extends Component<TableFooterProps, any> {
         return (
           <TableFooterCell
             key={key}
-            prefixCls={prefixCls}
             dataSet={dataSet}
             column={column}
             {...props}
@@ -123,11 +121,11 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   }
 
   render() {
-    const { prefixCls, lock } = this.props;
+    const { lock } = this.props;
     const {
       tableStore,
     } = this.context;
-    const { autoFootHeight, rowHeight } = tableStore;
+    const { prefixCls, autoFootHeight, rowHeight } = tableStore;
     const tds = this.getTds();
     const tr = (
       <tr

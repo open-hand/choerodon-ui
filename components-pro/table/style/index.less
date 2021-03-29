@@ -89,6 +89,7 @@
         position: absolute;
         top: 0;
         left: 0;
+        white-space: normal;
         border-top: 0.06rem solid @primary-color;
         border-right: 0.06rem solid transparent;
         content: ' ';
@@ -144,7 +145,7 @@
     &:hover,
     &.@{table-prefix-cls}-thead-hover {
       .@{table-prefix-cls}-cell {
-        border-right: @border-color-base;
+        border-right-color: @border-color-base;
         border-bottom-color: @border-color-base;
       }
     }
@@ -161,6 +162,12 @@
     line-height: inherit;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    &-fixed-height {
+      padding: .07rem @table-padding-horizontal;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
 
     .@{output-prefix-cls}-multi {
       div {
@@ -180,7 +187,11 @@
   &-editor {
     position: absolute;
     left: -1000rem;
-    z-index: 3;
+    z-index: 2;
+
+    &-lock {
+      z-index: 3;
+    }
 
     > * {
       display: block !important;

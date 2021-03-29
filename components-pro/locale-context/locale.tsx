@@ -63,6 +63,10 @@ export interface Locale {
     left_lock;
     right_lock;
     unlocked;
+    unlock;
+    top;
+    up;
+    down;
   };
   Pagination: {
     page;

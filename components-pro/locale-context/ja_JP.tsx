@@ -62,6 +62,10 @@ const locale: Locale = {
     left_lock: '左側をロック',
     right_lock: '右側をロック',
     unlocked: 'ロック解除',
+    unlock: 'ロックを解除する',
+    top: '上',
+    up: 'アップ',
+    down: 'ダウン',
   },
   Pagination: {
     page: 'ページ',

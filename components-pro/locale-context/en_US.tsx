@@ -62,6 +62,10 @@ const locale: Locale = {
     left_lock: 'Lock on the left',
     right_lock: 'Lock on the right',
     unlocked: 'Unlocked',
+    unlock: 'Unlock',
+    top: 'Top',
+    up: 'Up',
+    down: 'Down',
   },
   Pagination: {
     page: 'Page',

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useContext } from 'react';
+import React, { FunctionComponent, ReactElement, useCallback, useContext } from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import { ClickParam } from 'choerodon-ui/lib/menu';
@@ -12,6 +12,7 @@ import TableContext from '../../TableContext';
 import Record from '../../../data-set/Record';
 import { ColumnLock } from '../../enum';
 import { Placements } from '../../../dropdown/enum';
+import { $l } from '../../../locale-context';
 
 const { Item } = Menu;
 
@@ -37,7 +38,7 @@ function findRecords(record: Record, groups: { value: ColumnLock | false, record
 
 const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
   const { record, index, records, groups } = props;
-  const { tableStore: { columnHideable, prefixCls } } = useContext(TableContext);
+  const { tableStore: { columnHideable, prefixCls, columnTitleEditable, columnDraggable } } = useContext(TableContext);
   const changeLock = useCallback((lock: ColumnLock | false) => {
     const oldLock = record.get('lock');
     const group = groups.find(({ value }) => value === lock);
@@ -88,30 +89,54 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
   }), [record, index, changeLock, changeIndex]);
   const getTreeNodesMenus = useCallback(() => {
     const lock = record.get('lock');
-    return (
-      <Menu onClick={handleMenuClick}>
-        <Item key="rename">重新命名</Item>
-        {
-          !record.parent && (
-            lock ? (
-              <Item key="unlock">取消冻结</Item>
-            ) : [
-              <Item key="left">左侧冻结</Item>,
-              <Item key="right">右侧冻结</Item>,
-            ]
-          )
+    const menus: ReactElement<any>[] = [];
+    if (columnTitleEditable && record.get('titleEditable') !== false) {
+      menus.push(<Item key="rename">{$l('Table', 'rename')}</Item>);
+    }
+    if (columnDraggable) {
+      if (!record.parent) {
+        if (lock) {
+          menus.push(<Item key="unlock">{$l('Table', 'unlock')}</Item>);
+        } else {
+          menus.push(
+            <Item key="left">{$l('Table', 'left_lock')}</Item>,
+            <Item key="right">{$l('Table', 'right_lock')}</Item>,
+          );
         }
-        {index > 1 && <Item key='top'>置顶</Item>}
-        {index > 0 && <Item key="up">前置一列</Item>}
-        {index < records.length - 1 && <Item key="down">后置一列</Item>}
-      </Menu>
-    );
-  }, [record, index, records, handleMenuClick]);
+      }
+      if (index > 1) {
+        menus.push(<Item key='top'>{$l('Table', 'top')}</Item>);
+      }
+      if (index > 0) {
+        menus.push(<Item key="up">{$l('Table', 'up')}</Item>);
+      }
+      if (index < records.length - 1) {
+        menus.push(<Item key="down">{$l('Table', 'down')}</Item>);
+      }
+    }
+    if (menus.length) {
+      return (
+        <Menu prefixCls={`${prefixCls}-customization-dropdown-menu`} onClick={handleMenuClick}>
+          {menus}
+        </Menu>
+      );
+    }
+  }, [record, index, records, columnTitleEditable, columnDraggable, handleMenuClick]);
+  const menu = getTreeNodesMenus();
   return (
     <>
-      <Dropdown overlay={getTreeNodesMenus()} placement={Placements.bottomRight}>
-        <Button funcType={FuncType.flat} size={Size.small} icon="more_horiz" className={`${prefixCls}-customization-tree-treenode-hover-button`} />
-      </Dropdown>
+      {
+        menu && (
+          <Dropdown overlay={menu} placement={Placements.bottomRight}>
+            <Button
+              funcType={FuncType.flat}
+              size={Size.small}
+              icon="more_horiz"
+              className={`${prefixCls}-customization-tree-treenode-hover-button`}
+            />
+          </Dropdown>
+        )
+      }
       <Switch
         record={record}
         disabled={!columnHideable || record.get('hideable') === false || (record.parent && record.parent.get('hidden'))}

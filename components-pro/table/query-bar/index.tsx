@@ -45,7 +45,6 @@ import TextField from '../../text-field';
 
 
 export interface TableQueryBarProps {
-  prefixCls?: string;
   buttons?: Buttons[];
   queryFields?: { [key: string]: ReactElement<any> };
   queryFieldsLimit?: number;
@@ -269,12 +268,14 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @autobind
   handleExport() {
     const { selected } = this.exportDataSet;
-    const { prefixCls, clientExportQuantity } = this.props;
+    const {
+      props: { clientExportQuantity },
+      context: {
+        tableStore: { prefixCls, dataSet },
+      },
+    } = this;
     if (selected.length) {
-      const { exportModal } = this
-      const {
-        tableStore: { dataSet },
-      } = this.context;
+      const { exportModal } = this;
       dataSet.export(
         selected.reduce((columns, record) => {
           let myName = record.get('name');
@@ -406,9 +407,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    */
   renderSummary(summary) {
     const {
-      props: { prefixCls, summaryBar, summaryFieldsLimit = 3 },
+      props: { summaryBar, summaryFieldsLimit = 3 },
       context: {
-        tableStore: { dataSet },
+        tableStore: { prefixCls, dataSet },
       },
     } = this;
     const fieldTypeArr = [FieldType.currency, FieldType.number];
@@ -478,7 +479,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    * @param summary
    */
   getMoreSummaryButton(summary) {
-    const { prefixCls } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
 
     if (summary.length) {
       return (
@@ -502,11 +503,10 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       props: {
         buttons,
         summaryBar,
-        prefixCls,
         summaryFieldsLimit,
       },
       context: {
-        tableStore: { queryBar },
+        tableStore: { prefixCls, queryBar },
       },
     } = this;
 
@@ -535,7 +535,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    * 汇总条存在下 buttons 大于4个放入下拉
    */
   getMoreButton() {
-    const { buttons, prefixCls } = this.props;
+    const { buttons } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     const tableButtonProps = getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     if (buttons && buttons.length) {
@@ -692,13 +693,14 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   renderToolBar(props: TableQueryBarHookProps) {
-    const { prefixCls } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     return <TableToolBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
   renderFilterBar(props: TableQueryBarHookProps) {
+    const { tableStore: { prefixCls } } = this.context;
     const {
-      props: { prefixCls, filterBarFieldName, filterBarPlaceholder },
+      props: { filterBarFieldName, filterBarPlaceholder },
     } = this;
     return (
       <TableFilterBar
@@ -712,17 +714,18 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   renderAdvancedQueryBar(props: TableQueryBarHookProps) {
-    const { prefixCls } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     return <TableAdvancedQueryBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
   renderProfessionalBar(props: TableQueryBarHookProps) {
-    const { prefixCls } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     return <TableProfessionalBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
-    const { prefixCls, dynamicFilterBar } = this.props;
+    const { dynamicFilterBar } = this.props;
+    const { tableStore: { prefixCls } } = this.context;
     return <TableDynamicFilterBar key="toolbar" dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
   }
 
@@ -731,9 +734,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const summaryBar = this.getSummaryBar();
     const {
       context: {
-        tableStore: { dataSet, queryBar },
+        tableStore: { dataSet, queryBar, prefixCls },
       },
-      props: { queryFieldsLimit, summaryFieldsLimit, prefixCls, pagination },
+      props: { queryFieldsLimit, summaryFieldsLimit, pagination },
       showQueryBar,
     } = this;
     if (showQueryBar) {
