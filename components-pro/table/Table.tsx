@@ -1309,8 +1309,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 }
                 <div {...this.getOtherProps()}>
                   <div
-                    className={`${prefixCls}-content`}
-                    style={isStickySupport() && overflowX && !overflowY ? { overflow: 'auto hidden' } : undefined}
+                    className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
                     onScroll={this.handleBodyScroll}
                   >
                     {content}
