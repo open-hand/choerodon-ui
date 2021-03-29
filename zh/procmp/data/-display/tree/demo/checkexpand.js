@@ -27,6 +27,7 @@ class App extends React.Component {
         console.log('unSelect', record, dataSet),
     },
   });
+
   dsDefault = new DataSet({
     primaryKey: 'id',
     queryUrl: '/tree-less.mock',
@@ -44,6 +45,7 @@ class App extends React.Component {
         console.log('unSelect', record, dataSet),
     },
   });
+
   handleExpand = (expandKeys, nodeObj) => {
     console.log(`this is expand ${expandKeys} obj ${JSON.stringify(nodeObj)}`);
   };
@@ -56,6 +58,7 @@ class App extends React.Component {
             <Tree
               dataSet={this.ds}
               checkable
+              showLine
               draggable
               showIcon
               renderer={nodeRenderer}
@@ -65,6 +68,7 @@ class App extends React.Component {
             <Tree
               dataSet={this.dsDefault}
               checkable
+              showLine
               defaultExpandAll
               defaultCheckedKeys={['2']}
               draggable

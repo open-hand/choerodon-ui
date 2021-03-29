@@ -27,9 +27,7 @@ class App extends React.Component {
   });
 
   ds = new DataSet({
-    data: [
-      { userid: '15', name: '戴刚' }
-    ],
+    data: [{ userid: '15', name: '戴刚' }],
     fields: [
       {
         name: 'user',
@@ -46,12 +44,12 @@ class App extends React.Component {
       },
       {
         name: 'name',
-        bind: 'user.name'
+        bind: 'user.name',
       },
       {
         name: 'userid',
-        bind: 'user.userid'
-      }
+        bind: 'user.userid',
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -92,14 +90,12 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Row span={8}>
-          分页加载：
-        </Row>
+        <Row span={8}>分页加载：</Row>
         <Row gutter={10}>
           <Col span={8}>
             <Select
               multiple
-              optionsFilter={record => record.get('sex') === 'F'}
+              optionsFilter={(record) => record.get('sex') === 'F'}
               dataSet={this.ds}
               name="user"
             />
@@ -111,15 +107,10 @@ class App extends React.Component {
             <Button onClick={this.changeOptions}>切换选项</Button>
           </Col>
         </Row>
-        <Row span={8}>
-          不分页：
-        </Row>
+        <Row span={8}>不分页：</Row>
         <Row gutter={10}>
           <Col span={8}>
-            <Select
-              dataSet={this.dsOne}
-              name="user"
-            />
+            <Select dataSet={this.dsOne} name="user" />
           </Col>
         </Row>
       </>

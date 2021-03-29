@@ -14,16 +14,22 @@ import {
 const { Column } = Table;
 
 class EditButton extends React.Component {
-  handleClick = e => {
+  handleClick = (e) => {
     const { record, onClick } = this.props;
     onClick(record, e);
   };
 
   render() {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.handleClick} size="small" />;
+    return (
+      <Button
+        funcType="flat"
+        icon="mode_edit"
+        onClick={this.handleClick}
+        size="small"
+      />
+    );
   }
 }
-
 
 class App extends React.Component {
   userDs = new DataSet({
@@ -90,7 +96,7 @@ class App extends React.Component {
     });
   };
 
-  editUser = record => {
+  editUser = (record) => {
     this.openModal(record);
   };
 
@@ -106,34 +112,71 @@ class App extends React.Component {
   };
 
   leftDrag = (
-    <Button icon="fast_rewind" key="left" onClick={() => {this.createUser('left');}}>
+    <Button
+      icon="fast_rewind"
+      key="left"
+      onClick={() => {
+        this.createUser('left');
+      }}
+    >
       左侧拖拽
     </Button>
   );
 
   rightDrag = (
-    <Button icon="fast_forward" key="right" onClick={() => {this.createUser('right');}}>
+    <Button
+      icon="fast_forward"
+      key="right"
+      onClick={() => {
+        this.createUser('right');
+      }}
+    >
       右侧拖拽
     </Button>
   );
 
   noneDrag = (
-    <Button icon="graphic_eq" key="none" onClick={() => {this.createUser(undefined);}}>
+    <Button
+      icon="graphic_eq"
+      key="none"
+      onClick={() => {
+        this.createUser(undefined);
+      }}
+    >
       直接拖拽
     </Button>
   );
 
-
   render() {
-    const buttons = [this.leftDrag, this.noneDrag, this.rightDrag, 'save', 'delete', 'reset'];
+    const buttons = [
+      this.leftDrag,
+      this.noneDrag,
+      this.rightDrag,
+      'save',
+      'delete',
+      'reset',
+    ];
     const { dragColumnAlign } = this.state;
     return (
-      <Table dragColumnAlign={dragColumnAlign} rowDraggable columnDraggable key="user" buttons={buttons} dataSet={this.userDs} pristine>
+      <Table
+        dragColumnAlign={dragColumnAlign}
+        rowDraggable
+        columnDraggable
+        key="user"
+        buttons={buttons}
+        dataSet={this.userDs}
+        pristine
+      >
         <Column name="userid" />
         <Column name="age" />
         <Column name="enable" />
         <Column name="name" />
-        <Column header="操作" align="center" renderer={this.renderEdit} lock="right" />
+        <Column
+          header="操作"
+          align="center"
+          renderer={this.renderEdit}
+          lock="right"
+        />
       </Table>
     );
   }

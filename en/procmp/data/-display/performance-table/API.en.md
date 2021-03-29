@@ -12,13 +12,12 @@ title: API
 | autoHeight               | boolean                                                                           | Automatic height                                                                              |
 | bodyRef                  | React.Ref                                                                         | A ref attached to the table body element                                                      |
 | bordered                 | boolean`(true)`                                                                           | Show border                                                                                   |
-| cellBordered             | boolean                                                                           | Show cell border                                                                              |
 | data \*                  | Array&lt;Object&gt;                                                               | Table data                                                                                    |
 | defaultExpandAllRows     | boolean                                                                           | Expand all nodes By default                                                                   |
 | defaultExpandedRowKeys   | string[]                                                                          | Specify the default expanded row by `rowkey`                                                  |
 | defaultSortType          | enum: 'desc', 'asc'                                                               | Sort type                                                                                     |
 | expandedRowKeys          | string[]                                                                          | Specify the default expanded row by `rowkey` (Controlled)                                     |
-| headerHeight             | number`(30)`                                                                      | Table Header Height                                                                           |
+| headerHeight             | number`(33)`                                                                      | Table Header Height                                                                           |
 | height                   | number`(200)`                                                                     | Table height                                                                                  |
 | hover                    | boolean `(true)`                                                                  | The row of the table has a mouseover effect                                                   |
 | isTree                   | boolean                                                                           | Show as Tree table                                                                            |
@@ -35,7 +34,7 @@ title: API
 | renderTreeToggle         | (icon:node, rowData:object, expanded:boolean) => node                             | Tree table, the callback function in the expanded node                                        |
 | rowClassName             | string , (rowData:object) => string                                               | Add an optional extra class name to row                                                       |
 | rowExpandedHeight        | number `(100)`                                                                    | Set the height of an expandable area                                                          |
-| rowHeight                | (rowData:object) => number, number`(46)`                                          | Row height                                                                                    |
+| rowHeight                | (rowData:object) => number, number`(30)`                                          | Row height                                                                                    |
 | rowKey                   | string `('key')`                                                                  | Each row corresponds to the unique `key` in `data`                                            |
 | shouldUpdateScroll       | boolean`(true)`                                                                   | Whether to update the scroll bar after data update                                            |
 | showHeader               | boolean `(true)`                                                                  | Display header                                                                                |

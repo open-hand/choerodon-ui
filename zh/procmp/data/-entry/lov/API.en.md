@@ -18,7 +18,7 @@ title: API
 | searchAction | 搜索触发变更的动作, 可选值：`blur` `input`， | string | input |
 | fetchSingle | searchAction 为 blur 时生效，获取记录有重复时弹出选择窗口 | boolean | false |
 
-更多属性请参考 [TextField](/zh/procmp/data-entry/text-field/#TextField), [Button](/zh/procmp/general/button/#Button)。
+更多属性请参考[Select](/zh/procmp/data-entry/select/#API), [TextField](/zh/procmp/data-entry/text-field/#TextField), [Button](/zh/procmp/general/button/#Button)。
 
 <style>
 .code-box .c7n-row {

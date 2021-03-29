@@ -105,6 +105,14 @@ class App extends React.Component {
         type: 'string',
         label: '姓名',
       },
+      {
+        name: 'age',
+        type: 'number',
+        label: '年龄',
+        max: 100,
+        step: 1,
+      },
+      { name: 'enable', type: 'boolean', label: '是否开启' },
     ],
     events: {
       update: ({ name, value, record }) => {
@@ -139,8 +147,8 @@ class App extends React.Component {
               );
             }}
           />
-          <Column name="sex" />
-          <Column name="name" />
+          <Column name="sex" editor />
+          <Column name="name" editor />
           <Column name="age" />
           <Column name="enable" editor={<Switch />} />
         </Table>

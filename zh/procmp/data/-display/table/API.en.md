@@ -37,9 +37,9 @@ title: API
 | highLightRow | 当前行高亮, 可选值: boolean \| focus \| click  | boolean \| string | true |
 | selectedHighLightRow  | 勾选行高亮                                                                                                                                                                                                                     | boolean                                                                                                | false    |
 | columnResizable       | 可调整列宽                                                                                                                                                                                                                     | boolean                                                                                                | true     |
-| columnHideable | 可调整列显示 | boolean | true |
-| columnTitleEditable | 可编辑列标题 | boolean |  |
-| columnDraggable | 列拖拽 | boolean | false |
+| columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | true |
+| columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean |  |
+| columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | false |
 | rowDraggable | 行拖拽，实现行的拖拽， 树形数据无法使用 | boolean | false |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | left\|right |  |
 | pristine              | 显示原始值                                                                                                                                                                                                                     | boolean                                                                                                | false    |
@@ -50,7 +50,7 @@ title: API
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
-| autoMaxWidth          | 是否开启双击侧边栏宽度最大自适应, 初次双击为最大值再次双击为 minWidth                                                                                                                                                          | boolean                                                                                                | false    |
+| autoMaxWidth          | 是否开启双击侧边栏宽度最大自适应, 初次双击为最大值再次双击为 minWidth                                                                                                                                                          | boolean                                                                                                | true    |
 | onDragEnd | 完成拖拽后的触发事件 | (dataSet, columns, resultDrag, provided) => void |  |
 | columnsDragRender | 控制列的拖拽渲染 | 请查看DragRender[配置项](#dragRender)  |  |
 | rowDragRender | 控制列的拖拽渲染| 请查看DragRender[配置项](#dragRender) |  |
@@ -61,8 +61,8 @@ title: API
 | treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
 | parityRow | 奇偶行 | boolean |  |
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
-| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
-| customizedType | 可存储的个性化范围， 可选值： `all` `none` `columnOrder` `columnWidth` `columnHeader` `columnHidden` | CustomizedType\| CustomizedType[] | all |
+| customizable | 是否显示个性化设置入口按钮  | boolean | |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
 

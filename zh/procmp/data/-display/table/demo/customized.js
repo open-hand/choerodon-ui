@@ -15,12 +15,19 @@ import {
 const { Column } = Table;
 
 const EditButton = (props) => {
-  const handleClick = e => {
+  const handleClick = (e) => {
     const { record, onClick } = props;
     onClick(record, e);
   };
 
-  return <Button funcType="flat" icon="mode_edit" onClick={handleClick} size="small" />;
+  return (
+    <Button
+      funcType="flat"
+      icon="mode_edit"
+      onClick={handleClick}
+      size="small"
+    />
+  );
 };
 
 class App extends React.Component {
@@ -70,7 +77,7 @@ class App extends React.Component {
 
   columnsDragRender = { renderIcon: () => <Icon type="open_with" /> };
 
-  editUser = record => {
+  editUser = (record) => {
     this.openModal(record);
   };
 
@@ -103,13 +110,29 @@ class App extends React.Component {
     return new Array(3).fill(text).join(' ');
   };
 
-
   render() {
     return (
-      <Table border={false} customizedCode="customized" rowHeight={40} key="user" dataSet={this.userDs} rowDraggable columnDraggable columnTitleEditable dragColumnAlign="left" columnsDragRender={this.columnsDragRender}>
+      <Table
+        customizable
+        border={false}
+        customizedCode="customized"
+        rowHeight={40}
+        key="user"
+        dataSet={this.userDs}
+        rowDraggable
+        columnDraggable
+        columnTitleEditable
+        dragColumnAlign="left"
+        columnsDragRender={this.columnsDragRender}
+      >
         <Column header="组合">
           <Column header="子组合">
-            <Column name="userid" title="ID" header={(ds, name, title) => <i>{title}</i>} tooltip="always" />
+            <Column
+              name="userid"
+              title="ID"
+              header={(ds, name, title) => <i>{title}</i>}
+              tooltip="always"
+            />
             <Column name="name" tooltip="overflow" renderer={this.renderName} />
           </Column>
         </Column>

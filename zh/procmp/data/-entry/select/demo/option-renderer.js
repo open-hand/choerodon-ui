@@ -38,7 +38,12 @@ const App = () => {
   return (
     <Row gutter={10}>
       <Col span={8}>
-        <Select dataSet={ds} name="user" optionRenderer={optionRenderer} renderer={renderer} />
+        <Select
+          dataSet={ds}
+          name="user"
+          optionRenderer={optionRenderer}
+          renderer={renderer}
+        />
       </Col>
     </Row>
   );

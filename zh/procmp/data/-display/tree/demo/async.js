@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
-import { DataSet, Tree } from 'choerodon-ui/pro';
-import React, { useMemo } from 'react';
+import { DataSet, Tree, Row, Col } from 'choerodon-ui/pro';
+import React, { useMemo, useCallback } from 'react';
 import axios from 'axios';
 
 // 这里面可以控制node结点的判断来实现是否展示为叶结点
@@ -16,7 +16,13 @@ function nodeCover({ record }) {
 
 const TreeDs = () => ({
   primaryKey: 'id',
-  queryUrl: '/tree-async.mock',
+  transport: {
+    read({ data: { parentId } }) {
+      return {
+        url: `/tree-async${parentId ? `-${parentId}` : ''}.mock`,
+      };
+    },
+  },
   autoQuery: true,
   parentField: 'parentId',
   expandField: 'expand',
@@ -35,39 +41,39 @@ const TreeDs = () => ({
 const App = () => {
   const dataSet = useMemo(() => new DataSet(TreeDs()), []);
 
-  function onLoadData({ key, children }) {
+  const onLoadData = useCallback(({ key, children }) => {
     return new Promise((resolve) => {
       if (!children) {
         axios
-          .get('/tree-async.mock')
+          .get(`/tree-async-${key}.mock`)
           .then((res) => {
-            const remianData = dataSet.toData();
-            // 获取子结点数据，绑定父节点
-            const recordsChildren = res.data.rows.map((item) => {
-              item.parentId = key;
-              item.id = Math.random() * 100;
-              return item;
-            });
-            // 生成完成的dataSet数据注意会触发load event
-            dataSet.loadData([...remianData, ...recordsChildren]);
+            dataSet.appendData(res.data.rows);
             resolve();
           })
           .catch((err) => {
             resolve();
+            return;
           });
       } else {
         resolve();
       }
     });
-  }
+  }, []);
 
   return (
-    <Tree
-      dataSet={dataSet}
-      loadData={onLoadData}
-      checkable
-      treeNodeRenderer={nodeCover}
-    />
+    <Row>
+      <Col span={12}>
+        <Tree dataSet={dataSet} checkable treeNodeRenderer={nodeCover} async />
+      </Col>
+      <Col span={12}>
+        <Tree
+          dataSet={dataSet}
+          loadData={onLoadData}
+          checkable
+          treeNodeRenderer={nodeCover}
+        />
+      </Col>
+    </Row>
   );
 };
 

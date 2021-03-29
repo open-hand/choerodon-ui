@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DataSet, Table, Button } from 'choerodon-ui/pro';
+import { DataSet, Table, Button, TextArea } from 'choerodon-ui/pro';
 
 const { Column } = Table;
 
@@ -119,7 +119,7 @@ class App extends React.Component {
         />
         <Column name="age" editor width={150} sortable />
         <Column name="enable" editor width={50} minWidth={50} lock />
-        <Column name="name" editor width={150} sortable />
+        <Column name="name" editor={<TextArea />} width={150} sortable />
         <Column name="code" editor width={150} sortable />
         <Column name="code_code" editor width={150} />
         <Column name="sex" editor width={150} />
