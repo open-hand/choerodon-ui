@@ -81,6 +81,7 @@ export interface ModalProps extends ViewComponentProps {
   drawerTransitionName?: 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
   key?: Key;
   border?: boolean;
+  drawerBorder?: boolean;
   okFirst?: boolean;
   keyboard?: boolean;
   active?: boolean;
@@ -263,6 +264,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'okProps',
       'cancelProps',
       'border',
+      'drawerBorder',
       'okFirst',
       'drawerTransitionName',
       'autoCenter',
@@ -309,6 +311,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         size,
         active,
         border = getConfig('modalSectionBorder'),
+        drawerBorder = getConfig('drawerSectionBorder'),
         autoCenter = getConfig('modalAutoCenter'),
       },
     } = this;
@@ -317,7 +320,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-center`]: !drawer && !('left' in style || 'right' in style) && !this.offset,
       [`${prefixCls}-fullscreen`]: fullScreen,
       [`${prefixCls}-drawer`]: drawer,
-      [`${prefixCls}-border`]: border,
+      [`${prefixCls}-border`]: drawer ? drawerBorder : border,
       [`${prefixCls}-drawer-${drawerTransitionName}`]: drawer,
       [`${prefixCls}-auto-center`]: autoCenter,
       [`${prefixCls}-${size}`]: size,

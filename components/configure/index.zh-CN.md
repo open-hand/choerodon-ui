@@ -75,6 +75,7 @@ const prefixCls = getConfig('prefixCls');
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
+| drawerSectionBorder | 默认 Drawer 的头和脚有边框线 | boolean | true |
 | modalOkFirst | 默认 Modal 的 ok 按钮排在第一个 | boolean | true |
 | modalKeyboard | Modal 是否支持键盘 esc 关闭 | boolean | true |
 | modalAutoCenter | Modal 是否默认居中 | boolean | false |

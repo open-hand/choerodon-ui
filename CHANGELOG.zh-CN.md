@@ -15,19 +15,20 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: 新增 `clientExportQuantity` 配置客户端导出查询数量和轮询导出。
-- 🌟 `<pro>Cascader`: 新增 `searchable`, `searchMatcher` 实现可搜索配置。
-- 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip 属性。
+- 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip, drawerSectionBorder 属性。
+- 🌟 `<pro>Table`: 新增 clientExportQuantity 配置客户端导出查询数量和轮询导出。
+- 🌟 `<pro>Cascader`: 新增 searchable, searchMatcher 实现可搜索配置。
 - 🌟 `<pro>Table`: 新增 customizable 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 precision, numberGrouping 属性。
 - 🌟 `<pro>NumberField`: 新增 precision, numberGrouping 属性。
 - 🌟 `<pro>TextArea`: 新增 onResize 钩子。
 - 🌟 `<pro>PerformanceTable`: 新增与 DataSet 数据源结合 demo。
+- 🌟 `<pro>Modal`: 新增 drawerBorder 属性，与 modal border 属性区分控制。
 - 💄 `<pro>Table`: 当编辑器为 TextArea 时，行高可随 TextArea 大小的变更调整大小。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
 - 💄 `<pro>PerformanceTable`: 优化样式，加载条。
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格问题。
-- 🐞 `<pro>Table`: 修复表格中 `autoHeight` 的计算问题 。
+- 🐞 `<pro>Table`: 修复表格中 autoHeight 的计算问题 。
 
 ## 1.2.0
 
