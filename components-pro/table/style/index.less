@@ -52,7 +52,7 @@
 
   &-export-progress-footer {
     display: flex;
-    flex-flow:  row nowrap;
+    flex-flow: row nowrap;
     justify-content: space-between;
   }
 
@@ -164,6 +164,14 @@
   &-tbody &-cell {
     border-right: @border-width-base @border-style-base transparent;
     border-bottom: @table-border;
+  }
+
+  &-row-number-column &-cell,
+  &-customized-column &-cell {
+    &,
+    &-inner {
+      padding: 0 !important;
+    }
   }
 
   &-row-height-fixed &-cell-inner {

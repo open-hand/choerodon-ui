@@ -665,9 +665,10 @@ export default class TableStore {
         resizable: false,
         titleEditable: false,
         align: ColumnAlign.center,
-        width: 50,
+        width: 30,
         lock: ColumnLock.right,
         header: this.customizedColumnHeader,
+        headerClassName: `${this.prefixCls}-customized-column`,
       };
     }
     return undefined;
@@ -696,7 +697,7 @@ export default class TableStore {
         key: ROW_NUMBER_KEY,
         resizable: false,
         titleEditable: false,
-        className: `${this.prefixCls}-row-number-column`,
+        headerClassName: `${this.prefixCls}-row-number-column`,
         renderer: this.renderRowNumber,
         tooltip: TableColumnTooltip.overflow,
         align: ColumnAlign.center,
