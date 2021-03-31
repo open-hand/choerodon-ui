@@ -93,12 +93,11 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     const { lock, indentSize } = this.props;
     const { leafColumns, leafColumnsBody } = this;
     const {
-      tableStore: { prefixCls, node, data, virtual, props: { rowDragRender = {} }, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth, overflowX },
+      tableStore: { prefixCls, node, virtualData, props: { rowDragRender = {} }, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth, overflowX },
     } = this.context;
     const { droppableProps, renderClone } = rowDragRender;
-    const rowData = virtual ? this.processData() : data;
-    const rows = data.length
-      ? this.getRows(rowData, leafColumns, true, lock)
+    const rows = virtualData.length
+      ? this.getRows(virtualData, leafColumns, true, lock)
       : this.getEmptyRow(leafColumns, lock);
     const body = rowDraggable ? (
       <Droppable

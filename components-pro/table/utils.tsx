@@ -157,21 +157,39 @@ export function isInCellEditor(element?: ReactElement<FormFieldProps>): boolean 
     return !!(element.type as any).__IS_IN_CELL_EDITOR;
   }
   return false;
+}let STICKY_SUPPORT;
+
+export function isStickySupport(): boolean {
+  if (STICKY_SUPPORT !== undefined) {
+    return STICKY_SUPPORT;
+  }
+  if (typeof window !== 'undefined') {
+    const vendorList = ['', '-webkit-', '-ms-', '-moz-', '-o-'];
+    const stickyElement = document.createElement('div');
+    STICKY_SUPPORT = vendorList.some((vendor) => {
+      stickyElement.style.position = `${vendor}sticky`;
+      if (stickyElement.style.position !== '') {
+        return true;
+      }
+      return false;
+    });
+    return STICKY_SUPPORT;
+  }
+  return true;
 }
 
 export function findCell(
   tableStore: TableStore,
-  prefixCls?: string,
   name?: Key,
   lock?: ColumnLock | boolean,
+  record?: Record,
 ): HTMLSpanElement | undefined {
-  const { node, dataSet, overflowX, currentEditRecord } = tableStore;
-  const current = currentEditRecord || dataSet.current;
-  const tableCellPrefixCls = `${prefixCls}-cell`;
+  const { node, dataSet, overflowX, currentEditRecord, prefixCls } = tableStore;
+  const current = record || currentEditRecord || dataSet.current;
   if (name !== undefined && current && node.element) {
     const wrapperSelector =
-      overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
-    const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"] span.${tableCellPrefixCls}-inner`;
+      !isStickySupport() && overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
+    const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"] span.${prefixCls}-cell-inner`;
     return node.element.querySelector(selector);
   }
 }
@@ -180,7 +198,7 @@ export function findFirstFocusableElement(node: HTMLElement): HTMLElement | unde
   if (node.children) {
     let found: HTMLElement | undefined;
     [...(node.children as HTMLCollectionOf<HTMLElement>)].some(child => {
-      if (child.tabIndex > -1 && child.getAttribute('type') !== 'checkbox' && child.getAttribute('type') !== 'radio') {
+      if (child.tabIndex > -1) {
         found = child;
       } else {
         found = findFirstFocusableElement(child);
@@ -299,23 +317,3 @@ export function isDraggingStyle(style?: DraggingStyle | NotDraggingStyle): style
   return style ? 'left' in style : false;
 }
 
-let STICKY_SUPPORT;
-
-export function isStickySupport(): boolean {
-  if (STICKY_SUPPORT !== undefined) {
-    return STICKY_SUPPORT;
-  }
-  if (typeof window !== 'undefined') {
-    const vendorList = ['', '-webkit-', '-ms-', '-moz-', '-o-'];
-    const stickyElement = document.createElement('div');
-    STICKY_SUPPORT = vendorList.some((vendor) => {
-      stickyElement.style.position = `${vendor}sticky`;
-      if (stickyElement.style.position !== '') {
-        return true;
-      }
-      return false;
-    });
-    return STICKY_SUPPORT;
-  }
-  return true;
-}

@@ -18,12 +18,13 @@ timeline: true
 - 🌟 `configure`: Added `tableCustomizable`, `tableColumnTooltip`, `drawerSectionBorder` properties.
 - 🌟 `<pro>Table`: Added `clientExportQuantity` to configure the number of export queries.
 - 🌟 `<pro>Cascader`: Added `searchable`, `searchMatcher` properties to searchable the options;
-- 🌟 `<pro>Table`: Added `customizable` property.
+- 🌟 `<pro>Table`: Added `customizable`, `virtualCell` properties.
 - 🌟 `<pro>DataSet.Field`: Added `precision`, `numberGrouping` properties.
 - 🌟 `<pro>NumberField`: Added `precision`, `numberGrouping` properties.
 - 🌟 `<pro>TextArea`: Added `onResize` hook.
 - 🌟 `<pro>PerformanceTable`: Added demo combined with `DataSet`.
 - 🌟 `<pro>Modal`: Added the `drawerBorder` property, which is controlled separately from the modal `border` property.
+- 💄 `<pro>Table`: Optimize the performance editors.
 - 💄 `<pro>Table`: When the editor is TextArea, the line height can be adjusted with the TextArea resizing.
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.

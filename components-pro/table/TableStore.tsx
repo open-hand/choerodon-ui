@@ -4,7 +4,6 @@ import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
-import defer from 'lodash/defer';
 import isNumber from 'lodash/isNumber';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -28,6 +27,7 @@ import { Customized, expandIconProps, TablePaginationConfig } from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
+import TableEditor from './TableEditor';
 
 export const SELECTION_KEY = '__selection-column__';
 
@@ -273,6 +273,8 @@ async function getHeaderTexts(
 export default class TableStore {
   node: any;
 
+  editors: Map<string, TableEditor> = new Map();
+
   @observable props: any;
 
   @observable customized: Customized;
@@ -347,7 +349,7 @@ export default class TableStore {
 
   @computed
   get virtual(): boolean {
-    return this.props.virtual && !!this.height && isNumber(this.rowHeight);
+    return this.props.virtual && this.height !== undefined && isNumber(this.rowHeight);
   }
 
   @computed
@@ -366,6 +368,18 @@ export default class TableStore {
   get virtualTop(): number {
     const { rowHeight, virtualStartIndex } = this;
     return virtualStartIndex * Number(rowHeight);
+  }
+
+  @computed
+  get virtualData(): Record[] {
+    const { data, height, rowHeight, props: { virtual } } = this;
+    if (virtual && height !== undefined && isNumber(rowHeight)) {
+      const { lastScrollTop = 0 } = this;
+      const startIndex = Math.max(Math.round((lastScrollTop / rowHeight) - 3), 0);
+      const endIndex = Math.min(Math.round((lastScrollTop + height) / rowHeight + 2), data.length);
+      return data.slice(startIndex, endIndex);
+    }
+    return data;
   }
 
   get hidden(): boolean {
@@ -581,7 +595,7 @@ export default class TableStore {
         }
       }
       if (record) {
-        defer(action(() => (record.editing = true)));
+        record.editing = true;
       }
     });
   }
@@ -592,6 +606,7 @@ export default class TableStore {
     return this.props.mode === TableMode.tree;
   }
 
+  @computed
   get editing(): boolean {
     return this.currentEditorName !== undefined || this.currentEditRecord !== undefined;
   }

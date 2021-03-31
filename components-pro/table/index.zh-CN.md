@@ -59,6 +59,7 @@ subtitle: 表格
 | pristine | 显示原始值 | boolean | false |
 | onExpand | 点击展开图标时触发 | (expanded, record) => void |  |
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | false |
+| virtualCell | 虚拟单元格 | boolean | false |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |

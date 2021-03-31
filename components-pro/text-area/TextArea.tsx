@@ -58,7 +58,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   getOtherProps() {
     const { resize = ResizeType.none } = this.props;
-    const otherProps = omit(super.getOtherProps(), ['resize', 'autoSize']);
+    const otherProps = omit(super.getOtherProps(), ['resize', 'autoSize', 'onResize']);
     const { style = {} } = otherProps;
     style.resize = resize;
     if (resize !== ResizeType.none) {

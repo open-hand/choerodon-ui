@@ -1,4 +1,14 @@
-import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, MouseEventHandler, ReactElement, ReactNode } from 'react';
+import React, {
+  cloneElement,
+  Component,
+  CSSProperties,
+  HTMLProps,
+  isValidElement,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+  RefObject,
+} from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
@@ -43,6 +53,7 @@ import { LabelLayout } from '../form/enum';
 import { Commands, TableButtonProps } from './Table';
 import autobind from '../_util/autobind';
 import { DRAG_KEY, SELECTION_KEY } from './TableStore';
+import TableEditor from './TableEditor';
 
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
@@ -52,6 +63,8 @@ export interface TableCellProps extends ElementProps {
   isDragging: boolean;
   lock?: ColumnLock | boolean;
   provided?: DraggableProvided;
+  intersectionRef?: RefObject<any> | ((node?: Element | null) => void);
+  inView: boolean;
 }
 
 let inTab: boolean = false;
@@ -93,8 +106,29 @@ export default class TableCell extends Component<TableCellProps> {
     return !pristine && this.cellEditor && !this.cellEditorInCell;
   }
 
+  @computed
+  get canFocus() {
+    const { tableStore } = this.context;
+    const { record } = this.props;
+    return !isDisabledRow(record) && (!tableStore.inlineEdit || record === tableStore.currentEditRecord);
+  }
+
+  @computed
+  get currentEditor(): TableEditor | undefined {
+    const { tableStore } = this.context;
+    const { record, column } = this.props;
+    if (tableStore.inlineEdit && record === tableStore.currentEditRecord) {
+      return tableStore.editors.get(getColumnKey(column));
+    }
+    return undefined;
+  }
+
   componentDidMount(): void {
     this.connect();
+    const { currentEditor } = this;
+    if (currentEditor) {
+      currentEditor.alignEditor();
+    }
   }
 
   componentDidUpdate(): void {
@@ -104,6 +138,10 @@ export default class TableCell extends Component<TableCellProps> {
 
   componentWillUnmount(): void {
     this.disconnect();
+    const { currentEditor } = this;
+    if (currentEditor) {
+      currentEditor.hideEditor();
+    }
   }
 
 
@@ -189,7 +227,7 @@ export default class TableCell extends Component<TableCellProps> {
       case KeyCode.TAB: {
         const { column } = this.props;
         const { tableStore } = this.context;
-        const cell = findCell(tableStore, tableStore.prefixCls, getColumnKey(column));
+        const cell = findCell(tableStore, getColumnKey(column));
         if (cell) {
           if (cell.contains(document.activeElement)) {
             inTab = true;
@@ -210,17 +248,19 @@ export default class TableCell extends Component<TableCellProps> {
   @autobind
   handleFocus(e) {
     const { tableStore } = this.context;
-    const { prefixCls, dataSet, inlineEdit } = tableStore;
+    const { dataSet } = tableStore;
     const {
       record,
       column,
       column: { lock },
     } = this.props;
-    if (column.key !== SELECTION_KEY && !isDisabledRow(record) && (!inlineEdit || record.editing)) {
-      dataSet.current = record;
+    if (this.canFocus) {
+      if (column.key !== SELECTION_KEY) {
+        dataSet.current = record;
+      }
       this.showEditor(e.currentTarget, lock);
-      if (!isStickySupport() && (!this.cellEditor || this.cellEditorInCell)) {
-        const cell = findCell(tableStore, prefixCls, getColumnKey(column), lock);
+      if (!isStickySupport() && (column.key === SELECTION_KEY || !this.cellEditor || this.cellEditorInCell)) {
+        const cell = findCell(tableStore, getColumnKey(column), lock);
         if (cell && !cell.contains(document.activeElement)) {
           const node = findFirstFocusableElement(cell);
           if (node && !inTab) {
@@ -427,23 +467,50 @@ export default class TableCell extends Component<TableCellProps> {
     return renderer;
   }
 
+  getInnerSimple(prefixCls) {
+    const { hasEditor, context: { tableStore } } = this;
+    const { rowHeight } = tableStore;
+    const innerProps: any = {
+      tabIndex: hasEditor && this.canFocus ? 0 : -1,
+      onFocus: this.handleFocus,
+    };
+    if (rowHeight === 'auto') {
+      innerProps.style = {
+        minHeight: 30,
+      };
+    } else {
+      innerProps.style = {
+        height: pxToRem(rowHeight),
+      };
+      innerProps.style = {
+        minHeight: 30,
+      };
+    }
+    return (
+      <span
+        key="output"
+        {...innerProps}
+        className={`${prefixCls}-inner`}
+      />
+    );
+  }
+
   getInnerNode(prefixCls, command?: Commands[], textAlign?: ColumnAlign) {
     const {
       context: {
-        tableStore: {
-          dataSet,
-          rowHeight,
-          expandIconAsCell,
-          hasCheckFieldColumn,
-          pristine,
-        },
         tableStore,
       },
       props: { children },
     } = this;
-    if (expandIconAsCell && children) {
+    if (tableStore.expandIconAsCell && children) {
       return children;
     }
+    const {
+      dataSet,
+      rowHeight,
+      hasCheckFieldColumn,
+      pristine,
+    } = tableStore;
     const { column, record, indentSize, lock } = this.props;
     const { name, key } = column;
     const tooltip = tableStore.getColumnTooltip(column);
@@ -452,7 +519,7 @@ export default class TableCell extends Component<TableCellProps> {
     const field = record.getField(name);
     const innerClassName: string[] = [`${prefixCls}-inner`];
     const innerProps: any = {
-      tabIndex: hasEditor && !isDisabledRow(record) ? 0 : -1,
+      tabIndex: hasEditor && this.canFocus ? 0 : -1,
       onFocus: this.handleFocus,
       pristine,
     };
@@ -503,7 +570,7 @@ export default class TableCell extends Component<TableCellProps> {
       }
     }
     const height = record.getState(`__column_resize_height_${name}`);
-    if (height !== undefined && rows === 0 && (rowHeight !== 'auto' || tableStore.currentEditorName === name || tableStore.currentEditRecord === record)) {
+    if (height !== undefined && rows === 0) {
       innerProps.style = {
         height: pxToRem(height),
         lineHeight: 1,
@@ -546,7 +613,7 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   render() {
-    const { column, record, isDragging, provided, colSpan, style: propsStyle, className: propsClassName } = this.props;
+    const { column, record, isDragging, provided, colSpan, style: propsStyle, className: propsClassName, intersectionRef, inView } = this.props;
     const {
       tableStore,
     } = this.context;
@@ -596,6 +663,7 @@ export default class TableCell extends Component<TableCellProps> {
     };
     const td = (
       <td
+        ref={intersectionRef}
         colSpan={colSpan}
         {...cellExternalProps}
         className={classString}
@@ -603,7 +671,7 @@ export default class TableCell extends Component<TableCellProps> {
         {...(provided && provided.dragHandleProps)}
         style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...propsStyle }}
       >
-        {this.getInnerNode(cellPrefix, command, cellStyle.textAlign as ColumnAlign)}
+        {inView ? this.getInnerNode(cellPrefix, command, cellStyle.textAlign as ColumnAlign) : this.getInnerSimple(cellPrefix)}
       </td>
     );
     return tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow ? (
@@ -616,12 +684,11 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   showEditor(cell, lock?: ColumnLock | boolean) {
-    const {
-      column: { name },
-    } = this.props;
-    const { tableStore } = this.context;
+    const { column } = this.props;
+    const { name } = column;
     const { cellEditor } = this;
     if (name && cellEditor && !this.cellEditorInCell) {
+      const { tableStore } = this.context;
       if (!lock) {
         const { node, overflowX } = tableStore;
         if (overflowX) {
@@ -652,6 +719,25 @@ export default class TableCell extends Component<TableCellProps> {
         }
       }
       tableStore.showEditor(name);
+      const editor = tableStore.editors.get(name);
+      if (editor) {
+        if (editor.cellNode) {
+          if (tableStore.inlineEdit) {
+            if (editor.inTab) {
+              editor.inTab = false;
+            } else {
+              editor.focus();
+            }
+          } else {
+            editor.hideEditor();
+          }
+        } else {
+          if (!tableStore.inlineEdit) {
+            editor.alignEditor(!isStickySupport() && lock ? findCell(tableStore, getColumnKey(column), lock) : cell);
+          }
+          editor.focus();
+        }
+      }
     }
   }
 }

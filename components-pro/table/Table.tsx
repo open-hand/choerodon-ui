@@ -436,6 +436,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   virtual?: boolean;
   /**
+   * 虚拟单元格
+   */
+  virtualCell?: boolean;
+  /**
    * 虚拟滚动是否显示加载
    */
   virtualSpin?: boolean;
@@ -1103,6 +1107,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'expandIcon',
       'spin',
       'virtual',
+      'virtualCell',
       'virtualSpin',
       'autoHeight',
       'autoFootHeight',
@@ -1324,8 +1329,8 @@ export default class Table extends DataSetComponent<TableProps> {
                     className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
                     onScroll={this.handleBodyScroll}
                   >
-                    {content}
                     {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
+                    {content}
                     {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
                   </div>
                   <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
