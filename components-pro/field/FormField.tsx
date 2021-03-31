@@ -554,7 +554,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       record: 'record' in props ? props.record : context.record,
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
-      value: this.observableProps || 'value' in props ? props.value : props.defaultValue,
+      value: 'value' in props ? props.value : this.observableProps ? this.observableProps.value : props.defaultValue,
     };
   }
 

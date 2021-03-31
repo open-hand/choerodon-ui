@@ -24,12 +24,13 @@ timeline: true
 - 🌟 `<pro>TextArea`: Added `onResize` hook.
 - 🌟 `<pro>PerformanceTable`: Added demo combined with `DataSet`.
 - 🌟 `<pro>Modal`: Added the `drawerBorder` property, which is controlled separately from the modal `border` property.
-- 💄 `<pro>Table`: Optimize the performance editors.
+- 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: When the editor is TextArea, the line height can be adjusted with the TextArea resizing.
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
 - 🐞 `<pro>PerformanceTable`: Fixed the big data table problem.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
+- 🐞 `<pro>FormField`: Fix the problem that the defaultValue value will be cleaned up on state change.
 
 ## 1.2.0
 
