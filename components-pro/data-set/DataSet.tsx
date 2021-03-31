@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { action, computed, get, IReactionDisposer, isArrayLike, observable, runInAction, set, toJS } from 'mobx';
-import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axiosStatic, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import unionBy from 'lodash/unionBy';
 import omit from 'lodash/omit';
 import flatMap from 'lodash/flatMap';
@@ -12,7 +12,6 @@ import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import XLSX from 'xlsx';
 import localeContext, { $l } from '../locale-context';
 import axios from '../axios';
 import Record from './Record';
@@ -43,11 +42,12 @@ import {
   useCascade,
   useSelected,
   normalizeGroups,
+  exportExcel,
 } from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
-import { DataSetEvents, DataSetSelection, DataSetStatus, DataToJSON, ExportMode, FieldType, RecordStatus, SortOrder } from './enum';
+import { DataSetEvents, DataSetSelection, DataSetExportStatus, DataSetStatus, DataToJSON, ExportMode, FieldType, RecordStatus, SortOrder } from './enum';
 import { Lang } from '../locale-context/enum';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
@@ -62,7 +62,7 @@ export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
 
-export type Group = { name: string,  value: any, records: Record[], subGroups: Group[] };
+export type Group = { name: string, value: any, records: Record[], subGroups: Group[] };
 
 export interface DataSetProps {
   /**
@@ -315,6 +315,8 @@ export default class DataSet extends EventManager {
 
   @observable status: DataSetStatus;
 
+  @observable exportStatus: DataSetExportStatus | undefined;
+
   @observable currentPage: number;
 
   @observable selection: DataSetSelection | false;
@@ -373,7 +375,7 @@ export default class DataSet extends EventManager {
       if (ds) {
         // 初始化时如果直接执行create，mobx会报错，所以使用了defer
         ds.pending.add(
-          new Promise(reslove => {
+          new Promise<void>(reslove => {
             defer(() => {
               if (ds.records.length === 0) {
                 ds.create();
@@ -913,7 +915,7 @@ export default class DataSet extends EventManager {
    * @param object columns 导出的列
    * @param number exportQuantity 导出数量
    */
-  async export(columns: any = {}, exportQuantity: number = 0): Promise<void> {
+  async export(columns: any = {}, exportQuantity: number = 0): Promise<void | any[]> {
     if (this.checkReadable(this.parent) && (await this.ready())) {
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
@@ -930,10 +932,10 @@ export default class DataSet extends EventManager {
           })) !== false
         ) {
           const ExportQuantity = exportQuantity > 1000 ? 1000 : exportQuantity;
-          if (this.exportMode === ExportMode.client) {
-            this.doClientExport(data, ExportQuantity);
-          } else {
+          if (this.exportMode !== ExportMode.client) {
             doExport(this.axios.getUri(newConfig), newConfig.data, newConfig.method);
+          } else {
+            return this.doClientExport(data, ExportQuantity, false);
           }
         }
       } else {
@@ -942,15 +944,18 @@ export default class DataSet extends EventManager {
     }
   }
 
-  private async doClientExport(data: any, quantity: number) {
-    const columnsExport = data._HAP_EXCEL_EXPORT_COLUMNS;
-    delete data._HAP_EXCEL_EXPORT_COLUMNS;
-    const params = { ...this.generateQueryString(1, quantity) };
-    const newConfig = axiosConfigAdapter('read', this, data, params);
-    const result = await this.axios(newConfig);
+
+  /**
+   * 可以把json数组通过ds配置转化成可以直接浏览的数据信息
+   * @param result 需要转化内容
+   * @param columnsExport 表头信息
+   */
+  displayDataTransform(result: any[], columnsExport) {
     const newResult: any[] = [];
-    if (result[this.dataKey] && result[this.dataKey].length > 0) {
-      const processData = toJS(this.processData(result[this.dataKey])).map((item) => item.data);
+    if (result && result.length > 0) {
+      // check: 这里做性能优化去掉实例化为record 从demo来看没啥问题
+      // toJS(this.processData(result)).map((item) => item.data);
+      const processData = result
       processData.forEach((itemValue) => {
         const dataItem = {};
         const columnsExportkeys = Object.keys(columnsExport);
@@ -965,18 +970,64 @@ export default class DataSet extends EventManager {
               columnsExportkeys[i],
               true,
             );
-
           }
           dataItem[columnsExportkeys[i]] = processExportValue(processItemValue, exportField);
         }
         newResult.push(dataItem);
       });
     }
-    newResult.unshift(columnsExport);
-    const ws = XLSX.utils.json_to_sheet(newResult, { skipHeader: true }); /* 新建空workbook，然后加入worksheet */
-    const wb = XLSX.utils.book_new();  /* 新建book */
-    XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */
-    XLSX.writeFile(wb, `${this.name}.xlsx`); /* 写文件(book,xlsx文件名称) */
+    return newResult
+  }
+
+  /**
+   * 客户端导出方法
+   * @param data 表头数据
+   * @param quantity 输入一次导出数量
+   * @param isFile 是否导出为文件
+   */
+  @action
+  private async doClientExport(data: any, quantity: number, isFile: boolean = true): Promise<any[] | void> {
+    const columnsExport = data._HAP_EXCEL_EXPORT_COLUMNS;
+    delete data._HAP_EXCEL_EXPORT_COLUMNS;
+    const { totalCount } = this;
+    runInAction(() => {
+      this.exportStatus = DataSetExportStatus.start;
+    })
+    let newResult: any[] = [];
+    if (totalCount > 0) {
+      const queryTime = Math.ceil(totalCount / quantity)
+      const queryExportList: AxiosPromise<any>[] = [];
+      for (let i = 0; i < queryTime; i++) {
+        const params = { ...this.generateQueryString(1 + i, quantity) };
+        const newConfig = axiosConfigAdapter('read', this, data, params);
+        queryExportList.push(this.axios(newConfig))
+        runInAction(() => {
+          this.exportStatus = DataSetExportStatus.exporting;
+        })
+      }
+      return Promise.all(queryExportList).then((resultValue) => {
+        const reducer = (accumulator: any[], currentValue: any[]) => [...accumulator, ...currentValue];
+        const todataList = (item) => item ? item[this.dataKey] : []
+        runInAction(() => {
+          this.exportStatus = DataSetExportStatus.progressing;
+        })
+        const exportAlldate = resultValue.map(todataList).reduce(reducer);
+        newResult = this.displayDataTransform(exportAlldate, columnsExport);
+        newResult.unshift(columnsExport);
+        runInAction(() => {
+          this.exportStatus = DataSetExportStatus.success;
+        })
+        if (isFile) {
+          exportExcel(newResult, this.name);
+        } else {
+          return newResult
+        }
+      }).catch(() => {
+        runInAction(() => {
+          this.exportStatus = DataSetExportStatus.failed;
+        })
+      })
+    }
   }
 
   /**

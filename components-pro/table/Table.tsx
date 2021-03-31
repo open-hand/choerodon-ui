@@ -521,6 +521,10 @@ export interface TableProps extends DataSetComponentProps {
    * 同 rowDraggable
    */
   dragRow?: boolean;
+  /**
+   * 客户端导出一次查询数量配置
+   */
+  clientExportQuantity?: number;
 }
 
 @observer
@@ -653,6 +657,10 @@ export default class Table extends DataSetComponent<TableProps> {
      * 是否单独处理column footer
      */
     autoFootHeight: PropTypes.bool,
+    /**
+     * 客户端查询导出，查询数目设置
+     */
+    clientExportQuantity: PropTypes.number,
     ...DataSetComponent.propTypes,
   };
 
@@ -671,6 +679,7 @@ export default class Table extends DataSetComponent<TableProps> {
     autoHeight: false,
     autoMaxWidth: true,
     autoFootHeight: false,
+    clientExportQuantity: 100,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1117,6 +1126,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'customizedCode',
       'dragColumn',
       'dragRow',
+      'clientExportQuantity',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -1257,6 +1267,7 @@ export default class Table extends DataSetComponent<TableProps> {
         filterBarPlaceholder,
         summaryBar,
         dynamicFilterBar,
+        clientExportQuantity,
       },
     } = this;
     const content = this.getTable();
@@ -1275,6 +1286,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 buttons={buttons}
                 pagination={pagination}
                 queryFields={queryFields}
+                clientExportQuantity={clientExportQuantity}
                 summaryBar={summaryBar}
                 dynamicFilterBar={dynamicFilterBar}
                 queryFieldsLimit={queryFieldsLimit}

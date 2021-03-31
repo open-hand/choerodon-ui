@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
+import debounce from 'lodash/debounce';
+import isString from 'lodash/isString';
 import isEmpty from 'lodash/isEmpty';
 import noop from 'lodash/noop';
 import isPlainObject from 'lodash/isPlainObject';
@@ -24,7 +26,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
-import normalizeOptions from '../option/normalizeOptions';
+import normalizeOptions, { expandTreeRecords } from './utils';
 import { $l } from '../locale-context';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import isEmptyUtil from '../_util/isEmpty';
@@ -52,8 +54,17 @@ export interface CascaderOptionType {
   __IS_FILTERED_OPTION?: boolean;
 }
 
+export interface SearchMatcherProps {
+  record: Record;
+  text: string;
+  textField: string;
+  valueField: string;
+}
 
-const disabledField = '__disabled';
+export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
+
+
+const disabledField = 'disabled';
 
 function defaultOnOption({ record }) {
   if (record instanceof Record) {
@@ -81,10 +92,14 @@ function getSimpleValue(value, valueField) {
  * @param arrNext
  */
 function arraySameLike(arr, arrNext): boolean {
-  if ( isArrayLike(arr) &&  isArrayLike(arrNext)) {
+  if (isArrayLike(arr) && isArrayLike(arrNext)) {
     return arr.toString() === arrNext.toString();
   }
   return false;
+}
+
+function defaultSearchMatcher({ record, text, textField }) {
+  return record.get(textField) && record.get(textField).indexOf(text) !== -1;
 }
 
 export type onOptionProps = { dataSet: DataSet; record: Record };
@@ -121,15 +136,15 @@ export interface CascaderProps extends TriggerFieldProps {
   /**
    * 设置选项属性，如 disabled;
    */
-  onOption?: (props: onOptionProps) => OptionProps ;
+  onOption?: (props: onOptionProps) => OptionProps;
   /**
    * 选择一个值的时候触发
    */
-  onChoose?: (value,record) => void;
+  onChoose?: (value, record) => void;
   /**
    * 取消选中一个值的时候触发多选时候生效
    */
-  onUnChoose?: (value,record) => void;
+  onUnChoose?: (value, record) => void;
   /** 单框弹出形式切换 */
   menuMode?: MenuMode;
   /** 由于渲染在body下可以方便按照业务配置弹出框的大小 */
@@ -137,11 +152,13 @@ export interface CascaderProps extends TriggerFieldProps {
   /** 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 */
   singleMenuItemStyle?: CSSProperties,
   /** 设置需要的提示问题配置 */
-  singlePleaseRender?: ({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>,
+  singlePleaseRender?: ({ key, className, text }: { key: string, className: string, text: string }) => ReactElement<any>,
   /** 头部可以渲染出想要的tab样子 */
-  singleMenuItemRender?: (title:string) => ReactElement<any>,
+  singleMenuItemRender?: (title: string) => ReactElement<any>,
   /** 选择及改变 */
   changeOnSelect?: boolean,
+  searchable?: boolean,
+  searchMatcher?: SearchMatcher,
 }
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
@@ -195,6 +212,14 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
      * 设置选项属性，如 disabled;
      */
     onOption: PropTypes.func,
+    /** 
+     * 可搜索属性
+    */
+    searchable: PropTypes.bool,
+    /**
+     * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
+     */
+    searchMatcher: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     singleMenuStyle: PropTypes.object,
     singleMenuItemStyle: PropTypes.object,
     singlePleaseRender: PropTypes.func,
@@ -205,6 +230,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   static defaultProps = {
     ...TriggerField.defaultProps,
     suffixCls: 'cascader',
+    searchable: false,
     dropdownMatchSelectWidth: false,
     expandTrigger: ExpandTrigger.click,
     onOption: defaultOnOption,
@@ -217,7 +243,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   @observable clickTab;
 
-  @computed 
+  @computed
   get isClickTab() {
     return this.clickTab;
   }
@@ -316,12 +342,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   @computed
-  get editable(): boolean {
-    return false;
-  }
-
-
-  @computed
   get multiple(): boolean {
     return !!this.getProp('multiple');
   }
@@ -332,25 +352,45 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   @computed
+  get parentField(): string {
+    return this.getProp('parentField') || 'parentValue';
+  }
+
+  @computed
+  get idField(): string {
+    return this.getProp('idField') || this.valueField;
+  }
+
+  @computed
+  get searchMatcher(): SearchMatcher {
+    const { searchMatcher = defaultSearchMatcher } = this.observableProps;
+    return searchMatcher;
+  }
+
+  @computed
   get options(): DataSet {
     const {
       field,
       textField,
       valueField,
+      idField,
+      parentField,
       multiple,
-      observableProps: { children, options },
+      observableProps: { options },
     } = this;
-    let dealOption;
     if (isArrayLike(options)) {
-      dealOption = this.addOptionsParent(options, undefined);
-    } else {
-      dealOption = options;
+      return normalizeOptions({ textField, valueField, idField, disabledField, multiple, data: toJS(options), parentField })
     }
     return (
-      dealOption ||
-      (field && field.options) ||
-      normalizeOptions({ textField, valueField, disabledField, multiple, children })
+      options ||
+      (field && field.options)
     );
+  }
+
+  @computed
+  get filteredOptions(): Record[] {
+    const { text } = this;
+    return this.searchData(this.cascadeOptions, text);
   }
 
   // 增加父级属性
@@ -370,10 +410,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   @computed
   get primitive(): boolean {
     const type = this.getProp('type');
-    if (this.options instanceof DataSet) {
-      return this.observableProps.primitiveValue !== false && type !== FieldType.object;
-    }
-    return this.observableProps.primitiveValue !== false;
+    return this.observableProps.primitiveValue !== false && type !== FieldType.object;
   }
 
   checkValueReaction?: IReactionDisposer;
@@ -432,6 +469,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     const otherProps = omit(super.getOtherProps(), [
       'multiple',
       'value',
+      'searchable',
+      'searchMatcher',
       'name',
       'dropdownMatchSelectWidth',
       'dropdownMenuStyle',
@@ -444,7 +483,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       'singleMenuStyle',
       'singleMenuItemStyle',
       'singlePleaseRender',
-      'singleMenuItemRender', 
+      'singleMenuItemRender',
       'onChoose',
       'onUnChoose',
       'changeOnSelect',
@@ -457,6 +496,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       ...super.getObservableProps(props, context),
       children: props.children,
       options: props.options,
+      searchable: props.searchable,
+      searchMatcher: props.searchMatcher,
       primitiveValue: props.primitiveValue,
     };
   }
@@ -497,7 +538,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   findParentRecodTree(record: Record, fn?: any) {
     const recordTree: any[] = [];
     if (record) {
-      if ( isFunction(fn)) {
+      if (isFunction(fn)) {
         recordTree.push(fn(record));
       } else {
         recordTree.push(record);
@@ -539,9 +580,9 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       textField,
       valueField,
       props: {
-        dropdownMenuStyle, 
-        expandTrigger : expandTriggerProps, 
-        onOption, 
+        dropdownMenuStyle,
+        expandTrigger: expandTriggerProps,
+        onOption,
         menuMode,
         singleMenuStyle,
         singleMenuItemStyle,
@@ -557,84 +598,58 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     const menuDisabled = this.isDisabled();
     let optGroups: any[] = [];
     let selectedValues: any[] = [];
-    // 确保tabkey唯一
-    let deepindex = 0;
-    const treePropsChange = (treeRecord: ProcessOption[] | Record[]) => {
+    // 过滤后的数据不用进行子集遍历
+    const treePropsChange = (treeRecord: Record[], isFilterSearch: boolean = false) => {
       let treeRecords: any = [];
       if (treeRecord.length > 0) {
-        // @ts-ignore
-        treeRecords = treeRecord.map((recordItem, index) => {
-          deepindex++
+        treeRecords = treeRecord.map((recordItem) => {
           const value = this.getRecordOrObjValue(recordItem, valueField);
-          const text = this.getRecordOrObjValue(recordItem, textField);
-          if (recordItem instanceof Record ) {
-            const optionProps = onOption ? onOption({ dataSet: options, record: recordItem }) : undefined;
-            const optionDisabled = menuDisabled || (optionProps && optionProps.disabled);
-            const key: Key = getItemKey(recordItem, text, value);
-            let children;
-            if (recordItem.isSelected) {
-              selectedValues.push(recordItem);
-            }
-            if (recordItem.children) {
-              children = treePropsChange(recordItem.children);
-            }
-            return (children ? {
-              ...optionProps,
-              disabled: optionDisabled,
-              key,
-              label: text,
-              value: recordItem,
-              children,
-            } : {
-              ...optionProps,
-              disabled: optionDisabled,
-              key,
-              label: text,
-              value: recordItem,
-            });
-          }
+          const text = isFilterSearch ? this.treeTextToArray(recordItem).join('/') : this.getRecordOrObjValue(recordItem, textField);
           const optionProps = onOption ? onOption({ dataSet: options, record: recordItem }) : undefined;
-          const optionDisabled = recordItem.disabled || (optionProps && optionProps.disabled);
-          const key: Key = `${deepindex}-${index}`;
-          let children: any;
-          if (recordItem.children) {
+          const optionDisabled = menuDisabled || (optionProps && optionProps.disabled);
+          const key: Key = getItemKey(recordItem, text, value);
+          let children;
+          if (recordItem.isSelected) {
+            selectedValues.push(recordItem);
+          }
+          if (recordItem.children && !isFilterSearch) {
             children = treePropsChange(recordItem.children);
           }
           return (children ? {
             ...optionProps,
+            disabled: optionDisabled,
             key,
             label: text,
             value: recordItem,
             children,
-            disabled: optionDisabled,
           } : {
             ...optionProps,
+            disabled: optionDisabled,
             key,
             label: text,
             value: recordItem,
-            disabled: optionDisabled,
           });
         });
       }
       return treeRecords;
     };
-    if (isArrayLike(options)) {
-      optGroups = treePropsChange(options);
-    } else if (options instanceof DataSet) {
+    if (this.text) {
+      optGroups = treePropsChange(expandTreeRecords(this.filteredOptions, !changeOnSelect), true)
+    } else if (options) {
       optGroups = treePropsChange(options.treeData);
     } else {
       optGroups = [];
     }
     const getInputSelectedValue = (inputValue) => {
-        let activeInputValue = [];
-        if (isArrayLike(options)) {
-          activeInputValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options));
-        } else if (options instanceof DataSet) {
-          activeInputValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options.treeData));
-        } else {
-          activeInputValue = [];
-        }
-        return activeInputValue
+      let activeInputValue = [];
+      if (isArrayLike(options)) {
+        activeInputValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options));
+      } else if (options instanceof DataSet) {
+        activeInputValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options.treeData));
+      } else {
+        activeInputValue = [];
+      }
+      return activeInputValue
     }
     /**
      * 获取当前激活的menueItem
@@ -676,35 +691,34 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       dropdownMenuStyleMerge = { ...dropdownMenuStyle, width: pxToRem(this.itemMenuWidth) };
     }
     // 由于想让多选出现不同展现这边增加一个selected属性来解决但是会造成一定的性能损耗
-    
+
     let selectedValueMutiple
-    if(this.multiple) {
-      const selectedMutiple= this.getValues()
-                                .map(item => getInputSelectedValue(item))
-                                .filter((recordItem) => recordItem !== undefined && recordItem !== null)
-      selectedValueMutiple = Array.from(new Set(selectedMutiple.reduce((accumulator, currentValue) => [...accumulator, ...currentValue],[])))
+    if (this.multiple) {
+      const selectedMutiple = this.getValues()
+        .map(item => getInputSelectedValue(item))
+        .filter((recordItem) => recordItem !== undefined && recordItem !== null)
+      selectedValueMutiple = Array.from(new Set(selectedMutiple.reduce((accumulator, currentValue) => [...accumulator, ...currentValue], [])))
     }
-    
     // 渲染成单项选择还是多项选择组件以及空组件
-    if(options && options.length){
-      if( menuMode === MenuMode.single ){
+    if (options && options.length && optGroups.length) {
+      if (menuMode === MenuMode.single) {
         return (
           <SingleMenu
-          {...menuProps}
-          singleMenuStyle = {singleMenuStyle}
-          singleMenuItemStyle = {singleMenuItemStyle}
-          singlePleaseRender = {singlePleaseRender}
-          singleMenuItemRender ={singleMenuItemRender}
-          prefixCls={this.prefixCls}
-          expandTrigger={expandTrigger}
-          activeValue={selectedValues}
-          selectedValues={selectedValueMutiple}
-          options={optGroups}
-          locale={{pleaseSelect:$l('Cascader', 'please_select')}}
-          onSelect={this.handleMenuClick}
-          isTabSelected={this.isClickTab}
-          dropdownMenuColumnStyle={dropdownMenuStyleMerge}
-          visible={this.popup} />
+            {...menuProps}
+            singleMenuStyle={singleMenuStyle}
+            singleMenuItemStyle={singleMenuItemStyle}
+            singlePleaseRender={singlePleaseRender}
+            singleMenuItemRender={singleMenuItemRender}
+            prefixCls={this.prefixCls}
+            expandTrigger={expandTrigger}
+            activeValue={selectedValues}
+            selectedValues={selectedValueMutiple}
+            options={optGroups}
+            locale={{ pleaseSelect: $l('Cascader', 'please_select') }}
+            onSelect={this.handleMenuClick}
+            isTabSelected={this.isClickTab}
+            dropdownMenuColumnStyle={dropdownMenuStyleMerge}
+            visible={this.popup} />
         )
       }
       return (
@@ -723,15 +737,26 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
     return (
       <div key="no_data">
-          <ul className={`${this.prefixCls}-menu`} style={{...{height: 'auto'},...dropdownMenuStyleMerge}}>
-            <li
-             className={`${this.prefixCls}-menu-item ${this.prefixCls}-menu-item-disabled`}
-            >
-               {this.loading ? ' ' : this.getNotFoundContent()}
+        <ul className={`${this.prefixCls}-menu`} style={{ ...{ height: 'auto' }, ...dropdownMenuStyleMerge }}>
+          <li
+            className={`${this.prefixCls}-menu-item ${this.prefixCls}-menu-item-disabled`}
+          >
+            {this.loading ? ' ' : this.getNotFoundContent()}
           </li>
-          </ul>
+        </ul>
       </div>
     )
+  }
+
+  @computed
+  get editable(): boolean {
+    return !this.isReadOnly() && (!!this.searchable);
+  }
+
+
+  @computed
+  get searchable(): boolean {
+    return !!this.observableProps.searchable;
   }
 
   // 遍历出父亲节点
@@ -772,8 +797,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
   }
 
-  getTriggerIconFont() {
-    return 'baseline-arrow_drop_down';
+  getTriggerIconFont(): string {
+    return this.searchable && this.isFocused ? 'search' : 'baseline-arrow_drop_down';
   }
 
   @autobind
@@ -830,23 +855,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   // 按键第一个和最后一个的位置
   handleKeyDownFirstLast(e, direction: number) {
     stopEvent(e);
-    if (isArrayLike(this.options)) {
-      if (isEmpty(toJS(this.activeValue))) {
-        this.setActiveValue(this.options[0]);
-      } else {
-        const activeItem = this.findTreeDataFirstLast(this.options, this.activeValue, direction);
-        if (!this.editable || this.popup) {
-          this.setActiveValue(activeItem);
-        }
-      }
-    } else if (this.options instanceof DataSet) {
-      if (isEmpty(toJS(this.activeValue))) {
-        this.setActiveValue(this.options.treeData[0]);
-      } else {
-        const activeItem = this.findTreeDataFirstLast(this.options.treeData, this.activeValue, direction);
-        if (!this.editable || this.popup) {
-          this.setActiveValue(activeItem);
-        }
+    if (isEmpty(toJS(this.activeValue))) {
+      this.setActiveValue(this.options.treeData[0]);
+    } else {
+      const activeItem = this.findTreeDataFirstLast(this.options.treeData, this.activeValue, direction);
+      if (!this.editable || this.popup) {
+        this.setActiveValue(activeItem);
       }
     }
   }
@@ -876,18 +890,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   // 上下按键判断
   handleKeyDownPrevNext(e, direction: number) {
     if (!this.editable) {
-      if (isArrayLike(this.options)) {
-        if (isEmpty(toJS(this.activeValue))) {
-          this.setActiveValue(this.options[0]);
-        } else {
-          this.setActiveValue(this.findTreeDataUpDown(this.options, this.activeValue, direction, this.sameKeyRecordIndex(this.options, this.activeValue, 'value')));
-        }
-      } else if (this.options instanceof DataSet) {
-        if (isEmpty(toJS(this.activeValue))) {
-          this.setActiveValue(this.options.treeData[0]);
-        } else {
-          this.setActiveValue(this.findTreeDataUpDown(this.options.treeData, this.activeValue, direction, this.sameKeyRecordIndex(this.options.treeData, this.activeValue, 'key')));
-        }
+      if (isEmpty(toJS(this.activeValue))) {
+        this.setActiveValue(this.options.treeData[0]);
+      } else {
+        this.setActiveValue(this.findTreeDataUpDown(this.options.treeData, this.activeValue, direction, this.sameKeyRecordIndex(this.options.treeData, this.activeValue, 'key')));
       }
       e.preventDefault();
     } else if (e === KeyCode.DOWN) {
@@ -913,18 +919,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   handleKeyLeftRightNext(e, direction: number) {
     if (!this.editable) {
-      if (isArrayLike(this.options)) {
-        if (isEmpty(toJS(this.activeValue))) {
-          this.setActiveValue(this.options[0]);
-        } else {
-          this.setActiveValue(this.findTreeParentChidren(this.options, this.activeValue, direction));
-        }
-      } else if (this.options instanceof DataSet) {
-        if (isEmpty(toJS(this.activeValue))) {
-          this.setActiveValue(this.options.treeData[0]);
-        } else {
-          this.setActiveValue(this.findTreeParentChidren(this.options.treeData, this.activeValue, direction));
-        }
+      if (isEmpty(toJS(this.activeValue))) {
+        this.setActiveValue(this.options.treeData[0]);
+      } else {
+        this.setActiveValue(this.findTreeParentChidren(this.options.treeData, this.activeValue, direction));
       }
       e.preventDefault();
     } else if (e === KeyCode.DOWN) {
@@ -940,10 +938,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         this.unChoose(value);
       } else if (value.children) {
         this.setPopup(true);
-      } else if (value instanceof Record && !value.get(disabledField)) {
-        this.choose(value);
-      } else if (!value.disabled && isObject(value)) {
-        // @ts-ignore
+      } else if (value && !value.get(disabledField)) {
         this.choose(value);
       }
     }
@@ -983,18 +978,13 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   syncValueOnBlur(value) {
     if (value) {
-      if (this.options instanceof DataSet) {
+      if (this.options) {
         this.options.ready().then(() => {
           const record = this.findByTextWithValue(value);
           if (record) {
             this.choose(record);
           }
         });
-      } else {
-        const record = this.findByTextWithValue(value);
-        if (record) {
-          this.choose(record);
-        }
       }
     } else if (!this.multiple) {
       this.setValue(this.emptyValue);
@@ -1028,16 +1018,15 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     };
     const textArray = text.split('/');
     if (textArray && textArray.length > 0) {
-      if (this.options instanceof DataSet) {
+      if (this.options) {
         return findTreeItem(this.options.treeData, textArray, 0);
       }
-      return findTreeItem(this.options, textArray, 0);
     }
   }
 
 
   findByValue(value): Record | undefined {
-    const { valueField,props: { changeOnSelect } } = this;
+    const { valueField, props: { changeOnSelect } } = this;
     const findTreeItem = (options, valueItem, index) => {
       let sameItemTreeNode;
       if (valueItem.length > 0) {
@@ -1053,10 +1042,9 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       }
     };
     value = getSimpleValue(value, valueField);
-    if (this.options instanceof DataSet) {
+    if (this.options) {
       return findTreeItem(toJS(this.options.treeData), toJS(value), 0);
     }
-    return findTreeItem(this.options, value, 0);
   }
 
 
@@ -1120,26 +1108,26 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         this.setPopup(true);
         this.setActiveValue(targetOption.value);
         this.setIsClickTab(isClickTab);
-        if( changeOnSelect && ExpandTrigger.click === trigger) {
+        if (changeOnSelect && ExpandTrigger.click === trigger) {
           this.choose(targetOption.value);
         }
-        if(onChoose){
+        if (onChoose) {
           onChoose(
             this.processRecordToObject(targetOption.value),
             targetOption.value,
           )
         }
       } else {
-        if(!isClickTab){
+        if (!isClickTab) {
           this.setActiveValue(targetOption.value);
           this.choose(targetOption.value);
-          if(onChoose){
+          if (onChoose) {
             onChoose(
               this.processRecordToObject(targetOption.value),
               targetOption.value,
             )
           }
-        }else{
+        } else {
           this.setPopup(true);
         }
         this.setIsClickTab(isClickTab);
@@ -1147,7 +1135,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     } else {
       this.setactiveEmpty()
       this.unChoose(targetOption.value);
-      if(onUnChoose){
+      if (onUnChoose) {
         onUnChoose(
           this.processRecordToObject(targetOption.value),
           targetOption.value,
@@ -1156,10 +1144,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
   }
 
-  setactiveEmpty(){
-    if(this.multiple){
+  setactiveEmpty() {
+    if (this.multiple) {
       this.setActiveValue([])
-    }else{
+    } else {
       this.setActiveValue({})
     }
   }
@@ -1189,9 +1177,50 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     this.collapse();
   }
 
+  handleSearch(_text?: string) {
+  }
+
   @action
   setText(text?: string): void {
     super.setText(text);
+    if (this.searchable) {
+      this.doSearch(text);
+    }
+  }
+
+  doSearch = debounce(value => {
+    if (isString(this.searchMatcher)) {
+      this.searchRemote(value);
+    }
+    this.handleSearch(value);
+  }, 500);
+
+  searchRemote(value) {
+    const { field, searchMatcher } = this;
+    if (field && isString(searchMatcher)) {
+      field.setLovPara(searchMatcher, value === '' ? undefined : value);
+    }
+  }
+
+  searchData(data: Record[], text?: string): Record[] {
+    const {
+      searchable,
+      searchMatcher,
+    } = this;
+    return searchable && text && typeof searchMatcher === 'function' ? data.filter((r) => {
+      return this.matchRecordBySearch(r, text)
+    }) : data;
+  }
+
+  @autobind
+  matchRecordBySearch(record: Record, text?: string): boolean {
+    const {
+      textField,
+      valueField,
+      searchable,
+      searchMatcher,
+    } = this;
+    return !(searchable && text && typeof searchMatcher === 'function') || searchMatcher({ record, text, textField, valueField });
   }
 
 
@@ -1208,12 +1237,9 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
   }
 
-  processRecordToObject(record: Record | ProcessOption) {
+  processRecordToObject(record: Record) {
     const { primitive } = this;
-    if (record instanceof Record && record.dataSet!.getFromTree(0)) {
-      return primitive ? this.treeValueToArray(record) : this.treeToArray(record);
-    }
-    if (isObject(record)) {
+    if (record && record.dataSet!.getFromTree(0)) {
       return primitive ? this.treeValueToArray(record) : this.treeToArray(record);
     }
   }
@@ -1261,16 +1287,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
    * @param record
    * @param allArray
    */
-  treeToArray(record: Record | ProcessOption, allArray?: ProcessOption[] | Record[]) {
+  treeToArray(record: Record, allArray?: Record[]) {
     if (!allArray) {
       allArray = [];
     }
     if (record) {
-      if (record instanceof Record) {
-        allArray = [record.toData(), ...allArray];
-      } else {
-        allArray = [this.removeObjParentChild(record), ...allArray];
-      }
+      allArray = [record.toData(), ...allArray];
     }
     if (record.parent) {
       return this.treeToArray(record.parent, allArray);
@@ -1381,26 +1403,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   @autobind
   chooseAll() {
     const chooseAll = [];
-    if (isArrayLike(this.options)) {
-      const findLeafItem = (option) => {
-        option.forEach((item: CascaderOptionType) => {
-          if (isEmpty(item.children) && !item.disabled) {
-            // @ts-ignore
-            chooseAll.push(this.processRecordToObject(item));
-          } else {
-            findLeafItem(item.children);
-          }
-        });
-      };
-      findLeafItem(this.options);
-    } else if (this.options instanceof DataSet) {
-      this.options.forEach(item => {
-        if (isEmpty(item.children) && !item.get(disabledField)) {
-          // @ts-ignore
-          chooseAll.push(this.processRecordToObject(item));
-        }
-      }, this);
-    }
+    this.options.forEach(item => {
+      if (isEmpty(item.children) && !item.get(disabledField)) {
+        // @ts-ignore
+        chooseAll.push(this.processRecordToObject(item));
+      }
+    }, this);
     this.setValue(chooseAll);
   }
 

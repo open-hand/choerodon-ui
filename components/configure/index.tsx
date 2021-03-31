@@ -117,6 +117,7 @@ export type Config = {
   tableCustomizedLoad?: (code: string) => Promise<Customized | null>;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
+  drawerSectionBorder?: boolean;
   modalAutoCenter?: boolean;
   modalOkFirst?: boolean;
   drawerOkFirst?: boolean;
@@ -233,6 +234,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableCustomizedSave', (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized))],
   ['tableCustomizedLoad', (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) || 'null'))],
   ['modalSectionBorder', true],
+  ['drawerSectionBorder', true],
   ['modalOkFirst', true],
   ['modalAutoCenter', false],
   ['drawerOkFirst', undefined],

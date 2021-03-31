@@ -39,7 +39,7 @@ const options = [{
       disabled:true,
     },{
       value:'fuzimiao',
-      meaning:'Fu Zi Miao'
+      meaning:'Fu Zi Miao',
     }],
   }],
 }];
