@@ -14,7 +14,7 @@ import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView from './LovView';
 import { ModalProps } from '../modal/Modal';
-import DataSet from '../data-set/DataSet';
+import DataSet, { DataSetProps } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Spin from '../spin';
 import lovStore from '../stores/LovCodeStore';
@@ -50,7 +50,7 @@ export type LovConfigItem = {
   gridFieldWidth?: number;
   gridFieldAlign?: ColumnAlign;
   gridFieldSequence: number;
-  fieldProps?: FieldProps;
+  fieldProps?: Partial<FieldProps>;
 };
 
 export type LovConfig = {
@@ -69,6 +69,8 @@ export type LovConfig = {
   editableFlag?: 'Y' | 'N';
   queryColumns?: number;
   queryBar?: TableQueryBarType | TableQueryBarHook;
+  dataSetProps?: Partial<DataSetProps>;
+  tableProps?: Partial<TableProps>;
 };
 
 export interface LovProps extends SelectProps, ButtonProps {
@@ -269,7 +271,7 @@ export default class Lov extends Select<LovProps> {
         let textMatcher = text;
         if (isString(paramMatcher)) {
           textMatcher = text + paramMatcher;
-        } else if (isFunction(paramMatcher)){
+        } else if (isFunction(paramMatcher)) {
           textMatcher = paramMatcher({ record, text, textField, valueField }) || text;
         }
         options.setQueryParameter(searchMatcher, textMatcher);
@@ -291,7 +293,7 @@ export default class Lov extends Select<LovProps> {
   };
 
   handleLovViewOk = async () => {
-    const { options, multiple  } = this;
+    const { options, multiple } = this;
     const tableProps = this.getTableProps();
 
     // 根据 mode 进行区分 假如 存在 rowbox 这些 不应该以 current 作为基准
