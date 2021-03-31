@@ -116,7 +116,7 @@ export default class LovView extends Component<LovViewProps> {
   render() {
     const {
       dataSet,
-      config: { height, treeFlag, queryColumns },
+      config: { height, treeFlag, queryColumns, tableProps: configTableProps },
       multiple,
       tableProps,
     } = this.props;
@@ -153,6 +153,6 @@ export default class LovView extends Component<LovViewProps> {
       'selectionMode',
     ]));
 
-    return <Table {...lovTableProps} />;
+    return <Table {...lovTableProps} {...configTableProps} />;
   }
 }
