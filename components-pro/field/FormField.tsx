@@ -220,6 +220,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 字段 td 类名传递 支持个性化隐藏字段
    */
   fieldClassName?: string;
+  /**
+   * 阻止使用渲染器
+   */
+  preventRenderer?: boolean;
 }
 
 export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
@@ -580,6 +584,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'trim',
       'newLine',
       'fieldClassName',
+      'preventRenderer',
     ]);
     otherProps.onChange = !this.isDisabled() && !this.isReadOnly() ? this.handleChange : noop;
     otherProps.onKeyDown = this.handleKeyDown;
@@ -848,8 +853,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   getTextNode(): ReactNode {
+    const { preventRenderer } = this.props;
     const text =
-      this.isFocused && this.editable
+      this.editable && (preventRenderer || this.isFocused)
         ? this.processValue(this.getValue())
         : this.processRenderer(this.getValue());
     return text;

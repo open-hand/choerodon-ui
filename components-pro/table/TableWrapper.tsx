@@ -138,7 +138,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   getEditors() {
     return this.leafEditorColumns.map(column => (
-      <TableEditor key={column.name} column={column} />
+      <TableEditor key={getColumnKey(column)} column={column} />
     ));
   }
 
@@ -185,6 +185,6 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
       </table>
     );
 
-    return [editors, table];
+    return [table, editors];
   }
 }

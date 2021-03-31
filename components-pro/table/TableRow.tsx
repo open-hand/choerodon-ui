@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, remove, set } from 'mobx';
 import classNames from 'classnames';
+import defer from 'lodash/defer';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
+import ReactIntersectionObserver from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -14,7 +16,7 @@ import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
 import { ColumnLock, DragColumnAlign, HighLightRowType, SelectionMode } from './enum';
-import { findFirstFocusableElement, getColumnKey, getColumnLock, isDisabledRow, isSelectedRow, isStickySupport } from './utils';
+import { findCell, getColumnKey, getColumnLock, isDisabledRow, isSelectedRow, isStickySupport } from './utils';
 import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
@@ -247,15 +249,16 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @autobind
   getCell(column: ColumnProps, index: number, props: Partial<TableCellProps>): ReactNode {
-    const { record, indentSize, lock, provided, snapshot } = this.props;
+    const { record, indentSize, lock, provided, snapshot, index: rowIndex } = this.props;
     const {
-      tableStore: { leafColumns, rightLeafColumns },
+      tableStore: { leafColumns, rightLeafColumns, node, props: { virtualCell } },
     } = this.context;
     const columnIndex =
       lock === ColumnLock.right ? index + leafColumns.length - rightLeafColumns.length : index;
     const isDragging = snapshot ? snapshot.isDragging : false;
-    return (
+    const cell = (
       <TableCell
+        inView
         column={column}
         record={record}
         indentSize={indentSize}
@@ -267,41 +270,45 @@ export default class TableRow extends Component<TableRowProps, any> {
         {this.hasExpandIcon(columnIndex) && this.renderExpandIcon()}
       </TableCell>
     );
+    return virtualCell ? (
+      <ReactIntersectionObserver
+        key={props.key}
+        root={node.tableBodyWrap || node.element}
+        rootMargin="100px"
+        initialInView={rowIndex <= 10}
+      >
+        {
+          ({ ref, inView }) => (
+            cloneElement<any>(cell, { inView, intersectionRef: ref })
+          )
+        }
+      </ReactIntersectionObserver>
+    ) : cell;
   }
 
-  focusRow(row: HTMLTableRowElement | null) {
+  focusRow() {
+    const row = this.node;
     if (row) {
       const {
-        tableStore: { node, overflowY, currentEditorName, inlineEdit },
+        tableStore: { node, overflowY, editing },
       } = this.context;
       const { lock, record } = this.props;
-      /**
-       * 判断是否为ie浏览器
-       */
-        // @ts-ignore
-      const isIE: boolean = !!window.ActiveXObject || 'ActiveXObject' in window;
-      // 当不是为lock 和 当前不是编辑状态的时候
-      if (!lock && !currentEditorName) {
+      if (!lock && !editing) {
         const { element } = node;
-        // table 包含目前被focus的element
-        // 找到当前组件对应record生成的组件对象 然后遍历 每个 tr里面不是focus的目标那么这个函数触发row.focus
         if (
           element &&
           element.contains(document.activeElement) &&
-          !inlineEdit &&   // 这里的原因是因为当编辑状态为inline的时候currentEditorName永远为 undefined 所以暂时屏蔽掉
-          Array.from<HTMLTableRowElement>(
+          isStickySupport() ? !row.contains(document.activeElement) : Array.from<HTMLTableRowElement>(
             element.querySelectorAll(`tr[data-index="${record.id}"]`),
           ).every(tr => !tr.contains(document.activeElement))
         ) {
-          if (isIE) {
-            element.setActive(); // IE/Edge 暂时这样使用保证ie下可以被检测到已经激活
-          } else {
-            element.focus(); // All other browsers
-          }
+          row.focus();
         }
+        // table 包含目前被focus的element
+        // 找到当前组件对应record生成的组件对象 然后遍历 每个 tr里面不是focus的目标那么这个函数触发row.focus
       }
 
-      if (overflowY) {
+      if (!isStickySupport() && overflowY) {
         const { offsetParent } = row;
         if (offsetParent) {
           const tableBodyWrap = offsetParent.parentNode as HTMLDivElement;
@@ -331,13 +338,14 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   componentDidMount() {
     const { lock, record } = this.props;
-    const {
-      tableStore: { autoFocus },
-    } = this.context;
-    if (record.status === RecordStatus.add && autoFocus) {
-      const cell = this.node && lock !== ColumnLock.right ? findFirstFocusableElement(this.node) : null;
-      if (cell) {
-        cell.focus();
+    const { tableStore } = this.context;
+    if (record.status === RecordStatus.add && tableStore.autoFocus) {
+      const editor = [...tableStore.editors.values()][0];
+      if (editor && (isStickySupport() || getColumnLock(editor.props.column.lock) === getColumnLock(lock))) {
+        const cell = findCell(tableStore, getColumnKey(editor.props.column), lock);
+        if (cell) {
+          defer(() => cell.focus())
+        }
       }
     }
     this.syncLoadData();
@@ -346,7 +354,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   componentDidUpdate() {
     const { record } = this.props;
     if (record.isCurrent) {
-      this.focusRow(this.node);
+      this.focusRow();
     }
     this.syncLoadData();
   }

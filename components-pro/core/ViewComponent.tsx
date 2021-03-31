@@ -288,6 +288,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   element: any;
 
+  height: number | string | undefined;
+
   wrapper: any;
 
   isFocus: boolean;
@@ -385,7 +387,9 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     otherProps.disabled = this.isDisabled();
     otherProps.className = this.getClassName();
     otherProps.style = {};
-    if ('height' in style) {
+    if (this.height) {
+      otherProps.style.height = this.height;
+    } else if ('height' in style) {
       otherProps.style.height = style.height;
     }
     if ('minHeight' in style) {
@@ -449,11 +453,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       props: { onFocus = noop },
       prefixCls,
     } = this;
-    onFocus(e);
     const element = this.wrapper || findDOMNode(this);
     if (element) {
       classes(element).add(`${prefixCls}-focused`);
     }
+    onFocus(e);
   }
 
   @autobind
@@ -509,4 +513,13 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       defer(() => this.focus());
     }
   }
+
+  setHeight(height) {
+    this.height = height;
+    const { element } = this;
+    if (element) {
+      element.style.height = height;
+    }
+  }
+
 }

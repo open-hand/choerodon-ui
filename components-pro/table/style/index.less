@@ -87,6 +87,11 @@
       > * {
         vertical-align: middle;
       }
+
+      &-fixed-height {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     &-dirty {
@@ -191,11 +196,14 @@
 
   &-editor {
     position: absolute;
-    left: -1000rem;
-    z-index: 2;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: none;
+    transform: translateX(-1000rem);
 
     &-lock {
-      z-index: 3;
+      z-index: 2;
     }
 
     > * {
@@ -214,16 +222,19 @@
   &-body {
     position: relative;
     overflow: auto;
+    will-change: transform;
   }
 
   &-head {
     overflow: hidden;
+    will-change: transform;
   }
 
   &-foot {
     position: relative;
     overflow-x: auto;
     background-color: @component-background;
+    will-change: transform;
   }
 
   &-export-quantity {
