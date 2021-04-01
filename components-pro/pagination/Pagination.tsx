@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, computed, runInAction, observable } from "mobx";
+import { action, computed, runInAction, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
@@ -157,7 +157,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (
       !dataSet?.props.modifiedCheck ||
       !dataSet.dirty ||
-      (await confirm(dataSet.props.modifiedCheckMessage || $l("DataSet", "unsaved_data_confirm"))) !== "cancel") {
+      (await confirm(dataSet.props.modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'))) !== 'cancel') {
       this.handleChange(this.page, Number(value));
     } else {
       runInAction(() => {
@@ -205,12 +205,12 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (value > totalPage) {
       value = totalPage;
     }
-    return value
+    return value;
   }
 
   jumpPage = debounce(value => {
     if (!isNil(value)) {
-      this.handlePagerClick(value)
+      this.handlePagerClick(value);
     }
   }, 200);
 
@@ -303,7 +303,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       props: { itemRender = defaultItemRender, disabled = false },
     } = this;
     const disabledValue = disabledSender || disabled;
-    const classNamePager = isString(type) ? `${prefixCls}-pager-${type}` : ``
+    const classNamePager = isString(type) ? `${prefixCls}-pager-${type}` : ``;
     return (
       <Pager
         key={type === 'page' ? page : type}
@@ -362,7 +362,6 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       showSizeChanger,
       sizeChangerOptionRenderer,
       disabled,
-      prefixCls,
     } = this.props;
     if (showSizeChanger) {
       const select = (
@@ -379,7 +378,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         </ObserverSelect>
       );
       return showSizeChangerLabel
-        ? [<span className={`${prefixCls}-perpage`} key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
+        ? [<span className={`${this.prefixCls}-perpage`} key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
         : select;
     }
   }
@@ -424,14 +423,14 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
             {$l('Pagination', 'jump_to_confirm')}
           </Button>
         ) : (
-            <span
-              className={`${prefixCls}-go-button`}
-              onClick={this.handleJumpGo}
-              onKeyUp={this.handleJumpGo}
-            >
+          <span
+            className={`${prefixCls}-go-button`}
+            onClick={this.handleJumpGo}
+            onKeyUp={this.handleJumpGo}
+          >
               {goButton}
             </span>
-          );
+        );
     }
 
     return (

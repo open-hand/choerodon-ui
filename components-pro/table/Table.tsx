@@ -57,9 +57,6 @@ import {
   TablePaginationPosition,
   TableQueryBarType,
 } from './enum';
-import Switch from '../switch/Switch';
-import Tooltip from '../tooltip/Tooltip';
-import { $l } from '../locale-context';
 import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
 import FilterBar from './query-bar/TableFilterBar';
@@ -71,6 +68,8 @@ import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
 import ModalProvider from '../modal-provider/ModalProvider';
+import SelectionTips from './SelectionTips';
+import { DataSetSelection } from '../data-set/enum';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
 
@@ -738,12 +737,6 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   @action
-  handleSwitchChange(value) {
-    this.tableStore.showCachedSeletion = !!value;
-  }
-
-  @autobind
-  @action
   handleResize(width: number) {
     const { element, tableStore } = this;
     if (!element.offsetParent) {
@@ -1209,12 +1202,30 @@ export default class Table extends DataSetComponent<TableProps> {
   componentWillMount() {
     super.componentWillMount();
     this.initDefaultExpandedRows();
-    this.processDataSetListener(true);
+    this.connect();
   }
 
   componentDidMount() {
     this.syncSize();
     this.syncSizeInFrame();
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    super.componentWillReceiveProps(nextProps, nextContext);
+    this.disconnect();
+    this.tableStore.updateProps(nextProps);
+    this.connect();
+  }
+
+  componentWillUnmount() {
+    this.disconnect();
+    if (this.scrollId !== undefined) {
+      raf.cancel(this.scrollId);
+    }
+  }
+
+  connect() {
+    this.processDataSetListener(true);
     // 为什么使用 pointerup
     // 因为需要对disabled的元素进行特殊处理
     // 因为状态的改变依赖 mouseup 而在disabled的元素上 无法触发mouseup事件
@@ -1224,22 +1235,15 @@ export default class Table extends DataSetComponent<TableProps> {
     // https://stackoverflow.com/questions/62081666/the-event-of-the-document-is-not-triggered-when-it-is-on-a-disabled-element
     // 而使用指针事件可以突破disabled的限制
     // https://stackoverflow.com/questions/62126515/how-to-get-the-state-of-the-mouse-through-javascript/62127845#62127845
-    document.addEventListener('pointerup', this.handleDragMouseUp);
+    if (this.tableStore.useMouseBatchChoose) {
+      document.addEventListener('pointerup', this.handleDragMouseUp);
+    }
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    super.componentWillReceiveProps(nextProps, nextContext);
+  disconnect() {
     this.processDataSetListener(false);
-    this.tableStore.setProps(nextProps);
-    this.tableStore.initColumns();
-    this.processDataSetListener(true);
-  }
-
-  componentWillUnmount() {
-    this.processDataSetListener(false);
-    document.removeEventListener('pointerup', this.handleDragMouseUp);
-    if (this.scrollId !== undefined) {
-      raf.cancel(this.scrollId);
+    if (this.tableStore.useMouseBatchChoose) {
+      document.removeEventListener('pointerup', this.handleDragMouseUp);
     }
   }
 
@@ -1601,7 +1605,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getPagination(position: TablePaginationPosition): ReactElement<PaginationProps> | undefined {
     const {
-      props: { dataSet },
+      props: { dataSet, selectionMode },
       tableStore: { prefixCls, pagination },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
@@ -1615,30 +1619,10 @@ export default class Table extends DataSetComponent<TableProps> {
             className={classNames(`${prefixCls}-pagination`, paginationProps.className)}
             dataSet={dataSet}
           >
-            {this.getCacheSelectionSwitch()}
+            {selectionMode !== SelectionMode.none && dataSet.selection === DataSetSelection.multiple && <SelectionTips />}
           </Pagination>
         );
       }
-    }
-  }
-
-  getCacheSelectionSwitch() {
-    const {
-      props: { dataSet },
-    } = this;
-    if (dataSet && dataSet.cacheSelectionKeys && dataSet.cachedSelected.length) {
-      const { prefixCls, showCachedSeletion } = this.tableStore;
-      return (
-        <Tooltip
-          title={$l('Table', showCachedSeletion ? 'hide_cached_seletion' : 'show_cached_seletion')}
-        >
-          <Switch
-            className={`${prefixCls}-switch`}
-            checked={showCachedSeletion}
-            onChange={this.handleSwitchChange}
-          />
-        </Tooltip>
-      );
     }
   }
 

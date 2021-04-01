@@ -6,6 +6,7 @@ const locale: Locale = {
   Table: {
     show_cached_seletion: 'Show all selected records',
     hide_cached_seletion: 'Hide all selected records',
+    selection_tips: '{count} data selected',
     edit_button: 'Edit',
     create_button: 'Create',
     save_button: 'Save',

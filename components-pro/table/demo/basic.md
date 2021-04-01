@@ -110,6 +110,7 @@ class App extends React.Component {
     autoQuery: true,
     exportMode:'client',
     pageSize: 5,
+    cacheSelection: true,
     transport: {
       read({ params: { page, pagesize } }) {
         return {

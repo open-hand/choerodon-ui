@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>LovConfig`: 新增 tableProps, dataSetProps 配置。
 - 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip, drawerSectionBorder 属性。
+- 🌟 `<pro>Table`: 新增选择记录的提示。
 - 🌟 `<pro>Table`: 新增 clientExportQuantity 配置客户端导出查询数量和轮询导出。
 - 🌟 `<pro>Cascader`: 新增 searchable, searchMatcher 实现可搜索配置。
 - 🌟 `<pro>Table`: 新增 customizable, virtualCell 属性。

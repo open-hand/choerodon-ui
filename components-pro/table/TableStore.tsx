@@ -600,7 +600,7 @@ export default class TableStore {
     });
   }
 
-  @observable showCachedSeletion?: boolean;
+  @observable showCachedSelection?: boolean;
 
   get isTree(): boolean {
     return this.props.mode === TableMode.tree;
@@ -889,7 +889,7 @@ export default class TableStore {
   @computed
   get data(): Record[] {
     const { filter, pristine } = this.props;
-    const { dataSet, isTree, showCachedSeletion } = this;
+    const { dataSet, isTree, showCachedSelection } = this;
     let data = isTree ? dataSet.treeRecords : dataSet.records;
     if (typeof filter === 'function') {
       data = data.filter(filter);
@@ -897,7 +897,7 @@ export default class TableStore {
     if (pristine) {
       data = data.filter(record => !record.isNew);
     }
-    if (showCachedSeletion) {
+    if (showCachedSelection) {
       return [...dataSet.cachedSelected, ...data];
     }
     return data;
@@ -957,7 +957,7 @@ export default class TableStore {
       dataSet.selectAll(filter);
     } else {
       dataSet.unSelectAll();
-      if (this.showCachedSeletion) {
+      if (this.showCachedSelection) {
         dataSet.clearCachedSelected();
       }
     }
@@ -965,7 +965,7 @@ export default class TableStore {
 
   constructor(node) {
     runInAction(() => {
-      this.showCachedSeletion = false;
+      this.showCachedSelection = false;
       this.lockColumnsHeadRowsHeight = {};
       this.lockColumnsBodyRowsHeight = {};
       this.lockColumnsFootRowsHeight = {};
@@ -1032,6 +1032,17 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
+  }
+
+  @action
+  updateProps(props) {
+    this.setProps(props);
+    const { customizedCode } = this.props;
+    if (this.customizable && customizedCode !== props.customizedCode) {
+      this.loadCustomized().then(() => this.initColumns());
+    } else {
+      this.initColumns();
+    }
   }
 
   @action

@@ -6,6 +6,7 @@ const locale: Locale = {
   Table: {
     show_cached_seletion: '显示所有已选记录',
     hide_cached_seletion: '隐藏所有已选记录',
+    selection_tips: '已勾选 {count} 条数据',
     edit_button: '编辑',
     create_button: '新增',
     save_button: '保存',

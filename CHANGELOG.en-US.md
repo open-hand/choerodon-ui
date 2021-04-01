@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>LovConfig`: Added `tableProps`, `dataSetProps` configuration.
 - 🌟 `configure`: Added `tableCustomizable`, `tableColumnTooltip`, `drawerSectionBorder` properties.
+- 🌟 `<pro>Table`: Added a prompt for selected records under table.
 - 🌟 `<pro>Table`: Added `clientExportQuantity` to configure the number of export queries.
 - 🌟 `<pro>Cascader`: Added `searchable`, `searchMatcher` properties to searchable the options;
 - 🌟 `<pro>Table`: Added `customizable`, `virtualCell` properties.

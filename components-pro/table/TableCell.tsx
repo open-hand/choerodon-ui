@@ -731,11 +731,13 @@ export default class TableCell extends Component<TableCellProps> {
           } else {
             editor.hideEditor();
           }
-        } else {
-          if (!tableStore.inlineEdit) {
-            editor.alignEditor(!isStickySupport() && lock ? findCell(tableStore, getColumnKey(column), lock) : cell);
-          }
+        } else if (tableStore.inlineEdit) {
           editor.focus();
+        } else {
+          raf(() => {
+            editor.alignEditor(!isStickySupport() && lock ? findCell(tableStore, getColumnKey(column), lock) : cell);
+            editor.focus();
+          });
         }
       }
     }

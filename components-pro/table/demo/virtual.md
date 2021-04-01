@@ -180,6 +180,7 @@ class App extends React.Component {
         key="user"
         virtual
         selectionMode='click'
+        selectedHighLightRow
         dataSet={this.userDs}
         style={{ height: 300 }}
         columns={columns}
