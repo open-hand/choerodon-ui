@@ -81,11 +81,12 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   componentDidMount() {
-    const { column: { name } } = this.props;
+    const { column } = this.props;
     const {
       tableStore,
     } = this.context;
-    const { dataSet, currentEditRecord, editors, inlineEdit } = tableStore;
+    const { name } = column;
+    const { dataSet, currentEditRecord, editors, inlineEdit, virtual } = tableStore;
     const record = currentEditRecord || dataSet.current;
     const field = record?.getField(name) || dataSet.getField(name);
     if (field?.get('multiLine')) {
@@ -95,6 +96,10 @@ export default class TableEditor extends Component<TableEditorProps> {
     editors.set(name, this);
     if (inlineEdit) {
       this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? this.alignEditor() : this.hideEditor());
+    } else if (virtual) {
+      this.reaction = reaction(() => tableStore.virtualData.includes(dataSet.current), (exists) => (
+        exists && this.cellNode ? this.alignEditor() : this.hideEditor()
+      ));
     }
   }
 
@@ -288,7 +293,7 @@ export default class TableEditor extends Component<TableEditorProps> {
       }
       const height = pxToRem(offsetHeight);
       const width = pxToRem(offsetWidth);
-      wrap.style.cssText = `display: initial;transform:translate(${pxToRem(left)}, ${pxToRem(top)});width:${width}`;
+      wrap.style.cssText = `transform:translate(${pxToRem(left)}, ${pxToRem(top)});width:${width}`;
       const { height: stateHeight } = this.state;
       if (height !== stateHeight) {
         this.setState({ height });

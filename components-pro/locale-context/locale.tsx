@@ -7,6 +7,7 @@ export interface Locale {
   Table: {
     show_cached_seletion;
     hide_cached_seletion;
+    selection_tips;
     edit_button;
     create_button;
     save_button;

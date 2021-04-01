@@ -6,6 +6,7 @@ const locale: Locale = {
   Table: {
     show_cached_seletion: '選択したすべてのレコードを表示',
     hide_cached_seletion: '選択したすべてのレコードを非表示にする',
+    selection_tips: '{count} データがチェックされました',
     edit_button: '編集',
     create_button: '追加',
     save_button: 'セーブ',
