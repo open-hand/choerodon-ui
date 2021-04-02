@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { action, IReactionDisposer, reaction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
+import raf from 'raf';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -97,8 +98,8 @@ export default class TableEditor extends Component<TableEditorProps> {
     if (inlineEdit) {
       this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? this.alignEditor() : this.hideEditor());
     } else if (virtual) {
-      this.reaction = reaction(() => tableStore.virtualData.includes(dataSet.current), (exists) => (
-        exists && this.cellNode ? this.alignEditor() : this.hideEditor()
+      this.reaction = reaction(() => tableStore.virtualData, (records) => (
+        records.includes(dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
       ));
     }
   }
