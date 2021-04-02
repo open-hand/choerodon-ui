@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed the big data table problem.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 - 🐞 `<pro>FormField`: Fix the problem that the defaultValue value will be cleaned up on state change.
+- 🐞 `<pro>Table`: Fixed the problem that editor will not auto scroll into view in virtual mode.
 
 ## 1.2.0
 
