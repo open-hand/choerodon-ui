@@ -182,11 +182,16 @@ export default class TableEditor extends Component<TableEditorProps> {
   @autobind
   handleEditorKeyDown(e) {
     const ctrlKey = e.ctrlKey || e.metaKey;
-    if (e.keyCode !== KeyCode.ESC || !e.isDefaultPrevented()) {
+    if (![KeyCode.ESC, KeyCode.TAB].includes(e.keyCode) || !e.isDefaultPrevented()) {
       const { tableStore } = this.context;
       const { keyboard } = tableStore;
       switch (e.keyCode) {
-        case KeyCode.ESC:
+        case KeyCode.ESC: {
+          if (this.editor) {
+            this.editor.blur();
+          }
+          break;
+        }
         case KeyCode.TAB: {
           this.inTab = true;
           const { column } = this.props;
