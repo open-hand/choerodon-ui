@@ -690,9 +690,9 @@ export default class TableCell extends Component<TableCellProps> {
     if (name && cellEditor && !this.cellEditorInCell) {
       const { tableStore } = this.context;
       if (!lock) {
-        const { node, overflowX } = tableStore;
+        const { node, overflowX, virtual } = tableStore;
         if (overflowX) {
-          const tableBodyWrap = cell.offsetParent;
+          const tableBodyWrap = virtual ? cell.offsetParent.parentNode.parentNode : cell.offsetParent;
           if (tableBodyWrap) {
             const { leftLeafColumnsWidth, rightLeafColumnsWidth } = tableStore;
             const { offsetLeft, offsetWidth } = cell;
