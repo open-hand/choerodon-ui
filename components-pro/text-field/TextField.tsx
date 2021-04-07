@@ -602,7 +602,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       otherProps.style = {
         ...otherProps.style,
         textIndent: -1000,
-        width: isFlat ? width : 'auto',
+        width: isFlat ? width : undefined,
       };
     } else if (isFlat) {
       otherProps.style = { width, ...otherProps.style };
