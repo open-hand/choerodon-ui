@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useCallback, useContext } from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { action } from 'mobx';
 import { $l } from '../locale-context';
 import TableContext from './TableContext';

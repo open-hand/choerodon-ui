@@ -305,7 +305,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
     let activeModal: ModalProps | undefined;
     const items = modals.map((props, index) => {
-      const { drawerTransitionName, drawer, key } = props;
+      const { drawerTransitionName = getConfig('drawerTransitionName'), drawer, key } = props;
       const style: CSSProperties = {
         ...props.style,
       };
