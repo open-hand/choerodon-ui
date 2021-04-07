@@ -144,7 +144,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     fullScreen: false,
     drawer: false,
     drawerOffset: 150,
-    drawerTransitionName: 'slide-right',
     autoFocus: true,
   };
 
@@ -266,7 +265,6 @@ export default class Modal extends ViewComponent<ModalProps> {
       'border',
       'drawerBorder',
       'okFirst',
-      'drawerTransitionName',
       'autoCenter',
       'keyboard',
       'mousePosition',
@@ -307,7 +305,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         style = {},
         fullScreen,
         drawer,
-        drawerTransitionName,
+        drawerTransitionName = getConfig('drawerTransitionName'),
         size,
         active,
         border = getConfig('modalSectionBorder'),
