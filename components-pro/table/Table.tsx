@@ -1444,11 +1444,12 @@ export default class Table extends DataSetComponent<TableProps> {
 
   handleBodyScrollLeft(e, currentTarget) {
     const { target } = e;
+    const { tableStore } = this;
     const headTable = this.tableHeadWrap;
     const bodyTable = this.tableBodyWrap;
     const footTable = this.tableFootWrap;
     if (
-      this.tableStore.overflowX === undefined ||
+      !tableStore.overflowX ||
       currentTarget !== target ||
       target === this.fixedColumnsBodyRight ||
       target === this.fixedColumnsBodyLeft
@@ -1457,6 +1458,17 @@ export default class Table extends DataSetComponent<TableProps> {
     }
     const { scrollLeft } = target;
     if (scrollLeft !== this.lastScrollLeft) {
+      if (isStickySupport()) {
+        [...tableStore.editors.values()].forEach((editor) => {
+          if (editor.lock && editor.cellNode) {
+            if (tableStore.inlineEdit) {
+              editor.alignEditor(editor.cellNode);
+            } else {
+              editor.hideEditor();
+            }
+          }
+        });
+      }
       if (headTable && target !== headTable) {
         headTable.scrollLeft = scrollLeft;
       }

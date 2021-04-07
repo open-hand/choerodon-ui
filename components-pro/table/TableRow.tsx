@@ -56,6 +56,8 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   childrenRendered: boolean = false;
 
+  isCurrent: boolean = false;
+
   node: HTMLTableRowElement | null;
 
   @computed
@@ -353,9 +355,10 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   componentDidUpdate() {
     const { record } = this.props;
-    if (record.isCurrent) {
+    if (record.isCurrent && !this.isCurrent) {
       this.focusRow();
     }
+    this.isCurrent = record.isCurrent;
     this.syncLoadData();
   }
 
