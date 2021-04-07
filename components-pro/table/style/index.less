@@ -1064,11 +1064,14 @@
   }
 
   &-pagination {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
     margin: 0.1rem 0 0 0;
     text-align: right;
+
+    &-with-selection-tips {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
   }
 
   &-selection-tips {
@@ -1077,7 +1080,8 @@
     align-items: center;
     text-align: left;
 
-    .@{iconfont-css-prefix} {
+    .@{table-prefix-cls}-switch {
+      float: none;
       margin-left: .1rem;
     }
 

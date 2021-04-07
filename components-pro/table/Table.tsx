@@ -271,6 +271,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   alwaysShowRowBox?: boolean;
   /**
+   * 显示选择提示
+   */
+  showSelectionTips?: boolean;
+  /**
    * 设置行属性
    * @param {onRowProps} props
    * @return {Object} 行属性
@@ -1618,7 +1622,7 @@ export default class Table extends DataSetComponent<TableProps> {
   getPagination(position: TablePaginationPosition): ReactElement<PaginationProps> | undefined {
     const {
       props: { dataSet, selectionMode },
-      tableStore: { prefixCls, pagination },
+      tableStore: { prefixCls, pagination, showSelectionTips },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
       const paginationPosition = getPaginationPosition(pagination);
@@ -1628,7 +1632,7 @@ export default class Table extends DataSetComponent<TableProps> {
           <Pagination
             key={`pagination-${position}`}
             {...paginationProps}
-            className={classNames(`${prefixCls}-pagination`, paginationProps.className)}
+            className={classNames(`${prefixCls}-pagination`, paginationProps.className, { [`${prefixCls}-pagination-with-selection-tips`]: showSelectionTips })}
             dataSet={dataSet}
           >
             {selectionMode !== SelectionMode.none && dataSet.selection === DataSetSelection.multiple && <SelectionTips />}
