@@ -35,6 +35,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复表格中 autoHeight 的计算问题。
 - 🐞 `<pro>FormField`: 修复 defaultValue 值会被清理的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动时编辑器获焦不会自动进入视区的问题。
+- 🐞 `<pro>Table`: 修复当表格更新时会自动获取焦点的问题。
+- 🐞 `<pro>Output`: 修复值集显示值是数字0时渲染为空的问题。
 
 ## 1.2.0
 

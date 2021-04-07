@@ -300,9 +300,9 @@ export default class TableRow extends Component<TableRowProps, any> {
         if (
           element &&
           element.contains(document.activeElement) &&
-          isStickySupport() ? !row.contains(document.activeElement) : Array.from<HTMLTableRowElement>(
+          (isStickySupport() ? !row.contains(document.activeElement) : Array.from<HTMLTableRowElement>(
             element.querySelectorAll(`tr[data-index="${record.id}"]`),
-          ).every(tr => !tr.contains(document.activeElement))
+          ).every(tr => !tr.contains(document.activeElement)))
         ) {
           row.focus();
         }
