@@ -103,6 +103,7 @@ export type Config = {
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;
   tableDefaultRenderer?: Renderer;
+  tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;
