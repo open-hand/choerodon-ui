@@ -66,7 +66,9 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   @autobind
   onWindowResize() {
-    this.forceUpdate();
+    if (this.cellNode) {
+      this.alignEditor();
+    }
   }
 
   /**
@@ -96,7 +98,7 @@ export default class TableEditor extends Component<TableEditorProps> {
     window.addEventListener('resize', this.onWindowResize);
     editors.set(name, this);
     if (inlineEdit) {
-      this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? this.alignEditor() : this.hideEditor());
+      this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? raf(() => this.alignEditor()) : this.hideEditor());
     } else if (virtual) {
       this.reaction = reaction(() => tableStore.virtualData, (records) => (
         records.includes(dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
@@ -181,17 +183,14 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   @autobind
   handleEditorKeyDown(e) {
-    const ctrlKey = e.ctrlKey || e.metaKey;
     if (![KeyCode.ESC, KeyCode.TAB].includes(e.keyCode) || !e.isDefaultPrevented()) {
+      const ctrlKey = e.ctrlKey || e.metaKey;
       const { tableStore } = this.context;
       const { keyboard } = tableStore;
       switch (e.keyCode) {
-        case KeyCode.ESC: {
-          if (this.editor) {
-            this.editor.blur();
-          }
+        case KeyCode.ESC:
+          this.blur();
           break;
-        }
         case KeyCode.TAB: {
           this.inTab = true;
           const { column } = this.props;
@@ -273,6 +272,13 @@ export default class TableEditor extends Component<TableEditorProps> {
     }
   }
 
+  blur() {
+    const { editor } = this;
+    if (editor) {
+      editor.blur();
+    }
+  }
+
   focus() {
     const { editor } = this;
     if (editor) {
@@ -325,16 +331,12 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   showNextEditor(reserve: boolean) {
-    if (this.editor) {
-      this.editor.blur();
-    }
+    this.blur();
     const { tableStore } = this.context;
     const { column } = this.props;
     tableStore.showNextEditor(column.name, reserve);
     this.alignEditor();
-    if (this.editor) {
-      this.editor.focus();
-    }
+    this.focus();
   }
 
   /**

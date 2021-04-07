@@ -635,6 +635,18 @@ export default class TableStore {
   }
 
   @computed
+  get showSelectionTips(): boolean {
+    const { showSelectionTips } = this.props;
+    if (showSelectionTips !== undefined) {
+      return showSelectionTips;
+    }
+    if (getConfig('tableShowSelectionTips') !== undefined) {
+      return getConfig('tableShowSelectionTips');
+    }
+    return false;
+  }
+
+  @computed
   get overflowX(): boolean {
     if (isNumber(this.width)) {
       return this.totalLeafColumnsWidth > this.width;

@@ -74,6 +74,8 @@ subtitle: 表格
 | treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | |
 | treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | boolean |  |
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
+| clientExportQuantity | 导出一次轮询数量 | number | 100 |
+| showSelectionTips | 是否显示选中记录提示  | boolean | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
 

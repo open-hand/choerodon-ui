@@ -103,6 +103,7 @@ export type Config = {
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;
   tableDefaultRenderer?: Renderer;
+  tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;
@@ -118,6 +119,7 @@ export type Config = {
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;
+  drawerTransitionName?: string;
   modalAutoCenter?: boolean;
   modalOkFirst?: boolean;
   drawerOkFirst?: boolean;
@@ -235,6 +237,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableCustomizedLoad', (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) || 'null'))],
   ['modalSectionBorder', true],
   ['drawerSectionBorder', true],
+  ['drawerTransitionName', 'slide-right'],
   ['modalOkFirst', true],
   ['modalAutoCenter', false],
   ['drawerOkFirst', undefined],

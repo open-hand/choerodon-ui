@@ -55,6 +55,7 @@ const prefixCls = getConfig('prefixCls');
 | tableButtonProps | 默认 TableButton 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableCommandProps | 默认 TableCommand 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableDefaultRenderer | 默认 Table 为空时 renderer 的内容 | ReactNode | '' |
+| tableShowSelectionTips | Table默认显示选中记录提示 | boolean | false |
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
@@ -76,6 +77,7 @@ const prefixCls = getConfig('prefixCls');
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
 | drawerSectionBorder | 默认 Drawer 的头和脚有边框线 | boolean | true |
+| drawerTransitionName | 抽屉模式使用的动画， 可选值： 'slide-right' 'slide-left' 'slide-up' 'slide-down' | string | 'slide-right' |
 | modalOkFirst | 默认 Modal 的 ok 按钮排在第一个 | boolean | true |
 | modalKeyboard | Modal 是否支持键盘 esc 关闭 | boolean | true |
 | modalAutoCenter | Modal 是否默认居中 | boolean | false |

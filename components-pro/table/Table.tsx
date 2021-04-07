@@ -271,6 +271,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   alwaysShowRowBox?: boolean;
   /**
+   * 显示选择提示
+   */
+  showSelectionTips?: boolean;
+  /**
    * 设置行属性
    * @param {onRowProps} props
    * @return {Object} 行属性
@@ -1444,11 +1448,12 @@ export default class Table extends DataSetComponent<TableProps> {
 
   handleBodyScrollLeft(e, currentTarget) {
     const { target } = e;
+    const { tableStore } = this;
     const headTable = this.tableHeadWrap;
     const bodyTable = this.tableBodyWrap;
     const footTable = this.tableFootWrap;
     if (
-      this.tableStore.overflowX === undefined ||
+      !tableStore.overflowX ||
       currentTarget !== target ||
       target === this.fixedColumnsBodyRight ||
       target === this.fixedColumnsBodyLeft
@@ -1457,6 +1462,17 @@ export default class Table extends DataSetComponent<TableProps> {
     }
     const { scrollLeft } = target;
     if (scrollLeft !== this.lastScrollLeft) {
+      if (isStickySupport()) {
+        [...tableStore.editors.values()].forEach((editor) => {
+          if (editor.lock && editor.cellNode) {
+            if (tableStore.inlineEdit) {
+              editor.alignEditor(editor.cellNode);
+            } else {
+              editor.hideEditor();
+            }
+          }
+        });
+      }
       if (headTable && target !== headTable) {
         headTable.scrollLeft = scrollLeft;
       }
@@ -1606,7 +1622,7 @@ export default class Table extends DataSetComponent<TableProps> {
   getPagination(position: TablePaginationPosition): ReactElement<PaginationProps> | undefined {
     const {
       props: { dataSet, selectionMode },
-      tableStore: { prefixCls, pagination },
+      tableStore: { prefixCls, pagination, showSelectionTips },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
       const paginationPosition = getPaginationPosition(pagination);
@@ -1616,7 +1632,7 @@ export default class Table extends DataSetComponent<TableProps> {
           <Pagination
             key={`pagination-${position}`}
             {...paginationProps}
-            className={classNames(`${prefixCls}-pagination`, paginationProps.className)}
+            className={classNames(`${prefixCls}-pagination`, paginationProps.className, { [`${prefixCls}-pagination-with-selection-tips`]: showSelectionTips })}
             dataSet={dataSet}
           >
             {selectionMode !== SelectionMode.none && dataSet.selection === DataSetSelection.multiple && <SelectionTips />}
