@@ -38,6 +38,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 - 🐞 `<pro>FormField`: Fix the problem that the defaultValue value will be cleaned up on state change.
 - 🐞 `<pro>Table`: Fixed the problem that editor will not auto scroll into view in virtual mode.
+- 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
+- 🐞 `<pro>Table`: Fixed table virtual scrolling combined with automatic height table overflow.
 
 ## 1.2.0
 
