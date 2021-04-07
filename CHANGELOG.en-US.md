@@ -40,6 +40,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem that editor will not auto scroll into view in virtual mode.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 - 🐞 `<pro>Table`: Fixed table virtual scrolling combined with automatic height table overflow.
+- 🐞 `<pro>Table`: Fixed the problem that table will auto focused when updated.
+- 🐞 `<pro>Output`：Fixed the issue that the rendered text is empty when the lookup's display value is the number 0.
 
 ## 1.2.0
 
