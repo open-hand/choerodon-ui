@@ -30,13 +30,17 @@ timeline: true
 - 💄 `<pro>Table`: 当编辑器为 TextArea 时，行高可随 TextArea 大小的变更调整大小。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
 - 💄 `<pro>PerformanceTable`: 优化样式，加载条。
+- 🐞 `<pro>TextFiled`: 修复 renderer 配置出现的样式问题。
+- 🐞 `<pro>DatePicker`: 修复 DatePicker 年份选择的渲染空白问题。
+- 🐞 `<pro>FormField`: 修复 NumberField 当值为 0 配置 range 时候不会自动切换位置。
 - 🐞 `<pro>Tooltip`: 修复样式优先级。
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格问题。
 - 🐞 `<pro>Table`: 修复表格中 autoHeight 的计算问题。
 - 🐞 `<pro>FormField`: 修复 defaultValue 值会被清理的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动时编辑器获焦不会自动进入视区的问题。
+- 🐞 `<pro>Table`: 修复表格虚拟滚动结合自动高度表格溢出问题。
 - 🐞 `<pro>Table`: 修复当表格更新时会自动获取焦点的问题。
-- 🐞 `<pro>Output`: 修复值集显示值是数字0时渲染为空的问题。
+- 🐞 `<pro>Output`: 修复值集显示值是数字 0 时渲染为空的问题。
 
 ## 1.2.0
 

@@ -355,7 +355,7 @@ export default class TableStore {
   @computed
   get virtualHeight(): number {
     const { rowHeight, data } = this;
-    return Math.round(data.length * Number(rowHeight));
+    return Math.round(data.length * (Number(rowHeight)  + 3));
   }
 
   @computed
