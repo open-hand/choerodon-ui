@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>LovConfig`: 新增 tableProps, dataSetProps 配置。
-- 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip, drawerSectionBorder, tableShowSelectionTips 属性。
+- 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip, drawerSectionBorder, tableShowSelectionTips, drawerTransitionName 属性。
 - 🌟 `<pro>Table`: 新增选择记录的提示。
 - 🌟 `<pro>Table`: 新增 clientExportQuantity 配置客户端导出查询数量和轮询导出。
 - 🌟 `<pro>Cascader`: 新增 searchable, searchMatcher 实现可搜索配置。
@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>Table`: 当编辑器为 TextArea 时，行高可随 TextArea 大小的变更调整大小。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
 - 💄 `<pro>PerformanceTable`: 优化样式，加载条。
+- 🐞 `<pro>Tooltip`: 修复样式优先级。
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格问题。
 - 🐞 `<pro>Table`: 修复表格中 autoHeight 的计算问题。
 - 🐞 `<pro>FormField`: 修复 defaultValue 值会被清理的问题。

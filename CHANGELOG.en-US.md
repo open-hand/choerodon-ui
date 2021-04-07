@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>LovConfig`: Added `tableProps`, `dataSetProps` configuration.
-- 🌟 `configure`: Added `tableCustomizable`, `tableColumnTooltip`, `drawerSectionBorder`, `tableShowSelectionTips` properties.
+- 🌟 `configure`: Added `tableCustomizable`, `tableColumnTooltip`, `drawerSectionBorder`, `tableShowSelectionTips`, `drawerTransitionName` properties.
 - 🌟 `<pro>Table`: Added a prompt for selected records under table.
 - 🌟 `<pro>Table`: Added `clientExportQuantity` to configure the number of export queries.
 - 🌟 `<pro>Cascader`: Added `searchable`, `searchMatcher` properties to searchable the options;
@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>Table`: When the editor is TextArea, the line height can be adjusted with the TextArea resizing.
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
+- 🐞 `<pro>Tooltip`: Fixed style priority.
 - 🐞 `<pro>PerformanceTable`: Fixed the big data table problem.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 - 🐞 `<pro>FormField`: Fix the problem that the defaultValue value will be cleaned up on state change.

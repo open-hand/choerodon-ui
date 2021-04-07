@@ -68,8 +68,7 @@ const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) =>
 });
 
 
-// @ts-ignore
-const Store = createContext();
+const Store = createContext({} as any);
 
 export default Store;
 
