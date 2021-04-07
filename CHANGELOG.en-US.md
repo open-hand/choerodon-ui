@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
 - 🐞 `<pro>TextFiled`: Fixed the `renderer` style error.
+- 🐞 `<pro>FormField`: Fixed the range number change position error when the value is 0.
 - 🐞 `<pro>PerformanceTable`: Fixed the big data table problem.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 - 🐞 `<pro>FormField`: Fix the problem that the defaultValue value will be cleaned up on state change.

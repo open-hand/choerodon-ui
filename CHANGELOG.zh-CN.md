@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
 - 💄 `<pro>PerformanceTable`: 优化样式，加载条。
 - 🐞 `<pro>TextFiled`: 修复 renderer 配置出现的样式问题。
+- 🐞 `<pro>FormField`: 修复 NumberField 当值为0时候不会自动切换位置。
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格问题。
 - 🐞 `<pro>Table`: 修复表格中 autoHeight 的计算问题。
 - 🐞 `<pro>FormField`: 修复 defaultValue 值会被清理的问题。

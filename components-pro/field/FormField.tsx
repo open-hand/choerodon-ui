@@ -947,11 +947,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         const [start, end] = rangeValue;
         const newValue = values.pop();
         rangeValue[rangeTarget] = newValue;
-        if (rangeTarget === 0 && newValue && end && this.isLowerRange(end, newValue)) {
+        if (rangeTarget === 0 && (newValue || isNumber(newValue)) && (end || isNumber(end)) && this.isLowerRange(end, newValue)) {
           rangeValue[rangeTarget] = end;
           rangeValue[1] = newValue;
         }
-        if (rangeTarget === 1 && newValue && start && this.isLowerRange(newValue, start)) {
+        if (rangeTarget === 1 &&  (newValue || isNumber(newValue)) && (start || isNumber(start)) && this.isLowerRange(start, newValue)) {
           rangeValue[rangeTarget] = start;
           rangeValue[0] = newValue;
         }
