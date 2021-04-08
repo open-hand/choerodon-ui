@@ -137,11 +137,15 @@ export default class Lov extends Select<LovProps> {
 
   @computed
   get searchable(): boolean {
+    const { searchable } = this.observableProps;
+    if (searchable === false) {
+      return searchable;
+    }
     const config = this.getConfig();
     if (config) {
       return config.editableFlag === 'Y';
     }
-    return !!this.props.searchable;
+    return true;
   }
 
   @computed
