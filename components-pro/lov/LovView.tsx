@@ -121,7 +121,6 @@ export default class LovView extends Component<LovViewProps> {
       tableProps,
     } = this.props;
     const lovTableProps: TableProps = {
-      ...tableProps,
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
       onKeyDown: this.handleKeyDown,
@@ -129,6 +128,8 @@ export default class LovView extends Component<LovViewProps> {
       columns: this.getColumns(),
       queryFieldsLimit: queryColumns,
       queryBar: this.getQueryBar(),
+      ...configTableProps,
+      ...tableProps,
     };
 
     if (multiple) {
@@ -153,6 +154,6 @@ export default class LovView extends Component<LovViewProps> {
       'selectionMode',
     ]));
 
-    return <Table {...lovTableProps} {...configTableProps} />;
+    return <Table {...lovTableProps} />;
   }
 }
