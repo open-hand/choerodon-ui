@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>Table`: When the editor is TextArea, the line height can be adjusted with the TextArea resizing.
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
+- 💄 `<pro>Lov`: Prompt the priority of searchable attribute when value is false.
 - 🐞 `<pro>TextFiled`: Fixed the `renderer` style error.
 - 🐞 `<pro>DatePicker`: Fixed the DatePicker year render blank.
 - 🐞 `<pro>FormField`: Fixed the range number change position error when the value is 0.
