@@ -35,7 +35,7 @@ timeline: true
 - 💄 `<pro>Table`: 当编辑器为 TextArea 时，行高可随 TextArea 大小的变更调整大小。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
 - 💄 `<pro>PerformanceTable`: 优化样式，加载条。
-- 💄 `<pro>Lov`: 废弃 lovEvents，新增 dataSetProps 属性。
+- 💄 `<pro>Lov`: 废弃 lovEvents。
 - 💄 `<pro>Lov`: 提高 searchable 属性值为 false 的优先级。
 - 🐞 `<pro>TextFiled`: 修复 renderer 配置出现的样式问题。
 - 🐞 `<pro>DatePicker`: 修复 DatePicker 年份选择的渲染空白问题。

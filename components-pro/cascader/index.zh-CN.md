@@ -35,7 +35,8 @@ subtitle: 级联选择
 | onChoose | 选择一个值的时候触发| (value,record) => void | - |
 | onUnChoose | 取消选中一个值的时候触发多选时候生效|  (value,record) => void | - |
 | changeOnSelect | 所选既所得 | boolean | - |
-
+| searchable | 是否可搜索 | boolean | false |
+| searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField) && record.get(textField).indexOf(text) !== -1 |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
