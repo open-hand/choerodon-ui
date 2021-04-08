@@ -30,11 +30,16 @@ timeline: true
 - 💄 `<pro>Table`: When the editor is TextArea, the line height can be adjusted with the TextArea resizing.
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
+- 🐞 `<pro>TextFiled`: Fixed the `renderer` style error.
+- 🐞 `<pro>DatePicker`: Fixed the DatePicker year render blank.
+- 🐞 `<pro>FormField`: Fixed the range number change position error when the value is 0.
 - 🐞 `<pro>Tooltip`: Fixed style priority.
 - 🐞 `<pro>PerformanceTable`: Fixed the big data table problem.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 - 🐞 `<pro>FormField`: Fix the problem that the defaultValue value will be cleaned up on state change.
 - 🐞 `<pro>Table`: Fixed the problem that editor will not auto scroll into view in virtual mode.
+- 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
+- 🐞 `<pro>Table`: Fixed table virtual scrolling combined with automatic height table overflow.
 - 🐞 `<pro>Table`: Fixed the problem that table will auto focused when updated.
 - 🐞 `<pro>Output`：Fixed the issue that the rendered text is empty when the lookup's display value is the number 0.
 

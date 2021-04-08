@@ -131,6 +131,7 @@ export default class DecadeYearsView extends DaysView {
       };
       if (!isDisabled) {
         decadeProps.onClick = this.handleCellClick.bind(this, currentYear);
+        decadeProps.children = this.renderInner(text);
       }
 
       cells.push(renderer(decadeProps, text, currentYear, selected));
