@@ -37,7 +37,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
 - 💄 `<pro>TextField`: Optimized the inability to copy selected values when the `range` is configured in the `disabled` state.
 - 💄 `<pro>Lov`: Deprecated `lovEvents` attribute.
-- 💄 `<pro>Lov`: Prompt the priority of `searchable` attribute when value is false.
+- 💄 `<pro>Lov`: Increase the priority of `searchable` attribute when value is false.
 - 🐞 `<pro>TextField`: Fixed the `renderer` style error.
 - 🐞 `<pro>DatePicker`: Fixed DatePicker filter footer location current date cannot be filtered.
 - 🐞 `<pro>DatePicker`: Fixed the DatePicker year render blank.
@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed table virtual scrolling combined with automatic height table overflow.
 - 🐞 `<pro>Table`: Fixed the problem that table will auto focused when updated.
 - 🐞 `<pro>Output`：Fixed the issue that the rendered text is empty when the lookup's display value is the number 0.
+- 🐞 `<pro>DataSet.Field`: Fix the problem that `dynamicProps` may report errors.
 
 ## 1.2.0
 
