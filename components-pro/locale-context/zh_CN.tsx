@@ -27,6 +27,7 @@ const locale: Locale = {
     export_ing: '正在导出...',
     export_break: '数据导出中断，点击重试重新导出',
     export_operating: '正在导出表格数据点击取消终止导出',
+    export_waiting: '数据量比较大，耐心等待',
     more_button: '其他操作',
     advanced_search: '高级搜索',
     dirty_info: '显示条件已更改',
