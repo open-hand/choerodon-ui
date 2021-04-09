@@ -341,8 +341,6 @@ export default class Field {
 
   lastDynamicProps: any = {};
 
-  changingProps: any = {};
-
   validatorPropKeys: string[] = [];
 
   isDynamicPropsComputing: boolean = false;
@@ -995,14 +993,13 @@ export default class Field {
 
   private checkDynamicProp(propsName, newProp) {
     const oldProp = this.lastDynamicProps[propsName];
-    if (!this.changingProps[propsName] && !isEqualDynamicProps(oldProp, newProp)) {
-      this.changingProps[propsName] = true;
-      if (this.validatorPropKeys.includes(propsName) || propsName === 'validator') {
-        defer(() => this.validator.reset());
-      }
-      this.handlePropChange(propsName, newProp, oldProp);
-
-      this.changingProps[propsName] = false;
+    if (!isEqualDynamicProps(oldProp, newProp)) {
+      defer(action(() => {
+        if (this.validatorPropKeys.includes(propsName) || propsName === 'validator') {
+          this.validator.reset();
+        }
+        this.handlePropChange(propsName, newProp, oldProp);
+      }));
     }
     this.lastDynamicProps[propsName] = newProp;
   }

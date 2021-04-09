@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复表格虚拟滚动结合自动高度表格溢出问题。
 - 🐞 `<pro>Table`: 修复当表格更新时会自动获取焦点的问题。
 - 🐞 `<pro>Output`: 修复值集显示值是数字 0 时渲染为空的问题。
+- 🐞 `<pro>DataSet.Field`：修复 dynamicProps 有概率报错的问题。
 
 ## 1.2.0
 
