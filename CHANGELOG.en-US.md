@@ -30,10 +30,12 @@ timeline: true
 - 🌟 `<pro>TextArea`: Added `onResize` hook.
 - 🌟 `<pro>PerformanceTable`: Added demo combined with `DataSet`.
 - 🌟 `<pro>Modal`: Added the `drawerBorder` property, which is controlled separately from the modal `border` property.
+- 🌟 `<pro>Table`: Added the `virtualRowHeight` property to configure the virtual scroll height.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: When the editor is TextArea, the line height can be adjusted with the TextArea resizing.
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
+- 💄 `<pro>TextFiled`: Optimized the inability to copy selected values when the `range` is configured in the `disabled` state.
 - 💄 `<pro>Lov`: Deprecated `lovEvents` attribute.
 - 💄 `<pro>Lov`: Prompt the priority of `searchable` attribute when value is false.
 - 🐞 `<pro>TextFiled`: Fixed the `renderer` style error.

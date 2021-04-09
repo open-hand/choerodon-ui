@@ -532,6 +532,10 @@ export interface TableProps extends DataSetComponentProps {
    * 客户端导出一次查询数量配置
    */
   clientExportQuantity?: number;
+  /**
+   * 可以修改由于样式导致的虚拟高度和rowHeight不一致
+  */
+  virtualRowHeight?: number;
 }
 
 @observer
@@ -668,6 +672,10 @@ export default class Table extends DataSetComponent<TableProps> {
      * 客户端查询导出，查询数目设置
      */
     clientExportQuantity: PropTypes.number,
+    /**
+     * 可以修改由于样式导致的虚拟高度和rowHeight不一致
+     */
+    virtualRowHeight: PropTypes.number,
     ...DataSetComponent.propTypes,
   };
 

@@ -941,7 +941,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   @action
   prepareSetValue(...value: any[]): void {
     const { rangeTarget, range, rangeValue } = this;
-    const values = value.filter(item => !isEmpty(item));
+    const values = value.filter(item => isNumber(item) || !isEmpty(item));
     if (range) {
       if (rangeTarget !== undefined && rangeValue) {
         const [start, end] = rangeValue;
@@ -951,7 +951,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           rangeValue[rangeTarget] = end;
           rangeValue[1] = newValue;
         }
-        if (rangeTarget === 1 &&  (newValue || isNumber(newValue)) && (start || isNumber(start)) && this.isLowerRange(start, newValue)) {
+        if (rangeTarget === 1 && (newValue || isNumber(newValue)) && (start || isNumber(start)) && this.isLowerRange(newValue, start)) {
           rangeValue[rangeTarget] = start;
           rangeValue[0] = newValue;
         }

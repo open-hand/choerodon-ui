@@ -21,6 +21,7 @@ const locale: Locale = {
     defalut_export: 'Default export file',
     more_button: 'Others',
     file_name: 'File name',
+    export_waiting: 'The amount of data is relatively large, wait patiently',
     advanced_search: 'Advanced Search',
     dirty_info: 'Display condition has changed.',
     restore: 'Restore',
