@@ -87,6 +87,34 @@
       "order": 5,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "searchable.js",
+      "title": {
+        "zh": "可搜索",
+        "en": "Searchable"
+      },
+      "description": {
+        "zh": "可搜索\n",
+        "en": "Searchable\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "changeOnSelect.js",
+      "title": {
+        "zh": "所选既所得",
+        "en": "ChangeOnSelect"
+      },
+      "description": {
+        "zh": "所选既所得\n",
+        "en": "ChangeOnSelect\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }
