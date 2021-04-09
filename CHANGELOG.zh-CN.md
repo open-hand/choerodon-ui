@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `<pro>TextArea`: 新增 onResize 钩子。
 - 🌟 `<pro>PerformanceTable`: 新增与 DataSet 数据源结合 demo。
 - 🌟 `<pro>Modal`: 新增 drawerBorder 属性，与 modal border 属性区分控制。
+- 🌟 `<pro>Table`: 新增 virtualRowHeight 属性, 实现配置虚拟滚动高度。
 - 💄 `<pro>Table`: 优化编辑器性能。
 - 💄 `<pro>Table`: 当编辑器为 TextArea 时，行高可随 TextArea 大小的变更调整大小。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
