@@ -1,6 +1,4 @@
 export {
     Lang,
 } from './enum';
-export {
-    Locale,
-} from './Locale'
+export { Locale } from './locale';

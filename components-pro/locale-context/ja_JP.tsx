@@ -22,6 +22,7 @@ const locale: Locale = {
     defalut_export: 'デフォルトのエクスポートファイル',
     more_button: 'その他操作',
     advanced_search: '高度な検索',
+    export_waiting: 'データ量が多いので、待ってください',
     dirty_info: '表示条件が変更されました',
     restore: '復元',
     empty_data: 'データがまだありません',

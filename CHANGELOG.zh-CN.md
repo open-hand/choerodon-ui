@@ -15,22 +15,30 @@ timeline: true
 
 ---
 
+
+## 1.2.1
+
+`2021-04-08`
+
 - 🌟 `<pro>LovConfig`: 新增 tableProps, dataSetProps 配置。
 - 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip, drawerSectionBorder, tableShowSelectionTips, drawerTransitionName 属性。
 - 🌟 `<pro>Table`: 新增选择记录的提示。
 - 🌟 `<pro>Table`: 新增 clientExportQuantity 配置客户端导出查询数量和轮询导出。
 - 🌟 `<pro>Cascader`: 新增 searchable, searchMatcher 实现可搜索配置。
 - 🌟 `<pro>Table`: 新增 customizable, virtualCell, showSelectionTips 属性。
-- 🌟 `<pro>DataSet.Field`: 新增 precision, numberGrouping 属性。
+- 🌟 `<pro>DataSet.Field`: 新增 precision, numberGrouping, optionsProps 属性。
 - 🌟 `<pro>NumberField`: 新增 precision, numberGrouping 属性。
 - 🌟 `<pro>TextArea`: 新增 onResize 钩子。
 - 🌟 `<pro>PerformanceTable`: 新增与 DataSet 数据源结合 demo。
 - 🌟 `<pro>Modal`: 新增 drawerBorder 属性，与 modal border 属性区分控制。
+- 🌟 `<pro>Table`: 新增 virtualRowHeight 属性, 实现配置虚拟滚动高度。
 - 💄 `<pro>Table`: 优化编辑器性能。
 - 💄 `<pro>Table`: 当编辑器为 TextArea 时，行高可随 TextArea 大小的变更调整大小。
 - 💄 `<pro>Table`: 优化冻结列实现方式和性能。
 - 💄 `<pro>PerformanceTable`: 优化样式，加载条。
-- 💄 `<pro>Lov`: 提示searchable属性值为false的优先级。
+- 💄 `<pro>TextFiled`: 优化当为 disabled 状态下 range 配置导致的无法复制选中值的问题。
+- 💄 `<pro>Lov`: 废弃 lovEvents。
+- 💄 `<pro>Lov`: 提高 searchable 属性值为 false 的优先级。
 - 🐞 `<pro>TextFiled`: 修复 renderer 配置出现的样式问题。
 - 🐞 `<pro>DatePicker`: 修复 DatePicker 年份选择的渲染空白问题。
 - 🐞 `<pro>FormField`: 修复 NumberField 当值为 0 配置 range 时候不会自动切换位置。

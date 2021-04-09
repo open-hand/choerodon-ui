@@ -46,6 +46,7 @@ class App extends React.Component {
         lovCode: 'LOV_CODE',
         lovPara: { code: '111' },
         required: true,
+        optionsProps: { events: { load: handleUserDSLoad } },
       },
       {
         name: 'code_string',
@@ -79,7 +80,6 @@ class App extends React.Component {
                     };
                   }
                 } }}
-             lovEvents={{ load: handleUserDSLoad }}
           />
         </Col>
         <Col span={12}>

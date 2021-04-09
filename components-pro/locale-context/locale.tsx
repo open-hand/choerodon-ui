@@ -37,7 +37,8 @@ export interface Locale {
     retry_button;
     file_name;
     export_break;
-    export_operating,
+    export_operating;
+    export_waiting;
     more;
     enter_text_filter;
     clear_filter;

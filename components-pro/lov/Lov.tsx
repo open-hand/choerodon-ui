@@ -5,6 +5,7 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
+import noop from 'lodash/noop';
 import { action, computed, observable, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -78,6 +79,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   tableProps?: TableProps;
   noCache?: boolean;
   mode?: ViewMode;
+  // TODO：lovEvents deprecated
   lovEvents?: Events;
   /**
    * 触发查询变更的动作， default: input
@@ -207,6 +209,7 @@ export default class Lov extends Select<LovProps> {
   private openModal = action((fetchSingle?: boolean) => {
     const config = this.getConfig();
     const { options, multiple, primitive, valueField } = this;
+    // TODO：lovEvents deprecated
     const { lovEvents } = this.props;
     const modalProps = this.getModalProps();
     const tableProps = this.getTableProps();
@@ -252,6 +255,7 @@ export default class Lov extends Select<LovProps> {
           minHeight: pxToRem(Math.min(350, window.innerHeight)),
           ...(modalProps && modalProps.style),
         },
+        afterClose: this.handleLovViewAfterClose,
       } as ModalProps & { children; });
       if (this.resetOptions(noCache) && fetchSingle !== true) {
         options.query();
@@ -294,6 +298,19 @@ export default class Lov extends Select<LovProps> {
   handleLovViewClose = async () => {
     delete this.modal;
     this.focus();
+  };
+
+  /**
+   * 关闭弹窗移除时间监听 后续废弃
+   */
+  handleLovViewAfterClose = () => {
+    // TODO：lovEvents deprecated
+    const { options, props: { lovEvents } } = this;
+    const { afterClose = noop } = this.getModalProps();
+    afterClose();
+    if (lovEvents) {
+      Object.keys(lovEvents).forEach(event => options.removeEventListener(event, lovEvents[event]));
+    }
   };
 
   handleLovViewOk = async () => {

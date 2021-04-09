@@ -430,7 +430,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return (
       <span key="text" className={`${prefixCls}-range-text`}>
         {/* 确保 range-input 为第一个 当点击label的时候出了会让element聚焦以外还会让 label的第一个表单元素聚焦 因此导致意料之外的bug */}
-        <input
+        {!this.isDisabled() && <input
           {...props}
           className={`${prefixCls}-range-input`}
           key="text"
@@ -452,7 +452,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           }
           readOnly={this.isReadOnly()}
           style={editorStyle}
-        />
+        />}
         <input
           tabIndex={-1}
           className={`${prefixCls}-range-start`}
@@ -843,7 +843,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleMouseDown(e) {
     if (e.target !== this.element) {
-      e.preventDefault();
+      if (!this.isDisabled()) {
+        e.preventDefault();
+      }
       if (!this.isFocused) {
         this.focus();
       }

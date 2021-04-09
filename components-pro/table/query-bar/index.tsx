@@ -65,6 +65,7 @@ const ExportBody = observer((props) => {
     percent: 1,
     status: ProgressStatus.active,
   }
+
   switch (dataSet.exportStatus) {
     case DataSetExportStatus.start:
       exportProgress = {
@@ -101,6 +102,7 @@ const ExportBody = observer((props) => {
     default:
       break;
   }
+
   return (
     <div className={`${prefixCls}-export-progress-body`}>
       <span>
@@ -113,15 +115,30 @@ const ExportBody = observer((props) => {
 
 const ExportFooter = observer((props) => {
   const { dataSet, prefixCls, exportButton } = props;
-  const [username, setUsername] = useState(dataSet.name || $l('Table', 'defalut_export'))
-  const handleClick = () => { exportButton(dataSet.exportStatus, username) }
+  const [username, setUsername] = useState(dataSet.name || $l('Table', 'defalut_export'));
+  const handleClick = () => { exportButton(dataSet.exportStatus, username) };
+  const [messageTimeout, setMessageTimeout] = useState<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    let currentTimeout: any = null;
+    currentTimeout = setTimeout(() => {
+      if (dataSet && dataSet.exportStatus !== DataSetExportStatus.success && dataSet.exportStatus !== DataSetExportStatus.failed) {
+        setMessageTimeout($l('Table', 'export_waiting'));
+      }
+    }, 5000);
+    return () => {
+      if (currentTimeout) {
+        clearTimeout(currentTimeout);
+      }
+    };
+  }, []);
   return (
     <div className={`${prefixCls}-export-progress-footer`}>
       { dataSet.exportStatus === DataSetExportStatus.failed && <><span>{$l('Table', 'export_break')}</span><Button onClick={handleClick}>{$l('Table', 'retry_button')}</Button></>}
       { dataSet.exportStatus === DataSetExportStatus.success && <><div><span>{`${$l('Table', 'file_name')}:`}</span><TextField value={username} onChange={(value) => { setUsername(value) }} /></div><Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
       { dataSet.exportStatus !== DataSetExportStatus.success &&
-        dataSet.exportStatus !== DataSetExportStatus.success &&
-        <><span>{$l('Table', 'export_operating')}</span><Button color={ButtonColor.gray} onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
+        dataSet.exportStatus !== DataSetExportStatus.failed &&
+        <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray} onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
       }
     </div>
   )

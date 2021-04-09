@@ -347,36 +347,48 @@ export default class TableStore {
     return false;
   }
 
+  /**
+   * number 矫正虚拟滚动由于样式问题导致的高度不符问题
+   */
+  @computed
+  get virtualRowHeight(): number {
+    const { virtualRowHeight } = this.props;
+    if (virtualRowHeight) {
+      return virtualRowHeight;
+    }
+    return isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
+  }    
+
   @computed
   get virtual(): boolean {
-    return this.props.virtual && this.height !== undefined && isNumber(this.rowHeight);
+    return this.props.virtual && this.height !== undefined && isNumber(this.virtualRowHeight);
   }
 
   @computed
   get virtualHeight(): number {
-    const { rowHeight, data } = this;
-    return Math.round(data.length * (Number(rowHeight)  + 3));
+    const { virtualRowHeight, data } = this;
+    return Math.round(data.length * virtualRowHeight);
   }
 
   @computed
   get virtualStartIndex(): number {
-    const { rowHeight, lastScrollTop } = this;
-    return Math.max(Math.round((lastScrollTop / Number(rowHeight)) - 3), 0);
+    const { virtualRowHeight, lastScrollTop } = this;
+    return Math.max(Math.round((lastScrollTop / virtualRowHeight) - 3), 0);
   }
 
   @computed
   get virtualTop(): number {
-    const { rowHeight, virtualStartIndex } = this;
-    return virtualStartIndex * Number(rowHeight);
+    const { virtualRowHeight, virtualStartIndex } = this;
+    return virtualStartIndex * virtualRowHeight;
   }
 
   @computed
   get virtualData(): Record[] {
-    const { data, height, rowHeight, props: { virtual } } = this;
-    if (virtual && height !== undefined && isNumber(rowHeight)) {
+    const { data, height, virtualRowHeight, props: { virtual } } = this;
+    if (virtual && height !== undefined && isNumber(virtualRowHeight)) {
       const { lastScrollTop = 0 } = this;
-      const startIndex = Math.max(Math.round((lastScrollTop / rowHeight) - 3), 0);
-      const endIndex = Math.min(Math.round((lastScrollTop + height) / rowHeight + 2), data.length);
+      const startIndex = Math.max(Math.round((lastScrollTop / virtualRowHeight) - 3), 0);
+      const endIndex = Math.min(Math.round((lastScrollTop + height) / virtualRowHeight ), data.length);
       return data.slice(startIndex, endIndex);
     }
     return data;

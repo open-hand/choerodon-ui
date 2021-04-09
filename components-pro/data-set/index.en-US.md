@@ -233,6 +233,7 @@ title: DataSet
 | trueValue | 类型为 boolean 时，true 对应的值 | boolean\|string\|number | true |
 | falseValue | 类型为 boolean 时，false 对应的值 | boolean\|string\|number | false |
 | options | 下拉框组件的菜单数据集 | DataSet |  |
+| optionsProps | 值集组件的数据集配置 | DataSetProps |  |
 | group | 是否分组，如果是 number，则为分组的顺序(暂无实装) | boolean\|number |  |
 | defaultValue | 默认值 | any |  |
 | multiple | 是否为值数组。 当为字符串时，作为数据分隔符，查询时会将字符串分割成数组，提交时会将数组拼接成字符串 | boolean\| string | false |

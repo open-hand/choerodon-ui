@@ -144,10 +144,10 @@ export class LovCodeStore {
   }
 
   // lovCode 作为key 缓存了 ds
-  getLovDataSet(code: string, field?: Field): DataSet | undefined {
+  getLovDataSet(code: string, field?: Field, dataSetProps?: DataSetProps): DataSet | undefined {
     const config = this.getConfig(code);
     if (config) {
-      const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag, dataSetProps } = config;
+      const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag, dataSetProps: configDataSetProps } = config;
       const dsProps: DataSetProps = {
         transport: {
           read: this.getQueryAxiosConfig(code, field, config),
@@ -187,7 +187,7 @@ export class LovCodeStore {
           dsProps.fields = fields;
         }
       }
-      return new DataSet({ ...dsProps, ...dataSetProps });
+      return new DataSet({ ...dsProps, ...configDataSetProps, ...dataSetProps });
     }
     warning(false, `LOV: code<${code}> is not exists`);
     return undefined;

@@ -31,10 +31,13 @@ subtitle: 级联选择
 | primitiveValue | 是否为原始值（建议以绑定的数据源 Field 的 type 来决定值类型，如 type 设为 object 相当于 primitiveValue 设为 false）`true` - 选项中 valueField 对应的值 `false` - 选项值对象 | boolean |  |
 | notFoundContent | 当下拉列表为空时显示的内容 | ReactNode |  |
 | onOption | 设置选项属性，如 disabled | ({ dataSet, record })) => object \| ({ options, item })) => object |  |
-| menuMode | Single box pop-up form switch| `single` \| `multiple` | - |
-| onChoose | 选择一个值的时候触发| (value,record) => void | - |
-| onUnChoose | 取消选中一个值的时候触发多选时候生效|  (value,record) => void | - |
-| changeOnSelect | 所选既所得 | boolean | - |
+| menuMode | Single box pop-up form switch| `single` \| `multiple` | |
+| onChoose | 选择一个值的时候触发| (value,record) => void | |
+| onUnChoose | 取消选中一个值的时候触发多选时候生效|  (value,record) => void | |
+| changeOnSelect | 所选既所得 | boolean | |
+| searchable | 是否可搜索 | boolean | false |
+| searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField) && record.get(textField).indexOf(text) !== -1 |
+
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
