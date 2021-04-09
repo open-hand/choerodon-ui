@@ -209,6 +209,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       ref: node => (this.view = node),
       date: this.getSelectedDate(),
       mode: this.getDefaultViewMode(),
+      disabledNow: !this.isValidNowDate(this.getSelectedDate()),
       renderer: this.getCellRenderer(mode),
       onSelect: this.handleSelect,
       onSelectedDateChange: this.handleSelectedDateChange,
@@ -642,6 +643,16 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     const isValid = this.isUnderRange(currentDate);
     if (isValid && filter) {
       return filter(currentDate, selected);
+    }
+    return isValid;
+  }
+
+  @autobind
+  isValidNowDate(selected: Moment): boolean {
+    const { filter } = this.props;
+    const isValid = this.isUnderRange(moment());
+    if (isValid && filter) {
+      return filter(moment(), selected);
     }
     return isValid;
   }

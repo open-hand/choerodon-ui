@@ -3,6 +3,7 @@ import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
+import noop from 'lodash/noop';
 import autobind from '../_util/autobind';
 import { TimeUnit, ViewMode } from './enum';
 import DaysView, { alwaysValidDate } from './DaysView';
@@ -263,10 +264,17 @@ export default class TimesView extends DaysView {
   }
 
   renderFooter(): ReactNode {
-    const { prefixCls } = this;
+    const { prefixCls, props: { disabledNow } } = this;
+    const footerProps = {
+      className: classNames(`${prefixCls}-footer-now-btn`, {
+        [`${prefixCls}-now-disabled`]: disabledNow,
+      }),
+      onClick: !disabledNow ? this.choose.bind(this, moment()):noop,
+    }
+
     return (
       <div className={`${prefixCls}-footer`}>
-        <a className={`${prefixCls}-footer-now-btn`} onClick={this.choose.bind(this, moment())}>
+        <a {...footerProps}>
           {$l('DatePicker', 'now')}
         </a>
         <a
