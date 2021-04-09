@@ -16,9 +16,9 @@ timeline: true
 ---
 
 
-## 1.2.1
+## 1.3.0
 
-`2021-04-08`
+`2021-04-09`
 
 - 🌟 `<pro>LovConfig`: 新增 tableProps, dataSetProps 配置。
 - 🌟 `configure`: 新增 tableCustomizable, tableColumnTooltip, drawerSectionBorder, tableShowSelectionTips, drawerTransitionName 属性。
