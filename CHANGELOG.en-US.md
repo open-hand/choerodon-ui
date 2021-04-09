@@ -15,13 +15,17 @@ timeline: true
 
 ---
 
+## 1.2.1
+
+`2021-04-08`
+
 - 🌟 `<pro>LovConfig`: Added `tableProps`, `dataSetProps` configuration.
 - 🌟 `configure`: Added `tableCustomizable`, `tableColumnTooltip`, `drawerSectionBorder`, `tableShowSelectionTips`, `drawerTransitionName` properties.
 - 🌟 `<pro>Table`: Added a prompt for selected records under table.
 - 🌟 `<pro>Table`: Added `clientExportQuantity` to configure the number of export queries.
 - 🌟 `<pro>Cascader`: Added `searchable`, `searchMatcher` properties to searchable the options;
 - 🌟 `<pro>Table`: Added `customizable`, `virtualCell`, `showSelectionTips` properties.
-- 🌟 `<pro>DataSet.Field`: Added `precision`, `numberGrouping` properties.
+- 🌟 `<pro>DataSet.Field`: Added `precision`, `numberGrouping`, `optionsProps` properties.
 - 🌟 `<pro>NumberField`: Added `precision`, `numberGrouping` properties.
 - 🌟 `<pro>TextArea`: Added `onResize` hook.
 - 🌟 `<pro>PerformanceTable`: Added demo combined with `DataSet`.
@@ -32,6 +36,8 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the implementation and performance of frozen columns.
 - 💄 `<pro>PerformanceTable`: Optimized style, loading bar.
 - 💄 `<pro>TextFiled`: Optimized the inability to copy selected values when the `range` is configured in the `disabled` state.
+- 💄 `<pro>Lov`: Deprecated `lovEvents` attribute.
+- 💄 `<pro>Lov`: Prompt the priority of `searchable` attribute when value is false.
 - 🐞 `<pro>TextFiled`: Fixed the `renderer` style error.
 - 🐞 `<pro>DatePicker`: Fixed the DatePicker year render blank.
 - 🐞 `<pro>FormField`: Fixed the range number change position error when the value is 0.
@@ -42,6 +48,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem that editor will not auto scroll into view in virtual mode.
 - 🐞 `<pro>Table`: Fixed the `autoHeight` calculation.
 - 🐞 `<pro>Table`: Fixed table virtual scrolling combined with automatic height table overflow.
+- 🐞 `<pro>Table`: Fixed the problem that table will auto focused when updated.
+- 🐞 `<pro>Output`：Fixed the issue that the rendered text is empty when the lookup's display value is the number 0.
 
 ## 1.2.0
 

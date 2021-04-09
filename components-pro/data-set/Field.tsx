@@ -11,7 +11,7 @@ import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { ReactNode } from 'react';
-import DataSet from './DataSet';
+import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
@@ -181,6 +181,10 @@ export type FieldProps = {
    * 下拉框组件的菜单数据集
    */
   options?: DataSet | string;
+  /**
+   * 值集组件的数据集配置
+   */
+  optionsProps?: DataSetProps;
   /**
    * 是否分组
    * 如果是number，则为分组的顺序
@@ -399,6 +403,7 @@ export default class Field {
     }
     // 确保 lookup 相关配置介入观察
     lookupStore.getAxiosConfig(this);
+    const optionsProps = this.get('optionsProps');
     const { lookup, type } = this;
     if (lookup) {
       const parentField = this.get('parentField');
@@ -410,12 +415,13 @@ export default class Field {
         selection,
         idField,
         parentField,
+        ...optionsProps,
       });
     }
     const lovCode = this.get('lovCode');
     if (lovCode) {
       if (type === FieldType.object || type === FieldType.auto) {
-        return lovCodeStore.getLovDataSet(lovCode, this);
+        return lovCodeStore.getLovDataSet(lovCode, this, optionsProps);
       }
     }
     return undefined;
@@ -1025,12 +1031,13 @@ export default class Field {
         'lovPara',
         'cascadeMap',
         'lovQueryUrl',
+        'optionsProps',
       ].includes(propsName)
     ) {
       this.set('lookupData', undefined);
       this.fetchLookup();
     }
-    if (['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl'].includes(propsName)) {
+    if (['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl', 'optionsProps'].includes(propsName)) {
       this.fetchLovConfig();
     }
   }

@@ -60,6 +60,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnHideable | Default Table column hideable | boolean | true |
 | tableColumnTitleEditable | Default Table column title editable | boolean | false |
 | tableColumnDraggable | Default Table column draggable| boolean | false |
+| tableColumnTooltip | Table 是否开启列提示 | TableColumnTooltip | |
 | tableRowDraggable | Default Table row draggable | boolean | false |
 | tableDragColumnAlign | Default align of Table row drag handler | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |

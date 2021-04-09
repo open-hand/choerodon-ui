@@ -19,6 +19,7 @@ title: Modal
 | title | 标题 | ReactNode |  |
 | closable | 显示右上角关闭按钮 | boolean | false |
 | border | 默认 Modal 的头和脚有边框线 | boolean | true |
+| drawerBorder | 默认 drawer 的头和脚有边框线 | boolean | true |
 | movable | 可移动， drawer 无法移动 | boolean | true |
 | fullScreen | 全屏显示 | boolean | false |
 | maskClosable | 点击蒙层是否允许关闭，可选 boolean \| click \| dblclick | boolean \| string | false |

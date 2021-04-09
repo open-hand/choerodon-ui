@@ -282,7 +282,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     ...TriggerField.defaultProps,
     suffixCls: 'select',
     combo: false,
-    searchable: false,
     checkValueOnOptionsChange: true,
     onOption: defaultOnOption,
     selectAllButton: true,

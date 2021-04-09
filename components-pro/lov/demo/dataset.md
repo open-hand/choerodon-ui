@@ -46,6 +46,7 @@ class App extends React.Component {
         lovCode: 'LOV_CODE',
         lovPara: { code: '111' },
         required: true,
+        optionsProps: { events: { load: handleUserDSLoad } },
       },
       {
         name: 'code_string',
@@ -65,13 +66,21 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={12}>
-          <Lov dataSet={this.ds} searchAction="blur" name="code" noCache tableProps={{ selectionMode: 'rowbox',  onRow:({ dataSet, record, index, expandedRow }) => {
-                                                                                                                          if (index === 2) {
-                                                                                                                            return {
-                                                                                                                              style: { height: 50 },
-                                                                                                                            };
-                                                                                                                          }
-                                                                                                                        } }} lovEvents={{ load: handleUserDSLoad }} />
+          <Lov
+             dataSet={this.ds}
+             searchAction="blur"
+             name="code"
+             noCache
+             tableProps={{ 
+               selectionMode: 'rowbox',
+               onRow:({ dataSet, record, index, expandedRow }) => {
+                  if (index === 2) {
+                    return {
+                      style: { height: 50 },
+                    };
+                  }
+                } }}
+          />
         </Col>
         <Col span={12}>
           <Lov dataSet={this.ds} name="code_string" />
