@@ -30,6 +30,7 @@ export interface DateViewProps extends ViewComponentProps {
   onViewModeChange?: (mode: ViewMode) => void;
   renderExtraFooter?: () => ReactNode;
   extraFooterPlacement?: 'top' | 'bottom';
+  disabledNow?: boolean;
 }
 
 export default class DaysView extends ViewComponent<DateViewProps>
@@ -235,10 +236,17 @@ export default class DaysView extends ViewComponent<DateViewProps>
   renderFooter(): ReactNode {
     const {
       prefixCls,
+      props: { disabledNow },
     } = this;
+    const footerProps = {
+      className: classNames({
+        [`${prefixCls}-now-disabled`]: disabledNow,
+      }),
+      onClick : !disabledNow ? this.choose.bind(this, moment(), false) : noop,
+    }
     return (
       <div className={`${prefixCls}-footer`}>
-        <a onClick={this.choose.bind(this, moment().startOf('d'))}>{$l('DatePicker', 'today')}</a>
+        <a {...footerProps}>{$l('DatePicker', 'today')}</a>
       </div>
     );
   }
