@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Field`: Fix the issue of freezing when dynamicProps.lovPara and cascadeMap are used at the same time.
+
 ## 1.3.0
 
 `2021-04-09`

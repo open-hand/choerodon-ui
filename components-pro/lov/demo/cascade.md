@@ -41,6 +41,11 @@ class App extends React.Component {
         type: 'object',
         label: 'LOV',
         lovCode: 'LOV_CODE',
+        dynamicProps: {
+          lovPara: ({ record }) => ({
+            companyId: record.get('mySex'),
+          }),
+        },
         cascadeMap: { sex: 'mySex' },
       },
     ],
