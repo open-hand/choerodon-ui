@@ -314,7 +314,7 @@
         "en": "Virtual Scroll"
       },
       "description": {
-        "zh": "虚拟滚动，virtual 配合 height 使用。\n\n当前版本还有一些问题，拖动滚动不顺滑等，非必需情况（大数据需求并同时对功能性需求很高）下使用建议不使用。\n\n后续会不断完善此功能，感谢理解。\n",
+        "zh": "虚拟滚动，virtual && virtualCell。\n\n 在大数据需求并同时对功能性需求很高的情况下建议开启。\n\n",
         "en": "Virtual Scroll.\n"
       },
       "order": 20,
