@@ -15,9 +15,9 @@ timeline: true
 
 ---
 
-## 1.2.1
+## 1.3.0
 
-`2021-04-08`
+`2021-04-09`
 
 - 🌟 `<pro>LovConfig`: Added `tableProps`, `dataSetProps` configuration.
 - 🌟 `configure`: Added `tableCustomizable`, `tableColumnTooltip`, `drawerSectionBorder`, `tableShowSelectionTips`, `drawerTransitionName` properties.
