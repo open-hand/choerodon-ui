@@ -61,7 +61,7 @@ export interface DatePickerProps extends TriggerFieldProps {
    * 单元格渲染
    */
   cellRenderer?: (mode: ViewMode) => RenderFunction | undefined;
-  filter?: (currentDate: Moment, selected: Moment) => boolean;
+  filter?: (currentDate: Moment, selected: Moment, mode?: ViewMode) => boolean;
   min?: MomentInput | null;
   max?: MomentInput | null;
   step?: TimeStep;
@@ -642,7 +642,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     const { filter } = this.props;
     const isValid = this.isUnderRange(currentDate);
     if (isValid && filter) {
-      return filter(currentDate, selected);
+      return filter(currentDate, selected, this.getViewMode());
     }
     return isValid;
   }

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
 - 🐞 `<pro>DataSet.Field`：修复 dynamicProps.lovPara 和 cascadeMap 同时使用时卡顿的问题。
 
 
