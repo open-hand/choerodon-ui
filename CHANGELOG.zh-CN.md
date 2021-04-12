@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Field`：修复 dynamicProps.lovPara 和 cascadeMap 同时使用时卡顿的问题。
+
 
 ## 1.3.0
 
