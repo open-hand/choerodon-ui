@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
 - 🐞 `<pro>DataSet.Field`：修复 dynamicProps.lovPara 和 cascadeMap 同时使用时卡顿的问题。
+- 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
 
 
 ## 1.3.0

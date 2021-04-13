@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, MouseEvent } from 'react';
+import React, { Component, CSSProperties, Key, MouseEvent } from 'react';
 import { createPortal, render } from 'react-dom';
 import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -223,11 +223,19 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   }
 
   componentWillUnmount() {
+    const { modals } = this.state;
     ModalManager.removeInstance(this);
+    const current = ModalManager.containerInstances[0];
+    if (current && modals.length) {
+      current.mergeModals(modals.reduce<ModalProps[]>((list, modal) => modal.__deprecate__ ? list.concat({
+        ...modal,
+        transitionAppear: false,
+      }) : list, []));
+    }
   }
 
   @action
-  updateModals(modals) {
+  updateModals(modals: ModalProps[]) {
     this.top();
     let maskHidden = true;
     const drawerOffsets: DrawerOffsets = { 'slide-up': [], 'slide-right': [], 'slide-down': [], 'slide-left': [] };
@@ -244,6 +252,22 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     this.drawerOffsets = drawerOffsets;
     this.maskHidden = maskHidden; // modals.every(({ hidden }) => hidden);
     this.setState({ modals });
+  }
+
+  mergeModals(newModals: ModalProps[]) {
+    const { modals } = this.state;
+    const map = new Map<Key, ModalProps>();
+    modals.forEach((modal) => {
+      if (modal.key) {
+        map.set(modal.key, modal);
+      }
+    });
+    newModals.forEach((modal) => {
+      if (modal.key) {
+        map.set(modal.key, modal);
+      }
+    });
+    this.updateModals([...map.values()]);
   }
 
   findIndex(modalKey) {
@@ -304,8 +328,9 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const { modals } = this.state;
     const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
     let activeModal: ModalProps | undefined;
+    let maskTransition = true;
     const items = modals.map((props, index) => {
-      const { drawerTransitionName = getConfig('drawerTransitionName'), drawer, key } = props;
+      const { drawerTransitionName = getConfig('drawerTransitionName'), drawer, key, transitionAppear = true } = props;
       const style: CSSProperties = {
         ...props.style,
       };
@@ -333,13 +358,16 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       if (active) {
         activeModal = props;
       }
+      if (transitionAppear === false) {
+        maskTransition = false;
+      }
       return (
         <Animate
           key={key}
           component="div"
           // UED 用类名判断
           className={props.drawer ? `${getProPrefixCls(suffixCls)}-container-drawer` : `${getProPrefixCls(suffixCls)}-container-pristine`}
-          transitionAppear
+          transitionAppear={transitionAppear}
           transitionName={drawer ? drawerTransitionName : 'zoom'}
           hiddenProp="hidden"
           onEnd={this.handleAnimationEnd}
@@ -371,7 +399,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         <Animate
           component=""
           transitionAppear
-          transitionName="fade"
+          transitionName={maskTransition ? 'fade' : undefined}
           hiddenProp="hidden"
           {...animationProps}
         >
@@ -426,22 +454,27 @@ export function getContainer(loop?: boolean) {
 export function open(props: ModalProps & { children? }) {
   const container = getContainer();
 
+  function getCurrentContainer() {
+    return containerInstances.includes(container) ? container : getContainer();
+  }
+
   async function close(destroy?: boolean) {
     const { onClose = noop } = props;
     if ((await onClose()) !== false) {
       if (destroy) {
-        container.close({ ...props, destroyOnClose: true });
+        getCurrentContainer().close({ ...props, destroyOnClose: true });
       } else {
-        container.close(props);
+        getCurrentContainer().close(props);
       }
     }
   }
 
   function update(newProps) {
-    container.update({ ...newProps, key: props.key });
+    getCurrentContainer().update({ ...newProps, key: props.key });
   }
 
   props = {
+    __deprecate__: true,
     close,
     update,
     ...Modal.defaultProps as ModalProps,
@@ -450,7 +483,7 @@ export function open(props: ModalProps & { children? }) {
   container.open(props);
 
   function show(newProps) {
-    container.open({ ...props, ...newProps });
+    getCurrentContainer().open({ ...props, ...newProps });
   }
 
   return {
