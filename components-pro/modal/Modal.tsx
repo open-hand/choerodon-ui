@@ -48,6 +48,7 @@ function getTransformOrigin(position: MousePosition, style: CSSProperties) {
 }
 
 export interface ModalProps extends ViewComponentProps {
+  __deprecate__?: boolean;
   closable?: boolean;
   movable?: boolean;
   fullScreen?: boolean;
@@ -79,6 +80,7 @@ export interface ModalProps extends ViewComponentProps {
   drawer?: boolean;
   drawerOffset?: number;
   drawerTransitionName?: 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
+  transitionAppear?: boolean;
   key?: Key;
   border?: boolean;
   drawerBorder?: boolean;

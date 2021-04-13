@@ -1,4 +1,5 @@
 import { action, observable } from 'mobx';
+import { ModalProps } from '../modal/Modal';
 
 export type MousePosition = { x: number; y: number };
 
@@ -9,6 +10,8 @@ export interface IModalContainer {
   drawerOffsets: DrawerOffsets;
 
   clear();
+
+  mergeModals(modals: ModalProps[]);
 }
 
 export type ModalManagerType = {
