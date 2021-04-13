@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { action, computed, get, IReactionDisposer, isArrayLike, observable, runInAction, set, toJS } from 'mobx';
+import { action, computed, get, IReactionDisposer, isArrayLike, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import axiosStatic, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import unionBy from 'lodash/unionBy';
 import omit from 'lodash/omit';
@@ -9,6 +9,8 @@ import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import defer from 'lodash/defer';
+import isString from 'lodash/isString';
+import isPlainObject from 'lodash/isPlainObject';
 import debounce from 'lodash/debounce';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -324,6 +326,8 @@ export default class DataSet extends EventManager {
   @observable cachedSelected: Record[];
 
   @observable dataToJSON: DataToJSON;
+
+  @observable state: ObservableMap<string, any>;
 
   @computed
   get cascadeRecords(): Record[] {
@@ -763,6 +767,7 @@ export default class DataSet extends EventManager {
       this.name = name;
       this.dataToJSON = dataToJSON!;
       this.records = [];
+      this.state = observable.map<string, any>();
       this.fields = observable.map<string, Field>();
       this.totalCount = 0;
       this.status = DataSetStatus.ready;
@@ -806,6 +811,20 @@ export default class DataSet extends EventManager {
 
   destroy() {
     this.clear();
+  }
+
+  @action
+  setState(item: string | object, value?: any) {
+    if (isString(item)) {
+      this.state.set(item, value);
+    } else if (isPlainObject(item)) {
+      this.state.merge(item);
+    }
+    return this;
+  }
+
+  getState(key: string) {
+    return this.state.get(key);
   }
 
   snapshot(): DataSetSnapshot {
