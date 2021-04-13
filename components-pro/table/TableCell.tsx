@@ -247,6 +247,7 @@ export default class TableCell extends Component<TableCellProps> {
 
   @autobind
   handleFocus(e) {
+    e.stopPropagation();
     const { tableStore } = this.context;
     const { dataSet } = tableStore;
     const {

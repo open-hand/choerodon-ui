@@ -47,6 +47,8 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   editorProps?: any;
 
+  width?: any;
+
   inTab: boolean = false;
 
   editor: FormField<FormFieldProps> | null;
@@ -221,6 +223,16 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   @autobind
+  handleEditorFocus(e) {
+    e.stopPropagation();
+    const { editorProps } = this;
+    if (editorProps) {
+      const { onFocus = noop } = editorProps;
+      onFocus(e);
+    }
+  }
+
+  @autobind
   handleEditorBlur(e) {
     const { editorProps, inTab, context: { tableStore: { inlineEdit } } } = this;
     if (!inTab && !inlineEdit) {
@@ -305,6 +317,7 @@ export default class TableEditor extends Component<TableEditorProps> {
       }
       const height = pxToRem(offsetHeight);
       const width = pxToRem(offsetWidth);
+      this.width = width;
       wrap.style.cssText = `transform:translate(${pxToRem(left)}, ${pxToRem(top)});width:${width}`;
       const { height: stateHeight } = this.state;
       if (height !== stateHeight) {
@@ -322,7 +335,7 @@ export default class TableEditor extends Component<TableEditorProps> {
       const { wrap } = this;
       if (wrap) {
         if (this.originalCssText !== undefined) {
-          wrap.style.cssText = this.originalCssText;
+          wrap.style.cssText = `width:${this.width};${this.originalCssText}`;
           this.originalCssText = undefined;
         }
       }
@@ -373,6 +386,7 @@ export default class TableEditor extends Component<TableEditorProps> {
                 name: fields.get('name'),
                 onKeyDown: this.handleEditorKeyDown,
                 onEnterDown: this.handleEditorKeyEnterDown,
+                onFocus: this.handleEditorFocus,
                 onClick: this.handleEditorClick,
                 tabIndex: -1,
                 showHelp: ShowHelp.none,
@@ -422,6 +436,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         name,
         onKeyDown: this.handleEditorKeyDown,
         onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
+        onFocus: this.handleEditorFocus,
         onBlur: this.handleEditorBlur,
         tabIndex: -1,
         showHelp: ShowHelp.none,
