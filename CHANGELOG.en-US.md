@@ -19,10 +19,13 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `setState`, `getState` methods.
 - 🌟 `<pro>Select`: Added `pagingOptionContent` property.
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
-- 🌟 `<pro>Table.professionalBar`: Added `defaultExpanded` property.
+- 🌟 `<pro>Table`: Added ProfessionalBar `defaultExpanded` property.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
-- 💄 `<pro>Table.professionalBar`: Optimize professionalBar The query field of type boolean is displayed as a checkBox by default.
+- 💄 `<pro>Table`: Optimize ProfessionalBar The query field of type boolean is displayed as a checkBox by default.
+- 🐞 `<pro>DatePicker`: Fix the incorrect restriction of `maxLength` and `minLength`.
+- 🐞 `<pro>NumberField`: Fix the incorrect restriction of `maxLength` and `minLength`.
+- 🐞 `<pro>DataSet.Field`: Fix the incorrect restriction of `maxLength` and `minLength` on date and number types.
 - 🐞 `<pro>DataSet.Field`: Fix the issue of freezing when dynamicProps.lovPara and cascadeMap are used at the same time.
 - 🐞 `<pro>Modal`: Fix some abnormal behaviors of Modal which not provided by ModalProvider.
 - 🐞 `<pro>Table`: Fix the problem that the input number will not be displayed in a new line when rowHeight:auto.

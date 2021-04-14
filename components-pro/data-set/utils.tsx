@@ -331,7 +331,7 @@ function getValueType(value: any): FieldType {
             : FieldType.auto;
 }
 
-function getBaseType(type: FieldType): FieldType {
+export function getBaseType(type: FieldType): FieldType {
   switch (type) {
     case FieldType.number:
     case FieldType.currency:
@@ -871,7 +871,7 @@ export function normalizeGroups(groups: string[], records: Record[]): Group[] {
 }
 
 /**
- * 
+ *
  * @param data 导出需要导出的数据
  * @param excelname 导出表单的名字
  */

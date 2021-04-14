@@ -19,10 +19,13 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 setState, getState 方法。
 - 🌟 `<pro>Select`: 新增 pagingOptionContent 属性。
 - 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
-- 🌟 `<pro>Table.professionalBar`: 新增 defaultExpanded 属性。
+- 🌟 `<pro>Table`: 新增 ProfessionalBar 查询条 defaultExpanded 属性。
 - 💄 `<pro>Table`: 优化编辑器性能。
 - 💄 `<pro>Table`: 优化虚拟滚动性能。
-- 💄 `<pro>Table.professionalBar`: 优化该查询条 boolean 类型的查询字段默认显示为勾选框。
+- 💄 `<pro>Table`: 优化 ProfessionalBar 查询条 boolean 类型的查询字段默认显示为勾选框。
+- 🐞 `<pro>DatePicker`: 修复 maxLength 和 minLength 的错误限制。
+- 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 的错误限制。
+- 🐞 `<pro>DataSet.Field`：修复 maxLength 和 minLength 对日期和数字类型的错误限制及校验。
 - 🐞 `<pro>DataSet.Field`：修复 dynamicProps.lovPara 和 cascadeMap 同时使用时卡顿的问题。
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
 - 🐞 `<pro>Table`：修复 rowHeight:auto 时，输入数字不会换行显示的问题。
