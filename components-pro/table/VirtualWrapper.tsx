@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactElement, useContext, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import TableContext from './TableContext';
 import { TableWrapperProps } from './TableWrapper';
 
@@ -12,11 +13,11 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer((props) 
   const {
     tableStore: { virtualTop, virtualHeight, prefixCls },
   } = useContext(TableContext);
-  const style = useMemo(() => ({ transform: `translate(0, ${virtualTop}px)` }), [virtualTop]);
+  const style = useMemo(() => ({ transform: `translate(0, ${pxToRem(virtualTop)})` }), [virtualTop]);
   return (
     <div
       className={`${prefixCls}-tbody-wrapper`}
-      style={{ height: virtualHeight }}
+      style={{ height: pxToRem(virtualHeight) }}
     >
       <div style={style}>
         {children}

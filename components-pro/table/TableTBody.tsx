@@ -93,11 +93,11 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     const { lock, indentSize } = this.props;
     const { leafColumns, leafColumnsBody } = this;
     const {
-      tableStore: { prefixCls, node, virtualData, props: { rowDragRender = {} }, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth, overflowX },
+      tableStore: { prefixCls, node, virtual, virtualData, props: { rowDragRender = {} }, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth, overflowX },
     } = this.context;
     const { droppableProps, renderClone } = rowDragRender;
     const rows = virtualData.length
-      ? this.getRows(virtualData, leafColumns, true, lock)
+      ? this.getRows(virtualData, leafColumns, true, lock, virtual)
       : this.getEmptyRow(leafColumns, lock);
     const body = rowDraggable ? (
       <Droppable
@@ -225,8 +225,9 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     columns: ColumnProps[],
     expanded?: boolean,
     lock?: ColumnLock | boolean,
+    virtual?: boolean,
   ): ReactNode {
-    return records.map((record, index) => this.getRow(columns, record, index, expanded, lock));
+    return records.map((record, index) => this.getRow(columns, record, virtual ? record.index : index, expanded, lock));
   }
 
   getEmptyRow(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode | undefined {

@@ -357,7 +357,7 @@ export default class TableStore {
       return virtualRowHeight;
     }
     return isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
-  }    
+  }
 
   @computed
   get virtual(): boolean {
@@ -384,12 +384,11 @@ export default class TableStore {
 
   @computed
   get virtualData(): Record[] {
-    const { data, height, virtualRowHeight, props: { virtual } } = this;
+    const { data, height, virtualRowHeight, props: { virtual }, virtualStartIndex } = this;
     if (virtual && height !== undefined && isNumber(virtualRowHeight)) {
-      const { lastScrollTop = 0 } = this;
-      const startIndex = Math.max(Math.round((lastScrollTop / virtualRowHeight) - 3), 0);
-      const endIndex = Math.min(Math.round((lastScrollTop + height) / virtualRowHeight ), data.length);
-      return data.slice(startIndex, endIndex);
+      const { lastScrollTop } = this;
+      const endIndex = Math.min(Math.round((lastScrollTop + height) / virtualRowHeight) + 3, data.length);
+      return data.slice(virtualStartIndex, endIndex);
     }
     return data;
   }

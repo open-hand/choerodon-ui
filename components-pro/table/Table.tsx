@@ -534,7 +534,7 @@ export interface TableProps extends DataSetComponentProps {
   clientExportQuantity?: number;
   /**
    * 可以修改由于样式导致的虚拟高度和rowHeight不一致
-  */
+   */
   virtualRowHeight?: number;
 }
 
@@ -745,6 +745,10 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   saveResizeRef(node: HTMLDivElement | null) {
     this.resizeLine = node;
+  }
+
+  useFocusedClassName() {
+    return false;
   }
 
   @autobind
