@@ -569,6 +569,8 @@ export default class TableCell extends Component<TableCellProps> {
           }
         };
       }
+    } else {
+      innerClassName.push(`${prefixCls}-inner-auto-height`);
     }
     const height = record.getState(`__column_resize_height_${name}`);
     if (height !== undefined && rows === 0) {
