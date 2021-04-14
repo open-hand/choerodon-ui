@@ -22,6 +22,8 @@ title: Pagination
 | total | 总数 | number |  |
 | page | 当前页 | number |  |
 | pageSize | 分页数 | number |  |
+| maxPageSize | 最大可输入分页数 | number | 100 |
+| pageSizeEditable | 可输入分页数 | boolean |  |
 | onChange | 页码改变的回调，参数是改变后的页码及每页条数 | (page, pageSize) => void |  |
 | pageSizeOptions | 指定每页可以显示多少条 | string\[] | \['10', '20', '50', '100'\] |
 | showSizeChanger | 是否显示分页大小选择器 | boolean | true |

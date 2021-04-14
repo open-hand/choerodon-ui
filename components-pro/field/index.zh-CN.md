@@ -37,6 +37,7 @@ title: FormField
 | format | 字符串格式化，可选值: `uppercase` `lowercase` `capitalize` | string |  |
 | validationRenderer | 校验信息渲染 | (validationResult, validationProps) => ReactNode |  |
 | onInvalid | 校验失败回调 | (validationResults, validity, name) => void |  |
+| onBeforeChange | 值变化前回调, 返回 false 或 Promise.resolve(false) 时将阻止onChange | (value, oldValue, form) => boolean \| Promise<boolean> |  |
 | onChange | 值变化回调 | (value, oldValue, form) => void |  |
 | onInput | 输入回调 | Function |  |
 | onEnterDown | 键盘回车回调 | Function |  |

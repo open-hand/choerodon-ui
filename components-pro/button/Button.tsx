@@ -8,13 +8,14 @@ import { computed, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import isPromise from 'p-is-promise';
 import Icon from '../icon';
 import FormContext from '../form/FormContext';
 import Progress from '../progress';
 import Ripple from '../ripple';
 import { ButtonColor, ButtonType, FuncType } from './enum';
 import { DataSetStatus } from '../data-set/enum';
-import { WaitType, Size } from '../core/enum';
+import { Size, WaitType } from '../core/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import autobind from '../_util/autobind';
 
@@ -214,7 +215,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const { onClick } = this.props;
     if (onClick) {
       const afterClick: any = onClick(e);
-      if (afterClick && afterClick instanceof Promise) {
+      if (isPromise(afterClick)) {
         try {
           this.loading = true;
           await afterClick;

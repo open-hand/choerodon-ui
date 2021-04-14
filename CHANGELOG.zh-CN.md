@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>DataSet`: 新增 setState, getState 方法。
+- 🌟 `<pro>DataSet`: 新增 setState, getState, modifiedCheck 方法。
+- 🌟 `<pro>Paginition`: 新增 maxPageSize, pageSizeEditable 属性。
+- 🌟 `<pro>FormField`: 新增 onBeforeChange 钩子。
 - 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
 - 💄 `<pro>Table`: 优化编辑器性能。
 - 💄 `<pro>Table`: 优化虚拟滚动性能。
