@@ -433,7 +433,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
         [`${prefixCls}-sm`]: size === 'small',
         [`${prefixCls}-lg`]: size === 'large',
         [`${prefixCls}-disabled`]: this.isDisabled(),
-        [`${prefixCls}-focused`]: this.isFocus,
+        [`${prefixCls}-focused`]: this.useFocusedClassName() && this.isFocus,
       },
       ...args,
     );
@@ -442,6 +442,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   isDisabled(): boolean {
     const { disabled = false } = this.props;
     return disabled;
+  }
+
+  useFocusedClassName(): boolean {
+    return true;
   }
 
   @autobind
@@ -453,9 +457,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       props: { onFocus = noop },
       prefixCls,
     } = this;
-    const element = this.wrapper || findDOMNode(this);
-    if (element) {
-      classes(element).add(`${prefixCls}-focused`);
+    if (this.useFocusedClassName()) {
+      const element = this.wrapper || findDOMNode(this);
+      if (element) {
+        classes(element).add(`${prefixCls}-focused`);
+      }
     }
     onFocus(e);
   }
@@ -472,9 +478,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       if (!e.isDefaultPrevented()) {
         this.isFocused = false;
         this.isFocus = false;
-        const element = this.wrapper || findDOMNode(this);
-        if (element) {
-          classes(element).remove(`${prefixCls}-focused`);
+        if (this.useFocusedClassName()) {
+          const element = this.wrapper || findDOMNode(this);
+          if (element) {
+            classes(element).remove(`${prefixCls}-focused`);
+          }
         }
       }
     }
