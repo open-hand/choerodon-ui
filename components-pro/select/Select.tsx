@@ -20,7 +20,6 @@ import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import Option, { OptionProps } from '../option/Option';
 import OptGroup from '../option/OptGroup';
-import Icon from '../icon';
 import { DataSetStatus, FieldType } from '../data-set/enum';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -179,6 +178,10 @@ export interface SelectProps extends TriggerFieldProps {
    */
   optionRenderer?: Renderer;
   /**
+   * 渲染分页 Item 内容
+   */
+  pagingOptionContent?: string | ReactNode;
+  /**
    * 当下拉列表为空时显示的内容
    */
   notFoundContent?: ReactNode;
@@ -252,6 +255,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * 当下拉列表为空时显示的内容
      */
     notFoundContent: PropTypes.node,
+    /**
+     * 渲染分页 Item 内容
+     */
+    pagingOptionContent: PropTypes.node,
     /**
      * 设置选项属性，如 disabled;
      */
@@ -510,6 +517,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       'primitiveValue',
       'optionRenderer',
       'notFoundContent',
+      'pagingOptionContent',
       'onOption',
       'noCache',
       'reverse',
@@ -561,6 +569,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       return notFoundContent;
     }
     return getConfig('renderEmpty')('Select');
+  }
+
+  getPagingOptionContent() {
+    const { pagingOptionContent } = this.props;
+    if (pagingOptionContent !== undefined) {
+      return pagingOptionContent;
+    }
+    return getConfig('selectPagingOptionContent');
   }
 
   getOtherNextNode(): ReactNode {
@@ -721,7 +737,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         {
           options.paging && options.currentPage < options.totalPage && (
             <Item key={MORE_KEY} checkable={false} className={`${menuPrefix}-item-more`}>
-              <Icon type="more_horiz" />
+              {this.getPagingOptionContent()}
             </Item>
           )
         }

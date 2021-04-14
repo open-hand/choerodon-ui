@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `selectPagingOptionContent` property.
 - 🌟 `<pro>DataSet`: Added `setState`, `getState` methods.
+- 🌟 `<pro>Select`: Added `pagingOptionContent` property.
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
 - 🌟 `<pro>Table.professionalBar`: Added `defaultExpanded` property.
 - 💄 `<pro>Table`: Optimize the performance of editors.
