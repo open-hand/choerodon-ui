@@ -16,7 +16,9 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 selectPagingOptionContent 属性。
-- 🌟 `<pro>DataSet`: 新增 setState, getState 方法。
+- 🌟 `<pro>DataSet`: 新增 setState, getState, modifiedCheck 方法。
+- 🌟 `<pro>Paginition`: 新增 maxPageSize, pageSizeEditable 属性。
+- 🌟 `<pro>FormField`: 新增 onBeforeChange 钩子。
 - 🌟 `<pro>Select`: 新增 pagingOptionContent 属性。
 - 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
 - 🌟 `<pro>Table`: 新增 ProfessionalBar 查询条 defaultExpanded 属性。

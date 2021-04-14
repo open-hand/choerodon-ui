@@ -137,6 +137,7 @@ title: DataSet
 | appendData(data, total) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
 | setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
+| modifiedCheck(message) | 变更检查。 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage |  |
 
 ### DataSet Events
 

@@ -7,7 +7,7 @@ import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
@@ -26,7 +26,6 @@ import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
-import formatString from '../formatter/formatString';
 import Field from '../data-set/Field';
 
 export type RenderFunction = (
@@ -259,42 +258,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return this.toMoment(item);
   }
 
-  // 避免出现影响过多组件使用继承覆盖原有方法 Fix onchange moment use ValueOf to get the Timestamp compare
-  @action
-  setValue(value: any): void {
-    if (!this.isReadOnly()) {
-      if (
-        this.multiple || this.range
-          ? isArrayLike(value) && !value.length
-          : isNil(value) || value === ''
-      ) {
-        value = this.emptyValue;
-      }
-      const {
-        name,
-        dataSet,
-        trim,
-        format,
-        observableProps: { dataIndex },
-      } = this;
-      const { onChange = noop } = this.props;
-      const { formNode } = this.context;
-      const old = this.getOldValue();
-      if (dataSet && name) {
-        (this.record || dataSet.create({}, dataIndex)).set(name, value);
-      } else {
-        value = formatString(value, {
-          trim,
-          format,
-        });
-        this.validate(value);
-      }
-      if (!isSame(this.momentToTimestamp(old), this.momentToTimestamp(value))) {
-        onChange(value, toJS(old), formNode);
-      }
-      this.value = value;
-    }
+  compare(oldValue, newValue) {
+    return isSame(this.momentToTimestamp(oldValue), this.momentToTimestamp(newValue));
+  }
 
+  afterSetValue() {
+    super.afterSetValue();
     this.setText(undefined);
   }
 

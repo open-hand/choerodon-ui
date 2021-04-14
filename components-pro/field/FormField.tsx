@@ -3,6 +3,7 @@ import React, { cloneElement, FormEventHandler, isValidElement, ReactInstance, R
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
+import isPromise from 'p-is-promise';
 import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
@@ -201,6 +202,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   onInvalid?: (validationResults: ValidationResult[], validity: Validity, name?: string) => void;
   /**
+   * 值变化前回调
+   */
+  onBeforeChange?: (value: any, oldValue: any, form?: ReactInstance) => boolean | Promise<boolean>;
+  /**
    * 值变化回调
    */
   onChange?: (value: any, oldValue: any, form?: ReactInstance) => void;
@@ -326,6 +331,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * @default: both
      */
     trim: PropTypes.oneOf([FieldTrim.both, FieldTrim.left, FieldTrim.right, FieldTrim.none]),
+    /**
+     * 值变化前回调
+     * (value: any, oldValue: any) => boolean
+     */
+    onBeforeChange: PropTypes.func,
     /**
      * 值变化回调
      * (value: any, oldValue: any, form?: ReactInstance) => void
@@ -565,6 +575,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'dataIndex',
       'onEnterDown',
       'onClear',
+      'onBeforeChange',
       'readOnly',
       'validator',
       'validationRenderer',
@@ -1011,6 +1022,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     this.rangeTarget = target;
   }
 
+  compare(oldValue, newValue) {
+    return isSame(oldValue, newValue);
+  }
+
   @action
   setValue(value: any): void {
     if (!this.isReadOnly()) {
@@ -1028,24 +1043,43 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         format,
         observableProps: { dataIndex },
       } = this;
-      const { onChange = noop } = this.props;
-      const { formNode } = this.context;
-      const old = this.getOldValue();
-      if (dataSet && name) {
-        (this.record || dataSet.create({}, dataIndex)).set(name, value);
-      } else {
+      const { onChange = noop, onBeforeChange = noop } = this.props;
+      const old = toJS(this.getOldValue());
+      if (!dataSet || !name) {
         value = formatString(value, {
           trim,
           format,
         });
-        this.validate(value);
       }
       // 转成实际的数据再进行判断
-      if (!isSame(toJS(old), toJS(value))) {
-        onChange(value, toJS(old), formNode);
+      if (!this.compare(old, toJS(value))) {
+        const { formNode } = this.context;
+        const storedValue = this.value;
+        const beforeChange = onBeforeChange(value, old, formNode);
+        const resolveCallback = action(() => {
+          if (dataSet && name) {
+            (this.record || dataSet.create({}, dataIndex)).set(name, value);
+          } else {
+            this.validate(value);
+          }
+          onChange(value, old, formNode);
+          this.afterSetValue();
+        });
+        if (isPromise(beforeChange)) {
+          this.value = value;
+          const rejectCallback = () => {
+            this.value = storedValue;
+          };
+          beforeChange.then(result => result === false ? rejectCallback() : resolveCallback());
+        } else if (beforeChange !== false) {
+          resolveCallback();
+          this.value = value;
+        }
       }
-      this.value = value;
     }
+  }
+
+  afterSetValue() {
   }
 
   renderRangeValue(readOnly?: boolean, value?: any, repeat?: number): ReactNode {

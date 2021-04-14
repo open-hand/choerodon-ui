@@ -16,7 +16,9 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `selectPagingOptionContent` property.
-- 🌟 `<pro>DataSet`: Added `setState`, `getState` methods.
+- 🌟 `<pro>DataSet`: Added `setState`, `getState`, `modifiedCheck` methods.
+- 🌟 `<pro>Paginition`: Added `maxPageSize`, `pageSizeEditable` properties.
+- 🌟 `<pro>FormField`: Added `onBeforeChange` hook.
 - 🌟 `<pro>Select`: Added `pagingOptionContent` property.
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
 - 🌟 `<pro>Table`: Added ProfessionalBar `defaultExpanded` property.

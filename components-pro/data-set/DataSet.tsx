@@ -24,6 +24,7 @@ import {
   axiosConfigAdapter,
   checkParentByInsert,
   doExport,
+  exportExcel,
   findBindFieldBy,
   findRootParent,
   fixAxiosConfig,
@@ -35,6 +36,7 @@ import {
   getSpliceRecord,
   getSplitValue,
   isDirtyRecord,
+  normalizeGroups,
   prepareForSubmit,
   prepareSubmitData,
   processExportValue,
@@ -43,13 +45,21 @@ import {
   sortTree,
   useCascade,
   useSelected,
-  normalizeGroups,
-  exportExcel,
 } from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
-import { DataSetEvents, DataSetSelection, DataSetExportStatus, DataSetStatus, DataToJSON, ExportMode, FieldType, RecordStatus, SortOrder } from './enum';
+import {
+  DataSetEvents,
+  DataSetExportStatus,
+  DataSetSelection,
+  DataSetStatus,
+  DataToJSON,
+  ExportMode,
+  FieldType,
+  RecordStatus,
+  SortOrder,
+} from './enum';
 import { Lang } from '../locale-context/enum';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
@@ -974,7 +984,7 @@ export default class DataSet extends EventManager {
     if (result && result.length > 0) {
       // check: 这里做性能优化去掉实例化为record 从demo来看没啥问题
       // toJS(this.processData(result)).map((item) => item.data);
-      const processData = result
+      const processData = result;
       processData.forEach((itemValue) => {
         const dataItem = {};
         const columnsExportkeys = Object.keys(columnsExport);
@@ -995,7 +1005,7 @@ export default class DataSet extends EventManager {
         newResult.push(dataItem);
       });
     }
-    return newResult
+    return newResult;
   }
 
   /**
@@ -1011,41 +1021,41 @@ export default class DataSet extends EventManager {
     const { totalCount } = this;
     runInAction(() => {
       this.exportStatus = DataSetExportStatus.start;
-    })
+    });
     let newResult: any[] = [];
     if (totalCount > 0) {
-      const queryTime = Math.ceil(totalCount / quantity)
+      const queryTime = Math.ceil(totalCount / quantity);
       const queryExportList: AxiosPromise<any>[] = [];
       for (let i = 0; i < queryTime; i++) {
         const params = { ...this.generateQueryString(1 + i, quantity) };
         const newConfig = axiosConfigAdapter('read', this, data, params);
-        queryExportList.push(this.axios(newConfig))
+        queryExportList.push(this.axios(newConfig));
         runInAction(() => {
           this.exportStatus = DataSetExportStatus.exporting;
-        })
+        });
       }
       return Promise.all(queryExportList).then((resultValue) => {
         const reducer = (accumulator: any[], currentValue: any[]) => [...accumulator, ...currentValue];
-        const todataList = (item) => item ? item[this.dataKey] : []
+        const todataList = (item) => item ? item[this.dataKey] : [];
         runInAction(() => {
           this.exportStatus = DataSetExportStatus.progressing;
-        })
+        });
         const exportAlldate = resultValue.map(todataList).reduce(reducer);
         newResult = this.displayDataTransform(exportAlldate, columnsExport);
         newResult.unshift(columnsExport);
         runInAction(() => {
           this.exportStatus = DataSetExportStatus.success;
-        })
+        });
         if (isFile) {
           exportExcel(newResult, this.name);
         } else {
-          return newResult
+          return newResult;
         }
       }).catch(() => {
         runInAction(() => {
           this.exportStatus = DataSetExportStatus.failed;
-        })
-      })
+        });
+      });
     }
   }
 
@@ -1079,13 +1089,27 @@ export default class DataSet extends EventManager {
   }
 
   /**
+   * 变更检查，当有变更时会弹确认框
+   * @param message 提示信息或者是confirm的参数
+   * @return Promise
+   */
+  modifiedCheck(message?: ReactNode | ModalProps & confirmProps): Promise<boolean> {
+    const { modifiedCheck, modifiedCheckMessage } = this.props;
+    if (!modifiedCheck || !this.dirty) {
+      return Promise.resolve(true);
+    }
+    return confirm(message || modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'))
+      .then(result => result !== 'cancel');
+  }
+
+  /**
    * 定位记录
    * @param index 索引
    * @return Promise
    */
   async locate(index: number): Promise<Record | undefined> {
     const { paging, pageSize, totalCount } = this;
-    const { modifiedCheck, modifiedCheckMessage, autoLocateFirst } = this.props;
+    const { autoLocateFirst } = this.props;
     let currentRecord = this.findInAllPage(index);
     if (currentRecord) {
       this.current = currentRecord;
@@ -1093,11 +1117,7 @@ export default class DataSet extends EventManager {
     }
     if (paging === true || paging === 'server') {
       if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
-        if (
-          !modifiedCheck ||
-          !this.dirty ||
-          (await confirm(modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'))) !== 'cancel'
-        ) {
+        if (await this.modifiedCheck()) {
           await this.query(Math.floor(index / pageSize) + 1);
           currentRecord = this.findInAllPage(index);
           if (currentRecord) {

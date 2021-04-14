@@ -1,13 +1,15 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, computed, runInAction, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
+import classNames from 'classnames';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import isString from 'lodash/isString';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import ObserverSelect from '../select/Select';
@@ -19,7 +21,6 @@ import Pager from './Pager';
 import Icon from '../icon';
 import { SizeChangerPosition } from './enum';
 import { Renderer } from '../field/FormField';
-import confirm from '../modal/confirm';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 
@@ -27,9 +28,11 @@ export interface PaginationProps extends DataSetComponentProps {
   total?: number;
   page?: number;
   pageSize?: number;
+  maxPageSize?: number;
   onChange?: (page: number, pageSize: number) => void;
   itemRender?: (page: number, type: PagerType) => ReactNode;
   pageSizeOptions?: string[];
+  pageSizeEditable?: boolean;
   sizeChangerPosition?: SizeChangerPosition;
   sizeChangerOptionRenderer?: Renderer;
   showSizeChanger?: boolean;
@@ -82,7 +85,6 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   static defaultProps = {
     suffixCls: 'pagination',
-    pageSizeOptions: ['10', '20', '50', '100'],
     sizeChangerPosition: SizeChangerPosition.left,
     sizeChangerOptionRenderer: ({ text }) => text,
     hideOnSinglePage: false,
@@ -92,6 +94,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     showTotal: true,
     simple: false,
   };
+
+  customizePageSize: number;
 
   goInputText: number;
 
@@ -140,39 +144,39 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   }
 
   getObservableProps(props, context) {
+    const globalPagination = getConfig('pagination');
     return {
       ...super.getObservableProps(props, context),
-      page: defaultTo(props.page, 1),
-      pageSize: defaultTo(props.pageSize, 10),
+      page: defaultTo('page' in props ? props.page : globalPagination && globalPagination.page, 1),
+      pageSize: defaultTo('pageSize' in props ? props.pageSize : globalPagination && globalPagination.pageSize, 10),
       total: props.total,
+      pageSizeOptions: props.pageSizeOptions || (globalPagination && globalPagination.pageSizeOptions) || ['10', '20', '50', '100'],
+      pageSizeEditable: 'pageSizeEditable' in props ? props.pageSizeEditable : (globalPagination && globalPagination.pageSizeEditable),
+      maxPageSize: defaultTo('maxPageSize' in props ? props.maxPageSize : (globalPagination && globalPagination.maxPageSize), 100),
     };
   }
 
-  handlePageSizeChange = async (value: number, oldValue: number) => {
+  @autobind
+  handlePageSizeBeforeChange(value): boolean | Promise<boolean> {
+    if (value < 1 || value > Math.max(this.customizePageSize, this.observableProps.maxPageSize)) {
+      return false;
+    }
     const { dataSet } = this.props;
     if (dataSet) {
-      dataSet.pageSize = value;
+      return dataSet.modifiedCheck();
     }
-    if (!this.lastPageSize) this.lastPageSize = oldValue;
-    if (
-      !dataSet?.props.modifiedCheck ||
-      !dataSet.dirty ||
-      (await confirm(dataSet.props.modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'))) !== 'cancel') {
-      this.handleChange(this.page, Number(value));
-    } else {
-      runInAction(() => {
-        if (dataSet) {
-          dataSet.pageSize = this.lastPageSize;
-        }
-      });
-    }
-  };
+    return true;
+  }
+
+  @autobind
+  handlePageSizeChange(value: number) {
+    this.handleChange(this.page, Number(value));
+  }
 
   @action
   handleChange(page: number, pageSize: number) {
     const { dataSet, onChange } = this.props;
     if (this.pageSize !== pageSize) {
-      this.lastPageSize = pageSize;
       this.observableProps.pageSize = pageSize;
       this.observableProps.page = 1;
       if (dataSet) {
@@ -266,6 +270,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       'total',
       'page',
       'pageSize',
+      'maxPageSize',
+      'pageSizeEditable',
       'onChange',
       'pageSizeOptions',
       'itemRender',
@@ -281,16 +287,22 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     ]);
   }
 
-  @action
-  getOptions(): ReactNode {
-    const { pageSize } = this;
-    const { pageSizeOptions } = this.props;
+  @computed
+  get options(): string[] {
+    const { pageSize, customizePageSize } = this;
+    const { pageSizeOptions } = this.observableProps;
     const options = (pageSizeOptions || []).slice();
-    if (options.indexOf(String(pageSize)) === -1) {
-      options.unshift(String(pageSize));
+    if (customizePageSize || !options.includes(String(pageSize))) {
+      this.customizePageSize = customizePageSize || pageSize;
+      options.push(String(this.customizePageSize));
     }
+    return options.sort((a, b) => Number(a) - Number(b));
+  }
+
+  @action
+  getOptions(): [ReactNode, number] {
     const { Option } = ObserverSelect;
-    return options.map(option => (
+    return this.options.map(option => (
       <Option key={option} value={option}>
         {option}
       </Option>
@@ -364,21 +376,27 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       disabled,
     } = this.props;
     if (showSizeChanger) {
+      const { pageSizeEditable } = this.observableProps;
+      const { prefixCls } = this;
       const select = (
         <ObserverSelect
           key="size-select"
+          className={classNames(`${prefixCls}-size-changer`, { [`${prefixCls}-size-editable`]: pageSizeEditable })}
           disabled={disabled}
+          onBeforeChange={this.handlePageSizeBeforeChange}
           onChange={this.handlePageSizeChange}
           value={String(pageSize)}
           clearButton={false}
           renderer={sizeChangerOptionRenderer}
           optionRenderer={sizeChangerOptionRenderer}
+          combo={pageSizeEditable}
+          restrict="0-9"
         >
           {this.getOptions()}
         </ObserverSelect>
       );
       return showSizeChangerLabel
-        ? [<span className={`${this.prefixCls}-perpage`} key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
+        ? [<span className={`${prefixCls}-perpage`} key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
         : select;
     }
   }
@@ -429,7 +447,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
             onKeyUp={this.handleJumpGo}
           >
               {goButton}
-            </span>
+          </span>
         );
     }
 

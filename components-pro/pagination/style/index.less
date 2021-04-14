@@ -8,13 +8,17 @@
     vertical-align: middle;
   }
 
-  .@{c7n-pro-prefix}-select {
-    text-align: right;
-    border: none;
+  &-size-changer {
+    width: 0.7rem;
 
-    &-wrapper {
-      width: 0.7rem;
+    .@{c7n-pro-prefix}-select {
+      text-align: right;
+      border-style: none;
     }
+  }
+
+  &-size-editable .@{c7n-pro-prefix}-select {
+    border-bottom-style: @border-style-base;
   }
 
   &-page-info {
@@ -49,6 +53,7 @@
     height: 0.3rem;
     margin-right: 0.08rem;
     vertical-align: middle;
+
     input {
       position: relative;
       display: inline-block;
