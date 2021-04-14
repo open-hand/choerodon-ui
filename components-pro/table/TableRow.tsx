@@ -9,7 +9,6 @@ import ReactIntersectionObserver from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { stopPropagation } from 'choerodon-ui/lib/_util/EventManager';
 import { ColumnProps, columnWidth } from './Column';
 import TableCell, { TableCellProps } from './TableCell';
 import Record from '../data-set/Record';
@@ -240,14 +239,14 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @autobind
-  handleResize(index: Key, height: number) {
-    this.setRowHeight(index, height);
+  handleResize(key: Key, height: number) {
+    this.setRowHeight(key, height);
   }
 
   @action
-  setRowHeight(index: Key, height: number) {
+  setRowHeight(key: Key, height: number) {
     const { tableStore } = this.context;
-    set(tableStore.lockColumnsBodyRowsHeight, index, height);
+    set(tableStore.lockColumnsBodyRowsHeight, key, height);
   }
 
   @autobind
@@ -624,7 +623,6 @@ export default class TableRow extends Component<TableRowProps, any> {
       style: { ...rowExternalProps.style },
       onClick: this.handleClick,
       onClickCapture: this.handleClickCapture,
-      onFocus: stopPropagation,
       tabIndex: -1,
       disabled,
       'data-index': id,

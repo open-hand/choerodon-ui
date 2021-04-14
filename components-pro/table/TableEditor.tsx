@@ -223,16 +223,6 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   @autobind
-  handleEditorFocus(e) {
-    e.stopPropagation();
-    const { editorProps } = this;
-    if (editorProps) {
-      const { onFocus = noop } = editorProps;
-      onFocus(e);
-    }
-  }
-
-  @autobind
   handleEditorBlur(e) {
     const { editorProps, inTab, context: { tableStore: { inlineEdit } } } = this;
     if (!inTab && !inlineEdit) {
@@ -386,7 +376,6 @@ export default class TableEditor extends Component<TableEditorProps> {
                 name: fields.get('name'),
                 onKeyDown: this.handleEditorKeyDown,
                 onEnterDown: this.handleEditorKeyEnterDown,
-                onFocus: this.handleEditorFocus,
                 onClick: this.handleEditorClick,
                 tabIndex: -1,
                 showHelp: ShowHelp.none,
@@ -436,7 +425,6 @@ export default class TableEditor extends Component<TableEditorProps> {
         name,
         onKeyDown: this.handleEditorKeyDown,
         onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
-        onFocus: this.handleEditorFocus,
         onBlur: this.handleEditorBlur,
         tabIndex: -1,
         showHelp: ShowHelp.none,

@@ -29,6 +29,10 @@ export default class Output extends FormField<OutputProps> {
     return false;
   }
 
+  useFocusedClassName() {
+    return false;
+  }
+
   @autobind
   handleChange() {
   }
