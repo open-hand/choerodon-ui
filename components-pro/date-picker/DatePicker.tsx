@@ -191,7 +191,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @observable mode?: ViewMode;
 
   getOtherProps() {
-    return omit(super.getOtherProps(), ['mode', 'filter', 'cellRenderer']);
+    return omit(super.getOtherProps(), ['mode', 'filter', 'cellRenderer', 'maxLength', 'minLength']);
   }
 
   getDefaultViewMode() {
@@ -628,11 +628,14 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getValidatorProps(): ValidatorProps {
     const { min, max } = this;
-    return {
+    return omit({
       ...super.getValidatorProps(),
       min,
       max,
       format: this.getDateFormat(),
-    };
+    }, [
+      'maxLength',
+      'minLength',
+    ]);
   }
 }

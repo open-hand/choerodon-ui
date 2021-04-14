@@ -253,13 +253,16 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const step = this.getProp('step');
     const nonStrictStep = this.nonStrictStep;
 
-    return {
+    return omit({
       ...super.getValidatorProps(),
       min,
       max,
       step,
       nonStrictStep,
-    };
+    }, [
+      'maxLength',
+      'minLength',
+    ]);
   }
 
   getInnerSpanButton(): ReactNode {
@@ -366,6 +369,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       'longPressPlus',
       'precision',
       'numberGrouping',
+      'maxLength',
     ]);
     return otherProps;
   }

@@ -18,7 +18,7 @@ import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, F
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { getLimit, processValue } from './utils';
+import { getLimit, processValue, getBaseType } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -834,6 +834,7 @@ export default class Field {
   getValidatorProps(): ValidatorProps | undefined {
     const { record, dataSet, name, type, required } = this;
     if (record) {
+      const baseType = getBaseType(type);
       const customValidator = this.get('validator');
       const max = this.get('max');
       const min = this.get('min');
@@ -841,8 +842,8 @@ export default class Field {
       const pattern = this.get('pattern');
       const step = this.get('step');
       const nonStrictStep = this.get('nonStrictStep') === undefined ? getConfig('numberFieldNonStrictStep') : this.get('nonStrictStep');
-      const minLength = this.get('minLength');
-      const maxLength = this.get('maxLength');
+      const minLength = baseType !== FieldType.string ? undefined : this.get('minLength');
+      const maxLength = baseType !== FieldType.string ? undefined : this.get('maxLength');
       const label = this.get('label');
       const range = this.get('range');
       const multiple = this.get('multiple');
