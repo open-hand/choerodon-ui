@@ -17,10 +17,13 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: 新增 setState, getState 方法。
 - 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
+- 🌟 `<pro>Table.professionalBar`: 新增 defaultExpanded 属性。
 - 💄 `<pro>Table`: 优化编辑器性能。
 - 💄 `<pro>Table`: 优化虚拟滚动性能。
+- 💄 `<pro>Table.professionalBar`: 优化该查询条 boolean 类型的查询字段默认显示为勾选框。
 - 🐞 `<pro>DataSet.Field`：修复 dynamicProps.lovPara 和 cascadeMap 同时使用时卡顿的问题。
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
+- 🐞 `<pro>Table`：修复 rowHeight:auto 时，输入数字不会换行显示的问题。
 
 
 ## 1.3.0

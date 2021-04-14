@@ -17,10 +17,13 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: Added `setState`, `getState` methods.
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
+- 🌟 `<pro>Table.professionalBar`: Added `defaultExpanded` property.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
+- 💄 `<pro>Table.professionalBar`: Optimize professionalBar The query field of type boolean is displayed as a checkBox by default.
 - 🐞 `<pro>DataSet.Field`: Fix the issue of freezing when dynamicProps.lovPara and cascadeMap are used at the same time.
 - 🐞 `<pro>Modal`: Fix some abnormal behaviors of Modal which not provided by ModalProvider.
+- 🐞 `<pro>Table`: Fix the problem that the input number will not be displayed in a new line when rowHeight:auto.
 
 ## 1.3.0
 

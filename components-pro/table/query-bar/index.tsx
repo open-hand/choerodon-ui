@@ -697,7 +697,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           list.push(
             isValidElement(element)
               ? cloneElement(element, props)
-              : cloneElement(getEditorByField(field, true, queryBar === TableQueryBarType.filterBar), {
+              : cloneElement(getEditorByField(field, queryBar !== TableQueryBarType.professionalBar, queryBar === TableQueryBarType.filterBar), {
                 ...props,
                 ...(isObject(element) ? element : {}),
               }),

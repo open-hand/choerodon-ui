@@ -25,6 +25,7 @@ export interface TableProfessionalBarProps extends ElementProps {
   buttons: ReactElement<ButtonProps>[];
   queryBarProps?: FormProps;
   summaryBar?: ReactElement<any>;
+  defaultExpanded?: Boolean;
 }
 
 @observer
@@ -39,6 +40,12 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   @observable moreFields: ReactElement[];
 
   componentDidMount(): void {
+    const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = this.props;
+    if (queryDataSet && queryFields.length && defaultExpanded) {
+      runInAction(() => {
+        this.moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
+      });
+    }
     this.processDataSetListener(true);
   }
 
