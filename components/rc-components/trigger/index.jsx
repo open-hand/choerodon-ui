@@ -231,9 +231,11 @@ export default class Trigger extends Component {
 
   onBlur = (e) => {
     this.fireEvents('onBlur', e);
-    this.clearDelayTimer();
-    if (this.isBlurToHide()) {
-      this.delaySetPopupVisible(false, this.props.blurDelay);
+    if (!e.isDefaultPrevented()) {
+      this.clearDelayTimer();
+      if (this.isBlurToHide()) {
+        this.delaySetPopupVisible(false, this.props.blurDelay);
+      }
     }
   };
 
@@ -276,7 +278,7 @@ export default class Trigger extends Component {
   };
 
   onDocumentClick = (event) => {
-    if (this.props.mask && !this.props.maskClosable) {
+    if (event.isDefaultPrevented() || (this.props.mask && !this.props.maskClosable)) {
       return;
     }
     const target = event.target;
@@ -500,9 +502,11 @@ export default class Trigger extends Component {
     if (childCallback) {
       childCallback(e);
     }
-    const callback = this.props[type];
-    if (callback) {
-      callback(e);
+    if (!e.isDefaultPrevented()) {
+      const callback = this.props[type];
+      if (callback) {
+        callback(e);
+      }
     }
   }
 
@@ -517,8 +521,7 @@ export default class Trigger extends Component {
   render() {
     const { popupVisible } = this.state;
     const props = this.props;
-    const children = props.children;
-    const child = Children.only(children);
+    const child = Children.only(props.children);
     const newChildProps = { key: 'trigger' };
 
     if (this.isContextMenuToShow()) {

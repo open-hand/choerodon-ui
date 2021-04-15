@@ -300,7 +300,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   }
 
   @action
-  getOptions(): [ReactNode, number] {
+  getOptions(): ReactNode {
     const { Option } = ObserverSelect;
     return this.options.map(option => (
       <Option key={option} value={option}>
