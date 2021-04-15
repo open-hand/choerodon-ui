@@ -1,19 +1,16 @@
 import React, { CSSProperties, Key } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import shallowEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import isElement from 'lodash/isElement';
-import ClassNames from 'classnames';
 import Align from 'choerodon-ui/lib/align';
-import Portal from 'choerodon-ui/lib/rc-components/util/Portal';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Animate from '../animate';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import PopupInner from './PopupInner';
 import autobind from '../_util/autobind';
-
-let popupContainer;
 
 /**
  * 记录ID生成器
@@ -41,6 +38,8 @@ export interface PopupProps extends ViewComponentProps {
 export default class Popup extends ViewComponent<PopupProps> {
   static displayName = 'Popup';
 
+  static popupContainer?: HTMLDivElement;
+
   static propTypes = {
     align: PropTypes.object,
     onAlign: PropTypes.func,
@@ -60,6 +59,8 @@ export default class Popup extends ViewComponent<PopupProps> {
     suffixCls: 'popup',
     transitionName: 'zoom',
   };
+
+  popupContainer?: HTMLDivElement;
 
   currentAlignClassName?: string;
 
@@ -90,6 +91,13 @@ export default class Popup extends ViewComponent<PopupProps> {
     return otherProps;
   }
 
+  componentWillUnmount() {
+    const { popupContainer } = this;
+    if (popupContainer && popupContainer !== Popup.popupContainer && popupContainer.parentNode) {
+      popupContainer.parentNode.removeChild(popupContainer);
+    }
+  }
+
   render() {
     const {
       hidden,
@@ -105,12 +113,8 @@ export default class Popup extends ViewComponent<PopupProps> {
     if (!hidden) {
       this.contentRendered = true;
     }
-
-    return this.contentRendered ? (
-      <Portal
-        key={this.popupKey}
-        getContainer={this.getContainer}
-      >
+    const container = this.getContainer();
+    return container && this.contentRendered ? createPortal(
         <Animate
           component=""
           exclusive
@@ -134,25 +138,42 @@ export default class Popup extends ViewComponent<PopupProps> {
           >
             <PopupInner {...omit(this.getMergedProps(), ['ref'])}>{children}</PopupInner>
           </Align>
-        </Animate>
-      </Portal>
-    ) : null;
+        </Animate>,
+        container,
+        this.popupKey,
+      ) : null;
   }
-
 
   @autobind
   getContainer() {
     const { getPopupContainer, getRootDomNode = noop } = this.props;
-    if (typeof window !== 'undefined') {
-      const doc = window.document;
-      popupContainer = doc.createElement('div');
-      popupContainer.className = ClassNames(getProPrefixCls('popup-container'));
-      const mountNode = getPopupContainer ? getPopupContainer(getRootDomNode()) : doc.body;
-      if (isElement(mountNode)) {
-        mountNode.appendChild(popupContainer);
-      } else {
-        doc.body.appendChild(popupContainer);
+    const globalContainer = Popup.popupContainer;
+    if (getPopupContainer) {
+      const container = this.popupContainer;
+      if (container) {
+        return container;
       }
+    } else if (globalContainer || typeof window === 'undefined') {
+      return globalContainer;
+    }
+    const doc = window.document;
+    const popupContainer = doc.createElement('div');
+    popupContainer.className = getProPrefixCls('popup-container');
+    const root = doc.body;
+    if (getPopupContainer) {
+      const mountNode = getPopupContainer(getRootDomNode());
+      if (mountNode === root) {
+        if (globalContainer) {
+          this.popupContainer = globalContainer;
+          return globalContainer;
+        }
+        Popup.popupContainer = popupContainer;
+      }
+      (isElement(mountNode) ? mountNode : root).appendChild(popupContainer);
+      this.popupContainer = popupContainer;
+    } else {
+      root.appendChild(popupContainer);
+      Popup.popupContainer = popupContainer;
     }
     return popupContainer;
   }

@@ -158,6 +158,8 @@ export default class Trigger extends Component<TriggerProps> {
 
   @observable popupHidden?: boolean;
 
+  @observable mounted?: boolean;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -207,6 +209,11 @@ export default class Trigger extends Component<TriggerProps> {
     if (popupHidden !== this.popupHidden && popupHidden !== undefined) {
       this.popupHidden = popupHidden;
     }
+  }
+
+  @mobxAction
+  componentDidMount() {
+    this.mounted = true;
   }
 
   componentDidUpdate() {
@@ -340,40 +347,42 @@ export default class Trigger extends Component<TriggerProps> {
       getPopupContainer,
       onMouseDown = this.handlePopupMouseDown,
     } = this.props;
-    if (popupContent) {
-      const visible = !this.popupHidden;
-      const mouseProps: any = {};
-      if (this.isMouseEnterToShow()) {
-        mouseProps.onMouseEnter = this.handlePopupMouseEnter;
+    if (this.mounted || !getPopupContainer) {
+      if (popupContent) {
+        const visible = !this.popupHidden;
+        const mouseProps: any = {};
+        if (this.isMouseEnterToShow()) {
+          mouseProps.onMouseEnter = this.handlePopupMouseEnter;
+        }
+        if (this.isMouseLeaveToHide()) {
+          mouseProps.onMouseLeave = this.handlePopupMouseLeave;
+        }
+        return (
+          <Popup
+            key="popup"
+            ref={this.saveRef}
+            transitionName={transitionName}
+            className={classNames(`${prefixCls}-popup`, popupCls, popupClassName)}
+            style={popupStyle}
+            hidden={!visible}
+            align={this.getPopupAlign()}
+            onAlign={onPopupAlign}
+            onMouseDown={onMouseDown}
+            onMouseUp={this.handlePopupMouseUp}
+            getRootDomNode={getRootDomNode}
+            onAnimateAppear={onPopupAnimateAppear}
+            onAnimateEnter={onPopupAnimateEnter}
+            onAnimateLeave={onPopupAnimateLeave}
+            onAnimateEnd={onPopupAnimateEnd}
+            getStyleFromAlign={getPopupStyleFromAlign}
+            getClassNameFromAlign={this.getPopupClassNameFromAlign}
+            getPopupContainer={getPopupContainer}
+            {...mouseProps}
+          >
+            {popupContent}
+          </Popup>
+        );
       }
-      if (this.isMouseLeaveToHide()) {
-        mouseProps.onMouseLeave = this.handlePopupMouseLeave;
-      }
-      return (
-        <Popup
-          key="popup"
-          ref={this.saveRef}
-          transitionName={transitionName}
-          className={classNames(`${prefixCls}-popup`, popupCls, popupClassName)}
-          style={popupStyle}
-          hidden={!visible}
-          align={this.getPopupAlign()}
-          onAlign={onPopupAlign}
-          onMouseDown={onMouseDown}
-          onMouseUp={this.handlePopupMouseUp}
-          getRootDomNode={getRootDomNode}
-          onAnimateAppear={onPopupAnimateAppear}
-          onAnimateEnter={onPopupAnimateEnter}
-          onAnimateLeave={onPopupAnimateLeave}
-          onAnimateEnd={onPopupAnimateEnd}
-          getStyleFromAlign={getPopupStyleFromAlign}
-          getClassNameFromAlign={this.getPopupClassNameFromAlign}
-          getPopupContainer={getPopupContainer}
-          {...mouseProps}
-        >
-          {popupContent}
-        </Popup>
-      );
     }
   }
 

@@ -9,6 +9,7 @@
   position: absolute;
   z-index: 1;
   display: block;
+  padding: @tooltip-distance;
   background-color: transparent !important;
   box-shadow: none !important;
   visibility: visible;
@@ -20,25 +21,29 @@
   &-placement-top,
   &-placement-topLeft,
   &-placement-topRight {
-    padding-bottom: @tooltip-distance;
+    padding-right: 0;
+    padding-left: 0;
   }
 
   &-placement-right,
   &-placement-rightTop,
   &-placement-rightBottom {
-    padding-left: @tooltip-distance;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   &-placement-bottom,
   &-placement-bottomLeft,
   &-placement-bottomRight {
-    padding-top: @tooltip-distance;
+    padding-right: 0;
+    padding-left: 0;
   }
 
   &-placement-left,
   &-placement-leftTop,
   &-placement-leftBottom {
-    padding-right: @tooltip-distance;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   // Wrapper for the tooltip content

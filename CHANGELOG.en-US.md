@@ -25,12 +25,15 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
 - 💄 `<pro>Table`: Optimize ProfessionalBar The query field of type boolean is displayed as a checkBox by default.
+- 💄 `Popover`: Optimized if the trigger is click. When selecting the Select component in the pop-up window, you don't need to set getPopupContainer to prevent the pop-up window from closing.
+- 💄 `<pro>Trigger`: Optimize the getContainer method.
 - 🐞 `<pro>DatePicker`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>NumberField`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>DataSet.Field`: Fix the incorrect restriction of `maxLength` and `minLength` on date and number types.
 - 🐞 `<pro>DataSet.Field`: Fix the issue of freezing when dynamicProps.lovPara and cascadeMap are used at the same time.
 - 🐞 `<pro>Modal`: Fix some abnormal behaviors of Modal which not provided by ModalProvider.
 - 🐞 `<pro>Table`: Fix the problem that the input number will not be displayed in a new line when rowHeight:auto.
+- 🐞 `<pro>Tooltip`: Fix the problem that the position is offset when it is displayed for the first time.
 
 ## 1.3.0
 
