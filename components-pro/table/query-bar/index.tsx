@@ -9,7 +9,8 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
 import { DropDownProps } from 'choerodon-ui/lib/dropdown';
-import { ProgressStatus } from 'choerodon-ui/lib/progress/enum'
+import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
+import noop from 'lodash/noop';
 import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
 import Table, {
@@ -56,6 +57,9 @@ export interface TableQueryBarProps {
   filterBarFieldName?: string;
   filterBarPlaceholder?: string;
   clientExportQuantity?: number;
+  onQuery?: () => void;
+  onReset?: () => void;
+  treeQueryExpanded?: boolean;
 }
 
 const ExportBody = observer((props) => {
@@ -746,15 +750,37 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return <TableDynamicFilterBar key="toolbar" dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
   }
 
+  @autobind
+  expandTree() {
+    const {
+      context: {
+        tableStore,
+      },
+    } = this;
+    tableStore.expandAll();
+  }
+
+  @autobind
+  collapseTree() {
+    const {
+      context: {
+        tableStore,
+      },
+    } = this;
+    tableStore.collapseAll();
+  }
+
   render() {
     const buttons = this.getButtons();
     const summaryBar = this.getSummaryBar();
     const {
       context: {
-        tableStore: { dataSet, queryBar, prefixCls },
+        tableStore: { dataSet, queryBar, prefixCls, isTree },
       },
-      props: { queryFieldsLimit, summaryFieldsLimit, pagination },
+      props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded },
       showQueryBar,
+      expandTree,
+      collapseTree,
     } = this;
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
@@ -768,6 +794,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         queryFieldsLimit: queryFieldsLimit!,
         summaryFieldsLimit: summaryFieldsLimit!,
         summaryBar,
+        onQuery: treeQueryExpanded && isTree ? expandTree : noop,
+        onReset: treeQueryExpanded && isTree ? collapseTree : noop,
       };
       if (typeof queryBar === 'function') {
         return (queryBar as TableQueryBarHook)(props);

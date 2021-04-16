@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Select`: Added `pagingOptionContent` property.
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
 - 🌟 `<pro>Table`: Added ProfessionalBar `defaultExpanded` property.
+- 🌟 `<pro>Table`: Added 'TreequeryExpanded' tree structure QueryBar queries automatically trigger expansion tree structure.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
 - 💄 `<pro>Table`: Optimize ProfessionalBar The query field of type boolean is displayed as a checkBox by default.

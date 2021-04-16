@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Select`: 新增 pagingOptionContent 属性。
 - 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
 - 🌟 `<pro>Table`: 新增 ProfessionalBar 查询条 defaultExpanded 属性。
+- 🌟 `<pro>Table`: 新增 `treeQueryExpanded` 树形结构 queryBar 查询自动触发展开树形结构。
 - 💄 `<pro>Table`: 优化编辑器性能。
 - 💄 `<pro>Table`: 优化虚拟滚动性能。
 - 💄 `<pro>Table`: 优化 ProfessionalBar 查询条 boolean 类型的查询字段默认显示为勾选框。

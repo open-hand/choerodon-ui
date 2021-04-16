@@ -80,6 +80,7 @@ subtitle: 表格
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
 | clientExportQuantity | 客户端查询导出，查询数目设置  | number | |
 | virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | |
+| treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
