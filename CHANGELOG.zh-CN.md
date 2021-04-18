@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.3.1
+
+`2021-04-18`
+
 - 🌟 `configure`: 新增 selectPagingOptionContent, selectSearchable 属性。
 - 🌟 `<pro>DataSet`: 新增 setState, getState, modifiedCheck 方法。
 - 🌟 `<pro>Paginition`: 新增 maxPageSize, pageSizeEditable 属性。
@@ -37,7 +41,6 @@ timeline: true
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
 - 🐞 `<pro>Table`：修复 rowHeight:auto 时，输入数字不会换行显示的问题。
 - 🐞 `<pro>Tooltip`：修复第一次显示时位置有偏移的问题。
-
 
 ## 1.3.0
 

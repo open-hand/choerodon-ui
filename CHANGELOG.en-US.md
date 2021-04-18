@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.3.1
+
+`2021-04-18`
+
 - 🌟 `configure`: Added `selectPagingOptionContent`, `selectSearchable` properties.
 - 🌟 `<pro>DataSet`: Added `setState`, `getState`, `modifiedCheck` methods.
 - 🌟 `<pro>Paginition`: Added `maxPageSize`, `pageSizeEditable` properties.
