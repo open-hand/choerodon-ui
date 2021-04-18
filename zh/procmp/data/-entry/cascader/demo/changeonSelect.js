@@ -32,13 +32,7 @@ class App extends React.Component {
   });
 
   render() {
-    return (
-      <Cascader
-        changeOnSelect
-        dataSet={this.ds}
-        name="id"
-      />
-    );
+    return <Cascader changeOnSelect dataSet={this.ds} name="id" />;
   }
 }
 

@@ -4,22 +4,18 @@ subtitle: 表格
 order: 0
 ---
 
-Display row and column data, see the bottom for export and paging configuration.
+Show the ranks of data.
 
 ## When to use
 
--When there is a large amount of structured data to show;
--When complex behaviors such as sorting, searching, paging, and customizing data are required.
+When complex behaviors such as sorting, searching, paging, and custom operations on data are required.
+
+> Related tutorial: [Table](/zh/tutorials/table-advance)
 
 **Precautions**
 
-> Pro Table has many integrated functions and complex logic, so there are certain performance problems, so you must pay attention to it before developing technology selection.
-
-**Performance bottleneck**
-
--Multi-field: single-line field 50+ (10 items) affects the first rendering speed, and has little effect
--Large amount of data: The total number of cells in a single rendering exceeds 1000+
+> Pro Table has many integrated functions and complex logic. Therefore, when a large amount of data needs to be displayed on a single page (the total number of cells in a single rendering exceeds 2000+), there are certain performance problems. You must pay attention to the development of technology selection.
 
 **Processing plan**
 
-> Use basic tables or big data tables according to specific scenarios and needs
+> Use [PerformanceTable](/zh/procmp/data-display/performance-table) according to specific scenarios and needs

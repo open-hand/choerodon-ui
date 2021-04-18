@@ -1,16 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  DataSet,
-  Table,
-  Form,
-  TextField,
-  NumberField,
-  SelectBox,
-  Modal,
-  Button,
-} from 'choerodon-ui/pro';
-import { observer } from 'mobx-react';
+import { DataSet, Table } from 'choerodon-ui/pro';
 
 const { Column } = Table;
 
@@ -56,12 +46,12 @@ class App extends React.Component {
       { name: 'autoHeight', defaultValue: true },
     ],
   });
-  
+
   render() {
     return (
       <div style={{ height: '500px' }}>
         <div style={{ height: '100%' }}>
-          <Table autoHeight key="user" dataSet={this.userDs} pristine>
+          <Table autoHeight={{ type: 'maxHeight', diff: 20 }} key="user" dataSet={this.userDs} pristine>
             <Column name="userid" />
             <Column name="age" />
             <Column name="enable" />
