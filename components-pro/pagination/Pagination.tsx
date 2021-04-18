@@ -380,6 +380,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       const { prefixCls } = this;
       const select = (
         <ObserverSelect
+          searchable={false}
           key="size-select"
           className={classNames(`${prefixCls}-size-changer`, { [`${prefixCls}-size-editable`]: pageSizeEditable })}
           disabled={disabled}

@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `treeQueryExpanded` tree structure QueryBar queries automatically trigger expansion tree structure.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
+- 💄 `<pro>Table`: Optimize the border style issue.
 - 💄 `<pro>Table`: Optimize ProfessionalBar The query field of type boolean is displayed as a checkBox by default.
 - 💄 `Popover`: Optimized if the trigger is click. When selecting the Select component in the pop-up window, you don't need to set getPopupContainer to prevent the pop-up window from closing.
 - 💄 `<pro>Trigger`: Optimize the getContainer method.

@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function DropIndicator({
+  prefixCls,
   dropPosition,
   dropLevelOffset,
   indent,
@@ -8,6 +9,7 @@ export default function DropIndicator({
   dropPosition: -1 | 0 | 1,
   dropLevelOffset: number,
   indent: number,
+  prefixCls: string,
 }) {
   const style: React.CSSProperties = {
     pointerEvents: 'none',
@@ -31,5 +33,5 @@ export default function DropIndicator({
       break;
     default:
   }
-  return <div style={style} />;
+  return <div className={`${prefixCls}-drop-indicator`} style={style} />;
 }

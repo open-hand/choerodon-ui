@@ -265,7 +265,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dropdownMatchSelectWidth', true],
   ['selectReverse', true],
   ['selectPagingOptionContent', '···'],
-  ['selectSearchable', true],
+  ['selectSearchable', false],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
   ['textFieldAutoComplete', undefined],
