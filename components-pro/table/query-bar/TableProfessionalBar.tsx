@@ -26,6 +26,8 @@ export interface TableProfessionalBarProps extends ElementProps {
   queryBarProps?: FormProps;
   summaryBar?: ReactElement<any>;
   defaultExpanded?: Boolean;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 @observer
@@ -83,10 +85,13 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   @autobind
-  async handleQuery() {
-    const { dataSet, queryDataSet } = this.props;
+  async handleQuery(collapse?: boolean) {
+    const { dataSet, queryDataSet, onQuery } = this.props;
     if (await queryDataSet?.validate()) {
       dataSet.query();
+      if (!collapse && onQuery) {
+        onQuery();
+      }
     }
   }
 
@@ -166,7 +171,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
           <span className={`${prefixCls}-professional-query-bar-button`}>
             {moreFieldsButton}
             {this.getResetButton()}
-            <Button color={ButtonColor.primary} wait={500} onClick={this.handleQuery}>
+            <Button color={ButtonColor.primary} wait={500} onClick={() => {this.handleQuery()}}>
               {$l('Table', 'query_button')}
             </Button>
           </span>
@@ -178,13 +183,16 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, onReset } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         current.reset();
+        if(onReset){
+          onReset()
+        }
       }
-      this.handleQuery();
+      this.handleQuery(true);
     }
   }
 

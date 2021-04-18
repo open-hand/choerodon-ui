@@ -43,6 +43,8 @@ export interface TableToolBarProps extends ElementProps {
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 @observer
@@ -69,21 +71,27 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, onReset } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         current.reset();
+        if(onReset){
+          onReset()
+        }
       }
-      this.handleQuery();
+      this.handleQuery(true);
     }
   }
 
   @autobind
-  async handleQuery() {
-    const { dataSet, queryDataSet } = this.props;
+  async handleQuery(collapse?: boolean) {
+    const { dataSet, queryDataSet, onQuery } = this.props;
     if (await queryDataSet?.validate()) {
       dataSet.query();
+      if (!collapse && onQuery) {
+        onQuery()
+      }
     }
   }
 
@@ -112,7 +120,7 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
         <span className={`${prefixCls}-query-bar`}>
           {dirtyInfo}
           {currentFields}
-          <Button color={ButtonColor.primary} onClick={this.handleQuery}>
+          <Button color={ButtonColor.primary} onClick={() => {this.handleQuery()}}>
             {$l('Table', 'query_button')}
           </Button>
           {more}
