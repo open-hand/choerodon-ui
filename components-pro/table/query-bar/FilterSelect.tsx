@@ -150,12 +150,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   doQuery = throttle(() => {
-    const { onQuery } = this.props;
+    const { onQuery = noop } = this.props;
     const { optionDataSet } = this.observableProps;
     optionDataSet.query();
-    if( onQuery) {
-      onQuery()
-    }
+    onQuery();
   }, 500);
 
   @action
@@ -261,11 +259,9 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @autobind
   handleDataSetReset() {
-    const { onReset } = this.props;
+    const { onReset = noop } = this.props;
     this.setValue(undefined);
-    if( onReset) {
-      onReset()
-    }
+    onReset();
   }
 
   @autobind

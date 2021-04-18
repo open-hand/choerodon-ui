@@ -15,19 +15,20 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `selectPagingOptionContent` property.
+- 🌟 `configure`: Added `selectPagingOptionContent`, `selectSearchable` properties.
 - 🌟 `<pro>DataSet`: Added `setState`, `getState`, `modifiedCheck` methods.
 - 🌟 `<pro>Paginition`: Added `maxPageSize`, `pageSizeEditable` properties.
 - 🌟 `<pro>FormField`: Added `onBeforeChange` hook.
 - 🌟 `<pro>Select`: Added `pagingOptionContent` property.
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
 - 🌟 `<pro>Table`: Added ProfessionalBar `defaultExpanded` property.
-- 🌟 `<pro>Table`: Added 'TreequeryExpanded' tree structure QueryBar queries automatically trigger expansion tree structure.
+- 🌟 `<pro>Table`: Added `treeQueryExpanded` tree structure QueryBar queries automatically trigger expansion tree structure.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
 - 💄 `<pro>Table`: Optimize ProfessionalBar The query field of type boolean is displayed as a checkBox by default.
 - 💄 `Popover`: Optimized if the trigger is click. When selecting the Select component in the pop-up window, you don't need to set getPopupContainer to prevent the pop-up window from closing.
 - 💄 `<pro>Trigger`: Optimize the getContainer method.
+- 💄 `<pro>Select`: Optimize the search style in read-only mode.
 - 🐞 `<pro>DatePicker`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>NumberField`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>DataSet.Field`: Fix the incorrect restriction of `maxLength` and `minLength` on date and number types.

@@ -47,7 +47,9 @@ function updateActiveKey(menu: Menu, activeKey: string) {
 }
 
 function defaultSearchMatcher({ record, text, textField }) {
-  return record.get(textField) && record.get(textField).indexOf(text) !== -1;
+  if (record.get(textField) && isString(record.get(textField))) {
+    return record.get(textField).indexOf(text) !== -1;
+  }
 }
 
 export const DISABLED_FIELD = '__disabled';
@@ -379,7 +381,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @computed
   get searchable(): boolean {
-    return !!this.observableProps.searchable;
+    const { searchable = getConfig('selectSearchable') } = this.observableProps;
+    return !!searchable;
   }
 
   @computed
@@ -816,7 +819,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   getTriggerIconFont(): string {
-    return this.searchable && this.isFocused ? 'search' : 'baseline-arrow_drop_down';
+    return this.searchable && this.isFocused && !this.isReadOnly() ? 'search' : 'baseline-arrow_drop_down';
   }
 
   @autobind

@@ -1,5 +1,6 @@
 import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import DataSet from '../../data-set/DataSet';
@@ -71,14 +72,12 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet, onReset } = this.props;
+    const { queryDataSet, onReset = noop } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         current.reset();
-        if(onReset){
-          onReset()
-        }
+        onReset();
       }
       this.handleQuery(true);
     }
@@ -86,11 +85,11 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
 
   @autobind
   async handleQuery(collapse?: boolean) {
-    const { dataSet, queryDataSet, onQuery } = this.props;
+    const { dataSet, queryDataSet, onQuery = noop } = this.props;
     if (await queryDataSet?.validate()) {
       dataSet.query();
-      if (!collapse && onQuery) {
-        onQuery()
+      if (!collapse) {
+        onQuery();
       }
     }
   }

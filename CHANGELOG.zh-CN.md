@@ -15,19 +15,20 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 selectPagingOptionContent 属性。
+- 🌟 `configure`: 新增 selectPagingOptionContent, selectSearchable 属性。
 - 🌟 `<pro>DataSet`: 新增 setState, getState, modifiedCheck 方法。
 - 🌟 `<pro>Paginition`: 新增 maxPageSize, pageSizeEditable 属性。
 - 🌟 `<pro>FormField`: 新增 onBeforeChange 钩子。
 - 🌟 `<pro>Select`: 新增 pagingOptionContent 属性。
 - 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
 - 🌟 `<pro>Table`: 新增 ProfessionalBar 查询条 defaultExpanded 属性。
-- 🌟 `<pro>Table`: 新增 `treeQueryExpanded` 树形结构 queryBar 查询自动触发展开树形结构。
+- 🌟 `<pro>Table`: 新增 treeQueryExpanded 属性支持树形结构 queryBar 查询自动触发展开树形结构。
 - 💄 `<pro>Table`: 优化编辑器性能。
 - 💄 `<pro>Table`: 优化虚拟滚动性能。
 - 💄 `<pro>Table`: 优化 ProfessionalBar 查询条 boolean 类型的查询字段默认显示为勾选框。
 - 💄 `Popover`: 优化 trigger 为 click 模式下，弹窗中 Select 组件选择时无需设置 getPopupContainer 也能防止弹窗关闭。
 - 💄 `<pro>Trigger`: 优化 getContainer 方式。
+- 💄 `<pro>Select`: 优化只读模式下搜索样式。
 - 🐞 `<pro>DatePicker`: 修复 maxLength 和 minLength 的错误限制。
 - 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 的错误限制。
 - 🐞 `<pro>DataSet.Field`：修复 maxLength 和 minLength 对日期和数字类型的错误限制及校验。

@@ -197,16 +197,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   @autobind
   handleDataSetUpdate({ record }) {
-    const { dataSet, onQuery } = this.props;
+    const { dataSet, onQuery = noop } = this.props;
     let status = RecordStatus.update;
     if (record) {
       status = isEqualDynamicProps(this.originalValue, record.toData()) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
     dataSet.query();
-    if(onQuery) {
-      onQuery()
-    }
+    onQuery();
   }
 
   /**
@@ -356,7 +354,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 获取筛选下拉
    */
   getFilterMenu(): ReactNode {
-    const { prefixCls, queryFields, queryDataSet, dataSet, dynamicFilterBar, onReset } = this.props;
+    const { prefixCls, queryFields, queryDataSet, dataSet, dynamicFilterBar, onReset = noop } = this.props;
     const tableFilterAdapter = dynamicFilterBar?.tableFilterAdapter || getConfig('tableFilterAdapter');
     if (queryDataSet && queryFields.length && tableFilterAdapter) {
       return (
@@ -386,9 +384,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.current });
               this.setConditionStatus(RecordStatus.sync);
               dataSet.query();
-              if(onReset){
-                onReset()
-              }
+              onReset();
             }}
             color={ButtonColor.primary}
           >
@@ -405,7 +401,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit = 3, queryFields, queryDataSet, onReset, dataSet, dynamicFilterBar } = this.props;
+    const { prefixCls, queryFieldsLimit = 3, queryFields, queryDataSet, onReset = noop, dataSet, dynamicFilterBar } = this.props;
     const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
     if (queryDataSet && queryFields.length) {
       return (
@@ -501,9 +497,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   runInAction(() => {
                     this.searchText = '';
                   });
-                  if(onReset){
-                    onReset()
-                  }
+                  onReset();
                   dataSet.setQueryParameter(searchText, undefined);
                   this.handleQuery(true);
                 }}
@@ -527,9 +521,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @autobind
   handleQuery(collapse?: boolean) {
-    const { dataSet, onQuery } = this.props;
+    const { dataSet, onQuery = noop } = this.props;
     dataSet.query();
-    if( !collapse && onQuery) {
+    if (!collapse) {
       onQuery();
     }
   }
