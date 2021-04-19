@@ -1,5 +1,6 @@
 import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import DataSet from '../../data-set/DataSet';
@@ -43,6 +44,8 @@ export interface TableToolBarProps extends ElementProps {
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 @observer
@@ -69,21 +72,25 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, onReset = noop } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         current.reset();
+        onReset();
       }
-      this.handleQuery();
+      this.handleQuery(true);
     }
   }
 
   @autobind
-  async handleQuery() {
-    const { dataSet, queryDataSet } = this.props;
+  async handleQuery(collapse?: boolean) {
+    const { dataSet, queryDataSet, onQuery = noop } = this.props;
     if (await queryDataSet?.validate()) {
       dataSet.query();
+      if (!collapse) {
+        onQuery();
+      }
     }
   }
 
@@ -112,7 +119,7 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
         <span className={`${prefixCls}-query-bar`}>
           {dirtyInfo}
           {currentFields}
-          <Button color={ButtonColor.primary} onClick={this.handleQuery}>
+          <Button color={ButtonColor.primary} onClick={() => {this.handleQuery()}}>
             {$l('Table', 'query_button')}
           </Button>
           {more}

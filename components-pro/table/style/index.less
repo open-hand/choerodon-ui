@@ -41,7 +41,7 @@
 
     &-overflow {
       overflow-x: auto;
-      border-right: @table-border;
+      //border-right: @table-border;
     }
   }
 
@@ -337,9 +337,10 @@
       border-left: @table-border;
     }
 
+    .@{table-prefix-cls}-content,
     .@{table-prefix-cls}-filter-bar,
     .@{table-prefix-cls}-head,
-    .@{table-prefix-cls}-body,
+    //.@{table-prefix-cls}-body,
     .@{table-prefix-cls}-foot,
     .@{table-prefix-cls}-empty-row {
       border-right: @table-border;
@@ -375,6 +376,19 @@
 
     .@{table-prefix-cls}-cell-inner {
       border: @border-width-base @border-style-base transparent;
+    }
+
+    .@{table-prefix-cls}-tbody {
+      .@{table-prefix-cls}-cell:last-child {
+        border-right: @border-width-base @border-style-base transparent;
+      }
+    }
+  }
+
+  &-scroll-position-middle {
+    .@{table-prefix-cls}-tfoot,
+    .@{table-prefix-cls}-cell-fix-left-last {
+      border-right: @border-width-base @border-style-base transparent;
     }
   }
 

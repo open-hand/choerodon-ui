@@ -79,6 +79,8 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   buttons: ReactElement<ButtonProps>[];
   summaryBar?: ReactElement<any>;
   dynamicFilterBar?: DynamicFilterBarConfig;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 @observer
@@ -195,13 +197,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   @autobind
   handleDataSetUpdate({ record }) {
-    const { dataSet } = this.props;
+    const { dataSet, onQuery = noop } = this.props;
     let status = RecordStatus.update;
     if (record) {
       status = isEqualDynamicProps(this.originalValue, record.toData()) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
     dataSet.query();
+    onQuery();
   }
 
   /**
@@ -260,7 +263,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       return element;
     }
     const props: any = {
-      onEnterDown: this.handleQuery,
+      onEnterDown: () => {this.handleQuery()},
     };
     return cloneElement(element, props);
   }
@@ -351,7 +354,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 获取筛选下拉
    */
   getFilterMenu(): ReactNode {
-    const { prefixCls, queryFields, queryDataSet, dataSet, dynamicFilterBar } = this.props;
+    const { prefixCls, queryFields, queryDataSet, dataSet, dynamicFilterBar, onReset = noop } = this.props;
     const tableFilterAdapter = dynamicFilterBar?.tableFilterAdapter || getConfig('tableFilterAdapter');
     if (queryDataSet && queryFields.length && tableFilterAdapter) {
       return (
@@ -381,6 +384,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.current });
               this.setConditionStatus(RecordStatus.sync);
               dataSet.query();
+              onReset();
             }}
             color={ButtonColor.primary}
           >
@@ -397,7 +401,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, dynamicFilterBar } = this.props;
+    const { prefixCls, queryFieldsLimit = 3, queryFields, queryDataSet, onReset = noop, dataSet, dynamicFilterBar } = this.props;
     const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
     if (queryDataSet && queryFields.length) {
       return (
@@ -493,8 +497,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   runInAction(() => {
                     this.searchText = '';
                   });
+                  onReset();
                   dataSet.setQueryParameter(searchText, undefined);
-                  this.handleQuery();
+                  this.handleQuery(true);
                 }}
                 onInput={(e) => {
                   // @ts-ignore
@@ -515,9 +520,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   @autobind
-  handleQuery() {
-    const { dataSet } = this.props;
+  handleQuery(collapse?: boolean) {
+    const { dataSet, onQuery = noop } = this.props;
     dataSet.query();
+    if (!collapse) {
+      onQuery();
+    }
   }
 
   render() {

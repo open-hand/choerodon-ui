@@ -2,6 +2,7 @@ import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 import isFunction from 'lodash/isFunction';
+import noop from 'lodash/noop';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
 import DataSet from '../../data-set';
@@ -26,6 +27,8 @@ export interface TableProfessionalBarProps extends ElementProps {
   queryBarProps?: FormProps;
   summaryBar?: ReactElement<any>;
   defaultExpanded?: Boolean;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 @observer
@@ -83,10 +86,13 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   @autobind
-  async handleQuery() {
-    const { dataSet, queryDataSet } = this.props;
+  async handleQuery(collapse?: boolean) {
+    const { dataSet, queryDataSet, onQuery = noop } = this.props;
     if (await queryDataSet?.validate()) {
       dataSet.query();
+      if (!collapse) {
+        onQuery();
+      }
     }
   }
 
@@ -166,7 +172,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
           <span className={`${prefixCls}-professional-query-bar-button`}>
             {moreFieldsButton}
             {this.getResetButton()}
-            <Button color={ButtonColor.primary} wait={500} onClick={this.handleQuery}>
+            <Button color={ButtonColor.primary} wait={500} onClick={() => this.handleQuery()}>
               {$l('Table', 'query_button')}
             </Button>
           </span>
@@ -178,13 +184,14 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, onReset = noop } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         current.reset();
+        onReset();
       }
-      this.handleQuery();
+      this.handleQuery(true);
     }
   }
 

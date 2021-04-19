@@ -1,5 +1,6 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import noop from 'lodash/noop';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
@@ -16,6 +17,8 @@ export interface FilterBarProps {
   paramName: string;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 @observer
@@ -42,7 +45,7 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
   }
 
   render() {
-    const { prefixCls, dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination } = this.props;
+    const { prefixCls, dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination, onQuery = noop, onReset = noop } = this.props;
     const buttons = this.getButtons();
     return [
       buttons,
@@ -55,6 +58,8 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
         placeholder={placeholder}
         suffix={this.renderSuffix()}
         paramName={paramName}
+        onQuery={onQuery}
+        onReset={onReset}
       />,
     ];
   }

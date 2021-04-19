@@ -1,6 +1,7 @@
 import React, { cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import isFunction from 'lodash/isFunction';
+import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Field from '../../data-set/Field';
@@ -26,6 +27,8 @@ export interface TableAdvancedQueryBarProps extends ElementProps {
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 @observer
@@ -158,11 +161,12 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet, dataSet, queryFields } = this.props;
+    const { queryDataSet, dataSet, queryFields, onReset = noop } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         current.reset();
+        onReset();
       }
       dataSet.fireEvent('queryBarReset', {
         dataSet,
@@ -173,7 +177,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   }
 
   getFilterSelect() {
-    const { prefixCls, dataSet, queryDataSet } = this.props;
+    const { prefixCls, dataSet, queryDataSet, onQuery = noop } = this.props;
     return (
       <FilterSelect
         key="filter"
@@ -185,6 +189,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
         editable={false}
         filter={this.valueFilter}
         hiddenIfNone
+        onQuery={onQuery}
       />
     );
   }

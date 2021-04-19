@@ -142,6 +142,7 @@ export type Config = {
   dropdownMatchSelectWidth?: boolean;
   selectReverse?: boolean;
   selectPagingOptionContent?: string | ReactNode;
+  selectSearchable?: boolean;
   useColon?: boolean;
   excludeUseColonTagList?: string[];
   lovTableProps?: TableProps;
@@ -264,6 +265,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dropdownMatchSelectWidth', true],
   ['selectReverse', true],
   ['selectPagingOptionContent', '···'],
+  ['selectSearchable', false],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
   ['textFieldAutoComplete', undefined],

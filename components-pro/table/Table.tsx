@@ -106,6 +106,8 @@ export interface TableQueryBarHookProps {
   summaryFieldsLimit: number;
   pagination?: ReactElement<PaginationProps>;
   summaryBar?: ReactElement<any>;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 export interface expandedRowRendererProps {
@@ -506,6 +508,10 @@ export interface TableProps extends DataSetComponentProps {
    * 树节点展开时，加载数据钩子
    */
   treeLoadData?: ({ record, dataSet }) => Promise<any>,
+  /**
+   * 树形结构下queryBar触发查询,自动展开树形结构
+   */
+  treeQueryExpanded?: boolean;
   /**
    * 显示行号
    */
@@ -1141,6 +1147,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'dragColumn',
       'dragRow',
       'clientExportQuantity',
+      'treeQueryExpanded',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -1282,6 +1289,7 @@ export default class Table extends DataSetComponent<TableProps> {
       tableStore: { prefixCls, virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
         style,
+        treeQueryExpanded,
         spin,
         virtualSpin,
         buttons,
@@ -1318,6 +1326,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 summaryFieldsLimit={summaryFieldsLimit}
                 filterBarFieldName={filterBarFieldName}
                 filterBarPlaceholder={filterBarPlaceholder}
+                treeQueryExpanded={treeQueryExpanded}
               />
               <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
                 {

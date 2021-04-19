@@ -34,6 +34,7 @@ const prefixCls = getConfig('prefixCls');
 | lovModalProps | Lov 弹窗属性，详见[ModalProps](/components/modal/#Modal) | ModalProps |  |
 | lookupBatchAxiosConfig | hook for batch lookup query, more info:[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
+| selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | axios | Replace the built-in axios instance | AxiosInstance |  |
 | dataKey | default DataSet's dataKey | string | rows |
 | totalKey | default DataSet's totalKey | string | total |

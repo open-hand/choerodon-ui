@@ -44,6 +44,8 @@ export interface FilterSelectProps extends TextFieldProps {
   editable?: boolean;
   hiddenIfNone?: boolean;
   filter?: (string) => boolean;
+  onQuery?: () => void;
+  onReset?: () => void;
 }
 
 @observer
@@ -148,8 +150,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   doQuery = throttle(() => {
+    const { onQuery = noop } = this.props;
     const { optionDataSet } = this.observableProps;
     optionDataSet.query();
+    onQuery();
   }, 500);
 
   @action
@@ -255,7 +259,9 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @autobind
   handleDataSetReset() {
+    const { onReset = noop } = this.props;
     this.setValue(undefined);
+    onReset();
   }
 
   @autobind
