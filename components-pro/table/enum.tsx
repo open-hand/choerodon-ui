@@ -77,6 +77,12 @@ export enum TableColumnTooltip {
   overflow = 'overflow',
 }
 
+export enum TableHeightType {
+  auto = 'auto',
+  fixed = 'fixed',
+  flex = 'flex',
+}
+
 export enum TableAutoHeightType {
   maxHeight = 'maxHeight',
   minHeight = 'minHeight',

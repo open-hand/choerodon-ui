@@ -115,37 +115,39 @@ export default class Popup extends ViewComponent<PopupProps> {
     }
     const container = this.getContainer();
     return container && this.contentRendered ? createPortal(
-        <Animate
-          component=""
-          exclusive
-          transitionAppear
-          transitionName={transitionName}
-          hiddenProp="hidden"
-          onAppear={onAnimateAppear}
-          onEnter={onAnimateEnter}
-          onLeave={onAnimateLeave}
-          onEnd={onAnimateEnd}
+      <Animate
+        component=""
+        exclusive
+        transitionAppear
+        transitionName={transitionName}
+        hiddenProp="hidden"
+        onAppear={onAnimateAppear}
+        onEnter={onAnimateEnter}
+        onLeave={onAnimateLeave}
+        onEnd={onAnimateEnd}
+      >
+        <Align
+          ref={this.saveRef}
+          key="align"
+          childrenProps={{ hidden: 'hidden' }}
+          align={align}
+          onAlign={this.onAlign}
+          target={getRootDomNode}
+          hidden={hidden}
+          monitorWindowResize
         >
-          <Align
-            ref={this.saveRef}
-            key="align"
-            childrenProps={{ hidden: 'hidden' }}
-            align={align}
-            onAlign={this.onAlign}
-            target={getRootDomNode}
-            hidden={hidden}
-            monitorWindowResize
-          >
-            <PopupInner {...omit(this.getMergedProps(), ['ref'])}>{children}</PopupInner>
-          </Align>
-        </Animate>,
-        container,
-        this.popupKey,
-      ) : null;
+          <PopupInner {...omit(this.getMergedProps(), ['ref'])}>{children}</PopupInner>
+        </Align>
+      </Animate>,
+      container,
+      this.popupKey,
+    ) : null;
   }
 
-  @autobind
-  getContainer() {
+  getContainer(): HTMLDivElement | undefined {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
     const { getPopupContainer, getRootDomNode = noop } = this.props;
     const globalContainer = Popup.popupContainer;
     if (getPopupContainer) {
@@ -153,7 +155,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       if (container) {
         return container;
       }
-    } else if (globalContainer || typeof window === 'undefined') {
+    } else if (globalContainer) {
       return globalContainer;
     }
     const doc = window.document;

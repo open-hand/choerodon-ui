@@ -28,7 +28,7 @@ npm install choerodon-ui --save
 ```jsx
 import { DatePicker } from 'choerodon-ui';
 import { Table } from 'choerodon-ui/pro';
-ReactDOM.render(<><DatePicker /><Table /><>, mountNode);
+ReactDOM.render(<><DatePicker /><Table /></>, mountNode);
 ```
 
 And import style manually:

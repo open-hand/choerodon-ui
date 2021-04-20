@@ -212,7 +212,7 @@ export default class Column extends Component<ColumnPropsInner, ComponentState> 
     hidden: PropTypes.bool,
     colSpan: PropTypes.number,
     rowSpan: PropTypes.number,
-    children: PropTypes.array,
+    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   };
 
   static __PRO_TABLE_COLUMN = true;

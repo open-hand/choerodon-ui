@@ -2,6 +2,8 @@ declare module 'component-classes';
 
 declare module 'css-animation';
 
+declare module 'css-unit-converter';
+
 declare module 'array-tree-filter';
 
 declare module 'react-lazy-load';

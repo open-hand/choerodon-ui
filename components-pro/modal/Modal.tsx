@@ -49,6 +49,7 @@ function getTransformOrigin(position: MousePosition, style: CSSProperties) {
 
 export interface ModalProps extends ViewComponentProps {
   __deprecate__?: boolean;
+  children?: any;
   closable?: boolean;
   movable?: boolean;
   fullScreen?: boolean;
@@ -58,6 +59,7 @@ export interface ModalProps extends ViewComponentProps {
   mask?: boolean,
   maskClassName?: string,
   keyboardClosable?: boolean;
+  modalTitle?: ReactNode;
   header?: ((title: ReactNode, closeBtn: ReactNode, okBtn: ReactElement<Button>, cancelBtn: ReactElement<Button>) => ReactNode) | ReactNode | boolean;
   footer?: ((okBtn: ReactElement<Button>, cancelBtn: ReactElement<Button>) => ReactNode) | ReactNode | boolean;
   destroyOnClose?: boolean;
@@ -122,11 +124,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     drawer: PropTypes.bool,
     drawerOffset: PropTypes.number,
     drawerTransitionName: PropTypes.oneOf(['slide-up', 'slide-right', 'slide-down', 'slide-up', 'slide-left']),
-    // title: PropTypes.node,
-    // 此处原本允许title传入node，但是类型为PropTypes.node时无法正确继承ViewComponent
-    // 父类中的title指的是HTML元素的title属性，此处title指modal标题，产生歧义，暂时设置为string
-    // TODO: 添加modalTitle属性替代此处的title
-    title: PropTypes.string,
     okFirst: PropTypes.bool,
     keyboard: PropTypes.bool,
     mousePosition: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
@@ -237,6 +234,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   getOtherProps() {
     const otherProps = omit(super.getOtherProps(), [
+      '__deprecate__',
       'closable',
       'movable',
       'maskClosable',
@@ -271,6 +269,8 @@ export default class Modal extends ViewComponent<ModalProps> {
       'keyboard',
       'mousePosition',
       'active',
+      'contentStyle',
+      'bodyStyle',
     ]);
     const { hidden, mousePosition, keyboardClosable, style = {}, drawer } = this.props;
     if (keyboardClosable) {
