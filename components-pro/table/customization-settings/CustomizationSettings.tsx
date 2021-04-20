@@ -50,7 +50,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
   const { modal } = props;
   const { update, handleOk } = modal || { update: noop, handleOk: noop };
   const { tableStore } = useContext(TableContext);
-  const { props: { columns, children }, originalColumns, prefixCls, customized, totalHeight } = tableStore;
+  const { originalColumns, prefixCls, customized, totalHeight } = tableStore;
   const [heightType, setHeightType] = useState(tableStore.heightType);
   const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(originalColumns);
   const customizedRef = useRef<Customized | null>(null);
@@ -107,14 +107,15 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
     },
   }), [customizedColumns, customizedRef]);
   const handleRestore = useCallback(action(() => {
+    const { props: { columns, children }, originalHeightType } = tableStore;
     setCustomizedColumns(columns
       ? mergeDefaultProps(columns)
       : normalizeColumns(children));
-    setHeightType(tableStore.originalHeightType);
+    setHeightType(originalHeightType);
     customizedRef.current = {
       columns: {},
     };
-  }), [customizedRef, columns, children]);
+  }), [customizedRef, tableStore]);
   const handleOption = useCallback(() => ({
     className: `${prefixCls}-customization-option`,
   }), [prefixCls]);

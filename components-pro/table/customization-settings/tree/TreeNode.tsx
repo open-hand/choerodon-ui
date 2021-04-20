@@ -92,7 +92,9 @@ const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
         <div className={`${selfPrefixCls}-content`}>
           {getIcon()}
           <div className={`${selfPrefixCls}-title`}>
+            <span className={`${selfPrefixCls}-title-text`}>
             {renderer(record, provided)}
+            </span>
             <span className={classNames(`${selfPrefixCls}-switcher`, { [`${selfPrefixCls}-switcher-noop`]: isLeaf })}>
               {renderSwitcherIcon()}
             </span>

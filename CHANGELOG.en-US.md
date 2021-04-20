@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `lovTableCustomizable` property.
+- 🌟 `<pro>Table`: Added height settings for customization.
+- 💄 `<pro>Table`: Height style supports calc attribute.
+
 ## 1.3.1
 
 `2021-04-18`
@@ -27,8 +31,6 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
 - 🌟 `<pro>Table`: Added ProfessionalBar `defaultExpanded` property.
 - 🌟 `<pro>Table`: Added `treeQueryExpanded` tree structure QueryBar queries automatically trigger expansion tree structure.
-- 🌟 `<pro>Table`: Added height settings for customization.
-- 💄 `<pro>Table`: Height style supports calc attribute.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
 - 💄 `<pro>Table`: Optimize the border style issue.

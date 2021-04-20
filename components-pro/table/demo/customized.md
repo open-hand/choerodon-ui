@@ -123,6 +123,7 @@ class App extends React.Component {
       <Table
         customizable
         border={false}
+        customizedCode="customized"
         rowHeight={40}
         key="user"
         dataSet={this.userDs}

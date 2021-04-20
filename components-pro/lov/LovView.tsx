@@ -121,6 +121,7 @@ export default class LovView extends Component<LovViewProps> {
       tableProps,
     } = this.props;
     const lovTableProps: TableProps = {
+      customizable: getConfig('lovTableCustomizable'),
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
       onKeyDown: this.handleKeyDown,

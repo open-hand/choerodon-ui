@@ -34,7 +34,9 @@ const prefixCls = getConfig('prefixCls');
 | lovDefineAxiosConfig | 返回 Lov 配置的请求的配置或钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 配置中默认 url 为 lovDefineUrl， method 为 post。 | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
 | lovQueryUrl | Lov 取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/lov/dataset/\${code}\` |
 | lovQueryAxiosConfig | Lov 查询数据请求的配置或钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
+| lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) | {} |
 | lovModalProps | Lov 弹窗属性，详见[ModalProps](/components/modal/#Modal) | ModalProps |  |
+| lovTableCustomizable | Lov 弹窗中 Table 是否显示个性化设置入口按钮 | boolean | false |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
@@ -75,6 +77,7 @@ const prefixCls = getConfig('prefixCls');
 | tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
 | tableCustomizedSave | Table 个性化保存的钩子 | (code, customized) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
 | tableCustomizedLoad | Table 个性化加载的钩子 | (code) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
+| tableCustomizable | Table 是否显示个性化设置入口按钮 | boolean | false |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
@@ -95,7 +98,6 @@ const prefixCls = getConfig('prefixCls');
 | formatter | 日期格式化。其中 jsonDate 是数据请求和响应时的格式，为空时日期会转化为 timestamp。详见[Formatter](#Formatter) | Formatter |  |
 | useColon | Form中是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方 | boolean | false |
 | excludeUseColonTagList | Form中不使用冒号的标签的列表,当为自定义组件的时候,需要设置displayName作为标签名 | string[] | ['div','button','Button'] |
-| lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) | {} |
 | collapseExpandIconPosition | 全局配置 collapse 图标位置 |  `left` \| `right` | `left` |
 | collapseExpandIcon | 全局配置 collapse 自定义切换图标| (panelProps) => ReactNode \| `text`(预置icon + 展开收起文字) | 无 |
 | collapseTrigger | 全局配置切换面板的触发位置 | `header` \| `icon` | `header` |

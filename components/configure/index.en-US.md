@@ -31,7 +31,9 @@ const prefixCls = getConfig('prefixCls');
 | lovDefineAxiosConfig | hook for Lov configure axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lovDefineUrl and method is post. | AxiosRequestConfig \| (code: string) => AxiosRequestConfig | - |
 | lovQueryUrl | Lov query url or hook which return url | string \| ((code: string, lovConfig?: LovConfig, { dataSet, params, data }) => string) | code => \`/common/lov/dataset/\${code}\` |
 | lovQueryAxiosConfig | hook for Lov query axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lovQueryUrl and method is post. | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
+| lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) | {} |
 | lovModalProps | Lov 弹窗属性，详见[ModalProps](/components/modal/#Modal) | ModalProps |  |
+| lovTableCustomizable | Lov 弹窗中 Table 是否显示个性化设置入口按钮 | boolean | false |
 | lookupBatchAxiosConfig | hook for batch lookup query, more info:[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
@@ -72,6 +74,7 @@ const prefixCls = getConfig('prefixCls');
 | tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
 | tableCustomizedSave | Table 个性化保存的钩子 | (code, customized) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
 | tableCustomizedLoad | Table 个性化加载的钩子 | (code) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
+| tableCustomizable | Table 是否显示个性化设置入口按钮 | boolean | false |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
@@ -92,7 +95,6 @@ const prefixCls = getConfig('prefixCls');
 | formatter | Date formatter. `jsonDate` is the format of the data in request and response, and the date is converted to timestamp when it is empty. More info:[Formatter](#Formatter) | Formatter |  |
 | useColon | Form是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方 | boolean | false |
 | excludeUseColonTagList | Form中不使用冒号的标签的列表,当为自定义组件的时候,需要设置displayName作为标签名 | string[] | ['div','button','Button'] |
-| lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) | {} |
 | collapseExpandIconPosition | 全局配置 collapse 图标位置 |  `left` \| `right` | `left` |
 | collapseExpandIcon | 全局配置 collapse 自定义切换图标| (panelProps) => ReactNode \| `text`(预置icon + 展开收起文字) | 无 |
 | collapseTrigger | 全局配置切换面板的触发位置 | `header` \| `icon` | `header` |
