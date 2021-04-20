@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 lovTableCustomizable 属性。
+- 🌟 `<pro>Table`: 个性化新增高度设置。
+- 💄 `<pro>Table`: 高度样式支持 calc 属性。
+
 ## 1.3.1
 
 `2021-04-18`
@@ -27,8 +31,6 @@ timeline: true
 - 🌟 `<pro>DatePicker`: 属性 filter 新增 mode 参数。
 - 🌟 `<pro>Table`: 新增 ProfessionalBar 查询条 defaultExpanded 属性。
 - 🌟 `<pro>Table`: 新增 treeQueryExpanded 属性支持树形结构 queryBar 查询自动触发展开树形结构。
-- 🌟 `<pro>Table`: 个性化新增高度设置。
-- 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 💄 `<pro>Table`: 优化编辑器性能。
 - 💄 `<pro>Table`: 优化虚拟滚动性能。
 - 💄 `<pro>Table`: 优化边框样式问题。

@@ -75,7 +75,9 @@ export type Config = {
     lovConfig: LovConfig | undefined,
     props: TransportHookProps,
   ) => AxiosRequestConfig);
+  lovTableProps?: TableProps;
   lovModalProps?: ModalProps;
+  lovTableCustomizable?: boolean;
   axios?: AxiosInstance;
   feedback?: FeedBack;
   dataKey?: string;
@@ -145,7 +147,6 @@ export type Config = {
   selectSearchable?: boolean;
   useColon?: boolean;
   excludeUseColonTagList?: string[];
-  lovTableProps?: TableProps;
   textFieldAutoComplete?: 'on' | 'off';
   resultStatusRenderer?: object;
   numberFieldNonStrictStep?: boolean;
