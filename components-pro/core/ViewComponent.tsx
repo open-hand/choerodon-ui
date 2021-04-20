@@ -1,4 +1,4 @@
-import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler } from 'react';
+import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -39,7 +39,7 @@ export interface ViewComponentProps
   /**
    * 悬浮提示，建议用ToolTip组件
    */
-  title?: string;
+  title?: ReactNode;
   /**
    * 自动获取焦点，多个组件同时设置该参数时，以节点树的顺序最末的组件获取焦点
    */
@@ -191,7 +191,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     /**
      * 悬浮提示，建议用ToolTip组件
      */
-    title: PropTypes.string,
+    title: PropTypes.node,
     /**
      *  是否禁用
      */

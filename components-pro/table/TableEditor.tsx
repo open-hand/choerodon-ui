@@ -67,7 +67,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   @autobind
-  onWindowResize() {
+  handleWindowResize() {
     if (this.cellNode) {
       this.alignEditor();
     }
@@ -78,7 +78,7 @@ export default class TableEditor extends Component<TableEditorProps> {
    * @param e
    */
   @autobind
-  onWindowClick(e) {
+  handleWindowClick(e) {
     const { tableStore: { prefixCls } } = this.context;
     if (e.target.className !== `${prefixCls}-content` && e.target.className !== `${prefixCls}-body`) {
       this.handleEditorBlur(e);
@@ -95,9 +95,9 @@ export default class TableEditor extends Component<TableEditorProps> {
     const record = currentEditRecord || dataSet.current;
     const field = record?.getField(name) || dataSet.getField(name);
     if (field?.get('multiLine')) {
-      window.addEventListener('click', this.onWindowClick);
+      window.addEventListener('click', this.handleWindowClick);
     }
-    window.addEventListener('resize', this.onWindowResize);
+    window.addEventListener('resize', this.handleWindowResize);
     editors.set(name, this);
     if (inlineEdit) {
       this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? raf(() => this.alignEditor()) : this.hideEditor());
@@ -114,8 +114,8 @@ export default class TableEditor extends Component<TableEditorProps> {
       tableStore: { editors },
     } = this.context;
     editors.delete(name);
-    window.removeEventListener('resize', this.onWindowResize);
-    window.removeEventListener('click', this.onWindowClick);
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('click', this.handleWindowClick);
     if (this.reaction) {
       this.reaction();
     }

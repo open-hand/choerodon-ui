@@ -28,7 +28,6 @@ export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
   columns: ColumnProps[];
   record: Record;
-  indentSize: number;
   index: number;
   snapshot?: DraggableStateSnapshot;
   provided?: DraggableProvided;
@@ -45,7 +44,6 @@ export default class TableRow extends Component<TableRowProps, any> {
     ]),
     columns: PropTypes.array.isRequired,
     record: PropTypes.instanceOf(Record).isRequired,
-    indentSize: PropTypes.number.isRequired,
   };
 
   static contextType = TableContext;
@@ -251,7 +249,7 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @autobind
   getCell(column: ColumnProps, index: number, props: Partial<TableCellProps>): ReactNode {
-    const { record, indentSize, lock, provided, snapshot, index: rowIndex } = this.props;
+    const { record, lock, provided, snapshot, index: rowIndex } = this.props;
     const {
       tableStore: { leafColumns, rightLeafColumns, node, props: { virtualCell } },
     } = this.context;
@@ -263,7 +261,6 @@ export default class TableRow extends Component<TableRowProps, any> {
         inView
         column={column}
         record={record}
-        indentSize={indentSize}
         isDragging={isDragging}
         lock={lock}
         provided={props.key === DRAG_KEY ? provided : undefined}

@@ -4,6 +4,10 @@
 @table-customization-prefix-cls: ~'@{c7n-pro-prefix}-table-customization';
 
 .@{table-customization-prefix-cls} {
+  &-header-button {
+    float: right;
+  }
+
   &-tree {
     min-height: .01rem;
     margin-bottom: .06rem;
@@ -116,7 +120,6 @@
     &-header {
       display: flex;
       align-items: center;
-      margin-bottom: .2rem;
 
       &::before {
         display: block;
@@ -138,5 +141,39 @@
 
   &-dropdown-menu {
     .dropdown-menu;
+  }
+
+  &-form {
+    padding-top: .05rem;
+  }
+
+  &-option {
+    display: flex !important;
+    align-items: center;
+
+    &-label {
+      flex: 1;
+    }
+
+    &-input {
+      width: .8rem;
+      margin-left: .1rem;
+    }
+
+    .@{c7n-pro-prefix}-radio-label {
+      display: inline-flex;
+      flex: 1;
+      align-items: center;
+    }
+  }
+
+  .@{c7n-pro-prefix}-collapse {
+    &-header {
+      padding: .12rem .24rem;
+    }
+
+    &-content {
+      padding: 0 .24rem;
+    }
   }
 }

@@ -3,9 +3,12 @@ import { action, computed, get, observable, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
+import isObject from 'lodash/isObject';
 import isPlainObject from 'lodash/isPlainObject';
+import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
+import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
@@ -16,7 +19,18 @@ import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box';
 import ObserverRadio from '../radio';
 import { DataSetSelection } from '../data-set/enum';
-import { ColumnAlign, ColumnLock, DragColumnAlign, SelectionMode, TableColumnTooltip, TableEditMode, TableMode, TableQueryBarType } from './enum';
+import {
+  ColumnAlign,
+  ColumnLock,
+  DragColumnAlign,
+  SelectionMode,
+  TableAutoHeightType,
+  TableColumnTooltip,
+  TableEditMode,
+  TableHeightType,
+  TableMode,
+  TableQueryBarType,
+} from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getColumnLock, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
@@ -28,6 +42,7 @@ import { Size } from '../core/enum';
 import { $l } from '../locale-context';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
 import TableEditor from './TableEditor';
+import { ModalProps } from '../modal/Modal';
 
 export const SELECTION_KEY = '__selection-column__';
 
@@ -289,6 +304,8 @@ export default class TableStore {
 
   @observable height?: number;
 
+  @observable totalHeight?: number;
+
   @observable lastScrollTop: number;
 
   @observable lockColumnsBodyRowsHeight: any;
@@ -310,6 +327,8 @@ export default class TableStore {
   @observable styledHidden?: boolean;
 
   @observable rowHighLight: boolean;
+
+  @observable customizedActiveKey: string[];
 
   mouseBatchChooseStartId: number = 0;
 
@@ -345,6 +364,52 @@ export default class TableStore {
       return getConfig('tableCustomizable');
     }
     return false;
+  }
+
+  @computed
+  get autoHeight(): { type: TableAutoHeightType, diff: number } | undefined {
+    const { autoHeight } = this.props;
+    if (autoHeight) {
+      const defaultAutoHeight = {
+        type: TableAutoHeightType.minHeight,
+        diff: getConfig('tableAutoHeightDiff') || 80,
+      };
+      if (isObject(autoHeight)) {
+        return {
+          ...defaultAutoHeight,
+          ...autoHeight,
+        };
+      }
+      return defaultAutoHeight;
+    }
+    return undefined;
+  }
+
+  @computed
+  get heightType(): TableHeightType {
+    const { heightType } = this.customized;
+    if (heightType !== undefined) {
+      return heightType;
+    }
+    return this.originalHeightType;
+  }
+
+  @computed
+  get originalHeightType(): TableHeightType {
+    const { style, autoHeight } = this.props;
+    if (autoHeight) {
+      return TableHeightType.flex;
+    }
+    if (style) {
+      const { height } = style;
+      if (isString(height) && isCalcSize(height)) {
+        return TableHeightType.flex;
+      }
+      if (isNumber(toPx(height))) {
+        return TableHeightType.fixed;
+      }
+    }
+    return TableHeightType.auto;
   }
 
   /**
@@ -997,6 +1062,7 @@ export default class TableStore {
       this.lastScrollTop = 0;
       this.multiLineHeight = [];
       this.rowHighLight = false;
+      this.customizedActiveKey = ['columns'];
       this.originalColumns = [];
       this.customized = { columns: {} };
       this.setProps(node.props);
@@ -1275,16 +1341,20 @@ export default class TableStore {
 
   @autobind
   openCustomizationModal(modal) {
-    modal.open({
+    const { customizedCode } = this.props;
+    const modalProps: ModalProps = {
       drawer: true,
       size: Size.small,
-      title: $l('Table', 'customization_settings'),
       children: <CustomizationSettings />,
-      okText: $l('Table', 'save_button'),
       bodyStyle: {
         overflow: 'hidden auto',
+        padding: 0,
       },
-    });
+    };
+    if (customizedCode) {
+      modalProps.okText = $l('Table', 'save_button');
+    }
+    modal.open(modalProps);
   }
 
   async loadCustomized() {

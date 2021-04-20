@@ -60,6 +60,7 @@
     "core-js": "^2.5.1",
     "create-react-class": "^15.6.0",
     "css-animation": "^1.5.0",
+    "css-unit-converter": "^1.1.1",
     "dom-align": "1.x",
     "dom-closest": "^0.2.0",
     "dom-lib": "^1.3.1",

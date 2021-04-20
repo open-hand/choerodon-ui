@@ -2,6 +2,7 @@ import React, { Component, DetailedHTMLProps, Key, ThHTMLAttributes } from 'reac
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, set } from 'mobx';
+import classNames from 'classnames';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { ColumnProps, columnWidth } from './Column';
@@ -125,7 +126,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
     const {
       tableStore,
     } = this.context;
-    const { prefixCls, autoFootHeight, rowHeight } = tableStore;
+    const { prefixCls, autoFootHeight, rowHeight, overflowX } = tableStore;
     const tds = this.getTds();
     const tr = (
       <tr
@@ -138,7 +139,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
       </tr>
     );
     return (
-      <tfoot className={`${prefixCls}-tfoot`}>
+      <tfoot className={classNames(`${prefixCls}-tfoot`, {[`${prefixCls}-tfoot-bordered`]: overflowX})}>
         {
           !isStickySupport() && !lock && (rowHeight === 'auto' || autoFootHeight) ? (
             <ResizeObservedRow onResize={this.handleResize} rowIndex={0}>

@@ -106,6 +106,7 @@ export interface TextFieldProps extends FormFieldProps {
    * @default throttle
    */
   waitType?: WaitType;
+  groupClassName?: string;
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -173,6 +174,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
      * @default throttle
      */
     waitType: PropTypes.oneOf([WaitType.throttle, WaitType.debounce]),
+    groupClassName: PropTypes.string,
     ...FormField.propTypes,
   };
 
@@ -252,6 +254,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'valueChangeAction',
       'wait',
       'waitType',
+      'groupClassName',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
@@ -346,7 +349,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderGroup(): ReactNode {
     const {
       prefixCls,
-      props: { addonBefore, addonAfter, showHelp },
+      props: { addonBefore, addonAfter, showHelp, groupClassName },
     } = this;
     const inputElement = this.renderInputElement();
     const help = showHelp === ShowHelp.tooltip ? this.renderTooltipHelp() : null;
@@ -355,7 +358,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       return inputElement;
     }
 
-    const classString = classNames(`${prefixCls}-group`, {
+    const classString = classNames(`${prefixCls}-group`, groupClassName, {
       [`${prefixCls}-float-label-group`]: this.hasFloatLabel,
     });
 

@@ -120,7 +120,19 @@ class App extends React.Component {
 
   render() {
     return (
-      <Table customizable border={false} customizedCode="customized" rowHeight={40} key="user" dataSet={this.userDs} rowDraggable columnDraggable columnTitleEditable dragColumnAlign="left" columnsDragRender={this.columnsDragRender}>
+      <Table
+        customizable
+        border={false}
+        rowHeight={40}
+        key="user"
+        dataSet={this.userDs}
+        rowDraggable
+        columnDraggable
+        columnTitleEditable
+        dragColumnAlign="left"
+        columnsDragRender={this.columnsDragRender}
+        style={{ height: 'calc(100vh - 100px)' }}
+      >
         <Column header="组合">
           <Column header="子组合">
             <Column name="userid" title="ID" header={(ds, name, title) => <i>{title}</i>} tooltip="always" />

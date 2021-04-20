@@ -1,7 +1,9 @@
 import 'choerodon-ui/lib/style/index.less';
+import 'choerodon-ui/lib/collapse/style'
 import './index.less';
 
 // style dependencies
+import '../../form/style';
 import '../../output/style';
 import '../../button/style';
 import '../../radio/style';
