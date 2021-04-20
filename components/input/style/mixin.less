@@ -416,7 +416,7 @@
 
     // Reset Select's style in addon
     .@{c7n-prefix}-select {
-      margin: -(@input-padding-vertical-base + 0.01rem) (-@input-padding-horizontal-base); // lesshint spaceAroundOperator: false
+      margin: calc(-0.01rem - @input-padding-vertical-base) (calc(0px - @input-padding-horizontal-base)); // lesshint spaceAroundOperator: false
 
       .@{c7n-prefix}-select-selection {
         margin: -0.01rem;
@@ -580,14 +580,14 @@
   }
 
   .@{inputClass}-suffix {
-    right: @input-padding-horizontal-base + 0.01rem;
+    right: calc(@input-padding-horizontal-base + 0.01rem);
   }
 
   .@{inputClass}:not(:first-child) {
-    padding-left: @input-padding-horizontal-base + @input-affix-width;
+    padding-left:calc(@input-padding-horizontal-base + @input-affix-width);
   }
 
   .@{inputClass}:not(:last-child) {
-    padding-right: @input-padding-horizontal-base + @input-affix-width;
+    padding-right: calc(@input-padding-horizontal-base + @input-affix-width);
   }
 }

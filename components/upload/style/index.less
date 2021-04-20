@@ -147,7 +147,7 @@
     &-name {
       display: inline-block;
       width: 100%;
-      padding-left: @font-size-base + 0.08rem;
+      padding-left: calc(@font-size-base + 0.08rem);
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -165,7 +165,7 @@
       .@{iconfont-css-prefix}-loading,
       .@{iconfont-css-prefix}-attach_file {
         position: absolute;
-        top: @font-size-base / 2 - 0.02rem;
+        top: calc(@font-size-base / 2 - 0.02rem);
         color: @text-color-secondary;
         font-size: @font-size-base;
       }
@@ -209,7 +209,7 @@
       position: absolute;
       bottom: -0.12rem;
       width: 100%;
-      padding-left: @font-size-base + 0.12rem;
+      padding-left: calc(@font-size-base + 0.12rem);
       font-size: @font-size-base;
       line-height: 0;
     }

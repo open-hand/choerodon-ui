@@ -19,16 +19,16 @@
 
 // input status
 // == when focus or actived
-.active(@color: @outline-color) {
+.active() {
   color: @input-active-color;
-  border-color: ~`colorPalette('@{color}', 5) `;
+  border-color: @primary-5;
   outline: 0;
   // box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
 }
 
 // == when hoverd
-.hover(@color: @input-hover-border-color) {
-  border-color: ~`colorPalette('@{color}', 5) `;
+.hover() {
+  border-color: @primary-5;
 }
 
 .disabled() {
@@ -43,21 +43,21 @@
 }
 
 // Placeholder text
-.placeholder(@color: @input-placeholder-color) {
+.placeholder() {
   // Firefox
   &::-moz-placeholder {
-    color: @color;
+    color: @input-placeholder-color;
     text-align: left;
     opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
   }
   // Internet Explorer 10+
   &:-ms-input-placeholder {
-    color: @color;
+    color: @input-placeholder-color;
     text-align: left;
   }
   // Safari and Chrome
   &::-webkit-input-placeholder {
-    color: @color;
+    color: @input-placeholder-color;
     text-align: left;
   }
 }
@@ -205,7 +205,7 @@
   }
 
   &-suffix-button &-inner-button {
-    right: @suffix-width + 0.01rem;
+    right: calc(@suffix-width + 0.01rem);
   }
 
   &-suffix-button &-suffix {
@@ -315,7 +315,7 @@
   }
 
   &-multiple &:not(:last-child) {
-    padding-right: @suffix-width * 2;
+    padding-right: calc(@suffix-width * 2);
   }
 
   &-multiple:not(&-suffix-button) &:not(:last-child) {
@@ -526,7 +526,7 @@
     width: ~'calc(100% - .04rem)';
     height: 0.32rem;
     margin: 0.02rem;
-    padding-left: @input-padding-horizontal - 0.02rem;
+    padding-left: calc(@input-padding-horizontal - 0.02rem);
     border-radius: 0.04rem;
   }
 
@@ -535,7 +535,7 @@
   }
 
   &-prefix-button&-float-label &:-webkit-autofill {
-    padding-left: @prefix-width - 0.02rem;
+    padding-left: calc(~"@{prefix-width}  - 0.02rem}");
   }
 }
 
@@ -545,7 +545,7 @@
   /* stylelint-disable */
   &-underline {
     position: absolute;
-    bottom: -@border-width-base;
+    bottom: calc(0px - @border-width-base);
     width: 100%;
     height: 0;
     border-bottom: @border-width-base @border-style-base @input-baseline-color;

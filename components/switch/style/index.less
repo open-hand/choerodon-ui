@@ -10,8 +10,8 @@
   display: inline-block;
   box-sizing: border-box;
   min-width: 0.36rem;
-  height: @switch-height - 0.04rem;
-  line-height: @switch-height - 0.06rem;
+  height: calc(@switch-height - 0.04rem);
+  line-height: calc(@switch-height - 0.06rem);
   vertical-align: middle;
   background-color: rgba(0, 0, 0, 0.38);
   border: @border-width-base @border-style-base transparent;
@@ -74,7 +74,7 @@
 
   &:focus {
     outline: 0;
-    box-shadow: 0 0 0 0.02rem fade(@switch-color, 20%);
+    box-shadow: 0 0 0 0.02rem  rgba(182, 191, 219, 0.2);;
   }
 
   &:focus:hover {
@@ -83,8 +83,8 @@
 
   &-small {
     min-width: 0.28rem;
-    height: @switch-sm-height - 0.04rem;
-    line-height: @switch-sm-height - 0.06rem;
+    height: calc(@switch-sm-height - 0.04rem);
+    line-height: calc(@switch-sm-height - 0.06rem);
 
     .@{switch-prefix-cls}-inner {
       margin-right: 0.03rem;

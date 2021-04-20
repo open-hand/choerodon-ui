@@ -57,7 +57,7 @@
     text-decoration: none;
     word-wrap: break-word;
     background-color: @tooltip-bg;
-    border-radius: @border-radius-base * 2;
+    border-radius: calc(@border-radius-base * 2);
     box-shadow: @box-shadow-base;
 
 
@@ -83,7 +83,7 @@
   &-placement-top &-arrow,
   &-placement-topLeft &-arrow,
   &-placement-topRight &-arrow {
-    bottom: @tooltip-distance - @tooltip-arrow-width;
+    bottom: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width @tooltip-arrow-width 0;
     border-top-color: @tooltip-arrow-color;
 
@@ -94,7 +94,7 @@
 
   &-placement-top &-arrow {
     left: 50%;
-    margin-left: -@tooltip-arrow-width;
+    margin-left: calc(0px - @tooltip-arrow-width);
   }
 
   &-placement-topLeft &-arrow {
@@ -108,7 +108,7 @@
   &-placement-right &-arrow,
   &-placement-rightTop &-arrow,
   &-placement-rightBottom &-arrow {
-    left: @tooltip-distance - @tooltip-arrow-width;
+    left: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width @tooltip-arrow-width @tooltip-arrow-width 0;
     border-right-color: @tooltip-arrow-color;
 
@@ -119,7 +119,7 @@
 
   &-placement-right &-arrow {
     top: 50%;
-    margin-top: -@tooltip-arrow-width;
+    margin-top: calc(0px - @tooltip-arrow-width);
   }
 
   &-placement-rightTop &-arrow {
@@ -133,7 +133,7 @@
   &-placement-left &-arrow,
   &-placement-leftTop &-arrow,
   &-placement-leftBottom &-arrow {
-    right: @tooltip-distance - @tooltip-arrow-width;
+    right: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width 0 @tooltip-arrow-width @tooltip-arrow-width;
     border-left-color: @tooltip-arrow-color;
 
@@ -144,7 +144,7 @@
 
   &-placement-left &-arrow {
     top: 50%;
-    margin-top: -@tooltip-arrow-width;
+    margin-top: calc(0px - @tooltip-arrow-width);
   }
 
   &-placement-leftTop &-arrow {
@@ -158,7 +158,7 @@
   &-placement-bottom &-arrow,
   &-placement-bottomLeft &-arrow,
   &-placement-bottomRight &-arrow {
-    top: @tooltip-distance - @tooltip-arrow-width;
+    top: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;
     border-bottom-color: @tooltip-arrow-color;
 
@@ -169,7 +169,7 @@
 
   &-placement-bottom &-arrow {
     left: 50%;
-    margin-left: -@tooltip-arrow-width;
+    margin-left: calc(0px - @tooltip-arrow-width);
   }
 
   &-placement-bottomLeft &-arrow {

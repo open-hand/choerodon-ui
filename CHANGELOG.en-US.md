@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `Style`: Optimize component libraries to support CSS variables.
+
 ## 1.3.1
 
 `2021-04-18`

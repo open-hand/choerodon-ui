@@ -127,14 +127,14 @@ span.@{radio-prefix-cls} + * {
   display: inline-block;
   height: @btn-height-base;
   margin: 0;
-  padding: 0 @padding-md - 0.01rem;
+  padding: 0 calc(@padding-md - 0.01rem);
   color: @radio-button-color;
-  line-height: @btn-height-base - 0.02rem;
+  line-height: calc(@btn-height-base - 0.02rem);
   background: @radio-button-bg;
   border: @border-width-base @border-style-base @border-color-base;
   // strange align fix for chrome but works
   // https://gw.alipayobjects.com/zos/rmsportal/VFTfKXJuogBAXcvfAUWJ.gif
-  border-top-width: @border-width-base + 0.0002rem;
+  border-top-width: calc(@border-width-base + 0.0002rem);
   border-left: 0;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -153,13 +153,13 @@ span.@{radio-prefix-cls} + * {
   .@{radio-group-prefix-cls}-large & {
     height: @input-height-lg;
     font-size: @font-size-lg;
-    line-height: @input-height-lg - 0.02rem;
+    line-height: calc(@input-height-lg - 0.02rem);
   }
 
   .@{radio-group-prefix-cls}-small & {
     height: @input-height-sm;
-    padding: 0 @control-padding-horizontal-sm - 0.01rem;
-    line-height: @input-height-sm - 0.02rem;
+    padding: 0 calc(@control-padding-horizontal-sm - 0.01rem);
+    line-height:calc(@input-height-sm - 0.02rem);
   }
 
   &:not(:first-child) {

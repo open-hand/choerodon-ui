@@ -40,7 +40,7 @@
     .@{tree-node-prefix-cls} {
       display: flex;
       align-items: flex-start;
-      padding: 0 0 (@padding-xs / 2) 0;
+      padding: 0 0 calc(@padding-xs / 2) 0;
       outline: none;
       // Disabled
       &-disabled {
@@ -154,7 +154,7 @@
 
     // ==================== Draggable =====================
     &-node-content-wrapper[draggable='true'] {
-      line-height: @tree-title-height - 4px;
+      line-height: calc(@tree-title-height - 4px);
       border-top: 2px transparent solid;
       border-bottom: 2px transparent solid;
       user-select: none;
@@ -189,8 +189,8 @@
           &::before {
             position: absolute;
             top: calc(100% - 4px);
-            right: -@tree-title-height / 2;
-            bottom: -@tree-title-height - 4px;
+            right: calc(0px - @tree-title-height / 2);
+            bottom: calc(0px - @tree-title-height - 4px);
             border-right: 1px solid @border-color-base;
             content: '';
           }

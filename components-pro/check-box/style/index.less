@@ -22,11 +22,11 @@
       background-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
 
     &::after {
-      @check-width: (@checkbox-size / 14) * 5;
-      @check-height: (@checkbox-size / 14) * 10;
+      @check-width: calc(@checkbox-size / 14 * 5);
+      @check-height: calc(@checkbox-size / 14 * 10);
       position: absolute;
-      top: (@checkbox-size - @check-height) / 2 - 3 * (@checkbox-size / 14);
-      left: (@checkbox-size - @check-width) / 2 - 1.5 * (@checkbox-size / 14);
+      top: calc((@checkbox-size - @check-height) / 2 - 3 * (@checkbox-size / 14));
+      left: calc((@checkbox-size - @check-width) / 2 - 1.5 * (@checkbox-size / 14));
       display: table;
       width: @check-width;
       height: @check-height;
@@ -51,7 +51,7 @@
   }
   &:focus + &-inner {
     border-color: @primary-7;
-    box-shadow: 0 0 @outline-blur-size @outline-width fade(@outline-color, 20%);
+    box-shadow: 0 0 @outline-blur-size @outline-width  rgba(63, 81, 181, 0.2);;
   }
 
   &:checked + &-inner,
@@ -71,11 +71,11 @@
   }
 
   &-indeterminate &-inner::after {
-    @indeterminate-width: (@checkbox-size / 14) * 8;
-    @indeterminate-height: (@checkbox-size / 14) * 1;
+    @indeterminate-width: calc(@checkbox-size / 14 * 8);
+    @indeterminate-height: calc(@checkbox-size / 14 * 1);
     position: absolute;
-    top: (@checkbox-size - 0.05rem - @indeterminate-height) / 2;
-    left: (@checkbox-size - @indeterminate-width - @checkbox-border-width * 2) / 2;
+    top: calc((@checkbox-size - 0.05rem - @indeterminate-height) / 2);
+    left: calc((@checkbox-size - @indeterminate-width - @checkbox-border-width * 2) / 2);
     width: @indeterminate-width;
     height: @indeterminate-height;
     transform: scale(1) !important;

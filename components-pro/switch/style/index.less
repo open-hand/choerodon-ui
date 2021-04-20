@@ -19,13 +19,13 @@
     position: relative;
     display: block;
     min-width: 0.36rem;
-    height: @switch-height - 0.04rem;
+    height: calc(@switch-height - 0.04rem);
     padding: 0 0.05rem 0 @switch-height;
     color: #fff;
     font-size: @font-size-sm;
-    line-height: @switch-height - 0.06rem;
+    line-height: calc(@switch-height - 0.06rem);
     background-color: rgba(0, 0, 0, 0.38);
-    border-radius: @switch-height / 2;
+    border-radius: calc(@switch-height / 2);
     &::after {
       position: absolute;
       top: 0;
@@ -46,11 +46,11 @@
   }
 
   &:active + &-label::after {
-    width: @switch-height + 0.04rem;
+    width: calc(@switch-height + 0.04rem);
   }
 
   &-focused &-label {
-    box-shadow: 0 0 0 0.02rem fade(@switch-color, 20%);
+    box-shadow: 0 0 0 0.02rem rgba(182, 191, 219, 0.2);
   }
 
   &-focused:hover &-label {
@@ -68,7 +68,7 @@
     background-color: @switch-color;
     &::after {
       left: 100%;
-      margin-left: 0 - @switch-height;
+      margin-left: calc(0px - @switch-height);
       background-color: @switch-checked-color;
     }
   }
@@ -85,7 +85,7 @@
 
   &-sm &-label {
     min-width: 0.3rem;
-    height: @switch-sm-height - 0.04rem;
+    height: calc(@switch-sm-height - 0.04rem);
     &::after {
       left: 0.01rem;
       width: @switch-sm-height;
@@ -94,7 +94,7 @@
   }
 
   &-sm &:checked + &-label::after {
-    margin-left: -0.01rem - @switch-sm-height;
+    margin-left: calc(-0.01rem - @switch-sm-height);
   }
 
   &-lg {
@@ -103,7 +103,7 @@
 
   &-lg &-label {
     min-width: 0.4rem;
-    height: @switch-lg-height - 0.04rem;
+    height: calc(@switch-lg-height - 0.04rem);
     &::after {
       left: 0.01rem;
       width: @switch-lg-height;
@@ -111,7 +111,7 @@
     }
   }
   &-lg &:checked + &-label::after {
-    margin-left: 0.01rem - @switch-lg-height;
+    margin-left: calc(0.01rem - @switch-lg-height);
   }
 
   &-float-label .@{field-label-prefix-cls}-wrapper {

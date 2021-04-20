@@ -38,7 +38,7 @@
     height: @pagination-item-size;
     margin-right: 0.08rem;
     font-family: @pagination-font-family;
-    line-height: @pagination-item-size - 0.02rem;
+    line-height: calc(@pagination-item-size - 0.02rem);
     text-align: center;
     vertical-align: middle;
     list-style: none;
@@ -136,7 +136,7 @@
 
       &::before {
         display: block;
-        height: @pagination-item-size - 0.02rem;
+        height: calc(@pagination-item-size - 0.02rem);
         font-weight: 500;
         line-height: @pagination-item-size;
         text-align: center;
@@ -210,7 +210,7 @@
       float: right;
       width: auto;
       height: @pagination-item-size;
-      line-height: @pagination-item-size - 0.03rem;
+      line-height: calc(@pagination-item-size - 0.03rem);
 
       .@{c7n-prefix}-select-selection {
         min-width: 0.64rem;
@@ -317,7 +317,7 @@
     min-width: @pagination-item-size-sm;
     height: @pagination-item-size-sm;
     margin: 0;
-    line-height: @pagination-item-size-sm - 0.02rem;
+    line-height: calc(@pagination-item-size-sm - 0.02rem);
   }
 
   &-small &-item:not(&-item-active) {
@@ -385,7 +385,7 @@
     min-width: @pagination-item-size-lg;
     height: @pagination-item-size-lg;
     margin: 0;
-    line-height: @pagination-item-size-lg - 0.02rem;
+    line-height: calc(@pagination-item-size-lg - 0.02rem);
   }
 
   &-large &-item:not(&-item-active) {

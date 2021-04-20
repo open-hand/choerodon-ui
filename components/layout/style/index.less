@@ -90,11 +90,11 @@
       &-trigger {
         position: absolute;
         top: @layout-header-height;
-        right: -@layout-zero-trigger-width;
+        right: calc(0px - @layout-zero-trigger-width);
         width: @layout-zero-trigger-width;
         height: @layout-zero-trigger-height;
         color: @layout-trigger-color;
-        font-size: @layout-zero-trigger-width / 2;
+        font-size: calc(@layout-zero-trigger-width / 2);
         line-height: @layout-zero-trigger-height;
         text-align: center;
         background: @layout-sider-background;
@@ -103,7 +103,7 @@
         transition: background 0.3s ease;
 
         &:hover {
-          background: tint(@layout-sider-background, 10%);
+          background: #192c3e;
         }
       }
     }

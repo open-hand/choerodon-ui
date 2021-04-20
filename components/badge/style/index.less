@@ -13,7 +13,7 @@
 
   &-count {
     position: absolute;
-    top: -@badge-height / 2;
+    top: calc(0px - @badge-height / 2);
     min-width: @badge-height;
     height: @badge-height;
     padding: 0 0.06rem;
@@ -24,7 +24,7 @@
     white-space: nowrap;
     text-align: center;
     background: @highlight-color;
-    border-radius: @badge-height / 2;
+    border-radius: calc(@badge-height / 2);
     box-shadow: @shadow-3;
     transform: translateX(-50%);
     transform-origin: -10% center;
@@ -40,7 +40,7 @@
 
   &-dot {
     position: absolute;
-    top: -@badge-dot-size / 2;
+    top: calc(0px - @badge-dot-size / 2);
     z-index: 10;
     width: @badge-dot-size;
     height: @badge-dot-size;

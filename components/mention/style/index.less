@@ -118,7 +118,7 @@
     pointer-events: none;
     .public-DraftEditorPlaceholder-inner {
       height: auto;
-      padding: 0.05rem @control-padding-horizontal - 0.01rem;
+      padding: 0.05rem calc(@control-padding-horizontal - 0.01rem);
       color: @input-placeholder-color;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -128,6 +128,6 @@
   }
   .DraftEditor-editorContainer .public-DraftEditor-content {
     height: auto;
-    padding: 0.05rem @control-padding-horizontal - 0.01rem;
+    padding: 0.05rem calc(@control-padding-horizontal - 0.01rem);
   }
 }
