@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import raf from 'raf';
-import isNumber from 'lodash/isNumber';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import autobind from '../_util/autobind';
@@ -46,28 +45,16 @@ export default class TableBody extends Component<TableBodyProps> {
     }
   }
 
-  getHeightStyle(scrollbar: number) {
-    const { lock } = this.props;
+  getHeightStyle() {
     const {
       tableStore: {
-        lockColumnsBodyRowsHeight, rowHeight, hasFooter, height, autoHeight, customized: { heightType },
+        height, autoHeight, customized: { heightType },
       },
     } = this.context;
     if (!heightType && autoHeight && autoHeight.type === TableAutoHeightType.maxHeight) {
       return undefined;
     }
-    if (isNumber(height)) {
-      const bodyHeight = Math.max(
-        height,
-        isNumber(rowHeight) ? rowHeight : lockColumnsBodyRowsHeight[0] || 0,
-      );
-      if (lock && !hasFooter) {
-        return pxToRem(bodyHeight - scrollbar);
-      }
-
-      return pxToRem(bodyHeight);
-    }
-    return undefined;
+    return height;
   }
 
   render() {
@@ -80,13 +67,15 @@ export default class TableBody extends Component<TableBodyProps> {
     const fixedLeft = lock === true || lock === ColumnLock.left;
     const scrollbar = measureScrollbar();
     const hasFooterAndNotLock = !lock && hasFooter && overflowX && scrollbar;
-    const height = this.getHeightStyle(scrollbar);
+    const height = this.getHeightStyle();
     const tableBody = (
       <div
         ref={this.saveRef}
         className={`${prefixCls}-body`}
         style={{
-          height,
+          height: pxToRem(
+            hasFooterAndNotLock && height !== undefined ? height + scrollbar : height,
+          ),
           marginBottom: hasFooterAndNotLock ? pxToRem(-scrollbar) : undefined,
           width: fixedLeft ? pxToRem(leftLeafColumnsWidth + (scrollbar || 20)) :
             lock === ColumnLock.right

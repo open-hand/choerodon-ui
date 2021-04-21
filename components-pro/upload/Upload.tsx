@@ -4,8 +4,9 @@ import { action, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import uniqBy from 'lodash/uniqBy';
-import { T } from 'choerodon-ui/lib/upload/utils';
 import isEmpty from 'lodash/isEmpty';
+import isPromise from 'is-promise';
+import { T } from 'choerodon-ui/lib/upload/utils';
 import Button from '../button/Button';
 import { ButtonColor } from '../button/enum';
 import autobind from '../_util/autobind';
@@ -376,7 +377,7 @@ export default class Upload extends FormField<UploadProps> {
     /**
      * to solve the ie11 dispaly inline-block with the button cause unaligned
      */
-    const IeStyle = isIE() ? {display: '-ms-inline-flexbox'} : {} ;
+    const IeStyle = isIE() ? { display: '-ms-inline-flexbox' } : {};
 
     return (
       <div className={`${prefixCls}`} style={IeStyle}>
@@ -420,7 +421,7 @@ export default class Upload extends FormField<UploadProps> {
       this.removeFileItem(file);
       return false;
     }
-    if (result && (result as PromiseLike<any>).then) {
+    if (isPromise(result)) {
       return result;
     }
     return true;
@@ -469,7 +470,7 @@ export default class Upload extends FormField<UploadProps> {
     const { uploadImmediately, onFileChange } = this.props;
     e.target.value = '';
     if (uploadImmediately) {
-      if(!isEmpty(fileBuffer)) {
+      if (!isEmpty(fileBuffer)) {
         this.uploadFiles(this.fileList);
       }
     }
@@ -509,8 +510,8 @@ export default class Upload extends FormField<UploadProps> {
     }
     const files = partialUpload
       ? Array.from(fileList)
-          .slice(0)
-          .filter(item => !item.status || item.status !== 'success')
+        .slice(0)
+        .filter(item => !item.status || item.status !== 'success')
       : Array.from(fileList).slice(0);
     const that = this;
     if (!files.length) {
@@ -531,6 +532,7 @@ export default class Upload extends FormField<UploadProps> {
    * @returns {void}
    * @memberof Upload
    */
+
   /* istanbul ignore next */
   @autobind
   @action
