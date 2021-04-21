@@ -638,7 +638,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   renderFloatLabel(): ReactNode {
-    if (this.hasFloatLabel) {
+    if (this.hasFloatLabel && (this.isFocus || !this.range || !this.isEmpty() )) {
       const label = this.getLabel();
       if (label) {
         const prefixCls = getProPrefixCls(FIELD_SUFFIX);

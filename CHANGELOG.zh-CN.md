@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table`: 个性化新增高度设置。
 - 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 🐞 `<pro>Field`: 修复 getText 获取对象值报错。
+- 🐞 `<pro>TextField`: 修复 form 标题为浮动时候字段为 range 配置出现的标题显示冲突。
 
 ## 1.3.1
 
