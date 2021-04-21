@@ -157,7 +157,9 @@ export function isInCellEditor(element?: ReactElement<FormFieldProps>): boolean 
     return !!(element.type as any).__IS_IN_CELL_EDITOR;
   }
   return false;
-}let STICKY_SUPPORT;
+}
+
+let STICKY_SUPPORT;
 
 export function isStickySupport(): boolean {
   if (STICKY_SUPPORT !== undefined) {
@@ -299,7 +301,7 @@ export function getPaginationPosition(pagination?: TablePaginationConfig): Table
   return TablePaginationPosition.bottom;
 }
 
-export function getHeight(el: HTMLElement) {
+export function getHeight(el: HTMLElement): number {
   return el.getBoundingClientRect().height;
 }
 

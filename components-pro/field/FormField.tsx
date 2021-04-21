@@ -3,7 +3,7 @@ import React, { cloneElement, FormEventHandler, isValidElement, ReactInstance, R
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
-import isPromise from 'p-is-promise';
+import isPromise from 'is-promise';
 import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
@@ -1065,7 +1065,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           onChange(value, old, formNode);
           this.afterSetValue();
         });
-        if (isPromise(beforeChange)) {
+        if (isPromise<boolean>(beforeChange)) {
           this.value = value;
           const rejectCallback = () => {
             this.value = storedValue;

@@ -387,6 +387,11 @@
         border-right: @border-width-base @border-style-base transparent;
       }
     }
+    .@{table-prefix-cls}-fixed-left .@{table-prefix-cls}-tbody {
+      .@{table-prefix-cls}-cell:last-child {
+        border-right: @border-width-base @border-style-base @border-color-base;
+      }
+    }
   }
 
   &-scroll-position-middle {

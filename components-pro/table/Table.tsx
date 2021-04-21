@@ -1745,19 +1745,13 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getLeftFixedTable(): ReactNode {
-    const { height, prefixCls } = this.tableStore;
-    if (height === undefined) {
-      return;
-    }
+    const { prefixCls } = this.tableStore;
     const table = this.getTable(ColumnLock.left);
     return <div className={`${prefixCls}-fixed-left`}>{table}</div>;
   }
 
   getRightFixedTable(): ReactNode | undefined {
-    const { height, prefixCls } = this.tableStore;
-    if (height === undefined) {
-      return;
-    }
+    const { prefixCls } = this.tableStore;
     const table = this.getTable(ColumnLock.right);
     return <div className={`${prefixCls}-fixed-right`}>{table}</div>;
   }
@@ -1855,17 +1849,18 @@ export default class Table extends DataSetComponent<TableProps> {
     const { element, tableStore } = this;
     if (element) {
       tableStore.width = Math.floor(width);
-      let height = this.getContentHeight();
+      const height = this.getContentHeight();
       if (isNumber(height)) {
-        tableStore.totalHeight = height;
+        const { rowHeight, lockColumnsBodyRowsHeight } = tableStore;
         const { tableHeadWrap, tableFootWrap } = this;
-        if (tableHeadWrap) {
-          height -= getHeight(tableHeadWrap);
-        }
-        if (tableFootWrap) {
-          height -= getHeight(tableFootWrap);
-        }
-        tableStore.height = height;
+        const headerHeight = tableHeadWrap ? getHeight(tableHeadWrap) : 0;
+        const footerHeight = tableFootWrap ? getHeight(tableFootWrap) : 0;
+        const totalHeight = Math.max(
+          height,
+          (isNumber(rowHeight) ? rowHeight : lockColumnsBodyRowsHeight[0] || 0) + headerHeight + footerHeight,
+        );
+        tableStore.totalHeight = totalHeight;
+        tableStore.height = totalHeight - headerHeight - footerHeight;
       } else {
         tableStore.totalHeight = element.offsetHeight;
         tableStore.height = undefined;
