@@ -473,7 +473,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       >
         {$icon}
         {$title}
-        {this.renderDropIndicator()}
       </span>
     );
   };
@@ -572,6 +571,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           {this.renderCheckbox()}
           {this.renderSelector()}
         </div>
+        {this.renderDropIndicator()}
       </Ripple>
     );
   }

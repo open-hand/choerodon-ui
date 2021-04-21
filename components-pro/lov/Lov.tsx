@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
@@ -388,6 +389,8 @@ export default class Lov extends Select<LovProps> {
   getWrapperProps() {
     return super.getWrapperProps({
       onDoubleClick: this.handleOpenModal(),
+      // Support ued to distinguish between select and lov
+      className: this.getWrapperClassNames(`${this.prefixCls}-lov`),
     });
   }
 
@@ -461,7 +464,7 @@ export default class Lov extends Select<LovProps> {
       ...Button.defaultProps,
       ...omit(this.getOtherProps(), ['name']),
       dataSet: options,
-      className,
+      className: classNames(className, `${this.prefixCls}-lov`),
       type,
     };
     if (!this.isValid) {
