@@ -1,4 +1,4 @@
-import { action, computed, get, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
+import { action, computed, get, observable, ObservableMap, remove, runInAction, set, toJS, isObservableObject } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
 import isFunction from 'lodash/isFunction';
@@ -724,7 +724,9 @@ export default class Field {
       }
     }
     if (textField && isObject(value)) {
-      return get(value, textField);
+      // 如果要用get(object, key) 需要保证可观察  
+      const observerValue = isObservableObject(value) ? value : observable.object(value);
+      return get(observerValue, textField);
     }
     return value;
   }

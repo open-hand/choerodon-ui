@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `lovTableCustomizable` property.
 - 🌟 `<pro>Table`: Added height settings for customization.
 - 💄 `<pro>Table`: Height style supports calc attribute.
+- 🐞 `<pro>Field`: Fixed getText getting object value error.
 
 ## 1.3.1
 
