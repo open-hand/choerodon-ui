@@ -15,7 +15,11 @@ timeline: true
 
 ---
 
+
+- 🌟 `configure`: Added `lovTableCustomizable` property.
+- 🌟 `<pro>Table`: Added height settings for customization.
 - 💄 `Style`: Optimize component libraries to support CSS variables.
+- 💄 `<pro>Table`: Height style supports calc attribute.
 
 ## 1.3.1
 

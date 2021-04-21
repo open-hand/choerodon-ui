@@ -138,11 +138,15 @@
     color: @heading-color;
     background-color: @table-header-bg;
     border-right: @border-width-base @border-style-base transparent;
-    border-bottom: @table-border;
+  }
 
-    &[colspan] {
-      border-bottom: none;
-    }
+  &-thead &-cell,
+  &-tfoot-bordered &-cell {
+    border-bottom: @table-border;
+  }
+
+  &-thead &-cell[colspan] {
+    border-bottom: none;
   }
 
   &-tfoot &-cell {

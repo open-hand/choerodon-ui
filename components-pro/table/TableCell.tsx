@@ -58,7 +58,6 @@ import TableEditor from './TableEditor';
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
   record: Record;
-  indentSize: number;
   colSpan?: number;
   isDragging: boolean;
   lock?: ColumnLock | boolean;
@@ -76,7 +75,6 @@ export default class TableCell extends Component<TableCellProps> {
   static propTypes = {
     column: PropTypes.object.isRequired,
     record: PropTypes.instanceOf(Record).isRequired,
-    indentSize: PropTypes.number.isRequired,
   };
 
   static contextType = TableContext;
@@ -510,8 +508,9 @@ export default class TableCell extends Component<TableCellProps> {
       rowHeight,
       hasCheckFieldColumn,
       pristine,
+      props: { indentSize },
     } = tableStore;
-    const { column, record, indentSize, lock } = this.props;
+    const { column, record, lock } = this.props;
     const { name, key } = column;
     const tooltip = tableStore.getColumnTooltip(column);
     const { hasEditor } = this;

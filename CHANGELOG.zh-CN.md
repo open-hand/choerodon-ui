@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+
+
+- 🌟 `configure`: 新增 lovTableCustomizable 属性。
+- 🌟 `<pro>Table`: 个性化新增高度设置。
+- 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 💄 `Style`: 优化组件库支持 css 变量。
 
 ## 1.3.1

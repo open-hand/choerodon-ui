@@ -60,6 +60,12 @@ export interface Locale {
     query_option_yes;
     query_option_no;
     customization_settings;
+    table_settings;
+    height_settings;
+    auto_height;
+    fixed_height;
+    flex_height;
+    flex_height_help;
     column_settings;
     restore_default;
     left_lock;

@@ -95,8 +95,6 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     simple: false,
   };
 
-  customizePageSize: number;
-
   goInputText: number;
 
   lastPageSize: number;
@@ -158,7 +156,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   @autobind
   handlePageSizeBeforeChange(value): boolean | Promise<boolean> {
-    if (value < 1 || value > Math.max(this.customizePageSize, this.observableProps.maxPageSize)) {
+    if (value < 1 || value > this.observableProps.maxPageSize) {
       return false;
     }
     const { dataSet } = this.props;
@@ -287,22 +285,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     ]);
   }
 
-  @computed
-  get options(): string[] {
-    const { pageSize, customizePageSize } = this;
-    const { pageSizeOptions } = this.observableProps;
-    const options = (pageSizeOptions || []).slice();
-    if (customizePageSize || !options.includes(String(pageSize))) {
-      this.customizePageSize = customizePageSize || pageSize;
-      options.push(String(this.customizePageSize));
-    }
-    return options.sort((a, b) => Number(a) - Number(b));
-  }
-
   @action
   getOptions(): ReactNode {
     const { Option } = ObserverSelect;
-    return this.options.map(option => (
+    return this.observableProps.pageSizeOptions.map(option => (
       <Option key={option} value={option}>
         {option}
       </Option>

@@ -7,7 +7,6 @@ import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
-import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { action, toJS } from 'mobx';
@@ -53,6 +52,7 @@ import {
   TableButtonType,
   TableCommandType,
   TableEditMode,
+  TableHeightType,
   TableMode,
   TablePaginationPosition,
   TableQueryBarType,
@@ -202,6 +202,9 @@ export interface DragRender {
 
 export interface Customized {
   columns: object,
+  heightType?: TableHeightType,
+  height?: number,
+  heightDiff?: number,
 }
 
 let _instance;
@@ -759,7 +762,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   @action
-  handleResize(width: number) {
+  handleResize(width?: number) {
     const { element, tableStore } = this;
     if (!element.offsetParent) {
       tableStore.styledHidden = true;
@@ -768,6 +771,11 @@ export default class Table extends DataSetComponent<TableProps> {
     } else {
       tableStore.styledHidden = false;
     }
+  }
+
+  @autobind
+  handleWindowResize() {
+    this.handleResize();
   }
 
   @autobind
@@ -1261,6 +1269,9 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.tableStore.useMouseBatchChoose) {
       document.addEventListener('pointerup', this.handleDragMouseUp);
     }
+    if (this.tableStore.heightType === TableHeightType.flex) {
+      window.addEventListener('resize', this.handleWindowResize, false);
+    }
   }
 
   disconnect() {
@@ -1268,6 +1279,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.tableStore.useMouseBatchChoose) {
       document.removeEventListener('pointerup', this.handleDragMouseUp);
     }
+    window.removeEventListener('resize', this.handleWindowResize, false);
   }
 
   processDataSetListener(flag: boolean) {
@@ -1330,14 +1342,12 @@ export default class Table extends DataSetComponent<TableProps> {
               />
               <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
                 {
-                  virtual && (
+                  virtual && virtualSpin && (
                     <div
                       ref={(node) => this.refSpin = node}
-                      style={{
-                        display: 'none',
-                      }}
+                      style={{ display: 'none' }}
                     >
-                      {virtualSpin && <Spin
+                      <Spin
                         key="virtual"
                         spinning
                         style={{
@@ -1349,7 +1359,7 @@ export default class Table extends DataSetComponent<TableProps> {
                         }}
                         {...tableSpinProps}
                         {...spin}
-                      />}
+                      />
                     </div>
                   )
                 }
@@ -1433,12 +1443,11 @@ export default class Table extends DataSetComponent<TableProps> {
   handleBodyScrollTop(e, currentTarget) {
     const { target } = e;
     const {
-      props: { autoHeight },
-      tableStore: { virtual, height, lastScrollTop },
+      tableStore: { virtual, heightType, lastScrollTop },
     } = this;
     if (
       (isStickySupport() && !virtual) ||
-      (height === undefined && !autoHeight) ||
+      (![TableHeightType.fixed, TableHeightType.flex].includes(heightType)) ||
       currentTarget !== target ||
       target === this.tableFootWrap
     ) {
@@ -1664,14 +1673,12 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTable(lock?: ColumnLock | boolean): ReactNode {
-    const { autoHeight } = this.props;
-    const { overflowX, height, hasFooter: footer } = this.tableStore;
+    const { overflowX, heightType, hasFooter: footer } = this.tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
-    if ((!isStickySupport() && overflowX) || height !== undefined || autoHeight) {
-      const { prefixCls, lockColumnsBodyRowsHeight, rowHeight, leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = this.tableStore;
-      let bodyHeight = height;
+    if ((!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType)) {
+      const { prefixCls, leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = this.tableStore;
       let tableHeadRef;
       let tableBodyRef;
       let tableFootRef;
@@ -1694,18 +1701,6 @@ export default class Table extends DataSetComponent<TableProps> {
           }
         };
       }
-      if (isObject(autoHeight) && autoHeight.type === TableAutoHeightType.maxHeight) {
-        bodyHeight = undefined;
-      }
-      if (bodyHeight !== undefined) {
-        bodyHeight = Math.max(
-          bodyHeight,
-          isNumber(rowHeight) ? rowHeight : lockColumnsBodyRowsHeight[0] || 0,
-        );
-        if (lock && !footer) {
-          bodyHeight -= measureScrollbar();
-        }
-      }
       const style: CSSProperties | undefined = lock ? {
         width: pxToRem(lock === ColumnLock.right
           ? (rightLeafColumnsWidth - 1 + (overflowY ? measureScrollbar() : 0))
@@ -1724,7 +1719,6 @@ export default class Table extends DataSetComponent<TableProps> {
           key="tableBody"
           getRef={tableBodyRef}
           lock={lock}
-          height={bodyHeight}
           onScroll={this.handleBodyScroll}
         >
           {this.renderTable(false, true, false, lock)}
@@ -1751,8 +1745,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getLeftFixedTable(): ReactNode {
-    const { overflowX, height, prefixCls } = this.tableStore;
-    if (!overflowX && height === undefined) {
+    const { height, prefixCls } = this.tableStore;
+    if (height === undefined) {
       return;
     }
     const table = this.getTable(ColumnLock.left);
@@ -1760,8 +1754,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getRightFixedTable(): ReactNode | undefined {
-    const { overflowX, height, prefixCls } = this.tableStore;
-    if (!overflowX && height === undefined) {
+    const { height, prefixCls } = this.tableStore;
+    if (height === undefined) {
       return;
     }
     const table = this.getTable(ColumnLock.right);
@@ -1769,11 +1763,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableBody(lock?: ColumnLock | boolean): ReactNode {
-    const {
-      props: { indentSize, style },
-      tableStore: { rowDraggable },
-    } = this;
-    const body = <TableTBody key="tbody" lock={lock} indentSize={indentSize!} style={style} />;
+    const { tableStore: { rowDraggable } } = this;
+    const body = <TableTBody key="tbody" lock={lock} />;
     return rowDraggable ? (
       <DragDropContext onDragEnd={this.handleDragEnd}>
         {body}
@@ -1782,9 +1773,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableHeader(lock?: ColumnLock | boolean): ReactNode {
-    const {
-      props: { dataSet },
-    } = this;
+    const { props: { dataSet } } = this;
     return (
       <TableHeader key="thead" lock={lock} dataSet={dataSet} />
     );
@@ -1812,17 +1801,21 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getContentHeight() {
-    const { wrapper, element, props: { autoHeight }, tableBodyWrap, tableStore: { prefixCls } } = this;
+    const { wrapper, element, tableBodyWrap, tableStore: { prefixCls, autoHeight, customized: { heightType, height, heightDiff } } } = this;
+    if (heightType) {
+      if (heightType === TableHeightType.fixed) {
+        return height;
+      }
+      if (heightType === TableHeightType.flex) {
+        return document.documentElement.clientHeight - (heightDiff || 0);
+      }
+      return undefined;
+    }
     if (autoHeight) {
       const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
-      const { paddingBottom } = wrapper.parentNode.style;
+      const { paddingBottom } = document.defaultView ? document.defaultView.getComputedStyle(wrapper.parentNode) : { paddingBottom: 0 };
       const { top: tableTop } = element.getBoundingClientRect();
-      let diff = getConfig('tableAutoHeightDiff') || 80;
-      let type = TableAutoHeightType.minHeight;
-      if (isObject(autoHeight)) {
-        type = autoHeight.type || TableAutoHeightType.minHeight;
-        diff = autoHeight.diff || diff;
-      }
+      const { diff, type } = autoHeight;
       const paddingBottomPx = toPx(paddingBottom) || 0;
       if (wrapper) {
         if (type === TableAutoHeightType.minHeight) {
@@ -1862,30 +1855,20 @@ export default class Table extends DataSetComponent<TableProps> {
     const { element, tableStore } = this;
     if (element) {
       tableStore.width = Math.floor(width);
-      const { prefixCls } = tableStore;
       let height = this.getContentHeight();
-      if (element && isNumber(height)) {
-        const tableTitle: HTMLDivElement | null = element.querySelector(`.${prefixCls}-title`);
-        const tableHeader: HTMLTableSectionElement | null = element.querySelector(
-          `.${prefixCls}-thead`,
-        );
-        const tableFooter: HTMLTableSectionElement | null = element.querySelector(
-          `.${prefixCls}-footer`,
-        );
-        const tableFootWrap: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
-        if (tableTitle) {
-          height -= getHeight(tableTitle);
-        }
-        if (tableHeader) {
-          height -= getHeight(tableHeader);
-        }
-        if (tableFooter) {
-          height -= getHeight(tableFooter);
+      if (isNumber(height)) {
+        tableStore.totalHeight = height;
+        const { tableHeadWrap, tableFootWrap } = this;
+        if (tableHeadWrap) {
+          height -= getHeight(tableHeadWrap);
         }
         if (tableFootWrap) {
           height -= getHeight(tableFootWrap);
         }
-        this.tableStore.height = height;
+        tableStore.height = height;
+      } else {
+        tableStore.totalHeight = element.offsetHeight;
+        tableStore.height = undefined;
       }
     }
     this.setScrollPositionClassName();
@@ -1904,6 +1887,12 @@ export default class Table extends DataSetComponent<TableProps> {
         }
       });
     }
+  }
+
+  handleHeightTypeChange() {
+    this.disconnect();
+    this.syncSizeInFrame();
+    this.connect();
   }
 
   getWidth(): number {
