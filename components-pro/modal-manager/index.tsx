@@ -19,6 +19,7 @@ export type ModalManagerType = {
   addInstance: (instance: IModalContainer) => void;
   removeInstance: (instance: IModalContainer) => void;
   getKey: () => string;
+  clear: () => void;
   mousePositionEventBound: boolean;
   mousePosition?: MousePosition;
   defaultBodyStyle?: { overflow; paddingRight };
@@ -50,12 +51,19 @@ function getKey(): string {
   return KeyGen.next().value;
 }
 
+function clear() {
+  containerInstances.forEach((instance) => {
+    instance.clear();
+  });
+}
+
 const ModalManager: ModalManagerType = {
   addInstance,
   removeInstance,
   getKey,
   mousePositionEventBound: false,
   containerInstances,
+  clear,
 };
 
 export default ModalManager;
