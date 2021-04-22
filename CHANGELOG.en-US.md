@@ -18,6 +18,8 @@ timeline: true
 - 🌟 `configure`: Added `lovTableCustomizable` property.
 - 🌟 `<pro>Table`: Added height settings for customization.
 - 💄 `<pro>Table`: Height style supports calc attribute.
+- 🐞 `<pro>Field`: Fixed getText getting object value error.
+- 🐞 `<pro>TextField`: Fixed a conflict in the title display of the form when the title of the form is float and the field is range.
 
 ## 1.3.1
 
