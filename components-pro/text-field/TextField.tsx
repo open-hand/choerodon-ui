@@ -396,7 +396,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getLabel() {
-    const [placeholder] = this.getPlaceholders();
+    const [placeholder, endPlaceHolder] = this.getPlaceholders();
+    if(this.isEmpty() && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
+      return endPlaceHolder
+    }
     if (this.isEmpty() && placeholder) {
       return placeholder;
     }
