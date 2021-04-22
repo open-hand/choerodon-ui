@@ -218,7 +218,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const { location } = nextProps;
     const { location: currentLocation } = this.props;
     if (location && currentLocation && location.pathname !== currentLocation.pathname) {
-      this.clear();
+      ModalManager.clear();
     }
   }
 
@@ -316,7 +316,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 
   clear() {
     const { modals } = this.state;
-    modals.forEach(modal => this.close({ ...modal, destroyOnClose: true }));
+    this.updateModals(modals.map(modal => ({ ...modal, destroyOnClose: true, hidden: true })));
   }
 
   getModalWidth(modal) {

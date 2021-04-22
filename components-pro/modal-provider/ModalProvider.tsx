@@ -16,7 +16,8 @@ export interface ModalProviderProps extends ModalContainerProps {
 }
 
 const ModalProvider = (props: ModalProviderProps) => {
-  const { location, children, getContainer } = props;
+  const { location: contextLocation } = useContext(ModalContext);
+  const { location = contextLocation, children, getContainer } = props;
   const ref = useRef<ModalContainer>(null);
   const prepareToOpen = useMemo<(ModalProps & { children })[]>(
     () => [] as (ModalProps & { children })[],
@@ -68,7 +69,10 @@ const ModalProvider = (props: ModalProviderProps) => {
     }
   }, [ref, open]);
 
-  const context = { open };
+  const context = {
+    open,
+    location,
+  };
 
   return (
     <ModalContext.Provider value={context}>
