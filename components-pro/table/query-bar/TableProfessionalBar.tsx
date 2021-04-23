@@ -98,10 +98,14 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
   @action
   openMore = (fields: ReactElement[]) => {
+    const { tableStore } = this.context;
     if (this.moreFields && this.moreFields.length) {
       this.moreFields = [];
     } else {
       this.moreFields = fields;
+    }
+    if (tableStore.node) {
+      tableStore.node.handleResize();
     }
     return this.moreFields;
   };

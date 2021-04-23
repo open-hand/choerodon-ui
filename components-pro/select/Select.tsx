@@ -1297,10 +1297,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const value = record.get(valueField);
       const optionDisabled = (optionProps && optionProps.disabled);
       const optionIsSelect = values.some((v) => {
-        if (typeof v === 'string') {
-          return v === value;
+        if (typeof v === 'object') {
+          return v[valueField] === value;
         }
-        return v[valueField] === value;
+        return v === value;
       });
       return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect) ;
     });

@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `lovTableCustomizable` property.
 - 🌟 `<pro>Table`: Added height settings for customization.
 - 💄 `<pro>Table`: Height style supports calc attribute.
+- 💄 `<pro>Table`: Optimize professionalBar Expand Collapse `autoHeight` does not respond to the problem.
 - 🐞 `<pro>Field`: Fixed getText getting object value error.
 - 🐞 `<pro>Select`: Fixed that when the value type is object, select all and reverse the wrong assignment.
 - 🐞 `<pro>TextField`: Fixed a conflict in the title display of the form when the title of the form is float and the field is range.
