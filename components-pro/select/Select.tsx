@@ -1296,7 +1296,12 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const optionProps = onOption({ dataSet: options, record });
       const value = record.get(valueField);
       const optionDisabled = (optionProps && optionProps.disabled);
-      const optionIsSelect = values.includes(value);
+      const optionIsSelect = values.some((v) => {
+        if (typeof v === 'string') {
+          return v === value;
+        }
+        return v[valueField] === value;
+      });
       return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect) ;
     });
     this.setValue(selectedOptions.map(this.processRecordToObject, this));
