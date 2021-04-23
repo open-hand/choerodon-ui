@@ -536,42 +536,44 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
     return (
       <Ripple disabled={disabled || !ripple}>
-        <div
-          ref={domRef}
-          className={classNames(className, `${prefixCls}-treenode`, {
-            [`${prefixCls}-treenode-disabled`]: disabled,
-            [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
-            [`${prefixCls}-treenode-checkbox-checked`]: checked,
-            [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
-            [`${prefixCls}-treenode-selected`]: selected,
-            [`${prefixCls}-treenode-loading`]: loading,
-            [`${prefixCls}-treenode-active`]: active,
-            [`${prefixCls}-treenode-leaf-last`]: isEndNode,
+        <>
+          <div
+            ref={domRef}
+            className={classNames(className, `${prefixCls}-treenode`, {
+              [`${prefixCls}-treenode-disabled`]: disabled,
+              [`${prefixCls}-treenode-switcher-${expanded ? 'open' : 'close'}`]: !isLeaf,
+              [`${prefixCls}-treenode-checkbox-checked`]: checked,
+              [`${prefixCls}-treenode-checkbox-indeterminate`]: halfChecked,
+              [`${prefixCls}-treenode-selected`]: selected,
+              [`${prefixCls}-treenode-loading`]: loading,
+              [`${prefixCls}-treenode-active`]: active,
+              [`${prefixCls}-treenode-leaf-last`]: isEndNode,
 
-            'drop-target': dropTargetKey === eventKey,
-            'drop-container': dropContainerKey === eventKey,
-            'drag-over': !disabled && dragOver,
-            'drag-over-gap-top': !disabled && dragOverGapTop,
-            'drag-over-gap-bottom': !disabled && dragOverGapBottom,
-            'filter-node': filterTreeNode && filterTreeNode(convertNodePropsToEventData(this.props)),
-          })}
-          style={style}
-          onClick={this.onSelectorClick}
-          onDoubleClick={this.onSelectorDoubleClick}
-          onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
-          onDragOver={mergedDraggable ? this.onDragOver : undefined}
-          onDragLeave={mergedDraggable ? this.onDragLeave : undefined}
-          onDrop={mergedDraggable ? this.onDrop : undefined}
-          onDragEnd={mergedDraggable ? this.onDragEnd : undefined}
-          onMouseMove={onMouseMove}
-          {...dataOrAriaAttributeProps}
-        >
-          <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
-          {this.renderSwitcher()}
-          {this.renderCheckbox()}
-          {this.renderSelector()}
-        </div>
-        {this.renderDropIndicator()}
+              'drop-target': dropTargetKey === eventKey,
+              'drop-container': dropContainerKey === eventKey,
+              'drag-over': !disabled && dragOver,
+              'drag-over-gap-top': !disabled && dragOverGapTop,
+              'drag-over-gap-bottom': !disabled && dragOverGapBottom,
+              'filter-node': filterTreeNode && filterTreeNode(convertNodePropsToEventData(this.props)),
+            })}
+            style={style}
+            onClick={this.onSelectorClick}
+            onDoubleClick={this.onSelectorDoubleClick}
+            onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
+            onDragOver={mergedDraggable ? this.onDragOver : undefined}
+            onDragLeave={mergedDraggable ? this.onDragLeave : undefined}
+            onDrop={mergedDraggable ? this.onDrop : undefined}
+            onDragEnd={mergedDraggable ? this.onDragEnd : undefined}
+            onMouseMove={onMouseMove}
+            {...dataOrAriaAttributeProps}
+          >
+            <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
+            {this.renderSwitcher()}
+            {this.renderCheckbox()}
+            {this.renderSelector()}
+          </div>
+          {this.renderDropIndicator()}
+        </>
       </Ripple>
     );
   }

@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table`: 个性化新增高度设置。
 - 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 💄 `<pro>Table`: 优化 professionalBar 展开收起 autoHeight 未响应的问题。
+- 💄 `<pro>Select`: 优化点击清空自动弹出下拉的问题。
 - 🐞 `<pro>Field`: 修复 getText 获取对象值报错。
 - 🐞 `<pro>Select`: 修复值类型为对象时，全选反选错误的赋值。
 - 🐞 `<pro>TextField`: 修复 form 标题为浮动时候字段为 range 配置出现的标题显示冲突。
