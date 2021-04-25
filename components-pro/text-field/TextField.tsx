@@ -376,7 +376,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderTooltipHelp(): ReactNode {
     return (
-      <Tooltip title={this.getProp('help')} placement="bottom">
+      <Tooltip title={this.getProp('help')} popupClassName={`${getConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
         <Icon type="help" />
       </Tooltip>
     );

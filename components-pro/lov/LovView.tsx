@@ -15,7 +15,7 @@ import { ColumnProps } from '../table/Column';
 export interface LovViewProps {
   dataSet: DataSet;
   config: LovConfig;
-  tableProps?: TableProps;
+  tableProps?: Partial<TableProps>;
   multiple: boolean;
   values: any[];
   onDoubleClick: () => void;
