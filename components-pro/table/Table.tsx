@@ -9,7 +9,7 @@ import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { action, toJS } from 'mobx';
+import { action, get, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -724,6 +724,10 @@ export default class Table extends DataSetComponent<TableProps> {
 
   fixedColumnsBodyRight: HTMLDivElement | null;
 
+  tableHeader: TableHeader | null;
+
+  tableFooter: TableFooter | null;
+
   lastScrollLeft: number;
 
   scrollPosition: ScrollPosition;
@@ -754,6 +758,16 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   saveResizeRef(node: HTMLDivElement | null) {
     this.resizeLine = node;
+  }
+
+  @autobind
+  saveTableHeader(tableHeader: TableHeader | null) {
+    this.tableHeader = tableHeader;
+  }
+
+  @autobind
+  saveTableFooter(tableFooter: TableFooter | null) {
+    this.tableFooter = tableFooter;
   }
 
   useFocusedClassName() {
@@ -1769,7 +1783,7 @@ export default class Table extends DataSetComponent<TableProps> {
   getTableHeader(lock?: ColumnLock | boolean): ReactNode {
     const { props: { dataSet } } = this;
     return (
-      <TableHeader key="thead" lock={lock} dataSet={dataSet} />
+      <TableHeader key="thead" ref={lock ? undefined : this.saveTableHeader} lock={lock} dataSet={dataSet} />
     );
   }
 
@@ -1777,7 +1791,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       props: { dataSet },
     } = this;
-    return <TableFooter key="tfoot" lock={lock} dataSet={dataSet} />;
+    return <TableFooter key="tfoot" ref={lock ? undefined : this.saveTableFooter} lock={lock} dataSet={dataSet} />;
   }
 
   getStyleHeight(): number | undefined {
@@ -1795,7 +1809,24 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getContentHeight() {
-    const { wrapper, element, tableBodyWrap, tableStore: { prefixCls, autoHeight, customized: { heightType, height, heightDiff } } } = this;
+    const {
+      wrapper, element, tableBodyWrap,
+      tableStore: {
+        prefixCls, autoHeight,
+        customized: { heightType, height, heightDiff },
+        tempCustomized,
+      },
+    } = this;
+    const tempHeightType = get(tempCustomized, 'heightType');
+    if (tempHeightType) {
+      if (tempHeightType === TableHeightType.fixed) {
+        return get(tempCustomized, 'height');
+      }
+      if (tempHeightType === TableHeightType.flex) {
+        return document.documentElement.clientHeight - (get(tempCustomized, 'heightDiff') || 0);
+      }
+      return undefined;
+    }
     if (heightType) {
       if (heightType === TableHeightType.fixed) {
         return height;
@@ -1852,9 +1883,9 @@ export default class Table extends DataSetComponent<TableProps> {
       const height = this.getContentHeight();
       if (isNumber(height)) {
         const { rowHeight, lockColumnsBodyRowsHeight } = tableStore;
-        const { tableHeadWrap, tableFootWrap } = this;
-        const headerHeight = tableHeadWrap ? getHeight(tableHeadWrap) : 0;
-        const footerHeight = tableFootWrap ? getHeight(tableFootWrap) : 0;
+        const { tableHeader, tableFooter } = this;
+        const headerHeight = tableHeader ? tableHeader.getHeight() : 0;
+        const footerHeight = tableFooter ? tableFooter.getHeight() : 0;
         const totalHeight = Math.max(
           height,
           (isNumber(rowHeight) ? rowHeight : lockColumnsBodyRowsHeight[0] || 0) + headerHeight + footerHeight,
@@ -1884,9 +1915,13 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  handleHeightTypeChange() {
+  handleHeightTypeChange(immediate?: boolean) {
     this.disconnect();
-    this.syncSizeInFrame();
+    if (immediate) {
+      this.syncSize();
+    } else {
+      this.syncSizeInFrame();
+    }
     this.connect();
   }
 

@@ -11,7 +11,7 @@ import TableContext from './TableContext';
 import { ColumnLock, DragColumnAlign } from './enum';
 import DataSet from '../data-set/DataSet';
 import TableFooterCell, { TableFooterCellProps } from './TableFooterCell';
-import { getColumnKey, getColumnLock, isStickySupport } from './utils';
+import { getColumnKey, getColumnLock, getHeight, isStickySupport } from './utils';
 import autobind from '../_util/autobind';
 import ResizeObservedRow from './ResizeObservedRow';
 import { CUSTOMIZED_KEY } from './TableStore';
@@ -33,6 +33,13 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   };
 
   static contextType = TableContext;
+
+  node: HTMLTableSectionElement | null;
+
+  @autobind
+  saveRef(node) {
+    this.node = node;
+  }
 
   @autobind
   handleResize(index: Key, height: number) {
@@ -121,6 +128,14 @@ export default class TableFooter extends Component<TableFooterProps, any> {
     return tds;
   }
 
+  getHeight(): number {
+    const { node } = this;
+    if (node) {
+      return getHeight(node);
+    }
+    return 0;
+  }
+
   render() {
     const { lock } = this.props;
     const {
@@ -139,7 +154,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
       </tr>
     );
     return (
-      <tfoot className={classNames(`${prefixCls}-tfoot`, {[`${prefixCls}-tfoot-bordered`]: overflowX})}>
+      <tfoot ref={this.saveRef} className={classNames(`${prefixCls}-tfoot`, { [`${prefixCls}-tfoot-bordered`]: overflowX })}>
         {
           !isStickySupport() && !lock && (rowHeight === 'auto' || autoFootHeight) ? (
             <ResizeObservedRow onResize={this.handleResize} rowIndex={0}>
