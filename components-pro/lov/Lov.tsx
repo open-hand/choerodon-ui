@@ -77,7 +77,7 @@ export type LovConfig = {
 
 export interface LovProps extends SelectProps, ButtonProps {
   modalProps?: ModalProps;
-  tableProps?: TableProps;
+  tableProps?: Partial<TableProps>;
   noCache?: boolean;
   mode?: ViewMode;
   // TODO：lovEvents deprecated

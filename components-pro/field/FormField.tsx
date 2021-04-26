@@ -11,6 +11,7 @@ import isNil from 'lodash/isNil';
 import isLdEmpty from 'lodash/isEmpty';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
+import uniqWith from 'lodash/uniqWith';
 import { isMoment, Moment } from 'moment';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
@@ -936,7 +937,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (this.multiple) {
       const oldValues = this.getValues();
       if (values.length) {
-        this.setValue([...new Set([...oldValues, ...values])]);
+        this.setValue(uniqWith([...oldValues, ...values], this.compare));
       } else if (!oldValues.length) {
         this.setValue(this.emptyValue);
       }
@@ -1023,7 +1024,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   compare(oldValue, newValue) {
-    return isSame(oldValue, newValue);
+    return isSame(toJS(oldValue), toJS(newValue));
   }
 
   @action

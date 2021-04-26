@@ -376,7 +376,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderTooltipHelp(): ReactNode {
     return (
-      <Tooltip title={this.getProp('help')} placement="bottom">
+      <Tooltip title={this.getProp('help')} popupClassName={`${getConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
         <Icon type="help" />
       </Tooltip>
     );
@@ -732,7 +732,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     } = this;
     if (clearButton && !this.isReadOnly()) {
       return this.wrapperInnerSpanButton(
-        <Icon type="close" onClick={this.handleClearButtonClick} />,
+        <Icon type="close" onClick={this.handleClearButtonClick} onMouseDown={stopPropagation} />,
         {
           className: isFlat ? `${prefixCls}-clear-button ${prefixCls}-clear-button-flat` : `${prefixCls}-clear-button`,
         },
@@ -859,7 +859,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  handleClearButtonClick() {
+  handleClearButtonClick(e) {
+    e.preventDefault();
     this.setRangeTarget(0);
     this.clear();
   }

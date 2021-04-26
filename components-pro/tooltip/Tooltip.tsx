@@ -29,9 +29,9 @@ export type RenderFunction = () => React.ReactNode;
 export interface TooltipProps {
   prefixCls?: string;
   suffixCls?: string;
-  overlayClassName?: string;
+  popupClassName?: string;
   style?: React.CSSProperties;
-  overlayStyle?: React.CSSProperties;
+  popupStyle?: React.CSSProperties;
   placement?: TooltipPlacement;
   builtinPlacements?: Object;
   hidden?: boolean;
