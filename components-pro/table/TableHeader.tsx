@@ -11,7 +11,7 @@ import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import TableContext from './TableContext';
 import { ColumnLock } from './enum';
 import DataSet from '../data-set/DataSet';
-import { getColumnKey, getColumnLock, isStickySupport } from './utils';
+import { getColumnKey, getColumnLock, getHeight, isStickySupport } from './utils';
 import ColumnGroup from './ColumnGroup';
 import autobind from '../_util/autobind';
 import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow';
@@ -35,8 +35,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   static contextType = TableContext;
 
   node: HTMLTableSectionElement | null;
-
-  columnDeep: number = 0;
 
   @autobind
   saveRef(node) {
@@ -184,6 +182,14 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
         {trs}
       </thead>
     );
+  }
+
+  getHeight(): number {
+    const { node } = this;
+    if (node) {
+      return getHeight(node);
+    }
+    return 0;
   }
 
   getTableHeaderRows(

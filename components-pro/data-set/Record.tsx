@@ -106,6 +106,10 @@ export default class Record {
 
   @observable editing?: boolean;
 
+  @observable pending?: boolean;
+
+  @observable childrenLoaded?: boolean;
+
   @observable state: ObservableMap<string, any>;
 
   @computed

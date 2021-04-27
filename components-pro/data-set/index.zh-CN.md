@@ -185,6 +185,8 @@ title: DataSet
 | dirty          | 数据是否发生变更， 包含级联数据源是否变更       | boolean                   |
 | cascadeParent  | 级联父数据                                      | Record\| undefined        |
 | index          | 在数据源中的索引                                | number                    |
+| editing        | 编辑中状态                                | boolean                    |
+| pending        | 等待中状态， 包括树形子数据异步加载                                | boolean                    |
 
 ### Record Methods
 

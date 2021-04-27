@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { FunctionComponent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { action, toJS } from 'mobx';
+import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
 import Collapse from 'choerodon-ui/lib/collapse';
 import CollapsePanel from 'choerodon-ui/lib/collapse/CollapsePanel';
@@ -15,7 +15,6 @@ import { $l } from '../../locale-context';
 import Button from '../../button/Button';
 import { ButtonColor, FuncType } from '../../button/enum';
 import { Size } from '../../core/enum';
-import { Customized } from '../Table';
 import { mergeDefaultProps, normalizeColumns } from '../TableStore';
 import { ModalProps } from '../../modal/Modal';
 import Form from '../../form/Form';
@@ -42,42 +41,55 @@ function normalizeColumnsToTreeData(columns: ColumnProps[]) {
   }), []);
 }
 
+function diff(height: number = 0): number {
+  if (typeof document !== 'undefined') {
+    return document.documentElement.clientHeight - height;
+  }
+  return 0;
+}
+
+const HEIGHT_CHANGE_KEY = '__heightChange__';
+
 export interface CustomizationSettingsProps {
-  modal?: { handleOk: Function, update: (props: ModalProps) => void };
+  modal?: { handleOk: Function, handleCancel: Function, update: (props: ModalProps) => void };
 }
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = observer((props) => {
   const { modal } = props;
-  const { update, handleOk } = modal || { update: noop, handleOk: noop };
+  const { update, handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { tableStore } = useContext(TableContext);
-  const { originalColumns, prefixCls, customized, totalHeight } = tableStore;
-  const [heightType, setHeightType] = useState(tableStore.heightType);
+  const { originalColumns, prefixCls, customized } = tableStore;
   const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(originalColumns);
-  const customizedRef = useRef<Customized | null>(null);
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
-      { heightType, height: totalHeight, heightDiff: totalHeight ? document.documentElement.clientHeight - totalHeight : undefined },
+      {
+        heightType: tableStore.heightType,
+        height: tableStore.totalHeight,
+        heightDiff: diff(tableStore.totalHeight),
+      },
     ],
     events: {
       update({ record, name, value }) {
-        const { current } = customizedRef;
-        if (current) {
-          current[name] = value;
-          if (name === 'heightType') {
-            if (value === TableHeightType.fixed) {
-              current.height = record.get('height');
-            } else if (value === TableHeightType.flex) {
-              current.heightDiff = record.get('heightDiff');
-            }
-          } else if (name === 'height') {
-            current.heightType = TableHeightType.fixed;
-          } else if (name === 'heightDiff') {
-            current.heightType = TableHeightType.flex;
+        record.setState(HEIGHT_CHANGE_KEY, (record.getState(HEIGHT_CHANGE_KEY) || 0) + 1);
+        const { tempCustomized } = tableStore;
+        if (tempCustomized) {
+          set(tempCustomized, name, value);
+          if (name === 'height' && record.get('heightType') === TableHeightType.fixed) {
+            record.set('heightDiff', diff(value));
+            set(tempCustomized, 'heightType', TableHeightType.fixed);
+          } else if (name === 'heightDiff' && record.get('heightType') === TableHeightType.flex) {
+            record.set('height', diff(value));
+            set(tempCustomized, 'heightType', TableHeightType.flex);
           }
+        }
+        record.setState(HEIGHT_CHANGE_KEY, record.getState(HEIGHT_CHANGE_KEY) - 1);
+        if (record.getState(HEIGHT_CHANGE_KEY) === 0) {
+          tableStore.node.handleHeightTypeChange();
+          record.setState(HEIGHT_CHANGE_KEY, undefined);
         }
       },
     },
-  }).current!, [heightType, totalHeight, customizedRef]);
+  }).current!, [tableStore]);
   const columnDataSet = useMemo(() => new DataSet({
     data: normalizeColumnsToTreeData(customizedColumns),
     paging: false,
@@ -95,33 +107,37 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
             records.forEach(child => child.set(name, value));
           }
         }
-        const { current } = customizedRef;
-        if (current) {
+        const { tempCustomized } = tableStore;
+        if (tempCustomized) {
           const { key } = record;
-          if (!current.columns[key]) {
-            current.columns[key] = {};
+          if (!tempCustomized.columns[key]) {
+            tempCustomized.columns[key] = {};
           }
-          current.columns[key][name] = value;
+          tempCustomized.columns[key][name] = value;
         }
       },
     },
-  }), [customizedColumns, customizedRef]);
+  }), [customizedColumns, tableStore]);
   const handleRestore = useCallback(action(() => {
     const { props: { columns, children }, originalHeightType } = tableStore;
     setCustomizedColumns(columns
       ? mergeDefaultProps(columns)
       : normalizeColumns(children));
-    setHeightType(originalHeightType);
-    customizedRef.current = {
+    tableStore.tempCustomized = {
       columns: {},
     };
-  }), [customizedRef, tableStore]);
+    tableStore.node.handleHeightTypeChange(true);
+    tableRecord.init({
+      heightType: originalHeightType,
+      height: tableStore.totalHeight,
+      heightDiff: diff(tableStore.totalHeight),
+    });
+  }), [tableRecord, tableStore, tableRecord]);
   const handleOption = useCallback(() => ({
     className: `${prefixCls}-customization-option`,
   }), [prefixCls]);
   const handleCollapseChange = useCallback(action((key: string | string[]) => {
-    const keys: string[] = [];
-    tableStore.customizedActiveKey = keys.concat(key);
+    tableStore.customizedActiveKey = ([] as string[]).concat(key);
   }), [tableStore]);
   useEffect(() => {
     if (update) {
@@ -143,19 +159,30 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
       });
     }
   }, [update, prefixCls, handleRestore]);
-  useEffect(() => {
-    customizedRef.current = toJS(customized);
-  }, [customizedRef]);
+  useEffect(action(() => {
+    tableStore.tempCustomized = {
+      height: tableStore.totalHeight,
+      heightDiff: diff(tableStore.totalHeight),
+      ...toJS(customized),
+    };
+  }), [tableStore]);
   useEffect(() => {
     if (handleOk) {
       handleOk(action(() => {
-        const { current } = customizedRef;
-        tableStore.saveCustomized(current);
+        const { tempCustomized } = tableStore;
+        tableStore.tempCustomized = { columns: {} };
+        tableStore.saveCustomized(tempCustomized);
         tableStore.initColumns();
         tableStore.node.handleHeightTypeChange();
       }));
     }
-  }, [handleOk, columnDataSet, customizedRef, tableStore]);
+    if (handleCancel) {
+      handleCancel(action(() => {
+        tableStore.tempCustomized = { columns: {} };
+        tableStore.node.handleHeightTypeChange();
+      }));
+    }
+  }, [handleOk, handleCancel, columnDataSet, tableStore]);
   const tableHeightType = tableRecord.get('heightType');
   return (
     <Collapse
@@ -187,6 +214,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
                 labelLayout={LabelLayout.none}
                 name="height"
                 disabled={tableHeightType !== TableHeightType.fixed}
+                step={1}
               />
             </Option>
             <Option value={TableHeightType.flex}>
@@ -201,6 +229,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
                 disabled={tableHeightType !== TableHeightType.flex}
                 showHelp={ShowHelp.tooltip}
                 help={$l('Table', 'flex_height_help')}
+                step={1}
               />
             </Option>
           </SelectBox>

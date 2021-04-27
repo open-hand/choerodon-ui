@@ -259,6 +259,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'drawer',
       'drawerOffset',
       'drawerTransitionName',
+      'transitionAppear',
       'afterClose',
       'okProps',
       'cancelProps',

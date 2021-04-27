@@ -54,10 +54,6 @@ export const EXPAND_KEY = '__expand-column__';
 
 export const CUSTOMIZED_KEY = '__customized-column__';
 
-export const PENDING_KEY = '__pending__';
-
-export const LOADED_KEY = '__loaded__';
-
 export type HeaderText = { name: string; label: string; };
 
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
@@ -294,6 +290,8 @@ export default class TableStore {
 
   @observable customized: Customized;
 
+  @observable tempCustomized: Customized;
+
   @observable loading?: boolean;
 
   @observable originalColumns: ColumnProps[];
@@ -387,6 +385,10 @@ export default class TableStore {
 
   @computed
   get heightType(): TableHeightType {
+    const tempHeightType = get(this.tempCustomized, 'heightType');
+    if (tempHeightType !== undefined) {
+      return tempHeightType;
+    }
     const { heightType } = this.customized;
     if (heightType !== undefined) {
       return heightType;
@@ -1064,6 +1066,7 @@ export default class TableStore {
       this.rowHighLight = false;
       this.customizedActiveKey = ['columns'];
       this.originalColumns = [];
+      this.tempCustomized = { columns: {} };
       this.customized = { columns: {} };
       this.setProps(node.props);
       if (this.customizable) {
@@ -1178,19 +1181,21 @@ export default class TableStore {
   }
 
   isRowPending(record: Record): boolean {
-    return record.getState(PENDING_KEY) === true;
+    return record.pending === true;
   }
 
+  @action
   setRowPending(record: Record, pending: boolean) {
-    record.setState(PENDING_KEY, pending);
+    record.pending = pending;
   }
 
   isRowLoaded(record: Record): boolean {
-    return record.getState(LOADED_KEY) === true;
+    return record.childrenLoaded === true;
   }
 
-  setRowLoaded(record: Record, pending: boolean) {
-    record.setState(LOADED_KEY, pending);
+  @action
+  setRowLoaded(record: Record, loaded: boolean) {
+    record.childrenLoaded = loaded;
   }
 
   isRowHover(record: Record): boolean {
