@@ -24,6 +24,7 @@ import {
   Lov,
   Tabs,
 } from 'choerodon-ui/pro';
+import { Link } from 'bisheng/router';
 
 const { Column } = Table;
 const { TabPane } = Tabs;
@@ -176,6 +177,7 @@ class App extends React.Component {
               <Column name="name" editor={editorRenderer} sortable />
               <Column name="age" editor sortable />
               <Column name="sex" editor width={150} />
+              <Column command={[<Link to="/components-pro/data-set-cn/">详情</Link>]} />
             </Table>
           </TabPane>
           <TabPane tab="Friends(F)">

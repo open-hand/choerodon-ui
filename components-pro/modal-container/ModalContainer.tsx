@@ -214,8 +214,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     return this;
   }
 
-  componentWillUpdate(nextProps) {
-    const { location } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { location } = prevProps;
     const { location: currentLocation } = this.props;
     if (location && currentLocation && location.pathname !== currentLocation.pathname) {
       ModalManager.clear();
