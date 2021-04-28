@@ -121,6 +121,14 @@ export default class TableCell extends Component<TableCellProps> {
     return undefined;
   }
 
+  @computed
+  get isInnerColumn(): boolean {
+    const {
+      column: { key },
+    } = this.props;
+    return key === DRAG_KEY || key === SELECTION_KEY;
+  }
+
   componentDidMount(): void {
     this.connect();
     const { currentEditor } = this;
@@ -493,7 +501,7 @@ export default class TableCell extends Component<TableCellProps> {
     );
   }
 
-  getInnerNode(prefixCls, command?: Commands[], textAlign?: ColumnAlign) {
+  getInnerNode(prefixCls, command?: Commands[], textAlign?: ColumnAlign, onCellStyle?: CSSProperties) {
     const {
       context: {
         tableStore,
@@ -595,6 +603,7 @@ export default class TableCell extends Component<TableCellProps> {
       <Output
         key="output"
         {...innerProps}
+        style={{...innerProps.style, ...onCellStyle}}
         className={innerClassName.join(' ')}
         record={record}
         renderer={this.getCellRenderer(command)}
@@ -619,13 +628,15 @@ export default class TableCell extends Component<TableCellProps> {
       tableStore,
     } = this.context;
     const { prefixCls, inlineEdit, pristine, node } = tableStore;
+    const tableColumnOnCell = getConfig('tableColumnOnCell');
     const { className, style, align, name, onCell, lock } = column;
     const command = this.getCommand();
     const field = name ? record.getField(name) : undefined;
     const cellPrefix = `${prefixCls}-cell`;
+    const columnOnCell = !this.isInnerColumn && (onCell || tableColumnOnCell);
     const cellExternalProps: HTMLProps<HTMLTableCellElement> =
-      typeof onCell === 'function'
-        ? onCell({
+      typeof columnOnCell === 'function'
+        ? columnOnCell({
           dataSet: record.dataSet!,
           record,
           column,
@@ -662,6 +673,8 @@ export default class TableCell extends Component<TableCellProps> {
       }
       return draggingStyle;
     };
+    // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
+    const onCellStyle =  !this.isInnerColumn && tableColumnOnCell === columnOnCell &&  typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined ;
     const td = (
       <td
         ref={intersectionRef}
@@ -672,7 +685,7 @@ export default class TableCell extends Component<TableCellProps> {
         {...(provided && provided.dragHandleProps)}
         style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...propsStyle }}
       >
-        {inView ? this.getInnerNode(cellPrefix, command, cellStyle.textAlign as ColumnAlign) : this.getInnerSimple(cellPrefix)}
+        {inView ? this.getInnerNode(cellPrefix, command, cellStyle.textAlign as ColumnAlign, onCellStyle) : this.getInnerSimple(cellPrefix)}
       </td>
     );
     return tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow ? (
