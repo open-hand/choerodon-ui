@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>DataSet`：修复新建 defaultValue 对象校验无效问题。
 - 🐞 `<pro>FormField`：修复值没变更时不会校验的问题。
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
+- 🐞 `<pro>DataSet`：修复 create 方法传递带有 bind 属性的字段值且目标字段有默认值， 则目标字段会直接取默认值的问题。
 
 ## 1.3.1
 

@@ -210,6 +210,9 @@ class App extends React.Component {
           // 在发送请求之前对数据进行处理
           return { v: 2 };
         },
+        defaultValue: {
+          code: 'HR.EMPLOYEE_STATUS',
+        },
       },
       {
         name: 'code.v',
@@ -240,6 +243,7 @@ class App extends React.Component {
         dynamicProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码描述',
+        defaultValue: '员工状态2',
       },
       {
         name: 'code_select',
@@ -334,7 +338,7 @@ class App extends React.Component {
     console.log(userDs.toJSONData());
     console.log(userDs.toJSONData(true));
     console.log(userDs.toJSONData(false, true));
-    userDs.create({ other: { enemy: [{}, {}] } });
+    userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx' });
   };
 
   removeAllData = () => {

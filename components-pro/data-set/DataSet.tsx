@@ -1209,11 +1209,27 @@ export default class DataSet extends EventManager {
       data = {};
     }
     const record = new Record(data, this);
+    const objectFieldsList: [string, any][][] = [];
+    const normalFields: [string, any][] = [];
     [...record.fields.entries()].forEach(([name, field]) => {
       const defaultValue = field.get('defaultValue');
-      const value = ObjectChainValue.get(data, name);
-      if (isNil(value) && !isNil(defaultValue)) {
-        record.init(name, toJS(defaultValue));
+      if (!isNil(defaultValue)) {
+        const type = field.get('type');
+        if (type === FieldType.object) {
+          const level = name.split('.').length - 1;
+          objectFieldsList[level] = (objectFieldsList[level] || []).concat([[name, defaultValue]]);
+        } else {
+          normalFields.push([name, defaultValue]);
+        }
+      }
+    });
+    [...objectFieldsList, normalFields].forEach((items) => {
+      if (items) {
+        items.forEach(([name, defaultValue]) => {
+          if (isNil(record.get(name))) {
+            record.init(name, toJS(defaultValue));
+          }
+        });
       }
     });
     if (isNumber(dataIndex)) {
