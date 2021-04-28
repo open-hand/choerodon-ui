@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 lovTableCustomizable 属性。
+- 🌟 `<pro>Modal`：新增 closeOnLocationChange 属性。
 - 🌟 `<pro>Table`: 个性化新增高度设置。
 - 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 💄 `<pro>Table`: 优化 professionalBar 展开收起 autoHeight 未响应的问题。

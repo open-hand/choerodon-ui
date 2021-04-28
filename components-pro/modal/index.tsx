@@ -39,7 +39,7 @@ Modal.warning = function (props) {
   });
 };
 Modal.destroyAll = function destroyAllFn() {
-  ModalManager.containerInstances.forEach(instance => instance.clear());
+  ModalManager.clear();
 };
 
 export default Modal;

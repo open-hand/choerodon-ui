@@ -49,6 +49,7 @@ title: Modal
 | autoCenter	| 是否居中显示	| boolean	| false |
 | contentStyle | 内容样式 | object |  |
 | bodyStyle | 内容体样式 | object |  |
+| closeOnLocationChange | 路由变更时自动关闭, 注意必须要有一个设置了 location 的 ModalProvider。由 ModalProvider 提供的 Modal， 即使 closeOnLocationChange 设为 false 也会因其 ModalProvider 的销毁而被强制关闭  | boolean | true |
 
 <style>
 .code-box-demo .c7n-pro-btn {

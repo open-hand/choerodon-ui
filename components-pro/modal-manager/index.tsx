@@ -9,7 +9,7 @@ export interface IModalContainer {
   maskHidden: boolean;
   drawerOffsets: DrawerOffsets;
 
-  clear();
+  clear(closeByLocationChange?: boolean);
 
   mergeModals(modals: ModalProps[]);
 }
@@ -19,7 +19,7 @@ export type ModalManagerType = {
   addInstance: (instance: IModalContainer) => void;
   removeInstance: (instance: IModalContainer) => void;
   getKey: () => string;
-  clear: () => void;
+  clear: (closeByLocationChange?: boolean) => void;
   mousePositionEventBound: boolean;
   mousePosition?: MousePosition;
   defaultBodyStyle?: { overflow; paddingRight };
@@ -51,9 +51,9 @@ function getKey(): string {
   return KeyGen.next().value;
 }
 
-function clear() {
+function clear(closeByLocationChange) {
   containerInstances.forEach((instance) => {
-    instance.clear();
+    instance.clear(closeByLocationChange);
   });
 }
 
