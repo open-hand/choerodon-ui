@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed that when the value type is object, select all and reverse the wrong assignment.
 - 🐞 `<pro>TextField`: Fixed a conflict in the title display of the form when the title of the form is float and the field is range.
 - 🐞 `<pro>DataSet`：Fixed the invalid verification of the newly created defaultValue object.
+- 🐞 `<pro>FormField`: Fix the problem that the value will not be verified when the value is not changed.
 
 ## 1.3.1
 

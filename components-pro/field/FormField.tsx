@@ -639,7 +639,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   renderFloatLabel(): ReactNode {
-    if (this.hasFloatLabel && (this.isFocus || !this.range || !this.isEmpty() )) {
+    if (this.hasFloatLabel && (this.isFocus || !this.range || !this.isEmpty())) {
       const label = this.getLabel();
       if (label) {
         const prefixCls = getProPrefixCls(FIELD_SUFFIX);
@@ -1052,17 +1052,20 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           format,
         });
       }
+      const updateAndValidate = () => {
+        if (dataSet && name) {
+          (this.record || dataSet.create({}, dataIndex)).set(name, value);
+        } else {
+          this.validate(value);
+        }
+      };
       // 转成实际的数据再进行判断
       if (!this.compare(old, toJS(value))) {
         const { formNode } = this.context;
         const storedValue = this.value;
         const beforeChange = onBeforeChange(value, old, formNode);
         const resolveCallback = action(() => {
-          if (dataSet && name) {
-            (this.record || dataSet.create({}, dataIndex)).set(name, value);
-          } else {
-            this.validate(value);
-          }
+          updateAndValidate();
           onChange(value, old, formNode);
           this.afterSetValue();
         });
@@ -1076,6 +1079,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           resolveCallback();
           this.value = value;
         }
+      } else {
+        updateAndValidate();
       }
     }
   }
