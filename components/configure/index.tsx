@@ -21,6 +21,7 @@ import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import { Renderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
+import { onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { SpinProps } from '../spin';
 import { PanelProps } from '../collapse';
 import { Size } from '../_util/enum';
@@ -105,6 +106,7 @@ export type Config = {
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;
   tableDefaultRenderer?: Renderer;
+  tableColumnOnCell?: (props: onCellProps) => object;
   tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;

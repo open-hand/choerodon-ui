@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovTableCustomizable` property.
+- 🌟 `configure`: Added `lovTableCustomizable`, `tableColumnOnCell` properties.
 - 🌟 `<pro>Modal`: Added `closeOnLocationChange` property.
 - 🌟 `<pro>Table`: Added height settings for customization.
 - 💄 `<pro>Table`: Height style supports calc attribute.
