@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovTableCustomizable` property.
+- 🌟 `configure`: Added `lovTableCustomizable`, `tableColumnOnCell` property.
 - 🌟 `<pro>Table`: Added height settings for customization.
 - 💄 `<pro>Table`: Height style supports calc attribute.
 - 💄 `<pro>Table`: Optimized professionalBar Expand Collapse `autoHeight` does not respond to the problem.
