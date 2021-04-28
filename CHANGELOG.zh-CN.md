@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Field`: 修复 getText 获取对象值报错。
 - 🐞 `<pro>Select`: 修复值类型为对象时，全选反选错误的赋值。
 - 🐞 `<pro>TextField`: 修复 form 标题为浮动时候字段为 range 配置出现的标题显示冲突。
+- 🐞 `<pro>DataSet`：修复新建 defaultValue 对象校验无效问题。
 
 ## 1.3.1
 

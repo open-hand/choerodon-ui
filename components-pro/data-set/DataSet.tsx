@@ -1212,7 +1212,7 @@ export default class DataSet extends EventManager {
     [...record.fields.entries()].forEach(([name, field]) => {
       const defaultValue = field.get('defaultValue');
       const value = ObjectChainValue.get(data, name);
-      if (value === undefined && defaultValue !== undefined) {
+      if (isNil(value) && !isNil(defaultValue)) {
         record.init(name, toJS(defaultValue));
       }
     });

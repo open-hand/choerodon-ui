@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Field`: Fixed getText getting object value error.
 - 🐞 `<pro>Select`: Fixed that when the value type is object, select all and reverse the wrong assignment.
 - 🐞 `<pro>TextField`: Fixed a conflict in the title display of the form when the title of the form is float and the field is range.
+- 🐞 `<pro>DataSet`：Fixed the invalid verification of the newly created defaultValue object.
 
 ## 1.3.1
 
