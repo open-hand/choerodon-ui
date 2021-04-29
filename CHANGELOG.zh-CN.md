@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 lovTableCustomizable, tableColumnOnCell 属性。
+- 🌟 `<pro>Modal`：新增 closeOnLocationChange 属性。
 - 🌟 `<pro>Table`: 个性化新增高度设置。
 - 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 💄 `<pro>Table`: 优化 professionalBar 展开收起 autoHeight 未响应的问题。
@@ -26,6 +27,8 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复 form 标题为浮动时候字段为 range 配置出现的标题显示冲突。
 - 🐞 `<pro>DataSet`：修复新建 defaultValue 对象校验无效问题。
 - 🐞 `<pro>FormField`：修复值没变更时不会校验的问题。
+- 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
+- 🐞 `<pro>DataSet`：修复 create 方法传递带有 bind 属性的字段值且目标字段有默认值， 则目标字段会直接取默认值的问题。
 
 ## 1.3.1
 
@@ -50,7 +53,6 @@ timeline: true
 - 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 的错误限制。
 - 🐞 `<pro>DataSet.Field`：修复 maxLength 和 minLength 对日期和数字类型的错误限制及校验。
 - 🐞 `<pro>DataSet.Field`：修复 dynamicProps.lovPara 和 cascadeMap 同时使用时卡顿的问题。
-- 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
 - 🐞 `<pro>Table`：修复 rowHeight:auto 时，输入数字不会换行显示的问题。
 - 🐞 `<pro>Tooltip`：修复第一次显示时位置有偏移的问题。
 

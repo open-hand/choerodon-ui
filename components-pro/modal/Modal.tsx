@@ -92,6 +92,7 @@ export interface ModalProps extends ViewComponentProps {
   mousePosition?: MousePosition | null;
   contentStyle?: CSSProperties;
   bodyStyle?: CSSProperties;
+  closeOnLocationChange?: boolean;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -129,6 +130,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     mousePosition: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
     contentStyle: PropTypes.object,
     bodyStyle: PropTypes.object,
+    closeOnLocationChange: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -144,6 +146,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     drawer: false,
     drawerOffset: 150,
     autoFocus: true,
+    closeOnLocationChange: true,
   };
 
   static key;

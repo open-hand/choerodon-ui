@@ -1,4 +1,4 @@
-import { action, computed, get, observable, ObservableMap, remove, runInAction, set, toJS, isObservableObject } from 'mobx';
+import { action, computed, get, isObservableObject, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
 import isFunction from 'lodash/isFunction';
@@ -18,7 +18,7 @@ import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, F
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { getLimit, processValue, getBaseType } from './utils';
+import { getBaseType, getLimit, processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -27,7 +27,6 @@ import PromiseQueue from '../_util/PromiseQueue';
 import { LovConfig } from '../lov/Lov';
 import { TransportHookProps } from './Transport';
 import isSameLike from '../_util/isSameLike';
-import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getDateFormatByField } from '../field/utils';
 import { getLovPara } from '../stores/utils';
@@ -724,7 +723,7 @@ export default class Field {
       }
     }
     if (textField && isObject(value)) {
-      // 如果要用get(object, key) 需要保证可观察  
+      // 如果要用get(object, key) 需要保证可观察
       const observerValue = isObservableObject(value) ? value : observable.object(value);
       return get(observerValue, textField);
     }
@@ -1007,19 +1006,19 @@ export default class Field {
     this.lastDynamicProps[propsName] = newProp;
   }
 
-  private handlePropChange(propsName, newProp, oldProp) {
-    if (propsName === 'bind' && this.type !== FieldType.intl) {
-      const { record } = this;
-      if (record && !this.dirty) {
-        if (newProp) {
-          record.init(newProp, ObjectChainValue.get(record.data, oldProp || this.name));
-        }
-        if (oldProp) {
-          record.init(oldProp, undefined);
-        }
-      }
-      return;
-    }
+  private handlePropChange(propsName, _newProp, _oldProp) {
+    // if (propsName === 'bind' && this.type !== FieldType.intl) {
+    //   const { record } = this;
+    //   if (record && !this.dirty) {
+    //     if (newProp && oldProp) {
+    //       record.init(newProp, record.get(oldProp));
+    //     }
+    //     if (oldProp) {
+    //       record.init(oldProp, undefined);
+    //     }
+    //   }
+    //   return;
+    // }
     if (
       [
         'type',

@@ -20,10 +20,13 @@ import {
   TextField,
   DateTimePicker,
   Modal,
+  ModalProvider,
+  injectModal,
   Button,
   Lov,
   Tabs,
 } from 'choerodon-ui/pro';
+import { Link } from 'bisheng/router';
 
 const { Column } = Table;
 const { TabPane } = Tabs;
@@ -40,6 +43,7 @@ function femaleFilter(record) {
   return record.get('sex') === 'F';
 }
 
+@injectModal
 class App extends React.Component {
   friendsDs = new DataSet({
     dataToJSON: 'normal',
@@ -160,9 +164,11 @@ class App extends React.Component {
   });
 
   openModal = record => {
+    const { Modal: modal } = this.props;
     let isCancel = false;
-    Modal.open({
+    modal.open({
       drawer: true,
+      closeOnLocationChange: false,
       width: 600,
       children: (
         <Tabs>
@@ -176,6 +182,7 @@ class App extends React.Component {
               <Column name="name" editor={editorRenderer} sortable />
               <Column name="age" editor sortable />
               <Column name="sex" editor width={150} />
+              <Column command={[<Link to="/components-pro/data-set-cn/">详情</Link>]} />
             </Table>
           </TabPane>
           <TabPane tab="Friends(F)">
@@ -187,6 +194,7 @@ class App extends React.Component {
           </TabPane>
         </Tabs>
       ),
+      onOk: async () => await Modal.confirm('ok?') === 'ok',
       onCancel: () => (isCancel = true),
       afterClose: () => record && isCancel && this.userDs.remove(record),
     });
@@ -281,5 +289,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, mountNode);
+ReactDOM.render(<ModalProvider><App /></ModalProvider>, mountNode);
 ```

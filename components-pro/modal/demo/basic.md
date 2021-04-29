@@ -58,6 +58,7 @@ const App = () => {
       okText: '确定',
       maskClosable: 'dblclick',
       okProps: { disabled: true },
+      closeOnLocationChange: false,
     });
   }, [Modal]);
 
