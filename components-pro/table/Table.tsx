@@ -732,7 +732,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   scrollPosition: ScrollPosition;
 
-  refSpin: HTMLDivElement | null = null;
+  refSpin: HTMLDivElement | null;
 
   get currentRow(): HTMLTableRowElement | null {
     const { tableStore: { prefixCls } } = this;
@@ -753,6 +753,11 @@ export default class Table extends DataSetComponent<TableProps> {
     return this.element.querySelector(
       `.${prefixCls}-row:last-child`,
     ) as HTMLTableRowElement | null;
+  }
+
+  @autobind
+  saveVirtualSpinRef(node: HTMLDivElement | null) {
+    this.refSpin = node;
   }
 
   @autobind
@@ -1358,7 +1363,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 {
                   virtual && virtualSpin && (
                     <div
-                      ref={(node) => this.refSpin = node}
+                      ref={this.saveVirtualSpinRef}
                       style={{ display: 'none' }}
                     >
                       <Spin
@@ -1451,7 +1456,10 @@ export default class Table extends DataSetComponent<TableProps> {
    * 滚动结束隐藏spin
    */
   setSpin = debounce(() => {
-    this.refSpin!.style.display = 'none';
+    const { refSpin } = this;
+    if (refSpin) {
+      refSpin.style.display = 'none';
+    }
   }, 300);
 
   handleBodyScrollTop(e, currentTarget) {
@@ -1481,9 +1489,9 @@ export default class Table extends DataSetComponent<TableProps> {
       if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
         fixedColumnsBodyRight.scrollTop = scrollTop;
       }
-
-      if (virtual) {
-        this.refSpin!.style.display = 'block';
+      const { refSpin } = this;
+      if (refSpin) {
+        refSpin.style.display = 'block';
         this.setSpin();
       }
       this.tableStore.setLastScrollTop(scrollTop);
