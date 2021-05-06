@@ -37,7 +37,12 @@ export default class IntlField extends TextField<IntlFieldProps> {
     if (!this.modal) {
       const { modalProps, maxLengths } = this.props;
       const { record, lang, name, element } = this;
-      const maxLengthList = { ...maxLengths, [lang]: element.maxLength };
+      const { supports } = localeContext;
+      const maxLengthList = {};
+      Object.keys(supports).map(key => {
+        maxLengthList[key] = maxLengths && key !== lang ? maxLengths[key] || element.maxLength : element.maxLength;
+        return null;
+      });
       if (record) {
         this.setLoading(true);
         try {

@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>DataSet`：Fixed the invalid verification of the newly created defaultValue object.
 - 🐞 `<pro>FormField`: Fix the problem that the value will not be verified when the value is not changed.
 - 🐞 `<pro>Modal`: Fix some abnormal behaviors of Modal which not provided by ModalProvider.
+- 🐞 `<pro>IntlField`: Fixed the `maxLengths` attribute, the length language is not set separately and follows the field attribute configuration.
 - 🐞 `<pro>DataSet`: Fix the problem that if the create method passes the field value with the bind attribute and the target field has a default value, the target field will directly take the default value.
 
 ## 1.3.1
