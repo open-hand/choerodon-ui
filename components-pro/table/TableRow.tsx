@@ -343,7 +343,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       if (editor && (isStickySupport() || getColumnLock(editor.props.column.lock) === getColumnLock(lock))) {
         const cell = findCell(tableStore, getColumnKey(editor.props.column), lock);
         if (cell) {
-          defer(() => cell.focus())
+          defer(() => cell.focus());
         }
       }
     }
@@ -565,15 +565,12 @@ export default class TableRow extends Component<TableRowProps, any> {
     const {
       prefixCls,
       rowHeight,
-      overflowX,
       highLightRow,
       selectedHighLightRow,
       mouseBatchChooseIdList,
       mouseBatchChooseState,
       dragColumnAlign,
       rowDraggable,
-      totalLeafColumnsWidth,
-      width,
       props: { onRow, rowRenderer, selectionMode },
     } = tableStore;
     const { key, id } = record;
@@ -624,7 +621,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       disabled,
       'data-index': id,
     };
-    if (!isStickySupport() && overflowX) {
+    if (!isStickySupport() && tableStore.overflowX) {
       rowProps.onMouseEnter = this.handleMouseEnter;
       rowProps.onMouseLeave = this.handleMouseLeave;
     }
@@ -644,7 +641,10 @@ export default class TableRow extends Component<TableRowProps, any> {
     }
     if (rowDraggable && provided) {
       Object.assign(rowProps, provided.draggableProps);
-      rowProps.style = { ...provided.draggableProps.style, ...rowExternalProps.style, width: Math.max(totalLeafColumnsWidth, width) };
+      rowProps.style = {
+        ...provided.draggableProps.style, ...rowExternalProps.style,
+        width: Math.max(tableStore.totalLeafColumnsWidth, tableStore.width),
+      };
       if (!dragColumnAlign) {
         rowProps.style.cursor = 'move';
         Object.assign(rowProps, provided.dragHandleProps);

@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import omit from 'lodash/omit';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { $l } from '../locale-context';
 import Record from '../data-set/Record';
@@ -59,20 +58,24 @@ export default class TransferList extends Select<TransferListProps> {
     return undefined;
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), [
-      'type',
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'autoComplete',
-      'ref',
-      'body',
       'footer',
       'header',
       'selected',
-      'onChange',
       'onSelect',
       'onSelectAll',
-      'onKeyDown',
     ]);
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
+    delete otherProps.ref;
+    delete otherProps.type;
+    delete otherProps.onChange;
+    delete otherProps.onKeyDown;
+    return otherProps;
   }
 
   getObservableProps(props, context) {
@@ -113,7 +116,7 @@ export default class TransferList extends Select<TransferListProps> {
     if (multiple) {
       return (
         <ObserverCheckBox
-          disabled={this.isDisabled()}
+          disabled={this.disabled}
           onChange={this.handleSelectAllChange}
           onFocus={stopPropagation}
           checked={!!length && length === selectedLength}
@@ -179,7 +182,8 @@ export default class TransferList extends Select<TransferListProps> {
     });
   }
 
-  removeLastValue() {}
+  removeLastValue() {
+  }
 
   @autobind
   handleBlur(e) {

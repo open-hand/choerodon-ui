@@ -60,9 +60,13 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     this.hidden = hidden;
   }
 
+  getPrefixCls() {
+    const { prefixCls } = this.props;
+    return `${prefixCls}-columns-chooser`;
+  }
+
   render() {
-    const { prefixCls: rootPrefixCls } = this.props;
-    const prefixCls = `${rootPrefixCls}-columns-chooser`;
+    const prefixCls = this.getPrefixCls();
     return (
       <div
         className={prefixCls}
@@ -72,7 +76,7 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
       >
         <Dropdown
           placement={Placements.bottomRight}
-          overlay={this.getMenu(prefixCls)}
+          overlay={this.getMenu}
           hidden={this.hidden}
           onHiddenChange={this.handleHiddenChange}
         >
@@ -105,7 +109,9 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     value.hidden = true;
   }
 
-  getMenu(prefixCls) {
+  @autobind
+  getMenu() {
+    const prefixCls = this.getPrefixCls();
     const {
       tableStore: { leafColumns, dataSet },
     } = this.context;

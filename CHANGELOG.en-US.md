@@ -18,6 +18,13 @@ timeline: true
 - 🌟 `configure`: Added `lovTableCustomizable`, `tableColumnOnCell` properties.
 - 🌟 `<pro>Modal`: Added `closeOnLocationChange` property.
 - 🌟 `<pro>Table`: Added height settings for customization.
+- 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
+- 💄 `Dropdown`: The `overlay` property supports hook functions.
+- 💄 `Popover`: The `title` and `content` attributes support hook functions.
+- 💄 `Popconfirm`: The `title` attribute supports hook functions.
+- 💄 `<pro>Tooltip`: The `title` and `overlay` attributes support hook functions.
+- 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
+- 💄 `<pro>Table`: Optimize the performance.
 - 💄 `<pro>Table`: Height style supports calc attribute.
 - 💄 `<pro>Table`: Optimized professionalBar Expand Collapse `autoHeight` does not respond to the problem.
 - 💄 `<pro>Select`: Optimized the issue of pop-up drop-down automatically when clicking to clear.

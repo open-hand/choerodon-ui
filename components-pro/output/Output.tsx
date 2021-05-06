@@ -1,9 +1,8 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { computed, isArrayLike } from 'mobx';
+import { isArrayLike } from 'mobx';
 import isPlainObject from 'lodash/isPlainObject';
 import isNil from 'lodash/isNil';
-import omit from 'lodash/omit';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
@@ -24,8 +23,7 @@ export default class Output extends FormField<OutputProps> {
     suffixCls: 'output',
   };
 
-  @computed
-  get editable(): boolean {
+  isEditable(): boolean {
     return false;
   }
 
@@ -37,8 +35,10 @@ export default class Output extends FormField<OutputProps> {
   handleChange() {
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), ['name']);
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'name',
+    ]);
   }
 
   getValueKey(value) {
@@ -67,7 +67,7 @@ export default class Output extends FormField<OutputProps> {
       return <ObserverCheckBox disabled checked={value === field.get(BooleanValue.trueValue)} />;
     }
     const result = super.defaultRenderer({ text, repeat, maxTagTextLength });
-    return isEmpty(result) ? getConfig('renderEmpty')('Output'): result;
+    return isEmpty(result) ? getConfig('renderEmpty')('Output') : result;
   }
 
   getRenderedValue(): ReactNode {
@@ -90,7 +90,8 @@ export default class Output extends FormField<OutputProps> {
     if (currency) {
       return this.renderCurrency(true);
     }
-    return this.getTextNode() === '' ? getConfig('tableDefaultRenderer') : this.getTextNode();
+    const textNode = this.getTextNode();
+    return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;
   }
 
   renderWrapper(): ReactNode {

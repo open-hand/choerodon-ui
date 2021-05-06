@@ -49,11 +49,13 @@ function contains(root, n) {
   return false;
 }
 
+export type RenderFunction = (props?: { trigger?: ReactNode }) => React.ReactNode;
+
 export interface TriggerProps extends ElementProps {
   action?: Action[];
   showAction?: ShowAction[];
   hideAction?: HideAction[];
-  popupContent?: ReactNode | ((props: any) => ReactNode);
+  popupContent?: ReactNode | RenderFunction;
   popupCls?: string;
   popupStyle?: CSSProperties;
   popupHidden?: boolean;
@@ -65,6 +67,7 @@ export interface TriggerProps extends ElementProps {
   onPopupAnimateEnter?: (key: Key | null) => void;
   onPopupAnimateLeave?: (key: Key | null) => void;
   onPopupAnimateEnd?: (key: Key | null, exists: boolean) => void;
+  onPopupHiddenBeforeChange?: (hidden: boolean) => boolean;
   onPopupHiddenChange?: (hidden: boolean) => void;
   getRootDomNode?: () => Element | null | Text;
   getPopupStyleFromAlign?: (target: Node | Window, align: object) => object | undefined;
@@ -76,6 +79,7 @@ export interface TriggerProps extends ElementProps {
   mouseLeaveDelay?: number;
   transitionName?: string;
   defaultPopupHidden?: boolean;
+  forceRender?: boolean;
   popupClassName?: string;
   onMouseDown?: (event: React.MouseEvent<any, MouseEvent>) => void;
 }
@@ -99,7 +103,7 @@ export default class Trigger extends Component<TriggerProps> {
     hideAction: MobxPropTypes.arrayOrObservableArrayOf(
       PropTypes.oneOf([HideAction.blur, HideAction.mouseLeave, HideAction.click]),
     ),
-    popupContent: PropTypes.node,
+    popupContent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     popupCls: PropTypes.string,
     popupStyle: PropTypes.object,
     popupHidden: PropTypes.bool,
@@ -156,6 +160,8 @@ export default class Trigger extends Component<TriggerProps> {
 
   animateFrameId: number = 0;
 
+  calcContent?: ReactNode;
+
   @observable popupHidden?: boolean;
 
   @observable mounted?: boolean;
@@ -175,27 +181,25 @@ export default class Trigger extends Component<TriggerProps> {
     const newChildren = Children.map(children, child => {
       if (isValidElement(child)) {
         const newChildProps: any = {};
-        if (popup) {
-          if (this.isContextMenuToShow()) {
-            newChildProps.onContextMenu = this.handleEvent;
-          }
-          if (this.isClickToHide() || this.isClickToShow()) {
-            newChildProps.onClick = this.handleEvent;
-            newChildProps.onMouseDown = this.handleEvent;
-          }
-          if (this.isMouseEnterToShow()) {
-            newChildProps.onMouseEnter = this.handleEvent;
-          }
-          if (this.isMouseLeaveToHide()) {
-            newChildProps.onMouseLeave = this.handleEvent;
-          }
-          if (this.isFocusToShow() || this.isBlurToHide()) {
-            newChildProps.onFocus = this.handleEvent;
-            newChildProps.onBlur = this.handleEvent;
-          }
-          newChildProps.isClickScrollbar = this.isClickScrollbar;
-          newChildProps.popupHidden = this.popupHidden;
+        if (this.isContextMenuToShow()) {
+          newChildProps.onContextMenu = this.handleEvent;
         }
+        if (this.isClickToHide() || this.isClickToShow()) {
+          newChildProps.onClick = this.handleEvent;
+          newChildProps.onMouseDown = this.handleEvent;
+        }
+        if (this.isMouseEnterToShow()) {
+          newChildProps.onMouseEnter = this.handleEvent;
+        }
+        if (this.isMouseLeaveToHide()) {
+          newChildProps.onMouseLeave = this.handleEvent;
+        }
+        if (this.isFocusToShow() || this.isBlurToHide()) {
+          newChildProps.onFocus = this.handleEvent;
+          newChildProps.onBlur = this.handleEvent;
+        }
+        newChildProps.isClickScrollbar = this.isClickScrollbar;
+        newChildProps.popupHidden = this.popupHidden;
         return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
       }
       return child;
@@ -346,16 +350,22 @@ export default class Trigger extends Component<TriggerProps> {
       transitionName,
       getPopupContainer,
       onMouseDown = this.handlePopupMouseDown,
+      forceRender,
+      children,
     } = this.props;
     if (this.mounted || !getPopupContainer) {
-      if (popupContent) {
-        const visible = !this.popupHidden;
+      const hidden = this.popupHidden;
+      if (!hidden || this.popup || forceRender) {
         const mouseProps: any = {};
         if (this.isMouseEnterToShow()) {
           mouseProps.onMouseEnter = this.handlePopupMouseEnter;
         }
         if (this.isMouseLeaveToHide()) {
           mouseProps.onMouseLeave = this.handlePopupMouseLeave;
+        }
+        const { calcContent } = this;
+        if (calcContent) {
+          delete this.calcContent;
         }
         return (
           <Popup
@@ -364,7 +374,7 @@ export default class Trigger extends Component<TriggerProps> {
             transitionName={transitionName}
             className={classNames(`${prefixCls}-popup`, popupCls, popupClassName)}
             style={popupStyle}
-            hidden={!visible}
+            hidden={hidden}
             align={this.getPopupAlign()}
             onAlign={onPopupAlign}
             onMouseDown={onMouseDown}
@@ -379,7 +389,7 @@ export default class Trigger extends Component<TriggerProps> {
             getPopupContainer={getPopupContainer}
             {...mouseProps}
           >
-            {popupContent}
+            {calcContent || (typeof popupContent === 'function' ? popupContent({ trigger: children }) : popupContent)}
           </Popup>
         );
       }
@@ -438,15 +448,35 @@ export default class Trigger extends Component<TriggerProps> {
     }
   }
 
+  popupHiddenBeforeChange(hidden: boolean): boolean {
+    const { onPopupHiddenBeforeChange = noop } = this.props;
+    if (onPopupHiddenBeforeChange(hidden) === false) {
+      return false;
+    }
+    const { popupContent } = this.props;
+    if (typeof popupContent === 'function') {
+      const { children } = this.props;
+      const calcContent = popupContent({ trigger: children });
+      if (calcContent) {
+        this.calcContent = calcContent;
+        return true;
+      }
+      return false;
+    }
+    return !!popupContent;
+  }
+
   @mobxAction
-  setPopupHidden(hidden) {
+  setPopupHidden(hidden: boolean) {
     this.popupTask.cancel();
     if (this.popupHidden !== hidden) {
       const { popupHidden, onPopupHiddenChange = noop } = this.props;
-      if (popupHidden === undefined) {
-        this.popupHidden = hidden;
+      if (this.popupHiddenBeforeChange(hidden) !== false) {
+        if (popupHidden === undefined) {
+          this.popupHidden = hidden;
+        }
+        onPopupHiddenChange(hidden);
       }
-      onPopupHiddenChange(hidden);
     }
   }
 

@@ -1,11 +1,10 @@
-import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
+import { AriaAttributes, Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, computed, observable } from 'mobx';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
-import merge from 'lodash/merge';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -23,6 +22,7 @@ import localeContext from '../locale-context';
 export interface ViewComponentProps
   extends MouseEventComponentProps,
     KeyboardEventComponentProps,
+    AriaAttributes,
     ElementProps {
   /**
    * 组件id
@@ -312,6 +312,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     return localeContext.locale.lang;
   }
 
+  @computed
+  get disabled(): boolean {
+    return this.isDisabled();
+  }
+
   constructor(props, context) {
     super(props, context);
     this.setObservableProps(props, context);
@@ -322,15 +327,20 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   getMergedProps(props = {}) {
+    const wrapperProps = this.getWrapperProps(props);
+    const otherProps = this.getOtherProps();
     return {
-      ...merge(this.getWrapperProps(props), this.getOtherProps()),
-      className: this.getMergedClassNames(),
+      ...wrapperProps,
+      ...otherProps,
+      style: { ...wrapperProps.style, ...otherProps.style },
+      className: classNames(wrapperProps.className, otherProps.className),
     };
   }
 
   getObservableProps(props, _context: any) {
     return {
       lang: props.lang,
+      disabled: props.disabled,
     };
   }
 
@@ -347,9 +357,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     );
   }
 
-  getOtherProps() {
-    const { tabIndex, lang, style = {} } = this.props;
-    let otherProps: any = omit(this.props, [
+  getOmitPropsKeys(): string[] {
+    const keys: string[] = [
       'prefixCls',
       'suffixCls',
       'className',
@@ -361,9 +370,9 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       'onBlur',
       'children',
       'dataSet',
-    ]);
-    if (this.isDisabled()) {
-      otherProps = omit(otherProps, [
+    ];
+    if (this.disabled) {
+      return keys.concat([
         'onClick',
         'onMouseUp',
         'onMouseDown',
@@ -376,6 +385,15 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
         'onKeyPress',
         'onContextMenu',
       ]);
+    }
+    return keys;
+  }
+
+  getOtherProps() {
+    const { props, disabled } = this;
+    const { tabIndex, lang, style = {} } = props;
+    const otherProps: any = omit(props, this.getOmitPropsKeys());
+    if (disabled) {
       if (tabIndex !== undefined) {
         otherProps.tabIndex = -1;
       }
@@ -384,7 +402,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       otherProps.onBlur = this.handleBlur;
     }
     otherProps.ref = this.elementReference;
-    otherProps.disabled = this.isDisabled();
+    otherProps.disabled = disabled;
     otherProps.className = this.getClassName();
     otherProps.style = {};
     if (this.height) {
@@ -430,9 +448,9 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       `${prefixCls}-wrapper`,
       className,
       {
-        [`${prefixCls}-sm`]: size === 'small',
-        [`${prefixCls}-lg`]: size === 'large',
-        [`${prefixCls}-disabled`]: this.isDisabled(),
+        [`${prefixCls}-sm`]: size === Size.small,
+        [`${prefixCls}-lg`]: size === Size.large,
+        [`${prefixCls}-disabled`]: this.disabled,
         [`${prefixCls}-focused`]: this.useFocusedClassName() && this.isFocus,
       },
       ...args,
@@ -440,7 +458,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   isDisabled(): boolean {
-    const { disabled = false } = this.props;
+    const { disabled = false } = this.observableProps;
     return disabled;
   }
 
@@ -517,7 +535,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   componentWillMount() {
     const { tabIndex, autoFocus } = this.props;
-    if (!this.isDisabled() && autoFocus && (tabIndex === undefined || tabIndex > -1)) {
+    if (autoFocus && (tabIndex === undefined || tabIndex > -1) && !this.disabled) {
       defer(() => this.focus());
     }
   }

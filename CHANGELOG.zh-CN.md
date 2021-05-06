@@ -18,6 +18,13 @@ timeline: true
 - 🌟 `configure`: 新增 lovTableCustomizable, tableColumnOnCell 属性。
 - 🌟 `<pro>Modal`：新增 closeOnLocationChange 属性。
 - 🌟 `<pro>Table`: 个性化新增高度设置。
+- 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。
+- 💄 `Dropdown`: overlay 属性支持钩子函数。
+- 💄 `Popover`: title 和 content 属性支持钩子函数。
+- 💄 `Popconfirm`: title 属性支持钩子函数。
+- 💄 `<pro>Tooltip`: title 和 overlay 属性支持钩子函数。
+- 💄 `<pro>Dropdown`: overlay 属性支持钩子函数。
+- 💄 `<pro>Table`: 性能优化。
 - 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 💄 `<pro>Table`: 优化 professionalBar 展开收起 autoHeight 未响应的问题。
 - 💄 `<pro>Select`: 优化点击清空自动弹出下拉的问题。

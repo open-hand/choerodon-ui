@@ -31,11 +31,6 @@ export interface ButtonProps extends DataSetComponentProps {
    */
   color?: ButtonColor;
   /**
-   * 按钮类型
-   * @default 'button'
-   */
-  type?: ButtonType;
-  /**
    * 按钮是否是加载状态
    */
   loading?: boolean;
@@ -60,6 +55,19 @@ export interface ButtonProps extends DataSetComponentProps {
    * @default throttle
    */
   waitType?: WaitType;
+  /**
+   * 按钮类型
+   * @default 'button'
+   */
+  type?: ButtonType;
+  name?: string;
+  value?: any;
+  form?: string;
+  formAction?: string;
+  formEncType?: string;
+  formMethod?: string;
+  formNoValidate?: boolean;
+  formTarget?: string;
 }
 
 @observer
@@ -153,27 +161,17 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   getObservableProps(props, context) {
-    let loading = false;
-    if ('loading' in props) {
-      loading = props.loading;
-    }
     return {
       ...super.getObservableProps(props, context),
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
-      loading,
+      loading: 'loading' in props ? props.loading : this.observableProps ? this.loading : false,
       type: props.type,
+      disabled: context.disabled || props.disabled,
     };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    let loading = this.loading;
-    if ('loading' in nextProps) {
-      loading = nextProps.loading;
-    }
-    super.componentWillReceiveProps({
-      ...nextProps,
-      loading,
-    }, nextContext);
+    super.componentWillReceiveProps(nextProps, nextContext);
     const { wait, waitType } = this.props;
     if (wait !== nextProps.wait || waitType !== nextProps.waitType) {
       this.handleClickWait = this.getHandleClick(nextProps);
@@ -227,12 +225,11 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   isDisabled(): boolean {
-    const { disabled } = this.context;
-    return disabled || super.isDisabled() || this.loading;
+    return super.isDisabled() || this.loading;
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'icon',
       'funcType',
       'color',
@@ -240,7 +237,11 @@ export default class Button extends DataSetComponent<ButtonProps> {
       'wait',
       'waitType',
     ]);
-    if (!this.isDisabled()) {
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
+    if (!this.disabled) {
       otherProps.onClick = this.handleClickIfBubble;
     }
     return otherProps;
@@ -280,7 +281,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();
     return (
-      <Ripple disabled={this.isDisabled()}>
+      <Ripple disabled={this.disabled}>
         <Cmp {...(href ? omit(props, ['type']) : props)}>
           {buttonIcon}
           {hasString ? <span>{children}</span> : children}

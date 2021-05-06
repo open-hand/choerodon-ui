@@ -25,12 +25,12 @@ import { stopEvent } from '../_util/EventManager';
 import { ParamMatcher, SearchMatcher, Select, SelectProps } from '../select/Select';
 import { ColumnAlign, SelectionMode, TableQueryBarType } from '../table/enum';
 import { DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
-import { LovFieldType, ViewMode, SearchAction } from './enum';
+import { LovFieldType, SearchAction, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import { getLovPara } from '../stores/utils';
-import { TableQueryBarHook, TableProps } from '../table/Table';
+import { TableProps, TableQueryBarHook } from '../table/Table';
 import { FieldProps } from '../data-set/Field';
 
 export type Events = { [key: string]: Function };
@@ -199,7 +199,7 @@ export default class Lov extends Select<LovProps> {
       }
     }
     if (lovCode) {
-      const lovDataSet = lovStore.getLovDataSet(lovCode, field);
+      const lovDataSet = lovStore.getLovDataSet(lovCode, field, field && field.get('optionsProps'));
       if (lovDataSet) {
         return lovDataSet;
       }
@@ -388,7 +388,7 @@ export default class Lov extends Select<LovProps> {
 
   getWrapperProps() {
     return super.getWrapperProps({
-      onDoubleClick: this.handleOpenModal(),
+      onDoubleClick: (this.disabled || this.readOnly) ? undefined : this.handleOpenModal,
       // Support ued to distinguish between select and lov
       className: this.getWrapperClassNames(`${this.prefixCls}-lov`),
     });
@@ -450,11 +450,18 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   handleOpenModal() {
-    return this.isDisabled() || this.isReadOnly() ? undefined : this.openModal;
+    return this.openModal();
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), ['modalProps', 'noCache', 'tableProps', 'lovEvents', 'searchAction', 'fetchSingle']);
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'modalProps',
+      'noCache',
+      'tableProps',
+      'lovEvents',
+      'searchAction',
+      'fetchSingle',
+    ]);
   }
 
   getButtonProps() {
@@ -484,7 +491,7 @@ export default class Lov extends Select<LovProps> {
     const { suffix } = this.props;
     const icon = this.loading ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
     return this.wrapperSuffix(suffix || icon, {
-      onClick: this.handleOpenModal(),
+      onClick: (this.disabled || this.readOnly) ? undefined : this.handleOpenModal,
     });
   }
 
@@ -509,8 +516,8 @@ export default class Lov extends Select<LovProps> {
         <Button
           key="lov_button"
           {...this.getButtonProps()}
-          disabled={this.isDisabled()}
-          onClick={() => this.openModal()}
+          disabled={this.disabled}
+          onClick={this.handleOpenModal}
         >
           {children || this.getTextNode() || this.getPlaceholders()[0] || $l('Lov', 'choose')}
         </Button>,

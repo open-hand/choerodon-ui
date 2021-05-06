@@ -1079,6 +1079,12 @@ export default class TableStore {
     });
   }
 
+  isBuiltInColumn({ key }: ColumnProps) {
+    if (isString(key)) {
+      return [DRAG_KEY, SELECTION_KEY, ROW_NUMBER_KEY, CUSTOMIZED_KEY, EXPAND_KEY].includes(key);
+    }
+  }
+
   getColumnTooltip(column: ColumnProps): TableColumnTooltip {
     const { tooltip } = column;
     if (tooltip) {

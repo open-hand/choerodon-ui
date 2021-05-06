@@ -1,11 +1,10 @@
-import { action, computed, get, isObservableObject, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
+import { action, computed, get, IComputedValue, isObservableObject, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
 import isFunction from 'lodash/isFunction';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
-import defer from 'lodash/defer';
 import unionBy from 'lodash/unionBy';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -344,6 +343,8 @@ export default class Field {
 
   isDynamicPropsComputing: boolean = false;
 
+  computedProps: Map<string, IComputedValue<any>> = new Map();
+
   @observable props: FieldProps & { [key: string]: any; };
 
   @observable dirtyProps: Partial<FieldProps>;
@@ -534,13 +535,16 @@ export default class Field {
   }
 
   private getProp(propsName: string): any {
-    if (propsName !== 'dynamicProps') {
-      const dynamicProps = this.get('dynamicProps');
-      if (dynamicProps) {
-        if (typeof dynamicProps === 'function') {
-          warning(
-            false,
-            ` The dynamicProps hook will be deprecated. Please use dynamicProps map.
+    const computedProp = this.computedProps.get(propsName);
+    if (!computedProp) {
+      const newComputedProp = computed(() => {
+        if (propsName !== 'dynamicProps') {
+          const dynamicProps = this.get('dynamicProps');
+          if (dynamicProps) {
+            if (typeof dynamicProps === 'function') {
+              warning(
+                false,
+                ` The dynamicProps hook will be deprecated. Please use dynamicProps map.
               For e.g,
               Bad case:
               dynamicProps({ record }) {
@@ -558,48 +562,53 @@ export default class Field {
                   return record.get('yy'),
                 }
               }`,
-          );
-          const props = this.executeDynamicProps(dynamicProps);
-          if (props && propsName in props) {
-            const prop = props[propsName];
-            this.checkDynamicProp(propsName, prop);
-            return prop;
-          }
-        } else {
-          const dynamicProp = dynamicProps[propsName];
-          if (typeof dynamicProp === 'function') {
-            const prop = this.executeDynamicProps(dynamicProp);
-            if (prop !== undefined) {
-              this.checkDynamicProp(propsName, prop);
-              return prop;
+              );
+              const props = this.executeDynamicProps(dynamicProps);
+              if (props && propsName in props) {
+                const prop = props[propsName];
+                this.checkDynamicProp(propsName, prop);
+                return prop;
+              }
+            } else {
+              const dynamicProp = dynamicProps[propsName];
+              if (typeof dynamicProp === 'function') {
+                const prop = this.executeDynamicProps(dynamicProp);
+                if (prop !== undefined) {
+                  this.checkDynamicProp(propsName, prop);
+                  return prop;
+                }
+              }
             }
+            this.checkDynamicProp(propsName, undefined);
           }
         }
-        this.checkDynamicProp(propsName, undefined);
-      }
+        const value = get(this.props, propsName);
+        if (value !== undefined) {
+          return value;
+        }
+        const dsField = this.findDataSetField();
+        if (dsField) {
+          const dsValue = dsField.getProp(propsName);
+          if (dsValue !== undefined) {
+            return dsValue;
+          }
+        }
+        if (propsName === 'textField' || propsName === 'valueField') {
+          const lovCode = this.get('lovCode');
+          const lovProps = getPropsFromLovConfig(lovCode, propsName);
+          if (propsName in lovProps) {
+            return lovProps[propsName];
+          }
+        }
+        if (propsName === 'lookupUrl') {
+          return getConfig('lookupUrl');
+        }
+        return undefined;
+      }, { name: propsName, context: this });
+      this.computedProps.set(propsName, newComputedProp);
+      return newComputedProp.get();
     }
-    const value = get(this.props, propsName);
-    if (value !== undefined) {
-      return value;
-    }
-    const dsField = this.findDataSetField();
-    if (dsField) {
-      const dsValue = dsField.getProp(propsName);
-      if (dsValue !== undefined) {
-        return dsValue;
-      }
-    }
-    if (propsName === 'textField' || propsName === 'valueField') {
-      const lovCode = this.get('lovCode');
-      const lovProps = getPropsFromLovConfig(lovCode, propsName);
-      if (propsName in lovProps) {
-        return lovProps[propsName];
-      }
-    }
-    if (propsName === 'lookupUrl') {
-      return getConfig(propsName);
-    }
-    return undefined;
+    return computedProp.get();
   }
 
   /**
@@ -710,22 +719,24 @@ export default class Field {
    * @return {string}
    */
   getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
-    const textField = this.get('textField');
-    const valueField = this.get('valueField');
-    const { lookup, options } = this;
+    const { lookup } = this;
     if (lookup && !isObject(value)) {
       return this.getLookupText(value, showValueIfNotFound);
     }
+    const options = this.get('options');
+    const textField = this.get('textField');
     if (options) {
+      const valueField = this.get('valueField');
       const found = options.find(record => isSameLike(record.get(valueField), value));
       if (found) {
         return found.get(textField);
       }
     }
     if (textField && isObject(value)) {
-      // 如果要用get(object, key) 需要保证可观察
-      const observerValue = isObservableObject(value) ? value : observable.object(value);
-      return get(observerValue, textField);
+      if (isObservableObject(value)) {
+        return get(value, textField);
+      }
+      return value[textField];
     }
     return value;
   }
@@ -900,19 +911,19 @@ export default class Field {
    * @param noCache default: undefined
    * @return Promise<object[]>
    */
-  async fetchLookup(noCache = undefined): Promise<object[] | undefined> {
+  fetchLookup(noCache = false): Promise<object[] | undefined> {
     const batch = this.get('lookupBatchAxiosConfig') || getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode');
     const lovPara = getLovPara(this, this.record);
     const dsField = this.findDataSetField();
-    let result;
+    let promise;
     if (batch && lookupCode && Object.keys(lovPara).length === 0) {
       if (dsField && dsField.get('lookupCode') === lookupCode) {
         this.set('lookup', undefined);
-        return dsField.get('lookup');
+        return Promise.resolve(dsField.get('lookup'));
       }
 
-      result = await this.pending.add<object[] | undefined>(
+      promise = this.pending.add<object[] | undefined>(
         lookupStore.fetchLookupDataInBatch(lookupCode, batch),
       );
     } else {
@@ -924,17 +935,17 @@ export default class Field {
           buildURLWithAxiosConfig(dsConfig) === buildURLWithAxiosConfig(axiosConfig)
         ) {
           this.set('lookup', undefined);
-          return dsField.get('lookup');
+          return Promise.resolve(dsField.get('lookup'));
         }
       }
       if (axiosConfig.url) {
-        result = await this.pending.add<object[] | undefined>(
+        promise = this.pending.add<object[] | undefined>(
           lookupStore.fetchLookupData(axiosConfig),
         );
       }
     }
-    if (result) {
-      runInAction(() => {
+    if (promise) {
+      return promise.then(action((result) => {
         const { lookup } = this;
         this.set('lookup', result);
         const value = this.getValue();
@@ -952,9 +963,10 @@ export default class Field {
             }, []),
           );
         }
-      });
+        return result;
+      }));
     }
-    return result;
+    return Promise.resolve(undefined);
   }
 
   fetchLovConfig() {
@@ -996,7 +1008,7 @@ export default class Field {
   private checkDynamicProp(propsName, newProp) {
     const oldProp = this.lastDynamicProps[propsName];
     if (!isEqualDynamicProps(oldProp, newProp)) {
-      defer(action(() => {
+      raf(action(() => {
         if (this.validatorPropKeys.includes(propsName) || propsName === 'validator') {
           this.validator.reset();
         }

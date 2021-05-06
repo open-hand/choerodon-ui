@@ -27,11 +27,10 @@ export default class Skeleton extends DataSetComponent<SkeletonProps> {
     skeletonTitle: true,
   };
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'skeletonTitle',
     ]);
-    return otherProps;
   }
 
   render() {

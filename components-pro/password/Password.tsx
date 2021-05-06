@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { TextField, TextFieldProps } from '../text-field/TextField';
@@ -45,8 +44,10 @@ export default class Password extends TextField<PasswordProps> {
 
   selectionStart?: number;
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), ['reveal']);
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'reveal',
+    ]);
   }
 
   getOtherPrevNode(): ReactNode {
@@ -55,7 +56,7 @@ export default class Password extends TextField<PasswordProps> {
 
   getInnerSpanButton(): ReactNode {
     const { reveal } = this.props;
-    if (reveal) {
+    if (reveal && !this.disabled) {
       return this.wrapperInnerSpanButton(
         <Icon
           type={this.reveal ? 'visibility' : 'visibility_off'}

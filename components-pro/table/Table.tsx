@@ -9,7 +9,7 @@ import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { action, get, toJS } from 'mobx';
+import { action, computed, get, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -734,6 +734,13 @@ export default class Table extends DataSetComponent<TableProps> {
 
   refSpin: HTMLDivElement | null;
 
+  @computed
+  get tableContext() {
+    return {
+      tableStore: this.tableStore,
+    };
+  }
+
   get currentRow(): HTMLTableRowElement | null {
     const { tableStore: { prefixCls } } = this;
     return this.element.querySelector(
@@ -1111,13 +1118,12 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'columns',
       'header',
       'footer',
       'border',
-      'style',
       'selectionMode',
       'alwaysShowRowBox',
       'onRow',
@@ -1176,9 +1182,15 @@ export default class Table extends DataSetComponent<TableProps> {
       'clientExportQuantity',
       'treeQueryExpanded',
     ]);
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
-    if (rowHeight !== 'auto') {
+    if (rowHeight === 'auto') {
+      delete otherProps.style;
+    } else {
       otherProps.style = { lineHeight: pxToRem(rowHeight) };
     }
     return otherProps;
@@ -1316,7 +1328,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      tableStore,
+      tableContext,
       tableStore: { prefixCls, virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
         style,
@@ -1335,7 +1347,6 @@ export default class Table extends DataSetComponent<TableProps> {
       },
     } = this;
     const content = this.getTable();
-    const context = { tableStore };
     const pagination = this.getPagination(TablePaginationPosition.top);
     const tableSpinProps = getConfig('tableSpinProps');
     const styleHeight = style ? toPx(style.height) : 0;
@@ -1343,7 +1354,7 @@ export default class Table extends DataSetComponent<TableProps> {
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
         <div {...this.getWrapperProps()}>
-          <TableContext.Provider value={context}>
+          <TableContext.Provider value={tableContext}>
             <ModalProvider>
               {this.getHeader()}
               <TableQueryBar

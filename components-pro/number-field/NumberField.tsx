@@ -269,7 +269,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const { prefixCls, range } = this;
     const { longPressPlus } = this.props;
     const step = this.getProp('step');
-    if (step && !range && !this.isReadOnly()) {
+    if (step && !range && !this.readOnly && !this.disabled) {
       const plusIconProps: any = {
         ref: this.savePlusRef,
         key: 'plus',
@@ -309,7 +309,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @autobind
   handleKeyDown(e) {
-    if (!this.props.disabled && !this.isReadOnly()) {
+    if (!this.disabled && !this.readOnly) {
       switch (e.keyCode) {
         case KeyCode.UP:
           this.handleKeyDownUp(e);
@@ -361,8 +361,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     this.step(false);
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'nonStrictStep',
       'formatter',
       'formatterOptions',
@@ -371,7 +371,6 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       'numberGrouping',
       'maxLength',
     ]);
-    return otherProps;
   }
 
   step(isPlus: boolean, isKeeping?: boolean) {

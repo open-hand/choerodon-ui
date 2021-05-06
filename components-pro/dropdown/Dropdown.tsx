@@ -1,16 +1,17 @@
-import React, { cloneElement, CSSProperties, isValidElement, PureComponent } from 'react';
+import React, { cloneElement, CSSProperties, isValidElement, PureComponent, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Trigger from '../trigger/Trigger';
+import Trigger, { RenderFunction } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import { Placements } from './enum';
 import builtinPlacements from './placements';
+import autobind from '../_util/autobind';
 
 const popupStyle: CSSProperties = { whiteSpace: 'nowrap' };
 
 export interface DropDownProps {
   trigger?: Action[];
-  overlay: React.ReactNode;
+  overlay: ReactNode | RenderFunction;
   onHiddenChange?: (hidden?: boolean) => void;
   onVisibleChange?: (visible?: boolean) => void;
   onOverlayClick?: (e) => void;
@@ -27,7 +28,7 @@ export interface DropDownProps {
   transitionName?: string;
   placement?: Placements;
   forceRender?: boolean;
-  popupClassName?:string;
+  popupClassName?: string;
 }
 
 export interface DropdownState {
@@ -68,6 +69,8 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     trigger: [Action.hover, Action.focus],
     defaultHidden: true,
   };
+
+  renderedContentProps?: any;
 
   get triggerAction(): Action[] {
     const { trigger } = this.props;
@@ -116,7 +119,8 @@ export default class Dropdown extends PureComponent<DropDownProps> {
    *
    * @param {boolean} hidden
    */
-  handlePopupHiddenChange = (hidden: boolean) => {
+  @autobind
+  handlePopupHiddenChange(hidden: boolean) {
     const {
       onHiddenChange,
       onVisibleChange,
@@ -134,11 +138,12 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     if (onVisibleChange) {
       onVisibleChange(!hidden);
     }
-  };
+  }
 
-  handleClick = e => {
-    const { onOverlayClick, overlay, hidden, visible } = this.props;
-    const { onClick } = ((isValidElement(overlay) && overlay.props) || {}) as { onClick };
+  @autobind
+  handleClick(e) {
+    const { onOverlayClick, hidden, visible } = this.props;
+    const { onClick } = this.renderedContentProps || {};
     if (onOverlayClick) {
       onOverlayClick(e);
     }
@@ -150,12 +155,22 @@ export default class Dropdown extends PureComponent<DropDownProps> {
         hidden: true,
       });
     }
-  };
+  }
 
-  getMenuElement() {
+  getContent(...props) {
     const { overlay } = this.props;
-    if (isValidElement(overlay)) {
-      return cloneElement<any>(overlay, {
+    if (typeof overlay === 'function') {
+      return overlay(...props);
+    }
+    return overlay;
+  }
+
+  @autobind
+  renderPopupContent(...props) {
+    const content = this.getContent(...props);
+    if (isValidElement<any>(content)) {
+      this.renderedContentProps = content.props;
+      return cloneElement<any>(content, {
         onClick: this.handleClick,
       });
     }
@@ -186,7 +201,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
         action={this.triggerAction}
         builtinPlacements={builtinPlacements}
         popupPlacement={placement}
-        popupContent={this.getMenuElement()}
+        popupContent={this.renderPopupContent}
         popupStyle={popupStyle}
         popupClassName={popupClassName}
         onPopupHiddenChange={this.handlePopupHiddenChange}

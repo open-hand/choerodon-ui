@@ -1,5 +1,5 @@
-import React, { Component, ReactNode, MouseEventHandler } from 'react';
-import Tooltip, { AbstractTooltipProps } from '../tooltip';
+import React, { Component, MouseEventHandler, ReactNode } from 'react';
+import Tooltip, { AbstractTooltipProps, RenderFunction } from '../tooltip';
 import Icon from '../icon';
 import Button from '../button';
 import { ButtonType } from '../button/Button';
@@ -9,7 +9,7 @@ import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
 
 export interface PopconfirmProps extends AbstractTooltipProps {
-  title: ReactNode;
+  title: ReactNode | RenderFunction;
   onConfirm?: MouseEventHandler<any>;
   onCancel?: MouseEventHandler<any>;
   okText?: ReactNode;
@@ -94,7 +94,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     this.tooltip = node;
   };
 
-  renderOverlay = (popconfirmLocale: PopconfirmLocale) => {
+  renderOverlayWithLocale = (popconfirmLocale: PopconfirmLocale) => {
     const { title, cancelText, okText, okType } = this.props;
     const prefixCls = this.getPrefixCls();
     return (
@@ -102,7 +102,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
         <div className={`${prefixCls}-inner-content`}>
           <div className={`${prefixCls}-message`}>
             <Icon type="warning" />
-            <div className={`${prefixCls}-message-title`}>{title}</div>
+            <div className={`${prefixCls}-message-title`}>{typeof title === 'function' ? title() : title}</div>
           </div>
           <div className={`${prefixCls}-buttons`}>
             <Button onClick={this.onCancel} size={Size.small}>
@@ -117,6 +117,14 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     );
   };
 
+  renderLocale = () => {
+    return (
+      <LocaleReceiver componentName="Popconfirm" defaultLocale={defaultLocale.Popconfirm}>
+        {this.renderOverlayWithLocale}
+      </LocaleReceiver>
+    );
+  };
+
   getPrefixCls() {
     const { prefixCls } = this.props;
     return getPrefixCls('popover', prefixCls);
@@ -125,11 +133,6 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
   render() {
     const { placement, ...restProps } = this.props;
     const { visible } = this.state;
-    const overlay = (
-      <LocaleReceiver componentName="Popconfirm" defaultLocale={defaultLocale.Popconfirm}>
-        {this.renderOverlay}
-      </LocaleReceiver>
-    );
 
     return (
       <Tooltip
@@ -138,7 +141,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
         placement={placement}
         onVisibleChange={this.onVisibleChange}
         visible={visible}
-        overlay={overlay}
+        overlay={this.renderLocale}
         ref={this.saveTooltip}
       />
     );

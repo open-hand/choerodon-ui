@@ -44,7 +44,7 @@ export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: 
   if (
     lookupCode ||
     isString(lookupUrl) ||
-    (type !== FieldType.object && (lovCode || field.options))
+    (type !== FieldType.object && (lovCode || field.lookup || field.get('options')))
   ) {
     if (field.get('parentField')) {
       return <TreeSelect {...flatProps} />;
@@ -149,6 +149,9 @@ export function getEditorByColumnAndRecord(
     if (isValidElement(cellEditor)) {
       return cellEditor;
     }
+  }
+  if (isValidElement(editor)) {
+    return editor;
   }
 }
 
