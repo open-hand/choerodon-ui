@@ -31,7 +31,7 @@ const builtInHeight = [
 ];
 
 const calcReg = /^calc\(([^()]*)\)$/;
-const unitReg = /^(\d+)([^\d]+)$/;
+const unitReg = /^(-?[\d.]+)([^\d.-]+)$/;
 
 export function isCalcSize(num: string) {
   return num.match(calcReg);

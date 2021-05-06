@@ -397,8 +397,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getLabel() {
     const [placeholder, endPlaceHolder] = this.getPlaceholders();
-    if(this.isEmpty() && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
-      return endPlaceHolder
+    if (this.isEmpty() && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
+      return endPlaceHolder;
     }
     if (this.isEmpty() && placeholder) {
       return placeholder;
@@ -732,7 +732,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     } = this;
     if (clearButton && !this.isReadOnly()) {
       return this.wrapperInnerSpanButton(
-        <Icon type="close" onClick={this.handleClearButtonClick} onMouseDown={stopPropagation} />,
+        <Icon type="close" onClick={this.handleClearButtonClick} onMouseDown={this.handleInnerButtonMouseDown} />,
         {
           className: isFlat ? `${prefixCls}-clear-button ${prefixCls}-clear-button-flat` : `${prefixCls}-clear-button`,
         },
@@ -881,6 +881,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
     }
     super.handleBlur(e);
+  }
+
+  @autobind
+  handleInnerButtonMouseDown(e) {
+    if (!this.isFocus) {
+      e.stopPropagation();
+    }
   }
 
   @action
