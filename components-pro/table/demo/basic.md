@@ -260,9 +260,6 @@ class App extends React.Component {
         lovCode: 'LOV_CODE',
         multiple: true,
         required: true,
-        defaultValue: [{
-          code: 'HR.EMPLOYEE_STATUS',
-        }],
       },
       {
         name: 'codeMultiple_code',
@@ -270,6 +267,7 @@ class App extends React.Component {
         type: 'string',
         label: '代码（多值）',
         multiple: true,
+        defaultValue: ['x', 'y'],
       },
       {
         name: 'codeMultiple_description',
@@ -277,6 +275,7 @@ class App extends React.Component {
         type: 'string',
         label: '代码描述',
         multiple: ',',
+        defaultValue: 'a,b',
       },
       {
         name: 'sex',
