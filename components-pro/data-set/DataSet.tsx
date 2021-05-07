@@ -1213,7 +1213,7 @@ export default class DataSet extends EventManager {
     const normalFields: [string, any][] = [];
     [...record.fields.entries()].forEach(([name, field]) => {
       const defaultValue = field.get('defaultValue');
-      if (!isNil(defaultValue)) {
+      if (!isNil(defaultValue) && isNil(record.get(name))) {
         const type = field.get('type');
         if (type === FieldType.object) {
           const level = name.split('.').length - 1;
@@ -1226,9 +1226,7 @@ export default class DataSet extends EventManager {
     [...objectFieldsList, normalFields].forEach((items) => {
       if (items) {
         items.forEach(([name, defaultValue]) => {
-          if (isNil(record.get(name))) {
-            record.init(name, toJS(defaultValue));
-          }
+          record.init(name, toJS(defaultValue));
         });
       }
     });
