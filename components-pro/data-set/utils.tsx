@@ -142,15 +142,11 @@ export function processValue(value: any, field?: Field): any {
   if (field) {
     const multiple = field.get('multiple');
     const range = field.get('range');
-    if (multiple) {
-      if (isEmpty(value)) {
-        value = [];
-      } else if (!isArray(value)) {
-        if (isString(multiple) && isString(value)) {
-          value = value.split(multiple);
-        } else {
-          value = [value];
-        }
+    if (multiple && !isEmpty(value) && !isArray(value)) {
+      if (isString(multiple) && isString(value)) {
+        value = value.split(multiple);
+      } else {
+        value = [value];
       }
     }
     if (isArray(value) && (multiple || !range)) {
@@ -875,7 +871,7 @@ export function normalizeGroups(groups: string[], records: Record[]): Group[] {
  * @param data 导出需要导出的数据
  * @param excelname 导出表单的名字
  */
-export function exportExcel(data, excelName){
+export function exportExcel(data, excelName) {
   const ws = XLSX.utils.json_to_sheet(data, { skipHeader: true }); /* 新建空workbook，然后加入worksheet */
   const wb = XLSX.utils.book_new();  /* 新建book */
   XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */
