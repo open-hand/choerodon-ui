@@ -200,6 +200,7 @@ class App extends React.Component {
         min: 10,
         max: 100,
         step: 0.5,
+        defaultValue: [10, 100],
       },
       {
         name: 'code',
@@ -259,6 +260,9 @@ class App extends React.Component {
         lovCode: 'LOV_CODE',
         multiple: true,
         required: true,
+        defaultValue: [{
+          code: 'HR.EMPLOYEE_STATUS',
+        }],
       },
       {
         name: 'codeMultiple_code',
