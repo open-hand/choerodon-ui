@@ -138,15 +138,21 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
   return value;
 }
 
-export function processValue(value: any, field?: Field): any {
+export function processValue(value: any, field?: Field, init?: boolean): any {
   if (field) {
     const multiple = field.get('multiple');
     const range = field.get('range');
-    if (multiple && !isEmpty(value) && !isArray(value)) {
-      if (isString(multiple) && isString(value)) {
-        value = value.split(multiple);
-      } else {
-        value = [value];
+    if (multiple) {
+      if (isEmpty(value)) {
+        if(!init) {
+          value = [];
+        }
+      } else if (!isArray(value)) {
+        if (isString(multiple) && isString(value)) {
+          value = value.split(multiple);
+        } else {
+          value = [value];
+        }
       }
     }
     if (isArray(value) && (multiple || !range)) {

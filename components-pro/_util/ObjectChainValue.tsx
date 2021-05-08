@@ -3,20 +3,22 @@ import { isArrayLike, observable } from 'mobx';
 import { mobxGet, mobxRemove, mobxSet } from './MobxUtils';
 import Field, { Fields } from '../data-set/Field';
 
-export function get(obj: object, prop: string): any {
-  const index = prop.indexOf('.');
-  if (index !== -1) {
-    const key = prop.slice(0, index);
-    const restKey = prop.slice(index + 1);
-    const value = mobxGet(obj, key);
-    if (isArrayLike(value)) {
-      return value.map(item => get(item, restKey)).filter(item => !!item);
+export function get(obj: object | undefined, prop: string): any {
+  if (obj) {
+    const index = prop.indexOf('.');
+    if (index !== -1) {
+      const key = prop.slice(0, index);
+      const restKey = prop.slice(index + 1);
+      const value = mobxGet(obj, key);
+      if (isArrayLike(value)) {
+        return value.map(item => get(item, restKey)).filter(item => !!item);
+      }
+      if (isObject(value)) {
+        return get(value, restKey);
+      }
+    } else {
+      return mobxGet(obj, prop);
     }
-    if (isObject(value)) {
-      return get(value, restKey);
-    }
-  } else {
-    return mobxGet(obj, prop);
   }
 }
 
@@ -42,7 +44,7 @@ export function set(
       if (isArrayLike(value)) {
         value.forEach((item, i) => {
           if (!obj[i]) {
-            obj.push({});
+            obj[i] = {};
           }
           set(obj[i], prop.slice(index + 1), item);
         });

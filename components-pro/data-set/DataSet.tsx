@@ -1209,24 +1209,25 @@ export default class DataSet extends EventManager {
       data = {};
     }
     const record = new Record(data, this);
-    const objectFieldsList: [string, any][][] = [];
-    const normalFields: [string, any][] = [];
+    const objectFieldsList: [string, any, boolean][][] = [];
+    const normalFields: [string, any, boolean][] = [];
     [...record.fields.entries()].forEach(([name, field]) => {
       const defaultValue = field.get('defaultValue');
-      if (!isNil(defaultValue) && isNil(record.get(name))) {
+      const multiple = field.get('multiple');
+      if ((!isNil(defaultValue) || multiple) && isNil(record.get(name))) {
         const type = field.get('type');
         if (type === FieldType.object) {
           const level = name.split('.').length - 1;
-          objectFieldsList[level] = (objectFieldsList[level] || []).concat([[name, defaultValue]]);
+          objectFieldsList[level] = (objectFieldsList[level] || []).concat([[name, defaultValue, multiple]]);
         } else {
-          normalFields.push([name, defaultValue]);
+          normalFields.push([name, defaultValue, multiple]);
         }
       }
     });
     [...objectFieldsList, normalFields].forEach((items) => {
       if (items) {
-        items.forEach(([name, defaultValue]) => {
-          record.init(name, toJS(defaultValue));
+        items.forEach(([name, defaultValue, multiple]) => {
+          record.init(name, isNil(defaultValue) ? multiple ? [] : undefined : toJS(defaultValue));
         });
       }
     });
@@ -1945,9 +1946,7 @@ Then the query method will be auto invoke.`,
         }
         return data;
       }
-      const record = new Record(data, this);
-      record.status = RecordStatus.sync;
-      return record;
+      return new Record(data, this, RecordStatus.sync);
     });
   }
 
