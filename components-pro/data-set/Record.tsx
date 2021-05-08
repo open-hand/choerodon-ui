@@ -786,6 +786,7 @@ export default class Record {
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {
+    const newData = { ...data };
     const { fields } = this;
     const normalFields: [string, Field][] = [];
     const bindFields: [string, Field][] = [];
@@ -811,12 +812,12 @@ export default class Record {
       }
     });
     [...normalFields, ...bindFields, ...transformResponseField, ...dynamicFields, ...dynamicBindFields].forEach(([fieldName, field]) => {
-      let value = ObjectChainValue.get(data, fieldName);
+      let value = ObjectChainValue.get(newData, fieldName);
       const bind = field.get('bind');
       const transformResponse = field.get('transformResponse');
       if (bind) {
         fieldName = bind;
-        const bindValue = ObjectChainValue.get(data, fieldName);
+        const bindValue = ObjectChainValue.get(newData, fieldName);
         if (isNil(value) && !isNil(bindValue)) {
           value = bindValue;
         }
@@ -834,7 +835,7 @@ export default class Record {
           value = merge(oldValue, value);
         }
       }
-      ObjectChainValue.set(data, fieldName, value, fields);
+      ObjectChainValue.set(newData, fieldName, value, fields);
       ObjectChainValue.set(this.data, fieldName, value, fields);
     });
   }
