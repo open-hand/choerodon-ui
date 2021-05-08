@@ -834,6 +834,7 @@ export default class Record {
           value = merge(oldValue, value);
         }
       }
+      ObjectChainValue.set(data, fieldName, value, fields);
       ObjectChainValue.set(this.data, fieldName, value, fields);
     });
   }
