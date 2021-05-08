@@ -78,20 +78,18 @@ const nameDynamicProps = {
 const codeCodeDynamicProps = {
   // 代码code_code值绑定 为 字段code 的 值列表的值字段为code.codevalue
   bind({ record }) {
-    const field = record.getField('code');
+    const field = record.get('name');
     if (field) {
-      const valueField = field.get('valueField');
-      return `code.${valueField}`;
+      return `code.code`;
     }
   },
 };
 
 const codeDescriptionDynamicProps = {
   bind({ record }) {
-    const field = record.getField('code');
+    const field = record.get('name');
     if (field) {
-      const textField = field.get('textField');
-      return `code.${textField}`;
+      return `code.description`;
     }
   },
 };
@@ -167,10 +165,15 @@ class App extends React.Component {
         help: '主键，区分用户',
       },
       {
+        name: 'name1',
+        ignore: 'always',
+      },
+      {
         name: 'name',
         type: 'intl',
         label: '姓名',
         dynamicProps: nameDynamicProps,
+        bind: 'name1',
         ignore: 'clean',
       },
       {
@@ -341,7 +344,7 @@ class App extends React.Component {
     console.log(userDs.toJSONData());
     console.log(userDs.toJSONData(true));
     console.log(userDs.toJSONData(false, true));
-    userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx' });
+    userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx', name: 'Hugh' });
   };
 
   removeAllData = () => {

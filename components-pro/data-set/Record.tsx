@@ -1,4 +1,4 @@
-import { action, computed, isArrayLike, isObservableArray, isObservableObject, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
+import { action, computed, isArrayLike, isObservableArray, isObservableObject, observable, ObservableMap, runInAction, toJS } from 'mobx';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
@@ -349,12 +349,12 @@ export default class Record {
     return undefined;
   }
 
-  constructor(data: object = {}, dataSet?: DataSet) {
+  constructor(data: object = {}, dataSet?: DataSet, status: RecordStatus = RecordStatus.add) {
     runInAction(() => {
       const initData = isObservableObject(data) ? toJS(data) : data;
       this.state = observable.map<string, any>();
       this.fields = observable.map<string, Field>();
-      this.status = RecordStatus.add;
+      this.status = status;
       this.selectable = true;
       this.isSelected = false;
       this.isCurrent = false;
@@ -369,7 +369,7 @@ export default class Record {
           this.initFields(fields);
         }
       }
-      this.data = this.processData(initData);
+      this.processData(initData);
     });
   }
 
@@ -694,14 +694,8 @@ export default class Record {
         }
       }
       if (data) {
-        const newData = this.processData(data, true);
-        this.pristineData = newData;
-        Object.keys(newData).forEach(key => {
-          const newValue = newData[key];
-          if (this.get(key) !== newValue) {
-            set(this.data, key, newData[key]);
-          }
-        });
+        this.processData(data, true);
+        this.pristineData = this.data;
         const { children } = dataSet;
         const keys = Object.keys(children);
         if (keys.length) {
@@ -791,11 +785,33 @@ export default class Record {
     );
   }
 
-  private processData(data: object = {}, needMerge?: boolean): object {
+  private processData(data: object = {}, needMerge?: boolean): void {
     const { fields } = this;
-    const newData = { ...data };
+    const normalFields: [string, Field][] = [];
+    const bindFields: [string, Field][] = [];
+    const transformResponseField: [string, Field][] = [];
+    const dynamicFields: [string, Field][] = [];
+    const dynamicBindFields: [string, Field][] = [];
     [...fields.entries()].forEach(([fieldName, field]) => {
-      let value = ObjectChainValue.get(newData, fieldName);
+      const dynamicProps = field.get('dynamicProps');
+      if (dynamicProps) {
+        if (dynamicProps.bind) {
+          dynamicBindFields.push([fieldName, field]);
+        } else {
+          dynamicFields.push([fieldName, field]);
+        }
+      } else if (field.get('bind')) {
+        if (field.get('transformResponse')) {
+          transformResponseField.push([fieldName, field]);
+        } else {
+          bindFields.push([fieldName, field]);
+        }
+      } else {
+        normalFields.push([fieldName, field]);
+      }
+    });
+    [...normalFields, ...bindFields, ...transformResponseField, ...dynamicFields, ...dynamicBindFields].forEach(([fieldName, field]) => {
+      let value = ObjectChainValue.get(data, fieldName);
       const bind = field.get('bind');
       const transformResponse = field.get('transformResponse');
       if (bind) {
@@ -808,7 +824,7 @@ export default class Record {
       if (transformResponse) {
         value = transformResponse(value, data);
       }
-      value = processValue(value, field);
+      value = processValue(value, field, this.isNew);
       if (value === null) {
         value = undefined;
       }
@@ -818,9 +834,8 @@ export default class Record {
           value = merge(oldValue, value);
         }
       }
-      ObjectChainValue.set(newData, fieldName, value, fields);
+      ObjectChainValue.set(this.data, fieldName, value, fields);
     });
-    return newData;
   }
 
   private normalizeData(needIgnore?: boolean) {

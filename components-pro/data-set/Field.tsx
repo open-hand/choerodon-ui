@@ -723,9 +723,10 @@ export default class Field {
       }
     }
     if (textField && isObject(value)) {
-      // 如果要用get(object, key) 需要保证可观察
-      const observerValue = isObservableObject(value) ? value : observable.object(value);
-      return get(observerValue, textField);
+      if (isObservableObject(value)) {
+        return get(value, textField);
+      }
+      return value[textField];
     }
     return value;
   }
@@ -1006,19 +1007,19 @@ export default class Field {
     this.lastDynamicProps[propsName] = newProp;
   }
 
-  private handlePropChange(propsName, _newProp, _oldProp) {
-    // if (propsName === 'bind' && this.type !== FieldType.intl) {
-    //   const { record } = this;
-    //   if (record && !this.dirty) {
-    //     if (newProp && oldProp) {
-    //       record.init(newProp, record.get(oldProp));
-    //     }
-    //     if (oldProp) {
-    //       record.init(oldProp, undefined);
-    //     }
-    //   }
-    //   return;
-    // }
+  private handlePropChange(propsName, newProp, oldProp) {
+    if (propsName === 'bind' && this.type !== FieldType.intl) {
+      const { record } = this;
+      if (record && !this.dirty) {
+        if (newProp && oldProp) {
+          record.init(newProp, record.get(oldProp));
+        }
+        if (oldProp) {
+          record.init(oldProp, undefined);
+        }
+      }
+      return;
+    }
     if (
       [
         'type',
