@@ -203,6 +203,7 @@ title: DataSet
 | validate(all, noCascade) | 校验记录 | `all` - 校验所有字段，默认为 false，只校验修改或新增字段 `noCascade` - 为 true 时，不校验级联数据 | Promise&lt;boolean&gt; |
 | getCascadeRecords(childName) | 根据级联名获取子级联数据 | `childName` - 级联名 | Record[] |
 | getField(fieldName) | 根据字段名获取字段 | `fieldName` - 字段名 | Field |
+| addField(fieldName, fieldProps) | 增加新字段 | `fieldName` - 字段名，`fieldProps` - 字段属性 | Field |
 | clone() | 克隆记录，自动剔除主键值 |  | Record |
 | ready() | 判断记录是否准备就绪 |  | Promise |
 | reset() | 重置更改 |  |  |

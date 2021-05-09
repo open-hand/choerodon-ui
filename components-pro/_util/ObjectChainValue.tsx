@@ -43,7 +43,9 @@ export function set(
     if (isArrayLike(obj)) {
       if (isArrayLike(value)) {
         value.forEach((item, i) => {
-          if (!obj[i]) {
+          if (obj.length === i) {
+            obj.push({});
+          }else if (!obj[i]) {
             obj[i] = {};
           }
           set(obj[i], prop.slice(index + 1), item);

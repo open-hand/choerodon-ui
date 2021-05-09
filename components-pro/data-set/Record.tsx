@@ -770,7 +770,7 @@ export default class Record {
   }
 
   @action
-  private addField(name: string, fieldProps: FieldProps = {}): Field {
+  addField(name: string, fieldProps: FieldProps = {}): Field {
     const { dataSet } = this;
     fieldProps.name = name;
     return processIntlField(
@@ -785,33 +785,69 @@ export default class Record {
     );
   }
 
-  private processData(data: object = {}, needMerge?: boolean): void {
-    const newData = { ...data };
+  private getSortedFields(): [string, Field][] {
     const { fields } = this;
     const normalFields: [string, Field][] = [];
+    const objectBindFields: [string, Field][] = [];
     const bindFields: [string, Field][] = [];
     const transformResponseField: [string, Field][] = [];
     const dynamicFields: [string, Field][] = [];
+    const dynamicObjectBindFields: [string, Field][] = [];
     const dynamicBindFields: [string, Field][] = [];
-    [...fields.entries()].forEach(([fieldName, field]) => {
+    [...fields.entries()].forEach((entry) => {
+      const [, field] = entry;
       const dynamicProps = field.get('dynamicProps');
       if (dynamicProps) {
         if (dynamicProps.bind) {
-          dynamicBindFields.push([fieldName, field]);
+          if (field.type === FieldType.object) {
+            dynamicObjectBindFields.push(entry);
+          } else {
+            dynamicBindFields.push(entry);
+          }
         } else {
-          dynamicFields.push([fieldName, field]);
-        }
-      } else if (field.get('bind')) {
-        if (field.get('transformResponse')) {
-          transformResponseField.push([fieldName, field]);
-        } else {
-          bindFields.push([fieldName, field]);
+          dynamicFields.push(entry);
         }
       } else {
-        normalFields.push([fieldName, field]);
+        const bind = field.get('bind');
+        if (bind) {
+          const targetNames = bind.split('.');
+          targetNames.pop();
+          if (targetNames.some((targetName) => {
+            const target = fields.get(targetName);
+            return target && target.get('dynamicProps');
+          })) {
+            if (field.type === FieldType.object) {
+              dynamicObjectBindFields.push(entry);
+            } else {
+              dynamicBindFields.push(entry);
+            }
+          } else if (field.get('transformResponse')) {
+            transformResponseField.push(entry);
+          } else if (field.type === FieldType.object) {
+            objectBindFields.push(entry);
+          } else {
+            bindFields.push(entry);
+          }
+        } else {
+          normalFields.push(entry);
+        }
       }
     });
-    [...normalFields, ...bindFields, ...transformResponseField, ...dynamicFields, ...dynamicBindFields].forEach(([fieldName, field]) => {
+    return [
+      ...normalFields,
+      ...objectBindFields,
+      ...bindFields,
+      ...transformResponseField,
+      ...dynamicFields,
+      ...dynamicObjectBindFields,
+      ...dynamicBindFields,
+    ]
+  }
+
+  private processData(data: object = {}, needMerge?: boolean): void {
+    const newData = { ...data };
+    const { fields } = this;
+    this.getSortedFields().forEach(([fieldName, field]) => {
       let value = ObjectChainValue.get(newData, fieldName);
       const bind = field.get('bind');
       const transformResponse = field.get('transformResponse');

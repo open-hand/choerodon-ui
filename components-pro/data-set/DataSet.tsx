@@ -1209,26 +1209,25 @@ export default class DataSet extends EventManager {
       data = {};
     }
     const record = new Record(data, this);
-    const objectFieldsList: [string, any, boolean][][] = [];
-    const normalFields: [string, any, boolean][] = [];
+    const objectFieldsList: [string, any][][] = [];
+    const normalFields: [string, any][] = [];
     [...record.fields.entries()].forEach(([name, field]) => {
-      const defaultValue = field.get('defaultValue');
+      const fieldDefaultValue = field.get('defaultValue');
       const multiple = field.get('multiple');
-      if ((!isNil(defaultValue) || multiple) && isNil(record.get(name))) {
+      const defaultValue = multiple && isNil(fieldDefaultValue) ? [] : fieldDefaultValue;
+      if (!isNil(defaultValue) && isNil(record.get(name))) {
         const type = field.get('type');
         if (type === FieldType.object) {
           const level = name.split('.').length - 1;
-          objectFieldsList[level] = (objectFieldsList[level] || []).concat([[name, defaultValue, multiple]]);
+          objectFieldsList[level] = (objectFieldsList[level] || []).concat([[name, defaultValue]]);
         } else {
-          normalFields.push([name, defaultValue, multiple]);
+          normalFields.push([name, defaultValue]);
         }
       }
     });
     [...objectFieldsList, normalFields].forEach((items) => {
       if (items) {
-        items.forEach(([name, defaultValue, multiple]) => {
-          record.init(name, isNil(defaultValue) ? multiple ? [] : undefined : toJS(defaultValue));
-        });
+        items.forEach(([name, defaultValue]) => record.init(name, toJS(defaultValue)));
       }
     });
     if (isNumber(dataIndex)) {

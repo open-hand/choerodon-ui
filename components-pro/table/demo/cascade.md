@@ -152,6 +152,7 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
       },
       { name: 'enable', type: 'boolean', label: '是否开启' },
+      { name: 'account', type: 'object', ignore: 'always' },
     ],
     events: {
       submit: ({ data }) => console.log('submit data', data),
