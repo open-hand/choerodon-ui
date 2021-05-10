@@ -79,6 +79,7 @@ export type Config = {
   lovTableProps?: TableProps;
   lovModalProps?: ModalProps;
   lovTableCustomizable?: boolean;
+  lovAutoSelectSingle?: boolean;
   axios?: AxiosInstance;
   feedback?: FeedBack;
   dataKey?: string;
@@ -209,6 +210,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['lovQueryUrl', code => `/common/lov/dataset/${code}`],
   ['lovTableProps', {}],
   ['lovModalProps', {}],
+  ['lovAutoSelectSingle', false],
   ['dataKey', 'rows'],
   ['totalKey', 'total'],
   ['statusKey', '__status'],

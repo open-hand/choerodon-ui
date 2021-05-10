@@ -275,6 +275,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'active',
       'contentStyle',
       'bodyStyle',
+      'closeOnLocationChange',
     ]);
     const { hidden, mousePosition, keyboardClosable, style = {}, drawer } = this.props;
     if (keyboardClosable) {

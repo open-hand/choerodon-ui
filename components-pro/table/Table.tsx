@@ -526,7 +526,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否显示个性化设置入口按钮
    */
-  customizable?: string;
+  customizable?: boolean;
   /**
    * @deprecated
    * 同 columnDraggable
