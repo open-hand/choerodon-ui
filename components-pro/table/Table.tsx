@@ -734,6 +734,10 @@ export default class Table extends DataSetComponent<TableProps> {
 
   refSpin: HTMLDivElement | null;
 
+  wrapperWidth: number[] = [];
+
+  wrapperWidthTimer?: number;
+
   get currentRow(): HTMLTableRowElement | null {
     const { tableStore: { prefixCls } } = this;
     return this.element.querySelector(
@@ -782,7 +786,21 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   @action
   handleResize(width?: number) {
-    const { element, tableStore } = this;
+    const { element, tableStore, wrapperWidth } = this;
+    if (width !== undefined) {
+      const duplicate = wrapperWidth.includes(width);
+      wrapperWidth.unshift(width);
+      window.clearTimeout(this.wrapperWidthTimer);
+      this.wrapperWidthTimer = window.setTimeout(() => {
+        wrapperWidth.pop();
+      }, 500);
+      if (wrapperWidth.length > 2) {
+        wrapperWidth.pop();
+      }
+      if (duplicate) {
+        return;
+      }
+    }
     if (!element.offsetParent) {
       tableStore.styledHidden = true;
     } else if (!tableStore.hidden) {

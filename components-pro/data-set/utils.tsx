@@ -144,7 +144,9 @@ export function processValue(value: any, field?: Field, init?: boolean): any {
     const range = field.get('range');
     if (multiple) {
       if (isEmpty(value)) {
-        if(!init) {
+        if (init) {
+          value = undefined;
+        } else {
           value = [];
         }
       } else if (!isArray(value)) {
