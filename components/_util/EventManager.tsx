@@ -1,64 +1,130 @@
 import { action } from 'mobx';
+import isObject from 'lodash/isObject';
+import noop from 'lodash/noop';
 
-function on(eventName: string, fn: Function, el?: any, useCapture?: boolean): void {
-  if (el) {
-    if (el.addEventListener) {
-      el.addEventListener(eventName, fn, useCapture);
-    } else if (el.attachEvent) {
-      el.attachEvent(`on${eventName}`, fn);
-    }
+type EventTarget = { addEventListener?: Function, removeEventListener?: Function, attachEvent?: Function, detachEvent?: Function };
+type EventListenerOrEventListenerObject = Function | { handleEvent: Function };
+
+export type Handler = [EventListenerOrEventListenerObject, EventListenerOptions | AddEventListenerOptions | boolean, Function];
+
+function on(el: EventTarget, eventName: string, handle: Handler, handles: Handler[]): void {
+  if (el.addEventListener) {
+    const [fn, options] = handle;
+    el.addEventListener(eventName, fn, options);
+  } else {
+    const delegates: Function[] = [];
+    handles.forEach(([, , delegateFn]) => {
+      if (el.detachEvent) {
+        el.detachEvent(`on${eventName}`, delegateFn);
+        delegates.unshift(delegateFn);
+      }
+    });
+    delegates.forEach(delegateFn => {
+      if (el.attachEvent) {
+        el.attachEvent(`on${eventName}`, delegateFn);
+      }
+    });
   }
 }
 
-function off(eventName: string, fn: Function, el?: any, useCapture?: boolean): void {
-  if (el) {
-    if (el.removeEventListener) {
-      el.removeEventListener(eventName, fn, useCapture);
-    } else if (el.attachEvent) {
-      el.detachEvent(`on${eventName}`, fn);
-    }
+function off(el: EventTarget, eventName: string, handle: Handler): void {
+  const [fn, options, delegateFn] = handle;
+  if (el.removeEventListener) {
+    el.removeEventListener(eventName, fn, options);
+  } else if (el.detachEvent) {
+    el.detachEvent(`on${eventName}`, delegateFn);
   }
 }
 
-type handler = [Function, boolean];
+function isEventListenerOptions(options?: EventListenerOptions | boolean): options is EventListenerOptions {
+  return isObject(options);
+}
+
+function isAddEventListenerOptions(options?: EventListenerOptions | boolean): options is AddEventListenerOptions {
+  return isEventListenerOptions(options) && ('once' in options || 'passive' in options);
+}
+
+function getCapture(options: EventListenerOptions | boolean): boolean {
+  return isEventListenerOptions(options) ? options.capture || false : options;
+}
+
+function isSameHandler(handle: Handler, other: Handler): boolean {
+  const [handleFn, handleOption] = handle;
+  const [otherFn, otherOption] = other;
+  return handleFn === otherFn && getCapture(handleOption) === getCapture(otherOption);
+}
+
+function callHandler(events: Handler[], handle: Handler, ...rest): any {
+  const [, options, delegateFn] = handle;
+  if (isAddEventListenerOptions(options) && options.once) {
+    const index = events.indexOf(handle);
+    if (index !== -1) {
+      events.splice(index, 1);
+    }
+  }
+  return delegateFn(...rest);
+}
+
+function delegate(fn: EventListenerOrEventListenerObject): Function {
+  if ('handleEvent' in fn) {
+    return (...rest) => fn.handleEvent(...rest);
+  }
+  return (...rest) => fn(...rest);
+}
 
 export default class EventManager {
-  events: { [eventName: string]: handler[] } = {};
+  events: { [eventName: string]: Handler[] } = {};
 
-  el?: any;
+  el?: EventTarget | undefined;
 
-  constructor(el?: any) {
+  constructor(el?: EventTarget | undefined) {
     this.el = el;
   }
 
-  addEventListener(eventName: string, fn: Function, useCapture: boolean = false): EventManager {
+  addEventListener(eventName: string, fn: EventListenerOrEventListenerObject, options: AddEventListenerOptions | boolean = false): EventManager {
     eventName = eventName.toLowerCase();
-    const events: handler[] = this.events[eventName] || [];
-    const index = events.findIndex(([event]) => event === fn);
+    const events: Handler[] = this.events[eventName] || [];
+    const index = events.findIndex((handle) => isSameHandler(handle, [fn, options, noop]));
     if (index === -1) {
-      events.push([fn, useCapture]);
+      const newHandle: Handler = [fn, options, delegate(fn)];
+      if (getCapture(options)) {
+        const captureIndex = events.findIndex(([, handleOptions]) => !getCapture(handleOptions));
+        if (captureIndex === -1) {
+          events.push(newHandle);
+        } else {
+          events.splice(captureIndex, 0, newHandle);
+        }
+      } else {
+        events.push(newHandle);
+      }
       this.events[eventName] = events;
-      on(eventName, fn, this.el, useCapture);
+      const { el } = this;
+      if (el) {
+        on(el, eventName, newHandle, events);
+      }
     }
     return this;
   }
 
-  removeEventListener(eventName: string, fn?: Function, useCapture: boolean = false): EventManager {
+  removeEventListener(eventName: string, fn?: EventListenerOrEventListenerObject, options: EventListenerOptions | boolean = false): EventManager {
     eventName = eventName.toLowerCase();
-    const events: handler[] = this.events[eventName];
+    const events: Handler[] = this.events[eventName];
     if (events) {
+      const { el } = this;
       if (fn) {
-        const index = events.findIndex(([event]) => event === fn);
+        const index = events.findIndex(handle => isSameHandler(handle, [fn, options, noop]));
         if (index !== -1) {
+          if (el) {
+            off(el, eventName, events[index]);
+          }
           events.splice(index, 1);
         }
-        off(eventName, fn, this.el, useCapture);
       } else {
-        this.events[eventName] = this.el
-          ? (this.events[eventName] || []).filter(([event, capture]) => {
-              off(eventName, event, this.el, capture);
-              return false;
-            })
+        this.events[eventName] = el
+          ? (this.events[eventName] || []).filter((handle) => {
+            off(el, eventName, handle);
+            return false;
+          })
           : [];
       }
     }
@@ -67,17 +133,17 @@ export default class EventManager {
 
   @action
   fireEventSync(eventName: string, ...rest: any[]): boolean {
-    const events: handler[] = this.events[eventName.toLowerCase()];
-    return events ? events.every(([fn]) => fn(...rest) !== false) : true;
+    const events: Handler[] | undefined = this.events[eventName.toLowerCase()];
+    return events ? [...events].every(handle => callHandler(events, handle, ...rest) !== false) : true;
   }
 
   @action
   fireEvent(eventName: string, ...rest: any[]): Promise<boolean> {
-    const events: handler[] = this.events[eventName.toLowerCase()];
+    const events: Handler[] | undefined = this.events[eventName.toLowerCase()];
     return events
-      ? Promise.all(events.map(([fn]) => fn(...rest))).then(all =>
-          all.every(result => result !== false),
-        )
+      ? Promise.all([...events].map((handle) => callHandler(events, handle, ...rest))).then(all =>
+        all.every(result => result !== false),
+      )
       : Promise.resolve(true);
   }
 

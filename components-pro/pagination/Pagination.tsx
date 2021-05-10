@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
@@ -263,8 +262,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'total',
       'page',
       'pageSize',

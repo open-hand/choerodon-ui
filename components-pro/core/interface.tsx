@@ -4,4 +4,5 @@ export {
   ElementProps,
   MouseEventComponentProps,
   KeyboardEventComponentProps,
+  FocusEventComponentProps,
 } from './ViewComponent';

@@ -119,11 +119,14 @@ class App extends React.Component {
         url: '/dataset/user/mutations',
         method: 'put',
       },
-      update: ({ data }) =>
-        data.length
+      update: ({ data: [first] }) =>
+        first
           ? {
-            url: `/dataset/user/mutations/${data[0].userid}`,
-            data: data[0],
+            url: `/dataset/user/mutations/${first.userid}`,
+            data: first,
+            transformResponse() {
+              return [first];
+            }
           }
           : null,
       destroy: {
@@ -428,7 +431,7 @@ class App extends React.Component {
         header="User"
         style={{ height: 200 }}
         rowNumber
-        parityRow
+        parityRow summary="BASIC DEMO"
       >
         <Column
           name="userid"

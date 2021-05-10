@@ -1,6 +1,5 @@
 import React, { cloneElement, CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
@@ -223,17 +222,21 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   contentNode: HTMLElement;
 
-  saveCancelRef = node => (this.cancelButton = node);
+  @autobind
+  saveCancelRef(node) {
+    this.cancelButton = node;
+  }
 
-  handleKeyDown = e => {
-    const { cancelButton } = this;
-    if (cancelButton && !cancelButton.isDisabled() && e.keyCode === KeyCode.ESC) {
+  @autobind
+  handleKeyDown(e) {
+    const { cancelButton, props: { closable } } = this;
+    if ((closable || !cancelButton || !cancelButton.disabled) && e.keyCode === KeyCode.ESC) {
       cancelButton.handleClickWait(e);
     }
-  };
+  }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       '__deprecate__',
       'closable',
       'movable',
@@ -273,6 +276,10 @@ export default class Modal extends ViewComponent<ModalProps> {
       'bodyStyle',
       'closeOnLocationChange',
     ]);
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
     const { hidden, mousePosition, keyboardClosable = getConfig('modalKeyboard'), style = {}, drawer } = this.props;
     if (keyboardClosable) {
       otherProps.autoFocus = true;

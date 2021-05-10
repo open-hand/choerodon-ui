@@ -1,6 +1,5 @@
 import React, { CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
 import debounce from 'lodash/debounce';
@@ -9,7 +8,7 @@ import isEmpty from 'lodash/isEmpty';
 import noop from 'lodash/noop';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import { action, observable, computed, IReactionDisposer, isArrayLike, reaction, runInAction, toJS } from 'mobx';
+import { action, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
 import { Menus, SingleMenu } from 'choerodon-ui/lib/rc-components/cascader';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -212,7 +211,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
      * 设置选项属性，如 disabled;
      */
     onOption: PropTypes.func,
-    /** 
+    /**
      * 可搜索属性
     */
     searchable: PropTypes.bool,
@@ -465,8 +464,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     this.forcePopupAlign();
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat( [
       'multiple',
       'value',
       'searchable',
@@ -488,7 +487,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       'onUnChoose',
       'changeOnSelect',
     ]);
-    return otherProps;
   }
 
   getObservableProps(props, context) {
@@ -574,9 +572,13 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
    */
   @autobind
   getMenu(menuProps: object = {}): ReactNode {
+    const { options } = this;
+    if (!options) {
+      return null;
+    }
     // 暂时不用考虑分组情况 groups
     const {
-      options,
+      disabled: menuDisabled,
       textField,
       valueField,
       props: {
@@ -591,11 +593,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         singleMenuItemRender,
       },
     } = this;
-    if (!options) {
-      return null;
-    }
     const expandTrigger = changeOnSelect && menuMode !== MenuMode.single ? ExpandTrigger.hover : expandTriggerProps;
-    const menuDisabled = this.isDisabled();
     let optGroups: any[] = [];
     let selectedValues: any[] = [];
     // 过滤后的数据不用进行子集遍历
@@ -749,12 +747,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   @computed
-  get editable(): boolean {
-    return !this.isReadOnly() && (!!this.searchable);
-  }
-
-
-  @computed
   get searchable(): boolean {
     return !!this.observableProps.searchable;
   }
@@ -764,6 +756,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   get loading(): boolean {
     const { field, options } = this;
     return options.status === DataSetStatus.loading || (!!field && field.pending.length > 0);
+  }
+
+  isEditable(): boolean {
+    return super.isEditable() && !!this.searchable;
   }
 
   getPopupContent(): ReactNode {
@@ -803,7 +799,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   @autobind
   handleKeyDown(e) {
-    if (!this.isDisabled() && !this.isReadOnly()) {
+    if (!this.disabled && !this.readOnly) {
       switch (e.keyCode) {
         case KeyCode.RIGHT:
           this.handleKeyLeftRightNext(e, 1);

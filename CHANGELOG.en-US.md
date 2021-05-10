@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+- 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
+- 💄 `Dropdown`: The `overlay` property supports hook functions.
+- 💄 `Popover`: The `title` and `content` attributes support hook functions.
+- 💄 `Popconfirm`: The `title` attribute supports hook functions.
+- 💄 `<pro>Tooltip`: The `title` and `overlay` attributes support hook functions.
+- 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
+- 💄 `<pro>Table`: Optimize the performance.
+
 ## 1.3.2
 
 `2021-05-11`

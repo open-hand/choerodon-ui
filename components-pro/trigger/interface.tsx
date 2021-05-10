@@ -1,14 +1,15 @@
 export {
-    Action,
-    ShowAction,
-    HideAction,
+  Action,
+  ShowAction,
+  HideAction,
 } from './enum';
-export { 
-    PopupProps,
+export {
+  PopupProps,
 } from './Popup';
 export {
-    TriggerProps,
+  TriggerProps,
+  RenderFunction,
 } from './Trigger';
 export {
-    TriggerChildProps,
-} from './TriggerChild'
+  TriggerChildProps,
+} from './TriggerChild';

@@ -250,7 +250,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'placeHolder',
       'maxLengths',
       'autoComplete',
-      'isFlat',
       'valueChangeAction',
       'wait',
       'waitType',
@@ -436,29 +435,33 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return (
       <span key="text" className={`${prefixCls}-range-text`}>
         {/* 确保 range-input 为第一个 当点击label的时候出了会让element聚焦以外还会让 label的第一个表单元素聚焦 因此导致意料之外的bug */}
-        {!this.isDisabled() && <input
-          {...props}
-          className={`${prefixCls}-range-input`}
-          key="text"
-          value={
-            rangeTarget === undefined || !this.isFocused
-              ? ''
-              : this.text === undefined
-              ? rangeTarget === 0
-                ? startValue
-                : endValue
-              : this.text
-          }
-          placeholder={
-            rangeTarget === undefined || !this.isFocused
-              ? ''
-              : rangeTarget === 0
-              ? startPlaceholder
-              : endPlaceHolder
-          }
-          readOnly={this.isReadOnly()}
-          style={editorStyle}
-        />}
+        {
+          !this.disabled && (
+            <input
+              {...props}
+              className={`${prefixCls}-range-input`}
+              key="text"
+              value={
+                rangeTarget === undefined || !this.isFocused
+                  ? ''
+                  : this.text === undefined
+                  ? rangeTarget === 0
+                    ? startValue
+                    : endValue
+                  : this.text
+              }
+              placeholder={
+                rangeTarget === undefined || !this.isFocused
+                  ? ''
+                  : rangeTarget === 0
+                  ? startPlaceholder
+                  : endPlaceHolder
+              }
+              readOnly={this.readOnly}
+              style={editorStyle}
+            />
+          )
+        }
         <input
           tabIndex={-1}
           className={`${prefixCls}-range-start`}
@@ -549,8 +552,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       props: { style, isFlat, clearButton },
     } = this;
     const otherProps = this.getOtherProps();
-    const { height } = (style || {}) as CSSProperties;
     if (multiple) {
+      const { height } = (style || {}) as CSSProperties;
       const tags = (
         <Animate
           component="ul"
@@ -566,12 +569,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           onEnter={this.handleTagAnimateEnter}
         >
           {this.renderMultipleValues()}
-          {range
-            ? this.renderRangeEditor(otherProps)
-            : this.renderMultipleEditor({
-              ...otherProps,
-              className: `${prefixCls}-multiple-input`,
-            } as T)}
+          {
+            range
+              ? this.renderRangeEditor(otherProps)
+              : this.renderMultipleEditor({
+                ...otherProps,
+                className: `${prefixCls}-multiple-input`,
+              } as T)
+          }
         </Animate>
       );
       return (
@@ -600,7 +605,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     let width = 0;
     // 筛选条默认宽度处理
     if (isFlat) {
-      const hasValue = this.getValue() !== undefined && this.getValue() !== null;
+      const hasValue = !isNil(this.getValue());
       width = hasValue ? measureTextWidth(finalText) + (clearButton ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
     }
 
@@ -730,7 +735,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       props: { clearButton, isFlat },
       prefixCls,
     } = this;
-    if (clearButton && !this.isReadOnly()) {
+    if (clearButton && !this.readOnly && !this.disabled) {
       return this.wrapperInnerSpanButton(
         <Icon type="close" onClick={this.handleClearButtonClick} onMouseDown={this.handleInnerButtonMouseDown} />,
         {
@@ -744,15 +749,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls } = this;
     const { className, ...otherProps } = props;
     return (
-      !this.isDisabled() && (
-        <div
-          key="inner-button"
-          {...otherProps}
-          className={classNames(`${prefixCls}-inner-button`, className)}
-        >
-          {children}
-        </div>
-      )
+      <div
+        key="inner-button"
+        {...otherProps}
+        className={classNames(`${prefixCls}-inner-button`, className)}
+      >
+        {children}
+      </div>
     );
   }
 
@@ -802,8 +805,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleKeyDown(e) {
-    const { disabled, clearButton } = this.props;
-    if (!this.isReadOnly() && !disabled) {
+    const { clearButton } = this.props;
+    if (!this.disabled && !this.readOnly) {
       if (this.range && e.keyCode === KeyCode.TAB) {
         if (this.rangeTarget === 0 && !e.shiftKey) {
           this.setRangeTarget(1);
@@ -849,7 +852,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleMouseDown(e) {
     if (e.target !== this.element) {
-      if (!this.isDisabled()) {
+      if (!this.disabled) {
         e.preventDefault();
       }
       if (!this.isFocused) {

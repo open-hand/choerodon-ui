@@ -1,6 +1,6 @@
 import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { action, observable } from 'mobx';
+import { action } from 'mobx';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
@@ -9,9 +9,7 @@ import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
 import classes from 'component-classes';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { IconProps } from 'choerodon-ui/lib/icon';
-import raf from 'raf';
 import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
@@ -24,6 +22,7 @@ import { ColumnAlign, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import autobind from '../_util/autobind';
+import transform from '../_util/transform';
 
 export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
@@ -45,7 +44,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   static contextType = TableContext;
 
-  resizeEvent: EventManager = new EventManager(typeof window !== 'undefined' && document);
+  resizeEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
 
   resizeBoundary: number = 0;
 
@@ -56,8 +55,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   element?: HTMLDivElement | null;
 
   nextFrameActionId?: number;
-
-  @observable overflow?: boolean;
 
   @autobind
   saveElement(element) {
@@ -232,7 +229,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     if (left < 0) {
       left = 0;
     }
-    resizeLine.style.left = pxToRem(left) || null;
+    transform(`translateX(${pxToRem(left) || 0})`, resizeLine.style);
     return left + rectLeft;
   }
 
@@ -262,35 +259,21 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     return [pre, next];
   }
 
-  @autobind
-  handleResize() {
-    const { element } = this;
-    const { tableStore } = this.context;
-    if (element && !tableStore.hidden) {
-      if (this.nextFrameActionId !== undefined) {
-        raf.cancel(this.nextFrameActionId);
-      }
-      this.nextFrameActionId = raf(this.syncSize);
-    }
-  }
-
-  @autobind
-  @action
-  syncSize() {
-    this.overflow = this.computeOverFlow();
-  }
-
-  computeOverFlow(): boolean {
+  isOverFlow(): boolean {
     const { element } = this;
     if (element && element.textContent) {
-      const { column } = this.props;
-      const { tableStore } = this.context;
-      if (tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow) {
-        const { clientWidth, scrollWidth } = element;
-        return scrollWidth > clientWidth;
-      }
+      const { clientWidth, scrollWidth } = element;
+      return scrollWidth > clientWidth;
     }
     return false;
+  }
+
+  @autobind
+  handleOverflowHiddenBeforeChange(hidden: boolean): boolean {
+    if (hidden) {
+      return true;
+    }
+    return this.isOverFlow();
   }
 
   getHelpIcon(field?: Field) {
@@ -322,6 +305,12 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     if (sortable && name) {
       return <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
     }
+  }
+
+  @autobind
+  getHeader() {
+    const { column, dataSet } = this.props;
+    return getHeader(column, dataSet);
   }
 
   render() {
@@ -363,7 +352,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       ...style,
     };
 
-    const header = getHeader(column, dataSet);
+    const header = this.getHeader();
 
     const headerNode = isValidElement(header) ? (
       cloneElement(header, { key: 'text' })
@@ -430,23 +419,22 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       />
     );
 
-    const th = (
+    return (
       <th {...thProps}>
         {
-          this.overflow || tooltip === TableColumnTooltip.always ?
-            <Tooltip key="tooltip" title={header} placement={getPlacementByAlign(cellStyle.textAlign as ColumnAlign)}>{inner}</Tooltip> :
+          [TableColumnTooltip.always, TableColumnTooltip.overflow].includes(tooltip) ?
+            <Tooltip
+              key="tooltip"
+              title={this.getHeader}
+              placement={getPlacementByAlign(cellStyle.textAlign as ColumnAlign)}
+              onHiddenBeforeChange={tooltip === TableColumnTooltip.overflow ? this.handleOverflowHiddenBeforeChange : undefined}
+            >
+              {inner}
+            </Tooltip> :
             inner
         }
         {columnResizable && this.renderResizer()}
       </th>
-    );
-
-    return tooltip === TableColumnTooltip.overflow ? (
-      <ReactResizeObserver onResize={this.handleResize} resizeProp="width">
-        {th}
-      </ReactResizeObserver>
-    ) : (
-      th
     );
   }
 

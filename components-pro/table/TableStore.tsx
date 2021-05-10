@@ -355,7 +355,8 @@ export default class TableStore {
 
   @computed
   get customizable(): boolean {
-    if (this.columnTitleEditable || this.columnDraggable || this.columnHideable) {
+    const { customizedCode } = this.props;
+    if (customizedCode && (this.columnTitleEditable || this.columnDraggable || this.columnHideable)) {
       if ('customizable' in this.props) {
         return this.props.customizable;
       }
@@ -1077,6 +1078,12 @@ export default class TableStore {
         this.initColumns();
       }
     });
+  }
+
+  isBuiltInColumn({ key }: ColumnProps) {
+    if (isString(key)) {
+      return [DRAG_KEY, SELECTION_KEY, ROW_NUMBER_KEY, CUSTOMIZED_KEY, EXPAND_KEY].includes(key);
+    }
   }
 
   getColumnTooltip(column: ColumnProps): TableColumnTooltip {

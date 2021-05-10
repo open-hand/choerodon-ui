@@ -1,11 +1,11 @@
 import React, { Component, ReactNode } from 'react';
-import Tooltip, { AbstractTooltipProps } from '../tooltip';
+import Tooltip, { AbstractTooltipProps, RenderFunction } from '../tooltip';
 import warning from '../_util/warning';
 import { getPrefixCls } from '../configure';
 
 export interface PopoverProps extends AbstractTooltipProps {
   title?: ReactNode;
-  content?: ReactNode;
+  content?: ReactNode | RenderFunction;
 }
 
 export default class Popover extends Component<PopoverProps, {}> {
@@ -26,17 +26,18 @@ export default class Popover extends Component<PopoverProps, {}> {
     return this.tooltip.getPopupDomNode();
   }
 
-  getOverlay() {
+  getOverlay = () => {
     const { title, content } = this.props;
     const prefixCls = this.getPrefixCls();
     warning(
       !('overlay' in this.props),
       'Popover[overlay] is removed, please use Popover[content] instead',
     );
+    const header = typeof title === 'function' ? title() : title;
     return (
       <div>
-        {title && <div className={`${prefixCls}-title`}>{title}</div>}
-        <div className={`${prefixCls}-inner-content`}>{content}</div>
+        {header && <div className={`${prefixCls}-title`}>{header}</div>}
+        <div className={`${prefixCls}-inner-content`}>{typeof content === 'function' ? content() : content}</div>
       </div>
     );
   }
@@ -58,7 +59,7 @@ export default class Popover extends Component<PopoverProps, {}> {
         {...props}
         prefixCls={this.getPrefixCls()}
         ref={this.saveTooltip}
-        overlay={this.getOverlay()}
+        overlay={this.getOverlay}
       />
     );
   }

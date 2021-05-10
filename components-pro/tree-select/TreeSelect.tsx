@@ -182,6 +182,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     } = this;
     const menuPrefixCls = this.getMenuPrefixCls();
     const {
+      disabled: menuDisabled,
       textField,
       selectedKeys,
       expandedKeys,
@@ -194,7 +195,6 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         async, loadData,
       },
     } = this;
-    const menuDisabled = this.isDisabled();
     /**
      * fixed when ie the scroll width would cover the item width
      */

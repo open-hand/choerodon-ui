@@ -17,14 +17,14 @@ export default class Dropdown extends Component {
     align: PropTypes.object,
     overlayStyle: PropTypes.object,
     placement: PropTypes.string,
-    overlay: PropTypes.node,
+    overlay: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     trigger: PropTypes.array,
     showAction: PropTypes.array,
     hideAction: PropTypes.array,
     getPopupContainer: PropTypes.func,
     visible: PropTypes.bool,
     defaultVisible: PropTypes.bool,
-    overlayPlacements:PropTypes.object,
+    overlayPlacements: PropTypes.object,
   };
 
   static defaultProps = {
@@ -36,7 +36,8 @@ export default class Dropdown extends Component {
     overlayClassName: '',
     overlayStyle: {},
     defaultVisible: false,
-    onVisibleChange() {},
+    onVisibleChange() {
+    },
     placement: 'bottomLeft',
   };
 
@@ -88,17 +89,20 @@ export default class Dropdown extends Component {
     props.onVisibleChange(visible);
   };
 
-  getMenuElement() {
+  getMenuElement = () => {
     const { overlay, prefixCls } = this.props;
-    const extraOverlayProps = {
-      prefixCls: `${prefixCls}-menu`,
-      onClick: this.onClick,
-    };
-    if (typeof overlay.type === 'string') {
-      delete extraOverlayProps.prefixCls;
+    const element = typeof overlay === 'function' ? overlay() : overlay;
+    if (element) {
+      const extraOverlayProps = {
+        prefixCls: `${prefixCls}-menu`,
+        onClick: this.onClick,
+      };
+      if (typeof element.type === 'string') {
+        delete extraOverlayProps.prefixCls;
+      }
+      return cloneElement(element, extraOverlayProps);
     }
-    return cloneElement(overlay, extraOverlayProps);
-  }
+  };
 
   getPopupDomNode() {
     return this.trigger.getPopupDomNode();
@@ -138,7 +142,7 @@ export default class Dropdown extends Component {
       trigger,
       ...otherProps
     } = this.props;
-    const builtinPlacements = overlayPlacements || placements
+    const builtinPlacements = overlayPlacements || placements;
     return (
       <Trigger
         {...otherProps}
@@ -156,7 +160,7 @@ export default class Dropdown extends Component {
         popupAnimation={animation}
         popupVisible={this.state.visible}
         afterPopupVisibleChange={this.afterVisibleChange}
-        popup={this.getMenuElement()}
+        popup={this.getMenuElement}
         onPopupVisibleChange={this.onVisibleChange}
         getPopupContainer={getPopupContainer}
       >

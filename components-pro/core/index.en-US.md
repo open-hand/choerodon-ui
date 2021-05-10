@@ -21,6 +21,11 @@ title: ViewComponent
 | title | 悬浮提示，建议用[ToolTip]组件 | string  |  |
 | hidden | 是否隐藏 | boolean  | false |
 | autoFocus | 自动获取焦点，多个组件同时设置该参数时，以节点树的顺序最末的组件获取焦点 | boolean  | false |
+| accessKey | 快捷键, 通过 Alt + accessKey (或者 Shift + Alt + accessKey) 使组件聚焦 | string  |  |
+| contentEditable | 内容可编辑 | boolean \| 'true' \| 'false'  |  |
+| spellCheck | 拼写检查 | boolean \| 'true' \| 'false'  |  |
+| draggable | 是否可拖动 | boolean \| 'true' \| 'false'  |  |
+| dir | 内容的文本方向 | 'ltr' \| 'rtl'  |  |
 | size | 组件大小<未实现>，可选值 `default` `small` `large` | string  | default |
 | lang | 国际化语言编码， 默认使用localeContext.locale.lang | string  |  |
 | onFocus | 获取焦点回调 | Function |  |

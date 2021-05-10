@@ -1,4 +1,5 @@
 import React, {
+  Children,
   cloneElement,
   Component,
   CSSProperties,
@@ -11,7 +12,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
+import { action, computed, isArrayLike, runInAction } from 'mobx';
 import classNames from 'classnames';
 import raf from 'raf';
 import { DraggableProvided } from 'react-beautiful-dnd';
@@ -22,7 +23,6 @@ import max from 'lodash/max';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
@@ -48,7 +48,7 @@ import { ShowHelp } from '../field/enum';
 import Button, { ButtonProps } from '../button/Button';
 import { $l } from '../locale-context';
 import Tooltip from '../tooltip/Tooltip';
-import { DataSetEvents, FieldType, RecordStatus } from '../data-set/enum';
+import { FieldType, RecordStatus } from '../data-set/enum';
 import { LabelLayout } from '../form/enum';
 import { Commands, TableButtonProps } from './Table';
 import autobind from '../_util/autobind';
@@ -80,10 +80,6 @@ export default class TableCell extends Component<TableCellProps> {
   static contextType = TableContext;
 
   element?: HTMLSpanElement | null;
-
-  nextFrameActionId?: number;
-
-  @observable overflow?: boolean;
 
   @computed
   get cellEditor() {
@@ -121,35 +117,19 @@ export default class TableCell extends Component<TableCellProps> {
     return undefined;
   }
 
-  @computed
-  get isInnerColumn(): boolean {
-    const {
-      column: { key },
-    } = this.props;
-    return key === DRAG_KEY || key === SELECTION_KEY;
-  }
-
   componentDidMount(): void {
-    this.connect();
     const { currentEditor } = this;
     if (currentEditor) {
       currentEditor.alignEditor();
     }
   }
 
-  componentDidUpdate(): void {
-    this.disconnect();
-    this.connect();
-  }
-
   componentWillUnmount(): void {
-    this.disconnect();
     const { currentEditor } = this;
     if (currentEditor) {
       currentEditor.hideEditor();
     }
   }
-
 
   @autobind
   @action
@@ -161,70 +141,21 @@ export default class TableCell extends Component<TableCellProps> {
     }
   }
 
-  connect() {
-    const { column } = this.props;
-    const { tableStore } = this.context;
-    if (tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow) {
-      const { dataSet } = tableStore;
-      dataSet.addEventListener(DataSetEvents.update, this.handleOutputChange);
-      this.handleResize();
-    }
-  }
-
-  disconnect() {
-    const {
-      tableStore: { dataSet },
-    } = this.context;
-    dataSet.removeEventListener(DataSetEvents.update, this.handleOutputChange);
-  }
-
-  @autobind
-  handleResize() {
-    const { element } = this;
-    const { tableStore } = this.context;
-    if (element && !tableStore.hidden) {
-      if (this.nextFrameActionId !== undefined) {
-        raf.cancel(this.nextFrameActionId);
-      }
-      this.nextFrameActionId = raf(this.syncSize);
-    }
-  }
-
-  @autobind
-  handleOutputChange({ record, name }) {
-    const {
-      record: thisRecord,
-      column: { name: thisName },
-    } = this.props;
-    if (thisRecord && thisName) {
-      const field = thisRecord.getField(thisName);
-      const bind = field ? field.get('bind') : undefined;
-      if (
-        record === thisRecord &&
-        (thisName === name || (isString(bind) && bind.startsWith(`${name}.`)))
-      ) {
-        this.handleResize();
-      }
-    }
-  }
-
-  @autobind
-  @action
-  syncSize() {
-    this.overflow = this.computeOverFlow();
-  }
-
-  computeOverFlow(): boolean {
+  isOverFlow(): boolean {
     const { element } = this;
     if (element && element.textContent) {
-      const { column } = this.props;
-      const { tableStore } = this.context;
-      if (tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow) {
-        const { clientWidth, scrollWidth } = element;
-        return scrollWidth > clientWidth;
-      }
+      const { clientWidth, scrollWidth } = element;
+      return scrollWidth > clientWidth;
     }
     return false;
+  }
+
+  @autobind
+  handleOverflowHiddenBeforeChange(hidden: boolean): boolean {
+    if (hidden) {
+      return true;
+    }
+    return this.isOverFlow();
   }
 
   @autobind
@@ -501,11 +432,19 @@ export default class TableCell extends Component<TableCellProps> {
     );
   }
 
+  @autobind
+  renderTooltip(props) {
+    if (props) {
+      const { trigger } = props;
+      if (trigger) {
+        return Children.map(trigger, (item) => cloneElement<any>(item, { ref: null, className: null }));
+      }
+    }
+  }
+
   getInnerNode(prefixCls, command?: Commands[], textAlign?: ColumnAlign, onCellStyle?: CSSProperties) {
     const {
-      context: {
-        tableStore,
-      },
+      context: { tableStore },
       props: { children },
     } = this;
     if (tableStore.expandIconAsCell && children) {
@@ -519,8 +458,8 @@ export default class TableCell extends Component<TableCellProps> {
       props: { indentSize },
     } = tableStore;
     const { column, record, lock } = this.props;
-    const { name, key } = column;
     const tooltip = tableStore.getColumnTooltip(column);
+    const { name, key } = column;
     const { hasEditor } = this;
     // 计算多行编辑单元格高度
     const field = record.getField(name);
@@ -531,7 +470,7 @@ export default class TableCell extends Component<TableCellProps> {
       pristine,
     };
     let rows = 0;
-    if (field?.get('multiLine')) {
+    if (field && field.get('multiLine')) {
       rows = dataSet.props.fields?.map(fields => {
         if (fields.bind && fields.bind.split('.')[0] === name) {
           return record.getField(fields.name) || dataSet.getField(fields.name);
@@ -567,14 +506,6 @@ export default class TableCell extends Component<TableCellProps> {
       if (tooltip === TableColumnTooltip.overflow || (key === DRAG_KEY)) {
         innerProps.ref = this.saveOutput;
       }
-      // 如果为拖拽结点强制给予焦点
-      if (key === DRAG_KEY) {
-        innerProps.onMouseDown = () => {
-          if (this.element) {
-            this.element.focus();
-          }
-        };
-      }
     } else {
       innerClassName.push(`${prefixCls}-inner-auto-height`);
     }
@@ -603,7 +534,7 @@ export default class TableCell extends Component<TableCellProps> {
       <Output
         key="output"
         {...innerProps}
-        style={{...innerProps.style, ...onCellStyle}}
+        style={{ ...innerProps.style, ...onCellStyle }}
         className={innerClassName.join(' ')}
         record={record}
         renderer={this.getCellRenderer(command)}
@@ -612,8 +543,13 @@ export default class TableCell extends Component<TableCellProps> {
         showHelp={ShowHelp.none}
       />
     );
-    const text = tooltip === TableColumnTooltip.always || this.overflow ? (
-      <Tooltip key="tooltip" title={cloneElement(output, { ref: null, className: null })} placement={getPlacementByAlign(textAlign)}>
+    const text = [TableColumnTooltip.always, TableColumnTooltip.overflow].includes(tooltip) ? (
+      <Tooltip
+        key="tooltip"
+        title={this.renderTooltip}
+        placement={getPlacementByAlign(textAlign)}
+        onHiddenBeforeChange={tooltip === TableColumnTooltip.overflow ? this.handleOverflowHiddenBeforeChange : undefined}
+      >
         {output}
       </Tooltip>
     ) : (
@@ -633,7 +569,8 @@ export default class TableCell extends Component<TableCellProps> {
     const command = this.getCommand();
     const field = name ? record.getField(name) : undefined;
     const cellPrefix = `${prefixCls}-cell`;
-    const columnOnCell = !this.isInnerColumn && (onCell || tableColumnOnCell);
+    const isBuiltInColumn = tableStore.isBuiltInColumn(column);
+    const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
     const cellExternalProps: HTMLProps<HTMLTableCellElement> =
       typeof columnOnCell === 'function'
         ? columnOnCell({
@@ -674,8 +611,8 @@ export default class TableCell extends Component<TableCellProps> {
       return draggingStyle;
     };
     // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
-    const onCellStyle =  !this.isInnerColumn && tableColumnOnCell === columnOnCell &&  typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined ;
-    const td = (
+    const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
+    return (
       <td
         ref={intersectionRef}
         colSpan={colSpan}
@@ -687,13 +624,6 @@ export default class TableCell extends Component<TableCellProps> {
       >
         {inView ? this.getInnerNode(cellPrefix, command, cellStyle.textAlign as ColumnAlign, onCellStyle) : this.getInnerSimple(cellPrefix)}
       </td>
-    );
-    return tableStore.getColumnTooltip(column) === TableColumnTooltip.overflow ? (
-      <ReactResizeObserver onResize={this.handleResize} resizeProp="width">
-        {td}
-      </ReactResizeObserver>
-    ) : (
-      td
     );
   }
 

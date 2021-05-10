@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+- 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。
+- 💄 `Dropdown`: overlay 属性支持钩子函数。
+- 💄 `Popover`: title 和 content 属性支持钩子函数。
+- 💄 `Popconfirm`: title 属性支持钩子函数。
+- 💄 `<pro>Tooltip`: title 和 overlay 属性支持钩子函数。
+- 💄 `<pro>Dropdown`: overlay 属性支持钩子函数。
+- 💄 `<pro>Table`: 性能优化。
+
 ## 1.3.2
 
 `2021-05-11`
