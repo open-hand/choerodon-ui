@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized professionalBar Expand Collapse `autoHeight` does not respond to the problem.
 - 💄 `<pro>Select`: Optimized the issue of pop-up drop-down automatically when clicking to clear.
 - 💄 `<pro>Form`: Optimized tooltip help floating layer priority.
+- 🐞 `<pro>Table`: Fix the problem of constantly shaking.
 - 🐞 `<pro>Field`: Fixed getText getting object value error.
 - 🐞 `<pro>Select`: Fixed that when the value type is object, select all and reverse the wrong assignment.
 - 🐞 `<pro>TextField`: Fixed a conflict in the title display of the form when the title of the form is float and the field is range.
