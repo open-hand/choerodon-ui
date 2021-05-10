@@ -80,7 +80,7 @@ const codeCodeDynamicProps = {
   bind({ record }) {
     const field = record.get('name');
     if (field) {
-      return `code.code`;
+      return 'codeMultiple.code';
     }
   },
 };
@@ -89,7 +89,7 @@ const codeDescriptionDynamicProps = {
   bind({ record }) {
     const field = record.get('name');
     if (field) {
-      return `code.description`;
+      return 'codeMultiple.description';
     }
   },
 };
@@ -210,6 +210,9 @@ class App extends React.Component {
         type: 'object',
         label: '代码描述',
         dynamicProps: codeDynamicProps,
+        transformResponse(value, data) { 
+          return data
+        },
         transformRequest(value) {
           // 在发送请求之前对数据进行处理
           return { v: 2 };
@@ -240,14 +243,14 @@ class App extends React.Component {
         label: '代码',
         maxLength: 20,
         required: true,
-        dynamicProps: codeCodeDynamicProps,
+        bind: 'code.code',
       },
       {
         name: 'code_description',
-        dynamicProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码描述',
         defaultValue: '员工状态2',
+        bind: 'code.description',
       },
       {
         name: 'code_select',
@@ -266,7 +269,7 @@ class App extends React.Component {
       },
       {
         name: 'codeMultiple_code',
-        bind: 'codeMultiple.code',
+        dynamicProps: codeCodeDynamicProps,
         type: 'string',
         label: '代码（多值）',
         multiple: true,
@@ -274,7 +277,7 @@ class App extends React.Component {
       },
       {
         name: 'codeMultiple_description',
-        bind: 'codeMultiple.description',
+        dynamicProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码描述',
         multiple: ',',
