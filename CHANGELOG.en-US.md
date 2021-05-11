@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fixed the `maxLengths` attribute, the length language is not set separately and follows the field attribute configuration.
 - 🐞 `<pro>DataSet`: Fix the problem that if the create method passes the field value with the bind attribute and the target field has a default value, the target field will directly take the default value.
 - 🐞 `<pro>Table`：Fix customizable TS type error.
+- 🐞 `<pro>DatePicker`: Fix the problem that the endDate date will trigger two updates when startDate and endDate are related to each other by min and max.
 
 ## 1.3.1
 
