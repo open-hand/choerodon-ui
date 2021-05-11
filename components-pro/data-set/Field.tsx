@@ -600,6 +600,16 @@ export default class Field {
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);
     }
+    if (['min', 'max'].includes(propsName)) {
+      if (this.get('type') === FieldType.number) {
+        if (propsName === 'max') {
+          return MAX_SAFE_INTEGER;
+        }
+        if (propsName === 'min') {
+          return MIN_SAFE_INTEGER;
+        }
+      }
+    }
     return undefined;
   }
 
@@ -839,8 +849,8 @@ export default class Field {
     if (record) {
       const baseType = getBaseType(type);
       const customValidator = this.get('validator');
-      const max = this.get('max') === undefined ? MAX_SAFE_INTEGER : this.get('max');
-      const min = this.get('min') === undefined ? MIN_SAFE_INTEGER : this.get('min');
+      const max = this.get('max');
+      const min = this.get('min');
       const format = this.get('format') || getDateFormatByField(this, this.type);
       const pattern = this.get('pattern');
       const step = this.get('step');
