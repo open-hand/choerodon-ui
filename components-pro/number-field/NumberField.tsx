@@ -14,7 +14,7 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning from '../_util/keepRunning';
 import Icon from '../icon';
-import { getNearStepValues, getPrecision, MAX_SAFE_INTEGER, plus } from './utils';
+import { getNearStepValues, getPrecision, MIN_SAFE_INTEGER, MAX_SAFE_INTEGER, plus } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
@@ -118,6 +118,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     ...TextField.defaultProps,
     suffixCls: 'input-number',
     longPressPlus: true,
+    max: MAX_SAFE_INTEGER,
+    min: MIN_SAFE_INTEGER,
   };
 
   static format = defaultFormatNumber;

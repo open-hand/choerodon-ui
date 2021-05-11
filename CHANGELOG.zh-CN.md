@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Modal`：新增 closeOnLocationChange 属性。
 - 🌟 `<pro>Table`: 个性化新增高度设置。
 - 🌟 `<pro>Lov`: 新增 autoSelectSingle 属性，点击查询仅存在一条数据时自动选中且不弹窗。
+- 🌟 `<pro>NumberField`：max 以及 min属性设置默认值
 - 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 💄 `<pro>Table`: 优化 professionalBar 展开收起 autoHeight 未响应的问题。
 - 💄 `<pro>Select`: 优化点击清空自动弹出下拉的问题。
