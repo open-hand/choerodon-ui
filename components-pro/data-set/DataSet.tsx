@@ -1248,7 +1248,6 @@ export default class DataSet extends EventManager {
    * @param confirmMessage 提示信息或弹窗的属性
    * @return Promise
    */
-  @action
   async delete(
     records?: Record | Record[],
     confirmMessage?: ReactNode | ModalProps & confirmProps,
@@ -1286,7 +1285,7 @@ export default class DataSet extends EventManager {
   /**
    * 临时删除记录
    * @param records 记录或者记录数组
-   * @param locate 记录或者记录数组
+   * @param locate 是否需要进行定位操作
    */
   @action
   remove(records?: Record | Record[], locate?: Boolean): void {
