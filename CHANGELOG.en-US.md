@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.3.2
+
+`2021-05-11`
+
 - 🌟 `configure`: Added `lovTableCustomizable`, `lovAutoSelectSingle`, `tableColumnOnCell` properties.
 - 🌟 `<pro>Modal`: Added `closeOnLocationChange` property.
 - 🌟 `<pro>Table`: Added height settings for customization.

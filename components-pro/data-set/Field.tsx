@@ -605,9 +605,7 @@ export default class Field {
         if (propsName === 'max') {
           return MAX_SAFE_INTEGER;
         }
-        if (propsName === 'min') {
-          return MIN_SAFE_INTEGER;
-        }
+        return MIN_SAFE_INTEGER;
       }
     }
     return undefined;

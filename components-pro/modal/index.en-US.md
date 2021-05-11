@@ -44,7 +44,6 @@ title: Modal
 | okFirst | ok 按钮是否排在第一个 | boolean | true |
 | okProps | ok 按钮属性 | object |  |
 | cancelProps | cancel 按钮属性 | object |  |
-| keyboard	| 是否支持键盘 esc 关闭	| boolean	| true |
 | autoCenter	| 是否居中显示	| boolean	| false |
 | contentStyle | 内容样式 | object |  |
 | bodyStyle | 内容体样式 | object |  |

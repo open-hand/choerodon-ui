@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.3.2
+
+`2021-05-11`
+
 - 🌟 `configure`: 新增 lovTableCustomizable，lovAutoSelectSingle，tableColumnOnCell 属性。
 - 🌟 `<pro>Modal`：新增 closeOnLocationChange 属性。
 - 🌟 `<pro>Table`: 个性化新增高度设置。
