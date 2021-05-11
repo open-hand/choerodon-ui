@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 lovTableCustomizable, tableColumnOnCell 属性。
+- 🌟 `configure`: 新增 lovTableCustomizable，lovAutoSelectSingle，tableColumnOnCell 属性。
 - 🌟 `<pro>Modal`：新增 closeOnLocationChange 属性。
 - 🌟 `<pro>Table`: 个性化新增高度设置。
+- 🌟 `<pro>Lov`: 新增 autoSelectSingle 属性，点击查询仅存在一条数据时自动选中且不弹窗。
 - 💄 `<pro>Table`: 高度样式支持 calc 属性。
 - 💄 `<pro>Table`: 优化 professionalBar 展开收起 autoHeight 未响应的问题。
 - 💄 `<pro>Select`: 优化点击清空自动弹出下拉的问题。
@@ -29,7 +30,9 @@ timeline: true
 - 🐞 `<pro>DataSet`：修复新建 defaultValue 对象校验无效问题。
 - 🐞 `<pro>FormField`：修复值没变更时不会校验的问题。
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
+- 🐞 `<pro>IntlField`: 修复 maxLengths 属性，未单独设置长度语言遵循字段属性配置。
 - 🐞 `<pro>DataSet`：修复 create 方法传递带有 bind 属性的字段值且目标字段有默认值， 则目标字段会直接取默认值的问题。
+- 🐞 `<pro>Table`：修复 customizable TS 类型错误。
 
 ## 1.3.1
 

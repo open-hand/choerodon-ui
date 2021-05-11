@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovTableCustomizable`, `tableColumnOnCell` properties.
+- 🌟 `configure`: Added `lovTableCustomizable`, `lovAutoSelectSingle`, `tableColumnOnCell` properties.
 - 🌟 `<pro>Modal`: Added `closeOnLocationChange` property.
 - 🌟 `<pro>Table`: Added height settings for customization.
+- 🌟 `<pro>Lov`: Added `autoSelectSingle` property, click to query when there is only one piece of data, it will be automatically selected and the window will not pop up.
 - 💄 `<pro>Table`: Height style supports calc attribute.
 - 💄 `<pro>Table`: Optimized professionalBar Expand Collapse `autoHeight` does not respond to the problem.
 - 💄 `<pro>Select`: Optimized the issue of pop-up drop-down automatically when clicking to clear.
@@ -29,7 +30,9 @@ timeline: true
 - 🐞 `<pro>DataSet`：Fixed the invalid verification of the newly created defaultValue object.
 - 🐞 `<pro>FormField`: Fix the problem that the value will not be verified when the value is not changed.
 - 🐞 `<pro>Modal`: Fix some abnormal behaviors of Modal which not provided by ModalProvider.
+- 🐞 `<pro>IntlField`: Fixed the `maxLengths` attribute, the length language is not set separately and follows the field attribute configuration.
 - 🐞 `<pro>DataSet`: Fix the problem that if the create method passes the field value with the bind attribute and the target field has a default value, the target field will directly take the default value.
+- 🐞 `<pro>Table`：Fix customizable TS type error.
 
 ## 1.3.1
 

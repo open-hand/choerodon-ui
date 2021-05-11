@@ -92,6 +92,10 @@ export interface LovProps extends SelectProps, ButtonProps {
    * default: false
    */
   fetchSingle?: boolean;
+  /**
+   * 点击查询仅存在一条数据时自动选中
+   */
+  autoSelectSingle?: boolean;
 }
 
 @observer
@@ -105,6 +109,7 @@ export default class Lov extends Select<LovProps> {
     tableProps: PropTypes.object,
     noCache: PropTypes.bool,
     fetchSingle: PropTypes.bool,
+    autoSelectSingle: PropTypes.bool,
     /**
      * 触发查询变更的动作， default: input
      */
@@ -163,6 +168,20 @@ export default class Lov extends Select<LovProps> {
   @computed
   get popup(): boolean {
     return !this.filterText || this.modal ? false : this.statePopup;
+  }
+
+  /**
+   * 点击查询仅存在一条数据时自动选中
+   */
+  get autoSelectSingle(): boolean | undefined {
+    if ('autoSelectSingle' in this.props) {
+      return this.props.autoSelectSingle;
+    }
+    const autoSelectSingle = getConfig('lovAutoSelectSingle');
+    if (typeof autoSelectSingle !== 'undefined') {
+      return autoSelectSingle;
+    }
+    return false;
   }
 
   /**
@@ -449,12 +468,26 @@ export default class Lov extends Select<LovProps> {
   }
 
   @autobind
+  selectSingle() {
+    const { options } = this;
+    options.query().then(() => {
+      if (options.length === 1) {
+        this.choose(this.options.get(0));
+      } else {
+        this.openModal();
+      }
+    });
+  }
+
+  @autobind
   handleOpenModal() {
-    return this.isDisabled() || this.isReadOnly() ? undefined : this.openModal;
+    if (!this.isDisabled() && !this.isReadOnly()) {
+      return this.autoSelectSingle ? this.selectSingle : this.openModal;
+    }
   }
 
   getOtherProps() {
-    return omit(super.getOtherProps(), ['modalProps', 'noCache', 'tableProps', 'lovEvents', 'searchAction', 'fetchSingle']);
+    return omit(super.getOtherProps(), ['modalProps', 'noCache', 'tableProps', 'lovEvents', 'searchAction', 'fetchSingle', 'autoSelectSingle']);
   }
 
   getButtonProps() {
@@ -477,7 +510,7 @@ export default class Lov extends Select<LovProps> {
   @computed
   get loading(): boolean {
     const { options, props: { searchAction } } = this;
-    return searchAction === SearchAction.blur && options.status === DataSetStatus.loading && !this.popup;
+    return (searchAction === SearchAction.blur || Boolean(this.autoSelectSingle)) && options.status === DataSetStatus.loading && !this.popup;
   }
 
   getSuffix(): ReactNode {
