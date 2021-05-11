@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: 修复 maxLengths 属性，未单独设置长度语言遵循字段属性配置。
 - 🐞 `<pro>DataSet`：修复 create 方法传递带有 bind 属性的字段值且目标字段有默认值， 则目标字段会直接取默认值的问题。
 - 🐞 `<pro>Table`：修复 customizable TS 类型错误。
+- 🐞 `<pro>NumberField`：max以及min属性设置默认值
 
 ## 1.3.1
 

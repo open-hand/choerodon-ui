@@ -31,6 +31,7 @@ import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getDateFormatByField } from '../field/utils';
 import { getLovPara } from '../stores/utils';
 import { TimeStep } from '../date-picker/DatePicker';
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from '../number-field/utils';
 
 function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
@@ -239,14 +240,14 @@ export type FieldProps = {
    * LOV查询请求地址
    */
   lovQueryUrl?:
-    | string
-    | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
+  | string
+  | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
   /**
    * 值列表请求的axiosConfig
    */
   lookupAxiosConfig?:
-    | AxiosRequestConfig
-    | ((props: {
+  | AxiosRequestConfig
+  | ((props: {
     params?: any;
     dataSet?: DataSet;
     record?: Record;
@@ -260,8 +261,8 @@ export type FieldProps = {
    * LOV查询请求的钩子
    */
   lovQueryAxiosConfig?:
-    | AxiosRequestConfig
-    | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
+  | AxiosRequestConfig
+  | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
   /**
    * 批量值列表请求的axiosConfig
    */
@@ -274,8 +275,8 @@ export type FieldProps = {
    * 动态属性
    */
   dynamicProps?:
-    | ((props: DynamicPropsArguments) => FieldProps | undefined)
-    | { [key: string]: (DynamicPropsArguments) => any; };
+  | ((props: DynamicPropsArguments) => FieldProps | undefined)
+  | { [key: string]: (DynamicPropsArguments) => any; };
   /**
    * 快码和LOV查询时的级联参数映射
    * @example
@@ -838,8 +839,8 @@ export default class Field {
     if (record) {
       const baseType = getBaseType(type);
       const customValidator = this.get('validator');
-      const max = this.get('max');
-      const min = this.get('min');
+      const max = this.get('max') === undefined ? MAX_SAFE_INTEGER : this.get('max');
+      const min = this.get('min') === undefined ? MIN_SAFE_INTEGER : this.get('min');
       const format = this.get('format') || getDateFormatByField(this, this.type);
       const pattern = this.get('pattern');
       const step = this.get('step');
