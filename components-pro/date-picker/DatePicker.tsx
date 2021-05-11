@@ -301,7 +301,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
           if (value) {
             const momentValue = this.toMoment(value, field, true);
             if (momentValue) {
-              return this.getLimitWithType(momentValue, minOrMax);
+              return this.getLimitWithType(momentValue.clone(), minOrMax);
             }
           }
           return undefined;

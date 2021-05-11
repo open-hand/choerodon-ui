@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added height settings for customization.
 - 🌟 `<pro>Lov`: Added `autoSelectSingle` property, click to query when there is only one piece of data, it will be automatically selected and the window will not pop up.
 - 🌟 `<pro>Table`：Optimize the direction of data during the deletion process after the autoLocateAfterRemove property is turned on.
+- 🌟 `<pro>NumberField`：Set default values for `max` and `min` attributes.
 - 💄 `<pro>Table`: Height style supports calc attribute.
 - 💄 `<pro>Table`: Optimized professionalBar Expand Collapse `autoHeight` does not respond to the problem.
 - 💄 `<pro>Select`: Optimized the issue of pop-up drop-down automatically when clicking to clear.
@@ -34,6 +35,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fixed the `maxLengths` attribute, the length language is not set separately and follows the field attribute configuration.
 - 🐞 `<pro>DataSet`: Fix the problem that if the create method passes the field value with the bind attribute and the target field has a default value, the target field will directly take the default value.
 - 🐞 `<pro>Table`：Fix customizable TS type error.
+- 🐞 `<pro>DatePicker`: Fix the problem that the endDate date will trigger two updates when startDate and endDate are related to each other by min and max.
 
 ## 1.3.1
 

@@ -5,6 +5,8 @@ import { TimeStep } from '../date-picker/DatePicker';
 import { TimeUnit } from '../date-picker/enum';
 
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
+export const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER || -(2 ** 53 - 1);
+
 
 export function getPrecision(value: number): number {
   const valueString = value.toString();
