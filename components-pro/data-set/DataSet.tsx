@@ -70,11 +70,11 @@ import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 
-export type DataSetChildren = { [key: string]: DataSet };
+export type DataSetChildren = { [key: string]: DataSet; };
 
-export type Events = { [key: string]: Function };
+export type Events = { [key: string]: Function; };
 
-export type Group = { name: string, value: any, records: Record[], subGroups: Group[] };
+export type Group = { name: string, value: any, records: Record[], subGroups: Group[]; };
 
 export interface DataSetProps {
   /**
@@ -227,7 +227,7 @@ export interface DataSetProps {
    * { name_1: ds1, name_2: ds2 }
    * [ds1, ds2]
    */
-  children?: { [key: string]: string | DataSet } | DataSet[];
+  children?: { [key: string]: string | DataSet; } | DataSet[];
   /**
    * 树形数据当前节点id字段名
    */
@@ -1248,6 +1248,7 @@ export default class DataSet extends EventManager {
    * @param confirmMessage 提示信息或弹窗的属性
    * @return Promise
    */
+  @action
   async delete(
     records?: Record | Record[],
     confirmMessage?: ReactNode | ModalProps & confirmProps,
@@ -1259,8 +1260,25 @@ export default class DataSet extends EventManager {
         (await this.fireEvent(DataSetEvents.beforeDelete, { dataSet: this, records })) !== false &&
         (confirmMessage === false || (await confirm(confirmMessage && confirmMessage !== true ? confirmMessage : $l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel')
       ) {
-        this.remove(records);
-        return this.pending.add(this.write(this.destroyed, true));
+        this.remove(records, false);
+        const res = await this.pending.add(this.write(this.destroyed, true));
+        // 处理自动定位
+        const { current } = this;
+        if (current) {
+          let record;
+          if (this.props.autoLocateAfterRemove) {
+            record = this.get(0);
+            if (record) {
+              runInAction(() => {
+                record.isCurrent = true;
+              });
+            }
+          }
+          if (current !== record) {
+            this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous: current });
+          }
+        }
+        return res;
       }
     }
   }
@@ -1268,9 +1286,10 @@ export default class DataSet extends EventManager {
   /**
    * 临时删除记录
    * @param records 记录或者记录数组
+   * @param locate 记录或者记录数组
    */
   @action
-  remove(records?: Record | Record[]): void {
+  remove(records?: Record | Record[], locate?: Boolean): void {
     if (records) {
       const data = isArrayLike(records) ? records.slice() : [records];
       if (data.length && this.fireEventSync(DataSetEvents.beforeRemove, { dataSet: this, records: data }) !== false) {
@@ -1279,13 +1298,13 @@ export default class DataSet extends EventManager {
         this.fireEvent(DataSetEvents.remove, { dataSet: this, records: data });
         if (!this.current) {
           let record;
-          if (this.props.autoLocateAfterRemove) {
+          if (locate !== false && this.props.autoLocateAfterRemove) {
             record = this.get(0);
             if (record) {
               record.isCurrent = true;
             }
           }
-          if (current !== record) {
+          if (locate !== false && current !== record) {
             this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous: current });
           }
         }
@@ -2010,7 +2029,7 @@ Then the query method will be auto invoke.`,
     });
   }
 
-  private initChildren(children: { [key: string]: string | DataSet } | DataSet[]): void {
+  private initChildren(children: { [key: string]: string | DataSet; } | DataSet[]): void {
     if (isArray(children)) {
       children.forEach(childDs => {
         if (childDs instanceof DataSet) {
@@ -2215,7 +2234,7 @@ Then the query method will be auto invoke.`,
     const { dataKey, totalKey } = this;
     const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
     const data: {
-      [props: string]: any
+      [props: string]: any;
     }[] = [];
     let total;
     resp.forEach(item => {
@@ -2345,7 +2364,7 @@ Then the query method will be auto invoke.`,
    * @param page 在那个页面, 小于0时不分页
    * @param pageSizeInner 页面大小
    */
-  private generatePageQueryString(page: number, pageSizeInner?: number): { page?: number, pagesize?: number | undefined } {
+  private generatePageQueryString(page: number, pageSizeInner?: number): { page?: number, pagesize?: number | undefined; } {
     if (page >= 0) {
       const { paging, pageSize } = this;
       if (isNumber(pageSizeInner)) {
@@ -2358,7 +2377,7 @@ Then the query method will be auto invoke.`,
     return {};
   }
 
-  private generateOrderQueryString(): { sortname?: string; sortorder?: string } {
+  private generateOrderQueryString(): { sortname?: string; sortorder?: string; } {
     const { fields } = this;
     const orderField = getOrderFields(fields)[0];
     if (orderField) {
