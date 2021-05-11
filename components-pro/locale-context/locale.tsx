@@ -8,6 +8,10 @@ export interface Locale {
     show_cached_seletion;
     hide_cached_seletion;
     selection_tips;
+    select_current_page;
+    unselect_current_page;
+    select_all_page;
+    unselect_all_page;
     edit_button;
     create_button;
     save_button;

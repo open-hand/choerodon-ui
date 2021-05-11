@@ -280,6 +280,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   showSelectionTips?: boolean;
   /**
+   * 显示切换跨页全选按钮
+   */
+  showAllPageSelectionButton?: boolean;
+  /**
    * 设置行属性
    * @param {onRowProps} props
    * @return {Object} 行属性

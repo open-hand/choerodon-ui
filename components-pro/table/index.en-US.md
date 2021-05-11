@@ -76,6 +76,7 @@ subtitle: 表格
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | clientExportQuantity | 导出一次轮询数量 | number | 100 |
 | showSelectionTips | 是否显示选中记录提示  | boolean | |
+| showAllPageSelectionButton | 是否显示切换跨页全选按钮  | boolean | |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
 | clientExportQuantity | 客户端查询导出，查询数目设置  | number | |

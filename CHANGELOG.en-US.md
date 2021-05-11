@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+
+- 🌟 `<pro>DataSet`: Added `setAllPageSelection` method and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
+- 🌟 `<pro>Table`: Added `showAllPageSelectionButton` property.
 - 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `Dropdown`: The `overlay` property supports hook functions.
 - 💄 `Popover`: The `title` and `content` attributes support hook functions.

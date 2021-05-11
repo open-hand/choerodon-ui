@@ -69,14 +69,17 @@ title: DataSet
 | created | 新建的数据 | readonly observable&lt;Record[]&gt; |
 | updated | 更新的数据 | readonly observable&lt;Record[]&gt; |
 | destroyed | 暂时销毁的数据 | readonly observable&lt;Record[]&gt; |
-| selected | 选中记录，包括缓存的选中记录 | readonly observable&lt;Record[]&gt; |
+| selected | 选中记录，包括 isAllPageSelection 为 false 时缓存的选中记录 | readonly observable&lt;Record[]&gt; |
+| unSelected | 未选中记录，包括 isAllPageSelection 为 true 时缓存的未选中记录 | readonly observable&lt;Record[]&gt; |
 | currentSelected | 当前页选中记录 | readonly observable&lt;Record[]&gt; |
-| cachedSelected | 缓存的选中记录 | readonly observable&lt;Record[]&gt; |
+| currentUnSelected | 当前页未选中记录 | readonly observable&lt;Record[]&gt; |
+| cachedSelected | isAllPageSelection 为 false 时缓存的选中记录 或 isAllPageSelection 为 true 时缓存的未选中记录 | readonly observable&lt;Record[]&gt; |
 | length | 数据量 | readonly observable&lt;number&gt; |
 | queryDataSet | 查询数据源 | observable&lt;DataSet&gt; |
 | parent | 级联头数据源 | readonly observable&lt;DataSet&gt; |
 | children | 所有级联行数据源 | readonly \[key:string\]: DataSet} |
 | dirty | 含有状态不是 sync 的记录及 dirty 为 true 的记录 | readonly observable&lt;boolean&gt;} |
+| isAllPageSelection | 是否是跨页全选状态， 请配合 unSelected 一起做跨页选择数据提交， 需要接口支持 | readonly observable&lt;boolean&gt;} |
 
 ### DataSet Methods
 
@@ -138,6 +141,7 @@ title: DataSet
 | setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | modifiedCheck(message) | 变更检查。 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage |  |
+| setAllPageSelection(enabled) | 切换是否跨页全选。 | `enabled` - 是否开启 |  |
 
 ### DataSet Events
 

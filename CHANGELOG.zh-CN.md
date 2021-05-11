@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: 新增 setAllPageSelection 方法 and isAllPageSelection, unSelected, currentUnSelected 值。
+- 🌟 `<pro>Table`: 新增 showAllPageSelectionButton 属性。
 - 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `Dropdown`: overlay 属性支持钩子函数。
 - 💄 `Popover`: title 和 content 属性支持钩子函数。

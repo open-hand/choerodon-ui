@@ -431,7 +431,9 @@ class App extends React.Component {
         header="User"
         style={{ height: 200 }}
         rowNumber
-        parityRow summary="BASIC DEMO"
+        showAllPageSelectionButton
+        parityRow
+        summary="BASIC DEMO"
       >
         <Column
           name="userid"
