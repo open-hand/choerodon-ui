@@ -35,6 +35,4 @@ title: API
 | titleField | 节点文字对应数据源的字段，只在绑定数据源时起效                                 | string              |        |
 | selection  | selection 为 false Tree checkable 为 true 可以实现整个 treenode 点击触发 check | string \| boolean |       |
 
-dataSet 数据形式采用打平的结构，并且存在有 Id 和 parentId 的结构
-
 更多案例和属性请参考 [Tree](/zh/cmp/data-display/tree/)。

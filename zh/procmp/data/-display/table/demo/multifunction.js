@@ -65,20 +65,18 @@ const nameDynamicProps = {
 const codeCodeDynamicProps = {
   // 代码code_code值绑定 为 字段code 的 值列表的值字段为code.codevalue
   bind({ record }) {
-    const field = record.getField('code');
+    const field = record.get('name');
     if (field) {
-      const valueField = field.get('valueField');
-      return `code.${valueField}`;
+      return 'codeMultiple.code';
     }
   },
 };
 
 const codeDescriptionDynamicProps = {
   bind({ record }) {
-    const field = record.getField('code');
+    const field = record.get('name');
     if (field) {
-      const textField = field.get('textField');
-      return `code.${textField}`;
+      return 'codeMultiple.description';
     }
   },
 };
@@ -162,10 +160,15 @@ class App extends React.Component {
         help: '主键，区分用户',
       },
       {
+        name: 'name1',
+        ignore: 'always',
+      },
+      {
         name: 'name',
         type: 'intl',
         label: '姓名',
         dynamicProps: nameDynamicProps,
+        bind: 'name1',
         ignore: 'clean',
       },
       {
@@ -195,6 +198,7 @@ class App extends React.Component {
         min: 10,
         max: 100,
         step: 0.5,
+        defaultValue: [10, 100],
       },
       {
         name: 'code',
@@ -204,6 +208,9 @@ class App extends React.Component {
         transformRequest(value) {
           // 在发送请求之前对数据进行处理
           return { v: 2 };
+        },
+        defaultValue: {
+          code: 'HR.EMPLOYEE_STATUS',
         },
       },
       {
@@ -228,13 +235,14 @@ class App extends React.Component {
         label: '代码',
         maxLength: 20,
         required: true,
-        dynamicProps: codeCodeDynamicProps,
+        bind: 'code.code',
       },
       {
         name: 'code_description',
-        dynamicProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码描述',
+        defaultValue: '员工状态2',
+        bind: 'code.description',
       },
       {
         name: 'code_select',
@@ -253,17 +261,19 @@ class App extends React.Component {
       },
       {
         name: 'codeMultiple_code',
-        bind: 'codeMultiple.code',
+        dynamicProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码（多值）',
         multiple: true,
+        defaultValue: ['x', 'y'],
       },
       {
         name: 'codeMultiple_description',
-        bind: 'codeMultiple.description',
+        dynamicProps: codeCodeDynamicProps,
         type: 'string',
         label: '代码描述',
         multiple: ',',
+        defaultValue: 'a,b',
       },
       {
         name: 'sex',
@@ -347,7 +357,7 @@ class App extends React.Component {
     console.log(userDs.toJSONData());
     console.log(userDs.toJSONData(true));
     console.log(userDs.toJSONData(false, true));
-    userDs.create({ other: { enemy: [{}, {}] } });
+    userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx', name: 'Hugh' });
   };
 
   removeAllData = () => {
@@ -356,6 +366,18 @@ class App extends React.Component {
 
   deleteAllData = () => {
     this.userDs.deleteAll();
+  };
+
+  handleReset = () => {
+    this.userDs.selected.map((record) => {
+      // 勾选新增的数据删除，编辑的重置
+      if (record.status === 'add') {
+        this.userDs.remove(record);
+      } else {
+        record.reset();
+      }
+      return null;
+    });
   };
 
   copyButton = (
@@ -385,6 +407,12 @@ class App extends React.Component {
   deleteAllButton = (
     <Button icon="delete" onClick={this.deleteAllData} key="deleteAll">
       全部删除
+    </Button>
+  );
+
+  selectResetButton = (
+    <Button icon="undo" onClick={this.handleReset} key="selectReset">
+      勾选重置
     </Button>
   );
 
@@ -420,6 +448,7 @@ class App extends React.Component {
       this.insertButton,
       this.removeAllButton,
       this.deleteAllButton,
+      this.selectResetButton,
     ];
     return (
       <Table

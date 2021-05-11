@@ -115,7 +115,6 @@ class App extends React.Component {
       <Table
         customizable
         border={false}
-        customizedCode="customized"
         rowHeight={40}
         key="user"
         dataSet={this.userDs}
@@ -124,6 +123,7 @@ class App extends React.Component {
         columnTitleEditable
         dragColumnAlign="left"
         columnsDragRender={this.columnsDragRender}
+        style={{ height: 'calc(100vh - 100px)' }}
       >
         <Column header="组合">
           <Column header="子组合">

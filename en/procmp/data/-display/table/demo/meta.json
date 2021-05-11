@@ -71,7 +71,7 @@
         "en": "Custom inline"
       },
       "description": {
-        "zh": "通过 editor 自定义控制行内编辑\n",
+        "zh": "通过 editor 自定义控制行内编辑。\n",
         "en": "Custom inline.\n"
       },
       "order": 4,
@@ -86,7 +86,7 @@
         "en": "Tree Data"
       },
       "description": {
-        "zh": "树形 Table 的功能展示。\n",
+        "zh": "树形 Table 的功能展示。 - Tree Pro 组件需求 dataSet 数据形式采用打平的结构，通过 Id 和 parentId 字段声明来帮助组件内部构成树形处理。\n > 官网 mock 源数据 https://github.com/open-hand/choerodon-ui/blob/master/site/theme/mock/tree.js\n",
         "en": "Tree Data.\n"
       },
       "order": 5,
@@ -116,7 +116,7 @@
         "en": "Tree Data"
       },
       "description": {
-        "zh": "异步加载数据并对父亲节点进行分页处理。\n",
+        "zh": "异步加载数据并对父亲节点进行分页处理，树形分页需要根节点 parentId 为 null。\n",
         "en": "Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.onExpand event trigger，parent paging\n"
       },
       "order": 7,

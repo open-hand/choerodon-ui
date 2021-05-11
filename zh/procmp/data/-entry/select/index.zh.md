@@ -1,6 +1,6 @@
 ---
 title: Select
-subtitle: 选择框
+subtitle: 下拉选择框
 order: 0
 ---
 

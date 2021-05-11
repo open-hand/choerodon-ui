@@ -191,6 +191,8 @@ DataSet.
 | dirty          | 数据是否发生变更， 包含级联数据源是否变更       | boolean                   |
 | cascadeParent  | 级联父数据                                      | Record \| undefined        |
 | index          | 在数据源中的索引                                | number                    |
+| editing        | 编辑中状态                                | boolean                    |
+| pending        | 等待中状态， 包括树形子数据异步加载                                | boolean                    |
 
 ### Record Methods
 
@@ -209,6 +211,7 @@ DataSet.
 | validate(all, noCascade) | 校验记录 | `all` - 校验所有字段，默认为 false，只校验修改或新增字段 `noCascade` - 为 true 时，不校验级联数据 | Promise&lt;boolean&gt; |
 | getCascadeRecords(childName) | 根据级联名获取子级联数据 | `childName` - 级联名 | Record[] |
 | getField(fieldName) | 根据字段名获取字段 | `fieldName` - 字段名 | Field |
+| addField(fieldName, fieldProps) | 增加新字段 | `fieldName` - 字段名，`fieldProps` - 字段属性 | Field |
 | clone() | 克隆记录，自动剔除主键值 |  | Record |
 | ready() | 判断记录是否准备就绪 |  | Promise |
 | reset() | 重置更改 |  |  |
@@ -231,8 +234,8 @@ DataSet.
 | pattern | 正则校验 | string \| RegExp |  |
 | maxLength | 最大长度 | number |  |
 | minLength | 最小长度 | number |  |
-| max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | number \| MomentInput \| fieldName |  |
-| min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName |  |
+| max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | number \| MomentInput \| fieldName | MAX_SAFE_INTEGER(number 类型) |
+| min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName | MIN_SAFE_INTEGER(number 类型) |
 | step | 步距 | number \| { hour: number, minute: number, second: number } |  |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
 | precision | 小数点位数 | number |  |

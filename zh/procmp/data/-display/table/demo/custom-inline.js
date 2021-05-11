@@ -42,13 +42,28 @@ class App extends React.Component {
       submit: ({ data }) => console.log('submit data', data),
     },
   });
+
   handleEdit = (record) => {
     record.setState('editing', true);
   };
+
   handleAdd = () => {
     const record = this.userDs.create({}, 0);
     record.setState('editing', true);
   };
+
+  handleReset = () => {
+    this.userDs.selected.map((record) => {
+      // 勾选新增的数据删除，编辑的重置
+      if (record.status === 'add') {
+        this.userDs.remove(record);
+      } else {
+        record.reset();
+      }
+      return null;
+    });
+  };
+
   handleCancel = (record) => {
     if (record.status === 'add') {
       this.userDs.remove(record);
@@ -87,6 +102,7 @@ class App extends React.Component {
     }
     return [<span className="action-link">{btns}</span>];
   };
+
   render() {
     const buttons = [
       <Button icon="playlist_add" onClick={this.handleAdd} key="add">
@@ -95,6 +111,9 @@ class App extends React.Component {
       'save',
       'delete',
       'reset',
+      <Button icon="undo" onClick={this.handleReset} key="selectReset">
+        勾选重置
+      </Button>,
     ];
     return (
       <Table key="user" buttons={buttons} dataSet={this.userDs}>
@@ -117,4 +136,5 @@ class App extends React.Component {
     );
   }
 }
+
 ReactDOM.render(<App />, document.getElementById('container'));

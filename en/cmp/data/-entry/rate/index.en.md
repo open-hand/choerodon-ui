@@ -1,5 +1,6 @@
 ---
 title: Rate
+subtitle: 评分
 order: 0
 ---
 

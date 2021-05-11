@@ -1,5 +1,6 @@
 ---
 title: Statistic
+subtitle: 数值统计
 order: 0
 ---
 

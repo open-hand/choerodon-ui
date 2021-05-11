@@ -6,8 +6,8 @@ title: API
 
 | 参数 | 说明   | 类型   | 默认值 |
 | ---- | ------ | ------ | ------ |
-| min  | 最小值 | number |        |
-| max  | 最大值 | number |        |
+| min  | 最小值 | number |    MIN_SAFE_INTEGER   |
+| max  | 最大值 | number |   MAX_SAFE_INTEGER     |
 | step | 步距   | number |        |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
 | longPressPlus | 长按累加开关  | boolean | true |

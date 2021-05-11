@@ -1,5 +1,6 @@
 ---
 title: Table
+subtitle: 表格
 order: 0
 ---
 

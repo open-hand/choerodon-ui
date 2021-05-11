@@ -120,7 +120,7 @@
         "zh": "浮动标签。\n",
         "en": "Float Label.\n"
       },
-      "ignores": ["theme1", "theme3"],
+      "ignores": ["theme1", "theme2", "theme3"],
       "order": 6,
       "screenshot": "",
       "height": 644,

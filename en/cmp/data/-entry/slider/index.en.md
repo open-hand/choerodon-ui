@@ -1,5 +1,6 @@
 ---
 title: Slider
+subtitle: 滑动输入条
 order: 0
 ---
 

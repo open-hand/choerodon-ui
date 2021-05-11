@@ -1,5 +1,6 @@
 ---
 title: InputNumber
+subtitle: 数字输入框
 order: 0
 ---
 

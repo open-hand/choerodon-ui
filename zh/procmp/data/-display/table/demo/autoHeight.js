@@ -40,18 +40,21 @@ class App extends React.Component {
     ],
   });
 
- demoDs = new DataSet({
+  demoDs = new DataSet({
     autoCreate: true,
-    fields: [
-      { name: 'autoHeight', defaultValue: true },
-    ],
+    fields: [{ name: 'autoHeight', defaultValue: true }],
   });
 
   render() {
     return (
       <div style={{ height: '500px' }}>
         <div style={{ height: '100%' }}>
-          <Table autoHeight={{ type: 'maxHeight', diff: 20 }} key="user" dataSet={this.userDs} pristine>
+          <Table
+            autoHeight={{ type: 'maxHeight', diff: 20 }}
+            key="user"
+            dataSet={this.userDs}
+            pristine
+          >
             <Column name="userid" />
             <Column name="age" />
             <Column name="enable" />
