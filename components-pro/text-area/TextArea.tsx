@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
-import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { TextField, TextFieldProps } from '../text-field/TextField';
@@ -24,6 +23,7 @@ function getResizeProp(resize: ResizeType) {
 export interface TextAreaProps extends TextFieldProps {
   cols?: number;
   rows?: number;
+  wrap?: string;
   resize?: ResizeType;
   autoSize?: boolean | AutoSizeType;
   onResize?: (width: number, height: number, target: Element | null) => void;
@@ -56,24 +56,31 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   // eslint-disable-next-line camelcase
   static __PRO_TEXTAREA = true;
 
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'resize',
+      'autoSize',
+      'onResize',
+    ]);
+  }
+
   getOtherProps() {
-    const { resize = ResizeType.none } = this.props;
-    const otherProps = omit(super.getOtherProps(), ['resize', 'autoSize', 'onResize']);
+    const { resize = ResizeType.none, autoSize } = this.props;
+    const otherProps = super.getOtherProps();
     const { style = {} } = otherProps;
     style.resize = resize;
     if (resize !== ResizeType.none) {
       style.transition = 'none';
     }
-    const { autoSize } = this.props;
-    let textAreaStyles = {};
     if (autoSize) {
       const { minRows, maxRows } = autoSize as AutoSizeType;
       otherProps.rows = minRows;
-      if (this.element) {
-        textAreaStyles = calculateNodeHeight(this.element, true, minRows, maxRows);
+      const { element } = this;
+      if (element) {
+        Object.assign(style, calculateNodeHeight(element, true, minRows, maxRows));
       }
     }
-    otherProps.style = { ...style, ...textAreaStyles };
+    otherProps.style = style;
     return otherProps;
   }
 

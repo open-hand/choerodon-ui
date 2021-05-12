@@ -1,6 +1,6 @@
 import React, { cloneElement, Component, isValidElement, ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { action, IReactionDisposer, reaction } from 'mobx';
+import { action, IReactionDisposer, observable, reaction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import raf from 'raf';
@@ -20,13 +20,10 @@ import autobind from '../_util/autobind';
 import { TextAreaProps } from '../text-area/TextArea';
 import { ResizeType } from '../text-area/enum';
 import { ColumnLock } from './enum';
+import transform from '../_util/transform';
 
 export interface TableEditorProps extends ElementProps {
   column: ColumnProps;
-}
-
-export interface TableEditorState {
-  height?: number;
 }
 
 function isTextArea(editor: ReactElement<FormFieldProps>): editor is ReactElement<TextAreaProps> {
@@ -43,11 +40,13 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   static contextType = TableContext;
 
-  state: TableEditorState = {};
-
   editorProps?: any;
 
   width?: any;
+
+  @observable height?: number;
+
+  @observable rendered?: boolean;
 
   inTab: boolean = false;
 
@@ -129,6 +128,9 @@ export default class TableEditor extends Component<TableEditorProps> {
   @autobind
   saveWrap(node) {
     this.wrap = node;
+    if (node) {
+      this.alignEditor(this.cellNode);
+    }
   }
 
   @autobind
@@ -297,24 +299,28 @@ export default class TableEditor extends Component<TableEditorProps> {
       cellNode = findCell(tableStore, getColumnKey(column));
     }
     this.cellNode = cellNode;
-    if (editor && wrap && cellNode) {
-      const { offsetLeft, offsetTop, offsetWidth, offsetHeight, offsetParent } = cellNode;
-      const parentNode: HTMLTableCellElement | null = cellNode.parentNode as (HTMLTableCellElement | null);
-      const left = parentNode && offsetParent === parentNode ? parentNode.offsetLeft + offsetLeft : offsetLeft;
-      const top = parentNode && offsetParent === parentNode ? parentNode.offsetTop + offsetTop : offsetTop;
-      if (this.originalCssText === undefined) {
-        this.originalCssText = wrap.style.cssText;
+    if (cellNode) {
+      const { offsetHeight } = cellNode;
+      if (offsetHeight !== this.height) {
+        this.height = offsetHeight;
       }
-      const height = pxToRem(offsetHeight);
-      const width = pxToRem(offsetWidth);
-      this.width = width;
-      wrap.style.cssText = `transform:translate(${pxToRem(left)}, ${pxToRem(top)});width:${width}`;
-      const { height: stateHeight } = this.state;
-      if (height !== stateHeight) {
-        this.setState({ height });
+      if (!this.rendered) {
+        this.rendered = true;
+      } else if (editor && wrap) {
+        const { offsetLeft, offsetTop, offsetWidth, offsetParent } = cellNode;
+        const parentNode: HTMLTableCellElement | null = cellNode.parentNode as (HTMLTableCellElement | null);
+        const left = parentNode && offsetParent === parentNode ? parentNode.offsetLeft + offsetLeft : offsetLeft;
+        const top = parentNode && offsetParent === parentNode ? parentNode.offsetTop + offsetTop : offsetTop;
+        if (this.originalCssText === undefined) {
+          this.originalCssText = wrap.style.cssText;
+        }
+        const width = pxToRem(offsetWidth);
+        this.width = width;
+        wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left)}, ${pxToRem(top)})`)}`;
       }
     }
   }
+
 
   @autobind
   hideEditor() {
@@ -398,7 +404,6 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   renderEditor(): ReactElement<FormFieldProps> | undefined {
-    const { height } = this.state;
     const { column } = this.props;
     const {
       tableStore: { dataSet, currentEditRecord, pristine, inlineEdit },
@@ -413,6 +418,7 @@ export default class TableEditor extends Component<TableEditorProps> {
     const cellEditor = getEditorByColumnAndRecord(column, record);
     if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
       this.editorProps = cellEditor.props;
+      const { height } = this;
       const { style = {}, ...otherProps } = this.editorProps;
       if (height !== undefined) {
         style.height = pxToRem(height);
@@ -438,25 +444,27 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   render() {
-    const editor = this.renderEditor();
-    if (editor) {
-      const {
-        column: { lock },
-      } = this.props;
-      const { tableStore } = this.context;
-      const { prefixCls } = tableStore;
-      const props: any = {
-        className: classNames(`${prefixCls}-editor`, { [`${prefixCls}-editor-lock`]: isStickySupport() && lock }),
-      };
-      const editorProps: any = {};
-      if (isTextArea(editor)) {
-        const { resize = ResizeType.vertical } = editor.props;
-        editorProps.resize = resize;
-        if (resize !== ResizeType.none) {
-          editorProps.onResize = this.handleEditorResize;
+    if (this.rendered) {
+      const editor = this.renderEditor();
+      if (editor) {
+        const {
+          column: { lock },
+        } = this.props;
+        const { tableStore } = this.context;
+        const { prefixCls } = tableStore;
+        const props: any = {
+          className: classNames(`${prefixCls}-editor`, { [`${prefixCls}-editor-lock`]: isStickySupport() && lock }),
+        };
+        const editorProps: any = {};
+        if (isTextArea(editor)) {
+          const { resize = ResizeType.vertical } = editor.props;
+          editorProps.resize = resize;
+          if (resize !== ResizeType.none) {
+            editorProps.onResize = this.handleEditorResize;
+          }
         }
+        return <div {...props} ref={this.saveWrap}>{cloneElement(editor, editorProps)}</div>;
       }
-      return <div {...props} ref={this.saveWrap}>{cloneElement(editor, editorProps)}</div>;
     }
     return null;
   }

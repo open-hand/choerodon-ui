@@ -1,12 +1,11 @@
 import React, { CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
-import defer from "lodash/defer";
+import defer from 'lodash/defer';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
@@ -374,12 +373,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @computed
-  get editable(): boolean {
-    const { combo } = this.observableProps;
-    return !this.isReadOnly() && (!!this.searchable || !!combo);
-  }
-
-  @computed
   get searchable(): boolean {
     const { searchable = getConfig('selectSearchable') } = this.observableProps;
     return !!searchable;
@@ -424,6 +417,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   @autobind
   saveMenu(node) {
     this.menu = node;
+  }
+
+  isEditable(): boolean {
+    return super.isEditable() && (!!this.searchable || !!this.observableProps.combo);
   }
 
   checkValue() {
@@ -499,8 +496,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     this.forcePopupAlign();
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'searchable',
       'searchMatcher',
       'paramMatcher',
@@ -526,7 +523,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       'reverse',
       'selectAllButton',
     ]);
-    return otherProps;
   }
 
   getObservableProps(props, context) {
@@ -583,18 +579,18 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   getOtherNextNode(): ReactNode {
-    const {
-      options,
-      textField,
-      valueField,
-      observableProps: { commonItem },
-      props: { maxCommonTagCount, maxCommonTagPlaceholder, maxCommonTagTextLength },
-    } = this;
-    if (!options) {
-      return undefined;
-    }
-    const values = this.getValues();
+    const { commonItem } = this.observableProps;
     if (commonItem) {
+      const { options } = this;
+      if (!options) {
+        return undefined;
+      }
+      const {
+        textField,
+        valueField,
+        props: { maxCommonTagCount, maxCommonTagPlaceholder, maxCommonTagTextLength },
+      } = this;
+      const values = this.getValues();
       const valueLength = commonItem.length;
       const tags = commonItem.slice(0, maxCommonTagCount).map((item) => {
         let text = item;
@@ -645,14 +641,16 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   getMenu(menuProps: object = {}): ReactNode {
     const {
       options,
-      textField,
-      valueField,
-      props: { dropdownMenuStyle, optionRenderer, onOption },
     } = this;
     if (!options) {
       return null;
     }
-    const menuDisabled = this.isDisabled();
+    const {
+      disabled: menuDisabled,
+      textField,
+      valueField,
+      props: { dropdownMenuStyle, optionRenderer, onOption },
+    } = this;
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
     const selectedKeys: Key[] = [];
@@ -819,7 +817,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   getTriggerIconFont(): string {
-    return this.searchable && this.isFocused && !this.isReadOnly() ? 'search' : 'baseline-arrow_drop_down';
+    return this.searchable && this.isFocused && !this.readOnly ? 'search' : 'baseline-arrow_drop_down';
   }
 
   @autobind
@@ -833,7 +831,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         e.preventDefault();
       }
     }
-    if (!this.isDisabled() && !this.isReadOnly() && menu) {
+    if (!this.disabled && !this.readOnly && menu) {
       if (this.popup && menu.onKeyDown(e)) {
         stopEvent(e);
       } else {
@@ -872,13 +870,15 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   isMultipleBlockDisabled(v) {
     const {
-      options,
       props: { onOption },
     } = this;
     const findRecord = this.findByValue(v);
-    const optionProps = findRecord ? onOption({ dataSet: options, record: findRecord }) : undefined;
+    const optionProps = findRecord ? onOption === defaultOnOption ? defaultOnOption({ record: findRecord }) : onOption({
+      dataSet: this.options,
+      record: findRecord,
+    }) : undefined;
     const optionDisabled = (optionProps && optionProps.disabled);
-    return (findRecord && findRecord.get(DISABLED_FIELD) === true) || optionDisabled || this.isDisabled();
+    return (findRecord && findRecord.get(DISABLED_FIELD) === true) || optionDisabled || this.disabled;
   }
 
   handleKeyDownFirstLast(e, menu: Menu, direction: number) {
@@ -1302,7 +1302,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         }
         return v === value;
       });
-      return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect) ;
+      return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect);
     });
     this.setValue(selectedOptions.map(this.processRecordToObject, this));
   }
@@ -1314,9 +1314,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   handlePopupHiddenChange(hidden: boolean) {
-    const { field } = this;
     const noCache = this.getProp('noCache');
     if (!hidden) {
+      const { field } = this;
       if (field) {
         field.fetchLookup(noCache);
       }

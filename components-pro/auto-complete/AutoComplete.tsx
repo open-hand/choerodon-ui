@@ -1,6 +1,5 @@
-import React, { ReactNode, ReactElement, Key } from 'react';
+import React, { Key, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import omit from 'lodash/omit';
 import Menu, { Item } from 'choerodon-ui/lib/rc-components/menu';
 import { action } from 'mobx';
 import Record from '../data-set/Record';
@@ -47,12 +46,11 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
     return null;
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'searchable',
       'matcher',
     ]);
-    return otherProps;
   }
 
   @autobind
@@ -97,17 +95,17 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
 
   @autobind
   getMenu(menuProps: object = {}): ReactNode {
-    const {
-      options,
-      textField,
-      valueField,
-      props: { dropdownMenuStyle, optionRenderer, onOption, matcher = defaultMatcher },
-    } = this;
+    const { options } = this;
 
     if (!options) {
       return null;
     }
-    const menuDisabled = this.isDisabled();
+    const {
+      disabled: menuDisabled,
+      textField,
+      valueField,
+      props: { dropdownMenuStyle, optionRenderer, onOption, matcher = defaultMatcher },
+    } = this;
     const optGroups: ReactElement<any>[] = [];
     const selectedKeys: Key[] = [];
 

@@ -24,6 +24,8 @@ export interface TableWrapperProps extends ElementProps {
 
 @observer
 export default class TableWrapper extends Component<TableWrapperProps, any> {
+  static displayName = 'TableWrapper';
+
   static contextType = TableContext;
 
   static propTypes = {
@@ -150,13 +152,11 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   @computed
   get tableWidth() {
     const { lock, hasBody } = this.props;
-    const {
-      tableStore: { overflowY, overflowX },
-    } = this.context;
+    const { tableStore } = this.context;
 
-    if (overflowX) {
+    if (tableStore.overflowX) {
       let tableWidth = this.leafColumnsWidth;
-      if (tableWidth !== undefined && overflowY && lock !== ColumnLock.left && !hasBody) {
+      if (tableWidth !== undefined && lock !== ColumnLock.left && !hasBody && tableStore.overflowY) {
         tableWidth += measureScrollbar();
       }
       return pxToRem(tableWidth);
@@ -167,11 +167,12 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   render() {
     const { children, lock, hasBody } = this.props;
     const {
-      tableStore: { overflowY, height, prefixCls },
+      tableStore,
     } = this.context;
+    const { prefixCls, props: { summary } } = tableStore;
     const editors = hasBody && this.getEditors();
     const className = classNames({
-      [`${prefixCls}-last-row-bordered`]: hasBody && !overflowY && height !== undefined,
+      [`${prefixCls}-last-row-bordered`]: hasBody && !tableStore.overflowY && tableStore.height !== undefined,
     });
     const table = (
       <table
@@ -179,6 +180,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
         ref={lock ? undefined : this.saveRef}
         className={className}
         style={{ width: this.tableWidth }}
+        summary={summary}
       >
         {this.getColGroup()}
         {children}

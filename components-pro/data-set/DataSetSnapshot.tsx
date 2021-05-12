@@ -1,3 +1,4 @@
+import { Handler } from 'choerodon-ui/lib/_util/EventManager';
 import DataSet, { DataSetChildren } from './DataSet';
 import Record from './Record';
 import { DataToJSON } from './enum';
@@ -10,7 +11,7 @@ export default class DataSetSnapshot {
 
   current?: Record;
 
-  events?: { [eventName: string]: [Function, boolean][] };
+  events?: { [eventName: string]: Handler[] };
 
   originalData: Record[];
 

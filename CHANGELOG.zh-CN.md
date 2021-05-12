@@ -15,6 +15,17 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: 新增 setAllPageSelection 方法 and isAllPageSelection, unSelected, currentUnSelected 值。
+- 🌟 `<pro>Table`: 新增 showAllPageSelectionButton 属性。
+- 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。
+- 💄 `Dropdown`: overlay 属性支持钩子函数。
+- 💄 `Popover`: title 和 content 属性支持钩子函数。
+- 💄 `Popconfirm`: title 属性支持钩子函数。
+- 💄 `<pro>Tooltip`: title 和 overlay 属性支持钩子函数。
+- 💄 `<pro>Dropdown`: overlay 属性支持钩子函数。
+- 💄 `<pro>Table`: 性能优化。
+- 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
+
 ## 1.3.2
 
 `2021-05-11`

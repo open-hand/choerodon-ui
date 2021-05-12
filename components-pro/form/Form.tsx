@@ -154,6 +154,8 @@ export interface FormProps extends DataSetComponentProps {
    */
   separateSpacing?: SeparateSpacing;
   axios?: AxiosInstance;
+  acceptCharset?: string;
+  encType?: string;
 }
 
 const labelWidthPropTypes = PropTypes.oneOfType([
@@ -458,10 +460,6 @@ export default class Form extends DataSetComponent<FormProps> {
     return undefined;
   }
 
-  isDisabled(): boolean {
-    return super.isDisabled() || this.context.disabled;
-  }
-
   isReadOnly() {
     return this.props.readOnly || this.context.readOnly;
   }
@@ -474,6 +472,7 @@ export default class Form extends DataSetComponent<FormProps> {
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
       labelLayout: 'labelLayout' in props ? props.labelLayout : context.labelLayout,
       labelAlign: 'labelAlign' in props ? props.labelAlign : context.labelAlign,
+      disabled: context.disabled || props.disabled,
       labelWidth: defaultTo(props.labelWidth, context.labelWidth),
       pristine: 'pristine' in props ? props.pristine : context.pristine,
       columns: props.columns,
@@ -483,8 +482,8 @@ export default class Form extends DataSetComponent<FormProps> {
     };
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'record',
       'dataIndex',
       'onSuccess',
@@ -500,6 +499,10 @@ export default class Form extends DataSetComponent<FormProps> {
       'excludeUseColonTagList',
       'separateSpacing',
     ]);
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
     otherProps.onSubmit = this.handleSubmit;
     otherProps.onReset = this.handleReset;
     if (!otherProps.name) {
@@ -558,7 +561,7 @@ export default class Form extends DataSetComponent<FormProps> {
     }
   }
 
-  rasterizedChildren() {
+  rasterizedChildren(formReadOnly: boolean) {
     const {
       dataSet,
       record,
@@ -640,7 +643,7 @@ export default class Form extends DataSetComponent<FormProps> {
       const label = getProperty(props, 'label', dataSet, record);
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
-      const readOnly = getProperty(props, 'readOnly', dataSet, record) || this.isReadOnly();
+      const readOnly = getProperty(props, 'readOnly', dataSet, record) || formReadOnly;
       const {
         rowSpan = 1,
         colSpan = 1,
@@ -809,8 +812,10 @@ export default class Form extends DataSetComponent<FormProps> {
       record,
       dataIndex,
       observableProps,
+      disabled,
     } = this;
     const { formNode } = this.context;
+    const readOnly = this.isReadOnly();
     const value = {
       formNode: formNode || this,
       dataSet,
@@ -820,10 +825,10 @@ export default class Form extends DataSetComponent<FormProps> {
       labelAlign,
       labelLayout,
       pristine,
-      disabled: this.isDisabled(),
-      readOnly: this.isReadOnly(),
+      disabled,
+      readOnly,
     };
-    let children: ReactNode = this.rasterizedChildren();
+    let children: ReactNode = this.rasterizedChildren(readOnly);
     if (!formNode) {
       children = (
         <form {...this.getMergedProps()} noValidate>

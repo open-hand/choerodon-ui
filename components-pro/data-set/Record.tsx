@@ -42,7 +42,10 @@ const IDGen: IterableIterator<number> = (function* (start: number) {
   }
 })(1000);
 
-const EXPANDED_KEY = '__EXPANDED_KEY__';
+const EXPANDED_KEY = '__EXPANDED_KEY__';  // TODO:Symbol
+const SELECTABLE_KEY = '__SELECTABLE_KEY__';  // TODO:Symbol
+const SELECT_KEY = '__SELECT_KEY__';  // TODO:Symbol
+const UNSELECT_KEY = '__UNSELECT_KEY__';  // TODO:Symbol
 
 export default class Record {
   id: number;
@@ -96,9 +99,43 @@ export default class Record {
 
   @observable status: RecordStatus;
 
-  @observable selectable: boolean;
+  @computed
+  get selectable(): boolean {
+    return this.getState(SELECTABLE_KEY);
+  }
 
-  @observable isSelected: boolean;
+  set selectable(selectable: boolean) {
+    runInAction(() => {
+      if (!selectable) {
+        this.isSelected = false;
+      }
+      this.setState(SELECTABLE_KEY, selectable);
+    });
+  }
+
+  get isDataSetInAllPageSelection(): boolean {
+    const { dataSet } = this;
+    if (dataSet) {
+      return dataSet.isAllPageSelection;
+    }
+    return false;
+  }
+
+  @computed
+  get isSelected(): boolean {
+    if (this.isDataSetInAllPageSelection) {
+      return !this.getState(UNSELECT_KEY);
+    }
+    return this.getState(SELECT_KEY);
+  }
+
+  set isSelected(isSelected: boolean) {
+    if (this.isDataSetInAllPageSelection) {
+      this.setState(UNSELECT_KEY, !isSelected);
+    } else {
+      this.setState(SELECT_KEY, isSelected);
+    }
+  }
 
   @observable isCurrent: boolean;
 
@@ -841,7 +878,7 @@ export default class Record {
       ...dynamicFields,
       ...dynamicObjectBindFields,
       ...dynamicBindFields,
-    ]
+    ];
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {

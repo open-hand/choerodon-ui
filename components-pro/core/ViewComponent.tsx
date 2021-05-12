@@ -1,11 +1,10 @@
-import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
+import { AriaAttributes, Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, computed, observable } from 'mobx';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
-import merge from 'lodash/merge';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -20,46 +19,17 @@ import localeContext from '../locale-context';
 // 组件对内响应的事件函数名以 handleXXX 命名.
 // ----------------------------------------------------------------------
 
-export interface ViewComponentProps
-  extends MouseEventComponentProps,
-    KeyboardEventComponentProps,
-    ElementProps {
+type Booleanish = boolean | 'true' | 'false';
+
+export interface ElementProps {
   /**
    * 组件id
    */
   id?: string;
   /**
-   *  是否禁用
-   */
-  disabled?: boolean;
-  /**
    * 键盘Tab键焦点序号，设为-1时不会获得焦点，设为0时为节点树的顺序。
    */
   tabIndex?: number;
-  /**
-   * 悬浮提示，建议用ToolTip组件
-   */
-  title?: ReactNode;
-  /**
-   * 自动获取焦点，多个组件同时设置该参数时，以节点树的顺序最末的组件获取焦点
-   */
-  autoFocus?: boolean;
-  /**
-   * 组件大小<未实现>
-   * 可选值 `default` `small` `large`
-   */
-  size?: Size;
-  /**
-   * 获取焦点回调
-   */
-  onFocus?: FocusEventHandler<any>;
-  /**
-   * 失去焦点回调
-   */
-  onBlur?: FocusEventHandler<any>;
-}
-
-export interface ElementProps {
   /**
    * 组件key
    */
@@ -95,11 +65,36 @@ export interface ElementProps {
   /**
    * 拼写校验
    */
-  spellCheck?: boolean;
+  spellCheck?: Booleanish;
+  /**
+   * 自动获取焦点，多个组件同时设置该参数时，以节点树的顺序最末的组件获取焦点
+   */
+  autoFocus?: boolean;
+  /**
+   * 内容的文本方向
+   */
+  dir?: string;
+  /**
+   * 快捷键, 通过 Alt + accessKey (或者 Shift + Alt + accessKey) 使组件聚焦
+   */
+  accessKey?: string;
+  /**
+   * 内容可编辑
+   */
+  contentEditable?: Booleanish | 'inherit';
+  /**
+   * 是否可拖动
+   */
+  draggable?: Booleanish;
 }
 
 /** 响应鼠标事件组件 */
 export interface MouseEventComponentProps {
+  /**
+   * 右键单击回调
+   */
+  onAuxClick?: MouseEventHandler<any>;
+  onAuxClickCapture?: MouseEventHandler<any>;
   /**
    * 单击回调
    */
@@ -111,7 +106,7 @@ export interface MouseEventComponentProps {
   onDoubleClick?: MouseEventHandler<any>;
   onDoubleClickCapture?: MouseEventHandler<any>;
   /**
-   * 右点击回调
+   * 右键菜单回调
    */
   onContextMenu?: MouseEventHandler<any>;
   onContextMenuCapture?: MouseEventHandler<any>;
@@ -158,14 +153,52 @@ export interface KeyboardEventComponentProps {
    * 键盘按下时的回调
    */
   onKeyDown?: KeyboardEventHandler<any>;
+  onKeyDownCapture?: KeyboardEventHandler<any>;
   /**
    * 键盘抬起时的回调
    */
   onKeyUp?: KeyboardEventHandler<any>;
+  onKeyUpCapture?: KeyboardEventHandler<any>;
   /**
    * 键盘敲击后的回调
    */
   onKeyPress?: KeyboardEventHandler<any>;
+  onKeyPressCapture?: KeyboardEventHandler<any>;
+}
+
+/** 焦点事件组件 */
+export interface FocusEventComponentProps {
+  /**
+   * 获取焦点回调
+   */
+  onFocus?: FocusEventHandler<any>;
+  onFocusCapture?: FocusEventHandler<any>;
+  /**
+   * 失去焦点回调
+   */
+  onBlur?: FocusEventHandler<any>;
+  onBlurCapture?: FocusEventHandler<any>;
+}
+
+export interface ViewComponentProps
+  extends MouseEventComponentProps,
+    KeyboardEventComponentProps,
+    FocusEventComponentProps,
+    AriaAttributes,
+    ElementProps {
+  /**
+   *  是否禁用
+   */
+  disabled?: boolean;
+  /**
+   * 悬浮提示，建议用ToolTip组件
+   */
+  title?: ReactNode;
+  /**
+   * 组件大小<未实现>
+   * 可选值 `default` `small` `large`
+   */
+  size?: Size;
 }
 
 /* eslint-disable react/no-unused-prop-types */
@@ -204,6 +237,22 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
      * 自动获取焦点，多个组件同时设置该参数时，以节点树的顺序最末的组件获取焦点
      */
     autoFocus: PropTypes.bool,
+    /**
+     * 快捷键, 通过 Alt + accessKey (或者 Shift + Alt + accessKey) 使组件聚焦
+     */
+    accessKey: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    /**
+     * 内容的文本方向
+     */
+    dir: PropTypes.string,
+    /**
+     * 内容可编辑
+     */
+    contentEditable: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    /**
+     * 是否可拖动
+     */
+    draggable: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     /**
      * 内链样式
      */
@@ -312,6 +361,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     return localeContext.locale.lang;
   }
 
+  @computed
+  get disabled(): boolean {
+    return this.isDisabled();
+  }
+
   constructor(props, context) {
     super(props, context);
     this.setObservableProps(props, context);
@@ -322,15 +376,20 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   getMergedProps(props = {}) {
+    const wrapperProps = this.getWrapperProps(props);
+    const otherProps = this.getOtherProps();
     return {
-      ...merge(this.getWrapperProps(props), this.getOtherProps()),
-      className: this.getMergedClassNames(),
+      ...wrapperProps,
+      ...otherProps,
+      style: { ...wrapperProps.style, ...otherProps.style },
+      className: classNames(wrapperProps.className, otherProps.className),
     };
   }
 
   getObservableProps(props, _context: any) {
     return {
       lang: props.lang,
+      disabled: props.disabled,
     };
   }
 
@@ -347,9 +406,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     );
   }
 
-  getOtherProps() {
-    const { tabIndex, lang, style = {} } = this.props;
-    let otherProps: any = omit(this.props, [
+  getOmitPropsKeys(): string[] {
+    const keys: string[] = [
       'prefixCls',
       'suffixCls',
       'className',
@@ -361,9 +419,9 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       'onBlur',
       'children',
       'dataSet',
-    ]);
-    if (this.isDisabled()) {
-      otherProps = omit(otherProps, [
+    ];
+    if (this.disabled) {
+      return keys.concat([
         'onClick',
         'onMouseUp',
         'onMouseDown',
@@ -376,6 +434,15 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
         'onKeyPress',
         'onContextMenu',
       ]);
+    }
+    return keys;
+  }
+
+  getOtherProps() {
+    const { props, disabled } = this;
+    const { tabIndex, lang, style = {} } = props;
+    const otherProps: any = omit(props, this.getOmitPropsKeys());
+    if (disabled) {
       if (tabIndex !== undefined) {
         otherProps.tabIndex = -1;
       }
@@ -384,7 +451,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       otherProps.onBlur = this.handleBlur;
     }
     otherProps.ref = this.elementReference;
-    otherProps.disabled = this.isDisabled();
+    otherProps.disabled = disabled;
     otherProps.className = this.getClassName();
     otherProps.style = {};
     if (this.height) {
@@ -430,9 +497,9 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       `${prefixCls}-wrapper`,
       className,
       {
-        [`${prefixCls}-sm`]: size === 'small',
-        [`${prefixCls}-lg`]: size === 'large',
-        [`${prefixCls}-disabled`]: this.isDisabled(),
+        [`${prefixCls}-sm`]: size === Size.small,
+        [`${prefixCls}-lg`]: size === Size.large,
+        [`${prefixCls}-disabled`]: this.disabled,
         [`${prefixCls}-focused`]: this.useFocusedClassName() && this.isFocus,
       },
       ...args,
@@ -440,7 +507,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   isDisabled(): boolean {
-    const { disabled = false } = this.props;
+    const { disabled = false } = this.observableProps;
     return disabled;
   }
 
@@ -517,7 +584,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   componentWillMount() {
     const { tabIndex, autoFocus } = this.props;
-    if (!this.isDisabled() && autoFocus && (tabIndex === undefined || tabIndex > -1)) {
+    if (autoFocus && (tabIndex === undefined || tabIndex > -1) && !this.disabled) {
       defer(() => this.focus());
     }
   }

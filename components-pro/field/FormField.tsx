@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import isPromise from 'is-promise';
-import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
@@ -117,6 +116,11 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 对照表单id
    */
   form?: string;
+  formAction?: string;
+  formEncType?: string;
+  formMethod?: string;
+  formNoValidate?: boolean;
+  formTarget?: string;
   /**
    * 对照record在DataSet中的index
    * @default dataSet.currentIndex
@@ -370,7 +374,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   lock: boolean = false;
 
   // 多选中出现了校验值的数量大于一那么输入框不需要存在校验信息展示
-  mutipleValidateMessageLength: number = 0;
+  multipleValidateMessageLength: number = 0;
 
   @observable rangeTarget?: 0 | 1;
 
@@ -381,7 +385,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const { field } = this;
     if (field) {
       if (!field.get('defaultValidationMessages')) {
-        field.validator.props.defaultValidationMessages = this.getValidatorProps().defaultValidationMessages;
+        field.validator.defaultValidationMessages = this.defaultValidationMessages;
       }
       return field.validator;
     }
@@ -414,11 +418,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   get isControlled(): boolean {
-    return this.props.value !== undefined;
+    return this.getControlled(this.props);
   }
 
   get pristine(): boolean {
-    return this.props.pristine || this.context.pristine;
+    return this.observableProps.pristine;
   }
 
   @computed
@@ -426,9 +430,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return {};
   }
 
-  // @computed
+  @computed
   get editable(): boolean {
-    return !this.isDisabled() && !this.isReadOnly();
+    return this.isEditable();
   }
 
   @computed
@@ -515,6 +519,15 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.getProp('range');
   }
 
+  @computed
+  get readOnly(): boolean {
+    return this.isReadOnly();
+  }
+
+  getControlled(props): boolean {
+    return props.value !== undefined;
+  }
+
   @autobind
   defaultRenderer({ text, repeat, maxTagTextLength }: RenderProps): ReactNode {
     return repeat !== undefined &&
@@ -532,7 +545,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   multiLineValidator(field): Validator {
     if (field) {
       if (!field.get('defaultValidationMessages')) {
-        field.validator.props.defaultValidationMessages = this.getValidatorProps().defaultValidationMessages;
+        field.validator.defaultValidationMessages = this.defaultValidationMessages;
       }
       return field.validator;
     }
@@ -558,6 +571,19 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return isArrayLike(value) ? !value.length : isEmpty(value);
   }
 
+  isReadOnly(): boolean {
+    const { readOnly } = this.observableProps;
+    return (
+      readOnly ||
+      this.pristine ||
+      (this.field && this.field.get('readOnly'))
+    );
+  }
+
+  isEditable() {
+    return !this.disabled && !this.readOnly;
+  }
+
   getObservableProps(props, context) {
     return {
       ...super.getObservableProps(props, context),
@@ -566,11 +592,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
       value: 'value' in props ? props.value : this.observableProps ? this.observableProps.value : props.defaultValue,
+      disabled: context.disabled || props.disabled,
+      readOnly: context.readOnly || props.readOnly || (this.getControlled(props) && !props.onChange && !props.onInput),
+      pristine: context.pristine || props.pristine,
     };
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'record',
       'defaultValue',
       'dataIndex',
@@ -597,8 +626,13 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'newLine',
       'fieldClassName',
       'preventRenderer',
+      'isFlat',
     ]);
-    otherProps.onChange = !this.isDisabled() && !this.isReadOnly() ? this.handleChange : noop;
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
+    otherProps.onChange = !this.disabled && !this.readOnly ? this.handleChange : noop;
     otherProps.onKeyDown = this.handleKeyDown;
     otherProps.onCompositionStart = this.handleCompositionStart;
     otherProps.onCompositionEnd = this.handleChange;
@@ -612,7 +646,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         [`${prefixCls}-invalid`]: !this.isValid,
         [`${prefixCls}-float-label`]: this.hasFloatLabel,
         [`${prefixCls}-required`]: this.getProp('required'),
-        [`${prefixCls}-readonly`]: this.getProp('readOnly'),
+        [`${prefixCls}-readonly`]: this.readOnly,
       },
       ...args,
     );
@@ -644,10 +678,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       if (label) {
         const prefixCls = getProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
-        const readOnly = this.getProp('readOnly');
         const classString = classNames(`${prefixCls}-label`, {
           [`${prefixCls}-required`]: required,
-          [`${prefixCls}-readonly`]: readOnly,
+          [`${prefixCls}-readonly`]: this.readOnly,
         });
         return (
           <div className={`${prefixCls}-label-wrapper`}>
@@ -847,16 +880,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return '';
   }
 
-  isReadOnly(): boolean {
-    const { readOnly } = this.context;
-    return (
-      readOnly ||
-      (this.getProp('readOnly') as boolean) ||
-      this.pristine ||
-      (this.isControlled && !this.props.onChange && !this.props.onInput)
-    );
-  }
-
   getDataSetValue(): any {
     const { record, pristine, name } = this;
     if (record) {
@@ -889,7 +912,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       props: { renderer = this.defaultRenderer, name, maxTagTextLength },
     } = this;
     let processValue;
-    if (field && (field.lookup || field.options)) {
+    if (field && (field.lookup || field.get('options') || field.get('lovCode'))) {
       processValue = field.getText(value) as string;
     }
     // 值集中不存在 再去取直接返回的值
@@ -1030,7 +1053,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @action
   setValue(value: any): void {
-    if (!this.isReadOnly()) {
+    if (!this.readOnly) {
       if (
         this.multiple || this.range
           ? isArrayLike(value) && !value.length
@@ -1149,7 +1172,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
     if (readOnly) {
       if (multiLineFields.length) {
-        this.mutipleValidateMessageLength = 0;
+        this.multipleValidateMessageLength = 0;
         return (
           <>
             {multiLineFields.map(fieldItem => {
@@ -1173,7 +1196,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                 }
                 // 值集中不存在 再去取直接返回的值
                 const text = this.processText(processValue || this.getText(record?.get(fieldItem.get('name'))));
-                this.mutipleValidateMessageLength++;
+                this.multipleValidateMessageLength++;
                 const inner = record?.status === RecordStatus.add ? '' :
                   <span className={`${prefixCls}-multi-value-invalid`}>{text}</span>;
                 const validationInner = validationHidden ? inner : (
@@ -1241,7 +1264,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   isMultipleBlockDisabled(_v): boolean {
-    return this.isDisabled();
+    return this.disabled;
   }
 
   renderMultipleValues(readOnly?: boolean) {
@@ -1256,11 +1279,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const repeats: Map<any, number> = new Map<any, number>();
     const blockClassName = classNames(
       {
-        [`${prefixCls}-multiple-block-disabled`]: this.isDisabled(),
+        [`${prefixCls}-multiple-block-disabled`]: this.disabled,
       },
       `${prefixCls}-multiple-block`,
     );
-    this.mutipleValidateMessageLength = 0;
+    this.multipleValidateMessageLength = 0;
     const tags = values.slice(0, maxTagCount).map((v, index) => {
       const key = this.getValueKey(v);
       const repeat = repeats.get(key) || 0;
@@ -1279,9 +1302,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         const validationMessage =
           validationResult && this.renderValidationMessage(validationResult);
         if (validationMessage) {
-          this.mutipleValidateMessageLength++;
+          this.multipleValidateMessageLength++;
         }
-        const closeBtn = !disabled && !this.isReadOnly() && (
+        const closeBtn = !disabled && !this.readOnly && (
           <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />
         );
         const inner = readOnly ? (
@@ -1360,13 +1383,17 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   isDisabled(): boolean {
-    const { disabled } = this.context;
-    if (disabled || this.getProp('disabled')) {
+    if (super.isDisabled()) {
       return true;
     }
-    const { field, record } = this;
+    const { field } = this;
     if (field) {
+      const disabled = field.get('disabled');
+      if (disabled) {
+        return true;
+      }
       const cascadeMap = field.get('cascadeMap');
+      const { record } = this;
       if (
         cascadeMap &&
         (!record || Object.keys(cascadeMap).some(cascade => {
@@ -1379,7 +1406,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         return true;
       }
     }
-    return super.isDisabled();
+    return false;
   }
 
   @autobind
@@ -1399,47 +1426,37 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return defaultTo(field && field.get(propName), propName in observableProps ? observableProps[propName] : this.props[propName]);
   }
 
+  @autobind
+  getTooltipValidationMessage(): ReactNode {
+    const { _inTable } = this.props;
+    if (!_inTable && !(!!(this.multiple && this.getValues().length) && !this.getProp('validator') || this.multipleValidateMessageLength > 0)) {
+      const validationMessage = this.renderValidationMessage();
+      if (!this.isValidationMessageHidden(validationMessage)) {
+        return validationMessage;
+      }
+    }
+  }
+
   render() {
-    const validationMessage = this.renderValidationMessage();
     const wrapper = this.renderWrapper();
     const help = this.renderHelpMessage();
-    const { _inTable } = this.props;
-    /**
-     * 用户自定义校验存在的话说明用户保证校验情况那么多选这些应该存在校验信息
-     * If the user-defined verification exists, it means that the user guarantees
-     * that the verification situation is so many. These should have verification information
-     */
-    const customValidator = this.getProp('validator');
-    return this.hasFloatLabel ? (
-        [
-          isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
-          <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
-            {validationMessage}
-          </Animate>,
-          help,
-        ]
-      ) :
-      _inTable ?
-        <>
-          {wrapper}
-          {help}
-        </>
-        : (
-          <Tooltip
-            suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-            title={
-              (!!(this.multiple && this.getValues().length) && !customValidator || this.mutipleValidateMessageLength > 0) ||
-              this.isValidationMessageHidden(validationMessage)
-                ? null
-                : validationMessage
-            }
-            theme="light"
-            placement="bottomLeft"
-          >
-            {wrapper}
-            {help}
-          </Tooltip>
-        );
+    return this.hasFloatLabel ? [
+      isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
+      <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
+        {this.renderValidationMessage()}
+      </Animate>,
+      help,
+    ] : (
+      <Tooltip
+        suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
+        title={this.getTooltipValidationMessage}
+        theme="light"
+        placement="bottomLeft"
+      >
+        {wrapper}
+        {help}
+      </Tooltip>
+    );
   }
 }
 

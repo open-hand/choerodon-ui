@@ -1,12 +1,11 @@
 import React, { ComponentClass, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, observable, autorun } from 'mobx';
+import { action, autorun, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { EditorConfiguration } from 'codemirror';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ObserverFormField from '../field';
@@ -63,7 +62,7 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
   midText: string;
 
   constructor(props, content) {
-    super(props, content)
+    super(props, content);
     autorun(() => {
       // 在绑定dataSet的情况下
       // 当手动修改过codeArea里面的值以后 再使用record.set去更新值 组件不会更新
@@ -74,13 +73,13 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
       // 当数据不存在存在错误的时候即使特地将其去格式化也依旧会被格式化
       // 因此需要使用中间变量进行处理
       const { formatter } = this.props;
-      const recordValue = this.getValue()
+      const recordValue = this.getValue();
       const value = formatter ? formatter.getFormatted(recordValue) : recordValue;
       // 判断跟中间值是否一致 通过这个判断 数据的来源是 blur的时候设置的值 还是直接通过外部进行修改的值
       if (recordValue !== this.midText) {
-        this.setText(value)
+        this.setText(value);
       }
-    })
+    });
   }
 
   @autobind
@@ -107,8 +106,17 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     return { ...defaultCodeMirrorOptions, ...options };
   }
 
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'formatHotKey',
+      'unFormatHotKey',
+      'editorDidMount',
+    ]);
+  }
+
   getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), ['onChange', 'formatHotKey', 'unFormatHotKey', 'editorDidMount']);
+    const otherProps = super.getOtherProps();
+    delete otherProps.onChange;
     otherProps.onKeyDown = this.handleCodeMirrorKeyDown;
     return otherProps;
   }
@@ -123,7 +131,7 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
 
   renderWrapper(): ReactNode {
     if (CodeMirror) {
-      this.cmOptions.readOnly = this.isDisabled() ? 'nocursor' : this.isReadOnly();
+      this.cmOptions.readOnly = this.disabled ? 'nocursor' : this.readOnly;
       const text = this.getTextNode();
       return (
         <div {...this.getWrapperProps()}>
@@ -167,8 +175,8 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     const { formatter } = this.props;
     // 更新DataSet的值之前，先去拿到原始的raw格式
     const codeMirrorText = codeMirrorInstance.getValue();
-    const value = formatter ? formatter.getRaw(codeMirrorText) : codeMirrorText
-    this.midText = value
+    const value = formatter ? formatter.getRaw(codeMirrorText) : codeMirrorText;
+    this.midText = value;
     this.setValue(value);
   };
 

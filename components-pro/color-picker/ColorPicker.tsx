@@ -12,7 +12,8 @@ function getNodeRect(node): ClientRect {
   return node.getBoundingClientRect();
 }
 
-export interface ColorPickerProps extends TriggerFieldProps {}
+export interface ColorPickerProps extends TriggerFieldProps {
+}
 
 @observer
 export default class ColorPicker extends TriggerField<ColorPickerProps> {
@@ -28,7 +29,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   selectPointer: HTMLDivElement | null;
 
-  eventManager: EventManager = new EventManager(typeof window !== 'undefined' && document);
+  eventManager: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
 
   hue: HTMLDivElement | null;
 
@@ -243,17 +244,17 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     const result = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(results);
     return result
       ? {
-          r: parseInt(result[1], 16),
-          g: parseInt(result[2], 16),
-          b: parseInt(result[3], 16),
-          a: 1,
-        }
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+        a: 1,
+      }
       : {
-          r: 255,
-          g: 0,
-          b: 0,
-          a: 1,
-        };
+        r: 255,
+        g: 0,
+        b: 0,
+        a: 1,
+      };
   }
 
   rgbToHSV(r, g, b, a) {
@@ -414,7 +415,8 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     this.setColor(this.getValue());
   }
 
-  handlePopupAnimateEnd() {}
+  handlePopupAnimateEnd() {
+  }
 
   getPopupStyleFromAlign(): CSSProperties | undefined {
     return undefined;

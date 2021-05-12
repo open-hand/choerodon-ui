@@ -9,7 +9,7 @@ import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { action, get, toJS } from 'mobx';
+import { action, computed, get, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -280,6 +280,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   showSelectionTips?: boolean;
   /**
+   * 显示切换跨页全选按钮
+   */
+  showAllPageSelectionButton?: boolean;
+  /**
    * 设置行属性
    * @param {onRowProps} props
    * @return {Object} 行属性
@@ -545,6 +549,10 @@ export interface TableProps extends DataSetComponentProps {
    * 可以修改由于样式导致的虚拟高度和rowHeight不一致
    */
   virtualRowHeight?: number;
+  /**
+   * 摘要
+   */
+  summary?: string;
 }
 
 @observer
@@ -737,6 +745,13 @@ export default class Table extends DataSetComponent<TableProps> {
   wrapperWidth: number[] = [];
 
   wrapperWidthTimer?: number;
+
+  @computed
+  get tableContext() {
+    return {
+      tableStore: this.tableStore,
+    };
+  }
 
   get currentRow(): HTMLTableRowElement | null {
     const { tableStore: { prefixCls } } = this;
@@ -1129,13 +1144,12 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'columns',
       'header',
       'footer',
       'border',
-      'style',
       'selectionMode',
       'alwaysShowRowBox',
       'onRow',
@@ -1193,10 +1207,17 @@ export default class Table extends DataSetComponent<TableProps> {
       'dragRow',
       'clientExportQuantity',
       'treeQueryExpanded',
+      'summary',
     ]);
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
-    if (rowHeight !== 'auto') {
+    if (rowHeight === 'auto') {
+      delete otherProps.style;
+    } else {
       otherProps.style = { lineHeight: pxToRem(rowHeight) };
     }
     return otherProps;
@@ -1334,7 +1355,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      tableStore,
+      tableContext,
       tableStore: { prefixCls, virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
         style,
@@ -1353,7 +1374,6 @@ export default class Table extends DataSetComponent<TableProps> {
       },
     } = this;
     const content = this.getTable();
-    const context = { tableStore };
     const pagination = this.getPagination(TablePaginationPosition.top);
     const tableSpinProps = getConfig('tableSpinProps');
     const styleHeight = style ? toPx(style.height) : 0;
@@ -1361,7 +1381,7 @@ export default class Table extends DataSetComponent<TableProps> {
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
         <div {...this.getWrapperProps()}>
-          <TableContext.Provider value={context}>
+          <TableContext.Provider value={tableContext}>
             <ModalProvider>
               {this.getHeader()}
               <TableQueryBar

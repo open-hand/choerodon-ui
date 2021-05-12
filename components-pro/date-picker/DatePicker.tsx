@@ -169,12 +169,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @computed
-  get editable(): boolean {
-    const mode = this.getViewMode();
-    return super.editable && mode !== ViewMode.week;
-  }
-
-  @computed
   get min(): Moment | undefined | null {
     return this.getLimit('min');
   }
@@ -190,8 +184,19 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @observable mode?: ViewMode;
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), ['mode', 'filter', 'cellRenderer', 'maxLength', 'minLength']);
+  isEditable(): boolean {
+    const mode = this.getViewMode();
+    return super.isEditable() && mode !== ViewMode.week;
+  }
+
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'mode',
+      'filter',
+      'cellRenderer',
+      'maxLength',
+      'minLength',
+    ]);
   }
 
   getDefaultViewMode() {
@@ -360,7 +365,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleKeyDown(e) {
-    if (!this.isDisabled() && !this.isReadOnly()) {
+    if (!this.disabled && !this.readOnly) {
       const el = this.popup ? this.view || this : this;
       switch (e.keyCode) {
         case KeyCode.RIGHT:

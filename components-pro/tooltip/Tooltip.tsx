@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
-import Trigger, { TriggerProps } from '../trigger/Trigger';
+import Trigger, { RenderFunction, TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
 import autobind from '../_util/autobind';
@@ -24,8 +24,6 @@ export type TooltipPlacement =
 
 export type TooltipTheme = 'light' | 'dark';
 
-export type RenderFunction = () => React.ReactNode;
-
 export interface TooltipProps {
   prefixCls?: string;
   suffixCls?: string;
@@ -36,6 +34,7 @@ export interface TooltipProps {
   builtinPlacements?: Object;
   hidden?: boolean;
   defaultHidden?: boolean;
+  onHiddenBeforeChange?: (hidden: boolean) => boolean;
   onHiddenChange?: (hidden: boolean) => void;
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
@@ -197,13 +196,16 @@ export default class Tooltip extends Component<TooltipProps, any> {
     );
   }
 
-  getContent() {
+  getContent(...props) {
     const { title, overlay } = this.props;
     if (typeof overlay === 'function') {
-      return overlay();
+      return overlay(...props);
     }
     if (overlay) {
       return overlay;
+    }
+    if (typeof title === 'function') {
+      return title(...props);
     }
     return title;
   }
@@ -218,11 +220,27 @@ export default class Tooltip extends Component<TooltipProps, any> {
     }
   }
 
-  render() {
+  @autobind
+  renderPopupContent(...props) {
     const { translate } = this.state;
+    const { theme } = this.props;
+    const content = this.getContent(...props);
+    if (content) {
+      return (
+        <PopupContent
+          content={content}
+          theme={theme}
+          prefixCls={this.prefixCls}
+          translate={translate}
+        />
+      );
+    }
+  }
+
+  render() {
     const {
       prefixCls,
-      props: { children, placement, theme, onHiddenChange, trigger, defaultHidden, hidden, ...restProps },
+      props: { children, placement, onHiddenChange, onHiddenBeforeChange, trigger, defaultHidden, hidden, ...restProps },
     } = this;
     // 修复特殊情况为0，以及 undefined 出现的报错情况
     const child = Children.count(children) ? Children.map(children, node => (
@@ -231,32 +249,23 @@ export default class Tooltip extends Component<TooltipProps, any> {
       )
     )) : null;
 
-    const extraProps: TriggerProps = { ...restProps };
     if ('hidden' in this.props) {
-      extraProps.popupHidden = hidden;
+      (restProps as TriggerProps).popupHidden = hidden!;
     }
-    const content = this.getContent();
+    delete restProps.theme;
     return !isNil(child) ? (
       <Trigger
         prefixCls={prefixCls}
         action={trigger}
         builtinPlacements={this.placements}
         popupPlacement={placement}
-        popupContent={
-          content && (
-            <PopupContent
-              content={content}
-              theme={theme}
-              prefixCls={prefixCls}
-              translate={translate}
-            />
-          )
-        }
+        popupContent={this.renderPopupContent}
+        onPopupHiddenBeforeChange={onHiddenBeforeChange}
         onPopupHiddenChange={onHiddenChange}
         onPopupAlign={this.handlePopupAlign}
         defaultPopupHidden={defaultHidden}
         onMouseDown={noop}
-        {...extraProps}
+        {...restProps}
       >
         {child}
       </Trigger>

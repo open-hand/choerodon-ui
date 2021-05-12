@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { Radio, RadioProps } from '../radio/Radio';
@@ -89,13 +88,12 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     });
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'defaultChecked',
       'unCheckedValue',
       'unCheckedChildren',
       'indeterminate',
-      'isFlat',
     ]);
   }
 

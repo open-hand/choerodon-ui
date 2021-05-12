@@ -1,7 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import { action, computed, observable } from 'mobx';
 import { PropTypes as MobxPropTypes } from 'mobx-react';
@@ -86,16 +85,14 @@ export interface TriggerFieldProps extends TextFieldProps {
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
 }
 
-export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<
-  T & TriggerFieldProps
-> {
+export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<T & TriggerFieldProps> {
   static displayName = 'TriggerField';
 
   static propTypes = {
     /**
      * 下拉框的自定义内容
      */
-    popupContent: PropTypes.element,
+    popupContent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /**
      * 下拉框的自定义样式名
      */
@@ -179,8 +176,8 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     return findDOMNode(this);
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'popupContent',
       'popupCls',
       'editable',
@@ -200,13 +197,24 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     return {};
   }
 
+  @autobind
+  renderPopupContent() {
+    const { popupContent } = this.props;
+    if (popupContent === undefined) {
+      return this.getPopupContent();
+    }
+    if (popupContent instanceof Function) {
+      return popupContent(this.getPopupProps());
+    }
+    return popupContent;
+  }
+
   getWrappedEditor() {
     const {
       prefixCls,
       props: {
         popupCls,
         popupStyle,
-        popupContent,
         hidden,
         trigger,
         triggerShowDelay,
@@ -214,20 +222,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         getPopupContainer,
       },
     } = this;
-    let content;
-    if (popupContent !== undefined) {
-      if (popupContent instanceof Function) {
-        content = popupContent(this.getPopupProps());
-      } else {
-        content = popupContent;
-      }
-    } else {
-      content = this.getPopupContent();
-    }
     return (
       <Trigger
         ref={node => (this.trigger = node)}
-        action={this.isReadOnly() || this.isDisabled() ? [] : trigger}
+        action={this.readOnly || this.disabled ? [] : trigger}
         focusDelay={triggerShowDelay}
         blurDelay={triggerHiddenDelay}
         mouseEnterDelay={triggerShowDelay}
@@ -235,7 +233,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         prefixCls={prefixCls}
         popupCls={popupCls}
         popupStyle={popupStyle}
-        popupContent={content}
+        popupContent={this.renderPopupContent}
         popupPlacement="bottomLeft"
         popupHidden={hidden || !this.popup}
         builtinPlacements={BUILT_IN_PLACEMENTS}
@@ -255,7 +253,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     const { prefixCls } = this;
     return super.getWrapperClassNames(...args, {
       [`${prefixCls}-expand`]: this.popup,
-      [`${prefixCls}-not-editable`]: !this.isDisabled() && !this.editable,
+      [`${prefixCls}-not-editable`]: !this.disabled && !this.editable,
     });
   }
 
@@ -291,7 +289,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   expand() {
     this.popupTask.cancel();
-    if (!this.isReadOnly() && !this.popup) {
+    if (!this.readOnly && !this.popup) {
       this.popupTask.delay(this.props.triggerShowDelay as number, () => {
         this.setPopup(true);
       });
@@ -300,7 +298,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   collapse() {
     this.popupTask.cancel();
-    if (!this.isReadOnly() && this.popup) {
+    if (!this.readOnly && this.popup) {
       this.popupTask.delay(this.props.triggerHiddenDelay as number, () => {
         this.setPopup(false);
       });
