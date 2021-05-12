@@ -55,7 +55,7 @@
     "async-validator": "1.x",
     "choerodon-ui-font": "0.2.x",
     "classnames": "~2.2.6",
-    "codemirror": "5.44.0",
+    "codemirror": "5.58.2",
     "component-classes": "1.x",
     "core-js": "^2.5.1",
     "create-react-class": "^15.6.0",
