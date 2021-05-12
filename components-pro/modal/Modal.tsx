@@ -229,9 +229,13 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   @autobind
   handleKeyDown(e) {
-    const { cancelButton, props: { closable } } = this;
-    if ((closable || !cancelButton || !cancelButton.disabled) && e.keyCode === KeyCode.ESC) {
-      cancelButton.handleClickWait(e);
+    if (e.keyCode === KeyCode.ESC) {
+      const { cancelButton } = this;
+      if (cancelButton && !cancelButton.disabled) {
+        cancelButton.handleClickWait(e);
+      } else {
+        this.handleCancel();
+      }
     }
   }
 

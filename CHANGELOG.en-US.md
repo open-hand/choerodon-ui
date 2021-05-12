@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
 - 💄 `<pro>Table`: Optimize the performance.
+- 🐞 `<pro>Modal`: Fixed the `keyboardClosable` property has no effect when there is no cancel button.
 
 ## 1.3.2
 

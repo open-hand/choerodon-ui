@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `<pro>Dropdown`: overlay 属性支持钩子函数。
 - 💄 `<pro>Table`: 性能优化。
+- 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 
 ## 1.3.2
 
