@@ -211,7 +211,7 @@ class App extends React.Component {
           </TabPane>
         </Tabs>
       ),
-      onOk: async () => await Modal.confirm('ok?') === 'ok',
+      onOk: async () => (await Modal.confirm('ok?')) === 'ok',
       onCancel: () => (isCancel = true),
       afterClose: () => record && isCancel && this.userDs.remove(record),
     });
@@ -286,4 +286,9 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<ModalProvider><App /></ModalProvider>, document.getElementById('container'));
+ReactDOM.render(
+  <ModalProvider>
+    <App />
+  </ModalProvider>,
+  document.getElementById('container'),
+);

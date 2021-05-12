@@ -357,7 +357,12 @@ class App extends React.Component {
     console.log(userDs.toJSONData());
     console.log(userDs.toJSONData(true));
     console.log(userDs.toJSONData(false, true));
-    userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx', name: 'Hugh' });
+    userDs.create({
+      other: { enemy: [{}, {}] },
+      code_code: '1',
+      code_description: 'xxx',
+      name: 'Hugh',
+    });
   };
 
   removeAllData = () => {
