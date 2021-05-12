@@ -87,7 +87,6 @@ export interface ModalProps extends ViewComponentProps {
   border?: boolean;
   drawerBorder?: boolean;
   okFirst?: boolean;
-  keyboard?: boolean;
   active?: boolean;
   mousePosition?: MousePosition | null;
   contentStyle?: CSSProperties;
@@ -126,7 +125,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     drawerOffset: PropTypes.number,
     drawerTransitionName: PropTypes.oneOf(['slide-up', 'slide-right', 'slide-down', 'slide-up', 'slide-left']),
     okFirst: PropTypes.bool,
-    keyboard: PropTypes.bool,
     mousePosition: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
     contentStyle: PropTypes.object,
     bodyStyle: PropTypes.object,
@@ -138,7 +136,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     closable: false,
     movable: true,
     mask: true,
-    keyboardClosable: true,
     okButton: true,
     okCancel: true,
     destroyOnClose: true,
@@ -229,8 +226,8 @@ export default class Modal extends ViewComponent<ModalProps> {
   saveCancelRef = node => (this.cancelButton = node);
 
   handleKeyDown = e => {
-    const { cancelButton, props: { keyboard = getConfig('modalKeyboard') } } = this;
-    if (cancelButton && !cancelButton.isDisabled() && e.keyCode === KeyCode.ESC && keyboard) {
+    const { cancelButton } = this;
+    if (cancelButton && !cancelButton.isDisabled() && e.keyCode === KeyCode.ESC) {
       cancelButton.handleClickWait(e);
     }
   };
@@ -270,14 +267,13 @@ export default class Modal extends ViewComponent<ModalProps> {
       'drawerBorder',
       'okFirst',
       'autoCenter',
-      'keyboard',
       'mousePosition',
       'active',
       'contentStyle',
       'bodyStyle',
       'closeOnLocationChange',
     ]);
-    const { hidden, mousePosition, keyboardClosable, style = {}, drawer } = this.props;
+    const { hidden, mousePosition, keyboardClosable = getConfig('modalKeyboard'), style = {}, drawer } = this.props;
     if (keyboardClosable) {
       otherProps.autoFocus = true;
       otherProps.tabIndex = -1;

@@ -224,8 +224,8 @@ title: DataSet
 | pattern | 正则校验 | string \| RegExp |  |
 | maxLength | 最大长度 | number |  |
 | minLength | 最小长度 | number |  |
-| max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | number \| MomentInput \| fieldName |  |
-| min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName |  |
+| max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | number \| MomentInput \| fieldName | MAX_SAFE_INTEGER(number 类型) |
+| min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName | MIN_SAFE_INTEGER(number 类型) |
 | step | 步距 | number \| { hour: number, minute: number, second: number } |  |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
 | precision | 小数点位数 | number |  |
