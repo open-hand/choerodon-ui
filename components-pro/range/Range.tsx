@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import omit from 'lodash/omit';
 import { NumberField, NumberFieldProps } from '../number-field/NumberField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
@@ -37,7 +36,7 @@ export default class Range extends NumberField<RangeProps> {
     vertical: false,
   };
 
-  dragEvent: EventManager = new EventManager(typeof window !== 'undefined' && document);
+  dragEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
 
   track: HTMLDivElement;
 
@@ -47,8 +46,10 @@ export default class Range extends NumberField<RangeProps> {
     return FieldType.number;
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), ['vertical']);
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'vertical',
+    ]);
   }
 
   getValue() {
@@ -84,7 +85,7 @@ export default class Range extends NumberField<RangeProps> {
     return (
       <div
         className={`${prefixCls}-track`}
-        onMouseDown={this.isReadOnly() || this.isDisabled() ? undefined : this.handleTrackClick}
+        onMouseDown={this.readOnly || this.disabled ? undefined : this.handleTrackClick}
       >
         <div
           className={`${prefixCls}-draghandle`}

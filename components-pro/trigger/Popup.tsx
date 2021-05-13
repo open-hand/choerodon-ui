@@ -74,8 +74,8 @@ export default class Popup extends ViewComponent<PopupProps> {
 
   saveRef = align => (this.align = align);
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'align',
       'transitionName',
       'getRootDomNode',
@@ -88,7 +88,6 @@ export default class Popup extends ViewComponent<PopupProps> {
       'onAnimateLeave',
       'onAnimateEnd',
     ]);
-    return otherProps;
   }
 
   componentWillUnmount() {

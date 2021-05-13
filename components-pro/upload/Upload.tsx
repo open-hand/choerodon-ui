@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import omit from 'lodash/omit';
 import uniqBy from 'lodash/uniqBy';
 import isEmpty from 'lodash/isEmpty';
 import isPromise from 'is-promise';
@@ -291,15 +290,13 @@ export default class Upload extends FormField<UploadProps> {
     }
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'accept',
       'action',
       'data',
       'header',
       'multiple',
-      'onChange',
-      'ref',
       'uploadImmediately',
       'fileListMaxLength',
       'showPreviewImage',
@@ -316,6 +313,12 @@ export default class Upload extends FormField<UploadProps> {
       'appendUpload',
       'uploadFileList',
     ]);
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
+    delete otherProps.ref;
+    delete otherProps.onChange;
     return otherProps;
   }
 

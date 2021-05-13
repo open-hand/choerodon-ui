@@ -45,7 +45,7 @@ export function set(
         value.forEach((item, i) => {
           if (obj.length === i) {
             obj.push({});
-          }else if (!obj[i]) {
+          } else if (!obj[i]) {
             obj[i] = {};
           }
           set(obj[i], prop.slice(index + 1), item);

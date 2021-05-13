@@ -15,6 +15,18 @@ timeline: true
 
 ---
 
+
+- 🌟 `<pro>DataSet`: Added `setAllPageSelection` method and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
+- 🌟 `<pro>Table`: Added `showAllPageSelectionButton` property.
+- 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
+- 💄 `Dropdown`: The `overlay` property supports hook functions.
+- 💄 `Popover`: The `title` and `content` attributes support hook functions.
+- 💄 `Popconfirm`: The `title` attribute supports hook functions.
+- 💄 `<pro>Tooltip`: The `title` and `overlay` attributes support hook functions.
+- 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
+- 💄 `<pro>Table`: Optimize the performance.
+- 🐞 `<pro>Modal`: Fixed the `keyboardClosable` property has no effect when there is no cancel button.
+
 ## 1.3.2
 
 `2021-05-11`

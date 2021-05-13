@@ -5,11 +5,9 @@ import { toJS } from 'mobx';
 import { ReactQuillProps } from 'react-quill/lib';
 import 'react-quill/dist/quill.snow.css';
 import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 import { Delta } from './quill';
-import ObserverFormField from '../field';
 import DataSet from '../data-set/DataSet';
-import { FormFieldProps } from '../field/FormField';
+import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import BaseEditor from './BaseEditor';
 import RichTextViewer from './RichTextViewer';
@@ -34,7 +32,7 @@ const defaultRichTextOptions: ReactQuillProps = {
 };
 
 @observer
-export default class RichText extends ObserverFormField<RichTextProps> {
+export default class RichText extends FormField<RichTextProps> {
   static displayName = 'RichText';
 
   static RichTextViewer = RichTextViewer;
@@ -49,11 +47,11 @@ export default class RichText extends ObserverFormField<RichTextProps> {
       ]),
       PropTypes.func,
     ]),
-    ...ObserverFormField.propTypes,
+    ...FormField.propTypes,
   };
 
   static defaultProps = {
-    ...ObserverFormField.defaultProps,
+    ...FormField.defaultProps,
     suffixCls: 'rich-text',
     autoFocus: false,
     mode: 'editor',
@@ -85,8 +83,17 @@ export default class RichText extends ObserverFormField<RichTextProps> {
     return { ...defaultRichTextOptions, ...options };
   }
 
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'defaultValue',
+      'value',
+    ]);
+  }
+
   getOtherProps() {
-    return omit(super.getOtherProps(), ['defaultValue', 'value', 'disabled']);
+    const otherProps = super.getOtherProps();
+    delete otherProps.disabled;
+    return otherProps;
   }
 
   @autobind
@@ -112,7 +119,7 @@ export default class RichText extends ObserverFormField<RichTextProps> {
 
   renderWrapper(): ReactNode {
     const { defaultValue, dataSet } = this.props;
-    this.rtOptions.readOnly = this.isDisabled() ? true : this.isReadOnly();
+    this.rtOptions.readOnly = this.disabled || this.readOnly;
     const deltaOps = this.getValue() || defaultValue;
     return (
       <div {...this.getWrapperProps()}>

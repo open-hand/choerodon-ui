@@ -24,7 +24,6 @@ class App extends React.Component {
     selection: 'single',
     queryUrl: '/common/code/HR.EMPLOYEE_GENDER/',
     autoQuery: true,
-    pading: false,
   });
 
   userDs = new DataSet({
@@ -48,13 +47,13 @@ class App extends React.Component {
         name: 'sex',
         label: '性别',
         dynamicProps: {
-          type: ({ dataSet, record, name }) => {
+          type: ({ record }) => {
             return record.get('base') === 'Lov' ? 'object' : 'string';
           },
-          lovCode: ({ dataSet, record, name }) => {
+          lovCode: ({ record }) => {
             return record.get('base') === 'Lov' ? 'LOV_CODE' : null;
           },
-          options: ({ dataSet, record, name }) => {
+          options: ({ record }) => {
             return record.get('base') === 'Lov' ? null : this.optionDs;
           },
         },
@@ -127,6 +126,14 @@ class App extends React.Component {
         type: 'string',
         label: '姓名',
       },
+      {
+        name: 'age',
+        type: 'number',
+        label: '年龄',
+        max: 100,
+        step: 1,
+      },
+      { name: 'enable', type: 'boolean', label: '是否开启' },
     ],
     events: {
       update: ({ name, value, record }) => {
@@ -141,14 +148,16 @@ class App extends React.Component {
 
 
   render() {
-    const buttons = [
-      'add',
-      'delete',
-      'reset',
-    ];
+    const buttons = ['add', 'delete', 'reset'];
+
     return (
       <>
-        <Table header="Method one" key="user_one" buttons={buttons} dataSet={this.userDs}>
+        <Table
+          header="Method one"
+          key="user_one"
+          buttons={buttons}
+          dataSet={this.userDs}
+        >
           <Column name="userid" />
           <Column
             name="base"
@@ -161,12 +170,17 @@ class App extends React.Component {
               );
             }}
           />
-          <Column name="sex" />
-          <Column name="name" />
+          <Column name="sex" editor />
+          <Column name="name" editor />
           <Column name="age" />
           <Column name="enable" editor={<Switch />} />
         </Table>
-        <Table header="Method Two" key="user_two" buttons={buttons} dataSet={this.userTwoDs}>
+        <Table
+          header="Method Two"
+          key="user_two"
+          buttons={buttons}
+          dataSet={this.userTwoDs}
+        >
           <Column name="userid" />
           <Column
             name="base"

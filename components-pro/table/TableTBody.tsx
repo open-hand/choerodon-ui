@@ -91,11 +91,12 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     const { lock } = this.props;
     const { leafColumns, leafColumnsBody } = this;
     const {
-      tableStore: {
-        prefixCls, node, virtual, virtualData, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth, overflowX,
-        props: { rowDragRender = {} },
-      },
+      tableStore,
     } = this.context;
+    const {
+      prefixCls, node, virtual, virtualData, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth,
+      props: { rowDragRender = {} },
+    } = tableStore;
     const { droppableProps, renderClone } = rowDragRender;
     const rows = virtualData.length
       ? this.getRows(virtualData, leafColumns, true, lock, virtual)
@@ -109,7 +110,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
           snapshot: DraggableStateSnapshot,
           rubric: DraggableRubric,
         ) => {
-          if (overflowX && dragColumnAlign === DragColumnAlign.right && snapshot.isDragging) {
+          if (tableStore.overflowX && dragColumnAlign === DragColumnAlign.right && snapshot.isDragging) {
             const { style } = provided.draggableProps;
             if (isDraggingStyle(style)) {
               const { left, width } = style;
@@ -179,7 +180,6 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   componentWillMount() {
     this.processDataSetListener(true);
   }
-
 
   componentWillUnmount() {
     this.processDataSetListener(false);

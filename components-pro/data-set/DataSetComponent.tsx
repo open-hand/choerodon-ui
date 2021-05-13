@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 import { computed } from 'mobx';
 import DataSet from './DataSet';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
@@ -45,7 +44,9 @@ export default class DataSetComponent<T extends DataSetComponentProps> extends V
     };
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), ['dataSet']);
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'dataSet',
+    ]);
   }
 }

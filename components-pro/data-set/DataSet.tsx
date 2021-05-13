@@ -70,7 +70,9 @@ import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 
-export type DataSetChildren = { [key: string]: DataSet; };
+const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
+
+export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function; };
 
@@ -340,6 +342,11 @@ export default class DataSet extends EventManager {
   @observable state: ObservableMap<string, any>;
 
   @computed
+  get isAllPageSelection(): boolean {
+    return this.getState(ALL_PAGE_SELECTION) === true;
+  }
+
+  @computed
   get cascadeRecords(): Record[] {
     const { parent, parentName } = this;
     if (parent && parentName) {
@@ -576,9 +583,23 @@ export default class DataSet extends EventManager {
     return this.currentSelected.concat(this.cachedSelected.filter(record => record.isSelected));
   }
 
+  /**
+   * 获取未选中的记录集， 在 isAllPageSelection 为 true 时有效
+   * @return 记录集
+   */
+  @computed
+  get unSelected(): Record[] {
+    return this.currentUnSelected.concat(this.cachedSelected.filter(record => !record.isSelected));
+  }
+
   @computed
   get currentSelected(): Record[] {
     return this.records.filter(record => record.isSelected);
+  }
+
+  @computed
+  get currentUnSelected(): Record[] {
+    return this.records.filter(record => !record.isSelected);
   }
 
   @computed
@@ -738,6 +759,9 @@ export default class DataSet extends EventManager {
    */
   @computed
   get all(): Record[] {
+    if (this.isAllPageSelection) {
+      return this.records;
+    }
     return this.records.concat(this.cachedSelected.slice());
   }
 
@@ -858,6 +882,26 @@ export default class DataSet extends EventManager {
     this.children = snapshot.children;
     this.current = snapshot.current;
     return this;
+  }
+
+  @action
+  setAllPageSelection(enable: boolean) {
+    if (this.selection === DataSetSelection.multiple) {
+      if (enable) {
+        this.currentSelected.forEach(record => record.isSelected = false);
+      } else {
+        this.currentUnSelected.forEach(record => record.isSelected = true);
+      }
+      this.clearCachedSelected();
+      this.setState(ALL_PAGE_SELECTION, enable);
+      if (enable) {
+        this.records.forEach((record) => {
+          if (!record.selectable) {
+            record.isSelected = false;
+          }
+        });
+      }
+    }
   }
 
   toData(): object[] {
@@ -1591,10 +1635,14 @@ export default class DataSet extends EventManager {
             previous = selected;
           });
         }
-        if (record) {
-          record.isSelected = true;
-        }
+        record.isSelected = true;
         if (!this.inBatchSelection) {
+          if (this.isAllPageSelection) {
+            const cachedIndex = this.cachedSelected.indexOf(record);
+            if (cachedIndex !== -1) {
+              this.cachedSelected.splice(cachedIndex, 1);
+            }
+          }
           this.fireEvent(DataSetEvents.select, { dataSet: this, record, previous });
         }
       }
@@ -1615,9 +1663,11 @@ export default class DataSet extends EventManager {
       if (record && record.selectable && record.isSelected) {
         record.isSelected = false;
         if (!this.inBatchSelection) {
-          const cachedIndex = this.cachedSelected.indexOf(record);
-          if (cachedIndex !== -1) {
-            this.cachedSelected.splice(cachedIndex, 1);
+          if (!this.isAllPageSelection) {
+            const cachedIndex = this.cachedSelected.indexOf(record);
+            if (cachedIndex !== -1) {
+              this.cachedSelected.splice(cachedIndex, 1);
+            }
           }
           this.fireEvent(DataSetEvents.unSelect, { dataSet: this, record });
         }
@@ -2161,9 +2211,10 @@ Then the query method will be auto invoke.`,
   @action
   private storeSelected() {
     if (this.cacheSelectionKeys) {
+      const { isAllPageSelection } = this;
       this.setCachedSelected([
-        ...this.cachedSelected.filter(record => record.isSelected),
-        ...this.currentSelected.map(record => {
+        ...this.cachedSelected.filter(record => isAllPageSelection ? !record.isSelected :  record.isSelected),
+        ...(isAllPageSelection ? this.currentUnSelected : this.currentSelected).map(record => {
           record.isCurrent = false;
           record.isCached = true;
           return record;
@@ -2174,14 +2225,14 @@ Then the query method will be auto invoke.`,
 
   @action
   releaseCachedSelected() {
-    const { cacheSelectionKeys, cachedSelected } = this;
+    const { cacheSelectionKeys, cachedSelected, isAllPageSelection } = this;
     if (cacheSelectionKeys) {
       this.data.forEach(record => {
         const index = cachedSelected.findIndex(cached =>
           cacheSelectionKeys.every(key => record.get(key) === cached.get(key)),
         );
         if (index !== -1) {
-          record.isSelected = true;
+          record.isSelected = !isAllPageSelection;
           cachedSelected.splice(index, 1);
         }
       });

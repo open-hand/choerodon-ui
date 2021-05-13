@@ -2,7 +2,6 @@ import React, { ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed, isArrayLike } from 'mobx';
-import omit from 'lodash/omit';
 import { Select, SelectProps } from '../select/Select';
 import ObserverRadio from '../radio/Radio';
 import ObserverCheckBox from '../check-box/CheckBox';
@@ -73,8 +72,10 @@ export default class SelectBox extends Select<SelectBoxProps> {
     return this.observableProps.name || GroupIdGen.next().value;
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), ['vertical']);
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'vertical',
+    ]);
   }
 
   getClassName() {
@@ -107,7 +108,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
   }
 
   renderWrapper(): ReactNode {
-    const { options, filteredOptions, textField, valueField } = this;
+    const { name, options, filteredOptions, textField, valueField, readOnly, disabled } = this;
     const { autoFocus, mode, onOption, optionRenderer, optionsFilter } = this.props;
     const items = filteredOptions.reduce<ReactElement<any>[]>((arr, record, index, data) => {
       if (!optionsFilter || optionsFilter(record, index, data)) {
@@ -117,23 +118,27 @@ export default class SelectBox extends Select<SelectBoxProps> {
         const children = optionRenderer
           ? optionRenderer({ dataSet: options, record, text, value })
           : text;
-        arr.push(this.renderItem({
-          ...optionProps,
+        const itemProps = {
           key: index,
           dataSet: null,
           record: null,
           value,
           checked: this.isChecked(this.getValue(), value),
-          name: this.name,
+          name,
           onChange: this.handleItemChange,
           children,
           autoFocus: autoFocus && index === 0,
-          readOnly: this.isReadOnly(),
-          disabled: this.isDisabled() || (optionProps && optionProps.disabled),
+          readOnly,
+          disabled,
           mode,
           noValidate: true,
           labelLayout: LabelLayout.none,
-        }));
+        };
+        arr.push(this.renderItem(optionProps ? {
+          ...optionProps,
+          ...itemProps,
+          disabled: itemProps.disabled || optionProps.disabled,
+        } : itemProps));
       }
       return arr;
     }, []);
@@ -145,7 +150,11 @@ export default class SelectBox extends Select<SelectBoxProps> {
         {this.renderSelectAll()}
         <Element className={className}>{items}</Element>
         {this.renderFloatLabel()}
-        {options.paging && options.currentPage < options.totalPage && <Button funcType={FuncType.flat} icon="more_horiz" onClick={this.handleQueryMore} />}
+        {
+          options.paging && options.currentPage < options.totalPage && (
+            <Button funcType={FuncType.flat} icon="more_horiz" onClick={this.handleQueryMore} />
+          )
+        }
       </span>
     );
   }

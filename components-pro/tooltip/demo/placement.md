@@ -9,8 +9,6 @@ title:
 
 位置有 12 个方向。
 
-目前``left和top类的位置有首次渲染错位的bug，right和bottom可以正常使用。`
-`
 ## en-US
 
 The ToolTip has 12 placements choice.

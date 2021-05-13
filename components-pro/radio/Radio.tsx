@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed } from 'mobx';
 import { observer } from 'mobx-react';
-import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
@@ -75,16 +74,21 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     return value;
   }
 
-  get isControlled() {
-    return this.props.checked !== undefined;
+  getControlled(props) {
+    return props.checked !== undefined;
+  }
+
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'value',
+      'readOnly',
+      'mode',
+    ]);
   }
 
   getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), ['value', 'readOnly', 'mode']);
+    const otherProps = super.getOtherProps();
     otherProps.type = this.type;
-    // if (this.isReadOnly()) {
-    //   otherProps.disabled = true;
-    // }
     otherProps.onMouseDown = this.handleMouseDown;
     otherProps.onClick = otherProps.onChange;
     otherProps.onChange = noop;
@@ -95,13 +99,13 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     const checked = this.isChecked();
     return (
       <>
-      <label key="wrapper" {...this.getWrapperProps()}>
-        <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
-        {this.renderInner()}
-        {this.getTextNode()}
-        {this.renderFloatLabel()}
-      </label>
-      {super.hasFloatLabel ? this.renderSwitchFloatLabel(): undefined }
+        <label key="wrapper" {...this.getWrapperProps()}>
+          <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
+          {this.renderInner()}
+          {this.getTextNode()}
+          {this.renderFloatLabel()}
+        </label>
+        {super.hasFloatLabel ? this.renderSwitchFloatLabel() : undefined}
       </>
     );
   }
@@ -110,7 +114,9 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
    * 解决form 在float的时候没有表头的问题
    * 也可以在需要不在组件内部展现label的时候使用
    */
-  renderSwitchFloatLabel (): ReactNode | undefined { return undefined; }
+  renderSwitchFloatLabel(): ReactNode | undefined {
+    return undefined;
+  }
 
 
   renderInner(): ReactNode {

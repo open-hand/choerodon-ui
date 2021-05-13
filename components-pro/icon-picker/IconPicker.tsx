@@ -2,7 +2,6 @@ import React, { CSSProperties, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import omit from 'lodash/omit';
 import flatten from 'lodash/flatten';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -91,8 +90,12 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     });
   }
 
-  getOtherProps() {
-    return omit(super.getOtherProps(), ['pageSize','customFontName','icons']);
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'pageSize',
+      'customFontName',
+      'icons',
+    ]);
   }
 
   @action
@@ -125,7 +128,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
 
   @autobind
   handleKeyDown(e) {
-    if (!this.isDisabled() && !this.isReadOnly()) {
+    if (!this.disabled && !this.readOnly) {
       if (this.popup) {
         switch (e.keyCode) {
           case KeyCode.RIGHT:
@@ -351,9 +354,11 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     }
   }
 
-  handlePopupAnimateAppear() {}
+  handlePopupAnimateAppear() {
+  }
 
-  handlePopupAnimateEnd() {}
+  handlePopupAnimateEnd() {
+  }
 
   getPopupStyleFromAlign(): CSSProperties | any {
     return undefined;

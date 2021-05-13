@@ -42,17 +42,19 @@ import { Size } from '../core/enum';
 import { $l } from '../locale-context';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
 import TableEditor from './TableEditor';
+import Dropdown from '../dropdown/Dropdown';
+import Menu from '../menu';
 import { ModalProps } from '../modal/Modal';
 
-export const SELECTION_KEY = '__selection-column__';
+export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
-export const ROW_NUMBER_KEY = '__row-number-column__';
+export const ROW_NUMBER_KEY = '__row-number-column__'; // TODO:Symbol
 
-export const DRAG_KEY = '__drag-column__';
+export const DRAG_KEY = '__drag-column__'; // TODO:Symbol
 
-export const EXPAND_KEY = '__expand-column__';
+export const EXPAND_KEY = '__expand-column__'; // TODO:Symbol
 
-export const CUSTOMIZED_KEY = '__customized-column__';
+export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
 
 export type HeaderText = { name: string; label: string; };
 
@@ -355,7 +357,8 @@ export default class TableStore {
 
   @computed
   get customizable(): boolean {
-    if (this.columnTitleEditable || this.columnDraggable || this.columnHideable) {
+    const { customizedCode } = this.props;
+    if (customizedCode && (this.columnTitleEditable || this.columnDraggable || this.columnHideable)) {
       if ('customizable' in this.props) {
         return this.props.customizable;
       }
@@ -802,11 +805,14 @@ export default class TableStore {
   get selectionColumn(): ColumnProps | undefined {
     if (this.hasRowBox) {
       const { dataSet, prefixCls } = this;
+      const className = `${prefixCls}-selection-column`;
       const selectionColumn: ColumnProps = {
         key: SELECTION_KEY,
         resizable: false,
         titleEditable: false,
-        className: `${prefixCls}-selection-column`,
+        headerClassName: className,
+        className,
+        footerClassName: className,
         renderer: this.renderSelectionBox,
         align: ColumnAlign.center,
         width: 50,
@@ -1077,6 +1083,12 @@ export default class TableStore {
         this.initColumns();
       }
     });
+  }
+
+  isBuiltInColumn({ key }: ColumnProps) {
+    if (isString(key)) {
+      return [DRAG_KEY, SELECTION_KEY, ROW_NUMBER_KEY, CUSTOMIZED_KEY, EXPAND_KEY].includes(key);
+    }
   }
 
   getColumnTooltip(column: ColumnProps): TableColumnTooltip {
@@ -1385,15 +1397,60 @@ export default class TableStore {
   }
 
   @autobind
-  private multipleSelectionRenderer() {
+  @action
+  handleAllPageSelectionMenuClick({ key }) {
+    const { dataSet } = this;
+    const { isAllPageSelection } = dataSet;
+    switch (key) {
+      case 'current': {
+        if (this.allChecked) {
+          dataSet.unSelectAll();
+        } else {
+          const { filter } = this.props;
+          dataSet.selectAll(filter);
+        }
+        break;
+      }
+      case 'all':
+        dataSet.setAllPageSelection(!isAllPageSelection);
+        break;
+      default:
+    }
+  }
+
+  @autobind
+  renderAllPageSelectionMenu() {
+    const { dataSet: { isAllPageSelection }, allChecked, prefixCls } = this;
     return (
+      <Menu prefixCls={`${prefixCls}-all-page-selection-dropdown-menu`} onClick={this.handleAllPageSelectionMenuClick}>
+        <Menu.Item key="current">
+          {$l('Table', allChecked ? 'unselect_current_page' : 'select_current_page')}
+        </Menu.Item>
+        <Menu.Item key="all">
+          {$l('Table', isAllPageSelection ? 'unselect_all_page' : 'select_all_page')}
+        </Menu.Item>
+      </Menu>
+    );
+  }
+
+  @autobind
+  private multipleSelectionRenderer() {
+    const buttons = [
       <ObserverCheckBox
+        key="selectAll"
         checked={this.allChecked}
         indeterminate={this.indeterminate}
         onChange={this.handleSelectAllChange}
         value
-      />
-    );
+      />,
+    ];
+    if (this.props.showAllPageSelectionButton) {
+      buttons.push(
+        <Dropdown overlay={this.renderAllPageSelectionMenu}>
+          <Icon type="baseline-arrow_drop_down" />
+        </Dropdown>,
+      );
+    }
+    return buttons;
   }
-
 }
