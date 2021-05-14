@@ -3,6 +3,7 @@ order: 6
 title:
   zh-CN: 浮动标签
   en-US: Float Label
+only: true
 ---
 
 ## zh-CN
@@ -42,7 +43,7 @@ function passwordValidator(value, name, form) {
 }
 
 ReactDOM.render(
-  <Form labelLayout="float" columns={3} header="Float Label">
+  <Form labelLayout="float" columns={3} header="Float Label" style={{ width: '4rem' }} labelTooltip="overflow">
     <TextField
       colSpan={3}
       label="手机号"
@@ -62,7 +63,7 @@ ReactDOM.render(
       help="请输入与左侧相同的密码"
       disabled
     />
-    <NumberField rowSpan={2} label="年龄" name="age" min={18} step={1} required />
+    <NumberField rowSpan={2} label="年龄——请填写大于18的数字" name="age" min={18} step={1} required defaultValue={18} />
     <SelectBox label="性别" name="sex" required>
       <Option value="M">男</Option>
       <Option value="F">女</Option>

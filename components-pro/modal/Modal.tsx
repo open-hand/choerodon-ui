@@ -59,8 +59,8 @@ export interface ModalProps extends ViewComponentProps {
   maskClassName?: string,
   keyboardClosable?: boolean;
   modalTitle?: ReactNode;
-  header?: ((title: ReactNode, closeBtn: ReactNode, okBtn: ReactElement<Button>, cancelBtn: ReactElement<Button>) => ReactNode) | ReactNode | boolean;
-  footer?: ((okBtn: ReactElement<Button>, cancelBtn: ReactElement<Button>) => ReactNode) | ReactNode | boolean;
+  header?: ((title: ReactNode, closeBtn: ReactNode, okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>) => ReactNode) | ReactNode | boolean;
+  footer?: ((okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>) => ReactNode) | ReactNode | boolean;
   destroyOnClose?: boolean;
   okText?: ReactNode;
   cancelText?: ReactNode;
@@ -171,7 +171,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   cancelButton: Button | null;
 
-  get okBtn(): ReactElement<Button> {
+  get okBtn(): ReactElement<ButtonProps> {
     const {
       okProps,
       okText = $l('Modal', 'ok'),
@@ -195,7 +195,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     );
   }
 
-  get cancelBtn(): ReactElement<Button> {
+  get cancelBtn(): ReactElement<ButtonProps> {
     const {
       cancelProps,
       cancelText = $l('Modal', 'cancel'),

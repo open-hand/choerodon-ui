@@ -4,3 +4,9 @@ export enum WaitType {
   throttle = 'throttle',
   debounce = 'debounce',
 }
+
+export enum Tooltip {
+  none = 'none',
+  always = 'always',
+  overflow = 'overflow',
+}

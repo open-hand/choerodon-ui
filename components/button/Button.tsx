@@ -1,12 +1,4 @@
-import React, {
-  Children,
-  Component,
-  CSSProperties,
-  FormEventHandler,
-  KeyboardEventHandler,
-  ButtonHTMLAttributes,
-  MouseEventHandler,
-} from 'react';
+import React, { ButtonHTMLAttributes, Children, Component, CSSProperties, KeyboardEventHandler, MouseEventHandler } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -28,9 +20,11 @@ export interface ButtonProps {
   icon?: string;
   shape?: ButtonShape;
   size?: Size;
-  onClick?: FormEventHandler<any>;
-  onMouseUp?: FormEventHandler<any>;
-  onMouseDown?: FormEventHandler<any>;
+  onClick?: MouseEventHandler<any>;
+  onMouseUp?: MouseEventHandler<any>;
+  onMouseDown?: MouseEventHandler<any>;
+  onMouseEnter?: MouseEventHandler<any>;
+  onMouseLeave?: MouseEventHandler<any>;
   onKeyPress?: KeyboardEventHandler<any>;
   onKeyDown?: KeyboardEventHandler<any>;
   tabIndex?: number;
@@ -130,6 +124,9 @@ export default class Button extends Component<ButtonProps, any> {
       icon,
       ghost,
       funcType,
+      onMouseEnter,
+      onMouseLeave,
+      disabled,
       ...others
     } = this.props;
 
@@ -179,9 +176,12 @@ export default class Button extends Component<ButtonProps, any> {
           })
         : null;
 
-    return (
-      <Ripple disabled={others.disabled}>
+    const button = (
+      <Ripple disabled={disabled}>
         <ComponentProp
+          disabled={disabled}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
           {...omit(others, ['loading'])}
           // 如果没有href属性，则表示组件使用button标签，type为'submit' | 'reset' | 'button'
           type={
@@ -195,5 +195,11 @@ export default class Button extends Component<ButtonProps, any> {
         </ComponentProp>
       </Ripple>
     );
+
+    return disabled && (onMouseEnter || onMouseLeave) ? (
+      <span className={`${prefixCls}-disabled-wrapper`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        {button}
+      </span>
+    ) : button;
   }
 }

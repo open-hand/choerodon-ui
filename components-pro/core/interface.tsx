@@ -1,4 +1,4 @@
-export { Size, WaitType } from './enum';
+export { Size, WaitType, Tooltip } from './enum';
 export {
   ViewComponentProps,
   ElementProps,

@@ -475,13 +475,21 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   getWrapperProps(props = {}): any {
-    const { style, hidden } = this.props;
+    const { style, hidden, onMouseEnter, onMouseLeave } = this.props;
     const wrapperProps: any = {
       ref: this.wrapperReference,
       className: this.getWrapperClassNames(),
       hidden,
       ...props,
     };
+    if (this.disabled) {
+      if (!wrapperProps.onMouseEnter) {
+        wrapperProps.onMouseEnter = onMouseEnter;
+      }
+      if (!wrapperProps.onMouseLeave) {
+        wrapperProps.onMouseLeave = onMouseLeave;
+      }
+    }
     if (style) {
       wrapperProps.style = omit(style, ['height', 'minHeight']);
     }

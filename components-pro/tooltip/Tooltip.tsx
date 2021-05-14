@@ -64,17 +64,12 @@ const splitObject = (obj: any, keys: string[]) => {
  * Fix the tooltip won't hide when child element is button
  * @param element ReactElement
  */
-function getDisabledCompatobleChildren(element: React.ReactElement<any>) {
+function getDisabledCompatableChildren(element: React.ReactElement<any>) {
   const elementType = element.type as any;
-  if ((
-    elementType.__PRO_BUTTON ||
-    elementType.__PRO_SWITCH ||
-    elementType.__PRO_CHECKBOX ||
-    elementType.__PRO_RADIO ||
-    elementType.__C7N_BUTTON ||
-    elementType === 'button'
-  ) && element.props.disabled) {
-    const { picked, ommitted } = splitObject(element.props.style, [
+  const { props } = element;
+  if (elementType === 'button' && props.disabled) {
+    const { style, block, className } = props;
+    const { picked, ommitted } = splitObject(style, [
       'position',
       'left',
       'right',
@@ -88,7 +83,7 @@ function getDisabledCompatobleChildren(element: React.ReactElement<any>) {
       display: 'inline-block',
       ...picked,
       cursor: 'not-allowed',
-      width: element.props.block ? '100%' : null,
+      width: block ? '100%' : null,
     };
     const buttonStyle = {
       ...ommitted,
@@ -99,7 +94,7 @@ function getDisabledCompatobleChildren(element: React.ReactElement<any>) {
       className: null,
     });
     return (
-      <span style={spanStyle} className={element.props.classNames}>
+      <span style={spanStyle} className={className}>
         {child}
       </span>
     );
@@ -244,9 +239,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
     } = this;
     // 修复特殊情况为0，以及 undefined 出现的报错情况
     const child = Children.count(children) ? Children.map(children, node => (
-      !isNil(node) && getDisabledCompatobleChildren(
-        isValidElement(node) ? node : <span key={`text-${node}`}>{node}</span>,
-      )
+      !isNil(node) && (isValidElement(node) ? getDisabledCompatableChildren(node) : <span key={`text-${node}`}>{node}</span>)
     )) : null;
 
     if ('hidden' in this.props) {

@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip 属性。
+- 🌟 `<pro>Select`: 新增 optionTooltip 属性。
+- 🌟 `<pro>Form`: 新增 labelTooltip 属性。
+- 🌟 `<pro>FormField`: 新增 labelTooltip 属性。
+- 🌟 `<pro>Button`: 新增 tooltip 属性。
 - 🌟 `<pro>DataSet`: 新增 setAllPageSelection 方法 and isAllPageSelection, unSelected, currentUnSelected 值。
 - 🌟 `<pro>Table`: 新增 showAllPageSelectionButton 属性。
 - 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。

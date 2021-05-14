@@ -42,6 +42,8 @@ import {
   normalizeLabelWidth,
 } from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
+import { Tooltip as LabelTooltip } from '../core/enum';
+import OverflowTip from '../overflow-tip';
 
 /**
  * 表单name生成器
@@ -104,6 +106,11 @@ export interface FormProps extends DataSetComponentProps {
    * 可选值： 'horizontal' | 'vertical' | 'placeholder' | 'none'
    */
   labelLayout?: LabelLayoutType;
+  /**
+   * 用tooltip显示标签内容
+   * 可选值：`none` `always` `overflow`
+   */
+  labelTooltip?: LabelTooltip;
   /**
    * 表单列数
    */
@@ -426,7 +433,6 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @computed
   get labelLayout(): LabelLayout {
-    const defaultLabelLayout = (getConfig('labelLayout') as LabelLayout) || LabelLayout.horizontal;
     const { labelLayout } = this.observableProps;
     if (isString(labelLayout)) {
       return labelLayout as LabelLayout;
@@ -437,7 +443,21 @@ export default class Form extends DataSetComponent<FormProps> {
         return responsiveLabelLayout;
       }
     }
-    return defaultLabelLayout;
+    return getConfig('labelLayout') || LabelLayout.horizontal;
+  }
+
+  @computed
+  get labelTooltip(): LabelTooltip | undefined {
+    const { labelTooltip } = this.observableProps;
+    if (labelTooltip) {
+      return labelTooltip;
+    }
+    return getConfig('labelTooltip');
+  }
+
+  @computed
+  get readOnly(): boolean {
+    return this.observableProps.readOnly;
   }
 
   @computed
@@ -461,7 +481,7 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   isReadOnly() {
-    return this.props.readOnly || this.context.readOnly;
+    return this.readOnly;
   }
 
   getObservableProps(props, context) {
@@ -472,7 +492,9 @@ export default class Form extends DataSetComponent<FormProps> {
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
       labelLayout: 'labelLayout' in props ? props.labelLayout : context.labelLayout,
       labelAlign: 'labelAlign' in props ? props.labelAlign : context.labelAlign,
-      disabled: context.disabled || props.disabled,
+      labelTooltip: 'labelTooltip' in props ? props.labelTooltip : context.labelTooltip,
+      disabled: 'disabled' in props ? props.disabled : context.disabled,
+      readOnly: 'readOnly' in props ? props.readOnly : context.readOnly,
       labelWidth: defaultTo(props.labelWidth, context.labelWidth),
       pristine: 'pristine' in props ? props.pristine : context.pristine,
       columns: props.columns,
@@ -561,15 +583,17 @@ export default class Form extends DataSetComponent<FormProps> {
     }
   }
 
-  rasterizedChildren(formReadOnly: boolean) {
+  rasterizedChildren() {
     const {
       dataSet,
       record,
       columns,
       labelLayout,
       labelAlign,
+      labelTooltip,
       useColon,
       excludeUseColonTagList,
+      readOnly: formReadOnly,
       props: { children },
     } = this;
     const prefixCls = getProPrefixCls(FIELD_SUFFIX);
@@ -700,7 +724,9 @@ export default class Form extends DataSetComponent<FormProps> {
         if (!isNaN(fieldLabelWidth)) {
           labelWidth[colIndex] = Math.max(labelWidth[colIndex], fieldLabelWidth);
         }
-        cols.push(
+        const tooltip = 'labelTooltip' in props ? props.labelTooltip : labelTooltip;
+        const isTooltip = [LabelTooltip.always, LabelTooltip.overflow].includes(tooltip);
+        const labelTd = (
           <td
             key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
@@ -709,12 +735,23 @@ export default class Form extends DataSetComponent<FormProps> {
             && separateSpacingWidth
               ? { paddingLeft: pxToRem(separateSpacingWidth + 5) } : undefined}
           >
-            <label title={isString(label) ? label : ''}>
+            <label title={!isTooltip && isString(label) ? label : undefined}>
               <span>
                 {label}
               </span>
             </label>
-          </td>,
+          </td>
+        );
+        cols.push(
+          isTooltip ? (
+            <OverflowTip
+              key={`row-${rowIndex}-col-${colIndex}-label`}
+              title={label}
+              strict={tooltip === LabelTooltip.always}
+            >
+              {labelTd}
+            </OverflowTip>
+          ) : labelTd,
         );
       }
       const fieldElementProps: any = {
@@ -807,15 +844,16 @@ export default class Form extends DataSetComponent<FormProps> {
       labelWidth,
       labelAlign,
       labelLayout,
+      labelTooltip,
       pristine,
       dataSet,
       record,
       dataIndex,
       observableProps,
       disabled,
+      readOnly,
     } = this;
     const { formNode } = this.context;
-    const readOnly = this.isReadOnly();
     const value = {
       formNode: formNode || this,
       dataSet,
@@ -824,11 +862,12 @@ export default class Form extends DataSetComponent<FormProps> {
       labelWidth,
       labelAlign,
       labelLayout,
+      labelTooltip,
       pristine,
       disabled,
       readOnly,
     };
-    let children: ReactNode = this.rasterizedChildren(readOnly);
+    let children: ReactNode = this.rasterizedChildren();
     if (!formNode) {
       children = (
         <form {...this.getMergedProps()} noValidate>

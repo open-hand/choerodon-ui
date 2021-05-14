@@ -54,6 +54,7 @@ import { Commands, TableButtonProps } from './Table';
 import autobind from '../_util/autobind';
 import { DRAG_KEY, SELECTION_KEY } from './TableStore';
 import TableEditor from './TableEditor';
+import OverflowTip from '../overflow-tip';
 
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
@@ -139,23 +140,6 @@ export default class TableCell extends Component<TableCellProps> {
     } else {
       this.element = null;
     }
-  }
-
-  isOverFlow(): boolean {
-    const { element } = this;
-    if (element && element.textContent) {
-      const { clientWidth, scrollWidth } = element;
-      return scrollWidth > clientWidth;
-    }
-    return false;
-  }
-
-  @autobind
-  handleOverflowHiddenBeforeChange(hidden: boolean): boolean {
-    if (hidden) {
-      return true;
-    }
-    return this.isOverFlow();
   }
 
   @autobind
@@ -442,6 +426,11 @@ export default class TableCell extends Component<TableCellProps> {
     }
   }
 
+  @autobind
+  getOverflowContainer() {
+    return this.element;
+  }
+
   getInnerNode(prefixCls, command?: Commands[], textAlign?: ColumnAlign, onCellStyle?: CSSProperties) {
     const {
       context: { tableStore },
@@ -544,14 +533,15 @@ export default class TableCell extends Component<TableCellProps> {
       />
     );
     const text = [TableColumnTooltip.always, TableColumnTooltip.overflow].includes(tooltip) ? (
-      <Tooltip
+      <OverflowTip
         key="tooltip"
         title={this.renderTooltip}
         placement={getPlacementByAlign(textAlign)}
-        onHiddenBeforeChange={tooltip === TableColumnTooltip.overflow ? this.handleOverflowHiddenBeforeChange : undefined}
+        strict={tooltip === TableColumnTooltip.always}
+        getOverflowContainer={this.getOverflowContainer}
       >
         {output}
-      </Tooltip>
+      </OverflowTip>
     ) : (
       output
     );

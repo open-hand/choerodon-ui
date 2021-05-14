@@ -14,6 +14,7 @@ import Tag from 'choerodon-ui/lib/tag';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import { Tooltip as OptionTooltip } from '../core/enum';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
@@ -194,6 +195,11 @@ export interface SelectProps extends TriggerFieldProps {
    * 下拉时自动重新查询
    */
   noCache?: boolean;
+  /**
+   * 用tooltip显示选项内容
+   * 可选值：`none` `always` `overflow`
+   */
+  optionTooltip?: OptionTooltip;
 }
 
 export class Select<T extends SelectProps> extends TriggerField<T> {
@@ -283,6 +289,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * @default false
      */
     reverse: PropTypes.bool,
+    /**
+     * 用tooltip显示选项内容
+     * 可选值：`none` `always` `overflow`
+     */
+    optionTooltip: PropTypes.string,
     ...TriggerField.propTypes,
   };
 
@@ -522,6 +533,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       'noCache',
       'reverse',
       'selectAllButton',
+      'optionTooltip',
     ]);
   }
 
@@ -649,7 +661,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       disabled: menuDisabled,
       textField,
       valueField,
-      props: { dropdownMenuStyle, optionRenderer, onOption },
+      props: { dropdownMenuStyle, optionRenderer, onOption, optionTooltip = getConfig('selectOptionTooltip') },
     } = this;
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
@@ -702,7 +714,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         ? optionRenderer({ dataSet: options, record, text, value })
         : text;
       const option: ReactElement = (
-        <Item style={IeItemStyle} {...optionProps} key={key} value={record} disabled={optionDisabled}>
+        <Item style={IeItemStyle} {...optionProps} key={key} value={record} disabled={optionDisabled} tooltip={optionTooltip}>
           {itemContent}
         </Item>
       );
