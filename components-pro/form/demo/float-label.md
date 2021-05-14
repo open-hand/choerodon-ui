@@ -3,7 +3,6 @@ order: 6
 title:
   zh-CN: 浮动标签
   en-US: Float Label
-only: true
 ---
 
 ## zh-CN
