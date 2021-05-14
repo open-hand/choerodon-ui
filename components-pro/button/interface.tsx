@@ -5,4 +5,5 @@ export {
   ButtonColor,
   FuncType,
   ButtonType,
+  ButtonTooltip,
 } from './enum';

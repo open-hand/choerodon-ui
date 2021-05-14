@@ -13,11 +13,12 @@ import Icon from '../icon';
 import FormContext from '../form/FormContext';
 import Progress from '../progress';
 import Ripple from '../ripple';
-import { ButtonColor, ButtonType, FuncType } from './enum';
+import { ButtonColor, ButtonTooltip, ButtonType, FuncType } from './enum';
 import { DataSetStatus } from '../data-set/enum';
 import { Size, WaitType } from '../core/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import autobind from '../_util/autobind';
+import OverflowTip from '../overflow-tip';
 
 export interface ButtonProps extends DataSetComponentProps {
   /**
@@ -55,6 +56,11 @@ export interface ButtonProps extends DataSetComponentProps {
    * @default throttle
    */
   waitType?: WaitType;
+  /**
+   * 用tooltip显示按钮内容
+   * 可选值：`none` `always` `overflow`
+   */
+  tooltip?: ButtonTooltip;
   /**
    * 按钮类型
    * @default 'button'
@@ -129,6 +135,11 @@ export default class Button extends DataSetComponent<ButtonProps> {
      * @default throttle
      */
     waitType: PropTypes.oneOf([WaitType.throttle, WaitType.debounce]),
+    /**
+     * 用tooltip显示按钮内容
+     * 可选值：`none` `always` `overflow`
+     */
+    tooltip: PropTypes.string,
     ...DataSetComponent.propTypes,
   };
 
@@ -236,6 +247,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       'loading',
       'wait',
       'waitType',
+      'tooltip',
     ]);
   }
 
@@ -270,8 +282,14 @@ export default class Button extends DataSetComponent<ButtonProps> {
     );
   }
 
+  @autobind
+  getOverflowContainer() {
+    return this.element;
+  }
+
   render() {
-    const { children, icon, href } = this.props;
+    const { children, icon, href, tooltip = getConfig('buttonTooltip'), onMouseEnter, onMouseLeave } = this.props;
+    const isTooltip = [ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip);
     const buttonIcon: any = this.loading ? (
       <Progress key="loading" type={ProgressType.loading} size={Size.small} />
     ) : (
@@ -280,13 +298,31 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const hasString = Children.toArray(children).some(child => isString(child));
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();
-    return (
-      <Ripple disabled={this.disabled}>
+    const { disabled } = this;
+    const button = (
+      <Ripple disabled={disabled}>
         <Cmp {...(href ? omit(props, ['type']) : props)}>
           {buttonIcon}
           {hasString ? <span>{children}</span> : children}
         </Cmp>
       </Ripple>
     );
+    const wrappedButton = disabled && (isTooltip || onMouseEnter || onMouseLeave) ? (
+      <span className={`${this.prefixCls}-disabled-wrapper`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        {button}
+      </span>
+    ) : button;
+    if (isTooltip) {
+      return (
+        <OverflowTip
+          title={children}
+          getOverflowContainer={this.getOverflowContainer}
+          strict={tooltip === ButtonTooltip.always}
+        >
+          {wrappedButton}
+        </OverflowTip>
+      );
+    }
+    return wrappedButton;
   }
 }

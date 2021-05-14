@@ -20,6 +20,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Row from 'choerodon-ui/lib/row';
 import Col from 'choerodon-ui/lib/col';
+import { Tooltip as LabelTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -46,6 +47,7 @@ import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue } f
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
 import formatCurrency from '../formatter/formatCurrency';
+import OverflowTip from '../overflow-tip';
 
 const map: { [key: string]: FormField<FormFieldProps>[]; } = {};
 
@@ -88,6 +90,11 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 标签宽度
    */
   labelWidth?: number;
+  /**
+   * 用tooltip显示标签内容
+   * 可选值：`none` `always` `overflow`
+   */
+  labelTooltip?: LabelTooltip;
   /**
    * 字段名
    */
@@ -412,6 +419,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.props.labelLayout || this.context.labelLayout;
   }
 
+  get labelTooltip() {
+    return this.props.labelTooltip || this.context.labelTooltip;
+  }
+
   get hasFloatLabel(): boolean {
     const { labelLayout } = this;
     return labelLayout === LabelLayout.float;
@@ -626,6 +637,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'newLine',
       'fieldClassName',
       'preventRenderer',
+      'labelTooltip',
       'isFlat',
     ]);
   }
@@ -676,15 +688,28 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (this.hasFloatLabel && (this.isFocus || !this.range || !this.isEmpty())) {
       const label = this.getLabel();
       if (label) {
+        const { labelTooltip } = this;
         const prefixCls = getProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
         const classString = classNames(`${prefixCls}-label`, {
           [`${prefixCls}-required`]: required,
           [`${prefixCls}-readonly`]: this.readOnly,
         });
+        const isTooltip = [LabelTooltip.always, LabelTooltip.overflow].includes(labelTooltip);
+        const node = <div className={classString} title={!isTooltip && isString(label) ? label : undefined}>{label}</div>;
         return (
           <div className={`${prefixCls}-label-wrapper`}>
-            <div className={classString}>{label}</div>
+            {
+              isTooltip ? (
+                <OverflowTip
+                  title={label}
+                  strict={labelTooltip === LabelTooltip.always}
+                  placement="top"
+                >
+                  {node}
+                </OverflowTip>
+              ) : node
+            }
           </div>
         );
       }

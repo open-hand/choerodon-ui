@@ -21,6 +21,15 @@
   transition: all 0.3s ease-out;
   user-select: none;
 
+  &-disabled-wrapper {
+    display: inline-block;
+    cursor: not-allowed;
+  }
+
+  &-disabled-wrapper > & {
+    pointer-events: none;
+  }
+
   &:focus {
     box-shadow: @btn-focus-box-shadow;
   }
@@ -51,6 +60,7 @@
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-lg;
     }
+
     &[href] {
       line-height: @btn-height-lg;
     }
@@ -60,8 +70,9 @@
     height: @btn-height-sm;
     padding: @btn-padding-sm;
     font-size: @font-size-sm;
+
     &[href] {
-      line-height:  @btn-height-sm;
+      line-height: @btn-height-sm;
     }
 
     .@{c7n-pro-prefix}-icon {
@@ -376,6 +387,9 @@
     }
   }
 
+  &-disabled-wrapper + &-disabled-wrapper,
+  &-disabled-wrapper + &,
+  & + &-disabled-wrapper,
   & + & {
     margin-left: 0.1rem;
   }

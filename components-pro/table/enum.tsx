@@ -1,3 +1,5 @@
+export { Tooltip as TableColumnTooltip } from '../core/enum';
+
 export enum ColumnLock {
   left = 'left',
   right = 'right',
@@ -69,12 +71,6 @@ export enum TablePaginationPosition {
   top = 'top',
   bottom = 'bottom',
   both = 'both',
-}
-
-export enum TableColumnTooltip {
-  none = 'none',
-  always = 'always',
-  overflow = 'overflow',
 }
 
 export enum TableHeightType {

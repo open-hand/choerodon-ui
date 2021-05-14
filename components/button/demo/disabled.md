@@ -14,19 +14,24 @@ title:
 To mark a button as disabled, add the `disabled` property to the `Button`.
 
 ```jsx
-import { Button } from 'choerodon-ui';
+import { Button, Tooltip } from 'choerodon-ui';
+import { Tooltip as ProTooltip } from 'choerodon-ui/pro';
 
 ReactDOM.render(
   <div>
     <Button type="primary" funcType="raised">
       Primary
     </Button>
-    <Button type="primary" disabled>
-      Primary(disabled)
-    </Button>
+    <Tooltip title="disabled">
+      <Button type="primary" disabled>
+        Primary(disabled)
+      </Button>
+    </Tooltip>
     <br />
     <Button>Default</Button>
-    <Button disabled>Default(disabled)</Button>
+    <ProTooltip title="disabled">
+      <Button disabled>Default(disabled)</Button>
+    </ProTooltip>
     <br />
     <Button>Ghost</Button>
     <Button disabled>Ghost(disabled)</Button>

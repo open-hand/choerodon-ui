@@ -1,6 +1,8 @@
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import OverflowTip from 'choerodon-ui/pro/lib/overflow-tip';
 import KeyCode from '../../_util/KeyCode';
 import classNames from 'classnames';
 import { connect } from 'mini-store';
@@ -161,8 +163,10 @@ const MenuItem = createReactClass({
       style.paddingLeft = props.inlineIndent * props.level;
     }
 
-    const checkbox = props.multiple && props.checkable !== false ? <Checkbox disabled={props.disabled} checked={props.isSelected} tabIndex={-1} /> : null;
-    return (
+    const checkbox = props.multiple && props.checkable !== false ? (
+      <Checkbox disabled={props.disabled} checked={props.isSelected} tabIndex={-1} />
+    ) : null;
+    const item = (
       <Ripple disabled={props.disabled}>
         <li
           {...attrs}
@@ -174,6 +178,18 @@ const MenuItem = createReactClass({
         </li>
       </Ripple>
     );
+    if (['overflow', 'always'].includes(props.tooltip)) {
+      return (
+        <OverflowTip
+          title={() => props.children}
+          strict={props.tooltip === 'always'}
+          placement="right"
+        >
+          {item}
+        </OverflowTip>
+      );
+    }
+    return item;
   },
 });
 

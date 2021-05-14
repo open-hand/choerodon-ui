@@ -66,7 +66,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   static displayName = 'Tooltip';
 
   static defaultProps = {
-    placement: 'top',
+    placement: 'bottom',
     transitionName: 'zoom-big-fast',
     mouseEnterDelay: 0.1,
     mouseLeaveDelay: 0.1,
@@ -135,11 +135,9 @@ export default class Tooltip extends Component<TooltipProps, any> {
   getDisabledCompatibleChildren(element: ReactElement<any>) {
     const elementType = element.type as any;
     if ((
-      elementType.__PRO_BUTTON ||
       elementType.__PRO_SWITCH ||
       elementType.__PRO_CHECKBOX ||
       elementType.__PRO_RADIO ||
-      elementType.__C7N_BUTTON ||
       elementType === 'button'
     ) && element.props.disabled && this.isHoverTrigger()) {
       // Pick some layout related style properties up to span

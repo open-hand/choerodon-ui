@@ -13,6 +13,7 @@ import { ElementProps } from '../core/ViewComponent';
 import EventManager from '../_util/EventManager';
 import { Action, HideAction, ShowAction } from './enum';
 import TriggerChild from './TriggerChild';
+import isEmpty from '../_util/isEmpty';
 
 function isPointsEq(a1: string[], a2: string[]): boolean {
   return a1[0] === a2[0] && a1[1] === a2[1];
@@ -159,8 +160,6 @@ export default class Trigger extends Component<TriggerProps> {
   preClickTime: number = 0;
 
   animateFrameId: number = 0;
-
-  calcContent?: ReactNode;
 
   @observable popupHidden?: boolean;
 
@@ -363,10 +362,6 @@ export default class Trigger extends Component<TriggerProps> {
         if (this.isMouseLeaveToHide()) {
           mouseProps.onMouseLeave = this.handlePopupMouseLeave;
         }
-        const { calcContent } = this;
-        if (calcContent) {
-          delete this.calcContent;
-        }
         return (
           <Popup
             key="popup"
@@ -389,7 +384,7 @@ export default class Trigger extends Component<TriggerProps> {
             getPopupContainer={getPopupContainer}
             {...mouseProps}
           >
-            {calcContent || (typeof popupContent === 'function' ? popupContent({ trigger: children }) : popupContent)}
+            {typeof popupContent === 'function' ? popupContent({ trigger: children }) : popupContent}
           </Popup>
         );
       }
@@ -454,16 +449,7 @@ export default class Trigger extends Component<TriggerProps> {
       return false;
     }
     const { popupContent } = this.props;
-    if (typeof popupContent === 'function') {
-      const { children } = this.props;
-      const calcContent = popupContent({ trigger: children });
-      if (calcContent) {
-        this.calcContent = calcContent;
-        return true;
-      }
-      return false;
-    }
-    return !!popupContent;
+    return !isEmpty(popupContent);
   }
 
   @mobxAction

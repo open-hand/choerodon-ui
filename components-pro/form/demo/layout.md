@@ -26,7 +26,7 @@ function passwordValidator(value, name, form) {
 }
 
 ReactDOM.render(
-  <Form labelWidth={[60, 70, 50]} columns={3}>
+  <Form labelWidth={[60, 70, 50]} labelTooltip="overflow" columns={3}>
     <TextField colSpan={3} label="手机号" pattern="1[3-9]\d{9}" name="phone" required />
     <Password label="密码" name="password" required />
     <NumberField rowSpan={2} label="年龄" name="age" min={18} step={1} required addonAfter="周岁" />

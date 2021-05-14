@@ -23,6 +23,7 @@ import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import autobind from '../_util/autobind';
 import transform from '../_util/transform';
+import OverflowTip from '../overflow-tip';
 
 export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
@@ -151,8 +152,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     if (column) {
       const maxWidth = Math.max(
         ...[
-          ...element.querySelectorAll(`td[data-index=${getColumnKey(column)}] > .${prefixCls}-cell-inner`),
-        ].map(({ clientWidth, scrollWidth, parentNode: { offsetWidth } }) => offsetWidth + scrollWidth - clientWidth + 1),
+          ...element.querySelectorAll(`[data-index=${getColumnKey(column)}] > .${prefixCls}-cell-inner`),
+        ].map(({ clientWidth, scrollWidth, parentNode: { offsetWidth } }) => offsetWidth + scrollWidth - clientWidth),
         minColumnWidth(column),
         column.width ? column.width : 0,
       );
@@ -259,21 +260,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     return [pre, next];
   }
 
-  isOverFlow(): boolean {
-    const { element } = this;
-    if (element && element.textContent) {
-      const { clientWidth, scrollWidth } = element;
-      return scrollWidth > clientWidth;
-    }
-    return false;
-  }
-
   @autobind
-  handleOverflowHiddenBeforeChange(hidden: boolean): boolean {
-    if (hidden) {
-      return true;
-    }
-    return this.isOverFlow();
+  getOverflowContainer() {
+    return this.element;
   }
 
   getHelpIcon(field?: Field) {
@@ -423,14 +412,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       <th {...thProps}>
         {
           [TableColumnTooltip.always, TableColumnTooltip.overflow].includes(tooltip) ?
-            <Tooltip
+            <OverflowTip
               key="tooltip"
               title={this.getHeader}
               placement={getPlacementByAlign(cellStyle.textAlign as ColumnAlign)}
-              onHiddenBeforeChange={tooltip === TableColumnTooltip.overflow ? this.handleOverflowHiddenBeforeChange : undefined}
+              strict={tooltip === TableColumnTooltip.always}
+              getOverflowContainer={this.getOverflowContainer}
             >
               {inner}
-            </Tooltip> :
+            </OverflowTip> :
             inner
         }
         {columnResizable && this.renderResizer()}

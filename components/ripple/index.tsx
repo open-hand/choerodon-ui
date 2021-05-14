@@ -1,4 +1,4 @@
-import React, { Children, PureComponent, ReactChild } from 'react';
+import React, { Children, cloneElement, isValidElement, PureComponent, ReactNode } from 'react';
 import RippleChild from './RippleChild';
 import { getConfig, getPrefixCls } from '../configure';
 
@@ -11,15 +11,18 @@ export default class Ripple extends PureComponent<RippleProps> {
   static displayName = 'Ripple';
 
   render() {
-    const { disabled, children } = this.props;
+    const { disabled, children, ...rest } = this.props;
     if (disabled || !children || !getConfig('ripple')) {
+      if (children) {
+        return Children.map(children, child => isValidElement(child) ? cloneElement(child, rest) : child);
+      }
       return children;
     }
-    return Children.map(children, this.rippleChild);
+    return Children.map(children, (child) => this.rippleChild(child, rest));
   }
 
-  rippleChild = (child: ReactChild) => {
+  rippleChild(child: ReactNode, rest) {
     const { prefixCls } = this.props;
-    return <RippleChild prefixCls={getPrefixCls('ripple', prefixCls)}>{child}</RippleChild>;
-  };
+    return <RippleChild prefixCls={getPrefixCls('ripple', prefixCls)} {...rest}>{child}</RippleChild>;
+  }
 }

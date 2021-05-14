@@ -161,6 +161,15 @@
     }
   }
 
+  &-disabled-wrapper {
+    display: inline-block;
+    cursor: not-allowed;
+  }
+
+  &-disabled-wrapper > & {
+    pointer-events: none;
+  }
+
   &&-lg {
     .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
     line-height: @btn-height-lg;
