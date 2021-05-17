@@ -4,6 +4,8 @@
 @tree-showline-open-icon: '\e621';
 @tree-showline-close-icon: '\e645';
 @tree-doc-icon: '\e664';
+@tree-prefix-cls: ~'@{c7n-prefix}-tree';
+@tree-node-prefix-cls: ~'@{tree-prefix-cls}-treenode';
 
 .antTreeSwitcherIcon(@type: 'tree-default-open-icon') {
   &::after {
@@ -23,5 +25,17 @@
     vertical-align: baseline;
     transition: transform 0.3s;
     .iconfont-font(@type);
+  }
+}
+
+.@{tree-node-prefix-cls}-leaf-last {
+  .@{tree-prefix-cls}-switcher {
+    &-leaf-line {
+      &::before {
+        top: auto !important;
+        bottom: auto !important;
+        height: @tree-title-height - 10px !important;
+      }
+    }
   }
 }

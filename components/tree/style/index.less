@@ -6,6 +6,7 @@
 @tree-prefix-cls: ~'@{c7n-prefix}-tree';
 @tree-node-prefix-cls: ~'@{tree-prefix-cls}-treenode';
 @tree-motion: ~'@{c7n-prefix}-motion-collapse';
+@tree-node-padding: @padding-xs / 2;
 
 .antCheckboxFn(@checkbox-prefix-cls: ~'@{c7n-prefix}-tree-checkbox');
 
@@ -40,7 +41,7 @@
     .@{tree-node-prefix-cls} {
       display: flex;
       align-items: flex-start;
-      padding: 0 0 (@padding-xs / 2) 0;
+      padding: 0 0 @tree-node-padding 0;
       outline: none;
       // Disabled
       &-disabled {
@@ -75,10 +76,11 @@
     // >>> Switcher
     & &-switcher {
       .antTreeSwitcherIcon();
+      position: relative;
       flex: none;
+      align-self: stretch;
 
       width: @tree-title-height;
-      height: @tree-title-height;
       margin: 0;
       line-height: @tree-title-height;
       text-align: center;
@@ -90,6 +92,33 @@
 
       &_close .@{iconfont-css-prefix}-arrow_drop_down {
         transform: rotate(-90deg);
+      }
+
+      &-loading-icon {
+        color: @primary-color;
+      }
+
+      &-leaf-line {
+        z-index: 1;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        &::before {
+          position: absolute;
+          top: 0;
+          bottom: -@tree-node-padding;
+          margin-left: -1px;
+          border-left: 1px solid @normal-color;
+          content: ' ';
+        }
+        &::after {
+          position: absolute;
+          width: @tree-title-height - 14px;
+          height: @tree-title-height - 10px;
+          margin-left: -1px;
+          border-bottom: 1px solid @normal-color;
+          content: ' ';
+        }
       }
     }
 
@@ -121,7 +150,7 @@
       background: transparent;
       border-radius: @border-radius-base;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s, border 0s, line-height 0s;
 
       &:hover {
         background-color: @tree-node-hover-bg;
@@ -188,9 +217,9 @@
 
           &::before {
             position: absolute;
-            top: calc(100% - 4px);
-            right: -@tree-title-height / 2;
-            bottom: -@tree-title-height - 4px;
+            top: 0;
+            right: @tree-title-height / 2;
+            bottom: -@tree-node-padding;
             border-right: 1px solid @border-color-base;
             content: '';
           }
