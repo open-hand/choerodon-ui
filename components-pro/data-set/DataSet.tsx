@@ -1886,9 +1886,19 @@ export default class DataSet extends EventManager {
       if (restUpdatedData.length === updated.length) {
         updated.forEach((r, index) => r.commit(restUpdatedData[index], this));
       } else if (onlyDelete) {
-        updated.forEach(r => r.commit(r.toData(), this));
+        // onlyDelete状态不做其他处理 可以与else的处理合并
+        // updated.forEach(r => r.commit(r.toData(), this));
       } else {
-        updated.forEach(r => r.commit(omit(r.toData(), ['__dirty']), this));
+        updated
+          .filter(r => restUpdatedData.some(data => {
+            const dataStatus = data[statusKey];
+            return data.__id
+              ? r.id === data.__id
+              : primaryKey &&
+              dataStatus !== status[RecordStatus.add] &&
+              r.get(primaryKey) === data[primaryKey];
+          }))
+          .forEach(r => r.commit(omit(r.toData(), ['__dirty']), this));
       }
       destroyed.forEach(r => r.commit(undefined, this));
       if (isNumber(total)) {
