@@ -1,6 +1,7 @@
 import React, { Children, cloneElement, isValidElement, PureComponent, ReactNode } from 'react';
 import RippleChild from './RippleChild';
 import { getConfig, getPrefixCls } from '../configure';
+import createChains from '../_util/createChains';
 
 export interface RippleProps {
   prefixCls?: string;
@@ -14,7 +15,7 @@ export default class Ripple extends PureComponent<RippleProps> {
     const { disabled, children, ...rest } = this.props;
     if (disabled || !children || !getConfig('ripple')) {
       if (children) {
-        return Children.map(children, child => isValidElement(child) ? cloneElement(child, rest) : child);
+        return Children.map(children, child => isValidElement(child) ? cloneElement(child, createChains(rest, child.props)) : child);
       }
       return children;
     }

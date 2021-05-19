@@ -346,11 +346,17 @@ class App extends React.Component {
   };
 
   importData = () => {
-    const { userDs } = this;
-    console.log(userDs.toJSONData());
-    console.log(userDs.toJSONData(true));
-    console.log(userDs.toJSONData(false, true));
-    userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx', name: 'Hugh' });
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const { userDs } = this;
+        userDs.current.set('userid', Math.random())
+        console.log(userDs.toJSONData());
+        console.log(userDs.toJSONData(true));
+        console.log(userDs.toJSONData(false, true));
+        userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx', name: 'Hugh' });
+        resolve();
+      }, 2000);
+    });
   };
 
   removeAllData = () => {

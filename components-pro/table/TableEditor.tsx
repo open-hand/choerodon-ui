@@ -104,6 +104,10 @@ export default class TableEditor extends Component<TableEditorProps> {
       this.reaction = reaction(() => tableStore.virtualData, (records) => (
         records.includes(dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
       ));
+    } else {
+      this.reaction = reaction(() => dataSet.current, r => (
+        r && this.cellNode ? raf(() => this.alignEditor()) : this.hideEditor()
+      ));
     }
   }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import OverflowTip from 'choerodon-ui/pro/lib/overflow-tip';
