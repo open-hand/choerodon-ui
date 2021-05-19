@@ -42,6 +42,10 @@ class App extends React.Component {
   render() {
     return (
       <Tree
+        showLine={{
+          showLeafIcon: false
+        }}
+        showIcon={false}
         dataSet={this.ds}
         checkable
         renderer={nodeRenderer}

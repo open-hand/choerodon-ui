@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, CSSProperties, DragEvent, MouseEvent, ReactElement, ReactNode } from 'react';
+import React, { Component, CSSProperties, DragEvent, MouseEvent, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import DirectoryTree from './DirectoryTree';
 import animation from '../_util/openAnimation';
@@ -10,6 +10,7 @@ import { ProgressType } from '../progress/enum';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
 import { DataNode, EventDataNode, Key } from '../rc-components/tree/interface';
+import { isValidElement, cloneElement } from '../_util/reactNode';
 
 export { TreeNode };
 
@@ -103,8 +104,8 @@ export interface C7nTreeNodeDropEvent {
 // [Legacy] Compatible for v3
 export type TreeNodeNormal = DataNode;
 
-export interface TreeProps extends Omit<RcTreeProps, 'prefixCls'> {
-  showLine?: boolean;
+export interface TreeProps extends Omit<RcTreeProps, 'prefixCls' | 'showLine'> {
+  showLine?: boolean | { showLeafIcon: boolean };
   className?: string;
   /** 是否支持多选 */
   multiple?: boolean;
@@ -171,16 +172,21 @@ export default class Tree extends Component<TreeProps, any> {
       );
     }
     const switcherCls = `${prefixCls}-switcher-icon`;
-    if (showLine) {
-      if (isLeaf) {
+    let showLeafIcon;
+    if (showLine && typeof showLine === 'object') {
+      showLeafIcon = showLine.showLeafIcon;
+    }
+
+    if (isLeaf) {
+      if (showLine) {
+        if (typeof showLine === 'object' && !showLeafIcon) {
+          return <span className={`${prefixCls}-switcher-leaf-line`} />;
+        }
         return <Icon type="note" className={`${prefixCls}-switcher-line-icon`} />;
       }
-      return <Icon type="arrow_drop_down" className={switcherCls} />;
-    }
-    if (isLeaf) {
       return null;
     }
-    if (switcherIcon) {
+    if (isValidElement(switcherIcon)) {
       const switcherOriginCls = switcherIcon.props.className || '';
       return cloneElement(switcherIcon, {
         className: [switcherOriginCls, switcherCls],
@@ -207,14 +213,17 @@ export default class Tree extends Component<TreeProps, any> {
 
   render() {
     const props = this.props;
-    const { className, showIcon, children } = props;
-    const { checkable } = props;
+    const { className, showIcon, showLine, children, checkable } = props;
     const prefixCls = this.getPrefixCls();
+    const newProps = {
+      ...props,
+      showLine: Boolean(showLine),
+    };
     return (
       <RcTree
         itemHeight={20}
         ref={this.setTreeRef}
-        {...props}
+        {...newProps}
         className={classNames(!showIcon && `${prefixCls}-icon-hide`, className)}
         checkable={checkable ? <span className={`${prefixCls}-checkbox-inner`} /> : 0}
         switcherIcon={this.renderSwitcherIcon}
