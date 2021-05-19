@@ -1,27 +1,10 @@
 import React, { Children, cloneElement, isValidElement, PureComponent, ReactElement, ReactNode } from 'react';
 import Animate from '../animate';
+import createChains from '../_util/createChains';
 import MouseDown, { Size } from './MouseDown';
 
 export interface RippleChildProps {
   prefixCls?: string;
-}
-
-function createChains(newProps, oldProps) {
-  const chains = {};
-  Object.keys(newProps).forEach((key) => {
-    const value = newProps[key];
-    const oldValue = oldProps[key];
-    if (typeof value === 'function' && typeof oldValue === 'function') {
-      chains[key] = (...args) => {
-        value(...args);
-        return oldValue(...args);
-      };
-    }
-  });
-  return {
-    ...newProps,
-    ...chains,
-  };
 }
 
 export default class RippleChild extends PureComponent<RippleChildProps> {
@@ -37,7 +20,7 @@ export default class RippleChild extends PureComponent<RippleChildProps> {
   }
 
   handleMouseDown = (child: ReactElement<any>, size?: Size) => {
-    const { prefixCls, ...reset } = this.props;
+    const { prefixCls, ...rest } = this.props;
     const { children, style } = child.props;
     const componentProps: any = {
       className: `${prefixCls}-wrapper`,
@@ -55,7 +38,7 @@ export default class RippleChild extends PureComponent<RippleChildProps> {
       };
     }
     const newProps: any = {
-      ...createChains(reset, child.props),
+      ...createChains(rest, child.props),
       children: [
         children,
         <Animate

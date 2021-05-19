@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useCallback, useRef } from 'react';
 import { findDOMNode } from 'react-dom';
+import noop from 'lodash/noop';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 
 export interface OverflowTipProps extends TooltipProps {
@@ -15,7 +16,7 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
       return findDOMNode(current) as Element;
     }
   }, [ref]);
-  const { children, strict, getOverflowContainer = defaultGetOverflowContainer, onHiddenBeforeChange, ...rest } = props;
+  const { children, strict, getOverflowContainer = defaultGetOverflowContainer, onHiddenBeforeChange = noop, ...rest } = props;
   const isOverFlow = useCallback((): boolean => {
     const element = getOverflowContainer();
     if (element && element.textContent) {
@@ -25,12 +26,15 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
     return false;
   }, [getOverflowContainer]);
   const handleHiddenBeforeChange = useCallback((hidden: boolean): boolean => {
+    if (onHiddenBeforeChange(hidden) === false) {
+      return false;
+    }
     if (hidden) {
       return true;
     }
     return isOverFlow();
-
   }, [isOverFlow, onHiddenBeforeChange]);
+
   return (
     <Tooltip
       {...rest}
