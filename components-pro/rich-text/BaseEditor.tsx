@@ -127,7 +127,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
   }
 
   getOtherProps() {
-    return omit(this.props, ['style', 'onBlur', 'toolbar', 'className', 'defaultValue', 'onChange', 'value']);
+    return omit(this.props, ['style', 'toolbar', 'className', 'defaultValue', 'onChange', 'value']);
   }
 
   handleOpenLightBox = (e) => {
@@ -170,7 +170,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
     if (mode === 'preview') {
       return (
         <RichTextViewer
-          className={`${className}-preview`}
+          className={`${className}-preview ql-editor`}
           style={style}
           deltaOps={deltaOps || value}
         />

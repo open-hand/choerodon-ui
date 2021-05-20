@@ -71,7 +71,7 @@ export default class Tree extends Component<TreeProps> {
     tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     children: PropTypes.any,
     treeData: PropTypes.array, // Generate treeNode by children
-    showLine: PropTypes.bool,
+    showLine: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     showIcon: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     selectable: PropTypes.bool,

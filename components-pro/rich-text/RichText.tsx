@@ -5,6 +5,7 @@ import { toJS } from 'mobx';
 import { ReactQuillProps } from 'react-quill/lib';
 import 'react-quill/dist/quill.snow.css';
 import isEqual from 'lodash/isEqual';
+import noop from 'lodash/noop';
 import { Delta } from './quill';
 import DataSet from '../data-set/DataSet';
 import { FormField, FormFieldProps } from '../field/FormField';
@@ -117,6 +118,12 @@ export default class RichText extends FormField<RichTextProps> {
     super.componentWillReceiveProps(nextProps, nextContext);
   }
 
+  @autobind
+  handleRichTextBlur(props) {
+    const { onBlur = noop } = this.props;
+    onBlur(props);
+  }
+
   renderWrapper(): ReactNode {
     const { defaultValue, dataSet } = this.props;
     this.rtOptions.readOnly = this.disabled || this.readOnly;
@@ -129,6 +136,7 @@ export default class RichText extends FormField<RichTextProps> {
           toolbarId={this.toolbarId}
           value={toJS(deltaOps)}
           dataSet={dataSet}
+          onBlur={this.handleRichTextBlur}
         />
         {this.renderFloatLabel()}
       </div>

@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fixed the `keyboardClosable` property has no effect when there is no cancel button.
 - 🐞 `<pro>DataSet`：Fix the problem that the state of the dataSet is incorrectly modified after submission when only deleted and dataToJSON is selected.
 - 🐞 `<pro>Table`: Fix the positioning problem of the editor when the current record of the DataSet changes.
+- 🐞 `<pro>RichText`：Fix the editor onBlur event.
 
 ## 1.3.2
 
