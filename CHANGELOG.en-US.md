@@ -20,7 +20,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added `labelTooltip` property.
 - 🌟 `<pro>FormField`: Added `labelTooltip` property.
 - 🌟 `<pro>Button`: Added `tooltip` property.
-- 🌟 `<pro>DataSet`: Added `setAllPageSelection` method and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
+- 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
 - 🌟 `<pro>Table`: Added `showAllPageSelectionButton` property.
 - 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `Dropdown`: The `overlay` property supports hook functions.
