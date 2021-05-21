@@ -1964,7 +1964,7 @@ Then the query method will be auto invoke.`,
     const queryParameter = this.getState(QUERY_PARAMETER);
     if (queryParameter) {
       if (isNil(value)) {
-        queryParameter.remove(para);
+        queryParameter.delete(para);
       } else {
         queryParameter.set(para, value);
       }
