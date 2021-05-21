@@ -20,7 +20,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增 labelTooltip 属性。
 - 🌟 `<pro>FormField`: 新增 labelTooltip 属性。
 - 🌟 `<pro>Button`: 新增 tooltip 属性。
-- 🌟 `<pro>DataSet`: 新增 setAllPageSelection 方法 and isAllPageSelection, unSelected, currentUnSelected 值。
+- 🌟 `<pro>DataSet`: 新增 setAllPageSelection, getQueryParameter 方法和 isAllPageSelection, unSelected, currentUnSelected 值。
 - 🌟 `<pro>Table`: 新增 showAllPageSelectionButton 属性。
 - 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `Dropdown`: overlay 属性支持钩子函数。
