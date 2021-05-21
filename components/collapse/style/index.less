@@ -9,6 +9,7 @@
 .collapse-close() {
   transform: rotate(0);
 }
+
 .collapse-open() {
   transform: rotate(90deg);
 }
@@ -58,6 +59,7 @@
         vertical-align: top;
         transform: rotate(-90deg);
         cursor: pointer;
+
         &.@{collapse-prefix-cls}-expanded {
           vertical-align: top;
           transform: rotate(0);
@@ -90,6 +92,14 @@
           text-align: right;
           cursor: pointer;
         }
+      }
+    }
+  }
+
+  &-icon-position-text-right {
+    & > .@{collapse-prefix-cls}-item {
+      .@{collapse-prefix-cls}-expand-icon-wrapper {
+        margin-left: 10px;
       }
     }
   }
@@ -155,6 +165,25 @@
     & > .arrow {
       color: @disabled-color;
       cursor: not-allowed;
+    }
+  }
+
+  &-ghost {
+    background-color: transparent;
+    border: 0;
+
+    > .@{collapse-prefix-cls}-item {
+      border-bottom: 0;
+
+      > .@{collapse-prefix-cls}-content {
+        background-color: transparent;
+        border-top: 0;
+
+        > .@{collapse-prefix-cls}-content-box {
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, MouseEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
@@ -24,6 +24,9 @@ import Option from '../../option/Option';
 import { TableHeightType } from '../enum';
 import { LabelLayout } from '../../form/enum';
 import { ShowHelp } from '../../field/enum';
+import { ViewMode } from '../../radio/enum';
+import Icon from '../../icon';
+import Tooltip from '../../tooltip/Tooltip';
 
 function normalizeColumnsToTreeData(columns: ColumnProps[]) {
   return treeReduce<object[], ColumnProps>(columns, (list, column, _sort, parentColumn) => list.concat({
@@ -56,7 +59,7 @@ export interface CustomizationSettingsProps {
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = observer((props) => {
   const { modal } = props;
-  const { update, handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
+  const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { tableStore } = useContext(TableContext);
   const { originalColumns, prefixCls, customized } = tableStore;
   const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(originalColumns);
@@ -66,12 +69,16 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
         heightType: tableStore.heightType,
         height: tableStore.totalHeight,
         heightDiff: diff(tableStore.totalHeight),
+        aggregation: tableStore.aggregation,
+        size: tableStore.size,
+        parityRow: tableStore.parityRow,
+        aggregationExpandType: tableStore.aggregationExpandType,
       },
     ],
     events: {
       update({ record, name, value }) {
         record.setState(HEIGHT_CHANGE_KEY, (record.getState(HEIGHT_CHANGE_KEY) || 0) + 1);
-        const { tempCustomized } = tableStore;
+        const { tempCustomized, props: { columns, children } } = tableStore;
         if (tempCustomized) {
           set(tempCustomized, name, value);
           if (name === 'height' && record.get('heightType') === TableHeightType.fixed) {
@@ -80,6 +87,10 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
           } else if (name === 'heightDiff' && record.get('heightType') === TableHeightType.flex) {
             record.set('height', diff(value));
             set(tempCustomized, 'heightType', TableHeightType.flex);
+          } else if (name === 'aggregation') {
+            setCustomizedColumns(columns
+              ? mergeDefaultProps(columns, value, tempCustomized.columns)[0]
+              : normalizeColumns(children, value, tempCustomized.columns)[0]);
           }
         }
         record.setState(HEIGHT_CHANGE_KEY, record.getState(HEIGHT_CHANGE_KEY) - 1);
@@ -118,47 +129,31 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
       },
     },
   }), [customizedColumns, tableStore]);
-  const handleRestore = useCallback(action(() => {
-    const { props: { columns, children }, originalHeightType } = tableStore;
-    setCustomizedColumns(columns
-      ? mergeDefaultProps(columns)
-      : normalizeColumns(children));
-    tableStore.tempCustomized = {
-      columns: {},
-    };
+  const handleRestoreTable = useCallback(action((e: MouseEvent<any>) => {
+    e.stopPropagation();
+    const { originalHeightType } = tableStore;
     tableStore.node.handleHeightTypeChange(true);
     tableRecord.init({
       heightType: originalHeightType,
       height: tableStore.totalHeight,
       heightDiff: diff(tableStore.totalHeight),
     });
-  }), [tableRecord, tableStore, tableRecord]);
+  }), [tableRecord, tableStore]);
+  const handleRestoreColumns = useCallback(action((e: MouseEvent<any>) => {
+    e.stopPropagation();
+    const { props: { columns, children } } = tableStore;
+    const aggregation = tableRecord.get('aggregation');
+    setCustomizedColumns(columns
+      ? mergeDefaultProps(columns, aggregation)[0]
+      : normalizeColumns(children, aggregation)[0]);
+    tableStore.tempCustomized.columns = {};
+  }), [tableRecord, tableStore]);
   const handleOption = useCallback(() => ({
     className: `${prefixCls}-customization-option`,
   }), [prefixCls]);
   const handleCollapseChange = useCallback(action((key: string | string[]) => {
     tableStore.customizedActiveKey = ([] as string[]).concat(key);
   }), [tableStore]);
-  useEffect(() => {
-    if (update) {
-      update({
-        title: (
-          <>
-            <span>{$l('Table', 'customization_settings')}</span>
-            <Button
-              className={`${prefixCls}-customization-header-button`}
-              color={ButtonColor.primary}
-              funcType={FuncType.flat}
-              size={Size.small}
-              onClick={handleRestore}
-            >
-              {$l('Table', 'restore_default')}
-            </Button>
-          </>
-        ),
-      });
-    }
-  }, [update, prefixCls, handleRestore]);
   useEffect(action(() => {
     tableStore.tempCustomized = {
       height: tableStore.totalHeight,
@@ -169,11 +164,15 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
   useEffect(() => {
     if (handleOk) {
       handleOk(action(() => {
-        const { tempCustomized } = tableStore;
+        const { tempCustomized, aggregation, props: { onAggregationChange } } = tableStore;
         tableStore.tempCustomized = { columns: {} };
         tableStore.saveCustomized(tempCustomized);
         tableStore.initColumns();
         tableStore.node.handleHeightTypeChange();
+        const { aggregation: customAggregation } = tempCustomized;
+        if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
+          onAggregationChange(customAggregation);
+        }
       }));
     }
     if (handleCancel) {
@@ -183,21 +182,86 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
       }));
     }
   }, [handleOk, handleCancel, columnDataSet, tableStore]);
+  const renderIcon = useCallback(({ isActive }) => <Icon type={isActive ? 'expand_more' : 'navigate_next'} />, []);
   const tableHeightType = tableRecord.get('heightType');
   return (
     <Collapse
-      bordered={false}
       activeKey={tableStore.customizedActiveKey.slice()}
       onChange={handleCollapseChange}
-      expandIconPosition="right"
+      expandIcon={renderIcon}
+      expandIconPosition="text-right"
+      className={`${prefixCls}-customization`}
+      ghost
     >
       <CollapsePanel
         header={
-          <div className={`${prefixCls}-customization-panel-header`}>
+          <span className={`${prefixCls}-customization-panel-title`}>
+            {$l('Table', 'display_settings')}
+          </span>
+        }
+        key="display"
+      >
+        <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
+          {
+            tableStore.hasAggregationColumn && (
+              <SelectBox name="aggregation" label={$l('Table', 'view_display')} mode={ViewMode.button}>
+                <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
+                  <Tooltip title={$l('Table', 'tiled_view')} placement="top">
+                    <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-not-aggregation`} />
+                  </Tooltip>
+                </Option>
+                <Option value className={`${prefixCls}-customization-select-view-option`}>
+                  <Tooltip title={$l('Table', 'aggregation_view')} placement="top">
+                    <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-aggregation`} />
+                  </Tooltip>
+                </Option>
+              </SelectBox>
+            )
+          }
+          <SelectBox name="size" label={$l('Table', 'density_display')} mode={ViewMode.button}>
+            <Option value={Size.default} className={`${prefixCls}-customization-select-view-option`}>
+              <Tooltip title={$l('Table', 'normal')} placement="top">
+                <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-size-default`} />
+              </Tooltip>
+            </Option>
+            <Option value={Size.small} className={`${prefixCls}-customization-select-view-option`}>
+              <Tooltip title={$l('Table', 'compact')} placement="top">
+                <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-size-small`} />
+              </Tooltip>
+            </Option>
+          </SelectBox>
+          <SelectBox name="parityRow" label={$l('Table', 'parity_row')} mode={ViewMode.button}>
+            <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
+              <Tooltip title={$l('Table', 'normal')} placement="top">
+                <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-no-parity-row`} />
+              </Tooltip>
+            </Option>
+            <Option value className={`${prefixCls}-customization-select-view-option`}>
+              <Tooltip title={$l('Table', 'parity_row')} placement="top">
+                <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-parity-row`} />
+              </Tooltip>
+            </Option>
+          </SelectBox>
+        </Form>
+      </CollapsePanel>
+      <CollapsePanel
+        header={
+          <span className={`${prefixCls}-customization-panel-title`}>
             {$l('Table', 'table_settings')}
-          </div>
+          </span>
         }
         key="table"
+        extra={
+          <Button
+            className={`${prefixCls}-customization-header-button`}
+            color={ButtonColor.primary}
+            funcType={FuncType.flat}
+            size={Size.small}
+            onClick={handleRestoreTable}
+          >
+            {$l('Table', 'restore_default')}
+          </Button>
+        }
       >
         <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
           <SelectBox vertical name="heightType" label={$l('Table', 'height_settings')} onOption={handleOption}>
@@ -233,15 +297,41 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
               />
             </Option>
           </SelectBox>
+          {
+            tableRecord.get('aggregation') && (
+              <SelectBox name="aggregationExpandType" label={$l('Table', 'row_expand_settings')}>
+                <Option value="cell">
+                  {$l('Table', 'expand_cell')}
+                </Option>
+                <Option value="row">
+                  {$l('Table', 'expand_row')}
+                </Option>
+                <Option value="column">
+                  {$l('Table', 'expand_column')}
+                </Option>
+              </SelectBox>
+            )
+          }
         </Form>
       </CollapsePanel>
       <CollapsePanel
         header={
-          <div className={`${prefixCls}-customization-panel-header`}>
+          <span className={`${prefixCls}-customization-panel-title`}>
             {$l('Table', 'column_settings')}
-          </div>
+          </span>
         }
         key="columns"
+        extra={
+          <Button
+            className={`${prefixCls}-customization-header-button`}
+            color={ButtonColor.primary}
+            funcType={FuncType.flat}
+            size={Size.small}
+            onClick={handleRestoreColumns}
+          >
+            {$l('Table', 'restore_default')}
+          </Button>
+        }
       >
         <ColumnGroups dataSet={columnDataSet} />
       </CollapsePanel>

@@ -116,7 +116,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
     }
     if (menus.length) {
       return (
-        <Menu prefixCls={`${prefixCls}-customization-dropdown-menu`} onClick={handleMenuClick}>
+        <Menu prefixCls={`${prefixCls}-dropdown-menu`} onClick={handleMenuClick}>
           {menus}
         </Menu>
       );

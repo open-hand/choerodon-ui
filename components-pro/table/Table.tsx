@@ -70,6 +70,7 @@ import VirtualWrapper from './VirtualWrapper';
 import ModalProvider from '../modal-provider/ModalProvider';
 import SelectionTips from './SelectionTips';
 import { DataSetSelection } from '../data-set/enum';
+import { Size } from '../core/enum';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
 
@@ -201,10 +202,14 @@ export interface DragRender {
 }
 
 export interface Customized {
-  columns: object,
-  heightType?: TableHeightType,
-  height?: number,
-  heightDiff?: number,
+  columns: object;
+  heightType?: TableHeightType;
+  height?: number;
+  heightDiff?: number;
+  aggregation?: boolean;
+  size?: Size;
+  parityRow?: boolean;
+  aggregationExpandType?: 'cell' | 'row' | 'column';
 }
 
 let _instance;
@@ -553,6 +558,14 @@ export interface TableProps extends DataSetComponentProps {
    * 摘要
    */
   summary?: string;
+  /**
+   * 聚合视图
+   */
+  aggregation?: boolean;
+  /**
+   * 聚合视图切换钩子
+   */
+  onAggregationChange?: (aggregation: boolean) => void;
 }
 
 @observer
@@ -645,6 +658,8 @@ export default class Table extends DataSetComponent<TableProps> {
      */
     rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])]),
     alwaysShowRowBox: PropTypes.bool,
+    showSelectionTips: PropTypes.bool,
+    showAllPageSelectionButton: PropTypes.bool,
     defaultRowExpanded: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
     indentSize: PropTypes.number,
@@ -712,6 +727,7 @@ export default class Table extends DataSetComponent<TableProps> {
     autoMaxWidth: true,
     autoFootHeight: false,
     clientExportQuantity: 100,
+    aggregation: false,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1152,6 +1168,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'border',
       'selectionMode',
       'alwaysShowRowBox',
+      'showSelectionTips',
+      'showAllPageSelectionButton',
       'onRow',
       'rowRenderer',
       'buttons',
@@ -1208,6 +1226,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'clientExportQuantity',
       'treeQueryExpanded',
       'summary',
+      'aggregation',
+      'onAggregationChange',
     ]);
   }
 
@@ -1225,12 +1245,14 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getClassName(): string | undefined {
     const {
-      tableStore: { prefixCls, border, rowHeight, parityRow },
+      tableStore: { prefixCls, border, rowHeight, parityRow, aggregation, size },
     } = this;
     return super.getClassName(`${prefixCls}-scroll-position-left`, {
+      [`${prefixCls}-${size}`]: size !== Size.default,
       [`${prefixCls}-bordered`]: border,
       [`${prefixCls}-parity-row`]: parityRow,
       [`${prefixCls}-row-height-fixed`]: isNumber(rowHeight),
+      [`${prefixCls}-aggregation`]: aggregation,
     });
   }
 

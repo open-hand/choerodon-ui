@@ -1,5 +1,5 @@
 @import '../../../components/style/themes/default';
-@import "../../select/style/mixin";
+@import '../../check-box/style/mixin';
 
 @table-customization-prefix-cls: ~'@{c7n-pro-prefix}-table-customization';
 
@@ -66,7 +66,6 @@
         display: flex;
         flex: 1;
         align-items: center;
-        margin-left: .03rem;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -116,37 +115,18 @@
     &-group-header {
       display: inline-block;
       margin-bottom: .1rem;
-      margin-left: .03rem;
       color: @text-color-secondary;
       font-size: @font-size-sm;
     }
   }
 
   &-panel {
-    &-header {
-      display: flex;
-      align-items: center;
-
-      &::before {
-        display: block;
-        width: .03rem;
-        height: .12rem;
-        margin-right: .06rem;
-        background-color: @primary-color;
-        content: " ";
-      }
-    }
-
     &-title {
-      flex: 1;
-      font-weight: 400;
+      font-weight: 600;
       font-size: .14rem;
       line-height: .22rem;
+      vertical-align: middle;
     }
-  }
-
-  &-dropdown-menu {
-    .dropdown-menu;
   }
 
   &-form {
@@ -173,13 +153,95 @@
     }
   }
 
-  .@{c7n-pro-prefix}-collapse {
+  & &-select-view-option {
+    margin-top: .1rem !important;
+    margin-right: .25rem;
+    margin-bottom: .1rem !important;
+    padding: 0;
+
+    &-inner {
+      width: .7rem;
+      height: .41rem;
+      background-repeat: no-repeat;
+    }
+
+    .@{c7n-pro-prefix}-radio {
+      &-inner {
+        border-width: .02rem;
+        pointer-events: none;
+      }
+
+      &:checked + .@{c7n-pro-prefix}-radio-inner {
+        &::before {
+          top: 0;
+          right: 0;
+          left: auto;
+          display: block;
+          width: .14rem;
+          height: .14rem;
+          border-radius: 0;
+          content: '';
+        }
+
+        .uncheck-right(.14rem);
+        .check;
+
+        &::after {
+          left: auto;
+        }
+      }
+    }
+  }
+
+  &-size-default,
+  &-not-aggregation {
+    background-image: linear-gradient(90deg, @table-customization-select-view-option-bg .04rem, transparent .04rem, transparent .08rem, @table-customization-select-view-option-bg .08rem, @table-customization-select-view-option-bg 100%),
+    linear-gradient(90deg, @table-customization-select-view-option-bg 0, @table-customization-select-view-option-bg 100%),
+    linear-gradient(90deg, @table-customization-select-view-option-bg .04rem, transparent .04rem, transparent .08rem, @table-customization-select-view-option-bg .08rem, @table-customization-select-view-option-bg 100%);
+    background-position: .06rem .08rem, .02rem .2rem, .06rem .28rem;
+    background-size: .56rem .04rem, .67rem .01rem, .56rem .04rem;
+  }
+
+  &-aggregation {
+    background-image: linear-gradient(90deg, @table-customization-select-view-option-bg .03rem, transparent .03rem, transparent .08rem, @table-customization-select-view-option-bg .08rem, @table-customization-select-view-option-bg .32rem, transparent .32rem, transparent .36rem, @table-customization-select-view-option-bg .36rem),
+    linear-gradient(90deg, @table-customization-select-view-option-bg .2rem, transparent .2rem, transparent .28rem, @table-customization-select-view-option-bg .28rem),
+    linear-gradient(90deg, @table-customization-select-view-option-bg 0, @table-customization-select-view-option-bg 100%),
+    linear-gradient(90deg, @table-customization-select-view-option-bg .03rem, transparent .03rem, transparent .08rem, @table-customization-select-view-option-bg .08rem, @table-customization-select-view-option-bg .32rem, transparent .32rem, transparent .36rem, @table-customization-select-view-option-bg .36rem),
+    linear-gradient(90deg, @table-customization-select-view-option-bg .2rem, transparent .2rem, transparent .28rem, @table-customization-select-view-option-bg .28rem);
+    background-position: .06rem .06rem, .14rem .12rem, .02rem .2rem, .06rem .26rem, .14rem .32rem;
+    background-size: .56rem .03rem, .44rem .03rem, .67rem .01rem, .56rem .03rem, .44rem .03rem;
+  }
+
+  &-size-small,
+  &-no-parity-row {
+    background-image: linear-gradient(90deg, @table-customization-select-view-option-bg .03rem, transparent .03rem, transparent .08rem, @table-customization-select-view-option-bg .08rem),
+    linear-gradient(90deg, @table-customization-select-view-option-bg 0, @table-customization-select-view-option-bg 100%),
+    linear-gradient(90deg, @table-customization-select-view-option-bg .03rem, transparent .03rem, transparent .08rem, @table-customization-select-view-option-bg .08rem),
+    linear-gradient(90deg, @table-customization-select-view-option-bg 0, @table-customization-select-view-option-bg 100%),
+    linear-gradient(90deg, @table-customization-select-view-option-bg .03rem, transparent .03rem, transparent .08rem, @table-customization-select-view-option-bg .08rem);
+    background-position: .06rem .05rem, .02rem .13rem, .06rem .19rem, .02rem .27rem, .06rem .32rem;
+    background-size: .56rem .03rem, .67rem .01rem, .56rem .03rem, .67rem .01rem, .56rem .03rem;
+  }
+
+  &-parity-row {
+    background-image: linear-gradient(90deg, @table-customization-select-view-option-bg .03rem, transparent .03rem, transparent .08rem, @table-customization-select-view-option-bg .08rem),
+    linear-gradient(90deg, @table-customization-select-view-option-bg 0, @table-customization-select-view-option-bg 100%),
+    linear-gradient(90deg, #F0F0F0 0, #F0F0F0 100%),
+    linear-gradient(90deg, #F0F0F0 0, #F0F0F0 .03rem, @table-customization-select-view-option-bg .07rem, #F0F0F0 .07rem, #F0F0F0 .12rem, @table-customization-select-view-option-bg .12rem, @table-customization-select-view-option-bg .6rem, #F0F0F0 .6rem),
+    linear-gradient(90deg, #F0F0F0 0, #F0F0F0 100%),
+    linear-gradient(90deg, @table-customization-select-view-option-bg 0, @table-customization-select-view-option-bg 100%),
+    linear-gradient(90deg, @table-customization-select-view-option-bg .03rem, transparent .03rem, transparent .08rem, @table-customization-select-view-option-bg .08rem);
+    background-position: .06rem .05rem, .02rem .13rem, .02rem .14rem, .02rem .19rem, .02rem .22rem, .02rem .27rem, .06rem .32rem;
+    background-size: .56rem .03rem, .67rem .01rem, .67rem .05rem, .67rem .03rem, .67rem .06rem, .67rem .01rem, .56rem .03rem;
+  }
+
+  .@{c7n-prefix}-collapse {
     &-header {
-      padding: .12rem .24rem;
+      padding: .12rem .2rem !important;
     }
 
     &-content {
-      padding: 0 .24rem;
+      padding: 0 .2rem;
     }
   }
 }

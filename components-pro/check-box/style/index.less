@@ -1,6 +1,7 @@
 @import '../../../components/style/themes/default';
 @import '../../../components/style/mixins/index';
 @import '../../radio/style/mixin';
+@import 'mixin';
 
 @pro-checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
 
@@ -21,22 +22,7 @@
     transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1),
       background-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
 
-    &::after {
-      @check-width: (@checkbox-size / 14) * 5;
-      @check-height: (@checkbox-size / 14) * 10;
-      position: absolute;
-      top: (@checkbox-size - @check-height) / 2 - 3 * (@checkbox-size / 14);
-      left: (@checkbox-size - @check-width) / 2 - 1.5 * (@checkbox-size / 14);
-      display: table;
-      width: @check-width;
-      height: @check-height;
-      border: 0.02rem solid #fff;
-      border-top: 0;
-      border-left: 0;
-      transform: rotate(45deg) scale(0);
-      transition: all 0.1s @ease-in-back;
-      content: ' ';
-    }
+    .uncheck-left;
 
     & + span {
       padding-right: 0.08rem;
@@ -58,10 +44,7 @@
   &-indeterminate &-inner {
     background-color: @primary-color !important;
     border-color: @primary-color;
-    &::after {
-      transform: rotate(45deg) scale(1);
-      opacity: 1;
-    }
+    .check;
   }
   &:hover &:checked + &-inner,
   &-indeterminate:hover &-inner,
@@ -70,16 +53,8 @@
     border-color: @primary-7;
   }
 
-  &-indeterminate &-inner::after {
-    @indeterminate-width: (@checkbox-size / 14) * 8;
-    @indeterminate-height: (@checkbox-size / 14) * 1;
-    position: absolute;
-    top: (@checkbox-size - 0.05rem - @indeterminate-height) / 2;
-    left: (@checkbox-size - @indeterminate-width - @checkbox-border-width * 2) / 2;
-    width: @indeterminate-width;
-    height: @indeterminate-height;
-    transform: scale(1) !important;
-    content: ' ';
+  &-indeterminate &-inner {
+    .indeterminate;
   }
 
   &:disabled + &-inner {

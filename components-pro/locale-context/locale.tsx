@@ -64,6 +64,14 @@ export interface Locale {
     query_option_yes;
     query_option_no;
     customization_settings;
+    display_settings
+    view_display;
+    tiled_view;
+    aggregation_view;
+    density_display;
+    normal;
+    compact;
+    parity_row;
     table_settings;
     height_settings;
     auto_height;
@@ -79,6 +87,13 @@ export interface Locale {
     top;
     up;
     down;
+    row_expand_settings;
+    expand_cell;
+    expand_row;
+    expand_column;
+    collapse_cell;
+    collapse_row;
+    collapse_column;
   };
   Pagination: {
     page;

@@ -111,7 +111,8 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
 
   @autobind
   getMenu() {
-    const prefixCls = this.getPrefixCls();
+    const { prefixCls } = this.props;
+    const selfPrefixCls = this.getPrefixCls();
     const {
       tableStore: { leafColumns, dataSet },
     } = this.context;
@@ -135,6 +136,7 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
         multiple
         defaultActiveFirst
         prefixCls={`${prefixCls}-dropdown-menu`}
+        className={`${selfPrefixCls}-dropdown-menu`}
         selectedKeys={selectedKeys}
         onSelect={this.handleMenuSelect}
         onDeselect={this.handleMenuUnSelect}

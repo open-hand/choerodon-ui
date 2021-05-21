@@ -10,6 +10,7 @@ import { ShowHelp } from '../field/enum';
 import { Commands } from './Table';
 
 export const defaultMinWidth = 100;
+export const defaultAggregationMinWidth = 250;
 
 export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps; };
 export type commandProps = { dataSet: DataSet; record: Record; };
@@ -127,6 +128,10 @@ export interface ColumnPropsBase extends ElementProps {
    * 列排序，若无设置则按列数组顺序
    */
   sort?: number;
+  /**
+   * 是否聚合
+   */
+  aggregation?: boolean;
 }
 
 export interface ColumnProps extends ColumnPropsBase {
@@ -223,7 +228,6 @@ export default class Column extends Component<ColumnPropsInner, ComponentState> 
     resizable: true,
     sortable: false,
     hideable: true,
-    minWidth: defaultMinWidth,
     showHelp: ShowHelp.tooltip,
   };
 }
@@ -235,7 +239,8 @@ export function minColumnWidth(col): number {
   }
   const width: number | undefined = get(col, 'width');
   const min: number | undefined = get(col, 'minWidth');
-  const minWidth = min === undefined ? defaultMinWidth : min;
+  const aggregation: boolean | undefined = get(col, 'aggregation');
+  const minWidth = min === undefined ? aggregation ? defaultAggregationMinWidth : defaultMinWidth : min;
   if (width === undefined) {
     return minWidth;
   }
@@ -251,7 +256,8 @@ export function columnWidth(col): number {
   if (width === undefined) {
     const minWidth: number | undefined = get(col, 'minWidth');
     if (minWidth === undefined) {
-      return defaultMinWidth;
+      const aggregation: boolean | undefined = get(col, 'aggregation');
+      return aggregation ? defaultAggregationMinWidth : defaultMinWidth;
     }
     return minWidth;
   }

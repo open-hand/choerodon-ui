@@ -288,10 +288,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const { column } = this.props;
     const { tableStore: { prefixCls } } = this.context;
     const {
+      aggregation,
       sortable,
       name,
     } = column;
-    if (sortable && name) {
+    if (!aggregation && sortable && name) {
       return <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
     }
   }

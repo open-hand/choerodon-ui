@@ -21,11 +21,13 @@ timeline: true
 - 🌟 `<pro>FormField`: Added `labelTooltip` property.
 - 🌟 `<pro>Button`: Added `tooltip` property.
 - 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
-- 🌟 `<pro>Table`: Added `showAllPageSelectionButton` property.
+- 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange` properties.
+- 🌟 `<pro>Table.Column`: Added `aggregation` property.
 - 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `Dropdown`: The `overlay` property supports hook functions.
 - 💄 `Popover`: The `title` and `content` attributes support hook functions.
 - 💄 `Popconfirm`: The `title` attribute supports hook functions.
+- 💄 `<pro>Select.Option`: Attributes such as `className` and `style` can be passed to the drop-down menu item.
 - 💄 `<pro>Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
 - 💄 `<pro>Table`: Optimize the performance.

@@ -29,3 +29,20 @@ export function treeForEach<T>(
     }
   });
 }
+
+export function treeSome<T>(
+  nodes: T[],
+  fn: (node: T, index: number, parentNode?: T) => boolean,
+  childName: string = 'children',
+  parentNode?: T,
+) {
+  return nodes.some((node, index) => {
+    if (!fn(node, index, parentNode)) {
+      const children = node[childName];
+      if (children && children.length) {
+        return treeSome(children, fn, childName, node);
+      }
+    }
+    return true;
+  });
+}

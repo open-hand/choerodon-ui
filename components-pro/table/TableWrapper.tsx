@@ -14,6 +14,7 @@ import TableEditor from './TableEditor';
 import TableCol from './TableCol';
 import { getColumnKey, isStickySupport } from './utils';
 import autobind from '../_util/autobind';
+import { treeReduce } from '../_util/treeUtils';
 
 export interface TableWrapperProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -65,18 +66,29 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     switch (lock) {
       case ColumnLock.left:
       case true:
-        return tableStore.leftLeafColumns.filter(
-          ({ editor, name, hidden }) => editor && name && !hidden,
-        );
+        return treeReduce<ColumnProps[], ColumnProps>(tableStore.leftLeafColumns, (columns, column) => {
+          const { editor, name, hidden } = column;
+          if (editor && name && !hidden) {
+            columns.push(column);
+          }
+          return columns;
+        }, []);
       case ColumnLock.right:
-        return tableStore.rightLeafColumns.filter(
-          ({ editor, name, hidden }) => editor && name && !hidden,
-        );
+        return treeReduce<ColumnProps[], ColumnProps>(tableStore.rightLeafColumns, (columns, column) => {
+          const { editor, name, hidden } = column;
+          if (editor && name && !hidden) {
+            columns.push(column);
+          }
+          return columns;
+        }, []);
       default:
-        return tableStore.leafColumns.filter(
-          ({ editor, name, hidden, lock: columnLock }) =>
-            editor && name && !hidden && (isStickySupport() || !columnLock || !tableStore.overflowX),
-        );
+        return treeReduce<ColumnProps[], ColumnProps>(tableStore.leafColumns, (columns, column) => {
+          const { editor, name, hidden, lock: columnLock } = column;
+          if (editor && name && !hidden && (isStickySupport() || !columnLock || !tableStore.overflowX)) {
+            columns.push(column);
+          }
+          return columns;
+        }, []);
     }
   }
 
