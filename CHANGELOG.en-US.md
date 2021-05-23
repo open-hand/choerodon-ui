@@ -67,7 +67,7 @@ timeline: true
 
 `2021-04-18`
 
-- 🌟 `configure`: Added `selectPagingOptionContent`, `selectSearchable` properties.
+- 🌟 `configure`: Added `selectPagingOptionContent`, `selectSearchable`, `showLengthInfo` properties.
 - 🌟 `<pro>DataSet`: Added `setState`, `getState`, `modifiedCheck` methods.
 - 🌟 `<pro>Paginition`: Added `maxPageSize`, `pageSizeEditable` properties.
 - 🌟 `<pro>FormField`: Added `onBeforeChange` hook.
@@ -75,6 +75,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
 - 🌟 `<pro>Table`: Added ProfessionalBar `defaultExpanded` property.
 - 🌟 `<pro>Table`: Added `treeQueryExpanded` tree structure QueryBar queries automatically trigger expansion tree structure.
+- 🌟 `<pro>TextField`: Added `showLengthInfo` property.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
 - 💄 `<pro>Table`: Optimize the border style issue.
