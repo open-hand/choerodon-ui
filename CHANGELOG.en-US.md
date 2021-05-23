@@ -82,6 +82,7 @@ timeline: true
 - 💄 `Popover`: Optimized if the trigger is click. When selecting the Select component in the pop-up window, you don't need to set getPopupContainer to prevent the pop-up window from closing.
 - 💄 `<pro>Trigger`: Optimize the getContainer method.
 - 💄 `<pro>Select`: Optimize the search style in read-only mode.
+- 💄 `<pro>Form`: Optimized the display timing of the floating label label.
 - 🐞 `<pro>DatePicker`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>NumberField`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>DataSet.Field`: Fix the incorrect restriction of `maxLength` and `minLength` on date and number types.
