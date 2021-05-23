@@ -30,6 +30,23 @@ function isTextArea(editor: ReactElement<FormFieldProps>): editor is ReactElemen
   return (editor.type as any).__PRO_TEXTAREA;
 }
 
+function isHTMLElement(el): el is HTMLElement {
+  return el;
+}
+
+function offset(node: HTMLElement, topNode: HTMLElement | null, initialize: [number, number] = [node.offsetLeft, node.offsetTop]): [number, number] {
+  if (topNode) {
+    const { offsetParent } = node;
+    if (isHTMLElement(offsetParent)) {
+      if (offsetParent === topNode) {
+        return initialize;
+      }
+      return offset(offsetParent, topNode, [offsetParent.offsetLeft + initialize[0], offsetParent.offsetTop + initialize[1]]);
+    }
+  }
+  return initialize;
+}
+
 @observer
 export default class TableEditor extends Component<TableEditorProps> {
   static displayName = 'TableEditor';
@@ -311,10 +328,8 @@ export default class TableEditor extends Component<TableEditorProps> {
       if (!this.rendered) {
         this.rendered = true;
       } else if (editor && wrap) {
-        const { offsetLeft, offsetTop, offsetWidth, offsetParent } = cellNode;
-        const parentNode: HTMLTableCellElement | null = cellNode.parentNode as (HTMLTableCellElement | null);
-        const left = parentNode && offsetParent === parentNode ? parentNode.offsetLeft + offsetLeft : offsetLeft;
-        const top = parentNode && offsetParent === parentNode ? parentNode.offsetTop + offsetTop : offsetTop;
+        const { offsetWidth } = cellNode;
+        const [left, top] = offset(cellNode, wrap.parentElement);
         if (this.originalCssText === undefined) {
           this.originalCssText = wrap.style.cssText;
         }

@@ -2,12 +2,13 @@ import React, { ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed, isArrayLike } from 'mobx';
+import classNames from 'classnames';
 import { Select, SelectProps } from '../select/Select';
 import ObserverRadio from '../radio/Radio';
 import ObserverCheckBox from '../check-box/CheckBox';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
-import Option from '../option/Option';
+import Option, { OptionProps } from '../option/Option';
 import OptGroup from '../option/OptGroup';
 import { ViewMode } from '../radio/enum';
 import { $l } from '../locale-context';
@@ -16,6 +17,7 @@ import TextField from '../text-field';
 import Icon from '../icon';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
+import { OTHER_OPTION_PROPS } from '../option/normalizeOptions';
 
 const GroupIdGen = (function* (id) {
   while (true) {
@@ -118,7 +120,8 @@ export default class SelectBox extends Select<SelectBoxProps> {
         const children = optionRenderer
           ? optionRenderer({ dataSet: options, record, text, value })
           : text;
-        const itemProps = {
+        const itemProps: OptionProps = {
+          ...record.get(OTHER_OPTION_PROPS),
           key: index,
           dataSet: null,
           record: null,
@@ -137,6 +140,11 @@ export default class SelectBox extends Select<SelectBoxProps> {
         arr.push(this.renderItem(optionProps ? {
           ...optionProps,
           ...itemProps,
+          className: classNames(optionProps.className, itemProps.className),
+          style: {
+            ...optionProps.style,
+            ...itemProps.style,
+          },
           disabled: itemProps.disabled || optionProps.disabled,
         } : itemProps));
       }

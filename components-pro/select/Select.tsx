@@ -9,6 +9,7 @@ import defer from 'lodash/defer';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
+import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -25,7 +26,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
-import normalizeOptions from '../option/normalizeOptions';
+import normalizeOptions, { OTHER_OPTION_PROPS } from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import isEmpty from '../_util/isEmpty';
@@ -705,7 +706,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const value = record.get(valueField);
       const text = record.get(textField);
       const optionProps = onOption({ dataSet: options, record });
-      const optionDisabled = menuDisabled || (optionProps && optionProps.disabled);
       const key: Key = getItemKey(record, text, value);
       if (!('selectedKeys' in menuProps) && this.isSelected(record)) {
         selectedKeys.push(key);
@@ -713,8 +713,30 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const itemContent = optionRenderer
         ? optionRenderer({ dataSet: options, record, text, value })
         : text;
+      const recordValues = record.get(OTHER_OPTION_PROPS) || {};
+      const itemProps = {
+        ...recordValues,
+        style: {
+          ...IeItemStyle,
+          ...recordValues.style,
+        },
+        key,
+        value: record,
+        disabled: menuDisabled,
+        tooltip: optionTooltip,
+      };
+      const mergedProps = optionProps ? {
+        ...optionProps,
+        ...itemProps,
+        className: classNames(optionProps.className, itemProps.className),
+        style: {
+          ...optionProps.style,
+          ...itemProps.style,
+        },
+        disabled: itemProps.disabled || optionProps.disabled,
+      } : itemProps;
       const option: ReactElement = (
-        <Item style={IeItemStyle} {...optionProps} key={key} value={record} disabled={optionDisabled} tooltip={optionTooltip}>
+        <Item {...mergedProps}>
           {itemContent}
         </Item>
       );

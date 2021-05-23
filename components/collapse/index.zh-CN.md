@@ -25,9 +25,10 @@ cols: 1
 | bordered | 带边框风格的折叠面板 | boolean | true |
 | accordion | 手风琴模式	 | boolean | false |
 | expandIcon | 自定义切换图标 | (panelProps) => ReactNode \| `text`(预置icon + 展开收起文字) | 无 |
-| expandIconPosition | 设置图标位置 | `left` \| `right` | `left` |
+| expandIconPosition | 设置图标位置 | `left` \| `right` \| `text-right` | `left` |
 | destroyInactivePanel | 销毁折叠隐藏的面板 | boolean | false |
 | trigger | 切换面板的触发位置 | `header` \| `icon` | `header` |
+| ghost | 使折叠面板透明且无边框 | boolean | false |
 
 ### Collapse.Panel
 

@@ -6,9 +6,10 @@ import * as React from 'react';
 import omit from 'lodash/omit';
 import VirtualList, { ListRef } from 'rc-virtual-list';
 import { DataEntity, DataNode, FlattenNode, Key, ScrollTo } from './interface';
-import MotionTreeNode from './MotionTreeNode';
+import MotionTreeNode, { MotionTreeNodeProps } from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getKey, getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
+import List from './List';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -251,7 +252,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
   const mergedData = motion ? transitionData : data;
 
-  const treeNodeRequiredProps: TreeNodeRequiredProps = {
+  const treeNodeRequiredProps: TreeNodeRequiredProps = React.useMemo(() => ({
     expandedKeys,
     selectedKeys,
     loadedKeys,
@@ -261,7 +262,51 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     dragOverNodeKey,
     dropPosition,
     keyEntities,
-  } as TreeNodeRequiredProps;
+  }), [
+    expandedKeys,
+    selectedKeys,
+    loadedKeys,
+    loadingKeys,
+    checkedKeys,
+    halfCheckedKeys,
+    dragOverNodeKey,
+    dropPosition,
+    keyEntities,
+  ]) as TreeNodeRequiredProps;
+
+  const renderFunction = React.useCallback((treeNode: FlattenNode): React.ReactElement<MotionTreeNodeProps> => {
+    const {
+      pos,
+      data: { key, ...restProps },
+      isStart,
+      isEnd,
+    } = treeNode;
+    const mergedKey = getKey(key, pos);
+    delete restProps.children;
+
+    const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
+
+    return (
+      <MotionTreeNode
+        {...restProps}
+        {...treeNodeProps}
+        active={!!activeItem && key === activeItem.data.key}
+        pos={pos}
+        data={treeNode.data}
+        isStart={isStart}
+        isEnd={isEnd}
+        motion={motion}
+        motionNodes={key === MOTION_KEY ? transitionRange : null}
+        motionType={motionType}
+        onMotionStart={onListChangeStart}
+        onMotionEnd={onMotionEnd}
+        treeNodeRequiredProps={treeNodeRequiredProps}
+        onMouseMove={() => {
+          onActiveChange(null);
+        }}
+      />
+    );
+  }, [treeNodeRequiredProps]);
 
   return (
     <>
@@ -299,52 +344,27 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
           <div ref={indentMeasurerRef} className={`${prefixCls}-indent-unit`} />
         </div>
       </div>
-
-      <VirtualList<FlattenNode>
-        {...omit(domProps, ['selectable', 'checkable'])}
-        data={mergedData}
-        itemKey={itemKey}
-        height={height}
-        fullHeight={false}
-        virtual={virtual}
-        itemHeight={itemHeight}
-        prefixCls={`${prefixCls}-list`}
-        ref={listRef}
-      >
-        {(treeNode: FlattenNode) => {
-          const {
-            pos,
-            data: { key, ...restProps },
-            isStart,
-            isEnd,
-          } = treeNode;
-          const mergedKey = getKey(key, pos);
-          delete restProps.children;
-
-          const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
-
-          return (
-            <MotionTreeNode
-              {...restProps}
-              {...treeNodeProps}
-              active={!!activeItem && key === activeItem.data.key}
-              pos={pos}
-              data={treeNode.data}
-              isStart={isStart}
-              isEnd={isEnd}
-              motion={motion}
-              motionNodes={key === MOTION_KEY ? transitionRange : null}
-              motionType={motionType}
-              onMotionStart={onListChangeStart}
-              onMotionEnd={onMotionEnd}
-              treeNodeRequiredProps={treeNodeRequiredProps}
-              onMouseMove={() => {
-                onActiveChange(null);
-              }}
-            />
-          );
-        }}
-      </VirtualList>
+      {
+        virtual === false ? (
+          <List ref={listRef} data={mergedData || []} prefixCls={`${prefixCls}-list`} height={height} itemKey={itemKey}>
+            {renderFunction}
+          </List>
+        ) : (
+          <VirtualList<FlattenNode>
+            {...omit(domProps, ['selectable', 'checkable'])}
+            data={mergedData}
+            itemKey={itemKey}
+            height={height}
+            fullHeight={false}
+            virtual={virtual}
+            itemHeight={itemHeight}
+            prefixCls={`${prefixCls}-list`}
+            ref={listRef}
+          >
+            {renderFunction}
+          </VirtualList>
+        )
+      }
     </>
   );
 };

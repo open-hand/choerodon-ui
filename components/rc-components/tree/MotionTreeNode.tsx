@@ -6,7 +6,7 @@ import { FlattenNode } from './interface';
 import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
 import { TreeContext } from './contextTypes';
 
-interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
+export interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   active: boolean;
   motion?: any;
   motionNodes?: FlattenNode[] | null;

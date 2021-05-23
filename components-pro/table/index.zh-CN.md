@@ -82,6 +82,8 @@ subtitle: 表格
 | clientExportQuantity | 客户端查询导出，查询数目设置  | number | |
 | virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | |
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | number | |
+| aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | |
+| onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -115,6 +117,7 @@ subtitle: 表格
 | command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode \| object )[] |  |
 | hidden | 隐藏 | boolean |  |
 | tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | 'none' |
+| aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |
 
 ### Table.FilterBar
 

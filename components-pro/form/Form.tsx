@@ -44,6 +44,7 @@ import {
 import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import OverflowTip from '../overflow-tip';
+import { DataSetEvents } from '../data-set/enum';
 
 /**
  * 表单name生成器
@@ -568,7 +569,7 @@ export default class Form extends DataSetComponent<FormProps> {
     const { dataSet } = this;
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
-      handler.call(dataSet, 'validate', this.handleDataSetValidate);
+      handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
     }
   }
 

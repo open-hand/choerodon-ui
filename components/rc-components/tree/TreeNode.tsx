@@ -535,8 +535,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const isEndNode = isEnd[isEnd.length - 1];
     const mergedDraggable = typeof draggable === 'function' ? draggable(data) : draggable;
     return (
-      <Ripple disabled={disabled || !ripple}>
-        <>
+      <>
+        <Ripple disabled={disabled || !ripple}>
           <div
             ref={domRef}
             className={classNames(className, `${prefixCls}-treenode`, {
@@ -572,9 +572,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
             {this.renderCheckbox()}
             {this.renderSelector()}
           </div>
-          {this.renderDropIndicator()}
-        </>
-      </Ripple>
+        </Ripple>
+        {this.renderDropIndicator()}
+      </>
     );
   }
 }

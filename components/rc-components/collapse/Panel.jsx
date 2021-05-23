@@ -62,6 +62,7 @@ export default class CollapsePanel extends Component {
       accordion,
       forceRender,
       expandIcon,
+      expandIconPosition,
       extra,
       trigger,
     } = this.props;
@@ -101,8 +102,9 @@ export default class CollapsePanel extends Component {
           aria-expanded={`${isActive}`}
           onKeyPress={this.handleKeyPress}
         >
-          {showArrow && icon}
+          {showArrow && expandIconPosition !== 'text-right' && icon }
           {header}
+          {showArrow && expandIconPosition === 'text-right' && icon }
           {extra && (<div className={`${prefixCls}-extra`}>{extra}</div>)}
         </div>
         <Animate

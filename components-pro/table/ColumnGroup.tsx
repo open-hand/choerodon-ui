@@ -78,8 +78,9 @@ export default class ColumnGroup {
     this.column = column;
     this.parent = parent;
     const { children } = column;
-    if (children && children.length > 0) {
-      this.children = new ColumnGroups(children, this);
+    const { aggregation } = parent;
+    if ((!column.aggregation || !aggregation) && children && children.length > 0) {
+      this.children = new ColumnGroups(children, aggregation, this);
     }
   }
 }

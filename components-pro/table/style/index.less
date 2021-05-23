@@ -63,6 +63,7 @@
     &-inner {
       position: relative;
       display: block;
+      flex: 1;
       padding: @table-padding-vertical @table-padding-horizontal;
 
       &:focus {
@@ -130,6 +131,113 @@
       background-image: linear-gradient(to right, @component-background 0%, @component-background 100%);
       background-blend-mode: multiply;
     }
+
+    &-aggregation {
+      padding: 0;
+
+      .@{c7n-pro-prefix}-select-box {
+        line-height: inherit;
+      }
+    }
+
+    &-tree {
+      padding: 0.07rem 0.16rem .07rem 0;
+
+      &-treenode {
+        display: flex;
+        align-items: flex-start;
+        padding: 0 0 (@padding-xs / 2) 0;
+        outline: none;
+      }
+
+      &-node-content-wrapper {
+        flex: 1;
+      }
+
+      &-switcher {
+        flex: none;
+        width: .18rem;
+        margin: 0;
+        line-height: 1;
+        text-align: center;
+        cursor: pointer;
+
+        &-noop {
+          width: .16rem;
+          cursor: default;
+        }
+
+        &_close .@{iconfont-css-prefix}-arrow_drop_down {
+          transform: rotate(-90deg);
+        }
+      }
+
+      &-indent {
+        align-self: stretch;
+        white-space: nowrap;
+        user-select: none;
+
+        &-unit {
+          display: inline-block;
+          width: @tree-title-height;
+        }
+      }
+
+      &-title {
+        display: flex;
+        align-items: center;
+        font-size: @font-size-sm;
+        line-height: .18rem;
+      }
+    }
+
+    &-label {
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+    &-editable &-label {
+      margin-right: .1rem;
+    }
+
+    &-expand {
+      display: flex;
+      align-items: center;
+      color: @primary-color;
+
+      &-btn {
+        background-color: @btn-default-bg;
+        border: none;
+        cursor: pointer;
+      }
+
+      &-menu-btn {
+        display: inline-block;
+        margin-left: .05rem;
+        padding: .03rem .04rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: @item-active-bg;
+        }
+
+        &::before {
+          display: block;
+          border-right: .03rem solid transparent;
+          border-bottom: .03rem solid currentColor;
+          border-left: .03rem solid transparent;
+          content: '';
+        }
+
+        &::after {
+          display: block;
+          margin-top: .02rem;
+          border-top: .03rem solid currentColor;
+          border-right: .03rem solid transparent;
+          border-left: .03rem solid transparent;
+          content: '';
+        }
+      }
+    }
   }
 
   &-thead &-cell,
@@ -151,6 +259,10 @@
 
   &-tfoot &-cell {
     border-top: @table-border;
+  }
+
+  &-aggregation &-cell {
+    vertical-align: top;
   }
 
   &:not(&-bordered) &-thead&-column-resizable {
@@ -1165,12 +1277,11 @@
     border-left: @table-border;
 
     &-dropdown-menu {
-      .dropdown-menu;
       min-width: 1.8rem;
     }
   }
 
-  &-all-page-selection-dropdown-menu {
+  &-dropdown-menu {
     .dropdown-menu;
   }
 }
