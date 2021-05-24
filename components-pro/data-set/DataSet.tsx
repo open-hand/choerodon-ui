@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { action, computed, get, IReactionDisposer, isArrayLike, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
+import { action, computed, get, isArrayLike, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import axiosStatic, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import unionBy from 'lodash/unionBy';
 import omit from 'lodash/omit';
@@ -71,6 +71,8 @@ import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
+
+const QUERY_PARAMETER = '__QUERY_PARAMETER__';  // TODO:Symbol
 
 export type DataSetChildren = { [key: string]: DataSet };
 
@@ -301,11 +303,20 @@ export default class DataSet extends EventManager {
 
   children: DataSetChildren = {};
 
-  queryParameter: object;
+  @computed
+  get queryParameter(): object {
+    const queryParameterMap: ObservableMap<string, any> = this.getState(QUERY_PARAMETER);
+    if (queryParameterMap) {
+      return queryParameterMap.toPOJO();
+    }
+    return {};
+  }
 
-  pending: PromiseQueue = new PromiseQueue();
+  set queryParameter(queryParameter: object) {
+    this.setState(QUERY_PARAMETER, observable.map(queryParameter));
+  }
 
-  reaction: IReactionDisposer;
+  private pending: PromiseQueue = new PromiseQueue();
 
   originalData: Record[] = [];
 
@@ -1948,11 +1959,27 @@ Then the query method will be auto invoke.`,
    * @param {string} para 参数名.
    * @param {any} value 参数值.
    */
+  @action
   setQueryParameter(para: string, value: any) {
-    if (isNil(value)) {
-      delete this.queryParameter[para];
-    } else {
-      this.queryParameter[para] = value;
+    const queryParameter = this.getState(QUERY_PARAMETER);
+    if (queryParameter) {
+      if (isNil(value)) {
+        queryParameter.delete(para);
+      } else {
+        queryParameter.set(para, value);
+      }
+    }
+  }
+
+  /**
+   * 获取查询的参数.
+   * @param {string} para 参数名.
+   * @return {any} 参数值.
+   */
+  getQueryParameter(para: string): any {
+    const queryParameter = this.getState(QUERY_PARAMETER);
+    if (queryParameter) {
+      return queryParameter.get(para);
     }
   }
 
@@ -2223,7 +2250,7 @@ Then the query method will be auto invoke.`,
     if (this.cacheSelectionKeys) {
       const { isAllPageSelection } = this;
       this.setCachedSelected([
-        ...this.cachedSelected.filter(record => isAllPageSelection ? !record.isSelected :  record.isSelected),
+        ...this.cachedSelected.filter(record => isAllPageSelection ? !record.isSelected : record.isSelected),
         ...(isAllPageSelection ? this.currentUnSelected : this.currentSelected).map(record => {
           record.isCurrent = false;
           record.isCached = true;

@@ -31,6 +31,7 @@ title: TextField
 | valueChangeAction | 触发值变更的动作, 可选值：`blur` `input` | `blur` |  |
 | wait | 设置值变更间隔时间，只有在 valueChangeAction 为 input 时起作用 | number | - |
 | waitType | 设置值变更间隔类型，可选值： `throttle` `debounce` | string | `debounce` |
+| showLengthInfo | 是否显示长度信息 | boolean | |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 

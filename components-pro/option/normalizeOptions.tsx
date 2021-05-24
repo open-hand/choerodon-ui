@@ -5,6 +5,8 @@ import { FieldProps } from '../data-set/Field';
 import OptGroup, { OptGroupProps } from './OptGroup';
 import Option, { OptionProps } from './Option';
 
+export const OTHER_OPTION_PROPS = '__OTHER_OPTION_PROPS__'
+
 function getOptionsFromChildren(
   elements: ReactNode[],
   data: object[],
@@ -30,7 +32,7 @@ function getOptionsFromChildren(
             groups.concat(props.label || ''),
           );
         } else if ((type as typeof Option).__PRO_OPTION) {
-          const { value, children, disabled } = child.props as OptionProps & { children };
+          const { value, children, disabled, ...rest } = child.props as OptionProps & { children };
           data.push(
             groups.reduce(
               (obj, group, index) => {
@@ -46,6 +48,7 @@ function getOptionsFromChildren(
                 return obj;
               },
               {
+                [OTHER_OPTION_PROPS]: rest,
                 [textField]: children,
                 [valueField]: value === undefined && isValidElement(children) ? children : value,
                 [disabledField]: disabled,

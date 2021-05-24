@@ -169,6 +169,10 @@ export type Config = {
    * 同 tableRowDraggable
    */
   tableDragRow?: boolean;
+  /**
+   * 是否显示长度信息
+   */
+  showLengthInfo?: boolean;
 };
 
 export type ConfigKeys = keyof Config;

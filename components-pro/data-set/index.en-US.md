@@ -136,6 +136,7 @@ title: DataSet
 | toData() | 转换成普通数据，不包含删除的数据 |  | object[] |
 | bind(ds, name) | 绑定头 DataSet | `ds` - 头 DataSet 对象或 id `name` - 绑定名 |  |
 | setQueryParameter(para, value) | 设置查询参数 | `para` - 参数名 `value` - 参数值 |  |
+| getQueryParameter(para) | 获取查询参数 | `para` - 参数名 |  |
 | loadData(data, total) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
 | appendData(data, total) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
 | setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |

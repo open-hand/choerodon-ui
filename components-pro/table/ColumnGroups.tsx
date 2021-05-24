@@ -5,6 +5,8 @@ import ColumnGroup from './ColumnGroup';
 export default class ColumnGroups {
   columns: ColumnGroup[];
 
+  aggregation: boolean;
+
   parent?: ColumnGroup;
 
   @computed
@@ -51,7 +53,8 @@ export default class ColumnGroups {
     return 0;
   }
 
-  constructor(columns: ColumnProps[], parent?: ColumnGroup) {
+  constructor(columns: ColumnProps[], aggregation: boolean, parent?: ColumnGroup) {
+    this.aggregation = aggregation;
     this.parent = parent;
     let prev: ColumnGroup | undefined;
     this.columns = columns.map(col => {

@@ -10,7 +10,7 @@ import debounce from 'lodash/debounce';
 import isArrayLike from 'lodash/isArrayLike';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -107,6 +107,10 @@ export interface TextFieldProps extends FormFieldProps {
    */
   waitType?: WaitType;
   groupClassName?: string;
+  /**
+   * 是否显示长度信息
+   */
+  showLengthInfo?: boolean;
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -175,6 +179,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
      */
     waitType: PropTypes.oneOf([WaitType.throttle, WaitType.debounce]),
     groupClassName: PropTypes.string,
+    showLengthInfo: PropTypes.bool,
     ...FormField.propTypes,
   };
 
@@ -198,6 +203,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
+  }
+
+  /**
+   * 是否显示长度信息
+   */
+  @computed
+  get showLengthInfo(): boolean | undefined {
+    if ('showLengthInfo' in this.props) {
+      return this.props.showLengthInfo;
+    }
+    return getConfig('showLengthInfo');
   }
 
 
@@ -291,7 +307,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderWrapper(): ReactNode {
-    return this.renderGroup();
+    const maxLength = this.getProp('maxLength');
+    const lengthInfo = maxLength  ? this.renderLengthInfo() : null;
+    return (
+      <div>
+        {this.renderGroup()}
+        {lengthInfo}
+      </div>
+    );
   }
 
   renderInputElement(): ReactNode {
@@ -381,6 +404,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
+  renderLengthInfo(): ReactNode {
+    const { showLengthInfo, prefixCls } = this;
+    const maxLength = this.getProp('maxLength');
+    const inputLength = this.getValue() ? this.getValue().length : 0;
+    return maxLength && maxLength > 0  && showLengthInfo ? (
+      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+    ) : null;
+  }
+
   // 处理 form 中的 labelLayout 为 placeholder 情况避免以前 placeholder 和 label 无法区分彼此。
   getPlaceholders(): string[] {
     const { dataSet, record, props, labelLayout } = this;
@@ -396,10 +428,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getLabel() {
     const [placeholder, endPlaceHolder] = this.getPlaceholders();
-    if (this.isEmpty() && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
+    if (this.isEmpty()  && !this.isFocused && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
       return endPlaceHolder;
     }
-    if (this.isEmpty() && placeholder) {
+    if (this.isEmpty() && !this.isFocused && placeholder) {
       return placeholder;
     }
     return this.getProp('label');

@@ -20,12 +20,14 @@ timeline: true
 - 🌟 `<pro>Form`: Added `labelTooltip` property.
 - 🌟 `<pro>FormField`: Added `labelTooltip` property.
 - 🌟 `<pro>Button`: Added `tooltip` property.
-- 🌟 `<pro>DataSet`: Added `setAllPageSelection` method and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
-- 🌟 `<pro>Table`: Added `showAllPageSelectionButton` property.
+- 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
+- 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange` properties.
+- 🌟 `<pro>Table.Column`: Added `aggregation` property.
 - 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `Dropdown`: The `overlay` property supports hook functions.
 - 💄 `Popover`: The `title` and `content` attributes support hook functions.
 - 💄 `Popconfirm`: The `title` attribute supports hook functions.
+- 💄 `<pro>Select.Option`: Attributes such as `className` and `style` can be passed to the drop-down menu item.
 - 💄 `<pro>Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
 - 💄 `<pro>Table`: Optimize the performance.
@@ -65,7 +67,7 @@ timeline: true
 
 `2021-04-18`
 
-- 🌟 `configure`: Added `selectPagingOptionContent`, `selectSearchable` properties.
+- 🌟 `configure`: Added `selectPagingOptionContent`, `selectSearchable`, `showLengthInfo` properties.
 - 🌟 `<pro>DataSet`: Added `setState`, `getState`, `modifiedCheck` methods.
 - 🌟 `<pro>Paginition`: Added `maxPageSize`, `pageSizeEditable` properties.
 - 🌟 `<pro>FormField`: Added `onBeforeChange` hook.
@@ -73,6 +75,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
 - 🌟 `<pro>Table`: Added ProfessionalBar `defaultExpanded` property.
 - 🌟 `<pro>Table`: Added `treeQueryExpanded` tree structure QueryBar queries automatically trigger expansion tree structure.
+- 🌟 `<pro>TextField`: Added `showLengthInfo` property.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
 - 💄 `<pro>Table`: Optimize the border style issue.
@@ -80,6 +83,7 @@ timeline: true
 - 💄 `Popover`: Optimized if the trigger is click. When selecting the Select component in the pop-up window, you don't need to set getPopupContainer to prevent the pop-up window from closing.
 - 💄 `<pro>Trigger`: Optimize the getContainer method.
 - 💄 `<pro>Select`: Optimize the search style in read-only mode.
+- 💄 `<pro>Form`: Optimized the display timing of the floating label label.
 - 🐞 `<pro>DatePicker`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>NumberField`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>DataSet.Field`: Fix the incorrect restriction of `maxLength` and `minLength` on date and number types.

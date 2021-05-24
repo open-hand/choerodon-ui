@@ -15,21 +15,25 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip 属性。
+- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo 属性。
 - 🌟 `<pro>Select`: 新增 optionTooltip 属性。
 - 🌟 `<pro>Form`: 新增 labelTooltip 属性。
 - 🌟 `<pro>FormField`: 新增 labelTooltip 属性。
 - 🌟 `<pro>Button`: 新增 tooltip 属性。
-- 🌟 `<pro>DataSet`: 新增 setAllPageSelection 方法 and isAllPageSelection, unSelected, currentUnSelected 值。
-- 🌟 `<pro>Table`: 新增 showAllPageSelectionButton 属性。
+- 🌟 `<pro>DataSet`: 新增 setAllPageSelection, getQueryParameter 方法和 isAllPageSelection, unSelected, currentUnSelected 值。
+- 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange 属性。
+- 🌟 `<pro>Table.Column`: 新增 aggregation 属性。
+- 🌟 `<pro>TextField`: 新增 showLengthInfo 属性。
 - 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `Dropdown`: overlay 属性支持钩子函数。
 - 💄 `Popover`: title 和 content 属性支持钩子函数。
 - 💄 `Popconfirm`: title 属性支持钩子函数。
+- 💄 `<pro>Select.Option`: 属性如 className 和 style 可传递到下拉菜单选项。
 - 💄 `<pro>Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `<pro>Dropdown`: overlay 属性支持钩子函数。
 - 💄 `<pro>Table`: 性能优化。
 - 💄 `<pro>Tree`: 优化扩展 showLine 属性。
+- 💄 `<pro>Form`: 优化浮动标签 label 展示时机。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 - 🐞 `<pro>DataSet`：修复在仅删除以及dataToJSON为selected的情况下，提交后对dataSet状态修改不正确的问题。
 - 🐞 `<pro>Table`：修复编辑器在 DataSet 当前记录发生变化时的定位问题。

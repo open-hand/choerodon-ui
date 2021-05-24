@@ -21,6 +21,7 @@ const { Column } = Table;
 class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'userid',
+    name: 'user',
     transport: {
       read({ params: { page, pagesize } }) {
         return {

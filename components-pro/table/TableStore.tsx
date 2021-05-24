@@ -32,7 +32,7 @@ import {
   TableQueryBarType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getColumnKey, getColumnLock, getHeader } from './utils';
+import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
@@ -45,6 +45,7 @@ import TableEditor from './TableEditor';
 import Dropdown from '../dropdown/Dropdown';
 import Menu from '../menu';
 import { ModalProps } from '../modal/Modal';
+import { treeSome } from '../_util/treeUtils';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -55,6 +56,8 @@ export const DRAG_KEY = '__drag-column__'; // TODO:Symbol
 export const EXPAND_KEY = '__expand-column__'; // TODO:Symbol
 
 export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
+
+export const AGGREGATION_EXPAND_CELL_KEY = '__aggregation-expand-cell__'; // TODO:Symbol
 
 export type HeaderText = { name: string; label: string; };
 
@@ -82,6 +85,10 @@ function getRowNumbers(record?: Record | null, dataSet?: DataSet | null, isTree?
     return [record.index + 1 + pageIndex];
   }
   return [0];
+}
+
+function hasCheckField({ editor, name }: ColumnProps, checkField: string): boolean {
+  return !!editor && checkField === name;
 }
 
 function renderSelectionBox({ record, store }: { record: any, store: TableStore; }): ReactNode {
@@ -155,75 +162,108 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
 
 export function mergeDefaultProps(
   originalColumns: ColumnProps[],
+  tableAggregation?: boolean,
   customizedColumns?: object,
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
-): ColumnProps[] {
-  const columns: any[] = [];
-  const leftColumns: any[] = [];
-  const rightColumns: any[] = [];
-  const columnSort = {
+  columnSort = {
     left: 0,
     center: 0,
     right: 0,
-  };
-  originalColumns.forEach((column, index) => {
+  },
+): [any[], boolean] {
+  const columns: any[] = [];
+  const leftColumns: any[] = [];
+  const rightColumns: any[] = [];
+  let hasAggregationColumn: boolean = false;
+  originalColumns.forEach((column) => {
     if (isPlainObject(column)) {
       const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
       if (isNil(getColumnKey(newColumn))) {
         newColumn.key = `anonymous-${defaultKey[0]++}`;
       }
-      if (customizedColumns) {
-        Object.assign(newColumn, customizedColumns[getColumnKey(newColumn).toString()]);
+      const { children, aggregation } = newColumn;
+      if (!hasAggregationColumn && aggregation) {
+        hasAggregationColumn = true;
       }
-      if (parent) {
-        newColumn.lock = parent.lock;
-      }
-      if (newColumn.sort === undefined) {
-        if (parent) {
-          newColumn.sort = index;
-        } else {
-          newColumn.sort = columnSort[getColumnLock(newColumn.lock) || 'center']++;
+      if (tableAggregation || !aggregation) {
+        if (customizedColumns) {
+          Object.assign(newColumn, customizedColumns[getColumnKey(newColumn).toString()]);
         }
-      }
-      const { children } = newColumn;
-      if (children) {
-        newColumn.children = mergeDefaultProps(children, customizedColumns, newColumn, defaultKey);
-      }
-      if (parent || !newColumn.lock) {
-        columns.push(newColumn);
-      } else if (newColumn.lock === true || newColumn.lock === ColumnLock.left) {
-        leftColumns.push(newColumn);
-      } else {
-        rightColumns.push(newColumn);
+        if (parent) {
+          newColumn.lock = parent.lock;
+        }
+        if (children) {
+          const [childrenColumns, childrenHasAffregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, newColumn, defaultKey);
+          newColumn.children = childrenColumns;
+          if (!hasAggregationColumn && childrenHasAffregationColumn) {
+            hasAggregationColumn = childrenHasAffregationColumn;
+          }
+        }
+        if (parent || !newColumn.lock) {
+          if (newColumn.sort === undefined) {
+            newColumn.sort = columnSort.center++;
+          }
+          columns.push(newColumn);
+        } else if (newColumn.lock === true || newColumn.lock === ColumnLock.left) {
+          if (newColumn.sort === undefined) {
+            newColumn.sort = columnSort.left++;
+          }
+          leftColumns.push(newColumn);
+        } else {
+          if (newColumn.sort === undefined) {
+            newColumn.sort = columnSort.right++;
+          }
+          rightColumns.push(newColumn);
+        }
+      } else if (children) {
+        const [nodes, childrenHasAffregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+        if (!hasAggregationColumn && childrenHasAffregationColumn) {
+          hasAggregationColumn = childrenHasAffregationColumn;
+        }
+        if (parent) {
+          parent.children = nodes;
+        } else {
+          nodes.forEach((node) => {
+            if (!node.lock) {
+              columns.push(node);
+            } else if (node.lock === true || node.lock === ColumnLock.left) {
+              leftColumns.push(node);
+            } else {
+              rightColumns.push(node);
+            }
+          });
+        }
       }
     }
   }, []);
   if (parent) {
-    return sortBy(columns, ({ sort }) => sort);
+    return [sortBy(columns, ({ sort }) => sort), hasAggregationColumn];
   }
-  return [
+  return [[
     ...sortBy(leftColumns, ({ sort }) => sort),
     ...sortBy(columns, ({ sort }) => sort),
     ...sortBy(rightColumns, ({ sort }) => sort),
-  ];
+  ], hasAggregationColumn];
 }
 
 export function normalizeColumns(
   elements: ReactNode,
+  tableAggregation?: boolean,
   customizedColumns?: object,
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
-) {
-  const columns: any[] = [];
-  const leftColumns: any[] = [];
-  const rightColumns: any[] = [];
-  const columnSort = {
+  columnSort = {
     left: 0,
     center: 0,
     right: 0,
-  };
-  Children.forEach(elements, (element, index) => {
+  },
+): [any[], boolean] {
+  const columns: any[] = [];
+  const leftColumns: any[] = [];
+  const rightColumns: any[] = [];
+  let hasAggregationColumn: boolean = false;
+  Children.forEach(elements, (element) => {
     if (!isValidElement(element) || !(element.type as typeof Column).__PRO_TABLE_COLUMN) {
       return;
     }
@@ -236,36 +276,66 @@ export function normalizeColumns(
     } else if (isNil(getColumnKey(column))) {
       column.key = `anonymous-${defaultKey[0]++}`;
     }
-    if (customizedColumns) {
-      Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
+    const { children, aggregation } = column;
+    if (!hasAggregationColumn && aggregation) {
+      hasAggregationColumn = true;
     }
-    if (parent) {
-      column.lock = parent.lock;
-    }
-    if (column.sort === undefined) {
-      if (parent) {
-        column.sort = index;
-      } else {
-        column.sort = columnSort[getColumnLock(column.lock) || 'center']++;
+    if (tableAggregation || !aggregation) {
+      if (customizedColumns) {
+        Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
       }
-    }
-    column.children = normalizeColumns(column.children, customizedColumns, column, defaultKey);
-    if (parent || !column.lock) {
-      columns.push(column);
-    } else if (column.lock === true || column.lock === ColumnLock.left) {
-      leftColumns.push(column);
+      if (parent) {
+        column.lock = parent.lock;
+      }
+      const [childrenColumns, childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
+      column.children = childrenColumns;
+      if (!hasAggregationColumn && childrenHasAffregationColumn) {
+        hasAggregationColumn = childrenHasAffregationColumn;
+      }
+      if (parent || !column.lock) {
+        if (column.sort === undefined) {
+          column.sort = columnSort.center++;
+        }
+        columns.push(column);
+      } else if (column.lock === true || column.lock === ColumnLock.left) {
+        if (column.sort === undefined) {
+          column.sort = columnSort.left++;
+        }
+        leftColumns.push(column);
+      } else {
+        if (column.sort === undefined) {
+          column.sort = columnSort.right++;
+        }
+        rightColumns.push(column);
+      }
     } else {
-      rightColumns.push(column);
+      const [nodes, childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+      if (!hasAggregationColumn && childrenHasAffregationColumn) {
+        hasAggregationColumn = childrenHasAffregationColumn;
+      }
+      if (parent) {
+        parent.children = nodes;
+      } else {
+        nodes.forEach((node) => {
+          if (!node.lock) {
+            columns.push(node);
+          } else if (node.lock === true || node.lock === ColumnLock.left) {
+            leftColumns.push(node);
+          } else {
+            rightColumns.push(node);
+          }
+        });
+      }
     }
   });
   if (parent) {
-    return sortBy(columns, ({ sort }) => sort);
+    return [sortBy(columns, ({ sort }) => sort), hasAggregationColumn];
   }
-  return [
+  return [[
     ...sortBy(leftColumns, ({ sort }) => sort),
     ...sortBy(columns, ({ sort }) => sort),
     ...sortBy(rightColumns, ({ sort }) => sort),
-  ];
+  ], hasAggregationColumn];
 }
 
 async function getHeaderTexts(
@@ -297,6 +367,8 @@ export default class TableStore {
   @observable loading?: boolean;
 
   @observable originalColumns: ColumnProps[];
+
+  @observable hasAggregationColumn?: boolean;
 
   @observable bodyHeight: number;
 
@@ -338,7 +410,7 @@ export default class TableStore {
 
   @observable mouseBatchChooseIdList?: number[];
 
-  @observable multiLineHeight: number[];
+  @observable multiLineHeight: Map<string | number, number>;
 
   @observable columnResizing?: boolean;
 
@@ -365,6 +437,21 @@ export default class TableStore {
       return getConfig('tableCustomizable');
     }
     return false;
+  }
+
+  @computed
+  get aggregation(): boolean {
+    const { aggregation } = this.customized;
+    if (aggregation !== undefined) {
+      return aggregation;
+    }
+    const { aggregation: propAggregation } = this.props;
+    return propAggregation;
+  }
+
+  @computed
+  get aggregationExpandType(): 'cell' | 'row' | 'column' {
+    return this.customized.aggregationExpandType || 'cell';
   }
 
   @computed
@@ -569,15 +656,35 @@ export default class TableStore {
   }
 
   @computed
+  get size(): Size {
+    const { size } = this.customized;
+    if (size !== undefined) {
+      return size;
+    }
+    return this.props.size || Size.default;
+  }
+
+  @computed
   get rowHeight(): 'auto' | number {
+    let rowHeight = 30;
     if ('rowHeight' in this.props) {
-      return this.props.rowHeight;
+      rowHeight = this.props.rowHeight;
+    } else {
+      const tableRowHeight = getConfig('tableRowHeight');
+      if (typeof tableRowHeight !== 'undefined') {
+        rowHeight = tableRowHeight;
+      }
     }
-    const rowHeight = getConfig('tableRowHeight');
-    if (typeof rowHeight !== 'undefined') {
-      return rowHeight;
+    if (isNumber(rowHeight)) {
+      switch (this.size) {
+        case Size.large:
+          return rowHeight + 2;
+        case Size.small:
+          return rowHeight - 2;
+        default:
+      }
     }
-    return 30;
+    return rowHeight;
   }
 
   @computed
@@ -607,6 +714,10 @@ export default class TableStore {
 
   @computed
   get parityRow(): boolean {
+    const { parityRow } = this.customized;
+    if (parityRow !== undefined) {
+      return parityRow;
+    }
     if ('parityRow' in this.props) {
       return this.props.parityRow;
     }
@@ -884,7 +995,8 @@ export default class TableStore {
 
   @computed
   get columnGroups(): ColumnGroups {
-    return new ColumnGroups(this.columns);
+    const { aggregation } = this;
+    return new ColumnGroups(this.columns, aggregation);
   }
 
   @computed
@@ -932,6 +1044,11 @@ export default class TableStore {
   }
 
   @computed
+  get leafAggregationColumns(): ColumnProps[] {
+    return this.leafColumns.filter(({ aggregation }) => aggregation);
+  }
+
+  @computed
   get leafNamedColumns(): ColumnProps[] {
     return this.leafColumns.filter(column => !!column.name);
   }
@@ -954,7 +1071,14 @@ export default class TableStore {
   @computed
   get hasCheckFieldColumn(): boolean {
     const { checkField } = this.dataSet.props;
-    return this.leafColumns.some(({ name, editor }) => !!editor && checkField === name);
+    if (checkField) {
+      const { aggregation } = this;
+      return this.leafColumns.some((column) => aggregation
+        ? treeSome<ColumnProps>([column], (c) => hasCheckField(c, checkField))
+        : hasCheckField(column, checkField),
+      );
+    }
+    return false;
   }
 
   @computed
@@ -1059,6 +1183,17 @@ export default class TableStore {
     }
   });
 
+  @autobind
+  @action
+  handleLoadCustomized() {
+    this.initColumns();
+    const { onAggregationChange, aggregation } = this.props;
+    const { aggregation: customAggregation } = this.customized;
+    if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
+      onAggregationChange(customAggregation);
+    }
+  }
+
   constructor(node) {
     runInAction(() => {
       this.showCachedSelection = false;
@@ -1068,7 +1203,7 @@ export default class TableStore {
       this.node = node;
       this.expandedRows = [];
       this.lastScrollTop = 0;
-      this.multiLineHeight = [];
+      this.multiLineHeight = observable.map();
       this.rowHighLight = false;
       this.customizedActiveKey = ['columns'];
       this.originalColumns = [];
@@ -1076,9 +1211,7 @@ export default class TableStore {
       this.customized = { columns: {} };
       this.setProps(node.props);
       if (this.customizable) {
-        this.loadCustomized().then(() => {
-          this.initColumns();
-        });
+        this.loadCustomized().then(this.handleLoadCustomized);
       } else {
         this.initColumns();
       }
@@ -1143,7 +1276,7 @@ export default class TableStore {
     this.setProps(props);
     const { customizedCode } = this.props;
     if (this.customizable && customizedCode !== props.customizedCode) {
-      this.loadCustomized().then(() => this.initColumns());
+      this.loadCustomized().then(this.handleLoadCustomized);
     } else {
       this.initColumns();
     }
@@ -1151,12 +1284,37 @@ export default class TableStore {
 
   @action
   initColumns() {
-    const { customized, customizable } = this;
+    const { customized, customizable, aggregation } = this;
     const { columns, children } = this.props;
     const customizedColumns = customizable ? customized.columns : undefined;
-    this.originalColumns = columns
-      ? mergeDefaultProps(columns, customizedColumns)
-      : normalizeColumns(children, customizedColumns);
+    const [originalColumns, hasAggregationColumn] = columns
+      ? mergeDefaultProps(columns, aggregation, customizedColumns)
+      : normalizeColumns(children, aggregation, customizedColumns);
+    this.originalColumns = originalColumns;
+    this.hasAggregationColumn = hasAggregationColumn;
+  }
+
+  isAggregationCellExpanded(record: Record, column: ColumnProps): boolean {
+    const expandedKeys = record.getState(AGGREGATION_EXPAND_CELL_KEY);
+    if (expandedKeys) {
+      return expandedKeys.includes(getColumnKey(column));
+    }
+    return false;
+  }
+
+  @action
+  setAggregationCellExpanded(record: Record, column: ColumnProps, expanded: boolean) {
+    const expandedKeys = record.getState(AGGREGATION_EXPAND_CELL_KEY) || [];
+    const key = getColumnKey(column);
+    const index = expandedKeys.indexOf(key);
+    if (expanded) {
+      if (index === -1) {
+        expandedKeys.push(key);
+      }
+    } else if (index !== -1) {
+      expandedKeys.splice(index, 1);
+    }
+    record.setState(AGGREGATION_EXPAND_CELL_KEY, expandedKeys);
   }
 
   isRowExpanded(record: Record): boolean {
@@ -1245,8 +1403,12 @@ export default class TableStore {
   }
 
   @action
-  setMultiLineHeight(multiLineHeight: number) {
-    this.multiLineHeight.push(multiLineHeight);
+  setMultiLineHeight(rowIndex: string | number, multiLineHeight: number) {
+    this.multiLineHeight.set(rowIndex, multiLineHeight);
+  }
+
+  getMultiLineHeight(rowIndex: string | number): number {
+    return this.multiLineHeight.get(rowIndex) || 0;
   }
 
   @action
@@ -1292,8 +1454,9 @@ export default class TableStore {
 
   private getLeafColumns(columns: ColumnProps[]): ColumnProps[] {
     const leafColumns: ColumnProps[] = [];
+    const { aggregation } = this;
     columns.forEach(column => {
-      if (!column.children || column.children.length === 0) {
+      if ((aggregation && column.aggregation) || !column.children || column.children.length === 0) {
         leafColumns.push(column);
       } else {
         leafColumns.push(...this.getLeafColumns(column.children));
@@ -1362,6 +1525,7 @@ export default class TableStore {
     const modalProps: ModalProps = {
       drawer: true,
       size: Size.small,
+      title: $l('Table', 'customization_settings'),
       children: <CustomizationSettings />,
       bodyStyle: {
         overflow: 'hidden auto',
@@ -1422,7 +1586,7 @@ export default class TableStore {
   renderAllPageSelectionMenu() {
     const { dataSet: { isAllPageSelection }, allChecked, prefixCls } = this;
     return (
-      <Menu prefixCls={`${prefixCls}-all-page-selection-dropdown-menu`} onClick={this.handleAllPageSelectionMenuClick}>
+      <Menu prefixCls={`${prefixCls}-dropdown-menu`} onClick={this.handleAllPageSelectionMenuClick}>
         <Menu.Item key="current">
           {$l('Table', allChecked ? 'unselect_current_page' : 'select_current_page')}
         </Menu.Item>
@@ -1446,7 +1610,7 @@ export default class TableStore {
     ];
     if (this.props.showAllPageSelectionButton) {
       buttons.push(
-        <Dropdown overlay={this.renderAllPageSelectionMenu}>
+        <Dropdown key="selectAllPage" overlay={this.renderAllPageSelectionMenu}>
           <Icon type="baseline-arrow_drop_down" />
         </Dropdown>,
       );

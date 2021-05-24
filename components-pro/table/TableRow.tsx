@@ -146,17 +146,19 @@ export default class TableRow extends Component<TableRowProps, any> {
     }
   }
 
+  private needSaveRowHeight(): boolean {
+    const { lock, record } = this.props;
+    const { tableStore } = this.context;
+    return !isStickySupport() && !lock && (tableStore.rowHeight === 'auto' || [...record.fields.values()].some(field => field.get('multiLine')));
+  }
+
   @autobind
-  @action
   private saveRef(node: HTMLTableRowElement | null) {
     if (node) {
       this.node = node;
-      const { lock, record } = this.props;
-      const {
-        tableStore: { rowHeight, lockColumnsBodyRowsHeight },
-      } = this.context;
-      if (rowHeight === 'auto' && !lock) {
-        set(lockColumnsBodyRowsHeight, (this.rowKey = record.key), node.offsetHeight);
+      if (this.needSaveRowHeight()) {
+        const { record } = this.props;
+        this.setRowHeight(this.rowKey = record.key, node.offsetHeight);
       }
     }
   }
@@ -558,13 +560,12 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   render() {
-    const { record, lock, hidden, index, provided, className } = this.props;
+    const { record, hidden, index, provided, className } = this.props;
     const {
       tableStore,
     } = this.context;
     const {
       prefixCls,
-      rowHeight,
       highLightRow,
       selectedHighLightRow,
       mouseBatchChooseIdList,
@@ -629,7 +630,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (hidden) {
       rowProps.style.display = 'none';
     }
-    if (!isStickySupport() && lock && rowHeight === 'auto') {
+    if (this.needSaveRowHeight()) {
       rowProps.style.height = pxToRem(get(tableStore.lockColumnsBodyRowsHeight, key) as number);
     }
     if (selectionMode === SelectionMode.click) {
@@ -661,7 +662,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       </tr>
     );
     return [
-      !isStickySupport() && !lock && rowHeight === 'auto' ? (
+      this.needSaveRowHeight() ? (
         <ResizeObservedRow onResize={this.handleResize} rowIndex={key}>
           {tr}
         </ResizeObservedRow>

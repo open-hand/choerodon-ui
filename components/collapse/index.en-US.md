@@ -24,9 +24,10 @@ A content area which can be collapsed and expanded.
 | bordered | Toggles rendering of the border around the collapse block | boolean | true |
 | accordion | If true, Collapse renders as Accordion	 | boolean | false |
 | expandIcon | Allow to customize collapse icon | (panelProps) => ReactNode \| `text`(Default icon + text) | - |
-| expandIconPosition | Set expand icon position | `left` \| `right` | `left` |
+| expandIconPosition | Set expand icon position | `left` \| `right` \| `text-right` | `left` |
 | destroyInactivePanel | Destroy Inactive Panel | boolean | false |
 | trigger | trigger position | `header` \| `icon` | `header` |
+| ghost | Make the collapse borderless and its background transparent | boolean | false |
 
 ### Collapse.Panel
 
