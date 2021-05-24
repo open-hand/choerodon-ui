@@ -81,6 +81,8 @@ export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
 export interface SearchMatcherProps {
   record: Record;
   text: string;
+  value: any;
+  props: any;
   textField: string;
   valueField: string;
 }
@@ -353,9 +355,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @computed
   get filteredOptions(): Record[] {
-    const { text } = this;
     const { optionsWithCombo, observableProps: { optionsFilter } } = this;
-    return this.searchData(optionsFilter ? optionsWithCombo.filter(optionsFilter) : optionsWithCombo, text);
+    return this.searchData(optionsFilter ? optionsWithCombo.filter(optionsFilter) : optionsWithCombo);
   }
 
   @computed
@@ -1396,10 +1397,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     });
   }
 
-  searchData(data: Record[], text?: string): Record[] {
+  searchData(data: Record[]): Record[] {
     const {
       searchable,
       searchMatcher,
+      text,
     } = this;
     return searchable && text && typeof searchMatcher === 'function' ? data.filter((r) => this.matchRecordBySearch(r, text)) : data;
   }
@@ -1412,7 +1414,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       searchable,
       searchMatcher,
     } = this;
-    return !(searchable && text && typeof searchMatcher === 'function') || searchMatcher({ record, text, textField, valueField });
+    return !searchable || !text || typeof searchMatcher !== 'function' || searchMatcher({
+      record,
+      text,
+      textField,
+      valueField,
+      value: record.get(valueField),
+      props: record.get(OTHER_OPTION_PROPS),
+    });
   }
 }
 

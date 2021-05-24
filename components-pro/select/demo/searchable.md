@@ -31,7 +31,7 @@ const { Option } = Select;
 
 const data = [
   {
-    'last-name': 'huazhen',
+    'last-name': 'jack',
   },
 ];
 
@@ -52,15 +52,19 @@ class App extends React.Component {
     },
   });
 
+  searchMatcher = ({ text, props: { text: propText } }) => {
+    return propText.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+  }
+
   render() {
     return (
       <Row>
         <Col span={8}>
-          <Select dataSet={this.ds} name="last-name" searchable>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="huazhen">Huazhen</Option>
-            <Option value="aaa">Huazhen</Option>
+          <Select dataSet={this.ds} name="last-name" searchable searchMatcher={this.searchMatcher}>
+            <Option value="jack" text="Jack"><p>Jack</p></Option>
+            <Option value="lucy" text="Lucy"><p><em>lucy</em></p ></Option>
+            <Option value="huazhen" text="Huazhen">Huazhen</Option>
+            <Option value="aaa" text="Huazhen">Huazhen</Option>
           </Select>
         </Col>
         <Col span={8}>
