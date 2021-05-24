@@ -15,14 +15,17 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip` properties.
+- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip` `showLengthInfo` properties.
 - 🌟 `<pro>Select`: Added `optionTooltip` property.
 - 🌟 `<pro>Form`: Added `labelTooltip` property.
 - 🌟 `<pro>FormField`: Added `labelTooltip` property.
 - 🌟 `<pro>Button`: Added `tooltip` property.
-- 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
+- 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter`, `getValidationErrors` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
+- 🌟 `<pro>DataSet.Record`: Added `getValidationErrors` method.
+- 🌟 `<pro>DataSet.Field`: Added `computedProps` property, deprecated `dynamicProps` property.
 - 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange` properties.
 - 🌟 `<pro>Table.Column`: Added `aggregation` property.
+- 🌟 `<pro>TextField`: Added `showLengthInfo` property.
 - 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `Dropdown`: The `overlay` property supports hook functions.
 - 💄 `Popover`: The `title` and `content` attributes support hook functions.
@@ -36,6 +39,7 @@ timeline: true
 - 🐞 `<pro>DataSet`：Fix the problem that the state of the dataSet is incorrectly modified after submission when only deleted and dataToJSON is selected.
 - 🐞 `<pro>Table`: Fix the positioning problem of the editor when the current record of the DataSet changes.
 - 🐞 `<pro>RichText`：Fix the editor onBlur event.
+- 🐞 `<pro>FormField`: Fix the issue of invalid ref attribute.
 
 ## 1.3.2
 
@@ -67,7 +71,7 @@ timeline: true
 
 `2021-04-18`
 
-- 🌟 `configure`: Added `selectPagingOptionContent`, `selectSearchable`, `showLengthInfo` properties.
+- 🌟 `configure`: Added `selectPagingOptionContent`, `selectSearchable` properties.
 - 🌟 `<pro>DataSet`: Added `setState`, `getState`, `modifiedCheck` methods.
 - 🌟 `<pro>Paginition`: Added `maxPageSize`, `pageSizeEditable` properties.
 - 🌟 `<pro>FormField`: Added `onBeforeChange` hook.
@@ -75,7 +79,6 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `mode` parameter to the property `filter`.
 - 🌟 `<pro>Table`: Added ProfessionalBar `defaultExpanded` property.
 - 🌟 `<pro>Table`: Added `treeQueryExpanded` tree structure QueryBar queries automatically trigger expansion tree structure.
-- 🌟 `<pro>TextField`: Added `showLengthInfo` property.
 - 💄 `<pro>Table`: Optimize the performance of editors.
 - 💄 `<pro>Table`: Optimize virtual scrolling performance.
 - 💄 `<pro>Table`: Optimize the border style issue.

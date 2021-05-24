@@ -156,7 +156,7 @@ class App extends React.Component {
         name: 'name',
         type: 'intl',
         label: '姓名',
-        dynamicProps: nameDynamicProps,
+        computedProps: nameDynamicProps,
         ignore: 'clean',
       },
       {
@@ -178,7 +178,7 @@ class App extends React.Component {
         name: 'code',
         type: 'object',
         label: '代码描述',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
         transformRequest(value) {
           // 在发送请求之前对数据进行处理
           return { v: 2 };
@@ -187,7 +187,7 @@ class App extends React.Component {
       {
         name: 'code.v',
         type: 'number',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
         transformRequest(value) {
           return 5;
         },
@@ -195,14 +195,14 @@ class App extends React.Component {
       {
         name: 'code.d.v',
         type: 'number',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
         transformRequest(value) {
           return 5;
         },
       },
       {
         name: 'code_description',
-        dynamicProps: codeDescriptionDynamicProps,
+        computedProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码描述',
       },
