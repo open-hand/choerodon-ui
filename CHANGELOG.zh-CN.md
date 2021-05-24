@@ -20,10 +20,13 @@ timeline: true
 - 🌟 `<pro>Form`: 新增 labelTooltip 属性。
 - 🌟 `<pro>FormField`: 新增 labelTooltip 属性。
 - 🌟 `<pro>Button`: 新增 tooltip 属性。
-- 🌟 `<pro>DataSet`: 新增 setAllPageSelection, getQueryParameter 方法和 isAllPageSelection, unSelected, currentUnSelected 值。
+- 🌟 `<pro>DataSet`: 新增 setAllPageSelection, getQueryParameter, getValidationErrors 方法和 isAllPageSelection, unSelected, currentUnSelected 值。
+- 🌟 `<pro>DataSet.Record`: 新增 getValidationErrors 方法。
+- 🌟 `<pro>DataSet.Field`: 新增 computedProps 属性, 废弃 dynamicProps 属性。
 - 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange 属性。
 - 🌟 `<pro>Table.Column`: 新增 aggregation 属性。
 - 🌟 `<pro>TextField`: 新增 showLengthInfo 属性。
+- 🌟 `<pro>Table`: 新增自动定位到校验失败的单元格的特性。
 - 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `Dropdown`: overlay 属性支持钩子函数。
 - 💄 `Popover`: title 和 content 属性支持钩子函数。
@@ -38,6 +41,7 @@ timeline: true
 - 🐞 `<pro>DataSet`：修复在仅删除以及dataToJSON为selected的情况下，提交后对dataSet状态修改不正确的问题。
 - 🐞 `<pro>Table`：修复编辑器在 DataSet 当前记录发生变化时的定位问题。
 - 🐞 `<pro>RichText`：修复编辑器 onBlur 事件。
+- 🐞 `<pro>FormField`：修复 ref 属性无效的问题。
 
 ## 1.3.2
 

@@ -143,6 +143,7 @@ title: DataSet
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | modifiedCheck(message) | 变更检查。 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage |  |
 | setAllPageSelection(enabled) | 切换是否跨页全选。 | `enabled` - 是否开启 |  |
+| getValidationErrors() | 获取校验错误信息 |  |  |
 
 ### DataSet Events
 
@@ -215,6 +216,7 @@ title: DataSet
 | save() | 保存当前数据至缓存 |  |  |
 | restore() | 从缓存恢复保存的数据 |  |  |
 | clear() | 清除所有数据 |  |  |
+| getValidationErrors() | 获取校验错误信息 |  |  |
 
 ### Field Props
 
@@ -261,7 +263,8 @@ title: DataSet
 | lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | bind | 内部字段别名绑定 | string |  |
-| dynamicProps | 动态属性对象。对象为字段属性和返回该字段值的钩子的键值对。原对象属性钩子将在 v1.0 版本中废弃。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
+| dynamicProps | 动态属性对象。对象为字段属性和返回该字段值的钩子的键值对。<或废弃> | { fieldProp: ({ dataSet, record, name }) => value } |  |
+| computedProps | 计算属性对象。对象为字段属性和返回该字段值的钩子的键值对。功能和用法同 dynamicProps，具有 mobx computed 的缓存功能，避免重复计算，提高性能。请确保计算依赖的值是可观察的。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |
 | ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | `never` |

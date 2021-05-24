@@ -239,14 +239,14 @@ export type FieldProps = {
    * LOV查询请求地址
    */
   lovQueryUrl?:
-  | string
-  | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
+    | string
+    | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
   /**
    * 值列表请求的axiosConfig
    */
   lookupAxiosConfig?:
-  | AxiosRequestConfig
-  | ((props: {
+    | AxiosRequestConfig
+    | ((props: {
     params?: any;
     dataSet?: DataSet;
     record?: Record;
@@ -260,8 +260,8 @@ export type FieldProps = {
    * LOV查询请求的钩子
    */
   lovQueryAxiosConfig?:
-  | AxiosRequestConfig
-  | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
+    | AxiosRequestConfig
+    | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
   /**
    * 批量值列表请求的axiosConfig
    */
@@ -271,11 +271,16 @@ export type FieldProps = {
    */
   bind?: string;
   /**
+   * @deprecated
    * 动态属性
    */
   dynamicProps?:
-  | ((props: DynamicPropsArguments) => FieldProps | undefined)
-  | { [key: string]: (DynamicPropsArguments) => any; };
+    | ((props: DynamicPropsArguments) => FieldProps | undefined)
+    | { [key: string]: (DynamicPropsArguments) => any; };
+  /**
+   * 计算属性，具有 mobx-computed 的缓存功能
+   */
+  computedProps?: { [key: string]: (DynamicPropsArguments) => any; }
   /**
    * 快码和LOV查询时的级联参数映射
    * @example
@@ -495,7 +500,7 @@ export default class Field {
       this.dirtyProps = {};
       this.props = props;
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
-      if (!this.getProp('options') && (!record || this.getProp('dynamicProps'))) {
+      if (!this.getProp('options') && (!record || this.getProp('computedProps') || this.getProp('dynamicProps'))) {
         raf(() => {
           this.fetchLookup();
           this.fetchLovConfig();
@@ -536,16 +541,39 @@ export default class Field {
   }
 
   private getProp(propsName: string): any {
-    const computedProp = this.computedProps.get(propsName);
-    if (!computedProp) {
-      const newComputedProp = computed(() => {
-        if (propsName !== 'dynamicProps') {
-          const dynamicProps = this.get('dynamicProps');
-          if (dynamicProps) {
-            if (typeof dynamicProps === 'function') {
-              warning(
-                false,
-                ` The dynamicProps hook will be deprecated. Please use dynamicProps map.
+    if (!['computedProps', 'dynamicProps'].includes(propsName)) {
+      const computedProp = this.computedProps.get(propsName);
+      if (computedProp) {
+        const computedValue = computedProp.get();
+        if (computedValue !== undefined) {
+          return computedValue;
+        }
+      } else {
+        const computedProps = this.get('computedProps');
+        if (computedProps) {
+          const newComputedProp = computed(() => {
+            const computProp = computedProps[propsName];
+            if (typeof computProp === 'function') {
+              const prop = this.executeDynamicProps(computProp);
+              if (prop !== undefined) {
+                this.checkDynamicProp(propsName, prop);
+                return prop;
+              }
+            }
+          }, { name: propsName, context: this });
+          this.computedProps.set(propsName, newComputedProp);
+          const computedValue = newComputedProp.get();
+          if (computedValue !== undefined) {
+            return computedValue;
+          }
+        }
+      }
+      const dynamicProps = this.get('dynamicProps');
+      if (dynamicProps) {
+        if (typeof dynamicProps === 'function') {
+          warning(
+            false,
+            ` The dynamicProps hook will be deprecated. Please use dynamicProps map.
               For e.g,
               Bad case:
               dynamicProps({ record }) {
@@ -563,61 +591,56 @@ export default class Field {
                   return record.get('yy'),
                 }
               }`,
-              );
-              const props = this.executeDynamicProps(dynamicProps);
-              if (props && propsName in props) {
-                const prop = props[propsName];
-                this.checkDynamicProp(propsName, prop);
-                return prop;
-              }
-            } else {
-              const dynamicProp = dynamicProps[propsName];
-              if (typeof dynamicProp === 'function') {
-                const prop = this.executeDynamicProps(dynamicProp);
-                if (prop !== undefined) {
-                  this.checkDynamicProp(propsName, prop);
-                  return prop;
-                }
-              }
+          );
+          const props = this.executeDynamicProps(dynamicProps);
+          if (props && propsName in props) {
+            const prop = props[propsName];
+            this.checkDynamicProp(propsName, prop);
+            return prop;
+          }
+        } else {
+          const dynamicProp = dynamicProps[propsName];
+          if (typeof dynamicProp === 'function') {
+            const prop = this.executeDynamicProps(dynamicProp);
+            if (prop !== undefined) {
+              this.checkDynamicProp(propsName, prop);
+              return prop;
             }
-            this.checkDynamicProp(propsName, undefined);
           }
         }
-        const value = get(this.props, propsName);
-        if (value !== undefined) {
-          return value;
-        }
-        const dsField = this.findDataSetField();
-        if (dsField) {
-          const dsValue = dsField.getProp(propsName);
-          if (dsValue !== undefined) {
-            return dsValue;
-          }
-        }
-        if (propsName === 'textField' || propsName === 'valueField') {
-          const lovCode = this.get('lovCode');
-          const lovProps = getPropsFromLovConfig(lovCode, propsName);
-          if (propsName in lovProps) {
-            return lovProps[propsName];
-          }
-        }
-        if (propsName === 'lookupUrl') {
-          return getConfig(propsName);
-        }
-        if (['min', 'max'].includes(propsName)) {
-          if (this.get('type') === FieldType.number) {
-            if (propsName === 'max') {
-              return MAX_SAFE_INTEGER;
-            }
-            return MIN_SAFE_INTEGER;
-          }
-        }
-        return undefined;
-      }, { name: propsName, context: this });
-      this.computedProps.set(propsName, newComputedProp);
-      return newComputedProp.get();
+        this.checkDynamicProp(propsName, undefined);
+      }
     }
-    return computedProp.get();
+    const value = get(this.props, propsName);
+    if (value !== undefined) {
+      return value;
+    }
+    const dsField = this.findDataSetField();
+    if (dsField) {
+      const dsValue = dsField.getProp(propsName);
+      if (dsValue !== undefined) {
+        return dsValue;
+      }
+    }
+    if (propsName === 'textField' || propsName === 'valueField') {
+      const lovCode = this.get('lovCode');
+      const lovProps = getPropsFromLovConfig(lovCode, propsName);
+      if (propsName in lovProps) {
+        return lovProps[propsName];
+      }
+    }
+    if (propsName === 'lookupUrl') {
+      return getConfig(propsName);
+    }
+    if (['min', 'max'].includes(propsName)) {
+      if (this.get('type') === FieldType.number) {
+        if (propsName === 'max') {
+          return MAX_SAFE_INTEGER;
+        }
+        return MIN_SAFE_INTEGER;
+      }
+    }
+    return undefined;
   }
 
   /**
@@ -904,13 +927,16 @@ export default class Field {
    * @return true | false
    */
   @action
-  async checkValidity(): Promise<boolean> {
+  async checkValidity(report: boolean = true): Promise<boolean> {
     let valid = true;
     const { record, validator, name } = this;
     if (record) {
       validator.reset();
       const value = record.get(name);
       valid = await validator.checkValidity(value);
+      if (report && !record.validating) {
+        record.reportValidity(valid);
+      }
     }
     return valid;
   }

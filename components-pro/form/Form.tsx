@@ -32,15 +32,7 @@ import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComp
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
-import {
-  defaultColumns,
-  defaultExcludeUseColonTag,
-  defaultLabelWidth,
-  FIELD_SUFFIX,
-  findFirstInvalidElement,
-  getProperty,
-  normalizeLabelWidth,
-} from './utils';
+import { defaultColumns, defaultExcludeUseColonTag, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import OverflowTip from '../overflow-tip';
@@ -307,6 +299,10 @@ export default class Form extends DataSetComponent<FormProps> {
   @observable responsiveItems: any[];
 
   name = NameGen.next().value;
+
+  validating: boolean = false;
+
+  prepareForReport: { result?: boolean, timeout?: number } = {};
 
   constructor(props, context) {
     super(props, context);
@@ -575,11 +571,18 @@ export default class Form extends DataSetComponent<FormProps> {
 
   // 处理校验失败定位
   @autobind
-  async handleDataSetValidate({ result }) {
+  async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>, dataSet: DataSet }) {
     if (!await result) {
-      const item = this.element ? findFirstInvalidElement(this.element) : null;
-      if (item) {
-        item.focus();
+      const [firstInvalidRecord] = dataSet.getValidationErrors();
+      if (firstInvalidRecord) {
+        const { errors } = firstInvalidRecord;
+        if (errors.length) {
+          const [{ field: { name } }] = errors;
+          const field = this.getFields().find(item => item.props.name === name);
+          if (field) {
+            field.focus();
+          }
+        }
       }
     }
   }
@@ -605,7 +608,7 @@ export default class Form extends DataSetComponent<FormProps> {
     let colIndex = 0;
     const matrix: (boolean | undefined)[][] = [[]];
     let noLabel = true;
-    const childrenArray: ReactElement<any>[] = [];
+    const childrenArray: (ReactElement<any> & { ref })[] = [];
     const separateSpacingWidth: number = this.separateSpacing ? this.separateSpacing.width / 2 : 0;
     Children.forEach(children, child => {
       if (isValidElement(child)) {
@@ -658,7 +661,7 @@ export default class Form extends DataSetComponent<FormProps> {
     }
 
     for (let index = 0, len = childrenArray.length; index < len;) {
-      const { props, key, type } = childrenArray[index];
+      const { props, key, type, ref } = childrenArray[index];
 
       let TagName = type;
       if (isFunction(type)) {
@@ -756,6 +759,7 @@ export default class Form extends DataSetComponent<FormProps> {
         );
       }
       const fieldElementProps: any = {
+        ref,
         key,
         className: classNames(prefixCls, className),
         ...otherProps,
@@ -943,6 +947,25 @@ export default class Form extends DataSetComponent<FormProps> {
     }
   }
 
+  reportValidity(result: boolean) {
+    const { prepareForReport } = this;
+    if (!result) {
+      prepareForReport.result = result;
+    }
+    if (prepareForReport.timeout) {
+      window.clearTimeout(prepareForReport.timeout);
+    }
+    prepareForReport.timeout = window.setTimeout(() => {
+      if (!prepareForReport.result) {
+        const field = this.getFields().find(one => !one.isValid);
+        if (field) {
+          field.focus();
+        }
+      }
+      this.prepareForReport = {};
+    }, 200);
+  }
+
   checkValidity() {
     const { dataSet } = this;
     if (dataSet) {
@@ -951,9 +974,16 @@ export default class Form extends DataSetComponent<FormProps> {
       }
       return dataSet.validate();
     }
-    return Promise.all(this.getFields().map(field => field.checkValidity())).then(results =>
-      results.every(result => result),
-    );
+    this.validating = true;
+    return Promise.all(this.getFields().map(field => field.checkValidity())).then((results) => {
+      const valid = results.every(result => result);
+      this.reportValidity(valid);
+      this.validating = false;
+      return valid;
+    }).catch((error) => {
+      this.validating = false;
+      throw error;
+    });
   }
 
   getFields(): FormField<FormFieldProps>[] {

@@ -308,10 +308,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderWrapper(): ReactNode {
     const maxLength = this.getProp('maxLength');
-    const lengthInfo = maxLength  ? this.renderLengthInfo() : null;
+    const group = this.renderGroup();
+    if (this.props._inTable || !maxLength) {
+      return group;
+    }
+    const lengthInfo = this.renderLengthInfo();
     return (
       <div>
-        {this.renderGroup()}
+        {group}
         {lengthInfo}
       </div>
     );
@@ -408,7 +412,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { showLengthInfo, prefixCls } = this;
     const maxLength = this.getProp('maxLength');
     const inputLength = this.getValue() ? this.getValue().length : 0;
-    return maxLength && maxLength > 0  && showLengthInfo ? (
+    return maxLength && maxLength > 0 && showLengthInfo ? (
       <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
     ) : null;
   }
@@ -428,7 +432,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getLabel() {
     const [placeholder, endPlaceHolder] = this.getPlaceholders();
-    if (this.isEmpty()  && !this.isFocused && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
+    if (this.isEmpty() && !this.isFocused && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
       return endPlaceHolder;
     }
     if (this.isEmpty() && !this.isFocused && placeholder) {

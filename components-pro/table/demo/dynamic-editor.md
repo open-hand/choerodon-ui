@@ -46,7 +46,7 @@ class App extends React.Component {
       {
         name: 'sex',
         label: '性别',
-        dynamicProps: {
+        computedProps: {
           type: ({ record }) => {
             return record.get('base') === 'Lov' ? 'object' : 'string';
           },
@@ -103,7 +103,7 @@ class App extends React.Component {
       {
         name: 'sex',
         label: '性别',
-        dynamicProps: {
+        computedProps: {
           type: ({ record }) => {
             return record.get('base') === 'Lov' ? 'object' : 'string';
           },

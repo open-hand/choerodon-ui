@@ -63,13 +63,13 @@ import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
-import { findIndexedSibling, getHeight, getPaginationPosition, isCanEdictingRow, isDropresult, isStickySupport } from './utils';
+import { findCell, findIndexedSibling, getHeight, getPaginationPosition, isCanEdictingRow, isDropresult, isStickySupport } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
 import ModalProvider from '../modal-provider/ModalProvider';
 import SelectionTips from './SelectionTips';
-import { DataSetSelection } from '../data-set/enum';
+import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { Size } from '../core/enum';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
@@ -865,6 +865,23 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
+  async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>, dataSet: DataSet }) {
+    if (!await result) {
+      const [firstInvalidRecord] = dataSet.getValidationErrors();
+      if (firstInvalidRecord) {
+        const { errors, record } = firstInvalidRecord;
+        if (errors.length) {
+          const [{ field: { name } }] = errors;
+          const cell = findCell(this.tableStore, name, undefined, record);
+          if (cell) {
+            cell.focus();
+          }
+        }
+      }
+    }
+  }
+
+  @autobind
   handleKeyDown(e) {
     const { tableStore } = this;
     const { keyboard } = tableStore;
@@ -1367,11 +1384,12 @@ export default class Table extends DataSetComponent<TableProps> {
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
       if (isTree) {
-        handler.call(dataSet, 'load', this.handleDataSetLoad);
+        handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
       }
       if (inlineEdit) {
-        handler.call(dataSet, 'create', this.handleDataSetCreate);
+        handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
+      handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
     }
   }
 

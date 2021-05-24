@@ -14,6 +14,8 @@ export {
   DataSetExportStatus,
 } from './enum';
 export {
+  RecordValidationErrors,
+  ValidationErrors,
   DataSetChildren,
   Events,
   DataSetProps,
