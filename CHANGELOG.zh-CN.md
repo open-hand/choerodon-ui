@@ -36,6 +36,7 @@ timeline: true
 - 💄 `<pro>Table`: 性能优化。
 - 💄 `<pro>Tree`: 优化扩展 showLine 属性。
 - 💄 `<pro>Form`: 优化浮动标签 label 展示时机。
+- 💄 `<pro>TextField`: 优化 clearButton 渲染交互。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 - 🐞 `<pro>DataSet`：修复在仅删除以及dataToJSON为selected的情况下，提交后对dataSet状态修改不正确的问题。
 - 🐞 `<pro>Table`：修复编辑器在 DataSet 当前记录发生变化时的定位问题。

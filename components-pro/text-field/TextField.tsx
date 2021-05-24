@@ -684,7 +684,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   wrapperSuffix(children: ReactNode, props?: any): ReactNode {
-    const { prefixCls } = this;
+    const { prefixCls, props: { clearButton } } = this;
     if (isValidElement<any>(children)) {
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
@@ -696,8 +696,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         };
       }
     }
+    const classString = classNames(`${prefixCls}-suffix`, {
+      [`${prefixCls}-allow-clear`]: clearButton,
+    });
     return (
-      <div className={`${prefixCls}-suffix`} onMouseDown={preventDefault} {...props}>
+      <div className={classString} onMouseDown={preventDefault} {...props}>
         {children}
       </div>
     );

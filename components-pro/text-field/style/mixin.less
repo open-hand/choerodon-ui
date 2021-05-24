@@ -112,6 +112,7 @@
   }
 
   &-placeholder,
+  &-selected-value,
   &-rendered-value {
     position: absolute;
     top: 0;
@@ -136,6 +137,10 @@
     color: @input-placeholder-color;
     white-space: nowrap;
     opacity: 0;
+  }
+
+  &-expand > &-selected-value {
+    color: @input-placeholder-color;
   }
 
   // Reset height for `textarea`s
@@ -204,10 +209,6 @@
     padding-right: @suffix-width;
   }
 
-  &-suffix-button &-inner-button {
-    right: @suffix-width + 0.01rem;
-  }
-
   &-suffix-button &-suffix {
     cursor: pointer;
   }
@@ -232,15 +233,11 @@
   &-focused &-inner-button {
     z-index: 2;
     opacity: 1;
-
-    &-clear-button {
-      right: @suffix-width;
-    }
   }
 
-  &-wrapper:hover &-suffix-button &-suffix,
-  &-focused&-suffix-button &-suffix {
-    opacity: 1;
+  &-wrapper:hover &-allow-clear,
+  &-focused &-allow-clear {
+    opacity: 0;
   }
 
   &-clear-button {
