@@ -1105,7 +1105,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         if (dataSet && name) {
           (this.record || dataSet.create({}, dataIndex)).set(name, value);
         } else {
-          this.validate(value);
+          this.validate(value, false);
         }
       };
       // 转成实际的数据再进行判断
@@ -1394,7 +1394,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return valid;
   }
 
-  async validate(value?: any): Promise<boolean> {
+  async validate(value?: any, report: boolean = true): Promise<boolean> {
     let invalid = false;
     if (!this.props.noValidate) {
       if (value === undefined) {
@@ -1403,6 +1403,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const { validator } = this;
       validator.reset();
       invalid = !(await validator.checkValidity(value));
+      const { formNode } = this.context;
+      if (report && formNode && !formNode.validating) {
+        formNode.reportValidity(!invalid);
+      }
     }
     return !invalid;
   }

@@ -177,7 +177,7 @@ class App extends React.Component {
         name: 'name',
         type: 'intl',
         label: '姓名',
-        dynamicProps: nameDynamicProps,
+        computedProps: nameDynamicProps,
         bind: 'name1',
         ignore: 'clean',
       },
@@ -214,7 +214,7 @@ class App extends React.Component {
         name: 'code',
         type: 'object',
         label: '代码描述',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
         transformResponse(value, data) { 
           return data
         },
@@ -229,7 +229,7 @@ class App extends React.Component {
       {
         name: 'code.v',
         type: 'number',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
         transformRequest(value) {
           return 5;
         },
@@ -237,7 +237,7 @@ class App extends React.Component {
       {
         name: 'code.d.v',
         type: 'number',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
         transformRequest(value) {
           return 5;
         },
@@ -274,7 +274,7 @@ class App extends React.Component {
       },
       {
         name: 'codeMultiple_code',
-        dynamicProps: codeCodeDynamicProps,
+        computedProps: codeCodeDynamicProps,
         type: 'string',
         label: '代码（多值）',
         multiple: true,
@@ -282,7 +282,7 @@ class App extends React.Component {
       },
       {
         name: 'codeMultiple_description',
-        dynamicProps: codeDescriptionDynamicProps,
+        computedProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码描述',
         multiple: ',',
@@ -314,7 +314,7 @@ class App extends React.Component {
       { name: 'enable', type: 'boolean', label: '是否开启', unique: 'uniqueGroup' },
       { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
-      { name: 'date.endDate', type: 'time', range: true, label: '结束日期', dynamicProps: { defaultValue: () => [moment(), moment()] } },
+      { name: 'date.endDate', type: 'time', range: true, label: '结束日期', computedProps: { defaultValue: () => [moment(), moment()] } },
     ],
     events: {
       selectAll: ({ dataSet }) => console.log('select all', dataSet.selected),

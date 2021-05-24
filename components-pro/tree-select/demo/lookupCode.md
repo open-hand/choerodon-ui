@@ -43,7 +43,7 @@ class App extends React.Component {
       {
         name: 'sex2',
         type: 'string',
-        dynamicProps: {
+        computedProps: {
           lookupAxiosConfig: ({ record }) => ({
             url: record.get('sex') ? '/tree-less.mock' : null,
             transformResponse(data) {
