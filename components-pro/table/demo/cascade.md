@@ -153,6 +153,28 @@ class App extends React.Component {
       },
       { name: 'enable', type: 'boolean', label: '是否开启' },
       { name: 'account', type: 'object', ignore: 'always' },
+      {
+        name: 'code',
+        type: 'object',
+        label: '代码描述',
+        lovCode: 'LOV_CODE',
+        ignore: 'always',
+        multiple: true,
+      },
+      {
+        name: 'code_code',
+        type: 'string',
+        label: '代码',
+        bind: 'code.code',
+        multiple: ','
+      },
+      {
+        name: 'code_description',
+        type: 'string',
+        label: '代码描述',
+        bind: 'code.description',
+        multiple: ',',
+      },
     ],
     events: {
       submit: ({ data }) => console.log('submit data', data),
@@ -255,6 +277,9 @@ class App extends React.Component {
         <Column name="age" editor width={150} />
         <Column name="enable" editor width={50} />
         <Column name="name" editor width={150} />
+        <Column name="code" editor width={150} />
+        <Column name="code_code" editor width={150} />
+        <Column name="code_description" editor width={150} />
         <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />
       </Table>,
       <Table

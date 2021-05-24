@@ -7,7 +7,7 @@ import isNumber from 'lodash/isNumber';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import DataSet from './DataSet';
+import DataSet, { RecordValidationErrors } from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
   axiosConfigAdapter,
@@ -56,11 +56,15 @@ export default class Record {
 
   memo?: object;
 
+  prepareForReport: { result?: boolean, timeout?: number } = {};
+
   dataSetSnapshot: { [key: string]: DataSetSnapshot } = {};
 
   cascadeRecordsMap: { [key: string]: Record[] } = {};
 
   cascading = {};
+
+  validating: boolean = false;
 
   @observable data: object;
 
@@ -444,9 +448,10 @@ export default class Record {
 
   validate(all?: boolean, noCascade?: boolean): Promise<boolean> {
     const { dataSetSnapshot, dataSet, status, fields } = this;
+    this.validating = true;
     return Promise.all([
       ...[...fields.values()].map(field =>
-        all || status !== RecordStatus.sync ? field.checkValidity() : true,
+        all || status !== RecordStatus.sync ? field.checkValidity(false) : true,
       ),
       ...(!noCascade && dataSet ? Object.keys(dataSet.children).map((key) => {
         const { children } = dataSet;
@@ -462,7 +467,44 @@ export default class Record {
           record.validate(false, !cascade),
         );
       }) : []),
-    ]).then(results => results.every(result => result));
+    ]).then((results) => {
+      const valid = results.every(result => result);
+      this.reportValidity(valid);
+      this.validating = false;
+      return valid;
+    }).catch((error) => {
+      this.validating = false;
+      throw error;
+    });
+  }
+
+  reportValidity(result: boolean) {
+    const { dataSet } = this;
+    if (dataSet && !dataSet.validating) {
+      const { prepareForReport } = this;
+      if (!result) {
+        prepareForReport.result = result;
+      }
+      if (prepareForReport.timeout) {
+        window.clearTimeout(prepareForReport.timeout);
+      }
+      prepareForReport.timeout = window.setTimeout(() => {
+        dataSet.reportValidity(prepareForReport.result || true);
+        this.prepareForReport = {};
+      }, 200);
+    }
+  };
+
+  getValidationErrors(): RecordValidationErrors[] {
+    return [...this.fields.values()].reduce<RecordValidationErrors[]>((results, field) => {
+      if (!field.valid) {
+        results.push({
+          field,
+          errors: field.getValidationErrorValues(),
+        });
+      }
+      return results;
+    }, []);
   }
 
   getField(fieldName?: string): Field | undefined {
@@ -577,7 +619,7 @@ export default class Record {
       findBindFields(field, this.fields).forEach(oneField => {
         // oneField.dirty = field.dirty,
         oneField.validator.reset();
-        oneField.checkValidity();
+        oneField.checkValidity(false);
       });
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.set(key, item[key]));
@@ -833,7 +875,7 @@ export default class Record {
     const dynamicBindFields: [string, Field][] = [];
     [...fields.entries()].forEach((entry) => {
       const [, field] = entry;
-      const dynamicProps = field.get('dynamicProps');
+      const dynamicProps = field.get('computedProps') || field.get('dynamicProps');
       if (dynamicProps) {
         if (dynamicProps.bind) {
           if (field.type === FieldType.object) {
@@ -851,7 +893,7 @@ export default class Record {
           targetNames.pop();
           if (targetNames.some((targetName) => {
             const target = fields.get(targetName);
-            return target && target.get('dynamicProps');
+            return target && (target.get('computedProps') || target.get('dynamicProps'));
           })) {
             if (field.type === FieldType.object) {
               dynamicObjectBindFields.push(entry);

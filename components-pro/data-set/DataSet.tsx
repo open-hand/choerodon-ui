@@ -69,6 +69,7 @@ import { ModalProps } from '../modal/Modal';
 import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
+import ValidationResult from '../validator/ValidationResult';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
@@ -79,6 +80,16 @@ export type DataSetChildren = { [key: string]: DataSet };
 export type Events = { [key: string]: Function; };
 
 export type Group = { name: string, value: any, records: Record[], subGroups: Group[]; };
+
+export interface RecordValidationErrors {
+  field: Field;
+  errors: ValidationResult[];
+}
+
+export interface ValidationErrors {
+  record: Record;
+  errors: RecordValidationErrors[];
+}
 
 export interface DataSetProps {
   /**
@@ -303,6 +314,8 @@ export default class DataSet extends EventManager {
 
   children: DataSetChildren = {};
 
+  prepareForReport: { result?: boolean, timeout?: number } = {};
+
   @computed
   get queryParameter(): object {
     const queryParameterMap: ObservableMap<string, any> = this.getState(QUERY_PARAMETER);
@@ -321,6 +334,8 @@ export default class DataSet extends EventManager {
   originalData: Record[] = [];
 
   resetInBatch: boolean = false;
+
+  validating: boolean = false;
 
   @observable parent?: DataSet;
 
@@ -1787,19 +1802,54 @@ export default class DataSet extends EventManager {
    * @param noCascade 是否级联校验
    * @return true | false
    */
-  validate(isSelected?: boolean, noCascade?: boolean): Promise<boolean> {
-    const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
-    const cascade =
-      noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
-    const validateResult = Promise.all(
-      (useSelected(dataToJSON) ? this.selected : this.data).map(record =>
-        record.validate(false, !cascade),
-      ),
-    ).then(results => results.every(result => result));
+  async validate(isSelected?: boolean, noCascade?: boolean): Promise<boolean> {
+    this.validating = true;
+    try {
+      const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
+      const cascade =
+        noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
+      const validateResult = Promise.all(
+        (useSelected(dataToJSON) ? this.selected : this.data).map(record =>
+          record.validate(false, !cascade),
+        ),
+      ).then(results => results.every(result => result));
+      this.reportValidityImmediately(validateResult);
+      return await validateResult;
+    } finally {
+      this.validating = false;
+    }
+  }
 
-    this.fireEvent(DataSetEvents.validate, { dataSet: this, result: validateResult });
+  reportValidityImmediately(result: Promise<boolean>) {
+    this.fireEvent(DataSetEvents.validate, { dataSet: this, result });
+  }
 
-    return validateResult;
+  reportValidity(result: boolean) {
+    const { prepareForReport } = this;
+    if (!result) {
+      prepareForReport.result = result;
+    }
+    if (prepareForReport.timeout) {
+      window.clearTimeout(prepareForReport.timeout);
+    }
+    prepareForReport.timeout = window.setTimeout(() => {
+      this.reportValidityImmediately(Promise.resolve(prepareForReport.result || true));
+      this.prepareForReport = {};
+    }, 200);
+  }
+
+  getValidationErrors(): ValidationErrors[] {
+    const { dataToJSON } = this;
+    return (useSelected(dataToJSON) ? this.selected : this.data).reduce<ValidationErrors[]>((results, record) => {
+      const validationResults = record.getValidationErrors();
+      if (validationResults.length) {
+        results.push({
+          record,
+          errors: validationResults,
+        });
+      }
+      return results;
+    }, []);
   }
 
   /**

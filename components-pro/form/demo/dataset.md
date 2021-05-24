@@ -45,9 +45,7 @@ const defaultValidationMessages = {
 
 class App extends React.Component {
   ds = new DataSet({
-    data: [
-      { phone: '18116266000' }
-    ],
+    autoCreate: true,
     fields: [
       {
         name: 'phone',
@@ -96,12 +94,19 @@ class App extends React.Component {
     ],
   });
 
-  changeField = () => {
-    this.ds.current.getField('code').set('textField', 'description');
-  };
-
   clear = () => {
     this.ds.loadData([])
+  };
+
+  validateCurrent = () => {
+    const { current } = this.ds;
+    current.validate();
+  };
+
+  validatePhone = () => {
+    const { current } = this.ds;
+    const field = current.getField('phone');
+    field.checkValidity();
   };
 
   render() {
@@ -127,15 +132,16 @@ class App extends React.Component {
         <Switch name="frozen" />
         <div>
           <Button type="submit">注册</Button>
-          <Button type="reset" style={{ marginLeft: 8 }}>
+          <Button type="reset">
             重置
           </Button>
-          <Button onClick={this.changeField} style={{ marginLeft: 8 }}>
-            设置代码描述的textField
-          </Button>
-          <Button onClick={this.clear} style={{ marginLeft: 8 }}>
+          <Button onClick={this.clear}>
             清空
           </Button>
+        </div>
+        <div>
+          <Button onClick={this.validateCurrent}>校验当前记录</Button>
+          <Button onClick={this.validatePhone}>校验手机</Button>
         </div>
       </Form>
     );
