@@ -31,6 +31,7 @@ import { ShowHelp } from '../field/enum';
 import { FieldFormat } from '../data-set/enum';
 import { LabelLayout } from '../form/interface';
 import { getProperty } from '../form/utils';
+import RenderedText from './RenderedText';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -200,6 +201,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   handleChangeWait: Function & Cancelable;
 
+  @observable renderedTextContent?: string;
+
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
@@ -216,6 +219,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return getConfig('showLengthInfo');
   }
 
+  @autobind
+  @action
+  handleRenderedValueChange(text) {
+    this.renderedTextContent = text;
+  }
 
   componentWillReceiveProps(nextProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
@@ -635,25 +643,24 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       );
     }
     const text = this.getTextNode();
+    const value = this.getValue();
+    const finalText = isString(text) ? text : this.renderedTextContent || '';
     const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
-    const finalText = isString(text) ? text : this.getText(this.getValue());
-
-    let width = 0;
-    // 筛选条默认宽度处理
-    if (isFlat) {
-      const hasValue = !isNil(this.getValue());
-      width = hasValue ? measureTextWidth(finalText) + (clearButton ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
-    }
-
-    if (isValidElement(text)) {
+    if ((!this.isFocused || !this.editable) && isValidElement(text)) {
       otherProps.style = {
         ...otherProps.style,
         textIndent: -1000,
-        width: isFlat ? width : undefined,
       };
-    } else if (isFlat) {
-      otherProps.style = { width, ...otherProps.style };
     }
+    // 筛选条默认宽度处理
+    if (isFlat) {
+      const width = !isNil(value) ? measureTextWidth(finalText) + (clearButton ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
+      otherProps.style = {
+        ...otherProps.style,
+        width,
+      };
+    }
+
     return (
       <input
         key="text"
@@ -748,11 +755,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls, range, multiple } = this;
     if (!range && !multiple) {
       const text = this.getTextNode();
-      if ((!this.isFocused || !this.editable) && isValidElement(text)) {
+      if (isValidElement(text)) {
         return (
-          <span key="renderedText" className={`${prefixCls}-rendered-value`}>
-            <span className={`${prefixCls}-rendered-value-inner`}>{text}</span>
-          </span>
+          <RenderedText
+            key="renderedText"
+            prefixCls={prefixCls}
+            onContentChange={this.handleRenderedValueChange}
+            hidden={this.isFocused && this.editable}
+          >
+            {text}
+          </RenderedText>
         );
       }
     }

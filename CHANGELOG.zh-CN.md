@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复编辑器在 DataSet 当前记录发生变化时的定位问题。
 - 🐞 `<pro>RichText`：修复编辑器 onBlur 事件。
 - 🐞 `<pro>FormField`：修复 ref 属性无效的问题。
+- 🐞 `<pro>Select.Option`：修复 children 是 ReactNode 时渲染问题。
 
 ## 1.3.2
 

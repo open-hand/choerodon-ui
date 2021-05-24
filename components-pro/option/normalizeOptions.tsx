@@ -5,7 +5,7 @@ import { FieldProps } from '../data-set/Field';
 import OptGroup, { OptGroupProps } from './OptGroup';
 import Option, { OptionProps } from './Option';
 
-export const OTHER_OPTION_PROPS = '__OTHER_OPTION_PROPS__'
+export const OTHER_OPTION_PROPS = '__OTHER_OPTION_PROPS__';
 
 function getOptionsFromChildren(
   elements: ReactNode[],

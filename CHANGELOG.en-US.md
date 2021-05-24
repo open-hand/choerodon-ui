@@ -40,6 +40,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the positioning problem of the editor when the current record of the DataSet changes.
 - 🐞 `<pro>RichText`：Fix the editor onBlur event.
 - 🐞 `<pro>FormField`: Fix the issue of invalid ref attribute.
+- 🐞 `<pro>Select.Option`: Fix the rendering problem when children are ReactNode.
 
 ## 1.3.2
 
