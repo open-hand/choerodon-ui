@@ -572,6 +572,8 @@ export default class TableRow extends Component<TableRowProps, any> {
       mouseBatchChooseState,
       dragColumnAlign,
       rowDraggable,
+      isTree,
+      parityRow,
       props: { onRow, rowRenderer, selectionMode },
     } = tableStore;
     const { key, id } = record;
@@ -604,9 +606,14 @@ export default class TableRow extends Component<TableRowProps, any> {
       className, // 增加可以自定义类名满足拖拽功能
       rowExternalProps.className,
     );
+    let evenParentRow = false;
+    if (parityRow && (!isTree || !record.parent)) {
+      evenParentRow = record.dataSet.get(0).id % 2 === 0 ? id % 2 !== 0 : (id + 1) % 2 !== 0;
+    }
     const rowProps: HTMLProps<HTMLTableRowElement> & {
       style: CSSProperties;
       'data-index': number;
+      'data-even-row': string;
     } = {
       ref: (ref) => {
         this.saveRef(ref);
@@ -621,6 +628,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       tabIndex: -1,
       disabled,
       'data-index': id,
+      'data-even-row': evenParentRow.toString(),
     };
     if (!isStickySupport() && tableStore.overflowX) {
       rowProps.onMouseEnter = this.handleMouseEnter;

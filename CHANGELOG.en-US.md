@@ -35,12 +35,15 @@ timeline: true
 - 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
 - 💄 `<pro>Table`: Optimize the performance.
 - 💄 `<pro>Tree`: Optimized and extend the showLine attribute.
+- 💄 `<pro>TextField`: Optimized the `clearButton` rendering interaction.
 - 🐞 `<pro>Modal`: Fixed the `keyboardClosable` property has no effect when there is no cancel button.
 - 🐞 `<pro>DataSet`：Fix the problem that the state of the dataSet is incorrectly modified after submission when only deleted and dataToJSON is selected.
 - 🐞 `<pro>Table`: Fix the positioning problem of the editor when the current record of the DataSet changes.
 - 🐞 `<pro>RichText`：Fix the editor onBlur event.
 - 🐞 `<pro>FormField`: Fix the issue of invalid ref attribute.
 - 🐞 `<pro>Select.Option`: Fix the rendering problem when children are ReactNode.
+- 🐞 `<pro>Table`：Fix `parityRow` expansion row rendering problem.
+- 🐞 `<pro>Paginition`：Fix the rendering problem of page turning button without data.
 
 ## 1.3.2
 
