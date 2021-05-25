@@ -197,6 +197,11 @@ class App extends React.Component {
         type: 'string',
         label: '邮箱',
         help: '用户邮箱，可以自动补全',
+        computedProps: {
+          highlight({ record }) {
+            return record.index === 0;
+          }
+        },
       },
       {
         name: 'numberMultiple',

@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>Button`: Added `tooltip` property.
 - 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter`, `getValidationErrors` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
 - 🌟 `<pro>DataSet.Record`: Added `getValidationErrors` method.
-- 🌟 `<pro>DataSet.Field`: Added `computedProps` property, deprecated `dynamicProps` property.
+- 🌟 `<pro>DataSet.Field`: Added `computedProps`, `highlight` properties, deprecated `dynamicProps` property.
 - 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange` properties.
 - 🌟 `<pro>Table.Column`: Added `aggregation` property.
 - 🌟 `<pro>TextField`: Added `showLengthInfo` property.

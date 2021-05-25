@@ -18,6 +18,7 @@
     border: @border-width-base @border-style-base @border-color-base;
     border-radius: 50%;
     transition: all @radio-duration;
+
     &::before {
       position: absolute;
       top: 0.03rem;
@@ -31,25 +32,42 @@
       transition: all @radio-duration @ease-in-out-circ;
       content: ' ';
     }
+
     & + span {
       padding-right: 0.08rem;
       padding-left: 0.08rem;
     }
   }
+
   &:checked + &-inner {
     border-color: @primary-color;
+
     &::before {
       background-color: @primary-color;
       transform: scale(1);
       opacity: 1;
     }
   }
+
   &:hover + &-inner,
   &-wrapper:hover &-inner,
   &:focus + &-inner {
     border-color: @primary-7;
+
     &::before {
       background-color: @primary-7;
+    }
+  }
+
+  &-highlight &-inner {
+    border-color: @input-highlight-border-color;
+  }
+
+  &-highlight &:checked + &-inner {
+    border-color: @input-highlight-border-color;
+
+    &::before {
+      background-color: @input-highlight-border-color;
     }
   }
 
@@ -60,14 +78,17 @@
   &:disabled + &-inner {
     background-color: @input-disabled-bg;
     border-color: @disabled-color !important;
+
     &::before {
       background-color: @disabled-color;
     }
   }
+
   &-button {
     padding: 0 0.15rem;
     line-height: 0.3rem;
     background-color: #fff;
+
     .@{pro-radio-prefix-cls}-inner {
       position: absolute;
       top: 0;
@@ -78,21 +99,26 @@
       height: auto;
       background-color: transparent;
       border-radius: @border-radius-base;
+
       &::before {
         display: none;
       }
+
       & + span {
         position: relative;
         z-index: 1;
         padding: 0;
       }
     }
+
     .@{pro-radio-prefix-cls}:checked + .@{pro-radio-prefix-cls}-inner {
       z-index: 1;
+
       & + span {
         color: @primary-color;
       }
     }
+
     &:hover .@{pro-radio-prefix-cls}-inner + span {
       color: @primary-color;
     }

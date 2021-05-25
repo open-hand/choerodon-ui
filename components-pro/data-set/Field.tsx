@@ -319,6 +319,10 @@ export type FieldProps = {
    * 额外信息，常用于提示
    */
   help?: string;
+  /**
+   * 高亮
+   */
+  highlight?: boolean;
 };
 
 export default class Field {

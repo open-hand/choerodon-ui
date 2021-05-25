@@ -123,7 +123,7 @@ const App = () => {
         help="我们需要确定你的年龄"
         addonAfter="周岁"
       />
-      <SelectBox label="性别" name="sex" required>
+      <SelectBox highlight label="性别" name="sex" required>
         <Option value="M">男</Option>
         <Option value="F">女</Option>
       </SelectBox>
@@ -139,7 +139,7 @@ const App = () => {
       </Select>
       <EmailField label="邮箱" name="email" required addonAfter={dropdown} />
       <UrlField label="个人主页" name="homepage" required addonBefore="Http://" />
-      <DatePicker label="生日" name="birth" required />
+      <DatePicker highlight label="生日" name="birth" required />
       <div>
         <Button type="submit">注册</Button>
         <Button type="reset" style={{ marginLeft: 8 }}>
