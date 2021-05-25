@@ -1,6 +1,7 @@
 import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import { Cancelable, DebounceSettings } from 'lodash';
+import classNames from 'classnames';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
@@ -299,16 +300,18 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();
     const { disabled } = this;
+    const tooltipWrapper = disabled && !href && (isTooltip || onMouseEnter || onMouseLeave);
+    const buttonProps = tooltipWrapper ? omit(props, ['className']) : props;
     const button = (
       <Ripple disabled={disabled}>
-        <Cmp {...(href ? omit(props, ['type']) : props)}>
+        <Cmp {...(href ? omit(buttonProps, ['type']) : buttonProps)}>
           {buttonIcon}
           {hasString ? <span>{children}</span> : children}
         </Cmp>
       </Ripple>
     );
-    const wrappedButton = disabled && (isTooltip || onMouseEnter || onMouseLeave) ? (
-      <span className={`${this.prefixCls}-disabled-wrapper`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    const wrappedButton = tooltipWrapper ? (
+      <span className={classNames(props.className, `${this.prefixCls}-disabled-wrapper`)} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         {button}
       </span>
     ) : button;
