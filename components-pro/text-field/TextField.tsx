@@ -362,8 +362,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           {prefix}
           {input}
           {floatLabel}
-          {button}
           {suffix}
+          {button}
         </label>
       </span>
     );
@@ -697,7 +697,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
     }
     const classString = classNames(`${prefixCls}-suffix`, {
-      [`${prefixCls}-allow-clear`]: clearButton,
+      [`${prefixCls}-allow-clear`]: clearButton && !props?.onClick,
     });
     return (
       <div className={classString} onMouseDown={preventDefault} {...props}>
@@ -787,10 +787,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
     } = this;
     if (clearButton && !this.readOnly && !this.disabled) {
+      const classString = classNames(`${prefixCls}-clear-button`, {
+        [`${prefixCls}-clear-button-flat`]: isFlat,
+      });
       return this.wrapperInnerSpanButton(
         <Icon type="close" onClick={this.handleClearButtonClick} onMouseDown={this.handleInnerButtonMouseDown} />,
         {
-          className: isFlat ? `${prefixCls}-clear-button ${prefixCls}-clear-button-flat` : `${prefixCls}-clear-button`,
+          className: classString,
         },
       );
     }

@@ -235,6 +235,10 @@
     opacity: 0;
   }
 
+  &-suffix-button &-inner-button:not(&-allow-clear + &-clear-button) {
+    right: @suffix-width + 0.01rem;
+  }
+
   &-clear-button {
     background: transparent;
 
@@ -306,7 +310,7 @@
     padding-left: 0;
   }
 
-  &-multiple &:not(:last-child) {
+  &-multiple&-lov &:not(:last-child) {
     padding-right: @suffix-width * 2;
   }
 
