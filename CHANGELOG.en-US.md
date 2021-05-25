@@ -42,6 +42,7 @@ timeline: true
 - 🐞 `<pro>RichText`：Fix the editor onBlur event.
 - 🐞 `<pro>FormField`: Fix the issue of invalid ref attribute.
 - 🐞 `<pro>Select.Option`: Fix the rendering problem when children are ReactNode.
+- 🐞 `<pro>Table`：Fix `parityRow` expansion row rendering problem.
 
 ## 1.3.2
 
