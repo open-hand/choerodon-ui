@@ -44,6 +44,7 @@ timeline: true
 - 🐞 `<pro>FormField`：修复 ref 属性无效的问题。
 - 🐞 `<pro>Select.Option`：修复 children 是 ReactNode 时渲染问题。
 - 🐞 `<pro>Table`：修复 parityRow 展开行渲染问题。
+- 🐞 `<pro>Paginition`：修复无数据翻页按钮渲染问题。
 
 ## 1.3.2
 

@@ -96,8 +96,6 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   goInputText: number;
 
-  lastPageSize: number;
-
   @observable pageInput?: number | '';
 
   @computed
@@ -138,6 +136,12 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       return Math.ceil(total / pageSize);
     }
     return 1;
+  }
+
+  @computed
+  get next(): boolean {
+    const { total, pageSize, page } = this;
+    return page < Math.floor((total - 1) / pageSize) + 1;
   }
 
   getObservableProps(props, context) {
@@ -480,7 +484,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
             <span>／</span>
             {totalPage}
           </li>
-          {this.getPager(page + 1, 'next', false, page === totalPage)}
+          {this.getPager(page + 1, 'next', false, !this.next)}
         </nav>
       );
     }
@@ -493,8 +497,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         {this.getPager(1, 'first', false, page === 1)}
         {this.getPager(page - 1, 'prev', false, page === 1)}
         {showPager && this.renderPagers(page)}
-        {this.getPager(page + 1, 'next', false, page === totalPage)}
-        {this.getPager(totalPage, 'last', false, page === totalPage)}
+        {this.getPager(page + 1, 'next', false, !this.next)}
+        {this.getPager(totalPage, 'last', false, !this.next)}
         {sizeChangerPosition === SizeChangerPosition.right && sizeChanger}
         {showQuickJumper && this.renderQuickGo()}
       </nav>

@@ -43,6 +43,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fix the issue of invalid ref attribute.
 - 🐞 `<pro>Select.Option`: Fix the rendering problem when children are ReactNode.
 - 🐞 `<pro>Table`：Fix `parityRow` expansion row rendering problem.
+- 🐞 `<pro>Paginition`：Fix the rendering problem of page turning button without data.
 
 ## 1.3.2
 
