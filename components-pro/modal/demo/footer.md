@@ -66,13 +66,16 @@ const App = () => {
           <p>Some contents...</p>
         </div>
       ),
-      footer: (okBtn, cancelBtn) => (
-        <div>
-          {okBtn}
-          <Button color="primary">Custom</Button>
-          {cancelBtn}
-        </div>
-      ),
+      footer: (okBtn, cancelBtn, modal) => {
+        console.log(modal)
+        return (
+           <div>
+             {okBtn}
+             <Button color="primary">Custom</Button>
+             {cancelBtn}
+           </div>
+         )
+      },
     });
   }, [Modal]);
 

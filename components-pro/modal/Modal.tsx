@@ -300,7 +300,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         };
       }
       if (hidden) {
-        this.mousePosition = undefined;
+        this.mousePosition = null;
       }
     }
 
@@ -505,7 +505,16 @@ export default class Modal extends ViewComponent<ModalProps> {
     } = this.props;
 
     if (typeof footer === 'function') {
-      return this.getWrappedFooter(footer(this.okBtn, this.cancelBtn));
+      const { props } = this;
+      const { close = noop, update = noop } = props;
+      const modal: modalChildrenProps = {
+        close,
+        update,
+        props,
+        handleOk: this.registerOk,
+        handleCancel: this.registerCancel,
+      };
+      return this.getWrappedFooter(footer(this.okBtn, this.cancelBtn, modal));
     }
 
     if (!isEmpty(footer, true)) {
@@ -524,7 +533,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     return <div className={className}>{footer}</div>;
   }
 
-  getDefaultHeader = (title, closeButton: ReactNode, _okBtn: ReactElement<Button>, _cancelBtn: ReactElement<Button>) => {
+  getDefaultHeader = (title, closeButton: ReactNode, _okBtn: ReactElement<ButtonProps>, _cancelBtn: ReactElement<ButtonProps>) => {
     const { prefixCls } = this;
     if (title || closeButton) {
       return (
@@ -538,7 +547,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     }
   };
 
-  getDefaultFooter = (okBtn: ReactElement<Button>, cancelBtn: ReactElement<Button>) => {
+  getDefaultFooter = (okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>) => {
     const { okCancel, okButton, cancelButton, okFirst = getConfig('modalOkFirst'), drawer } = this.props;
     const buttons: ReactNode[] = [];
     if (okButton !== false) {
