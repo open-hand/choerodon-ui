@@ -384,37 +384,33 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     let newValue;
     const value =
       this.multiple || this.isFocused ? Number(this.text || this.getValue()) : this.getValue();
-    if (!isNumber(value)) {
-      newValue = defaultTo(this.min, 0);
+    const currentValue = getCurrentValidValue(String(value));
+    newValue = currentValue;
+    const nearStep = getNearStepValues(currentValue, step as number, min, max);
+    if (nonStrictStep === false && nearStep) {
+      switch (nearStep.length) {
+        case 1:
+          newValue = nearStep[0];
+          break;
+        case 2:
+          newValue = nearStep[isPlus ? 1 : 0];
+          break;
+        default:
+      }
     } else {
-      const currentValue = getCurrentValidValue(String(value));
-      newValue = currentValue;
-      const nearStep = getNearStepValues(currentValue, step as number, min, max);
-      if (nonStrictStep === false && nearStep) {
-        switch (nearStep.length) {
-          case 1:
-            newValue = nearStep[0];
-            break;
-          case 2:
-            newValue = nearStep[isPlus ? 1 : 0];
-            break;
-          default:
+      const nextValue = plus(currentValue, (isPlus ? step : -step) as number);
+      if (nextValue < min) {
+        newValue = min;
+      } else if (nextValue > max) {
+        const nearMaxStep = getNearStepValues(max as number, step as number, min, max as number);
+
+        if (nearMaxStep) {
+          newValue = nearMaxStep[0];
+        } else {
+          newValue = max;
         }
       } else {
-        const nextValue = plus(currentValue, (isPlus ? step : -step) as number);
-        if (nextValue < min) {
-          newValue = min;
-        } else if (nextValue > max) {
-          const nearMaxStep = getNearStepValues(max as number, step as number, min, max as number);
-
-          if (nearMaxStep) {
-            newValue = nearMaxStep[0];
-          } else {
-            newValue = max;
-          }
-        } else {
-          newValue = nextValue;
-        }
+        newValue = nextValue;
       }
     }
     // 不要进行对比操作,在table中使用的时候,因为NumberField会作为editor使用,所以在 对第一个cell只点击一次的情况下(例如plus)
