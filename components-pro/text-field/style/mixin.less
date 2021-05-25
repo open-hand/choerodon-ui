@@ -230,8 +230,8 @@
     opacity: 1;
   }
 
-  &-wrapper:hover &-allow-clear,
-  &-focused &-allow-clear {
+  &-wrapper:not(&-empty):hover &-allow-clear,
+  &-focused:not(&-empty) &-allow-clear {
     opacity: 0;
   }
 
