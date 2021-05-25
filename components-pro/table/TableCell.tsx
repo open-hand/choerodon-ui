@@ -5,7 +5,7 @@ import { computed } from 'mobx';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
-import Tree from 'choerodon-ui/lib/tree';
+import Tree, { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
@@ -124,31 +124,47 @@ export default class TableCell extends Component<TableCellProps> {
     );
   }
 
-  getColumnsInnerNode(columns: ColumnProps[], prefixCls, command?: Commands[], onCellStyle?: CSSProperties) {
+  getColumnsInnerNode(columns: ColumnProps[], prefixCls, command?: Commands[]) {
     const { tableStore } = this.context;
     const { dataSet } = tableStore;
     return columns.map((column) => {
       const { children, hidden } = column;
       if (!hidden) {
+        const { record } = this.props;
+        const { onCell } = column;
+        const tableColumnOnCell = getConfig('tableColumnOnCell');
+        const isBuiltInColumn = tableStore.isBuiltInColumn(column);
+        const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
+        const cellExternalProps: Partial<TreeNodeProps> =
+          typeof columnOnCell === 'function'
+            ? columnOnCell({
+              dataSet: record.dataSet!,
+              record,
+              column,
+            })
+            : {};
         const columnKey = getColumnKey(column);
         const header = getHeader(column, dataSet);
+        // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
+        const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
         if (children && children.length) {
           return (
             <Tree.TreeNode
+              {...cellExternalProps}
               key={columnKey}
               title={header}
             >
-              {this.getColumnsInnerNode(children, prefixCls, command, onCellStyle)}
+              {this.getColumnsInnerNode(children, prefixCls, command)}
             </Tree.TreeNode>
           );
         }
-        const { record } = this.props;
         const field = record.getField(column.name);
         const innerNode = this.getInnerNode(column, command, onCellStyle, true);
         return (
           <Tree.TreeNode
+            {...cellExternalProps}
             key={columnKey}
-            className={classNames(this.getColumnClassName(prefixCls, column, field))}
+            className={classNames(cellExternalProps.className, this.getColumnClassName(prefixCls, column, field))}
             title={
               <>
                 <span className={`${prefixCls}-label`}>{header}</span>
@@ -183,7 +199,7 @@ export default class TableCell extends Component<TableCellProps> {
           return (
             <Tree prefixCls={`${prefixCls}-tree`} virtual={false} focusable={false}>
               {
-                this.getColumnsInnerNode(nodes, prefixCls, command, onCellStyle)
+                this.getColumnsInnerNode(nodes, prefixCls, command)
               }
               {
                 hasExpand && (

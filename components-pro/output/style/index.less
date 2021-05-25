@@ -12,10 +12,12 @@
     border: @border-width-base @border-style-base @error-color;
     border-radius: @border-radius-base;
   }
+
   &-multiple-block {
     .tag-block;
     vertical-align: text-top;
   }
+
   &-empty::after {
     display: inline-block;
     width: 0.01rem;
@@ -35,5 +37,9 @@
     line-height: 1;
     vertical-align: middle;
     content: '*';
+  }
+
+  &-highlight {
+    border-color: @input-highlight-border-color;
   }
 }

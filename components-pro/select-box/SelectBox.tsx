@@ -112,6 +112,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
   renderWrapper(): ReactNode {
     const { name, options, filteredOptions, textField, valueField, readOnly, disabled } = this;
     const { autoFocus, mode, onOption, optionRenderer, optionsFilter } = this.props;
+    const highlight = this.getProp('highlight');
     const items = filteredOptions.reduce<ReactElement<any>[]>((arr, record, index, data) => {
       if (!optionsFilter || optionsFilter(record, index, data)) {
         const optionProps = onOption({ dataSet: options, record });
@@ -136,6 +137,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
           mode,
           noValidate: true,
           labelLayout: LabelLayout.none,
+          highlight,
         };
         arr.push(this.renderItem(optionProps ? {
           ...optionProps,

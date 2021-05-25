@@ -241,6 +241,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 阻止使用渲染器
    */
   preventRenderer?: boolean;
+  /**
+   * 高亮
+   */
+  highlight?: boolean;
 }
 
 export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
@@ -365,6 +369,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * 键盘回车回调
      */
     fieldClassName: PropTypes.string,
+    /**
+     * 高亮
+     */
+    highlight: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -578,6 +586,15 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   isEmpty() {
+    if (this.range === true) {
+      if (this.value && isArrayLike(this.value) && !this.value.find(v => v)) {
+        return true;
+      }
+    } else if (isArrayLike(this.range)) {
+      if (this.value && !Object.values(this.value).find(v => v)) {
+        return true;
+      }
+    }
     const value = this.getValue();
     return isArrayLike(value) ? !value.length : isEmpty(value);
   }
@@ -637,6 +654,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'newLine',
       'fieldClassName',
       'preventRenderer',
+      'highlight',
       'labelTooltip',
       'isFlat',
     ]);
@@ -655,6 +673,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const { prefixCls } = this;
     return super.getWrapperClassNames(
       {
+        [`${prefixCls}-empty`]: this.isEmpty(),
+        [`${prefixCls}-highlight`]: this.getProp('highlight'),
         [`${prefixCls}-invalid`]: !this.isValid,
         [`${prefixCls}-float-label`]: this.hasFloatLabel,
         [`${prefixCls}-required`]: this.getProp('required'),

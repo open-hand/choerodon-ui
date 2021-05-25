@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>Button`: 新增 tooltip 属性。
 - 🌟 `<pro>DataSet`: 新增 setAllPageSelection, getQueryParameter, getValidationErrors 方法和 isAllPageSelection, unSelected, currentUnSelected 值。
 - 🌟 `<pro>DataSet.Record`: 新增 getValidationErrors 方法。
-- 🌟 `<pro>DataSet.Field`: 新增 computedProps 属性, 废弃 dynamicProps 属性。
+- 🌟 `<pro>DataSet.Field`: 新增 computedProps, highlight 属性, 废弃 dynamicProps 属性。
 - 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange 属性。
 - 🌟 `<pro>Table.Column`: 新增 aggregation 属性。
 - 🌟 `<pro>TextField`: 新增 showLengthInfo 属性。

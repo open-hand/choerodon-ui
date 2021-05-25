@@ -7,7 +7,6 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
-import isArrayLike from 'lodash/isArrayLike';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, computed, observable } from 'mobx';
@@ -245,21 +244,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   isEmpty() {
-    const result = isEmpty(this.text) && super.isEmpty();
-    if (this.range === true) {
-      if (this.value && isArrayLike(this.value) && !this.value.find(v => v)) {
-        return true;
-      }
-      return result;
-    }
-
-    if (isArrayLike(this.range)) {
-      if (this.value && !Object.values(this.value).find(v => v)) {
-        return true;
-      }
-      return result;
-    }
-    return result;
+    return isEmpty(this.text) && super.isEmpty();
   }
 
   getOtherProps() {
@@ -304,7 +289,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const prefix = this.getPrefix();
     return super.getWrapperClassNames(
       {
-        [`${prefixCls}-empty`]: this.isEmpty(),
         [`${prefixCls}-suffix-button`]: isValidElement<{ onClick; }>(suffix),
         [`${prefixCls}-multiple`]: multiple,
         [`${prefixCls}-range`]: range,
@@ -644,7 +628,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     const text = this.getTextNode();
     const value = this.getValue();
-    const finalText = isString(text) ? text : this.renderedTextContent || '';
+    const unRenderedText = this.getText(value);
+    const finalText = isString(text) ? text : isString(unRenderedText) ? unRenderedText : (this.renderedTextContent || '');
     const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
     if ((!this.isFocused || !this.editable) && isValidElement(text)) {
       otherProps.style = {
@@ -758,13 +743,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls, range, multiple } = this;
     if (!range && !multiple) {
       const text = this.getTextNode();
-      if (isValidElement(text)) {
+      const isNodeValue = isValidElement(this.getText(this.getValue()));
+      const hidden = this.isFocused && this.editable;
+      if ((!hidden || isNodeValue) && isValidElement(text)) {
         return (
           <RenderedText
             key="renderedText"
             prefixCls={prefixCls}
-            onContentChange={this.handleRenderedValueChange}
-            hidden={this.isFocused && this.editable}
+            onContentChange={isNodeValue ? this.handleRenderedValueChange : undefined}
+            hidden={hidden}
           >
             {text}
           </RenderedText>
