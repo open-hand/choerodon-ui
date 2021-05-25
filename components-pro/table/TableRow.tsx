@@ -607,8 +607,9 @@ export default class TableRow extends Component<TableRowProps, any> {
       rowExternalProps.className,
     );
     let evenParentRow = false;
-    if (parityRow && (!isTree || !record.parent)) {
-      evenParentRow = record.dataSet.get(0).id % 2 === 0 ? id % 2 !== 0 : (id + 1) % 2 !== 0;
+    if (parityRow && record && (!isTree || !record.parent)) {
+      const firstRecordId = record.dataSet!.get(0) ? record.dataSet!.get(0)!.id : 0;
+      evenParentRow = firstRecordId % 2 === 0 ? id % 2 !== 0 : (id + 1) % 2 !== 0;
     }
     const rowProps: HTMLProps<HTMLTableRowElement> & {
       style: CSSProperties;
