@@ -434,8 +434,12 @@
     box-shadow: 0 0 0 10rem @input-wrapper-bg inset;
   }
 
-  &-required {
+  &-required&-empty {
     background-color: @input-required-bg;
+  }
+
+  &-highlight & {
+    border-color: @input-highlight-border-color;
   }
 
   .validation;
@@ -567,8 +571,8 @@
     transform: scaleX(1);
     opacity: 1;
     transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
-      opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
-      border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
   &-invalid &-underline {
@@ -578,7 +582,7 @@
   &-length-info {
     position: relative;
     float: right;
-    color: rgba(0,0,0,.54);
+    color: rgba(0, 0, 0, .54);
     font-size: .12rem;
     letter-spacing: .02rem;
   }

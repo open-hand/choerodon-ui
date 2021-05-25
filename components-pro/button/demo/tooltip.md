@@ -32,6 +32,7 @@ const App = () => {
       <Button tooltip="overflow" style={flag ? overflowStyle : undefined} onClick={handleClick}>
         内容超长时显示气泡&lt;点击改变样式&gt;
       </Button>
+      <Button href="https://choerodon.io" target="_blank" tooltip="always" disabled>跳转按钮</Button>
     </>
   )
 }

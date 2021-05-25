@@ -21,13 +21,21 @@
   transition: all 0.3s ease-out;
   user-select: none;
 
-  &-disabled-wrapper {
-    display: inline-block;
-    cursor: not-allowed;
+  a&[disabled] {
+    pointer-events: auto;
   }
 
-  &-disabled-wrapper > & {
-    pointer-events: none;
+  &-disabled-wrapper {
+    padding: 0;
+
+    > button {
+      height: 100%;
+      padding: @btn-padding-base;
+      background-color: transparent;
+      border: none;
+      cursor: inherit;
+      pointer-events: none;
+    }
   }
 
   &:focus {
@@ -96,6 +104,7 @@
   }
 
   &-raised,
+  &-raised-disabled,
   &-raised:disabled {
     color: #fff;
 
@@ -104,6 +113,7 @@
     }
   }
 
+  &-disabled,
   &:disabled {
     cursor: not-allowed;
 
@@ -128,13 +138,16 @@
     &.@{btn-prefix-cls}-raised {
       background-color: @primary-color;
 
-      &:enabled:hover,
-      &:enabled:focus {
-        background-color: @primary-7;
-      }
-
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
+      }
+    }
+
+    &.@{btn-prefix-cls}-raised:enabled,
+    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
+      &:hover,
+      &:focus {
+        background-color: @primary-7;
       }
     }
 
@@ -152,15 +165,19 @@
     &.@{btn-prefix-cls}-raised {
       color: @btn-default-color;
       background-color: #f5f5f5;
+    }
 
-      &:enabled:hover,
-      &:enabled:focus {
+    &.@{btn-prefix-cls}-raised:enabled,
+    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
+      &:hover,
+      &:focus {
         background-color: #e6e6e6;
       }
+    }
 
-      &:disabled {
-        color: @disabled-color;
-      }
+    &.@{btn-prefix-cls}-raised:disabled,
+    &.@{btn-prefix-cls}-raised.@{btn-prefix-cls}-disabled {
+      color: @disabled-color;
     }
 
     &.@{btn-prefix-cls}-flat {
@@ -177,13 +194,16 @@
     &.@{btn-prefix-cls}-raised {
       background-color: @blue-6;
 
-      &:enabled:hover,
-      &:enabled:focus {
-        background-color: @blue-7;
-      }
-
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
+      }
+    }
+
+    &.@{btn-prefix-cls}-raised:enabled,
+    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
+      &:hover,
+      &:focus {
+        background-color: @blue-7;
       }
     }
 
@@ -201,13 +221,16 @@
     &.@{btn-prefix-cls}-raised {
       background-color: @green-6;
 
-      &:enabled:hover,
-      &:enabled:focus {
-        background-color: @green-7;
-      }
-
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
+      }
+    }
+
+    &.@{btn-prefix-cls}-raised:enabled,
+    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
+      &:hover,
+      &:focus {
+        background-color: @green-7;
       }
     }
 
@@ -225,13 +248,16 @@
     &.@{btn-prefix-cls}-raised {
       background-color: @red-6;
 
-      &:enabled:hover,
-      &:enabled:focus {
-        background-color: @red-7;
-      }
-
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
+      }
+    }
+
+    &.@{btn-prefix-cls}-raised:enabled,
+    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
+      &:hover,
+      &:focus {
+        background-color: @red-7;
       }
     }
 
@@ -249,13 +275,16 @@
     &.@{btn-prefix-cls}-raised {
       background-color: @yellow-6;
 
-      &:enabled:hover,
-      &:enabled:focus {
-        background-color: @yellow-7;
-      }
-
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
+      }
+    }
+
+    &.@{btn-prefix-cls}-raised:enabled,
+    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
+      &:hover,
+      &:focus {
+        background-color: @yellow-7;
       }
     }
 
@@ -273,13 +302,16 @@
     &.@{btn-prefix-cls}-raised {
       background-color: @purple-6;
 
-      &:enabled:hover,
-      &:enabled:focus {
-        background-color: @purple-7;
-      }
-
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
+      }
+    }
+
+    &.@{btn-prefix-cls}-raised:enabled,
+    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
+      &:hover,
+      &:focus {
+        background-color: @purple-7;
       }
     }
 
@@ -297,13 +329,16 @@
     &.@{btn-prefix-cls}-raised {
       background-color: @dark-4;
 
-      &:enabled:hover,
-      &:enabled:focus {
-        background-color: @dark-5;
-      }
-
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
+      }
+    }
+
+    &.@{btn-prefix-cls}-raised:enabled,
+    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
+      &:hover,
+      &:focus {
+        background-color: @dark-5;
       }
     }
 
@@ -323,6 +358,7 @@
       stroke: @btn-default-color;
     }
 
+    &.@{btn-prefix-cls}-disabled&.@{btn-prefix-cls}-raised,
     &.@{btn-prefix-cls}-raised:disabled {
       color: @disabled-color;
 
@@ -368,7 +404,8 @@
       }
     }
 
-    &:disabled::before {
+    &:disabled::before,
+    &.@{btn-prefix-cls}-disabled::before {
       opacity: 0.5;
     }
   }
@@ -387,9 +424,6 @@
     }
   }
 
-  &-disabled-wrapper + &-disabled-wrapper,
-  &-disabled-wrapper + &,
-  & + &-disabled-wrapper,
   & + & {
     margin-left: 0.1rem;
   }

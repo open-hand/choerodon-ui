@@ -272,6 +272,7 @@ title: DataSet
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any, object: any) => any |  |
 | trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
 | defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/components/configure/#ValidationMessages) | ValidationMessages |  |
+| highlight | 高亮 | boolean |  |
 
 ### Field Values
 

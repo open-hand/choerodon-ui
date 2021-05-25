@@ -3,7 +3,7 @@ import React, { FunctionComponent, useLayoutEffect, useRef, useState } from 'rea
 export interface RenderedTextProps {
   prefixCls?: string;
   hidden?: boolean;
-  onContentChange: (text: string) => void;
+  onContentChange?: (text: string) => void;
 }
 
 const RenderedText: FunctionComponent<RenderedTextProps> = ({ prefixCls, children, onContentChange, hidden }) => {
@@ -11,17 +11,17 @@ const RenderedText: FunctionComponent<RenderedTextProps> = ({ prefixCls, childre
   const [content, setContent] = useState(null);
   const selfPrefixCls = `${prefixCls}-rendered-value`;
   useLayoutEffect(() => {
-    const { current } = renderedValueRef;
-    if (current) {
-      const { textContent } = current;
-      if (textContent !== null && textContent !== content) {
-        setContent(textContent);
-        if (onContentChange) {
+    if (onContentChange) {
+      const { current } = renderedValueRef;
+      if (current) {
+        const { textContent } = current;
+        if (textContent !== null && textContent !== content) {
+          setContent(textContent);
           onContentChange(textContent);
         }
       }
     }
-  }, [renderedValueRef, content, children]);
+  }, [onContentChange, renderedValueRef, content, children]);
   return (
     <span key="renderedText" className={selfPrefixCls} hidden={hidden}>
       <span className={`${selfPrefixCls}-inner`} ref={renderedValueRef}>{children}</span>
