@@ -44,6 +44,7 @@ timeline: true
 - 🐞 `<pro>Select.Option`: Fix the rendering problem when children are ReactNode.
 - 🐞 `<pro>Table`：Fix `parityRow` expansion row rendering problem.
 - 🐞 `<pro>Paginition`：Fix the rendering problem of page turning button without data.
+- 🐞 `<pro>Select`: Fix the problem that the prompt cannot be displayed correctly when the Select is wrapped by the Tooltip in the multi-select mode.
 
 ## 1.3.2
 
