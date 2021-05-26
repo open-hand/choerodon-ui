@@ -301,7 +301,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const props = this.getMergedProps();
     const { disabled } = this;
     const tooltipWrapper = disabled && !href && (isTooltip || onMouseEnter || onMouseLeave);
-    const buttonProps = tooltipWrapper ? omit(props, ['className']) : props;
+    const buttonProps = tooltipWrapper ? omit(props, ['className', 'style']) : props;
     const button = (
       <Ripple disabled={disabled}>
         <Cmp {...(href ? omit(buttonProps, ['type']) : buttonProps)}>
@@ -311,7 +311,12 @@ export default class Button extends DataSetComponent<ButtonProps> {
       </Ripple>
     );
     const wrappedButton = tooltipWrapper ? (
-      <span className={classNames(props.className, `${this.prefixCls}-disabled-wrapper`)} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <span
+        className={classNames(props.className, `${this.prefixCls}-disabled-wrapper`)}
+        style={props.style}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
         {button}
       </span>
     ) : button;

@@ -45,6 +45,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fix the issue of invalid ref attribute.
 - 🐞 `<pro>Select.Option`: Fix the rendering problem when children are ReactNode.
 - 🐞 `<pro>Table`：Fix `parityRow` expansion row rendering problem.
+- 🐞 `<pro>Table`: Fix the problem of an infinite loop caused by empty value of idField in tree paging data.
 - 🐞 `<pro>Paginition`：Fix the rendering problem of page turning button without data.
 - 🐞 `<pro>Select`: Fix the problem that the prompt cannot be displayed correctly when the Select is wrapped by the Tooltip in the multi-select mode.
 

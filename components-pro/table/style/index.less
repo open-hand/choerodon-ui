@@ -627,20 +627,22 @@
     border-color: @table-editable-cell-border-color;
 
     &.@{c7n-pro-prefix}-output-highlight {
-      border-color: @input-highlight-border-color;
+      border-color:  @table-editable-cell-highlight-border-color;
     }
   }
 
   &-cell-editable&-cell-required &-cell-inner.@{c7n-pro-prefix}-output-empty {
     background-color: @table-editable-cell-required-bg;
+    border-color: @table-editable-cell-required-border-color;
   }
 
-  &-cell-editable .@{output-prefix-cls}-invalid {
-    border-color: @error-color;
+  &-cell-editable &-cell-inner.@{output-prefix-cls}-invalid {
+    border-color: @table-editable-cell-error-border-color;
   }
 
-  &-cell-editable&-cell-required .@{output-prefix-cls}-invalid {
-    background-color: @error-bg-color;
+  &-cell-editable&-cell-required &-cell-inner.@{output-prefix-cls}-invalid {
+    background-color: @table-editable-cell-error-bg;
+    border-color: @table-editable-cell-error-border-color;
   }
 
   &-row:last-child &-cell {

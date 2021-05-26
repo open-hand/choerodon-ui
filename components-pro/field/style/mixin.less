@@ -5,19 +5,19 @@
   &-invalid label:hover &,
   &-invalid &:hover {
     color: @error-color;
-    border-color: @error-color;
+    border-color: @input-error-border-color;
   }
 
   &-invalid&-wrapper {
-    background-color: @error-bg-color;
+    background-color: @input-error-bg;
   }
 
   &-invalid &-clear-button {
     background: linear-gradient(
       to right,
       rgba(255, 255, 255, 0),
-      @error-bg-color 20%,
-      @error-bg-color
+      @input-error-bg 20%,
+      @input-error-bg
     ) !important;
   }
 

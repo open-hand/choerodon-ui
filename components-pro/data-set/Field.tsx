@@ -322,7 +322,7 @@ export type FieldProps = {
   /**
    * 高亮
    */
-  highlight?: boolean;
+  highlight?: boolean | ReactNode;
 };
 
 export default class Field {

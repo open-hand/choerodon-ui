@@ -139,7 +139,7 @@ const App = () => {
       </Select>
       <EmailField label="邮箱" name="email" required addonAfter={dropdown} />
       <UrlField label="个人主页" name="homepage" required addonBefore="Http://" />
-      <DatePicker highlight label="生日" name="birth" required />
+      <DatePicker highlight="生日高亮" label="生日" name="birth" required />
       <div>
         <Button type="submit">注册</Button>
         <Button type="reset" style={{ marginLeft: 8 }}>

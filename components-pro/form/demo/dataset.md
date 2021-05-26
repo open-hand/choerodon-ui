@@ -86,7 +86,7 @@ class App extends React.Component {
         required: true,
         help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
       },
-      { name: 'email', type: 'email', label: '邮箱', required: true, highlight: true },
+      { name: 'email', type: 'email', label: '邮箱', required: true, highlight: '生日高亮' },
       { name: 'homepage', type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE', placeholder:"d1" },
