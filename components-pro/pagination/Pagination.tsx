@@ -140,7 +140,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   @computed
   get next(): boolean {
-    const { total, pageSize, page } = this;
+    const { total = 0, pageSize, page } = this;
     return page < Math.floor((total - 1) / pageSize) + 1;
   }
 

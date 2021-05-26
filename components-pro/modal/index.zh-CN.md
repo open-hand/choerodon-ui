@@ -29,7 +29,7 @@ title: Modal
 | keyboardClosable | 按 esc 键是否允许关闭 | boolean | true |
 | destroyOnClose | 关闭时是否销毁 | boolean | true |
 | header | 头部内容 | ReactNode 或`(title: ReactNode, closeBtn: ReactNode, okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode` |  |
-| footer | 底部内容 | ReactNode 或`(okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode` |  |
+| footer | 底部内容 | ReactNode 或`(okBtn: ReactNode, cancelBtn: ReactNode, modal) => ReactNode` |  |
 | okText | 确认按钮文字 | ReactNode | 确定 |
 | cancelText | 取消按钮文字 | ReactNode | 取消 |
 | onClose | 关闭时回调，返回`false` `Promise.resolve(false)`或`Promise.reject()`不会关闭， 其他自动关闭 | () => Promise&lt;boolean&gt; |  |

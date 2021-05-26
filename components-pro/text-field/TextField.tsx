@@ -334,7 +334,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
     // 修复ie下出现多层model导致的输入框遮盖问题
     // fixed the input would shadow each other in ie brower
-    const ZIndexOfIEProps: { style: CSSProperties } | {} = isIE() ? { style: { zIndex: 'auto' } } : {};
+    const ZIndexOfIEProps: { style: CSSProperties; } | {} = isIE() ? { style: { zIndex: 'auto' } } : {};
 
     const element = (
       <span key="element" {...wrapperProps}>
@@ -346,8 +346,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           {prefix}
           {input}
           {floatLabel}
-          {button}
           {suffix}
+          {button}
         </label>
       </span>
     );
@@ -473,17 +473,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
                 rangeTarget === undefined || !this.isFocused
                   ? ''
                   : this.text === undefined
-                  ? rangeTarget === 0
-                    ? startValue
-                    : endValue
-                  : this.text
+                    ? rangeTarget === 0
+                      ? startValue
+                      : endValue
+                    : this.text
               }
               placeholder={
                 rangeTarget === undefined || !this.isFocused
                   ? ''
                   : rangeTarget === 0
-                  ? startPlaceholder
-                  : endPlaceHolder
+                    ? startPlaceholder
+                    : endPlaceHolder
               }
               readOnly={this.readOnly}
               style={editorStyle}
@@ -580,6 +580,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       props: { style, isFlat, clearButton },
     } = this;
     const otherProps = this.getOtherProps();
+    const { onMouseEnter,onMouseLeave } = otherProps;
     if (multiple) {
       const { height } = (style || {}) as CSSProperties;
       const tags = (
@@ -588,6 +589,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           componentProps={{
             ref: this.saveTagContainer,
             onScroll: stopPropagation,
+            onMouseEnter,
+            onMouseLeave,
             style:
               height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
           }}
@@ -682,7 +685,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
     }
     const classString = classNames(`${prefixCls}-suffix`, {
-      [`${prefixCls}-allow-clear`]: clearButton,
+      [`${prefixCls}-allow-clear`]: clearButton && !props?.onClick,
     });
     return (
       <div className={classString} onMouseDown={preventDefault} {...props}>
@@ -774,10 +777,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
     } = this;
     if (clearButton && !this.readOnly && !this.disabled) {
+      const classString = classNames(`${prefixCls}-clear-button`, {
+        [`${prefixCls}-clear-button-flat`]: isFlat,
+      });
       return this.wrapperInnerSpanButton(
         <Icon type="close" onClick={this.handleClearButtonClick} onMouseDown={this.handleInnerButtonMouseDown} />,
         {
-          className: isFlat ? `${prefixCls}-clear-button ${prefixCls}-clear-button-flat` : `${prefixCls}-clear-button`,
+          className: classString,
         },
       );
     }

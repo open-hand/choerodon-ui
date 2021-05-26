@@ -31,11 +31,13 @@ timeline: true
 - 💄 `Popover`: The `title` and `content` attributes support hook functions.
 - 💄 `Popconfirm`: The `title` attribute supports hook functions.
 - 💄 `<pro>Select.Option`: Attributes such as `className` and `style` can be passed to the drop-down menu item.
+- 💄 `<pro>NumberField`: Optimized the processing of clicking the stepper when there is no value.
 - 💄 `<pro>Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
 - 💄 `<pro>Table`: Optimize the performance.
 - 💄 `<pro>Tree`: Optimized and extend the showLine attribute.
 - 💄 `<pro>TextField`: Optimized the `clearButton` rendering interaction.
+- 💄 `<pro>Modal`: `footer` add callback parameters.
 - 🐞 `<pro>Modal`: Fixed the `keyboardClosable` property has no effect when there is no cancel button.
 - 🐞 `<pro>DataSet`：Fix the problem that the state of the dataSet is incorrectly modified after submission when only deleted and dataToJSON is selected.
 - 🐞 `<pro>Table`: Fix the positioning problem of the editor when the current record of the DataSet changes.
@@ -44,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Select.Option`: Fix the rendering problem when children are ReactNode.
 - 🐞 `<pro>Table`：Fix `parityRow` expansion row rendering problem.
 - 🐞 `<pro>Paginition`：Fix the rendering problem of page turning button without data.
+- 🐞 `<pro>Select`: Fix the problem that the prompt cannot be displayed correctly when the Select is wrapped by the Tooltip in the multi-select mode.
 
 ## 1.3.2
 
