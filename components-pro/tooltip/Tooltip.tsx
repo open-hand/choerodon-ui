@@ -159,7 +159,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   static defaultProps = {
     suffixCls: 'tooltip',
-    placement: 'bottom',
+    placement: 'top',
     transitionName: 'zoom-big-fast',
     mouseEnterDelay: 100,
     mouseLeaveDelay: 100,

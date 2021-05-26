@@ -46,6 +46,7 @@ timeline: true
 - 🐞 `<pro>FormField`：修复 ref 属性无效的问题。
 - 🐞 `<pro>Select.Option`：修复 children 是 ReactNode 时渲染问题。
 - 🐞 `<pro>Table`：修复 parityRow 展开行渲染问题。
+- 🐞 `<pro>Table`：修复树形分页数据中 idField 为空导致死循环的问题。
 - 🐞 `<pro>Paginition`：修复无数据翻页按钮渲染问题。
 - 🐞 `<pro>Select`: 修复在多选模式下Select被Tooltip包裹时无法正确显示提示的问题。
 

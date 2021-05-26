@@ -284,35 +284,41 @@ export function sortTree(children: Record[], orderField: Field): Record[] {
   return children;
 }
 
-// 递归生成树获取树形结构数据
-function availableTree(idField, parentField, parentId, allData) {
-  let result = [];
-  allData.forEach(element => {
-    if (element[parentField] === parentId) {
-      const childresult = availableTree(idField, parentField, element[idField], allData);
-      result = result.concat(element).concat(childresult);
-    }
-  });
-  return result;
-}
-
-
 // 获取单个页面能够展示的数据
-export function sliceTree(idField, parentField, allData, pageSize) {
-  let availableTreeData = [];
+export function sliceTree(idField: string, parentField: string, allData: object[], pageSize: number): object[] {
   if (allData.length) {
-    let parentLength = 0;
-    allData.forEach((item) => {
-      if (item) {
-        if (isNil(item[parentField]) && !isNil(idField) && parentLength < pageSize) {
-          parentLength++;
-          const childresult = availableTree(idField, parentField, item[idField], allData);
-          availableTreeData = availableTreeData.concat(item).concat(childresult);
+    const parentMap = new Map();
+    const noParentChildren: [any, object][] = [];
+    const parent: object[] = [];
+    const children: object[] = [];
+    allData.some((item) => {
+      if (parent.length >= pageSize) {
+        return true;
+      }
+      const id = item[idField];
+      const parentId = item[parentField];
+      if (!isNil(parentId)) {
+        if (parentMap.get(parentId)) {
+          children.push(item);
+        } else {
+          noParentChildren.push([parentId, item]);
         }
+      } else {
+        if (!isNil(id)) {
+          parentMap.set(id, item);
+        }
+        parent.push(item);
+      }
+      return false;
+    });
+    noParentChildren.forEach(([parentId, item]) => {
+      if (parentMap.get(parentId)) {
+        children.push(item);
       }
     });
+    return parent.concat(children);
   }
-  return availableTreeData;
+  return [];
 }
 
 export function checkParentByInsert({ parent }: DataSet) {

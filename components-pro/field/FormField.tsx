@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import isPromise from 'is-promise';
+import isBoolean from 'lodash/isBoolean';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
@@ -244,7 +245,7 @@ export interface FormFieldProps extends DataSetComponentProps {
   /**
    * 高亮
    */
-  highlight?: boolean;
+  highlight?: boolean | ReactNode;
 }
 
 export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
@@ -372,7 +373,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     /**
      * 高亮
      */
-    highlight: PropTypes.bool,
+    highlight: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
     ...DataSetComponent.propTypes,
   };
 
@@ -543,6 +544,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.isReadOnly();
   }
 
+  @computed
+  get highlight(): boolean | ReactNode {
+    return this.getProp('highlight');
+  }
+
   getControlled(props): boolean {
     return props.value !== undefined;
   }
@@ -623,6 +629,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       disabled: context.disabled || props.disabled,
       readOnly: context.readOnly || props.readOnly || (this.getControlled(props) && !props.onChange && !props.onInput),
       pristine: context.pristine || props.pristine,
+      highlight: props.highlight,
     };
   }
 
@@ -674,7 +681,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return super.getWrapperClassNames(
       {
         [`${prefixCls}-empty`]: this.isEmpty(),
-        [`${prefixCls}-highlight`]: this.getProp('highlight'),
+        [`${prefixCls}-highlight`]: this.highlight,
         [`${prefixCls}-invalid`]: !this.isValid,
         [`${prefixCls}-float-label`]: this.hasFloatLabel,
         [`${prefixCls}-required`]: this.getProp('required'),
@@ -1489,13 +1496,30 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   render() {
     const wrapper = this.renderWrapper();
     const help = this.renderHelpMessage();
-    return this.hasFloatLabel ? [
-      isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
-      <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
-        {this.renderValidationMessage()}
-      </Animate>,
-      help,
-    ] : (
+    const { highlight } = this;
+    const highlightTip = isBoolean(highlight) ? undefined : highlight;
+    if (this.hasFloatLabel) {
+      return [
+        highlightTip ? (
+          <Tooltip title={highlightTip} key="wrapper">
+            {wrapper}
+          </Tooltip>
+        ) : isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
+        <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
+          {this.renderValidationMessage()}
+        </Animate>,
+        help,
+      ];
+    }
+    if (highlightTip && this.isValid) {
+      return (
+        <Tooltip title={highlightTip}>
+          {wrapper}
+          {help}
+        </Tooltip>
+      );
+    }
+    return (
       <Tooltip
         suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
         title={this.getTooltipValidationMessage}
