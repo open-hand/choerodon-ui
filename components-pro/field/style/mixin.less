@@ -2,10 +2,12 @@
 
 .validation() {
   &-invalid &,
+  &-invalid&-empty &,
   &-invalid label:hover &,
-  &-invalid &:hover {
+  &-invalid&-empty &:hover {
     color: @error-color;
     border-color: @input-error-border-color;
+    opacity: 1;
   }
 
   &-invalid&-wrapper {
@@ -46,7 +48,7 @@
     }
 
     padding: 0;
-    color: @label-color;
+    color: @float-label-color;
     line-height: 34 / 13; // <-- fieldHeight / fontSize
     transform-origin: inherit;
     transition: inherit;
@@ -66,13 +68,13 @@
   }
   &-float-label .@{field-label-prefix-cls},
   &-float-label&-focused .@{field-label-prefix-cls} {
-    font-weight: 500;
-    font-size: 0.15rem; // 15 * 0.8(缩放比例) = 12(目标值)
+    font-weight: @float-label-font-weight;
+    font-size: @float-label-font-size;
     transform: scaleY(0.8);
   }
   &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper .@{field-label-prefix-cls} {
-    font-weight: 500;
-    font-size: 0.15rem; // 15 * 0.8(缩放比例) = 12(目标值)
+    font-weight: @float-label-font-weight;
+    font-size: @float-label-font-size;
     transform: scaleY(0.8);
   }
   &-float-label & {
@@ -82,9 +84,11 @@
   &-float-label textarea& {
     height: auto;
   }
-  &-float-label&-invalid,
-  &-float-label&-required {
-    background-color: @input-wrapper-bg;
+  &-float-label&-invalid {
+    background-color: @input-float-error-bg;
+  }
+  &-float-label&-required&-empty {
+    background-color: @input-float-required-bg;
   }
   &-float-label&-required .@{field-label-prefix-cls}::after {
     width: 0.08rem;

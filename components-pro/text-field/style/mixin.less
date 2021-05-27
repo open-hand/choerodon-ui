@@ -19,7 +19,7 @@
 
 // input status
 // == when focus or actived
-.active(@color: @outline-color) {
+.active(@color: @input-focus-border-color) {
   color: @input-active-color;
   border-color: ~`colorPalette('@{color}', 5) `;
   outline: 0;
@@ -32,7 +32,7 @@
 }
 
 .disabled() {
-  color: @disabled-color;
+  color: @input-disabled-color;
   background-color: @input-disabled-bg;
   cursor: not-allowed;
   opacity: 1;
@@ -75,20 +75,31 @@
   background-color: transparent;
   background-image: none;
   border: @border-width-base @border-style-base @input-border-color;
-  border-radius: @border-radius-base;
+  border-radius: @input-border-radius;
   cursor: text;
   transition-duration: 0.3s;
   transition-property: opacity, color, background-color, border;
 
   .placeholder;
 
+  &-required&-empty {
+    background-color: @input-required-bg;
+  }
+
+  &-required&-empty & {
+    border-color: @input-required-border-color;
+  }
+
   label:hover &,
-  &:hover {
+  &:hover,
+  &-empty &:hover {
     .hover;
   }
 
   &:focus,
-  &-focused & {
+  &-empty &:focus,
+  &-focused &,
+  &-focused&-empty & {
     .active;
   }
 
@@ -391,7 +402,7 @@
       word-break: keep-all;
       background-color: @input-addon-bg;
       border: 0.01rem solid @input-border-color;
-      border-radius: @border-radius-base;
+      border-radius: @input-border-radius;
     }
 
     &-before {
@@ -434,15 +445,8 @@
     box-shadow: 0 0 0 10rem @input-wrapper-bg inset;
   }
 
-  &-required&-empty {
-    background-color: @input-required-bg;
-  }
-
-  &-required&-empty & {
-    border-color: @input-required-border-color;
-  }
-
-  &-highlight & {
+  &-highlight &,
+  &-highlight&-empty & {
     border-color: @input-highlight-border-color;
   }
 
@@ -477,28 +481,37 @@
     bottom: 0;
     left: 0;
     display: block;
-    border: @border-width-base @border-style-base @input-border-color;
-    border-radius: 0.05rem;
+    border: @border-width-base @border-style-base @input-float-border-color;
+    border-radius: @input-float-border-radius;
     content: ' ';
+  }
+  &-float-label&-required&-empty::before {
+    border-color: @input-float-required-border-color;
   }
   &-float-label&-focused::before,
   &-float-label&-invalid::before {
-    border-width: 0.02rem;
+    border-width: @input-float-border-active-width;
   }
   &-float-label:hover:not(&-disabled):not(&-focused):not(&-invalid)::before {
-    border-color: @input-color;
+    border-color: @input-float-hover-border-color;
   }
 
-  &-float-label&-focused::before {
-    border-color: @primary-color;
+  &-float-label&-focused,
+  &-float-label&-focused&-empty {
+    &::before {
+      border-color: @input-float-focus-border-color;
+    }
   }
-  &-float-label&-invalid::before {
-    border-color: @error-color;
+  &-float-label&-invalid,
+  &-float-label&-invalid&-empty {
+    &::before {
+      border-color: @input-error-border-color;
+    }
   }
 
   &-float-label&-disabled {
     i {
-      color: @disabled-color;
+      color: @input-disabled-color;
     }
   }
 
@@ -524,14 +537,14 @@
   &-float-label-group &-group-before,
   &-float-label-group &-group-after,
   &-float-label-group &-group-help {
-    border-radius: 4px;
+    border-radius: @input-float-border-radius;
   }
   &-float-label &:-webkit-autofill {
     width: ~'calc(100% - .04rem)';
     height: 0.32rem;
     margin: 0.02rem;
     padding-left: @input-padding-horizontal - 0.02rem;
-    border-radius: 0.04rem;
+    border-radius: @input-float-border-radius;
   }
 
   &-float-label textarea&:-webkit-autofill {
@@ -602,7 +615,7 @@
   line-height: @line-height-base;
   white-space: nowrap;
   background-color: @tag-default-bg;
-  border-radius: @border-radius-base;
+  border-radius: @input-border-radius;
   > div {
     height: 100%;
     display: inline-block;

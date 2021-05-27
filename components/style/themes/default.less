@@ -294,6 +294,9 @@
 @form-vertical-label-padding: 0 0 0.08rem;
 @form-vertical-label-margin: 0;
 @float-label-transform-origin-high: 0.1rem -330%; // SelectBox, Range, CheckBox, Switch
+@float-label-color: @label-color;
+@float-label-font-size: .15rem;
+@float-label-font-weight: 500;
 
 // Input
 // ---
@@ -314,15 +317,25 @@
 // @input-border-color: @border-color-base;
 @input-baseline-color: rgba(0, 0, 0, 0.54);
 @input-border-color: rgba(0, 0, 0, 0.2);
+@input-border-radius: @border-radius-base;
 @input-error-border-color: @error-color;
-@input-required-border-color: rgba(0, 0, 0, 0.2);
+@input-required-border-color: @input-border-color;
 @input-highlight-border-color: #47B881;
 @input-wrapper-bg: @component-background;
 @input-bg: transparent;
 @input-required-bg: @yellow-1;
 @input-error-bg: @error-bg-color;
 @input-addon-bg: @background-color-light;
+@input-focus-border-color: @outline-color;
 @input-hover-border-color: @primary-color;
+@input-float-border-color: @input-border-color;
+@input-float-border-radius: 0.05rem;
+@input-float-border-active-width: 0.02rem;
+@input-float-required-border-color: @input-required-border-color;
+@input-float-required-bg: @component-background;
+@input-float-error-bg: @component-background;
+@input-float-focus-border-color: @input-focus-border-color;
+@input-float-hover-border-color: @input-color;
 @input-disabled-bg: @disabled-bg;
 @input-disabled-color: rgba(0, 0, 0, 0.54);
 @input-icon-width-base: 0.24rem;
@@ -433,6 +446,7 @@
 @table-editable-cell-required-bg: @input-required-bg;
 @table-editable-cell-error-bg: @error-bg-color;
 @table-customization-select-view-option-bg: fade(#000, 8%);
+@table-customization-form-padding-vertical: 0.05rem;
 
 // PerformanceTable
 @performance-table-header-bg: #f5f5f5;
