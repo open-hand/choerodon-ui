@@ -100,9 +100,6 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     return FieldType.color;
   }
 
-  getValue() {
-    return super.getValue() || this.hueColor;
-  }
 
   getPrefix(): ReactNode {
     const { prefixCls } = this;
