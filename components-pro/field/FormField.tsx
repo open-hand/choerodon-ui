@@ -1012,7 +1012,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (this.multiple) {
       const oldValues = this.getValues();
       if (values.length) {
-        this.setValue(uniqWith([...oldValues, ...values], this.compare));
+        this.setValue(uniqWith([...oldValues, ...values], this.compare.bind(this)));
       } else if (!oldValues.length) {
         this.setValue(this.emptyValue);
       }

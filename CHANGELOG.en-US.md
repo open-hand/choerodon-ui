@@ -48,6 +48,9 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of an infinite loop caused by empty value of idField in tree paging data.
 - 🐞 `<pro>Paginition`：Fix the rendering problem of page turning button without data.
 - 🐞 `<pro>Select`: Fix the problem that the prompt cannot be displayed correctly when the Select is wrapped by the Tooltip in the multi-select mode.
+- 🐞 `<pro>ColorPicker`: Fix the problem that the display cannot be restored to the initial state correctly after reset is used after clicking the horizontal color selector at the bottom when the DataSet is used.
+- 🐞 `<pro>DatePicker`: Fix the problem that the selected date in the multi-select mode reports an error.
+
 
 ## 1.3.2
 
