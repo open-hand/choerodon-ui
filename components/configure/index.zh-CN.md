@@ -109,6 +109,7 @@ const prefixCls = getConfig('prefixCls');
 | numberFieldFormatter | NumberField格式器   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
 | numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
+| showInvalidDate | 显示无效日期 | boolean |  |
 
 ### Formatter
 

@@ -12,7 +12,7 @@ import isLdEmpty from 'lodash/isEmpty';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import uniqWith from 'lodash/uniqWith';
-import { isMoment, Moment } from 'moment';
+import { isMoment } from 'moment';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import isPlainObject from 'lodash/isPlainObject';
@@ -49,6 +49,7 @@ import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
 import formatCurrency from '../formatter/formatCurrency';
 import OverflowTip from '../overflow-tip';
+import { $l } from '../locale-context';
 
 const map: { [key: string]: FormField<FormFieldProps>[]; } = {};
 
@@ -920,7 +921,13 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   processValue(value: any): string {
     if (!isNil(value)) {
       if (isMoment(value)) {
-        return (value as Moment).format(this.getDateFormat());
+        if (value.isValid()) {
+          return value.format(this.getDateFormat());
+        }
+        if (getConfig('showInvalidDate')) {
+          return $l('DatePicker', 'invalid_date') as string;
+        }
+        return '';
       }
       if (isValidElement(value)) {
         // For Select's Option and TreeSelect's TreeNode which type may be ReactElement
@@ -1012,7 +1019,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (this.multiple) {
       const oldValues = this.getValues();
       if (values.length) {
-        this.setValue(uniqWith([...oldValues, ...values], this.compare.bind(this)));
+        this.setValue(uniqWith([...oldValues, ...values], this.compare));
       } else if (!oldValues.length) {
         this.setValue(this.emptyValue);
       }
@@ -1099,6 +1106,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     this.rangeTarget = target;
   }
 
+  @autobind
   compare(oldValue, newValue) {
     return isSame(toJS(oldValue), toJS(newValue));
   }

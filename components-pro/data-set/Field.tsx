@@ -459,7 +459,14 @@ export default class Field {
     }
     if (record) {
       const { dirtyData } = record;
-      return [...dirtyData.keys()].some(key => key === name || key.startsWith(`${name}.`));
+      const dirtyNames = [...dirtyData.keys()];
+      if (dirtyNames.includes(name)) {
+        return true;
+      }
+      const bind = this.get('bind');
+      if (bind) {
+        return [...dirtyData.keys()].some(key => bind === key || bind.startsWith(`${key}.`));
+      }
     }
     return false;
   }

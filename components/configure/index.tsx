@@ -173,6 +173,10 @@ export type Config = {
    * 是否显示长度信息
    */
   showLengthInfo?: boolean;
+  /**
+   * moment非法时显示Invalid date
+   */
+  showInvalidDate?: boolean;
 };
 
 export type ConfigKeys = keyof Config;
@@ -285,6 +289,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['numberFieldNonStrictStep', false],
   ['numberFieldFormatter', undefined],
   ['numberFieldFormatterOptions', undefined],
+  ['showInvalidDate', true],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

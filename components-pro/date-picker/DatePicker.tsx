@@ -263,8 +263,19 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return this.toMoment(item);
   }
 
+  @autobind
   compare(oldValue, newValue) {
     return isSame(this.momentToTimestamp(oldValue), this.momentToTimestamp(newValue));
+  }
+
+  setText(text) {
+    super.setText(text);
+    if (text) {
+      const date = this.toMoment(text);
+      if (date && date.isValid()) {
+        this.changeSelectedDate(date);
+      }
+    }
   }
 
   afterSetValue() {

@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo 属性。
+- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo, showInvalidDate 属性。
 - 🌟 `<pro>Select`: 新增 optionTooltip 属性。
 - 🌟 `<pro>Form`: 新增 labelTooltip 属性。
 - 🌟 `<pro>FormField`: 新增 labelTooltip 属性。
