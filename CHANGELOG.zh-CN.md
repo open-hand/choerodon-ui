@@ -48,8 +48,10 @@ timeline: true
 - 🐞 `<pro>Table`：修复 parityRow 展开行渲染问题。
 - 🐞 `<pro>Table`：修复树形分页数据中 idField 为空导致死循环的问题。
 - 🐞 `<pro>Paginition`：修复无数据翻页按钮渲染问题。
-- 🐞 `<pro>Select`: 修复在多选模式下Select被Tooltip包裹时无法正确显示提示的问题。
-- 🐞 `<pro>ColorPicker`: 修复在使用了DataSet的情况下,点击了下方的横向的颜色选择器后，使用reset无法正确将显示恢复到初始状态的问题。
+- 🐞 `<pro>Select`: 修复在多选模式下 Select 被 Tooltip 包裹时无法正确显示提示的问题。
+- 🐞 `<pro>ColorPicker`: 修复在使用了 DataSet 的情况下，点击了下方的横向的颜色选择器后，reset 无法正确将显示恢复到初始状态的问题。
+- 🐞 `<pro>DatePicker`: 修复在多选模式下选择日期报错的问题。
+
 
 ## 1.3.2
 
