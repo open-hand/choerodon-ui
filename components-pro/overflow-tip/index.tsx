@@ -31,9 +31,13 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
         if (defaultView) {
           const computedStyle = defaultView.getComputedStyle(element);
           const { paddingLeft, paddingRight } = computedStyle;
-          const textWidth = measureTextWidth(textContent, computedStyle);
-          const contentWidth = clientWidth - (paddingLeft ? parseFloat(paddingLeft) : 0) - (paddingRight ? parseFloat(paddingRight) : 0);
-          return textWidth > contentWidth;
+          const pl = paddingLeft ? parseFloat(paddingLeft) : 0;
+          const pr = paddingRight ? parseFloat(paddingRight) : 0;
+          if (pl || pr) {
+            const textWidth = measureTextWidth(textContent, computedStyle);
+            const contentWidth = clientWidth - pl - pr;
+            return textWidth > contentWidth;
+          }
         }
       }
     }

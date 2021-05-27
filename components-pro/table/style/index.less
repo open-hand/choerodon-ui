@@ -98,10 +98,15 @@
         word-break: break-all;
       }
     }
+    .@{output-prefix-cls}-empty::after {
+      display: none;
+    }
 
     &-dirty {
       .@{table-prefix-cls}-cell-inner::after {
+        display: inline-block;
         position: absolute;
+        width: 0;
         top: 0;
         left: 0;
         white-space: normal;
@@ -626,12 +631,12 @@
   &-cell-editable &-cell-inner {
     border-color: @table-editable-cell-border-color;
 
-    &.@{c7n-pro-prefix}-output-highlight {
+    &.@{output-prefix-cls}-highlight {
       border-color:  @table-editable-cell-highlight-border-color;
     }
   }
 
-  &-cell-editable&-cell-required &-cell-inner.@{c7n-pro-prefix}-output-empty {
+  &-cell-editable&-cell-required &-cell-inner.@{output-prefix-cls}-empty {
     background-color: @table-editable-cell-required-bg;
     border-color: @table-editable-cell-required-border-color;
   }

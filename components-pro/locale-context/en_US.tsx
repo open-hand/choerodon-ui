@@ -133,6 +133,7 @@ const locale: Locale = {
     today: 'Today',
     now: 'Now',
     this_week: 'This week',
+    invalid_date: 'Invalid date',
   },
   EmailField: {
     value_missing_no_label: 'Please input an email address.',

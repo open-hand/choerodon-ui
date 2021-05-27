@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip` `showLengthInfo` properties.
+- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate` properties.
 - 🌟 `<pro>Select`: Added `optionTooltip` property.
 - 🌟 `<pro>Form`: Added `labelTooltip` property.
 - 🌟 `<pro>FormField`: Added `labelTooltip` property.

@@ -134,6 +134,7 @@ export interface Locale {
     today;
     now;
     this_week;
+    invalid_date;
   };
   EmailField: {
     value_missing;
