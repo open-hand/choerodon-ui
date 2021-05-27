@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback, useRef } from 'react';
 import { findDOMNode } from 'react-dom';
 import noop from 'lodash/noop';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
+import measureTextWidth from '../_util/measureTextWidth';
 
 export interface OverflowTipProps extends TooltipProps {
   strict?: boolean;
@@ -19,9 +20,22 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
   const { children, strict, getOverflowContainer = defaultGetOverflowContainer, onHiddenBeforeChange = noop, ...rest } = props;
   const isOverFlow = useCallback((): boolean => {
     const element = getOverflowContainer();
-    if (element && element.textContent) {
-      const { clientWidth, scrollWidth } = element;
-      return scrollWidth > clientWidth;
+    if (element) {
+      const { textContent, ownerDocument } = element;
+      if (textContent && ownerDocument) {
+        const { clientWidth, scrollWidth } = element;
+        if (scrollWidth > clientWidth) {
+          return true;
+        }
+        const { defaultView } = ownerDocument;
+        if (defaultView) {
+          const computedStyle = defaultView.getComputedStyle(element);
+          const { paddingLeft, paddingRight } = computedStyle;
+          const textWidth = measureTextWidth(textContent, computedStyle);
+          const contentWidth = clientWidth - (paddingLeft ? parseFloat(paddingLeft) : 0) - (paddingRight ? parseFloat(paddingRight) : 0);
+          return textWidth > contentWidth;
+        }
+      }
     }
     return false;
   }, [getOverflowContainer]);
