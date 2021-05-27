@@ -49,6 +49,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复树形分页数据中 idField 为空导致死循环的问题。
 - 🐞 `<pro>Paginition`：修复无数据翻页按钮渲染问题。
 - 🐞 `<pro>Select`: 修复在多选模式下Select被Tooltip包裹时无法正确显示提示的问题。
+- 🐞 `<pro>DatePicker`: 修复在多选模式下选择日期报错的问题。
 
 ## 1.3.2
 
