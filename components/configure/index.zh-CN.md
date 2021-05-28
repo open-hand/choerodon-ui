@@ -67,7 +67,6 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnHideable | 默认 Table 列可调整显示 | boolean | true |
 | tableColumnTitleEditable | 默认 Table 列可编辑标题 | boolean | false |
 | tableColumnDraggable | Table是否开启列拖拽 | boolean | false |
-| tableColumnTooltip | Table 是否开启列提示 | TableColumnTooltip | |
 | tableRowDraggable | Table是否开启行拖拽 | boolean | false |
 | tableDragColumnAlign | Table行拖拽的模式 | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
@@ -108,6 +107,10 @@ const prefixCls = getConfig('prefixCls');
 | numberFieldNonStrictStep | 全局配置 NumberField 的 nonStrictStep 属性 | boolean | false |
 | numberFieldFormatter | NumberField格式器   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
 | numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
+| tableColumnTooltip | Table 是否开启列提示 | Tooltip.always \| Tooltip.overflow | |
+| buttonTooltip | Button 是否开启提示 | Tooltip.always \| Tooltip.overflow | |
+| labelTooltip | 表单控件label是否开启提示 | Tooltip.always \| Tooltip.overflow | |
+| selectOptionTooltip | 下拉框菜单是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
 | showInvalidDate | 显示无效日期 | boolean |  |
 

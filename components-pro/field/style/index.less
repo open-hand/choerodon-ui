@@ -10,7 +10,7 @@
   &-label,
   &-label-vertical {
     overflow: hidden;
-    line-height: 28 / 13; // <-- fieldHeight / fontSize
+    line-height: @label-line-height;
     white-space: nowrap;
     text-overflow: ellipsis;
     vertical-align: middle;
@@ -40,7 +40,7 @@
     direction: ltr;
     text-align: left;
 
-    &+.@{field-prefix-cls}-wrapper {
+    & + .@{field-prefix-cls}-wrapper {
       padding-top: 0;
     }
   }
@@ -59,6 +59,7 @@
   &-required&-label::after {
     content: '*';
   }
+
   &-required&-label&-label-output::after {
     content: '';
   }

@@ -291,10 +291,7 @@ export function sliceTree(idField: string, parentField: string, allData: object[
     const noParentChildren: [any, object][] = [];
     const parent: object[] = [];
     const children: object[] = [];
-    allData.some((item) => {
-      if (parent.length >= pageSize) {
-        return true;
-      }
+    allData.forEach((item) => {
       const id = item[idField];
       const parentId = item[parentField];
       if (!isNil(parentId)) {
@@ -303,13 +300,12 @@ export function sliceTree(idField: string, parentField: string, allData: object[
         } else {
           noParentChildren.push([parentId, item]);
         }
-      } else {
+      } else if (parent.length < pageSize) {
         if (!isNil(id)) {
           parentMap.set(id, item);
         }
         parent.push(item);
       }
-      return false;
     });
     noParentChildren.forEach(([parentId, item]) => {
       if (parentMap.get(parentId)) {

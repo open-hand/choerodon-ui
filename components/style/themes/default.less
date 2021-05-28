@@ -25,9 +25,7 @@
 @primary-2: color(~`colorPalette('@{primary-color}', 2) `); // replace tint(@primary-color, 80%)
 @primary-3: color(~`colorPalette('@{primary-color}', 3) `); // unused
 @primary-4: color(~`colorPalette('@{primary-color}', 4) `); // unused
-@primary-5: color(
-  ~`colorPalette('@{primary-color}', 5) `
-); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+@primary-5: color(~`colorPalette('@{primary-color}', 5) `); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
 @primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
 @primary-7: color(~`colorPalette('@{primary-color}', 7) `); // replace shade(@primary-color, 5%)
 @primary-8: color(~`colorPalette('@{primary-color}', 8) `); // unused
@@ -42,8 +40,8 @@
 // Base background color for most components
 @component-background: #fff;
 @font-family-no-number: 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-  'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
-  sans-serif;
+'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+sans-serif;
 @font-family: 'Monospaced Number', @font-family-no-number;
 @code-family: Consolas, Menlo, Courier, monospace;
 @heading-color: fade(#000, 85%);
@@ -145,7 +143,7 @@
 @shadow-2: 0 0.04rem 0.12rem @shadow-color;
 @shadow-3: 0 0 0 0.01rem @component-background;
 @shadow-4: 0 0.05rem 0.05rem -0.03rem rgba(0, 0, 0, 0.2),
-  0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
+0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
 
 // Buttons
 @btn-font-weight: 500;
@@ -187,9 +185,9 @@
 
 @btn-group-border: @primary-5;
 @btn-box-shadow: 0 0.03rem 0.01rem -0.02rem rgba(0, 0, 0, 0.2),
-  0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
+0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
 @btn-focus-box-shadow: 0 0.04rem 0.03rem -0.02rem rgba(0, 0, 0, 0.2),
-  0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
+0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
 @btn-active-box-shadow: @shadow-4;
 @btn-icon-size: 0.14rem;
 // Checkbox
@@ -287,6 +285,7 @@
 @label-required-color: @highlight-color;
 @label-color: rgba(0, 0, 0, 60%);
 @label-colon-color: rgba(0, 0, 0, 60%);
+@label-line-height: @input-height-base;
 @field-help-color: rgba(0, 0, 0, 40%);
 @form-item-margin-top: 0.07rem;
 @form-item-margin-bottom: 0.2rem;
@@ -343,6 +342,12 @@
 @input-icon-width-sm: 0.2rem;
 @input-button-width: @input-icon-width-base;
 @input-addon-bg: #eee;
+@input-tag-default-color: @tag-default-color;
+@input-tag-default-bg: @tag-default-bg;
+@input-tag-error-color: @error-color;
+@input-tag-disabled-color: @disabled-color;
+@input-tag-close-color: inherit;
+@input-tag-close-hover-color: inherit;
 
 //step
 @step-border-color: rgba(0, 0, 0, 0.26);
