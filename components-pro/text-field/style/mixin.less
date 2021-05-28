@@ -337,7 +337,11 @@
       height: 100%;
       margin-left: 0.08rem;
       line-height: inherit;
+      color: @input-tag-close-color;
       cursor: pointer;
+      &:hover {
+        color: @input-tag-close-hover-color;
+      }
     }
   }
 
@@ -611,10 +615,10 @@
   margin: 0 0.02rem;
   padding: 0 0.08rem;
   overflow: hidden;
-  color: @tag-default-color;
+  color: @input-tag-default-color;
   line-height: @line-height-base;
   white-space: nowrap;
-  background-color: @tag-default-bg;
+  background-color: @input-tag-default-bg;
   border-radius: @input-border-radius;
   > div {
     height: 100%;
@@ -630,11 +634,11 @@
     }
   }
   &-invalid {
-    background-color: @error-color;
+    background-color: @input-tag-error-color;
   }
   &-disabled {
     padding-right: 0.1rem;
-    background-color: @disabled-color;
+    background-color: @input-tag-disabled-color;
     cursor: not-allowed;
   }
 }

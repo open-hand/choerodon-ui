@@ -15,12 +15,10 @@
   }
 
   &-invalid &-clear-button {
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0),
-      @input-error-bg 20%,
-      @input-error-bg
-    ) !important;
+    background: linear-gradient(to right,
+    rgba(255, 255, 255, 0),
+    @input-error-bg 20%,
+    @input-error-bg) !important;
   }
 
   // &-invalid &:focus {
@@ -84,11 +82,12 @@
   &-float-label textarea& {
     height: auto;
   }
-  &-float-label&-invalid {
-    background-color: @input-float-error-bg;
-  }
   &-float-label&-required&-empty {
     background-color: @input-float-required-bg;
+  }
+  &-float-label&-invalid,
+  &-float-label&-invalid&-empty {
+    background-color: @input-float-error-bg;
   }
   &-float-label&-required .@{field-label-prefix-cls}::after {
     width: 0.08rem;
@@ -99,6 +98,7 @@
         border-top-color: transparent;
         transform: none;
       }
+
       font-weight: inherit;
       font-size: inherit;
       transform: none;
@@ -108,6 +108,7 @@
   &-float-label & > ul {
     margin-top: 0.06rem;
     margin-left: 0.03rem;
+
     > li {
       display: inline-block;
       max-width: 99%;
@@ -128,6 +129,7 @@
     white-space: nowrap;
     background-color: @tag-default-bg;
     border-radius: 0.12rem;
+
     > div {
       display: inline-block;
       max-width: 100%;
@@ -141,9 +143,11 @@
         max-width: ~'calc(100% - .24rem)';
       }
     }
+
     &-invalid {
       background-color: @error-color;
     }
+
     &-disabled {
       padding-right: 0.1rem;
       background-color: @disabled-color;
