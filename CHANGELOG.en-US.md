@@ -38,6 +38,7 @@ timeline: true
 - 💄 `<pro>Tree`: Optimized and extend the showLine attribute.
 - 💄 `<pro>TextField`: Optimized the `clearButton` rendering interaction.
 - 💄 `<pro>Modal`: `footer` add callback parameters.
+- 💄 `<pro>TextField`: Optimized the label rendering logic in `range` mode.
 - 🐞 `<pro>Modal`: Fixed the `keyboardClosable` property has no effect when there is no cancel button.
 - 🐞 `<pro>DataSet`：Fix the problem that the state of the dataSet is incorrectly modified after submission when only deleted and dataToJSON is selected.
 - 🐞 `<pro>Table`: Fix the positioning problem of the editor when the current record of the DataSet changes.

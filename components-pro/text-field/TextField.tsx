@@ -427,7 +427,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (this.isEmpty() && !this.isFocused && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
       return endPlaceHolder;
     }
-    if (this.isEmpty() && !this.isFocused && placeholder) {
+    if (this.isEmpty() && !this.isFocused && placeholder && (this.rangeTarget === 0 || !this.range)) {
       return placeholder;
     }
     return this.getProp('label');

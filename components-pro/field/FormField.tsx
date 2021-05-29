@@ -713,7 +713,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   renderFloatLabel(): ReactNode {
-    if (this.hasFloatLabel && (this.isFocus || !this.range || !this.isEmpty())) {
+    if (this.hasFloatLabel) {
       const label = this.getLabel();
       if (label) {
         const { labelTooltip } = this;
