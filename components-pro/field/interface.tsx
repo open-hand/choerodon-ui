@@ -1,12 +1,13 @@
 export {
-    CloseButtonProps,
+  CloseButtonProps,
 } from './CloseButton';
 export {
-    ShowHelp,
+  ShowHelp,
 } from './enum';
 export {
-    Comparator,
-    RenderProps,
-    Renderer,
-    FormFieldProps,
+  Comparator,
+  RenderProps,
+  Renderer,
+  HighlightRenderer,
+  FormFieldProps,
 } from './FormField';

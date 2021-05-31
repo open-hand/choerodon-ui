@@ -36,6 +36,8 @@ title: FormField
 | trim | 字符串值是否去掉首尾空格，如果绑定 DataSet 需要在 DataSet 的 Field 上设置 trim，可选值: `both` `left` `right` `none` | string | `both` |
 | format | 字符串格式化，可选值: `uppercase` `lowercase` `capitalize` | string |  |
 | validationRenderer | 校验信息渲染 | (validationResult, validationProps) => ReactNode |  |
+| highlight | 高亮 |  boolean \| ReactNode \| { title, content, className, style  } |  |
+| highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | onInvalid | 校验失败回调 | (validationResults, validity, name) => void |  |
 | onBeforeChange | 值变化前回调, 返回 false 或 Promise.resolve(false) 时将阻止onChange | (value, oldValue, form) => boolean \| Promise<boolean> |  |
 | onChange | 值变化回调 | (value, oldValue, form) => void |  |

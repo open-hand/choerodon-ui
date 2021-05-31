@@ -9,7 +9,7 @@
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
 @output-prefix-cls: ~'@{c7n-pro-prefix}-output';
-@table-border: @border-width-base @border-style-base @border-color-base;
+@table-border: @border-width-base @border-style-base @table-border-color;
 
 .@{table-prefix-cls} {
   position: relative;
@@ -32,7 +32,7 @@
     padding: 0.08rem;
     font-weight: 400;
     font-size: 0.16rem;
-    border-bottom: @border-width-base @border-style-base @border-color-base;
+    border-bottom: @table-border;
   }
 
   &-content {
@@ -104,11 +104,11 @@
 
     &-dirty {
       .@{table-prefix-cls}-cell-inner::after {
-        display: inline-block;
         position: absolute;
-        width: 0;
         top: 0;
         left: 0;
+        display: inline-block;
+        width: 0;
         white-space: normal;
         border-top: 0.06rem solid @primary-color;
         border-right: 0.06rem solid transparent;
@@ -280,8 +280,8 @@
     &:hover,
     &.@{table-prefix-cls}-thead-hover {
       .@{table-prefix-cls}-cell {
-        border-right-color: @border-color-base;
-        border-bottom-color: @border-color-base;
+        border-right-color: @table-border-color;
+        border-bottom-color: @table-border-color;
       }
     }
   }
@@ -508,7 +508,7 @@
 
     .@{table-prefix-cls}-fixed-left .@{table-prefix-cls}-tbody {
       .@{table-prefix-cls}-cell:last-child {
-        border-right: @border-width-base @border-style-base @border-color-base;
+        border-right: @table-border;
       }
     }
   }
@@ -630,22 +630,18 @@
 
   &-cell-editable &-cell-inner {
     border-color: @table-editable-cell-border-color;
-
-    &.@{output-prefix-cls}-highlight {
-      border-color:  @table-editable-cell-highlight-border-color;
-    }
   }
 
-  &-cell-editable&-cell-required &-cell-inner.@{output-prefix-cls}-empty {
+  &-cell-editable&-cell-required &-cell-inner.@{output-prefix-cls}-required-colors {
     background-color: @table-editable-cell-required-bg;
     border-color: @table-editable-cell-required-border-color;
   }
 
-  &-cell-editable &-cell-inner.@{output-prefix-cls}-invalid {
-    border-color: @table-editable-cell-error-border-color;
+  &-cell-editable&-cell &-cell-inner.@{output-prefix-cls}-highlight {
+    border-color:  @table-editable-cell-highlight-border-color;
   }
 
-  &-cell-editable&-cell-required &-cell-inner.@{output-prefix-cls}-invalid {
+  &-cell-editable&-cell &-cell-inner.@{output-prefix-cls}-invalid {
     background-color: @table-editable-cell-error-bg;
     border-color: @table-editable-cell-error-border-color;
   }

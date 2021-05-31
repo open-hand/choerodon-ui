@@ -1,6 +1,6 @@
 import { observable, ObservableMap, runInAction, toJS } from 'mobx';
 import { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import isObject from 'lodash/isObject';
 import { categories } from 'choerodon-ui-font';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
@@ -19,13 +19,14 @@ import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
 import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
-import { Renderer } from 'choerodon-ui/pro/lib/field/FormField';
+import { Renderer, HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { SpinProps } from '../spin';
 import { PanelProps } from '../collapse';
 import { Size } from '../_util/enum';
+import Popover from '../popover';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -136,6 +137,7 @@ export type Config = {
   buttonColor?: ButtonColor;
   buttonTooltip?: Tooltip;
   renderEmpty?: renderEmptyHandler;
+  highlightRenderer?: HighlightRenderer;
   defaultValidationMessages?: ValidationMessages;
   transport?: TransportProps;
   icons?: { [key: string]: string[]; } | string[];
@@ -177,6 +179,10 @@ export type Config = {
    * moment非法时显示Invalid date
    */
   showInvalidDate?: boolean;
+  /**
+   * 只有在空值时显示必填背景色和边框色
+   */
+  showRequiredColorsOnlyEmpty?: boolean;
 };
 
 export type ConfigKeys = keyof Config;
@@ -192,6 +198,12 @@ const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNo
     default:
   }
 };
+
+const defaultFormFieldHighlightRenderer: HighlightRenderer = ({ content, ...rest }, element): ReactNode => content ? (
+  <Popover {...rest} content={content}>
+    {element}
+  </Popover>
+) : element;
 
 const defaultButtonProps = { color: ButtonColor.primary, funcType: FuncType.flat };
 
@@ -290,6 +302,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['numberFieldFormatter', undefined],
   ['numberFieldFormatterOptions', undefined],
   ['showInvalidDate', true],
+  ['highlightRenderer', defaultFormFieldHighlightRenderer],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

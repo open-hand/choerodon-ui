@@ -565,7 +565,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @action
   setRangeTarget(target) {
-    if (target !== undefined && target !== this.rangeTarget) {
+    if (this.isFocused && (target !== undefined && target !== this.rangeTarget)) {
       this.expand();
     }
     this.selectedDate = undefined;

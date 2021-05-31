@@ -13,22 +13,28 @@
     font-size: 0.16rem;
     border-bottom: @border-width-base @border-style-base @border-color-base;
   }
+
   > table {
     width: 100%;
     table-layout: fixed;
+
     &.auto-width {
       table-layout: auto;
     }
   }
+
   > table > tbody > tr > td {
     vertical-align: top;
   }
+
   &-float-label {
     margin: 0 -0.05rem;
+
     .@{form-prefix-cls}-header {
       margin-right: 0.05rem;
       margin-left: 0.05rem;
     }
+
     .@{field-prefix-cls}-wrapper {
       margin-top: @form-item-margin-top;
       margin-bottom: @form-item-margin-bottom;
@@ -36,6 +42,7 @@
       padding-bottom: 0;
       // position: relative;
     }
+
     // .@{field-prefix-cls}-help,
     // .@{validation-prefix-cls} {
     //   position: absolute;

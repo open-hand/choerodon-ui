@@ -29,6 +29,7 @@ export {
   Fields,
   DynamicPropsArguments,
   FieldProps,
+  HighlightProps,
 } from './Field';
 export {
   SubmitTypes,

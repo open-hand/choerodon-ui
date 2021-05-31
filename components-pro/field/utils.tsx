@@ -1,10 +1,12 @@
+import { isValidElement, ReactNode } from 'react';
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
+import isString from 'lodash/isString';
 import { isArrayLike } from 'mobx';
 import moment from 'moment';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { FieldType } from '../data-set/enum';
-import Field from '../data-set/Field';
+import Field, { HighlightProps } from '../data-set/Field';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
   if (isArrayLike(range)) {
@@ -68,4 +70,20 @@ export function getDateFormatByField(field?: Field, type?: FieldType): string {
     return getDateFormatByFieldType(type);
   }
   return getConfig('formatter').jsonDate || moment.defaultFormat;
+}
+
+export function transformHighlightProps(highlight: true | ReactNode | HighlightProps, props: HighlightProps): HighlightProps {
+  if (isValidElement(highlight) || isString(highlight)) {
+    return {
+      ...props,
+      content: highlight,
+    };
+  }
+  if (isObject(highlight)) {
+    return {
+      ...props,
+      ...highlight,
+    };
+  }
+  return props;
 }

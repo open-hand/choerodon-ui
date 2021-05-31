@@ -26,7 +26,7 @@ import isFunction from 'lodash/isFunction';
 import isArray from 'lodash/isArray';
 import axios from '../axios';
 import autobind from '../_util/autobind';
-import { FormField, FormFieldProps, getFieldsById } from '../field/FormField';
+import { FormField, FormFieldProps, getFieldsById, HighlightRenderer } from '../field/FormField';
 import FormContext from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet from '../data-set/DataSet';
@@ -133,6 +133,10 @@ export interface FormProps extends DataSetComponentProps {
    * 优先级高于dataSet和dataIndex
    */
   record?: Record;
+  /**
+   * 高亮渲染器
+   */
+  fieldHighlightRenderer?: HighlightRenderer;
   /**
    * 提交回调
    */
@@ -266,6 +270,10 @@ export default class Form extends DataSetComponent<FormProps> {
      * 表单头
      */
     header: PropTypes.string,
+    /**
+     * 高亮渲染器
+     */
+    fieldHighlightRenderer: PropTypes.func,
     /**
      * 提交回调
      */
@@ -463,6 +471,11 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   @computed
+  get fieldHighlightRenderer(): boolean {
+    return this.observableProps.fieldHighlightRenderer;
+  }
+
+  @computed
   get separateSpacing(): SeparateSpacing | undefined {
     const { separateSpacing } = this.observableProps;
     if (separateSpacing) {
@@ -498,6 +511,7 @@ export default class Form extends DataSetComponent<FormProps> {
       useColon: props.useColon,
       excludeUseColonTagList: props.excludeUseColonTagList,
       separateSpacing: props.separateSpacing,
+      fieldHighlightRenderer: 'fieldHighlightRenderer' in props ? props.fieldHighlightRenderer : context.fieldHighlightRenderer,
     };
   }
 
@@ -511,12 +525,14 @@ export default class Form extends DataSetComponent<FormProps> {
       'labelWidth',
       'labelAlign',
       'labelLayout',
+      'labelTooltip',
       'columns',
       'pristine',
       'axios',
       'useColon',
       'excludeUseColonTagList',
       'separateSpacing',
+      'fieldHighlightRenderer',
     ]);
   }
 
@@ -857,6 +873,7 @@ export default class Form extends DataSetComponent<FormProps> {
       observableProps,
       disabled,
       readOnly,
+      fieldHighlightRenderer,
     } = this;
     const { formNode } = this.context;
     const value = {
@@ -871,6 +888,7 @@ export default class Form extends DataSetComponent<FormProps> {
       pristine,
       disabled,
       readOnly,
+      fieldHighlightRenderer,
     };
     let children: ReactNode = this.rasterizedChildren();
     if (!formNode) {

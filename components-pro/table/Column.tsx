@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'mobx';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { FormFieldProps, Renderer } from '../field/FormField';
+import { FormFieldProps, HighlightRenderer, Renderer } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
@@ -132,6 +132,10 @@ export interface ColumnPropsBase extends ElementProps {
    * 是否聚合
    */
   aggregation?: boolean;
+  /**
+   * 高亮渲染器
+   */
+  highlightRenderer?: HighlightRenderer;
 }
 
 export interface ColumnProps extends ColumnPropsBase {
@@ -214,6 +218,10 @@ export default class Column extends Component<ColumnPropsInner, ComponentState> 
      *
      */
     showHelp: PropTypes.oneOf([ShowHelp.tooltip, ShowHelp.newLine, ShowHelp.none]),
+    /**
+     * 高亮渲染器
+     */
+    highlightRenderer: PropTypes.func,
     hidden: PropTypes.bool,
     colSpan: PropTypes.number,
     rowSpan: PropTypes.number,

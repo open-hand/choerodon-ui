@@ -80,7 +80,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   } = tableStore;
   const prefixCls = `${tableStore.prefixCls}-cell`;
   const tooltip = tableStore.getColumnTooltip(column);
-  const { name, key, lock } = column;
+  const { name, key, lock, highlightRenderer = tableStore.cellHighlightRenderer } = column;
   const columnKey = getColumnKey(column);
   const { checkField } = dataSet.props;
   const height = record.getState(`__column_resize_height_${name}`);
@@ -363,6 +363,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
     pristine,
+    highlightRenderer,
   };
   if (!inView) {
     if (rowHeight === 'auto') {
