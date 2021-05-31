@@ -47,7 +47,7 @@
 
     padding: 0;
     color: @float-label-color;
-    line-height: 34 / 13; // <-- fieldHeight / fontSize
+    line-height: @float-label-line-height;
     transform-origin: inherit;
     transition: inherit;
   }
@@ -76,7 +76,7 @@
     transform: scaleY(0.8);
   }
   &-float-label & {
-    height: 0.36rem;
+    height: @float-label-height-base;
     border-radius: 0.04rem;
   }
   &-float-label textarea& {

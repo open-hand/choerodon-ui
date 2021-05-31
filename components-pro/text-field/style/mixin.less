@@ -23,7 +23,7 @@
   color: @input-active-color;
   border-color: ~`colorPalette('@{color}', 5) `;
   outline: 0;
-  // box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
+  box-shadow: @input-active-box-shadow;
 }
 
 // == when hoverd
@@ -339,6 +339,7 @@
       line-height: inherit;
       color: @input-tag-close-color;
       cursor: pointer;
+
       &:hover {
         color: @input-tag-close-hover-color;
       }
