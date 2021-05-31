@@ -1349,7 +1349,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const repeat = repeats.get(key) || 0;
       const text = range ? this.renderRangeValue(true, v, repeat) : this.processRenderer(v, repeat);
       repeats.set(key, repeat + 1);
-      if (!isNil(text)) {
+      if (!isNil(text) && text) {
         const validationResult = validationResults.find(error => error.value === v);
         const disabled = this.isMultipleBlockDisabled(v);
         const className = classNames(

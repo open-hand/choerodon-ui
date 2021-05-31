@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fix the problem that the prompt cannot be displayed correctly when the Select is wrapped by the Tooltip in the multi-select mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem that the display cannot be restored to the initial state correctly after reset is used after clicking the horizontal color selector at the bottom when the DataSet is used.
 - 🐞 `<pro>DatePicker`: Fix the problem that the selected date in the multi-select mode reports an error.
+- 🐞 `<pro>TextField`: Fix null rendering in `multiple` mode.
 
 
 ## 1.3.2
