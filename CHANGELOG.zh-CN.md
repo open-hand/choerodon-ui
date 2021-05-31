@@ -39,6 +39,7 @@ timeline: true
 - 💄 `<pro>Form`: 优化浮动标签 label 展示时机。
 - 💄 `<pro>TextField`: 优化 clearButton 渲染交互。
 - 💄 `<pro>Modal`: footer 增加 modal 回调参数。
+- 💄 `<pro>TextField`: 优化 range 模式 label 渲染逻辑。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 - 🐞 `<pro>DataSet`：修复在仅删除以及dataToJSON为selected的情况下，提交后对dataSet状态修改不正确的问题。
 - 🐞 `<pro>Table`：修复编辑器在 DataSet 当前记录发生变化时的定位问题。
@@ -51,7 +52,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复在多选模式下 Select 被 Tooltip 包裹时无法正确显示提示的问题。
 - 🐞 `<pro>ColorPicker`: 修复在使用了 DataSet 的情况下，点击了下方的横向的颜色选择器后，reset 无法正确将显示恢复到初始状态的问题。
 - 🐞 `<pro>DatePicker`: 修复在多选模式下选择日期报错的问题。
-
+- 🐞 `<pro>TextField`: 修复 multiple 模式空值渲染。
 
 ## 1.3.2
 
