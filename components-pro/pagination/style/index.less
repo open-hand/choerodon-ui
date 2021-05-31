@@ -13,12 +13,12 @@
 
     .@{c7n-pro-prefix}-select {
       text-align: right;
-      border-style: none;
     }
   }
 
-  &-size-editable .@{c7n-pro-prefix}-select {
-    border-bottom-style: @border-style-base;
+  &-size-changer:not(&-size-editable) .@{c7n-pro-prefix}-select,
+  &-size-changer&-size-editable .@{c7n-pro-prefix}-select:not(.@{c7n-pro-prefix}-select:hover):not(.@{c7n-pro-prefix}-select:focus) {
+    border-color: transparent;
   }
 
   &-page-info {

@@ -46,6 +46,7 @@ import Dropdown from '../dropdown/Dropdown';
 import Menu from '../menu';
 import { ModalProps } from '../modal/Modal';
 import { treeSome } from '../_util/treeUtils';
+import { HighlightRenderer } from '../field/FormField';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -1390,6 +1391,12 @@ export default class TableStore {
   @computed
   get isRowHighLight() {
     return this.rowHighLight || this.highLightRow === true;
+  }
+
+  @computed
+  get cellHighlightRenderer(): HighlightRenderer {
+    const { cellHighlightRenderer = getConfig('highlightRenderer') } = this.props;
+    return cellHighlightRenderer;
   }
 
   @action

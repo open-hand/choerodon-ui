@@ -113,6 +113,8 @@ const prefixCls = getConfig('prefixCls');
 | selectOptionTooltip | 下拉框菜单是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
 | showInvalidDate | 显示无效日期 | boolean |  |
+| showRequiredColorsOnlyEmpty | 只有在空值时显示必填背景色和边框色 | boolean |  |
+| highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 
 ### Formatter
 

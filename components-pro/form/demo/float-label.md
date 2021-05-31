@@ -52,6 +52,7 @@ ReactDOM.render(
       placeholder="请输入手机号"
       addonBefore="+86"
       addonAfter="中国大陆"
+      highlight="高亮"
     />
     <Password label="密码" name="password" required />
     <Password

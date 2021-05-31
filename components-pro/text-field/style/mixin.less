@@ -70,8 +70,8 @@
   height: @input-height-base;
   padding: @input-padding-vertical-base @input-padding-horizontal;
   color: @input-color;
-  font-size: inherit;
-  line-height: 1;
+  font-size: @input-font-size-base;
+  line-height: @input-line-height-base;
   background-color: transparent;
   background-image: none;
   border: @border-width-base @border-style-base @input-border-color;
@@ -82,24 +82,13 @@
 
   .placeholder;
 
-  &-required&-empty {
-    background-color: @input-required-bg;
-  }
-
-  &-required&-empty & {
-    border-color: @input-required-border-color;
-  }
-
   label:hover &,
-  &:hover,
-  &-empty &:hover {
+  &:hover {
     .hover;
   }
 
   &:focus,
-  &-empty &:focus,
-  &-focused &,
-  &-focused&-empty & {
+  &-focused & {
     .active;
   }
 
@@ -286,8 +275,8 @@
       max-width: 99%;
       height: 0.24rem;
       margin-bottom: 0.02rem;
-      line-height: 0.22rem;
       vertical-align: middle;
+      line-height: 0.22rem;
     }
   }
 
@@ -450,8 +439,15 @@
     box-shadow: 0 0 0 10rem @input-wrapper-bg inset;
   }
 
-  &-highlight &,
-  &-highlight&-empty & {
+  &-required-colors {
+    background-color: @input-required-bg;
+  }
+
+  &-required-colors & {
+    border-color: @input-required-border-color;
+  }
+
+  &-highlight & {
     border-color: @input-highlight-border-color;
   }
 
@@ -490,9 +486,14 @@
     border-radius: @input-float-border-radius;
     content: ' ';
   }
-  &-float-label&-required&-empty::before {
+  &-float-label&-required-colors::before {
     border-color: @input-float-required-border-color;
   }
+
+  &-float-label&-highlight::before {
+    border-color: @input-float-highlight-border-color;
+  }
+
   &-float-label&-focused::before,
   &-float-label&-invalid::before {
     border-width: @input-float-border-active-width;
@@ -501,17 +502,11 @@
     border-color: @input-float-hover-border-color;
   }
 
-  &-float-label&-focused,
-  &-float-label&-focused&-empty {
-    &::before {
-      border-color: @input-float-focus-border-color;
-    }
+  &-float-label&-focused::before {
+    border-color: @input-float-focus-border-color;
   }
-  &-float-label&-invalid,
-  &-float-label&-invalid&-empty {
-    &::before {
-      border-color: @input-error-border-color;
-    }
+  &-float-label&-invalid::before {
+    border-color: @input-error-border-color;
   }
 
   &-float-label&-disabled {
@@ -635,11 +630,13 @@
     }
   }
   &-invalid {
-    background-color: @input-tag-error-color;
+    background-color: @input-tag-error-bg;
+    color: @input-tag-error-color;
   }
   &-disabled {
     padding-right: 0.1rem;
-    background-color: @input-tag-disabled-color;
+    background-color: @input-tag-disabled-bg;
+    color: @input-tag-disabled-color;
     cursor: not-allowed;
   }
 }

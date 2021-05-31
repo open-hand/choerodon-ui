@@ -304,6 +304,8 @@ sans-serif;
 @input-height-base: 0.3rem;
 @input-height-lg: 0.4rem;
 @input-height-sm: 0.24rem;
+@input-font-size-base: inherit;
+@input-line-height-base: @line-height-base;
 @input-padding-horizontal: @control-padding-horizontal - 0.02rem;
 @input-padding-horizontal-base: @input-padding-horizontal;
 @input-padding-horizontal-sm: @control-padding-horizontal-sm - 0.02rem;
@@ -335,8 +337,10 @@ sans-serif;
 @input-float-border-radius: 0.05rem;
 @input-float-border-active-width: 0.02rem;
 @input-float-required-border-color: @input-required-border-color;
+@input-float-highlight-border-color: @input-highlight-border-color;
 @input-float-required-bg: @component-background;
 @input-float-error-bg: @component-background;
+@input-float-disabled-bg: @component-background;
 @input-float-focus-border-color: @input-focus-border-color;
 @input-float-hover-border-color: @input-color;
 @input-disabled-bg: @disabled-bg;
@@ -348,8 +352,10 @@ sans-serif;
 @input-addon-bg: #eee;
 @input-tag-default-color: @tag-default-color;
 @input-tag-default-bg: @tag-default-bg;
-@input-tag-error-color: @error-color;
-@input-tag-disabled-color: @disabled-color;
+@input-tag-error-color: @tag-default-color;
+@input-tag-error-bg: @error-color;
+@input-tag-disabled-color: @tag-default-color;
+@input-tag-disabled-bg: @disabled-color;
 @input-tag-close-color: inherit;
 @input-tag-close-hover-color: inherit;
 
@@ -456,6 +462,7 @@ sans-serif;
 @table-editable-cell-error-bg: @error-bg-color;
 @table-customization-select-view-option-bg: fade(#000, 8%);
 @table-customization-form-padding-vertical: 0.05rem;
+@table-border-color: @border-color-base;
 
 // PerformanceTable
 @performance-table-header-bg: #f5f5f5;
@@ -654,3 +661,9 @@ sans-serif;
 @statistic-unit-font-size: 16px;
 @statistic-font-family: @font-family;
 
+// Dropdown Menu
+// ---
+@dropdown-menu-max-width: none;
+@dropdown-menu-max-height: 2.5rem;
+@dropdown-menu-padding-vertical-base: 0.08rem;
+@dropdown-menu-padding-horizontal-base: 0;

@@ -115,7 +115,7 @@
     &-group-header {
       display: inline-block;
       margin-bottom: .1rem;
-      color: @text-color-secondary;
+      color: @float-label-color;
       font-size: @font-size-sm;
     }
   }
@@ -136,6 +136,13 @@
   &-option {
     display: flex !important;
     align-items: center;
+    min-height: .32rem;
+    margin: 0 !important;
+    padding: .03rem 0;
+
+    &:first-child {
+      margin-top: .05rem !important;
+    }
 
     &-label {
       flex: 1;

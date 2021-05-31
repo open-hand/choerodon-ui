@@ -15,16 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate` properties.
+- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate`, `showRequiredColorsOnlyEmpty`, `highlightRenderer` properties.
 - 🌟 `<pro>Select`: Added `optionTooltip` property.
-- 🌟 `<pro>Form`: Added `labelTooltip` property.
-- 🌟 `<pro>FormField`: Added `labelTooltip` property.
+- 🌟 `<pro>Form`: Added `labelTooltip`, `fieldHighlightRenderer` properties.
+- 🌟 `<pro>FormField`: Added `labelTooltip`, `highlightRenderer` properties.
 - 🌟 `<pro>Button`: Added `tooltip` property.
 - 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter`, `getValidationErrors` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
 - 🌟 `<pro>DataSet.Record`: Added `getValidationErrors` method.
 - 🌟 `<pro>DataSet.Field`: Added `computedProps`, `highlight` properties, deprecated `dynamicProps` property.
-- 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange` properties.
-- 🌟 `<pro>Table.Column`: Added `aggregation` property.
+- 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange`, `cellHighlightRenderer` properties.
+- 🌟 `<pro>Table.Column`: Added `aggregation`, `highlightRenderer` properties.
 - 🌟 `<pro>TextField`: Added `showLengthInfo` property.
 - 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `Dropdown`: The `overlay` property supports hook functions.
@@ -52,7 +52,7 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: Fix the problem that the display cannot be restored to the initial state correctly after reset is used after clicking the horizontal color selector at the bottom when the DataSet is used.
 - 🐞 `<pro>DatePicker`: Fix the problem that the selected date in the multi-select mode reports an error.
 - 🐞 `<pro>TextField`: Fix null rendering in `multiple` mode.
-
+- 🐞 `<pro>DatePicker`: Fix the problem that the calendar will pop up when the clear button is clicked and cannot be closed.
 
 ## 1.3.2
 

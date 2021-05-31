@@ -1,3 +1,5 @@
+@import '../../../components/style/themes/default';
+
 @checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox';
 
 .dropdown-menu-item () {
@@ -95,9 +97,10 @@
 }
 
 .dropdown-menu () {
-  max-height: 2.5rem;
+  max-width: @dropdown-menu-max-width;
+  max-height: @dropdown-menu-max-height;
   margin-bottom: 0;
-  padding: 0.08rem 0;
+  padding: @dropdown-menu-padding-vertical-base @dropdown-menu-padding-horizontal-base;
   overflow: auto;
   list-style: none;
   outline: none;

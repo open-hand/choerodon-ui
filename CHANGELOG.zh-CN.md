@@ -15,16 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo, showInvalidDate 属性。
+- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo, showInvalidDate, showRequiredColorsOnlyEmpty, highlightRenderer 属性。
 - 🌟 `<pro>Select`: 新增 optionTooltip 属性。
-- 🌟 `<pro>Form`: 新增 labelTooltip 属性。
-- 🌟 `<pro>FormField`: 新增 labelTooltip 属性。
+- 🌟 `<pro>Form`: 新增 labelTooltip, highlightRenderer 属性。
+- 🌟 `<pro>FormField`: 新增 labelTooltip, highlight, highlightRenderer 属性。
 - 🌟 `<pro>Button`: 新增 tooltip 属性。
 - 🌟 `<pro>DataSet`: 新增 setAllPageSelection, getQueryParameter, getValidationErrors 方法和 isAllPageSelection, unSelected, currentUnSelected 值。
 - 🌟 `<pro>DataSet.Record`: 新增 getValidationErrors 方法。
 - 🌟 `<pro>DataSet.Field`: 新增 computedProps, highlight 属性, 废弃 dynamicProps 属性。
-- 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange 属性。
-- 🌟 `<pro>Table.Column`: 新增 aggregation 属性。
+- 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange, cellHighlightRenderer 属性。
+- 🌟 `<pro>Table.Column`: 新增 aggregation, highlightRenderer 属性。
 - 🌟 `<pro>TextField`: 新增 showLengthInfo 属性。
 - 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `Dropdown`: overlay 属性支持钩子函数。
@@ -53,6 +53,8 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: 修复在使用了 DataSet 的情况下，点击了下方的横向的颜色选择器后，reset 无法正确将显示恢复到初始状态的问题。
 - 🐞 `<pro>DatePicker`: 修复在多选模式下选择日期报错的问题。
 - 🐞 `<pro>TextField`: 修复 multiple 模式空值渲染。
+- 🐞 `<pro>DatePicker`: 修复点击清除按钮是日历会弹出切无法关闭的问题。
+
 
 ## 1.3.2
 

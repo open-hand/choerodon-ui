@@ -169,25 +169,27 @@ export default class Button extends Component<ButtonProps, any> {
     const kids =
       children || children === 0
         ? Children.map(children, child => {
-            if (typeof child === 'string') {
-              return <span>{child}</span>;
-            }
-            return child;
-          })
+          if (typeof child === 'string') {
+            return <span>{child}</span>;
+          }
+          return child;
+        })
         : null;
-
+    const useWrapper = disabled && ComponentProp === 'button' && (onMouseEnter || onMouseLeave);
+    const { style, ...otherProps } = others;
     const button = (
       <Ripple disabled={disabled}>
         <ComponentProp
           disabled={disabled}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          {...omit(others, ['loading'])}
+          {...omit(otherProps, ['loading'])}
           // 如果没有href属性，则表示组件使用button标签，type为'submit' | 'reset' | 'button'
           type={
             others.href ? undefined : (htmlType as ButtonHTMLAttributes<any>['type']) || 'button'
           }
-          className={classes}
+          style={useWrapper? undefined : style}
+          className={useWrapper ? undefined : classes}
           onClick={this.handleClick}
         >
           {iconNode}
@@ -196,8 +198,15 @@ export default class Button extends Component<ButtonProps, any> {
       </Ripple>
     );
 
-    return disabled && (onMouseEnter || onMouseLeave) ? (
-      <span className={`${prefixCls}-disabled-wrapper`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    return useWrapper ? (
+      <span
+        // @ts-ignore
+        disabled
+        style={style}
+        className={classNames(classes, `${prefixCls}-disabled-wrapper`)}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
         {button}
       </span>
     ) : button;

@@ -2,9 +2,7 @@
 
 .validation() {
   &-invalid &,
-  &-invalid&-empty &,
-  &-invalid label:hover &,
-  &-invalid&-empty &:hover {
+  &-invalid label:hover & {
     color: @error-color;
     border-color: @input-error-border-color;
     opacity: 1;
@@ -82,12 +80,14 @@
   &-float-label textarea& {
     height: auto;
   }
-  &-float-label&-required&-empty {
+  &-float-label&-required-colors {
     background-color: @input-float-required-bg;
   }
-  &-float-label&-invalid,
-  &-float-label&-invalid&-empty {
+  &-float-label&-invalid {
     background-color: @input-float-error-bg;
+  }
+  &-float-label&-disabled {
+    background-color: @input-float-disabled-bg;
   }
   &-float-label&-required .@{field-label-prefix-cls}::after {
     width: 0.08rem;

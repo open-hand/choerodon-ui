@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import isPromise from 'is-promise';
-import isBoolean from 'lodash/isBoolean';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
@@ -25,7 +24,7 @@ import { Tooltip as LabelTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import Field from '../data-set/Field';
+import Field, { HighlightProps } from '../data-set/Field';
 import { findBindFields } from '../data-set/utils';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import Validity from '../validator/Validity';
@@ -44,7 +43,7 @@ import { FIELD_SUFFIX } from '../form/utils';
 import { LabelLayout } from '../form/enum';
 import Animate from '../animate';
 import CloseButton from './CloseButton';
-import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue } from './utils';
+import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue, transformHighlightProps } from './utils';
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
 import formatCurrency from '../formatter/formatCurrency';
@@ -67,6 +66,8 @@ export type RenderProps = {
 };
 
 export type Renderer = (props: RenderProps) => ReactNode;
+
+export type HighlightRenderer = (highlightProps: HighlightProps, element: ReactNode) => ReactNode;
 
 export function getFieldsById(id): FormField<FormFieldProps>[] {
   if (!map[id]) {
@@ -246,7 +247,11 @@ export interface FormFieldProps extends DataSetComponentProps {
   /**
    * 高亮
    */
-  highlight?: boolean | ReactNode;
+  highlight?: boolean | ReactNode | HighlightProps;
+  /**
+   * 高亮渲染器
+   */
+  highlightRenderer?: HighlightRenderer;
 }
 
 export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
@@ -375,6 +380,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * 高亮
      */
     highlight: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
+    /**
+     * 高亮渲染器
+     */
+    highlightRenderer: PropTypes.func,
     ...DataSetComponent.propTypes,
   };
 
@@ -550,6 +559,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.getProp('highlight');
   }
 
+  @computed
+  get highlightRenderer(): HighlightRenderer {
+    const { highlightRenderer = getConfig('highlightRenderer') } = this.observableProps;
+    return highlightRenderer;
+  }
+
   getControlled(props): boolean {
     return props.value !== undefined;
   }
@@ -631,6 +646,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       readOnly: context.readOnly || props.readOnly || (this.getControlled(props) && !props.onChange && !props.onInput),
       pristine: context.pristine || props.pristine,
       highlight: props.highlight,
+      highlightRenderer: 'highlightRenderer' in props ? props.highlightRenderer : context.fieldHighlightRenderer,
     };
   }
 
@@ -663,6 +679,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'fieldClassName',
       'preventRenderer',
       'highlight',
+      'highlightRenderer',
       'labelTooltip',
       'isFlat',
     ]);
@@ -679,13 +696,16 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   getWrapperClassNames(...args): string {
     const { prefixCls } = this;
+    const required = this.getProp('required');
+    const empty = this.isEmpty();
     return super.getWrapperClassNames(
       {
-        [`${prefixCls}-empty`]: this.isEmpty(),
+        [`${prefixCls}-empty`]: empty,
         [`${prefixCls}-highlight`]: this.highlight,
         [`${prefixCls}-invalid`]: !this.isValid,
         [`${prefixCls}-float-label`]: this.hasFloatLabel,
-        [`${prefixCls}-required`]: this.getProp('required'),
+        [`${prefixCls}-required`]: required,
+        [`${prefixCls}-required-colors`]: required && (empty || !getConfig('showRequiredColorsOnlyEmpty')),
         [`${prefixCls}-readonly`]: this.readOnly,
       },
       ...args,
@@ -1349,7 +1369,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const repeat = repeats.get(key) || 0;
       const text = range ? this.renderRangeValue(true, v, repeat) : this.processRenderer(v, repeat);
       repeats.set(key, repeat + 1);
-      if (!isNil(text) && text) {
+      if (!isEmpty(text)) {
         const validationResult = validationResults.find(error => error.value === v);
         const disabled = this.isMultipleBlockDisabled(v);
         const className = classNames(
@@ -1501,31 +1521,29 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
   }
 
-  render() {
+  renderHighLight() {
     const wrapper = this.renderWrapper();
+    const { highlight, dataSet, record, name } = this;
+    if (highlight && (this.hasFloatLabel || this.isValid)) {
+      const highlightWrapper = this.highlightRenderer(transformHighlightProps(highlight, { dataSet, record, name }), wrapper);
+      if (isValidElement(highlightWrapper)) {
+        return highlightWrapper;
+      }
+    }
+    return wrapper;
+  }
+
+  render() {
+    const wrapper = this.renderHighLight();
     const help = this.renderHelpMessage();
-    const { highlight } = this;
-    const highlightTip = isBoolean(highlight) ? undefined : highlight;
     if (this.hasFloatLabel) {
       return [
-        highlightTip ? (
-          <Tooltip title={highlightTip} key="wrapper">
-            {wrapper}
-          </Tooltip>
-        ) : isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
+        isValidElement(wrapper) ? cloneElement(wrapper, { key: 'wrapper' }) : wrapper,
         <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
           {this.renderValidationMessage()}
         </Animate>,
         help,
       ];
-    }
-    if (highlightTip && this.isValid) {
-      return (
-        <Tooltip title={highlightTip}>
-          {wrapper}
-          {help}
-        </Tooltip>
-      );
     }
     return (
       <Tooltip

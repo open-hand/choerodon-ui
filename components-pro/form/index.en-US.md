@@ -34,6 +34,7 @@ title: Form
 | onSuccess | 提交成功回调 | Function |  |
 | onError | 提交失败回调 | Function |  |
 | separateSpacing | 切分单元格间隔，当 label 布局为默认值 horizontal 时候使用padding修改单元格横向间距可能需要结合labelwidth效果会更好 | {width:number,height:number} | - |
+| fieldHighlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

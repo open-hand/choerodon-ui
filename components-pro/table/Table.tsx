@@ -71,6 +71,7 @@ import ModalProvider from '../modal-provider/ModalProvider';
 import SelectionTips from './SelectionTips';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { Size } from '../core/enum';
+import { HighlightRenderer } from '../field/FormField';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
 
@@ -566,6 +567,10 @@ export interface TableProps extends DataSetComponentProps {
    * 聚合视图切换钩子
    */
   onAggregationChange?: (aggregation: boolean) => void;
+  /**
+   * 高亮渲染器
+   */
+  cellHighlightRenderer?: HighlightRenderer;
 }
 
 @observer

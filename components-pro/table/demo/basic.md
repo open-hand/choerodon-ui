@@ -199,7 +199,7 @@ class App extends React.Component {
         help: '用户邮箱，可以自动补全',
         computedProps: {
           highlight({ record }) {
-            return record.index === 0;
+            return record.index === 0 ? { title: '提示', content: '邮箱高亮' } : false;
           }
         },
       },
@@ -445,6 +445,7 @@ class App extends React.Component {
         showAllPageSelectionButton
         parityRow
         summary="BASIC DEMO"
+        pagination={{ pageSizeEditable: true }}
       >
         <Column
           name="userid"

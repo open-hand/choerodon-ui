@@ -17,51 +17,77 @@
   line-height: @btn-height-base;
   .btn;
   .btn-default;
-  // Make sure that the target of Button's click event always be `button`
 
-  > i.@{iconfont-css-prefix} {
-    display: inline-block;
-    line-height: inherit;
-    vertical-align: top;
+  &-disabled-wrapper > button {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: inherit;
+    background-color: transparent;
+    border: none;
+    cursor: inherit;
     pointer-events: none;
+
+    &:focus > span,
+    &:active > span {
+      position: relative;
+    }
   }
-  > span {
-    display: inline-block;
-  }
-  > i.@{iconfont-css-prefix} + span,
-  > span + i.@{iconfont-css-prefix} {
-    margin-left: 0.04rem;
-  }
-  > div.btn-loading {
-    display: inline-block;
-    width: 0.32rem;
-    margin-right: 0.04rem;
+
+  // Make sure that the target of Button's click event always be `button`
+  &-disabled-wrapper > button,
+  & {
+    > i.@{iconfont-css-prefix} {
+      display: inline-block;
+      line-height: inherit;
+      vertical-align: top;
+      pointer-events: none;
+    }
 
     > span {
       display: inline-block;
-      width: 0.07rem;
-      height: 0.07rem;
-      background: #000;
-      border-color: #000;
-      border-radius: 50%;
     }
-    .dot1 {
-      transform: scale(1);
-      opacity: 1;
-      animation: btn-loading 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.07s infinite normal;
+
+    > i.@{iconfont-css-prefix} + span,
+    > span + i.@{iconfont-css-prefix} {
+      margin-left: 0.04rem;
     }
-    .dot2 {
-      margin: 0 0.03rem;
-      transform: scale(0.7);
-      opacity: 0.9;
-      animation: btn-loading 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.17s infinite normal;
-    }
-    .dot3 {
-      transform: scale(0.7);
-      opacity: 0.9;
-      animation: btn-loading 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.27s infinite normal;
+
+    > div.btn-loading {
+      display: inline-block;
+      width: 0.32rem;
+      margin-right: 0.04rem;
+
+      > span {
+        display: inline-block;
+        width: 0.07rem;
+        height: 0.07rem;
+        background: #000;
+        border-color: #000;
+        border-radius: 50%;
+      }
+
+      .dot1 {
+        transform: scale(1);
+        opacity: 1;
+        animation: btn-loading 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.07s infinite normal;
+      }
+
+      .dot2 {
+        margin: 0 0.03rem;
+        transform: scale(0.7);
+        opacity: 0.9;
+        animation: btn-loading 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.17s infinite normal;
+      }
+
+      .dot3 {
+        transform: scale(0.7);
+        opacity: 0.9;
+        animation: btn-loading 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.27s infinite normal;
+      }
     }
   }
+
   .@{progress-cls}.@{progress-cls}-loading {
     margin-right: 0.01rem;
     line-height: 1;
@@ -75,6 +101,7 @@
       height: 0.15rem;
     }
   }
+
   &-flat&-primary {
     .btn-flat-primary;
 
@@ -90,6 +117,7 @@
     .@{btn-prefix-cls}-group &:first-child {
       &:not(:last-child) {
         border-right-color: @btn-group-border;
+
         &[disabled] {
           border-right-color: @btn-default-border;
         }
@@ -99,6 +127,7 @@
     .@{btn-prefix-cls}-group &:last-child:not(:first-child),
     .@{btn-prefix-cls}-group & + & {
       border-left-color: @btn-group-border;
+
       &[disabled] {
         border-left-color: @btn-default-border;
       }
@@ -120,6 +149,7 @@
     .@{btn-prefix-cls}-group &:first-child {
       &:not(:last-child) {
         border-right-color: @btn-group-border;
+
         &[disabled] {
           border-right-color: @btn-default-border;
         }
@@ -129,11 +159,13 @@
     .@{btn-prefix-cls}-group &:last-child:not(:first-child),
     .@{btn-prefix-cls}-group & + & {
       border-left-color: @btn-group-border;
+
       &[disabled] {
         border-left-color: @btn-default-border;
       }
     }
   }
+
   &-ghost {
     .btn-ghost;
   }
@@ -150,6 +182,7 @@
   &-circle,
   &-circle-outline {
     .btn-circle(@btn-prefix-cls);
+
     & > i.@{iconfont-css-prefix} {
       margin: 0;
     }
@@ -183,12 +216,11 @@
     .btn-group(@btn-prefix-cls);
   }
 
-  &:not(&-circle):not(&-circle-outline)&-icon-only {
+  &:not(&-circle):not(&-circle-outline) &-icon-only {
     padding-right: 0.08rem;
     padding-left: 0.08rem;
   }
 
-  // http://stackoverflow.com/a/21281554/3040605
   &:focus > span,
   &:active > span {
     position: relative;
@@ -237,7 +269,7 @@
   &-raised {
     box-shadow: @btn-box-shadow;
     transition: background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
-      box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
 
     &:not([disabled]):active {
       box-shadow: @btn-active-box-shadow;
@@ -273,9 +305,11 @@
 
 a.@{btn-prefix-cls} {
   line-height: @btn-height-base - 0.02rem;
+
   &-lg {
     line-height: @btn-height-lg - 0.02rem;
   }
+
   &-sm {
     line-height: @btn-height-sm - 0.02rem;
   }

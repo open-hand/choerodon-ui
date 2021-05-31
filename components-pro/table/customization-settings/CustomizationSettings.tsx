@@ -273,7 +273,6 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
                 {$l('Table', 'fixed_height')}
               </span>
               <ObserverNumberField
-                size={Size.small}
                 className={`${prefixCls}-customization-option-input`}
                 labelLayout={LabelLayout.none}
                 name="height"
@@ -286,7 +285,6 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
                 {$l('Table', 'flex_height')}
               </span>
               <ObserverNumberField
-                size={Size.small}
                 groupClassName={`${prefixCls}-customization-option-input`}
                 labelLayout={LabelLayout.none}
                 name="heightDiff"

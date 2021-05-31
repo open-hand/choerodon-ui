@@ -1,3 +1,4 @@
+import { CSSProperties, ReactNode } from 'react';
 import { action, computed, get, IComputedValue, isObservableObject, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
@@ -9,7 +10,6 @@ import unionBy from 'lodash/unionBy';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { ReactNode } from 'react';
 import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
@@ -69,6 +69,15 @@ function getPropsFromLovConfig(lovCode, propsName) {
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string; };
+export type HighlightProps = {
+  title?: ReactNode;
+  content?: ReactNode;
+  dataSet?: DataSet | undefined;
+  record?: Record | undefined;
+  name?: string | undefined;
+  className?: string;
+  style?: CSSProperties
+};
 
 export type FieldProps = {
   /**
@@ -322,7 +331,7 @@ export type FieldProps = {
   /**
    * 高亮
    */
-  highlight?: boolean | ReactNode;
+  highlight?: boolean | ReactNode | HighlightProps;
 };
 
 export default class Field {

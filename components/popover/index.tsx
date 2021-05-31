@@ -40,7 +40,7 @@ export default class Popover extends Component<PopoverProps, {}> {
         <div className={`${prefixCls}-inner-content`}>{typeof content === 'function' ? content() : content}</div>
       </div>
     );
-  }
+  };
 
   saveTooltip = (node: any) => {
     this.tooltip = node;
