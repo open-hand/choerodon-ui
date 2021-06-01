@@ -46,7 +46,7 @@
   }
 
   &-footer {
-    padding: @table-padding-vertical 0;
+    padding: 0.08rem;
     text-align: left;
   }
 
@@ -58,13 +58,14 @@
 
   &-cell {
     margin: 0;
-    padding: 0.01rem;
+    padding: @table-cell-padding-vertical-base @table-cell-padding-horizontal-base;
 
     &-inner {
       position: relative;
       display: block;
       flex: 1;
       padding: @table-padding-vertical @table-padding-horizontal;
+      border-radius: @table-editable-cell-border-radius-base;
 
       &:focus {
         outline: none;
@@ -98,6 +99,7 @@
         word-break: break-all;
       }
     }
+
     .@{output-prefix-cls}-empty::after {
       display: none;
     }
@@ -245,10 +247,15 @@
     }
   }
 
+  &-cell-editor-bordered &-cell-inner {
+    border: @border-width-base @border-style-base transparent;
+  }
+
   &-thead &-cell,
   &-tfoot &-cell {
     position: relative;
-    color: @heading-color;
+    color: @table-header-color;
+    font-weight: @table-header-font-weight;
     background-color: @table-header-bg;
     border-right: @border-width-base @border-style-base transparent;
   }
@@ -296,7 +303,8 @@
   &-customized-column {
     &,
     .@{table-prefix-cls}-cell-inner {
-      padding: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   }
 
@@ -496,10 +504,6 @@
       border-bottom: @table-border;
     }
 
-    .@{table-prefix-cls}-cell-inner {
-      border: @border-width-base @border-style-base transparent;
-    }
-
     .@{table-prefix-cls}-tbody {
       .@{table-prefix-cls}-cell:last-child {
         border-right: @border-width-base @border-style-base transparent;
@@ -638,12 +642,17 @@
   }
 
   &-cell-editable&-cell &-cell-inner.@{output-prefix-cls}-highlight {
-    border-color:  @table-editable-cell-highlight-border-color;
+    border-color: @table-editable-cell-highlight-border-color;
   }
 
   &-cell-editable&-cell &-cell-inner.@{output-prefix-cls}-invalid {
     background-color: @table-editable-cell-error-bg;
     border-color: @table-editable-cell-error-border-color;
+  }
+
+  &-cell-editable&-cell &-cell-inner.@{output-prefix-cls}-disabled {
+    background-color: @table-editable-cell-disabled-bg;
+    border-color: @table-editable-cell-disabled-border-color;
   }
 
   &-row:last-child &-cell {
@@ -1290,5 +1299,11 @@
 
   &-dropdown-menu {
     .dropdown-menu;
+  }
+
+  &-small {
+    .@{table-prefix-cls}-cell {
+      padding: @table-cell-padding-vertical-sm @table-cell-padding-horizontal-sm;
+    }
   }
 }

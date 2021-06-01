@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate`, `showRequiredColorsOnlyEmpty`, `highlightRenderer` properties.
+- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate`, `showRequiredColorsOnlyEmpty`, `highlightRenderer`, `tableColumnEditorBorder` properties.
 - 🌟 `<pro>Select`: Added `optionTooltip` property.
 - 🌟 `<pro>Form`: Added `labelTooltip`, `fieldHighlightRenderer` properties.
 - 🌟 `<pro>FormField`: Added `labelTooltip`, `highlightRenderer` properties.
@@ -23,7 +23,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter`, `getValidationErrors` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
 - 🌟 `<pro>DataSet.Record`: Added `getValidationErrors` method.
 - 🌟 `<pro>DataSet.Field`: Added `computedProps`, `highlight` properties, deprecated `dynamicProps` property.
-- 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange`, `cellHighlightRenderer` properties.
+- 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange`, `cellHighlightRenderer`, `columnEditorBorder` properties.
 - 🌟 `<pro>Table.Column`: Added `aggregation`, `highlightRenderer` properties.
 - 🌟 `<pro>TextField`: Added `showLengthInfo` property.
 - 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.

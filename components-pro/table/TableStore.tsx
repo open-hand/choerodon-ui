@@ -758,6 +758,18 @@ export default class TableStore {
   }
 
   @computed
+  get columnEditorBorder(): boolean {
+    if ('columnEditorBorder' in this.props) {
+      return this.props.columnEditorBorder;
+    }
+    const tableColumnEditorBorder = getConfig('tableColumnEditorBorder');
+    if (tableColumnEditorBorder !== undefined) {
+      return tableColumnEditorBorder;
+    }
+    return this.border;
+  }
+
+  @computed
   get queryBar(): TableQueryBarType {
     return this.props.queryBar || getConfig('queryBar');
   }

@@ -22,6 +22,7 @@ subtitle: 表格
 | header | 表头 | ReactNode \| (records) => ReactNode |  |
 | footer | 表脚 | ReactNode \| (records) => ReactNode |  |
 | border | 是否显示边框 | boolean | true |
+| columnEditorBorder | 是否显示编辑器边框 | boolean | border |
 | autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |
 | selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` `mousedown` `none` | string | 'rowbox' |
 | alwaysShowRowBox | 是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |

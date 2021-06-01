@@ -93,6 +93,7 @@ export type Config = {
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   tableBorder?: boolean;
+  tableColumnEditorBorder?: boolean;
   tableHighLightRow?: boolean;
   tableParityRow?: boolean;
   tableSelectedHighLightRow?: boolean;

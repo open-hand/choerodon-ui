@@ -17,7 +17,7 @@ import Icon from '../icon';
 import DataSet from '../data-set/DataSet';
 import Field from '../data-set/Field';
 import EventManager from '../_util/EventManager';
-import { getAlignByField, getColumnKey, getColumnLock, getHeader, getPlacementByAlign, isStickySupport } from './utils';
+import { getAlignByField, getColumnKey, getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
 import { ColumnAlign, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
@@ -83,7 +83,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     this.resizeColumn = column;
     const node = this.getNode(column);
     if (node) {
-      this.resizeBoundary = node.getBoundingClientRect().left;
+      this.resizeBoundary = Math.round(node.getBoundingClientRect().left);
     }
   }
 
@@ -153,7 +153,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       const maxWidth = Math.max(
         ...[
           ...element.querySelectorAll(`[data-index=${getColumnKey(column)}] > .${prefixCls}-cell-inner`),
-        ].map(({ clientWidth, scrollWidth, parentNode: { offsetWidth } }) => offsetWidth + scrollWidth - clientWidth),
+        ].map((node) => node.parentNode.offsetWidth + getMaxClientWidth(node) - node.clientWidth + 1),
         minColumnWidth(column),
         column.width ? column.width : 0,
       );
@@ -207,11 +207,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     tableStore.columnResizing = false;
     classes(element).remove(`${prefixCls}-resizing`);
     this.resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
-    const column = this.resizeColumn;
-    if (this.resizePosition && column) {
-      const newWidth = Math.round(Math.max(this.resizePosition - this.resizeBoundary, minColumnWidth(column)));
-      if (newWidth !== column.width) {
-        tableStore.changeCustomizedColumnValue(column, {
+    const { resizeColumn, resizePosition } = this;
+    if (resizePosition && resizeColumn) {
+      const newWidth = Math.round(Math.max(resizePosition - this.resizeBoundary, minColumnWidth(resizeColumn)));
+      if (newWidth !== resizeColumn.width) {
+        tableStore.changeCustomizedColumnValue(resizeColumn, {
           width: newWidth,
         });
       }
@@ -225,7 +225,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         node: { resizeLine },
       },
     } = this.context;
-    const { left: rectLeft } = resizeLine.offsetParent.getBoundingClientRect();
+    const { offsetParent, ownerDocument } = resizeLine;
+    let { left: rectLeft } = offsetParent.getBoundingClientRect();
+    if (ownerDocument) {
+      const { defaultView } = ownerDocument;
+      if (defaultView) {
+        const { borderLeftWidth } = defaultView.getComputedStyle(offsetParent);
+        rectLeft += parseFloat(borderLeftWidth);
+      }
+    }
     left -= rectLeft;
     if (left < 0) {
       left = 0;
@@ -416,7 +424,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
             <OverflowTip
               key="tooltip"
               title={this.getHeader}
-              placement={getPlacementByAlign(cellStyle.textAlign as ColumnAlign)}
+              placement="right"
               strict={tooltip === TableColumnTooltip.always}
               getOverflowContainer={this.getOverflowContainer}
             >

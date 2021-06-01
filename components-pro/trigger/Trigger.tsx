@@ -343,14 +343,12 @@ export default class Trigger extends Component<TriggerProps> {
       onPopupAnimateLeave,
       onPopupAnimateEnd,
       onPopupAlign,
-      popupContent,
       getPopupStyleFromAlign,
       getRootDomNode = this.getRootDomNode,
       transitionName,
       getPopupContainer,
       onMouseDown = this.handlePopupMouseDown,
       forceRender,
-      children,
     } = this.props;
     if (this.mounted || !getPopupContainer) {
       const hidden = this.popupHidden;
@@ -384,7 +382,7 @@ export default class Trigger extends Component<TriggerProps> {
             getPopupContainer={getPopupContainer}
             {...mouseProps}
           >
-            {typeof popupContent === 'function' ? popupContent({ trigger: children }) : popupContent}
+            {this.getPopupContent()}
           </Popup>
         );
       }
@@ -443,13 +441,20 @@ export default class Trigger extends Component<TriggerProps> {
     }
   }
 
+  getPopupContent() {
+    const { popupContent, children } = this.props;
+    return typeof popupContent === 'function' ? popupContent({ trigger: children }) : popupContent;
+  }
+
   popupHiddenBeforeChange(hidden: boolean): boolean {
     const { onPopupHiddenBeforeChange = noop } = this.props;
     if (onPopupHiddenBeforeChange(hidden) === false) {
       return false;
     }
-    const { popupContent } = this.props;
-    return !isEmpty(popupContent);
+    if (hidden === false) {
+      return !isEmpty(this.getPopupContent());
+    }
+    return true;
   }
 
   @mobxAction

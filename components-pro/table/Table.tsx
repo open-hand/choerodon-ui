@@ -265,6 +265,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   border?: boolean;
   /**
+   * 单元格编辑器边框
+   */
+  columnEditorBorder?: boolean;
+  /**
    * 是否自动聚焦
    * @default true
    */
@@ -608,6 +612,10 @@ export default class Table extends DataSetComponent<TableProps> {
      * @default true
      */
     border: PropTypes.bool,
+    /**
+     * 可编辑单元格边框
+     */
+    columnEditorBorder: PropTypes.bool,
     /**
      * 功能按钮
      * 可选值：`add` `delete` `remove` `save` `query` `expandAll` `collapseAll` 或 自定义按钮
@@ -1188,6 +1196,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'header',
       'footer',
       'border',
+      'columnEditorBorder',
       'selectionMode',
       'alwaysShowRowBox',
       'showSelectionTips',
@@ -1267,11 +1276,12 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getClassName(): string | undefined {
     const {
-      tableStore: { prefixCls, border, rowHeight, parityRow, aggregation, size },
+      tableStore: { prefixCls, border, columnEditorBorder, rowHeight, parityRow, aggregation, size },
     } = this;
     return super.getClassName(`${prefixCls}-scroll-position-left`, {
       [`${prefixCls}-${size}`]: size !== Size.default,
       [`${prefixCls}-bordered`]: border,
+      [`${prefixCls}-cell-editor-bordered`]: columnEditorBorder,
       [`${prefixCls}-parity-row`]: parityRow,
       [`${prefixCls}-row-height-fixed`]: isNumber(rowHeight),
       [`${prefixCls}-aggregation`]: aggregation,

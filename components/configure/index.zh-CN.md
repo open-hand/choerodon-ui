@@ -50,6 +50,7 @@ const prefixCls = getConfig('prefixCls');
 | labelLayout | 默认 Form 的 labelLayout | string | horizontal |
 | queryBar | 默认 Table 的 queryBar | string | normal |
 | tableBorder | 默认 Table 的 border | boolean | true |
+| tableColumnEditorBorder | 默认 Table 的 columnEditorBorder | boolean | tableBorder |
 | tableHighLightRow | 默认 Table 当前行高亮 | boolean | true |
 | tableSelectedHighLightRow | 默认 Table 当前勾选行高亮 | boolean | false |
 | tableParityRow | 默认 Table 奇偶行 | boolean |  |
