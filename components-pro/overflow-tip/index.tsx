@@ -36,7 +36,7 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
           if (pl || pr) {
             const textWidth = measureTextWidth(textContent, computedStyle);
             const contentWidth = clientWidth - pl - pr;
-            return textWidth > contentWidth;
+            return textWidth >= contentWidth;
           }
         }
       }

@@ -32,6 +32,7 @@ import TableStore from './TableStore';
 import { TablePaginationConfig } from './Table';
 import { $l } from '../locale-context';
 import { TooltipPlacement } from '../tooltip/Tooltip';
+import measureTextWidth from '../_util/measureTextWidth';
 
 export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
@@ -322,3 +323,26 @@ export function isDraggingStyle(style?: DraggingStyle | NotDraggingStyle): style
   return style ? 'left' in style : false;
 }
 
+export function getMaxClientWidth(element: Element): number {
+  const { textContent, ownerDocument, clientWidth } = element;
+  if (textContent && ownerDocument) {
+    const { scrollWidth } = element;
+    if (scrollWidth > clientWidth) {
+      return scrollWidth;
+    }
+    const { defaultView } = ownerDocument;
+    if (defaultView) {
+      const computedStyle = defaultView.getComputedStyle(element);
+      const { paddingLeft, paddingRight } = computedStyle;
+      const pl = paddingLeft ? parseFloat(paddingLeft) : 0;
+      const pr = paddingRight ? parseFloat(paddingRight) : 0;
+      if (pl || pr) {
+        const textWidth = measureTextWidth(textContent, computedStyle) + pl + pr;
+        if (textWidth > clientWidth) {
+          return textWidth;
+        }
+      }
+    }
+  }
+  return clientWidth;
+}

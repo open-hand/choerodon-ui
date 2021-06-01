@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo, showInvalidDate, showRequiredColorsOnlyEmpty, highlightRenderer 属性。
+- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo, showInvalidDate, showRequiredColorsOnlyEmpty, highlightRenderer, tableColumnEditorBorder 属性。
 - 🌟 `<pro>Select`: 新增 optionTooltip 属性。
 - 🌟 `<pro>Form`: 新增 labelTooltip, highlightRenderer 属性。
 - 🌟 `<pro>FormField`: 新增 labelTooltip, highlight, highlightRenderer 属性。
@@ -23,7 +23,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 setAllPageSelection, getQueryParameter, getValidationErrors 方法和 isAllPageSelection, unSelected, currentUnSelected 值。
 - 🌟 `<pro>DataSet.Record`: 新增 getValidationErrors 方法。
 - 🌟 `<pro>DataSet.Field`: 新增 computedProps, highlight 属性, 废弃 dynamicProps 属性。
-- 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange, cellHighlightRenderer 属性。
+- 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange, cellHighlightRenderer, columnEditorBorder 属性。
 - 🌟 `<pro>Table.Column`: 新增 aggregation, highlightRenderer 属性。
 - 🌟 `<pro>TextField`: 新增 showLengthInfo 属性。
 - 💄 `Tooltip`: title 和 overlay 属性支持钩子函数。

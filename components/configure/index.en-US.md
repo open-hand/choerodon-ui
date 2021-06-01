@@ -39,14 +39,15 @@ const prefixCls = getConfig('prefixCls');
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | axios | Replace the built-in axios instance | AxiosInstance |  |
-| dataKey | default DataSet's dataKey | string | rows |
-| totalKey | default DataSet's totalKey | string | total |
+| dataKey | default dataKey of DataSet | string | rows |
+| totalKey | default totalKey of DataSet | string | total |
 | statusKey | The status key in the data submitted by the DataSet by default. | string | \_\_status |
 | tlsKey | Multi-language key in the DataSet data by default. | string | \_\_tls |
 | status | Default status map of data submitted by DataSet. | { add: string, update: string, delete: string } | { add: 'add', update: 'update', delete: 'delete' } |
-| labelLayout | default Form's labelLayout | string | horizontal |
-| queryBar | default table's queryBar | string | normal |
-| tableBorder | default table's border | boolean | true |
+| labelLayout | default labelLayout of Form | string | horizontal |
+| queryBar | default queryBar of table | string | normal |
+| tableBorder | default border of table | boolean | true |
+| tableColumnEditorBorder | default columnEditorBorder of Table | boolean | tableBorder |
 | tableHighLightRow | Default Table current line highlight | boolean | true |
 | tableSelectedHighLightRow | Default Table selected line highlight | boolean | false |
 | tableParityRow | Default Table parity line | boolean |  |
