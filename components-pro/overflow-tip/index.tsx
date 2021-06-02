@@ -1,8 +1,17 @@
-import React, { FunctionComponent, useCallback, useRef } from 'react';
+import React, { Children, cloneElement, FunctionComponent, useCallback, useRef } from 'react';
 import { findDOMNode } from 'react-dom';
 import noop from 'lodash/noop';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import measureTextWidth from '../_util/measureTextWidth';
+
+function renderTitle(props) {
+  if (props) {
+    const { trigger } = props;
+    if (trigger) {
+      return Children.map(trigger, (item) => cloneElement<any>(item, { ref: null, className: null }));
+    }
+  }
+}
 
 export interface OverflowTipProps extends TooltipProps {
   strict?: boolean;
@@ -17,7 +26,7 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
       return findDOMNode(current) as Element;
     }
   }, [ref]);
-  const { children, strict, getOverflowContainer = defaultGetOverflowContainer, onHiddenBeforeChange = noop, ...rest } = props;
+  const { children, strict, getOverflowContainer = defaultGetOverflowContainer, onHiddenBeforeChange = noop, title = renderTitle, ...rest } = props;
   const isOverFlow = useCallback((): boolean => {
     const element = getOverflowContainer();
     if (element) {
@@ -56,6 +65,7 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
   return (
     <Tooltip
       {...rest}
+      title={title}
       onHiddenBeforeChange={strict ? onHiddenBeforeChange : handleHiddenBeforeChange}
       ref={ref}
     >

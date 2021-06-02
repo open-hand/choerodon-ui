@@ -19,7 +19,7 @@ import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
 import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
-import { Renderer, HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
+import { HighlightRenderer, Renderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { onCellProps } from 'choerodon-ui/pro/lib/table/Column';

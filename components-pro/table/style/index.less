@@ -566,7 +566,7 @@
     transform: translateX(-50%);
   }
 
-  &-parity-row &-row[data-even-row='true'] > td {
+  &-parity-row &-row:nth-of-type(even) > td {
     background-color: @table-even-row-bg;
   }
 
@@ -581,8 +581,8 @@
 
   &-row:hover,
   &-row-hover,
-  &-parity-row &-row[data-even-row='true']:hover,
-  &-parity-row &-row-hover[data-even-row='true'] {
+  &-parity-row &-row:nth-of-type(even):hover,
+  &-parity-row &-row-hover:nth-of-type(even) {
     &,
     & + .@{table-prefix-cls}-expanded-row {
       & > td {
@@ -593,7 +593,7 @@
 
   &-row-current,
   &-row-current:hover,
-  &-parity-row &-row-current[data-even-row='true'] {
+  &-parity-row &-row-current:nth-of-type(even) {
     &.@{table-prefix-cls}-row-highlight,
     &.@{table-prefix-cls}-row-highlight + .@{table-prefix-cls}-expanded-row {
       & > td {
@@ -604,7 +604,7 @@
 
   &-row-clicked,
   &-row-clicked:hover,
-  &-parity-row &-row-clicked[data-even-row='true'] {
+  &-parity-row &-row-clicked:nth-of-type(even) {
     &.@{table-prefix-cls}-row-highlight,
     &.@{table-prefix-cls}-row-highlight + .@{table-prefix-cls}-expanded-row {
       & > td {
@@ -614,7 +614,7 @@
   }
 
   &-row-selected&-row:hover,
-  &-parity-row &-row-selected&-row[data-even-row='true']:hover {
+  &-parity-row &-row-selected&-row:nth-of-type(even):hover {
     &,
     & + .@{table-prefix-cls}-expanded-row {
       & > td {
@@ -624,7 +624,7 @@
   }
 
   &-row-selected,
-  &-parity-row &-row-selected[data-even-row='true'] {
+  &-parity-row &-row-selected:nth-of-type(even) {
     &,
     & + .@{table-prefix-cls}-expanded-row {
       & > td {

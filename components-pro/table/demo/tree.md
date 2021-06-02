@@ -123,6 +123,7 @@ class App extends React.Component {
         border={border}
         expandedRowRenderer={expandedRender && expandedRowRenderer}
         rowNumber
+        parityRow
       >
         <Column name="text" editor renderer={iconRenderer} width={450} />
         <Column name="url" editor />

@@ -20,9 +20,6 @@ import {
   Button,
 } from 'choerodon-ui/pro';
 
-const { FormVirtualGroup }=Form;
-
-
 class App extends React.Component {
 
   state = {
@@ -58,7 +55,7 @@ class App extends React.Component {
         />
         {
           showGroup && (
-            <FormVirtualGroup className="virtual-group">
+            <>
               <TextField
                 label="姓名1"
               />
@@ -67,7 +64,7 @@ class App extends React.Component {
               />
               {
                 showGroup2 && (
-                  <FormVirtualGroup className="virtual-group2">
+                  <>
                     <TextField
                       label="姓名3"
                     />
@@ -77,10 +74,10 @@ class App extends React.Component {
                     <TextField
                       label="姓名5"
                     />
-                  </FormVirtualGroup>
+                  </>
                 )
               }
-            </FormVirtualGroup>
+            </>
           )
         }
         <div>

@@ -7,9 +7,11 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import { BooleanValue, FieldType } from '../data-set/enum';
+import { Tooltip as TextTooltip } from '../core/enum';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { processFieldValue } from '../data-set/utils';
 import isEmpty from '../_util/isEmpty';
+import OverflowTip from '../overflow-tip';
 
 export interface OutputProps extends FormFieldProps {
 }
@@ -94,7 +96,25 @@ export default class Output extends FormField<OutputProps> {
     return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;
   }
 
+  @autobind
+  getOverflowContainer() {
+    return this.element;
+  }
+
   renderWrapper(): ReactNode {
-    return <span {...this.getMergedProps()}>{this.getRenderedValue()}</span>;
+    const { tooltip } = this.props;
+    const wrapper = <span {...this.getMergedProps()}>{this.getRenderedValue()}</span>;
+    return [TextTooltip.always, TextTooltip.overflow].includes(tooltip!) && !this.multiLine ? (
+      <OverflowTip
+        key="tooltip"
+        placement="right"
+        strict={tooltip === TextTooltip.always}
+        getOverflowContainer={this.getOverflowContainer}
+      >
+        {wrapper}
+      </OverflowTip>
+    ) : (
+      wrapper
+    );
   }
 }
