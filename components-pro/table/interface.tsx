@@ -101,3 +101,7 @@ export {
 export {
   TableWrapperProps,
 } from './TableWrapper';
+
+export {
+  TableContextValue,
+} from './TableContext';

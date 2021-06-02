@@ -15,10 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo, showInvalidDate, showRequiredColorsOnlyEmpty, highlightRenderer, tableColumnEditorBorder 属性。
+- 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo, showInvalidDate, showRequiredColorsOnlyEmpty, highlightRenderer, tableColumnEditorBorder 属性, 废弃 excludeUseColonTagList 属性。
 - 🌟 `<pro>Select`: 新增 optionTooltip 属性。
-- 🌟 `<pro>Form`: 新增 labelTooltip, highlightRenderer 属性。
-- 🌟 `<pro>FormField`: 新增 labelTooltip, highlight, highlightRenderer 属性。
+- 🌟 `<pro>Form.Item`: 新增 Item 组件。
+- 🌟 `<pro>Form`: 新增 labelTooltip, highlightRenderer, layout 属性, 废弃 excludeUseColonTagList 属性。
+- 🌟 `<pro>FormField`: 新增 labelTooltip, highlight, highlightRenderer, useColon 属性。
 - 🌟 `<pro>Button`: 新增 tooltip 属性。
 - 🌟 `<pro>DataSet`: 新增 setAllPageSelection, getQueryParameter, getValidationErrors 方法和 isAllPageSelection, unSelected, currentUnSelected 值。
 - 🌟 `<pro>DataSet.Record`: 新增 getValidationErrors 方法。

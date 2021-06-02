@@ -155,13 +155,16 @@ export type Config = {
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
   useColon?: boolean;
-  excludeUseColonTagList?: string[];
   textFieldAutoComplete?: 'on' | 'off';
   resultStatusRenderer?: object;
   numberFieldNonStrictStep?: boolean;
   numberFieldFormatter?: FormatNumberFunc;
   numberFieldFormatterOptions?: FormatNumberFuncOptions;
   labelTooltip?: Tooltip;
+  /**
+   * @deprecated
+   */
+  excludeUseColonTagList?: string[];
   /**
    * @deprecated
    * 同 tableColumnDraggable

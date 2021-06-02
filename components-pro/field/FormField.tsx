@@ -99,6 +99,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   labelTooltip?: LabelTooltip;
   /**
+   * 是否使用冒号
+   */
+  useColon?: boolean;
+  /**
    * 字段名
    */
   name?: string;
@@ -384,6 +388,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * 高亮渲染器
      */
     highlightRenderer: PropTypes.func,
+    /**
+     * 是否使用冒号
+     */
+    useColon: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -682,6 +690,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'highlightRenderer',
       'labelTooltip',
       'isFlat',
+      'useColon',
     ]);
   }
 

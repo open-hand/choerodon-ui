@@ -23,7 +23,6 @@ import Responsive from 'choerodon-ui/lib/responsive/Responsive';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isFunction from 'lodash/isFunction';
-import isArray from 'lodash/isArray';
 import axios from '../axios';
 import autobind from '../_util/autobind';
 import { FormField, FormFieldProps, getFieldsById, HighlightRenderer } from '../field/FormField';
@@ -31,12 +30,13 @@ import FormContext from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
+import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
 import { defaultColumns, defaultExcludeUseColonTag, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import OverflowTip from '../overflow-tip';
 import { DataSetEvents } from '../data-set/enum';
+import Item from './Item';
 
 /**
  * 表单name生成器
@@ -81,6 +81,7 @@ export interface FormProps extends DataSetComponentProps {
    */
   useColon?: boolean,
   /**
+   * @deprecated
    * 不使用冒号的列表
    */
   excludeUseColonTagList?: string[],
@@ -154,6 +155,10 @@ export interface FormProps extends DataSetComponentProps {
    */
   onError?: (error: Error) => void;
   /**
+   * 布局
+   */
+  layout?: FormLayout;
+  /**
    * 切分单元格间隔，当label布局为默认值horizontal时候使用padding修改单元格横向间距可能需要结合labelwidth效果会更好
    */
   separateSpacing?: SeparateSpacing;
@@ -173,6 +178,7 @@ const labelLayoutPropTypes = PropTypes.oneOf([
   LabelLayout.vertical,
   LabelLayout.placeholder,
   LabelLayout.float,
+  LabelLayout.none,
 ]);
 
 @observer
@@ -298,9 +304,12 @@ export default class Form extends DataSetComponent<FormProps> {
     suffixCls: 'form',
     columns: defaultColumns,
     labelWidth: defaultLabelWidth,
+    layout: FormLayout.table,
   };
 
   static contextType = FormContext;
+
+  static Item = Item;
 
   fields: FormField<FormFieldProps>[] = [];
 
@@ -533,6 +542,7 @@ export default class Form extends DataSetComponent<FormProps> {
       'excludeUseColonTagList',
       'separateSpacing',
       'fieldHighlightRenderer',
+      'layout',
     ]);
   }
 
@@ -626,40 +636,31 @@ export default class Form extends DataSetComponent<FormProps> {
     let noLabel = true;
     const childrenArray: (ReactElement<any> & { ref })[] = [];
     const separateSpacingWidth: number = this.separateSpacing ? this.separateSpacing.width / 2 : 0;
-    Children.forEach(children, child => {
+    Children.forEach<ReactNode>(children, (child) => {
       if (isValidElement(child)) {
-        const setChild = (arr, outChild, groupProps = {}) => {
-          if (
-            noLabel === true &&
-            labelLayout === LabelLayout.horizontal &&
-            getProperty(outChild.props, 'label', dataSet, record)
-          ) {
-            noLabel = false;
-          }
-          if (!outChild?.type) {
-            return;
-          }
-          if (outChild?.type && (outChild.type as any).displayName === 'FormVirtualGroup') {
-            if (!outChild.props.children) {
-              return;
+        const setChild = (arr: ReactElement<any>[], outChild: ReactElement<any>, groupProps = {}) => {
+          const { type } = outChild;
+          if (type) {
+            if (
+              noLabel === true &&
+              labelLayout === LabelLayout.horizontal &&
+              getProperty(outChild.props, 'label', dataSet, record)
+            ) {
+              noLabel = false;
             }
-            if (isArray(outChild.props.children)) {
-              outChild.props.children.forEach((c) => {
-                setChild(arr, c, omit(outChild.props, ['children']));
+            const { props: { children: outChildChildren, ...outChildProps } } = outChild;
+            if ((type as any).__PRO_FORM_VIRTUAL_GROUP && outChildChildren) {
+              Children.forEach<ReactElement<any>>(outChildChildren, (c) => {
+                if (isValidElement<any>(c)) {
+                  setChild(arr, c, omit(outChildProps, ['children']));
+                }
               });
-            } else if (outChild?.type && (outChild.type as any).displayName === 'FormVirtualGroup') {
-              setChild(arr, outChild.props.children, omit(outChild.props, ['children']));
             } else {
-              arr.push(cloneElement(outChild.props.children, {
+              arr.push(cloneElement<any>(outChild, {
                 ...groupProps,
-                ...outChild.props.children.props,
+                ...outChild.props,
               }));
             }
-          } else {
-            arr.push(cloneElement(outChild, {
-              ...groupProps,
-              ...outChild.props,
-            }));
           }
         };
         setChild(childrenArray, child);
@@ -679,11 +680,7 @@ export default class Form extends DataSetComponent<FormProps> {
     for (let index = 0, len = childrenArray.length; index < len;) {
       const { props, key, type, ref } = childrenArray[index];
 
-      let TagName = type;
-      if (isFunction(type)) {
-        TagName = (type as any).displayName;
-      }
-
+      const TagName = isFunction(type) ? (type as any).displayName : type;
       const label = getProperty(props, 'label', dataSet, record);
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
@@ -694,6 +691,7 @@ export default class Form extends DataSetComponent<FormProps> {
         newLine,
         className,
         fieldClassName,
+        useColon: fieldUseColon = useColon,
         ...otherProps
       } = props as any;
       let newColSpan = colSpan;
@@ -735,12 +733,12 @@ export default class Form extends DataSetComponent<FormProps> {
         [`${prefixCls}-readonly`]: readOnly,
         [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
         [`${prefixCls}-label-output`]: isOutput,
-        [`${prefixCls}-label-useColon`]: useColon && !excludeUseColonTagList.find(v => v === TagName),
+        [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
         [`${prefixCls}-output`]: isOutput,
       });
-      if (!noLabel) {
+      if (!noLabel && !(type as any).__PRO_FORM_ITEM) {
         if (!isNaN(fieldLabelWidth)) {
           labelWidth[colIndex] = Math.max(labelWidth[colIndex], fieldLabelWidth);
         }
@@ -787,7 +785,7 @@ export default class Form extends DataSetComponent<FormProps> {
       cols.push(
         <td
           key={`row-${rowIndex}-col-${colIndex}-field`}
-          colSpan={noLabel ? newColSpan : newColSpan * 2 - 1}
+          colSpan={noLabel ? newColSpan : newColSpan * 2 - ((type as any).__PRO_FORM_ITEM ? 0 : 1)}
           rowSpan={rowSpan}
           className={fieldClassName}
           style={this.labelLayout === LabelLayout.horizontal
@@ -851,13 +849,12 @@ export default class Form extends DataSetComponent<FormProps> {
 
     const isAutoWidth = this.labelWidth === 'auto' || (isArrayLike(this.labelWidth) && this.labelWidth.some(w => w === 'auto'));
 
-    return [
-      this.getHeader(),
-      <table style={tableStyle} key="form-body" className={`${isAutoWidth ? 'auto-width' : ''}`}>
+    return (
+      <table key="form-body" style={tableStyle} className={`${isAutoWidth ? 'auto-width' : ''}`}>
         {cols.length ? <colgroup>{cols}</colgroup> : undefined}
         <tbody>{rows}</tbody>
-      </table>,
-    ];
+      </table>
+    );
   }
 
   render() {
@@ -874,6 +871,8 @@ export default class Form extends DataSetComponent<FormProps> {
       disabled,
       readOnly,
       fieldHighlightRenderer,
+      props,
+      useColon,
     } = this;
     const { formNode } = this.context;
     const value = {
@@ -889,15 +888,12 @@ export default class Form extends DataSetComponent<FormProps> {
       disabled,
       readOnly,
       fieldHighlightRenderer,
+      useColon,
     };
-    let children: ReactNode = this.rasterizedChildren();
-    if (!formNode) {
-      children = (
-        <form {...this.getMergedProps()} noValidate>
-          {children}
-        </form>
-      );
-    }
+    const children: ReactNode = [
+      this.getHeader(),
+      props.layout === FormLayout.table ? this.rasterizedChildren() : props.children,
+    ];
     return (
       <Responsive
         items={[
@@ -908,7 +904,15 @@ export default class Form extends DataSetComponent<FormProps> {
         ]}
         onChange={this.handleResponsive}
       >
-        <FormContext.Provider value={value}>{children}</FormContext.Provider>
+        <FormContext.Provider value={value}>
+          {
+            formNode ? children : (
+              <form {...this.getMergedProps()} noValidate>
+                {children}
+              </form>
+            )
+          }
+        </FormContext.Provider>
       </Responsive>
     );
   }

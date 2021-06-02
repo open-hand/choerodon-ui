@@ -1,4 +1,8 @@
 import React from 'react';
 import TableStore from './TableStore';
 
-export default React.createContext<{ tableStore: TableStore }>({} as any);
+export interface TableContextValue {
+  tableStore: TableStore
+}
+
+export default React.createContext<TableContextValue>({ tableStore: {} as TableStore });

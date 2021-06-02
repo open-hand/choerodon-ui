@@ -12,6 +12,11 @@ export enum LabelLayout {
   none = 'none',
 }
 
+export enum FormLayout {
+  table = 'table',
+  none = 'none',
+}
+
 export enum ResponsiveKeys {
   xs = 'xs',
   sm = 'sm',
