@@ -468,17 +468,19 @@ class App extends React.Component {
         <Column name="code_select" editor width={150} />
         <Column name="codeMultiple" editor width={150} />
         <Column name="codeMultiple_code" width={150} />
-        <Column name="sex" editor={<SelectBox />} width={150} />
-        <Column header="性别id" renderer={sexIdRenderer} />
-        <Column name="sexMultiple" editor width={150} />
-        <Column name="accountMultiple" editor width={150} />
-        <Column name="date.startDate" editor width={150} />
         <>
+          <Column name="sex" editor={<SelectBox />} width={150} />
+          <Column header="性别id" renderer={sexIdRenderer} />
+          <Column name="sexMultiple" editor width={150} />
+          <Column name="accountMultiple" editor width={150} />
+          <Column name="date.startDate" editor width={150} />
+        </>
+        <fragment>
           <Column name="date.endDate" editor width={150} />
           <Column header="时间" name="time" editor={<DateTimePicker />} width={150} />
           <Column name="numberMultiple" editor width={150} minWidth={50} />
           <Column name="frozen" editor width={50} minWidth={50} lock="right" />
-        </>
+        </fragment>
       </Table>
     );
   }

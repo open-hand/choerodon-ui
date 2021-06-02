@@ -508,7 +508,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     // Fix that the `ColumnGroup` array cannot be rendered in the Table
     const flattenColumns = flatten(children).map((column: React.ReactElement) => {
       if (column) {
-        if ((column.type as any)?.__PRO_TABLE_COLUMN_GROUP) {
+        if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
           const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
           return childColumns.map((childColumn, index) => {
             // 把 ColumnGroup 设置的属性覆盖到 Column
