@@ -202,9 +202,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @observable renderedTextContent?: string;
 
-  constructor(props, context) {
-    super(props, context);
-    this.handleChangeWait = this.getHandleChange(props);
+  get clearButton(): boolean {
+    const { clearButton } = this.props;
+    return clearButton && !this.readOnly && !this.disabled;
   }
 
   /**
@@ -216,6 +216,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       return this.props.showLengthInfo;
     }
     return getConfig('showLengthInfo');
+  }
+
+  constructor(props, context) {
+    super(props, context);
+    this.handleChangeWait = this.getHandleChange(props);
   }
 
   @autobind
@@ -473,17 +478,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
                 rangeTarget === undefined || !this.isFocused
                   ? ''
                   : this.text === undefined
-                    ? rangeTarget === 0
-                      ? startValue
-                      : endValue
-                    : this.text
+                  ? rangeTarget === 0
+                    ? startValue
+                    : endValue
+                  : this.text
               }
               placeholder={
                 rangeTarget === undefined || !this.isFocused
                   ? ''
                   : rangeTarget === 0
-                    ? startPlaceholder
-                    : endPlaceHolder
+                  ? startPlaceholder
+                  : endPlaceHolder
               }
               readOnly={this.readOnly}
               style={editorStyle}
@@ -577,10 +582,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
       multiple,
       range,
-      props: { style, isFlat, clearButton },
+      clearButton,
+      props: { style, isFlat },
     } = this;
     const otherProps = this.getOtherProps();
-    const { onMouseEnter,onMouseLeave } = otherProps;
+    const { onMouseEnter, onMouseLeave } = otherProps;
     if (multiple) {
       const { height } = (style || {}) as CSSProperties;
       const tags = (
@@ -672,7 +678,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   wrapperSuffix(children: ReactNode, props?: any): ReactNode {
-    const { prefixCls, props: { clearButton } } = this;
+    const { prefixCls, clearButton } = this;
     if (isValidElement<any>(children)) {
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
@@ -773,10 +779,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getInnerSpanButton(): ReactNode {
     const {
-      props: { clearButton, isFlat },
+      props: { isFlat },
+      clearButton,
       prefixCls,
     } = this;
-    if (clearButton && !this.readOnly && !this.disabled) {
+    if (clearButton) {
       const classString = classNames(`${prefixCls}-clear-button`, {
         [`${prefixCls}-clear-button-flat`]: isFlat,
       });
@@ -849,7 +856,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleKeyDown(e) {
-    const { clearButton } = this.props;
+    const { clearButton } = this;
     if (!this.disabled && !this.readOnly) {
       if (this.range && e.keyCode === KeyCode.TAB) {
         if (this.rangeTarget === 0 && !e.shiftKey) {
@@ -873,7 +880,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
             default:
           }
         }
-      } else if (clearButton && !this.editable) {
+      } else if (clearButton) {
         switch (e.keyCode) {
           case KeyCode.DELETE:
           case KeyCode.BACKSPACE:

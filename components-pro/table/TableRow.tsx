@@ -455,6 +455,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       prefixCls,
       expandIconAsCell,
       overflowX,
+      parityRow,
     } = tableStore;
     const expandRows: ReactNode[] = [];
     if (isExpanded || this.childrenRendered) {
@@ -482,10 +483,11 @@ export default class TableRow extends Component<TableRowProps, any> {
         }
 
         if (!isExpanded) {
-          rowProps.style.display = 'none';
+          rowProps.hidden = true;
         }
+        const Element = isExpanded || !parityRow ? 'tr' : 'div';
         expandRows.push(
-          <tr {...rowExternalProps} {...rowProps}>
+          <Element {...rowExternalProps} {...rowProps}>
             {expandIconAsCell && <td key={EXPAND_KEY} />}
             <td
               key={`${EXPAND_KEY}-rest`}
@@ -496,7 +498,7 @@ export default class TableRow extends Component<TableRowProps, any> {
                 {expandedRowRenderer({ dataSet: record.dataSet!, record })}
               </div>
             </td>
-          </tr>,
+          </Element>,
         );
       }
       if (isValidElement<ExpandedRowProps>(children)) {
@@ -572,7 +574,6 @@ export default class TableRow extends Component<TableRowProps, any> {
       mouseBatchChooseState,
       dragColumnAlign,
       rowDraggable,
-      isTree,
       parityRow,
       props: { onRow, rowRenderer, selectionMode },
     } = tableStore;
@@ -606,15 +607,9 @@ export default class TableRow extends Component<TableRowProps, any> {
       className, // 增加可以自定义类名满足拖拽功能
       rowExternalProps.className,
     );
-    let evenParentRow = false;
-    if (parityRow && record && (!isTree || !record.parent)) {
-      const firstRecordId = record.dataSet!.get(0) ? record.dataSet!.get(0)!.id : 0;
-      evenParentRow = firstRecordId % 2 === 0 ? id % 2 !== 0 : (id + 1) % 2 !== 0;
-    }
     const rowProps: HTMLProps<HTMLTableRowElement> & {
       style: CSSProperties;
       'data-index': number;
-      'data-even-row': string;
     } = {
       ref: (ref) => {
         this.saveRef(ref);
@@ -629,7 +624,6 @@ export default class TableRow extends Component<TableRowProps, any> {
       tabIndex: -1,
       disabled,
       'data-index': id,
-      'data-even-row': evenParentRow.toString(),
     };
     if (!isStickySupport() && tableStore.overflowX) {
       rowProps.onMouseEnter = this.handleMouseEnter;
@@ -637,8 +631,9 @@ export default class TableRow extends Component<TableRowProps, any> {
     }
 
     if (hidden) {
-      rowProps.style.display = 'none';
+      rowProps.hidden = true;
     }
+    const Element = hidden && parityRow ? 'div' : 'tr';
     if (this.needSaveRowHeight()) {
       rowProps.style.height = pxToRem(get(tableStore.lockColumnsBodyRowsHeight, key) as number);
     }
@@ -662,13 +657,13 @@ export default class TableRow extends Component<TableRowProps, any> {
     }
 
     const tr = (
-      <tr
+      <Element
         key={key}
         {...rowExternalProps}
         {...rowProps}
       >
         {this.getColumns()}
-      </tr>
+      </Element>
     );
     return [
       this.needSaveRowHeight() ? (

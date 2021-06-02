@@ -20,7 +20,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Row from 'choerodon-ui/lib/row';
 import Col from 'choerodon-ui/lib/col';
-import { Tooltip as LabelTooltip } from '../core/enum';
+import { Tooltip as TextTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -97,7 +97,8 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 用tooltip显示标签内容
    * 可选值：`none` `always` `overflow`
    */
-  labelTooltip?: LabelTooltip;
+  labelTooltip?: TextTooltip;
+  tooltip?: TextTooltip;
   /**
    * 是否使用冒号
    */
@@ -752,7 +753,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           [`${prefixCls}-required`]: required,
           [`${prefixCls}-readonly`]: this.readOnly,
         });
-        const isTooltip = [LabelTooltip.always, LabelTooltip.overflow].includes(labelTooltip);
+        const isTooltip = [TextTooltip.always, TextTooltip.overflow].includes(labelTooltip);
         const node = <div className={classString} title={!isTooltip && isString(label) ? label : undefined}>{label}</div>;
         return (
           <div className={`${prefixCls}-label-wrapper`}>
@@ -760,7 +761,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
               isTooltip ? (
                 <OverflowTip
                   title={label}
-                  strict={labelTooltip === LabelTooltip.always}
+                  strict={labelTooltip === TextTooltip.always}
                   placement="top"
                 >
                   {node}
@@ -1248,7 +1249,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       field,
       dataSet,
       prefixCls,
-      props: { renderer },
+      props: { renderer, tooltip },
     } = this;
     const multiLineFields = findBindFields(field as Field, record!.fields, true);
     if (renderer) {
@@ -1283,8 +1284,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                     }
                   }
                 }
+                const value = record?.get(fieldItem.get('name'));
+                const notEmpty = !isEmpty(value);
                 // 值集中不存在 再去取直接返回的值
-                const text = this.processText(processValue || this.getText(record?.get(fieldItem.get('name'))));
+                const text = this.processText(processValue || this.getText(value));
                 this.multipleValidateMessageLength++;
                 const inner = record?.status === RecordStatus.add ? '' :
                   <span className={`${prefixCls}-multi-value-invalid`}>{text}</span>;
@@ -1301,39 +1304,56 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                   </Tooltip>
                 );
                 const label = fieldItem.get('label');
+                const useTooltip = [TextTooltip.always, TextTooltip.overflow].includes(tooltip!);
+                const labelCol = label && (
+                  <Col
+                    span={8}
+                    className={required ? `${prefixCls}-multi-label ${prefixCls}-multi-label-required` : `${prefixCls}-multi-label`}
+                  >
+                    {fieldItem.get('label')}
+                  </Col>
+                );
+                const fieldCol = (
+                  <Col
+                    span={label ? 16 : 24}
+                    className={
+                      validationHidden ?
+                        `${prefixCls}-multi-value` :
+                        `${prefixCls}-multi-value ${prefixCls}-multi-value-invalid`
+                    }
+                  >
+                    {
+                      notEmpty ? (
+                        <Tooltip
+                          suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
+                          key={`${key}-${repeat}`}
+                          title={validationMessage}
+                          theme="light"
+                          placement="bottomLeft"
+                          hidden={validationHidden}
+                        >
+                          {text}
+                        </Tooltip>
+                      ) : validationInner
+                    }
+                  </Col>
+                );
                 return (
                   <Row key={`${record?.index}-multi-${fieldItem.get('name')}`} className={`${prefixCls}-multi`}>
-                    {label && (
-                      <Col
-                        span={8}
-                        className={required ? `${prefixCls}-multi-label ${prefixCls}-multi-label-required` : `${prefixCls}-multi-label`}
-                      >
-                        {fieldItem.get('label')}
-                      </Col>
-                    )}
-                    <Col
-                      span={label ? 16 : 24}
-                      className={
-                        validationHidden ?
-                          `${prefixCls}-multi-value` :
-                          `${prefixCls}-multi-value ${prefixCls}-multi-value-invalid`
-                      }
-                    >
-                      {record?.get(fieldItem.get('name')) ?
-                        (
-                          <Tooltip
-                            suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-                            key={`${key}-${repeat}`}
-                            title={validationMessage}
-                            theme="light"
-                            placement="bottomLeft"
-                            hidden={validationHidden}
-                          >
-                            {text}
-                          </Tooltip>
-                        ) : validationInner
-                      }
-                    </Col>
+                    {
+                      labelCol && useTooltip ? (
+                        <OverflowTip title={label} placement="right" strict={tooltip === TextTooltip.always}>
+                          {labelCol}
+                        </OverflowTip>
+                      ) : labelCol
+                    }
+                    {
+                      useTooltip ? (
+                        <OverflowTip title={notEmpty ? text : validationMessage} placement="right" strict={tooltip === TextTooltip.always}>
+                          {fieldCol}
+                        </OverflowTip>
+                      ) : fieldCol
+                    }
                   </Row>
                 );
               }

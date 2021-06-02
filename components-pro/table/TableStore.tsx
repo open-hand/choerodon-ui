@@ -1,4 +1,5 @@
 import React, { Children, isValidElement, ReactNode } from 'react';
+import { isFragment } from 'react-is';
 import { action, computed, get, observable, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
@@ -264,71 +265,78 @@ export function normalizeColumns(
   const leftColumns: any[] = [];
   const rightColumns: any[] = [];
   let hasAggregationColumn: boolean = false;
-  Children.forEach(elements, (element) => {
-    if (!isValidElement(element) || !(element.type as typeof Column).__PRO_TABLE_COLUMN) {
-      return;
-    }
-    const { props, key } = element;
-    const column: any = {
-      ...props,
-    };
-    if (key) {
-      column.key = key;
-    } else if (isNil(getColumnKey(column))) {
-      column.key = `anonymous-${defaultKey[0]++}`;
-    }
-    const { children, aggregation } = column;
-    if (!hasAggregationColumn && aggregation) {
-      hasAggregationColumn = true;
-    }
-    if (tableAggregation || !aggregation) {
-      if (customizedColumns) {
-        Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
-      }
-      if (parent) {
-        column.lock = parent.lock;
-      }
-      const [childrenColumns, childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
-      column.children = childrenColumns;
-      if (!hasAggregationColumn && childrenHasAffregationColumn) {
-        hasAggregationColumn = childrenHasAffregationColumn;
-      }
-      if (parent || !column.lock) {
-        if (column.sort === undefined) {
-          column.sort = columnSort.center++;
+  const normalizeColumn = (element) => {
+    if (isValidElement<any>(element)) {
+      const { props, key, type } = element;
+      if (isFragment(element)) {
+        const { children } = props;
+        if (children) {
+          Children.forEach(children, normalizeColumn);
         }
-        columns.push(column);
-      } else if (column.lock === true || column.lock === ColumnLock.left) {
-        if (column.sort === undefined) {
-          column.sort = columnSort.left++;
+      } else if ((type as typeof Column).__PRO_TABLE_COLUMN) {
+        const column: any = {
+          ...props,
+        };
+        if (key) {
+          column.key = key;
+        } else if (isNil(getColumnKey(column))) {
+          column.key = `anonymous-${defaultKey[0]++}`;
         }
-        leftColumns.push(column);
-      } else {
-        if (column.sort === undefined) {
-          column.sort = columnSort.right++;
+        const { children, aggregation } = column;
+        if (!hasAggregationColumn && aggregation) {
+          hasAggregationColumn = true;
         }
-        rightColumns.push(column);
-      }
-    } else {
-      const [nodes, childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
-      if (!hasAggregationColumn && childrenHasAffregationColumn) {
-        hasAggregationColumn = childrenHasAffregationColumn;
-      }
-      if (parent) {
-        parent.children = nodes;
-      } else {
-        nodes.forEach((node) => {
-          if (!node.lock) {
-            columns.push(node);
-          } else if (node.lock === true || node.lock === ColumnLock.left) {
-            leftColumns.push(node);
-          } else {
-            rightColumns.push(node);
+        if (tableAggregation || !aggregation) {
+          if (customizedColumns) {
+            Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
           }
-        });
+          if (parent) {
+            column.lock = parent.lock;
+          }
+          const [childrenColumns, childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
+          column.children = childrenColumns;
+          if (!hasAggregationColumn && childrenHasAffregationColumn) {
+            hasAggregationColumn = childrenHasAffregationColumn;
+          }
+          if (parent || !column.lock) {
+            if (column.sort === undefined) {
+              column.sort = columnSort.center++;
+            }
+            columns.push(column);
+          } else if (column.lock === true || column.lock === ColumnLock.left) {
+            if (column.sort === undefined) {
+              column.sort = columnSort.left++;
+            }
+            leftColumns.push(column);
+          } else {
+            if (column.sort === undefined) {
+              column.sort = columnSort.right++;
+            }
+            rightColumns.push(column);
+          }
+        } else {
+          const [nodes, childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+          if (!hasAggregationColumn && childrenHasAffregationColumn) {
+            hasAggregationColumn = childrenHasAffregationColumn;
+          }
+          if (parent) {
+            parent.children = nodes;
+          } else {
+            nodes.forEach((node) => {
+              if (!node.lock) {
+                columns.push(node);
+              } else if (node.lock === true || node.lock === ColumnLock.left) {
+                leftColumns.push(node);
+              } else {
+                rightColumns.push(node);
+              }
+            });
+          }
+        }
       }
     }
-  });
+  };
+  Children.forEach(elements, normalizeColumn);
   if (parent) {
     return [sortBy(columns, ({ sort }) => sort), hasAggregationColumn];
   }
@@ -410,8 +418,6 @@ export default class TableStore {
   mouseBatchChooseState: boolean = false;
 
   @observable mouseBatchChooseIdList?: number[];
-
-  @observable multiLineHeight: Map<string | number, number>;
 
   @observable columnResizing?: boolean;
 
@@ -1216,7 +1222,6 @@ export default class TableStore {
       this.node = node;
       this.expandedRows = [];
       this.lastScrollTop = 0;
-      this.multiLineHeight = observable.map();
       this.rowHighLight = false;
       this.customizedActiveKey = ['columns'];
       this.originalColumns = [];
@@ -1419,15 +1424,6 @@ export default class TableStore {
   @action
   setRowHover(record: Record, hover: boolean) {
     this.hoverRow = hover ? record : undefined;
-  }
-
-  @action
-  setMultiLineHeight(rowIndex: string | number, multiLineHeight: number) {
-    this.multiLineHeight.set(rowIndex, multiLineHeight);
-  }
-
-  getMultiLineHeight(rowIndex: string | number): number {
-    return this.multiLineHeight.get(rowIndex) || 0;
   }
 
   @action

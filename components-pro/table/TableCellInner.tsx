@@ -1,5 +1,4 @@
 import React, {
-  Children,
   cloneElement,
   CSSProperties,
   FunctionComponent,
@@ -44,7 +43,6 @@ import ObserverCheckBox from '../check-box/CheckBox';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { $l } from '../locale-context';
 import Button, { ButtonProps } from '../button/Button';
-import OverflowTip from '../overflow-tip';
 import { LabelLayout } from '../form/enum';
 
 let inTab: boolean = false;
@@ -56,15 +54,6 @@ export interface TableCellInnerProps {
   record: Record;
   command?: Commands[];
   style?: CSSProperties;
-}
-
-function renderTooltip(props) {
-  if (props) {
-    const { trigger } = props;
-    if (trigger) {
-      return Children.map(trigger, (item) => cloneElement<any>(item, { ref: null, className: null }));
-    }
-  }
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) => {
@@ -330,12 +319,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       return renderEditor;
     }
   }, [command, cellEditorInCell, renderCommand, renderEditor]);
-  const getOverflowContainer = useCallback(() => {
-    const { current } = outputRef;
-    if (current) {
-      return current.element;
-    }
-  }, [outputRef]);
   const innerStyle = useComputed(() => {
     if (!isTreeNode) {
       if (height !== undefined && rows === 0) {
@@ -422,25 +405,13 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       name={name}
       disabled={disabled}
       showHelp={ShowHelp.none}
+      tooltip={tooltip}
     />
-  );
-  const text = [TableColumnTooltip.always, TableColumnTooltip.overflow].includes(tooltip) ? (
-    <OverflowTip
-      key="tooltip"
-      title={renderTooltip}
-      placement="right"
-      strict={tooltip === TableColumnTooltip.always}
-      getOverflowContainer={getOverflowContainer}
-    >
-      {output}
-    </OverflowTip>
-  ) : (
-    output
   );
   return (
     <>
       {prefix}
-      {text}
+      {output}
     </>
   );
 });

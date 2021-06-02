@@ -5,15 +5,16 @@ import React, {
   CSSProperties,
   FormEvent,
   FormEventHandler,
+  Fragment,
   isValidElement,
   ReactElement,
   ReactNode,
 } from 'react';
+import { isFragment } from 'react-is';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import { action as mobxAction, computed, isArrayLike, observable, runInAction } from 'mobx';
-import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -32,7 +33,6 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
 import { defaultColumns, defaultExcludeUseColonTag, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
-import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import OverflowTip from '../overflow-tip';
 import { DataSetEvents } from '../data-set/enum';
@@ -185,7 +185,9 @@ const labelLayoutPropTypes = PropTypes.oneOf([
 export default class Form extends DataSetComponent<FormProps> {
   static displayName = 'Form';
 
-  static FormVirtualGroup = FormVirtualGroup;
+  static FormVirtualGroup = Fragment;
+
+  static Item = Item;
 
   static propTypes = {
     /**
@@ -308,8 +310,6 @@ export default class Form extends DataSetComponent<FormProps> {
   };
 
   static contextType = FormContext;
-
-  static Item = Item;
 
   fields: FormField<FormFieldProps>[] = [];
 
@@ -639,26 +639,26 @@ export default class Form extends DataSetComponent<FormProps> {
     Children.forEach<ReactNode>(children, (child) => {
       if (isValidElement(child)) {
         const setChild = (arr: ReactElement<any>[], outChild: ReactElement<any>, groupProps = {}) => {
-          const { type } = outChild;
+          const { type, props: outChildProps } = outChild;
           if (type) {
             if (
               noLabel === true &&
               labelLayout === LabelLayout.horizontal &&
-              getProperty(outChild.props, 'label', dataSet, record)
+              getProperty(outChildProps, 'label', dataSet, record)
             ) {
               noLabel = false;
             }
-            const { props: { children: outChildChildren, ...outChildProps } } = outChild;
-            if ((type as any).__PRO_FORM_VIRTUAL_GROUP && outChildChildren) {
+            const { children: outChildChildren, ...otherOutChildProps } = outChildProps;
+            if (isFragment(outChild)) {
               Children.forEach<ReactElement<any>>(outChildChildren, (c) => {
                 if (isValidElement<any>(c)) {
-                  setChild(arr, c, omit(outChildProps, ['children']));
+                  setChild(arr, c, otherOutChildProps);
                 }
               });
             } else {
               arr.push(cloneElement<any>(outChild, {
                 ...groupProps,
-                ...outChild.props,
+                ...outChildProps,
               }));
             }
           }

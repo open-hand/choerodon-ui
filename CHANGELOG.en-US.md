@@ -27,6 +27,8 @@ timeline: true
 - 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange`, `cellHighlightRenderer`, `columnEditorBorder` properties.
 - 🌟 `<pro>Table.Column`: Added `aggregation`, `highlightRenderer` properties.
 - 🌟 `<pro>TextField`: Added `showLengthInfo` property.
+- 💄 `<pro>Table.Column`: Support ReactFragment nesting.
+- 💄 `<pro>Form`: Support ReactFragment nested child elements.
 - 💄 `Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `Dropdown`: The `overlay` property supports hook functions.
 - 💄 `Popover`: The `title` and `content` attributes support hook functions.

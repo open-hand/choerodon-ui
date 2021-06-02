@@ -226,8 +226,8 @@
 
   &-wrapper:hover &-inner-button,
   &-focused &-inner-button {
-    z-index: 2;
     opacity: 1;
+    z-index: 2;
   }
 
   &-wrapper:not(&-empty):hover &-allow-clear,
@@ -235,7 +235,7 @@
     opacity: 0;
   }
 
-  &-suffix-button &-inner-button:not(&-allow-clear + &-clear-button) {
+  &-suffix-button &-suffix:not(&-allow-clear) + &-clear-button {
     right: @suffix-width + 0.01rem;
   }
 
