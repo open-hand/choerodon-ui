@@ -64,7 +64,7 @@
     content: '';
   }
 
-  &-required&-label-useColon,
+  &-required&-label-useColon::after,
   &-label&-label-useColon::after {
     position: relative;
     width: 0;
@@ -102,5 +102,26 @@
   &-label-output {
     padding-top: 0.01rem;
     padding-bottom: 0.01rem;
+  }
+
+  &-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  &-col {
+    position: relative;
+    flex-grow: 0;
+    max-width: 100%;
+    min-height: 1px;
+
+    &-control {
+      flex: 1;
+    }
+  }
+
+  &-col &-label {
+    display: inline-block;
   }
 }

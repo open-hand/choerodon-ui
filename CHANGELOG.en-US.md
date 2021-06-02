@@ -15,10 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate`, `showRequiredColorsOnlyEmpty`, `highlightRenderer`, `tableColumnEditorBorder` properties.
+- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate`, `showRequiredColorsOnlyEmpty`, `highlightRenderer`, `tableColumnEditorBorder` properties, deprecated `excludeUseColonTagList` property.
 - 🌟 `<pro>Select`: Added `optionTooltip` property.
-- 🌟 `<pro>Form`: Added `labelTooltip`, `fieldHighlightRenderer` properties.
-- 🌟 `<pro>FormField`: Added `labelTooltip`, `highlightRenderer` properties.
+- 🌟 `<pro>Form.Item`: Added Item component.
+- 🌟 `<pro>Form`: Added `labelTooltip`, `fieldHighlightRenderer`, `layout` properties, deprecated `excludeUseColonTagList` property.
+- 🌟 `<pro>FormField`: Added `labelTooltip`, `highlightRenderer`, `useColon` properties.
 - 🌟 `<pro>Button`: Added `tooltip` property.
 - 🌟 `<pro>DataSet`: Added `setAllPageSelection`, `getQueryParameter`, `getValidationErrors` methods and `isAllPageSelection`, `unSelected`, `currentUnSelected` values.
 - 🌟 `<pro>DataSet.Record`: Added `getValidationErrors` method.
