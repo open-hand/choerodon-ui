@@ -5,12 +5,10 @@ import React, {
   CSSProperties,
   FormEvent,
   FormEventHandler,
-  Fragment,
   isValidElement,
   ReactElement,
   ReactNode,
 } from 'react';
-import { isFragment } from 'react-is';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
@@ -26,6 +24,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isFunction from 'lodash/isFunction';
 import axios from '../axios';
 import autobind from '../_util/autobind';
+import isFragment from '../_util/isFragment';
 import { FormField, FormFieldProps, getFieldsById, HighlightRenderer } from '../field/FormField';
 import FormContext from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
@@ -33,6 +32,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
 import { defaultColumns, defaultExcludeUseColonTag, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
+import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import OverflowTip from '../overflow-tip';
 import { DataSetEvents } from '../data-set/enum';
@@ -185,7 +185,7 @@ const labelLayoutPropTypes = PropTypes.oneOf([
 export default class Form extends DataSetComponent<FormProps> {
   static displayName = 'Form';
 
-  static FormVirtualGroup = Fragment;
+  static FormVirtualGroup = FormVirtualGroup;
 
   static Item = Item;
 
@@ -649,10 +649,11 @@ export default class Form extends DataSetComponent<FormProps> {
               noLabel = false;
             }
             const { children: outChildChildren, ...otherOutChildProps } = outChildProps;
-            if (isFragment(outChild)) {
+            const isFragmentElement = isFragment(outChild);
+            if (isFragmentElement || (type as typeof FormVirtualGroup).__PRO_FORM_VIRTUAL_GROUP) {
               Children.forEach<ReactElement<any>>(outChildChildren, (c) => {
                 if (isValidElement<any>(c)) {
-                  setChild(arr, c, otherOutChildProps);
+                  setChild(arr, c, isFragmentElement ? groupProps : { ...groupProps, ...otherOutChildProps });
                 }
               });
             } else {
@@ -738,7 +739,7 @@ export default class Form extends DataSetComponent<FormProps> {
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
         [`${prefixCls}-output`]: isOutput,
       });
-      if (!noLabel && !(type as any).__PRO_FORM_ITEM) {
+      if (!noLabel && !(type as typeof Item).__PRO_FORM_ITEM) {
         if (!isNaN(fieldLabelWidth)) {
           labelWidth[colIndex] = Math.max(labelWidth[colIndex], fieldLabelWidth);
         }
@@ -785,7 +786,7 @@ export default class Form extends DataSetComponent<FormProps> {
       cols.push(
         <td
           key={`row-${rowIndex}-col-${colIndex}-field`}
-          colSpan={noLabel ? newColSpan : newColSpan * 2 - ((type as any).__PRO_FORM_ITEM ? 0 : 1)}
+          colSpan={noLabel ? newColSpan : newColSpan * 2 - ((type as typeof Item).__PRO_FORM_ITEM ? 0 : 1)}
           rowSpan={rowSpan}
           className={fieldClassName}
           style={this.labelLayout === LabelLayout.horizontal

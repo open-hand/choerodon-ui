@@ -80,7 +80,37 @@
   transition-duration: 0.3s;
   transition-property: opacity, color, background-color, border;
 
+  &-wrapper {
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    background-color: @input-wrapper-bg;
+
+    label {
+      position: relative;
+      z-index: 1;
+      display: block;
+    }
+
+    .@{field-label-prefix-cls} {
+      z-index: -1;
+    }
+  }
+
   .placeholder;
+
+  &-required-colors {
+    background-color: @input-required-bg;
+  }
+
+  &-required-colors & {
+    border-color: @input-required-border-color;
+  }
+
+  &-highlight & {
+    border-color: @input-highlight-border-color;
+  }
 
   label:hover &,
   &:hover {
@@ -148,24 +178,6 @@
   // Size
   .input-lg;
   .input-sm;
-
-  &-wrapper {
-    position: relative;
-    display: inline-block;
-    line-height: 1;
-    vertical-align: middle;
-    background-color: @input-wrapper-bg;
-
-    label {
-      position: relative;
-      z-index: 1;
-      display: block;
-    }
-
-    .@{field-label-prefix-cls} {
-      z-index: -1;
-    }
-  }
 
   &-prefix,
   &-suffix,
@@ -437,18 +449,6 @@
 
   &:-webkit-autofill {
     box-shadow: 0 0 0 10rem @input-wrapper-bg inset;
-  }
-
-  &-required-colors {
-    background-color: @input-required-bg;
-  }
-
-  &-required-colors & {
-    border-color: @input-required-border-color;
-  }
-
-  &-highlight & {
-    border-color: @input-highlight-border-color;
   }
 
   .validation;

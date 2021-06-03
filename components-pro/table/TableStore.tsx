@@ -1,5 +1,4 @@
 import React, { Children, isValidElement, ReactNode } from 'react';
-import { isFragment } from 'react-is';
 import { action, computed, get, observable, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
@@ -15,6 +14,7 @@ import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
 import Column, { ColumnProps, columnWidth } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
+import isFragment from '../_util/isFragment';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box';

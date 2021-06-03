@@ -34,6 +34,7 @@ import {
 import { observer } from 'mobx-react';
 
 const { Option } = Select;
+const { FormVirtualGroup } = Form;
 
 function passwordValidator(value, name, record) {
   if (value !== record.get('password')) {
@@ -156,14 +157,16 @@ class App extends React.Component {
           </Row>
           <Row gutter={10}>
             <Col span={6}>
-              <Form.Item>
+              <Form.Item useColon={false}>
                 <DatePicker name="birth" />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item useColon={false}>
-                <Lov name="code" />
-              </Form.Item>
+              <FormVirtualGroup useColon={false}>
+                <Form.Item name="code">
+                  <Lov />
+                </Form.Item>
+              </FormVirtualGroup>
             </Col>
           </Row>
           <Form.Item>

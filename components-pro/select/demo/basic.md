@@ -36,12 +36,14 @@ class App extends React.Component {
         <Col span={8}>
           <Select placeholder="请选择" onChange={handleChange} optionTooltip={visible ? 'overflow' : 'always'}>
             <Option value="jack">Jack</Option>
-            <Option value="lucy" disabled><b style={{ color: '#08c' }}>Lucy</b></Option>
             {
               visible && (
-                <Option value="wu">
-                  Wu Wu Wu Wu Wu Wu Wu Wu Wu Wu Wu
-                </Option>
+                <>
+                  <Option value="lucy" disabled><b style={{ color: '#08c' }}>Lucy</b></Option>
+                  <Option value="wu">
+                    Wu Wu Wu Wu Wu Wu Wu Wu Wu Wu Wu
+                  </Option>
+                </>
               )
             }
           </Select>
