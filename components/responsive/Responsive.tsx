@@ -1,5 +1,6 @@
 import { PureComponent, ReactNode } from 'react';
 import isObject from 'lodash/isObject';
+import debounce from 'lodash/debounce';
 import { isArrayLike } from 'mobx';
 import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
 import { Breakpoint } from './enum';
@@ -12,12 +13,12 @@ if (typeof window !== 'undefined') {
 }
 
 export type BreakpointMap = {
-  [Breakpoint.xxl]?: string;
-  [Breakpoint.xl]?: string;
-  [Breakpoint.lg]?: string;
-  [Breakpoint.md]?: string;
-  [Breakpoint.sm]?: string;
-  [Breakpoint.xs]?: string;
+  [Breakpoint.xxl]?: any;
+  [Breakpoint.xl]?: any;
+  [Breakpoint.lg]?: any;
+  [Breakpoint.md]?: any;
+  [Breakpoint.sm]?: any;
+  [Breakpoint.xs]?: any;
 };
 
 const responsiveMap: BreakpointMap = {
@@ -31,7 +32,26 @@ const responsiveMap: BreakpointMap = {
 
 const responsiveArray: Breakpoint[] = Object.keys(responsiveMap) as Breakpoint[];
 
-export type ChildrenFunction = (items: any[]) => ReactNode;
+function isBreakPointMap(item: any): item is BreakpointMap {
+  if (isObject(item)) {
+    const keys = Object.keys(item);
+    if (keys.length) {
+      return keys.every(key => key in responsiveMap);
+    }
+  }
+  return false;
+}
+
+export function hasBreakPointMap(items: any[]): boolean {
+  // eslint-disable-next-line no-use-before-define
+  return items.some(isOrHasBreakPointMap);
+}
+
+function isOrHasBreakPointMap(item: any | any[]) {
+  return isArrayLike(item) ? hasBreakPointMap(item) : isBreakPointMap(item);
+}
+
+export type ChildrenFunction = (items: any[], disabled: boolean) => ReactNode;
 
 export interface ResponsiveProps {
   disabled?: boolean;
@@ -49,10 +69,12 @@ export default class Responsive extends PureComponent<ResponsiveProps, Responsiv
 
   state = { breakpoints: {} };
 
+  handlers = new Map();
+
   isDisabled(props) {
     const { disabled, items } = props;
     if (!disabled && items) {
-      return !items.some(isObject);
+      return !hasBreakPointMap(items);
     }
     return true;
   }
@@ -63,19 +85,13 @@ export default class Responsive extends PureComponent<ResponsiveProps, Responsiv
     }
   }
 
-  componentDidUpdate() {
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange(this.getValues());
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.isDisabled(this.props) && !this.isDisabled(nextProps)) {
-      this.register();
-    }
-    if (!this.isDisabled(this.props) && this.isDisabled(nextProps)) {
+  componentDidUpdate(prevProps) {
+    const { props } = this;
+    if (!this.isDisabled(prevProps) && this.isDisabled(props)) {
       this.unregister();
+    }
+    if (this.isDisabled(prevProps) && !this.isDisabled(props)) {
+      this.register();
     }
   }
 
@@ -85,17 +101,26 @@ export default class Responsive extends PureComponent<ResponsiveProps, Responsiv
     }
   }
 
+  fireUpdate = debounce(() => {
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(this.getValues());
+    }
+  }, 10);
+
   register() {
     if (enquire) {
-      responsiveArray.map((breakpoint: Breakpoint) =>
-        enquire.register(responsiveMap[breakpoint], {
+      const { handlers } = this;
+      responsiveArray.forEach((breakpoint: Breakpoint) => {
+        const query = responsiveMap[breakpoint];
+        const handler = {
           match: () => {
             this.setState(prevState => ({
               breakpoints: {
                 ...prevState.breakpoints,
                 [breakpoint]: true,
               },
-            }));
+            }), this.fireUpdate);
           },
           unmatch: () => {
             this.setState(prevState => ({
@@ -103,27 +128,35 @@ export default class Responsive extends PureComponent<ResponsiveProps, Responsiv
                 ...prevState.breakpoints,
                 [breakpoint]: false,
               },
-            }));
+            }), this.fireUpdate);
           },
           // Keep a empty destory to avoid triggering unmatch when unregister
-          destroy() {},
-        }),
-      );
+          destroy() {
+          },
+        };
+        enquire.register(query, handler);
+        handlers.set(query, handler);
+      });
     }
   }
 
   unregister() {
-    Object.keys(responsiveMap).map((breakpoint: Breakpoint) =>
-      enquire.unregister(responsiveMap[breakpoint]),
-    );
+    const { handlers } = this;
+    Object.keys(responsiveMap).forEach((breakpoint: Breakpoint) => {
+      const query = responsiveMap[breakpoint];
+      const handler = handlers.get(query);
+      if (handler) {
+        enquire.unregister(query, handler);
+      }
+    });
   }
 
   processValue(value) {
     const { breakpoints } = this.state;
-    if (isArrayLike(value)) {
+    if (isArrayLike(value) && hasBreakPointMap(value)) {
       return value.map(this.processValue, this);
     }
-    if (isObject(value)) {
+    if (isBreakPointMap(value)) {
       for (let i = 0; i < responsiveArray.length; i++) {
         const breakpoint: Breakpoint = responsiveArray[i];
         if (breakpoints[breakpoint] && value[breakpoint] !== undefined) {
@@ -144,9 +177,10 @@ export default class Responsive extends PureComponent<ResponsiveProps, Responsiv
   }
 
   render() {
-    const { children } = this.props;
+    const { props } = this;
+    const { children } = props;
     if (typeof children === 'function') {
-      return (children as ChildrenFunction)(this.getValues());
+      return (children as ChildrenFunction)(this.getValues(), this.isDisabled(props));
     }
     return children;
   }

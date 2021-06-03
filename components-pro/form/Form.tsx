@@ -18,7 +18,7 @@ import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
 import { AxiosInstance } from 'axios';
-import Responsive from 'choerodon-ui/lib/responsive/Responsive';
+import Responsive, { hasBreakPointMap } from 'choerodon-ui/lib/responsive/Responsive';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isFunction from 'lodash/isFunction';
@@ -416,7 +416,7 @@ export default class Form extends DataSetComponent<FormProps> {
     if (labelWidth === 'auto') {
       return labelWidth;
     }
-    if (isNumber(labelWidth) || isArrayLike(labelWidth)) {
+    if (isNumber(labelWidth) || (isArrayLike(labelWidth) && !hasBreakPointMap(labelWidth))) {
       return labelWidth;
     }
     if (labelWidth) {
@@ -740,8 +740,9 @@ export default class Form extends DataSetComponent<FormProps> {
         [`${prefixCls}-output`]: isOutput,
       });
       if (!noLabel && !(type as typeof Item).__PRO_FORM_ITEM) {
-        if (!isNaN(fieldLabelWidth)) {
-          labelWidth[colIndex] = Math.max(labelWidth[colIndex], fieldLabelWidth);
+        const columnLabelWidth = labelWidth[colIndex];
+        if (!isNaN(fieldLabelWidth) && columnLabelWidth !== 'auto') {
+          labelWidth[colIndex] = Math.max(columnLabelWidth, fieldLabelWidth);
         }
         const tooltip = 'labelTooltip' in props ? props.labelTooltip : labelTooltip;
         const isTooltip = [LabelTooltip.always, LabelTooltip.overflow].includes(tooltip);
@@ -807,21 +808,24 @@ export default class Form extends DataSetComponent<FormProps> {
       index++;
     }
     cols = [];
-    // 优化当使用separateSoacing label宽度太窄问题
-    const labelWidthProcess = (widthInner: number) => {
-      if (isNumber(widthInner)) {
-        if (this.labelLayout === LabelLayout.horizontal) {
-          return separateSpacingWidth + widthInner;
-        }
-        return widthInner;
-      }
-      return separateSpacingWidth + defaultLabelWidth;
-    };
+    const isAutoWidth = !noLabel && labelWidth.some(w => w === 'auto');
     if (!noLabel) {
       for (let i = 0; i < columns; i++) {
+        const key = `label-${i}`;
+        const columnLabelWidth = labelWidth[i % columns];
+        if (columnLabelWidth === 'auto') {
+          cols.push(<col key={key} />);
+        } else {
+          cols.push(
+            <col
+              key={key}
+              // 优化当使用separateSoacing label宽度太窄问题
+              style={{ width: pxToRem(labelLayout === LabelLayout.horizontal ? separateSpacingWidth + columnLabelWidth : columnLabelWidth) }}
+            />,
+          );
+        }
         cols.push(
-          <col key={`label-${i}`} style={{ width: pxToRem(labelWidthProcess(labelWidth[i % columns])) }} />,
-          <col key={`wrapper-${i}`} />,
+          <col key={`wrapper-${i}`} style={isAutoWidth ? { width: `${100 / columns}%` } : undefined} />,
         );
       }
     } else {
@@ -835,7 +839,7 @@ export default class Form extends DataSetComponent<FormProps> {
     let tableStyle: CSSProperties | undefined;
     const { separateSpacing } = this;
     if (separateSpacing) {
-      if (this.labelLayout === LabelLayout.horizontal) {
+      if (labelLayout === LabelLayout.horizontal) {
         tableStyle = {
           borderCollapse: 'separate',
           borderSpacing: `0rem ${pxToRem(separateSpacing.height)}`,
@@ -847,8 +851,6 @@ export default class Form extends DataSetComponent<FormProps> {
         };
       }
     }
-
-    const isAutoWidth = this.labelWidth === 'auto' || (isArrayLike(this.labelWidth) && this.labelWidth.some(w => w === 'auto'));
 
     return (
       <table key="form-body" style={tableStyle} className={`${isAutoWidth ? 'auto-width' : ''}`}>
