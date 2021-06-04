@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import FormContext from './FormContext';
-import { FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
+import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import { LabelLayout } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import Row from '../row';
@@ -18,7 +18,7 @@ export interface IItem extends FunctionComponent<ItemProps> {
 }
 
 const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
-  const { dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth, useColon } = useContext(FormContext);
+  const { dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, useColon } = useContext(FormContext);
   const { children, useColon: fieldUseColon = useColon, ...rest } = props;
   const child = Children.only<ReactElement<FormFieldProps>>(children);
   if (isValidElement<FormFieldProps>(child)) {
@@ -60,7 +60,8 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
       );
     }
     const fieldLabelWidth = getProperty(fieldProps, 'labelWidth', dataSet, record);
-    const labelWidth = contextLabelWidth === 'auto' ? undefined : Math.max(normalizeLabelWidth(contextLabelWidth, 1)[0], isNaN(fieldLabelWidth) ? 0 : fieldLabelWidth);
+    const columnLabelWidth = normalizeLabelWidth(contextLabelWidth, 1)[0];
+    const labelWidth = columnLabelWidth === 'auto' ? undefined : Math.max(columnLabelWidth, isNaN(fieldLabelWidth) ? 0 : fieldLabelWidth);
     return (
       <Row className={`${prefixCls}-row`}>
         <Col className={`${prefixCls}-col`}>

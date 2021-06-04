@@ -856,7 +856,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleKeyDown(e) {
-    const { clearButton } = this;
     if (!this.disabled && !this.readOnly) {
       if (this.range && e.keyCode === KeyCode.TAB) {
         if (this.rangeTarget === 0 && !e.shiftKey) {
@@ -880,13 +879,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
             default:
           }
         }
-      } else if (clearButton) {
-        switch (e.keyCode) {
-          case KeyCode.DELETE:
-          case KeyCode.BACKSPACE:
-            this.clear();
-            break;
-          default:
+      } else {
+        const { clearButton } = this.props;
+        if (clearButton && !this.editable) {
+          switch (e.keyCode) {
+            case KeyCode.DELETE:
+            case KeyCode.BACKSPACE:
+              this.clear();
+              break;
+            default:
+          }
         }
       }
     } else if (isIE()) {

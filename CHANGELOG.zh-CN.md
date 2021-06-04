@@ -44,6 +44,7 @@ timeline: true
 - 💄 `<pro>TextField`: 优化 clearButton 渲染交互。
 - 💄 `<pro>Modal`: footer 增加 modal 回调参数。
 - 💄 `<pro>TextField`: 优化 range 模式 label 渲染逻辑。
+- 🐞 `Responsive`：修复多个响应式组件其中一个禁用或销毁时其他组件无法触发响应的问题。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 - 🐞 `<pro>DataSet`：修复在仅删除以及dataToJSON为selected的情况下，提交后对dataSet状态修改不正确的问题。
 - 🐞 `<pro>Table`：修复编辑器在 DataSet 当前记录发生变化时的定位问题。

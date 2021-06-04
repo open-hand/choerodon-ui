@@ -2,6 +2,7 @@ import isNumber from 'lodash/isNumber';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { LabelLayout } from './enum';
+import { LabelWidth } from './Form';
 
 export const defaultLabelWidth: number = 100;
 
@@ -11,7 +12,7 @@ export const defaultColumns: number = 1;
 
 export const FIELD_SUFFIX = 'field';
 
-export function normalizeLabelWidth(labelWidth, columns) {
+export function normalizeLabelWidth(labelWidth: LabelWidth, columns: number): (number | 'auto')[] {
   if (isNumber(labelWidth) || labelWidth === 'auto') {
     return new Array(columns).fill(labelWidth);
   }
