@@ -227,7 +227,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     ModalManager.removeInstance(this);
     const current = ModalManager.containerInstances[0];
     if (current && modals.length) {
-      current.mergeModals(modals.reduce<ModalProps[]>((list, modal) => modal.__deprecate__ ? list.concat({
+      current.mergeModals(modals.reduce<ModalProps[]>((list, modal) => modal.__deprecate__ && (!modal.hidden || !modal.destroyOnClose) ? list.concat({
         ...modal,
         transitionAppear: false,
       }) : list, []));
