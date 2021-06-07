@@ -49,6 +49,7 @@ import formatString from '../formatter/formatString';
 import formatCurrency from '../formatter/formatCurrency';
 import OverflowTip from '../overflow-tip';
 import { $l } from '../locale-context';
+import isReactChildren from '../_util/isReactChildren';
 
 const map: { [key: string]: FormField<FormFieldProps>[]; } = {};
 
@@ -959,7 +960,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         }
         return '';
       }
-      if (isValidElement(value)) {
+      if (isReactChildren(value)) {
         // For Select's Option and TreeSelect's TreeNode which type may be ReactElement
         // @ts-ignore
         return value;

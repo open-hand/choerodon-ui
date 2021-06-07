@@ -31,6 +31,7 @@ import { FieldFormat } from '../data-set/enum';
 import { LabelLayout } from '../form/interface';
 import { getProperty } from '../form/utils';
 import RenderedText from './RenderedText';
+import isReactChildren from '../_util/isReactChildren';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -752,9 +753,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls, range, multiple } = this;
     if (!range && !multiple) {
       const text = this.getTextNode();
-      const isNodeValue = isValidElement(this.getText(this.getValue()));
+      const isNodeValue = isReactChildren(this.getText(this.getValue()));
       const hidden = this.isFocused && this.editable;
-      if ((!hidden || isNodeValue) && isValidElement(text)) {
+      if ((!hidden || isNodeValue) && isReactChildren(text)) {
         return (
           <RenderedText
             key="renderedText"
