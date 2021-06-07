@@ -159,21 +159,32 @@ class App extends React.Component {
         label: '代码描述',
         lovCode: 'LOV_CODE',
         ignore: 'always',
-        multiple: true,
+      },
+      {
+        name: 'code2',
+        type: 'object',
+        label: '代码描述2',
+        lovCode: 'LOV_CODE',
+        ignore: 'always',
+        bind: 'code.lv',
+      },
+      {
+        name: 'code2_description',
+        type: 'string',
+        label: '代码描述22',
+        bind: 'code2.description',
       },
       {
         name: 'code_code',
         type: 'string',
         label: '代码',
         bind: 'code.code',
-        multiple: ','
       },
       {
         name: 'code_description',
         type: 'string',
         label: '代码描述',
         bind: 'code.description',
-        multiple: ',',
       },
     ],
     events: {
@@ -278,6 +289,7 @@ class App extends React.Component {
         <Column name="enable" editor width={50} />
         <Column name="name" editor width={150} />
         <Column name="code" editor width={150} />
+        <Column name="code2" editor width={150} />
         <Column name="code_code" editor width={150} />
         <Column name="code_description" editor width={150} />
         <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />

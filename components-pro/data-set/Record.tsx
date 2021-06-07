@@ -13,11 +13,14 @@ import {
   axiosConfigAdapter,
   checkFieldType,
   childrenInfoForDelete,
+  findBindField,
   findBindFields,
   generateData,
   generateJSONData,
   generateResponseData,
+  getChainFieldName,
   getRecordValue,
+  getSortedFields,
   isDirtyRecord,
   processIntlField,
   processToJSON,
@@ -532,7 +535,7 @@ export default class Record {
         const data = this.get(fieldName);
         if (!this.cascading[fieldName] && isObservableArray(data)) {
           this.cascading[fieldName] = true;
-          const records = childDataSet.processData(data);
+          const records = childDataSet.processData(data, this.isNew ? RecordStatus.add : RecordStatus.sync);
           this.cascading[fieldName] = false;
           this.cascadeRecordsMap[fieldName] = records;
           return records;
@@ -563,9 +566,8 @@ export default class Record {
   }
 
   get(fieldName?: string): any {
-    return getRecordValue.call(
+    return getRecordValue(
       this,
-      this.data,
       (child, checkField) => child.get(checkField),
       fieldName,
     );
@@ -574,14 +576,10 @@ export default class Record {
   @action
   set(item: string | object, value?: any): Record {
     if (isString(item)) {
-      let fieldName: string = item;
-      const oldName = fieldName;
-      const field = this.getField(fieldName) || this.addField(fieldName);
+      const oldName: string = item;
+      const fieldName: string = getChainFieldName(this, oldName);
+      const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || this.addField(oldName);
       checkFieldType(value, field);
-      const bind = field.get('bind');
-      if (bind) {
-        fieldName = bind;
-      }
       const oldValue = toJS(this.get(fieldName));
       const newValue = processValue(value, field);
       if (!isSame(processToJSON(oldValue), processToJSON(newValue))) {
@@ -608,7 +606,7 @@ export default class Record {
             oldValue,
           });
           const { checkField } = dataSet.props;
-          if (checkField && (checkField === fieldName || checkField === oldName)) {
+          if (checkField && fieldName === getChainFieldName(this, checkField)) {
             const { children } = this;
             if (children) {
               children.forEach(record => record.set(fieldName, value));
@@ -616,8 +614,7 @@ export default class Record {
           }
         }
       }
-      findBindFields(field, this.fields).forEach(oneField => {
-        // oneField.dirty = field.dirty,
+      [field, ...findBindFields(field, this.fields, true)].forEach((oneField) => {
         oneField.validator.reset();
         oneField.checkValidity(false);
       });
@@ -864,75 +861,15 @@ export default class Record {
     );
   }
 
-  private getSortedFields(): [string, Field][] {
-    const { fields } = this;
-    const normalFields: [string, Field][] = [];
-    const objectBindFields: [string, Field][] = [];
-    const bindFields: [string, Field][] = [];
-    const transformResponseField: [string, Field][] = [];
-    const dynamicFields: [string, Field][] = [];
-    const dynamicObjectBindFields: [string, Field][] = [];
-    const dynamicBindFields: [string, Field][] = [];
-    [...fields.entries()].forEach((entry) => {
-      const [, field] = entry;
-      const dynamicProps = field.get('computedProps') || field.get('dynamicProps');
-      if (dynamicProps) {
-        if (dynamicProps.bind) {
-          if (field.type === FieldType.object) {
-            dynamicObjectBindFields.push(entry);
-          } else {
-            dynamicBindFields.push(entry);
-          }
-        } else {
-          dynamicFields.push(entry);
-        }
-      } else {
-        const bind = field.get('bind');
-        if (bind) {
-          const targetNames = bind.split('.');
-          targetNames.pop();
-          if (targetNames.some((targetName) => {
-            const target = fields.get(targetName);
-            return target && (target.get('computedProps') || target.get('dynamicProps'));
-          })) {
-            if (field.type === FieldType.object) {
-              dynamicObjectBindFields.push(entry);
-            } else {
-              dynamicBindFields.push(entry);
-            }
-          } else if (field.get('transformResponse')) {
-            transformResponseField.push(entry);
-          } else if (field.type === FieldType.object) {
-            objectBindFields.push(entry);
-          } else {
-            bindFields.push(entry);
-          }
-        } else {
-          normalFields.push(entry);
-        }
-      }
-    });
-    return [
-      ...normalFields,
-      ...objectBindFields,
-      ...bindFields,
-      ...transformResponseField,
-      ...dynamicFields,
-      ...dynamicObjectBindFields,
-      ...dynamicBindFields,
-    ];
-  }
-
   private processData(data: object = {}, needMerge?: boolean): void {
     const newData = { ...data };
     const { fields } = this;
-    this.getSortedFields().forEach(([fieldName, field]) => {
+    getSortedFields(fields).forEach(([fieldName, field]) => {
       let value = ObjectChainValue.get(newData, fieldName);
-      const bind = field.get('bind');
+      const chainFieldName = getChainFieldName(this, fieldName);
       const transformResponse = field.get('transformResponse');
-      if (bind) {
-        fieldName = bind;
-        const bindValue = ObjectChainValue.get(newData, fieldName);
+      if (chainFieldName !== fieldName) {
+        const bindValue = ObjectChainValue.get(newData, chainFieldName);
         if (isNil(value) && !isNil(bindValue)) {
           value = bindValue;
         }
@@ -940,18 +877,18 @@ export default class Record {
       if (transformResponse) {
         value = transformResponse(value, data);
       }
-      value = processValue(value, field, this.isNew);
+      value = processValue(value, field, !needMerge && this.isNew);
       if (value === null) {
         value = undefined;
       }
       if (needMerge && isObject(value)) {
-        const oldValue = this.get(fieldName);
+        const oldValue = ObjectChainValue.get(this.data, chainFieldName);
         if (isObject(oldValue)) {
           value = merge(oldValue, value);
         }
       }
-      ObjectChainValue.set(newData, fieldName, value, fields);
-      ObjectChainValue.set(this.data, fieldName, value, fields);
+      ObjectChainValue.set(newData, chainFieldName, value, fields);
+      ObjectChainValue.set(this.data, chainFieldName, value, fields);
     });
   }
 
@@ -985,13 +922,9 @@ export default class Record {
       if (items) {
         items.forEach(field => {
           const { name } = field;
-          let value = ObjectChainValue.get(json, name);
-          const bind = field.get('bind');
+          let value = ObjectChainValue.get(json, getChainFieldName(this, name));
           const multiple = field.get('multiple');
           const transformRequest = field.get('transformRequest');
-          if (bind) {
-            value = this.get(bind);
-          }
           if (isString(multiple) && isArrayLike(value)) {
             value = value.map(processToJSON).join(multiple);
           }

@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange, cellHighlightRenderer, columnEditorBorder 属性。
 - 🌟 `<pro>Table.Column`: 新增 aggregation, highlightRenderer 属性。
 - 🌟 `<pro>TextField`: 新增 showLengthInfo 属性。
+- 💄 `<pro>DataSet.Field`: 优化链式绑定的一些问题。
 - 💄 `<pro>Select.Option`: 支持 ReactFragment 嵌套。
 - 💄 `<pro>Table.Column`: 支持 ReactFragment 嵌套。
 - 💄 `<pro>Form`: 支持 ReactFragment 嵌套子元素。
