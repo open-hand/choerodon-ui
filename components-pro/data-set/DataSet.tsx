@@ -2091,16 +2091,16 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  processData(allData: any[]): Record[] {
+  processData(allData: any[], status: RecordStatus = RecordStatus.sync): Record[] {
     return allData.map(data => {
       if (data instanceof Record) {
         if (data.dataSet !== this) {
           data.dataSet = this;
-          data.status = RecordStatus.sync;
+          data.status = status;
         }
         return data;
       }
-      return new Record(data, this, RecordStatus.sync);
+      return new Record(data, this, status);
     });
   }
 

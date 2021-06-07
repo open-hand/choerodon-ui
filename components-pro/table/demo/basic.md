@@ -172,11 +172,16 @@ class App extends React.Component {
         ignore: 'always',
       },
       {
+        name: 'name2',
+        ignore: 'always',
+        bind: 'name1',
+      },
+      {
         name: 'name',
         type: 'intl',
         label: '姓名',
         computedProps: nameDynamicProps,
-        bind: 'name1',
+        bind: 'name2',
         ignore: 'clean',
       },
       {
@@ -461,6 +466,8 @@ class App extends React.Component {
         <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
         <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
         <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
+        <Column name="name1" editor width={150} />
+        <Column name="name2" editor width={150} />
         <Column name="name" editor width={150} sortable tooltip="always" />
         <Column name="description" editor={<TextArea />} width={150} sortable />
         <Column name="code" editor width={150} sortable />
