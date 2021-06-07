@@ -211,8 +211,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
 
   getLabel() {
     const { placeholder, label } = this.props;
-    const { inputLength } = this.state;
-    if (inputLength === 0 && placeholder) {
+    const { inputLength, focused } = this.state;
+    if (inputLength === 0 && !focused && placeholder) {
       return placeholder;
     }
     return label;

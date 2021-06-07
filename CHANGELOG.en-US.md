@@ -43,6 +43,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimized the `clearButton` rendering interaction.
 - 💄 `<pro>Modal`: `footer` add callback parameters.
 - 💄 `<pro>TextField`: Optimized the label rendering logic in `range` mode.
+- 💄 `<pro>Form`: Optimized the display timing of the floating label label.
 - 🐞 `Responsive`：Fix the problem that other components cannot trigger a response after one of these components is come to be disabled or destroyed.
 - 🐞 `<pro>Modal`: Fix the `keyboardClosable` property has no effect when there is no cancel button.
 - 🐞 `<pro>Modal`: Fix some abnormal behaviors of Modal which not provided by ModalProvider.
@@ -105,7 +106,6 @@ timeline: true
 - 💄 `Popover`: Optimized if the trigger is click. When selecting the Select component in the pop-up window, you don't need to set getPopupContainer to prevent the pop-up window from closing.
 - 💄 `<pro>Trigger`: Optimize the getContainer method.
 - 💄 `<pro>Select`: Optimize the search style in read-only mode.
-- 💄 `<pro>Form`: Optimized the display timing of the floating label label.
 - 🐞 `<pro>DatePicker`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>NumberField`: Fix the incorrect restriction of `maxLength` and `minLength`.
 - 🐞 `<pro>DataSet.Field`: Fix the incorrect restriction of `maxLength` and `minLength` on date and number types.
