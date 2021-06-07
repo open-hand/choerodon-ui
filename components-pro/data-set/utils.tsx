@@ -138,13 +138,14 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
   return value;
 }
 
-export function processValue(value: any, field?: Field, init?: boolean): any {
+export function processValue(value: any, field?: Field, isCreated?: boolean): any {
   if (field) {
     const multiple = field.get('multiple');
     const range = field.get('range');
     if (multiple) {
       if (isEmpty(value)) {
-        if (init) {
+        if (isCreated) {
+          // for defaultValue
           value = undefined;
         } else {
           value = [];
@@ -358,19 +359,18 @@ export function getBaseType(type: FieldType): FieldType {
 }
 
 export function checkFieldType(value: any, field: Field): boolean {
-  if (process.env.NODE_ENV !== 'production') {
-    if (!isEmpty(value)) {
+  if (process.env.NODE_ENV !== 'production' && !isEmpty(value)) {
+    const fieldType = getBaseType(field.type);
+    if (fieldType !== FieldType.auto) {
       if (isArrayLike(value)) {
         return value.every(item => checkFieldType(item, field));
       }
-      const fieldType = getBaseType(field.type);
       const valueType =
         field.type === FieldType.boolean &&
         [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
-        fieldType !== FieldType.auto &&
         fieldType !== FieldType.reactNode &&
         fieldType !== valueType
       ) {
@@ -418,29 +418,70 @@ export function doExport(url, data, method = 'post') {
   document.body.removeChild(form);
 }
 
-export function findBindFields(myField: Field, fields: Fields, excludeSelf?: boolean): Field[] {
+function throwCycleBindingFields(map: Map<string, Field> = new Map()) {
+  const keys = [...map.keys()];
+  throw new Error(`DataSet: Cycle binding fields[${[...keys].join(' -> ')} -> ${keys[0]}].`);
+}
+
+function getChainFieldNamePrivate(record: Record, fieldName: string, linkedMap: Map<string, Field> = new Map(), init: boolean = true): string {
+  const field = record.getField(fieldName);
+  if (field) {
+    const bind = field.get('bind');
+    if (bind) {
+      if (linkedMap.has(fieldName)) {
+        throwCycleBindingFields(linkedMap);
+      }
+      linkedMap.set(fieldName, field);
+      const names = bind.split('.');
+      if (names.length > 0) {
+        if (names.length === 1) {
+          return getChainFieldNamePrivate(record, bind, linkedMap);
+        }
+        return names.reduce((chainFieldName, name) => [getChainFieldNamePrivate(record, chainFieldName, linkedMap, false), name].join('.'));
+      }
+    }
+  } else if (init && fieldName.indexOf('.') > -1) {
+    return fieldName.split('.').reduce((chainFieldName, name) => [getChainFieldNamePrivate(record, chainFieldName, linkedMap, false), name].join('.'));
+  }
+
+  return fieldName;
+}
+
+export function getChainFieldName(record: Record, fieldName: string): string {
+  return getChainFieldNamePrivate(record, fieldName);
+}
+
+export function findBindFields(myField: Field, fields: Fields, deep?: boolean, bindFields: Map<string, Field> = new Map()): Field[] {
   const { name } = myField;
-  return [...fields.values()].filter(field => {
+  [...fields.entries()].forEach(([fieldName, field]) => {
     if (field !== myField) {
       const bind = field.get('bind');
-      // 处理 addField 后校验问题
-      // return isString(bind) ? bind.startsWith(`${name}.`) : !excludeSelf;
-      return isString(bind) && bind.startsWith(`${name}.`);
+      if (bind && (bind === name || bind.startsWith(`${name}.`))) {
+        if (bindFields.has(fieldName)) {
+          throwCycleBindingFields(bindFields);
+        }
+        bindFields.set(fieldName, field);
+        if (deep) {
+          findBindFields(field, fields, deep, bindFields);
+        }
+      }
     }
-    return !excludeSelf;
   });
+  return [...bindFields.values()];
 }
 
 export function findBindField(
-  myField: Field | string,
-  fields: Fields,
-  callback?: (field: Field) => boolean,
+  myField: string,
+  chainFieldName: string,
+  record: Record,
 ): Field | undefined {
-  const name = isString(myField) ? myField : myField.name;
-  return [...fields.values()].find(field => {
-    if (field.name !== name) {
+  return [...record.fields.values()].find((field) => {
+    const fieldName = field.name;
+    if (fieldName !== myField) {
       const bind = field.get('bind');
-      return isString(bind) && bind.startsWith(`${name}.`) && (!callback || callback(field));
+      if (bind) {
+        return chainFieldName === getChainFieldName(record, fieldName);
+      }
     }
     return false;
   });
@@ -614,25 +655,20 @@ export function generateResponseData(item: any, dataKey?: string): object[] {
 }
 
 export function getRecordValue(
-  data: any,
+  record: Record,
   cb: (record: Record, fieldName: string) => boolean,
   fieldName?: string,
 ) {
   if (fieldName) {
-    const field = this.getField(fieldName);
-    if (field) {
-      const bind = field.get('bind');
-      if (bind) {
-        fieldName = bind;
-      }
-    }
-    const { dataSet } = this;
+    const chainFieldName = getChainFieldName(record, fieldName);
+    const { dataSet } = record;
     if (dataSet) {
       const { checkField } = dataSet.props;
-      if (checkField && checkField === fieldName) {
+      if (checkField && chainFieldName === getChainFieldName(record, checkField)) {
+        const field = record.getField(checkField);
         const trueValue = field ? field.get(BooleanValue.trueValue) : true;
         const falseValue = field ? field.get(BooleanValue.falseValue) : false;
-        const { children } = this;
+        const { children } = record;
         if (children) {
           return children.every(child => cb(child, checkField) === trueValue)
             ? trueValue
@@ -640,7 +676,7 @@ export function getRecordValue(
         }
       }
     }
-    return ObjectChainValue.get(data, fieldName as string);
+    return ObjectChainValue.get(record.data, chainFieldName as string);
   }
 }
 
@@ -886,4 +922,62 @@ export function exportExcel(data, excelName) {
   const wb = XLSX.utils.book_new();  /* 新建book */
   XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */
   XLSX.writeFile(wb, `${excelName}.xlsx`); /* 写文件(book,xlsx文件名称) */
+}
+
+export function getSortedFields(fields: Fields): [string, Field][] {
+  const normalFields: [string, Field][] = [];
+  const objectBindFields: [string, Field][] = [];
+  const bindFields: [string, Field][] = [];
+  const transformResponseField: [string, Field][] = [];
+  const dynamicFields: [string, Field][] = [];
+  const dynamicObjectBindFields: [string, Field][] = [];
+  const dynamicBindFields: [string, Field][] = [];
+  [...fields.entries()].forEach((entry) => {
+    const [, field] = entry;
+    const dynamicProps = field.get('computedProps') || field.get('dynamicProps');
+    if (dynamicProps) {
+      if (dynamicProps.bind) {
+        if (field.type === FieldType.object) {
+          dynamicObjectBindFields.push(entry);
+        } else {
+          dynamicBindFields.push(entry);
+        }
+      } else {
+        dynamicFields.push(entry);
+      }
+    } else {
+      const bind = field.get('bind');
+      if (bind) {
+        const targetNames = bind.split('.');
+        targetNames.pop();
+        if (targetNames.some((targetName) => {
+          const target = fields.get(targetName);
+          return target && (target.get('computedProps') || target.get('dynamicProps'));
+        })) {
+          if (field.type === FieldType.object) {
+            dynamicObjectBindFields.push(entry);
+          } else {
+            dynamicBindFields.push(entry);
+          }
+        } else if (field.get('transformResponse')) {
+          transformResponseField.push(entry);
+        } else if (field.type === FieldType.object) {
+          objectBindFields.push(entry);
+        } else {
+          bindFields.push(entry);
+        }
+      } else {
+        normalFields.push(entry);
+      }
+    }
+  });
+  return [
+    ...normalFields,
+    ...objectBindFields,
+    ...bindFields,
+    ...transformResponseField,
+    ...dynamicFields,
+    ...dynamicObjectBindFields,
+    ...dynamicBindFields,
+  ];
 }
