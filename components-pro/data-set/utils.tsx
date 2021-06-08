@@ -26,6 +26,7 @@ import formatNumber from '../formatter/formatNumber';
 import formatCurrency from '../formatter/formatCurrency';
 import { getPrecision } from '../number-field/utils';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
+import { treeReduce } from '../_util/treeUtils';
 
 export function useNormal(dataToJSON: DataToJSON): boolean {
   return [DataToJSON.normal, DataToJSON['normal-self']].includes(dataToJSON);
@@ -285,35 +286,35 @@ export function sortTree(children: Record[], orderField: Field): Record[] {
   return children;
 }
 
+interface Node {
+  item: object;
+  children: Node[];
+}
+
 // 获取单个页面能够展示的数据
 export function sliceTree(idField: string, parentField: string, allData: object[], pageSize: number): object[] {
   if (allData.length) {
-    const parentMap = new Map();
-    const noParentChildren: [any, object][] = [];
-    const parent: object[] = [];
-    const children: object[] = [];
+    const rootMap: Map<string, Node> = new Map<string, Node>();
+    const itemMap: Map<string, Node> = new Map<string, Node>();
     allData.forEach((item) => {
       const id = item[idField];
-      const parentId = item[parentField];
-      if (!isNil(parentId)) {
-        if (parentMap.get(parentId)) {
-          children.push(item);
-        } else {
-          noParentChildren.push([parentId, item]);
-        }
-      } else if (parent.length < pageSize) {
-        if (!isNil(id)) {
-          parentMap.set(id, item);
-        }
-        parent.push(item);
+      if (!isNil(id)) {
+        const node: Node = {
+          item,
+          children: [],
+        };
+        itemMap.set(id, node);
+        rootMap.set(id, node);
       }
     });
-    noParentChildren.forEach(([parentId, item]) => {
-      if (parentMap.get(parentId)) {
-        children.push(item);
+    [...itemMap.entries()].forEach(([key, node]) => {
+      const parent = itemMap.get(node.item[parentField]);
+      if (parent) {
+        parent.children.push(node);
+        rootMap.delete(key);
       }
     });
-    return parent.concat(children);
+    return treeReduce<object[], Node>([...rootMap.values()].slice(0, pageSize), (previousValue, node) => previousValue.concat(node.item), []);
   }
   return [];
 }

@@ -35,7 +35,8 @@ title: Tooltip
 | placement | 气泡框位置，可选 `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom` | string | top |
 | trigger | 触发行为，可选 `hover/focus/click/contextMenu` | string | hover |
 | hidden | 用于手动控制浮层显隐 | boolean | `true` |
-| onHiddenChange | 显示隐藏的回调 | (hidden) => void | 无 |
+| onHiddenBeforeChange | 显示隐藏状态改变前的回调， 返回false将阻止该改变 | (hidden) => boolean | 无 |
+| onHiddenChange | 显示隐藏状态改变的回调 | (hidden) => void | 无 |
 
 ## 注意
 

@@ -183,6 +183,7 @@ title: DataSet
 | selectable     | 可选                                            | observable&lt;boolean&gt; |
 | isSelected     | 是否选中                                        | observable&lt;boolean&gt; |
 | isCurrent      | 是否当前记录                                    | observable&lt;boolean&gt; |
+| isExpanded     | 树形节点是否展开                                    | observable&lt;boolean&gt; |
 | children       | 树形子数据集                                    | Record[]\| undefined      |
 | parent         | 树形父数据                                      | Record\| undefined        |
 | previousRecord | 树形中前一条数据                                | Record\| undefined        |
