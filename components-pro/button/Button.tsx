@@ -231,6 +231,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
           await afterClick;
         } finally {
           this.loading = false;
+          // Fix asynchronous out of focus
+          this.focus();
         }
       }
     }

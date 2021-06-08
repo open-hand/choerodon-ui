@@ -396,8 +396,9 @@ export default class Input extends Component<InputProps, any> {
   }
 
   getLabel() {
+    const { focused } = this.state;
     const { placeholder, label } = this.props;
-    if (!this.hasValue() && placeholder) {
+    if (!this.hasValue() && !focused && placeholder) {
       return placeholder;
     }
     return label;

@@ -1410,7 +1410,7 @@ export default class Select extends Component {
 
   getLabel() {
     const { placeholder, label } = this.props;
-    if (!this.hasValue() && placeholder) {
+    if (!this.hasValue() && !this._focused && placeholder) {
       return placeholder;
     }
     return label;

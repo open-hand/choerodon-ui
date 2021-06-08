@@ -17,7 +17,7 @@ import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, F
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { getBaseType, getLimit, processValue } from './utils';
+import { getBaseType, getChainFieldName, getLimit, processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -469,12 +469,8 @@ export default class Field {
     if (record) {
       const { dirtyData } = record;
       const dirtyNames = [...dirtyData.keys()];
-      if (dirtyNames.includes(name)) {
+      if (dirtyNames.includes(getChainFieldName(record, name))) {
         return true;
-      }
-      const bind = this.get('bind');
-      if (bind) {
-        return [...dirtyData.keys()].some(key => bind === key || bind.startsWith(`${key}.`));
       }
     }
     return false;

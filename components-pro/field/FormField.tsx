@@ -14,18 +14,14 @@ import uniqWith from 'lodash/uniqWith';
 import { isMoment } from 'moment';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
-import isPlainObject from 'lodash/isPlainObject';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Row from 'choerodon-ui/lib/row';
-import Col from 'choerodon-ui/lib/col';
 import { Tooltip as TextTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field, { HighlightProps } from '../data-set/Field';
-import { findBindFields } from '../data-set/utils';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import Validity from '../validator/Validity';
 import FormContext from '../form/FormContext';
@@ -34,8 +30,7 @@ import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Form from '../form/Form';
 import isEmpty from '../_util/isEmpty';
-import * as ObjectChainValue from '../_util/ObjectChainValue';
-import { FieldFormat, FieldTrim, FieldType, RecordStatus } from '../data-set/enum';
+import { FieldFormat, FieldTrim, FieldType } from '../data-set/enum';
 import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
 import { ValidatorProps } from '../validator/rules';
@@ -1236,133 +1231,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       };
       const value = this.getValue();
       return formatCurrency(value, lang, formatOptions);
-    }
-  }
-
-  /**
-   * 只读模式下多行单元格渲染
-   * @param readOnly
-   */
-  renderMultiLine(readOnly?: boolean): ReactNode {
-    const {
-      name,
-      record,
-      field,
-      dataSet,
-      prefixCls,
-      props: { renderer, tooltip },
-    } = this;
-    const multiLineFields = findBindFields(field as Field, record!.fields, true);
-    if (renderer) {
-      return renderer({
-        multiLineFields,
-        record,
-        dataSet,
-        name,
-      });
-    }
-    if (readOnly) {
-      if (multiLineFields.length) {
-        this.multipleValidateMessageLength = 0;
-        return (
-          <>
-            {multiLineFields.map(fieldItem => {
-              if (fieldItem) {
-                const { validationResults } = this.multiLineValidator(fieldItem);
-                const required = defaultTo(fieldItem && fieldItem.get('required'), this.props.required);
-                const repeats: Map<any, number> = new Map<any, number>();
-                const validationResult = validationResults.find(error => error.value === record?.get(fieldItem.get('name')));
-                const validationMessage =
-                  validationResult && this.renderValidationMessage(validationResult);
-                const key = this.getValueKey(record?.get(fieldItem.get('name')));
-                const repeat = repeats.get(key) || 0;
-                const validationHidden = this.isValidationMessageHidden(validationMessage);
-                let processValue = '';
-                if (fieldItem && fieldItem.get('lovCode')) {
-                  if (!isNil(fieldItem.getValue())) {
-                    if (isPlainObject(fieldItem.getValue())) {
-                      processValue = ObjectChainValue.get(fieldItem.getValue(), fieldItem.get('textField') || 'meaning');
-                    }
-                  }
-                }
-                const value = record?.get(fieldItem.get('name'));
-                const notEmpty = !isEmpty(value);
-                // 值集中不存在 再去取直接返回的值
-                const text = this.processText(processValue || this.getText(value));
-                this.multipleValidateMessageLength++;
-                const inner = record?.status === RecordStatus.add ? '' :
-                  <span className={`${prefixCls}-multi-value-invalid`}>{text}</span>;
-                const validationInner = validationHidden ? inner : (
-                  <Tooltip
-                    suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-                    key={`${key}-${repeat}`}
-                    title={validationMessage}
-                    theme="light"
-                    placement="bottomLeft"
-                    hidden={validationHidden}
-                  >
-                    {validationMessage}
-                  </Tooltip>
-                );
-                const label = fieldItem.get('label');
-                const useTooltip = [TextTooltip.always, TextTooltip.overflow].includes(tooltip!);
-                const labelCol = label && (
-                  <Col
-                    span={8}
-                    className={required ? `${prefixCls}-multi-label ${prefixCls}-multi-label-required` : `${prefixCls}-multi-label`}
-                  >
-                    {fieldItem.get('label')}
-                  </Col>
-                );
-                const fieldCol = (
-                  <Col
-                    span={label ? 16 : 24}
-                    className={
-                      validationHidden ?
-                        `${prefixCls}-multi-value` :
-                        `${prefixCls}-multi-value ${prefixCls}-multi-value-invalid`
-                    }
-                  >
-                    {
-                      notEmpty ? (
-                        <Tooltip
-                          suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-                          key={`${key}-${repeat}`}
-                          title={validationMessage}
-                          theme="light"
-                          placement="bottomLeft"
-                          hidden={validationHidden}
-                        >
-                          {text}
-                        </Tooltip>
-                      ) : validationInner
-                    }
-                  </Col>
-                );
-                return (
-                  <Row key={`${record?.index}-multi-${fieldItem.get('name')}`} className={`${prefixCls}-multi`}>
-                    {
-                      labelCol && useTooltip ? (
-                        <OverflowTip title={label} placement="right" strict={tooltip === TextTooltip.always}>
-                          {labelCol}
-                        </OverflowTip>
-                      ) : labelCol
-                    }
-                    {
-                      useTooltip ? (
-                        <OverflowTip title={notEmpty ? text : validationMessage} placement="right" strict={tooltip === TextTooltip.always}>
-                          {fieldCol}
-                        </OverflowTip>
-                      ) : fieldCol
-                    }
-                  </Row>
-                );
-              }
-              return null;
-            })}
-          </>
-        );
-      }
     }
   }
 

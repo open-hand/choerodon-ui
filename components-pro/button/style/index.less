@@ -135,7 +135,7 @@
   // primary
   &-primary {
     &.@{btn-prefix-cls}-raised {
-      background-color: @primary-color;
+      background-color: @btn-primary-bg;
 
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
@@ -146,15 +146,15 @@
     &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
       &:hover,
       &:focus {
-        background-color: @primary-7;
+        background-color: @btn-hover-primary-color;
       }
     }
 
     &.@{btn-prefix-cls}-flat {
-      color: @primary-color;
+      color: @btn-primary-bg;
 
       .@{progress-cls} circle {
-        stroke: @primary-color;
+        stroke: @btn-primary-bg;
       }
     }
   }
@@ -367,7 +367,7 @@
     }
 
     &:focus {
-      color: @primary-color;
+      color: @btn-primary-bg;
     }
   }
 

@@ -307,7 +307,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderWrapper(): ReactNode {
     const maxLength = this.getProp('maxLength');
     const group = this.renderGroup();
-    if (this.props._inTable || !maxLength) {
+    if (this.props._inTable || !maxLength || !this.showLengthInfo) {
       return group;
     }
     const lengthInfo = this.renderLengthInfo();
