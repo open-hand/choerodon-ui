@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem that the selected date in the multi-select mode reports an error.
 - 🐞 `<pro>TextField`: Fix null rendering in `multiple` mode.
 - 🐞 `<pro>DatePicker`: Fix the problem that the calendar will pop up when the clear button is clicked and cannot be closed.
+- 🐞 `<pro>Button`: Fix the problem of focus error after asynchronous waiting.
 
 ## 1.3.2
 

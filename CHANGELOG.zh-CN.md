@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复在多选模式下选择日期报错的问题。
 - 🐞 `<pro>TextField`: 修复 multiple 模式空值渲染。
 - 🐞 `<pro>DatePicker`: 修复点击清除按钮是日历会弹出切无法关闭的问题。
+- 🐞 `<pro>Button`: 修复异步等待后焦点错误问题。
 
 
 ## 1.3.2
