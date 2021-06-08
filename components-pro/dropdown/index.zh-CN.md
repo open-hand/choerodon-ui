@@ -23,6 +23,7 @@ title: Dropdown
 | placement | 菜单弹出位置：`bottomLeft` `bottomCenter` `bottomRight` `topLeft` `topCenter` `topRight` | String | `bottomLeft` |
 | trigger | 触发下拉的行为 | Array&lt;`click`\|`hover`\|`contextMenu`> | `['click', 'focus']` |
 | hidden | 菜单是否隐藏 | boolean | - |
+| onHiddenBeforeChange | 菜单显示状态改变前调用，参数为 hidden， 返回值为false将阻止改变 | (hidden) => boolean | 无 |
 | onHiddenChange | 菜单显示状态改变时调用，参数为 hidden | Function(hidden) | - |
 | onOverlayClick | 点击菜单时调用，参数为 event | Function(event) | - |
 

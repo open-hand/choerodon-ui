@@ -22,6 +22,7 @@ If there are too many operations to display, you can wrap them in a `Dropdown`. 
 | placement | placement of pop menu: `bottomLeft` `bottomCenter` `bottomRight` `topLeft` `topCenter` `topRight` | String | `bottomLeft` |
 | trigger | the trigger mode which executes the drop-down action | Array&lt;`click`\|`hover`\|`contextMenu`> | `['click', 'focus']` |
 | hidden | whether the dropdown menu is hidden | boolean | - |
+| onHiddenBeforeChange | a callback function takes an argument: `hidden`, is executed before the hidden state is changed. If return value is false, this change will be stopped. | (hidden) => boolean | 无 |
 | onHiddenChange | a callback function takes an argument: `hidden`, is executed when the hidden state is changed | Function(visible) | - |
 | onOverlayClick | a callback function takes an argument: `event`, is executed when the overlay click | Function(event) | - |
 
