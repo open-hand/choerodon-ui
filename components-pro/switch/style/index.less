@@ -7,7 +7,8 @@
 
 .@{switch-prefix-cls} {
   &-wrapper {
-    padding: 0.03rem;
+    padding: @switch-wrapper-padding;
+
     &.@{c7n-pro-prefix}-field {
       width: auto;
     }
@@ -18,27 +19,29 @@
   &-label {
     position: relative;
     display: block;
-    min-width: 0.36rem;
-    height: @switch-height - 0.04rem;
-    padding: 0 0.05rem 0 @switch-height;
-    color: #fff;
+    min-width: @switch-min-width;
+    height: @switch-height;
+    padding-right: 0.05rem;
+    padding-left: @switch-button-size * 1.2;
+    color: @switch-label-color;
     font-size: @font-size-sm;
-    line-height: @switch-height - 0.06rem;
-    background-color: rgba(0, 0, 0, 0.38);
-    border-radius: @switch-height / 2;
+    line-height: @switch-line-height;
+    background-color: @switch-bg;
+    border-radius: @switch-button-size / 2;
+
     &::after {
       position: absolute;
       top: 0;
       bottom: 0;
       left: 0;
-      width: @switch-height;
-      height: @switch-height;
+      width: @switch-button-size;
+      height: @switch-button-size;
       margin-top: auto;
       margin-bottom: auto;
-      background-color: @component-background;
+      margin-left: @switch-padding-horizontal;
+      background-color: @switch-button-bg;
       border-radius: 50%;
-      box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
-        0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+      box-shadow: @switch-button-box-shadow;
       cursor: inherit;
       transition: all @switch-duration @ease-in-out-circ;
       content: ' ';
@@ -46,11 +49,11 @@
   }
 
   &:active + &-label::after {
-    width: @switch-height + 0.04rem;
+    width: @switch-button-active-width;
   }
 
   &-focused &-label {
-    box-shadow: 0 0 0 0.02rem fade(@switch-color, 20%);
+    box-shadow: @switch-box-shadow;
   }
 
   &-focused:hover &-label {
@@ -64,54 +67,62 @@
   }
 
   &:checked + &-label {
-    padding: 0 @switch-height 0 0.05rem;
-    background-color: @switch-color;
+    padding-right: @switch-button-size * 1.2;
+    padding-left: 0.05rem;
+    background-color: @switch-checked-bg;
+
     &::after {
       left: 100%;
-      margin-left: 0 - @switch-height;
-      background-color: @switch-checked-color;
+      margin-left: -@switch-padding-horizontal;
+      background-color: @switch-checked-button-bg;
+      transform: translateX(-100%);
     }
   }
+
   &:disabled {
     cursor: not-allowed;
   }
+
   &:disabled + &-label {
     opacity: @switch-disabled-opacity;
   }
 
   &-sm {
-    padding: 0;
+    padding: @switch-sm-wrapper-padding;
   }
 
   &-sm &-label {
-    min-width: 0.3rem;
-    height: @switch-sm-height - 0.04rem;
+    min-width: @switch-sm-min-width;
+    height: @switch-sm-height;
+    border-radius: @switch-sm-button-size / 2;
+
     &::after {
-      left: 0.01rem;
-      width: @switch-sm-height;
-      height: @switch-sm-height;
+      width: @switch-sm-button-size;
+      height: @switch-sm-button-size;
     }
   }
 
-  &-sm &:checked + &-label::after {
-    margin-left: -0.01rem - @switch-sm-height;
+  &-sm &:active + &-label::after {
+    width: @switch-sm-button-active-width;
   }
 
   &-lg {
-    padding: 0.03rem 0;
+    padding: @switch-lg-wrapper-padding;
   }
 
   &-lg &-label {
-    min-width: 0.4rem;
-    height: @switch-lg-height - 0.04rem;
+    min-width: @switch-lg-min-width;
+    height: @switch-lg-height;
+    border-radius: @switch-lg-button-size / 2;
+
     &::after {
-      left: 0.01rem;
-      width: @switch-lg-height;
-      height: @switch-lg-height;
+      width: @switch-lg-button-size;
+      height: @switch-lg-button-size;
     }
   }
-  &-lg &:checked + &-label::after {
-    margin-left: 0.01rem - @switch-lg-height;
+
+  &-lg &:active + &-label::after {
+    width: @switch-lg-button-active-width;
   }
 
   &-float-label .@{field-label-prefix-cls}-wrapper {

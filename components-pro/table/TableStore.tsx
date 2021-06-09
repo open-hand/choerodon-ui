@@ -1535,7 +1535,12 @@ export default class TableStore {
   saveCustomizedDebounce = debounce(this.saveCustomized, 1000);
 
   @autobind
+  @action
   openCustomizationModal(modal) {
+    const { node: { element }, height } = this;
+    if (height === undefined) {
+      this.totalHeight = element.offsetHeight;
+    }
     const { customizedCode } = this.props;
     const modalProps: ModalProps = {
       drawer: true,

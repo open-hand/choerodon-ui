@@ -23,9 +23,9 @@ class App extends React.PureComponent {
     return (
       <div>
         <div>
-          <Button>默认raised按钮</Button>
-          <Button size="large">大raised按钮</Button>
-          <Button size="small">小raised按钮</Button>
+          <Button icon="search">默认raised按钮</Button>
+          <Button icon="search" size="large">大raised按钮</Button>
+          <Button icon="search" size="small">小raised按钮</Button>
         </div>
         <div>
           <Button funcType="flat">flat按钮</Button>

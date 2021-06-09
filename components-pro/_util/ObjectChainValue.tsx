@@ -3,13 +3,19 @@ import { isArrayLike, observable } from 'mobx';
 import { mobxGet, mobxRemove, mobxSet } from './MobxUtils';
 import Field, { Fields } from '../data-set/Field';
 
-export function get(obj: object | undefined, prop: string): any {
-  if (obj) {
+export function get(obj: object | undefined | null, prop: string): any {
+  if (obj === null) {
+    return null;
+  }
+  if (obj !== undefined) {
     const index = prop.indexOf('.');
     if (index !== -1) {
       const key = prop.slice(0, index);
       const restKey = prop.slice(index + 1);
       const value = mobxGet(obj, key);
+      if (value === null) {
+        return null;
+      }
       if (isArrayLike(value)) {
         return value.map(item => get(item, restKey)).filter(item => !!item);
       }

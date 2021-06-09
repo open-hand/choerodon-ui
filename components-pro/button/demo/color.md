@@ -14,47 +14,59 @@ title:
 Button background color or font color.
 
 ```jsx
-import { Button } from 'choerodon-ui/pro';
+import { Button, Switch } from 'choerodon-ui/pro';
 
 class App extends React.PureComponent {
+  state = {
+    loading: true,
+  };
+
+  handleChange = (value) => this.setState({ loading: value });
+
   render() {
+    const { loading } = this.state;
     return (
       <div>
+        <Switch checked={loading} onChange={this.handleChange} value>Loading</Switch>
         <div>
           <div style={{ margin: '20px 0' }}>Background Color(With raised funcType)</div>
-          <Button color="gray">Gray</Button>
-          <Button color="primary">Blue</Button>
-          <Button color="green">Green</Button>
-          <Button color="red">Red</Button>
-          <Button color="yellow">Yellow</Button>
-          <Button color="purple">Purple</Button>
+          <Button loading={loading} color="primary">Primary</Button>
+          <Button loading={loading} color="default">Default</Button>
+          <Button loading={loading} color="gray">Gray</Button>
+          <Button loading={loading} color="blue">Blue</Button>
+          <Button loading={loading} color="green">Green</Button>
+          <Button loading={loading} color="red">Red</Button>
           <br />
           <br />
-          <Button color="dark">Dark</Button>
+          <Button loading={loading} color="yellow">Yellow</Button>
+          <Button loading={loading} color="purple">Purple</Button>
+          <Button loading={loading} color="dark">Dark</Button>
         </div>
         <div>
           <div style={{ margin: '20px 0' }}>Font Color(With flat funcType)</div>
-          <Button funcType="flat" color="gray">
+          <Button loading={loading} funcType="flat" color="primary">Primary</Button>
+          <Button loading={loading} funcType="flat" color="default">Default</Button>
+          <Button loading={loading} funcType="flat" color="gray">
             Gray
           </Button>
-          <Button funcType="flat" color="primary">
+          <Button loading={loading} funcType="flat" color="blue">
             Blue
           </Button>
-          <Button funcType="flat" color="green">
+          <Button loading={loading} funcType="flat" color="green">
             Green
           </Button>
-          <Button funcType="flat" color="red">
+          <Button loading={loading} funcType="flat" color="red">
             Red
           </Button>
-          <Button funcType="flat" color="yellow">
+          <br />
+          <br />
+          <Button loading={loading} funcType="flat" color="yellow">
             Yellow
           </Button>
-          <Button funcType="flat" color="purple">
+          <Button loading={loading} funcType="flat" color="purple">
             Purple
           </Button>
-          <br />
-          <br />
-          <Button funcType="flat" color="dark">
+          <Button loading={loading} funcType="flat" color="dark">
             Dark
           </Button>
         </div>

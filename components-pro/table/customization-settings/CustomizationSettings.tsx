@@ -81,7 +81,13 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
         const { tempCustomized, props: { columns, children } } = tableStore;
         if (tempCustomized) {
           set(tempCustomized, name, value);
-          if (name === 'height' && record.get('heightType') === TableHeightType.fixed) {
+          if (name === 'heightType') {
+            if (value === TableHeightType.fixed) {
+              set(tempCustomized, 'height', record.get('height'));
+            } else if (value === TableHeightType.flex) {
+              set(tempCustomized, 'heightDiff', record.get('heightDiff'));
+            }
+          } else if (name === 'height' && record.get('heightType') === TableHeightType.fixed) {
             record.set('heightDiff', diff(value));
             set(tempCustomized, 'heightType', TableHeightType.fixed);
           } else if (name === 'heightDiff' && record.get('heightType') === TableHeightType.flex) {

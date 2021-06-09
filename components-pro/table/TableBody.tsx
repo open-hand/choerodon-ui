@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, CSSProperties } from 'react';
 import { observer } from 'mobx-react';
 import raf from 'raf';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -11,6 +11,7 @@ export interface TableBodyProps {
   lock?: ColumnLock | boolean;
   getRef?: (node: HTMLDivElement | null) => void;
   onScroll?: (e) => void;
+  style?: CSSProperties;
 }
 
 @observer
@@ -58,7 +59,7 @@ export default class TableBody extends Component<TableBodyProps> {
   }
 
   render() {
-    const { children, lock, onScroll } = this.props;
+    const { children, lock, onScroll, style } = this.props;
     const {
       tableStore: {
         prefixCls, leftLeafColumnsWidth, rightLeafColumnsWidth, hasFooter, overflowY, overflowX,
@@ -73,6 +74,7 @@ export default class TableBody extends Component<TableBodyProps> {
         ref={this.saveRef}
         className={`${prefixCls}-body`}
         style={{
+          ...style,
           height: pxToRem(
             hasFooterAndNotLock && height !== undefined ? height + scrollbar : height,
           ),

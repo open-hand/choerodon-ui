@@ -41,11 +41,13 @@ timeline: true
 - 💄 `<pro>Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `<pro>Dropdown`: overlay 属性支持钩子函数。
 - 💄 `<pro>Table`: 性能优化。
+- 💄 `<pro>Table`: 支持 maxHeight 和 minHeight 样式属性。
 - 💄 `<pro>Tree`: 优化扩展 showLine 属性。
 - 💄 `<pro>Form`: 优化浮动标签 label 展示时机。
 - 💄 `<pro>TextField`: 优化 clearButton 渲染交互。
 - 💄 `<pro>Modal`: footer 增加 modal 回调参数。
 - 💄 `<pro>TextField`: 优化 range 模式 label 渲染逻辑。
+- 🐞 `<pro>DataSet`：修复清除object类型字段的值时，其绑定字段不会提交null值的问题。
 - 🐞 `Responsive`：修复多个响应式组件其中一个禁用或销毁时其他组件无法触发响应的问题。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
