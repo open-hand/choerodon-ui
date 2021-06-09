@@ -2035,11 +2035,11 @@ Then the query method will be auto invoke.`,
 
   @action
   appendData(allData: (object | Record)[] = []): DataSet {
-    const {
-      paging,
-      pageSize,
-    } = this;
-    allData = paging ? allData.slice(0, pageSize) : allData;
+    // const {
+    //   paging,
+    //   pageSize,
+    // } = this;
+    // allData = paging ? allData.slice(0, pageSize) : allData;
     this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: allData });
     const appendData = this.processData(allData);
     this.originalData = unionBy(this.originalData, appendData, 'key');

@@ -684,7 +684,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (queryDataSet) {
       const { fields } = queryDataSet;
       return [...fields.entries()].reduce((list, [name, field]) => {
-        if (!field.get('bind')) {
+        if (!field.get('bind') && !name.includes('__tls')) {
           let filterBarProps = {};
           if (queryBar === TableQueryBarType.filterBar) {
             filterBarProps = {
