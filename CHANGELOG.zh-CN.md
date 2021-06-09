@@ -41,6 +41,7 @@ timeline: true
 - 💄 `<pro>Tooltip`: title 和 overlay 属性支持钩子函数。
 - 💄 `<pro>Dropdown`: overlay 属性支持钩子函数。
 - 💄 `<pro>Table`: 性能优化。
+- 💄 `<pro>Table`: 支持 maxHeight 和 minHeight 样式属性。
 - 💄 `<pro>Tree`: 优化扩展 showLine 属性。
 - 💄 `<pro>Form`: 优化浮动标签 label 展示时机。
 - 💄 `<pro>TextField`: 优化 clearButton 渲染交互。

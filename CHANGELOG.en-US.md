@@ -41,6 +41,7 @@ timeline: true
 - 💄 `<pro>Tooltip`: The `title` and `overlay` attributes support hook functions.
 - 💄 `<pro>Dropdown`: The `overlay` property supports hook functions.
 - 💄 `<pro>Table`: Optimize the performance.
+- 💄 `<pro>Table`: Support maxHeight and minHeight style attributes.
 - 💄 `<pro>Tree`: Optimized and extend the showLine attribute.
 - 💄 `<pro>TextField`: Optimized the `clearButton` rendering interaction.
 - 💄 `<pro>Modal`: `footer` add callback parameters.

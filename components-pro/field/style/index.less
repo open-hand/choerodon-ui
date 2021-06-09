@@ -11,7 +11,7 @@
   &-label-vertical {
     overflow: hidden;
     line-height: @label-line-height;
-    white-space: nowrap;
+    white-space: @label-white-space;
     text-overflow: ellipsis;
     vertical-align: middle;
 
@@ -28,15 +28,18 @@
     }
   }
 
-  &-label,
+  &-label {
+    padding: @label-wrapper-padding;
+  }
+
   &-wrapper {
-    padding: 0.1rem 0.05rem;
+    padding: @form-item-wrapper-padding;
   }
 
   &-label-vertical {
     display: block;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: @label-vertical-wrapper-padding-vertical;
+    padding-bottom: @label-vertical-wrapper-padding-vertical;
     direction: ltr;
     text-align: left;
 
@@ -98,10 +101,14 @@
     word-break: break-all;
   }
 
-  &-output,
+  &-output {
+    padding-top: @label-output-wrapper-padding-vertical;
+    padding-bottom: @label-output-wrapper-padding-vertical;
+  }
+
   &-label-output {
-    padding-top: 0.01rem;
-    padding-bottom: 0.01rem;
+    padding-top: @form-item-wrapper-output-padding-vertical;
+    padding-bottom: @form-item-wrapper-output-padding-vertical;
   }
 
   &-row {

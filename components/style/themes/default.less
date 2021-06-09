@@ -48,11 +48,11 @@ sans-serif;
 @text-color: fade(#000, 100%);
 @text-color-secondary: fade(#000, 45%);
 @heading-color-dark: fade(#fff, 100%);
-@text-color-dark: fade(#fff, 85%);
+@text-color-dark: fade(#fff, 100%);
 @text-color-secondary-dark: fade(#fff, 65%);
 @font-size-base: 0.13rem;
-@font-size-lg: @font-size-base + 0.03rem;
-@font-size-sm: @font-size-base - 0.01rem;
+@font-size-lg: 0.16rem;
+@font-size-sm: 0.12rem;
 @line-height-base: 1.5;
 @border-radius-lg: 0.1rem;
 @border-radius-base: 0.02rem;
@@ -146,20 +146,13 @@ sans-serif;
 0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
 
 // Buttons
-@btn-font-weight: 500;
+@btn-font-weight: 400;
 @btn-border-radius-base: @border-radius-base;
 @btn-border-radius-sm: @border-radius-base;
 
 @btn-hover-default-color: rgba(0, 0, 0, 0.08);
 @btn-hover-other-color: rgba(255, 255, 255, 0.08);
-@btn-hover-primary-color: @primary-7;
 
-@btn-primary-color: #fff;
-@btn-primary-bg: @primary-color;
-
-@btn-default-color: @text-color;
-@btn-default-bg: transparent;
-@btn-default-border: @border-color-base;
 
 @btn-danger-color: @error-color;
 @btn-danger-bg: rgba(0, 0, 0, 0);
@@ -170,9 +163,15 @@ sans-serif;
 @btn-disable-border: @border-color-base;
 
 @btn-line-height: 1.5;
-@btn-padding-base: 0 @padding-sm - 0.02rem;
-@btn-padding-lg: @btn-padding-base;
-@btn-padding-sm: @padding-vertical-sm @padding-xs - 0.02rem;
+@btn-padding-vertical-base: 0;
+@btn-padding-horizontal-base: 0.12rem;
+@btn-padding-base: @btn-padding-vertical-base @btn-padding-horizontal-base;
+@btn-padding-vertical-lg: @btn-padding-vertical-base;
+@btn-padding-horizontal-lg: @btn-padding-horizontal-base;
+@btn-padding-lg: @btn-padding-vertical-lg @btn-padding-horizontal-lg;
+@btn-padding-vertical-sm: @padding-vertical-sm;
+@btn-padding-horizontal-sm: 0.06rem;
+@btn-padding-sm: @padding-vertical-sm @btn-padding-horizontal-sm;
 @btn-font-size-lg: @font-size-lg;
 @btn-font-size-sm: @font-size-sm;
 
@@ -193,6 +192,116 @@ sans-serif;
 0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
 @btn-active-box-shadow: @shadow-4;
 @btn-icon-size: 0.14rem;
+@btn-icon-size-lg: @font-size-lg;
+@btn-icon-size-sm: @font-size-sm;
+@btn-icon-only-size: 0.2rem;
+@btn-icon-only-size-sm: 0.14rem;
+@btn-icon-only-size-lg: 0.24rem;
+@btn-icon-font-weight: inherit;
+
+// raised button
+@btn-raised-border-width-base: 0;
+@btn-raised-border-style-base: solid;
+
+// button primary
+@btn-primary-color: @text-color-dark;
+@btn-primary-bg: @primary-color;
+@btn-primary-border: @btn-primary-bg;
+@btn-primary-focus-color: @btn-primary-color;
+@btn-primary-focus-bg: @primary-7;
+@btn-primary-hover-color: @btn-primary-focus-color;
+@btn-primary-hover-bg: @btn-primary-focus-bg;
+@btn-primary-disabled-color: @btn-primary-color;
+@btn-primary-flat-color: @btn-primary-bg;
+
+// button gray
+@btn-gray-color: @text-color;
+@btn-gray-bg: #f5f5f5;
+@btn-gray-border: @btn-gray-bg;
+@btn-gray-focus-color: @btn-gray-color;
+@btn-gray-focus-bg: #e6e6e6;
+@btn-gray-hover-color: @btn-gray-focus-color;
+@btn-gray-hover-bg: @btn-gray-focus-bg;
+@btn-gray-disabled-color: @btn-gray-color;
+@btn-gray-flat-color: #d0d0d0;
+
+// button blue
+@btn-blue-color: @text-color-dark;
+@btn-blue-bg: @blue-6;
+@btn-blue-border: @btn-blue-bg;
+@btn-blue-focus-color: @btn-blue-color;
+@btn-blue-focus-bg: @blue-7;
+@btn-blue-hover-color: @btn-blue-focus-color;
+@btn-blue-hover-bg: @btn-blue-focus-bg;
+@btn-blue-disabled-color: @btn-blue-color;
+@btn-blue-flat-color: @btn-blue-bg;
+
+// button green
+@btn-green-color: @text-color-dark;
+@btn-green-bg: @green-6;
+@btn-green-border: @btn-green-bg;
+@btn-green-focus-color: @btn-green-color;
+@btn-green-focus-bg: @green-7;
+@btn-green-hover-color: @btn-green-focus-color;
+@btn-green-hover-bg: @btn-green-focus-bg;
+@btn-green-disabled-color: @btn-green-color;
+@btn-green-flat-color: @btn-green-bg;
+
+// button red
+@btn-red-color: @text-color-dark;
+@btn-red-bg: @red-6;
+@btn-red-border: @btn-red-bg;
+@btn-red-focus-color: @btn-red-color;
+@btn-red-focus-bg: @red-7;
+@btn-red-hover-color: @btn-red-focus-color;
+@btn-red-hover-bg: @btn-red-focus-bg;
+@btn-red-disabled-color: @btn-red-color;
+@btn-red-flat-color: @btn-red-bg;
+
+// button yellow
+@btn-yellow-color: @text-color-dark;
+@btn-yellow-bg: @yellow-6;
+@btn-yellow-border: @btn-yellow-bg;
+@btn-yellow-focus-color: @btn-yellow-color;
+@btn-yellow-focus-bg: @yellow-7;
+@btn-yellow-hover-color: @btn-yellow-focus-color;
+@btn-yellow-hover-bg: @btn-yellow-focus-bg;
+@btn-yellow-disabled-color: @btn-yellow-color;
+@btn-yellow-flat-color: @btn-yellow-bg;
+
+// button purple
+@btn-purple-color: @text-color-dark;
+@btn-purple-bg: @purple-6;
+@btn-purple-border: @btn-purple-bg;
+@btn-purple-focus-color: @btn-purple-color;
+@btn-purple-focus-bg: @purple-7;
+@btn-purple-hover-color: @btn-purple-focus-color;
+@btn-purple-hover-bg: @btn-purple-focus-bg;
+@btn-purple-disabled-color: @btn-purple-color;
+@btn-purple-flat-color: @btn-purple-bg;
+
+// button dark
+@btn-dark-color: @text-color-dark;
+@btn-dark-bg: @dark-4;
+@btn-dark-border: @btn-dark-bg;
+@btn-dark-focus-color: @btn-dark-color;
+@btn-dark-focus-bg: @dark-5;
+@btn-dark-hover-color: @btn-dark-focus-color;
+@btn-dark-hover-bg: @btn-dark-focus-bg;
+@btn-dark-disabled-color: @btn-dark-color;
+@btn-dark-flat-color: @dark-6;
+
+// button default
+@btn-default-color: @text-color;
+@btn-default-bg: transparent;
+@btn-default-border: @border-color-base;
+@btn-default-focus-color: @btn-primary-bg;
+@btn-default-focus-bg: @btn-default-bg;
+@btn-default-hover-color: @btn-default-color;
+@btn-default-hover-bg: @btn-default-focus-bg;
+@btn-default-disabled-color: @btn-default-color;
+@btn-default-flat-color: @btn-default-color;
+
 // Checkbox
 @checkbox-size: 0.16rem;
 @checkbox-color: @primary-color;
@@ -289,7 +398,17 @@ sans-serif;
 @label-color: rgba(0, 0, 0, 60%);
 @label-colon-color: rgba(0, 0, 0, 60%);
 @label-line-height: @input-height-base;
+@label-white-space: nowrap;
+@label-wrapper-padding-vertical: 0.1rem;
+@label-wrapper-padding-horizontal: 0.05rem;
+@label-wrapper-padding: @label-wrapper-padding-vertical @label-wrapper-padding-horizontal;
+@label-vertical-wrapper-padding-vertical: 0;
+@label-output-wrapper-padding-vertical: 0.01rem;
 @field-help-color: rgba(0, 0, 0, 40%);
+@form-item-wrapper-padding-vertical: 0.1rem;
+@form-item-wrapper-padding-horizontal: 0.05rem;
+@form-item-wrapper-padding: @form-item-wrapper-padding-vertical @form-item-wrapper-padding-horizontal;
+@form-item-wrapper-output-padding-vertical: 0.01rem;
 @form-item-margin-top: 0.07rem;
 @form-item-margin-bottom: 0.2rem;
 @form-item-trailing-colon: true;
@@ -301,6 +420,9 @@ sans-serif;
 @float-label-color: @label-color;
 @float-label-font-size: .15rem;
 @float-label-font-weight: 500;
+@float-form-item-margin-top: @form-item-margin-top;
+@float-form-item-margin-bottom: @form-item-margin-bottom;
+@float-form-item-wrapper-padding-vertical: 0;
 
 // Input
 // ---
@@ -372,7 +494,7 @@ sans-serif;
 @tooltip-min-width: 0.3rem;
 @tooltip-min-height: 0.32rem;
 // Tooltip text color
-@tooltip-color: #fff;
+@tooltip-color: @text-color-dark;
 // Tooltip background color
 @tooltip-bg: rgba(0, 0, 0, 0.75);
 // Tooltip arrow width
@@ -382,14 +504,14 @@ sans-serif;
 // Tooltip arrow color
 @tooltip-arrow-color: @tooltip-bg;
 // Tooltip light theme colors
-@tooltip-color-light: #000;
-@tooltip-bg-light: #fff;
+@tooltip-color-light: @text-color;
+@tooltip-bg-light: @component-background;
 @tooltip-arrow-color-light: @tooltip-bg-light;
 
 // Popover
 // ---
 // Popover body background color
-@popover-bg: #fff;
+@popover-bg: @component-background;
 // Popover text color
 @popover-color: @text-color;
 // Popover maximum width
@@ -406,7 +528,16 @@ sans-serif;
 
 // Modal
 // --
-@modal-font-size-lg: 0.2rem;
+@modal-font-size-lg: 0.18rem; // deprecated
+@modal-font-size-base: @modal-font-size-lg; // deprecated
+@modal-title-color: @heading-color;
+@modal-title-font-size-base: @modal-font-size-base;
+@modal-title-font-weight: 500;
+@modal-title-line-height: 0.24rem;
+@modal-confirm-title-color: @modal-title-color;
+@modal-confirm-title-font-size-base: 0.2rem;
+@modal-confirm-title-font-weight: @modal-title-font-weight;
+@modal-confirm-title-line-height: 0.32rem;
 @modal-mask-bg: rgba(0, 0, 0, 0.288);
 @modal-content-shadow: @shadow-2;
 
@@ -506,7 +637,7 @@ sans-serif;
 // Tag
 // --
 @tag-default-bg: @primary-color;
-@tag-default-color: #fff;
+@tag-default-color: @text-color-dark;
 @tag-multiple-color: rgba(255, 255, 255, 0.72);
 @tag-font-size: @font-size-sm;
 
@@ -586,13 +717,37 @@ sans-serif;
 
 // Switch
 // ---
-@switch-height: 0.20rem;
-@switch-sm-height: 0.16rem;
-@switch-lg-height: 0.24rem;
+@switch-wrapper-padding: 0.03rem;
+@switch-padding-horizontal: 0;
+@switch-sm-wrapper-padding: 0;
+@switch-lg-wrapper-padding: @switch-wrapper-padding 0;
+@switch-min-width: 0.36rem;
+@switch-sm-min-width: 0.3rem;
+@switch-lg-min-width: 0.4rem;
+@switch-height: 0.16rem;
+@switch-sm-height: 0.12rem;
+@switch-lg-height: 0.2rem;
+@switch-line-height: 0.14rem;
+@switch-sm-line-height: 0.1rem;
+@switch-lg-line-height: 0.18rem;
+@switch-button-size: 0.20rem;
+@switch-sm-button-size: 0.16rem;
+@switch-lg-button-size: 0.24rem;
+@switch-button-active-width: 0.24rem;
+@switch-sm-button-active-width: 0.2rem;
+@switch-lg-button-active-width: 0.28rem;
 @switch-sm-checked-margin-left: 0.03rem - @switch-sm-height;
 @switch-disabled-opacity: 0.4;
-@switch-checked-color: @primary-color;
-@switch-color: @primary-3;
+@switch-label-color: @text-color-dark;
+@switch-checked-color: @primary-color; // deprecated
+@switch-color: @primary-3; // deprecated
+@switch-checked-bg: @switch-color;
+@switch-checked-button-bg: @switch-checked-color;
+@switch-bg: rgba(0, 0, 0, 0.38);
+@switch-button-bg: @component-background;
+@switch-box-shadow: 0 0 0 0.02rem fade(@switch-color, 20%);
+@switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
+0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
 
 // Pagination
 // ---

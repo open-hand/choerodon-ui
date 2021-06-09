@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import raf from 'raf';
 import { observer } from 'mobx-react';
+import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
@@ -25,7 +26,7 @@ import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
-import Column, { ColumnProps, defaultMinWidth } from './Column';
+import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import DataSet from '../data-set/DataSet';
@@ -1288,22 +1289,6 @@ export default class Table extends DataSetComponent<TableProps> {
     });
   }
 
-  getWrapperProps(props = {}) {
-    const { style } = this.props;
-    const { tableStore } = this;
-    const newStyle: any = omit(style, ['width', 'height']);
-    if (style && style.width !== undefined && style.width !== 'auto') {
-      newStyle.width = Math.max(
-        style.width as number,
-        tableStore.leftLeafColumnsWidth + tableStore.rightLeafColumnsWidth + defaultMinWidth,
-      );
-    }
-    return super.getWrapperProps({
-      style: newStyle,
-      ...props,
-    });
-  }
-
   /**
    * 获取传入的 Spin props
    */
@@ -1788,6 +1773,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTable(lock?: ColumnLock | boolean): ReactNode {
+    const { props } = this;
     const { overflowX, heightType, hasFooter: footer } = this.tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
@@ -1835,6 +1821,7 @@ export default class Table extends DataSetComponent<TableProps> {
           getRef={tableBodyRef}
           lock={lock}
           onScroll={this.handleBodyScroll}
+          style={pick(props.style, ['maxHeight', 'minHeight'])}
         >
           {this.renderTable(false, true, false, lock)}
         </TableBody>
@@ -1994,7 +1981,6 @@ export default class Table extends DataSetComponent<TableProps> {
         tableStore.totalHeight = totalHeight;
         tableStore.height = totalHeight - headerHeight - footerHeight;
       } else {
-        tableStore.totalHeight = element.offsetHeight;
         tableStore.height = undefined;
       }
     }

@@ -9,10 +9,12 @@
   display: inline-block;
   height: @btn-height-base;
   padding: @btn-padding-base;
+  font-weight: @btn-font-weight;
   line-height: @btn-line-height;
   text-align: center;
   vertical-align: middle;
   background-color: @btn-default-bg;
+  background-image: none;
   border: none;
   border-radius: @border-radius-base;
   outline: none;
@@ -20,6 +22,7 @@
   cursor: pointer;
   transition: all 0.3s ease-out;
   user-select: none;
+  touch-action: manipulation;
 
   a&[disabled] {
     pointer-events: auto;
@@ -51,6 +54,7 @@
   > button > .@{iconfont-css-prefix},
   > .@{iconfont-css-prefix} {
     margin-right: 0.05rem;
+    font-weight: @btn-icon-font-weight;
     font-size: @btn-icon-size;
   }
 
@@ -64,8 +68,8 @@
     padding: @btn-padding-lg;
     font-size: @font-size-lg;
 
-    .@{c7n-pro-prefix}-icon {
-      font-size: @font-size-lg;
+    .@{iconfont-css-prefix} {
+      font-size: @btn-icon-size-lg;
     }
 
     &[href] {
@@ -82,8 +86,8 @@
       line-height: @btn-height-sm;
     }
 
-    .@{c7n-pro-prefix}-icon {
-      font-size: @font-size-sm;
+    .@{iconfont-css-prefix} {
+      font-size: @btn-icon-size-sm;
     }
   }
 
@@ -102,273 +106,150 @@
     }
   }
 
-  &-raised,
-  &-raised-disabled,
-  &-raised:disabled {
-    color: #fff;
-
-    .@{progress-cls} circle {
-      stroke: #fff;
-    }
+  &-raised {
+    border-color: transparent;
+    border-style: @btn-raised-border-style-base;
+    border-width: @btn-raised-border-width-base;
   }
 
   &-disabled,
   &:disabled {
     cursor: not-allowed;
-
-    &::before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1;
-      background: #fff;
-      border-radius: inherit;
-      opacity: 0.35;
-      transition: opacity 0.2s;
-      content: '';
-      pointer-events: none;
-    }
+    opacity: 0.65;
   }
 
   // primary
   &-primary {
-    &.@{btn-prefix-cls}-raised {
-      background-color: @btn-primary-bg;
-
-      .@{c7n-pro-prefix}-ripple {
-        background-color: @ripple-light-color;
-      }
-    }
-
-    &.@{btn-prefix-cls}-raised:enabled,
-    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
-      &:hover,
-      &:focus {
-        background-color: @btn-hover-primary-color;
-      }
-    }
-
-    &.@{btn-prefix-cls}-flat {
-      color: @btn-primary-bg;
-
-      .@{progress-cls} circle {
-        stroke: @btn-primary-bg;
-      }
-    }
+    .pro-button-color(
+      @btn-primary-color,
+      @btn-primary-bg,
+      @btn-primary-border,
+      @btn-primary-focus-color,
+      @btn-primary-focus-bg,
+      @btn-primary-hover-color,
+      @btn-primary-hover-bg,
+      @btn-primary-disabled-color,
+      @btn-primary-flat-color
+    );
   }
 
   // gray
   &-gray {
-    &.@{btn-prefix-cls}-raised {
-      color: @btn-default-color;
-      background-color: #f5f5f5;
-    }
-
-    &.@{btn-prefix-cls}-raised:enabled,
-    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
-      &:hover,
-      &:focus {
-        background-color: #e6e6e6;
-      }
-    }
-
-    &.@{btn-prefix-cls}-raised:disabled,
-    &.@{btn-prefix-cls}-raised.@{btn-prefix-cls}-disabled {
-      color: @disabled-color;
-    }
-
-    &.@{btn-prefix-cls}-flat {
-      color: #d0d0d0;
-
-      .@{progress-cls} circle {
-        stroke: #d0d0d0;
-      }
-    }
+    .pro-button-color(
+      @btn-gray-color,
+      @btn-gray-bg,
+      @btn-gray-border,
+      @btn-gray-focus-color,
+      @btn-gray-focus-bg,
+      @btn-gray-hover-color,
+      @btn-gray-hover-bg,
+      @btn-gray-disabled-color,
+      @btn-gray-flat-color
+    );
   }
 
   // blue
   &-blue {
-    &.@{btn-prefix-cls}-raised {
-      background-color: @blue-6;
-
-      .@{c7n-pro-prefix}-ripple {
-        background-color: @ripple-light-color;
-      }
-    }
-
-    &.@{btn-prefix-cls}-raised:enabled,
-    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
-      &:hover,
-      &:focus {
-        background-color: @blue-7;
-      }
-    }
-
-    &.@{btn-prefix-cls}-flat {
-      color: @blue-6;
-
-      .@{progress-cls} circle {
-        stroke: @blue-6;
-      }
-    }
+    .pro-button-color(
+      @btn-blue-color,
+      @btn-blue-bg,
+      @btn-blue-border,
+      @btn-blue-focus-color,
+      @btn-blue-focus-bg,
+      @btn-blue-hover-color,
+      @btn-blue-hover-bg,
+      @btn-blue-disabled-color,
+      @btn-blue-flat-color
+    );
   }
 
   // green
   &-green {
-    &.@{btn-prefix-cls}-raised {
-      background-color: @green-6;
-
-      .@{c7n-pro-prefix}-ripple {
-        background-color: @ripple-light-color;
-      }
-    }
-
-    &.@{btn-prefix-cls}-raised:enabled,
-    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
-      &:hover,
-      &:focus {
-        background-color: @green-7;
-      }
-    }
-
-    &.@{btn-prefix-cls}-flat {
-      color: @green-6;
-
-      .@{progress-cls} circle {
-        stroke: @green-6;
-      }
-    }
+    .pro-button-color(
+      @btn-green-color,
+      @btn-green-bg,
+      @btn-green-border,
+      @btn-green-focus-color,
+      @btn-green-focus-bg,
+      @btn-green-hover-color,
+      @btn-green-hover-bg,
+      @btn-green-disabled-color,
+      @btn-green-flat-color
+    );
   }
 
   // red
   &-red {
-    &.@{btn-prefix-cls}-raised {
-      background-color: @red-6;
-
-      .@{c7n-pro-prefix}-ripple {
-        background-color: @ripple-light-color;
-      }
-    }
-
-    &.@{btn-prefix-cls}-raised:enabled,
-    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
-      &:hover,
-      &:focus {
-        background-color: @red-7;
-      }
-    }
-
-    &.@{btn-prefix-cls}-flat {
-      color: @red-6;
-
-      .@{progress-cls} circle {
-        stroke: @red-6;
-      }
-    }
+    .pro-button-color(
+      @btn-red-color,
+      @btn-red-bg,
+      @btn-red-border,
+      @btn-red-focus-color,
+      @btn-red-focus-bg,
+      @btn-red-hover-color,
+      @btn-red-hover-bg,
+      @btn-red-disabled-color,
+      @btn-red-flat-color
+    );
   }
 
   // yellow
   &-yellow {
-    &.@{btn-prefix-cls}-raised {
-      background-color: @yellow-6;
-
-      .@{c7n-pro-prefix}-ripple {
-        background-color: @ripple-light-color;
-      }
-    }
-
-    &.@{btn-prefix-cls}-raised:enabled,
-    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
-      &:hover,
-      &:focus {
-        background-color: @yellow-7;
-      }
-    }
-
-    &.@{btn-prefix-cls}-flat {
-      color: @yellow-6;
-
-      .@{progress-cls} circle {
-        stroke: @yellow-6;
-      }
-    }
+    .pro-button-color(
+      @btn-yellow-color,
+      @btn-yellow-bg,
+      @btn-yellow-border,
+      @btn-yellow-focus-color,
+      @btn-yellow-focus-bg,
+      @btn-yellow-hover-color,
+      @btn-yellow-hover-bg,
+      @btn-yellow-disabled-color,
+      @btn-yellow-flat-color
+    );
   }
 
   // purple
   &-purple {
-    &.@{btn-prefix-cls}-raised {
-      background-color: @purple-6;
-
-      .@{c7n-pro-prefix}-ripple {
-        background-color: @ripple-light-color;
-      }
-    }
-
-    &.@{btn-prefix-cls}-raised:enabled,
-    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
-      &:hover,
-      &:focus {
-        background-color: @purple-7;
-      }
-    }
-
-    &.@{btn-prefix-cls}-flat {
-      color: @purple-6;
-
-      .@{progress-cls} circle {
-        stroke: @purple-6;
-      }
-    }
+    .pro-button-color(
+      @btn-purple-color,
+      @btn-purple-bg,
+      @btn-purple-border,
+      @btn-purple-focus-color,
+      @btn-purple-focus-bg,
+      @btn-purple-hover-color,
+      @btn-purple-hover-bg,
+      @btn-purple-disabled-color,
+      @btn-purple-flat-color
+    );
   }
 
   // dark
   &-dark {
-    &.@{btn-prefix-cls}-raised {
-      background-color: @dark-4;
-
-      .@{c7n-pro-prefix}-ripple {
-        background-color: @ripple-light-color;
-      }
-    }
-
-    &.@{btn-prefix-cls}-raised:enabled,
-    &.@{btn-prefix-cls}-raised:not(.@{btn-prefix-cls}-disabled) {
-      &:hover,
-      &:focus {
-        background-color: @dark-5;
-      }
-    }
-
-    &.@{btn-prefix-cls}-flat {
-      color: @dark-6;
-
-      .@{progress-cls} circle {
-        stroke: @dark-6;
-      }
-    }
+    .pro-button-color(
+      @btn-dark-color,
+      @btn-dark-bg,
+      @btn-dark-border,
+      @btn-dark-focus-color,
+      @btn-dark-focus-bg,
+      @btn-dark-hover-color,
+      @btn-dark-hover-bg,
+      @btn-dark-disabled-color,
+      @btn-dark-flat-color
+    );
   }
 
   &-default {
-    color: @btn-default-color;
-
-    .@{progress-cls} circle {
-      stroke: @btn-default-color;
-    }
-
-    &.@{btn-prefix-cls}-disabled&.@{btn-prefix-cls}-raised,
-    &.@{btn-prefix-cls}-raised:disabled {
-      color: @disabled-color;
-
-      .@{progress-cls} circle {
-        stroke: @disabled-color;
-      }
-    }
-
-    &:focus {
-      color: @btn-primary-bg;
-    }
+    .pro-button-color(
+      @btn-default-color,
+      @btn-default-bg,
+      @btn-default-border,
+      @btn-default-focus-color,
+      @btn-default-focus-bg,
+      @btn-default-hover-color,
+      @btn-default-hover-bg,
+      @btn-default-disabled-color,
+      @btn-default-flat-color
+    );
   }
 
   &-icon-only {
@@ -380,7 +261,7 @@
     > button > .@{iconfont-css-prefix},
     > .@{iconfont-css-prefix} {
       margin-right: 0;
-      font-size: @btn-icon-size + 0.06rem;
+      font-size: @btn-icon-only-size;
       line-height: 1.5;
     }
 
@@ -391,7 +272,7 @@
 
       > button > .@{iconfont-css-prefix},
       > .@{iconfont-css-prefix} {
-        font-size: @btn-icon-size;
+        font-size: @btn-icon-only-size-sm;
       }
     }
 
@@ -402,7 +283,7 @@
 
       > button > .@{iconfont-css-prefix},
       > .@{iconfont-css-prefix} {
-        font-size: @btn-icon-size + 0.1rem;
+        font-size: @btn-icon-only-size-lg;
       }
     }
 
@@ -432,5 +313,57 @@
 
   > * {
     vertical-align: middle;
+  }
+}
+
+
+.pro-button-color(
+  @raised-color,
+  @raised-bg,
+  @raised-border-color,
+  @focus-color,
+  @focus-bg,
+  @hover-color,
+  @hover-bg,
+  @disabled-color,
+  @flat-color
+) {
+  &.@{btn-prefix-cls}-raised {
+    color: @raised-color;
+    background-color: @raised-bg;
+    border-color: @raised-border-color;
+
+    .@{progress-cls} circle {
+      stroke: @raised-color;
+    }
+
+    .@{c7n-pro-prefix}-ripple {
+      background-color: @ripple-light-color;
+    }
+
+    &:focus {
+      background-color: @focus-bg;
+    }
+
+    &:enabled:hover {
+      color: @hover-color;
+      background-color: @hover-bg;
+    }
+
+    &:disabled,
+    &.@{btn-prefix-cls}-disabled {
+      color: @disabled-color;
+    }
+  }
+
+  &.@{btn-prefix-cls}-flat {
+    color: @flat-color;
+
+    .@{progress-cls} circle {
+      stroke: @flat-color;
+    }
+  }
+  &:focus {
+    color: @focus-color;
   }
 }

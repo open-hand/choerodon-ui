@@ -462,6 +462,9 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     if ('minHeight' in style) {
       otherProps.style.minHeight = style.minHeight;
     }
+    if ('maxHeight' in style) {
+      otherProps.style.maxHeight = style.maxHeight;
+    }
     otherProps.lang = normalizeLanguage(lang);
     return otherProps;
   }
@@ -474,8 +477,9 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     return classNames(prefixCls, elementClassName, ...props);
   }
 
-  getWrapperProps(props = {}): any {
+  getWrapperProps(props: any = {}): any {
     const { style, hidden, onMouseEnter, onMouseLeave } = this.props;
+    const mergedStyle = props.style || style;
     const wrapperProps: any = {
       ref: this.wrapperReference,
       className: this.getWrapperClassNames(),
@@ -490,8 +494,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
         wrapperProps.onMouseLeave = onMouseLeave;
       }
     }
-    if (style) {
-      wrapperProps.style = omit(style, ['height', 'minHeight']);
+    if (mergedStyle) {
+      wrapperProps.style = omit(mergedStyle, ['height', 'minHeight', 'maxHeight']);
     }
     return wrapperProps;
   }

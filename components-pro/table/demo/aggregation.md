@@ -353,7 +353,7 @@ class App extends React.Component {
         dataSet={this.userDs}
         columnDraggable={false}
         columnTitleEditable={false}
-        style={{ height: 'calc(100vh - 100px)' }}
+        style={{ height: 'calc(100vh - 100px)', maxHeight: 300 }}
         aggregation
         onAggregationChange={this.handleAggregationChange}
       >
@@ -368,26 +368,26 @@ class App extends React.Component {
           lock
           sortable
         />
-        <Column header="基本组" aggregation>
+        <Column header="基本组" align="left" aggregation>
           <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
           <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
           <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
           <Column name="name" editor width={150} sortable tooltip="always" />
           <Column name="description" editor={<TextArea />} width={150} sortable />
         </Column>
-        <Column header="代码组" aggregation>
+        <Column header="代码组" align="left" aggregation>
           <Column name="code" editor width={150} sortable />
           <Column name="code_code" editor width={150} tooltip="overflow" />
           <Column name="code_select" editor width={150} />
           <Column name="codeMultiple" editor width={150} />
           <Column name="codeMultiple_code" width={150} />
         </Column>
-        <Column header="性别组" aggregation>
+        <Column header="性别组" align="left" aggregation>
           <Column name="sex" editor={<SelectBox />} width={150} />
           <Column header="性别id" renderer={sexIdRenderer} />
           <Column name="sexMultiple" editor width={150} />
         </Column>
-        <Column header="日期组" aggregation>
+        <Column header="日期组" align="left" aggregation>
           <Column name="accountMultiple" editor width={150} />
           <Column name="date.startDate" editor width={150} />
           <Column name="date.endDate" editor width={150} />
