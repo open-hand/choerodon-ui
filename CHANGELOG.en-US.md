@@ -65,6 +65,8 @@ timeline: true
 - 🐞 `<pro>Button`: Fix the problem of focus error after asynchronous waiting.
 - 🐞 `<pro>Lov`: Fix the problem that `autoSelectSingle` cannot pop up a single data.
 - 🐞 `<pro>Lov`: Fix the problem of data processing error when the table property `selectionMode` is `click` in `multiple` mode.
+- 🐞 `<pro>Table`: Fix queryBar multilingual field rendering problem.
+
 
 ## 1.3.2
 
