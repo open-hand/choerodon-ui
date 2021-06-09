@@ -27,7 +27,8 @@ title: Lov
 | paramMatcher | 参数匹配器。当为字符串时，进行参数拼接。 | string \| ({ record, text, textField, valueField }) => string | |
 | searchAction | 搜索触发变更的动作, 可选值：`blur` `input`， | string | input |
 | fetchSingle | searchAction 为 blur 时生效，获取记录有重复时弹出选择窗口 | boolean | false |
-
+| autoSelectSingle | 点击查询仅存在一条数据时自动选中 | boolean | false |
+  
 更多属性请参考 [TextField](/components-pro/text-field/#TextField), [Button](/components-pro/button/#Button)。
 
 <style>

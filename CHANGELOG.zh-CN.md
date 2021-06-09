@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange, cellHighlightRenderer, columnEditorBorder 属性。
 - 🌟 `<pro>Table.Column`: 新增 aggregation, highlightRenderer 属性。
 - 🌟 `<pro>TextField`: 新增 showLengthInfo 属性。
+- 💄 `<pro>DataSet`: 优化 appendData 方法不受分页影响。
 - 💄 `<pro>DataSet.Field`: 优化链式绑定的一些问题。
 - 💄 `<pro>Select.Option`: 支持 ReactFragment 嵌套。
 - 💄 `<pro>Table.Column`: 支持 ReactFragment 嵌套。
@@ -62,6 +63,8 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复 multiple 模式空值渲染。
 - 🐞 `<pro>DatePicker`: 修复点击清除按钮是日历会弹出切无法关闭的问题。
 - 🐞 `<pro>Button`: 修复异步等待后焦点错误问题。
+- 🐞 `<pro>Lov`: 修复 autoSelectSingle 开启单条数据无法弹出的问题。
+- 🐞 `<pro>Lov`: 修复多选模式下表格属性 selectionMode 为 click 时数据处理错误的问题。
 
 
 ## 1.3.2

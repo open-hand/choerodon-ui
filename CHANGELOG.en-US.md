@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange`, `cellHighlightRenderer`, `columnEditorBorder` properties.
 - 🌟 `<pro>Table.Column`: Added `aggregation`, `highlightRenderer` properties.
 - 🌟 `<pro>TextField`: Added `showLengthInfo` property.
+- 💄 `<pro>DataSet`: Optimize the `appendData` method to not be affected by paging.
 - 💄 `<pro>DataSet.Field`: Optimize some problems of chain binding.
 - 💄 `<pro>Select.Option`: Support ReactFragment nesting.
 - 💄 `<pro>Table.Column`: Support ReactFragment nesting.
@@ -62,6 +63,8 @@ timeline: true
 - 🐞 `<pro>TextField`: Fix null rendering in `multiple` mode.
 - 🐞 `<pro>DatePicker`: Fix the problem that the calendar will pop up when the clear button is clicked and cannot be closed.
 - 🐞 `<pro>Button`: Fix the problem of focus error after asynchronous waiting.
+- 🐞 `<pro>Lov`: Fix the problem that `autoSelectSingle` cannot pop up a single data.
+- 🐞 `<pro>Lov`: Fix the problem of data processing error when the table property `selectionMode` is `click` in `multiple` mode.
 
 ## 1.3.2
 

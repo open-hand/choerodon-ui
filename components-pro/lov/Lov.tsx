@@ -269,10 +269,12 @@ export default class Lov extends Select<LovProps> {
         onOk: this.handleLovViewOk,
         destroyOnClose: true,
         closable: true,
+        bodyStyle: {
+          minHeight: pxToRem(Math.min(350, window.innerHeight)),
+        },
         ...modalProps,
         style: {
           width: pxToRem(width),
-          minHeight: pxToRem(Math.min(350, window.innerHeight)),
           ...(modalProps && modalProps.style),
         },
         afterClose: this.handleLovViewAfterClose,
@@ -348,7 +350,7 @@ export default class Lov extends Select<LovProps> {
     }
 
     const result: Record[] = [];
-    const records = selectionMode === SelectionMode.rowbox ? options.selected : result.concat(options.current || []);
+    const records = selectionMode === SelectionMode.rowbox || multiple ? options.selected : result.concat(options.current || []);
     const values = records.map(record => this.processRecordToObject(record));
 
     if (values[0] || multiple) {
@@ -468,8 +470,12 @@ export default class Lov extends Select<LovProps> {
   }
 
   @autobind
+  @action
   selectSingle() {
     const { options } = this;
+    if (options.length === 1) {
+      this.resetOptions(true)
+    }
     options.query().then(() => {
       if (options.length === 1) {
         this.choose(this.options.get(0));
