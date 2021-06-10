@@ -1003,13 +1003,16 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   async handleKeyDownCTRLN(e) {
-    e.preventDefault();
     const {
-      tableStore: { dataSet },
+      tableStore: { dataSet, editors },
     } = this;
-    dataSet.create({}, 0);
+    if (editors.size) {
+      e.preventDefault();
+      dataSet.create({}, 0);
+    }
   }
 
+  // TODO: To be optimized
   async handleKeyDownCTRLD(e) {
     e.preventDefault();
     const { currentRow, tableStore } = this;
