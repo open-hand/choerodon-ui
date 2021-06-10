@@ -56,7 +56,7 @@ export default class Output extends FormField<OutputProps> {
     return this.processValue(value);
   }
 
-  processValue(value: any): string {
+  processValue(value: any): ReactNode {
     if (!isNil(value)) {
       const text = isPlainObject(value) ? value : super.processValue(value);
       const { field, lang } = this;

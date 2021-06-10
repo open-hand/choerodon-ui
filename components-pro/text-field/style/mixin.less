@@ -90,7 +90,7 @@
     label {
       position: relative;
       z-index: 1;
-      display: block;
+      display: flex;
     }
 
     .@{field-label-prefix-cls} {
@@ -540,11 +540,16 @@
     border-radius: @input-float-border-radius;
   }
   &-float-label &:-webkit-autofill {
-    width: ~'calc(100% - .04rem)';
-    height: 0.32rem;
-    margin: 0.02rem;
-    padding-left: @input-padding-horizontal - 0.02rem;
+    height: @float-label-height-base - @float-label-autofill-margin * 2;
+    margin: @float-label-autofill-margin;
+    padding-left: @input-padding-horizontal - @float-label-autofill-margin;
     border-radius: @input-float-border-radius;
+  }
+  &-float-label&-sm &:-webkit-autofill {
+    height: @float-label-height-sm - @float-label-autofill-margin * 2;
+  }
+  &-float-label&-lg &:-webkit-autofill {
+    height: @float-label-height-lg - @float-label-autofill-margin * 2;
   }
 
   &-float-label textarea&:-webkit-autofill {

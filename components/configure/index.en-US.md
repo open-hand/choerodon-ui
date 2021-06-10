@@ -48,7 +48,7 @@ const prefixCls = getConfig('prefixCls');
 | queryBar | default queryBar of table | string | normal |
 | tableBorder | default border of table | boolean | true |
 | tableColumnEditorBorder | default columnEditorBorder of Table | boolean | tableBorder |
-| tableHighLightRow | Default Table current line highlight | boolean | true |
+| tableHighLightRow | Default Table current line highlight, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean | true |
 | tableSelectedHighLightRow | Default Table selected line highlight | boolean | false |
 | tableParityRow | Default Table parity line | boolean |  |
 | tableRowHeight | Default Table row height | auto \| number | 30 |

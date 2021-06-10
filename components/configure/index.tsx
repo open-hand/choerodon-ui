@@ -250,7 +250,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['labelLayout', LabelLayout.horizontal],
   ['queryBar', TableQueryBarType.normal],
   ['tableBorder', true],
-  ['tableHighLightRow', true],
+  ['tableHighLightRow', false],
   ['tableSelectedHighLightRow', false],
   ['tableRowHeight', 30],
   ['tableDefaultRenderer', ''],

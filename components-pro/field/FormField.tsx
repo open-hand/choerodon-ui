@@ -52,7 +52,7 @@ export type Comparator = (v1: any, v2: any) => boolean;
 
 export type RenderProps = {
   value?: any;
-  text?: string;
+  text?: ReactNode;
   record?: Record | null;
   name?: string;
   dataSet?: DataSet | null;
@@ -944,7 +944,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return getDateFormatByField(field, this.getFieldType(field));
   }
 
-  processValue(value: any): string {
+  processValue(value: any): ReactNode {
     if (!isNil(value)) {
       if (isMoment(value)) {
         if (value.isValid()) {
@@ -981,11 +981,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return text;
   }
 
-  getText(value: any): string {
+  getText(value: any): ReactNode {
     return this.processValue(value);
   }
 
-  processText(value: string): string {
+  processText(value: ReactNode): ReactNode {
     return value;
   }
 

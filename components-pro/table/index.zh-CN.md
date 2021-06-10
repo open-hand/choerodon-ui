@@ -48,7 +48,7 @@ subtitle: 表格
 | filterBarFieldName | `queryBar`为`bar`时，直接输入的过滤条件的字段名 | string | 'params' |
 | filterBarPlaceholder | `queryBar`为`bar`时输入框的占位符 | string |  |
 | pagination | 分页器，参考[配置项](#pagination)或 [pagination](/components/pagination/)，设为 false 时不展示分页 | object \| false |  |
-| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click  | boolean \| string | true |
+| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行  | boolean \| string | true |
 | selectedHighLightRow | 勾选行高亮 | boolean | false |
 | parityRow | 奇偶行 | boolean |  |
 | columnResizable | 可调整列宽 | boolean |  |
@@ -120,6 +120,9 @@ subtitle: 表格
 | hidden | 隐藏 | boolean |  |
 | tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | 'none' |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |
+| aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
+| aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
+| aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
 | highlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 
 ### Table.FilterBar

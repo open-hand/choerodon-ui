@@ -63,11 +63,7 @@
     transform: scaleX(0.8);
   }
   &-float-label .@{field-label-prefix-cls},
-  &-float-label&-focused .@{field-label-prefix-cls} {
-    font-weight: @float-label-font-weight;
-    font-size: @float-label-font-size;
-    transform: scaleY(0.8);
-  }
+  &-float-label&-focused .@{field-label-prefix-cls},
   &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper .@{field-label-prefix-cls} {
     font-weight: @float-label-font-weight;
     font-size: @float-label-font-size;
@@ -75,7 +71,19 @@
   }
   &-float-label & {
     height: @float-label-height-base;
-    border-radius: 0.04rem;
+    border-radius: @input-float-border-radius;
+  }
+  &-float-label&-sm & {
+    height: @float-label-height-sm;
+  }
+  &-float-label&-sm .@{field-label-prefix-cls} {
+    line-height: @float-label-line-height-sm;
+  }
+  &-float-label&-lg & {
+    height: @float-label-height-lg;
+  }
+  &-float-label&-lg .@{field-label-prefix-cls} {
+    line-height: @float-label-line-height-lg;
   }
   &-float-label textarea& {
     height: auto;

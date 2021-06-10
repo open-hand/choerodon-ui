@@ -48,7 +48,7 @@ subtitle: 表格
 | filterBarFieldName | `queryBar`为`bar`时，直接输入的过滤条件的字段名 | string | 'params' |
 | filterBarPlaceholder | `queryBar`为`bar`时输入框的占位符 | string |  |
 | pagination | 分页器，参考[配置项](#pagination)或 [pagination](/components/pagination/)，设为 false 时不展示分页 | object \| false |  |
-| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click  | boolean \| string | true |
+| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行  | boolean \| string | true |
 | selectedHighLightRow | 勾选行高亮 | boolean | false |
 | parityRow | 奇偶行 | boolean |  |
 | columnResizable | 可调整列宽 | boolean | true |
@@ -84,6 +84,9 @@ subtitle: 表格
 | virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | |
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | |
+| aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
+| aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
+| aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 

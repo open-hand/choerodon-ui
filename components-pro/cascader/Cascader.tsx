@@ -213,7 +213,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     onOption: PropTypes.func,
     /**
      * 可搜索属性
-    */
+     */
     searchable: PropTypes.bool,
     /**
      * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
@@ -378,7 +378,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       observableProps: { options },
     } = this;
     if (isArrayLike(options)) {
-      return normalizeOptions({ textField, valueField, idField, disabledField, multiple, data: toJS(options), parentField })
+      return normalizeOptions({ textField, valueField, idField, disabledField, multiple, data: toJS(options), parentField });
     }
     return (
       options ||
@@ -465,7 +465,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   getOmitPropsKeys(): string[] {
-    return super.getOmitPropsKeys().concat( [
+    return super.getOmitPropsKeys().concat([
       'multiple',
       'value',
       'searchable',
@@ -632,7 +632,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       return treeRecords;
     };
     if (this.text) {
-      optGroups = treePropsChange(expandTreeRecords(this.filteredOptions, !changeOnSelect), true)
+      optGroups = treePropsChange(expandTreeRecords(this.filteredOptions, !changeOnSelect), true);
     } else if (options) {
       optGroups = treePropsChange(options.treeData);
     } else {
@@ -647,8 +647,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       } else {
         activeInputValue = [];
       }
-      return activeInputValue
-    }
+      return activeInputValue;
+    };
     /**
      * 获取当前激活的menueItem
      * 以及value 展示激活状态的判断
@@ -663,7 +663,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         if (inputValue && arraySameLike(this.treeValueToArray(this.activeValue), inputValue) || this.activeValue.children) {
           activeValue = this.findParentRecodTree(this.activeValue);
         } else if (this.activeValue) {
-          activeValue = getInputSelectedValue(inputValue)
+          activeValue = getInputSelectedValue(inputValue);
         }
       } else if (inputValue) {
         activeValue = this.findParentRecodTree(this.activeValue);
@@ -690,12 +690,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
     // 由于想让多选出现不同展现这边增加一个selected属性来解决但是会造成一定的性能损耗
 
-    let selectedValueMutiple
+    let selectedValueMutiple;
     if (this.multiple) {
       const selectedMutiple = this.getValues()
         .map(item => getInputSelectedValue(item))
-        .filter((recordItem) => recordItem !== undefined && recordItem !== null)
-      selectedValueMutiple = Array.from(new Set(selectedMutiple.reduce((accumulator, currentValue) => [...accumulator, ...currentValue], [])))
+        .filter((recordItem) => recordItem !== undefined && recordItem !== null);
+      selectedValueMutiple = Array.from(new Set(selectedMutiple.reduce((accumulator, currentValue) => [...accumulator, ...currentValue], [])));
     }
     // 渲染成单项选择还是多项选择组件以及空组件
     if (options && options.length && optGroups.length) {
@@ -717,7 +717,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
             isTabSelected={this.isClickTab}
             dropdownMenuColumnStyle={dropdownMenuStyleMerge}
             visible={this.popup} />
-        )
+        );
       }
       return (
         <Menus
@@ -731,7 +731,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           dropdownMenuColumnStyle={dropdownMenuStyleMerge}
           visible={this.popup}
         />
-      )
+      );
     }
     return (
       <div key="no_data">
@@ -743,7 +743,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           </li>
         </ul>
       </div>
-    )
+    );
   }
 
   @computed
@@ -1111,7 +1111,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           onChoose(
             this.processRecordToObject(targetOption.value),
             targetOption.value,
-          )
+          );
         }
       } else {
         if (!isClickTab) {
@@ -1121,7 +1121,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
             onChoose(
               this.processRecordToObject(targetOption.value),
               targetOption.value,
-            )
+            );
           }
         } else {
           this.setPopup(true);
@@ -1129,22 +1129,22 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         this.setIsClickTab(isClickTab);
       }
     } else {
-      this.setactiveEmpty()
+      this.setactiveEmpty();
       this.unChoose(targetOption.value);
       if (onUnChoose) {
         onUnChoose(
           this.processRecordToObject(targetOption.value),
           targetOption.value,
-        )
+        );
       }
     }
   }
 
   setactiveEmpty() {
     if (this.multiple) {
-      this.setActiveValue([])
+      this.setActiveValue([]);
     } else {
-      this.setActiveValue({})
+      this.setActiveValue({});
     }
   }
 
@@ -1204,7 +1204,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       searchMatcher,
     } = this;
     return searchable && text && typeof searchMatcher === 'function' ? data.filter((r) => {
-      return this.matchRecordBySearch(r, text)
+      return this.matchRecordBySearch(r, text);
     }) : data;
   }
 
@@ -1330,7 +1330,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   // 处理value
-  processValue(value: any) {
+  processValue(value: any): ReactNode {
     const text = this.processLookupValue(value);
     if (isEmptyUtil(text)) {
       if (isPlainObject(value)) {

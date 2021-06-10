@@ -7,7 +7,7 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
 import Tree, { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import { ColumnProps } from './Column';
+import { ColumnProps, defaultAggregationRenderer } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
@@ -29,8 +29,6 @@ export interface TableCellProps extends ElementProps {
   intersectionRef?: RefObject<any> | ((node?: Element | null) => void);
   inView: boolean;
 }
-
-const MAX_AGGREGATION_LINE = 4;
 
 @observer
 export default class TableCell extends Component<TableCellProps> {
@@ -188,16 +186,17 @@ export default class TableCell extends Component<TableCellProps> {
     }
     const { column, record } = props;
     if (column.aggregation) {
-      const { children } = column;
+      const { children, renderer = defaultAggregationRenderer, aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll } = column;
       if (children) {
         const visibleChildren = children.filter(child => !child.hidden);
         const { length } = visibleChildren;
         if (length > 0) {
           const expanded = tableStore.isAggregationCellExpanded(record, column);
-          const hasExpand = length > MAX_AGGREGATION_LINE;
-          const nodes = hasExpand && !expanded ? visibleChildren.slice(0, MAX_AGGREGATION_LINE - 1) : visibleChildren;
-          return (
-            <Tree prefixCls={`${prefixCls}-tree`} virtual={false} focusable={false}>
+          const hasExpand = length > aggregationLimit!;
+          const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
+
+          const text = (
+            <Tree prefixCls={`${prefixCls}-tree`} virtual={false} focusable={false} defaultExpandedKeys={aggregationDefaultExpandedKeys} defaultExpandAll={aggregationDefaultExpandAll}>
               {
                 this.getColumnsInnerNode(nodes, prefixCls, command)
               }
@@ -207,6 +206,11 @@ export default class TableCell extends Component<TableCellProps> {
                 )
               }
             </Tree>
+          );
+          return (
+            <div className={`${prefixCls}-inner`}>
+              {renderer({ text, record, dataSet: tableStore.dataSet })}
+            </div>
           );
         }
       }

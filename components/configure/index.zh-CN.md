@@ -51,7 +51,7 @@ const prefixCls = getConfig('prefixCls');
 | queryBar | 默认 Table 的 queryBar | string | normal |
 | tableBorder | 默认 Table 的 border | boolean | true |
 | tableColumnEditorBorder | 默认 Table 的 columnEditorBorder | boolean | tableBorder |
-| tableHighLightRow | 默认 Table 当前行高亮 | boolean | true |
+| tableHighLightRow | 默认 Table 当前行高亮, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean \| string | true |
 | tableSelectedHighLightRow | 默认 Table 当前勾选行高亮 | boolean | false |
 | tableParityRow | 默认 Table 奇偶行 | boolean |  |
 | tableRowHeight | 默认 Table 行高 | auto \| number | 30 |
