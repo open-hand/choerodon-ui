@@ -17,8 +17,8 @@ import CustomizationSettings from './customization-settings/CustomizationSetting
 import isFragment from '../_util/isFragment';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import ObserverCheckBox from '../check-box';
-import ObserverRadio from '../radio';
+import ObserverCheckBox, { CheckBoxProps } from '../check-box/CheckBox';
+import ObserverRadio from '../radio/Radio';
 import { DataSetSelection } from '../data-set/enum';
 import {
   ColumnAlign,
@@ -67,15 +67,27 @@ function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
 }
 
-export const getIdList = (startId: number, endId: number) => {
-  const idList: any[] = [];
-  const min = Math.min(startId, endId);
-  const max = Math.max(startId, endId);
-  for (let i = min; i <= max; i++) {
-    idList.push(i);
-  }
+export function getIdList(store: TableStore) {
+  const { mouseBatchChooseStartId, mouseBatchChooseEndId, node: { element }, prefixCls } = store;
+  const rows = Array.from<HTMLTableRowElement>(element.querySelectorAll(`.${prefixCls}-row`));
+  let endId;
+  const idList: number[] = [];
+  rows.some((row) => {
+    const index = Number(row.dataset.index);
+    if (!endId) {
+      if (mouseBatchChooseStartId === index) {
+        endId = mouseBatchChooseEndId;
+      } else if (mouseBatchChooseEndId === index) {
+        endId = mouseBatchChooseStartId;
+      }
+    }
+    if (endId) {
+      idList.push(index);
+    }
+    return endId === index;
+  });
   return idList;
-};
+}
 
 function getRowNumbers(record?: Record | null, dataSet?: DataSet | null, isTree?: boolean): number[] {
   if (record && dataSet) {
@@ -116,29 +128,56 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
       }
     };
 
-    const handleMouseDown = () => {
-      if (store.useMouseBatchChoose) {
-        store.mouseBatchChooseStartId = record.id;
-        store.mouseBatchChooseEndId = record.id;
-        store.mouseBatchChooseState = true;
-      }
-    };
-
-    const handleMouseEnter = () => {
-      if (store.useMouseBatchChoose && store.mouseBatchChooseState) {
-        store.mouseBatchChooseEndId = record.id;
-        store.changeMouseBatchChooseIdList(getIdList(store.mouseBatchChooseStartId, store.mouseBatchChooseEndId));
-      }
-    };
-
     if (selection === DataSetSelection.multiple) {
+      const batchSelectProps: CheckBoxProps = {};
+      const handleDragMouseUp = action(() => {
+        const { mouseBatchChooseIdList } = store;
+        if (store.mouseBatchChooseState) {
+          store.mouseBatchChooseState = false;
+          store.changeMouseBatchChooseIdList([]);
+          const { mouseBatchChooseStartId, mouseBatchChooseEndId } = store;
+          if (mouseBatchChooseStartId === mouseBatchChooseEndId) {
+            return;
+          }
+          const startRecord = dataSet.findRecordById(mouseBatchChooseStartId);
+          const { isSelected } = startRecord || {};
+          if (isSelected) {
+            dataSet.batchUnSelect(mouseBatchChooseIdList);
+          } else {
+            dataSet.batchSelect(mouseBatchChooseIdList);
+          }
+        }
+        document.removeEventListener('pointerup', handleDragMouseUp);
+      });
+      if (store.useMouseBatchChoose) {
+        batchSelectProps.onMouseDown = action(() => {
+          store.mouseBatchChooseStartId = record.id;
+          store.mouseBatchChooseEndId = record.id;
+          store.mouseBatchChooseState = true;
+          // 为什么使用 pointerup
+          // 因为需要对disabled的元素进行特殊处理
+          // 因为状态的改变依赖 mouseup 而在disabled的元素上 无法触发mouseup事件
+          // 导致状态无法进行修正
+          // 以下两种方案通过 pointer-events:none 进行处理
+          // https://stackoverflow.com/questions/322378/javascript-check-if-mouse-button-down
+          // https://stackoverflow.com/questions/62081666/the-event-of-the-document-is-not-triggered-when-it-is-on-a-disabled-element
+          // 而使用指针事件可以突破disabled的限制
+          // https://stackoverflow.com/questions/62126515/how-to-get-the-state-of-the-mouse-through-javascript/62127845#62127845
+          document.addEventListener('pointerup', handleDragMouseUp);
+        });
+        batchSelectProps.onMouseEnter = () => {
+          if (store.mouseBatchChooseState) {
+            store.mouseBatchChooseEndId = record.id;
+            store.changeMouseBatchChooseIdList(getIdList(store));
+          }
+        };
+      }
       return (
         <ObserverCheckBox
+          {...batchSelectProps}
           checked={record.isSelected}
           onChange={handleChange}
           onClick={stopPropagation}
-          onMouseDown={handleMouseDown}
-          onMouseEnter={handleMouseEnter}
           disabled={!record.selectable}
           data-selection-key={SELECTION_KEY}
           value
@@ -151,8 +190,6 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
           checked={record.isSelected}
           onChange={handleChange}
           onClick={handleClick}
-          onMouseDown={handleMouseDown}
-          onMouseEnter={handleMouseEnter}
           disabled={!record.selectable}
           data-selection-key={SELECTION_KEY}
           value
@@ -401,13 +438,11 @@ export default class TableStore {
 
   @observable hoverRow?: Record;
 
-  @observable clickRow?: Record;
+  @observable rowClicked?: boolean;
 
   @observable currentEditorName?: string;
 
   @observable styledHidden?: boolean;
-
-  @observable rowHighLight: boolean;
 
   @observable customizedActiveKey: string[];
 
@@ -415,9 +450,9 @@ export default class TableStore {
 
   mouseBatchChooseEndId: number = 0;
 
-  mouseBatchChooseState: boolean = false;
+  @observable mouseBatchChooseState: boolean;
 
-  @observable mouseBatchChooseIdList?: number[];
+  @observable mouseBatchChooseIdList: number[];
 
   @observable columnResizing?: boolean;
 
@@ -712,11 +747,7 @@ export default class TableStore {
     if ('highLightRow' in this.props) {
       return this.props.highLightRow;
     }
-    const tableHighLightRow = getConfig('tableHighLightRow');
-    if (tableHighLightRow === false) {
-      return false;
-    }
-    return tableHighLightRow;
+    return getConfig('tableHighLightRow');
   }
 
   @computed
@@ -1215,6 +1246,8 @@ export default class TableStore {
 
   constructor(node) {
     runInAction(() => {
+      this.mouseBatchChooseIdList = [];
+      this.mouseBatchChooseState = false;
       this.showCachedSelection = false;
       this.lockColumnsHeadRowsHeight = {};
       this.lockColumnsBodyRowsHeight = {};
@@ -1222,7 +1255,6 @@ export default class TableStore {
       this.node = node;
       this.expandedRows = [];
       this.lastScrollTop = 0;
-      this.rowHighLight = false;
       this.customizedActiveKey = ['columns'];
       this.originalColumns = [];
       this.tempCustomized = { columns: {} };
@@ -1390,15 +1422,6 @@ export default class TableStore {
     return this.hoverRow === record;
   }
 
-  isRowClick(record: Record): boolean {
-    return this.clickRow === record;
-  }
-
-  @action
-  setRowClicked(record: Record, click: boolean) {
-    this.clickRow = click ? record : undefined;
-  }
-
   @computed
   get canTreeLoadData(): boolean {
     const { treeLoadData, treeAsync } = this.props;
@@ -1406,19 +1429,9 @@ export default class TableStore {
   }
 
   @computed
-  get isRowHighLight() {
-    return this.rowHighLight || this.highLightRow === true;
-  }
-
-  @computed
   get cellHighlightRenderer(): HighlightRenderer {
     const { cellHighlightRenderer = getConfig('highlightRenderer') } = this.props;
     return cellHighlightRenderer;
-  }
-
-  @action
-  setRowHighLight(highLight: boolean) {
-    this.rowHighLight = highLight;
   }
 
   @action

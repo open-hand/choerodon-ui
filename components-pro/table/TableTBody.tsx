@@ -18,7 +18,7 @@ import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
 import autobind from '../_util/autobind';
 import { instance } from './Table';
-import { isDraggingStyle } from './utils';
+import { isDraggingStyle, isStickySupport } from './utils';
 
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -213,7 +213,8 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     }
     const styles: CSSProperties = tableWidth
       ? {
-        marginLeft: pxToRem(tableWidth / 2),
+        position: isStickySupport() ? 'sticky' : 'absolute',
+        left: pxToRem(tableWidth / 2),
       }
       : {
         transform: 'none',

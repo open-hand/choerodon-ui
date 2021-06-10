@@ -33,7 +33,7 @@ function sexIdRenderer({ record }) {
 }
 
 function handleUserDSLoad({ dataSet }) {
-  const first = dataSet.get(0);
+  const first = dataSet.get(1);
   if (first) {
     first.selectable = false;
   }

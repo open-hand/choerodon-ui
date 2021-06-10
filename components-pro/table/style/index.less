@@ -140,22 +140,33 @@
       padding: 0;
 
       .@{c7n-pro-prefix}-select-box {
+        display: flex;
         line-height: inherit;
+
+        &-wrapper {
+          display: block;
+        }
       }
     }
 
     &-tree {
-      padding: 0.07rem 0.16rem .07rem 0;
+      padding: 0.07rem 0;
 
       &-treenode {
         display: flex;
         align-items: flex-start;
         padding: 0 0 (@padding-xs / 2) 0;
         outline: none;
+
+        &:not(.@{table-prefix-cls}-cell-editable) .@{table-prefix-cls}-cell-inner {
+          padding-right: 0;
+          padding-left: 0;
+        }
       }
 
       &-node-content-wrapper {
         flex: 1;
+        overflow: hidden;
       }
 
       &-switcher {
@@ -167,7 +178,7 @@
         cursor: pointer;
 
         &-noop {
-          width: .16rem;
+          width: 0;
           cursor: default;
         }
 
@@ -178,6 +189,7 @@
 
       &-indent {
         align-self: stretch;
+        line-height: 1;
         white-space: nowrap;
         user-select: none;
 
@@ -191,16 +203,17 @@
         display: flex;
         align-items: center;
         font-size: @font-size-sm;
+        line-height: .2rem;
+      }
+
+      .@{table-prefix-cls}-cell-editable &-title {
         line-height: .18rem;
       }
     }
 
     &-label {
+      margin-right: .04rem;
       color: rgba(0, 0, 0, 0.65);
-    }
-
-    &-editable &-label {
-      margin-right: .1rem;
     }
 
     &-expand {
@@ -560,6 +573,7 @@
   &-empty-row div {
     display: inline-block;
     transform: translateX(-50%);
+    line-height: .3rem;
   }
 
   &-parity-row &-row:nth-of-type(even) > td {
@@ -590,17 +604,6 @@
   &-row-current,
   &-row-current:hover,
   &-parity-row &-row-current:nth-of-type(even) {
-    &.@{table-prefix-cls}-row-highlight,
-    &.@{table-prefix-cls}-row-highlight + .@{table-prefix-cls}-expanded-row {
-      & > td {
-        background-color: @table-current-row-bg;
-      }
-    }
-  }
-
-  &-row-clicked,
-  &-row-clicked:hover,
-  &-parity-row &-row-clicked:nth-of-type(even) {
     &.@{table-prefix-cls}-row-highlight,
     &.@{table-prefix-cls}-row-highlight + .@{table-prefix-cls}-expanded-row {
       & > td {

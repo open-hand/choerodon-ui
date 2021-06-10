@@ -109,33 +109,18 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @computed
-  get isClicked(): boolean {
-    const { tableStore } = this.context;
-    const { record } = this.props;
-    return tableStore.isRowClick(record);
-  }
-
-  set isClicked(click: boolean) {
-    const { tableStore } = this.context;
-    if (tableStore.highLightRow) {
-      const { record } = this.props;
-      tableStore.setRowClicked(record, click);
-    }
-  }
-
-  @computed
   get isHighLightRow(): boolean {
     const {
       tableStore: { highLightRow },
       tableStore,
     } = this.context;
-    if (highLightRow === false) {
-      return false;
-    }
     if (highLightRow === HighLightRowType.click) {
-      return highLightRow && tableStore.isRowHighLight && this.isClicked;
+      return tableStore.rowClicked;
     }
-    return highLightRow && tableStore.isRowHighLight;
+    if (highLightRow === HighLightRowType.focus) {
+      return tableStore.node.isFocused;
+    }
+    return highLightRow;
   }
 
   set isHover(hover: boolean) {
@@ -221,6 +206,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @autobind
+  @action
   handleClick(e) {
     const { onClick } = this.rowExternalProps;
     const {
@@ -229,9 +215,8 @@ export default class TableRow extends Component<TableRowProps, any> {
       },
       tableStore,
     } = this.context;
-    if (highLightRow !== true) {
-      this.isClicked = true;
-      tableStore.setRowHighLight(true);
+    if (highLightRow === HighLightRowType.click && !tableStore.rowClicked) {
+      tableStore.rowClicked = true;
     }
     if (typeof onClick === 'function') {
       return onClick(e);
@@ -597,11 +582,10 @@ export default class TableRow extends Component<TableRowProps, any> {
       {
         [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent, // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
         [`${rowPrefixCls}-hover`]: highLightRow && this.isHover,
-        [`${rowPrefixCls}-clicked`]: highLightRow === HighLightRowType.click && this.isClicked,
         [`${rowPrefixCls}-highlight`]: this.isHighLightRow,
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && isSelectedRow(record),
         [`${rowPrefixCls}-disabled`]: disabled,
-        [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && (mouseBatchChooseIdList || []).includes(id),
+        [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && record.selectable && (mouseBatchChooseIdList || []).includes(id),
         [`${rowPrefixCls}-expanded`]: this.isExpanded,
       },
       className, // 增加可以自定义类名满足拖拽功能

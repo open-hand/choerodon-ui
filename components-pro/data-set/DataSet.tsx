@@ -1741,6 +1741,64 @@ export default class DataSet extends EventManager {
     }
   }
 
+  /**
+   * 批量勾选
+   */
+  batchSelect(recordOrId: (Record | number)[]): void {
+    const { selection } = this;
+    if (selection) {
+      const records = recordOrId.reduce<Record[]>((list, r) => {
+        let record: Record | undefined = r as Record;
+        if (isNumber(r)) {
+          record = this.findRecordById(r as number);
+        }
+        if (record && record.selectable && !record.isSelected) {
+          list.push(record);
+        }
+        return list;
+      }, []);
+      if (records.length) {
+        this.inBatchSelection = true;
+        if (selection === DataSetSelection.single) {
+          if (!this.currentSelected.length) {
+            this.select(records[0]);
+          }
+        } else {
+          records.forEach((record) => {
+            if (record.selectable) {
+              this.select(record);
+            }
+          });
+        }
+        this.fireEvent(DataSetEvents.batchSelect, { dataSet: this, records });
+        this.inBatchSelection = false;
+      }
+    }
+  }
+
+  /**
+   * 批量取消勾选
+   */
+  batchUnSelect(recordOrId: (Record | number)[]): void {
+    const { selection } = this;
+    if (selection) {
+      this.inBatchSelection = true;
+      const records = recordOrId.reduce<Record[]>((list, r) => {
+        let record: Record | undefined = r as Record;
+        if (isNumber(r)) {
+          record = this.findRecordById(r as number);
+        }
+        if (record && record.selectable && record.isSelected) {
+          this.unSelect(record);
+          list.push(record);
+        }
+        return list;
+      }, []);
+      this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records });
+      this.inBatchSelection = false;
+    }
+  }
+
   clearCachedSelected(): void {
     this.setCachedSelected([]);
   }

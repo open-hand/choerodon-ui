@@ -95,7 +95,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
             {...this.getOtherProps()}
             placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
             readOnly={!this.editable}
-            value={isString(text) ? text : this.getText(this.getValue())}
+            value={isString(text) ? text : this.getText(this.getValue()) as string}
           />
           {this.renderFloatLabel()}
         </label>

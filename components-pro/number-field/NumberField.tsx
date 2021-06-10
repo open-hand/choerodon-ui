@@ -486,7 +486,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return defaultFormatNumber;
   }
 
-  processText(value: string): string {
+  processText(value: ReactNode): ReactNode {
     const formatOptions = this.getFormatOptions(Number(value));
     return this.getFormatter()(value, formatOptions.lang, formatOptions.options);
   }

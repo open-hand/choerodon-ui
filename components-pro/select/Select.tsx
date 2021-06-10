@@ -1225,7 +1225,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     return super.processValue(this.processObjectValue(value, textField));
   }
 
-  processValue(value: any): string {
+  processValue(value: any): ReactNode {
     const text = this.processLookupValue(value);
     if (isEmpty(text)) {
       if (isPlainObject(value)) {

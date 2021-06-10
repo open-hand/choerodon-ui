@@ -25,7 +25,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Record`: 新增 getValidationErrors 方法。
 - 🌟 `<pro>DataSet.Field`: 新增 computedProps, highlight 属性, 废弃 dynamicProps 属性。
 - 🌟 `<pro>Table`: 新增 showAllPageSelectionButton, aggregation, onAggregationChange, cellHighlightRenderer, columnEditorBorder 属性。
-- 🌟 `<pro>Table.Column`: 新增 aggregation, highlightRenderer 属性。
+- 🌟 `<pro>Table.Column`: 新增 aggregation, aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll, highlightRenderer 属性。
 - 🌟 `<pro>TextField`: 新增 showLengthInfo 属性。
 - 💄 `<pro>DataSet`: 优化 appendData 方法不受分页影响。
 - 💄 `<pro>DataSet.Field`: 优化链式绑定的一些问题。
@@ -47,6 +47,7 @@ timeline: true
 - 💄 `<pro>TextField`: 优化 clearButton 渲染交互。
 - 💄 `<pro>Modal`: footer 增加 modal 回调参数。
 - 💄 `<pro>TextField`: 优化 range 模式 label 渲染逻辑。
+- 🐞 `<pro>Table`: 修复鼠标批量选择记录不准确的问题。
 - 🐞 `<pro>DataSet`：修复清除object类型字段的值时，其绑定字段不会提交null值的问题。
 - 🐞 `Responsive`：修复多个响应式组件其中一个禁用或销毁时其他组件无法触发响应的问题。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
