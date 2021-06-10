@@ -48,6 +48,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimized the label rendering logic in `range` mode.
 - 💄 `<pro>Form`: Optimized the display timing of the floating label label.
 - 💄 `<pro>DataSet`: Fix the problem that the bound field will not submit a null value when clearing the value of the object type field.
+- 🐞 `<pro>Table.Column`: Fix the problem that elements in the editor addonBefore and addonAfter cannot get focus.
 - 🐞 `<pro>Table`: Fix the problem of inaccurate mouse batch selection records.
 - 🐞 `Responsive`：Fix the problem that other components cannot trigger a response after one of these components is come to be disabled or destroyed.
 - 🐞 `<pro>Modal`: Fix the `keyboardClosable` property has no effect when there is no cancel button.

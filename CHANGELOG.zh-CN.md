@@ -47,6 +47,7 @@ timeline: true
 - 💄 `<pro>TextField`: 优化 clearButton 渲染交互。
 - 💄 `<pro>Modal`: footer 增加 modal 回调参数。
 - 💄 `<pro>TextField`: 优化 range 模式 label 渲染逻辑。
+- 🐞 `<pro>Table.Column`: 修复编辑器 addonBefore 和 addonAfter 中的元素无法获取焦点的问题。
 - 🐞 `<pro>Table`: 修复鼠标批量选择记录不准确的问题。
 - 🐞 `<pro>DataSet`：修复清除object类型字段的值时，其绑定字段不会提交null值的问题。
 - 🐞 `Responsive`：修复多个响应式组件其中一个禁用或销毁时其他组件无法触发响应的问题。

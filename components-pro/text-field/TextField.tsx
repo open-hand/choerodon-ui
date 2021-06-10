@@ -1,4 +1,4 @@
-import React, { createElement, CSSProperties, isValidElement, ReactNode } from 'react';
+import React, { Children, cloneElement, createElement, CSSProperties, DetailedHTMLProps, HTMLAttributes, isValidElement, ReactNode } from 'react';
 import { Cancelable, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
@@ -32,6 +32,8 @@ import { LabelLayout } from '../form/interface';
 import { getProperty } from '../form/utils';
 import RenderedText from './RenderedText';
 import isReactChildren from '../_util/isReactChildren';
+import TextFieldGroup from './TextFieldGroup';
+import { findFirstFocusableElement } from '../table/utils';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -83,9 +85,17 @@ export interface TextFieldProps extends FormFieldProps {
    */
   addonBefore?: ReactNode;
   /**
+   * 前置标签样式
+   */
+  addonBeforeStyle?: CSSProperties;
+  /**
    * 后置标签
    */
   addonAfter?: ReactNode;
+  /**
+   * 后置标签样式
+   */
+  addonAfterStyle?: CSSProperties;
   /**
    * 限制可输入的字符
    */
@@ -155,9 +165,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
      */
     addonBefore: PropTypes.node,
     /**
+     * 前置标签样式
+     */
+    addonBeforeStyle: PropTypes.object,
+    /**
      * 后置标签
      */
     addonAfter: PropTypes.node,
+    /**
+     * 后置标签样式
+     */
+    addonAfterStyle: PropTypes.object,
     /**
      * 限制可输入的字符
      */
@@ -200,6 +218,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   tagContainer: HTMLUListElement | null;
 
   handleChangeWait: Function & Cancelable;
+
+  addonAfterRef?: HTMLDivElement | null;
+
+  addonBeforeRef?: HTMLDivElement | null;
 
   @observable renderedTextContent?: string;
 
@@ -249,6 +271,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.tagContainer = node;
   }
 
+  @autobind
+  saveAddonAfterRef(node) {
+    this.addonAfterRef = node;
+  }
+
+  @autobind
+  saveAddonBeforeRef(node) {
+    this.addonBeforeRef = node;
+  }
+
   isEmpty() {
     return isEmpty(this.text) && super.isEmpty();
   }
@@ -260,6 +292,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'clearButton',
       'addonBefore',
       'addonAfter',
+      'addonBeforeStyle',
+      'addonAfterStyle',
       'restrict',
       'placeholder',
       'placeHolder',
@@ -275,6 +309,29 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     otherProps.onKeyDown = this.handleKeyDown;
     otherProps.autoComplete = this.props.autoComplete || getConfig('textFieldAutoComplete') || 'off';
     return otherProps;
+  }
+
+  forceBlur(e) {
+    const { addonBefore, addonAfter, _inTable } = this.props;
+    if (!_inTable || (!addonBefore && !addonAfter)) {
+      super.forceBlur(e);
+    }
+  }
+
+  @autobind
+  handleAddonBeforeKeyDown(e) {
+    const { _inTable, onKeyDown } = this.props;
+    if (_inTable && onKeyDown && e.keyCode === KeyCode.TAB && e.shiftKey) {
+      onKeyDown(e);
+    }
+  }
+
+  @autobind
+  handleAddonAfterKeyDown(e) {
+    const { _inTable, onKeyDown } = this.props;
+    if (_inTable && onKeyDown && e.keyCode === KeyCode.TAB && !e.shiftKey) {
+      onKeyDown(e);
+    }
   }
 
   getValidatorProps(): ValidatorProps {
@@ -373,7 +430,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderGroup(): ReactNode {
     const {
       prefixCls,
-      props: { addonBefore, addonAfter, showHelp, groupClassName },
+      props: { addonBefore, addonAfter, addonBeforeStyle, addonAfterStyle, showHelp, groupClassName, _inTable, onBlur, tabIndex },
     } = this;
     const inputElement = this.renderInputElement();
     const help = showHelp === ShowHelp.tooltip ? this.renderTooltipHelp() : null;
@@ -387,14 +444,24 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     });
 
     return (
-      <div key="wrapper" className={`${prefixCls}-group-wrapper`}>
-        <div {...this.getWrapperProps()} className={classString}>
-          {this.wrapGroupItem(addonBefore, GroupItemCategory.before)}
+      <TextFieldGroup key="wrapper" prefixCls={prefixCls} onBlur={_inTable && (addonBefore || addonAfter) ? onBlur : undefined}>
+        <div className={classString}>
+          {
+            this.wrapGroupItem(addonBefore, GroupItemCategory.before, {
+              style: addonBeforeStyle,
+              ref: this.saveAddonBeforeRef,
+              onKeyDown: this.handleAddonBeforeKeyDown,
+            }, { tabIndex })
+          }
           {this.wrapGroupItem(inputElement, GroupItemCategory.input)}
           {this.wrapGroupItem(help, GroupItemCategory.help)}
-          {this.wrapGroupItem(addonAfter, GroupItemCategory.after)}
+          {this.wrapGroupItem(addonAfter, GroupItemCategory.after, {
+            style: addonAfterStyle,
+            ref: this.saveAddonAfterRef,
+            onKeyDown: this.handleAddonAfterKeyDown,
+          }, { tabIndex })}
         </div>
-      </div>
+      </TextFieldGroup>
     );
   }
 
@@ -439,12 +506,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return this.getProp('label');
   }
 
-  wrapGroupItem(node: ReactNode, category: GroupItemCategory): ReactNode {
-    const { prefixCls } = this;
+  wrapGroupItem(node: ReactNode, category: GroupItemCategory, props?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, childrenProps?: any): ReactNode {
     if (!node) {
       return null;
     }
-    return <div className={`${prefixCls}-group-${category}`}>{node}</div>;
+    const { prefixCls } = this;
+    const children = childrenProps ? Children.map(node, (child) => {
+      if (isValidElement<any>(child) && !isString(child.type)) {
+        return cloneElement<any>(child, childrenProps);
+      }
+      return child;
+    }) : node;
+    return <div className={`${prefixCls}-group-${category}`} {...props}>{children}</div>;
   }
 
   setRangeTarget(target) {
@@ -858,14 +931,40 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleKeyDown(e) {
     if (!this.disabled && !this.readOnly) {
-      if (this.range && e.keyCode === KeyCode.TAB) {
-        if (this.rangeTarget === 0 && !e.shiftKey) {
-          this.setRangeTarget(1);
-          e.preventDefault();
+      if (e.keyCode === KeyCode.TAB) {
+        const { _inTable } = this.props;
+        if (_inTable) {
+          if (e.shiftKey) {
+            const { addonBeforeRef } = this;
+            if (addonBeforeRef) {
+              const focusableElement = findFirstFocusableElement(addonBeforeRef);
+              if (focusableElement) {
+                focusableElement.focus();
+                e.preventDefault();
+              }
+            }
+          } else {
+            const { addonAfterRef } = this;
+            if (addonAfterRef) {
+              const focusableElement = findFirstFocusableElement(addonAfterRef);
+              if (focusableElement) {
+                focusableElement.focus();
+                e.preventDefault();
+              }
+            }
+          }
         }
-        if (this.rangeTarget === 1 && e.shiftKey) {
-          this.setRangeTarget(0);
-          e.preventDefault();
+        const { range } = this;
+        if (range) {
+          if (e.shiftKey) {
+            if (this.rangeTarget === 1) {
+              this.setRangeTarget(0);
+              e.preventDefault();
+            }
+          } else if (this.rangeTarget === 0) {
+            this.setRangeTarget(1);
+            e.preventDefault();
+          }
         }
       }
       if (this.multiple) {

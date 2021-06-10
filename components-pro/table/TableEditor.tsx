@@ -334,7 +334,9 @@ export default class TableEditor extends Component<TableEditorProps> {
           this.originalCssText = wrap.style.cssText;
         }
         const width = pxToRem(offsetWidth);
-        this.width = width;
+        if (width !== this.width) {
+          this.width = width;
+        }
         wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left)}, ${pxToRem(top)})`)}`;
       }
     }
@@ -425,7 +427,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   renderEditor(): ReactElement<FormFieldProps> | undefined {
     const { column } = this.props;
     const {
-      tableStore: { dataSet, currentEditRecord, pristine, inlineEdit },
+      tableStore: { dataSet, currentEditRecord, currentEditorName, pristine, inlineEdit },
     } = this.context;
     const { name } = column;
     const record = currentEditRecord || dataSet.current;
@@ -451,7 +453,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         onKeyDown: this.handleEditorKeyDown,
         onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
         onBlur: this.handleEditorBlur,
-        tabIndex: -1,
+        tabIndex: currentEditorName ? 0 : -1,
         showHelp: ShowHelp.none,
         // 目前测试inline时候需要放开限制
         _inTable: !inlineEdit,

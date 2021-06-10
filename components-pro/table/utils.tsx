@@ -204,26 +204,12 @@ export function findFirstFocusableElement(node: HTMLElement): HTMLElement | unde
   if (node.children) {
     let found: HTMLElement | undefined;
     [...(node.children as HTMLCollectionOf<HTMLElement>)].some(child => {
-      if (child.tabIndex > -1) {
-        found = child;
-      } else {
-        found = findFirstFocusableElement(child);
-      }
-      return !!found;
-    });
-    return found;
-  }
-}
-
-// 用于校验定位 focus 第一个非法单元格
-export function findFirstFocusableInvalidElement(node: HTMLElement): HTMLElement | undefined {
-  if (node.children) {
-    let found: HTMLElement | undefined;
-    [...(node.children as HTMLCollectionOf<HTMLElement>)].some(child => {
-      if (child.tabIndex > -1 && child.className.includes('invalid')) {
-        found = child;
-      } else {
-        found = findFirstFocusableInvalidElement(child);
+      if (child.offsetParent) {
+        if (child.tabIndex > -1) {
+          found = child;
+        } else {
+          found = findFirstFocusableElement(child);
+        }
       }
       return !!found;
     });
