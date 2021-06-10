@@ -6,16 +6,19 @@ import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import { CellGroupProps } from './CellGroup.d';
 import TableContext from './TableContext';
 
+const propTypes = {
+  fixed: PropTypes.oneOf(['left', 'right']),
+  width: PropTypes.number,
+  height: PropTypes.number,
+  left: PropTypes.number,
+  style: PropTypes.object,
+  className: PropTypes.string,
+  classPrefix: PropTypes.string
+};
+
 class CellGroup extends React.PureComponent<CellGroupProps> {
-  static propTypes = {
-    fixed: PropTypes.oneOf(['left', 'right']),
-    width: PropTypes.number,
-    height: PropTypes.number,
-    left: PropTypes.number,
-    style: PropTypes.object,
-    className: PropTypes.string,
-    classPrefix: PropTypes.string,
-  };
+  static propTypes = propTypes;
+
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-cell-group'),
   };
@@ -43,7 +46,7 @@ class CellGroup extends React.PureComponent<CellGroupProps> {
       height,
       ...style,
     };
-    const unhandledProps = getUnhandledProps(CellGroup, rest);
+    const unhandledProps = getUnhandledProps(propTypes, rest);
 
     return (
       <TableContext.Consumer>

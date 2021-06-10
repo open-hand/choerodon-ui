@@ -68,6 +68,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that `autoSelectSingle` cannot pop up a single data.
 - 🐞 `<pro>Lov`: Fix the problem of data processing error when the table property `selectionMode` is `click` in `multiple` mode.
 - 🐞 `<pro>Table`: Fix queryBar multilingual field rendering problem.
+- 🐞 `<pro>PerformanceTable`: Fix column cannot be sorted in ColumnGroup.
 
 
 ## 1.3.2

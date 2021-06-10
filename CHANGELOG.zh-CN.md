@@ -68,6 +68,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 autoSelectSingle 开启单条数据无法弹出的问题。
 - 🐞 `<pro>Lov`: 修复多选模式下表格属性 selectionMode 为 click 时数据处理错误的问题。
 - 🐞 `<pro>Table`: 修复 queryBar 多语言类型字段渲染问题。
+- 🐞 `<pro>PerformanceTable`: 修复ColumnGroup 中列不能排序的问题。
 
 
 ## 1.3.2

@@ -138,18 +138,20 @@ class Cell extends React.PureComponent<CellProps> {
 
     const nextHeight = isHeaderCell ? headerHeight : this.getHeight();
     const styles = {
+      ...style,
       width,
       height: nextHeight,
       zIndex: depth,
       [rtl ? 'right' : 'left']: left,
     };
 
+    //By moving style from cell content to Cell, it breaks UI behaviours.
+    // for example, check box are not showing in the middle of the cell anymore.
     const contentStyles: React.CSSProperties = {
       width,
       height: nextHeight,
       textAlign: align,
-      [rtl ? 'paddingRight' : 'paddingLeft']: this.isTreeCol() ? depth! * LAYER_WIDTH + 10 : null,
-      ...style,
+      [rtl ? 'paddingRight' : 'paddingLeft']: this.isTreeCol() ? depth! * LAYER_WIDTH + 10 : null
     };
 
     if (verticalAlign) {
@@ -165,7 +167,8 @@ class Cell extends React.PureComponent<CellProps> {
       cellContent = getChildren(rowData, rowIndex);
     }
 
-    const unhandledProps = getUnhandledProps(Cell, getUnhandledProps(Column, rest));
+    // fix unable to get propTypes after gatsby is compiled
+    const unhandledProps = getUnhandledProps(propTypes, getUnhandledProps(Column.propTypes, rest));
     const cell = renderCell ? renderCell(cellContent) : cellContent;
     const content = wordWrap ? (
       <div className={this.addPrefix('wrap')}>
