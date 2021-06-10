@@ -1109,7 +1109,7 @@ export default class Select extends Component {
     const props = this.props;
     const { inputValue } = this.state;
     const tags = props.tags;
-    Children.forEach(children, child => {
+    Children.forEach(children, (child, index) => {
       if (!child) {
         return;
       }
@@ -1121,7 +1121,7 @@ export default class Select extends Component {
         );
         if (innerItems.length) {
           let label = child.props.label;
-          let key = child.key;
+          let key = `__RC_SELECT_GRP__${child.key === null ? index : child.key}__`;
           // if (!key && typeof label === 'string') {
           //   key = label;
           // }
@@ -1361,7 +1361,7 @@ export default class Select extends Component {
     }
 
     let newValues;
-    const values = this._options.filter((option) => {
+    const values = this.getOptionsFromChildren(props.children).filter((option) => {
       // 当这个选项为禁用时，全选和无不对这个选项做处理
       return option.props.disabled !== true;
     }).map((option) => {

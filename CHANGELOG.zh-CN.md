@@ -50,6 +50,7 @@ timeline: true
 - 💄 `<pro>TextField`: 修改 autoComplete 属性类型为 string。
 - 🐞 `<pro>DataSet`：修复清除object类型字段的值时，其绑定字段不会提交null值的问题。
 - 🐞 `Responsive`：修复多个响应式组件其中一个禁用或销毁时其他组件无法触发响应的问题。
+- 🐞 `Select`：修复 OptGroup 模式下全选失效问题。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
 - 🐞 `<pro>DataSet`：修复在仅删除以及dataToJSON为selected的情况下，提交后对dataSet状态修改不正确的问题。

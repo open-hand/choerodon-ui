@@ -50,6 +50,7 @@ timeline: true
 - 💄 `<pro>TextField`: Modify the `autoComplete` attribute type to `string`.
 - 🐞 `<pro>DataSet`: Fix the problem that the bound field will not submit a null value when clearing the value of the object type field.
 - 🐞 `Responsive`：Fix the problem that other components cannot trigger a response after one of these components is come to be disabled or destroyed.
+- 🐞 `Select`：Fix the issue that select all fails in OptGroup mode.
 - 🐞 `<pro>Modal`: Fix the `keyboardClosable` property has no effect when there is no cancel button.
 - 🐞 `<pro>Modal`: Fix some abnormal behaviors of Modal which not provided by ModalProvider.
 - 🐞 `<pro>DataSet`：Fix the problem that the state of the dataSet is incorrectly modified after submission when only deleted and dataToJSON is selected.
