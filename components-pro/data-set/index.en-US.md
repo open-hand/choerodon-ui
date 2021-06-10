@@ -122,10 +122,12 @@ title: DataSet
 | reduceRight(fn, initialValue) | 按降序调用数组中所有元素的指定回调函数。 回调函数的返回值是累计结果，并在下次调用回调函数时作为参数提供 | `fn` - 过滤函数(previousValue, record, index, array) =&gt; value `initialValue` - 初始值 | typeof initialValue |
 | indexOf(record, fromIndex) | 获取记录所在索引 | `record` - 记录；`fromIndex`&lt;optional&gt; - 开始检索的索引 | number |
 | reverse() | 反转记录的顺序 |  | Record[] |
-| select(record) | 选中记录 | `record` - 记录对象或记录的索引 |  |
-| unSelect(record) | 取消选中记录 | `record` - 记录对象或记录的索引 |  |
+| select(recordOrIndex) | 选中记录 | `recordOrIndex` - 记录对象或记录的索引 |  |
+| unSelect(recordOrIndex) | 取消选中记录 | `recordOrIndex` - 记录对象或记录的索引 |  |
 | selectAll() | 全选当前页 |  |  |
 | unSelectAll() | 取消全选当前页 |  |  |
+| batchSelect(recordOrId) | 批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
+| unSelectAll(recordOrId) | 取消批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |
 | get(index) | 获取指定索引的记录 | `index` - 记录索引 | Record |
 | getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | `index` - 记录索引 | Record |
@@ -163,6 +165,8 @@ title: DataSet
 | unSelect | 撤销选择记录事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 撤销选择的记录 | 是 |
 | selectAll | 全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | unSelectAll | 撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| batchSelect | 批量选择记录事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
+| batchUnSelect | 批量取消选择记录事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 | 是 |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 | 是 |
 | create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 | 是 |

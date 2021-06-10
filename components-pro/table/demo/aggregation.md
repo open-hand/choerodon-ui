@@ -22,6 +22,8 @@ import {
   DateTimePicker,
   SelectBox,
   AutoComplete,
+  Row,
+  Col,
 } from 'choerodon-ui/pro';
 import moment from 'moment';
 
@@ -30,6 +32,15 @@ const { Column } = Table;
 function sexIdRenderer({ record }) {
   // 获取性别codeValueId
   return record.getField('sex').getLookupData().codeValueId;
+}
+
+function aggregationRendereer({ text, record }) {
+  return (
+    <Row>
+      <Col span={6}>{record.get('email')}</Col>
+      <Col span={18}>{text}</Col>
+    </Row>
+  )
 }
 
 function handleUserDSLoad({ dataSet }) {
@@ -368,26 +379,30 @@ class App extends React.Component {
           lock
           sortable
         />
-        <Column header="基本组" align="left" aggregation>
-          <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
-          <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
-          <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
-          <Column name="name" editor width={150} sortable tooltip="always" />
-          <Column name="description" editor={<TextArea />} width={150} sortable />
+        <Column header="基本组" align="left" aggregation key="basic-group" aggregationDefaultExpandedKeys={['basic-subgroup-1']}>
+          <Column header="基本组-分类1" key="basic-subgroup-1">
+            <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
+            <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
+          </Column>
+          <Column header="基本组-分类2" key="basic-subgroup-2">
+            <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
+            <Column name="name" editor width={150} sortable tooltip="always" />
+            <Column name="description" editor={<TextArea />} width={150} sortable />
+          </Column>
         </Column>
-        <Column header="代码组" align="left" aggregation>
+        <Column header="代码组" align="left" aggregation renderer={aggregationRendereer} key="code-group">
           <Column name="code" editor width={150} sortable />
           <Column name="code_code" editor width={150} tooltip="overflow" />
           <Column name="code_select" editor width={150} />
           <Column name="codeMultiple" editor width={150} />
           <Column name="codeMultiple_code" width={150} />
         </Column>
-        <Column header="性别组" align="left" aggregation>
+        <Column header="性别组" align="left" aggregationLimit={2} aggregation key="sex-group">
           <Column name="sex" editor={<SelectBox />} width={150} />
           <Column header="性别id" renderer={sexIdRenderer} />
           <Column name="sexMultiple" editor width={150} />
         </Column>
-        <Column header="日期组" align="left" aggregation>
+        <Column header="日期组" align="left" aggregation key="date-group">
           <Column name="accountMultiple" editor width={150} />
           <Column name="date.startDate" editor width={150} />
           <Column name="date.endDate" editor width={150} />

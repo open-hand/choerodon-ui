@@ -1311,25 +1311,6 @@ export default class Table extends DataSetComponent<TableProps> {
     };
   }
 
-
-  @autobind
-  handleDragMouseUp() {
-    const { dataSet, mouseBatchChooseIdList } = this.tableStore;
-    if (this.tableStore.mouseBatchChooseState) {
-      this.tableStore.mouseBatchChooseState = false;
-      const { mouseBatchChooseStartId, mouseBatchChooseEndId } = this.tableStore;
-      if (mouseBatchChooseStartId === mouseBatchChooseEndId) {
-        return;
-      }
-      (mouseBatchChooseIdList || []).forEach((id: number) => {
-        const record = dataSet.find((innerRecord) => innerRecord.id === id);
-        if (record) {
-          dataSet.select(record);
-        }
-      });
-    }
-  };
-
   componentWillMount() {
     super.componentWillMount();
     this.initDefaultExpandedRows();
@@ -1357,18 +1338,6 @@ export default class Table extends DataSetComponent<TableProps> {
 
   connect() {
     this.processDataSetListener(true);
-    // 为什么使用 pointerup
-    // 因为需要对disabled的元素进行特殊处理
-    // 因为状态的改变依赖 mouseup 而在disabled的元素上 无法触发mouseup事件
-    // 导致状态无法进行修正
-    // 以下两种方案通过 pointer-events:none 进行处理
-    // https://stackoverflow.com/questions/322378/javascript-check-if-mouse-button-down
-    // https://stackoverflow.com/questions/62081666/the-event-of-the-document-is-not-triggered-when-it-is-on-a-disabled-element
-    // 而使用指针事件可以突破disabled的限制
-    // https://stackoverflow.com/questions/62126515/how-to-get-the-state-of-the-mouse-through-javascript/62127845#62127845
-    if (this.tableStore.useMouseBatchChoose) {
-      document.addEventListener('pointerup', this.handleDragMouseUp);
-    }
     if (this.tableStore.heightType === TableHeightType.flex) {
       window.addEventListener('resize', this.handleWindowResize, false);
     }
@@ -1376,9 +1345,6 @@ export default class Table extends DataSetComponent<TableProps> {
 
   disconnect() {
     this.processDataSetListener(false);
-    if (this.tableStore.useMouseBatchChoose) {
-      document.removeEventListener('pointerup', this.handleDragMouseUp);
-    }
     window.removeEventListener('resize', this.handleWindowResize, false);
   }
 

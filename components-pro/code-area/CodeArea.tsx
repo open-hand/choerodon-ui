@@ -160,10 +160,10 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     return this.text === undefined ? (super.getTextNode() as string) || '' : this.text;
   }
 
-  processValue(value: any): string {
+  processValue(value: any): ReactNode {
     const text = super.processValue(value);
     const { formatter } = this.props;
-    return formatter ? formatter.getFormatted(text) : text;
+    return formatter && isString(text) ? formatter.getFormatted(text) : text;
   }
 
   /**

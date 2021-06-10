@@ -17,9 +17,11 @@ The most basic usage.
 import {
   DataSet,
   Table,
+  TextField,
   NumberField,
   TextArea,
   DateTimePicker,
+  Select,
   SelectBox,
   Modal,
   Button,
@@ -28,6 +30,7 @@ import {
 import moment from 'moment';
 
 const { Column } = Table;
+const { Option } = Select;
 
 function sexIdRenderer({ record }) {
   // 获取性别codeValueId
@@ -39,6 +42,20 @@ function handleUserDSLoad({ dataSet }) {
   if (first) {
     first.selectable = false;
   }
+}
+
+function renderPhoneEditor(record) {
+  const region = (
+    <Select record={record} name="phone-region">
+      <Option value="+81">+81</Option>
+      <Option value="+00">+00</Option>
+    </Select>
+  );
+  return <TextField addonBefore={region} addonBeforeStyle={{ border: 'none', padding: 0, maxWidth: '60px', width: '35%' }} />
+}
+
+function renderPhone({ record, text }) {
+  return [record.get('phone-region'), text].filter(Boolean).join('-');
 }
 
 function renderColumnFooter(dataset, name) {
@@ -318,6 +335,7 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
         multiple: ',',
       },
+      { name: 'phone', type: 'string', label: '手机' },
       { name: 'account', type: 'object', ignore: 'always' },
       { name: 'enable', type: 'boolean', label: '是否开启', unique: 'uniqueGroup' },
       { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
@@ -465,6 +483,7 @@ class App extends React.Component {
         />
         <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
         <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
+        <Column name="phone" lock editor={renderPhoneEditor} width={150} renderer={renderPhone} />
         <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
         <Column name="name1" editor width={150} />
         <Column name="name2" editor width={150} />

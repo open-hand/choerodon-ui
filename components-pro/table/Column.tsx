@@ -1,4 +1,4 @@
-import { Component, ComponentState, CSSProperties, ReactElement, ReactNode } from 'react';
+import { Component, ComponentState, CSSProperties, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'mobx';
 import DataSet from '../data-set/DataSet';
@@ -11,6 +11,10 @@ import { Commands } from './Table';
 
 export const defaultMinWidth = 100;
 export const defaultAggregationMinWidth = 250;
+
+export function defaultAggregationRenderer({ text }) {
+  return text;
+}
 
 export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps; };
 export type commandProps = { dataSet: DataSet; record: Record; };
@@ -133,6 +137,19 @@ export interface ColumnPropsBase extends ElementProps {
    */
   aggregation?: boolean;
   /**
+   * 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示
+   * @default 4
+   */
+  aggregationLimit?: number;
+  /**
+   * 默认展开指定的聚合列树节点
+   */
+  aggregationDefaultExpandedKeys?: Key[];
+  /**
+   * 默认展开所有聚合列树节点
+   */
+  aggregationDefaultExpandAll?: boolean;
+  /**
    * 高亮渲染器
    */
   highlightRenderer?: HighlightRenderer;
@@ -219,6 +236,23 @@ export default class Column extends Component<ColumnPropsInner, ComponentState> 
      */
     showHelp: PropTypes.oneOf([ShowHelp.tooltip, ShowHelp.newLine, ShowHelp.none]),
     /**
+     * 是否聚合
+     */
+    aggregation: PropTypes.bool,
+    /**
+     * 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示
+     * @default 4
+     */
+    aggregationLimit: PropTypes.number,
+    /**
+     * 默认展开指定的聚合列树节点
+     */
+    aggregationDefaultExpandedKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    /**
+     * 默认展开所有聚合列树节点
+     */
+    aggregationDefaultExpandAll: PropTypes.bool,
+    /**
      * 高亮渲染器
      */
     highlightRenderer: PropTypes.func,
@@ -236,6 +270,7 @@ export default class Column extends Component<ColumnPropsInner, ComponentState> 
     resizable: true,
     sortable: false,
     hideable: true,
+    aggregationLimit: 4,
     showHelp: ShowHelp.tooltip,
   };
 }

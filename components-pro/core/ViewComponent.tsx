@@ -545,15 +545,20 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     onFocus(e);
   }
 
+  protected forceBlur(e) {
+    const {
+      props: { onBlur = noop },
+    } = this;
+    onBlur(e);
+  }
+
+
   @autobind
   @action
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
-      const {
-        props: { onBlur = noop },
-        prefixCls,
-      } = this;
-      onBlur(e);
+      const { prefixCls } = this;
+      this.forceBlur(e);
       if (!e.isDefaultPrevented()) {
         this.isFocused = false;
         this.isFocus = false;

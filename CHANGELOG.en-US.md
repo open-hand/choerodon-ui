@@ -25,7 +25,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Record`: Added `getValidationErrors` method.
 - 🌟 `<pro>DataSet.Field`: Added `computedProps`, `highlight` properties, deprecated `dynamicProps` property.
 - 🌟 `<pro>Table`: Added `showAllPageSelectionButton`, `aggregation`, `onAggregationChange`, `cellHighlightRenderer`, `columnEditorBorder` properties.
-- 🌟 `<pro>Table.Column`: Added `aggregation`, `highlightRenderer` properties.
+- 🌟 `<pro>Table.Column`: Added `aggregation`, `aggregationLimit`, `aggregationDefaultExpandedKeys`, `aggregationDefaultExpandAll`, `highlightRenderer` properties.
 - 🌟 `<pro>TextField`: Added `showLengthInfo` property.
 - 💄 `<pro>DataSet`: Optimize the `appendData` method to not be affected by paging.
 - 💄 `<pro>DataSet.Field`: Optimize some problems of chain binding.
@@ -43,11 +43,13 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the performance.
 - 💄 `<pro>Table`: Support maxHeight and minHeight style attributes.
 - 💄 `<pro>Tree`: Optimized and extend the showLine attribute.
+- 💄 `<pro>Form`: Optimized the display timing of the floating label label.
 - 💄 `<pro>TextField`: Optimized the `clearButton` rendering interaction.
 - 💄 `<pro>Modal`: `footer` add callback parameters.
 - 💄 `<pro>TextField`: Optimized the label rendering logic in `range` mode.
-- 💄 `<pro>Form`: Optimized the display timing of the floating label label.
 - 💄 `<pro>TextField`: Modify the `autoComplete` attribute type to `string`.
+- 🐞 `<pro>Table.Column`: Fix the problem that elements in the editor addonBefore and addonAfter cannot get focus.
+- 🐞 `<pro>Table`: Fix the problem of inaccurate mouse batch selection records.
 - 🐞 `<pro>DataSet`: Fix the problem that the bound field will not submit a null value when clearing the value of the object type field.
 - 🐞 `Responsive`：Fix the problem that other components cannot trigger a response after one of these components is come to be disabled or destroyed.
 - 🐞 `Select`：Fix the issue that select all fails in OptGroup mode.
