@@ -89,6 +89,63 @@ interface TableState {
   [key: string]: any;
 }
 
+const propTypes = {
+  columns: PropTypes.array,
+  autoHeight: PropTypes.bool,
+  affixHeader: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  affixHorizontalScrollbar: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  bordered: PropTypes.bool,
+  bodyRef: PropTypes.func,
+  className: PropTypes.string,
+  classPrefix: PropTypes.string,
+  children: PropTypes.any,
+  cellBordered: PropTypes.bool,
+  clickScrollLength: PropTypes.object,
+  data: PropTypes.arrayOf(PropTypes.object),
+  defaultExpandAllRows: PropTypes.bool,
+  defaultExpandedRowKeys: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ),
+  defaultSortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  disabledScroll: PropTypes.bool,
+  expandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  hover: PropTypes.bool,
+  height: PropTypes.number,
+  headerHeight: PropTypes.number,
+  locale: PropTypes.object,
+  loading: PropTypes.bool,
+  loadAnimation: PropTypes.bool,
+  minHeight: PropTypes.number,
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  renderTreeToggle: PropTypes.func,
+  renderRowExpanded: PropTypes.func,
+  rowExpandedHeight: PropTypes.number,
+  renderEmpty: PropTypes.func,
+  renderLoading: PropTypes.func,
+  rowClassName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  rtl: PropTypes.bool,
+  style: PropTypes.object,
+  sortColumn: PropTypes.string,
+  sortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  showHeader: PropTypes.bool,
+  showScrollArrow: PropTypes.bool,
+  shouldUpdateScroll: PropTypes.bool,
+  translate3d: PropTypes.bool,
+  wordWrap: PropTypes.bool,
+  width: PropTypes.number,
+  virtualized: PropTypes.bool,
+  isTree: PropTypes.bool,
+  onRowClick: PropTypes.func,
+  onRowContextMenu: PropTypes.func,
+  onScroll: PropTypes.func,
+  onSortColumn: PropTypes.func,
+  onExpandChange: PropTypes.func,
+  onTouchStart: PropTypes.func,
+  onTouchMove: PropTypes.func,
+  onDataUpdated: PropTypes.func,
+};
+
 export default class PerformanceTable extends React.Component<TableProps, TableState> {
   static displayName = 'performance';
 
@@ -98,62 +155,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   static HeaderCell = HeaderCell;
 
-  static propTypes = {
-    columns: PropTypes.array,
-    autoHeight: PropTypes.bool,
-    affixHeader: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-    affixHorizontalScrollbar: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-    bordered: PropTypes.bool,
-    bodyRef: PropTypes.func,
-    className: PropTypes.string,
-    classPrefix: PropTypes.string,
-    children: PropTypes.any,
-    cellBordered: PropTypes.bool,
-    clickScrollLength: PropTypes.object,
-    data: PropTypes.arrayOf(PropTypes.object),
-    defaultExpandAllRows: PropTypes.bool,
-    defaultExpandedRowKeys: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    ),
-    defaultSortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    disabledScroll: PropTypes.bool,
-    expandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    hover: PropTypes.bool,
-    height: PropTypes.number,
-    headerHeight: PropTypes.number,
-    locale: PropTypes.object,
-    loading: PropTypes.bool,
-    loadAnimation: PropTypes.bool,
-    minHeight: PropTypes.number,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    renderTreeToggle: PropTypes.func,
-    renderRowExpanded: PropTypes.func,
-    rowExpandedHeight: PropTypes.number,
-    renderEmpty: PropTypes.func,
-    renderLoading: PropTypes.func,
-    rowClassName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-    rtl: PropTypes.bool,
-    style: PropTypes.object,
-    sortColumn: PropTypes.string,
-    sortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    showHeader: PropTypes.bool,
-    showScrollArrow: PropTypes.bool,
-    shouldUpdateScroll: PropTypes.bool,
-    translate3d: PropTypes.bool,
-    wordWrap: PropTypes.bool,
-    width: PropTypes.number,
-    virtualized: PropTypes.bool,
-    isTree: PropTypes.bool,
-    onRowClick: PropTypes.func,
-    onRowContextMenu: PropTypes.func,
-    onScroll: PropTypes.func,
-    onSortColumn: PropTypes.func,
-    onExpandChange: PropTypes.func,
-    onTouchStart: PropTypes.func,
-    onTouchMove: PropTypes.func,
-    onDataUpdated: PropTypes.func,
-  };
+  static propTypes = propTypes;
+
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table'),
     data: [],
@@ -513,6 +516,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           return childColumns.map((childColumn, index) => {
             // 把 ColumnGroup 设置的属性覆盖到 Column
             const groupCellProps: any = {
+              ...childColumn?.props,
               align,
               fixed,
               verticalAlign,
@@ -1717,7 +1721,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       ...style,
     };
 
-    const unhandled = getUnhandledProps(PerformanceTable, rest);
+    const unhandled = getUnhandledProps(propTypes, rest);
 
     return (
       <TableContext.Provider

@@ -155,7 +155,7 @@ export type Config = {
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
   useColon?: boolean;
-  textFieldAutoComplete?: 'on' | 'off';
+  textFieldAutoComplete?: string;
   resultStatusRenderer?: object;
   numberFieldNonStrictStep?: boolean;
   numberFieldFormatter?: FormatNumberFunc;

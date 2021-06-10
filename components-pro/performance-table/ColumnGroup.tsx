@@ -38,17 +38,13 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
 
       {React.Children.map(children, (node: React.ReactElement) => {
         const nodeStyles = { height, ...node.props?.style, top: styles.height };
-        const width = node.props?.style?.width;
-        const nodeContentStyles = { height, width, verticalAlign };
 
         return React.cloneElement(node, {
           className: addPrefix('cell'),
           style: nodeStyles,
-          children: (
-            <div className={addPrefix('cell-content')} style={nodeContentStyles}>
-              {node.props.children}
-            </div>
-          ),
+          headerHeight: height,
+          verticalAlign,
+          children: <span className={addPrefix('cell-content')}>{node.props.children}</span>
         });
       })}
     </div>

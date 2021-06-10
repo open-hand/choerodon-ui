@@ -67,7 +67,7 @@ export interface TextFieldProps extends FormFieldProps {
   /**
    * 自动完成
    */
-  autoComplete?: 'on' | 'off';
+  autoComplete?: string;
   /**
    * 前缀
    */

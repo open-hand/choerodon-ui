@@ -12,22 +12,26 @@ interface HeaderCelltate {
   flexGrow?: number;
 }
 
+const propTypes = {
+  index: PropTypes.number,
+  sortColumn: PropTypes.string,
+  sortType: PropTypes.oneOf(['desc', 'asc']),
+  sortable: PropTypes.bool,
+  resizable: PropTypes.bool,
+  minWidth: PropTypes.number,
+  onColumnResizeStart: PropTypes.func,
+  onColumnResizeEnd: PropTypes.func,
+  onResize: PropTypes.func,
+  onColumnResizeMove: PropTypes.func,
+  onSortColumn: PropTypes.func,
+  flexGrow: PropTypes.number,
+  fixed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right'])]),
+  children: PropTypes.node
+};
+
 class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
-  static propTypes = {
-    index: PropTypes.number,
-    sortColumn: PropTypes.string,
-    sortType: PropTypes.oneOf(['desc', 'asc']),
-    sortable: PropTypes.bool,
-    resizable: PropTypes.bool,
-    minWidth: PropTypes.number,
-    onColumnResizeStart: PropTypes.func,
-    onColumnResizeEnd: PropTypes.func,
-    onResize: PropTypes.func,
-    onColumnResizeMove: PropTypes.func,
-    onSortColumn: PropTypes.func,
-    flexGrow: PropTypes.number,
-    fixed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right'])]),
-  };
+  static propTypes = propTypes;
+
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-cell-header'),
   };
@@ -99,9 +103,9 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
   }
 
   renderSortColumn(): React.ReactNode {
-    const { sortable, sortColumn, sortType = '', dataKey } = this.props;
+    const { sortable, sortColumn, sortType = '', dataKey, groupHeader } = this.props;
 
-    if (sortable) {
+    if (sortable && !groupHeader) {
       const iconClasses = classNames(this.addPrefix('icon-sort icon'), {
         [this.addPrefix(`icon-sort-${sortType}`)]: sortColumn === dataKey,
       });
@@ -126,13 +130,14 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
       classPrefix,
       sortColumn,
       sortType,
+      groupHeader,
       ...rest
     } = this.props;
 
     const classes = classNames(classPrefix, className, {
       [this.addPrefix('sortable')]: sortable,
     });
-    const unhandledProps = getUnhandledProps(HeaderCell, rest);
+    const unhandledProps = getUnhandledProps(propTypes, rest);
 
     let ariaSort;
 
@@ -155,7 +160,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
           left={left}
           headerHeight={headerHeight}
           isHeaderCell={true}
-          onClick={this.handleClick}
+          onClick={!groupHeader ? this.handleClick : null}
         >
           {children}
           {this.renderSortColumn()}

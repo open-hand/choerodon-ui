@@ -43,14 +43,16 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the performance.
 - 💄 `<pro>Table`: Support maxHeight and minHeight style attributes.
 - 💄 `<pro>Tree`: Optimized and extend the showLine attribute.
+- 💄 `<pro>Form`: Optimized the display timing of the floating label label.
 - 💄 `<pro>TextField`: Optimized the `clearButton` rendering interaction.
 - 💄 `<pro>Modal`: `footer` add callback parameters.
 - 💄 `<pro>TextField`: Optimized the label rendering logic in `range` mode.
-- 💄 `<pro>Form`: Optimized the display timing of the floating label label.
-- 💄 `<pro>DataSet`: Fix the problem that the bound field will not submit a null value when clearing the value of the object type field.
+- 💄 `<pro>TextField`: Modify the `autoComplete` attribute type to `string`.
 - 🐞 `<pro>Table.Column`: Fix the problem that elements in the editor addonBefore and addonAfter cannot get focus.
 - 🐞 `<pro>Table`: Fix the problem of inaccurate mouse batch selection records.
+- 🐞 `<pro>DataSet`: Fix the problem that the bound field will not submit a null value when clearing the value of the object type field.
 - 🐞 `Responsive`：Fix the problem that other components cannot trigger a response after one of these components is come to be disabled or destroyed.
+- 🐞 `Select`：Fix the issue that select all fails in OptGroup mode.
 - 🐞 `<pro>Modal`: Fix the `keyboardClosable` property has no effect when there is no cancel button.
 - 🐞 `<pro>Modal`: Fix some abnormal behaviors of Modal which not provided by ModalProvider.
 - 🐞 `<pro>DataSet`：Fix the problem that the state of the dataSet is incorrectly modified after submission when only deleted and dataToJSON is selected.
@@ -70,6 +72,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that `autoSelectSingle` cannot pop up a single data.
 - 🐞 `<pro>Lov`: Fix the problem of data processing error when the table property `selectionMode` is `click` in `multiple` mode.
 - 🐞 `<pro>Table`: Fix queryBar multilingual field rendering problem.
+- 🐞 `<pro>PerformanceTable`: Fix column cannot be sorted in ColumnGroup.
 
 
 ## 1.3.2

@@ -8,22 +8,25 @@ import TableContext from './TableContext';
 import { ColumnResizeHandlerProps } from './ColumnResizeHandler.d';
 import { RESIZE_MIN_WIDTH } from './constants';
 
+const propTypes = {
+  height: PropTypes.number,
+  defaultColumnWidth: PropTypes.number,
+  columnLeft: PropTypes.number,
+  columnFixed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right'])]),
+  className: PropTypes.string,
+  classPrefix: PropTypes.string,
+  minWidth: PropTypes.number,
+  style: PropTypes.object,
+  onColumnResizeStart: PropTypes.func,
+  onColumnResizeEnd: PropTypes.func,
+  onColumnResizeMove: PropTypes.func
+};
+
 class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
   static contextType = TableContext;
 
-  static propTypes = {
-    height: PropTypes.number,
-    defaultColumnWidth: PropTypes.number,
-    columnLeft: PropTypes.number,
-    columnFixed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right'])]),
-    className: PropTypes.string,
-    classPrefix: PropTypes.string,
-    minWidth: PropTypes.number,
-    style: PropTypes.object,
-    onColumnResizeStart: PropTypes.func,
-    onColumnResizeEnd: PropTypes.func,
-    onColumnResizeMove: PropTypes.func,
-  };
+  static propTypes = propTypes;
+
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-column-resize-spanner'),
   };
@@ -112,7 +115,7 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     };
 
     const classes = classNames(classPrefix, className);
-    const unhandled = getUnhandledProps(ColumnResizeHandler, rest);
+    const unhandled = getUnhandledProps(propTypes, rest);
 
     return (
       <div

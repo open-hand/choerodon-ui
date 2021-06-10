@@ -6,18 +6,21 @@ import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import TableContext from './TableContext';
 import { RowProps } from './Row.d';
 
+const propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
+  headerHeight: PropTypes.number,
+  top: PropTypes.number,
+  isHeaderRow: PropTypes.bool,
+  rowRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  className: PropTypes.string,
+  classPrefix: PropTypes.string,
+  style: PropTypes.object
+};
+
 class Row extends React.PureComponent<RowProps> {
-  static propTypes = {
-    width: PropTypes.number,
-    height: PropTypes.number,
-    headerHeight: PropTypes.number,
-    top: PropTypes.number,
-    isHeaderRow: PropTypes.bool,
-    rowRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-    className: PropTypes.string,
-    classPrefix: PropTypes.string,
-    style: PropTypes.object,
-  };
+  static propTypes = propTypes;
+
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-row'),
     height: 46,
@@ -50,7 +53,7 @@ class Row extends React.PureComponent<RowProps> {
       ...style,
     };
 
-    const unhandledProps = getUnhandledProps(Row, rest);
+    const unhandledProps = getUnhandledProps(propTypes, rest);
 
     return (
       <TableContext.Consumer>

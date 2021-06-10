@@ -47,10 +47,12 @@ timeline: true
 - 💄 `<pro>TextField`: 优化 clearButton 渲染交互。
 - 💄 `<pro>Modal`: footer 增加 modal 回调参数。
 - 💄 `<pro>TextField`: 优化 range 模式 label 渲染逻辑。
+- 💄 `<pro>TextField`: 修改 autoComplete 属性类型为 string。
 - 🐞 `<pro>Table.Column`: 修复编辑器 addonBefore 和 addonAfter 中的元素无法获取焦点的问题。
 - 🐞 `<pro>Table`: 修复鼠标批量选择记录不准确的问题。
 - 🐞 `<pro>DataSet`：修复清除object类型字段的值时，其绑定字段不会提交null值的问题。
 - 🐞 `Responsive`：修复多个响应式组件其中一个禁用或销毁时其他组件无法触发响应的问题。
+- 🐞 `Select`：修复 OptGroup 模式下全选失效问题。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
 - 🐞 `<pro>DataSet`：修复在仅删除以及dataToJSON为selected的情况下，提交后对dataSet状态修改不正确的问题。
@@ -70,6 +72,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 autoSelectSingle 开启单条数据无法弹出的问题。
 - 🐞 `<pro>Lov`: 修复多选模式下表格属性 selectionMode 为 click 时数据处理错误的问题。
 - 🐞 `<pro>Table`: 修复 queryBar 多语言类型字段渲染问题。
+- 🐞 `<pro>PerformanceTable`: 修复ColumnGroup 中列不能排序的问题。
 
 
 ## 1.3.2
