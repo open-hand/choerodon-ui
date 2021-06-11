@@ -309,6 +309,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['currencyFormatterOptions', undefined],
   ['showInvalidDate', true],
   ['highlightRenderer', defaultFormFieldHighlightRenderer],
+  ['labelTooltip', 'overflow'],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

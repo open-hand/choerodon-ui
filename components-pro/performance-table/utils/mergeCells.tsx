@@ -12,7 +12,7 @@ function cloneCell(Cell, props) {
 }
 
 function mergeCells(cells) {
-  const nextCells = [];
+  const nextCells: React.ReactElement[] = [];
   for (let i = 0; i < cells.length; i += 1) {
     const {
       width,
@@ -51,7 +51,6 @@ function mergeCells(cells) {
           cells[i + j] = cloneCell(nextCell, { removed: true });
         }
         groupChildren.push(
-          // @ts-ignore
           <HeaderCell
             key={j}
             left={left}
@@ -67,7 +66,6 @@ function mergeCells(cells) {
         );
       }
       nextCells.push(
-        // @ts-ignore
         cloneCell(cells[i], {
           width: nextWidth,
           children: (
@@ -118,7 +116,6 @@ function mergeCells(cells) {
       }
 
       nextCells.push(
-        // @ts-ignore
         cloneCell(cells[i], {
           width: nextWidth,
           //  Fix this use of the variablecolSpan always evaluates to true
@@ -127,7 +124,6 @@ function mergeCells(cells) {
       );
       continue;
     }
-    // @ts-ignore
     nextCells.push(cells[i]);
   }
   return nextCells;

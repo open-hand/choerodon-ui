@@ -3,6 +3,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { LabelAlign, LabelLayout } from './enum';
 import { LabelWidth } from './Form';
+import { Tooltip } from '../core/enum';
 
 export interface FormContextValue {
   dataSet?: DataSet;
@@ -10,6 +11,7 @@ export interface FormContextValue {
   labelLayout?: LabelLayout;
   labelAlign?: LabelAlign;
   labelWidth?: LabelWidth;
+  labelTooltip?: Tooltip;
   useColon?: boolean;
 }
 

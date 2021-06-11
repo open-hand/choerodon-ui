@@ -57,7 +57,7 @@ class App extends React.Component {
       { name: 'email', type: 'email', label: '邮箱', required: true },
       { name: 'homepage', type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
-      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
+      { name: 'code', type: 'object', label: '代码描述代码描述代码描述代码描述代码描述代码描述代码描述代码描述代码描述代码描述', lovCode: 'LOV_CODE' },
     ],
   });
 
