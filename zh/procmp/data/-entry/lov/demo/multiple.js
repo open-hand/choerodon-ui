@@ -16,7 +16,9 @@ function handleDataSetChange({ record, name, value, oldValue }) {
 class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'code',
-    autoCreate: true,
+    data: [
+      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS' , 'code_description': '性别,员工状态' }
+    ],
     fields: [
       {
         name: 'code',
@@ -25,6 +27,18 @@ class App extends React.Component {
         multiple: true,
         required: true,
       },
+      {
+        name: 'code_code',
+        type: 'string',
+        bind: 'code.code',
+        multiple: ','
+      },
+      {
+        name: 'code_description',
+        type: 'string',
+        bind: 'code.description',
+        multiple: ','
+      }
     ],
     cacheSelection: true,
     selection: 'multiple',
@@ -34,7 +48,7 @@ class App extends React.Component {
   });
 
   render() {
-    return <Lov dataSet={this.ds} name="code" placeholder="复选LOV" />;
+    return <Lov dataSet={this.ds} searchAction="blur" name="code" placeholder="复选LOV" />;
   }
 }
 

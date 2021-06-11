@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { CheckBox, DataSet } from 'choerodon-ui/pro';
+import { CheckBox, DataSet, Tooltip } from 'choerodon-ui/pro';
 
 const data = [{ rd: 'C' }];
 
@@ -15,7 +15,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <CheckBox name="rd" disabled>A</CheckBox>
+        <Tooltip title="disabled">
+          <CheckBox name="rd" disabled>A</CheckBox>
+        </Tooltip>
         <CheckBox name="rd" readOnly>B</CheckBox>
         <CheckBox dataSet={this.ds} name="rd" value="C">C</CheckBox>
       </div>

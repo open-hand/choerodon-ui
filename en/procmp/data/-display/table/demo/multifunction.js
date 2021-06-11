@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import moment from 'moment';
 import {
   DataSet,
   Table,
+  TextField,
   NumberField,
+  TextArea,
   DateTimePicker,
+  Select,
   SelectBox,
   Modal,
   Button,
   AutoComplete,
-  TextArea,
 } from 'choerodon-ui/pro';
 
 const { Column } = Table;
+const { Option } = Select;
 
 function sexIdRenderer({ record }) {
   // 获取性别codeValueId
@@ -26,12 +30,23 @@ function handleUserDSLoad({ dataSet }) {
   }
 }
 
+function renderPhoneEditor(record) {
+  const region = (
+    <Select record={record} name="phone-region">
+      <Option value="+81">+81</Option>
+      <Option value="+00">+00</Option>
+    </Select>
+  );
+  return <TextField addonBefore={region} addonBeforeStyle={{ border: 'none', padding: 0, maxWidth: '60px', width: '35%' }} />
+}
+function renderPhone({ record, text }) {
+  return [record.get('phone-region'), text].filter(Boolean).join('-');
+}
+
 function renderColumnFooter(dataset, name) {
   const max = Math.max(
     0,
-    ...dataset.data
-      .map((record) => record.get(name))
-      .filter((value) => !isNaN(value)),
+    ...dataset.data.map(record => record.get(name)).filter(value => !isNaN(value)),
   );
   return `最大年龄：${NumberField.format(max)}`;
 }
@@ -83,47 +98,46 @@ const codeDescriptionDynamicProps = {
 
 class App extends React.Component {
   options = new DataSet({
-    fields: [
-      {
-        name: 'value',
-        type: 'string',
-      },
-      {
-        name: 'meaning',
-        type: 'string',
-      },
-    ],
-  });
+    fields: [{
+      name: 'value', type: 'string',
+    }, {
+      name: 'meaning', type: 'string',
+    }],
+  })
 
   userDs = new DataSet({
     primaryKey: 'userid',
-    name: 'user',
     autoQuery: true,
+    exportMode:'client',
     pageSize: 5,
-    exportMode: 'client', // 客户端导出默认为服务器导出
+    cacheSelection: true,
     transport: {
-      read: {
-        url: '/dataset/user/queries',
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
       },
       create: {
         url: '/dataset/user/mutations',
         method: 'put',
       },
-      update: ({ data }) =>
-        data.length
+      update: ({ data: [first] }) =>
+        first
           ? {
-              url: `/dataset/user/mutations/${data[0].userid}`,
-              data: data[0],
+            url: `/dataset/user/mutations/${first.userid}`,
+            data: first,
+            transformResponse() {
+              return [first];
             }
+          }
           : null,
       destroy: {
         url: '/dataset/user/mutations',
         method: 'delete',
       },
-      exports: {
-        url:
-          'http://gitee.com/xurime/excelize/raw/master/test/SharedStrings.xlsx',
-        method: 'get',
+      exports:{
+        url:'http://gitee.com/xurime/excelize/raw/master/test/SharedStrings.xlsx',
+        method:'get',
       },
       tls({ name }) {
         // 多语言数据请求的 axios 配置或 url 字符串。UI 接收的接口返回值格式为：[{ name: { zh_CN: '简体中文', en_US: '美式英语', ... }}]
@@ -136,19 +150,15 @@ class App extends React.Component {
     feedback: {
       loadSuccess(resp) {
         //  DataSet 查询成功的反馈 可以return 一个resp 来修改响应结果
-        console.log('resp', resp);
+        console.log('loadSuccess')
       },
     },
     queryFields: [
+      { name: 'enable', type: 'boolean', label: '是否开启' },
       { name: 'name', type: 'string', label: '姓名', defaultValue: 'Hugh' },
       { name: 'age', type: 'number', label: '年龄' },
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
-      {
-        name: 'sex',
-        type: 'string',
-        label: '性别',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-      },
+      { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
     ],
     fields: [
       {
@@ -164,11 +174,16 @@ class App extends React.Component {
         ignore: 'always',
       },
       {
+        name: 'name2',
+        ignore: 'always',
+        bind: 'name1',
+      },
+      {
         name: 'name',
         type: 'intl',
         label: '姓名',
-        dynamicProps: nameDynamicProps,
-        bind: 'name1',
+        computedProps: nameDynamicProps,
+        bind: 'name2',
         ignore: 'clean',
       },
       {
@@ -189,6 +204,11 @@ class App extends React.Component {
         type: 'string',
         label: '邮箱',
         help: '用户邮箱，可以自动补全',
+        computedProps: {
+          highlight({ record }) {
+            return record.index === 0 ? { title: '提示', content: '邮箱高亮' } : false;
+          }
+        },
       },
       {
         name: 'numberMultiple',
@@ -204,7 +224,10 @@ class App extends React.Component {
         name: 'code',
         type: 'object',
         label: '代码描述',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
+        transformResponse(value, data) {
+          return data
+        },
         transformRequest(value) {
           // 在发送请求之前对数据进行处理
           return { v: 2 };
@@ -216,7 +239,7 @@ class App extends React.Component {
       {
         name: 'code.v',
         type: 'number',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
         transformRequest(value) {
           return 5;
         },
@@ -224,7 +247,7 @@ class App extends React.Component {
       {
         name: 'code.d.v',
         type: 'number',
-        dynamicProps: codeDynamicProps,
+        computedProps: codeDynamicProps,
         transformRequest(value) {
           return 5;
         },
@@ -261,7 +284,7 @@ class App extends React.Component {
       },
       {
         name: 'codeMultiple_code',
-        dynamicProps: codeDescriptionDynamicProps,
+        computedProps: codeCodeDynamicProps,
         type: 'string',
         label: '代码（多值）',
         multiple: true,
@@ -269,7 +292,7 @@ class App extends React.Component {
       },
       {
         name: 'codeMultiple_description',
-        dynamicProps: codeCodeDynamicProps,
+        computedProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码描述',
         multiple: ',',
@@ -297,37 +320,20 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
         multiple: ',',
       },
+      { name: 'phone', type: 'string', label: '手机' },
       { name: 'account', type: 'object', ignore: 'always' },
-      {
-        name: 'enable',
-        type: 'boolean',
-        label: '是否开启',
-        unique: 'uniqueGroup',
-      },
-      {
-        name: 'frozen',
-        type: 'boolean',
-        label: '是否冻结',
-        trueValue: 'Y',
-        falseValue: 'N',
-      },
-      {
-        name: 'date.startDate',
-        type: 'date',
-        label: '开始日期',
-        defaultValue: new Date(),
-      },
-      { name: 'date.endDate', type: 'time', range: true, label: '结束日期' },
+      { name: 'enable', type: 'boolean', label: '是否开启', unique: 'uniqueGroup' },
+      { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
+      { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
+      { name: 'date.endDate', type: 'time', range: true, label: '结束日期', computedProps: { defaultValue: () => [moment(), moment()] } },
     ],
     events: {
       selectAll: ({ dataSet }) => console.log('select all', dataSet.selected),
       indexchange: ({ record }) => console.log('current user', record),
       submit: ({ data }) => console.log('submit data', data),
       load: handleUserDSLoad,
-      query: ({ params, data }) =>
-        console.log('user query parameter', params, data),
-      export: ({ params, data }) =>
-        console.log('user export parameter', params, data),
+      query: ({ params, data }) => console.log('user query parameter', params, data),
+      export: ({ params, data }) => console.log('user export parameter', params, data),
       remove: ({ records }) => console.log('removed records', records),
     },
   });
@@ -336,7 +342,7 @@ class App extends React.Component {
     const { userDs } = this;
     const { selected } = userDs;
     if (selected.length > 0) {
-      userDs.unshift(...selected.map((record) => record.clone()));
+      userDs.unshift(...selected.map(record => record.clone()));
     } else {
       Modal.warning('请选择记录');
     }
@@ -353,15 +359,16 @@ class App extends React.Component {
   };
 
   importData = () => {
-    const { userDs } = this;
-    console.log(userDs.toJSONData());
-    console.log(userDs.toJSONData(true));
-    console.log(userDs.toJSONData(false, true));
-    userDs.create({
-      other: { enemy: [{}, {}] },
-      code_code: '1',
-      code_description: 'xxx',
-      name: 'Hugh',
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const { userDs } = this;
+        userDs.current.set('userid', Math.random())
+        console.log(userDs.toJSONData());
+        console.log(userDs.toJSONData(true));
+        console.log(userDs.toJSONData(false, true));
+        userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx', name: 'Hugh' });
+        resolve();
+      }, 2000);
     });
   };
 
@@ -371,18 +378,6 @@ class App extends React.Component {
 
   deleteAllData = () => {
     this.userDs.deleteAll();
-  };
-
-  handleReset = () => {
-    this.userDs.selected.map((record) => {
-      // 勾选新增的数据删除，编辑的重置
-      if (record.status === 'add') {
-        this.userDs.remove(record);
-      } else {
-        record.reset();
-      }
-      return null;
-    });
   };
 
   copyButton = (
@@ -415,30 +410,22 @@ class App extends React.Component {
     </Button>
   );
 
-  selectResetButton = (
-    <Button icon="undo" onClick={this.handleReset} key="selectReset">
-      勾选重置
-    </Button>
-  );
-
   save = () => {
     console.log('submit result', 'after click');
   };
 
   handeValueChange = (v) => {
-    const { value } = v.target;
-    const suffixList = ['@qq.com', '@163.com', '@hand-china.com'];
+    const value = v.target.value
+    const suffixList = ['@qq.com', '@163.com', '@hand-china.com']
     if (value.indexOf('@') !== -1) {
-      this.options.loadData([]);
+      this.options.loadData([])
     } else {
-      this.options.loadData(
-        suffixList.map((suffix) => ({
-          value: `${value}${suffix}`,
-          meaning: `${value}${suffix}`,
-        })),
-      );
+      this.options.loadData(suffixList.map(suffix => ({
+        value: `${value}${suffix}`,
+        meaning: `${value}${suffix}`,
+      })))
     }
-  };
+  }
 
   render() {
     const buttons = [
@@ -453,7 +440,6 @@ class App extends React.Component {
       this.insertButton,
       this.removeAllButton,
       this.deleteAllButton,
-      this.selectResetButton,
     ];
     return (
       <Table
@@ -463,16 +449,15 @@ class App extends React.Component {
         buttons={buttons}
         dataSet={this.userDs}
         autoMaxWidth
-        parityRow
-        rowNumber
+        style={{ height: 300 }}
         header="User"
-        style={{ height: 400 }}
-        onRow={({ dataSet, record, index, expandedRow }) => {
-          if (index === 2) {
-            return {
-              style: { height: 50 },
-            };
-          }
+        rowNumber
+        showAllPageSelectionButton
+        parityRow
+        summary="BASIC DEMO"
+        pagination={{
+          pageSizeEditable: true,
+          pageSizeOptions: ['10', '50', '100', '200'],
         }}
       >
         <Column
@@ -486,24 +471,12 @@ class App extends React.Component {
           lock
           sortable
         />
-        <Column
-          name="age"
-          editor
-          width={150}
-          sortable
-          footer={renderColumnFooter}
-        />
-        <Column
-          name="email"
-          editor={
-            <AutoComplete
-              onFocus={this.handeValueChange}
-              onInput={this.handeValueChange}
-              options={this.options}
-            />
-          }
-        />
-        <Column name="enable" editor width={50} minWidth={50} lock />
+        <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
+        <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
+        <Column name="phone" lock editor={renderPhoneEditor} width={150} renderer={renderPhone} />
+        <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
+        <Column name="name1" editor width={150} />
+        <Column name="name2" editor width={150} />
         <Column name="name" editor width={150} sortable tooltip="always" />
         <Column name="description" editor={<TextArea />} width={150} sortable />
         <Column name="code" editor width={150} sortable />
@@ -511,20 +484,19 @@ class App extends React.Component {
         <Column name="code_select" editor width={150} />
         <Column name="codeMultiple" editor width={150} />
         <Column name="codeMultiple_code" width={150} />
-        <Column name="sex" editor={<SelectBox />} width={150} />
-        <Column header="性别id" renderer={sexIdRenderer} />
-        <Column name="sexMultiple" editor width={150} />
-        <Column name="accountMultiple" editor width={150} />
-        <Column name="date.startDate" editor width={150} />
-        <Column name="date.endDate" editor width={150} />
-        <Column
-          header="时间"
-          name="time"
-          editor={<DateTimePicker />}
-          width={150}
-        />
-        <Column name="numberMultiple" editor width={150} minWidth={50} />
-        <Column name="frozen" editor width={50} minWidth={50} lock="right" />
+        <>
+          <Column name="sex" editor={<SelectBox />} width={150} />
+          <Column header="性别id" renderer={sexIdRenderer} />
+          <Column name="sexMultiple" editor width={150} />
+          <Column name="accountMultiple" editor width={150} />
+          <Column name="date.startDate" editor width={150} />
+        </>
+        <fragment>
+          <Column name="date.endDate" editor width={150} />
+          <Column header="时间" name="time" editor={<DateTimePicker />} width={150} />
+          <Column name="numberMultiple" editor width={150} minWidth={50} />
+          <Column name="frozen" editor width={50} minWidth={50} lock="right" />
+        </fragment>
       </Table>
     );
   }

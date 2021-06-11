@@ -28,7 +28,7 @@ function passwordValidator(value, name, form) {
 }
 
 const modalContent = (
-  <Form labelLayout="float" columns={3} header="Float Label">
+  <Form labelLayout="float" columns={3} header="Float Label" labelTooltip="overflow">
     <TextField
       colSpan={3}
       label="手机号"
@@ -48,7 +48,7 @@ const modalContent = (
     />
     <NumberField
       rowSpan={2}
-      label="年龄"
+      label="年龄——请填写大于18的数字"
       name="age"
       min={18}
       step={1}

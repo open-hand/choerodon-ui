@@ -7,10 +7,10 @@ function handleChange(value, oldValue) {
 }
 
 ReactDOM.render(
-  <div>
+  <form>
     <Radio mode="button" name="base" value="A" onChange={handleChange} defaultChecked>A</Radio>
     <Radio mode="button" name="base" value="B" onChange={handleChange}>B</Radio>
     <Radio mode="button" name="base" value="C" onChange={handleChange}>C</Radio>
-  </div>,
+  </form>,
   document.getElementById('container')
 );

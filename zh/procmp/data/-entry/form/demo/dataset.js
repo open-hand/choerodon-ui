@@ -31,6 +31,7 @@ const defaultValidationMessages = {
 
 class App extends React.Component {
   ds = new DataSet({
+    autoCreate: true,
     fields: [
       {
         name: 'phone',
@@ -63,29 +64,40 @@ class App extends React.Component {
         step: 1,
         help: '我们需要确定你的年龄',
       },
-      { name: 'sex', type: 'string', label: '性别', required: true },
+      { name: 'sex', type: 'string', label: '性别', required: true, highlight: true },
       {
         name: 'language',
         type: 'string',
-        label: '语言',
+        label: '语言（labelWidth为auto自适应）',
         required: true,
         help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
       },
-      { name: 'email', type: 'email', label: '邮箱', required: true },
+      { name: 'email', type: 'email', label: '邮箱', required: true, highlight: '生日高亮' },
       { name: 'homepage', type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
-      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
+      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE', placeholder: 'd1' },
       { name: 'frozen', type: 'boolean', label: '是否冻结' },
     ],
   });
 
-  changeField = () => {
-    this.ds.current.getField('code').set('textField', 'description');
+  clear = () => {
+    this.ds.loadData([]);
+  };
+
+  validateCurrent = () => {
+    const { current } = this.ds;
+    current.validate();
+  };
+
+  validatePhone = () => {
+    const { current } = this.ds;
+    const field = current.getField('phone');
+    field.checkValidity();
   };
 
   render() {
     return (
-      <Form dataSet={this.ds} style={{ width: '4.5rem' }}>
+      <Form dataSet={this.ds} style={{ width: '4.5rem' }} labelWidth="auto">
         <TextField name="phone" />
         <Password name="password" />
         <Password name="confirmPassword" />
@@ -102,16 +114,20 @@ class App extends React.Component {
         <EmailField name="email" />
         <UrlField name="homepage" />
         <DatePicker name="birth" />
-        <Lov name="code" />
+        <Lov name="code" placeholder="d2" />
         <Switch name="frozen" />
         <div>
           <Button type="submit">注册</Button>
-          <Button type="reset" style={{ marginLeft: 8 }}>
+          <Button type="reset">
             重置
           </Button>
-          <Button onClick={this.changeField} style={{ marginLeft: 8 }}>
-            设置代码描述的textField
+          <Button onClick={this.clear}>
+            清空
           </Button>
+        </div>
+        <div>
+          <Button onClick={this.validateCurrent}>校验当前记录</Button>
+          <Button onClick={this.validatePhone}>校验手机</Button>
         </div>
       </Form>
     );

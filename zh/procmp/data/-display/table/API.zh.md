@@ -34,7 +34,7 @@ title: API
 | filterBarFieldName    | `queryBar`为`bar`时，直接输入的过滤条件的字段名                                                                                                                                                                                | string                                                                                                 | params |
 | filterBarPlaceholder  | `queryBar`为`bar`时输入框的占位符                                                                                                                                                                                              | string                                                                                                 |          |
 | pagination            | 分页器，参考[配置项](#pagination)或 [pagination](/zh/procmp/navigation/pagination/)，设为 false 时不展示分页                                                                                                                             | object \| false                                                                                        |          |
-| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click  | boolean \| string | true |
+| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click, true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean \| string | true |
 | selectedHighLightRow  | 勾选行高亮                                                                                                                                                                                                                     | boolean                                                                                                | false    |
 | columnResizable       | 可调整列宽                                                                                                                                                                                                                     | boolean                                                                                                | true     |
 | columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | true |
@@ -47,6 +47,7 @@ title: API
 | virtual               | 是否开启虚拟滚动，当设置表格高度时有效                                                                                                                                                               | boolean                                                                                                | false    |
 | virtualCell | 虚拟单元格 | boolean | false |
 | virtualSpin           | 是否开启虚拟滚动 Spin                                                                                                                                                                                                          | boolean                                                                                                | false    |
+| virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | |
 | autoHeight            | 是否开启高度自适应                                                                                                                                                                                                             | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) }                                      | false    |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |
@@ -64,8 +65,16 @@ title: API
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | clientExportQuantity | 导出一次轮询数量 | number | 100 |
 | showSelectionTips | 是否显示选中记录提示  | boolean | |
+| showAllPageSelectionButton | 是否显示切换跨页全选按钮 | boolean | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
+| treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | |
+| aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | |
+| aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
+| aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
+| aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
+| onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
+| cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
 
@@ -98,6 +107,8 @@ title: API
 | command         | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode \| object )[] |           |
 | hidden          | 隐藏                                                                                                                                                                                              | boolean                                                                                                                            |           |
 | tooltip         | 用 Tooltip 显示单元格内容。可选值 none \| always \| overflow                                                                                                                                      | string                                                                                                                             | none    |
+| aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |
+| highlightRenderer | 单元格高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 
 ### Table.FilterBar
 

@@ -52,7 +52,7 @@ DataSet.
 | axios | 覆盖默认 axios | AxiosInstance |  |
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#dataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |
-| exportMode | 导出模式选择：前端导出，后端导出 | `client|server` | ‘client’ |
+| exportMode | 导出模式选择：前端导出，后端导出 | `client|server` | ‘server’ |
 
 ### DataSet Values
 
@@ -73,14 +73,18 @@ DataSet.
 | created | 新建的数据 | readonly observable&lt;Record[]&gt; |
 | updated | 更新的数据 | readonly observable&lt;Record[]&gt; |
 | destroyed | 暂时销毁的数据 | readonly observable&lt;Record[]&gt; |
-| selected | 选中记录，包括缓存的选中记录 | readonly observable&lt;Record[]&gt; |
+| selected | 选中记录，包括 isAllPageSelection 为 false 时缓存的选中记录 | readonly observable&lt;Record[]&gt; |
+| unSelected | 未选中记录，包括 isAllPageSelection 为 true 时缓存的未选中记录 | readonly observable&lt;Record[]&gt; |
 | currentSelected | 当前页选中记录 | readonly observable&lt;Record[]&gt; |
+| currentUnSelected | 当前页未选中记录 | readonly observable&lt;Record[]&gt; |
+| cachedSelected | isAllPageSelection 为 false 时缓存的选中记录 或 isAllPageSelection 为 true 时缓存的未选中记录 | readonly observable&lt;Record[]&gt; |
 | cachedSelected | 缓存的选中记录 | readonly observable&lt;Record[]&gt; |
 | length | 数据量 | readonly observable&lt;number&gt; |
 | queryDataSet | 查询数据源 | observable&lt;DataSet&gt; |
 | parent | 级联头数据源 | readonly observable&lt;DataSet&gt; |
 | children | 所有级联行数据源 | readonly \[key:string\]: DataSet} |
 | dirty | 含有状态不是 sync 的记录及 dirty 为 true 的记录 | readonly observable&lt;boolean&gt;} |
+| isAllPageSelection | 是否是跨页全选状态， 请配合 unSelected 一起做跨页选择数据提交， 需要接口支持 | readonly observable&lt;boolean&gt;} |
 
 ### DataSet Methods
 
@@ -123,10 +127,12 @@ DataSet.
 | reduceRight(fn, initialValue) | 按降序调用数组中所有元素的指定回调函数。 回调函数的返回值是累计结果，并在下次调用回调函数时作为参数提供 | `fn` - 过滤函数(previousValue, record, index, array) =&gt; value `initialValue` - 初始值 | typeof initialValue |
 | indexOf(record, fromIndex) | 获取记录所在索引 | `record` - 记录；`fromIndex`&lt;optional&gt; - 开始检索的索引 | number |
 | reverse() | 反转记录的顺序 |  | Record[] |
-| select(record) | 选中记录 | `record` - 记录对象或记录的索引 |  |
-| unSelect(record) | 取消选中记录 | `record` - 记录对象或记录的索引 |  |
+| select(recordOrIndex) | 选中记录 | `recordOrIndex` - 记录对象或记录的索引 |  |
+| unSelect(recordOrIndex) | 取消选中记录 | `recordOrIndex` - 记录对象或记录的索引 |  |
 | selectAll() | 全选当前页 |  |  |
 | unSelectAll() | 取消全选当前页 |  |  |
+| batchSelect(recordOrId) | 批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
+| unSelectAll(recordOrId) | 取消批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |
 | get(index) | 获取指定索引的记录 | `index` - 记录索引 | Record |
 | getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | `index` - 记录索引 | Record |
@@ -137,11 +143,14 @@ DataSet.
 | toData() | 转换成普通数据，不包含删除的数据 |  | object[] |
 | bind(ds, name) | 绑定头 DataSet | `ds` - 头 DataSet 对象或 id `name` - 绑定名 |  |
 | setQueryParameter(para, value) | 设置查询参数 | `para` - 参数名 `value` - 参数值 |  |
+| getQueryParameter(para) | 获取查询参数 | `para` - 参数名 |  |
 | loadData(data, total) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
 | appendData(data, total) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
 | setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | modifiedCheck(message) | 变更检查 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage | |
+| setAllPageSelection(enabled) | 切换是否跨页全选。 | `enabled` - 是否开启 |  |
+| getValidationErrors() | 获取校验错误信息 |  |  |
 
 ### DataSet Events
 
@@ -161,6 +170,8 @@ DataSet.
 | unSelect | 撤销选择记录事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 撤销选择的记录 | 是 |
 | selectAll | 全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | unSelectAll | 撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| batchSelect | 批量选择记录事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
+| batchUnSelect | 批量取消选择记录事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 | 是 |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 | 是 |
 | create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 | 是 |
@@ -183,6 +194,7 @@ DataSet.
 | selectable     | 可选                                            | observable&lt;boolean&gt; |
 | isSelected     | 是否选中                                        | observable&lt;boolean&gt; |
 | isCurrent      | 是否当前记录                                    | observable&lt;boolean&gt; |
+| isExpanded | 树形节点是否展开 | observable&lt;boolean&gt; |
 | children       | 树形子数据集                                    | Record[] \| undefined      |
 | parent         | 树形父数据                                      | Record \| undefined        |
 | previousRecord | 树形中前一条数据                                | Record \| undefined        |
@@ -218,6 +230,7 @@ DataSet.
 | save() | 保存当前数据至缓存 |  |  |
 | restore() | 从缓存恢复保存的数据 |  |  |
 | clear() | 清除所有数据 |  |  |
+| getValidationErrors() | 获取校验错误信息 | | |
 
 ### Field Props
 
@@ -238,7 +251,7 @@ DataSet.
 | min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName | MIN_SAFE_INTEGER(number 类型) |
 | step | 步距 | number \| { hour: number, minute: number, second: number } |  |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
-| precision | 小数点位数 | number |  |
+| precision | 转换小数点位数 | number |  |
 | numberGrouping | 千分位分组显示 | boolean | true |
 | validator | 校验器，当返回值为 false 或 涵盖错误信息的字符串，则为校验失败 | (value, name, record) =&gt; boolean \| string \| undefined |  |
 | required | 是否必选 | boolean | false |
@@ -265,7 +278,8 @@ DataSet.
 | lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/zh/procmp/configure/configure/#axiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | bind | 内部字段别名绑定 | string |  |
-| dynamicProps | [动态属性对象](https://huihuawk.gitee.io/c7n-ui/zh/tutorials/dataSet-more#dynamicprops)。对象为字段属性和返回该字段值的钩子的键值对。原对象属性钩子将在 v1.0 版本中废弃。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
+| dynamicProps | 动态属性对象。对象为字段属性和返回该字段值的钩子的键值对。<或废弃> | { fieldProp: ({ dataSet, record, name }) => value } |  |
+| computedProps | [计算属性对象](https://huihuawk.gitee.io/c7n-ui/zh/tutorials/dataSet-more#computedProps)。对象为字段属性和返回该字段值的钩子的键值对。功能和用法同 dynamicProps，具有 mobx computed 的缓存功能，避免重复计算，提高性能。请确保计算依赖的值是可观察的。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |
 | ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | never |
@@ -273,6 +287,7 @@ DataSet.
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any, object: any) => any |  |
 | trim | 字符串值是否去掉首尾空格，可选值: both \| left \| right \| none | string | both |
 | defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/zh/procmp/configure/configure/#ValidationMessages) | ValidationMessages |  |
+| highlight | 高亮, 如是字符串或 ReactElement, 则会显示 Tooltip | boolean \| ReactNode |  |
 
 ### Field Values
 

@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Form, TextField, Button } from 'choerodon-ui/pro';
+import {
+  Form,
+  TextField,
+  Button,
+} from 'choerodon-ui/pro';
 
 const { FormVirtualGroup } = Form;
 
 class App extends React.Component {
+
   state = {
     showGroup: true,
     showGroup2: true,
@@ -36,26 +41,40 @@ class App extends React.Component {
           addonBefore="+86"
           addonAfter="中国大陆"
         />
-        {showGroup && (
-          <FormVirtualGroup className="virtual-group">
-            <TextField label="姓名1" />
-            <TextField label="姓名2" />
-            {showGroup2 && (
-              <FormVirtualGroup className="virtual-group2">
-                <TextField label="姓名3" />
-                <TextField label="姓名4" />
-                <TextField label="姓名5" />
-              </FormVirtualGroup>
-            )}
-          </FormVirtualGroup>
-        )}
+        {
+          showGroup && (
+            <FormVirtualGroup className="virtual-group">
+              <TextField
+                label="姓名1"
+              />
+              <>
+                <TextField
+                  label="姓名2"
+                />
+              </>
+              {
+                showGroup2 && (
+                  <FormVirtualGroup className="virtual-group2">
+                    <TextField
+                      label="姓名3"
+                    />
+                    <TextField
+                      label="姓名4"
+                    />
+                    <fragment>
+                      <TextField
+                        label="姓名5"
+                      />
+                    </fragment>
+                  </FormVirtualGroup>
+                )
+              }
+            </FormVirtualGroup>
+          )
+        }
         <div>
-          <Button type="button" onClick={this.toggleShow}>
-            切换
-          </Button>
-          <Button type="button" onClick={this.toggleShow2}>
-            切换2
-          </Button>
+          <Button type="button" onClick={this.toggleShow}>切换</Button>
+          <Button type="button" onClick={this.toggleShow2}>切换2</Button>
         </div>
       </Form>
     );

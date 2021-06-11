@@ -412,7 +412,21 @@
       "order": 26,
       "screenshot": "",
       "height": 570,
-      "ignores": ["theme1", "theme3", "theme4"],
+      "category": "pro"
+    },
+    {
+      "filename": "aggregation.js",
+      "title": {
+        "zh": "聚合视图",
+        "en": "Aggregation View"
+      },
+      "description": {
+        "zh": "单元格内多字段聚合展示视图。\n",
+        "en": "Aggregation View.\n"
+      },
+      "order": 27,
+      "screenshot": "",
+      "height": 800,
       "category": "pro"
     },
     {

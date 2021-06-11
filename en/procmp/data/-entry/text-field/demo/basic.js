@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { TextField, Row, Col } from 'choerodon-ui/pro';
+import { TextField, Row, Col, Tooltip } from 'choerodon-ui/pro';
 
 function log(value) {
   console.log('[basic]', value);
@@ -15,7 +15,9 @@ ReactDOM.render(
       <TextField placeholder="清除按钮" defaultValue="点击清除" clearButton onChange={log} />
     </Col>
     <Col span={8}>
-      <TextField value="不可用" disabled />
+      <Tooltip title="disabled">
+        <TextField value="不可用" disabled />
+      </Tooltip>
     </Col>
   </Row>,
   document.getElementById('container')

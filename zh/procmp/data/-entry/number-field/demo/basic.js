@@ -10,10 +10,10 @@ ReactDOM.render(
   <div>
     <Row style={{ marginBottom: 10 }} gutter={10}>
       <Col span={12}>
-        <NumberField placeholder="请输入整数" step={1} onChange={log} />
+        <NumberField placeholder="请输入整数" precision={0} step={2} onChange={log} />
       </Col>
       <Col span={12}>
-        <NumberField placeholder="精确两位小数" step={0.01} min={0} />
+        <NumberField placeholder="精确两位小数" precision={2} min={0} />
       </Col>
     </Row>
     <Row gutter={10}>

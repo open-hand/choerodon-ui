@@ -4,9 +4,9 @@ import {
   DataSet,
   Table,
   TextField,
+  Modal,
   ModalProvider,
   injectModal,
-  Modal,
   Button,
   Lov,
   Tabs,
@@ -22,6 +22,7 @@ function editorRenderer(record) {
 function maleFilter(record) {
   return record.get('sex') === 'M' || !record.get('sex');
 }
+
 // 过滤展示数据 结合 table filter
 function femaleFilter(record) {
   return record.get('sex') === 'F';
@@ -51,8 +52,7 @@ class App extends React.Component {
       },
     ],
     events: {
-      query: ({ params, data }) =>
-        console.log('friend query parameter', params, data),
+      query: ({ params, data }) => console.log('friend query parameter', params, data),
     },
   });
 
@@ -95,14 +95,19 @@ class App extends React.Component {
     },
     events: {
       indexChange: ({ record }) =>
-        record &&
-        console.log('enemyRecord cascadeParent', record.cascadeParent),
+        record && console.log('enemyRecord cascadeParent', record.cascadeParent),
     },
   });
 
   userDs = new DataSet({
     primaryKey: 'userid',
-    name: 'user',
+    transport: {
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
+      },
+    },
     autoQuery: false,
     autoCreate: true,
     pageSize: 5,
@@ -132,6 +137,40 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
       },
       { name: 'enable', type: 'boolean', label: '是否开启' },
+      { name: 'account', type: 'object', ignore: 'always' },
+      {
+        name: 'code',
+        type: 'object',
+        label: '代码描述',
+        lovCode: 'LOV_CODE',
+        ignore: 'always',
+      },
+      {
+        name: 'code2',
+        type: 'object',
+        label: '代码描述2',
+        lovCode: 'LOV_CODE',
+        ignore: 'always',
+        bind: 'code.lv',
+      },
+      {
+        name: 'code2_description',
+        type: 'string',
+        label: '代码描述22',
+        bind: 'code2.description',
+      },
+      {
+        name: 'code_code',
+        type: 'string',
+        label: '代码',
+        bind: 'code.code',
+      },
+      {
+        name: 'code_description',
+        type: 'string',
+        label: '代码描述',
+        bind: 'code.description',
+      },
     ],
     events: {
       submit: ({ data }) => console.log('submit data', data),
@@ -142,6 +181,12 @@ class App extends React.Component {
       'other.enemy': this.enemyDs,
     },
   });
+
+  createButton = (
+    <Button icon="playlist_add" onClick={this.createUser} key="add">
+      新增
+    </Button>
+  );
 
   toDataButton = (
     <Button onClick={this.toData} key="toData">
@@ -155,11 +200,41 @@ class App extends React.Component {
     </Button>
   );
 
-  createButton = (
-    <Button icon="playlist_add" onClick={this.createUser} key="add">
-      新增
-    </Button>
-  );
+  openModal = record => {
+    const { Modal: modal } = this.props;
+    let isCancel = false;
+    modal.open({
+      drawer: true,
+      closeOnLocationChange: false,
+      width: 600,
+      children: (
+        <Tabs>
+          <TabPane tab="Friends(M)">
+            <Table
+              buttons={['add', 'delete']}
+              dataSet={this.friendsDs}
+              rowHeight={40}
+              filter={maleFilter}
+            >
+              <Column name="name" editor={editorRenderer} sortable />
+              <Column name="age" editor sortable />
+              <Column name="sex" editor width={150} />
+            </Table>
+          </TabPane>
+          <TabPane tab="Friends(F)">
+            <Table dataSet={this.friendsDs} rowHeight={40} filter={femaleFilter}>
+              <Column name="name" editor={editorRenderer} sortable />
+              <Column name="age" editor sortable />
+              <Column name="sex" editor width={150} />
+            </Table>
+          </TabPane>
+        </Tabs>
+      ),
+      onOk: async () => await Modal.confirm('ok?') === 'ok',
+      onCancel: () => (isCancel = true),
+      afterClose: () => record && isCancel && this.userDs.remove(record),
+    });
+  };
 
   createUser = () => {
     this.openModal(this.userDs.create({}, 0));
@@ -178,54 +253,8 @@ class App extends React.Component {
     console.log('toJSONData', this.userDs.toJSONData());
   };
 
-  openModal = (record) => {
-    const { Modal: modal } = this.props;
-    let isCancel = false;
-    modal.open({
-      drawer: true,
-      width: 600,
-      children: (
-        <Tabs>
-          <TabPane tab="Friends(M)">
-            <Table
-              buttons={['add', 'delete']}
-              dataSet={this.friendsDs}
-              rowHeight={40}
-              filter={maleFilter}
-            >
-              <Column name="name" editor={editorRenderer} sortable />
-              <Column name="age" editor sortable />
-              <Column name="sex" editor width={150} />
-            </Table>
-          </TabPane>
-          <TabPane tab="Friends(F)">
-            <Table
-              dataSet={this.friendsDs}
-              rowHeight={40}
-              filter={femaleFilter}
-            >
-              <Column name="name" editor={editorRenderer} sortable />
-              <Column name="age" editor sortable />
-              <Column name="sex" editor width={150} />
-            </Table>
-          </TabPane>
-        </Tabs>
-      ),
-      onOk: async () => (await Modal.confirm('ok?')) === 'ok',
-      onCancel: () => (isCancel = true),
-      afterClose: () => record && isCancel && this.userDs.remove(record),
-    });
-  };
-
   renderEdit = () => {
-    return (
-      <Button
-        funcType="flat"
-        icon="mode_edit"
-        onClick={this.editUser}
-        size="small"
-      />
-    );
+    return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} size="small" />;
   };
 
   render() {
@@ -238,23 +267,23 @@ class App extends React.Component {
       this.toJSONDataButton,
     ];
     return [
-      <Table key="user" buttons={buttons} dataSet={this.userDs} header="User">
+      <Table key="user" buttons={buttons} dataSet={this.userDs} header="User" rowHeight="auto" columnDraggable rowNumber={({ text }) => `#${text}`}>
         <Column name="userid" editor />
         <Column name="age" editor width={150} />
         <Column name="enable" editor width={50} />
         <Column name="name" editor width={150} />
-        <Column
-          header="编辑Friends"
-          align="center"
-          renderer={this.renderEdit}
-          lock="right"
-        />
+        <Column name="code" editor width={150} />
+        <Column name="code2" editor width={150} />
+        <Column name="code_code" editor width={150} />
+        <Column name="code_description" editor width={150} />
+        <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />
       </Table>,
       <Table
         key="cascade1"
         header="Cascade Level 1"
         buttons={['add', 'delete']}
         dataSet={this.enemyDs}
+        pagination={{ position: 'both' }}
       >
         <Column name="name" editor sortable />
         <Column name="age" editor sortable />
@@ -266,16 +295,12 @@ class App extends React.Component {
         buttons={[
           'add',
           'delete',
-          <Lov
-            dataSet={this.enemyFriendsDs}
-            name="code"
-            mode="button"
-            clearButton={false}
-          >
+          <Lov key="lov" dataSet={this.enemyFriendsDs} name="code" mode="button" clearButton={false}>
             Lov
           </Lov>,
         ]}
         dataSet={this.enemyFriendsDs}
+        pagination={{ position: 'top' }}
       >
         <Column name="name" editor={editorRenderer} sortable />
         <Column name="age" editor sortable />

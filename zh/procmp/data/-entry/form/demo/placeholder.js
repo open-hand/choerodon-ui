@@ -21,7 +21,7 @@ ReactDOM.render(
       <Option value="M">男</Option>
       <Option value="F">女</Option>
     </SelectBox>
-    <Select label="语言" name="language" required>
+    <Select placeholder="请输入内容进行语言搜索" searchable label="语言" name="language" required>
       <Option value="zh-cn">简体中文</Option>
       <Option value="en-us">英语(美国)</Option>
       <Option value="ja-jp">日本語</Option>

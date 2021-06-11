@@ -21,11 +21,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <form>
         <Radio dataSet={this.ds} name="bind" value="A">A</Radio>
         <Radio dataSet={this.ds} name="bind" value="B">B</Radio>
         <Radio dataSet={this.ds} name="bind" value="C">C</Radio>
-      </div>
+      </form>
     );
   }
 }

@@ -29,7 +29,7 @@ class App extends React.Component {
       {
         name: 'sex2',
         type: 'string',
-        dynamicProps: {
+        computedProps: {
           lookupAxiosConfig: ({ record }) => ({
             url: record.get('sex') ? '/common/code/HR.EMPLOYEE_GENDER/' : null,
             transformResponse(data) {

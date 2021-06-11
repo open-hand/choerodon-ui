@@ -203,18 +203,18 @@
       "ignores": ["theme1", "theme3"]
     },
     {
-      "filename": "virtualGroup.js",
+      "filename": "grid.js",
       "title": {
-        "zh": "虚拟分组",
-        "en": "virtualGroup"
+        "zh": "栅格布局",
+        "en": "Grid layout"
       },
       "description": {
-        "zh": "虚拟分组\n",
-        "en": "virtualGroup\n"
+        "zh": "栅格布局\n",
+        "en": "Grid layouT\n"
       },
       "order": 13,
       "screenshot": "",
-      "height": 443,
+      "height": 768,
       "category": "pro"
     }
   ]

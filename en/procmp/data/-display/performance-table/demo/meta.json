@@ -258,21 +258,6 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    },
-    {
-      "filename": "dataset.js",
-      "title": {
-        "zh": "数据源",
-        "en": "DataSet"
-      },
-      "description": {
-        "zh": "与数据源DS结合使用。\n 单页数据量大于300条可开启虚拟滚动。\n单页数据量大于5000条建议不使用DS。(暂不支持在线编辑)。详细代码查看：https://gitee.com/choerodon-ui/hzero-sample/tree/master/packages/hzero-sample-demo1/src/pages/performanceEditTable",
-        "en": "DataSet."
-      },
-      "order": 17,
-      "screenshot": "",
-      "height": 580,
-      "category": "pro"
     }
   ]
 }

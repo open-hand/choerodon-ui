@@ -65,11 +65,11 @@ class App extends React.Component {
         label: '代码',
         maxLength: 20,
         // required: true,
-        dynamicProps: codeCodeDynamicProps,
+        computedProps: codeCodeDynamicProps,
       },
       {
         name: 'code_description',
-        dynamicProps: codeDescriptionDynamicProps,
+        computedProps: codeDescriptionDynamicProps,
         type: 'string',
         label: '代码描述',
       },

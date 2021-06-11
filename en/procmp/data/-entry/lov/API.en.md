@@ -15,6 +15,6 @@ title: API
 | paramMatcher | 参数匹配器。当为字符串时，进行参数拼接。 | string \| ({ record, text, textField, valueField }) => string | ||
 | searchAction | 搜索触发变更的动作, 可选值：`blur` `input`， | string | input ||
 | fetchSingle | searchAction 为 blur 时生效，获取记录有重复时弹出选择窗口 | boolean | false ||
-| ~~lovEvents~~ | 废弃属性，使用[optionsProps](/zh/procmp/dataset/dataset#field-props)替换 | | |
+| autoSelectSingle | 点击查询仅存在一条数据时自动选中 | boolean | false |
 
 更多属性请参考[Select](/zh/procmp/data-entry/select/#API), [TextField](/zh/procmp/data-entry/text-field/#TextField), [Button](/zh/procmp/general/button/#Button)。

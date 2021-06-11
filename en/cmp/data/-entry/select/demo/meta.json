@@ -42,9 +42,9 @@
         "zh": "三种大小的选择框，当 size 分别为 `large` 和 `small` 时，输入框高度为 `40px` 和 `24px` ，默认高度为 `32px`。\n",
         "en": "The height of the input field for the select defaults to 32px. If size is set to large, the height will be 40px, and if set to small, 24px.\n"
       },
-      "order": 1,
+      "order": 2,
       "ignores": ["theme1", "theme3"],
-      "height": 142,
+      "height": 260,
       "screenshot": ""
     },
     {
@@ -57,7 +57,7 @@
         "zh": "多选，从已有条目中选择（scroll the menu）\n",
         "en": "Multiple selection, selecting from existing items (scroll the menu).\n"
       },
-      "order": 2,
+      "order": 3,
       "height": 142,
       "screenshot": ""
     },
@@ -71,7 +71,7 @@
         "zh": "tags select，随意输入的内容（scroll the menu）\n",
         "en": "Select with tags, transform input to tag (scroll the menu)\n"
       },
-      "order": 3,
+      "order": 4,
       "height": 142,
       "screenshot": ""
     },
@@ -85,7 +85,7 @@
         "zh": "输入框自动完成功能，下面是一个账号注册表单的例子。\n\n推荐使用 [AutoComplete](/components/auto-complete/) 组件。\n",
         "en": "Automatic completion of select input.\n\nUsing the [AutoComplete](/components/auto-complete/) component is strongly recommended instead as it is more flexible and capable.\n"
       },
-      "order": 4,
+      "order": 5,
       "height": 142,
       "screenshot": ""
     },
@@ -99,7 +99,7 @@
         "zh": "用 `OptGroup` 进行选项分组。\n",
         "en": "Using `OptGroup` to group the options.\n"
       },
-      "order": 5,
+      "order": 6,
       "height": 142,
       "screenshot": ""
     },
@@ -113,7 +113,7 @@
         "zh": "省市联动是典型的例子。\n\n推荐使用 [Cascader](/components/cascader/) 组件。\n",
         "en": "Coordinating the selection of provinces and cities is a common use case and demonstrates how selection can be coordinated.\n\nUsing the [Cascader](/components/cascader) component is strongly recommended instead as it is more flexible and capable.\n"
       },
-      "order": 6,
+      "order": 7,
       "height": 142,
       "screenshot": ""
     },
@@ -127,7 +127,7 @@
         "zh": "自动补全和远程数据结合。\n",
         "en": "Autocomplete with remote ajax data.\n"
       },
-      "order": 9,
+      "order": 8,
       "height": 142,
       "screenshot": ""
     },
@@ -141,7 +141,7 @@
         "zh": "默认情况下 `onChange` 里只能拿到 value，如果需要拿到选中的节点文本 label，可以使用 `labelInValue` 属性。\n\n选中项的 label 会被包装到 value 中传递给 `onChange` 等函数，此时 value 是一个对象。\n",
         "en": "As a default behavior, the onChange callback can only get the value of the selected item. The labelInValue prop can be used to get the label property of the selected item.\n\nThe label of the selected item will be packed as an object for passing to the onChange callback.\n"
       },
-      "order": 10,
+      "order": 9,
       "height": 142,
       "screenshot": ""
     },
@@ -155,7 +155,7 @@
         "zh": "试下复制 `露西,杰克` 到输入框里。只在 tags 和 multiple 模式下可用。\n",
         "en": "Try to copy `Lucy,Jack` to the input. Only available in tags and multiple mode.\n"
       },
-      "order": 11,
+      "order": 10,
       "height": 142,
       "screenshot": ""
     },
@@ -169,7 +169,7 @@
         "zh": "图标下拉框。\n",
         "en": "Icon Select.\n"
       },
-      "order": 12,
+      "order": 11,
       "height": 142,
       "screenshot": ""
     }

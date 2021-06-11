@@ -14,11 +14,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <form>
         <Radio name="rd" disabled>A</Radio>
         <Radio name="rd" readOnly>B</Radio>
         <Radio dataSet={this.ds} name="rd" value="C">C</Radio>
-      </div>
+      </form>
     );
   }
 }

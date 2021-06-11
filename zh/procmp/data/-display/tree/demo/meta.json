@@ -16,7 +16,7 @@
       },
       "order": 0,
       "screenshot": "",
-      "height": 373,
+      "height": 580,
       "category": "pro"
     },
     {
@@ -44,7 +44,7 @@
         "zh": "dataSet selection 为 false  ， Tree checkable 为 true 可以实现整个treenode点击触发check 。注意：优先级高于record 里面的selectable\n",
         "en": "dataSet selection is false and Tree checkable is true .when treeNode click , it would be checked and selection is higer priority than Record selectable\n\nDataSet.\n"
       },
-      "order": 1,
+      "order": 2,
       "screenshot": "",
       "height": 400,
       "category": "pro"
@@ -61,7 +61,22 @@
       },
       "order": 3,
       "screenshot": "",
-      "height": 260,
+      "height": 580,
+      "category": "pro"
+    },
+    {
+      "filename": "line.js",
+      "title": {
+        "zh": "连接线",
+        "en": "line"
+      },
+      "description": {
+        "zh": "节点之间带连接线的树，常用于文件目录结构展示。使用 showLine 开启，可以用 switcherIcon 修改默认图标。\n",
+        "en": "A tree with connecting lines between nodes is often used for file directory structure display. Use showLine to open, you can use switcherIcon to modify the default icon.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 440,
       "category": "pro"
     }
   ]

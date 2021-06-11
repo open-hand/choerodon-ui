@@ -19,5 +19,5 @@ title: API
 | 名称                         | 说明       | 参数                                                                                                                                                                       |
 | ---------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | format(value, lang, options) | 数字格式化 | `value` - 数值 `lang` - 语言代码 `options` - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
-| precision | 小数点位数 | number |  |
+| precision | 转换小数点位数 | number |  |
 | numberGrouping | 千分位分组显示 | boolean | true |
