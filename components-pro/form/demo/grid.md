@@ -71,7 +71,7 @@ class App extends React.Component {
     const { current } = this.settingDs;
     return (
       <>
-        <Form record={current} columns={2} useColon>
+        <Form record={current} columns={2} useColon labelTooltip="overflow">
           <Form.Item name="labelLayout" label="labelLayout">
             <SelectBox mode="button">
               <Option value="none">none</Option>
@@ -96,6 +96,7 @@ class App extends React.Component {
           <Switch name="useColon" label="useColon" />
         </Form>
         <Form
+          labelTooltip="overflow"
           header="栅格布局"
           record={this.ds.current}
           layout="none"
