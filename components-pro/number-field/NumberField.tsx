@@ -14,7 +14,7 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning from '../_util/keepRunning';
 import Icon from '../icon';
-import { getNearStepValues, getPrecision, MIN_SAFE_INTEGER, MAX_SAFE_INTEGER, plus } from './utils';
+import { getNearStepValues, getPrecision, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, parseNumber, plus } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
@@ -31,8 +31,8 @@ function getCurrentValidValue(value: string): number {
 export type FormatNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions) => string;
 
 export type FormatNumberFuncOptions = {
-  lang?: string,
-  options?: Intl.NumberFormatOptions;
+  lang?: string | undefined,
+  options: Intl.NumberFormatOptions;
 };
 
 
@@ -157,7 +157,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @computed
   get allowDecimal(): boolean {
-    const { min, nonStrictStep } = this;
+    const { min, nonStrictStep, precision } = this;
+    if (precision === 0) {
+      return false;
+    }
     // 非严格步距下允许输入小数
     if (nonStrictStep) {
       return true;
@@ -183,6 +186,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   get allowNegative(): boolean {
     const { min } = this;
     return isNil(min) || min < 0;
+  }
+
+  @computed
+  get precision(): number | undefined {
+    return this.getProp('precision');
   }
 
   @computed
@@ -375,11 +383,21 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     ]);
   }
 
+  getObservableProps(props, context) {
+    return {
+      ...super.getObservableProps(props, context),
+      max: props.max,
+      min: props.min,
+      precision: props.precision,
+      nonStrictStep: props.nonStrictStep,
+    };
+  }
+
   step(isPlus: boolean, isKeeping?: boolean) {
     const min = defaultTo(this.min, -MAX_SAFE_INTEGER);
     const max = defaultTo(this.max, MAX_SAFE_INTEGER);
     const step = defaultTo(this.getProp('step'), 1);
-    const nonStrictStep = this.nonStrictStep;
+    const { nonStrictStep } = this;
     // 需要处理非严格模式
     let newValue;
     const value =
@@ -421,11 +439,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     } else {
       this.prepareSetValue(newValue);
     }
-
   }
 
   prepareSetValue(value: any): void {
-    super.prepareSetValue(isNaN(value) || isEmpty(value) ? null : Number(value));
+    super.prepareSetValue(isNaN(value) || isEmpty(value) ? null : parseNumber(value, this.precision));
   }
 
   restrictInput(value: string): string {
@@ -448,23 +465,17 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getFormatOptions(value?: number): FormatNumberFuncOptions {
-    const precisionInValue = getPrecision(isNil(value) ? this.getValue() || 0 : value);
+    const { precision } = this;
+    const precisionInValue = isNumber(precision) ? precision : getPrecision(isNil(value) ? this.getValue() || 0 : value);
     const formatterOptions: FormatNumberFuncOptions = this.getProp('formatterOptions') || {};
     const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
     const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || this.lang;
     const options: Intl.NumberFormatOptions = {
-      minimumFractionDigits: precisionInValue,
       maximumFractionDigits: precisionInValue,
       ...numberFieldFormatterOptions.options,
       ...formatterOptions.options,
     };
-
-    const precision = this.getProp('precision');
     const numberGrouping = this.getProp('numberGrouping');
-    if (isNumber(precision)) {
-      options.minimumFractionDigits = precision;
-      options.maximumFractionDigits = precision;
-    }
     if (numberGrouping === false) {
       options.useGrouping = false;
     }

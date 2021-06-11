@@ -49,6 +49,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimized the label rendering logic in `range` mode.
 - 💄 `<pro>TextField`: Modify the `autoComplete` attribute type to `string`.
 - 💄 `<pro>TextField`: `restrict` property supports regular type.
+- 💄 `<pro>NumberField`: Optimize the `precision` property to convert the number of decimal places.
 - 🐞 `<pro>Table.Column`: Fix the problem that elements in the editor addonBefore and addonAfter cannot get focus.
 - 🐞 `<pro>Table`: Fix the problem of inaccurate mouse batch selection records.
 - 🐞 `<pro>DataSet`: Fix the problem that the bound field will not submit a null value when clearing the value of the object type field.

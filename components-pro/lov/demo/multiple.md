@@ -30,15 +30,29 @@ function handleDataSetChange({ record, name, value, oldValue }) {
 class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'code',
-    autoCreate: true,
+    data: [
+      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS' , 'code_description': '性别,员工状态' }
+    ],
     fields: [
       {
         name: 'code',
         type: 'object',
-        lovCode: 'LOV_MOCK_CODE',
+        lovCode: 'LOV_CODE',
         multiple: true,
         required: true,
       },
+      {
+        name: 'code_code',
+        type: 'string',
+        bind: 'code.code',
+        multiple: ','
+      },
+      {
+         name: 'code_description',
+         type: 'string',
+        bind: 'code.description',
+         multiple: ','
+      }
     ],
     cacheSelection: true,
     selection: 'multiple',

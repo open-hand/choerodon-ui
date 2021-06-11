@@ -33,7 +33,7 @@ import { getProperty } from '../form/utils';
 import RenderedText from './RenderedText';
 import isReactChildren from '../_util/isReactChildren';
 import TextFieldGroup from './TextFieldGroup';
-import { findFirstFocusableElement } from '../table/utils';
+import findFirstFocusableElement from '../_util/findFirstFocusableElement';
 
 let PLACEHOLDER_SUPPORT;
 

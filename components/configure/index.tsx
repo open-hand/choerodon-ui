@@ -160,6 +160,7 @@ export type Config = {
   numberFieldNonStrictStep?: boolean;
   numberFieldFormatter?: FormatNumberFunc;
   numberFieldFormatterOptions?: FormatNumberFuncOptions;
+  currencyFormatterOptions?: FormatNumberFuncOptions;
   labelTooltip?: Tooltip;
   /**
    * @deprecated
@@ -305,6 +306,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['numberFieldNonStrictStep', false],
   ['numberFieldFormatter', undefined],
   ['numberFieldFormatterOptions', undefined],
+  ['currencyFormatterOptions', undefined],
   ['showInvalidDate', true],
   ['highlightRenderer', defaultFormFieldHighlightRenderer],
 ]);

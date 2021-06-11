@@ -1,8 +1,10 @@
 import { isMoment, Moment, unitOfTime } from 'moment';
+import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import { TimeStep } from '../date-picker/DatePicker';
 import { TimeUnit } from '../date-picker/enum';
+import defaultFormatNumber from '../formatter/formatNumber';
 
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 export const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER || -(2 ** 53 - 1);
@@ -111,4 +113,14 @@ export function getNearStepValues<T extends Moment | number>(
       return getNearStepMoments(value, hour, TimeUnit.hour) as T[];
     }
   }
+}
+
+export function parseNumber(value: any, precision?: number): number {
+  if (isNil(precision)) {
+    return Number(value);
+  }
+  return Number(defaultFormatNumber(value, undefined, {
+    maximumFractionDigits: precision!,
+    useGrouping: false,
+  }));
 }

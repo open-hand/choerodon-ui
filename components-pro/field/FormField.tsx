@@ -642,6 +642,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   getObservableProps(props, context) {
     return {
       ...super.getObservableProps(props, context),
+      label: props.label,
       name: props.name,
       record: 'record' in props ? props.record : context.record,
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,

@@ -3,6 +3,7 @@ import isFunction from 'lodash/isFunction';
 import get from 'lodash/get';
 import ColumnGroup from '../ColumnGroup';
 import HeaderCell from '../HeaderCell';
+import { HeaderCellProps } from '../HeaderCell.d';
 
 import isNullOrUndefined from './isNullOrUndefined';
 
@@ -23,7 +24,7 @@ function mergeCells(cells) {
       verticalAlign,
     } = cells[i].props;
 
-    const groupChildren = [];
+    const groupChildren: React.ReactElement<HeaderCellProps>[] = [];
 
     // fix(ColumnGroup): fix column cannot be sorted in ColumnGroup
     /**
@@ -41,7 +42,7 @@ function mergeCells(cells) {
           dataKey,
           onSortColumn,
           sortColumn,
-          sortType
+          sortType,
         } = nextCell.props;
 
         if (j !== 0) {
@@ -121,8 +122,8 @@ function mergeCells(cells) {
         cloneCell(cells[i], {
           width: nextWidth,
           //  Fix this use of the variablecolSpan always evaluates to true
-          'aria-colspan': nextWidth > width ? colSpan : undefined
-        })
+          'aria-colspan': nextWidth > width ? colSpan : undefined,
+        }),
       );
       continue;
     }

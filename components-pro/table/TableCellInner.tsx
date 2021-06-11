@@ -24,15 +24,7 @@ import Record from '../data-set/Record';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
 import { Commands, TableButtonProps } from './Table';
-import {
-  findCell,
-  findFirstFocusableElement,
-  getColumnKey,
-  getEditorByColumnAndRecord,
-  isDisabledRow,
-  isInCellEditor,
-  isStickySupport,
-} from './utils';
+import { findCell, getColumnKey, getEditorByColumnAndRecord, isDisabledRow, isInCellEditor, isStickySupport } from './utils';
 import { FieldType } from '../data-set/enum';
 import { SELECTION_KEY } from './TableStore';
 import { TableColumnTooltip, TableCommandType } from './enum';
@@ -44,6 +36,7 @@ import { FormFieldProps, Renderer } from '../field/FormField';
 import { $l } from '../locale-context';
 import Button, { ButtonProps } from '../button/Button';
 import { LabelLayout } from '../form/enum';
+import findFirstFocusableElement from '../_util/findFirstFocusableElement';
 
 let inTab: boolean = false;
 

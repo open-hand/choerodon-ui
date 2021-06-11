@@ -23,7 +23,7 @@ ReactDOM.render(
         <Currency defaultValue={123456.789} />
       </Col>
       <Col span={8}>
-        <Currency currency="CNY" defaultValue={123456.789} />
+        <Currency currency="CNY" defaultValue={123456.789} precision={3} />
       </Col>
       <Col span={8}>
         <Currency currency="EUR" lang="de-DE" defaultValue={123456.789} />
