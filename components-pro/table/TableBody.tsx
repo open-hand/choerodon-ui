@@ -74,7 +74,7 @@ export default class TableBody extends Component<TableBodyProps> {
         ref={this.saveRef}
         className={`${prefixCls}-body`}
         style={{
-          ...style,
+          ...(height === undefined ? style : {}),
           height: pxToRem(
             hasFooterAndNotLock && height !== undefined ? height + scrollbar : height,
           ),
