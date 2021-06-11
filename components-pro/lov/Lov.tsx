@@ -473,9 +473,7 @@ export default class Lov extends Select<LovProps> {
   @action
   selectSingle() {
     const { options } = this;
-    if (options.length === 1) {
-      this.resetOptions(true)
-    }
+    this.resetOptions(options.length === 1);
     options.query().then(() => {
       if (options.length === 1) {
         this.choose(this.options.get(0));
