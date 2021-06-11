@@ -48,6 +48,7 @@ timeline: true
 - 💄 `<pro>Modal`: footer 增加 modal 回调参数。
 - 💄 `<pro>TextField`: 优化 range 模式 label 渲染逻辑。
 - 💄 `<pro>TextField`: 修改 autoComplete 属性类型为 string。
+- 💄 `<pro>TextField`: restrict 属性支持正则类型。
 - 🐞 `<pro>Table.Column`: 修复编辑器 addonBefore 和 addonAfter 中的元素无法获取焦点的问题。
 - 🐞 `<pro>Table`: 修复鼠标批量选择记录不准确的问题。
 - 🐞 `<pro>DataSet`：修复清除object类型字段的值时，其绑定字段不会提交null值的问题。
