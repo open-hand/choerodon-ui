@@ -25,6 +25,7 @@ title: Form
 | labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#Form Responsive), 如果为auto，则根据内部label最大长度来对齐所有label | number\| 'auto' \| ('auto' \| number)[] \| object | 100 |
 | labelAlign | 标签文字对齐方式, 只在 labelLayout 为`horizontal`时起作用，可选值： `left` `center` `right`, 响应式参考[Responsive](#Form Responsive) | string \| object | right |
 | labelLayout | 标签位置, 可选值 `horizontal` `vertical` `placeholder` `float` `none`, 响应式参考[Responsive](#Form Responsive) | string \| object | horizontal |
+| labelTooltip | 用 Tooltip 显示标签内容。可选值 `none` `always` `overflow` | string | 'none' |
 | dataIndex | 对照 record 在 DataSet 中的 index | number | ds.currentIndex |
 | record | 对照 record, 优先级高于 dataSet 和 dataIndex | Record |  |
 | columns | 列数, 响应式参考[Responsive](#Form Responsive) | number \| object | 1 |

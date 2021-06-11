@@ -36,7 +36,7 @@ class App extends React.Component {
     autoQuery: true,
     pageSize: 5,
     queryFields: [
-      { name: 'name', type: 'string', label: '姓名' },
+      { name: 'name', type: 'intl', label: '姓名' },
       { name: 'age', type: 'number', label: '年龄' },
       {
         name: 'sex.text',

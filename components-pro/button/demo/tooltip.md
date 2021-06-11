@@ -26,7 +26,7 @@ const App = () => {
   }), []);
   return (
     <>
-      <Tooltip title="xxx">
+      <Tooltip title="xxx" placement="bottom">
         <Button tooltip="always" disabled>始终显示气泡的按钮</Button>
       </Tooltip>
       <Button tooltip="overflow" style={flag ? overflowStyle : undefined} onClick={handleClick}>
