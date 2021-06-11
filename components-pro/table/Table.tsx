@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import raf from 'raf';
 import { observer } from 'mobx-react';
+import defaultTo from 'lodash/defaultTo';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
@@ -1742,13 +1743,13 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTable(lock?: ColumnLock | boolean): ReactNode {
-    const { props } = this;
-    const { overflowX, heightType, hasFooter: footer } = this.tableStore;
+    const { props, tableStore } = this;
+    const { overflowX, heightType, hasFooter: footer } = tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
-    if ((!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType)) {
-      const { prefixCls, leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = this.tableStore;
+    if ((!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType) || tableStore.height !== undefined) {
+      const { prefixCls, leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = tableStore;
       let tableHeadRef;
       let tableBodyRef;
       let tableFootRef;
@@ -1937,16 +1938,21 @@ export default class Table extends DataSetComponent<TableProps> {
     const { element, tableStore } = this;
     if (element) {
       tableStore.width = Math.floor(width);
-      const height = this.getContentHeight();
+      const { style } = this.props;
+      const maxHeight = style && toPx(style.maxHeight);
+      const minHeight = style && toPx(style.minHeight);
+      const height = defaultTo(defaultTo(this.getContentHeight(), maxHeight), minHeight);
       if (isNumber(height)) {
         const { rowHeight, lockColumnsBodyRowsHeight } = tableStore;
         const { tableHeader, tableFooter } = this;
         const headerHeight = tableHeader ? tableHeader.getHeight() : 0;
         const footerHeight = tableFooter ? tableFooter.getHeight() : 0;
-        const totalHeight = Math.max(
+        const rowMinHeight = defaultTo(minHeight, isNumber(rowHeight) ? rowHeight : lockColumnsBodyRowsHeight[0] || 0) + headerHeight + footerHeight;
+        const minTotalHeight = Math.max(
           height,
-          (isNumber(rowHeight) ? rowHeight : lockColumnsBodyRowsHeight[0] || 0) + headerHeight + footerHeight,
+          rowMinHeight,
         );
+        const totalHeight = maxHeight ? Math.min(maxHeight, minTotalHeight) : minTotalHeight;
         tableStore.totalHeight = totalHeight;
         tableStore.height = totalHeight - headerHeight - footerHeight;
       } else {

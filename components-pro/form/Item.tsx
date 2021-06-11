@@ -8,6 +8,8 @@ import { LabelLayout } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import Row from '../row';
 import Col from '../col';
+import OverflowTip from '../overflow-tip';
+import { Tooltip as LabelTooltip } from '../core/enum';
 
 export interface ItemProps extends FormFieldProps {
   children: ReactElement<FormFieldProps>;
@@ -18,7 +20,7 @@ export interface IItem extends FunctionComponent<ItemProps> {
 }
 
 const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
-  const { dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, useColon } = useContext(FormContext);
+  const { dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon } = useContext(FormContext);
   const { children, useColon: fieldUseColon = useColon, ...rest } = props;
   const child = Children.only<ReactElement<FormFieldProps>>(children);
   if (isValidElement<FormFieldProps>(child)) {
@@ -51,10 +53,24 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
       [`${prefixCls}-output`]: isOutput,
     });
+    const tooltip = props.labelTooltip || labelTooltip;
+    const isTooltip = tooltip && [LabelTooltip.always, LabelTooltip.overflow].includes(tooltip);
     if (labelLayout === LabelLayout.vertical) {
+      const labelNode = (
+        <label className={labelClassName}>{label}</label>
+      );
       return (
         <>
-          <label className={labelClassName}>{label}</label>
+          {
+            isTooltip ? (
+              <OverflowTip
+                title={label}
+                strict={tooltip === LabelTooltip.always}
+              >
+                {labelNode}
+              </OverflowTip>
+            ) : labelNode
+          }
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>
         </>
       );
@@ -62,10 +78,22 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     const fieldLabelWidth = getProperty(fieldProps, 'labelWidth', dataSet, record);
     const columnLabelWidth = normalizeLabelWidth(contextLabelWidth, 1)[0];
     const labelWidth = columnLabelWidth === 'auto' ? undefined : Math.max(columnLabelWidth, isNaN(fieldLabelWidth) ? 0 : fieldLabelWidth);
+    const labelNode = (
+      <label className={labelClassName} style={{ width: labelWidth }}>{label}</label>
+    );
     return (
       <Row className={`${prefixCls}-row`}>
         <Col className={`${prefixCls}-col`}>
-          <label className={labelClassName} style={{ width: labelWidth }}>{label}</label>
+          {
+            isTooltip ? (
+              <OverflowTip
+                title={label}
+                strict={tooltip === LabelTooltip.always}
+              >
+                {labelNode}
+              </OverflowTip>
+            ) : labelNode
+          }
         </Col>
         <Col className={`${prefixCls}-col ${prefixCls}-col-control`}>
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>

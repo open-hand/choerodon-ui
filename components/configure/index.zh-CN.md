@@ -107,6 +107,8 @@ const prefixCls = getConfig('prefixCls');
 | numberFieldNonStrictStep | 全局配置 NumberField 的 nonStrictStep 属性 | boolean | false |
 | numberFieldFormatter | NumberField格式器   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
 | numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
+| currencyFormatter | Currency格式器   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
+| currencyFormatterOptions | Currency格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
 | tableColumnTooltip | Table 是否开启列提示 | Tooltip.always \| Tooltip.overflow | |
 | buttonTooltip | Button 是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | labelTooltip | 表单控件label是否开启提示 | Tooltip.always \| Tooltip.overflow | |

@@ -24,7 +24,7 @@ import formatString from '../formatter/formatString';
 import { Lang } from '../locale-context/enum';
 import formatNumber from '../formatter/formatNumber';
 import formatCurrency from '../formatter/formatCurrency';
-import { getPrecision } from '../number-field/utils';
+import { getPrecision, parseNumber } from '../number-field/utils';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
 import { treeReduce } from '../_util/treeUtils';
 
@@ -111,7 +111,7 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
         case FieldType.number:
         case FieldType.currency:
           if (!isNaN(value)) {
-            value = Number(value);
+            value = parseNumber(value, field.get('precision'));
           } else {
             value = undefined;
           }

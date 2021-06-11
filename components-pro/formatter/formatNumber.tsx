@@ -6,7 +6,7 @@ import {
   toLocaleStringSupportsLocales,
 } from './utils';
 
-export default function formatNumber(value, lang: string, options?: Intl.NumberFormatOptions) {
+export default function formatNumber(value, lang: string | undefined, options?: Intl.NumberFormatOptions) {
   const v = parseFloat(value);
   if (!isNaN(v)) {
     if (toLocaleStringSupportsLocales()) {

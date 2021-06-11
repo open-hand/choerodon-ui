@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate`, `showRequiredColorsOnlyEmpty`, `highlightRenderer`, `tableColumnEditorBorder` properties, deprecated `excludeUseColonTagList` property.
+- 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate`, `showRequiredColorsOnlyEmpty`, `highlightRenderer`, `tableColumnEditorBorder`, `currencyFormatter`, `currencyFormatterOptions` properties, deprecated `excludeUseColonTagList` property.
 - 🌟 `<pro>Select`: Added `optionTooltip` property.
 - 🌟 `<pro>Form.Item`: Added Item component.
 - 🌟 `<pro>Form`: Added `labelTooltip`, `fieldHighlightRenderer`, `layout` properties, deprecated `excludeUseColonTagList` property.
@@ -48,6 +48,8 @@ timeline: true
 - 💄 `<pro>Modal`: `footer` add callback parameters.
 - 💄 `<pro>TextField`: Optimized the label rendering logic in `range` mode.
 - 💄 `<pro>TextField`: Modify the `autoComplete` attribute type to `string`.
+- 💄 `<pro>TextField`: `restrict` property supports regular type.
+- 💄 `<pro>NumberField`: Optimize the `precision` property to convert the number of decimal places.
 - 🐞 `<pro>Table.Column`: Fix the problem that elements in the editor addonBefore and addonAfter cannot get focus.
 - 🐞 `<pro>Table`: Fix the problem of inaccurate mouse batch selection records.
 - 🐞 `<pro>DataSet`: Fix the problem that the bound field will not submit a null value when clearing the value of the object type field.

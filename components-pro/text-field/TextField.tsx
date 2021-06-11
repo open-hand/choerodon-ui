@@ -33,7 +33,7 @@ import { getProperty } from '../form/utils';
 import RenderedText from './RenderedText';
 import isReactChildren from '../_util/isReactChildren';
 import TextFieldGroup from './TextFieldGroup';
-import { findFirstFocusableElement } from '../table/utils';
+import findFirstFocusableElement from '../_util/findFirstFocusableElement';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -99,7 +99,7 @@ export interface TextFieldProps extends FormFieldProps {
   /**
    * 限制可输入的字符
    */
-  restrict?: string;
+  restrict?: string | RegExp;
   /**
    * 是否是筛选条 flat 模式
    */
@@ -179,7 +179,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     /**
      * 限制可输入的字符
      */
-    restrict: PropTypes.string,
+    restrict: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     /**
      * 是否是筛选条 flat 模式
      */
@@ -1118,7 +1118,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   restrictInput(value: string): string {
     const { restrict } = this.props;
     if (restrict) {
-      return value.replace(new RegExp(`[^${restrict}]+`, 'g'), '');
+      const pattern = restrict instanceof RegExp ? restrict : new RegExp(`[^${restrict}]+`, 'g');
+      return value.replace(pattern, '');
     }
     return value;
   }

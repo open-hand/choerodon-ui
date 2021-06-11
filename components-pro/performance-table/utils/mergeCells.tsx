@@ -3,6 +3,7 @@ import isFunction from 'lodash/isFunction';
 import get from 'lodash/get';
 import ColumnGroup from '../ColumnGroup';
 import HeaderCell from '../HeaderCell';
+import { HeaderCellProps } from '../HeaderCell.d';
 
 import isNullOrUndefined from './isNullOrUndefined';
 
@@ -11,7 +12,7 @@ function cloneCell(Cell, props) {
 }
 
 function mergeCells(cells) {
-  const nextCells = [];
+  const nextCells: React.ReactElement[] = [];
   for (let i = 0; i < cells.length; i += 1) {
     const {
       width,
@@ -23,7 +24,7 @@ function mergeCells(cells) {
       verticalAlign,
     } = cells[i].props;
 
-    const groupChildren = [];
+    const groupChildren: React.ReactElement<HeaderCellProps>[] = [];
 
     // fix(ColumnGroup): fix column cannot be sorted in ColumnGroup
     /**
@@ -41,7 +42,7 @@ function mergeCells(cells) {
           dataKey,
           onSortColumn,
           sortColumn,
-          sortType
+          sortType,
         } = nextCell.props;
 
         if (j !== 0) {
@@ -50,7 +51,6 @@ function mergeCells(cells) {
           cells[i + j] = cloneCell(nextCell, { removed: true });
         }
         groupChildren.push(
-          // @ts-ignore
           <HeaderCell
             key={j}
             left={left}
@@ -66,7 +66,6 @@ function mergeCells(cells) {
         );
       }
       nextCells.push(
-        // @ts-ignore
         cloneCell(cells[i], {
           width: nextWidth,
           children: (
@@ -117,16 +116,14 @@ function mergeCells(cells) {
       }
 
       nextCells.push(
-        // @ts-ignore
         cloneCell(cells[i], {
           width: nextWidth,
           //  Fix this use of the variablecolSpan always evaluates to true
-          'aria-colspan': nextWidth > width ? colSpan : undefined
-        })
+          'aria-colspan': nextWidth > width ? colSpan : undefined,
+        }),
       );
       continue;
     }
-    // @ts-ignore
     nextCells.push(cells[i]);
   }
   return nextCells;
