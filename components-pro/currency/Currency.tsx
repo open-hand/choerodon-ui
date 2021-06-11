@@ -20,6 +20,14 @@ export default class Currency extends NumberField<CurrencyProps> {
   }
 
   getFormatter() {
+    const formatter = this.getProp('formatter');
+    if (formatter !== undefined) {
+      return formatter;
+    }
+    const currencyFormatter = getConfig('currencyFormatter');
+    if (currencyFormatter !== undefined) {
+      return currencyFormatter;
+    }
     return formatCurrency;
   }
 
