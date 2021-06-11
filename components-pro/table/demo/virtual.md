@@ -179,6 +179,7 @@ class App extends React.Component {
       <Table
         key="user"
         virtual
+        virtualCell
         selectionMode='click'
         selectedHighLightRow
         dataSet={this.userDs}

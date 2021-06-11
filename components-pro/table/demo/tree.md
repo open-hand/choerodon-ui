@@ -116,6 +116,7 @@ class App extends React.Component {
     const { mode, expandIconColumnIndex, border, expandedRender } = this.state;
     return (
       <Table
+        parityRow
         mode={mode}
         buttons={this.buttons}
         dataSet={this.ds}

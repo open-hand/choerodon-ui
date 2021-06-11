@@ -463,12 +463,15 @@ class App extends React.Component {
         dataSet={this.userDs}
         autoMaxWidth
         header="User"
-        style={{ height: 200 }}
+        style={{ height: 300 }}
         rowNumber
         showAllPageSelectionButton
         parityRow
         summary="BASIC DEMO"
-        pagination={{ pageSizeEditable: true }}
+        pagination={{ 
+          pageSizeEditable: true,
+          pageSizeOptions: ['10', '50', '100', '200'],
+        }}
       >
         <Column
           name="userid"

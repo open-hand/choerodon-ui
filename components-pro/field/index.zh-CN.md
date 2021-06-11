@@ -14,6 +14,7 @@ title: FormField
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | label | 标签, 只在 Form 下生效 | string \| ReactNode |  |
+| labelTooltip | 用 Tooltip 显示标签内容。可选值 `none` `always` `overflow` | string | 'none' |
 | name | 字段名 | string |  |
 | value | <受控>当前值 | any |  |
 | defaultValue | 默认值 | any |  |

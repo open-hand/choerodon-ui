@@ -3,6 +3,7 @@ order: 2
 title:
   zh-CN: 注册新用户
   en-US: Registration
+only: true  
 ---
 
 ## zh-CN
@@ -225,6 +226,7 @@ class RegistrationForm extends React.Component {
             <Input
               maxLength={20}
               label="名称"
+              placeholder="placeholder"
               showLengthInfo={showLengthInfo}
               onChange={this.handleNickName}
             />,
@@ -241,7 +243,7 @@ class RegistrationForm extends React.Component {
               },
             ],
             initialValue: 20,
-          })(<InputNumber label="Age" min={1} max={100} />)}
+          })(<InputNumber placeholder="placeholder" label="Age" min={1} max={100} />)}
         </FormItem>
         <FormItem {...formItemLayout} label="Habitual Residence">
           {getFieldDecorator('residence', {
@@ -258,7 +260,7 @@ class RegistrationForm extends React.Component {
             <AutoComplete
               dataSource={websiteOptions}
               onChange={this.handleWebsiteChange}
-              placeholder="website"
+              placeholder="websit111e"
               label="Website"
             />,
           )}

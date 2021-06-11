@@ -4,7 +4,7 @@ const lessTreeMockRootRows = [
   {
     expand: true,
     functionCode: 'HR',
-    icon: 'fa fa-cubes',
+    icon: 'airline_seat_flat-o',
     id: 2,
     ischecked: null,
     score: 10,
@@ -16,7 +16,7 @@ const lessTreeMockRootRows = [
   {
     expand: false,
     functionCode: 'SYS_REPORT_MANAGE',
-    icon: 'fa fa-user',
+    icon: 'airline_seat_flat_angled-o',
     id: 24,
     ischecked: true,
     score: 10,
@@ -35,7 +35,7 @@ const asyncTreeBlock1 = [
   {
     expand: false,
     functionCode: 'ATTACH',
-    icon: 'fa fa-cloud-upload',
+    icon: 'airline_seat_flat-o',
     id: 69,
     ischecked: true,
     score: 30,
@@ -47,7 +47,7 @@ const asyncTreeBlock1 = [
   {
     expand: false,
     functionCode: 'JOB',
-    icon: 'fa fa-clock-o',
+    icon: 'airline_seat_flat-o',
     id: 16,
     ischecked: true,
     score: 40,
@@ -59,7 +59,7 @@ const asyncTreeBlock1 = [
   {
     expand: false,
     functionCode: 'WFL_OFFICE',
-    icon: 'fa fa-user',
+    icon: 'airline_seat_flat-o',
     id: 39,
     ischecked: true,
     score: 49,
@@ -73,7 +73,7 @@ const asyncTreeBlock2 = [
   {
     expand: false,
     functionCode: 'WFL',
-    icon: 'fa fa-sitemap',
+    icon: 'airline_seat_flat-o',
     id: 27,
     ischecked: true,
     score: 50,
@@ -85,7 +85,7 @@ const asyncTreeBlock2 = [
   {
     expand: false,
     functionCode: 'IF',
-    icon: 'fa fa-plug',
+    icon: 'airline_seat_flat-o',
     id: 45,
     ischecked: true,
     score: 80,
@@ -97,7 +97,7 @@ const asyncTreeBlock2 = [
   {
     expand: false,
     functionCode: 'API',
-    icon: 'fa fa-server',
+    icon: 'airline_seat_flat-o',
     id: 49,
     ischecked: true,
     score: 90,
@@ -109,7 +109,7 @@ const asyncTreeBlock2 = [
   {
     expand: false,
     functionCode: 'TASK',
-    icon: 'fa fa-tasks',
+    icon: 'airline_seat_flat-o',
     id: 53,
     ischecked: true,
     score: 95,
@@ -121,7 +121,7 @@ const asyncTreeBlock2 = [
   {
     expand: false,
     functionCode: 'SYSTEM',
-    icon: 'fa fa-gears',
+    icon: 'airline_seat_flat-o',
     id: 1,
     ischecked: true,
     score: 99,
@@ -154,7 +154,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'SYS_CONFIG',
-      icon: 'fa fa-cog',
+      icon: 'airline_seat_flat-o',
       id: 63,
       ischecked: true,
       score: 6,
@@ -167,7 +167,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'SYS_METRICS',
-      icon: 'fa fa-heartbeat',
+      icon: 'airline_seat_flat-o',
       id: 78,
       ischecked: true,
       score: 10,
@@ -180,7 +180,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'ACCOUNT',
-      icon: 'fa fa-user',
+      icon: 'airline_seat_flat-o',
       id: 8,
       ischecked: true,
       score: 10,
@@ -193,7 +193,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'FORM',
-      icon: 'fa fa-newspaper-o',
+      icon: 'airline_seat_flat-o',
       id: 87,
       ischecked: true,
       score: 10,
@@ -206,7 +206,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'HOTKEY',
-      icon: 'fa fa-keyboard-o',
+      icon: 'airline_seat_flat-o',
       id: 88,
       ischecked: true,
       score: 10,
@@ -219,7 +219,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'FUNCTION',
-      icon: 'fa fa-plug',
+      icon: 'airline_seat_flat-o',
       id: 3,
       ischecked: true,
       score: 10,
@@ -232,7 +232,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'SYS_DASHBOARD',
-      icon: 'fa fa-dashboard',
+      icon: 'airline_seat_flat-o',
       id: 77,
       ischecked: true,
       score: 15,
@@ -245,7 +245,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'PROMPT',
-      icon: 'fa fa-edit',
+      icon: 'airline_seat_flat-o',
       id: 58,
       ischecked: true,
       score: 20,
@@ -258,7 +258,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'PROMPT_REACT',
-      icon: 'description',
+      icon: 'airline_seat_flat-o',
       id: 14,
       ischecked: true,
       score: 20,
@@ -271,7 +271,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'CODE',
-      icon: 'fa fa-code',
+      icon: 'airline_seat_flat-o',
       id: 59,
       ischecked: true,
       score: 30,
@@ -284,7 +284,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'CODE_REACT',
-      icon: 'operation_help',
+      icon: 'airline_seat_flat-o',
       id: 4,
       ischecked: true,
       score: 30,
@@ -297,7 +297,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'LOV',
-      icon: 'fa fa-search',
+      icon: 'airline_seat_flat-o',
       id: 60,
       ischecked: true,
       score: 40,
@@ -310,7 +310,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'SYS_CODE_RULE',
-      icon: 'fa fa-cube',
+      icon: 'airline_seat_flat-o',
       id: 83,
       ischecked: true,
       score: 45,
@@ -323,7 +323,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'LANGUAGE',
-      icon: 'fa fa-flag',
+      icon: 'airline_seat_flat-o',
       id: 61,
       ischecked: true,
       score: 50,
@@ -336,7 +336,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'LANGUAGE_REACT',
-      icon: 'language',
+      icon: 'airline_seat_flat-o',
       id: 15,
       ischecked: true,
       score: 50,
@@ -349,7 +349,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'PROFILE',
-      icon: 'fa fa-cogs',
+      icon: 'airline_seat_flat-o',
       id: 62,
       ischecked: true,
       score: 50,
@@ -362,7 +362,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'CODE_RULE_REACT',
-      icon: 'report_overview',
+      icon: 'airline_seat_flat-o',
       id: 90,
       ischecked: true,
       score: 60,
@@ -375,7 +375,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'EMAIL',
-      icon: 'fa fa-envelope',
+      icon: 'airline_seat_flat-o',
       id: 19,
       ischecked: true,
       score: 80,
@@ -388,7 +388,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'FLEX_FIELD',
-      icon: 'fa fa-object-group',
+      icon: 'airline_seat_flat-o',
       id: 79,
       ischecked: true,
       score: 90,
@@ -401,7 +401,7 @@ const asyncTreeMock1 = {
     {
       expand: false,
       functionCode: 'DATA_PERMISSION',
-      icon: 'fa fa-user-times',
+      icon: 'airline_seat_flat-o',
       id: 84,
       ischecked: false,
       score: 100,
@@ -419,7 +419,7 @@ const asyncTreeMock2 = {
     {
       expand: false,
       functionCode: 'EMPLOYEE_REACT',
-      icon: 'record_test',
+      icon: 'airline_seat_flat-o',
       id: 7,
       ischecked: true,
       score: 10,
@@ -432,7 +432,7 @@ const asyncTreeMock2 = {
     {
       expand: false,
       functionCode: 'HR_UNIT',
-      icon: 'fa fa-cube',
+      icon: 'airline_seat_flat_angled-o',
       id: 73,
       ischecked: true,
       score: 10,
@@ -445,7 +445,7 @@ const asyncTreeMock2 = {
     {
       expand: false,
       functionCode: 'COMPANY_REACT',
-      icon: 'mail_set',
+      icon: 'airline_seat_flat-o',
       id: 12,
       ischecked: true,
       score: 10,
@@ -458,7 +458,7 @@ const asyncTreeMock2 = {
     {
       expand: false,
       functionCode: 'ORGUNIT_REACT',
-      icon: 'authority',
+      icon: 'airline_seat_flat_angled-o',
       id: 5,
       ischecked: true,
       score: 10,
@@ -471,7 +471,7 @@ const asyncTreeMock2 = {
     {
       expand: false,
       functionCode: 'POSITION_REACT',
-      icon: 'agile_subtask',
+      icon: 'airline_seat_flat-o',
       id: 6,
       ischecked: true,
       score: 10,
@@ -484,7 +484,7 @@ const asyncTreeMock2 = {
     {
       expand: false,
       functionCode: 'HR_POSITION',
-      icon: 'fa fa-user-secret',
+      icon: 'airline_seat_flat-o',
       id: 75,
       ischecked: true,
       score: 20,
@@ -497,7 +497,7 @@ const asyncTreeMock2 = {
     {
       expand: false,
       functionCode: 'HR_EMPLOYEE',
-      icon: 'fa fa-user',
+      icon: 'airline_seat_flat-o',
       id: 74,
       ischecked: true,
       score: 30,
@@ -510,7 +510,7 @@ const asyncTreeMock2 = {
     {
       expand: false,
       functionCode: 'FND_COMPANY',
-      icon: 'fa fa-cube',
+      icon: 'airline_seat_flat-o',
       id: 76,
       ischecked: null,
       score: 40,
@@ -528,7 +528,7 @@ const asyncTreeMock3 = {
     {
       expand: false,
       functionCode: 'FUNCTION_ADD',
-      icon: 'fa fa-puzzle-piece',
+      icon: 'airline_seat_flat-o',
       id: 66,
       ischecked: true,
       score: 10,
@@ -541,7 +541,7 @@ const asyncTreeMock3 = {
     {
       expand: false,
       functionCode: 'RESOYRCE_REACT',
-      icon: 'report_overview',
+      icon: 'airline_seat_flat-o',
       id: 11,
       ischecked: null,
       score: 10,
@@ -554,7 +554,7 @@ const asyncTreeMock3 = {
     {
       expand: false,
       functionCode: 'FUNCTION_REACT',
-      icon: 'functions',
+      icon: 'airline_seat_flat-o',
       id: 13,
       ischecked: true,
       score: 10,
@@ -567,7 +567,7 @@ const asyncTreeMock3 = {
     {
       expand: false,
       functionCode: 'SYS_RESOURCE',
-      icon: 'fa fa-share-alt-square',
+      icon: 'airline_seat_flat-o',
       id: 67,
       ischecked: true,
       score: 20,
@@ -580,7 +580,7 @@ const asyncTreeMock3 = {
     {
       expand: false,
       functionCode: 'FUNCTION_ASSIGN',
-      icon: 'fa fa-list',
+      icon: 'airline_seat_flat-o',
       id: 68,
       ischecked: true,
       score: 90,
@@ -598,7 +598,7 @@ const asyncTreeMock8 = {
     {
       expand: false,
       functionCode: 'ACCOUNT_USER',
-      icon: 'fa fa-user-plus',
+      icon: 'airline_seat_flat-o',
       id: 64,
       ischecked: true,
       score: 10,
@@ -611,7 +611,7 @@ const asyncTreeMock8 = {
     {
       expand: false,
       functionCode: 'ACCOUNT_USER_REACT',
-      icon: 'task_schedule',
+      icon: 'airline_seat_flat-o',
       id: 9,
       ischecked: true,
       score: 10,
@@ -624,7 +624,7 @@ const asyncTreeMock8 = {
     {
       expand: false,
       functionCode: 'ACCOUNT_ROLE_REACT',
-      icon: 'test_execute',
+      icon: 'airline_seat_flat-o',
       id: 10,
       ischecked: true,
       score: 20,
@@ -637,7 +637,7 @@ const asyncTreeMock8 = {
     {
       expand: false,
       functionCode: 'ACCOUNT_ROLE',
-      icon: 'fa fa-users',
+      icon: 'airline_seat_flat-o',
       id: 65,
       ischecked: true,
       score: 20,
@@ -655,7 +655,7 @@ const asyncTreeMock16 = {
     {
       expand: false,
       functionCode: 'JOB_DETAIL',
-      icon: 'fa fa-tasks',
+      icon: 'airline_seat_flat-o',
       id: 17,
       ischecked: true,
       score: 10,
@@ -668,7 +668,7 @@ const asyncTreeMock16 = {
     {
       expand: false,
       functionCode: 'JOB_RUNNING_INFO',
-      icon: 'fa fa-list-ul',
+      icon: 'airline_seat_flat-o',
       id: 18,
       ischecked: true,
       score: 20,
@@ -686,7 +686,7 @@ const asyncTreeMock19 = {
     {
       expand: false,
       functionCode: 'EMAIL_ACCOUNT',
-      icon: 'fa fa-envelope',
+      icon: 'airline_seat_flat-o',
       id: 20,
       ischecked: true,
       score: 10,
@@ -699,7 +699,7 @@ const asyncTreeMock19 = {
     {
       expand: false,
       functionCode: 'EMAIL_TEMPLATE',
-      icon: 'fa fa-envelope',
+      icon: 'airline_seat_flat-o',
       id: 21,
       ischecked: true,
       score: 20,
@@ -712,7 +712,7 @@ const asyncTreeMock19 = {
     {
       expand: false,
       functionCode: 'EMAIL_TEST',
-      icon: 'fa fa-envelope',
+      icon: 'airline_seat_flat-o',
       id: 22,
       ischecked: true,
       score: 30,
@@ -725,7 +725,7 @@ const asyncTreeMock19 = {
     {
       expand: false,
       functionCode: 'EMAIL_STATUS',
-      icon: 'fa fa-envelope',
+      icon: 'airline_seat_flat-o',
       id: 23,
       ischecked: true,
       score: 40,
@@ -743,7 +743,7 @@ const asyncTreeMock24 = {
     {
       expand: false,
       functionCode: 'SYS_REPORT_LIST',
-      icon: 'fa fa-user',
+      icon: 'airline_seat_flat-o',
       id: 25,
       ischecked: true,
       score: 10,
@@ -756,7 +756,7 @@ const asyncTreeMock24 = {
     {
       expand: false,
       functionCode: 'SYS_REPORT_DESIGN',
-      icon: 'fa fa-user',
+      icon: 'airline_seat_flat-o',
       id: 26,
       ischecked: true,
       score: 10,
@@ -775,7 +775,7 @@ const asyncTreeMock27 = {
     {
       expand: false,
       functionCode: 'WFL_TEST',
-      icon: 'fa fa-wrench',
+      icon: 'airline_seat_flat-o',
       id: 30,
       ischecked: true,
       score: 10,
@@ -788,7 +788,7 @@ const asyncTreeMock27 = {
     {
       expand: false,
       functionCode: 'WFL_VACATION_TEST',
-      icon: 'fa fa-wrench',
+      icon: 'airline_seat_flat-o',
       id: 38,
       ischecked: true,
       score: 10,
@@ -801,7 +801,7 @@ const asyncTreeMock27 = {
     {
       expand: false,
       functionCode: 'WFL_TASK',
-      icon: 'fa fa-check-square-o',
+      icon: 'airline_seat_flat-o',
       id: 28,
       ischecked: true,
       score: 20,
@@ -814,7 +814,7 @@ const asyncTreeMock27 = {
     {
       expand: false,
       functionCode: 'WFL_MODEL',
-      icon: 'fa fa-object-group',
+      icon: 'airline_seat_flat-o',
       id: 29,
       ischecked: true,
       score: 40,
@@ -827,7 +827,7 @@ const asyncTreeMock27 = {
     {
       expand: false,
       functionCode: 'WFL_DEFINITION',
-      icon: 'fa fa-share-alt',
+      icon: 'airline_seat_flat-o',
       id: 31,
       ischecked: true,
       score: 50,
@@ -840,7 +840,7 @@ const asyncTreeMock27 = {
     {
       expand: false,
       functionCode: 'WFL_LOG',
-      icon: 'fa fa-check-square-o',
+      icon: 'airline_seat_flat-o',
       id: 33,
       ischecked: true,
       score: 60,
@@ -853,7 +853,7 @@ const asyncTreeMock27 = {
     {
       expand: false,
       functionCode: 'WFL_MONITOR',
-      icon: 'fa fa-check-square-o',
+      icon: 'airline_seat_flat-o',
       id: 32,
       ischecked: true,
       score: 60,
@@ -866,7 +866,7 @@ const asyncTreeMock27 = {
     {
       expand: false,
       functionCode: 'WFL_APPROVE',
-      icon: 'fa fa-cog',
+      icon: 'airline_seat_flat-o',
       id: 34,
       ischecked: true,
       score: 90,
@@ -884,7 +884,7 @@ const asyncTreeMock34 = {
     {
       expand: false,
       functionCode: 'WFL_APV_STRATEGY',
-      icon: 'fa fa-users',
+      icon: 'airline_seat_flat-o',
       id: 35,
       ischecked: true,
       score: 10,
@@ -897,7 +897,7 @@ const asyncTreeMock34 = {
     {
       expand: false,
       functionCode: 'WFL_APV_TYPE',
-      icon: 'fa fa-user-plus',
+      icon: 'airline_seat_flat-o',
       id: 36,
       ischecked: true,
       score: 20,
@@ -910,7 +910,7 @@ const asyncTreeMock34 = {
     {
       expand: false,
       functionCode: 'WFL_APV_RULE',
-      icon: 'fa fa-gavel',
+      icon: 'airline_seat_flat-o',
       id: 37,
       ischecked: true,
       score: 30,
@@ -928,7 +928,7 @@ const asyncTreeMock39 = {
     {
       expand: false,
       functionCode: 'WFL_AUTO_DELEGATE',
-      icon: 'fa fa-user-plus',
+      icon: 'airline_seat_flat-o',
       id: 44,
       ischecked: true,
       score: 5,
@@ -941,7 +941,7 @@ const asyncTreeMock39 = {
     {
       expand: false,
       functionCode: 'WFL_MY_START',
-      icon: 'fa fa-share',
+      icon: 'airline_seat_flat-o',
       id: 41,
       ischecked: true,
       score: 10,
@@ -954,7 +954,7 @@ const asyncTreeMock39 = {
     {
       expand: false,
       functionCode: 'WFL_MY_TASK',
-      icon: 'fa fa-check-square-o',
+      icon: 'airline_seat_flat-o',
       id: 42,
       ischecked: true,
       score: 10,
@@ -967,7 +967,7 @@ const asyncTreeMock39 = {
     {
       expand: false,
       functionCode: 'WFL_HISROTY',
-      icon: 'fa fa-history',
+      icon: 'airline_seat_flat-o',
       id: 43,
       ischecked: true,
       score: 20,
@@ -980,7 +980,7 @@ const asyncTreeMock39 = {
     {
       expand: false,
       functionCode: 'WFL_CARBON',
-      icon: 'fa fa-reply',
+      icon: 'airline_seat_flat-o',
       id: 40,
       ischecked: true,
       score: 30,
@@ -998,7 +998,7 @@ const asyncTreeMock45 = {
     {
       expand: false,
       functionCode: 'IF_CONFIG',
-      icon: 'fa fa-share-alt-square',
+      icon: 'airline_seat_flat-o',
       id: 46,
       ischecked: true,
       score: 10,
@@ -1011,7 +1011,7 @@ const asyncTreeMock45 = {
     {
       expand: false,
       functionCode: 'IF_INVOKE',
-      icon: 'fa fa-bar-chart',
+      icon: 'airline_seat_flat-o',
       id: 89,
       ischecked: true,
       score: 20,
@@ -1024,7 +1024,7 @@ const asyncTreeMock45 = {
     {
       expand: false,
       functionCode: 'IF_CLIENT',
-      icon: 'fa fa-laptop',
+      icon: 'airline_seat_flat-o',
       id: 47,
       ischecked: true,
       score: 30,
@@ -1037,7 +1037,7 @@ const asyncTreeMock45 = {
     {
       expand: false,
       functionCode: 'IF_TOKEN',
-      icon: 'fa fa-lock',
+      icon: 'airline_seat_flat-o',
       id: 48,
       ischecked: true,
       score: 40,
@@ -1055,7 +1055,7 @@ const asyncTreeMock49 = {
     {
       expand: false,
       functionCode: 'API_SERVER',
-      icon: 'fa fa-registered',
+      icon: 'airline_seat_flat-o',
       id: 50,
       ischecked: true,
       score: 5,
@@ -1068,7 +1068,7 @@ const asyncTreeMock49 = {
     {
       expand: false,
       functionCode: 'API_APPLICATION',
-      icon: 'fa fa-th-large',
+      icon: 'airline_seat_flat-o',
       id: 51,
       ischecked: true,
       score: 10,
@@ -1081,7 +1081,7 @@ const asyncTreeMock49 = {
     {
       expand: false,
       functionCode: 'API_INVOKE',
-      icon: 'fa fa-book',
+      icon: 'airline_seat_flat-o',
       id: 52,
       ischecked: true,
       score: 15,
@@ -1099,7 +1099,7 @@ const asyncTreeMock53 = {
     {
       expand: false,
       functionCode: 'TASK_DETAIL',
-      icon: 'fa fa-life-saver',
+      icon: 'airline_seat_flat-o',
       id: 54,
       ischecked: true,
       score: 10,
@@ -1112,7 +1112,7 @@ const asyncTreeMock53 = {
     {
       expand: false,
       functionCode: 'TASK_EXECUTE',
-      icon: 'fa fa-terminal',
+      icon: 'airline_seat_flat-o',
       id: 55,
       ischecked: true,
       score: 15,
@@ -1125,7 +1125,7 @@ const asyncTreeMock53 = {
     {
       expand: false,
       functionCode: 'TASK_EXECUTION',
-      icon: 'fa fa-archive',
+      icon: 'airline_seat_flat-o',
       id: 56,
       ischecked: true,
       score: 20,
@@ -1138,7 +1138,7 @@ const asyncTreeMock53 = {
     {
       expand: false,
       functionCode: 'TASK_ADMIN_EXECUTION',
-      icon: 'fa fa-archive',
+      icon: 'airline_seat_flat-o',
       id: 57,
       ischecked: true,
       score: 25,
@@ -1156,7 +1156,7 @@ const asyncTreeMock69 = {
     {
       expand: false,
       functionCode: 'ATTACH_CATEGORY',
-      icon: 'fa fa-folder-open',
+      icon: 'airline_seat_flat-o',
       id: 72,
       ischecked: true,
       score: 10,
@@ -1169,7 +1169,7 @@ const asyncTreeMock69 = {
     {
       expand: false,
       functionCode: 'ATTACH_FILE',
-      icon: 'fa fa-file',
+      icon: 'airline_seat_flat-o',
       id: 70,
       ischecked: true,
       score: 20,
@@ -1182,7 +1182,7 @@ const asyncTreeMock69 = {
     {
       expand: false,
       functionCode: 'ATTACH_TEST',
-      icon: 'fa fa-file',
+      icon: 'airline_seat_flat-o',
       id: 71,
       ischecked: true,
       score: 30,
@@ -1200,7 +1200,7 @@ const asyncTreeMock79 = {
     {
       expand: false,
       functionCode: 'FLEX_FIELD_MODEL',
-      icon: 'fa fa-object-ungroup',
+      icon: 'airline_seat_flat-o',
       id: 80,
       ischecked: true,
       score: 10,
@@ -1213,7 +1213,7 @@ const asyncTreeMock79 = {
     {
       expand: false,
       functionCode: 'FLEX_FIELD_RULE_SET',
-      icon: 'fa fa-object-ungroup',
+      icon: 'airline_seat_flat-o',
       id: 81,
       ischecked: true,
       score: 20,
@@ -1226,7 +1226,7 @@ const asyncTreeMock79 = {
     {
       expand: false,
       functionCode: 'FLEX_FIELD_DEMO',
-      icon: 'fa fa-object-ungroup',
+      icon: 'airline_seat_flat-o',
       id: 82,
       ischecked: true,
       score: 30,
@@ -1244,7 +1244,7 @@ const asyncTreeMock84 = {
     {
       expand: false,
       functionCode: 'DATA_PERMISSION_RULE',
-      icon: 'fa fa-user-times',
+      icon: 'airline_seat_flat-o',
       id: 85,
       ischecked: true,
       score: 10,
@@ -1257,7 +1257,7 @@ const asyncTreeMock84 = {
     {
       expand: false,
       functionCode: 'DATA_PERMISSION_TABLE',
-      icon: 'fa fa-user-times',
+      icon: 'airline_seat_flat-o',
       id: 86,
       ischecked: true,
       score: 20,
