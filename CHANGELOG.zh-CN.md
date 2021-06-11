@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.0
+
+`2021-06-11`
+
 - 🌟 `configure`: 新增 buttonTooltip, selectOptionTooltip, labelTooltip, showLengthInfo, showInvalidDate, showRequiredColorsOnlyEmpty, highlightRenderer, tableColumnEditorBorder, currencyFormatter, currencyFormatterOptions 属性, 废弃 excludeUseColonTagList 属性。
 - 🌟 `<pro>Select`: 新增 optionTooltip 属性。
 - 🌟 `<pro>Form.Item`: 新增 Item 组件。
