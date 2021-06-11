@@ -60,6 +60,7 @@ class App extends React.Component {
       {
         name: 'first-name',
         type: 'intl',
+                maxLength: 5,
         required: true,
       },
     ],
@@ -75,10 +76,10 @@ class App extends React.Component {
           <IntlField dataSet={this.ds} name="first-name" />
         </Col>
         <Col span={8}>
-          <IntlField placeholder="默认英文" dataSet={this.ds2} name="first-name" />
+          <IntlField maxLengths={{ en_GB: 6, en_US: 10 }}  placeholder="默认英文" dataSet={this.ds2} name="first-name" />
         </Col>
         <Col span={8}>
-          <IntlField placeholder="限制输入长度" dataSet={this.ds} name="last-name" maxLengths={{ en_GB: 5, en_US: 10 }} />
+          <IntlField placeholder="限制输入长度" dataSet={this.ds} name="last-name" maxLengths={{ zh_CN: 6, en_US: 10 }} />
         </Col>
       </Row>
     );

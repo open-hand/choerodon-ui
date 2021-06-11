@@ -50,6 +50,7 @@ function mergeCells(cells) {
           cells[i + j] = cloneCell(nextCell, { removed: true });
         }
         groupChildren.push(
+          // @ts-ignore
           <HeaderCell
             key={j}
             left={left}
