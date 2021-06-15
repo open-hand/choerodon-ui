@@ -14,6 +14,7 @@ import React, {
 import { observer, useComputed } from 'mobx-react-lite';
 import { isArrayLike } from 'mobx';
 import raf from 'raf';
+import classNames from 'classnames';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -42,7 +43,6 @@ let inTab: boolean = false;
 
 export interface TableCellInnerProps {
   inView: boolean;
-  isTreeNode?: boolean;
   column: ColumnProps;
   record: Record;
   command?: Commands[];
@@ -50,7 +50,7 @@ export interface TableCellInnerProps {
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) => {
-  const { column, record, command, children, style, inView, isTreeNode } = props;
+  const { column, record, command, children, style, inView } = props;
   const { tableStore } = useContext(TableContext);
   const outputRef = useRef<Output | null>(null);
   const {
@@ -58,6 +58,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     rowHeight,
     pristine,
     inlineEdit,
+    aggregation,
     props: { indentSize },
   } = tableStore;
   const prefixCls = `${tableStore.prefixCls}-cell`;
@@ -233,13 +234,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   }, [disabled, handleCommandEdit, handleCommandDelete]);
   const renderCommand = useCallback(() => {
     const tableCommandProps = getConfig('tableCommandProps');
+    const classString = classNames(`${prefixCls}-command`, tableCommandProps && tableCommandProps.className);
     if (record.editing) {
       return [
         <Tooltip key="save" title={$l('Table', 'save_button')}>
-          <Button {...tableCommandProps} icon="finished" onClick={handleCommandSave} />
+          <Button {...tableCommandProps} className={classString} icon="finished" onClick={handleCommandSave} />
         </Tooltip>,
         <Tooltip key="cancel" title={$l('Table', 'cancel_button')}>
-          <Button {...tableCommandProps} icon="cancle_a" onClick={handleCommandCancel} />
+          <Button {...tableCommandProps} className={classString} icon="cancle_a" onClick={handleCommandCancel} />
         </Tooltip>,
       ];
     }
@@ -269,19 +271,34 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
             const { title, ...otherProps } = defaultButtonProps;
             commands.push(
               <Tooltip key={button} title={title}>
-                <Button {...tableCommandProps} {...otherProps} {...buttonProps} />
+                <Button
+                  {...tableCommandProps}
+                  {...otherProps}
+                  {...buttonProps}
+                  className={classNames(classString, otherProps.className, buttonProps.className)}
+                />
               </Tooltip>,
             );
           }
         } else if (isValidElement<ButtonProps>(button)) {
-          commands.push(cloneElement(button, { ...tableCommandProps, ...button.props }));
+          commands.push(cloneElement(button, {
+            ...tableCommandProps,
+            ...button.props,
+            className: classNames(classString, button.props.className),
+          }));
         } else if (isObject(button)) {
-          commands.push(<Button {...tableCommandProps} {...button} />);
+          commands.push(
+            <Button
+              {...tableCommandProps}
+              {...button}
+              className={classNames(classString, (button as ButtonProps).className)}
+            />,
+          );
         }
       });
       return commands;
     }
-  }, [record, command, getButtonProps, handleCommandSave, handleCommandCancel]);
+  }, [prefixCls, record, command, aggregation, getButtonProps, handleCommandSave, handleCommandCancel]);
   const renderEditor = useCallback(() => {
     if (isValidElement(cellEditor)) {
       const newEditorProps = {
@@ -313,7 +330,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     }
   }, [command, cellEditorInCell, renderCommand, renderEditor]);
   const innerStyle = useComputed(() => {
-    if (!isTreeNode) {
+    if (!aggregation) {
       if (height !== undefined && rows === 0) {
         return {
           height: pxToRem(height),
@@ -334,7 +351,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       }
     }
     return style;
-  }, [field, key, rows, rowHeight, height, style, hasEditor]);
+  }, [field, key, rows, rowHeight, height, style, aggregation, hasEditor]);
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,

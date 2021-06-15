@@ -16,6 +16,7 @@ Aggregation View.
 ```jsx
 import {
   DataSet,
+  Button,
   Table,
   NumberField,
   TextArea,
@@ -351,11 +352,16 @@ class App extends React.Component {
     }
   }
 
-  handleAggregationChange(aggregation) {
-    console.log('aggregation', aggregation);
-  }
+  handleAggregationChange = (aggregation) => {
+    this.setState({ aggregation });
+  };
 
   render() {
+    const { aggregation } = this.state;
+    const command = [
+      <Button funcType="link">编辑</Button>,
+      <Button funcType="link">操作记录</Button>,
+    ];
     return (
       <Table
         customizable
@@ -365,7 +371,7 @@ class App extends React.Component {
         columnDraggable={false}
         columnTitleEditable={false}
         style={{ height: 'calc(100vh - 100px)', maxHeight: 300 }}
-        aggregation
+        aggregation={aggregation}
         onAggregationChange={this.handleAggregationChange}
       >
         <Column
@@ -410,6 +416,7 @@ class App extends React.Component {
         </Column>
         <Column name="numberMultiple" editor width={150} minWidth={50} />
         <Column name="frozen" editor width={50} minWidth={50} lock="right" />
+        <Column header="操作" width={50} minWidth={50} lock="right" command={command} align={aggregation ? 'left' : 'center'} />
       </Table>
     );
   }

@@ -106,7 +106,7 @@ export default class TableCell extends Component<TableCellProps> {
     return command;
   }
 
-  getInnerNode(column: ColumnProps, command?: Commands[], onCellStyle?: CSSProperties, isTreeNode?: boolean) {
+  getInnerNode(column: ColumnProps, command?: Commands[], onCellStyle?: CSSProperties) {
     const { record, inView, children } = this.props;
     return (
       <TableCellInner
@@ -115,7 +115,6 @@ export default class TableCell extends Component<TableCellProps> {
         command={command}
         record={record}
         style={onCellStyle}
-        isTreeNode={isTreeNode}
       >
         {children}
       </TableCellInner>
@@ -157,7 +156,7 @@ export default class TableCell extends Component<TableCellProps> {
           );
         }
         const field = record.getField(column.name);
-        const innerNode = this.getInnerNode(column, command, onCellStyle, true);
+        const innerNode = this.getInnerNode(column, command, onCellStyle);
         return (
           <Tree.TreeNode
             {...cellExternalProps}

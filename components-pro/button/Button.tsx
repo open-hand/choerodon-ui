@@ -67,6 +67,7 @@ export interface ButtonProps extends DataSetComponentProps {
    * @default 'button'
    */
   type?: ButtonType;
+  block?: boolean;
   name?: string;
   value?: any;
   form?: string;
@@ -141,6 +142,10 @@ export default class Button extends DataSetComponent<ButtonProps> {
      * 可选值：`none` `always` `overflow`
      */
     tooltip: PropTypes.string,
+    /**
+     * 将按钮宽度调整为其父宽度的选项
+     */
+    block: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -251,6 +256,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       'wait',
       'waitType',
       'tooltip',
+      'block',
     ]);
   }
 
@@ -270,6 +276,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
         funcType = getConfig('buttonFuncType'),
         children,
         icon,
+        block,
       },
     } = this;
     const childrenCount = Children.count(children);
@@ -280,6 +287,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
         [`${prefixCls}-icon-only`]: icon
           ? childrenCount === 0 || children === false
           : childrenCount === 1 && (children as any).type && (children as any).type.__C7N_ICON,
+        [`${prefixCls}-block`]: block,
       },
       ...props,
     );
@@ -291,7 +299,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   render() {
-    const { children, icon, href, tooltip = getConfig('buttonTooltip'), onMouseEnter, onMouseLeave } = this.props;
+    const { children, icon, href, funcType, tooltip = getConfig('buttonTooltip'), onMouseEnter, onMouseLeave } = this.props;
     const isTooltip = [ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip);
     const buttonIcon: any = this.loading ? (
       <Progress key="loading" type={ProgressType.loading} size={Size.small} />
@@ -304,8 +312,9 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const { disabled } = this;
     const tooltipWrapper = disabled && !href && (isTooltip || onMouseEnter || onMouseLeave);
     const buttonProps = tooltipWrapper ? omit(props, ['className', 'style']) : props;
+    const rippleDisabled = disabled || funcType === FuncType.link;
     const button = (
-      <Ripple disabled={disabled}>
+      <Ripple disabled={rippleDisabled}>
         <Cmp {...(href ? omit(buttonProps, ['type']) : buttonProps)}>
           {buttonIcon}
           {hasString ? <span>{children}</span> : children}

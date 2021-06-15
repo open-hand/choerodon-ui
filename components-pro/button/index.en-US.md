@@ -32,11 +32,7 @@ subtitle: 按钮
 更多属性请参考 [ViewComponent](/components-pro/core/#ViewComponent)。
 
 <style>
-[id^="components-button-demo-"] .c7n-pro-btn, [id^="components-button-demo-"] .c7n-pro-button {
-  margin-right: 8px;
+.code-box-demo .c7n-pro-btn {
   margin-bottom: 12px;
-}
-[id^="components-button-demo-"] .c7n-pro-btn-group > .c7n-pro-btn {
-  margin-right: 0;
 }
 </style>
