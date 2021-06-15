@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.0
+
+`2021-06-11`
+
 - 🌟 `configure`: Added `buttonTooltip`, `selectOptionTooltip`, `labelTooltip`, `showLengthInfo`, `showInvalidDate`, `showRequiredColorsOnlyEmpty`, `highlightRenderer`, `tableColumnEditorBorder`, `currencyFormatter`, `currencyFormatterOptions` properties, deprecated `excludeUseColonTagList` property.
 - 🌟 `<pro>Select`: Added `optionTooltip` property.
 - 🌟 `<pro>Form.Item`: Added Item component.
