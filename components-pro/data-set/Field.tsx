@@ -1108,11 +1108,15 @@ export default class Field {
     const { dataSet, name, record } = this;
     if (this.isDynamicPropsComputing) {
       warning(false, `Cycle dynamicProps execution of field<${name}>.`);
-    } else if (dataSet && record) {
+    } else if (dataSet) {
       this.isDynamicPropsComputing = true;
-      const props = dynamicProps({ dataSet, record, name });
-      this.isDynamicPropsComputing = false;
-      return props;
+      try {
+        return dynamicProps({ dataSet, record: record || new Record(), name });
+      } catch (e) {
+        warning(false, e.message);
+      } finally {
+        this.isDynamicPropsComputing = false;
+      }
     }
   }
 }
