@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Button`：新增 block 属性, funcType 新增 link 类型。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
+- 🐞 `<pro>Table.Column`： 修复 dynamicProps.label 对于列头无效的问题。
 - 🐞 `<pro>Button`：修复样式问题。
 - 🐞 `<pro>DataSet`：修复object类型字段使用transformRequest转成字符串值时绑定的字段为空值的问题。
 

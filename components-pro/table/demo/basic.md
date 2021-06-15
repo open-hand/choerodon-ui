@@ -90,6 +90,9 @@ const nameDynamicProps = {
   required({ record }) {
     return record.get('sex') === 'M';
   },
+  label() {
+    return '姓名';
+  }
 };
 
 const codeCodeDynamicProps = {
@@ -196,7 +199,6 @@ class App extends React.Component {
       {
         name: 'name',
         type: 'intl',
-        label: '姓名',
         computedProps: nameDynamicProps,
         bind: 'name2',
         ignore: 'clean',

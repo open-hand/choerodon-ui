@@ -1135,8 +1135,11 @@ export default class DataSet extends EventManager {
   @action
   reset(): DataSet {
     this.resetInBatch = true;
-    this.records = this.originalData.map(record => record.reset());
-    this.resetInBatch = false;
+    try {
+      this.records = this.originalData.map(record => record.reset());
+    } finally {
+      this.resetInBatch = false;
+    }
     if (this.props.autoCreate && this.records.length === 0) {
       this.create();
     }
@@ -1709,20 +1712,22 @@ export default class DataSet extends EventManager {
     const { selection } = this;
     if (selection) {
       this.inBatchSelection = true;
-      if (selection === DataSetSelection.single) {
-        if (!this.currentSelected.length) {
-          this.select(filter ? this.filter(filter)[0] : 0);
-        }
-      } else {
-        this.records.forEach(record => {
-          if (!filter || filter(record) !== false) {
-            this.select(record);
+      try {
+        if (selection === DataSetSelection.single) {
+          if (!this.currentSelected.length) {
+            this.select(filter ? this.filter(filter)[0] : 0);
           }
-        });
+        } else {
+          this.records.forEach(record => {
+            if (!filter || filter(record) !== false) {
+              this.select(record);
+            }
+          });
+        }
+        this.fireEvent(DataSetEvents.selectAll, { dataSet: this });
+      } finally {
+        this.inBatchSelection = false;
       }
-
-      this.fireEvent(DataSetEvents.selectAll, { dataSet: this });
-      this.inBatchSelection = false;
     }
   }
 
@@ -1733,11 +1738,14 @@ export default class DataSet extends EventManager {
   unSelectAll(): void {
     if (this.selection) {
       this.inBatchSelection = true;
-      this.currentSelected.forEach(record => {
-        this.unSelect(record);
-      });
-      this.fireEvent(DataSetEvents.unSelectAll, { dataSet: this });
-      this.inBatchSelection = false;
+      try {
+        this.currentSelected.forEach(record => {
+          this.unSelect(record);
+        });
+        this.fireEvent(DataSetEvents.unSelectAll, { dataSet: this });
+      } finally {
+        this.inBatchSelection = false;
+      }
     }
   }
 
@@ -1759,19 +1767,22 @@ export default class DataSet extends EventManager {
       }, []);
       if (records.length) {
         this.inBatchSelection = true;
-        if (selection === DataSetSelection.single) {
-          if (!this.currentSelected.length) {
-            this.select(records[0]);
-          }
-        } else {
-          records.forEach((record) => {
-            if (record.selectable) {
-              this.select(record);
+        try {
+          if (selection === DataSetSelection.single) {
+            if (!this.currentSelected.length) {
+              this.select(records[0]);
             }
-          });
+          } else {
+            records.forEach((record) => {
+              if (record.selectable) {
+                this.select(record);
+              }
+            });
+          }
+          this.fireEvent(DataSetEvents.batchSelect, { dataSet: this, records });
+        } finally {
+          this.inBatchSelection = false;
         }
-        this.fireEvent(DataSetEvents.batchSelect, { dataSet: this, records });
-        this.inBatchSelection = false;
       }
     }
   }
@@ -1783,19 +1794,22 @@ export default class DataSet extends EventManager {
     const { selection } = this;
     if (selection) {
       this.inBatchSelection = true;
-      const records = recordOrId.reduce<Record[]>((list, r) => {
-        let record: Record | undefined = r as Record;
-        if (isNumber(r)) {
-          record = this.findRecordById(r as number);
-        }
-        if (record && record.selectable && record.isSelected) {
-          this.unSelect(record);
-          list.push(record);
-        }
-        return list;
-      }, []);
-      this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records });
-      this.inBatchSelection = false;
+      try {
+        const records = recordOrId.reduce<Record[]>((list, r) => {
+          let record: Record | undefined = r as Record;
+          if (isNumber(r)) {
+            record = this.findRecordById(r as number);
+          }
+          if (record && record.selectable && record.isSelected) {
+            this.unSelect(record);
+            list.push(record);
+          }
+          return list;
+        }, []);
+        this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records });
+      } finally {
+        this.inBatchSelection = false;
+      }
     }
   }
 

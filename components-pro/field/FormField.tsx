@@ -504,11 +504,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
     if (name) {
       const recordField = record ? record.getField(name) : undefined;
-      const dsField = dataSet ? dataSet.getField(name) : undefined;
       if (recordField) {
         return recordField;
       }
-      return dsField;
+      if (dataSet) {
+        return dataSet.getField(name);
+      }
     }
     return undefined;
   }
