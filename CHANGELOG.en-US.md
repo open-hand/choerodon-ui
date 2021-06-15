@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet`: Fix the problem that the bound field is empty when the object type field is converted to a string value using transformRequest.
+
 ## 1.4.0
 
 `2021-06-11`

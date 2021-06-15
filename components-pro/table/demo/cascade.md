@@ -158,7 +158,7 @@ class App extends React.Component {
         type: 'object',
         label: '代码描述',
         lovCode: 'LOV_CODE',
-        ignore: 'always',
+        transformRequest: value => value && value.code,
       },
       {
         name: 'code2',
