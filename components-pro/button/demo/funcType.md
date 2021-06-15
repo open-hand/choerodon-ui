@@ -7,12 +7,12 @@ title:
 
 ## zh-CN
 
-按钮的展现模式，有flat和raised两种，默认为raised。
+按钮的展现模式，有flat、raised和link三种，默认为raised。
 
 
 ## en-US
 
-Buttons display mode, flat and raised, default raised.
+Buttons display mode, flat raised and link, default raised.
 
 
 ````jsx
@@ -25,6 +25,7 @@ class App extends React.PureComponent {
         <Button>默认raised按钮</Button>
         <Button funcType="flat">flat按钮</Button>
         <Button funcType="raised">raised按钮</Button>
+        <Button funcType="link">link按钮</Button>
       </div>
     );
   }

@@ -15,6 +15,7 @@ export enum ButtonColor {
 export enum FuncType {
   flat = 'flat',
   raised = 'raised',
+  link = 'link',
 }
 
 export enum ButtonType {

@@ -24,6 +24,11 @@
   user-select: none;
   touch-action: manipulation;
 
+  &-block {
+    display: block;
+    width: 100%;
+  }
+
   a&[disabled] {
     pointer-events: auto;
   }
@@ -47,7 +52,7 @@
     line-height: @btn-height-base;
   }
 
-  &:enabled:active {
+  &:not(&-disabled):active {
     box-shadow: @btn-active-box-shadow;
   }
 
@@ -95,13 +100,13 @@
     background: transparent;
     box-shadow: none;
 
-    &:enabled:hover,
-    &:enabled:focus {
+    &:not(.@{btn-prefix-cls}-disabled):hover,
+    &:not(.@{btn-prefix-cls}-disabled):focus {
       background-color: @btn-hover-default-color;
       box-shadow: none;
     }
 
-    &:enabled:active {
+    &:not(.@{btn-prefix-cls}-disabled):active {
       box-shadow: none;
     }
   }
@@ -110,6 +115,21 @@
     border-color: transparent;
     border-style: @btn-raised-border-style-base;
     border-width: @btn-raised-border-width-base;
+  }
+
+  &-link {
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+
+    &:not(.@{btn-prefix-cls}-disabled):hover,
+    &:not(.@{btn-prefix-cls}-disabled):focus {
+      box-shadow: none;
+    }
+
+    &:not(.@{btn-prefix-cls}-disabled):active {
+      box-shadow: none;
+    }
   }
 
   &-disabled,
@@ -129,7 +149,8 @@
       @btn-primary-hover-color,
       @btn-primary-hover-bg,
       @btn-primary-disabled-color,
-      @btn-primary-flat-color
+      @btn-primary-flat-color,
+      @ripple-light-color
     );
   }
 
@@ -144,7 +165,8 @@
       @btn-gray-hover-color,
       @btn-gray-hover-bg,
       @btn-gray-disabled-color,
-      @btn-gray-flat-color
+      @btn-gray-flat-color,
+      @ripple-dark-color
     );
   }
 
@@ -159,7 +181,8 @@
       @btn-blue-hover-color,
       @btn-blue-hover-bg,
       @btn-blue-disabled-color,
-      @btn-blue-flat-color
+      @btn-blue-flat-color,
+      @ripple-light-color
     );
   }
 
@@ -174,7 +197,8 @@
       @btn-green-hover-color,
       @btn-green-hover-bg,
       @btn-green-disabled-color,
-      @btn-green-flat-color
+      @btn-green-flat-color,
+      @ripple-light-color
     );
   }
 
@@ -189,7 +213,8 @@
       @btn-red-hover-color,
       @btn-red-hover-bg,
       @btn-red-disabled-color,
-      @btn-red-flat-color
+      @btn-red-flat-color,
+      @ripple-light-color
     );
   }
 
@@ -204,7 +229,8 @@
       @btn-yellow-hover-color,
       @btn-yellow-hover-bg,
       @btn-yellow-disabled-color,
-      @btn-yellow-flat-color
+      @btn-yellow-flat-color,
+      @ripple-light-color
     );
   }
 
@@ -219,7 +245,8 @@
       @btn-purple-hover-color,
       @btn-purple-hover-bg,
       @btn-purple-disabled-color,
-      @btn-purple-flat-color
+      @btn-purple-flat-color,
+      @ripple-light-color
     );
   }
 
@@ -234,7 +261,8 @@
       @btn-dark-hover-color,
       @btn-dark-hover-bg,
       @btn-dark-disabled-color,
-      @btn-dark-flat-color
+      @btn-dark-flat-color,
+      @ripple-light-color
     );
   }
 
@@ -248,8 +276,13 @@
       @btn-default-hover-color,
       @btn-default-hover-bg,
       @btn-default-disabled-color,
-      @btn-default-flat-color
+      @btn-default-flat-color,
+      @ripple-dark-color
     );
+
+    &:focus {
+      color: @btn-default-focus-color;
+    }
   }
 
   &-icon-only {
@@ -307,7 +340,7 @@
     }
   }
 
-  & + & {
+  & + &:not(&-block) {
     margin-left: @btn-group-spacing;
   }
 
@@ -326,7 +359,8 @@
   @hover-color,
   @hover-bg,
   @disabled-color,
-  @flat-color
+  @flat-color,
+  @ripple-color
 ) {
   &.@{btn-prefix-cls}-raised {
     color: @raised-color;
@@ -337,15 +371,16 @@
       stroke: @raised-color;
     }
 
-    .@{c7n-pro-prefix}-ripple {
-      background-color: @ripple-light-color;
+    .@{c7n-prefix}-ripple {
+      background-color: @ripple-color;
     }
 
     &:focus {
+      color: @focus-color;
       background-color: @focus-bg;
     }
 
-    &:enabled:hover {
+    &:not(.@{btn-prefix-cls}-disabled):hover {
       color: @hover-color;
       background-color: @hover-bg;
     }
@@ -356,14 +391,12 @@
     }
   }
 
-  &.@{btn-prefix-cls}-flat {
+  &.@{btn-prefix-cls}-flat,
+  &.@{btn-prefix-cls}-link {
     color: @flat-color;
 
     .@{progress-cls} circle {
       stroke: @flat-color;
     }
-  }
-  &:focus {
-    color: @focus-color;
   }
 }

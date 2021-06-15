@@ -922,9 +922,13 @@ export default class Record {
       if (items) {
         items.forEach(field => {
           const { name } = field;
-          let value = ObjectChainValue.get(json, getChainFieldName(this, name));
+          let value = ObjectChainValue.get(json, name);
+          const bind = field.get('bind');
           const multiple = field.get('multiple');
           const transformRequest = field.get('transformRequest');
+          if (bind) {
+            value = this.get(getChainFieldName(this, name));
+          }
           if (isString(multiple) && isArrayLike(value)) {
             value = value.map(processToJSON).join(multiple);
           }

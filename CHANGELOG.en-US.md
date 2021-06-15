@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Button`: Added `block` property, Added `link` type for `funcType`.
+- 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
+- 🐞 `<pro>Button`: Fix style issue.
+- 🐞 `<pro>DataSet`: Fix the problem that the bound field is empty when the object type field is converted to a string value using transformRequest.
+
 ## 1.4.0
 
 `2021-06-11`
