@@ -64,7 +64,9 @@ export default class Dropdown extends Component {
 
   onClick = e => {
     const props = this.props;
-    const overlayProps = props.overlay.props;
+    const { overlay } = props;
+    const element = typeof overlay === 'function' ? overlay() : overlay;
+    const overlayProps = element.props;
     // do no call onVisibleChange, if you need click to hide, use onClick and control visible
     if (!('visible' in props)) {
       this.setState({
