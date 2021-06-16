@@ -21,6 +21,15 @@ import localeContext from '../locale-context';
 
 type Booleanish = boolean | 'true' | 'false';
 
+/**
+ * Code生成器
+ */
+const CodeGen: IterableIterator<string> = (function* (start: number) {
+  while (true) {
+    yield `anonymous-${++start}`;
+  }
+})(1000);
+
 export interface ElementProps {
   /**
    * 组件id
@@ -187,6 +196,10 @@ export interface ViewComponentProps
     AriaAttributes,
     ElementProps {
   /**
+   *  唯一标识编码
+   */
+  code?: boolean;
+  /**
    *  是否禁用
    */
   disabled?: boolean;
@@ -343,6 +356,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   isFocus: boolean;
 
+  code: string;
+
   @observable isFocused: boolean;
 
   @observable observableProps: any;
@@ -368,7 +383,12 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   constructor(props, context) {
     super(props, context);
+    this.setCode(props);
     this.setObservableProps(props, context);
+  }
+
+  setCode(props) {
+    this.code = props.code || CodeGen.next().value;
   }
 
   getMergedClassNames(...props) {
@@ -408,6 +428,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   getOmitPropsKeys(): string[] {
     const keys: string[] = [
+      'code',
       'prefixCls',
       'suffixCls',
       'className',
@@ -596,6 +617,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
+    const { code } = this.props;
+    if (nextProps.code !== code) {
+      this.setCode(nextProps);
+    }
     this.updateObservableProps(nextProps, nextContext);
   }
 

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`：Added `performanceEnabled`, `onPerformance` properties.
 - 🌟 `<pro>Button`: Added `block` property, Added `link` type for `funcType`.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
 - 🐞 `<pro>Table.Column`: Fix the issue that `dynamicProps.label` has no effect on column header.

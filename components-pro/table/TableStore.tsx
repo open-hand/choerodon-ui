@@ -458,6 +458,19 @@ export default class TableStore {
 
   inBatchExpansion: boolean = false;
 
+  performanceOn: boolean = false;
+
+  timing: {
+    renderStart: number;
+    renderEnd: number;
+  } = { renderStart: 0, renderEnd: 0 };
+
+  @computed
+  get performanceEnabled(): boolean {
+    const performanceEnabled = getConfig('performanceEnabled');
+    return performanceEnabled && performanceEnabled.Table;
+  }
+
   @computed
   get dataSet(): DataSet {
     return this.props.dataSet;

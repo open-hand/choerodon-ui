@@ -331,6 +331,16 @@ export default class DataSet extends EventManager {
 
   private pending: PromiseQueue = new PromiseQueue();
 
+  performance: {
+    url?: string | undefined;
+    timing: {
+      fetchStart: number;
+      fetchEnd: number;
+      loadStart: number;
+      loadEnd: number;
+    }
+  } = { timing: { fetchStart: 0, fetchEnd: 0, loadStart: 0, loadEnd: 0 } };
+
   originalData: Record[] = [];
 
   resetInBatch: boolean = false;
@@ -2122,6 +2132,7 @@ Then the query method will be auto invoke.`,
 
   @action
   loadData(allData: (object | Record)[] = [], total?: number): DataSet {
+    this.performance.timing.loadStart = Date.now();
     this.storeSelected();
     const {
       paging,
@@ -2157,6 +2168,7 @@ Then the query method will be auto invoke.`,
     if (nextRecord) {
       nextRecord.isCurrent = true;
     }
+    this.performance.timing.loadEnd = Date.now();
     this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record: nextRecord });
     this.fireEvent(DataSetEvents.load, { dataSet: this });
     return this;
@@ -2349,7 +2361,10 @@ Then the query method will be auto invoke.`,
             data: newConfig.data,
           });
           if (queryEventResult) {
+            this.performance.timing.fetchStart = Date.now();
+            this.performance.url = newConfig.url;
             const result = await this.axios(fixAxiosConfig(newConfig));
+            this.performance.timing.fetchEnd = Date.now();
             runInAction(() => {
               if (page >= 0) {
                 this.currentPage = page;
