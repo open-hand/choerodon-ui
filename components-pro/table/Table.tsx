@@ -863,7 +863,13 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   handleDataSetLoad() {
-    this.initDefaultExpandedRows();
+    const { tableStore } = this;
+    if (tableStore.performanceEnabled) {
+      tableStore.performanceOn = true;
+    }
+    if (tableStore.isTree) {
+      this.initDefaultExpandedRows();
+    }
   }
 
   @autobind
@@ -1350,10 +1356,10 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   processDataSetListener(flag: boolean) {
-    const { isTree, dataSet, inlineEdit } = this.tableStore;
+    const { isTree, dataSet, inlineEdit, performanceEnabled } = this.tableStore;
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
-      if (isTree) {
+      if (isTree || performanceEnabled) {
         handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
       }
       if (inlineEdit) {

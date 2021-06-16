@@ -7,6 +7,7 @@ import raf from 'raf';
 import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import isFunction from 'lodash/isFunction';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
@@ -58,6 +59,49 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   get leafColumnsBody(): ColumnProps[] {
     const { tableStore } = this.context;
     return tableStore.leafColumns.filter(({ hidden }) => !hidden);
+  }
+
+  constructor(props, context) {
+    super(props, context);
+    const { tableStore } = context;
+    if (tableStore.performanceEnabled) {
+      const { dataSet } = tableStore;
+      if (dataSet.status === DataSetStatus.ready && dataSet.length) {
+        tableStore.performanceOn = true;
+        tableStore.timing.renderStart = Date.now();
+      }
+    }
+  }
+
+  handlePerformance() {
+    const { tableStore } = this.context;
+    if (tableStore.performanceEnabled && tableStore.performanceOn) {
+      const { dataSet, node, customizedCode, timing } = tableStore;
+      const { performance } = dataSet;
+      const onPerformance = getConfig('onPerformance');
+      timing.renderEnd = Date.now();
+      onPerformance('Table', {
+        name: customizedCode || node.code,
+        url: performance.url,
+        size: dataSet.length,
+        timing: {
+          ...performance.timing,
+          ...timing,
+        },
+      });
+      tableStore.performanceOn = false;
+    }
+  }
+
+  componentDidMount(): void {
+    this.handlePerformance();
+  }
+
+  componentWillUpdate(): void {
+    const { tableStore } = this.context;
+    if (tableStore.performanceEnabled && tableStore.performanceOn) {
+      tableStore.timing.renderStart = Date.now();
+    }
   }
 
   @autobind
@@ -178,6 +222,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   }
 
   componentDidUpdate() {
+    this.handlePerformance();
     const { lock } = this.props;
     const { tableStore: { prefixCls } } = this.context;
     if (!lock) {

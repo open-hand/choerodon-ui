@@ -1,6 +1,7 @@
 import { observable, ObservableMap, runInAction, toJS } from 'mobx';
 import { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import React, { ReactNode } from 'react';
+import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
 import { categories } from 'choerodon-ui-font';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
@@ -35,6 +36,24 @@ export type Status = {
 };
 
 export type renderEmptyHandler = (componentName?: string) => ReactNode;
+
+export type PerformanceEvents = {
+  Table: {
+    name: string;
+    url: string | undefined;
+    size: number;
+    timing: {
+      fetchStart: number;
+      fetchEnd: number;
+      loadStart: number;
+      loadEnd: number;
+      renderStart: number;
+      renderEnd: number;
+    }
+  }
+}
+
+export type PerformanceEventHook<T extends keyof PerformanceEvents> = (key: T, event: PerformanceEvents[T]) => void;
 
 export type Formatter = {
   jsonDate?: string | null;
@@ -189,6 +208,11 @@ export type Config = {
    * 只有在空值时显示必填背景色和边框色
    */
   showRequiredColorsOnlyEmpty?: boolean;
+  /**
+   * 性能监控钩子
+   */
+  onPerformance?: PerformanceEventHook<keyof PerformanceEvents>;
+  performanceEnabled?: { [key in keyof PerformanceEvents]: boolean }
 };
 
 export type ConfigKeys = keyof Config;
@@ -311,6 +335,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['currencyFormatterOptions', undefined],
   ['showInvalidDate', true],
   ['highlightRenderer', defaultFormFieldHighlightRenderer],
+  ['onPerformance', noop],
+  ['performanceEnabled', { Table: false }],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

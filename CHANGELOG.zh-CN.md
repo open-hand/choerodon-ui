@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`：新增 performanceEnabled, onPerformance 属性。
 - 🌟 `<pro>Button`：新增 block 属性, funcType 新增 link 类型。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 🐞 `<pro>Table.Column`： 修复 dynamicProps.label 对于列头无效的问题。
