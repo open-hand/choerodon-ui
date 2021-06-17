@@ -23,6 +23,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fix style issue.
 - 🐞 `<pro>DataSet`: Fix the problem that the bound field is empty when the object type field is converted to a string value using transformRequest.
 - 🐞 `<pro>Modal`: Fix the issue that the width style is invalid when `autoCenter` is turned on.
+- 🐞 `<pro>Table`：Fix the hover penetration problem of frozen columns.
 
 ## 1.4.0
 

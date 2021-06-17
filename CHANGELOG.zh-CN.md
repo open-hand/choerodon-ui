@@ -23,6 +23,7 @@ timeline: true
 - 🐞 `<pro>Button`：修复样式问题。
 - 🐞 `<pro>DataSet`：修复object类型字段使用transformRequest转成字符串值时绑定的字段为空值的问题。
 - 🐞 `<pro>Modal`：修复 autoCenter 开启时宽度样式无效问题。
+- 🐞 `<pro>Table`：修复冻结列 hover 穿透问题。
 
 ## 1.4.0
 
