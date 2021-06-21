@@ -293,8 +293,19 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.addonBeforeRef = node;
   }
 
+  isRenderEmpty() {
+    if (!this.range && !this.multiple) {
+      const text = this.getTextNode();
+      const value = this.getValue();
+      const unRenderedText = this.getText(value);
+      const finalText = isString(text) ? text : isString(unRenderedText) ? unRenderedText : (this.renderedTextContent || '');
+      return isEmpty(finalText);
+    }
+    return true;
+  }
+
   isEmpty() {
-    return isEmpty(this.text) && super.isEmpty();
+    return isEmpty(this.text) && super.isEmpty() && this.isRenderEmpty();
   }
 
   getOtherProps() {

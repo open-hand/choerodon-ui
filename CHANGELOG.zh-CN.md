@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Select`: popupContent 钩子新增 content dataSet textField valueField setValue 和 setPopup 参数。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
+- 🐞 `<pro>TextField`: 修复空值渲染时浮动标签和渲染值重叠的问题。
 - 🐞 `<pro>TriggerField`: 修复 popupContent 中输入框无法获焦的问题， 修复IE下多选模式下拉框滚动条无法拖动的问题。
 - 🐞 `<pro>DataSet.Record`: 修复 init 和 getPristineValue 中链式绑定的问题。
 - 🐞 `Dropdown`: 修复 overlay 为钩子函数时 overlayProps 未定义的问题。

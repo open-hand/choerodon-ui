@@ -41,8 +41,7 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
       const { [`on${eventName}`]: handle, children } = this.props as { [key: string]: any };
       const child = Children.only(children);
       if (handle) {
-        const childProps = child ? child.props : {};
-        handle(eventName, childProps, e);
+        handle(eventName, child, e);
       } else if (child) {
         const { [`on${eventName}`]: childHandle } = child.props;
         if (childHandle) {

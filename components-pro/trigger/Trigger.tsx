@@ -267,7 +267,7 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   @autobind
-  handleEvent(eventName, childProps, e) {
+  handleEvent(eventName, child, e) {
     const { activeElement } = this;
     if (activeElement && this.isBlurToHide() && eventName === 'Blur') {
       const { target } = e;
@@ -282,7 +282,7 @@ export default class Trigger extends Component<TriggerProps> {
       return;
     }
     const { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
-    const { [`on${eventName}`]: childHandle } = childProps;
+    const { [`on${eventName}`]: childHandle } = child.props;
     if (childHandle) {
       childHandle(e);
     }

@@ -87,10 +87,6 @@
         }
       }
 
-      > * {
-        vertical-align: middle;
-      }
-
       &-fixed-height {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -148,6 +144,10 @@
           display: block;
         }
       }
+    }
+
+    &:not(&-aggregation) &-inner > * {
+      vertical-align: middle;
     }
 
     &-tree {
