@@ -46,11 +46,16 @@ const BUILT_IN_PLACEMENTS = {
   },
 };
 
-export interface TriggerFieldProps extends TextFieldProps {
+export interface TriggerFieldPopupContentProps {
+  setValue: (value) => void;
+  setPopup: (hidden: boolean) => void;
+}
+
+export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = TriggerFieldPopupContentProps> extends TextFieldProps {
   /**
    * 下拉框的自定义内容
    */
-  popupContent?: ReactNode | ((props: any) => ReactNode);
+  popupContent?: ReactNode | ((props: P) => ReactNode);
   /**
    * 下拉框的自定义样式名
    */
@@ -83,6 +88,10 @@ export interface TriggerFieldProps extends TextFieldProps {
    * @param triggerNode
    */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
+  /**
+   * 当popup中有可获取焦点对象时，是否按tab键时获取焦点
+   */
+  tabIntoPopupContent?: boolean;
 }
 
 export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<T & TriggerFieldProps> {
@@ -124,6 +133,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
      * 定义浮层的容器，默认为 body
      */
     getPopupContainer: PropTypes.func,
+    /**
+     * 当popup中有可获取焦点对象时，是否按tab键时获取焦点
+     */
+    tabIntoPopupContent: PropTypes.bool,
     ...TextField.propTypes,
   };
 
@@ -150,6 +163,11 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   constructor(props, context) {
     super(props, context);
     this.setPopup(false);
+  }
+
+  @autobind
+  saveTrigger(node) {
+    this.trigger = node;
   }
 
   isValidationMessageHidden(message?: ReactNode): undefined | boolean {
@@ -190,11 +208,15 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
       'renderExtraFooter',
       'treeDefaultExpandedKeys',
       'treeDefaultExpandAll',
+      'tabIntoPopupContent',
     ]);
   }
 
-  getPopupProps() {
-    return {};
+  getPopupProps(): TriggerFieldPopupContentProps {
+    return {
+      setValue: this.setValue.bind(this),
+      setPopup: this.setPopup.bind(this),
+    };
   }
 
   @autobind
@@ -220,11 +242,12 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         triggerShowDelay,
         triggerHiddenDelay,
         getPopupContainer,
+        tabIntoPopupContent,
       },
     } = this;
     return (
       <Trigger
-        ref={node => (this.trigger = node)}
+        ref={this.saveTrigger}
         action={this.readOnly || this.disabled ? [] : trigger}
         focusDelay={triggerShowDelay}
         blurDelay={triggerHiddenDelay}
@@ -243,8 +266,9 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         getPopupStyleFromAlign={this.getPopupStyleFromAlign}
         getRootDomNode={this.getRootDomNode}
         getPopupContainer={getPopupContainer}
+        tabIntoPopupContent={tabIntoPopupContent}
       >
-        {this.getEditor()}
+        {this.getEditor}
       </Trigger>
     );
   }

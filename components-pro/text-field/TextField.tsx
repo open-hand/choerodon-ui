@@ -1,4 +1,14 @@
-import React, { Children, cloneElement, createElement, CSSProperties, DetailedHTMLProps, HTMLAttributes, isValidElement, ReactNode } from 'react';
+import React, {
+  Children,
+  cloneElement,
+  createElement,
+  CSSProperties,
+  DetailedHTMLProps,
+  HTMLAttributes,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { Cancelable, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
@@ -33,9 +43,11 @@ import { getProperty } from '../form/utils';
 import RenderedText from './RenderedText';
 import isReactChildren from '../_util/isReactChildren';
 import TextFieldGroup from './TextFieldGroup';
-import findFirstFocusableElement from '../_util/findFirstFocusableElement';
+import { findFirstFocusableElement } from '../_util/focusable';
 
 let PLACEHOLDER_SUPPORT;
+
+const defaultWrap: (node: ReactElement) => ReactElement = node => node;
 
 export function isPlaceHolderSupport(): boolean {
   if (PLACEHOLDER_SUPPORT !== undefined) {
@@ -529,7 +541,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     defer(() => this.isFocused && this.select());
   }
 
-  renderRangeEditor(props) {
+  renderRangeEditor(props, wrap: (node: ReactElement) => ReactElement) {
     const { prefixCls, rangeTarget, isFocused } = this;
     const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
     const [startValue = '', endValue = ''] = this.processRangeValue();
@@ -543,7 +555,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       <span key="text" className={`${prefixCls}-range-text`}>
         {/* 确保 range-input 为第一个 当点击label的时候出了会让element聚焦以外还会让 label的第一个表单元素聚焦 因此导致意料之外的bug */}
         {
-          !this.disabled && (
+          !this.disabled && wrap(
             <input
               {...props}
               className={`${prefixCls}-range-input`}
@@ -566,7 +578,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               }
               readOnly={this.readOnly}
               style={editorStyle}
-            />
+            />,
           )
         }
         <input
@@ -594,7 +606,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
-  renderMultipleEditor(props: T) {
+  renderMultipleEditor(props: T, wrap: (node: ReactElement) => ReactElement) {
     const { style } = this.props;
     const { text } = this;
     const editorStyle = {} as CSSProperties;
@@ -609,13 +621,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return (
       <li key="text">
-        <input {...(props as Object)} value={text || ''} style={editorStyle} />
+        {wrap(<input {...(props as Object)} value={text || ''} style={editorStyle} />)}
       </li>
     );
   }
 
   getWrappedEditor(): ReactNode {
-    return this.getEditor();
+    return this.getEditor(defaultWrap);
   }
 
   getClassName(...props): string | undefined {
@@ -651,7 +663,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return texts.join('、');
   }
 
-  getEditor(): ReactNode {
+  @autobind
+  getEditor(wrap: (node: ReactElement) => ReactElement): ReactNode {
     const {
       prefixCls,
       multiple,
@@ -682,11 +695,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           {this.renderMultipleValues()}
           {
             range
-              ? this.renderRangeEditor(otherProps)
+              ? this.renderRangeEditor(otherProps, wrap)
               : this.renderMultipleEditor({
                 ...otherProps,
                 className: `${prefixCls}-multiple-input`,
-              } as T)
+              } as T, wrap)
           }
         </Animate>
       );
@@ -705,7 +718,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (range) {
       return (
         <span key="text" className={otherProps.className}>
-          {this.renderRangeEditor(otherProps)}
+          {this.renderRangeEditor(otherProps, wrap)}
         </span>
       );
     }
@@ -729,14 +742,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       };
     }
 
-    return (
+    return wrap(
       <input
         key="text"
         {...otherProps}
         placeholder={placeholder}
         value={finalText}
         readOnly={!this.editable}
-      />
+      />,
     );
   }
 

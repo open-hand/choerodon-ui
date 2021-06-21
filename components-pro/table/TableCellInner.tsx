@@ -37,7 +37,7 @@ import { FormFieldProps, Renderer } from '../field/FormField';
 import { $l } from '../locale-context';
 import Button, { ButtonProps } from '../button/Button';
 import { LabelLayout } from '../form/enum';
-import findFirstFocusableElement from '../_util/findFirstFocusableElement';
+import { findFirstFocusableElement } from '../_util/focusable';
 
 let inTab: boolean = false;
 

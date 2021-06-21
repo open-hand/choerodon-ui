@@ -1,5 +1,6 @@
-import { cloneElement, Component, CSSProperties, isValidElement } from 'react';
+import { cloneElement, CSSProperties, isValidElement, PureComponent } from 'react';
 import { findDOMNode } from 'react-dom';
+import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
 import cssAnimate, { isCssAnimationSupported } from 'css-animation';
@@ -17,7 +18,7 @@ export interface AnimateChildProps {
   style?: CSSProperties;
 }
 
-export default class AnimateChild extends Component<AnimateChildProps, any> {
+export default class AnimateChild extends PureComponent<AnimateChildProps, any> {
   static displayName = 'AnimateChild';
 
   static propTypes = {
@@ -27,6 +28,8 @@ export default class AnimateChild extends Component<AnimateChildProps, any> {
   };
 
   stopper;
+
+  style?: CSSProperties;
 
   componentWillUnmount() {
     this.stop();
@@ -101,6 +104,14 @@ export default class AnimateChild extends Component<AnimateChildProps, any> {
     }
   }
 
+  getStyle(style?: CSSProperties) {
+    if (isEqual(style, this.style)) {
+      return this.style;
+    }
+    this.style = style;
+    return style;
+  }
+
   render() {
     const { children, ...otherProps } = this.props;
     if (isValidElement(children)) {
@@ -112,7 +123,7 @@ export default class AnimateChild extends Component<AnimateChildProps, any> {
         'transitionLeave',
       ]);
       const { style } = children.props as any;
-      return cloneElement(children, { ...props, style: { ...props.style, ...style } } as any);
+      return cloneElement(children, { ...props, style: this.getStyle({ ...props.style, ...style }) } as any);
     }
     return children;
   }

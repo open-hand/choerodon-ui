@@ -1,7 +1,7 @@
 import React, { CSSProperties, Key } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
+import { observer } from 'mobx-react';
 import shallowEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import isElement from 'lodash/isElement';
@@ -11,6 +11,7 @@ import Animate from '../animate';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import PopupInner from './PopupInner';
 import autobind from '../_util/autobind';
+import { findFocusableElements } from '../_util/focusable';
 
 /**
  * 记录ID生成器
@@ -20,6 +21,8 @@ const PopupKeyGen: IterableIterator<string> = (function* (start: number) {
     yield `popup-key-${start++}`;
   }
 })(1);
+
+const childrenProps = { hidden: 'hidden' };
 
 export interface PopupProps extends ViewComponentProps {
   align: object;
@@ -33,8 +36,10 @@ export interface PopupProps extends ViewComponentProps {
   onAnimateEnd?: (key: Key | null, exists: boolean) => void;
   getStyleFromAlign?: (target: Node | Window, align: object) => object | undefined;
   getClassNameFromAlign?: (align: object) => string | undefined;
+  getFocusableElements?: (elements: HTMLElement[]) => void;
 }
 
+@observer
 export default class Popup extends ViewComponent<PopupProps> {
   static displayName = 'Popup';
 
@@ -97,13 +102,36 @@ export default class Popup extends ViewComponent<PopupProps> {
     }
   }
 
+  componentDidUpdate(): void {
+    this.findFocusableElements();
+  }
+
+  componentDidMount(): void {
+    this.findFocusableElements();
+  }
+
+  findFocusableElements() {
+    const { element } = this;
+    const { getFocusableElements } = this.props;
+    if (element && getFocusableElements) {
+      getFocusableElements(findFocusableElements(element));
+    }
+  }
+
+  @autobind
+  renderInner(innerRef) {
+    const { children } = this.props;
+    return (
+      <PopupInner {...this.getMergedProps()} innerRef={innerRef}>{children}</PopupInner>
+    );
+  }
+
   render() {
     const {
       hidden,
       align,
       transitionName,
       getRootDomNode,
-      children,
       onAnimateAppear = noop,
       onAnimateEnter = noop,
       onAnimateLeave = noop,
@@ -127,15 +155,16 @@ export default class Popup extends ViewComponent<PopupProps> {
       >
         <Align
           ref={this.saveRef}
+          childrenRef={this.elementReference}
           key="align"
-          childrenProps={{ hidden: 'hidden' }}
+          childrenProps={childrenProps}
           align={align}
           onAlign={this.onAlign}
           target={getRootDomNode}
           hidden={hidden}
           monitorWindowResize
         >
-          <PopupInner {...omit(this.getMergedProps(), ['ref'])}>{children}</PopupInner>
+          {this.renderInner}
         </Align>
       </Animate>,
       container,

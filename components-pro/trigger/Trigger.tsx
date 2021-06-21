@@ -1,4 +1,4 @@
-import React, { Children, Component, CSSProperties, isValidElement, Key, ReactNode } from 'react';
+import React, { Children, Component, CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
@@ -6,6 +6,8 @@ import raf from 'raf';
 import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import noop from 'lodash/noop';
+import isEqual from 'lodash/isEqual';
+import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Popup from './Popup';
 import autobind from '../_util/autobind';
 import TaskRunner from '../_util/TaskRunner';
@@ -14,6 +16,8 @@ import EventManager from '../_util/EventManager';
 import { Action, HideAction, ShowAction } from './enum';
 import TriggerChild from './TriggerChild';
 import isEmpty from '../_util/isEmpty';
+import focusable, { findFocusableParent } from '../_util/focusable';
+import isIE from '../_util/isIE';
 
 function isPointsEq(a1: string[], a2: string[]): boolean {
   return a1[0] === a2[0] && a1[1] === a2[1];
@@ -37,6 +41,14 @@ function getAlignFromPlacement(builtinPlacements, placementStr, align) {
   };
 }
 
+function getPopupAlign(props) {
+  const { popupPlacement, popupAlign, builtinPlacements } = props;
+  if (popupPlacement && builtinPlacements) {
+    return getAlignFromPlacement(builtinPlacements, popupPlacement, popupAlign);
+  }
+  return popupAlign;
+}
+
 function contains(root, n) {
   if (root) {
     let node = n;
@@ -51,6 +63,12 @@ function contains(root, n) {
 }
 
 export type RenderFunction = (props?: { trigger?: ReactNode }) => React.ReactNode;
+
+export type ChildrenFunction = (caller: (node: ReactElement) => ReactElement) => ReactElement;
+
+function isChildrenFunction(fn: ReactNode | ChildrenFunction): fn is ChildrenFunction {
+  return typeof fn === 'function';
+}
 
 export interface TriggerProps extends ElementProps {
   action?: Action[];
@@ -81,8 +99,9 @@ export interface TriggerProps extends ElementProps {
   transitionName?: string;
   defaultPopupHidden?: boolean;
   forceRender?: boolean;
+  tabIntoPopupContent?: boolean;
   popupClassName?: string;
-  onMouseDown?: (event: React.MouseEvent<any, MouseEvent>) => void;
+  children?: ReactNode | ChildrenFunction;
 }
 
 @observer
@@ -126,7 +145,7 @@ export default class Trigger extends Component<TriggerProps> {
     transitionName: PropTypes.string,
     defaultPopupHidden: PropTypes.bool,
     popupClassName: PropTypes.string,
-    onMouseDown: PropTypes.func,
+    tabIntoPopupContent: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -136,17 +155,6 @@ export default class Trigger extends Component<TriggerProps> {
     mouseLeaveDelay: 100,
     transitionName: 'slide-up',
     defaultPopupHidden: true,
-  };
-
-  // 兼容ie11
-  // 在ie11上当pop的内容存在滚动条的时候 点击滚动条会导致当前组件失去焦点
-  // 给组件设置的 preventDefault 不会起到作用
-  // 根据 handlePopupMouseDown  handlePopupMouseUp 设置一个标识符来判断当前点击的是否是弹出框
-  // 不应该使用 state 将isClickScrollbar放到state里面会导致渲染导致在chrome下无法点击滚动条进行拖动
-  isClickScrollbar: {
-    value: boolean
-  } = {
-    value: false,
   };
 
   popup: Popup | null;
@@ -165,44 +173,63 @@ export default class Trigger extends Component<TriggerProps> {
 
   @observable mounted?: boolean;
 
+  activeElement?: HTMLElement | null | true;
+
+  focusElements?: HTMLElement[];
+
+  focusTarget?: HTMLElement | null;
+
+  align?: object;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
       this.popupHidden = 'popupHidden' in props ? props.popupHidden : props.defaultPopupHidden;
+      this.align = getPopupAlign(props);
     });
   }
 
-  saveRef = node => (this.popup = node);
+  @autobind
+  saveRef(node) {
+    this.popup = node;
+  }
+
+  @autobind
+  getFocusableElements(elements) {
+    this.focusElements = elements && elements.sort((e1, e2) => e1.tabIndex - e2.tabIndex);
+  }
+
+  @autobind
+  renderTriggerChild(child: ReactElement): ReactElement {
+    const newChildProps: any = {};
+    if (this.isContextMenuToShow()) {
+      newChildProps.onContextMenu = this.handleEvent;
+    }
+    if (this.isClickToHide() || this.isClickToShow()) {
+      newChildProps.onClick = this.handleEvent;
+      newChildProps.onMouseDown = this.handleEvent;
+    }
+    if (this.isMouseEnterToShow()) {
+      newChildProps.onMouseEnter = this.handleEvent;
+    }
+    if (this.isMouseLeaveToHide()) {
+      newChildProps.onMouseLeave = this.handleEvent;
+    }
+    if (this.isFocusToShow() || this.isBlurToHide()) {
+      newChildProps.onFocus = this.handleEvent;
+      newChildProps.onBlur = this.handleEvent;
+    }
+    newChildProps.onKeyDown = this.handleEvent;
+    newChildProps.popupHidden = this.popupHidden;
+    return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
+  }
 
   render() {
     const { children } = this.props;
     const popup = this.getPopup();
-    const newChildren = Children.map(children, child => {
-      if (isValidElement(child)) {
-        const newChildProps: any = {};
-        if (this.isContextMenuToShow()) {
-          newChildProps.onContextMenu = this.handleEvent;
-        }
-        if (this.isClickToHide() || this.isClickToShow()) {
-          newChildProps.onClick = this.handleEvent;
-          newChildProps.onMouseDown = this.handleEvent;
-        }
-        if (this.isMouseEnterToShow()) {
-          newChildProps.onMouseEnter = this.handleEvent;
-        }
-        if (this.isMouseLeaveToHide()) {
-          newChildProps.onMouseLeave = this.handleEvent;
-        }
-        if (this.isFocusToShow() || this.isBlurToHide()) {
-          newChildProps.onFocus = this.handleEvent;
-          newChildProps.onBlur = this.handleEvent;
-        }
-        newChildProps.isClickScrollbar = this.isClickScrollbar;
-        newChildProps.popupHidden = this.popupHidden;
-        return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
-      }
-      return child;
-    });
+    const newChildren = isChildrenFunction(children) ? children(this.renderTriggerChild) : Children.map(children, child => (
+      isValidElement(child) ? this.renderTriggerChild(child) : child
+    ));
     return [newChildren, popup];
   }
 
@@ -211,6 +238,10 @@ export default class Trigger extends Component<TriggerProps> {
     const { popupHidden } = nextProps;
     if (popupHidden !== this.popupHidden && popupHidden !== undefined) {
       this.popupHidden = popupHidden;
+    }
+    const newAlign = getPopupAlign(nextProps);
+    if (!isEqual(this.align, newAlign)) {
+      this.align = newAlign;
     }
   }
 
@@ -236,9 +267,22 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   @autobind
-  handleEvent(eventName, child, e) {
+  handleEvent(eventName, childProps, e) {
+    const { activeElement } = this;
+    if (activeElement && this.isBlurToHide() && eventName === 'Blur') {
+      const { target } = e;
+      if (!this.focusTarget) {
+        this.focusTarget = target;
+      }
+      if (activeElement === true) {
+        e.preventDefault();
+        target.focus();
+        this.activeElement = null;
+      }
+      return;
+    }
     const { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
-    const { [`on${eventName}`]: childHandle } = child.props;
+    const { [`on${eventName}`]: childHandle } = childProps;
     if (childHandle) {
       childHandle(e);
     }
@@ -252,9 +296,78 @@ export default class Trigger extends Component<TriggerProps> {
     }
   }
 
+  @autobind
+  handlePopupMouseDown(e) {
+    const { target } = e;
+    const { popup } = this;
+    const element = focusable(target) ? target : findFocusableParent(target, popup && popup.element);
+    if (element) {
+      this.activeElement = element;
+      e.stopPropagation();
+    } else if (this.isBlurToHide()) {
+      e.preventDefault();
+      if (isIE()) {
+        this.activeElement = true;
+      }
+    }
+  }
+
+  @autobind
+  handlePopupMouseUp() {
+    if (this.activeElement === true) {
+      this.activeElement = null;
+    }
+  }
+
+  @autobind
+  handlePopupKeyDown(e) {
+    const { activeElement } = this;
+    if (activeElement && activeElement !== true && e.keyCode === KeyCode.TAB) {
+      const { focusElements, focusTarget } = this;
+      if (focusElements && focusElements.indexOf(activeElement) === (e.shiftKey ? 0 : focusElements.length - 1)) {
+        if (e.shiftKey) {
+          e.preventDefault();
+        } else {
+          this.setPopupHidden(true);
+        }
+        if (focusTarget) {
+          focusTarget.focus();
+        }
+      }
+    }
+  }
+
+  @autobind
+  handlePopupBlur() {
+    if (this.activeElement) {
+      this.activeElement = null;
+      raf(() => {
+        const { activeElement } = document;
+        const { popup } = this;
+        if (activeElement && popup && popup.element.contains(activeElement)) {
+          this.activeElement = activeElement as HTMLElement;
+        } else {
+          this.setPopupHidden(true);
+        }
+      });
+    }
+  }
+
   handleContextMenu(e) {
     e.preventDefault();
     this.setPopupHidden(false);
+  }
+
+  handleKeyDown(e) {
+    const { tabIntoPopupContent } = this.props;
+    if (!this.popupHidden && tabIntoPopupContent && this.focusElements && e.keyCode === KeyCode.TAB && !e.shiftKey) {
+      const [firstFocusElement] = this.focusElements;
+      if (firstFocusElement) {
+        e.preventDefault();
+        this.activeElement = firstFocusElement;
+        firstFocusElement.focus();
+      }
+    }
   }
 
   handleFocus() {
@@ -347,7 +460,6 @@ export default class Trigger extends Component<TriggerProps> {
       getRootDomNode = this.getRootDomNode,
       transitionName,
       getPopupContainer,
-      onMouseDown = this.handlePopupMouseDown,
       forceRender,
     } = this.props;
     if (this.mounted || !getPopupContainer) {
@@ -368,10 +480,13 @@ export default class Trigger extends Component<TriggerProps> {
             className={classNames(`${prefixCls}-popup`, popupCls, popupClassName)}
             style={popupStyle}
             hidden={hidden}
-            align={this.getPopupAlign()}
+            align={this.align}
             onAlign={onPopupAlign}
-            onMouseDown={onMouseDown}
+            onMouseDown={this.handlePopupMouseDown}
             onMouseUp={this.handlePopupMouseUp}
+            onKeyDown={this.handlePopupKeyDown}
+            onBlur={this.handlePopupBlur}
+            getFocusableElements={this.getFocusableElements}
             getRootDomNode={getRootDomNode}
             onAnimateAppear={onPopupAnimateAppear}
             onAnimateEnter={onPopupAnimateEnter}
@@ -387,25 +502,6 @@ export default class Trigger extends Component<TriggerProps> {
         );
       }
     }
-  }
-
-  getPopupAlign() {
-    const { popupPlacement, popupAlign, builtinPlacements } = this.props;
-    if (popupPlacement && builtinPlacements) {
-      return getAlignFromPlacement(builtinPlacements, popupPlacement, popupAlign);
-    }
-    return popupAlign;
-  }
-
-  @autobind
-  handlePopupMouseDown(e) {
-    this.isClickScrollbar.value = true;
-    e.preventDefault();
-  }
-
-  @autobind
-  handlePopupMouseUp() {
-    this.isClickScrollbar.value = false;
   }
 
   @autobind

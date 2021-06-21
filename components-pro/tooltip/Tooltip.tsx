@@ -1,7 +1,6 @@
 import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
 import Trigger, { RenderFunction, TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
@@ -257,7 +256,6 @@ export default class Tooltip extends Component<TooltipProps, any> {
         onPopupHiddenChange={onHiddenChange}
         onPopupAlign={this.handlePopupAlign}
         defaultPopupHidden={defaultHidden}
-        onMouseDown={noop}
         {...restProps}
       >
         {child}

@@ -33,26 +33,16 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
 
   handleBlur;
 
+  handleKeyDown;
+
   constructor(props, context) {
     super(props, context);
     const createChains = eventName => e => {
-      if (eventName === 'Blur') {
-        const { isClickScrollbar, popupHidden } = this.props;
-        if (isClickScrollbar) {
-          // 判断是否已经关闭
-          if (popupHidden) {
-            isClickScrollbar.value = false;
-          }
-          if (isClickScrollbar.value) {
-            e.target.focus();
-            return;
-          }
-        }
-      }
       const { [`on${eventName}`]: handle, children } = this.props as { [key: string]: any };
       const child = Children.only(children);
       if (handle) {
-        handle(eventName, child, e);
+        const childProps = child ? child.props : {};
+        handle(eventName, childProps, e);
       } else if (child) {
         const { [`on${eventName}`]: childHandle } = child.props;
         if (childHandle) {
@@ -68,6 +58,7 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
     this.handleMouseLeave = createChains('MouseLeave');
     this.handleFocus = createChains('Focus');
     this.handleBlur = createChains('Blur');
+    this.handleKeyDown = createChains('KeyDown');
   }
 
   render() {
@@ -80,6 +71,7 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
       onMouseLeave: this.handleMouseLeave,
       onFocus: this.handleFocus,
       onBlur: this.handleBlur,
+      onKeyDown: this.handleKeyDown,
     });
   }
 }

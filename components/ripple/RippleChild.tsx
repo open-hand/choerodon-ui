@@ -14,17 +14,27 @@ export default class RippleChild extends PureComponent<RippleChildProps> {
 
   currentStyle: any;
 
+  componentProps?: any;
+
   render() {
     const { children } = this.props;
     return this.ripple(Children.only(children));
   }
 
+  getComponentProps(prefixCls) {
+    const className = `${prefixCls}-wrapper`;
+    const { componentProps } = this;
+    if (!componentProps || className !== componentProps.className) {
+      this.componentProps = {
+        className,
+      };
+    }
+    return this.componentProps;
+  }
+
   handleMouseDown = (child: ReactElement<any>, size?: Size) => {
     const { prefixCls, ...rest } = this.props;
     const { children, style } = child.props;
-    const componentProps: any = {
-      className: `${prefixCls}-wrapper`,
-    };
     if (size) {
       const { x, y, width, height } = size;
       const maxWidth = Math.max(width - x, x);
@@ -44,7 +54,7 @@ export default class RippleChild extends PureComponent<RippleChildProps> {
         <Animate
           key="ripple"
           component="div"
-          componentProps={componentProps}
+          componentProps={this.getComponentProps(prefixCls)}
           transitionName={size ? 'zoom-small-slow' : 'fade'}
           hiddenProp="hidden"
         >
