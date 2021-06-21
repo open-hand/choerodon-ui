@@ -132,6 +132,7 @@
     &-fix-right {
       position: sticky !important;
       z-index: 2;
+      background-color: #fff;
       background-image: linear-gradient(to right, @component-background 0%, @component-background 100%);
       background-blend-mode: multiply;
     }
@@ -319,8 +320,8 @@
   &-customized-column {
     &,
     .@{table-prefix-cls}-cell-inner {
-      padding-left: 0 !important;
       padding-right: 0 !important;
+      padding-left: 0 !important;
     }
   }
 
@@ -578,8 +579,8 @@
   //ROW
   &-empty-row div {
     display: inline-block;
-    transform: translateX(-50%);
     line-height: .3rem;
+    transform: translateX(-50%);
   }
 
   &-parity-row &-row:nth-of-type(even) > td {

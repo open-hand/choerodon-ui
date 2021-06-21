@@ -15,12 +15,15 @@ timeline: true
 
 ---
 
-- 🌟 `configure`：Added `performanceEnabled`, `onPerformance` properties.
+- 🌟 `configure`: Added `performanceEnabled`, `onPerformance` properties.
 - 🌟 `<pro>Button`: Added `block` property, Added `link` type for `funcType`.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
+- 🐞 `Dropdown`: Fix the problem that overlayProps is undefined when typeof overlay is func.
 - 🐞 `<pro>Table.Column`: Fix the issue that `dynamicProps.label` has no effect on column header.
 - 🐞 `<pro>Button`: Fix style issue.
 - 🐞 `<pro>DataSet`: Fix the problem that the bound field is empty when the object type field is converted to a string value using transformRequest.
+- 🐞 `<pro>Modal`: Fix the issue that the width style is invalid when `autoCenter` is turned on.
+- 🐞 `<pro>Table`：Fix the hover penetration problem of frozen columns.
 
 ## 1.4.0
 
