@@ -61,7 +61,7 @@ export type RenderProps = {
   multiLineFields?: Field[];
 };
 
-export type Renderer = (props: RenderProps) => ReactNode;
+export type Renderer<T extends RenderProps = RenderProps> = (props: T) => ReactNode;
 
 export type HighlightRenderer = (highlightProps: HighlightProps, element: ReactNode) => ReactNode;
 

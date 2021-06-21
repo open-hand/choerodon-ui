@@ -31,7 +31,6 @@ import {
 } from './utils';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import DataSetSnapshot from './DataSetSnapshot';
-import localeContext from '../locale-context';
 import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
 import isSame from '../_util/isSame';
 import { treeReduce } from '../_util/treeUtils';
@@ -625,21 +624,20 @@ export default class Record {
   }
 
   getPristineValue(fieldName?: string): any {
-    return fieldName && this.dirtyData.has(fieldName) ? this.dirtyData.get(fieldName) : this.get(fieldName);
+    if (fieldName) {
+      const chainFieldName = getChainFieldName(this, fieldName);
+      return this.dirtyData.has(chainFieldName) ? this.dirtyData.get(chainFieldName) : this.get(chainFieldName);
+    }
   }
 
   @action
   init(item: string | object, value?: any): Record {
     const { fields, data, dirtyData } = this;
     if (isString(item)) {
-      let fieldName: string = item;
-      const field = this.getField(fieldName) || this.addField(fieldName);
+      const oldName: string = item;
+      const fieldName: string = getChainFieldName(this, oldName);
+      const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || this.addField(fieldName);
       const newValue = processValue(value, field);
-      const bind = field.get('bind');
-      if (bind) {
-        fieldName = bind;
-      }
-
       dirtyData.delete(fieldName);
       ObjectChainValue.set(data, fieldName, newValue, fields);
       field.commit();
@@ -823,22 +821,24 @@ export default class Record {
 
   @action
   private commitTls(data = {}, name: string) {
-    const { dataSet } = this;
-    const lang = dataSet ? dataSet.lang : localeContext.locale.lang;
     const tlsKey = getConfig('tlsKey');
-    const values: object = {};
     if (!(name in data)) {
       data[name] = {};
     }
-    Object.keys(data).forEach(key => {
+    Object.keys(data).forEach((key) => {
       const value = data[key];
       const field = this.getField(key);
-      if (field && field.dirty) {
-        values[`${tlsKey}.${key}.${lang}`] = this.get(key);
+      if (field) {
+        const transformResponse = field.get('transformResponse');
+        if (transformResponse) {
+          const originValue = { ...value };
+          Object.keys(value).forEach((language) => {
+            value[language] = transformResponse(value[language], originValue);
+          });
+        }
       }
-      this.init(`${tlsKey}.${key}`, value);
+      ObjectChainValue.set(this.data, `${tlsKey}.${key}`, value);
     });
-    this.set(values);
   }
 
   private initFields(fields: Fields) {

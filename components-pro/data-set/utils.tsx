@@ -12,7 +12,7 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import XLSX from 'xlsx';
-import Field, { DynamicPropsArguments, FieldProps, Fields } from './Field';
+import Field, { FieldProps, Fields } from './Field';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet, { Group } from './DataSet';
 import Record from './Record';
@@ -681,18 +681,6 @@ export function getRecordValue(
   }
 }
 
-function tlsBind(
-  props: DynamicPropsArguments,
-  name: string,
-  lang: Lang,
-  tlsKey: string,
-): string | undefined {
-  const tls = props.record.get(tlsKey) || {};
-  if (name in tls) {
-    return `${tlsKey}.${name}.${lang}`;
-  }
-}
-
 export function processIntlField(
   name: string,
   fieldProps: FieldProps,
@@ -700,7 +688,7 @@ export function processIntlField(
   dataSet?: DataSet,
 ): Field {
   if (fieldProps.type === FieldType.intl) {
-    const { dynamicProps } = fieldProps;
+    const { transformRequest } = fieldProps;
     const tlsKey = getConfig('tlsKey');
     const { supports } = localeContext;
     const languages = Object.keys(supports);
@@ -708,27 +696,17 @@ export function processIntlField(
       callback(`${tlsKey}.${name}.${language}`, {
         type: FieldType.string,
         label: `${supports[language]}`,
+        transformRequest,
+        computedProps: {
+          bind: ({ record }) => {
+            const tls = record.get(tlsKey) || {};
+            if (name in tls && (dataSet ? dataSet.lang : localeContext.locale.lang) === language) {
+              return name;
+            }
+          },
+        },
       }),
     );
-    const { lang = localeContext.locale.lang } = dataSet || {};
-    const newDynamicProps =
-      typeof dynamicProps === 'function'
-        ? props => {
-          return {
-            ...dynamicProps(props),
-            bind: tlsBind(props, name, lang, tlsKey),
-          };
-        }
-        : {
-          ...dynamicProps,
-          bind: props => {
-            return tlsBind(props, name, lang, tlsKey);
-          },
-        };
-    return callback(name, {
-      ...fieldProps,
-      dynamicProps: newDynamicProps,
-    });
   }
   return callback(name, fieldProps);
 }

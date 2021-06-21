@@ -17,7 +17,10 @@ timeline: true
 
 - 🌟 `configure`：新增 performanceEnabled, onPerformance 属性。
 - 🌟 `<pro>Button`：新增 block 属性, funcType 新增 link 类型。
+- 🌟 `<pro>Table.Column`: header 和 renderer 钩子新增 aggregation 参数。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
+- 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
+- 🐞 `<pro>DataSet.Record`: 修复 init 和 getPristineValue 中链式绑定的问题。
 - 🐞 `Dropdown`: 修复 overlay 为钩子函数时 overlayProps 未定义的问题。
 - 🐞 `<pro>Table.Column`： 修复 dynamicProps.label 对于列头无效的问题。
 - 🐞 `<pro>Button`：修复样式问题。

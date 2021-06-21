@@ -141,7 +141,7 @@ export default class TableCell extends Component<TableCellProps> {
             })
             : {};
         const columnKey = getColumnKey(column);
-        const header = getHeader(column, dataSet);
+        const header = getHeader(column, dataSet, tableStore);
         // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
         const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
         if (children && children.length) {
@@ -195,7 +195,8 @@ export default class TableCell extends Component<TableCellProps> {
           const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
 
           const text = (
-            <Tree prefixCls={`${prefixCls}-tree`} virtual={false} focusable={false} defaultExpandedKeys={aggregationDefaultExpandedKeys} defaultExpandAll={aggregationDefaultExpandAll}>
+            <Tree prefixCls={`${prefixCls}-tree`} virtual={false} focusable={false} defaultExpandedKeys={aggregationDefaultExpandedKeys}
+                  defaultExpandAll={aggregationDefaultExpandAll}>
               {
                 this.getColumnsInnerNode(nodes, prefixCls, command)
               }
@@ -208,7 +209,7 @@ export default class TableCell extends Component<TableCellProps> {
           );
           return (
             <div className={`${prefixCls}-inner`}>
-              {renderer({ text, record, dataSet: tableStore.dataSet })}
+              {renderer({ text, record, dataSet: tableStore.dataSet, aggregation: tableStore.aggregation })}
             </div>
           );
         }

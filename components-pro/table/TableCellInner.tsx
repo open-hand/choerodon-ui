@@ -63,7 +63,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   } = tableStore;
   const prefixCls = `${tableStore.prefixCls}-cell`;
   const tooltip = tableStore.getColumnTooltip(column);
-  const { name, key, lock, highlightRenderer = tableStore.cellHighlightRenderer } = column;
+  const { name, key, lock, highlightRenderer = tableStore.cellHighlightRenderer, renderer } = column;
   const columnKey = getColumnKey(column);
   const { checkField } = dataSet.props;
   const height = record.getState(`__column_resize_height_${name}`);
@@ -328,7 +328,13 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     if (cellEditorInCell) {
       return renderEditor;
     }
-  }, [command, cellEditorInCell, renderCommand, renderEditor]);
+    if (aggregation && renderer) {
+      return (rendererProps) => {
+        return renderer({ ...rendererProps, aggregation });
+      };
+    }
+    return renderer;
+  }, [command, cellEditorInCell, renderCommand, renderEditor, renderer, aggregation]);
   const innerStyle = useComputed(() => {
     if (!aggregation) {
       if (height !== undefined && rows === 0) {
@@ -411,7 +417,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       style={innerStyle}
       className={innerClassName.join(' ')}
       record={record}
-      renderer={cellRenderer || column.renderer}
+      renderer={cellRenderer}
       name={name}
       disabled={disabled}
       showHelp={ShowHelp.none}

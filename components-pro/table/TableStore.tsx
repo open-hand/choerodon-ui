@@ -387,14 +387,15 @@ export function normalizeColumns(
 async function getHeaderTexts(
   dataSet: DataSet,
   columns: ColumnProps[],
+  store: TableStore,
   headers: HeaderText[] = [],
 ): Promise<HeaderText[]> {
   const column = columns.shift();
   if (column) {
-    headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet)) });
+    headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet, store)) });
   }
   if (columns.length) {
-    await getHeaderTexts(dataSet, columns, headers);
+    await getHeaderTexts(dataSet, columns, store, headers);
   }
   return headers;
 }
@@ -1297,7 +1298,7 @@ export default class TableStore {
 
   getColumnHeaders(): Promise<HeaderText[]> {
     const { leafNamedColumns, dataSet } = this;
-    return getHeaderTexts(dataSet, leafNamedColumns.slice());
+    return getHeaderTexts(dataSet, leafNamedColumns.slice(), this);
   }
 
   @action
