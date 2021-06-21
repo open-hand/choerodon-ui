@@ -1111,7 +1111,7 @@ export default class Field {
     } else if (dataSet) {
       this.isDynamicPropsComputing = true;
       try {
-        return dynamicProps({ dataSet, record: record || new Record(), name });
+        return dynamicProps({ dataSet, record, name });
       } catch (e) {
         warning(false, e.message);
       } finally {

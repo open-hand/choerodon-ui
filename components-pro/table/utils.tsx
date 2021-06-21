@@ -232,10 +232,10 @@ export function isSelectedRow(record: Record) {
   return record.isSelected;
 }
 
-export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
+export function getHeader(column: ColumnProps, dataSet: DataSet, store: TableStore): ReactNode {
   const { header, name, title } = column;
   if (typeof header === 'function') {
-    return header(dataSet, name, title);
+    return header(dataSet, name, title, store.aggregation);
   }
   if (title !== undefined) {
     return title;

@@ -308,7 +308,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   @autobind
   getHeader() {
     const { column, dataSet } = this.props;
-    return getHeader(column, dataSet);
+    const { tableStore } = this.context;
+    return getHeader(column, dataSet, tableStore);
   }
 
   render() {

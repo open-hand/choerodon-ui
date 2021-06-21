@@ -61,7 +61,7 @@ export type RenderProps = {
   multiLineFields?: Field[];
 };
 
-export type Renderer = (props: RenderProps) => ReactNode;
+export type Renderer<T extends RenderProps = RenderProps> = (props: T) => ReactNode;
 
 export type HighlightRenderer = (highlightProps: HighlightProps, element: ReactNode) => ReactNode;
 
@@ -615,11 +615,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   isEmpty() {
     if (this.range === true) {
-      if (this.value && isArrayLike(this.value) && !this.value.find(v => v)) {
+      if (this.value && isArrayLike(this.value) && this.value.every(v => isEmpty(v))) {
         return true;
       }
     } else if (isArrayLike(this.range)) {
-      if (this.value && !Object.values(this.value).find(v => v)) {
+      if (this.value && Object.values(this.value).every(v => isEmpty(v))) {
         return true;
       }
     }

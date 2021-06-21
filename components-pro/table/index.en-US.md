@@ -99,7 +99,7 @@ subtitle: 表格
 | name | 列对照的字段名 | string |  |
 | width | 列宽，不推荐给所有列设置宽度，而是给某一列不设置宽度达到自动宽度的效果 | number |  |
 | minWidth | 最小列宽 | number | 100 |
-| header | 列头 | ReactNode \| (dataSet, name) => ReactNode |  |
+| header | 列头 | ReactNode \| (dataSet, name, title, aggregation) => ReactNode |  |
 | footer | 列脚 | ReactNode \| (dataSet, name) => ReactNode |  |
 | renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet }) => ReactNode |  |
 | editor | 编辑器, 设为`true`时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。 | FormField \| ((record, name) => FormField \| boolean) \| boolean |  |

@@ -1,6 +1,6 @@
 import {
   cloneElement,
-  Component,
+  PureComponent,
   createElement,
   isValidElement,
   Key,
@@ -55,7 +55,7 @@ export interface AnimateState {
   children: ReactElement<any>[];
 }
 
-export default class Animate extends Component<AnimateProps> {
+export default class Animate extends PureComponent<AnimateProps> {
   static displayName = 'Animate';
 
   static propTypes = {
@@ -75,9 +75,7 @@ export default class Animate extends Component<AnimateProps> {
   };
 
   static defaultProps = {
-    animation: {},
     component: 'span',
-    componentProps: {},
     transitionEnter: true,
     transitionLeave: true,
     transitionAppear: false,

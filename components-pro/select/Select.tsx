@@ -16,7 +16,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { Tooltip as OptionTooltip } from '../core/enum';
-import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
+import TriggerField, { TriggerFieldPopupContentProps, TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import Option, { OptionProps } from '../option/Option';
@@ -34,6 +34,7 @@ import isSame from '../_util/isSame';
 import isSameLike from '../_util/isSameLike';
 import { Renderer } from '../field/FormField';
 import isIE from '../_util/isIE';
+import Field from '../data-set/Field';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -96,7 +97,16 @@ export interface ParamMatcherProps {
   valueField: string;
 }
 
-export interface SelectProps extends TriggerFieldProps {
+export interface SelectPopupContentProps extends TriggerFieldPopupContentProps {
+  dataSet: DataSet,
+  textField: string;
+  valueField: string;
+  field?: Field | undefined;
+  record?: Record | undefined;
+  content: ReactNode;
+}
+
+export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> {
   /**
    * 复合输入值
    * @default false
@@ -781,12 +791,20 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     );
   }
 
-  getPopupProps() {
-    const { options, textField, valueField } = this;
+  /**
+   * 增加lov popupContent 回调参数 用于控制对应交互
+   */
+  @autobind
+  getPopupProps(): SelectPopupContentProps {
+    const { options, textField, field, record, valueField } = this;
     return {
+      ...super.getPopupProps(),
       dataSet: options,
       textField,
       valueField,
+      field,
+      record,
+      content: this.getPopupContent(),
     };
   }
 

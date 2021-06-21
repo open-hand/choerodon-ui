@@ -24,6 +24,7 @@ export default class PopupInner extends Component {
         onMouseEnter={props.onMouseEnter}
         onMouseLeave={props.onMouseLeave}
         style={props.style}
+        ref={props.innerRef}
       >
         <LazyRenderBox className={`${props.prefixCls}-content`} hidden={props.hidden}>
           {props.children}

@@ -38,6 +38,7 @@ title: Select
 | noCache    | 下拉时自动重新查询，不缓存下拉数据源                                   | boolean |   |
 | selectAllButton | 多选模式下，是否显示全选按钮 | boolean | true  |
 | reverse | 多选模式下，是否显示反选按钮 | boolean | false  |
+| popupContent | 下拉框的自定义内容, 注意函数参数 dataSet 为下拉列表的 options  | ReactNode \| ({ dataSet, field, record, textField, valueField, content, setValue(value), setPopup(popup) }) => ReactNode |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

@@ -202,6 +202,8 @@ class App extends React.Component {
         computedProps: nameDynamicProps,
         bind: 'name2',
         ignore: 'clean',
+        transformResponse(value) { return value && `${value}!`},
+        transformRequest(value) { return value && value.replace(/!$/, '')},
       },
       {
         name: 'description',

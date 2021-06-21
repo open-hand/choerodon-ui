@@ -1,8 +1,12 @@
-import React, { StatelessComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { ElementProps } from '../core/ViewComponent';
 
-const PopupInner: StatelessComponent<ElementProps> = (props) => (
-  <div {...props} />
+export interface PopupInnerProps extends ElementProps {
+  innerRef: (node) => void;
+}
+
+const PopupInner: FunctionComponent<PopupInnerProps> = ({ innerRef, ...props }) => (
+  <div {...props} ref={innerRef} />
 );
 
 export default PopupInner;

@@ -68,7 +68,7 @@ ReactDOM.render(
       <Option value="M">男</Option>
       <Option value="F">女</Option>
     </SelectBox>
-    <Select label="语言" name="language" required>
+    <Select label="语言" name="language" required multiple>
       <Option value="zh-cn">简体中文</Option>
       <Option value="en-us">英语(美国)</Option>
       <Option value="ja-jp">日本語</Option>
@@ -89,6 +89,7 @@ ReactDOM.render(
       required
       help="请输入你的个人主页，如Github Pages个人博客"
       showHelp="tooltip"
+      renderer={({ text }) => text || '首页' }
     />
     <DatePicker label="生日" name="birth" required />
     <Range label="阈值" name="threshold" required />

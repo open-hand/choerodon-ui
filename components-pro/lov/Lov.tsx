@@ -184,22 +184,6 @@ export default class Lov extends Select<LovProps> {
     return false;
   }
 
-  /**
-   * 增加lov popupContent 回调参数 用于控制对应交互
-   */
-  @autobind
-  getPopupProps() {
-    const { options, textField, field, valueField } = this;
-    return {
-      dataSet: options,
-      textField,
-      valueField,
-      field,
-      setValue: (value) => this.setValue(value),
-      setPopup: (hidden) => this.setPopup(hidden),
-    };
-  }
-
   @autobind
   getPopupContent(): ReactNode {
     if (this.props.searchAction === SearchAction.input) {

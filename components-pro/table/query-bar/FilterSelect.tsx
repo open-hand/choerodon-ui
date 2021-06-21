@@ -339,7 +339,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   @autobind
-  handleEnterDown() {}
+  handleEnterDown() {
+  }
 
   @action
   setSelectField(value) {
@@ -355,7 +356,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     return [];
   }
 
-  syncValueOnBlur() {}
+  syncValueOnBlur() {
+  }
 
   @action
   setQueryValue(fieldName: string, value: any) {
@@ -426,7 +428,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     return data;
   }
 
-  getFieldEditor(props, selectField: Field): ReactElement<FormFieldProps> {
+  getFieldEditor(props, selectField: Field, wrap: (node: ReactElement) => ReactElement): ReactElement<FormFieldProps> {
     const editor: ReactElement<FormFieldProps> = getEditorByField(selectField, true);
     const editorProps: FormFieldProps = {
       ...props,
@@ -443,10 +445,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       (editorProps as SelectProps).dropdownMenuStyle = this.props.dropdownMenuStyle;
       (editorProps as SelectProps).dropdownMatchSelectWidth = false;
     }
-    return cloneElement<FormFieldProps>(editor, editorProps);
+    return wrap(cloneElement<FormFieldProps>(editor, editorProps));
   }
 
-  getFieldSelect(props): ReactElement<SelectProps> {
+  getFieldSelect(props, wrap: (node: ReactElement) => ReactElement): ReactElement<SelectProps> {
     const {
       filterText,
       props: { dropdownMenuStyle },
@@ -456,7 +458,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       editable && filterText
         ? this.getInputFilterOptions(filterText)
         : this.getFieldSelectOptions();
-    return (
+    return wrap(
       <ObserverSelect
         {...props}
         key="key"
@@ -470,7 +472,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         dropdownMatchSelectWidth={false}
       >
         {options}
-      </ObserverSelect>
+      </ObserverSelect>,
     );
   }
 
@@ -493,7 +495,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     return super.renderWrapper();
   }
 
-  renderMultipleEditor(props: FilterSelectProps) {
+  renderMultipleEditor(props: FilterSelectProps, wrap: (node: ReactElement) => ReactElement) {
     const { text, selectField, prefixCls } = this;
     const editorProps: FilterSelectProps = {
       ...omit(props, ['multiple', 'prefixCls']),
@@ -512,8 +514,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           <span className={`${prefixCls}-select-field`}>{this.getFieldLabel(selectField)}:</span>
         ) : null}
         {selectField
-          ? this.getFieldEditor(editorProps, selectField)
-          : this.getFieldSelect(editorProps)}
+          ? this.getFieldEditor(editorProps, selectField, wrap)
+          : this.getFieldSelect(editorProps, wrap)}
       </li>
     );
   }

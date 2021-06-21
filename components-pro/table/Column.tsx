@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'mobx';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { FormFieldProps, HighlightRenderer, Renderer } from '../field/FormField';
+import { FormFieldProps, HighlightRenderer, Renderer, RenderProps } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
@@ -18,6 +18,10 @@ export function defaultAggregationRenderer({ text }) {
 
 export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps; };
 export type commandProps = { dataSet: DataSet; record: Record; };
+
+export interface ColumnRenderProps extends RenderProps {
+  aggregation?: boolean;
+}
 
 export interface ColumnPropsBase extends ElementProps {
   /**
@@ -40,7 +44,7 @@ export interface ColumnPropsBase extends ElementProps {
   /**
    * 列头
    */
-  header?: ReactNode | ((dataSet: DataSet, name?: string, title?: string) => ReactNode);
+  header?: ReactNode | ((dataSet: DataSet, name?: string, title?: string, aggregation?: boolean) => ReactNode);
   /**
    * 列脚
    */
@@ -48,7 +52,7 @@ export interface ColumnPropsBase extends ElementProps {
   /**
    * 单元格渲染回调
    */
-  renderer?: Renderer;
+  renderer?: Renderer<ColumnRenderProps>;
   /**
    * 编辑器
    */

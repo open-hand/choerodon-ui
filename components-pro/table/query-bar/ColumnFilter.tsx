@@ -113,14 +113,13 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
   getMenu() {
     const { prefixCls } = this.props;
     const selfPrefixCls = this.getPrefixCls();
-    const {
-      tableStore: { leafColumns, dataSet },
-    } = this.context;
+    const { tableStore } = this.context;
+    const { leafColumns, dataSet } = tableStore;
     const selectedKeys: Key[] = [];
     const columns: [ColumnProps, ReactNode, Key][] = [];
     leafColumns.forEach(column => {
       if (column.hideable) {
-        const header = getHeader(column, dataSet);
+        const header = getHeader(column, dataSet, tableStore);
         if (header) {
           const key: Key = getColumnKey(column);
           if (!column.hidden) {

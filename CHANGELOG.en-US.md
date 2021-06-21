@@ -17,7 +17,14 @@ timeline: true
 
 - 🌟 `configure`: Added `performanceEnabled`, `onPerformance` properties.
 - 🌟 `<pro>Button`: Added `block` property, Added `link` type for `funcType`.
+- 🌟 `<pro>Table.Column`: Added `aggregation` parameter into `header` and `renderer` hooks.
+- 🌟 `<pro>TriggerField`: Added `tabIntoPopupContent` property, `popupContent` hook added `setValue` and `setPopup` parameters.
+- 🌟 `<pro>Select`: `popupContent` hook adds `content` `dataSet` `textField` `valueField` `setValue` and `setPopup` parameters.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
+- 💄 `<pro>DataSet.Field`: Each language field created by intl typed Field supports `transformResponse` and `transformRequest` properties.
+- 🐞 `<pro>TextField`: Fix the problem that the floating label and the rendered value overlap when the null value is rendered to a non empty text.
+- 🐞 `<pro>TriggerField`: Fix the problem that the input box in popupContent cannot be focused, and fix the problem that the scroll bar of the multi-select mode drop-down box cannot be dragged under IE.
+- 🐞 `<pro>DataSet.Record`: Fix chain binding problem in `init` and `getPristineValue` method.
 - 🐞 `Dropdown`: Fix the problem that overlayProps is undefined when typeof overlay is func.
 - 🐞 `<pro>Table.Column`: Fix the issue that `dynamicProps.label` has no effect on column header.
 - 🐞 `<pro>Button`: Fix style issue.

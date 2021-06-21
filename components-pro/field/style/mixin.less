@@ -69,17 +69,17 @@
     font-size: @float-label-font-size;
     transform: scaleY(0.8);
   }
-  &-float-label & {
+  &-float-label:not(&-multiple) & {
     height: @float-label-height-base;
     border-radius: @input-float-border-radius;
   }
-  &-float-label&-sm & {
+  &-float-label&-sm:not(&-multiple) & {
     height: @float-label-height-sm;
   }
   &-float-label&-sm .@{field-label-prefix-cls} {
     line-height: @float-label-line-height-sm;
   }
-  &-float-label&-lg & {
+  &-float-label&-lg:not(&-multiple) & {
     height: @float-label-height-lg;
   }
   &-float-label&-lg .@{field-label-prefix-cls} {
@@ -115,6 +115,7 @@
   }
   &-float-label & > ul {
     margin-top: 0.06rem;
+    margin-bottom: @input-float-border-active-width;
     margin-left: 0.03rem;
 
     > li {
@@ -129,8 +130,8 @@
   &-float-label &-multiple-block {
     display: inline-block;
     max-width: 99%;
-    margin: 0 0.02rem;
-    padding: 0 0 0 0.08rem;
+    margin: 0 @input-float-border-active-width;
+    padding: 0 @input-float-border-active-width 0 0.08rem;
     overflow: hidden;
     color: @tag-default-color;
     line-height: @line-height-base;

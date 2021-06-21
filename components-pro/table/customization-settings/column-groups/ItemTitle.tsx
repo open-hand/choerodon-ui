@@ -13,10 +13,11 @@ export interface ItemTitleProps {
 
 const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
   const { record, provided } = props;
-  const { tableStore: { dataSet, columnTitleEditable } } = useContext(TableContext);
+  const { tableStore } = useContext(TableContext);
+  const { dataSet, columnTitleEditable } = tableStore;
   const editing = record.getState('editing');
   const handleEditBlur = useCallback(() => {
-    record.setState('editing', false)
+    record.setState('editing', false);
   }, []);
   const handleHeaderChange = useCallback((value) => {
     record.set('title', value);
@@ -26,7 +27,7 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
     name: record.get('name'),
     title,
     header: record.get('header'),
-  }, dataSet);
+  }, dataSet, tableStore);
   const titleEditable = columnTitleEditable && record.get('titleEditable') !== false;
 
   return (

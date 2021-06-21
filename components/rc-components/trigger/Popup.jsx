@@ -117,11 +117,10 @@ class Popup extends Component {
     return `${this.props.prefixCls} ${this.props.className} ${currentAlignClassName}`;
   }
 
-  getPopupElement() {
+  renderPopupInner = (innerRef) => {
     const { savePopupRef } = this;
-    const { stretchChecked, targetHeight, targetWidth } = this.state;
     const {
-      align, visible,
+      align,
       prefixCls, style, getClassNameFromAlign,
       destroyPopupOnHide, stretch, children,
       onMouseEnter, onMouseLeave,
@@ -129,11 +128,6 @@ class Popup extends Component {
     const className = this.getClassName(this.currentAlignClassName ||
       getClassNameFromAlign(align));
     const hiddenClassName = `${prefixCls}-hidden`;
-
-    if (!visible) {
-      this.currentAlignClassName = null;
-    }
-
     const sizeStyle = {};
     if (stretch) {
       if (stretchChecked) {
@@ -153,13 +147,11 @@ class Popup extends Component {
         return null;
       }
     }
-
     const newStyle = {
       ...sizeStyle,
       ...style,
       ...this.getZIndexStyle(),
     };
-
     const popupInnerProps = {
       className,
       prefixCls,
@@ -168,6 +160,35 @@ class Popup extends Component {
       onMouseLeave,
       style: newStyle,
     };
+    if (!destroyPopupOnHide) {
+      popupInnerProps.hiddenClassName = hiddenClassName;
+    }
+    return (
+      <PopupInner
+        innerRef={innerRef}
+        {...popupInnerProps}
+      >
+        {children}
+      </PopupInner>
+    );
+  };
+
+  getPopupElement() {
+    const { stretchChecked } = this.state;
+    const {
+      align, visible,
+      destroyPopupOnHide, stretch,
+    } = this.props;
+
+    if (!visible) {
+      this.currentAlignClassName = null;
+    }
+
+    if (stretch && !stretchChecked) {
+      // Do nothing when stretch not ready
+      return null;
+    }
+
     if (destroyPopupOnHide) {
       return (
         <Animate
@@ -187,11 +208,7 @@ class Popup extends Component {
               align={align}
               onAlign={this.onAlign}
             >
-              <PopupInner
-                {...popupInnerProps}
-              >
-                {children}
-              </PopupInner>
+              {this.renderPopupInner}
             </Align>
           ) : null}
         </Animate>
@@ -216,12 +233,7 @@ class Popup extends Component {
           align={align}
           onAlign={this.onAlign}
         >
-          <PopupInner
-            hiddenClassName={hiddenClassName}
-            {...popupInnerProps}
-          >
-            {children}
-          </PopupInner>
+          {this.renderPopupInner}
         </Align>
       </Animate>
     );
