@@ -2,7 +2,7 @@ import React, { cloneElement, Component, CSSProperties, isValidElement, ReactEle
 import classNames from 'classnames';
 import getPlacements, { AdjustOverflow, PlacementsConfig } from './placements';
 import RcTooltip from '../rc-components/tooltip';
-import { getPrefixCls } from '../configure';
+import { getConfig, getPrefixCls } from '../configure';
 
 export { AdjustOverflow, PlacementsConfig };
 
@@ -19,6 +19,8 @@ export type TooltipPlacement =
   | 'leftBottom'
   | 'rightTop'
   | 'rightBottom';
+
+export type TooltipTheme = 'light' | 'dark';
 
 export interface AbstractTooltipProps {
   prefixCls?: string;
@@ -48,6 +50,7 @@ export type RenderFunction = () => ReactNode;
 export interface TooltipProps extends AbstractTooltipProps {
   title?: ReactNode | RenderFunction;
   overlay?: ReactNode | RenderFunction;
+  theme?: TooltipTheme;
 }
 
 const splitObject = (obj: any, keys: string[]) => {
@@ -223,6 +226,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
       openClassName,
       getPopupContainer,
       getTooltipContainer,
+      theme = getConfig('tooltipTheme'),
     } = props;
     const prefixCls = getPrefixCls('tooltip', customizePrefixCls);
     const children = props.children as ReactElement<any>;
@@ -251,6 +255,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
         visible={visible}
         onVisibleChange={this.onVisibleChange}
         onPopupAlign={this.onPopupAlign}
+        theme={theme}
       >
         {visible ? cloneElement(child, { className: childCls }) : child}
       </RcTooltip>

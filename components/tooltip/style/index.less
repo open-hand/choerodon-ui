@@ -56,6 +56,12 @@
     .@{c7n-pro-prefix}-output {
       line-height: unset;
     }
+
+
+    &-light {
+      color: @tooltip-color-light;
+      background-color: @tooltip-bg-light;
+    }
   }
 
   // Arrows
@@ -73,6 +79,10 @@
     bottom: @tooltip-distance - @tooltip-arrow-width;
     border-width: @tooltip-arrow-width @tooltip-arrow-width 0;
     border-top-color: @tooltip-arrow-color;
+
+    &-light {
+      border-top-color: @tooltip-arrow-color-light;
+    }
   }
 
   &-placement-top &-arrow {
@@ -94,6 +104,10 @@
     left: @tooltip-distance - @tooltip-arrow-width;
     border-width: @tooltip-arrow-width @tooltip-arrow-width @tooltip-arrow-width 0;
     border-right-color: @tooltip-arrow-color;
+
+    &-light {
+      border-right-color: @tooltip-arrow-color-light;
+    }
   }
 
   &-placement-right &-arrow {
@@ -115,6 +129,10 @@
     right: @tooltip-distance - @tooltip-arrow-width;
     border-width: @tooltip-arrow-width 0 @tooltip-arrow-width @tooltip-arrow-width;
     border-left-color: @tooltip-arrow-color;
+
+    &-light {
+      border-left-color: @tooltip-arrow-color-light;
+    }
   }
 
   &-placement-left &-arrow {
@@ -136,6 +154,10 @@
     top: @tooltip-distance - @tooltip-arrow-width;
     border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;
     border-bottom-color: @tooltip-arrow-color;
+
+    &-light {
+      border-bottom-color: @tooltip-arrow-color-light;
+    }
   }
 
   &-placement-bottom &-arrow {

@@ -24,6 +24,7 @@ import { HighlightRenderer, Renderer } from 'choerodon-ui/pro/lib/field/FormFiel
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { onCellProps } from 'choerodon-ui/pro/lib/table/Column';
+import { TooltipTheme } from '../tooltip';
 import { SpinProps } from '../spin';
 import { PanelProps } from '../collapse';
 import { Size } from '../_util/enum';
@@ -212,7 +213,18 @@ export type Config = {
    * 性能监控钩子
    */
   onPerformance?: PerformanceEventHook<keyof PerformanceEvents>;
-  performanceEnabled?: { [key in keyof PerformanceEvents]: boolean }
+  /**
+   * 开启性能监控
+   */
+  performanceEnabled?: { [key in keyof PerformanceEvents]: boolean };
+  /**
+   * tooltip 主题
+   */
+  tooltipTheme?: TooltipTheme;
+  /**
+   * 校验提示 tooltip 主题
+   */
+  validationTooltipTheme?: TooltipTheme;
 };
 
 export type ConfigKeys = keyof Config;
@@ -337,6 +349,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['highlightRenderer', defaultFormFieldHighlightRenderer],
   ['onPerformance', noop],
   ['performanceEnabled', { Table: false }],
+  ['tooltipTheme', 'dark'],
+  ['validationTooltipTheme', 'light'],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

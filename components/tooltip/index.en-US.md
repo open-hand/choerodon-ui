@@ -16,6 +16,7 @@ A simple text popup tip.
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | title | The text shown in the tooltip | string\|ReactNode\|() => ReactNode | - |
+| theme | theme | dark \| light |    |
 
 ### Common API
 

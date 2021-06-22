@@ -92,6 +92,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       'onAnimateEnter',
       'onAnimateLeave',
       'onAnimateEnd',
+      'getFocusableElements',
     ]);
   }
 

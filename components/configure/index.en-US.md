@@ -114,6 +114,8 @@ const prefixCls = getConfig('prefixCls');
 | highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | performanceEnabled | 开启性能监控 | { Table: boolean } | { Table: false }  |
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
+| tooltipTheme | Tooltip 主题 | dark \| light |  dark |
+| validationTooltipTheme | 校验提示 Tooltip 主题 | dark \| light | light  |
 
 ### Formatter
 
