@@ -21,14 +21,14 @@
 // == when focus or actived
 .active(@color: @input-focus-border-color) {
   color: @input-active-color;
-  border-color: ~`colorPalette('@{color}', 5) `;
+  border-color: @color;
   outline: 0;
   box-shadow: @input-active-box-shadow;
 }
 
 // == when hoverd
 .hover(@color: @input-hover-border-color) {
-  border-color: ~`colorPalette('@{color}', 5) `;
+  border-color: @color;
 }
 
 .disabled() {
@@ -115,6 +115,11 @@
   label:hover &,
   &:hover {
     .hover;
+  }
+
+  &-required-colors label:hover &,
+  &-required-colors &:hover {
+    .hover(@input-required-hover-border-color);
   }
 
   &:focus,
@@ -506,6 +511,9 @@
   }
   &-float-label:hover:not(&-disabled):not(&-focused):not(&-invalid)::before {
     border-color: @input-float-hover-border-color;
+  }
+  &-float-label&-required-colors:hover:not(&-disabled):not(&-focused):not(&-invalid)::before {
+    border-color: @input-float-required-hover-border-color;
   }
 
   &-float-label&-focused::before {
