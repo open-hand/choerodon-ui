@@ -16,15 +16,15 @@
 }
 // input status
 // == when focus or actived
-.active(@color: @outline-color) {
-  border-color: ~`colorPalette('@{color}', 5) `;
+.active(@color: @input-focus-border-color) {
+  border-color: @color;
   outline: 0;
   // box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
 }
 
 // == when hoverd
 .hover(@color: @input-hover-border-color) {
-  border-color: ~`colorPalette('@{color}', 5) `;
+  border-color: @color;
 }
 
 .disabled() {

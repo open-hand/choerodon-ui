@@ -6,7 +6,7 @@ export interface TextFieldGroupProps {
   children?: ReactNode;
 }
 
-const TextFieldGroup: FunctionComponent<TextFieldGroupProps> = ({ prefixCls, onBlur, children }) => {
+const TextFieldGroup: FunctionComponent<TextFieldGroupProps> = ({ prefixCls, onBlur, children, ...otherProps }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const { current } = ref;
@@ -25,7 +25,7 @@ const TextFieldGroup: FunctionComponent<TextFieldGroupProps> = ({ prefixCls, onB
     }
   }, [onBlur, ref]);
   return (
-    <div ref={ref} className={`${prefixCls}-group-wrapper`}>
+    <div ref={ref} className={`${prefixCls}-group-wrapper`} {...otherProps}>
       {children}
     </div>
   );

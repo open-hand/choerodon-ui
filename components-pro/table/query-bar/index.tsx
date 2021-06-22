@@ -19,7 +19,7 @@ import Table, {
   SummaryBar,
   SummaryBarHook,
   TableButtonProps,
-  TableQueryBarHook,
+  TableQueryBarHook, TableQueryBarHookCustomProps,
   TableQueryBarHookProps,
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
@@ -64,37 +64,37 @@ export interface TableQueryBarProps {
 
 const ExportBody = observer((props) => {
   const { dataSet, prefixCls } = props;
-  let exportMessage = $l('Table', 'export_ing')
+  let exportMessage = $l('Table', 'export_ing');
   let exportProgress = {
     percent: 1,
     status: ProgressStatus.active,
-  }
+  };
 
   switch (dataSet.exportStatus) {
     case DataSetExportStatus.start:
       exportProgress = {
         percent: 1,
         status: ProgressStatus.active,
-      }
+      };
       break;
     case DataSetExportStatus.exporting:
       exportProgress = {
         percent: 20,
         status: ProgressStatus.active,
-      }
+      };
       break;
     case DataSetExportStatus.progressing:
       exportProgress = {
         percent: 50,
         status: ProgressStatus.active,
-      }
+      };
       break;
     case DataSetExportStatus.failed:
-      exportMessage = $l('Table', 'export_failed')
+      exportMessage = $l('Table', 'export_failed');
       exportProgress = {
         percent: 50,
         status: ProgressStatus.exception,
-      }
+      };
       break;
     case DataSetExportStatus.success:
       exportMessage = $l('Table', 'export_success');
@@ -114,13 +114,15 @@ const ExportBody = observer((props) => {
       </span>
       <Progress {...exportProgress} />
     </div>
-  )
-})
+  );
+});
 
 const ExportFooter = observer((props) => {
   const { dataSet, prefixCls, exportButton } = props;
   const [username, setUsername] = useState(dataSet.name || $l('Table', 'defalut_export'));
-  const handleClick = () => { exportButton(dataSet.exportStatus, username) };
+  const handleClick = () => {
+    exportButton(dataSet.exportStatus, username);
+  };
   const [messageTimeout, setMessageTimeout] = useState<string | undefined>(undefined);
 
   React.useEffect(() => {
@@ -138,15 +140,21 @@ const ExportFooter = observer((props) => {
   }, []);
   return (
     <div className={`${prefixCls}-export-progress-footer`}>
-      { dataSet.exportStatus === DataSetExportStatus.failed && <><span>{$l('Table', 'export_break')}</span><Button onClick={handleClick}>{$l('Table', 'retry_button')}</Button></>}
-      { dataSet.exportStatus === DataSetExportStatus.success && <><div><span>{`${$l('Table', 'file_name')}:`}</span><TextField value={username} onChange={(value) => { setUsername(value) }} /></div><Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
-      { dataSet.exportStatus !== DataSetExportStatus.success &&
-        dataSet.exportStatus !== DataSetExportStatus.failed &&
-        <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray} onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
+      {dataSet.exportStatus === DataSetExportStatus.failed && <><span>{$l('Table', 'export_break')}</span><Button
+        onClick={handleClick}>{$l('Table', 'retry_button')}</Button></>}
+      {dataSet.exportStatus === DataSetExportStatus.success && <>
+        <div><span>{`${$l('Table', 'file_name')}:`}</span><TextField value={username} onChange={(value) => {
+          setUsername(value);
+        }} /></div>
+        <Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
+      {dataSet.exportStatus !== DataSetExportStatus.success &&
+      dataSet.exportStatus !== DataSetExportStatus.failed &&
+      <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray}
+                                                                                onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
       }
     </div>
-  )
-})
+  );
+});
 
 @observer
 export default class TableQueryBar extends Component<TableQueryBarProps> {
@@ -313,7 +321,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         clientExportQuantity,
       ).then((exportData) => {
         this.exportData = exportData;
-      })
+      });
       if (exportModal) {
         exportModal.update(
           {
@@ -336,13 +344,13 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     } = this.context;
     if (data === DataSetExportStatus.success) {
       if (this.exportData) {
-        exportExcel(this.exportData, filename)
+        exportExcel(this.exportData, filename);
         this.exportModal.close();
         this.exportData = null;
       }
     } else if (data === DataSetExportStatus.failed) {
       this.exportData = null;
-      this.handleExport()
+      this.handleExport();
     } else {
       this.exportModal.close();
       this.exportData = null;
@@ -775,7 +783,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const summaryBar = this.getSummaryBar();
     const {
       context: {
-        tableStore: { dataSet, queryBar, prefixCls, isTree },
+        tableStore: { dataSet, queryBar, prefixCls, isTree, props: { queryBarProps } },
       },
       props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded },
       showQueryBar,
@@ -785,7 +793,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
       const queryFields = this.getQueryFields();
-      const props: TableQueryBarHookProps = {
+      const props: TableQueryBarHookCustomProps & TableQueryBarHookProps = {
+        ...queryBarProps,
         dataSet,
         queryDataSet,
         buttons,

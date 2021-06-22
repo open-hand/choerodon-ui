@@ -1,27 +1,14 @@
 import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import isNil from 'lodash/isNil';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import Trigger, { RenderFunction, TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
 import autobind from '../_util/autobind';
 
-export type TooltipPlacement =
-  | 'top'
-  | 'left'
-  | 'right'
-  | 'bottom'
-  | 'topLeft'
-  | 'topRight'
-  | 'bottomLeft'
-  | 'bottomRight'
-  | 'leftTop'
-  | 'leftBottom'
-  | 'rightTop'
-  | 'rightBottom';
-
-export type TooltipTheme = 'light' | 'dark';
+export { TooltipPlacement, TooltipTheme };
 
 export interface TooltipProps {
   prefixCls?: string;
@@ -164,7 +151,6 @@ export default class Tooltip extends Component<TooltipProps, any> {
     mouseLeaveDelay: 100,
     arrowPointAtCenter: false,
     autoAdjustOverflow: true,
-    theme: 'dark',
     defaultHidden: true,
     trigger: [Action.hover],
   };
@@ -217,7 +203,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   @autobind
   renderPopupContent(...props) {
     const { translate } = this.state;
-    const { theme } = this.props;
+    const { theme = getConfig('tooltipTheme') } = this.props;
     const content = this.getContent(...props);
     if (content) {
       return (

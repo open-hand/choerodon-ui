@@ -25,6 +25,7 @@ class Tooltip extends Component {
     align: PropTypes.object,
     arrowContent: PropTypes.any,
     id: PropTypes.string,
+    theme: PropTypes.string,
   };
 
   static defaultProps = {
@@ -39,12 +40,12 @@ class Tooltip extends Component {
   };
 
   getPopupElement = () => {
-    const { arrowContent, overlay, prefixCls, id } = this.props;
+    const { arrowContent, overlay, prefixCls, id, theme } = this.props;
     return [
-      <div className={`${prefixCls}-arrow`} key="arrow">
+      <div className={`${prefixCls}-arrow ${prefixCls}-arrow-${theme}`} key="arrow">
         {arrowContent}
       </div>,
-      <div className={`${prefixCls}-inner`} key="content" id={id}>
+      <div className={`${prefixCls}-inner ${prefixCls}-inner-${theme}`} key="content" id={id}>
         {typeof overlay === 'function' ? overlay() : overlay}
       </div>,
     ];

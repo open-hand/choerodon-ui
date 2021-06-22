@@ -1300,7 +1300,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
             key={String(index)}
             title={validationMessage}
-            theme="light"
+            theme={getConfig('validationTooltipTheme') || getConfig('tooltipTheme')}
             placement="bottomLeft"
             hidden={this.isValidationMessageHidden(validationMessage)}
           >
@@ -1449,7 +1449,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       <Tooltip
         suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
         title={this.getTooltipValidationMessage}
-        theme="light"
+        theme={getConfig('validationTooltipTheme') || getConfig('tooltipTheme')}
         placement="bottomLeft"
       >
         {wrapper}
