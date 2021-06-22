@@ -134,8 +134,8 @@ export interface onRowProps {
   index: number;
   expandedRow: boolean;
 }
-
-export type TableQueryBarHook = (props: TableQueryBarHookProps) => ReactNode;
+export type TableQueryBarHookCustomProps = object;
+export type TableQueryBarHook = (props: TableQueryBarHookCustomProps & TableQueryBarHookProps) => ReactNode;
 export type Commands =
   | TableCommandType
   | [TableCommandType, TableButtonProps]
@@ -338,6 +338,10 @@ export interface TableProps extends DataSetComponentProps {
    * @default 'normal'
    */
   queryBar?: TableQueryBarType | TableQueryBarHook;
+  /**
+   * 查询条自定义参数
+   */
+  queryBarProps?: TableQueryBarHookCustomProps;
   /**
    * 显示汇总条
    * @default 'normal'
@@ -1220,6 +1224,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'queryFieldsLimit',
       'summaryFieldsLimit',
       'queryBar',
+      'queryBarProps',
       'autoFocus',
       'summaryBar',
       'defaultRowExpanded',

@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`：新增 performanceEnabled, onPerformance, tooltipTheme, validationTooltipTheme 属性。
 - 🌟 `Tooltip`：新增 theme 属性。
+- 🌟 `<pro>Table`：新增queryBarProps 属性。
 - 🌟 `<pro>Button`：新增 block 属性, funcType 新增 link 类型。
 - 🌟 `<pro>Table.Column`: header 和 renderer 钩子新增 aggregation 参数。
 - 🌟 `<pro>TriggerField`: 新增 tabIntoPopupContent 属性, popupContent 钩子新增 setValue 和 setPopup 参数。

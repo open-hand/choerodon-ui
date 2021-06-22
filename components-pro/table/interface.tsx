@@ -37,6 +37,7 @@ export {
   SummaryBar,
   SummaryBarProps,
   TableQueryBarHookProps,
+  TableQueryBarHookCustomProps,
   expandedRowRendererProps,
   expandIconProps,
   onRowProps,

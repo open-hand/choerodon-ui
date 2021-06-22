@@ -769,7 +769,6 @@ export default class Record {
       }
       if (data) {
         this.processData(data, true);
-        this.pristineData = this.data;
         const { children } = dataSet;
         const keys = Object.keys(children);
         if (keys.length) {
@@ -793,6 +792,7 @@ export default class Record {
         }
       }
     }
+    this.dirtyData.clear();
     [...fields.values()].forEach(field => field.commit());
     this.status = RecordStatus.sync;
     return this;
