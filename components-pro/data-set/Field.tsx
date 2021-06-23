@@ -2,6 +2,7 @@ import { CSSProperties, ReactNode } from 'react';
 import { action, computed, get, IComputedValue, isObservableObject, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
+import omit from 'lodash/omit';
 import isFunction from 'lodash/isFunction';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
@@ -931,7 +932,7 @@ export default class Field {
         defaultValidationMessages,
       };
       if (!this.validatorPropKeys.length) {
-        this.validatorPropKeys = Object.keys(validatorProps);
+        this.validatorPropKeys = Object.keys(omit(validatorProps, ['label', 'defaultValidationMessages']));
       }
       return validatorProps;
     }

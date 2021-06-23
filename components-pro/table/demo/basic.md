@@ -190,6 +190,7 @@ class App extends React.Component {
       {
         name: 'name1',
         ignore: 'always',
+        required: true,
       },
       {
         name: 'name2',

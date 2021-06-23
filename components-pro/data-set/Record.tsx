@@ -15,6 +15,7 @@ import {
   childrenInfoForDelete,
   findBindField,
   findBindFields,
+  findBindTargetFields,
   generateData,
   generateJSONData,
   generateResponseData,
@@ -613,7 +614,8 @@ export default class Record {
           }
         }
       }
-      [field, ...findBindFields(field, this.fields, true)].forEach((oneField) => {
+      const { fields } = this;
+      [field, ...findBindFields(field, fields, true), ...findBindTargetFields(field, fields, true)].forEach((oneField) => {
         oneField.validator.reset();
         oneField.checkValidity(false);
       });
