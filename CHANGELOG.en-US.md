@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>TriggerField`: Added `tabIntoPopupContent` property, `popupContent` hook added `setValue` and `setPopup` parameters.
 - 🌟 `<pro>Select`: `popupContent` hook adds `content` `dataSet` `textField` `valueField` `setValue` and `setPopup` parameters.
 - 🌟 `<pro>Table`：Added `queryBarProps` property.
+- 🌟 `<pro>TreeSelect`: Added `showCheckedStrategy` property, when configuring `treeCheckable`, define the way of backfilling selected items.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
 - 💄 `<pro>DataSet.Field`: Each language field created by intl typed Field supports `transformResponse` and `transformRequest` properties.
 - 🐞 `<pro>TextField`: Fix the problem that Tooltip cannot be displayed when there is `addonBefore`, `addonAfter` or `help`.
