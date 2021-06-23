@@ -15,12 +15,19 @@ import { defaultRenderer } from '../tree';
 import { getTreeNodes } from '../tree/util';
 import Icon from '../icon';
 
+export enum CheckedStrategy {
+  SHOW_ALL = 'SHOW_ALL',
+  SHOW_PARENT = 'SHOW_PARENT',
+  SHOW_CHILD = 'SHOW_CHILD',
+}
+
 export interface TreeSelectProps extends SelectProps {
   treeCheckable?: boolean;
   treeDefaultExpandAll?: boolean;
   treeDefaultExpandedKeys?: Key[];
   async?: boolean;
   loadData?: (node) => Promise<any>
+  showCheckedStrategy?: CheckedStrategy;
 }
 
 @observer
@@ -29,6 +36,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
 
   static propTypes = {
     treeCheckable: PropTypes.bool,
+    showCheckedStrategy: PropTypes.string,
     treeDefaultExpandAll: PropTypes.bool,
     treeDefaultExpandedKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
     ...Select.propTypes,
@@ -38,6 +46,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     ...Select.defaultProps,
     suffixCls: 'tree-select',
     dropdownMatchSelectWidth: false,
+    showCheckedStrategy: 'SHOW_ALL',
     reverse: false,
   };
 
@@ -83,7 +92,15 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     return (
       options ||
       (field && field.options) ||
-      normalizeTreeNodes({ textField, valueField, disabledField: DISABLED_FIELD, parentField, idField, multiple, children })
+      normalizeTreeNodes({
+        textField,
+        valueField,
+        disabledField: DISABLED_FIELD,
+        parentField,
+        idField,
+        multiple,
+        children,
+      })
     );
   }
 
@@ -113,6 +130,10 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     this.expandedKeys = keys;
   }
 
+  @computed
+  get multiple(): boolean {
+    return !!this.getProp('multiple') || !!this.props.treeCheckable;
+  }
 
   @autobind
   handleTreeSelect(_e, { node }) {
@@ -124,23 +145,87 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       const { multiple } = this;
       if (multiple) {
         if (this.isSelected(record)) {
-          const records = record.treeReduce((array, r) => this.isSelected(r) ? array.concat(r) : array, []);
-          const parents = record.parents.filter(parent => this.isSelected(parent));
-          this.unChoose(records.concat(parents));
+          this.unChoose(record);
         } else {
-          const records = record.treeReduce((array, r) => this.isSelected(r) ? array : array.concat(r), []);
-          const parents: Record[] = [];
-          record.parents.every((parent, index) => {
-            const { children } = parent;
-            if (children && children.every(child => {
-              return (index === 0 ? records.includes(child) : parents.includes(child)) || this.isSelected(child);
-            })) {
-              parents.push(parent);
-              return true;
+          this.choose(record);
+        }
+      } else {
+        this.choose(record);
+      }
+    }
+  }
+
+  @autobind
+  handleTreeCheck(_e, { node }) {
+    const { record, disabled, key } = node;
+    const { valueField } = this;
+    if (key === MORE_KEY) {
+      const { options } = this;
+      options.queryMore(options.currentPage + 1);
+    } else if (!disabled) {
+      const { multiple, props: { showCheckedStrategy } } = this;
+      if (multiple) {
+        const records = record.treeReduce((array, r) => this.isSelected(r) ? array : array.concat(r), []);
+        const parents: Record[] = [];
+        record.parents.every((parent, index) => {
+          const { children } = parent;
+          if (children && children.every(child => {
+            return (index === 0 ? records.includes(child) : parents.includes(child)) || this.isSelected(child);
+          })) {
+            parents.push(parent);
+            return true;
+          }
+          return false;
+        });
+        if (showCheckedStrategy === 'SHOW_ALL') {
+          if (this.isSelected(record)) {
+            const unChooseRecords = record.treeReduce((array, r) => this.isSelected(r) ? array.concat(r) : array, []);
+            const unChooseParents = record.parents.filter(parent => this.isSelected(parent));
+            this.unChoose(unChooseRecords.concat(unChooseParents));
+          } else {
+            this.choose(records.concat(parents));
+          }
+        }
+        if (showCheckedStrategy === 'SHOW_PARENT') {
+          if (this.isSelected(record) || record.parents.some(parent => this.isSelected(parent))) {
+            const selectedRecords = this.options.filter(option => {
+              if (key === option.get(valueField) || (option.children && option.children.includes(record))) {
+                return false;
+              }
+              return !!((option.parent && option.children && record.parent && (option.parents.some(parent => this.isSelected(parent)) || this.isSelected(option)))
+                ||
+                (!option.children && option.parent.children.includes(record) && option.parents.some(parent => this.isSelected(parent)))
+                ||
+                (!option.children && option.parents.every(parent => !this.isSelected(parent)) && this.isSelected(option)));
+            });
+            this.setValue(selectedRecords.map(this.processRecordToObject, this));
+          } else {
+            const preSelected = this.options.filter(option => this.isSelected(option)).concat(record, parents);
+            const selectedRecords = preSelected.filter((child) => {
+              return !(child.parent && preSelected.includes(child.parent));
+            });
+            this.setValue(selectedRecords.map(this.processRecordToObject, this));
+          }
+        }
+        if (showCheckedStrategy === 'SHOW_CHILD') {
+          if (!record.parent) {
+            if (this.options.every(option => (!option.children && this.isSelected(option)) || !!option.children)) {
+              this.unChooseAll();
+            } else {
+              this.choose(records.filter(childRecord => !childRecord.children));
             }
-            return false;
-          });
-          this.choose(records.concat(parents));
+          }
+          if (this.isSelected(record) && !record.children) {
+            this.unChoose(record);
+          } else if (!this.isSelected(record) && record.children && record.parent) {
+            if (record.children.every(child => this.isSelected(child))) {
+              this.unChoose(record.children);
+            } else {
+              this.choose(records.filter(chooseRecord => !chooseRecord.children));
+            }
+          } else {
+            this.choose(records.filter(chooseRecord => !chooseRecord.children));
+          }
         }
       } else {
         this.choose(record);
@@ -173,6 +258,9 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       promises.push(loadData(event));
     }
     return Promise.all(promises);
+  }
+
+  renderSelectAll() {
   }
 
   @autobind
@@ -240,8 +328,8 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         ref={this.saveMenu}
         ripple
         disabled={menuDisabled}
-        onSelect={this.handleTreeSelect}
-        onCheck={this.handleTreeSelect}
+        onSelect={treeCheckable ? this.handleTreeCheck : this.handleTreeSelect}
+        onCheck={this.handleTreeCheck}
         onExpand={this.handleExpand}
         style={{ ...IeMenuStyle, ...dropdownMenuStyle }}
         selectable
@@ -251,7 +339,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         defaultExpandedKeys={treeDefaultExpandedKeys}
         selectedKeys={selectedKeys}
         checkedKeys={selectedKeys}
-        checkable={'treeCheckable' in this.props ? treeCheckable : multiple}
+        checkable={treeCheckable}
         className={menuPrefixCls}
         multiple={multiple}
         loadData={async ? this.handleLoadData : loadData}

@@ -14,7 +14,9 @@ title:
 Multiple values via property `multiple`.
 
 ````jsx
-import { DataSet, TreeSelect, Row, Col } from 'choerodon-ui/pro';
+import { DataSet, TreeSelect, Row, Col, SelectBox } from 'choerodon-ui/pro';
+
+const { Option } = SelectBox;
 
 function handleChange(value, oldValue) {
   console.log('[multiple]', value, '[oldValue]', oldValue);
@@ -31,6 +33,10 @@ const data = [{
 }];
 
 class App extends React.Component {
+  state = {
+    showCheckedStrategy: 'SHOW_ALL',
+  };
+  
   ds = new DataSet({
     data,
     fields: [
@@ -40,14 +46,32 @@ class App extends React.Component {
       update: handleDataSetChange,
     },
   });
+  
+  handleChange = (value) => {
+    console.log('handleChange', value)
+     this.setState({ showCheckedStrategy: value })
+  };
 
   render() {
+    console.log('showCheckedStrategy', this.state.showCheckedStrategy)
     return (
       <Row gutter={10}>
         <Col span={24}>
+          <SelectBox value={this.state.showCheckedStrategy} onChange={this.handleChange}>
+            <Option value="SHOW_CHILD">SHOW_CHILD</Option>
+            <Option value="SHOW_PARENT">SHOW_PARENT</Option>
+            <Option value="SHOW_ALL">
+              SHOW_All
+            </Option>
+          </SelectBox>
+        </Col>
+        <Col span={24}>
           <TreeSelect
+            treeCheckStrictly
+            treeDefaultExpandAll
+            treeCheckable
+            showCheckedStrategy={this.state.showCheckedStrategy}
             dataSet={this.ds} name="user" placeholder="数据源多选"
-            maxTagCount={2} maxTagTextLength={3} maxTagPlaceholder={restValues => `+${restValues.length}...`}
           >
             <TreeNode value="parent 1" title="parent 1">
               <TreeNode value="parent 1-0" title="parent 1-0">
