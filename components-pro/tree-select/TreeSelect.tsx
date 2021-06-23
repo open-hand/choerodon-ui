@@ -14,6 +14,7 @@ import isIE from '../_util/isIE';
 import { defaultRenderer } from '../tree';
 import { getTreeNodes } from '../tree/util';
 import Icon from '../icon';
+import { preventDefault } from '../_util/EventManager';
 
 export enum CheckedStrategy {
   SHOW_ALL = 'SHOW_ALL',
@@ -328,6 +329,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         ref={this.saveMenu}
         ripple
         disabled={menuDisabled}
+        onMouseDown={preventDefault}
         onSelect={treeCheckable ? this.handleTreeCheck : this.handleTreeSelect}
         onCheck={this.handleTreeCheck}
         onExpand={this.handleExpand}

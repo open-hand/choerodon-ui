@@ -25,7 +25,7 @@ import { DataSetStatus, FieldType } from '../data-set/enum';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Spin from '../spin';
-import { stopEvent } from '../_util/EventManager';
+import { preventDefault, stopEvent } from '../_util/EventManager';
 import normalizeOptions, { OTHER_OPTION_PROPS } from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
@@ -775,6 +775,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         selectedKeys={selectedKeys}
         prefixCls={menuPrefix}
         onClick={this.handleMenuClick}
+        onMouseDown={preventDefault}
         style={{ ...IeMenuStyle, ...dropdownMenuStyle }}
         focusable={false}
         {...menuProps}

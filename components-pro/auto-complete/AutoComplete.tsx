@@ -8,6 +8,7 @@ import { getItemKey, MORE_KEY, Select, SelectProps } from '../select/Select';
 import DataSet from '../data-set';
 import { FieldType } from '../data-set/enum';
 import Icon from '../icon';
+import { preventDefault } from '../_util/EventManager';
 
 
 const defaultMatcher = (value: string, inputText: string) => value.indexOf(inputText) !== -1;
@@ -149,6 +150,7 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
         selectedKeys={selectedKeys}
         prefixCls={menuPrefix}
         onClick={this.handleMenuClick}
+        onMouseDown={preventDefault}
         style={dropdownMenuStyle}
         focusable={false}
         {...menuProps}
