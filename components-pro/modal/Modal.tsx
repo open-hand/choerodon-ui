@@ -334,7 +334,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-drawer`]: drawer,
       [`${prefixCls}-border`]: drawer ? drawerBorder : border,
       [`${prefixCls}-drawer-${drawerTransitionName}`]: drawer,
-      [`${prefixCls}-auto-center`]: autoCenter,
+      [`${prefixCls}-auto-center`]: autoCenter && !drawer && !fullScreen,
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-active`]: active,
     });
