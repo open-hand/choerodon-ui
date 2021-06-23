@@ -270,6 +270,7 @@ export default class Trigger extends Component<TriggerProps> {
   handleEvent(eventName, child, e) {
     const { activeElement } = this;
     if (activeElement && this.isBlurToHide() && eventName === 'Blur') {
+      e.stopPropagation();
       const { target } = e;
       if (!this.focusTarget) {
         this.focusTarget = target;
@@ -298,13 +299,21 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   handlePopupMouseDown(e) {
-    const { target } = e;
-    const { popup } = this;
-    const element = focusable(target) ? target : findFocusableParent(target, popup && popup.element);
-    if (element) {
-      this.activeElement = element;
-      e.stopPropagation();
-    } else if (this.isBlurToHide()) {
+    let fix = false;
+    if (!e.isDefaultPrevented()) {
+      const { target } = e;
+      const { popup } = this;
+      const element = focusable(target) ? target : findFocusableParent(target, popup && popup.element);
+      if (element) {
+        this.activeElement = element;
+        e.stopPropagation();
+      } else {
+        fix = true;
+      }
+    } else {
+      fix = true;
+    }
+    if (fix && this.isBlurToHide()) {
       e.preventDefault();
       if (isIE()) {
         this.activeElement = true;
@@ -338,8 +347,10 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   @autobind
-  handlePopupBlur() {
+  handlePopupBlur(e) {
     if (this.activeElement) {
+      const { activeElement: target } = this;
+      e.stopPropagation();
       this.activeElement = null;
       raf(() => {
         const { activeElement } = document;
@@ -348,6 +359,10 @@ export default class Trigger extends Component<TriggerProps> {
           this.activeElement = activeElement as HTMLElement;
         } else {
           this.setPopupHidden(true);
+          if (target && target !== true) {
+            target.focus();
+            target.blur();
+          }
         }
       });
     }

@@ -84,6 +84,7 @@ export interface TreeProps {
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   onContextMenu?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
   onClick?: NodeMouseEventHandler;
   onDoubleClick?: NodeMouseEventHandler;
   onExpand?: (
@@ -1291,6 +1292,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       onContextMenu,
       direction,
       ripple,
+      onMouseDown,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -1345,6 +1347,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             [`${prefixCls}-focused`]: focused,
             [`${prefixCls}-active-focused`]: activeKey !== null,
           })}
+          onMouseDown={onMouseDown}
         >
           <NodeList
             ref={this.listRef}
