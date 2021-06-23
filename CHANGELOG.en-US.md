@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Table`：Added `queryBarProps` property.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
 - 💄 `<pro>DataSet.Field`: Each language field created by intl typed Field supports `transformResponse` and `transformRequest` properties.
+- 🐞 `<pro>DataSet.Field`: Fix the problem when `dynamicProps` is called recursively.
 - 🐞 `<pro>TextField`: Fix the problem that Tooltip cannot be displayed when there is `addonBefore`, `addonAfter` or `help`.
 - 🐞 `<pro>TextField`: Fix the problem that the floating label and the rendered value overlap when the null value is rendered to a non empty text.
 - 🐞 `<pro>TriggerField`: Fix the problem that the input box in popupContent cannot be focused, and fix the problem that the scroll bar of the multi-select mode drop-down box cannot be dragged under IE.
