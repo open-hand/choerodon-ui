@@ -353,7 +353,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, height } = prevProps;
+    const { rowHeight, data, height, virtualized } = prevProps;
 
     if (data !== this.props.data) {
       this.calculateRowMaxHeight();
@@ -384,6 +384,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
 
     this.calculateTableContentWidth(prevProps);
+    if (virtualized) {
+      this.calculateTableWidth();
+    }
   }
 
   componentWillUnmount() {
@@ -1086,11 +1089,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   calculateTableContextHeight(prevProps?: TableProps) {
     const table = this.tableRef.current;
     const rows = table.querySelectorAll(`.${this.addPrefix('row')}`) || [];
-    const { height, autoHeight, rowHeight, affixHeader } = this.props;
+    const { height, autoHeight, affixHeader } = this.props;
     const headerHeight = this.getTableHeaderHeight();
     const contentHeight = rows.length
       ? Array.from(rows)
-        .map((row: HTMLElement) => getHeight(row) || toPx(row.style.height) || rowHeight)
+        .map((row: HTMLElement) => {
+          return Math.max(getHeight(row), Number(toPx(row.style.height)), this.getRowHeight()) || this.getRowHeight();
+        })
         .reduce((x, y) => x + y)
       : 0;
 

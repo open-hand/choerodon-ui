@@ -194,7 +194,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
               }
               return !!((option.parent && option.children && record.parent && (option.parents.some(parent => this.isSelected(parent)) || this.isSelected(option)))
                 ||
-                (!option.children && option.parent.children.includes(record) && option.parents.some(parent => this.isSelected(parent)))
+                (!option.children && option.parent!.children!.includes(record) && option.parents.some(parent => this.isSelected(parent)))
                 ||
                 (!option.children && option.parents.every(parent => !this.isSelected(parent)) && this.isSelected(option)));
             });
