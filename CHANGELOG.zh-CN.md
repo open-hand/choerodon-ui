@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `<pro>DataSet`：修复object类型字段使用transformRequest转成字符串值时绑定的字段为空值的问题。
 - 🐞 `<pro>Modal`：修复 autoCenter 开启时宽度样式无效，影响抽屉和全屏模式的问题。
 - 🐞 `<pro>Table`：修复冻结列 hover 穿透问题。
+- 🐞 `<pro>PerformanceTable`：修复虚拟滚动下渲染异步导致的滚动条异常。
 
 ## 1.4.0
 
@@ -100,7 +101,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 autoSelectSingle 开启单条数据无法弹出的问题。
 - 🐞 `<pro>Lov`: 修复多选模式下表格属性 selectionMode 为 click 时数据处理错误的问题。
 - 🐞 `<pro>Table`: 修复 queryBar 多语言类型字段渲染问题。
-- 🐞 `<pro>PerformanceTable`: 修复ColumnGroup 中列不能排序的问题。
+- 🐞 `<pro>PerformanceTable`: 修复 ColumnGroup 中列不能排序的问题。
 
 
 ## 1.3.2

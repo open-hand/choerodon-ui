@@ -826,7 +826,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     return options.status === DataSetStatus.loading || (!!field && field.pending.length > 0);
   }
 
-  renderSelectAll(): ReactNode {
+  renderSelectAll(): ReactNode | void {
     const { selectAllButton } = this.props;
     if (this.multiple && selectAllButton) {
       return (
