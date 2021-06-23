@@ -25,6 +25,8 @@ timeline: true
 - 🌟 `<pro>TreeSelect`: Added `showCheckedStrategy` property, when configuring `treeCheckable`, define the way of backfilling selected items.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
 - 💄 `<pro>DataSet.Field`: Each language field created by intl typed Field supports `transformResponse` and `transformRequest` properties.
+- 💄 `<pro>DataSet.Field`: Optimize the field bounded will also trigger verification due to the  value change of it's bound field.
+- 🐞 `<pro>DataSet.Field`: Fix the problem when `dynamicProps` is called recursively.
 - 🐞 `<pro>TextField`: Fix the problem that Tooltip cannot be displayed when there is `addonBefore`, `addonAfter` or `help`.
 - 🐞 `Menu`：Fix menu event reporting error.
 - 🐞 `<pro>TextField`: Fix the problem that the floating label and the rendered value overlap when the null value is rendered to a non empty text.

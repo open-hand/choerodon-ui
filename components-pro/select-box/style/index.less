@@ -19,7 +19,8 @@
     transform-origin: @float-label-transform-origin-high;
   }
 
-  &-float-label & {
+  &-float-label&-multiple &,
+  &-float-label:not(&-multiple) & {
     height: auto;
     min-height: .36rem;
   }
