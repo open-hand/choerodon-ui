@@ -17,14 +17,16 @@ timeline: true
 
 - 🌟 `configure`：新增 performanceEnabled, onPerformance, tooltipTheme, validationTooltipTheme 属性。
 - 🌟 `Tooltip`：新增 theme 属性。
-- 🌟 `<pro>Table`：新增queryBarProps 属性。
+- 🌟 `<pro>Table`：新增 queryBarProps 属性。
 - 🌟 `<pro>Button`：新增 block 属性, funcType 新增 link 类型。
 - 🌟 `<pro>Table.Column`: header 和 renderer 钩子新增 aggregation 参数。
 - 🌟 `<pro>TriggerField`: 新增 tabIntoPopupContent 属性, popupContent 钩子新增 setValue 和 setPopup 参数。
 - 🌟 `<pro>Select`: popupContent 钩子新增 content dataSet textField valueField setValue 和 setPopup 参数。
+- 🌟 `<pro>TreeSelect`：新增 showCheckedStrategy 属性, 配置 treeCheckable 时，定义选中项回填的方式。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
 - 🐞 `<pro>TextField`: 修复有 addonBefore， addonAfter 或 help 时， Tooltip无法显示的问题。
+- 🐞 `Menu`: 修复菜单事件报错。
 - 🐞 `<pro>TextField`: 修复空值渲染时浮动标签和渲染值重叠的问题。
 - 🐞 `<pro>TriggerField`: 修复 popupContent 中输入框无法获焦的问题， 修复IE下多选模式下拉框滚动条无法拖动的问题。
 - 🐞 `<pro>DataSet.Record`: 修复 init 和 getPristineValue 中链式绑定的问题。
@@ -32,7 +34,7 @@ timeline: true
 - 🐞 `<pro>Table.Column`： 修复 dynamicProps.label 对于列头无效的问题。
 - 🐞 `<pro>Button`：修复样式问题。
 - 🐞 `<pro>DataSet`：修复object类型字段使用transformRequest转成字符串值时绑定的字段为空值的问题。
-- 🐞 `<pro>Modal`：修复 autoCenter 开启时宽度样式无效问题。
+- 🐞 `<pro>Modal`：修复 autoCenter 开启时宽度样式无效，影响抽屉和全屏模式的问题。
 - 🐞 `<pro>Table`：修复冻结列 hover 穿透问题。
 
 ## 1.4.0

@@ -17,6 +17,8 @@ title: TreeSelect
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| multiple | 支持多选（当设置 treeCheckable 时自动变为 true）|	boolean |	false
+| showCheckedStrategy | 定义选中项回填的方式。`SHOW_CHILD`: 只显示子节点. `SHOW_PARENT`: 只显示父节点(当父节点下所有子节点都选中时). 默认显示所有选中节点(包括父节点). | string | SHOW_ALL |
 | treeCheckable | 显示 checkbox | boolean | false |
 | treeDefaultExpandAll | 默认展开所有树节点 | boolean | false |
 | treeDefaultExpandedKeys | 默认展开的树节点, 对应TreeNode的key或value | string\[] | - |

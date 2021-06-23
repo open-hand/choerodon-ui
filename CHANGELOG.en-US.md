@@ -22,9 +22,11 @@ timeline: true
 - 🌟 `<pro>TriggerField`: Added `tabIntoPopupContent` property, `popupContent` hook added `setValue` and `setPopup` parameters.
 - 🌟 `<pro>Select`: `popupContent` hook adds `content` `dataSet` `textField` `valueField` `setValue` and `setPopup` parameters.
 - 🌟 `<pro>Table`：Added `queryBarProps` property.
+- 🌟 `<pro>TreeSelect`: Added `showCheckedStrategy` property, when configuring `treeCheckable`, define the way of backfilling selected items.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
 - 💄 `<pro>DataSet.Field`: Each language field created by intl typed Field supports `transformResponse` and `transformRequest` properties.
 - 🐞 `<pro>TextField`: Fix the problem that Tooltip cannot be displayed when there is `addonBefore`, `addonAfter` or `help`.
+- 🐞 `Menu`：Fix menu event reporting error.
 - 🐞 `<pro>TextField`: Fix the problem that the floating label and the rendered value overlap when the null value is rendered to a non empty text.
 - 🐞 `<pro>TriggerField`: Fix the problem that the input box in popupContent cannot be focused, and fix the problem that the scroll bar of the multi-select mode drop-down box cannot be dragged under IE.
 - 🐞 `<pro>DataSet.Record`: Fix chain binding problem in `init` and `getPristineValue` method.
@@ -32,7 +34,7 @@ timeline: true
 - 🐞 `<pro>Table.Column`: Fix the issue that `dynamicProps.label` has no effect on column header.
 - 🐞 `<pro>Button`: Fix style issue.
 - 🐞 `<pro>DataSet`: Fix the problem that the bound field is empty when the object type field is converted to a string value using transformRequest.
-- 🐞 `<pro>Modal`: Fix the issue that the width style is invalid when `autoCenter` is turned on.
+- 🐞 `<pro>Modal`: Fix the problem that the width style is invalid when autoCenter is turned on, which affects the drawer and full screen mode.
 - 🐞 `<pro>Table`：Fix the hover penetration problem of frozen columns.
 
 ## 1.4.0
