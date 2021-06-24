@@ -498,14 +498,15 @@ export default class Trigger extends Component {
   }
 
   fireEvents(type, e) {
+    const domEvent = e.hasOwnProperty('isDefaultPrevented') ? e : e.domEvent;
     const childCallback = this.props.children.props[type];
     if (childCallback) {
-      childCallback(e);
+      childCallback(domEvent);
     }
     if (!e.isDefaultPrevented()) {
       const callback = this.props[type];
       if (callback) {
-        callback(e);
+        callback(domEvent);
       }
     }
   }

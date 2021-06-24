@@ -134,8 +134,6 @@
     }
 
     &-aggregation {
-      padding: 0;
-
       .@{c7n-pro-prefix}-select-box {
         display: flex;
         line-height: inherit;
@@ -151,8 +149,6 @@
     }
 
     &-tree {
-      padding: 0.07rem 0;
-
       &-treenode {
         display: flex;
         align-items: flex-start;
@@ -282,6 +278,10 @@
 
   &-tfoot &-cell {
     border-top: @table-border;
+  }
+
+  &-cell-command + &-cell-command {
+    margin-left: @btn-group-spacing;
   }
 
   &-aggregation &-cell {

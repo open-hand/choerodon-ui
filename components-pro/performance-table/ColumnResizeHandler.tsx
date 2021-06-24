@@ -123,6 +123,7 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
         className={classes}
         style={styles}
         onMouseDown={this.onColumnResizeMouseDown}
+        onTouchMove={this.onColumnResizeMouseDown}
         role="button"
         tabIndex={-1}
       />

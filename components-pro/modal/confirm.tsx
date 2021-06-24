@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import noop from 'lodash/noop';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls, getConfig } from 'choerodon-ui/lib/configure';
 import ModalManager from '../modal-manager';
 import { ModalProps } from './Modal';
 import { open } from '../modal-container/ModalContainer';
@@ -15,7 +15,7 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
     onCancel = noop,
     onClose = noop,
     iconType,
-    autoCenter = false,
+    autoCenter = getConfig('modalAutoCenter'),
     border = false,
     okCancel = true,
     title,

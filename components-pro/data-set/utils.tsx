@@ -452,6 +452,28 @@ export function getChainFieldName(record: Record, fieldName: string): string {
   return getChainFieldNamePrivate(record, fieldName);
 }
 
+export function findBindTargetFields(myField: Field, fields: Fields, deep?: boolean, bindFields: Map<string, Field> = new Map()): Field[] {
+  const bind = myField.get('bind');
+  if (bind) {
+    [...fields.entries()].some(([fieldName, field]) => {
+      if (field !== myField) {
+        if ((bind === fieldName || bind.startsWith(`${fieldName}.`))) {
+          if (bindFields.has(fieldName)) {
+            throwCycleBindingFields(bindFields);
+          }
+          bindFields.set(fieldName, field);
+          if (deep) {
+            findBindTargetFields(field, fields, deep, bindFields);
+          }
+          return true;
+        }
+      }
+      return false;
+    });
+  }
+  return [...bindFields.values()];
+}
+
 export function findBindFields(myField: Field, fields: Fields, deep?: boolean, bindFields: Map<string, Field> = new Map()): Field[] {
   const { name } = myField;
   [...fields.entries()].forEach(([fieldName, field]) => {
