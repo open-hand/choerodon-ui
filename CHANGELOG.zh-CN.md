@@ -38,6 +38,7 @@ timeline: true
 - 🐞 `<pro>DataSet`：修复object类型字段使用transformRequest转成字符串值时绑定的字段为空值的问题。
 - 🐞 `<pro>Modal`：修复 autoCenter 开启时宽度样式无效，影响抽屉和全屏模式的问题。
 - 🐞 `<pro>Table`：修复冻结列 hover 穿透问题。
+- 🐞 `<pro>Table`：修复导出问题,优化本地导出。
 - 🐞 `<pro>PerformanceTable`：修复虚拟滚动下渲染异步导致的滚动条异常。
 
 ## 1.4.0
