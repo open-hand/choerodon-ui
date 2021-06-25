@@ -28,7 +28,7 @@ class EmptyDataTable extends React.Component {
       <PerformanceTable
         virtualized
         height={400}
-        data={fakeLargeData}
+        data={fakeLargeData.slice(0, 500)}
         ref={tableRef}
         onRowClick={data => {
           console.log(data);
@@ -39,12 +39,12 @@ class EmptyDataTable extends React.Component {
           <Cell dataKey="id" />
         </Column>
 
-        <Column width={130}>
+        <Column resizable width={130}>
           <HeaderCell>First Name</HeaderCell>
           <Cell dataKey="firstName" />
         </Column>
 
-        <Column width={130}>
+        <Column resizable width={130}>
           <HeaderCell>Last Name</HeaderCell>
           <Cell dataKey="lastName" />
         </Column>

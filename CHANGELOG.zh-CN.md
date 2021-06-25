@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>TriggerField`: 新增 tabIntoPopupContent 属性, popupContent 钩子新增 setValue 和 setPopup 参数。
 - 🌟 `<pro>Select`: popupContent 钩子新增 content dataSet textField valueField setValue 和 setPopup 参数。
 - 🌟 `<pro>TreeSelect`：新增 showCheckedStrategy 属性, 配置 treeCheckable 时，定义选中项回填的方式。
+- 🌟 `<pro>PerformanceTable`：新增点击行高亮属性 highlightRow。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
 - 💄 `<pro>DataSet.Field`: 优化被绑定的字段也会因绑定字段的值变更而触发校验。
@@ -40,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复冻结列 hover 穿透问题。
 - 🐞 `<pro>Table`：修复导出问题,优化本地导出。
 - 🐞 `<pro>PerformanceTable`：修复虚拟滚动下渲染异步导致的滚动条异常。
+- 🐞 `<pro>PerformanceTable`：修复移动端滚动卡顿的问题。
 
 ## 1.4.0
 

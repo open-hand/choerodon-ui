@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Select`: `popupContent` hook adds `content` `dataSet` `textField` `valueField` `setValue` and `setPopup` parameters.
 - 🌟 `<pro>Table`：Added `queryBarProps` property.
 - 🌟 `<pro>TreeSelect`: Added `showCheckedStrategy` property, when configuring `treeCheckable`, define the way of backfilling selected items.
+- 🌟 `<pro>PerformanceTable`：Added click row highlight attribute.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
 - 💄 `<pro>DataSet.Field`: Each language field created by intl typed Field supports `transformResponse` and `transformRequest` properties.
 - 💄 `<pro>DataSet.Field`: Optimize the field bounded will also trigger verification due to the  value change of it's bound field.
@@ -40,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`：Fix the hover penetration problem of frozen columns.
 - 🐞 `<pro>Table`：Fix export problems and optimize local export.
 - 🐞 `<pro>PerformanceTable`: Fix the scroll bar exception caused by rendering asynchronous under virtual scrolling.
+- 🐞 `<pro>PerformanceTable`: Fix the issue that the mobile terminal is stuck when scrolling.
 
 ## 1.4.0
 
