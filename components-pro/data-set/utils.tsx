@@ -253,7 +253,7 @@ export function getSplitValue(dataItem: any, name: string, isBind: boolean = tru
     return levelValue;
   }
   if (isBind) {
-    return dataItem[name];
+    return dataItem ? dataItem[name] : undefined;
   }
   return dataItem;
 }

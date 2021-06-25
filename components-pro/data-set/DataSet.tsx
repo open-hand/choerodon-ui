@@ -1071,12 +1071,12 @@ export default class DataSet extends EventManager {
           const firstRecord = this.records[0] || this;
           const exportField = firstRecord.getField(columnsExportkeys[i]);
           let processItemValue = getSplitValue(toJS(itemValue), columnsExportkeys[i]);
-          // 处理bind 情况
+          // 处理bind 情况 没有需要链式bind 没有处理反向bind 后面可能根据需求增加
           if (exportField && isNil(processItemValue) && exportField.get('bind')) {
             processItemValue = getSplitValue(
               getSplitValue(toJS(itemValue), exportField.get('bind')),
               columnsExportkeys[i],
-              true,
+              false,
             );
           }
           dataItem[columnsExportkeys[i]] = processExportValue(processItemValue, exportField);
