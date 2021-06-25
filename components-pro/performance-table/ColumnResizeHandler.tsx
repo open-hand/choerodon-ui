@@ -1,9 +1,11 @@
 import * as React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import clamp from 'lodash/clamp';
 import { DOMMouseMoveTracker } from 'dom-lib';
 import { defaultClassPrefix, getUnhandledProps } from './utils';
+import { addEvent, removeEvent } from './utils/domFns';
 import TableContext from './TableContext';
 import { ColumnResizeHandlerProps } from './ColumnResizeHandler.d';
 import { RESIZE_MIN_WIDTH } from './constants';
@@ -19,7 +21,7 @@ const propTypes = {
   style: PropTypes.object,
   onColumnResizeStart: PropTypes.func,
   onColumnResizeEnd: PropTypes.func,
-  onColumnResizeMove: PropTypes.func
+  onColumnResizeMove: PropTypes.func,
 };
 
 class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
@@ -36,20 +38,91 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
   mouseMoveTracker;
   isKeyDown: boolean;
 
+  handleRef: React.RefObject<any>;
+  mounted: boolean = false;
+
+  dragging: boolean;
+  deltaX: any = 0;
+  touchX: any = 0;
+
+
   constructor(props) {
     super(props);
     this.columnWidth = props.defaultColumnWidth || 0;
+    this.handleRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+    // Touch handlers must be added with {passive: false} to be cancelable.
+    const thisNode = this.findDOMNode();
+    if (thisNode) {
+      addEvent(thisNode, 'touchstart', this.handleDragStart, { passive: false });
+    }
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     if (this.mouseMoveTracker) {
       this.mouseMoveTracker.releaseMouseMoves();
       this.mouseMoveTracker = null;
     }
+    const thisNode = this.findDOMNode();
+    if (thisNode) {
+      const { ownerDocument } = thisNode;
+      removeEvent(ownerDocument, 'touchmove', this.handleDrag);
+      removeEvent(ownerDocument, 'touchend', this.handleDragStop);
+      removeEvent(thisNode, 'touchstart', this.handleDragStart, { passive: false });
+    }
   }
 
+  // React Strict Mode compatibility: if `nodeRef` is passed, we will use it instead of trying to find
+  // the underlying DOM node ourselves. See the README for more information.
+  findDOMNode(): HTMLElement {
+    return this.handleRef?.current || ReactDOM.findDOMNode(this);
+  }
+
+  handleDragStart = (e) => {
+    if (e.touches) {
+      this.dragging = true;
+      this.cursorDelta = 0;
+      const { clientX, clientY } = e.touches[0];
+      const client = {
+        clientX,
+        clientY,
+      };
+
+      this.touchX = clientX;
+      this.props.onColumnResizeStart?.(client);
+    }
+
+    const thisNode = this.findDOMNode();
+    const { ownerDocument } = thisNode;
+    if (e.type === 'touchstart') e.preventDefault();
+    if (!this.mounted) return;
+
+    addEvent(ownerDocument, 'touchmove', this.handleDrag);
+    addEvent(ownerDocument, 'touchend', this.handleDragStop);
+  };
+
+  handleDrag = (event) => {
+    if (event.touches) {
+      const x = event.touches[0].clientX;
+      this.deltaX = x - this.touchX;
+      this.touchX = x;
+      this.onMove(this.deltaX);
+    }
+  };
+
+  handleDragStop = () => {
+    if (!this.dragging) return;
+
+    this.dragging = false;
+    this.props.onColumnResizeEnd?.(this.columnWidth, this.cursorDelta);
+  };
+
   onMove = (deltaX: number) => {
-    if (!this.isKeyDown) {
+    if (!this.isKeyDown && !this.dragging) {
       return;
     }
 
@@ -65,12 +138,14 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     );
     onColumnResizeMove?.(this.columnWidth, columnLeft, columnFixed);
   };
+
   onColumnResizeEnd = () => {
     this.isKeyDown = false;
     this.props.onColumnResizeEnd?.(this.columnWidth, this.cursorDelta);
     this.mouseMoveTracker?.releaseMouseMoves?.();
     this.mouseMoveTracker = null;
   };
+
   onColumnResizeMouseDown = (event: React.MouseEvent) => {
     this.mouseMoveTracker = this.getMouseMoveTracker();
     this.mouseMoveTracker.captureMouseMoves(event);
@@ -120,10 +195,11 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     return (
       <div
         {...unhandled}
+        ref={this.handleRef}
         className={classes}
         style={styles}
         onMouseDown={this.onColumnResizeMouseDown}
-        onTouchMove={this.onColumnResizeMouseDown}
+        onTouchEnd={this.handleDragStop}
         role="button"
         tabIndex={-1}
       />
