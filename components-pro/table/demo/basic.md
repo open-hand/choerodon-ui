@@ -92,7 +92,7 @@ const nameDynamicProps = {
   },
   label() {
     return '姓名';
-  }
+  },
 };
 
 const codeCodeDynamicProps = {
@@ -146,7 +146,7 @@ class App extends React.Component {
             data: first,
             transformResponse() {
               return [first];
-            }
+            },
           }
           : null,
       destroy: {
@@ -190,18 +190,14 @@ class App extends React.Component {
       {
         name: 'name1',
         ignore: 'always',
+        label: '姓名1',
         required: true,
-      },
-      {
-        name: 'name2',
-        ignore: 'always',
-        bind: 'name1',
+        bind:'name',
       },
       {
         name: 'name',
         type: 'intl',
         computedProps: nameDynamicProps,
-        bind: 'name2',
         ignore: 'clean',
         transformResponse(value) { return value && `${value}!`},
         transformRequest(value) { return value && value.replace(/!$/, '')},
@@ -227,7 +223,7 @@ class App extends React.Component {
         computedProps: {
           highlight({ record }) {
             return record.index === 0 ? { title: '提示', content: '邮箱高亮' } : false;
-          }
+          },
         },
       },
       {
@@ -494,7 +490,6 @@ class App extends React.Component {
         <Column name="phone" lock editor={renderPhoneEditor} width={150} renderer={renderPhone} />
         <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
         <Column name="name1" editor width={150} />
-        <Column name="name2" editor width={150} />
         <Column name="name" editor width={150} sortable tooltip="always" />
         <Column name="description" editor={<TextArea />} width={150} sortable />
         <Column name="code" editor width={150} sortable />
