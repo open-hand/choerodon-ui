@@ -43,6 +43,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复导出问题,优化本地导出。
 - 🐞 `<pro>PerformanceTable`：修复虚拟滚动下渲染异步导致的滚动条异常。
 - 🐞 `<pro>PerformanceTable`：修复移动端滚动卡顿的问题。
+- 🐞 `<pro>Screening`：修复dataSet没有初始值的时候的显示问题。
 
 ## 1.4.0
 
