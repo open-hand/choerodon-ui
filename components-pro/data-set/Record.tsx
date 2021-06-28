@@ -450,7 +450,7 @@ export default class Record {
   }
 
   validate(all?: boolean, noCascade?: boolean): Promise<boolean> {
-    const { dataSetSnapshot, dataSet, status, fields } = this;
+    const { dataSetSnapshot, dataSet, status, fields, isCurrent } = this;
     this.validating = true;
     return Promise.all([
       ...[...fields.values()].map(field =>
@@ -460,7 +460,7 @@ export default class Record {
         const { children } = dataSet;
         const snapshot = dataSetSnapshot[key];
         const ds = children[key];
-        const child = dataSet.current === this ? ds : snapshot && new DataSet().restore(snapshot);
+        const child = isCurrent ? ds : snapshot && new DataSet().restore(snapshot);
         if (child) {
           return child.validate();
         }
@@ -521,7 +521,7 @@ export default class Record {
     if (fieldName && dataSet) {
       const childDataSet = dataSet.children[fieldName];
       if (childDataSet) {
-        if (dataSet.current === this) {
+        if (this.isCurrent) {
           return childDataSet.records.slice();
         }
         const snapshot = this.dataSetSnapshot[fieldName];
@@ -774,7 +774,7 @@ export default class Record {
         const { children } = dataSet;
         const keys = Object.keys(children);
         if (keys.length) {
-          const isCurrent = dataSet.current === this;
+          const { isCurrent } = this;
           const tmpDs = new DataSet();
           keys.forEach(key => {
             const snapshot = dataSetSnapshot[key];
@@ -961,25 +961,28 @@ export default class Record {
       if (isRemoved) {
         childrenInfoForDelete(json, children);
       } else {
-        const isCurrent = dataSet.current === this;
-        Object.keys(children).forEach(name => {
-          const snapshot = dataSetSnapshot[name];
-          const child = (!isCurrent && snapshot && new DataSet().restore(snapshot)) || children[name];
-          if (child) {
-            const { dataToJSON } = child;
-            const records = this.getCascadeRecordsIncludeDelete(name);
-            const selected = isSelect || useSelected(dataToJSON) ? this.getCascadeSelectedRecordsIncludeDelete(name) : records;
-            const jsonArray = normal || useNormal(dataToJSON)
-              ? records && generateData(records)
-              : selected && generateJSONData(child, selected);
-            if (jsonArray) {
-              if (jsonArray.dirty) {
-                dirty = true;
+        const keys = Object.keys(children);
+        if (keys.length) {
+          const { isCurrent } = this;
+          keys.forEach(name => {
+            const snapshot = dataSetSnapshot[name];
+            const child = (!isCurrent && snapshot && new DataSet().restore(snapshot)) || children[name];
+            if (child) {
+              const { dataToJSON } = child;
+              const records = this.getCascadeRecordsIncludeDelete(name);
+              const selected = isSelect || useSelected(dataToJSON) ? this.getCascadeSelectedRecordsIncludeDelete(name) : records;
+              const jsonArray = normal || useNormal(dataToJSON)
+                ? records && generateData(records)
+                : selected && generateJSONData(child, selected);
+              if (jsonArray) {
+                if (jsonArray.dirty) {
+                  dirty = true;
+                }
+                ObjectChainValue.set(json, name, jsonArray.data, fields);
               }
-              ObjectChainValue.set(json, name, jsonArray.data, fields);
             }
-          }
-        });
+          });
+        }
       }
       return dirty;
     }
