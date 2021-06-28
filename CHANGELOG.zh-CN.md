@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.1
+
+`2021-06-28`
+
 - 🌟 `configure`：新增 performanceEnabled, onPerformance, tooltipTheme, validationTooltipTheme 属性。
 - 🌟 `Tooltip`：新增 theme 属性。
 - 🌟 `<pro>Table`：新增 queryBarProps, showSelectionCachedButton 属性。

@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.1
+
+`2021-06-28`
+
 - 🌟 `configure`: Added `performanceEnabled`, `onPerformance`, `tooltipTheme`, `validationTooltipTheme` properties.
 - 🌟 `Tooltip`: Added `theme` property.
 - 🌟 `<pro>Button`: Added `block` property, Added `link` type for `funcType`.

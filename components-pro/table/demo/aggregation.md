@@ -14,6 +14,7 @@ title:
 Aggregation View.
 
 ```jsx
+import moment from 'moment';
 import {
   DataSet,
   Button,
@@ -26,7 +27,6 @@ import {
   Row,
   Col,
 } from 'choerodon-ui/pro';
-import moment from 'moment';
 
 const { Column } = Table;
 
@@ -41,7 +41,7 @@ function aggregationRendereer({ text, record }) {
       <Col span={6}>{record.get('email')}</Col>
       <Col span={18}>{text}</Col>
     </Row>
-  )
+  );
 }
 
 function handleUserDSLoad({ dataSet }) {
@@ -115,12 +115,12 @@ class App extends React.Component {
     }, {
       name: 'meaning', type: 'string',
     }],
-  })
+  });
 
   userDs = new DataSet({
     primaryKey: 'userid',
     autoQuery: true,
-    exportMode:'client',
+    exportMode: 'client',
     pageSize: 5,
     cacheSelection: true,
     transport: {
@@ -140,16 +140,16 @@ class App extends React.Component {
             data: first,
             transformResponse() {
               return [first];
-            }
+            },
           }
           : null,
       destroy: {
         url: '/dataset/user/mutations',
         method: 'delete',
       },
-      exports:{
-        url:'http://gitee.com/xurime/excelize/raw/master/test/SharedStrings.xlsx',
-        method:'get',
+      exports: {
+        url: 'http://gitee.com/xurime/excelize/raw/master/test/SharedStrings.xlsx',
+        method: 'get',
       },
       tls({ name }) {
         // 多语言数据请求的 axios 配置或 url 字符串。UI 接收的接口返回值格式为：[{ name: { zh_CN: '简体中文', en_US: '美式英语', ... }}]
@@ -162,7 +162,7 @@ class App extends React.Component {
     feedback: {
       loadSuccess(resp) {
         //  DataSet 查询成功的反馈 可以return 一个resp 来修改响应结果
-        console.log('loadSuccess')
+        console.log('loadSuccess');
       },
     },
     queryFields: [
@@ -227,8 +227,8 @@ class App extends React.Component {
         type: 'object',
         label: '代码描述',
         computedProps: codeDynamicProps,
-        transformResponse(value, data) { 
-          return data
+        transformResponse(value, data) {
+          return data;
         },
         transformRequest(value) {
           // 在发送请求之前对数据进行处理
@@ -326,7 +326,13 @@ class App extends React.Component {
       { name: 'enable', type: 'boolean', label: '是否开启', unique: 'uniqueGroup' },
       { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
-      { name: 'date.endDate', type: 'time', range: true, label: '结束日期', computedProps: { defaultValue: () => [moment(), moment()] } },
+      {
+        name: 'date.endDate',
+        type: 'time',
+        range: true,
+        label: '结束日期',
+        computedProps: { defaultValue: () => [moment(), moment()] },
+      },
     ],
     events: {
       selectAll: ({ dataSet }) => console.log('select all', dataSet.selected),
@@ -340,17 +346,17 @@ class App extends React.Component {
   });
 
   handeValueChange = (v) => {
-    const value = v.target.value
-    const suffixList = ['@qq.com', '@163.com', '@hand-china.com']
+    const { value } = v.target;
+    const suffixList = ['@qq.com', '@163.com', '@hand-china.com'];
     if (value.indexOf('@') !== -1) {
-      this.options.loadData([])
+      this.options.loadData([]);
     } else {
       this.options.loadData(suffixList.map(suffix => ({
         value: `${value}${suffix}`,
         meaning: `${value}${suffix}`,
-      })))
+      })));
     }
-  }
+  };
 
   handleAggregationChange = (aggregation) => {
     this.setState({ aggregation });
@@ -359,8 +365,8 @@ class App extends React.Component {
   render() {
     const { aggregation } = this.state;
     const command = [
-      <Button funcType="link">编辑</Button>,
-      <Button funcType="link">操作记录</Button>,
+      <Button key="edit" funcType="link">编辑</Button>,
+      <Button key="opera" funcType="link">操作记录</Button>,
     ];
     return (
       <Table
@@ -388,7 +394,8 @@ class App extends React.Component {
         <Column header="基本组" align="left" aggregation key="basic-group" aggregationDefaultExpandedKeys={['basic-subgroup-1']}>
           <Column header="基本组-分类1" key="basic-subgroup-1">
             <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
-            <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
+            <Column name="email" lock editor={
+              <AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
           </Column>
           <Column header="基本组-分类2" key="basic-subgroup-2">
             <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
