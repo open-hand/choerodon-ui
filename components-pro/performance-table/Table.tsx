@@ -8,6 +8,7 @@ import isEqual from 'lodash/isEqual';
 import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
+import BScroll from '@better-scroll/core'
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
 import { addStyle, getHeight, getOffset, getWidth, on, scrollLeft, scrollTop, WheelHandler } from 'dom-lib';
@@ -144,6 +145,7 @@ const propTypes = {
   onTouchStart: PropTypes.func,
   onTouchMove: PropTypes.func,
   onDataUpdated: PropTypes.func,
+  highLightRow: PropTypes.bool,
 };
 
 export default class PerformanceTable extends React.Component<TableProps, TableState> {
@@ -167,6 +169,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     minHeight: 0,
     rowExpandedHeight: 100,
     hover: true,
+    highLightRow: true,
     showHeader: true,
     showScrollArrow: false,
     bordered: true,
@@ -196,6 +199,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   translateDOMPositionXY = null;
   scrollListener: any = null;
+  bscroll: any = null;
 
   tableRef: React.RefObject<any>;
   scrollbarYRef: React.RefObject<any>;
@@ -225,6 +229,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   _cacheCells: any = null;
   _cacheChildrenSize = 0;
   _visibleRows = [];
+  _lastRowIndex: string | number;
 
   constructor(props: TableProps) {
     super(props);
@@ -318,9 +323,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const options = { passive: false };
     const tableBody = this.tableBodyRef.current;
     if (tableBody) {
+      this.initBScroll(tableBody);
       this.wheelListener = on(tableBody, 'wheel', this.wheelHandler.onWheel, options);
-      this.touchStartListener = on(tableBody, 'touchstart', this.handleTouchStart, options);
-      this.touchMoveListener = on(tableBody, 'touchmove', this.handleTouchMove, options);
+      // this.touchStartListener = on(tableBody, 'touchstart', this.handleTouchStart, options);
+      // this.touchMoveListener = on(tableBody, 'touchmove', this.handleTouchMove, options);
     }
 
     const { affixHeader, affixHorizontalScrollbar } = this.props;
@@ -855,11 +861,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   };
 
   // 处理移动端 Touch 事件, Move 的时候初始化，更新 scroll
-  handleTouchMove = (event: React.TouchEvent) => {
+  handleTouchMove = ({ e }) => {
     const { autoHeight } = this.props;
 
-    if (event.touches) {
-      const { pageX, pageY } = event.touches[0];
+    if (e.touches) {
+      const { pageX, pageY } = e.touches[0];
       const deltaX = this.touchX - pageX;
       const deltaY = autoHeight ? 0 : this.touchY - pageY;
 
@@ -867,7 +873,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         return;
       }
 
-      event.preventDefault?.();
+      e.preventDefault?.();
 
       this.handleWheel(deltaX, deltaY);
       this.scrollbarXRef.current?.onWheelScroll?.(deltaX);
@@ -877,7 +883,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.touchY = pageY;
     }
 
-    this.props.onTouchMove?.(event);
+    this.props.onTouchMove?.(e);
   };
 
   /**
@@ -912,6 +918,30 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         this.scrollbarXRef?.current?.resetScrollBarPosition?.(-this.scrollX);
       }, 0);
     }
+  }
+
+  initBScroll(tableBody) {
+    this.bscroll = new BScroll(tableBody, {
+      disableMouse: false,
+      disableTouch: false,
+      useTransition: false,
+      scrollbar: false,
+      probeType: 3,
+      scrollX: true,
+      click: true
+    });
+    const hooks = this.bscroll.scroller.actions.hooks;
+
+    hooks.on('start', this.handleTouchStart);
+
+    const thHooks = this.bscroll.scroller.actionsHandler.hooks;
+
+    thHooks.on('move', this.handleTouchMove);
+
+    this.bscroll.on('scroll', (pos) => {
+      this.scrollY = pos.y;
+      this.scrollTop(-pos.y);
+    });
   }
 
   updatePosition() {
@@ -1201,11 +1231,31 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
   };
 
-  bindRowClick = (rowData: object) => {
+  bindRowClick = (rowIndex: number| string, index: number| string, rowData: object) => {
     return (event: React.MouseEvent) => {
-      this.props.onRowClick?.(rowData, event);
+      this.onRowClick(rowData, event, rowIndex, index);
     };
   };
+
+  onRowClick(rowData, event, rowIndex, index) {
+    const { virtualized, highLightRow } = this.props;
+    if (highLightRow) {
+      if (virtualized) {
+        this._lastRowIndex = rowIndex;
+        this.forceUpdate();
+      } else {
+        const ref = this.tableRows[index][0];
+        if (this._lastRowIndex !== index) {
+          if (this._lastRowIndex || this._lastRowIndex === 0) {
+            this.tableRows[this._lastRowIndex][0].className = ref.className.replace(` ${this.addPrefix('row-highLight')}`,'')
+          }
+          ref.className = `${ref.className} ${this.addPrefix('row-highLight')}`;
+        }
+        this._lastRowIndex = index;
+      }
+    }
+    this.props.onRowClick?.(rowData, event);
+  }
 
   bindRowContextMenu = (rowData: object) => {
     return (event: React.MouseEvent) => {
@@ -1229,7 +1279,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       key: nextRowKey,
       'aria-rowindex': (props.key as number) + 2,
       rowRef: this.bindTableRowsRef(props.key!, rowData),
-      onClick: this.bindRowClick(rowData),
+      onClick: this.bindRowClick(props.rowIndex, props.key!, rowData),
       onContextMenu: this.bindRowContextMenu(rowData),
     };
 
@@ -1260,14 +1310,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
-    const { rowClassName } = this.props;
+    const { rowClassName, highLightRow, virtualized } = this.props;
     const { shouldFixedColumn, width, contentWidth } = this.state;
-    const { depth, ...restRowProps } = props;
+    const { depth, rowIndex, ...restRowProps } = props;
 
     if (typeof rowClassName === 'function') {
       restRowProps.className = rowClassName(rowData);
     } else {
       restRowProps.className = rowClassName;
+    }
+    if (rowIndex === this._lastRowIndex && virtualized && highLightRow) {
+      restRowProps.className = `${rowClassName} ${this.addPrefix('row-highLight')}`;
     }
 
     const rowStyles: React.CSSProperties = {};

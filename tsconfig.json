@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "strictNullChecks": true,
     "moduleResolution": "node",
+    "module": "esnext",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "jsx": "react",

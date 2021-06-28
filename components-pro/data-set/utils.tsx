@@ -11,8 +11,8 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import XLSX from 'xlsx';
 import Field, { FieldProps, Fields } from './Field';
+// import XLSX from 'xlsx';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet, { Group } from './DataSet';
 import Record from './Record';
@@ -253,12 +253,12 @@ export function getSplitValue(dataItem: any, name: string, isBind: boolean = tru
     return levelValue;
   }
   if (isBind) {
-    return dataItem[name];
+    return dataItem ? dataItem[name] : undefined;
   }
   return dataItem;
 }
 
-export function childrenInfoForDelete(json: {}, children: { [key: string]: DataSet }): {} {
+export function childrenInfoForDelete(json: {}, children: { [key: string]: DataSet; }): {} {
   return Object.keys(children).reduce((data, name) => {
     const child = children[name];
     if (child) {
@@ -368,7 +368,7 @@ export function checkFieldType(value: any, field: Field): boolean {
       }
       const valueType =
         field.type === FieldType.boolean &&
-        [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
+          [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -610,7 +610,7 @@ export function axiosConfigAdapter(
   };
 
   const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
-  getConfig('transport') || {};
+    getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
   if (globalConfig) {
     Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params, options));
@@ -801,7 +801,7 @@ export function adapterDataToJSON(
   return undefined;
 }
 
-export function generateData(records: Record[]): { dirty: boolean; data: object[] } {
+export function generateData(records: Record[]): { dirty: boolean; data: object[]; } {
   let dirty = false;
   const data: object[] = records.reduce<object[]>((list, record) => {
     if (record.isRemoved) {
@@ -825,7 +825,7 @@ export function generateData(records: Record[]): { dirty: boolean; data: object[
 export function generateJSONData(
   ds: DataSet,
   records: Record[],
-): { dirty: boolean; data: object[] } {
+): { dirty: boolean; data: object[]; } {
   const { dataToJSON } = ds;
   const data: object[] = [];
   records.forEach(record => generateRecordJSONData(data, record, dataToJSON));
@@ -919,10 +919,12 @@ export function normalizeGroups(groups: string[], records: Record[]): Group[] {
  * @param excelname 导出表单的名字
  */
 export function exportExcel(data, excelName) {
-  const ws = XLSX.utils.json_to_sheet(data, { skipHeader: true }); /* 新建空workbook，然后加入worksheet */
-  const wb = XLSX.utils.book_new();  /* 新建book */
-  XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */
-  XLSX.writeFile(wb, `${excelName}.xlsx`); /* 写文件(book,xlsx文件名称) */
+  import('xlsx').then(XLSX => {
+    const ws = XLSX.utils.json_to_sheet(data, { skipHeader: true }); /* 新建空workbook，然后加入worksheet */
+    const wb = XLSX.utils.book_new();  /* 新建book */
+    XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */
+    XLSX.writeFile(wb, `${excelName}.xlsx`); /* 写文件(book,xlsx文件名称) */
+  });
 }
 
 export function getSortedFields(fields: Fields): [string, Field][] {

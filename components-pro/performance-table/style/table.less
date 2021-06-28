@@ -39,6 +39,10 @@
     background: @performance-table-header-bg;
   }
 
+  &-row-highLight &-cell {
+    background: @table-current-row-bg;
+  }
+
   &-row-header {
     background: @performance-table-header-bg;
   }
@@ -84,16 +88,9 @@
   }
 
   &-body-row-wrapper {
-    overflow-scrolling: touch;
-    -webkit-overflow-scrolling: touch;
     position: relative;
     overflow: hidden;
     z-index: 0;
-  }
-
-  &-body-wheel-area {
-    overflow-scrolling: touch;
-    -webkit-overflow-scrolling: touch;
   }
 
   &-body-info {

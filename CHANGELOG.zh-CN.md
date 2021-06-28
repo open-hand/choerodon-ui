@@ -23,6 +23,8 @@ timeline: true
 - 🌟 `<pro>TriggerField`: 新增 tabIntoPopupContent 属性, popupContent 钩子新增 setValue 和 setPopup 参数。
 - 🌟 `<pro>Select`: popupContent 钩子新增 content dataSet textField valueField setValue 和 setPopup 参数。
 - 🌟 `<pro>TreeSelect`：新增 showCheckedStrategy 属性, 配置 treeCheckable 时，定义选中项回填的方式。
+- 🌟 `<pro>PerformanceTable`：新增点击行高亮属性 highlightRow。
+- 💄 `<pro>PerformanceTable`：兼容移动端拖拽列宽。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
 - 💄 `<pro>DataSet.Field`: 优化被绑定的字段也会因绑定字段的值变更而触发校验。
@@ -38,7 +40,10 @@ timeline: true
 - 🐞 `<pro>DataSet`：修复object类型字段使用transformRequest转成字符串值时绑定的字段为空值的问题。
 - 🐞 `<pro>Modal`：修复 autoCenter 开启时宽度样式无效，影响抽屉和全屏模式的问题。
 - 🐞 `<pro>Table`：修复冻结列 hover 穿透问题。
+- 🐞 `<pro>Table`：修复导出问题,优化本地导出。
 - 🐞 `<pro>PerformanceTable`：修复虚拟滚动下渲染异步导致的滚动条异常。
+- 🐞 `<pro>PerformanceTable`：修复移动端滚动卡顿的问题。
+- 🐞 `<pro>Screening`：修复dataSet没有初始值的时候的显示问题。
 
 ## 1.4.0
 

@@ -75,7 +75,7 @@ const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
 const QUERY_PARAMETER = '__QUERY_PARAMETER__';  // TODO:Symbol
 
-export type DataSetChildren = { [key: string]: DataSet };
+export type DataSetChildren = { [key: string]: DataSet; };
 
 export type Events = { [key: string]: Function; };
 
@@ -314,7 +314,7 @@ export default class DataSet extends EventManager {
 
   children: DataSetChildren = {};
 
-  prepareForReport: { result?: boolean, timeout?: number } = {};
+  prepareForReport: { result?: boolean, timeout?: number; } = {};
 
   @computed
   get queryParameter(): object {
@@ -338,7 +338,7 @@ export default class DataSet extends EventManager {
       fetchEnd: number;
       loadStart: number;
       loadEnd: number;
-    }
+    };
   } = { timing: { fetchStart: 0, fetchEnd: 0, loadStart: 0, loadEnd: 0 } };
 
   originalData: Record[] = [];
@@ -1032,7 +1032,7 @@ export default class DataSet extends EventManager {
       const params = { _r: Date.now(), ...this.generateOrderQueryString() };
       ObjectChainValue.set(params, totalKey, totalCount);
       const newConfig = axiosConfigAdapter('exports', this, data, params);
-      if (newConfig.url) {
+      if (newConfig.url || this.exportMode === ExportMode.client) {
         if (
           (await this.fireEvent(DataSetEvents.export, {
             dataSet: this,
@@ -1043,9 +1043,8 @@ export default class DataSet extends EventManager {
           const ExportQuantity = exportQuantity > 1000 ? 1000 : exportQuantity;
           if (this.exportMode !== ExportMode.client) {
             doExport(this.axios.getUri(newConfig), newConfig.data, newConfig.method);
-          } else {
-            return this.doClientExport(data, ExportQuantity, false);
           }
+          return this.doClientExport(data, ExportQuantity, false);
         }
       } else {
         warning(false, 'Unable to execute the export method of dataset, please check the ');
@@ -1072,12 +1071,12 @@ export default class DataSet extends EventManager {
           const firstRecord = this.records[0] || this;
           const exportField = firstRecord.getField(columnsExportkeys[i]);
           let processItemValue = getSplitValue(toJS(itemValue), columnsExportkeys[i]);
-          // 处理bind 情况
+          // 处理bind 情况 没有需要链式bind 没有处理反向bind 后面可能根据需求增加
           if (exportField && isNil(processItemValue) && exportField.get('bind')) {
             processItemValue = getSplitValue(
               getSplitValue(toJS(itemValue), exportField.get('bind')),
               columnsExportkeys[i],
-              true,
+              false,
             );
           }
           dataItem[columnsExportkeys[i]] = processExportValue(processItemValue, exportField);
@@ -1131,7 +1130,8 @@ export default class DataSet extends EventManager {
         } else {
           return newResult;
         }
-      }).catch(() => {
+      }).catch((err) => {
+        console.warn(err);
         runInAction(() => {
           this.exportStatus = DataSetExportStatus.failed;
         });
