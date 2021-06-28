@@ -512,7 +512,7 @@ export default class Record {
 
   getField(fieldName?: string): Field | undefined {
     if (fieldName) {
-      return this.fields.get(fieldName);
+      return this.fields.get(fieldName) || this.addField(fieldName);
     }
   }
 
@@ -565,7 +565,7 @@ export default class Record {
     }
   }
 
-  get(fieldName?: string): any {
+  get(fieldName?: string | string []): any {
     return getRecordValue(
       this,
       (child, checkField) => child.get(checkField),

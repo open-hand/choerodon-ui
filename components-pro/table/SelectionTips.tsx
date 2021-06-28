@@ -9,11 +9,11 @@ import { FuncType } from '../button/enum';
 
 const SelectionTips: FunctionComponent<any> = observer(() => {
   const { tableStore } = useContext(TableContext);
-  const { prefixCls, dataSet, showCachedSelection } = tableStore;
+  const { prefixCls, dataSet, showCachedSelection, props: { showSelectionCachedButton } } = tableStore;
   const handleSwitch = useCallback(action(() => {
     tableStore.showCachedSelection = !showCachedSelection;
   }), [showCachedSelection]);
-  const cachedButton = dataSet.cacheSelectionKeys && dataSet.cachedSelected.length > 0 ? (
+  const cachedButton = showSelectionCachedButton && dataSet.cacheSelectionKeys && dataSet.cachedSelected.length > 0 ? (
     (
       <Tooltip
         title={$l('Table', showCachedSelection ? 'hide_cached_seletion' : 'show_cached_seletion')}

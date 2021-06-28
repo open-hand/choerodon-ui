@@ -17,13 +17,14 @@ timeline: true
 
 - 🌟 `configure`：新增 performanceEnabled, onPerformance, tooltipTheme, validationTooltipTheme 属性。
 - 🌟 `Tooltip`：新增 theme 属性。
-- 🌟 `<pro>Table`：新增 queryBarProps 属性。
+- 🌟 `<pro>Table`：新增 queryBarProps, showSelectionCachedButton 属性。
 - 🌟 `<pro>Button`：新增 block 属性, funcType 新增 link 类型。
 - 🌟 `<pro>Table.Column`: header 和 renderer 钩子新增 aggregation 参数。
 - 🌟 `<pro>TriggerField`: 新增 tabIntoPopupContent 属性, popupContent 钩子新增 setValue 和 setPopup 参数。
 - 🌟 `<pro>Select`: popupContent 钩子新增 content dataSet textField valueField setValue 和 setPopup 参数。
 - 🌟 `<pro>TreeSelect`：新增 showCheckedStrategy 属性, 配置 treeCheckable 时，定义选中项回填的方式。
 - 🌟 `<pro>PerformanceTable`：新增点击行高亮属性 highlightRow。
+- 🌟 `<pro>DataSet.Record`: get 方法支持字段名数组参数。
 - 💄 `<pro>PerformanceTable`：兼容移动端拖拽列宽。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
