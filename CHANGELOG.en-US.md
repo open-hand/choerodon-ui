@@ -21,7 +21,7 @@ timeline: true
 - 🌟 `<pro>Table.Column`: Added `aggregation` parameter into `header` and `renderer` hooks.
 - 🌟 `<pro>TriggerField`: Added `tabIntoPopupContent` property, `popupContent` hook added `setValue` and `setPopup` parameters.
 - 🌟 `<pro>Select`: `popupContent` hook adds `content` `dataSet` `textField` `valueField` `setValue` and `setPopup` parameters.
-- 🌟 `<pro>Table`：Added `queryBarProps` property.
+- 🌟 `<pro>Table`：Added `queryBarProps`, `showSelectionCachedButton` properties.
 - 🌟 `<pro>TreeSelect`: Added `showCheckedStrategy` property, when configuring `treeCheckable`, define the way of backfilling selected items.
 - 🌟 `<pro>PerformanceTable`：Added click row highlight attribute.
 - 🌟 `<pro>DataSet.Record`: The `get` method supports the field name array parameter.

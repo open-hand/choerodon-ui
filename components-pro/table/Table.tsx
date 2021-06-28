@@ -292,6 +292,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   showSelectionTips?: boolean;
   /**
+   * 显示缓存选中记录的按钮
+   */
+  showSelectionCachedButton?: boolean;
+  /**
    * 显示切换跨页全选按钮
    */
   showAllPageSelectionButton?: boolean;
@@ -678,6 +682,7 @@ export default class Table extends DataSetComponent<TableProps> {
     rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])]),
     alwaysShowRowBox: PropTypes.bool,
     showSelectionTips: PropTypes.bool,
+    showSelectionCachedButton: PropTypes.bool,
     showAllPageSelectionButton: PropTypes.bool,
     defaultRowExpanded: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
@@ -747,6 +752,7 @@ export default class Table extends DataSetComponent<TableProps> {
     autoFootHeight: false,
     clientExportQuantity: 100,
     aggregation: false,
+    showSelectionCachedButton: true,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1215,6 +1221,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'selectionMode',
       'alwaysShowRowBox',
       'showSelectionTips',
+      'showSelectionCachedButton',
       'showAllPageSelectionButton',
       'onRow',
       'rowRenderer',

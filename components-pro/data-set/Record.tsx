@@ -512,7 +512,7 @@ export default class Record {
 
   getField(fieldName?: string): Field | undefined {
     if (fieldName) {
-      return this.fields.get(fieldName);
+      return this.fields.get(fieldName) || this.addField(fieldName);
     }
   }
 
