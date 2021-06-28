@@ -17,7 +17,10 @@ class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'code',
     data: [
-      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS' , 'code_description': '性别,员工状态' }
+      {
+        code_code: 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS',
+        code_description: '性别,员工状态',
+      },
     ],
     fields: [
       {
@@ -31,14 +34,14 @@ class App extends React.Component {
         name: 'code_code',
         type: 'string',
         bind: 'code.code',
-        multiple: ','
+        multiple: ',',
       },
       {
         name: 'code_description',
         type: 'string',
         bind: 'code.description',
-        multiple: ','
-      }
+        multiple: ',',
+      },
     ],
     cacheSelection: true,
     selection: 'multiple',
@@ -48,7 +51,14 @@ class App extends React.Component {
   });
 
   render() {
-    return <Lov dataSet={this.ds} searchAction="blur" name="code" placeholder="复选LOV" />;
+    return (
+      <Lov
+        dataSet={this.ds}
+        searchAction="blur"
+        name="code"
+        placeholder="复选LOV"
+      />
+    );
   }
 }
 

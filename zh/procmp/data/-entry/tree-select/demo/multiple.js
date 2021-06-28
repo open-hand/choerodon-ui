@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DataSet, TreeSelect, Row, Col } from 'choerodon-ui/pro';
+import { DataSet, TreeSelect, Row, Col, SelectBox } from 'choerodon-ui/pro';
+const { Option } = SelectBox;
 
 function handleChange(value, oldValue) {
   console.log('[multiple]', value, '[oldValue]', oldValue);
@@ -26,6 +27,10 @@ const data = [
 ];
 
 class App extends React.Component {
+  state = {
+    showCheckedStrategy: 'SHOW_ALL',
+  };
+
   ds = new DataSet({
     data,
     fields: [
@@ -42,9 +47,45 @@ class App extends React.Component {
     },
   });
 
+  handleChange = (value) => {
+    console.log('handleChange', value)
+    this.setState({ showCheckedStrategy: value })
+  };
+
+
   render() {
     return (
       <Row gutter={10}>
+        <Col span={24}>
+          <SelectBox value={this.state.showCheckedStrategy} onChange={this.handleChange}>
+            <Option value="SHOW_CHILD">SHOW_CHILD</Option>
+            <Option value="SHOW_PARENT">SHOW_PARENT</Option>
+            <Option value="SHOW_ALL">
+              SHOW_All
+            </Option>
+          </SelectBox>
+        </Col>
+        <Col span={24}>
+          <TreeSelect
+            dataSet={this.ds}
+            name="user"
+            placeholder="定义选中项回填的方式"
+            treeCheckStrictly
+            treeDefaultExpandAll
+            treeCheckable
+            showCheckedStrategy={this.state.showCheckedStrategy}
+          >
+            <TreeNode value="parent 1" title="parent 1">
+              <TreeNode value="parent 1-0" title="parent 1-0">
+                <TreeNode value="leaf1" title="my leaf" />
+                <TreeNode value="leaf2" title="your leaf" />
+              </TreeNode>
+              <TreeNode value="parent 1-1" title="parent 1-1">
+                <TreeNode value="sss" title="sss" />
+              </TreeNode>
+            </TreeNode>
+          </TreeSelect>
+        </Col>
         <Col span={24}>
           <TreeSelect
             dataSet={this.ds}

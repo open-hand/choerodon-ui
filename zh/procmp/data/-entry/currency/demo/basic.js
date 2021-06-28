@@ -16,5 +16,5 @@ ReactDOM.render(
       </Col>
     </Row>
   </div>,
-  document.getElementById('container')
+  document.getElementById('container'),
 );

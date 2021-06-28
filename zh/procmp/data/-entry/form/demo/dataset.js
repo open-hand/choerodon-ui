@@ -64,7 +64,13 @@ class App extends React.Component {
         step: 1,
         help: '我们需要确定你的年龄',
       },
-      { name: 'sex', type: 'string', label: '性别', required: true, highlight: true },
+      {
+        name: 'sex',
+        type: 'string',
+        label: '性别',
+        required: true,
+        highlight: true,
+      },
       {
         name: 'language',
         type: 'string',
@@ -72,10 +78,22 @@ class App extends React.Component {
         required: true,
         help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
       },
-      { name: 'email', type: 'email', label: '邮箱', required: true, highlight: '生日高亮' },
+      {
+        name: 'email',
+        type: 'email',
+        label: '邮箱',
+        required: true,
+        highlight: '生日高亮',
+      },
       { name: 'homepage', type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
-      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE', placeholder: 'd1' },
+      {
+        name: 'code',
+        type: 'object',
+        label: '代码描述',
+        lovCode: 'LOV_CODE',
+        placeholder: 'd1',
+      },
       { name: 'frozen', type: 'boolean', label: '是否冻结' },
     ],
   });
@@ -118,12 +136,8 @@ class App extends React.Component {
         <Switch name="frozen" />
         <div>
           <Button type="submit">注册</Button>
-          <Button type="reset">
-            重置
-          </Button>
-          <Button onClick={this.clear}>
-            清空
-          </Button>
+          <Button type="reset">重置</Button>
+          <Button onClick={this.clear}>清空</Button>
         </div>
         <div>
           <Button onClick={this.validateCurrent}>校验当前记录</Button>

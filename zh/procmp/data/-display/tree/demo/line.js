@@ -25,7 +25,8 @@ const Demo = () => {
       ],
       events: {
         select: ({ record, dataSet }) => console.log('select', record, dataSet),
-        unSelect: ({ record, dataSet }) => console.log('unSelect', record, dataSet),
+        unSelect: ({ record, dataSet }) =>
+          console.log('unSelect', record, dataSet),
       },
     });
   }, []);
@@ -45,8 +46,8 @@ const Demo = () => {
     setShowLine(
       checked
         ? {
-          showLeafIcon,
-        }
+            showLeafIcon,
+          }
         : false,
     );
   };
@@ -70,7 +71,9 @@ const Demo = () => {
         dataSet={ds}
         showLine={showLine}
         showIcon={showIcon}
-        icon={(props) => <Icon type={props.data.record.get('icon') || 'airline_seat_flat-o'} />}
+        icon={(props) => (
+          <Icon type={props.data.record.get('icon') || 'airline_seat_flat-o'} />
+        )}
         onSelect={onSelect}
         renderer={nodeRenderer}
       />

@@ -17,6 +17,7 @@ title: API
 | queryFields           | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件                                                                                                                                      | ReactNode[] \| object                                                                                  |          |
 | queryFieldsLimit      | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口                                                                                                                                                                       | number                                                                                                 |          |
 | queryBar              | 查询条, 可选值为钩子或者内置类型：filterBar \| professionalBar \| advancedBar \| normal \| bar \| none                                                                                                                                                          | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | normal |
+| queryBarProps | 查询条自定义参数。 当查询条是全局配置的自定义查询条，需要传递自定义参数时可以用此属性 | object | |
 | summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |
 | useMouseBatchChoose   | 是否使用鼠标批量选择,开启后在 rowbox 的情况下可以进行鼠标拖动批量选择,在起始的 rowbox 处按下,在结束位置松开                                                                                                                    | boolean                                                                                                | false    |
@@ -65,6 +66,7 @@ title: API
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | clientExportQuantity | 导出一次轮询数量 | number | 100 |
 | showSelectionTips | 是否显示选中记录提示  | boolean | |
+| showSelectionCachedButton | 是否显示缓存选中记录按钮 | boolean | |
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮 | boolean | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
@@ -85,7 +87,7 @@ title: API
 | name            | 列对照的字段名                                                                                                                                                                                    | string                                                                                                                             |           |
 | width           | 列宽，不推荐给所有列设置宽度，而是给某一列不设置宽度达到自动宽度的效果                                                                                                                            | number                                                                                                                             |           |
 | minWidth        | 最小列宽                                                                                                                                                                                          | number                                                                                                                             | 100       |
-| header          | 列头                                                                                                                                                                                              | ReactNode \| (dataSet, name) => ReactNode                                                                                          |           |
+| header | 列头 | ReactNode \| (dataSet, name, title, aggregation) => ReactNode |  |
 | footer          | 列脚                                                                                                                                                                                              | ReactNode \| (dataSet, name) => ReactNode                                                                                          |           |
 | renderer        | 单元格渲染回调                                                                                                                                                                                    | ({ value, text, name, record, dataSet }) => ReactNode                                                                              |           |
 | editor          | 编辑器, 设为 `true` 时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。                                                                                   | FormField \| ((record, name) => FormField \| boolean) \| boolean                                                                   |           |

@@ -20,16 +20,18 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={8}>
-          <Select placeholder="请选择" onChange={handleChange} optionTooltip={visible ? 'overflow' : 'always'}>
+          <Select
+            placeholder="请选择"
+            onChange={handleChange}
+            optionTooltip={visible ? 'overflow' : 'always'}
+          >
             <Option value="jack">Jack</Option>
-            <Option value="lucy" disabled><b style={{ color: '#08c' }}>Lucy</b></Option>
-            {
-              visible && (
-                <Option value="wu">
-                  Wu Wu Wu Wu Wu Wu Wu Wu Wu Wu Wu
-                </Option>
-              )
-            }
+            <Option value="lucy" disabled>
+              <b style={{ color: '#08c' }}>Lucy</b>
+            </Option>
+            {visible && (
+              <Option value="wu">Wu Wu Wu Wu Wu Wu Wu Wu Wu Wu Wu</Option>
+            )}
           </Select>
         </Col>
         <Col span={4}>
@@ -38,7 +40,9 @@ class App extends React.Component {
         <Col span={12}>
           <Select placeholder="请选择" disabled optionTooltip="overflow">
             <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy</Option>
+            <Option value="lucy">
+              Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy
+            </Option>
             <Option value="wu">Wu</Option>
           </Select>
         </Col>

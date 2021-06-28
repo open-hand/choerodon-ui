@@ -12,7 +12,12 @@ ReactDOM.render(
       <TextField placeholder="请输入" onChange={log} />
     </Col>
     <Col span={8}>
-      <TextField placeholder="清除按钮" defaultValue="点击清除" clearButton onChange={log} />
+      <TextField
+        placeholder="清除按钮"
+        defaultValue="点击清除"
+        clearButton
+        onChange={log}
+      />
     </Col>
     <Col span={8}>
       <Tooltip title="disabled">
@@ -20,5 +25,5 @@ ReactDOM.render(
       </Tooltip>
     </Col>
   </Row>,
-  document.getElementById('container')
+  document.getElementById('container'),
 );

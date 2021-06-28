@@ -46,6 +46,7 @@ title: API
 | virtualized              | boolean                                                                           | 呈现大表格数据                                               |
 | width                    | number                                                                            | 宽度                                                         |
 | wordWrap                 | boolean                                                                           | 单元格自动换行                                               |
+| highLightRow             | boolean`(true)`                                                                   | 点击行显示高亮行                                             |
 
 ### Form methods
 

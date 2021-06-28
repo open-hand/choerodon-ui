@@ -21,7 +21,8 @@ class App extends React.Component {
     ],
     events: {
       select: ({ record, dataSet }) => console.log('select', record, dataSet),
-      unSelect: ({ record, dataSet }) => console.log('unSelect', record, dataSet),
+      unSelect: ({ record, dataSet }) =>
+        console.log('unSelect', record, dataSet),
     },
   });
 
@@ -29,7 +30,7 @@ class App extends React.Component {
     return (
       <Tree
         showLine={{
-          showLeafIcon: false
+          showLeafIcon: false,
         }}
         showIcon={false}
         dataSet={this.ds}
@@ -40,7 +41,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

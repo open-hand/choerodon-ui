@@ -113,8 +113,8 @@ const Demo = () => {
     setShowLine(
       checked
         ? {
-          showLeafIcon,
-        }
+            showLeafIcon,
+          }
         : false,
     );
   };

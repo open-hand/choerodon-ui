@@ -212,7 +212,7 @@ DataSet.
 
 | 名称 | 说明 | 参数 | 返回值类型 |
 | --- | --- | --- | --- |
-| get(fieldName) | 根据字段名获取字段值。注意：禁止通过 record.data\[fieldName\]的方式获取字段值。 | `fieldName` - 字段名 | any |
+| get(fieldName) | 根据字段名获取字段值或根据字段名数组获取字段名与字段值的map。注意：禁止通过 record.data\[fieldName\]的方式获取字段值。 | `fieldName` - 字段名 或 字段名数组 | any |
 | getPristineValue(fieldName) | 根据字段名获取字段的原始值。 | `fieldName` - 字段名 | any |
 | set(fieldName, value) | 给指定字段赋值 | `fieldName` - 字段名或者键值对对象；`value` - 值 |  |
 | init(fieldName, value) | 给指定字段初始化值。字段变为净值。 | `fieldName` - 字段名或者键值对对象；`value` - 值 |  |

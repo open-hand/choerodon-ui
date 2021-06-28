@@ -6,9 +6,7 @@ const data = [{ rd: 'C' }];
 
 class App extends React.Component {
   ds = new DataSet({
-    fields: [
-      { name: 'rd', readOnly: true },
-    ],
+    fields: [{ name: 'rd', readOnly: true }],
     data,
   });
 
@@ -16,16 +14,19 @@ class App extends React.Component {
     return (
       <div>
         <Tooltip title="disabled">
-          <CheckBox name="rd" disabled>A</CheckBox>
+          <CheckBox name="rd" disabled>
+            A
+          </CheckBox>
         </Tooltip>
-        <CheckBox name="rd" readOnly>B</CheckBox>
-        <CheckBox dataSet={this.ds} name="rd" value="C">C</CheckBox>
+        <CheckBox name="rd" readOnly>
+          B
+        </CheckBox>
+        <CheckBox dataSet={this.ds} name="rd" value="C">
+          C
+        </CheckBox>
       </div>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

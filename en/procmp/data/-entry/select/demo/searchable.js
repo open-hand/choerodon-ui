@@ -46,11 +46,26 @@ class App extends React.Component {
     return (
       <Row>
         <Col span={8}>
-          <Select dataSet={this.ds} name="last-name" searchable searchMatcher={this.searchMatcher}>
-            <Option value="jack" text="Jack"><p>Jack</p></Option>
-            <Option value="lucy" text="Lucy"><p><em>lucy</em></p></Option>
-            <Option value="zhangsan" text="Zhangsan">Zhangsan</Option>
-            <Option value="aaa" text="Zhangsan">Zhangsan</Option>
+          <Select
+            dataSet={this.ds}
+            name="last-name"
+            searchable
+            searchMatcher={this.searchMatcher}
+          >
+            <Option value="jack" text="Jack">
+              <p>Jack</p>
+            </Option>
+            <Option value="lucy" text="Lucy">
+              <p>
+                <em>lucy</em>
+              </p>
+            </Option>
+            <Option value="zhangsan" text="Zhangsan">
+              Zhangsan
+            </Option>
+            <Option value="aaa" text="Zhangsan">
+              Zhangsan
+            </Option>
           </Select>
         </Col>
         <Col span={8}>

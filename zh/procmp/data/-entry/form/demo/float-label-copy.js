@@ -28,7 +28,12 @@ function passwordValidator(value, name, form) {
 }
 
 const modalContent = (
-  <Form labelLayout="float" columns={3} header="Float Label" labelTooltip="overflow">
+  <Form
+    labelLayout="float"
+    columns={3}
+    header="Float Label"
+    labelTooltip="overflow"
+  >
     <TextField
       colSpan={3}
       label="手机号"

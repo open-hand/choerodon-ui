@@ -11,9 +11,7 @@ const data = [{ bind: 'A' }];
 class App extends React.Component {
   ds = new DataSet({
     data,
-    fields: [
-      { name: 'bind' },
-    ],
+    fields: [{ name: 'bind' }],
     events: {
       update: handleDataSetChange,
     },
@@ -22,15 +20,18 @@ class App extends React.Component {
   render() {
     return (
       <form>
-        <Radio dataSet={this.ds} name="bind" value="A">A</Radio>
-        <Radio dataSet={this.ds} name="bind" value="B">B</Radio>
-        <Radio dataSet={this.ds} name="bind" value="C">C</Radio>
+        <Radio dataSet={this.ds} name="bind" value="A">
+          A
+        </Radio>
+        <Radio dataSet={this.ds} name="bind" value="B">
+          B
+        </Radio>
+        <Radio dataSet={this.ds} name="bind" value="C">
+          C
+        </Radio>
       </form>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

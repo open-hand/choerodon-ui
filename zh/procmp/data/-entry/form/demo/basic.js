@@ -27,7 +27,9 @@ function passwordValidator(value, name, form) {
 
 function validationRenderer(error, props) {
   if (error.ruleName === 'valueMissing' && props.name === 'password') {
-    return <span style={{ color: 'blue' }}>{error.validationMessage}(自定义)</span>;
+    return (
+      <span style={{ color: 'blue' }}>{error.validationMessage}(自定义)</span>
+    );
   }
 }
 
@@ -39,12 +41,20 @@ const menu = (
       </a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.com.cn/">
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://choerodon.com.cn/"
+      >
         2nd menu item
       </a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://github.com/open-hand/choerodon-ui">
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://github.com/open-hand/choerodon-ui"
+      >
         3rd menu item
       </a>
     </Menu.Item>
@@ -91,7 +101,12 @@ const App = () => {
         addonBefore="+86"
         addonAfter="中国大陆"
       />
-      <Password label="密码" name="password" required validationRenderer={validationRenderer} />
+      <Password
+        label="密码"
+        name="password"
+        required
+        validationRenderer={validationRenderer}
+      />
       <Password
         label="确认密码"
         name="confirmPassword"
@@ -124,7 +139,12 @@ const App = () => {
         <Option value="ja-jp">日本語</Option>
       </Select>
       <EmailField label="邮箱" name="email" required addonAfter={dropdown} />
-      <UrlField label="个人主页" name="homepage" required addonBefore="Http://" />
+      <UrlField
+        label="个人主页"
+        name="homepage"
+        required
+        addonBefore="Http://"
+      />
       <DatePicker highlight="生日高亮" label="生日" name="birth" required />
       <div>
         <Button type="submit">注册</Button>

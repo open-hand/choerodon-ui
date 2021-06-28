@@ -9,6 +9,36 @@ const optionData = [
   { text: '女', value: 'F' },
 ];
 
+const QueryBar = (props) => {
+  const { queryFields, queryDataSet, queryFieldsLimit, dataSet, buttons, defaultShowMore = true } = props;
+  const [showMore, setShowMore] = React.useState(defaultShowMore);
+  const toggleShowMore = React.useCallback(() => setShowMore(!showMore), [showMore]);
+  const handleQuery = React.useCallback(() => queryDataSet.query(), [queryDataSet]);
+  const handleReset = React.useCallback(() => queryDataSet.reset(), [queryDataSet]);
+  if (queryDataSet) {
+    return (
+      <>
+        <Form columns={queryFieldsLimit} dataSet={queryDataSet}>
+          {showMore ? queryFields : queryFields.slice(0, queryFieldsLimit)}
+          <div newLine>
+            <Button
+              dataSet={null}
+              onClick={handleQuery}
+            >
+              查询
+            </Button>
+            <Button onClick={handleReset}>重置</Button>
+            <Button onClick={toggleShowMore}>显示更多</Button>
+            {buttons}
+          </div>
+        </Form>
+        <FilterBar {...props} buttons={[]} />
+      </>
+    );
+  }
+  return null;
+};
+
 class App extends React.Component {
   optionDs = new DataSet({
     data: optionData,
@@ -69,36 +99,7 @@ class App extends React.Component {
     ];
   }
 
-  renderBar = (props) => {
-    const {
-      queryFields,
-      queryDataSet,
-      queryFieldsLimit,
-      dataSet,
-      buttons,
-    } = props;
-    if (queryDataSet) {
-      return (
-        <>
-          <Form columns={queryFieldsLimit} dataSet={queryDataSet}>
-            {queryFields}
-            <div newLine>
-              <Button
-                dataSet={null}
-                onClick={() => {
-                  dataSet.query();
-                }}
-              >
-                查询
-              </Button>
-              <Button onClick={() => queryDataSet.reset()}>重置</Button>
-            </div>
-          </Form>
-          <FilterBar {...props} buttons={buttons} />
-        </>
-      );
-    }
-  };
+  renderBar = props => <QueryBar {...props} />;
 
   render() {
     return (
@@ -106,6 +107,7 @@ class App extends React.Component {
         buttons={['add']}
         dataSet={this.ds}
         queryBar={this.renderBar}
+        queryBarProps={{ defaultShowMore: false }}
         columns={this.columns}
         queryFieldsLimit={2}
       />

@@ -143,7 +143,7 @@ class App extends React.Component {
         type: 'object',
         label: '代码描述',
         lovCode: 'LOV_CODE',
-        ignore: 'always',
+        transformRequest: value => value && value.code,
       },
       {
         name: 'code2',
@@ -181,24 +181,6 @@ class App extends React.Component {
       'other.enemy': this.enemyDs,
     },
   });
-
-  createButton = (
-    <Button icon="playlist_add" onClick={this.createUser} key="add">
-      新增
-    </Button>
-  );
-
-  toDataButton = (
-    <Button onClick={this.toData} key="toData">
-      toData
-    </Button>
-  );
-
-  toJSONDataButton = (
-    <Button onClick={this.toJSONData} key="toJSONData">
-      toJSONData
-    </Button>
-  );
 
   openModal = record => {
     const { Modal: modal } = this.props;
@@ -244,6 +226,24 @@ class App extends React.Component {
   editUser = () => {
     this.openModal();
   };
+
+  createButton = (
+    <Button icon="playlist_add" onClick={this.createUser} key="add">
+      新增
+    </Button>
+  );
+
+  toDataButton = (
+    <Button onClick={this.toData} key="toData">
+      toData
+    </Button>
+  );
+
+  toJSONDataButton = (
+    <Button onClick={this.toJSONData} key="toJSONData">
+      toJSONData
+    </Button>
+  );
 
   toData = () => {
     console.log('toData', this.userDs.toData());
@@ -295,7 +295,7 @@ class App extends React.Component {
         buttons={[
           'add',
           'delete',
-          <Lov key="lov" dataSet={this.enemyFriendsDs} name="code" mode="button" clearButton={false}>
+          <Lov dataSet={this.enemyFriendsDs} name="code" mode="button" clearButton={false}>
             Lov
           </Lov>,
         ]}

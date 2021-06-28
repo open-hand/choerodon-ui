@@ -243,6 +243,21 @@
       "screenshot": "",
       "height": 200,
       "category": "pro"
+    },
+    {
+      "filename": "popup-content.js",
+      "title": {
+        "zh": "扩展菜单",
+        "en": "Custom dropdown"
+      },
+      "description": {
+        "zh": "自定义下拉扩展菜单内容。\n",
+        "en": "Customize the content of the drop-down extended menu.\n"
+      },
+      "order": 15,
+      "screenshot": "",
+      "height": 260,
+      "category": "pro"
     }
   ]
 }

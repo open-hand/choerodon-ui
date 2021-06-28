@@ -5,6 +5,7 @@ title: API
 | 参数  | 说明     | 类型                               | 默认值 |
 | ----- | -------- | ---------------------------------- | ------ |
 | title | 提示文字 | string\|ReactNode\|() => ReactNode |     |
+| theme | 主题 | dark \| light | |
 
 ### 共同的 API
 

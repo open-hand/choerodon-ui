@@ -4,6 +4,7 @@ import isNaN from 'lodash/isNaN';
 import moment from 'moment';
 import {
   DataSet,
+  Button,
   Table,
   NumberField,
   TextArea,
@@ -27,7 +28,7 @@ function aggregationRendereer({ text, record }) {
       <Col span={6}>{record.get('email')}</Col>
       <Col span={18}>{text}</Col>
     </Row>
-  )
+  );
 }
 
 function handleUserDSLoad({ dataSet }) {
@@ -91,6 +92,10 @@ const codeDescriptionDynamicProps = {
 };
 
 class App extends React.Component {
+  state = {
+    aggregation: true,
+  };
+
   options = new DataSet({
     fields: [{
       name: 'value', type: 'string',
@@ -327,11 +332,6 @@ class App extends React.Component {
     },
   });
 
-
-  handleAggregationChange(aggregation) {
-    console.log('aggregation', aggregation);
-  }
-
   handeValueChange = (v) => {
     const { value } = v.target;
     const suffixList = ['@qq.com', '@163.com', '@hand-china.com'];
@@ -345,10 +345,18 @@ class App extends React.Component {
     }
   };
 
+  handleAggregationChange = (aggregation) => {
+    this.setState({ aggregation });
+  };
+
   render() {
+    const { aggregation } = this.state;
+    const command = [
+      <Button key="edit" funcType="link">编辑</Button>,
+      <Button key="opera" funcType="link">操作记录</Button>,
+    ];
     return (
       <Table
-        queryBar="professionalBar"
         customizable
         customizedCode="aggregation"
         key="user"
@@ -356,7 +364,7 @@ class App extends React.Component {
         columnDraggable={false}
         columnTitleEditable={false}
         style={{ height: 'calc(100vh - 100px)', maxHeight: 300 }}
-        aggregation
+        aggregation={aggregation}
         onAggregationChange={this.handleAggregationChange}
       >
         <Column
@@ -373,7 +381,8 @@ class App extends React.Component {
         <Column header="基本组" align="left" aggregation key="basic-group" aggregationDefaultExpandedKeys={['basic-subgroup-1']}>
           <Column header="基本组-分类1" key="basic-subgroup-1">
             <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
-            <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
+            <Column name="email" lock editor={
+              <AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
           </Column>
           <Column header="基本组-分类2" key="basic-subgroup-2">
             <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
@@ -388,7 +397,7 @@ class App extends React.Component {
           <Column name="codeMultiple" editor width={150} />
           <Column name="codeMultiple_code" width={150} />
         </Column>
-        <Column header="性别组" align="left" aggregation aggregationLimit={2} key="sex-group">
+        <Column header="性别组" align="left" aggregationLimit={2} aggregation key="sex-group">
           <Column name="sex" editor={<SelectBox />} width={150} />
           <Column header="性别id" renderer={sexIdRenderer} />
           <Column name="sexMultiple" editor width={150} />
@@ -401,6 +410,7 @@ class App extends React.Component {
         </Column>
         <Column name="numberMultiple" editor width={150} minWidth={50} />
         <Column name="frozen" editor width={50} minWidth={50} lock="right" />
+        <Column header="操作" width={50} minWidth={50} lock="right" command={command} align={aggregation ? 'left' : 'center'} />
       </Table>
     );
   }

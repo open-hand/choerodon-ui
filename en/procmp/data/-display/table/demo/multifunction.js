@@ -37,8 +37,19 @@ function renderPhoneEditor(record) {
       <Option value="+00">+00</Option>
     </Select>
   );
-  return <TextField addonBefore={region} addonBeforeStyle={{ border: 'none', padding: 0, maxWidth: '60px', width: '35%' }} />
+  return (
+    <TextField
+      addonBefore={region}
+      addonBeforeStyle={{
+        border: 'none',
+        padding: 0,
+        maxWidth: '60px',
+        width: '35%',
+      }}
+    />
+  );
 }
+
 function renderPhone({ record, text }) {
   return [record.get('phone-region'), text].filter(Boolean).join('-');
 }
@@ -46,7 +57,9 @@ function renderPhone({ record, text }) {
 function renderColumnFooter(dataset, name) {
   const max = Math.max(
     0,
-    ...dataset.data.map(record => record.get(name)).filter(value => !isNaN(value)),
+    ...dataset.data
+      .map((record) => record.get(name))
+      .filter((value) => !isNaN(value)),
   );
   return `最大年龄：${NumberField.format(max)}`;
 }
@@ -75,6 +88,9 @@ const nameDynamicProps = {
   required({ record }) {
     return record.get('sex') === 'M';
   },
+  label() {
+    return '姓名';
+  },
 };
 
 const codeCodeDynamicProps = {
@@ -98,17 +114,22 @@ const codeDescriptionDynamicProps = {
 
 class App extends React.Component {
   options = new DataSet({
-    fields: [{
-      name: 'value', type: 'string',
-    }, {
-      name: 'meaning', type: 'string',
-    }],
-  })
+    fields: [
+      {
+        name: 'value',
+        type: 'string',
+      },
+      {
+        name: 'meaning',
+        type: 'string',
+      },
+    ],
+  });
 
   userDs = new DataSet({
     primaryKey: 'userid',
     autoQuery: true,
-    exportMode:'client',
+    exportMode: 'client',
     pageSize: 5,
     cacheSelection: true,
     transport: {
@@ -128,16 +149,17 @@ class App extends React.Component {
             data: first,
             transformResponse() {
               return [first];
-            }
+            },
           }
           : null,
       destroy: {
         url: '/dataset/user/mutations',
         method: 'delete',
       },
-      exports:{
-        url:'http://gitee.com/xurime/excelize/raw/master/test/SharedStrings.xlsx',
-        method:'get',
+      exports: {
+        url:
+          'http://gitee.com/xurime/excelize/raw/master/test/SharedStrings.xlsx',
+        method: 'get',
       },
       tls({ name }) {
         // 多语言数据请求的 axios 配置或 url 字符串。UI 接收的接口返回值格式为：[{ name: { zh_CN: '简体中文', en_US: '美式英语', ... }}]
@@ -150,7 +172,7 @@ class App extends React.Component {
     feedback: {
       loadSuccess(resp) {
         //  DataSet 查询成功的反馈 可以return 一个resp 来修改响应结果
-        console.log('loadSuccess')
+        console.log('loadSuccess');
       },
     },
     queryFields: [
@@ -158,7 +180,12 @@ class App extends React.Component {
       { name: 'name', type: 'string', label: '姓名', defaultValue: 'Hugh' },
       { name: 'age', type: 'number', label: '年龄' },
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
-      { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
+      {
+        name: 'sex',
+        type: 'string',
+        label: '性别',
+        lookupCode: 'HR.EMPLOYEE_GENDER',
+      },
     ],
     fields: [
       {
@@ -172,6 +199,7 @@ class App extends React.Component {
       {
         name: 'name1',
         ignore: 'always',
+        required: true,
       },
       {
         name: 'name2',
@@ -181,10 +209,11 @@ class App extends React.Component {
       {
         name: 'name',
         type: 'intl',
-        label: '姓名',
         computedProps: nameDynamicProps,
         bind: 'name2',
         ignore: 'clean',
+        transformResponse(value) { return value && `${value}!`},
+        transformRequest(value) { return value && value.replace(/!$/, '')},
       },
       {
         name: 'description',
@@ -206,8 +235,10 @@ class App extends React.Component {
         help: '用户邮箱，可以自动补全',
         computedProps: {
           highlight({ record }) {
-            return record.index === 0 ? { title: '提示', content: '邮箱高亮' } : false;
-          }
+            return record.index === 0
+              ? { title: '提示', content: '邮箱高亮' }
+              : false;
+          },
         },
       },
       {
@@ -226,7 +257,7 @@ class App extends React.Component {
         label: '代码描述',
         computedProps: codeDynamicProps,
         transformResponse(value, data) {
-          return data
+          return data;
         },
         transformRequest(value) {
           // 在发送请求之前对数据进行处理
@@ -322,18 +353,42 @@ class App extends React.Component {
       },
       { name: 'phone', type: 'string', label: '手机' },
       { name: 'account', type: 'object', ignore: 'always' },
-      { name: 'enable', type: 'boolean', label: '是否开启', unique: 'uniqueGroup' },
-      { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
-      { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
-      { name: 'date.endDate', type: 'time', range: true, label: '结束日期', computedProps: { defaultValue: () => [moment(), moment()] } },
+      {
+        name: 'enable',
+        type: 'boolean',
+        label: '是否开启',
+        unique: 'uniqueGroup',
+      },
+      {
+        name: 'frozen',
+        type: 'boolean',
+        label: '是否冻结',
+        trueValue: 'Y',
+        falseValue: 'N',
+      },
+      {
+        name: 'date.startDate',
+        type: 'date',
+        label: '开始日期',
+        defaultValue: new Date(),
+      },
+      {
+        name: 'date.endDate',
+        type: 'time',
+        range: true,
+        label: '结束日期',
+        computedProps: { defaultValue: () => [moment(), moment()] },
+      },
     ],
     events: {
       selectAll: ({ dataSet }) => console.log('select all', dataSet.selected),
       indexchange: ({ record }) => console.log('current user', record),
       submit: ({ data }) => console.log('submit data', data),
       load: handleUserDSLoad,
-      query: ({ params, data }) => console.log('user query parameter', params, data),
-      export: ({ params, data }) => console.log('user export parameter', params, data),
+      query: ({ params, data }) =>
+        console.log('user query parameter', params, data),
+      export: ({ params, data }) =>
+        console.log('user export parameter', params, data),
       remove: ({ records }) => console.log('removed records', records),
     },
   });
@@ -342,7 +397,7 @@ class App extends React.Component {
     const { userDs } = this;
     const { selected } = userDs;
     if (selected.length > 0) {
-      userDs.unshift(...selected.map(record => record.clone()));
+      userDs.unshift(...selected.map((record) => record.clone()));
     } else {
       Modal.warning('请选择记录');
     }
@@ -362,11 +417,16 @@ class App extends React.Component {
     return new Promise((resolve) => {
       setTimeout(() => {
         const { userDs } = this;
-        userDs.current.set('userid', Math.random())
+        userDs.current.set('userid', Math.random());
         console.log(userDs.toJSONData());
         console.log(userDs.toJSONData(true));
         console.log(userDs.toJSONData(false, true));
-        userDs.create({ other: { enemy: [{}, {}] }, code_code: '1', code_description: 'xxx', name: 'Hugh' });
+        userDs.create({
+          other: { enemy: [{}, {}] },
+          code_code: '1',
+          code_description: 'xxx',
+          name: 'Hugh',
+        });
         resolve();
       }, 2000);
     });
@@ -415,17 +475,19 @@ class App extends React.Component {
   };
 
   handeValueChange = (v) => {
-    const value = v.target.value
-    const suffixList = ['@qq.com', '@163.com', '@hand-china.com']
+    const value = v.target.value;
+    const suffixList = ['@qq.com', '@163.com', '@hand-china.com'];
     if (value.indexOf('@') !== -1) {
-      this.options.loadData([])
+      this.options.loadData([]);
     } else {
-      this.options.loadData(suffixList.map(suffix => ({
-        value: `${value}${suffix}`,
-        meaning: `${value}${suffix}`,
-      })))
+      this.options.loadData(
+        suffixList.map((suffix) => ({
+          value: `${value}${suffix}`,
+          meaning: `${value}${suffix}`,
+        })),
+      );
     }
-  }
+  };
 
   render() {
     const buttons = [
@@ -434,7 +496,6 @@ class App extends React.Component {
       ['delete', { color: 'red' }],
       'remove',
       'reset',
-      'export',
       this.importButton,
       this.copyButton,
       this.insertButton,
@@ -471,10 +532,39 @@ class App extends React.Component {
           lock
           sortable
         />
-        <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
-        <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
-        <Column name="phone" lock editor={renderPhoneEditor} width={150} renderer={renderPhone} />
-        <Column name="enable" editor width={50} minWidth={50} lock tooltip="overflow" />
+        <Column
+          name="age"
+          editor
+          width={150}
+          sortable
+          footer={renderColumnFooter}
+        />
+        <Column
+          name="email"
+          lock
+          editor={
+            <AutoComplete
+              onFocus={this.handeValueChange}
+              onInput={this.handeValueChange}
+              options={this.options}
+            />
+          }
+        />
+        <Column
+          name="phone"
+          lock
+          editor={renderPhoneEditor}
+          width={150}
+          renderer={renderPhone}
+        />
+        <Column
+          name="enable"
+          editor
+          width={50}
+          minWidth={50}
+          lock
+          tooltip="overflow"
+        />
         <Column name="name1" editor width={150} />
         <Column name="name2" editor width={150} />
         <Column name="name" editor width={150} sortable tooltip="always" />
@@ -493,7 +583,12 @@ class App extends React.Component {
         </>
         <fragment>
           <Column name="date.endDate" editor width={150} />
-          <Column header="时间" name="time" editor={<DateTimePicker />} width={150} />
+          <Column
+            header="时间"
+            name="time"
+            editor={<DateTimePicker />}
+            width={150}
+          />
           <Column name="numberMultiple" editor width={150} minWidth={50} />
           <Column name="frozen" editor width={50} minWidth={50} lock="right" />
         </fragment>

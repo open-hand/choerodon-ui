@@ -45,6 +45,7 @@ title: API
 | virtualized              | boolean                                                                           | Effectively render large tabular data                                                         |
 | width                    | number                                                                            | Table width                                                                                   |
 | wordWrap                 | boolean                                                                           | The cell wraps automatically                                                                  |
+| highLightRow             | boolean`(true)`                                                                   | Click on the row to display the highlighted row                                       |
 
 ### Form methods
 

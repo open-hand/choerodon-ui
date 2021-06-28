@@ -36,10 +36,28 @@ class App extends React.Component {
     fields: [
       { name: 'phone', type: 'string', label: '手机号', required: true },
       { name: 'password', type: 'string', label: '密码', required: true },
-      { name: 'confirmPassword', type: 'string', label: '确认密码', required: true, validator: passwordValidator },
-      { name: 'age', type: 'number', label: '年龄', required: true, help: '我们需要确定你的年龄' },
+      {
+        name: 'confirmPassword',
+        type: 'string',
+        label: '确认密码',
+        required: true,
+        validator: passwordValidator,
+      },
+      {
+        name: 'age',
+        type: 'number',
+        label: '年龄',
+        required: true,
+        help: '我们需要确定你的年龄',
+      },
       { name: 'sex', type: 'string', label: '性别', required: true },
-      { name: 'language', type: 'string', label: '语言', required: true, help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息' },
+      {
+        name: 'language',
+        type: 'string',
+        label: '语言',
+        required: true,
+        help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
+      },
       { name: 'email', type: 'email', label: '邮箱', required: true },
       { name: 'homepage', type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
@@ -49,7 +67,13 @@ class App extends React.Component {
 
   settingDs = new DataSet({
     data: [
-      { labelLayout: 'horizontal', labelWidthType: 'size', labelWidth: 100, labelAlign: 'right', useColon: true },
+      {
+        labelLayout: 'horizontal',
+        labelWidthType: 'size',
+        labelWidth: 100,
+        labelAlign: 'right',
+        useColon: true,
+      },
     ],
   });
 
@@ -70,7 +94,12 @@ class App extends React.Component {
           <Form.Item label="labelWidth" name="labelWidthType">
             <SelectBox>
               <Option value="auto">auto</Option>
-              <Option value="size"><NumberField name="labelWidth" disabled={current.get('labelWidthType') === 'auto'} /></Option>
+              <Option value="size">
+                <NumberField
+                  name="labelWidth"
+                  disabled={current.get('labelWidthType') === 'auto'}
+                />
+              </Option>
             </SelectBox>
           </Form.Item>
           <Form.Item name="labelAlign" label="labelAlign">
@@ -88,7 +117,11 @@ class App extends React.Component {
           useColon={current.get('useColon')}
           labelAlign={current.get('labelAlign')}
           labelLayout={current.get('labelLayout')}
-          labelWidth={current.get('labelWidthType') === 'auto' ? 'auto' : current.get('labelWidth')}
+          labelWidth={
+            current.get('labelWidthType') === 'auto'
+              ? 'auto'
+              : current.get('labelWidth')
+          }
         >
           <Row gutter={10}>
             <Col span={6}>
@@ -108,7 +141,13 @@ class App extends React.Component {
             </Col>
             <Col span={6}>
               <Form.Item>
-                <NumberField name="age" min={18} step={1} addonAfter="周岁" showHelp="tooltip" />
+                <NumberField
+                  name="age"
+                  min={18}
+                  step={1}
+                  addonAfter="周岁"
+                  showHelp="tooltip"
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -158,7 +197,9 @@ class App extends React.Component {
           <Form.Item>
             <div>
               <Button type="submit">注册</Button>
-              <Button type="reset" style={{ marginLeft: 8 }}>重置</Button>
+              <Button type="reset" style={{ marginLeft: 8 }}>
+                重置
+              </Button>
             </div>
           </Form.Item>
         </Form>
