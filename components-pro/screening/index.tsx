@@ -202,8 +202,8 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
   render() {
     const dataSet = this.dataSet;
     const { children } = this.props;
-    const mergeValue = toJS(this.mergeValue)
-    omit(mergeValue, ['__dirty'])
+    let mergeValue = toJS(this.mergeValue)
+    mergeValue = omit(mergeValue, ['__dirty'])
     const filteredChildren = Children.toArray(children).filter(c => !!c);
     return (
       <div className={`${this.prefixCls}`}>

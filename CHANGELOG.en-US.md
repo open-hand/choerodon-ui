@@ -43,6 +43,7 @@ timeline: true
 - 🐞 `<pro>Table`：Fix export problems and optimize local export.
 - 🐞 `<pro>PerformanceTable`: Fix the scroll bar exception caused by rendering asynchronous under virtual scrolling.
 - 🐞 `<pro>PerformanceTable`: Fix the issue that the mobile terminal is stuck when scrolling.
+- 🐞 `<pro>Screening`：Fix the display problem when the dataSet has no initial value.
 
 ## 1.4.0
 
