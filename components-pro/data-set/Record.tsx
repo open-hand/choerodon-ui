@@ -565,7 +565,7 @@ export default class Record {
     }
   }
 
-  get(fieldName?: string): any {
+  get(fieldName?: string | string []): any {
     return getRecordValue(
       this,
       (child, checkField) => child.get(checkField),

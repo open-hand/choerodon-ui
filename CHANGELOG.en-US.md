@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Table`：Added `queryBarProps` property.
 - 🌟 `<pro>TreeSelect`: Added `showCheckedStrategy` property, when configuring `treeCheckable`, define the way of backfilling selected items.
 - 🌟 `<pro>PerformanceTable`：Added click row highlight attribute.
+- 🌟 `<pro>DataSet.Record`: The `get` method supports the field name array parameter.
 - 💄 `<pro>PerformanceTable`: Compatible with dragging the column width on the mobile terminal.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
 - 💄 `<pro>DataSet.Field`: Each language field created by intl typed Field supports `transformResponse` and `transformRequest` properties.

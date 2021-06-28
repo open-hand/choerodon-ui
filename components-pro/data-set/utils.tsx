@@ -680,9 +680,15 @@ export function generateResponseData(item: any, dataKey?: string): object[] {
 export function getRecordValue(
   record: Record,
   cb: (record: Record, fieldName: string) => boolean,
-  fieldName?: string,
+  fieldName?: string | string[],
 ) {
   if (fieldName) {
+    if (isArrayLike(fieldName)) {
+      return fieldName.reduce<object>((value, key) => {
+        value[key] = getRecordValue(record, cb, key);
+        return value;
+      }, {});
+    }
     const chainFieldName = getChainFieldName(record, fieldName);
     const { dataSet } = record;
     if (dataSet) {
