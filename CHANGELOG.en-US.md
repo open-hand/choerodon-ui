@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
+
 ## 1.4.1
 
 `2021-06-28`

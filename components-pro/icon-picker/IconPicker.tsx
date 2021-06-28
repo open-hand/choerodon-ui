@@ -11,7 +11,7 @@ import Tabs from '../tabs';
 import { $l } from '../locale-context';
 import IconCategory from './IconCategory';
 import autobind from '../_util/autobind';
-import { stopEvent } from '../_util/EventManager';
+import { preventDefault, stopEvent } from '../_util/EventManager';
 
 const COLUMNS = 5;
 
@@ -388,7 +388,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     const { prefixCls } = this;
     const { customFontName } = this.props;
     return (
-      <div className={`${prefixCls}-single-tab`}>
+      <div className={`${prefixCls}-single-tab`} onMouseDown={preventDefault}>
         <IconCategory
           paging={false}
           customFontName={customFontName}
@@ -428,7 +428,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
         </TabPane>
       ));
       return (
-        <div>
+        <div onMouseDown={preventDefault}>
           <Tabs onChange={this.handleTabsChange} activeKey={activeCategory}>
             {tabs}
           </Tabs>
@@ -437,7 +437,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     }
     const category = categoryKeys[0];
     return (
-      <div className={`${prefixCls}-single-tab`}>
+      <div className={`${prefixCls}-single-tab`} onMouseDown={preventDefault}>
         <IconCategory
           page={categoryPages[category]}
           pageSize={pageSize}
