@@ -18,7 +18,6 @@ import {
   DataSet,
   Table,
   TextField,
-  DateTimePicker,
   Modal,
   ModalProvider,
   injectModal,
@@ -38,6 +37,7 @@ function editorRenderer(record) {
 function maleFilter(record) {
   return record.get('sex') === 'M' || !record.get('sex');
 }
+
 // 过滤展示数据 结合 table filter
 function femaleFilter(record) {
   return record.get('sex') === 'F';
@@ -49,7 +49,7 @@ class App extends React.Component {
     dataToJSON: 'normal',
     queryUrl: '/dataset/user/queries',
     cascadeParams(parent) {
-      console.log('cascadeParams',parent.toData())
+      console.log('cascadeParams', parent.toData());
       // 级联查询参数 (record, primaryKey) => object
       return {
         __parent: parent.toData(),
@@ -220,7 +220,7 @@ class App extends React.Component {
             </Table>
           </TabPane>
           <TabPane tab="Friends(F)">
-            <Table dataSet={this.friendsDs} rowHeight={40} filter={femaleFilter}> 
+            <Table dataSet={this.friendsDs} rowHeight={40} filter={femaleFilter}>
               <Column name="name" editor={editorRenderer} sortable />
               <Column name="age" editor sortable />
               <Column name="sex" editor width={150} />
@@ -243,18 +243,6 @@ class App extends React.Component {
     this.openModal();
   };
 
-  toData = () => {
-    console.log('toData', this.userDs.toData());
-  };
-
-  toJSONData = () => {
-    console.log('toJSONData', this.userDs.toJSONData());
-  };
-
-  renderEdit = () => {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} size="small" />;
-  };
-
   createButton = (
     <Button icon="playlist_add" onClick={this.createUser} key="add">
       新增
@@ -272,6 +260,18 @@ class App extends React.Component {
       toJSONData
     </Button>
   );
+
+  toData = () => {
+    console.log('toData', this.userDs.toData());
+  };
+
+  toJSONData = () => {
+    console.log('toJSONData', this.userDs.toJSONData());
+  };
+
+  renderEdit = () => {
+    return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} size="small" />;
+  };
 
   render() {
     const buttons = [

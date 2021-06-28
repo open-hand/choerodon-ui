@@ -3,6 +3,7 @@ order: 2
 title:
   zh-CN: 显示原始值
   en-US: Pristine
+only: true  
 ---
 
 ## zh-CN
@@ -14,47 +15,29 @@ title:
 Pristine.
 
 ```jsx
-import {
-  DataSet,
-  Table,
-  Form,
-  TextField,
-  NumberField,
-  SelectBox,
-  Modal,
-  Button,
-} from 'choerodon-ui/pro';
-
-const { Column } = Table;
-
-class EditButton extends React.Component {
-  handleClick = e => {
-    const { record, onClick } = this.props;
-    onClick(record, e);
-  };
-
-  render() {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.handleClick} size="small" />;
-  }
-}
+import { DataSet, Table, Button } from 'choerodon-ui/pro';
 
 class App extends React.Component {
+  state = {
+    columns: [
+      { name: 'userid' },
+      { name: 'name', editor: true },
+      { name: 'age', editor: true },
+      { name: 'sex', editor: true },
+      { name: 'enable', editor: true },
+    ]
+  }
+  
   userDs = new DataSet({
     primaryKey: 'userid',
-    transport: {
-      read({ params: { page, pagesize } }) {
-        return {
-          url: `/dataset/user/page/${pagesize}/${page}`,
-        };
-      },
-    },
+    name: 'user',
     autoQuery: true,
     pageSize: 5,
     fields: [
       {
         name: 'userid',
         type: 'string',
-        label: '编号',
+        label: '编号1',
         required: true,
       },
       {
@@ -78,58 +61,44 @@ class App extends React.Component {
       },
       { name: 'enable', type: 'boolean', label: '是否开启' },
     ],
-    events: {
-      submit: ({ data }) => console.log('submit data', data),
-    },
   });
 
-  openModal = (record, isNew) => {
-    let isCancel = false;
-    Modal.open({
-      drawer: true,
-      width: 600,
-      children: (
-        <Form record={record}>
-          <TextField name="userid" />
-          <TextField name="name" />
-          <NumberField name="age" />
-          <SelectBox name="sex" />
-        </Form>
-      ),
-      onOk: () => this.userDs.submit(),
-      onCancel: () => (isCancel = true),
-      afterClose: () => isCancel && isNew && this.userDs.remove(record),
-    });
-  };
-
-  editUser = record => {
-    this.openModal(record);
-  };
-
-  renderEdit = ({ record }) => {
-    return <EditButton onClick={this.editUser} record={record} />;
-  };
-
-  createUser = () => {
-    this.openModal(this.userDs.create({}), true);
-  };
-
-  createButton = (
-    <Button icon="playlist_add" onClick={this.createUser} key="add">
-      新增
-    </Button>
-  );
+  get columns() {
+    return [
+      { name: 'userid' },
+      { name: 'name', editor: true },
+      { name: 'age', editor: true },
+      { name: 'sex', editor: true },
+      { name: 'enable', editor: true },
+    ];
+  }
+  
+  addColumn = () => {
+    this.userDs.addField('test', {
+      label: '测试',
+      type: 'string',
+      required: true,
+    })
+    const cols = [...this.state.columns];
+    cols.push({
+      name: 'test', editor: true
+    })
+    console.log('add', cols)
+    this.setState({
+      columns: cols
+    })
+  }
 
   render() {
     const buttons = [this.createButton, 'save', 'delete', 'reset'];
     return (
-      <Table key="user" buttons={buttons} dataSet={this.userDs} pristine>
-        <Column name="userid" />
-        <Column name="age" />
-        <Column name="enable" />
-        <Column name="name" />
-        <Column header="操作" align="center" renderer={this.renderEdit} lock="right" />
-      </Table>
+      <Table
+        key="basic"
+        buttons={[<Button onClick={this.addColumn}>新增列</Button>]}
+        rowNumber={({ text }) => `#${text}`}
+        dataSet={this.userDs}
+        columns={this.state.columns}
+      />
     );
   }
 }
