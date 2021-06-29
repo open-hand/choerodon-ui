@@ -11,6 +11,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { RecordValidationErrors } from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
+  addRecordField,
   axiosConfigAdapter,
   checkFieldType,
   childrenInfoForDelete,
@@ -24,7 +25,6 @@ import {
   getRecordValue,
   getSortedFields,
   isDirtyRecord,
-  processIntlField,
   processToJSON,
   processValue,
   useCascade,
@@ -57,6 +57,8 @@ export default class Record {
   dataSet?: DataSet;
 
   @observable fields: Fields;
+
+  tempFields: Map<string, Field> = new Map();
 
   memo?: object;
 
@@ -514,7 +516,7 @@ export default class Record {
   getField(fieldName?: string): Field | undefined {
     if (fieldName) {
       try {
-        return this.fields.get(fieldName) || this.addField(fieldName);
+        return this.fields.get(fieldName) || addRecordField(fieldName, {}, this, true);
       } catch (e) {
         warning(false, e.message);
       }
@@ -854,18 +856,7 @@ export default class Record {
 
   @action
   addField(name: string, fieldProps: FieldProps = {}): Field {
-    const { dataSet } = this;
-    fieldProps.name = name;
-    return processIntlField(
-      name,
-      fieldProps,
-      (langName, langProps) => {
-        const field = new Field(langProps, dataSet, this);
-        this.fields.set(langName, field);
-        return field;
-      },
-      dataSet,
-    );
+    return addRecordField(name, fieldProps, this);
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {

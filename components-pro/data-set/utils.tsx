@@ -1,6 +1,7 @@
 import queryString from 'querystringify';
 import moment, { isDate, isMoment } from 'moment';
-import { isArrayLike } from 'mobx';
+import { action, isArrayLike } from 'mobx';
+import raf from 'raf';
 import { AxiosRequestConfig } from 'axios';
 import isBoolean from 'lodash/isBoolean';
 import isObject from 'lodash/isObject';
@@ -368,7 +369,7 @@ export function checkFieldType(value: any, field: Field): boolean {
       }
       const valueType =
         field.type === FieldType.boolean &&
-          [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
+        [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -610,7 +611,7 @@ export function axiosConfigAdapter(
   };
 
   const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
-    getConfig('transport') || {};
+  getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
   if (globalConfig) {
     Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params, options));
@@ -737,6 +738,53 @@ export function processIntlField(
     );
   }
   return callback(name, fieldProps);
+}
+
+export function addRecordField(name: string, fieldProps: FieldProps = {}, record: Record, async: boolean = false): Field {
+  fieldProps.name = name;
+  const { dataSet, fields, tempFields } = record;
+  if (async) {
+    const tempField = tempFields.get(name);
+    if (tempField) {
+      return tempField;
+    }
+  }
+  const recordField = processIntlField(
+    name,
+    fieldProps,
+    (langName, langProps) => {
+      const field = new Field(langProps, dataSet, record);
+      if (async) {
+        tempFields.set(langName, field);
+      } else {
+        fields.set(langName, field);
+      }
+      return field;
+    },
+    dataSet,
+  );
+  if (async) {
+    raf(action(() => {
+      [...tempFields.entries()].forEach(([key, field]) => {
+        const existField = fields.get(key);
+        if (existField) {
+          const dirtyKeys = Object.keys(field.dirtyProps);
+          if (dirtyKeys.length) {
+            const { dirtyProps } = existField;
+            dirtyKeys.forEach(prop => {
+              if (!(prop in dirtyProps)) {
+                existField.set(prop, field.props[prop]);
+              }
+            });
+          }
+        } else {
+          fields.set(key, field);
+        }
+      });
+      tempFields.clear();
+    }));
+  }
+  return recordField;
 }
 
 export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {
