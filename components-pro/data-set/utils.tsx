@@ -1,6 +1,7 @@
 import queryString from 'querystringify';
 import moment, { isDate, isMoment } from 'moment';
-import { isArrayLike } from 'mobx';
+import { action, isArrayLike } from 'mobx';
+import raf from 'raf';
 import { AxiosRequestConfig } from 'axios';
 import isBoolean from 'lodash/isBoolean';
 import isObject from 'lodash/isObject';
@@ -737,6 +738,42 @@ export function processIntlField(
     );
   }
   return callback(name, fieldProps);
+}
+
+export function addRecordField(name: string, fieldProps: FieldProps = {}, record: Record, async: boolean = false): Field {
+  fieldProps.name = name;
+  const { dataSet, fields, tempFields } = record;
+  if (async) {
+    const tempField = tempFields.get(name);
+    if (tempField) {
+      return tempField;
+    }
+  }
+  const recordField = processIntlField(
+    name,
+    fieldProps,
+    (langName, langProps) => {
+      const field = new Field(langProps, dataSet, record);
+      if (async) {
+        tempFields.set(langName, field);
+      } else {
+        fields.set(langName, field);
+      }
+      return field;
+    },
+    dataSet,
+  );
+  if (async) {
+    raf(action(() => {
+      [...tempFields.entries()].forEach(([key, field]) => {
+        if (!fields.has(key)) {
+          fields.set(key, field);
+        }
+      });
+      tempFields.clear();
+    }));
+  }
+  return recordField;
 }
 
 export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {
