@@ -14,6 +14,7 @@ title:
 Line.
 
 ````jsx
+import { useState, useMemo } from 'react';
 import { Tree, Switch, Icon, DataSet } from 'choerodon-ui/pro';
 
 function nodeRenderer({ record }) {
