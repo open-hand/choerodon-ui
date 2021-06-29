@@ -9,7 +9,6 @@
   display: inline-block;
   height: @btn-height-base;
   padding: @btn-padding-base;
-  font-weight: @btn-font-weight;
   line-height: @btn-line-height;
   text-align: center;
   vertical-align: middle;
@@ -97,7 +96,8 @@
   }
 
   &-flat {
-    background: transparent;
+    background-color: transparent;
+    font-weight: @btn-font-weight;
     box-shadow: none;
 
     &:not(.@{btn-prefix-cls}-disabled):hover,
@@ -112,6 +112,7 @@
   }
 
   &-raised {
+    font-weight: @btn-font-weight;
     border-color: transparent;
     border-style: @btn-raised-border-style-base;
     border-width: @btn-raised-border-width-base;
@@ -119,7 +120,8 @@
 
   &-link {
     padding: 0;
-    background: transparent;
+    background-color: transparent;
+    font-weight: @btn-link-font-weight;
     box-shadow: none;
 
     &:not(.@{btn-prefix-cls}-disabled):hover,

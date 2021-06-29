@@ -7,6 +7,7 @@ import isNumber from 'lodash/isNumber';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { RecordValidationErrors } from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
@@ -512,7 +513,11 @@ export default class Record {
 
   getField(fieldName?: string): Field | undefined {
     if (fieldName) {
-      return this.fields.get(fieldName) || this.addField(fieldName);
+      try {
+        return this.fields.get(fieldName) || this.addField(fieldName);
+      } catch (e) {
+        warning(false, e.message);
+      }
     }
   }
 

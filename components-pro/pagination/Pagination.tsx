@@ -146,14 +146,16 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   getObservableProps(props, context) {
     const globalPagination = getConfig('pagination');
+    const pageSizeOptions = props.pageSizeOptions || (globalPagination && globalPagination.pageSizeOptions) || ['10', '20', '50', '100'];
+    const maxPageSize = Math.max(defaultTo('maxPageSize' in props ? props.maxPageSize : (globalPagination && globalPagination.maxPageSize), 100), ...pageSizeOptions);
     return {
       ...super.getObservableProps(props, context),
       page: defaultTo('page' in props ? props.page : globalPagination && globalPagination.page, 1),
       pageSize: defaultTo('pageSize' in props ? props.pageSize : globalPagination && globalPagination.pageSize, 10),
       total: props.total,
-      pageSizeOptions: props.pageSizeOptions || (globalPagination && globalPagination.pageSizeOptions) || ['10', '20', '50', '100'],
+      pageSizeOptions,
       pageSizeEditable: 'pageSizeEditable' in props ? props.pageSizeEditable : (globalPagination && globalPagination.pageSizeEditable),
-      maxPageSize: defaultTo('maxPageSize' in props ? props.maxPageSize : (globalPagination && globalPagination.maxPageSize), 100),
+      maxPageSize,
     };
   }
 
