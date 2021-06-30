@@ -5,7 +5,9 @@
 @output-prefix-cls: ~'@{c7n-pro-prefix}-output';
 
 .@{output-prefix-cls} {
-  line-height: @output-line-height; // <-- fieldHeight / fontSize
+  line-height: @output-line-height;
+  word-break: @output-word-break;
+
   &-invalid {
     color: @error-color;
     background-color: @error-bg-color;
