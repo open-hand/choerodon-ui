@@ -15,12 +15,14 @@
   &-wrapper {
     position: relative;
     display: inline-block;
-    line-height: 1;
-    white-space: nowrap;
+    align-items: center;
+    line-height: @radio-line-height;
+    white-space: @radio-label-white-space;
     vertical-align: middle;
     outline: none;
     cursor: pointer;
   }
+
   &:disabled {
     cursor: not-allowed;
     pointer-events: none;

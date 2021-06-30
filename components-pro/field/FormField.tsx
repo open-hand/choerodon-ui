@@ -444,7 +444,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   get labelTooltip() {
-    return this.props.labelTooltip || this.context.labelTooltip;
+    return this.props.labelTooltip || this.context.labelTooltip || getConfig('labelTooltip');
   }
 
   get hasFloatLabel(): boolean {

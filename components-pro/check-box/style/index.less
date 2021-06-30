@@ -8,6 +8,11 @@
 .@{pro-checkbox-prefix-cls} {
   .radio-btn;
 
+  &-wrapper,
+  &-wrapper.@{field-prefix-cls} {
+    display: inline-flex;
+  }
+
   &-inner {
     position: relative;
     display: inline-block;
@@ -66,6 +71,13 @@
     }
   }
 
+  &-label {
+    display: inline-block;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &-button {
     padding: 0 0.15rem;
     line-height: 0.3rem;
@@ -95,7 +107,7 @@
     }
   }
   &-button + &-button {
-    margin-left: 0.1rem;
+    margin-left: @btn-group-spacing;
   }
   &-float-label .@{field-label-prefix-cls}-wrapper {
     left: 0;
