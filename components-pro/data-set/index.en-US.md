@@ -49,6 +49,7 @@ title: DataSet
 | axios | 覆盖默认 axios | AxiosInstance |  |
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (parent, primaryKey) => object | (parent, primaryKey) => primaryKey ? parent.get(primaryKey) : parent.toData() |
+| combineSort | 是否开启组件列排序传参 | boolean | false |
 
 ### DataSet Values
 
