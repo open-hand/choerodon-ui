@@ -88,18 +88,16 @@ export default class Layout extends React.Component {
     moment.locale(locale);
     localeContext.setLocale(proComponentsLocale);
     return (
-      <React.StrictMode>
-        <IntlProvider locale={locale} messages={messages}>
-          <LocaleProvider locale={componentsLocale}>
-            <div className="page-wrapper">
-              <ModalProvider location={location}>
-                <Header {...restProps} />
-                {children}
-              </ModalProvider>
-            </div>
-          </LocaleProvider>
-        </IntlProvider>
-      </React.StrictMode>
+      <IntlProvider locale={locale} messages={messages}>
+        <LocaleProvider locale={componentsLocale}>
+          <div className="page-wrapper">
+            <ModalProvider location={location}>
+              <Header {...restProps} />
+              {children}
+            </ModalProvider>
+          </div>
+        </LocaleProvider>
+      </IntlProvider>
     );
   }
 }

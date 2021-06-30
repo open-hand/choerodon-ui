@@ -88,7 +88,7 @@ const codeDynamicProps = {
 const nameDynamicProps = {
   // 当Sex为M(男)的时候 该属性为必须输入字段 即为 field 中 require = true
   required({ record }) {
-    return record.get('sex') === 'M';
+    return record && record.get('sex') === 'M';
   },
   label() {
     return '姓名';
@@ -98,18 +98,22 @@ const nameDynamicProps = {
 const codeCodeDynamicProps = {
   // 代码code_code值绑定 为 字段code 的 值列表的值字段为code.codevalue
   bind({ record }) {
-    const field = record.get('name');
-    if (field) {
-      return 'codeMultiple.code';
+    if (record) {
+      const field = record.get('name');
+      if (field) {
+        return 'codeMultiple.code';
+      }
     }
   },
 };
 
 const codeDescriptionDynamicProps = {
   bind({ record }) {
-    const field = record.get('name');
-    if (field) {
-      return 'codeMultiple.description';
+    if (record) {
+      const field = record.get('name');
+      if (field) {
+        return 'codeMultiple.description';
+      }
     }
   },
 };

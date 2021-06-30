@@ -1,7 +1,6 @@
 import queryString from 'querystringify';
 import moment, { isDate, isMoment } from 'moment';
-import { action, isArrayLike } from 'mobx';
-import raf from 'raf';
+import { isArrayLike } from 'mobx';
 import { AxiosRequestConfig } from 'axios';
 import isBoolean from 'lodash/isBoolean';
 import isObject from 'lodash/isObject';
@@ -28,6 +27,7 @@ import formatCurrency from '../formatter/formatCurrency';
 import { getPrecision, parseNumber } from '../number-field/utils';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
 import { treeReduce } from '../_util/treeUtils';
+import MobxBatchAction from '../_util/MobxBatchAction';
 
 export function useNormal(dataToJSON: DataToJSON): boolean {
   return [DataToJSON.normal, DataToJSON['normal-self']].includes(dataToJSON);
@@ -728,9 +728,11 @@ export function processIntlField(
         transformRequest,
         computedProps: {
           bind: ({ record }) => {
-            const tls = record.get(tlsKey) || {};
-            if (name in tls && (dataSet ? dataSet.lang : localeContext.locale.lang) === language) {
-              return name;
+            if (record) {
+              const tls = record.get(tlsKey) || {};
+              if (name in tls && (dataSet ? dataSet.lang : localeContext.locale.lang) === language) {
+                return name;
+              }
             }
           },
         },
@@ -739,6 +741,8 @@ export function processIntlField(
   }
   return callback(name, fieldProps);
 }
+
+const mobxBatchActions = new MobxBatchAction();
 
 export function addRecordField(name: string, fieldProps: FieldProps = {}, record: Record, async: boolean = false): Field {
   fieldProps.name = name;
@@ -764,7 +768,7 @@ export function addRecordField(name: string, fieldProps: FieldProps = {}, record
     dataSet,
   );
   if (async) {
-    raf(action(() => {
+    mobxBatchActions.add(() => {
       [...tempFields.entries()].forEach(([key, field]) => {
         const existField = fields.get(key);
         if (existField) {
@@ -782,7 +786,7 @@ export function addRecordField(name: string, fieldProps: FieldProps = {}, record
         }
       });
       tempFields.clear();
-    }));
+    });
   }
   return recordField;
 }
