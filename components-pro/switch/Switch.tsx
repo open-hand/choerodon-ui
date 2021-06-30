@@ -11,7 +11,7 @@ export default class Switch extends CheckBox<CheckBoxProps> {
   /**
    * tooltip disable sign
    */
-  // eslint-disable-next-line camelcase
+    // eslint-disable-next-line camelcase
   static __PRO_SWITCH = true;
 
   // eslint-disable-next-line camelcase
@@ -32,6 +32,10 @@ export default class Switch extends CheckBox<CheckBoxProps> {
     super.handleKeyDown(e);
   }
 
+  getLabelText() {
+    return undefined;
+  }
+
   getTextNode() {
     const {
       prefixCls,
@@ -49,7 +53,7 @@ export default class Switch extends CheckBox<CheckBoxProps> {
       <span className={`${prefixCls}-float-label`}>
         {this.getLabelChildren()}
       </span>
-    )
+    );
   }
 
   renderInner(): ReactNode {

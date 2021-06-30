@@ -201,7 +201,9 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   renderTriggerChild(child: ReactElement): ReactElement {
-    const newChildProps: any = {};
+    const newChildProps: any = {
+      key: child.key,
+    };
     if (this.isContextMenuToShow()) {
       newChildProps.onContextMenu = this.handleEvent;
     }
