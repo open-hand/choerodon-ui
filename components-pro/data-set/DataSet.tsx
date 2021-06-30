@@ -286,6 +286,10 @@ export interface DataSetProps {
    * 级联查询参数
    */
   cascadeParams?: (parent: Record, primaryKey?: string) => object;
+  /**
+   * 组合列排序查询
+   */
+  combineSort?: boolean;
 }
 
 export default class DataSet extends EventManager {
@@ -301,6 +305,7 @@ export default class DataSet extends EventManager {
     modifiedCheck: true,
     pageSize: 10,
     paging: true,
+    combineSort: false,
     dataToJSON: DataToJSON.dirty,
     cascadeParams(parent, primaryKey) {
       if (primaryKey) {
@@ -1623,19 +1628,22 @@ export default class DataSet extends EventManager {
 
   /**
    * 服务端排序
-   * 排序新增加中间态
+   *
    * @param fieldName
    */
   @action
   sort(fieldName: string): void {
+    const { combineSort } = this.props;
     const field = this.getField(fieldName);
     if (field) {
       const currents = getOrderFields(this.fields);
-      currents.forEach(current => {
-        if (current !== field) {
-          current.order = undefined;
-        }
-      });
+      if (!combineSort) {
+        currents.forEach(current => {
+          if (current !== field) {
+            current.order = undefined;
+          }
+        });
+      }
       switch (field.order) {
         case SortOrder.asc:
           field.order = SortOrder.desc;
@@ -2601,10 +2609,23 @@ Then the query method will be auto invoke.`,
     return {};
   }
 
-  private generateOrderQueryString(): { sortname?: string; sortorder?: string; } {
-    const { fields } = this;
-    const orderField = getOrderFields(fields)[0];
-    if (orderField) {
+  private generateOrderQueryString(): { sortname?: string; sortorder?: string; } | string[] {
+    const { fields, props: { combineSort } } = this;
+    const orderFields = getOrderFields(fields);
+    if (combineSort) {
+      return orderFields.map(orderField => {
+        let sortname = orderField.name;
+        if (orderField.type === FieldType.object) {
+          const bindField = findBindFieldBy(orderField, this.fields, 'valueField');
+          if (bindField) {
+            sortname = bindField.name;
+          }
+        }
+        return `${sortname},${orderField.order}`;
+      });
+    }
+    if (orderFields.length) {
+      const orderField = orderFields[0];
       const param = { sortname: orderField.name, sortorder: orderField.order };
       if (orderField.type === FieldType.object) {
         const bindField = findBindFieldBy(orderField, this.fields, 'valueField');
@@ -2623,18 +2644,24 @@ Then the query method will be auto invoke.`,
    * @param pageSizeInner 页面大小
    */
   private generateQueryString(page: number, pageSizeInner?: number) {
-    const order = this.generateOrderQueryString();
+    const { combineSort } = this.props;
+    const order: any = this.generateOrderQueryString();
     const pageQuery = this.generatePageQueryString(page, pageSizeInner);
     const generatePageQuery = getConfig('generatePageQuery');
+    let sortParams: {} = order;
+    if (combineSort && order.length) {
+      sortParams = {
+        sort: order,
+      };
+    }
     if (typeof generatePageQuery === 'function') {
       return generatePageQuery({
-        sortName: order.sortname,
-        sortOrder: order.sortorder,
+        ...sortParams,
         pageSize: pageQuery.pagesize,
         page: pageQuery.page,
       });
     }
-    return { ...pageQuery, ...order };
+    return { ...pageQuery, ...sortParams };
   }
 
   private getParentParams(): object {
