@@ -167,6 +167,7 @@ export type Config = {
     pageSize?: number;
     sortName?: string;
     sortOrder?: string;
+    sort?: string[];
   }) => object;
   formatter?: Formatter;
   dropdownMatchSelectWidth?: boolean;
