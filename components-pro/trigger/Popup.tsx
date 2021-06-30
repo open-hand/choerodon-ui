@@ -2,6 +2,7 @@ import React, { CSSProperties, Key } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import omit from 'lodash/omit';
 import shallowEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import isElement from 'lodash/isElement';
@@ -123,7 +124,7 @@ export default class Popup extends ViewComponent<PopupProps> {
   renderInner(innerRef) {
     const { children } = this.props;
     return (
-      <PopupInner {...this.getMergedProps()} innerRef={innerRef}>{children}</PopupInner>
+      <PopupInner {...omit(this.getMergedProps(), ['ref'])} innerRef={innerRef}>{children}</PopupInner>
     );
   }
 
