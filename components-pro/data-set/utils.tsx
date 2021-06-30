@@ -27,7 +27,6 @@ import formatCurrency from '../formatter/formatCurrency';
 import { getPrecision, parseNumber } from '../number-field/utils';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
 import { treeReduce } from '../_util/treeUtils';
-import MobxBatchAction from '../_util/MobxBatchAction';
 
 export function useNormal(dataToJSON: DataToJSON): boolean {
   return [DataToJSON.normal, DataToJSON['normal-self']].includes(dataToJSON);
@@ -740,55 +739,6 @@ export function processIntlField(
     );
   }
   return callback(name, fieldProps);
-}
-
-const mobxBatchActions = new MobxBatchAction();
-
-export function addRecordField(name: string, fieldProps: FieldProps = {}, record: Record, async: boolean = false): Field {
-  fieldProps.name = name;
-  const { dataSet, fields, tempFields } = record;
-  if (async) {
-    const tempField = tempFields.get(name);
-    if (tempField) {
-      return tempField;
-    }
-  }
-  const recordField = processIntlField(
-    name,
-    fieldProps,
-    (langName, langProps) => {
-      const field = new Field(langProps, dataSet, record);
-      if (async) {
-        tempFields.set(langName, field);
-      } else {
-        fields.set(langName, field);
-      }
-      return field;
-    },
-    dataSet,
-  );
-  if (async) {
-    mobxBatchActions.add(() => {
-      [...tempFields.entries()].forEach(([key, field]) => {
-        const existField = fields.get(key);
-        if (existField) {
-          const dirtyKeys = Object.keys(field.dirtyProps);
-          if (dirtyKeys.length) {
-            const { dirtyProps } = existField;
-            dirtyKeys.forEach(prop => {
-              if (!(prop in dirtyProps)) {
-                existField.set(prop, field.props[prop]);
-              }
-            });
-          }
-        } else {
-          fields.set(key, field);
-        }
-      });
-      tempFields.clear();
-    });
-  }
-  return recordField;
 }
 
 export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {

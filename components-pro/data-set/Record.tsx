@@ -7,11 +7,9 @@ import isNumber from 'lodash/isNumber';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { RecordValidationErrors } from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
-  addRecordField,
   axiosConfigAdapter,
   checkFieldType,
   childrenInfoForDelete,
@@ -25,6 +23,7 @@ import {
   getRecordValue,
   getSortedFields,
   isDirtyRecord,
+  processIntlField,
   processToJSON,
   processValue,
   useCascade,
@@ -515,11 +514,7 @@ export default class Record {
 
   getField(fieldName?: string): Field | undefined {
     if (fieldName) {
-      try {
-        return this.fields.get(fieldName) || addRecordField(fieldName, {}, this, true);
-      } catch (e) {
-        warning(false, e.message);
-      }
+      return this.fields.get(fieldName);
     }
   }
 
@@ -856,7 +851,18 @@ export default class Record {
 
   @action
   addField(name: string, fieldProps: FieldProps = {}): Field {
-    return addRecordField(name, fieldProps, this);
+    const { dataSet } = this;
+    fieldProps.name = name;
+    return processIntlField(
+      name,
+      fieldProps,
+      (langName, langProps) => {
+        const field = new Field(langProps, dataSet, this);
+        this.fields.set(langName, field);
+        return field;
+      },
+      dataSet,
+    );
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {
