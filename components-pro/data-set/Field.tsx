@@ -305,7 +305,6 @@ export type FieldProps = {
   /**
    * 忽略提交
    * 可选值: always - 总是忽略 clean - 值未变化时忽略 never - 从不忽略
-   * @default never
    */
   ignore?: FieldIgnore;
   /**

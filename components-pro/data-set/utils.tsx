@@ -41,13 +41,17 @@ export function useSelected(dataToJSON: DataToJSON): boolean {
 }
 
 export function useCascade(dataToJSON: DataToJSON): boolean {
-  return [DataToJSON.dirty, DataToJSON.selected, DataToJSON.all, DataToJSON.normal].includes(
+  return [DataToJSON.dirty, DataToJSON['dirty-field'], DataToJSON.selected, DataToJSON.all, DataToJSON.normal].includes(
     dataToJSON,
   );
 }
 
 export function useDirty(dataToJSON: DataToJSON): boolean {
   return [DataToJSON.dirty, DataToJSON['dirty-self']].includes(dataToJSON);
+}
+
+export function useDirtyField(dataToJSON: DataToJSON): boolean {
+  return [DataToJSON['dirty-field'], DataToJSON['dirty-field-self']].includes(dataToJSON);
 }
 
 export function append(url: string, suffix?: object) {
@@ -61,13 +65,52 @@ export function getOrderFields(fields: Fields): Field[] {
   return [...fields.values()].filter(({ order }) => order);
 }
 
-export function processToJSON(value) {
-  if (isDate(value)) {
-    value = moment(value);
+function processOneToJSON(value, field: Field, checkRange: boolean = true) {
+  if (!isEmpty(value)) {
+    const range = field.get('range');
+    if (range && checkRange) {
+      if (isArrayLike(range)) {
+        if (isObject(value)) {
+          const [start, end] = range;
+          value = {
+            [start]: processOneToJSON(value[start], field, false),
+            [end]: processOneToJSON(value[end], field, false),
+          };
+        }
+      } else if (isArrayLike(value)) {
+        value = [
+          processOneToJSON(value[0], field, false),
+          processOneToJSON(value[1], field, false),
+        ];
+      }
+    } else {
+      if (isDate(value)) {
+        value = moment(value);
+      }
+      if (isMoment(value)) {
+        const { jsonDate } = getConfig('formatter');
+        value = jsonDate ? value.format(jsonDate) : +value;
+      }
+      if (field.type === FieldType.json) {
+        value = JSON.stringify(value);
+      }
+    }
   }
-  if (isMoment(value)) {
-    const { jsonDate } = getConfig('formatter');
-    value = jsonDate ? value.format(jsonDate) : +value;
+  return value;
+}
+
+export function processToJSON(value, field: Field) {
+  if (!isEmpty(value)) {
+    const multiple = field.get('multiple');
+    const range = field.get('range');
+    if (isArrayLike(value) && (multiple || !range)) {
+      value = value.map(v => processOneToJSON(v, field));
+      if (isString(multiple)) {
+        return value.join(multiple);
+      }
+      return value;
+    }
+    return processOneToJSON(value, field);
   }
   return value;
 }
@@ -132,6 +175,9 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
           value = jsonDate ? moment(value, jsonDate) : moment(value);
           break;
         }
+        case FieldType.json:
+          value = JSON.parse(value);
+          break;
         default:
       }
     }
@@ -545,7 +591,7 @@ export function generateRecordJSONData(array: object[], record: Record, dataToJS
   const json = normal
     ? !record.isRemoved && record.toData()
     : record.toJSONData();
-  if (json && (normal || useAll(dataToJSON) || !useDirty(dataToJSON) || json.__dirty)) {
+  if (json && (normal || useAll(dataToJSON) || (!useDirty(dataToJSON) && !useDirtyField(dataToJSON)) || json.__dirty)) {
     delete json.__dirty;
     array.push(json);
   }
@@ -1004,4 +1050,27 @@ export function getSortedFields(fields: Fields): [string, Field][] {
     ...dynamicObjectBindFields,
     ...dynamicBindFields,
   ];
+}
+
+export function getUniqueFieldNames(dataSet?: DataSet): string[] {
+  const keys: string[] = [];
+  if (dataSet) {
+    [...dataSet.fields.entries()].forEach(([key, field]) => {
+      if (field.get('unique')) {
+        keys.push(key);
+      }
+    });
+  }
+  return keys;
+}
+
+export function getUniqueKeysAndPrimaryKey(dataSet?: DataSet): string[] {
+  const keys: string[] = getUniqueFieldNames(dataSet);
+  if (dataSet) {
+    const { primaryKey } = dataSet.props;
+    if (primaryKey) {
+      keys.push(primaryKey);
+    }
+  }
+  return keys;
 }
