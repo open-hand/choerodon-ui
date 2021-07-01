@@ -20,6 +20,7 @@ import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
   adapterDataToJSON,
+  addDataSetField,
   arrayMove,
   axiosConfigAdapter,
   checkParentByInsert,
@@ -40,7 +41,6 @@ import {
   prepareForSubmit,
   prepareSubmitData,
   processExportValue,
-  processIntlField,
   sliceTree,
   sortTree,
   useCascade,
@@ -1965,7 +1965,7 @@ export default class DataSet extends EventManager {
     fields.forEach(field => {
       const { name } = field;
       if (name) {
-        this.addField(name, field);
+        addDataSetField(this, name, field);
       } else {
         warning(
           false,
@@ -1982,17 +1982,10 @@ export default class DataSet extends EventManager {
    * @return 新增字段
    */
   @action
-  addField(name: string, fieldProps: FieldProps = {}): Field {
-    return processIntlField(
-      name,
-      fieldProps,
-      (langName, langProps) => {
-        const field = new Field(langProps, this);
-        this.fields.set(langName, field);
-        return field;
-      },
-      this,
-    );
+  addField(name: string, fieldProps?: FieldProps): Field {
+    const field = addDataSetField(this, name, fieldProps);
+    this.records.forEach(record => record.addField(name));
+    return field;
   }
 
   @action
