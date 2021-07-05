@@ -15,11 +15,13 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Tooltip`: Added singleton mode, added `show` and `hide` static methods.
 - 🌟 `<pro>DataSet`: dataToJSON adds `dirty-field`, `dirty-field-self` types.
 - 🌟 `<pro>DataSet.Field`: Added `json` type.
 - 🌟 `<pro>DataSet`: Added the `combineSort` property to support the parameter passing of combined column sorting.
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
 - 💄 `<pro>Radio`: Optimize the label content overflow tooltip.
+- 💄 `<pro>Table`: Optimize the performance.
 - 🐞 `<pro>Pagination`: Fix the problem that the pagination option exceeds the default maximum of 100 pagination when the maximum pagination is not set.
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
 

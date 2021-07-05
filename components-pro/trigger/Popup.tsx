@@ -40,6 +40,13 @@ export interface PopupProps extends ViewComponentProps {
   getFocusableElements?: (elements: HTMLElement[]) => void;
 }
 
+function newPopupContainer() {
+  const doc = window.document;
+  const popupContainer = doc.createElement('div');
+  popupContainer.className = getProPrefixCls('popup-container');
+  return popupContainer;
+}
+
 @observer
 export default class Popup extends ViewComponent<PopupProps> {
   static displayName = 'Popup';
@@ -73,6 +80,8 @@ export default class Popup extends ViewComponent<PopupProps> {
   currentAlignStyle?: CSSProperties;
 
   align: Align | null;
+
+  target?: Node | Window;
 
   contentRendered: boolean = false;
 
@@ -188,12 +197,10 @@ export default class Popup extends ViewComponent<PopupProps> {
     } else if (globalContainer) {
       return globalContainer;
     }
-    const doc = window.document;
-    const popupContainer = doc.createElement('div');
-    popupContainer.className = getProPrefixCls('popup-container');
-    const root = doc.body;
     if (getPopupContainer) {
       const mountNode = getPopupContainer(getRootDomNode());
+      const popupContainer = newPopupContainer();
+      const root = window.document.body;
       if (mountNode === root) {
         if (globalContainer) {
           this.popupContainer = globalContainer;
@@ -203,27 +210,28 @@ export default class Popup extends ViewComponent<PopupProps> {
       }
       (isElement(mountNode) ? mountNode : root).appendChild(popupContainer);
       this.popupContainer = popupContainer;
-    } else {
-      root.appendChild(popupContainer);
-      Popup.popupContainer = popupContainer;
+      return popupContainer;
     }
-    return popupContainer;
+    // eslint-disable-next-line no-use-before-define
+    return getGlobalPopupContainer();
   }
 
   @autobind
   onAlign(source, align, target, translate) {
     const { getClassNameFromAlign = noop, getStyleFromAlign = noop, onAlign = noop } = this.props;
     const currentAlignClassName = getClassNameFromAlign(align);
-    if (this.currentAlignClassName !== currentAlignClassName) {
+    const differentTarget = target !== this.target;
+    if (differentTarget || this.currentAlignClassName !== currentAlignClassName) {
       this.currentAlignClassName = currentAlignClassName;
       source.className = this.getMergedClassNames(currentAlignClassName);
     }
     const currentAlignStyle = getStyleFromAlign(target, align);
-    if (!shallowEqual(this.currentAlignStyle, currentAlignStyle)) {
+    if (differentTarget || !shallowEqual(this.currentAlignStyle, currentAlignStyle)) {
       this.currentAlignStyle = currentAlignStyle;
       Object.assign(source.style, currentAlignStyle);
     }
     onAlign(source, align, target, translate);
+    this.target = source;
   }
 
   forceAlign() {
@@ -231,4 +239,16 @@ export default class Popup extends ViewComponent<PopupProps> {
       this.align.forceAlign();
     }
   }
+}
+
+
+export function getGlobalPopupContainer() {
+  if (Popup.popupContainer) {
+    return Popup.popupContainer;
+  }
+  const popupContainer = newPopupContainer();
+  const root = window.document.body;
+  root.appendChild(popupContainer);
+  Popup.popupContainer = popupContainer;
+  return popupContainer;
 }

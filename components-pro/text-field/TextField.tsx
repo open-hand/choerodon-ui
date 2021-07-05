@@ -44,6 +44,7 @@ import RenderedText from './RenderedText';
 import isReactChildren from '../_util/isReactChildren';
 import TextFieldGroup from './TextFieldGroup';
 import { findFirstFocusableElement } from '../_util/focusable';
+import { hide, show } from '../tooltip/singleton';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -357,6 +358,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
+  @autobind
+  handleHelpMouseEnter(e) {
+    show(e.currentTarget, {
+      title: this.getProp('help'),
+      popupClassName: `${getConfig('proPrefixCls')}-tooltip-popup-help`,
+    });
+  }
+
+  handleHelpMouseLeave() {
+    hide();
+  }
+
   getValidatorProps(): ValidatorProps {
     const pattern = this.getProp('pattern');
     const maxLength = this.getProp('maxLength');
@@ -489,11 +502,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderTooltipHelp(): ReactNode {
-    return (
-      <Tooltip title={this.getProp('help')} popupClassName={`${getConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
-        <Icon type="help" />
-      </Tooltip>
-    );
+    const help = this.getProp('help');
+    if (help) {
+      return (
+        <Icon
+          type="help"
+          onMouseEnter={this.handleHelpMouseEnter}
+          onMouseLeave={this.handleHelpMouseLeave}
+        />
+      );
+    }
   }
 
   renderLengthInfo(): ReactNode {
@@ -684,8 +702,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       props: { style, isFlat },
     } = this;
     const otherProps = this.getOtherProps();
-    const { onMouseEnter, onMouseLeave } = otherProps;
     if (multiple) {
+      const { onMouseEnter, onMouseLeave } = otherProps;
       const { height } = (style || {}) as CSSProperties;
       const tags = (
         <Animate
@@ -929,7 +947,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       } else {
         tagContainer.scrollTop = tagContainer.getBoundingClientRect().height;
       }
-
     }
   }
 

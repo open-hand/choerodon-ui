@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import OverflowTip from 'choerodon-ui/pro/lib/overflow-tip';
+import { hide, show } from 'choerodon-ui/pro/lib/tooltip/singleton';
+import isOverflow from 'choerodon-ui/pro/lib/overflow-tip/util';
 import KeyCode from '../../_util/KeyCode';
 import classNames from 'classnames';
 import { connect } from 'mini-store';
@@ -95,6 +96,17 @@ const MenuItem = createReactClass({
     });
   },
 
+  handleRippleMouseEnter(e) {
+    const { tooltip, children, mode } = this.props;
+    const { currentTarget } = e;
+    if (children && (tooltip === 'always' || (tooltip === 'overflow' && isOverflow(currentTarget)))) {
+      show(currentTarget, {
+        title: children,
+        placement: mode === 'horizontal' ? 'top' : 'right',
+      });
+    }
+  },
+
   onClick(e) {
     const { eventKey, multiple, onClick, onSelect, onDeselect, isSelected } = this.props;
     const info = {
@@ -165,8 +177,15 @@ const MenuItem = createReactClass({
     const checkbox = props.multiple && props.checkable !== false ? (
       <Checkbox disabled={props.disabled} checked={props.isSelected} tabIndex={-1} />
     ) : null;
-    const item = (
-      <Ripple disabled={props.disabled}>
+    const rippleProps = {
+      disabled: props.disabled,
+    };
+    if (['overflow', 'always'].includes(props.tooltip)) {
+      rippleProps.onMouseEnter = this.handleRippleMouseEnter;
+      rippleProps.onMouseLeave = hide;
+    }
+    return (
+      <Ripple {...rippleProps}>
         <li
           {...attrs}
           {...mouseEvent}
@@ -177,18 +196,6 @@ const MenuItem = createReactClass({
         </li>
       </Ripple>
     );
-    if (['overflow', 'always'].includes(props.tooltip)) {
-      return (
-        <OverflowTip
-          title={() => props.children}
-          strict={props.tooltip === 'always'}
-          placement="right"
-        >
-          {item}
-        </OverflowTip>
-      );
-    }
-    return item;
   },
 });
 

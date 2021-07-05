@@ -27,7 +27,6 @@ import Validity from '../validator/Validity';
 import FormContext from '../form/FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import Icon from '../icon';
-import Tooltip from '../tooltip';
 import Form from '../form/Form';
 import isEmpty from '../_util/isEmpty';
 import { FieldFormat, FieldTrim, FieldType } from '../data-set/enum';
@@ -42,9 +41,10 @@ import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue, tr
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
 import formatCurrency from '../formatter/formatCurrency';
-import OverflowTip from '../overflow-tip';
 import { $l } from '../locale-context';
 import isReactChildren from '../_util/isReactChildren';
+import { hide, show } from '../tooltip/singleton';
+import isOverflow from '../overflow-tip/util';
 
 const map: { [key: string]: FormField<FormFieldProps>[]; } = {};
 
@@ -404,6 +404,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   lock: boolean = false;
 
+  tooltipShown?: boolean;
+
   // 多选中出现了校验值的数量大于一那么输入框不需要存在校验信息展示
   multipleValidateMessageLength: number = 0;
 
@@ -699,6 +701,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     otherProps.onKeyDown = this.handleKeyDown;
     otherProps.onCompositionStart = this.handleCompositionStart;
     otherProps.onCompositionEnd = this.handleChange;
+    otherProps.onMouseEnter = this.handleMouseEnter;
+    otherProps.onMouseLeave = this.handleMouseLeave;
     return otherProps;
   }
 
@@ -726,13 +730,15 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   renderHelpMessage(): ReactNode {
     const { showHelp } = this.props;
-    const help = this.getProp('help');
-    if (showHelp === ShowHelp.newLine && help) {
-      return (
-        <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>
-          {help}
-        </div>
-      );
+    if (showHelp === ShowHelp.newLine) {
+      const help = this.getProp('help');
+      if (help) {
+        return (
+          <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>
+            {help}
+          </div>
+        );
+      }
     }
   }
 
@@ -751,21 +757,16 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           [`${prefixCls}-required`]: required,
           [`${prefixCls}-readonly`]: this.readOnly,
         });
-        const isTooltip = [TextTooltip.always, TextTooltip.overflow].includes(labelTooltip);
-        const node = <div className={classString} title={!isTooltip && isString(label) ? label : undefined}>{label}</div>;
         return (
           <div className={`${prefixCls}-label-wrapper`}>
-            {
-              isTooltip ? (
-                <OverflowTip
-                  title={label}
-                  strict={labelTooltip === TextTooltip.always}
-                  placement="top"
-                >
-                  {node}
-                </OverflowTip>
-              ) : node
-            }
+            <div
+              className={classString}
+              title={isString(label) && ![TextTooltip.always, TextTooltip.overflow].includes(labelTooltip) ? label : undefined}
+              onMouseEnter={this.handleFloatLabelMouseEnter}
+              onMouseLeave={this.handleFloatLabelMouseLeave}
+            >
+              {label}
+            </div>
           </div>
         );
       }
@@ -867,6 +868,62 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       }
       return validationResult.validationMessage;
     }
+  }
+
+  showValidationMessage(e, message: ReactNode) {
+    show(e.currentTarget, {
+      suffixCls: `form-tooltip ${getConfig('proPrefixCls')}-tooltip`,
+      title: message,
+      theme: getConfig('validationTooltipTheme') || getConfig('tooltipTheme'),
+      placement: 'bottomLeft',
+    });
+  }
+
+
+  showTooltip(e): boolean {
+    if (!this.hasFloatLabel) {
+      const message = this.getTooltipValidationMessage();
+      if (message) {
+        this.showValidationMessage(e, message);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @autobind
+  handleMouseEnter(e) {
+    if (this.showTooltip(e)) {
+      this.tooltipShown = true;
+    }
+    const { onMouseEnter = noop } = this.props;
+    onMouseEnter(e);
+  }
+
+  @autobind
+  handleMouseLeave(e) {
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
+    const { onMouseLeave = noop } = this.props;
+    onMouseLeave(e);
+  }
+
+  @autobind
+  handleFloatLabelMouseEnter(e) {
+    const { labelTooltip } = this;
+    const { currentTarget } = e;
+    if (labelTooltip === TextTooltip.always || (labelTooltip === TextTooltip.overflow && isOverflow(currentTarget))) {
+      show(currentTarget, {
+        title: this.getLabel(),
+        placement: 'top',
+      });
+    }
+  }
+
+  handleFloatLabelMouseLeave() {
+    hide();
   }
 
   @autobind
@@ -1288,25 +1345,21 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />
         );
         const inner = readOnly ? (
-          <span className={className}>{text}</span>
+          <span key={String(index)} className={className}>{text}</span>
         ) : (
-          <li className={className}>
+          <li key={String(index)} className={className}>
             <div>{text}</div>
             {closeBtn}
           </li>
         );
-        return (
-          <Tooltip
-            suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-            key={String(index)}
-            title={validationMessage}
-            theme={getConfig('validationTooltipTheme') || getConfig('tooltipTheme')}
-            placement="bottomLeft"
-            hidden={this.isValidationMessageHidden(validationMessage)}
-          >
-            {inner}
-          </Tooltip>
-        );
+        if (!this.isValidationMessageHidden(validationMessage)) {
+          return cloneElement(inner, {
+            onMouseEnter: (e) => this.showValidationMessage(e, validationMessage),
+            onMouseLeave: () => hide(),
+          });
+        }
+
+        return inner;
       }
       return undefined;
     });
@@ -1437,24 +1490,22 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const wrapper = this.renderHighLight();
     const help = this.renderHelpMessage();
     if (this.hasFloatLabel) {
+      const message = this.renderValidationMessage();
       return [
         isValidElement(wrapper) ? cloneElement(wrapper, { key: 'wrapper' }) : wrapper,
-        <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
-          {this.renderValidationMessage()}
-        </Animate>,
+        message && (
+          <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
+            {message}
+          </Animate>
+        ),
         help,
       ];
     }
     return (
-      <Tooltip
-        suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-        title={this.getTooltipValidationMessage}
-        theme={getConfig('validationTooltipTheme') || getConfig('tooltipTheme')}
-        placement="bottomLeft"
-      >
+      <>
         {wrapper}
         {help}
-      </Tooltip>
+      </>
     );
   }
 }

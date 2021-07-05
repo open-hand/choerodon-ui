@@ -12,12 +12,11 @@ import { Tooltip as TextTooltip } from '../core/enum';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { findBindFields, processFieldValue } from '../data-set/utils';
 import isEmpty from '../_util/isEmpty';
-import OverflowTip from '../overflow-tip';
 import Field from '../data-set/Field';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
-import Tooltip from '../tooltip';
-import Row from '../row';
-import Col from '../col';
+import isOverflow from '../overflow-tip/util';
+import { show } from '../tooltip/singleton';
+import MultiLine from './MultiLine';
 
 export interface OutputProps extends FormFieldProps {
 }
@@ -89,118 +88,66 @@ export default class Output extends FormField<OutputProps> {
       field,
       dataSet,
       prefixCls,
-      props: { renderer, tooltip },
+      props: { renderer },
     } = this;
-    const multiLineFields = findBindFields(field as Field, record!.fields);
-    if (renderer) {
-      return renderer({
-        multiLineFields,
-        record,
-        dataSet,
-        name,
-      });
-    }
-    if (readOnly) {
-      if (multiLineFields.length) {
-        this.multipleValidateMessageLength = 0;
-        return (
-          <>
-            {multiLineFields.map(fieldItem => {
+    if (record) {
+      const multiLineFields = findBindFields(field as Field, record.fields);
+      if (renderer) {
+        return renderer({
+          multiLineFields,
+          record,
+          dataSet,
+          name,
+        });
+      }
+      if (readOnly) {
+        if (multiLineFields.length) {
+          this.multipleValidateMessageLength = 0;
+          return (
+            multiLineFields.map(fieldItem => {
               if (fieldItem) {
                 const { validationResults } = this.multiLineValidator(fieldItem);
-                const required = defaultTo(fieldItem && fieldItem.get('required'), this.props.required);
-                const repeats: Map<any, number> = new Map<any, number>();
-                const validationResult = validationResults.find(error => error.value === record?.get(fieldItem.get('name')));
+                const required = defaultTo(fieldItem.get('required'), this.props.required);
+                const fieldName = fieldItem.get('name');
+                const value = record.get(fieldName);
+                const validationResult = validationResults.find(error => error.value === value);
                 const validationMessage =
                   validationResult && this.renderValidationMessage(validationResult);
-                const key = this.getValueKey(record?.get(fieldItem.get('name')));
-                const repeat = repeats.get(key) || 0;
                 const validationHidden = this.isValidationMessageHidden(validationMessage);
                 let processValue = '';
-                if (fieldItem && fieldItem.get('lovCode')) {
-                  if (!isNil(fieldItem.getValue())) {
-                    if (isPlainObject(fieldItem.getValue())) {
-                      processValue = ObjectChainValue.get(fieldItem.getValue(), fieldItem.get('textField') || 'meaning');
-                    }
+                if (fieldItem.get('lovCode')) {
+                  const fieldValue = fieldItem.getValue();
+                  if (isPlainObject(fieldValue)) {
+                    processValue = ObjectChainValue.get(fieldValue, fieldItem.get('textField') || Field.defaultProps.textField);
                   }
                 }
-                const value = record?.get(fieldItem.get('name'));
                 const notEmpty = !isEmpty(value);
                 // 值集中不存在 再去取直接返回的值
                 const text = this.processText(processValue || this.getText(value));
                 this.multipleValidateMessageLength++;
-                const inner = record?.status === RecordStatus.add ? '' :
-                  <span className={`${prefixCls}-multi-value-invalid`}>{text}</span>;
-                const validationInner = validationHidden ? inner : (
-                  <Tooltip
-                    suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-                    key={`${key}-${repeat}`}
-                    title={validationMessage}
-                    theme="light"
-                    placement="bottomLeft"
-                    hidden={validationHidden}
-                  >
-                    {validationMessage}
-                  </Tooltip>
-                );
+                const validationInner = notEmpty ? text :
+                  validationHidden ? record.status === RecordStatus.add ? '' :
+                    <span className={`${prefixCls}-multi-value-invalid`}>{text}</span> : validationMessage;
                 const label = fieldItem.get('label');
-                const useTooltip = [TextTooltip.always, TextTooltip.overflow].includes(tooltip!);
-                const labelCol = label && (
-                  <Col
-                    span={8}
-                    className={required ? `${prefixCls}-multi-label ${prefixCls}-multi-label-required` : `${prefixCls}-multi-label`}
-                  >
-                    {fieldItem.get('label')}
-                  </Col>
-                );
-                const fieldCol = (
-                  <Col
-                    span={label ? 16 : 24}
-                    className={
-                      validationHidden ?
-                        `${prefixCls}-multi-value` :
-                        `${prefixCls}-multi-value ${prefixCls}-multi-value-invalid`
-                    }
-                  >
-                    {
-                      notEmpty ? (
-                        <Tooltip
-                          suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-                          key={`${key}-${repeat}`}
-                          title={validationMessage}
-                          theme="light"
-                          placement="bottomLeft"
-                          hidden={validationHidden}
-                        >
-                          {text}
-                        </Tooltip>
-                      ) : validationInner
-                    }
-                  </Col>
-                );
                 return (
-                  <Row key={`${record?.index}-multi-${fieldItem.get('name')}`} className={`${prefixCls}-multi`}>
-                    {
-                      labelCol && useTooltip ? (
-                        <OverflowTip title={label} placement="right" strict={tooltip === TextTooltip.always}>
-                          {labelCol}
-                        </OverflowTip>
-                      ) : labelCol
-                    }
-                    {
-                      useTooltip ? (
-                        <OverflowTip title={notEmpty ? text : validationMessage} placement="right" strict={tooltip === TextTooltip.always}>
-                          {fieldCol}
-                        </OverflowTip>
-                      ) : fieldCol
-                    }
-                  </Row>
+                  <MultiLine
+                    key={`${record!.index}-multi-${fieldName}`}
+                    prefixCls={prefixCls}
+                    label={label}
+                    required={required}
+                    validationMessage={validationMessage}
+                    validationHidden={validationHidden}
+                    tooltip={this.props.tooltip}
+                    labelTooltip={this.props.labelTooltip}
+                  >
+                    {validationInner}
+                  </MultiLine>
                 );
               }
               return null;
-            })}
-          </>
-        );
+            })
+          );
+        }
       }
     }
   }
@@ -229,27 +176,26 @@ export default class Output extends FormField<OutputProps> {
     return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;
   }
 
-  @autobind
-  getOverflowContainer() {
-    return this.element;
+  showTooltip(e): boolean {
+    if (super.showTooltip(e)) {
+      return true;
+    }
+    const { tooltip } = this.props;
+    const { element } = this;
+    if (element && !this.multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
+      const title = this.getRenderedValue();
+      if (title) {
+        show(element, {
+          title,
+          placement: 'right',
+        });
+        return true;
+      }
+    }
+    return false;
   }
 
   renderWrapper(): ReactNode {
-    const { tooltip } = this.props;
-    const renderedValue = this.getRenderedValue();
-    const wrapper = <span {...this.getMergedProps()}>{renderedValue}</span>;
-    return [TextTooltip.always, TextTooltip.overflow].includes(tooltip!) && !this.multiLine ? (
-      <OverflowTip
-        key="tooltip"
-        placement="right"
-        strict={tooltip === TextTooltip.always}
-        getOverflowContainer={this.getOverflowContainer}
-        title={renderedValue}
-      >
-        {wrapper}
-      </OverflowTip>
-    ) : (
-      wrapper
-    );
+    return <span {...this.getMergedProps()}>{this.getRenderedValue()}</span>;
   }
 }

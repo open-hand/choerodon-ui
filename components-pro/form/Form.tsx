@@ -34,9 +34,9 @@ import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
 import { defaultColumns, defaultExcludeUseColonTag, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
-import OverflowTip from '../overflow-tip';
 import { DataSetEvents } from '../data-set/enum';
 import Item from './Item';
+import FormItemLabel from './FormItemLabel';
 
 /**
  * 表单name生成器
@@ -745,33 +745,16 @@ export default class Form extends DataSetComponent<FormProps> {
           labelWidth[colIndex] = Math.max(columnLabelWidth, fieldLabelWidth);
         }
         const tooltip = 'labelTooltip' in props ? props.labelTooltip : labelTooltip;
-        const isTooltip = [LabelTooltip.always, LabelTooltip.overflow].includes(tooltip);
-        const labelTd = (
-          <td
+        cols.push(
+          <FormItemLabel
             key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
             rowSpan={rowSpan}
-            style={this.labelLayout === LabelLayout.horizontal
-            && separateSpacingWidth
-              ? { paddingLeft: pxToRem(separateSpacingWidth + 5) } : undefined}
+            paddingLeft={this.labelLayout === LabelLayout.horizontal && separateSpacingWidth ? pxToRem(separateSpacingWidth + 5) : undefined}
+            tooltip={tooltip}
           >
-            <label title={!isTooltip && isString(label) ? label : undefined}>
-              <span>
-                {label}
-              </span>
-            </label>
-          </td>
-        );
-        cols.push(
-          isTooltip ? (
-            <OverflowTip
-              key={`row-${rowIndex}-col-${colIndex}-label`}
-              title={label}
-              strict={tooltip === LabelTooltip.always}
-            >
-              {labelTd}
-            </OverflowTip>
-          ) : labelTd,
+            {label}
+          </FormItemLabel>,
         );
       }
       const fieldElementProps: any = {
