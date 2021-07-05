@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Cancelable, DebounceSettings } from 'lodash';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
 import { computed, runInAction } from 'mobx';
@@ -19,7 +20,8 @@ import { DataSetStatus } from '../data-set/enum';
 import { Size, WaitType } from '../core/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import autobind from '../_util/autobind';
-import OverflowTip from '../overflow-tip';
+import { hide, show } from '../tooltip/singleton';
+import isOverflow from '../overflow-tip/util';
 
 export interface ButtonProps extends DataSetComponentProps {
   /**
@@ -243,6 +245,26 @@ export default class Button extends DataSetComponent<ButtonProps> {
     }
   }
 
+  @autobind
+  handleMouseEnter(e) {
+    const { tooltip = getConfig('buttonTooltip'), children } = this.props;
+    const { element } = this;
+    if (tooltip === ButtonTooltip.always || (tooltip === ButtonTooltip.overflow && isOverflow(element))) {
+      show(element, {
+        title: children,
+      });
+    }
+    const { onMouseEnter = noop } = this.props;
+    onMouseEnter(e);
+  }
+
+  @autobind
+  handleMouseLeave(e) {
+    hide();
+    const { onMouseLeave = noop } = this.props;
+    onMouseLeave(e);
+  }
+
   isDisabled(): boolean {
     return super.isDisabled() || this.loading;
   }
@@ -262,8 +284,13 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   getOtherProps() {
     const otherProps = super.getOtherProps();
+    const { tooltip = getConfig('buttonTooltip') } = this.props;
     if (!this.disabled) {
       otherProps.onClick = this.handleClickIfBubble;
+    }
+    if ([ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip)) {
+      otherProps.onMouseEnter = this.handleMouseEnter;
+      otherProps.onMouseLeave = this.handleMouseLeave;
     }
     return otherProps;
   }
@@ -293,14 +320,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
     );
   }
 
-  @autobind
-  getOverflowContainer() {
-    return this.element;
-  }
-
   render() {
-    const { children, icon, href, funcType, tooltip = getConfig('buttonTooltip'), onMouseEnter, onMouseLeave } = this.props;
-    const isTooltip = [ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip);
+    const { children, icon, href, funcType } = this.props;
     const buttonIcon: any = this.loading ? (
       <Progress key="loading" type={ProgressType.loading} size={Size.small} />
     ) : (
@@ -310,7 +331,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();
     const { disabled } = this;
-    const tooltipWrapper = disabled && !href && (isTooltip || onMouseEnter || onMouseLeave);
+    const { onMouseEnter, onMouseLeave } = props;
+    const tooltipWrapper = disabled && !href && (onMouseEnter || onMouseLeave);
     const buttonProps = tooltipWrapper ? omit(props, ['className', 'style']) : props;
     const rippleDisabled = disabled || funcType === FuncType.link;
     const button = (
@@ -321,7 +343,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
         </Cmp>
       </Ripple>
     );
-    const wrappedButton = tooltipWrapper ? (
+    return tooltipWrapper ? (
       <span
         className={classNames(props.className, `${this.prefixCls}-disabled-wrapper`)}
         style={props.style}
@@ -331,17 +353,5 @@ export default class Button extends DataSetComponent<ButtonProps> {
         {button}
       </span>
     ) : button;
-    if (isTooltip) {
-      return (
-        <OverflowTip
-          title={children}
-          getOverflowContainer={this.getOverflowContainer}
-          strict={tooltip === ButtonTooltip.always}
-        >
-          {wrappedButton}
-        </OverflowTip>
-      );
-    }
-    return wrappedButton;
   }
 }

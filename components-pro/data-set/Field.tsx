@@ -2,8 +2,8 @@ import { CSSProperties, ReactNode } from 'react';
 import { action, computed, get, IComputedValue, isObservableObject, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
+import intersection from 'lodash/intersection';
 import omit from 'lodash/omit';
-import isFunction from 'lodash/isFunction';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
@@ -37,36 +37,59 @@ function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
     return true;
   }
-  if (isObject(newProps) && isObject(oldProps) && Object.keys(newProps).length) {
-    if (Object.keys(newProps).length !== Object.keys(toJS(oldProps)).length) {
-      return false;
+  if (isObject(newProps) && isObject(oldProps)) {
+    const newKeys = Object.keys(newProps);
+    const { length } = newKeys;
+    if (length) {
+      if (length !== Object.keys(oldProps).length) {
+        return false;
+      }
+      return newKeys.every(key => {
+        const value = newProps[key];
+        const oldValue = oldProps[key];
+        if (oldValue === value) {
+          return true;
+        }
+        if (typeof value === 'function' && typeof oldValue === 'function') {
+          return value.toString() === oldValue.toString();
+        }
+        return isEqual(oldValue, value);
+      });
     }
-    return Object.keys(newProps).every(key => {
-      const value = newProps[key];
-      const oldValue = oldProps[key];
-      if (oldValue === value) {
-        return true;
-      }
-      if (isFunction(value) && isFunction(oldValue)) {
-        return value.toString() === oldValue.toString();
-      }
-      return isEqual(oldValue, value);
-    });
   }
   return isEqual(newProps, oldProps);
 }
 
-function getPropsFromLovConfig(lovCode, propsName) {
+function getPropsFromLovConfig(lovCode: string, propsName: string[]) {
+  const props = {};
   if (lovCode) {
     const config = lovCodeStore.getConfig(lovCode);
     if (config) {
-      if (config[propsName]) {
-        return { [propsName]: config[propsName] };
-      }
+      propsName.forEach(name => {
+        const value = config[name];
+        if (value) {
+          props[name] = value;
+        }
+      });
     }
   }
-  return {};
+  return props;
 }
+
+const LOOKUP_SIDE_EFFECT_KEYS = [
+  'type',
+  'lookupUrl',
+  'lookupCode',
+  'lookupAxiosConfig',
+  'lovCode',
+  'lovQueryAxiosConfig',
+  'lovPara',
+  'cascadeMap',
+  'lovQueryUrl',
+  'optionsProps',
+];
+
+const LOV_SIDE_EFFECT_KEYS = ['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl', 'optionsProps'];
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string; };
@@ -406,8 +429,11 @@ export default class Field {
     const lookup = this.get('lookup');
     const valueField = this.get('valueField');
     if (lookup) {
-      const lookupData = this.get('lookupData') || [];
-      return unionBy(lookup.concat(lookupData), valueField);
+      const lookupData = this.get('lookupData');
+      if (lookupData) {
+        return unionBy(lookup.concat(lookupData), valueField);
+      }
+      return lookup;
     }
     return undefined;
   }
@@ -447,15 +473,17 @@ export default class Field {
   @computed
   get intlFields(): Field[] {
     const { record, type, name } = this;
-    const tlsKey = getConfig('tlsKey');
-    if (type === FieldType.intl && record && record.get(tlsKey)) {
-      return Object.keys(localeContext.supports).reduce<Field[]>((arr, lang) => {
-        const field = record.getField(`${tlsKey}.${name}.${lang}`);
-        if (field) {
-          arr.push(field);
-        }
-        return arr;
-      }, []);
+    if (type === FieldType.intl && record) {
+      const tlsKey = getConfig('tlsKey');
+      if (record.get(tlsKey)) {
+        return Object.keys(localeContext.supports).reduce<Field[]>((arr, lang) => {
+          const field = record.getField(`${tlsKey}.${name}.${lang}`);
+          if (field) {
+            arr.push(field);
+          }
+          return arr;
+        }, []);
+      }
     }
     return [];
   }
@@ -516,11 +544,31 @@ export default class Field {
       this.dirtyProps = {};
       this.props = props;
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
-      if (!this.getProp('options') && (!record || this.getProp('computedProps') || this.getProp('dynamicProps'))) {
-        raf(() => {
-          this.fetchLookup();
-          this.fetchLovConfig();
-        });
+      if (
+        !this.getProp('options')
+      ) {
+        const dynamicProps = this.getProp('dynamicProps');
+        if (!record || typeof dynamicProps === 'function') {
+          raf(() => {
+            this.fetchLookup();
+            this.fetchLovConfig();
+          });
+        } else {
+          const computedProps = this.getProp('computedProps');
+          if (computedProps || dynamicProps) {
+            const keys = Object.keys({ ...computedProps, ...dynamicProps });
+            const fetches: Function[] = [];
+            if (intersection(LOOKUP_SIDE_EFFECT_KEYS, keys).length) {
+              fetches.push(this.fetchLookup);
+            }
+            if (intersection(LOV_SIDE_EFFECT_KEYS, keys).length) {
+              fetches.push(this.fetchLovConfig);
+            }
+            if (fetches.length) {
+              raf(() => fetches.forEach(one => one.call(this)));
+            }
+          }
+        }
       }
     });
   }
@@ -535,8 +583,7 @@ export default class Field {
     return merge(
       { lookupUrl: getConfig('lookupUrl') },
       Field.defaultProps,
-      getPropsFromLovConfig(lovCode, 'textField'),
-      getPropsFromLovConfig(lovCode, 'valueField'),
+      getPropsFromLovConfig(lovCode, ['textField', 'valueField']),
       dsField && dsField.props,
       this.props,
     );
@@ -640,16 +687,16 @@ export default class Field {
     }
     if (propsName === 'textField' || propsName === 'valueField') {
       const lovCode = this.get('lovCode');
-      const lovProps = getPropsFromLovConfig(lovCode, propsName);
-      if (propsName in lovProps) {
-        return lovProps[propsName];
+      const lovProp = getPropsFromLovConfig(lovCode, [propsName])[propsName];
+      if (lovProp) {
+        return lovProp;
       }
     }
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);
     }
     if (['min', 'max'].includes(propsName)) {
-      if (this.get('type') === FieldType.number) {
+      if (this.type === FieldType.number) {
         if (propsName === 'max') {
           return MAX_SAFE_INTEGER;
         }
@@ -668,7 +715,7 @@ export default class Field {
   @action
   set(propsName: string, value: any): void {
     const oldValue = this.get(propsName);
-    if (!isEqualDynamicProps(oldValue, value)) {
+    if (!isEqualDynamicProps(toJS(oldValue), value)) {
       if (!(propsName in this.dirtyProps)) {
         set(this.dirtyProps, propsName, oldValue);
       } else if (isSame(toJS(this.dirtyProps[propsName]), value)) {
@@ -1083,23 +1130,12 @@ export default class Field {
       return;
     }
     if (
-      [
-        'type',
-        'lookupUrl',
-        'lookupCode',
-        'lookupAxiosConfig',
-        'lovCode',
-        'lovQueryAxiosConfig',
-        'lovPara',
-        'cascadeMap',
-        'lovQueryUrl',
-        'optionsProps',
-      ].includes(propsName)
+      LOOKUP_SIDE_EFFECT_KEYS.includes(propsName)
     ) {
       this.set('lookupData', undefined);
       this.fetchLookup();
     }
-    if (['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl', 'optionsProps'].includes(propsName)) {
+    if (LOV_SIDE_EFFECT_KEYS.includes(propsName)) {
       this.fetchLovConfig();
     }
   }

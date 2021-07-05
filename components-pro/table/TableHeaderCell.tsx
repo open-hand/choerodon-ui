@@ -23,7 +23,8 @@ import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import autobind from '../_util/autobind';
 import transform from '../_util/transform';
-import OverflowTip from '../overflow-tip';
+import { hide, show } from '../tooltip/singleton';
+import isOverflow from '../overflow-tip/util';
 
 export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
@@ -53,14 +54,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   resizeColumn?: ColumnProps;
 
-  element?: HTMLDivElement | null;
-
   nextFrameActionId?: number;
-
-  @autobind
-  saveElement(element) {
-    this.element = element;
-  }
 
   @autobind
   handleClick() {
@@ -68,6 +62,20 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const { name } = column;
     if (name) {
       dataSet.sort(name);
+    }
+  }
+
+  @autobind
+  handleMouseEnter(e) {
+    const { column } = this.props;
+    const { tableStore } = this.context;
+    const tooltip = tableStore.getColumnTooltip(column);
+    const { currentTarget } = e;
+    if (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget))) {
+      show(currentTarget, {
+        title: this.getHeader(),
+        placement: 'right',
+      });
     }
   }
 
@@ -268,11 +276,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     return [pre, next];
   }
 
-  @autobind
-  getOverflowContainer() {
-    return this.element;
-  }
-
   getHelpIcon(field?: Field) {
     const { column } = this.props;
     const { tableStore: { prefixCls } } = this.context;
@@ -329,7 +332,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       command,
       lock,
     } = column;
-    const tooltip = tableStore.getColumnTooltip(column);
     const columnKey = getColumnKey(column);
     const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classList: string[] = [`${prefixCls}-cell`];
@@ -371,7 +373,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const innerProps: any = {
       className: classNames(`${prefixCls}-cell-inner`),
       children: childNodes,
-      style: {},
+      onMouseEnter: this.handleMouseEnter,
+      onMouseLeave: hide,
     };
 
     if (helpIcon) {
@@ -400,10 +403,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       };
     }
 
-    if (tooltip === TableColumnTooltip.overflow) {
-      innerProps.ref = this.saveElement;
-    }
-
     const thProps: any = {
       className: classList.join(' '),
       rowSpan,
@@ -412,27 +411,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       style: omit(cellStyle, ['width', 'height']),
     };
 
-    const inner = (
-      <div
-        {...innerProps}
-      />
-    );
-
     return (
       <th {...thProps}>
-        {
-          [TableColumnTooltip.always, TableColumnTooltip.overflow].includes(tooltip) ?
-            <OverflowTip
-              key="tooltip"
-              title={this.getHeader}
-              placement="right"
-              strict={tooltip === TableColumnTooltip.always}
-              getOverflowContainer={this.getOverflowContainer}
-            >
-              {inner}
-            </OverflowTip> :
-            inner
-        }
+        <div
+          {...innerProps}
+        />
         {columnResizable && this.renderResizer()}
       </th>
     );

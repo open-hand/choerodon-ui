@@ -10,21 +10,11 @@ import autobind from '../_util/autobind';
 
 export { TooltipPlacement, TooltipTheme };
 
-export interface TooltipProps {
-  prefixCls?: string;
-  suffixCls?: string;
-  popupClassName?: string;
-  style?: React.CSSProperties;
-  popupStyle?: React.CSSProperties;
+export interface TooltipProps extends TriggerProps {
   placement?: TooltipPlacement;
-  builtinPlacements?: Object;
-  hidden?: boolean;
   defaultHidden?: boolean;
   onHiddenBeforeChange?: (hidden: boolean) => boolean;
   onHiddenChange?: (hidden: boolean) => void;
-  mouseEnterDelay?: number;
-  mouseLeaveDelay?: number;
-  transitionName?: string;
   trigger?: Action[];
   openClassName?: string;
   arrowPointAtCenter?: boolean;
@@ -155,6 +145,10 @@ export default class Tooltip extends Component<TooltipProps, any> {
     trigger: [Action.hover],
   };
 
+  static show;
+
+  static hide;
+
   state = {
     translate: { x: 0, y: 0 },
   };
@@ -220,18 +214,18 @@ export default class Tooltip extends Component<TooltipProps, any> {
   render() {
     const {
       prefixCls,
-      props: { children, placement, onHiddenChange, onHiddenBeforeChange, trigger, defaultHidden, hidden, ...restProps },
+      props: { children, placement, onHiddenChange, onHiddenBeforeChange, trigger, defaultHidden, hidden, getRootDomNode, ...restProps },
     } = this;
     // 修复特殊情况为0，以及 undefined 出现的报错情况
     const child = Children.count(children) ? Children.map(children, node => (
       !isNil(node) && (isValidElement(node) ? getDisabledCompatableChildren(node) : <span key={`text-${node}`}>{node}</span>)
     )) : null;
-
-    if ('hidden' in this.props) {
+    const hasHiddenProp = 'hidden' in this.props;
+    if (hasHiddenProp) {
       (restProps as TriggerProps).popupHidden = hidden!;
     }
     delete restProps.theme;
-    return !isNil(child) ? (
+    return !isNil(child) || (getRootDomNode && hasHiddenProp) ? (
       <Trigger
         prefixCls={prefixCls}
         action={trigger}
@@ -242,6 +236,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
         onPopupHiddenChange={onHiddenChange}
         onPopupAlign={this.handlePopupAlign}
         defaultPopupHidden={defaultHidden}
+        getRootDomNode={getRootDomNode}
         {...restProps}
       >
         {child}

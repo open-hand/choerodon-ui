@@ -1,4 +1,4 @@
-import React, { Children, Component, CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
+import React, { Children, Component, CSSProperties, isValidElement, Key, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
@@ -88,6 +88,8 @@ export interface TriggerProps extends ElementProps {
   onPopupAnimateEnd?: (key: Key | null, exists: boolean) => void;
   onPopupHiddenBeforeChange?: (hidden: boolean) => boolean;
   onPopupHiddenChange?: (hidden: boolean) => void;
+  onPopupMouseEnter?: MouseEventHandler<any>;
+  onPopupMouseLeave?: MouseEventHandler<any>;
   getRootDomNode?: () => Element | null | Text;
   getPopupStyleFromAlign?: (target: Node | Window, align: object) => object | undefined;
   getPopupClassNameFromAlign?: (align: object) => string | undefined;
@@ -452,14 +454,21 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   @autobind
-  handlePopupMouseEnter() {
+  handlePopupMouseEnter(e) {
     this.popupTask.cancel();
+    const { onPopupMouseEnter } = this.props;
+    if (onPopupMouseEnter) {
+      onPopupMouseEnter(e);
+    }
   }
 
   @autobind
-  handlePopupMouseLeave() {
-    const { mouseLeaveDelay } = this.props;
+  handlePopupMouseLeave(e) {
+    const { mouseLeaveDelay, onPopupMouseLeave } = this.props;
     this.delaySetPopupHidden(true, mouseLeaveDelay);
+    if (onPopupMouseLeave) {
+      onPopupMouseLeave(e);
+    }
   }
 
   getPopup(): ReactNode {
@@ -473,6 +482,8 @@ export default class Trigger extends Component<TriggerProps> {
       onPopupAnimateLeave,
       onPopupAnimateEnd,
       onPopupAlign,
+      onPopupMouseEnter,
+      onPopupMouseLeave,
       getPopupStyleFromAlign,
       getRootDomNode = this.getRootDomNode,
       transitionName,
@@ -482,13 +493,10 @@ export default class Trigger extends Component<TriggerProps> {
     if (this.mounted || !getPopupContainer) {
       const hidden = this.popupHidden;
       if (!hidden || this.popup || forceRender) {
-        const mouseProps: any = {};
-        if (this.isMouseEnterToShow()) {
-          mouseProps.onMouseEnter = this.handlePopupMouseEnter;
-        }
-        if (this.isMouseLeaveToHide()) {
-          mouseProps.onMouseLeave = this.handlePopupMouseLeave;
-        }
+        const mouseProps: any = {
+          onMouseEnter: this.isMouseEnterToShow() ? this.handlePopupMouseEnter : onPopupMouseEnter,
+          onMouseLeave: this.isMouseLeaveToHide() ? this.handlePopupMouseLeave : onPopupMouseLeave,
+        };
         return (
           <Popup
             key="popup"
