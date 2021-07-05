@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, FunctionComponent, isValidElement, ReactElement, useContext } from 'react';
+import React, { Children, cloneElement, FunctionComponent, isValidElement, ReactElement, ReactNode, useCallback, useContext } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -8,16 +8,41 @@ import { LabelLayout } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import Row from '../row';
 import Col from '../col';
-import OverflowTip from '../overflow-tip';
 import { Tooltip as LabelTooltip } from '../core/enum';
+import { hide, show } from '../tooltip/singleton';
+import isOverflow from '../overflow-tip/util';
 
 export interface ItemProps extends FormFieldProps {
   children: ReactElement<FormFieldProps>;
 }
 
+export interface LabelProps {
+  className?: string;
+  children?: ReactNode;
+  tooltip?: LabelTooltip;
+  width?: number;
+}
+
 export interface IItem extends FunctionComponent<ItemProps> {
   __PRO_FORM_ITEM?: boolean;
 }
+
+const Label: FunctionComponent<LabelProps> = (props) => {
+  const { children, className, tooltip, width } = props;
+  const handleMouseEnter = useCallback((e) => {
+    const { currentTarget } = e;
+    if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && isOverflow(currentTarget))) {
+      show(currentTarget, {
+        title: children,
+      });
+    }
+  }, [children, tooltip]);
+  return (
+    <label className={className} onMouseEnter={handleMouseEnter} onMouseLeave={hide} style={width ? { width } : undefined}>{children}</label>
+  );
+};
+
+Label.displayName = 'Label';
 
 const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
   const { dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon } = useContext(FormContext);
@@ -54,23 +79,10 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
       [`${prefixCls}-output`]: isOutput,
     });
     const tooltip = props.labelTooltip || labelTooltip;
-    const isTooltip = tooltip && [LabelTooltip.always, LabelTooltip.overflow].includes(tooltip);
     if (labelLayout === LabelLayout.vertical) {
-      const labelNode = (
-        <label className={labelClassName}>{label}</label>
-      );
       return (
         <>
-          {
-            isTooltip ? (
-              <OverflowTip
-                title={label}
-                strict={tooltip === LabelTooltip.always}
-              >
-                {labelNode}
-              </OverflowTip>
-            ) : labelNode
-          }
+          <Label className={labelClassName} tooltip={tooltip}>{label}</Label>
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>
         </>
       );
@@ -78,22 +90,10 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     const fieldLabelWidth = getProperty(fieldProps, 'labelWidth', dataSet, record);
     const columnLabelWidth = normalizeLabelWidth(contextLabelWidth, 1)[0];
     const labelWidth = columnLabelWidth === 'auto' ? undefined : Math.max(columnLabelWidth, isNaN(fieldLabelWidth) ? 0 : fieldLabelWidth);
-    const labelNode = (
-      <label className={labelClassName} style={{ width: labelWidth }}>{label}</label>
-    );
     return (
       <Row className={`${prefixCls}-row`}>
         <Col className={`${prefixCls}-col`}>
-          {
-            isTooltip ? (
-              <OverflowTip
-                title={label}
-                strict={tooltip === LabelTooltip.always}
-              >
-                {labelNode}
-              </OverflowTip>
-            ) : labelNode
-          }
+          <Label className={labelClassName} width={labelWidth} tooltip={tooltip}>{label}</Label>
         </Col>
         <Col className={`${prefixCls}-col ${prefixCls}-col-control`}>
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>

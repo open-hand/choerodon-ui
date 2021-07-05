@@ -152,13 +152,13 @@ export default class SelectBox extends Select<SelectBoxProps> {
       }
       return arr;
     }, []);
-    const { className } = this.getOtherProps();
+    const className = this.getClassName();
     const Element = this.context.formNode ? 'div' : 'form';
     return (
       <span key="wrapper" {...this.getWrapperProps()}>
         {this.renderSearcher()}
         {this.renderSelectAll()}
-        <Element className={className}>{items}</Element>
+        <Element className={className} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>{items}</Element>
         {this.renderFloatLabel()}
         {
           options.paging && options.currentPage < options.totalPage && (

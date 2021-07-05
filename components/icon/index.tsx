@@ -12,6 +12,7 @@ export interface IconProps {
   onFocus?: FocusEventHandler<any>;
   onMouseDown?: MouseEventHandler<any>;
   onMouseUp?: MouseEventHandler<any>;
+  onMouseEnter?: MouseEventHandler<any>;
   onMouseLeave?: MouseEventHandler<any>;
   style?: CSSProperties;
   tabIndex?: number;

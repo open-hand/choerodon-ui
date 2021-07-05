@@ -9,8 +9,9 @@ import { ValidationMessages } from '../validator/Validator';
 import { ViewMode } from './enum';
 import { $l } from '../locale-context';
 import { LabelLayout } from '../form/enum';
-import OverflowTip from '../overflow-tip';
-import { Tooltip as TextTooltip, Tooltip as LabelTooltip } from '../core/enum';
+import { Tooltip as TextTooltip } from '../core/enum';
+import isOverflow from '../overflow-tip/util';
+import { show } from '../tooltip/singleton';
 
 export interface RadioProps extends FormFieldProps {
   /**
@@ -104,44 +105,33 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     return otherProps;
   }
 
-  @autobind
-  getOverflowContainer() {
-    return this.labelRef;
+  showTooltip(e): boolean {
+    if (!super.showTooltip(e)) {
+      const { labelTooltip, labelRef } = this;
+      if (labelRef && (labelTooltip === TextTooltip.always || (labelTooltip === TextTooltip.overflow && isOverflow(labelRef)))) {
+        const labelText = this.getLabelText();
+        if (labelText) {
+          show(labelRef, {
+            title: labelText,
+          });
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   renderWrapper(): ReactNode {
     const checked = this.isChecked();
-    const labelText = this.getLabelText();
-    const wrap = (
-      <label key="wrapper" {...this.getWrapperProps()}>
-        <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
-        {this.renderInner()}
-        {this.getTextNode()}
-        {this.renderFloatLabel()}
-      </label>
-    );
     const floatLabel = super.hasFloatLabel ? this.renderSwitchFloatLabel() : undefined;
-    if (labelText) {
-      const { labelTooltip } = this;
-      const isTooltip = [LabelTooltip.always, LabelTooltip.overflow].includes(labelTooltip);
-      if (isTooltip) {
-        return (
-          <>
-            <OverflowTip
-              title={labelText}
-              strict={labelTooltip === TextTooltip.always}
-              getOverflowContainer={this.getOverflowContainer}
-            >
-              {wrap}
-            </OverflowTip>
-            {floatLabel}
-          </>
-        );
-      }
-    }
     return (
       <>
-        {wrap}
+        <label key="wrapper" {...this.getWrapperProps()}>
+          <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
+          {this.renderInner()}
+          {this.getTextNode()}
+          {this.renderFloatLabel()}
+        </label>
         {floatLabel}
       </>
     );

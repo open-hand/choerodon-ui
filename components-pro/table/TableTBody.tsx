@@ -2,7 +2,6 @@ import React, { Component, CSSProperties, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed } from 'mobx';
-import classes from 'component-classes';
 import raf from 'raf';
 import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -224,13 +223,12 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   componentDidUpdate() {
     this.handlePerformance();
     const { lock } = this.props;
-    const { tableStore: { prefixCls } } = this.context;
     if (!lock) {
       const {
         tableStore: { node },
       } = this.context;
       if (
-        classes(node.wrapper).has(`${prefixCls}-focused`) &&
+        node.isFocus &&
         !node.wrapper.contains(document.activeElement)
       ) {
         node.focus();

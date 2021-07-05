@@ -2,7 +2,7 @@ import React, { Children, cloneElement, FunctionComponent, useCallback, useRef }
 import { findDOMNode } from 'react-dom';
 import noop from 'lodash/noop';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
-import measureTextWidth from '../_util/measureTextWidth';
+import utilIsOverflow from './util';
 
 function renderTitle(props) {
   if (props) {
@@ -30,25 +30,7 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
   const isOverFlow = useCallback((): boolean => {
     const element = getOverflowContainer();
     if (element) {
-      const { textContent, ownerDocument } = element;
-      if (textContent && ownerDocument) {
-        const { clientWidth, scrollWidth } = element;
-        if (scrollWidth > clientWidth) {
-          return true;
-        }
-        const { defaultView } = ownerDocument;
-        if (defaultView) {
-          const computedStyle = defaultView.getComputedStyle(element);
-          const { paddingLeft, paddingRight } = computedStyle;
-          const pl = paddingLeft ? parseFloat(paddingLeft) : 0;
-          const pr = paddingRight ? parseFloat(paddingRight) : 0;
-          if (pl || pr) {
-            const textWidth = measureTextWidth(textContent, computedStyle);
-            const contentWidth = clientWidth - pl - pr;
-            return textWidth > contentWidth;
-          }
-        }
-      }
+      return utilIsOverflow(element)
     }
     return false;
   }, [getOverflowContainer]);

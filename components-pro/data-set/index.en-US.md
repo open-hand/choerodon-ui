@@ -129,7 +129,7 @@ title: DataSet
 | selectAll() | 全选当前页 |  |  |
 | unSelectAll() | 取消全选当前页 |  |  |
 | batchSelect(recordOrId) | 批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
-| unSelectAll(recordOrId) | 取消批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
+| batchUnSelect(recordOrId) | 取消批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |
 | get(index) | 获取指定索引的记录 | `index` - 记录索引 | Record |
 | getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | `index` - 记录索引 | Record |
