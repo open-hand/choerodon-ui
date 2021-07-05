@@ -74,6 +74,7 @@ export enum FieldType {
   email = 'email',
   url = 'url',
   color = 'color',
+  json = 'json',
   reactNode = 'reactNode',
 }
 
@@ -111,8 +112,10 @@ export enum DataToJSON {
   selected = 'selected',
   all = 'all',
   normal = 'normal',
+  'dirty-field' = 'dirty-field',
   'dirty-self' = 'dirty-self',
   'selected-self' = 'selected-self',
   'all-self' = 'all-self',
   'normal-self' = 'normal-self',
+  'dirty-field-self' = 'dirty-field-self',
 }

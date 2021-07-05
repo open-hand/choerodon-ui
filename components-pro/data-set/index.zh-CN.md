@@ -1,5 +1,6 @@
 ---
 category: Pro Components
+cols: 1
 order: -1
 title: DataSet
 ---
@@ -229,7 +230,7 @@ title: DataSet
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | name | 字段名 | string |  |
-| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` | string | string |
+| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` `json` | string | string |
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值：`asc` `desc` | string |  |
 | label | 字段标签 | string \| ReactNode |  |
 | labelWidth | 字段标签宽度 | number |  |
@@ -273,7 +274,7 @@ title: DataSet
 | computedProps | 计算属性对象。功能和用法同 dynamicProps，具有 mobx computed 的缓存功能，避免重复计算，提高性能。请确保计算依赖的值是可观察的。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |
-| ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | `never` |
+| ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | |
 | transformRequest | 在发送请求之前对数据进行处理 | (value: any, record: Record) => any |  |
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any, object: any) => any |  |
 | trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
@@ -334,10 +335,12 @@ title: DataSet
 | 枚举值 | 说明 |
 | --- | --- |
 | dirty | 只转换变更的数据，包括本身无变更但级联有变更的数据 |
+| dirty-field | 只转数据中变更了的字段（包括主键和unique以及ignore为never的字段），包括本身无变更但级联有变更的数据 |
 | selected | 只转换选中的数据，无关数据的变更状态 |
 | all | 转换所有数据 |
 | normal | 转换所有数据为普通 json，不会带上\_\_status, \_\_id 等附加字段，也不会出现临时删除的数据， 一般用于大 JSON 字段 |
 | dirty-self | 同 dirty， 但不转换级联数据 |
+| dirty-field-self | 同 dirty-field， 但不转换级联数据 |
 | selected-self | 同 selected， 但不转换级联数据 |
 | all-self | 同 all， 但不转换级联数据 |
 | normal-self | 同 normal， 但不转换级联数据 |

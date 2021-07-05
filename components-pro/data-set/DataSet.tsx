@@ -36,6 +36,7 @@ import {
   getOrderFields,
   getSpliceRecord,
   getSplitValue,
+  getUniqueFieldNames,
   isDirtyRecord,
   normalizeGroups,
   prepareForSubmit,
@@ -272,10 +273,12 @@ export interface DataSetProps {
   /**
    * 数据转为json的方式
    * dirty - 只转换变更的数据，包括本身无变更但级联有变更的数据
+   * dirty-field - 只转数据中变更了的字段（包括主键和unique以及ignore为never的字段），包括本身无变更但级联有变更的数据
    * selected - 只转换选中的数据，无关数据的变更状态
    * all - 转换所有数据
    * normal - 转换所有数据，且不会带上__status, __id等附加字段
    * dirty-self - 同dirty， 但不转换级联数据
+   * dirty-field-self - 同dirty-field， 但不转换级联数据
    * selected-self - 同selected， 但不转换级联数据
    * all-self - 同all， 但不转换级联数据
    * normal-self - 同normal， 但不转换级联数据
@@ -772,12 +775,7 @@ export default class DataSet extends EventManager {
     if (primaryKey) {
       return [primaryKey];
     }
-    const keys: string[] = [];
-    [...this.fields.entries()].forEach(([key, field]) => {
-      if (field.get('unique')) {
-        keys.push(key);
-      }
-    });
+    const keys = getUniqueFieldNames(this);
     if (keys.length) {
       return keys;
     }

@@ -22,10 +22,10 @@ function nodeRenderer({ record }) {
 }
 
 const Demo = () => {
-  const [showLine, setShowLine] = useState(true);
-  const [showIcon, setShowIcon] = useState(false);
-  const [showLeafIcon, setShowLeafIcon] = useState(true);
-  const ds = useMemo(() => {
+  const [showLine, setShowLine] = React.useState(true);
+  const [showIcon, setShowIcon] = React.useState(false);
+  const [showLeafIcon, setShowLeafIcon] = React.useState(true);
+  const ds = React.useMemo(() => {
     return new DataSet({
       primaryKey: 'id',
       queryUrl: '/tree.mock',
