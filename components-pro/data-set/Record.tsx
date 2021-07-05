@@ -22,11 +22,13 @@ import {
   getChainFieldName,
   getRecordValue,
   getSortedFields,
+  getUniqueKeysAndPrimaryKey,
   isDirtyRecord,
   processIntlField,
   processToJSON,
   processValue,
   useCascade,
+  useDirtyField,
   useNormal,
   useSelected,
 } from './utils';
@@ -419,20 +421,35 @@ export default class Record {
     });
   }
 
+  /**
+   * 转换成普通数据
+   * 一般用于父级联数据源中的json类型字段
+   * 禁止通过此方法获取某一个或几个字段值
+   */
   toData(
     needIgnore?: boolean,
     noCascade?: boolean,
     isCascadeSelect?: boolean,
     all: boolean = true,
   ): any {
-    const { status, dataSet } = this;
+    const { status, dataSet, fields } = this;
     const dataToJSON = dataSet && dataSet.dataToJSON;
     const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
     const normal = all || (dataToJSON && useNormal(dataToJSON));
     let dirty = status !== RecordStatus.sync;
-    const json = this.normalizeData(needIgnore);
+    const childrenKeys: string[] | undefined = cascade && dataSet ? Object.keys(dataSet.children) : undefined;
+    const jsonFieldKeys: string[] | undefined = childrenKeys && [...fields.entries()].reduce<string[]>((fieldKeys, [key, field]) => {
+      if (field.type === FieldType.json && childrenKeys.some(childKey => key === childKey || childKey.startsWith(`${key}.`))) {
+        fieldKeys.push(key);
+      }
+      return fieldKeys;
+    }, []);
+    const json = this.normalizeData(needIgnore, jsonFieldKeys);
     if (cascade && this.normalizeCascadeData(json, normal, isCascadeSelect)) {
       dirty = true;
+    }
+    if (jsonFieldKeys) {
+      jsonFieldKeys.forEach(key => ObjectChainValue.set(json, key, JSON.stringify(ObjectChainValue.get(json, key)), fields));
     }
     return {
       ...json,
@@ -440,6 +457,9 @@ export default class Record {
     };
   }
 
+  /**
+   * 转换成用于提交的数据
+   */
   toJSONData(noCascade?: boolean, isCascadeSelect?: boolean): any {
     const { status } = this;
     return {
@@ -584,7 +604,8 @@ export default class Record {
       checkFieldType(value, field);
       const oldValue = toJS(this.get(fieldName));
       const newValue = processValue(value, field);
-      if (!isSame(processToJSON(oldValue), processToJSON(newValue))) {
+      const newValueForCompare = processToJSON(newValue, field);
+      if (!isSame(processToJSON(oldValue, field), newValueForCompare)) {
         const { fields } = this;
         ObjectChainValue.set(this.data, fieldName, newValue, fields);
         if (!(this.dirtyData.has(fieldName))) {
@@ -592,7 +613,7 @@ export default class Record {
           if (this.status === RecordStatus.sync) {
             this.status = RecordStatus.update;
           }
-        } else if (isSame(toJS(this.dirtyData.get(fieldName)), newValue)) {
+        } else if (isSame(processToJSON(this.dirtyData.get(fieldName), field), newValueForCompare)) {
           this.dirtyData.delete(fieldName);
           if (this.status === RecordStatus.update && this.dirtyData.size === 0 && [...fields.values()].every(f => !f.dirty)) {
             this.status = RecordStatus.sync;
@@ -896,18 +917,22 @@ export default class Record {
     });
   }
 
-  private normalizeData(needIgnore?: boolean) {
-    const { fields } = this;
-    const json: any = toJS(this.data);
+  private normalizeData(needIgnore?: boolean, jsonFields?: string[]) {
+    const { fields, dataSet } = this;
+    const dataToJSON = dataSet && dataSet.dataToJSON;
+    const onlyDirtyField = needIgnore && dataToJSON ? useDirtyField(dataToJSON) : false;
+    const neverKeys = onlyDirtyField ? getUniqueKeysAndPrimaryKey(dataSet) : [];
+    const json: any = onlyDirtyField ? {} : toJS(this.data);
+    const fieldIgnore = onlyDirtyField ? FieldIgnore.clean : undefined;
     const objectFieldsList: Field[][] = [];
     const normalFields: Field[] = [];
     const ignoreFieldNames: Set<string> = new Set();
-    [...fields.keys()].forEach(key => {
-      const field = this.getField(key);
-      if (field) {
-        const ignore = field.get('ignore');
+    [...fields.entries()].forEach(([key, field]) => {
+      if (field && (!jsonFields || !jsonFields.includes(key))) {
+        const ignore = field.get('ignore') || fieldIgnore;
         if (
           needIgnore &&
+          !neverKeys.includes(key) &&
           (ignore === FieldIgnore.always || (ignore === FieldIgnore.clean && !field.dirty))
         ) {
           ignoreFieldNames.add(key);
@@ -926,21 +951,22 @@ export default class Record {
       if (items) {
         items.forEach(field => {
           const { name } = field;
-          let value = ObjectChainValue.get(json, name);
+          let value = ObjectChainValue.get(onlyDirtyField ? { ...this.data, ...json } : json, name);
           const bind = field.get('bind');
-          const multiple = field.get('multiple');
           const transformRequest = field.get('transformRequest');
           if (bind) {
             value = this.get(getChainFieldName(this, name));
           }
-          if (isString(multiple) && isArrayLike(value)) {
-            value = value.map(processToJSON).join(multiple);
-          }
+          const old = value;
+          value = processToJSON(value, field);
           if (transformRequest) {
-            value = transformRequest(value, this);
+            // compatible old logic
+            value = isString(field.get('multiple')) && isArrayLike(old) ?
+              transformRequest(value, this) :
+              processToJSON(transformRequest(old, this), field);
           }
           if (value !== undefined) {
-            ObjectChainValue.set(json, name, processToJSON(value), fields);
+            ObjectChainValue.set(json, name, value, fields);
           } else {
             ignoreFieldNames.add(name);
           }
