@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
 - 💄 `<pro>Radio`: Optimize the label content overflow tooltip.
 - 💄 `<pro>Table`: Optimize the performance.
+- 💄 `Progress`: Optimize animation performance.
 - 🐞 `<pro>Pagination`: Fix the problem that the pagination option exceeds the default maximum of 100 pagination when the maximum pagination is not set.
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
 - 🐞 `<pro>Table`: Fix the issue that under the peacock blue theme, when the editor of the Column is function, after entering the editing mode and clicking exit, the width of the component in the editing mode will be incorrect next time.
