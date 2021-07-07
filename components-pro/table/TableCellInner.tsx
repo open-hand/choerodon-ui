@@ -26,7 +26,7 @@ import { ColumnProps } from './Column';
 import TableContext from './TableContext';
 import { Commands, TableButtonProps } from './Table';
 import { findCell, getColumnKey, getEditorByColumnAndRecord, isDisabledRow, isInCellEditor, isStickySupport } from './utils';
-import { FieldType } from '../data-set/enum';
+import { FieldType, RecordStatus } from '../data-set/enum';
 import { SELECTION_KEY } from './TableStore';
 import { TableColumnTooltip, TableCommandType } from './enum';
 import Output from '../output/Output';
@@ -173,10 +173,13 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     });
   }, [tableStore, dataSet]);
   const handleCommandCancel = useCallback(() => {
-    if (inlineEdit) {
-      tableStore.currentEditRecord = record;
+    if (record.status === RecordStatus.add) {
+      dataSet.remove(record);
+    } else {
+      record.reset();
+      tableStore.currentEditRecord = undefined;
     }
-  }, [tableStore, record, inlineEdit]);
+  }, [tableStore, record, dataSet]);
   const handleCommandEdit = useCallback(() => {
     if (inlineEdit) {
       tableStore.currentEditRecord = record;

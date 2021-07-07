@@ -787,19 +787,6 @@ export function processIntlField(
   return callback(name, fieldProps);
 }
 
-export function addDataSetField(dataSet: DataSet, name: string, fieldProps: FieldProps = {}): Field {
-  return processIntlField(
-    name,
-    fieldProps,
-    (langName, langProps) => {
-      const field = new Field(langProps, dataSet);
-      dataSet.fields.set(langName, field);
-      return field;
-    },
-    dataSet,
-  );
-}
-
 export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {
   const value = myField.get(prop);
   const myName = myField.name;

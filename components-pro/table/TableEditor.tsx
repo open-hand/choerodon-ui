@@ -1,6 +1,6 @@
 import React, { cloneElement, Component, isValidElement, ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { action, IReactionDisposer, observable, reaction } from 'mobx';
+import { action, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import raf from 'raf';
@@ -486,6 +486,9 @@ export default class TableEditor extends Component<TableEditorProps> {
         }
         return <div {...props} ref={this.saveWrap}>{cloneElement(editor, editorProps)}</div>;
       }
+      runInAction(() => {
+        this.rendered = false;
+      });
     }
     return null;
   }

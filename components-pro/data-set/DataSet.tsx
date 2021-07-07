@@ -20,7 +20,6 @@ import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
   adapterDataToJSON,
-  addDataSetField,
   arrayMove,
   axiosConfigAdapter,
   checkParentByInsert,
@@ -42,6 +41,7 @@ import {
   prepareForSubmit,
   prepareSubmitData,
   processExportValue,
+  processIntlField,
   sliceTree,
   sortTree,
   useCascade,
@@ -81,6 +81,19 @@ export type DataSetChildren = { [key: string]: DataSet; };
 export type Events = { [key: string]: Function; };
 
 export type Group = { name: string, value: any, records: Record[], subGroups: Group[]; };
+
+export function addDataSetField(dataSet: DataSet, name: string, fieldProps: FieldProps = {}): Field {
+  return processIntlField(
+    name,
+    fieldProps,
+    (langName, langProps) => {
+      const field = new Field(langProps, dataSet);
+      dataSet.fields.set(langName, field);
+      return field;
+    },
+    dataSet,
+  );
+}
 
 export interface RecordValidationErrors {
   field: Field;

@@ -1150,7 +1150,7 @@ export default class Field {
         return dynamicProps({ dataSet, record, name });
       } catch (e) {
         if (process.env.NODE_ENV !== 'production') {
-          console.error(e);
+          console.warn(e);
         }
       } finally {
         dynamicPropsComputingChains.pop();
