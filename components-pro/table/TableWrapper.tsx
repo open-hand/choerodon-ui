@@ -152,10 +152,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   getEditors() {
     return this.leafEditorColumns.map(column => (
-      <TableEditor
-        key={(typeof column.editor === 'function') ?
-          `${getColumnKey(column)}+${Math.random()}` : getColumnKey(column)}
-        column={column} />
+      <TableEditor key={getColumnKey(column)} column={column} />
     ));
   }
 
