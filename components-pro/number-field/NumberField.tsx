@@ -285,12 +285,14 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
         key: 'plus',
         className: `${prefixCls}-plus`,
         onMouseDown: longPressPlus ? this.handlePlus : this.handleOncePlus,
+        onTouchStart: this.handleOncePlus,
       };
       const minIconProps: any = {
         ref: this.saveMinusRef,
         key: 'minus',
         className: `${prefixCls}-minus`,
         onMouseDown: longPressPlus ? this.handleMinus : this.handleOnceMinus,
+        onTouchStart: this.handleOnceMinus,
       };
       return this.wrapperInnerSpanButton(
         <div>
