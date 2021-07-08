@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: dataToJSON adds `dirty-field`, `dirty-field-self` types.
 - 🌟 `<pro>DataSet.Field`: Added `json` type.
 - 🌟 `<pro>DataSet`: Added the `combineSort` property to support the parameter passing of combined column sorting.
+- 🌟 `<pro>Table`: Fix the effect of local export in large data volume.
 - 🌟 `<pro>Select`: `selectAllButton` added hook type to support custom buttons.
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
 - 💄 `<pro>Radio`: Optimize the label content overflow tooltip.

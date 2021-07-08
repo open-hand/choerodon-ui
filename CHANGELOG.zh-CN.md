@@ -47,6 +47,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`：新增 showCheckedStrategy 属性, 配置 treeCheckable 时，定义选中项回填的方式。
 - 🌟 `<pro>PerformanceTable`：新增点击行高亮属性 highlightRow。
 - 🌟 `<pro>DataSet.Record`: get 方法支持字段名数组参数。
+- 🌟 `<pro>Table`：修复本地导出在超大数据量时的效果。
 - 💄 `<pro>PerformanceTable`：兼容移动端拖拽列宽。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。

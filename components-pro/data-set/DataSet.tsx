@@ -46,6 +46,7 @@ import {
   sortTree,
   useCascade,
   useSelected,
+  concurrentPromise,
 } from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -402,6 +403,8 @@ export default class DataSet extends EventManager {
   @observable status: DataSetStatus;
 
   @observable exportStatus: DataSetExportStatus | undefined;
+
+  @observable exportProgress: number;
 
   @observable currentPage: number;
 
@@ -1130,21 +1133,31 @@ export default class DataSet extends EventManager {
     delete data._HAP_EXCEL_EXPORT_COLUMNS;
     const { totalCount } = this;
     runInAction(() => {
+      this.exportProgress = 0;
       this.exportStatus = DataSetExportStatus.start;
     });
     let newResult: any[] = [];
     if (totalCount > 0) {
       const queryTime = Math.ceil(totalCount / quantity);
-      const queryExportList: AxiosPromise<any>[] = [];
+      // 处理超并发问题 在超大数据量下一口气发出了几千个请求造成数据丢失
+      const queryExportList: { getPromise: () => AxiosPromise<any>; }[] = [];
+      runInAction(() => {
+        this.exportStatus = DataSetExportStatus.exporting;
+      });
       for (let i = 0; i < queryTime; i++) {
         const params = { ...this.generateQueryString(1 + i, quantity) };
         const newConfig = axiosConfigAdapter('read', this, data, params);
-        queryExportList.push(this.axios(newConfig));
-        runInAction(() => {
-          this.exportStatus = DataSetExportStatus.exporting;
+        queryExportList.push({
+          getPromise: () => this.axios(newConfig),
         });
       }
-      return Promise.all(queryExportList).then((resultValue) => {
+      return concurrentPromise(queryExportList, (currentPromiseIndex) => {
+        // 下面还有一段处理所以设置最大值为99
+        runInAction(() => {
+          this.exportProgress = Math.min(99, Math.floor(currentPromiseIndex / queryExportList.length * 100));
+        });
+        return this.exportStatus === undefined;
+      }).then((resultValue: any[]) => {
         const reducer = (accumulator: any[], currentValue: any[]) => [...accumulator, ...currentValue];
         const todataList = (item) => item ? item[this.dataKey] : [];
         runInAction(() => {
@@ -1165,6 +1178,7 @@ export default class DataSet extends EventManager {
         console.warn(err);
         runInAction(() => {
           this.exportStatus = DataSetExportStatus.failed;
+          this.exportProgress = 0;
         });
       });
     }

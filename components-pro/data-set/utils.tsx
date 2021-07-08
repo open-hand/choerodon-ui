@@ -410,7 +410,7 @@ export function checkFieldType(value: any, field: Field): boolean {
       }
       const valueType =
         field.type === FieldType.boolean &&
-        [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
+          [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -652,7 +652,7 @@ export function axiosConfigAdapter(
   };
 
   const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
-  getConfig('transport') || {};
+    getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
   if (globalConfig) {
     Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params, options));
@@ -1020,4 +1020,55 @@ export function getUniqueKeysAndPrimaryKey(dataSet?: DataSet): string[] {
     }
   }
   return keys;
+}
+
+
+export async function concurrentPromise(
+  promiseLoaders: { getPromise: () => Promise<any>; }[],
+  cancelFnc: (readyPromiseNumber:number) => boolean,
+) {
+  const promiseLoadersLength = promiseLoaders.length;
+  let fail = false;
+  return new Promise((resolve, reject) => {
+    const resulet: any = Array(promiseLoadersLength).fill(null);
+    // 依次执行promise
+    // 最大并发数
+    const maxConcurrent = Math.min(5, promiseLoadersLength);
+    let currentPromiseIndex = 0;
+    const execPromise = async (getPromise: () => Promise<any>, index: number) => {
+      if (fail) {
+        return;
+      }
+      if (cancelFnc(resulet.filter(Boolean).length)) {
+        fail = true;
+        reject();
+        return
+      }
+      let res;
+      try {
+        res = await getPromise();
+      } catch (error) {
+        fail = true;
+        reject(error);
+        return
+      }
+      resulet[index] = res;
+      // 判断是否完结
+      if (currentPromiseIndex === promiseLoadersLength - 1 && resulet.every(Boolean)) {
+        resolve(resulet);
+        return;
+      }
+      // 执行下一个promise
+      if (currentPromiseIndex < promiseLoadersLength - 1) {
+        ++currentPromiseIndex;
+        execPromise(promiseLoaders[currentPromiseIndex]?.getPromise, currentPromiseIndex);
+      }
+    };
+
+    // 初始化执行
+    for (let i = 0; i < maxConcurrent; i++) {
+      execPromise(promiseLoaders[i]?.getPromise, i);
+    }
+    currentPromiseIndex = maxConcurrent - 1;
+  });
 }
