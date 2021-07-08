@@ -599,7 +599,7 @@ export default class Record {
     if (isString(item)) {
       const oldName: string = item;
       const fieldName: string = getChainFieldName(this, oldName);
-      const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || this.addField(oldName);
+      const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || addRecordField(this, oldName);
       checkFieldType(value, field);
       const oldValue = toJS(this.get(fieldName));
       const newValue = processValue(value, field);
@@ -660,7 +660,7 @@ export default class Record {
     if (isString(item)) {
       const oldName: string = item;
       const fieldName: string = getChainFieldName(this, oldName);
-      const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || this.addField(fieldName);
+      const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || addRecordField(this, fieldName);
       const newValue = processValue(value, field);
       dirtyData.delete(fieldName);
       ObjectChainValue.set(data, fieldName, newValue, fields);

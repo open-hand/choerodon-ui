@@ -27,7 +27,7 @@ timeline: true
 - 💄 `<pro>NumberField`: Compatible with mobile events.
 - 💄 `Progress`: Optimize animation performance.
 - 💄 `<pro>Table.Column`: Optimized currency type columns are aligned to the right by default.
-- 💄 `<pro>Output`: Optimize the display of number and currency.
+- 💄 `<pro>Output`: Optimize the display of number and currency, Optimize the display of empty values.
 - 💄 `<pro>DataSet.Record`: `addField` method will process existing values.
 - 🐞 `<pro>Pagination`: Fix the problem that the pagination option exceeds the default maximum of 100 pagination when the maximum pagination is not set.
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
