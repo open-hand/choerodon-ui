@@ -40,7 +40,6 @@ import CloseButton from './CloseButton';
 import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue, transformHighlightProps } from './utils';
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
-import formatCurrency from '../formatter/formatCurrency';
 import { $l } from '../locale-context';
 import isReactChildren from '../_util/isReactChildren';
 import { hide, show } from '../tooltip/singleton';
@@ -72,7 +71,7 @@ export function getFieldsById(id): FormField<FormFieldProps>[] {
   return map[id];
 }
 
-export interface FormFieldProps extends DataSetComponentProps {
+export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 内部属性,标记该组件是否位于table中,适用于CheckBox以及switch等组件
    */
@@ -224,7 +223,7 @@ export interface FormFieldProps extends DataSetComponentProps {
   /**
    * 值变化回调
    */
-  onChange?: (value: any, oldValue: any, form?: ReactInstance) => void;
+  onChange?: (value: V, oldValue: V, form?: ReactInstance) => void;
   /**
    * 输入回调
    */
@@ -255,7 +254,7 @@ export interface FormFieldProps extends DataSetComponentProps {
   highlightRenderer?: HighlightRenderer;
 }
 
-export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
+export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSetComponent<T> {
   static contextType = FormContext;
 
   static propTypes = {
@@ -1267,29 +1266,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           </>
         );
       }
-    }
-  }
-
-
-  /**
-   * 渲染货币格式化
-   * @param readOnly
-   */
-  renderCurrency(readOnly?: boolean): ReactNode {
-    const {
-      currency,
-      lang,
-      props: { renderer },
-    } = this;
-    if (renderer) {
-      return this.getTextNode();
-    }
-    if (readOnly) {
-      const formatOptions = {
-        currency,
-      };
-      const value = this.getValue();
-      return formatCurrency(value, lang, formatOptions);
     }
   }
 

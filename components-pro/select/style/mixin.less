@@ -109,17 +109,16 @@
 
 .select-all() {
   &-select-all-none {
-    padding: 0.08rem 0.16rem;
+    padding: 0.08rem 0  0 @control-padding-horizontal;
     font-size: @font-size-sm;
     border-bottom: @border-width-base @border-style-base @border-color-base;
 
     span {
+      display: inline-block;
+      margin-right: 0.2rem;
+      margin-bottom: 0.08rem;
       color: @primary-color;
       cursor: pointer;
-    }
-
-    span + span {
-      margin-left: 0.2rem;
     }
   }
 }

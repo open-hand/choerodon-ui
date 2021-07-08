@@ -96,6 +96,21 @@ export function addDataSetField(dataSet: DataSet, name: string, fieldProps: Fiel
   );
 }
 
+export function addRecordField(record: Record, name: string, fieldProps: FieldProps = {}): Field {
+  const { dataSet } = record;
+  fieldProps.name = name;
+  return processIntlField(
+    name,
+    fieldProps,
+    (langName, langProps) => {
+      const field = new Field(langProps, dataSet, record);
+      record.fields.set(langName, field);
+      return field;
+    },
+    dataSet,
+  );
+}
+
 export interface RecordValidationErrors {
   field: Field;
   errors: ValidationResult[];
