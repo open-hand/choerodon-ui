@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React, { Children, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { Cancelable, DebounceSettings } from 'lodash';
 import classNames from 'classnames';
@@ -78,6 +78,7 @@ export interface ButtonProps extends DataSetComponentProps {
   formMethod?: string;
   formNoValidate?: boolean;
   formTarget?: string;
+  children?: ReactNode;
 }
 
 @observer

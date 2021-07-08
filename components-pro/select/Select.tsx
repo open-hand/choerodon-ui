@@ -35,6 +35,7 @@ import isSameLike from '../_util/isSameLike';
 import { Renderer } from '../field/FormField';
 import isIE from '../_util/isIE';
 import Field from '../data-set/Field';
+import { ButtonProps } from '../button/Button';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -161,7 +162,7 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * 多选时显示全选按钮;
    * @default true
    */
-  selectAllButton?: boolean;
+  selectAllButton?: boolean | ((buttons: ButtonProps[]) => ButtonProps[]);
   /**
    * 多选是否开启反选
    * @default false
@@ -296,7 +297,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * 多选时显示全选按钮;
      * @default true
      */
-    selectAllButton: PropTypes.bool,
+    selectAllButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.arrayOf(PropTypes.object)]),
     /**
      * 多选是否开启反选
      * @default false
@@ -830,11 +831,25 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   renderSelectAll(): ReactNode | void {
     const { selectAllButton } = this.props;
     if (this.multiple && selectAllButton) {
+      const builtInButtons: ButtonProps[] = [
+        { key: 'select_all', onClick: this.chooseAll, children: $l('Select', 'select_all') },
+      ];
+      if (this.selectReverse) {
+        builtInButtons.push(
+          { key: 'select_re', onClick: this.chooseRe, children: $l('Select', 'select_re') },
+        );
+      }
+      builtInButtons.push(
+        { key: 'unselect_all', onClick: this.unChooseAll, children: $l('Select', 'unselect_all') },
+      );
+      const buttons = typeof selectAllButton === 'function' ? selectAllButton(builtInButtons) : builtInButtons;
       return (
         <div key="check-all" className={`${this.prefixCls}-select-all-none`}>
-          <span onClick={this.chooseAll}>{$l('Select', 'select_all')}</span>
-          {this.selectReverse && <span onClick={this.chooseRe}>{$l('Select', 'select_re')}</span>}
-          <span onClick={this.unChooseAll}>{$l('Select', 'unselect_all')}</span>
+          {
+            buttons.map(({ key, onClick, children }, index) => (
+              <span key={key || String(index)} onClick={onClick}>{children}</span>
+            ))
+          }
         </div>
       );
     }

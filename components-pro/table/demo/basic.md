@@ -27,6 +27,7 @@ import {
   Button,
   AutoComplete,
 } from 'choerodon-ui/pro';
+import { action } from 'mobx';
 import moment from 'moment';
 
 const { Column } = Table;
@@ -273,21 +274,6 @@ class App extends React.Component {
         },
       },
       {
-        name: 'code_code',
-        type: 'string',
-        label: '代码',
-        maxLength: 20,
-        required: true,
-        bind: 'code.code',
-      },
-      {
-        name: 'code_description',
-        type: 'string',
-        label: '代码描述',
-        defaultValue: '员工状态2',
-        bind: 'code.description',
-      },
-      {
         name: 'code_select',
         type: 'string',
         label: '代码描述(下拉)',
@@ -400,6 +386,23 @@ class App extends React.Component {
     this.userDs.deleteAll();
   };
 
+  addColumn = action(() => {
+    const { userDs } = this;
+    userDs.addField('code_code', {
+      type: 'string',
+      label: '代码',
+      maxLength: 20,
+      required: true,
+      bind: 'code.code',
+    });
+    userDs.addField('code_description', {
+      type: 'string',
+      label: '代码描述',
+      defaultValue: '员工状态2',
+      bind: 'code.description',
+    });
+  })
+
   copyButton = (
     <Button icon="baseline-file_copy" onClick={this.copy} key="copy">
       复制
@@ -427,6 +430,12 @@ class App extends React.Component {
   deleteAllButton = (
     <Button icon="delete" onClick={this.deleteAllData} key="deleteAll">
       全部删除
+    </Button>
+  );
+
+  addColumnButton = (
+    <Button icon="add" onClick={this.addColumn} key="addColumn">
+      添加字段
     </Button>
   );
 
@@ -460,6 +469,7 @@ class App extends React.Component {
       this.insertButton,
       this.removeAllButton,
       this.deleteAllButton,
+      this.addColumnButton,
     ];
     return (
       <Table

@@ -7,7 +7,7 @@ import isNumber from 'lodash/isNumber';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import DataSet, { RecordValidationErrors } from './DataSet';
+import DataSet, { addRecordField, RecordValidationErrors } from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
   axiosConfigAdapter,
@@ -24,7 +24,6 @@ import {
   getSortedFields,
   getUniqueKeysAndPrimaryKey,
   isDirtyRecord,
-  processIntlField,
   processToJSON,
   processValue,
   useCascade,
@@ -867,54 +866,49 @@ export default class Record {
   }
 
   private initFields(fields: Fields) {
-    [...fields.keys()].forEach(key => this.addField(key));
+    [...fields.keys()].forEach(key => addRecordField(this, key));
   }
 
   @action
   addField(name: string, fieldProps: FieldProps = {}): Field {
-    const { dataSet } = this;
-    fieldProps.name = name;
-    return processIntlField(
-      name,
-      fieldProps,
-      (langName, langProps) => {
-        const field = new Field(langProps, dataSet, this);
-        this.fields.set(langName, field);
-        return field;
-      },
-      dataSet,
-    );
+    const field = addRecordField(this, name, fieldProps);
+    const data = toJS(this.data);
+    const newData = { ...data };
+    this.processFieldValue(name, field, this.fields, newData, data);
+    return field;
+  }
+
+  private processFieldValue(fieldName: string, field: Field, fields: Fields, newData: object, data: object, needMerge?: boolean) {
+    let value = ObjectChainValue.get(newData, fieldName);
+    const chainFieldName = getChainFieldName(this, fieldName);
+    const transformResponse = field.get('transformResponse');
+    if (chainFieldName !== fieldName) {
+      const bindValue = ObjectChainValue.get(newData, chainFieldName);
+      if (isNil(value) && !isNil(bindValue)) {
+        value = bindValue;
+      }
+    }
+    if (transformResponse) {
+      value = transformResponse(value, data);
+    }
+    value = processValue(value, field, !needMerge && this.isNew);
+    if (value === null) {
+      value = undefined;
+    }
+    if (needMerge && isObject(value)) {
+      const oldValue = ObjectChainValue.get(this.data, chainFieldName);
+      if (isObject(oldValue)) {
+        value = merge(oldValue, value);
+      }
+    }
+    ObjectChainValue.set(newData, chainFieldName, value, fields);
+    ObjectChainValue.set(this.data, chainFieldName, value, fields);
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {
     const newData = { ...data };
     const { fields } = this;
-    getSortedFields(fields).forEach(([fieldName, field]) => {
-      let value = ObjectChainValue.get(newData, fieldName);
-      const chainFieldName = getChainFieldName(this, fieldName);
-      const transformResponse = field.get('transformResponse');
-      if (chainFieldName !== fieldName) {
-        const bindValue = ObjectChainValue.get(newData, chainFieldName);
-        if (isNil(value) && !isNil(bindValue)) {
-          value = bindValue;
-        }
-      }
-      if (transformResponse) {
-        value = transformResponse(value, data);
-      }
-      value = processValue(value, field, !needMerge && this.isNew);
-      if (value === null) {
-        value = undefined;
-      }
-      if (needMerge && isObject(value)) {
-        const oldValue = ObjectChainValue.get(this.data, chainFieldName);
-        if (isObject(oldValue)) {
-          value = merge(oldValue, value);
-        }
-      }
-      ObjectChainValue.set(newData, chainFieldName, value, fields);
-      ObjectChainValue.set(this.data, chainFieldName, value, fields);
-    });
+    getSortedFields(fields).forEach(([fieldName, field]) => this.processFieldValue(fieldName, field, fields, newData, data, needMerge));
   }
 
   private normalizeData(needIgnore?: boolean, jsonFields?: string[]) {
