@@ -27,6 +27,7 @@ class App extends React.Component {
       { name: 'email', defaultValue: 'some@example.com', type: 'string', label: '邮箱' },
       { name: 'homepage', defaultValue: 'www.baidu.com', type: 'string', label: '个人主页' },
       { name: 'birth', defaultValue: '2018-12-26', type: 'date', label: '生日' },
+      { name: 'currency', defaultValue: 12, type: 'currency', label: '金额' },
     ],
   });
 
@@ -40,6 +41,7 @@ class App extends React.Component {
         <EmailField name="email" />
         <Output name="homepage" />
         <Output name="birth" />
+        <Output name="currency" currency="CNY" />
       </Form>
     );
   }

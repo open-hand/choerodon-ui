@@ -41,11 +41,24 @@ class App extends React.Component {
     },
   });
 
+  renderSelectAllButtons = (buttons) => [
+    ...buttons,
+   { key: 'custom', children: 'custom', onClick: () => console.log('custom button clicked') },
+  ];
+
   render() {
     return (
       <Row gutter={10}>
         <Col span={24}>
-          <Select dataSet={this.ds} name="user" placeholder="数据源多选" maxTagCount={2} maxTagTextLength={3} maxTagPlaceholder={restValues => `+${restValues.length}...`}>
+          <Select
+            dataSet={this.ds}
+            name="user"
+            placeholder="数据源多选"
+            maxTagCount={2}
+            maxTagTextLength={3}
+            maxTagPlaceholder={restValues => `+${restValues.length}...`}
+            selectAllButton={this.renderSelectAllButtons}
+          >
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
             <Option value="wu">Wu</Option>

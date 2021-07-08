@@ -1,9 +1,8 @@
-import React, { ReactInstance, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
-import isNumber from 'lodash/isNumber';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import defaultTo from 'lodash/defaultTo';
@@ -14,7 +13,7 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning from '../_util/keepRunning';
 import Icon from '../icon';
-import { getNearStepValues, getPrecision, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, parseNumber, plus } from './utils';
+import { getNearStepValues, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, parseNumber, plus } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
@@ -23,6 +22,7 @@ import { ValidatorProps } from '../validator/rules';
 import defaultFormatNumber from '../formatter/formatNumber';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context/LocaleContext';
+import { getNumberFormatOptions, getNumberFormatter } from '../field/utils';
 
 function getCurrentValidValue(value: string): number {
   return Number(value.replace(/\.$/, '')) || 0;
@@ -36,7 +36,7 @@ export type FormatNumberFuncOptions = {
 };
 
 
-export interface NumberFieldProps extends TextFieldProps {
+export interface NumberFieldProps<V = number> extends TextFieldProps<V> {
   /**
    * 最小值
    */
@@ -61,10 +61,6 @@ export interface NumberFieldProps extends TextFieldProps {
    * 格式器参数
    */
   formatterOptions?: FormatNumberFuncOptions;
-  /**
-   * 值变化回调
-   */
-  onChange?: (value: number, oldValue: number, form?: ReactInstance) => void;
   /**
    *是否长按按钮按步距增加
    */
@@ -157,7 +153,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @computed
   get allowDecimal(): boolean {
-    const { min, nonStrictStep, precision } = this;
+    const { min, nonStrictStep } = this;
+    const precision = this.getProp('precision');
     if (precision === 0) {
       return false;
     }
@@ -186,11 +183,6 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   get allowNegative(): boolean {
     const { min } = this;
     return isNil(min) || min < 0;
-  }
-
-  @computed
-  get precision(): number | undefined {
-    return this.getProp('precision');
   }
 
   @computed
@@ -444,7 +436,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   prepareSetValue(value: any): void {
-    super.prepareSetValue(isNaN(value) || isEmpty(value) ? null : parseNumber(value, this.precision));
+    super.prepareSetValue(isNaN(value) || isEmpty(value) ? null : parseNumber(value, this.getProp('precision')));
   }
 
   restrictInput(value: string): string {
@@ -467,36 +459,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getFormatOptions(value?: number): FormatNumberFuncOptions {
-    const { precision } = this;
-    const precisionInValue = isNumber(precision) ? precision : getPrecision(isNil(value) ? this.getValue() || 0 : value);
-    const formatterOptions: FormatNumberFuncOptions = this.getProp('formatterOptions') || {};
-    const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
-    const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || this.lang;
-    const options: Intl.NumberFormatOptions = {
-      maximumFractionDigits: precisionInValue,
-      ...numberFieldFormatterOptions.options,
-      ...formatterOptions.options,
-    };
-    const numberGrouping = this.getProp('numberGrouping');
-    if (numberGrouping === false) {
-      options.useGrouping = false;
-    }
-    return {
-      lang,
-      options,
-    };
+    return getNumberFormatOptions(this, value);
   }
 
   getFormatter() {
-    const formatter = this.getProp('formatter');
-    if (formatter !== undefined) {
-      return formatter;
-    }
-    const numberFieldFormatter = getConfig('numberFieldFormatter');
-    if (numberFieldFormatter !== undefined) {
-      return numberFieldFormatter;
-    }
-    return defaultFormatNumber;
+    return getNumberFormatter(this);
   }
 
   processText(value: ReactNode): ReactNode {

@@ -25,7 +25,7 @@ import ObserverSelect, { SelectProps } from '../../select/Select';
 import Option, { OptionProps } from '../../option/Option';
 import isSameLike from '../../_util/isSameLike';
 import { DataSetEvents } from '../../data-set/enum';
-import { processFieldValue } from '../../data-set/utils';
+import { processFieldValue } from '../../field/utils';
 
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;
@@ -194,10 +194,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             fieldValue = (fieldValue || [])[repeat];
           }
           if (field.get('bind') || !fieldValue) return;
-          return `${this.getFieldLabel(field)}: ${processFieldValue(
+          return `${this.getFieldLabel(field)}: ${processFieldValue<FilterSelectProps>(
             isPlainObject(fieldValue) ? fieldValue : super.processValue(fieldValue),
             field,
-            this.lang,
+            this,
           )}`;
         }
         return value;
