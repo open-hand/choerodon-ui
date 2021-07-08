@@ -21,6 +21,7 @@ import MultiLine from './MultiLine';
 import { CurrencyProps } from '../currency/Currency';
 
 export interface OutputProps extends FormFieldProps<any>, CurrencyProps<any> {
+  renderEmpty?: () => ReactNode;
 }
 
 @observer
@@ -72,9 +73,9 @@ export default class Output extends FormField<OutputProps> {
     if (field && field.type === FieldType.boolean) {
       return <ObserverCheckBox disabled checked={value === field.get(BooleanValue.trueValue)} />;
     }
-    const result = super.defaultRenderer({ text, repeat, maxTagTextLength });
-    return isEmpty(result) ? getConfig('renderEmpty')('Output') : result;
+    return super.defaultRenderer({ text, repeat, maxTagTextLength });
   }
+
 
   /**
    * 多行单元格渲染
@@ -189,6 +190,9 @@ export default class Output extends FormField<OutputProps> {
   }
 
   renderWrapper(): ReactNode {
-    return <span {...this.getMergedProps()}>{this.getRenderedValue()}</span>;
+    const result = this.getRenderedValue();
+    const { renderEmpty } = this.props;
+    const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? renderEmpty ? renderEmpty() : getConfig('renderEmpty')('Output') : result;
+    return <span {...this.getMergedProps()}>{text}</span>;
   }
 }

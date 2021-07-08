@@ -15,6 +15,7 @@ import { observer, useComputed } from 'mobx-react-lite';
 import { isArrayLike } from 'mobx';
 import raf from 'raf';
 import classNames from 'classnames';
+import noop from 'lodash/noop';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -425,6 +426,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       disabled={disabled}
       showHelp={ShowHelp.none}
       tooltip={tooltip}
+      renderEmpty={!inlineEdit && hasEditor ? noop : undefined}
     />
   );
   return (

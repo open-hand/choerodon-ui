@@ -936,7 +936,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   handleBlur(e) {
     super.handleBlur(e);
-    if (this.range) {
+    if (this.range && this.isEditable()) {
       this.endRange();
     }
   }
@@ -1259,7 +1259,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   renderRangeValue(readOnly?: boolean, value?: any, repeat?: number): ReactNode {
     const rangeValue = this.processRangeValue(value, repeat);
     if (readOnly) {
-      if (rangeValue.length) {
+      if (rangeValue.filter(v => !isEmpty(v)).length) {
         return (
           <>
             {rangeValue[0]}~{rangeValue[1]}
