@@ -10,15 +10,17 @@ import autobind from '../_util/autobind';
 import { BooleanValue, FieldType, RecordStatus } from '../data-set/enum';
 import { Tooltip as TextTooltip } from '../core/enum';
 import ObserverCheckBox from '../check-box/CheckBox';
-import { findBindFields, processFieldValue } from '../data-set/utils';
+import { findBindFields } from '../data-set/utils';
+import { processFieldValue } from '../field/utils';
 import isEmpty from '../_util/isEmpty';
 import Field from '../data-set/Field';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import isOverflow from '../overflow-tip/util';
 import { show } from '../tooltip/singleton';
 import MultiLine from './MultiLine';
+import { CurrencyProps } from '../currency/Currency';
 
-export interface OutputProps extends FormFieldProps {
+export interface OutputProps extends FormFieldProps<any>, CurrencyProps<any> {
 }
 
 @observer
@@ -58,11 +60,8 @@ export default class Output extends FormField<OutputProps> {
   processValue(value: any): ReactNode {
     if (!isNil(value)) {
       const text = isPlainObject(value) ? value : super.processValue(value);
-      const { field, lang } = this;
-      if (field) {
-        return processFieldValue(text, field, lang, true);
-      }
-      return text;
+      const { field } = this;
+      return processFieldValue<OutputProps>(text, field, this, true);
     }
     return '';
   }
@@ -153,7 +152,7 @@ export default class Output extends FormField<OutputProps> {
   }
 
   getRenderedValue(): ReactNode {
-    const { multiple, range, multiLine, currency } = this;
+    const { multiple, range, multiLine } = this;
     if (multiple) {
       return this.renderMultipleValues(true);
     }
@@ -165,12 +164,6 @@ export default class Output extends FormField<OutputProps> {
      */
     if (multiLine) {
       return this.renderMultiLine(true);
-    }
-    /**
-     * 货币渲染
-     */
-    if (currency) {
-      return this.renderCurrency(true);
     }
     const textNode = this.getTextNode();
     return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;

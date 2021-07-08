@@ -131,7 +131,7 @@ class App extends React.Component {
     primaryKey: 'userid',
     autoQuery: true,
     exportMode:'client',
-    pageSize: 5,
+    pageSize: 20,
     cacheSelection: true,
     transport: {
       read({ params: { page, pagesize } }) {

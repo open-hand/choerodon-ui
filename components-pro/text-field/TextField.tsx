@@ -60,7 +60,7 @@ export function isPlaceHolderSupport(): boolean {
   return true;
 }
 
-export interface TextFieldProps extends FormFieldProps {
+export interface TextFieldProps<V = any> extends FormFieldProps<V> {
   /**
    * 占位词
    */

@@ -21,11 +21,7 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import localeContext, { $l } from '../locale-context';
 import { SubmitTypes, TransportType, TransportTypes } from './Transport';
 import formatString from '../formatter/formatString';
-import { Lang } from '../locale-context/enum';
-import formatNumber from '../formatter/formatNumber';
-import formatCurrency from '../formatter/formatCurrency';
-import { getPrecision, parseNumber } from '../number-field/utils';
-import { FormatNumberFuncOptions } from '../number-field/NumberField';
+import { parseNumber } from '../number-field/utils';
 import { treeReduce } from '../_util/treeUtils';
 
 export function useNormal(dataToJSON: DataToJSON): boolean {
@@ -794,42 +790,6 @@ export function findBindFieldBy(myField: Field, fields: Fields, prop: string): F
     const bind = field.get('bind');
     return bind && bind === `${myName}.${value}`;
   });
-}
-
-function processNumberOptions(field: Field, options: Intl.NumberFormatOptions) {
-  const precision = field.get('precision');
-  const numberGrouping = field.get('numberGrouping');
-  if (isNumber(precision)) {
-    options.minimumFractionDigits = precision;
-    options.maximumFractionDigits = precision;
-  }
-  if (numberGrouping === false) {
-    options.useGrouping = false;
-  }
-  return options;
-}
-
-export function processFieldValue(value, field: Field, defaultLang: Lang, showValueIfNotFound?: boolean) {
-  const { type } = field;
-  const formatterOptions: FormatNumberFuncOptions = field.get('formatterOptions') || {};
-  const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
-  if (type === FieldType.number) {
-    const precisionInValue = getPrecision(value || 0);
-
-    return formatNumber(value, formatterOptions.lang || numberFieldFormatterOptions.lang || defaultLang, processNumberOptions(field, {
-      minimumFractionDigits: precisionInValue,
-      maximumFractionDigits: precisionInValue,
-      ...numberFieldFormatterOptions.options,
-      ...formatterOptions.options,
-    }));
-  }
-  if (type === FieldType.currency) {
-    return formatCurrency(value, formatterOptions.lang || defaultLang, processNumberOptions(field, {
-      currency: field.get('currency'),
-      ...formatterOptions.options,
-    }));
-  }
-  return field.getText(value, showValueIfNotFound);
 }
 
 export function getLimit(limit: any, record: Record) {

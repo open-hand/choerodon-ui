@@ -106,6 +106,7 @@ export function getAlignByField(field?: Field): ColumnAlign | undefined {
     const { type } = field;
     switch (type) {
       case FieldType.number:
+      case FieldType.currency:
         return ColumnAlign.right;
       case FieldType.boolean:
         return ColumnAlign.center;

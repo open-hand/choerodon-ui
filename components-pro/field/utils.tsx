@@ -2,11 +2,17 @@ import { isValidElement, ReactNode } from 'react';
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
+import isNumber from 'lodash/isNumber';
 import { isArrayLike } from 'mobx';
 import moment from 'moment';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { FieldType } from '../data-set/enum';
 import Field, { HighlightProps } from '../data-set/Field';
+import { FormField, FormFieldProps } from './FormField';
+import formatCurrency from '../formatter/formatCurrency';
+import formatNumber from '../formatter/formatNumber';
+import { FormatNumberFuncOptions } from '../number-field/NumberField';
+import { getPrecision } from '../number-field/utils';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
   if (isArrayLike(range)) {
@@ -86,4 +92,92 @@ export function transformHighlightProps(highlight: true | ReactNode | HighlightP
     };
   }
   return props;
+}
+
+export function getCurrencyFormatter(control: FormField) {
+  const formatter = control.getProp('formatter');
+  if (formatter !== undefined) {
+    return formatter;
+  }
+  const currencyFormatter = getConfig('currencyFormatter');
+  if (currencyFormatter !== undefined) {
+    return currencyFormatter;
+  }
+  return formatCurrency;
+}
+
+export function getNumberFormatter(control: FormField) {
+  const formatter = control.getProp('formatter');
+  if (formatter !== undefined) {
+    return formatter;
+  }
+  const numberFieldFormatter = getConfig('numberFieldFormatter');
+  if (numberFieldFormatter !== undefined) {
+    return numberFieldFormatter;
+  }
+  return formatNumber;
+}
+
+export function getCurrencyFormatOptions(control: FormField): FormatNumberFuncOptions {
+  const precision = control.getProp('precision');
+  const formatterOptions: FormatNumberFuncOptions = control.getProp('formatterOptions') || {};
+  const currencyFormatterOptions: FormatNumberFuncOptions = getConfig('currencyFormatterOptions') || {};
+  const lang = formatterOptions.lang || currencyFormatterOptions.lang || control.lang;
+  const options: Intl.NumberFormatOptions = {};
+  if (isNumber(precision)) {
+    options.minimumFractionDigits = precision;
+    options.maximumFractionDigits = precision;
+  }
+  Object.assign(options, currencyFormatterOptions.options, formatterOptions.options);
+
+  const numberGrouping = control.getProp('numberGrouping');
+  const currency = control.getProp('currency');
+  if (currency) {
+    options.currency = currency;
+  }
+  if (numberGrouping === false) {
+    options.useGrouping = false;
+  }
+  return {
+    lang,
+    options,
+  };
+}
+
+export function getNumberFormatOptions(control: FormField, value?: number): FormatNumberFuncOptions {
+  const precision = control.getProp('precision');
+  const precisionInValue = isNumber(precision) ? precision : getPrecision(isNil(value) ? control.getValue() || 0 : value);
+  const formatterOptions: FormatNumberFuncOptions = control.getProp('formatterOptions') || {};
+  const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
+  const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || control.lang;
+  const options: Intl.NumberFormatOptions = {
+    maximumFractionDigits: precisionInValue,
+    ...numberFieldFormatterOptions.options,
+    ...formatterOptions.options,
+  };
+  const numberGrouping = control.getProp('numberGrouping');
+  if (numberGrouping === false) {
+    options.useGrouping = false;
+  }
+  return {
+    lang,
+    options,
+  };
+}
+
+export function processFieldValue<T extends FormFieldProps>(value, field: Field | undefined, control: FormField<T>, showValueIfNotFound?: boolean) {
+  const type = field && field.type;
+  const currency = control.getProp('currency');
+  if (currency || type === FieldType.currency) {
+    const formatOptions = getCurrencyFormatOptions(control);
+    return getCurrencyFormatter(control)(value, formatOptions.lang, formatOptions.options);
+  }
+  if (type === FieldType.number) {
+    const formatOptions = getNumberFormatOptions(control, value);
+    return getNumberFormatter(control)(value, formatOptions.lang, formatOptions.options);
+  }
+  if (field) {
+    return field.getText(value, showValueIfNotFound);
+  }
+  return value;
 }
