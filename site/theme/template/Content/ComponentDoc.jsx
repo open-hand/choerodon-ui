@@ -32,7 +32,7 @@ export default class ComponentDoc extends React.Component {
     const { doc, location } = props;
     const { content, meta } = doc;
     const { intl: { locale } } = this.context;
-    const demos = Object.keys(props.demos).map(key => props.demos[key]);
+    const demos = Object.keys(props.demos).map(key => ({id: key, ...props.demos[key]}));
     const expand = state.expandAll;
 
     const isSingleCol = meta.cols === 1;

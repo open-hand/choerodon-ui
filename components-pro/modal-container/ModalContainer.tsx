@@ -14,7 +14,7 @@ import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
-import { suffixCls } from '../modal/utils';
+import { getDocument, getMousePosition, suffixCls } from '../modal/utils';
 
 const { containerInstances } = ModalManager;
 
@@ -28,7 +28,7 @@ function getArrayIndex(array, index) {
 function getRoot(): HTMLDivElement | undefined {
   let { root } = ModalManager;
   if (typeof window !== 'undefined') {
-    const doc = window.document;
+    const doc = getDocument(window);
     if (root) {
       if (!root.parentNode) {
         doc.body.appendChild(root);
@@ -154,16 +154,12 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       this.maskHidden = true;
       this.drawerOffsets = { 'slide-up': [], 'slide-right': [], 'slide-down': [], 'slide-left': [] };
       this.top();
-      if (!ModalManager.mousePositionEventBound) {
-        new EventManager(
-          typeof window === 'undefined' ? undefined : document,
-        ).addEventListener(
+      const doc = typeof window === 'undefined' ? undefined : document;
+      if (doc && !ModalManager.mousePositionEventBound.has(doc)) {
+        new EventManager(doc).addEventListener(
           'click',
           (e: MouseEvent<any>) => {
-            ModalManager.mousePosition = {
-              x: e.pageX,
-              y: e.pageY,
-            };
+            ModalManager.mousePosition = getMousePosition(e.clientX, e.clientY, window);
             // 100ms 内发生过点击事件，则从点击位置动画展示
             // 否则直接 zoom 展示
             // 这样可以兼容非点击方式展开
@@ -171,7 +167,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           },
           true,
         );
-        ModalManager.mousePositionEventBound = true;
+        ModalManager.mousePositionEventBound.add(doc);
       }
     });
   }

@@ -108,11 +108,11 @@ export default class Demo extends React.Component {
   render() {
     const { state } = this;
     const { props } = this;
-    const { meta, src, content, preview, highlightedCode, style, highlightedStyle, expand } = props;
+    const { meta, src, content, preview, highlightedCode, style, highlightedStyle, expand, location: { pathname }, id } = props;
     if (!this.liveDemo) {
       this.liveDemo = meta.iframe ? (
         <BrowserFrame>
-          <iframe src={src} height={meta.iframe} title="demo" />
+          <iframe src={meta.across ? `/iframe/${id}/${pathname}` : src} height={meta.iframe} title="demo" />
         </BrowserFrame>
       ) : (
         preview(React, ReactDOM)
