@@ -22,7 +22,7 @@ import message from '../message';
 import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
-import { suffixCls } from './utils';
+import { getDocument, suffixCls } from './utils';
 import { modalChildrenProps } from './interface';
 
 function fixUnit(n) {
@@ -34,7 +34,7 @@ function fixUnit(n) {
 
 function getTransformOrigin(position: MousePosition, style: CSSProperties) {
   const { offsetWidth = 0, scrollTop = 0, scrollLeft = 0 } =
-    typeof window === 'undefined' ? {} : document.documentElement;
+    typeof window === 'undefined' ? {} : getDocument(window).documentElement;
   const { width = 520, left, top = 100 } = style;
   const { x, y } = position;
   const originX = `calc(${x}px - ${
@@ -163,7 +163,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   mousePosition?: MousePosition | null;
 
-  moveEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
+  moveEvent: EventManager = new EventManager(typeof window === 'undefined' ? getDocument(window) : undefined);
 
   okCancelEvent: EventManager = new EventManager();
 
@@ -221,6 +221,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   };
 
   contentNode: HTMLElement;
+
 
   @autobind
   saveCancelRef(node) {

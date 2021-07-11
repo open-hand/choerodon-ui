@@ -3,6 +3,7 @@ const path = require('path');
 
 const homeTmpl = './template/Home/index';
 const contentTmpl = './template/Content/index';
+const iframeTmpl = './template/Iframe/index';
 const redirectTmpl = './template/Redirect';
 
 const demoBabelConfig = encodeURIComponent(
@@ -61,7 +62,10 @@ module.exports = {
     `bisheng-plugin-choerodon-ui?babelConfig=${demoBabelConfig}`,
     'bisheng-plugin-react?lang=__react',
   ],
-  routes: {
+  routes: [{
+    path: '/iframe/:demo/:component/:children/',
+    component: iframeTmpl,
+  }, {
     path: '/',
     component: './template/Layout/index',
     indexRoute: { component: homeTmpl },
@@ -111,5 +115,5 @@ module.exports = {
         component: redirectTmpl,
       },
     ],
-  },
+  }],
 };

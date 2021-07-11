@@ -20,7 +20,7 @@ export type ModalManagerType = {
   removeInstance: (instance: IModalContainer) => void;
   getKey: () => string;
   clear: (closeByLocationChange?: boolean) => void;
-  mousePositionEventBound: boolean;
+  mousePositionEventBound: WeakSet<Document>;
   mousePosition?: MousePosition;
   defaultBodyStyle?: { overflow; paddingRight };
   root?: HTMLDivElement;
@@ -61,7 +61,7 @@ const ModalManager: ModalManagerType = {
   addInstance,
   removeInstance,
   getKey,
-  mousePositionEventBound: false,
+  mousePositionEventBound: new WeakSet<Document>(),
   containerInstances,
   clear,
 };

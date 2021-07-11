@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Added `json` type.
 - 🌟 `<pro>DataSet`: Added the `combineSort` property to support the parameter passing of combined column sorting.
 - 🌟 `<pro>Select`: `selectAllButton` added hook type to support custom buttons.
+- 💄 `<pro>Modal`: Support traversing iframes in the same domain.
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
 - 💄 `<pro>Radio`: Optimize the label content overflow tooltip.
 - 💄 `<pro>Table`: Optimize the performance.
