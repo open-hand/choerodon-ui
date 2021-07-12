@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, HTMLProps, RefObject } from 'react';
+import React, { Component, CSSProperties, HTMLProps } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
@@ -26,8 +26,7 @@ export interface TableCellProps extends ElementProps {
   isDragging: boolean;
   lock?: ColumnLock | boolean;
   provided?: DraggableProvided;
-  intersectionRef?: RefObject<any> | ((node?: Element | null) => void);
-  inView: boolean;
+  disabled?: boolean;
 }
 
 @observer
@@ -107,14 +106,14 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   getInnerNode(column: ColumnProps, command?: Commands[], onCellStyle?: CSSProperties) {
-    const { record, inView, children } = this.props;
+    const { record, children, disabled } = this.props;
     return (
       <TableCellInner
-        inView={inView}
         column={column}
         command={command}
         record={record}
         style={onCellStyle}
+        disabled={disabled}
       >
         {children}
       </TableCellInner>
@@ -240,7 +239,7 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   render() {
-    const { column, record, isDragging, provided, colSpan, style: propsStyle, className: propsClassName, intersectionRef } = this.props;
+    const { column, record, isDragging, provided, colSpan, style: propsStyle, className: propsClassName } = this.props;
     const {
       tableStore,
     } = this.context;
@@ -293,7 +292,6 @@ export default class TableCell extends Component<TableCellProps> {
     const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
     return (
       <td
-        ref={intersectionRef}
         colSpan={colSpan}
         {...cellExternalProps}
         className={classString}

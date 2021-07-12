@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableVirtualCell` property.
 - 🌟 `<pro>Tooltip`: Added singleton mode, added `show` and `hide` static methods.
 - 🌟 `<pro>DataSet`: dataToJSON adds `dirty-field`, `dirty-field-self` types.
 - 🌟 `<pro>DataSet.Field`: Added `json` type.

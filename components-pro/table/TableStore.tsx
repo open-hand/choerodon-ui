@@ -560,6 +560,14 @@ export default class TableStore {
     return TableHeightType.auto;
   }
 
+  @computed
+  get virtualCell(): boolean {
+    if ('virtualCell' in this.props) {
+      return this.props.virtualCell;
+    }
+    return getConfig('tableVirtualCell');
+  }
+
   /**
    * number 矫正虚拟滚动由于样式问题导致的高度不符问题
    */

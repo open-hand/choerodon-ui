@@ -20,6 +20,7 @@ import {
   Form,
   TextField,
   NumberField,
+  CheckBox,
   SelectBox,
   Modal,
   Button,
@@ -95,6 +96,7 @@ class App extends React.Component {
           <TextField name="name" />
           <NumberField name="age" />
           <SelectBox name="sex" />
+          <CheckBox name="enable" />
         </Form>
       ),
       onOk: () => this.userDs.submit(),

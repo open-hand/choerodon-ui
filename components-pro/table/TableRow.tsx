@@ -239,11 +239,9 @@ export default class TableRow extends Component<TableRowProps, any> {
   @autobind
   getCell(column: ColumnProps, index: number, props: Partial<TableCellProps>): ReactNode {
     const { record, lock, provided, snapshot } = this.props;
-    const { tableStore } = this.context;
     const isDragging = snapshot ? snapshot.isDragging : false;
-    const cell = (
+    return (
       <TableCell
-        inView
         column={column}
         record={record}
         isDragging={isDragging}
@@ -254,25 +252,6 @@ export default class TableRow extends Component<TableRowProps, any> {
         {this.hasExpandIcon(index) ? this.renderExpandIcon() : undefined}
       </TableCell>
     );
-    if (tableStore.props.virtualCell) {
-      const { node } = tableStore;
-      const { index: rowIndex } = this.props;
-      return (
-        <ReactIntersectionObserver
-          key={props.key}
-          root={node.tableBodyWrap || node.element}
-          rootMargin="100px"
-          initialInView={rowIndex <= 10}
-        >
-          {
-            ({ ref, inView }) => (
-              cloneElement<any>(cell, { inView, intersectionRef: ref })
-            )
-          }
-        </ReactIntersectionObserver>
-      );
-    }
-    return cell;
   }
 
   focusRow() {
@@ -488,12 +467,13 @@ export default class TableRow extends Component<TableRowProps, any> {
         if (isValidElement<ExpandedRowProps>(children)) {
           expandRows.push(cloneElement(children, { isExpanded, key: `${record.key}-expanded-rows` }));
         }
+        return expandRows;
       }
     }
     return [];
   }
 
-  getColumns() {
+  getColumns(disabled: boolean) {
     const { columns, lock } = this.props;
     const { tableStore } = this.context;
     const { prefixCls, customizable, rowDraggable, dragColumnAlign } = tableStore;
@@ -506,6 +486,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && index === columnLength - 2 ? 2 : 1;
         const props: Partial<TableCellProps> = {
           key,
+          disabled,
         };
         if (colSpan > 1) {
           props.colSpan = colSpan;
@@ -648,15 +629,37 @@ export default class TableRow extends Component<TableRowProps, any> {
         {...rowExternalProps}
         {...rowProps}
       >
-        {this.getColumns()}
+        {this.getColumns(disabled)}
       </Element>
     );
+    let row = tr;
+    if (!hidden && tableStore.virtualCell) {
+      const { node } = tableStore;
+      const { index: rowIndex } = this.props;
+      row = (
+        <ReactIntersectionObserver
+          key={key}
+          root={node.tableBodyWrap || node.element}
+          rootMargin="100px"
+          initialInView={rowIndex <= 10}
+        >
+          {
+            ({ ref, inView }) => {
+              if (record.getState('__inView') !== inView) {
+                record.setState('__inView', inView);
+              }
+              return cloneElement<any>(tr, { ref });
+            }
+          }
+        </ReactIntersectionObserver>
+      );
+    }
     return [
       this.needSaveRowHeight() ? (
         <ResizeObservedRow onResize={this.handleResize} rowIndex={key} key={key}>
-          {tr}
+          {row}
         </ResizeObservedRow>
-      ) : tr,
+      ) : row,
       ...this.renderExpandRow(),
     ];
   }
