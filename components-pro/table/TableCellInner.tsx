@@ -311,7 +311,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         disabled: disabled || (tableStore.inlineEdit && !record.editing),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
-        _inTable: true,
       };
       /**
        * 渲染多行编辑器
