@@ -137,12 +137,11 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
       tableStore,
     } = this.context;
     const {
-      prefixCls, node, virtual, virtualData, dataSet, rowDraggable, dragColumnAlign, totalLeafColumnsWidth,
-      props: { rowDragRender = {} },
+      prefixCls, virtualData, rowDraggable,
+      props: { rowDragRender },
     } = tableStore;
-    const { droppableProps, renderClone } = rowDragRender;
     const rows = virtualData.length
-      ? this.getRows(virtualData, leafColumns, true, lock, virtual)
+      ? this.getRows(virtualData, leafColumns, true, lock, tableStore.virtual)
       : this.getEmptyRow(leafColumns, lock);
     const body = rowDraggable ? (
       <Droppable
@@ -153,14 +152,15 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
           snapshot: DraggableStateSnapshot,
           rubric: DraggableRubric,
         ) => {
-          if (tableStore.overflowX && dragColumnAlign === DragColumnAlign.right && snapshot.isDragging) {
+          if (tableStore.overflowX && tableStore.dragColumnAlign === DragColumnAlign.right && snapshot.isDragging) {
             const { style } = provided.draggableProps;
             if (isDraggingStyle(style)) {
               const { left, width } = style;
-              style.left = left - Math.max(totalLeafColumnsWidth - 50, width);
+              style.left = left - Math.max(tableStore.totalLeafColumnsWidth - 50, width);
             }
           }
-          const record = dataSet.get(rubric.source.index);
+          const record = tableStore.dataSet.get(rubric.source.index);
+          const renderClone = rowDragRender && rowDragRender.renderClone;
           if (renderClone && isFunction(renderClone)) {
             return renderClone({
               provided,
@@ -188,8 +188,8 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
             />
           );
         }}
-        getContainerForClone={() => instance(node.getClassName(), prefixCls).tbody}
-        {...droppableProps}
+        getContainerForClone={() => instance(tableStore.node.getClassName(), prefixCls).tbody}
+        {...(rowDragRender && rowDragRender.droppableProps)}
       >
         {(droppableProvided: DroppableProvided) => (
           <tbody
@@ -263,7 +263,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
         transform: 'none',
         display: 'inline-block',
       };
-    const tdStyle: CSSProperties = tableWidth ? {} : { textAlign: 'center' };
+    const tdStyle: CSSProperties | undefined = tableWidth ? undefined : { textAlign: 'center' };
     return (
       <tr className={`${prefixCls}-empty-row`}>
         <td colSpan={columns.length} style={tdStyle}>
@@ -290,43 +290,47 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     expanded?: boolean,
     lock?: ColumnLock | boolean,
   ): ReactNode {
-    const {
-      tableStore: { isTree, props: { rowDragRender = {} }, rowDraggable, dragColumnAlign },
-    } = this.context;
-    const { draggableProps } = rowDragRender;
-    const children = isTree && (
+    const { tableStore } = this.context;
+    const { key } = record;
+    const children = tableStore.isTree && (
       <ExpandedRow record={record} columns={columns} lock={lock}>
         {this.renderExpandedRows}
       </ExpandedRow>
     );
-    return rowDraggable && (!dragColumnAlign || (dragColumnAlign === DragColumnAlign.right && lock !== ColumnLock.left) || (dragColumnAlign === DragColumnAlign.left && lock !== ColumnLock.right)) ? (
-      <Draggable
-        draggableId={String(record.key)}
-        index={index}
-        key={record.key}
-      >
-        {(
-          provided: DraggableProvided,
-          snapshot: DraggableStateSnapshot,
-        ) => (
-          <TableRow
-            provided={provided}
-            snapshot={snapshot}
-            key={record.key}
-            hidden={!expanded}
-            lock={lock}
-            columns={columns}
-            record={record}
+    if (tableStore.rowDraggable) {
+      const { props: { rowDragRender }, dragColumnAlign } = tableStore;
+      if (!dragColumnAlign || (dragColumnAlign === DragColumnAlign.right && lock !== ColumnLock.left) || (dragColumnAlign === DragColumnAlign.left && lock !== ColumnLock.right)) {
+        return (
+          <Draggable
+            draggableId={String(key)}
             index={index}
-            {...draggableProps}
+            key={record.key}
           >
-            {children}
-          </TableRow>
-        )}
-      </Draggable>
-    ) : (
+            {(
+              provided: DraggableProvided,
+              snapshot: DraggableStateSnapshot,
+            ) => (
+              <TableRow
+                provided={provided}
+                snapshot={snapshot}
+                key={record.key}
+                hidden={!expanded}
+                lock={lock}
+                columns={columns}
+                record={record}
+                index={index}
+                {...(rowDragRender && rowDragRender.draggableProps)}
+              >
+                {children}
+              </TableRow>
+            )}
+          </Draggable>
+        );
+      }
+    }
+    return (
       <TableRow
-        key={record.key}
+        key={key}
         hidden={!expanded}
         lock={lock}
         columns={columns}

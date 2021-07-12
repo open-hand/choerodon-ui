@@ -1331,12 +1331,12 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   componentWillMount() {
-    super.componentWillMount();
     this.initDefaultExpandedRows();
     this.connect();
   }
 
   componentDidMount() {
+    super.componentDidMount();
     this.syncSize();
     this.syncSizeInFrame();
   }

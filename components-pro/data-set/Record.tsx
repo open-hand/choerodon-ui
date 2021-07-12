@@ -871,10 +871,13 @@ export default class Record {
 
   @action
   addField(name: string, fieldProps: FieldProps = {}): Field {
+    const old = this.fields.get(name);
     const field = addRecordField(this, name, fieldProps);
-    const data = toJS(this.data);
-    const newData = { ...data };
-    this.processFieldValue(name, field, this.fields, newData, data);
+    if (!old) {
+      const data = toJS(this.data);
+      const newData = { ...data };
+      this.processFieldValue(name, field, this.fields, newData, data);
+    }
     return field;
   }
 

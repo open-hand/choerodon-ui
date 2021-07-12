@@ -195,8 +195,13 @@ export default class TableCell extends Component<TableCellProps> {
           const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
 
           const text = (
-            <Tree prefixCls={`${prefixCls}-tree`} virtual={false} focusable={false} defaultExpandedKeys={aggregationDefaultExpandedKeys}
-                  defaultExpandAll={aggregationDefaultExpandAll}>
+            <Tree
+              prefixCls={`${prefixCls}-tree`}
+              virtual={false}
+              focusable={false}
+              defaultExpandedKeys={aggregationDefaultExpandedKeys}
+              defaultExpandAll={aggregationDefaultExpandAll}
+            >
               {
                 this.getColumnsInnerNode(nodes, prefixCls, command)
               }

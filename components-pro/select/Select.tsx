@@ -478,7 +478,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   componentWillMount() {
-    super.componentWillMount();
     const { checkValueOnOptionsChange, combo } = this.props;
     if (checkValueOnOptionsChange) {
       this.checkValue();

@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, computed, observable } from 'mobx';
 import omit from 'lodash/omit';
-import defer from 'lodash/defer';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -398,12 +397,15 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   getMergedProps(props = {}) {
     const wrapperProps = this.getWrapperProps(props);
     const otherProps = this.getOtherProps();
-    return {
+    const mergedProps = {
       ...wrapperProps,
       ...otherProps,
-      style: { ...wrapperProps.style, ...otherProps.style },
       className: classNames(wrapperProps.className, otherProps.className),
     };
+    if (wrapperProps.style && otherProps.style) {
+      mergedProps.style = { ...wrapperProps.style, ...otherProps.style };
+    }
+    return mergedProps;
   }
 
   getObservableProps(props, _context: any) {
@@ -446,8 +448,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
         'onClick',
         'onMouseUp',
         'onMouseDown',
-        // 'onMouseEnter',
-        // 'onMouseLeave',
+        'onMouseEnter',
+        'onMouseLeave',
         // 'onMouseOver',
         // 'onMouseOut',
         'onKeyDown',
@@ -624,10 +626,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     this.updateObservableProps(nextProps, nextContext);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { tabIndex, autoFocus } = this.props;
     if (autoFocus && (tabIndex === undefined || tabIndex > -1) && !this.disabled) {
-      defer(() => this.focus());
+      this.focus();
     }
   }
 

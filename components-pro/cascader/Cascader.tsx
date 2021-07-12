@@ -447,10 +447,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     this.clearCheckCombo();
   }
 
-  componentWillMount() {
-    super.componentWillMount();
-  }
-
   componentWillUnmount() {
     super.componentWillUnmount();
     this.clearReaction();
