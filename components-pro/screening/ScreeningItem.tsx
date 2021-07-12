@@ -128,6 +128,7 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
   };
 
   componentDidMount() {
+    super.componentDidMount();
     const { onRef } = this.props;
     if (onRef) {
       onRef(this);

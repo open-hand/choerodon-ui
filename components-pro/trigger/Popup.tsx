@@ -118,6 +118,7 @@ export default class Popup extends ViewComponent<PopupProps> {
   }
 
   componentDidMount(): void {
+    super.componentDidMount();
     this.findFocusableElements();
   }
 
