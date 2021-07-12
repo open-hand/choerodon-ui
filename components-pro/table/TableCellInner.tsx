@@ -58,9 +58,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     dataSet,
     rowHeight,
     pristine,
-    inlineEdit,
     aggregation,
-    props: { indentSize },
   } = tableStore;
   const prefixCls = `${tableStore.prefixCls}-cell`;
   const tooltip = tableStore.getColumnTooltip(column);
@@ -69,7 +67,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   const { checkField } = dataSet.props;
   const height = record.getState(`__column_resize_height_${name}`);
   const disabled = useComputed(() => isDisabledRow(record), [record]);
-  const canFocus = useComputed(() => !disabled && (!inlineEdit || record === tableStore.currentEditRecord), [disabled, record, inlineEdit, tableStore]);
+  const canFocus = useComputed(() => !disabled && (!tableStore.inlineEdit || record === tableStore.currentEditRecord), [disabled, record, tableStore]);
   const cellEditor = useComputed(() => getEditorByColumnAndRecord(column, record), [record, column]);
   const cellEditorInCell = useMemo(() => isInCellEditor(cellEditor), [cellEditor]);
   const hasEditor = useMemo(() => !pristine && cellEditor && !cellEditorInCell, [pristine, cellEditor, cellEditorInCell]);
@@ -182,10 +180,10 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     }
   }, [tableStore, record, dataSet]);
   const handleCommandEdit = useCallback(() => {
-    if (inlineEdit) {
+    if (tableStore.inlineEdit) {
       tableStore.currentEditRecord = record;
     }
-  }, [tableStore, record, inlineEdit]);
+  }, [tableStore, record]);
   const handleCommandDelete = useCallback(() => {
     dataSet.delete(record);
   }, [dataSet, record]);
@@ -310,7 +308,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         record,
         name,
         pristine,
-        disabled: disabled || (inlineEdit && !record.editing),
+        disabled: disabled || (tableStore.inlineEdit && !record.editing),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
         _inTable: true,
@@ -323,7 +321,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       }
       return cloneElement(cellEditor, newEditorProps as FormFieldProps);
     }
-  }, [disabled, cellEditor, checkField, field, record, name, pristine, inlineEdit]);
+  }, [disabled, cellEditor, checkField, field, record, name, pristine, tableStore]);
 
   const cellRenderer = useComputed((): Renderer | undefined => {
     if (command) {
@@ -367,6 +365,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     onFocus: handleFocus,
     pristine,
     highlightRenderer,
+    _inTable: true,
   };
   if (!inView) {
     if (rowHeight === 'auto') {
@@ -404,7 +403,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     innerClassName.push(`${prefixCls}-inner-fixed-height`);
   }
   const indentText = children && (
-    <span style={{ paddingLeft: pxToRem(indentSize * record.level) }} />
+    <span style={{ paddingLeft: pxToRem(tableStore.props.indentSize * record.level) }} />
   );
 
   const prefix = (indentText || children || checkBox) && (
@@ -426,7 +425,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       disabled={disabled}
       showHelp={ShowHelp.none}
       tooltip={tooltip}
-      renderEmpty={!inlineEdit && hasEditor ? noop : undefined}
+      renderEmpty={hasEditor && !tableStore.inlineEdit ? noop : undefined}
     />
   );
   return (

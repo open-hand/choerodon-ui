@@ -641,9 +641,16 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return !this.disabled && !this.readOnly;
   }
 
+  getObservablePropsExcludeOutput(props, context): object | undefined {
+    return {
+      readOnly: context.readOnly || props.readOnly || (this.getControlled(props) && !props.onChange && !props.onInput),
+    };
+  }
+
   getObservableProps(props, context) {
     return {
       ...super.getObservableProps(props, context),
+      ...this.getObservablePropsExcludeOutput(props, context),
       label: props.label,
       name: props.name,
       record: 'record' in props ? props.record : context.record,
@@ -651,7 +658,6 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
       value: 'value' in props ? props.value : this.observableProps ? this.observableProps.value : props.defaultValue,
       disabled: context.disabled || props.disabled,
-      readOnly: context.readOnly || props.readOnly || (this.getControlled(props) && !props.onChange && !props.onInput),
       pristine: context.pristine || props.pristine,
       highlight: props.highlight,
       highlightRenderer: 'highlightRenderer' in props ? props.highlightRenderer : context.fieldHighlightRenderer,
@@ -694,15 +700,26 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     ]);
   }
 
-  getOtherProps() {
-    const otherProps = super.getOtherProps();
+  getOtherPropsExcludeOutput(otherProps) {
     otherProps.onChange = !this.disabled && !this.readOnly ? this.handleChange : noop;
     otherProps.onKeyDown = this.handleKeyDown;
     otherProps.onCompositionStart = this.handleCompositionStart;
     otherProps.onCompositionEnd = this.handleChange;
+    return otherProps;
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
     otherProps.onMouseEnter = this.handleMouseEnter;
     otherProps.onMouseLeave = this.handleMouseLeave;
-    return otherProps;
+    return this.getOtherPropsExcludeOutput(otherProps);
+  }
+
+  getWrapperClassNamesExcludeOutput(prefixCls, empty): object | undefined {
+    return {
+      [`${prefixCls}-empty`]: empty,
+      [`${prefixCls}-readonly`]: this.readOnly,
+    };
   }
 
   getWrapperClassNames(...args): string {
@@ -711,14 +728,13 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     const empty = this.isEmpty();
     return super.getWrapperClassNames(
       {
-        [`${prefixCls}-empty`]: empty,
         [`${prefixCls}-highlight`]: this.highlight,
         [`${prefixCls}-invalid`]: !this.isValid,
         [`${prefixCls}-float-label`]: this.hasFloatLabel,
         [`${prefixCls}-required`]: required,
         [`${prefixCls}-required-colors`]: required && (empty || !getConfig('showRequiredColorsOnlyEmpty')),
-        [`${prefixCls}-readonly`]: this.readOnly,
       },
+      this.getWrapperClassNamesExcludeOutput(prefixCls, empty),
       ...args,
     );
   }

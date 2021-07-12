@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table`: Fix the effect of local export in large data volume.
 - 🌟 `<pro>Select`: `selectAllButton` added hook type to support custom buttons.
 - 💄 `<pro>Modal`: Support traversing iframes in the same domain.
+- 💄 `<pro>DataSet`: The `all` value of the `dataToJSON` property will verify all records.
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
 - 💄 `<pro>Radio`: Optimize the label content overflow tooltip.
 - 💄 `<pro>Table`: Optimize the performance.
@@ -29,7 +30,7 @@ timeline: true
 - 💄 `Progress`: Optimize animation performance.
 - 💄 `<pro>Table.Column`: Optimized currency type columns are aligned to the right by default.
 - 💄 `<pro>Output`: Optimize the display of number and currency, Optimize the display of empty values.
-- 💄 `<pro>DataSet.Record`: `addField` method will process existing values.
+- 💄 `<pro>DataSet.Record`: In the absence of a field, the addField method will process the existing value of the field.
 - 🐞 `<pro>Pagination`: Fix the problem that the pagination option exceeds the default maximum of 100 pagination when the maximum pagination is not set.
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
 - 🐞 `<pro>Table`: Fix the issue that under the peacock blue theme, when the editor of the Column is function, after entering the editing mode and clicking exit, the width of the component in the editing mode will be incorrect next time.

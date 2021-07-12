@@ -43,7 +43,7 @@ import {
   processExportValue,
   processIntlField,
   sliceTree,
-  sortTree,
+  sortTree, useAll,
   useCascade,
   useSelected,
   concurrentPromise,
@@ -1940,7 +1940,7 @@ export default class DataSet extends EventManager {
         noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
       const validateResult = Promise.all(
         (useSelected(dataToJSON) ? this.selected : this.data).map(record =>
-          record.validate(false, !cascade),
+          record.validate(useAll(dataToJSON), !cascade),
         ),
       ).then(results => results.every(result => result));
       this.reportValidityImmediately(validateResult);

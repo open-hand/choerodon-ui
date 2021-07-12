@@ -613,8 +613,8 @@
   &-row-current,
   &-row-current:hover,
   &-parity-row &-row-current:nth-of-type(even) {
-    &.@{table-prefix-cls}-row-highlight,
-    &.@{table-prefix-cls}-row-highlight + .@{table-prefix-cls}-expanded-row {
+    &,
+    & + .@{table-prefix-cls}-expanded-row {
       & > td {
         background-color: @table-current-row-bg;
       }

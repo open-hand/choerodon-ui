@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, Key, ReactNode } from 'react';
+import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, remove, set } from 'mobx';
@@ -132,9 +132,12 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   private needSaveRowHeight(): boolean {
-    const { lock, record } = this.props;
-    const { tableStore } = this.context;
-    return !isStickySupport() && !lock && (tableStore.rowHeight === 'auto' || [...record.fields.values()].some(field => field.get('multiLine')));
+    if (!isStickySupport()) {
+      const { lock, record } = this.props;
+      const { tableStore } = this.context;
+      return !lock && (tableStore.rowHeight === 'auto' || [...record.fields.values()].some(field => field.get('multiLine')));
+    }
+    return false;
   }
 
   @autobind
@@ -145,6 +148,10 @@ export default class TableRow extends Component<TableRowProps, any> {
         const { record } = this.props;
         this.setRowHeight(this.rowKey = record.key, node.offsetHeight);
       }
+    }
+    const { provided } = this.props;
+    if (provided) {
+      provided.innerRef(node);
     }
   }
 
@@ -209,13 +216,8 @@ export default class TableRow extends Component<TableRowProps, any> {
   @action
   handleClick(e) {
     const { onClick } = this.rowExternalProps;
-    const {
-      tableStore: {
-        highLightRow,
-      },
-      tableStore,
-    } = this.context;
-    if (highLightRow === HighLightRowType.click && !tableStore.rowClicked) {
+    const { tableStore } = this.context;
+    if (tableStore.highLightRow === HighLightRowType.click && !tableStore.rowClicked) {
       tableStore.rowClicked = true;
     }
     if (typeof onClick === 'function') {
@@ -236,12 +238,8 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @autobind
   getCell(column: ColumnProps, index: number, props: Partial<TableCellProps>): ReactNode {
-    const { record, lock, provided, snapshot, index: rowIndex } = this.props;
-    const {
-      tableStore: { leafColumns, rightLeafColumns, node, props: { virtualCell } },
-    } = this.context;
-    const columnIndex =
-      lock === ColumnLock.right ? index + leafColumns.length - rightLeafColumns.length : index;
+    const { record, lock, provided, snapshot } = this.props;
+    const { tableStore } = this.context;
     const isDragging = snapshot ? snapshot.isDragging : false;
     const cell = (
       <TableCell
@@ -253,23 +251,28 @@ export default class TableRow extends Component<TableRowProps, any> {
         provided={props.key === DRAG_KEY ? provided : undefined}
         {...props}
       >
-        {this.hasExpandIcon(columnIndex) && this.renderExpandIcon()}
+        {this.hasExpandIcon(index) ? this.renderExpandIcon() : undefined}
       </TableCell>
     );
-    return virtualCell ? (
-      <ReactIntersectionObserver
-        key={props.key}
-        root={node.tableBodyWrap || node.element}
-        rootMargin="100px"
-        initialInView={rowIndex <= 10}
-      >
-        {
-          ({ ref, inView }) => (
-            cloneElement<any>(cell, { inView, intersectionRef: ref })
-          )
-        }
-      </ReactIntersectionObserver>
-    ) : cell;
+    if (tableStore.props.virtualCell) {
+      const { node } = tableStore;
+      const { index: rowIndex } = this.props;
+      return (
+        <ReactIntersectionObserver
+          key={props.key}
+          root={node.tableBodyWrap || node.element}
+          rootMargin="100px"
+          initialInView={rowIndex <= 10}
+        >
+          {
+            ({ ref, inView }) => (
+              cloneElement<any>(cell, { inView, intersectionRef: ref })
+            )
+          }
+        </ReactIntersectionObserver>
+      );
+    }
+    return cell;
   }
 
   focusRow() {
@@ -369,31 +372,26 @@ export default class TableRow extends Component<TableRowProps, any> {
     }
   }
 
-  hasExpandIcon(columnIndex) {
+  hasExpandIcon(index: number) {
+    const { props } = this;
     const { tableStore } = this.context;
     const {
       props: { expandRowByClick, expandedRowRenderer },
       expandIconColumnIndex,
-      isTree,
     } = tableStore;
     return (
-      !expandRowByClick && (expandedRowRenderer || isTree) && columnIndex === expandIconColumnIndex
+      !expandRowByClick &&
+      (expandedRowRenderer || tableStore.isTree) &&
+      (props.lock === ColumnLock.right ? index + tableStore.leafColumns.length - tableStore.rightLeafColumns.length : index) === expandIconColumnIndex
     );
   }
 
   syncLoadData() {
     if (this.isLoading) return;
-    const { record } = this.props;
-    const {
-      tableStore,
-    } = this.context;
-    const { isExpanded, isLoaded, expandable } = this;
-    const {
-      canTreeLoadData,
-    } = tableStore;
-
-    if (canTreeLoadData && isExpanded && expandable) {
-      if (!record.children && !isLoaded) {
+    const { tableStore } = this.context;
+    if (tableStore.canTreeLoadData && this.expandable && this.isExpanded && !this.isLoaded) {
+      const { record } = this.props;
+      if (!record.children) {
         tableStore.onTreeNodeLoad({ record });
       }
     }
@@ -429,68 +427,70 @@ export default class TableRow extends Component<TableRowProps, any> {
     );
   }
 
-  renderExpandRow(): ReactNode[] {
-    const {
-      isExpanded,
-      props: { children, columns, record, index },
-    } = this;
-    const { tableStore } = this.context;
-    const {
-      props: { expandedRowRenderer, onRow },
-      prefixCls,
-      expandIconAsCell,
-      overflowX,
-      parityRow,
-    } = tableStore;
-    const expandRows: ReactNode[] = [];
-    if (isExpanded || this.childrenRendered) {
-      this.childrenRendered = true;
-      if (expandedRowRenderer) {
-        const rowExternalProps =
-          typeof onRow === 'function'
-            ? onRow({
-              dataSet: record.dataSet!,
-              record,
-              expandedRow: true,
-              index,
-            })
-            : {};
-        const classString = classNames(`${prefixCls}-expanded-row`, rowExternalProps.className);
-        const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties; } = {
-          key: `${record.key}-expanded-row`,
-          className: classString,
-          style: { ...rowExternalProps.style },
-        };
+  renderExpandRow(): ReactElement<ExpandedRowProps>[] {
+    if (this.expandable) {
+      const { isExpanded } = this;
+      if (isExpanded || this.childrenRendered) {
+        const {
+          props: { children, columns, record, index },
+        } = this;
+        const { tableStore } = this.context;
+        const {
+          props: { expandedRowRenderer, onRow },
+          prefixCls,
+          expandIconAsCell,
+          overflowX,
+          parityRow,
+        } = tableStore;
+        const expandRows: ReactElement<ExpandedRowProps>[] = [];
+        this.childrenRendered = true;
+        if (expandedRowRenderer) {
+          const rowExternalProps =
+            typeof onRow === 'function'
+              ? onRow({
+                dataSet: record.dataSet!,
+                record,
+                expandedRow: true,
+                index,
+              })
+              : {};
+          const classString = classNames(`${prefixCls}-expanded-row`, rowExternalProps.className);
+          const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties; } = {
+            key: `${record.key}-expanded-row`,
+            className: classString,
+            style: { ...rowExternalProps.style },
+          };
 
-        if (overflowX || !record.isCurrent) {
-          rowProps.onMouseEnter = this.handleMouseEnter;
-          rowProps.onMouseLeave = this.handleMouseLeave;
-        }
+          if (!isStickySupport() && (overflowX || !record.isCurrent)) {
+            rowProps.onMouseEnter = this.handleMouseEnter;
+            rowProps.onMouseLeave = this.handleMouseLeave;
+          }
 
-        if (!isExpanded) {
-          rowProps.hidden = true;
+          if (!isExpanded) {
+            rowProps.hidden = true;
+          }
+          const Element = isExpanded || !parityRow ? 'tr' : 'div';
+          expandRows.push(
+            <Element {...rowExternalProps} {...rowProps}>
+              {expandIconAsCell && <td key={EXPAND_KEY} />}
+              <td
+                key={`${EXPAND_KEY}-rest`}
+                className={`${prefixCls}-cell`}
+                colSpan={columns.length - (expandIconAsCell ? 1 : 0)}
+              >
+                <div className={`${prefixCls}-cell-inner`}>
+                  {expandedRowRenderer({ dataSet: record.dataSet!, record })}
+                </div>
+              </td>
+            </Element>,
+          );
         }
-        const Element = isExpanded || !parityRow ? 'tr' : 'div';
-        expandRows.push(
-          <Element {...rowExternalProps} {...rowProps}>
-            {expandIconAsCell && <td key={EXPAND_KEY} />}
-            <td
-              key={`${EXPAND_KEY}-rest`}
-              className={`${prefixCls}-cell`}
-              colSpan={columns.length - (expandIconAsCell ? 1 : 0)}
-            >
-              <div className={`${prefixCls}-cell-inner`}>
-                {expandedRowRenderer({ dataSet: record.dataSet!, record })}
-              </div>
-            </td>
-          </Element>,
-        );
-      }
-      if (isValidElement<ExpandedRowProps>(children)) {
-        expandRows.push(cloneElement(children, { isExpanded, key: `${record.key}-expanded-rows` }));
+        if (isValidElement<ExpandedRowProps>(children)) {
+          expandRows.push(cloneElement(children, { isExpanded, key: `${record.key}-expanded-rows` }));
+        }
       }
     }
-    return expandRows;
+    return [];
   }
 
   getColumns() {
@@ -555,7 +555,6 @@ export default class TableRow extends Component<TableRowProps, any> {
       prefixCls,
       highLightRow,
       selectedHighLightRow,
-      mouseBatchChooseIdList,
       mouseBatchChooseState,
       dragColumnAlign,
       rowDraggable,
@@ -580,29 +579,23 @@ export default class TableRow extends Component<TableRowProps, any> {
     const classString = classNames(
       rowPrefixCls,
       {
-        [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent, // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
-        [`${rowPrefixCls}-hover`]: highLightRow && this.isHover,
-        [`${rowPrefixCls}-highlight`]: this.isHighLightRow,
+        [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent && this.isHighLightRow, // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
+        [`${rowPrefixCls}-hover`]: !isStickySupport() && highLightRow && this.isHover,
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && isSelectedRow(record),
         [`${rowPrefixCls}-disabled`]: disabled,
-        [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && record.selectable && (mouseBatchChooseIdList || []).includes(id),
-        [`${rowPrefixCls}-expanded`]: this.isExpanded,
+        [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && record.selectable && (tableStore.mouseBatchChooseIdList || []).includes(id),
+        [`${rowPrefixCls}-expanded`]: this.expandable && this.isExpanded,
       },
       className, // 增加可以自定义类名满足拖拽功能
       rowExternalProps.className,
     );
+    const { style } = rowExternalProps;
     const rowProps: HTMLProps<HTMLTableRowElement> & {
-      style: CSSProperties;
+      style?: CSSProperties;
       'data-index': number;
     } = {
-      ref: (ref) => {
-        this.saveRef(ref);
-        if (provided) {
-          provided.innerRef(ref);
-        }
-      },
+      ref: this.saveRef,
       className: classString,
-      style: { ...rowExternalProps.style },
       onClick: this.handleClick,
       onClickCapture: this.handleClickCapture,
       tabIndex: -1,
@@ -618,9 +611,6 @@ export default class TableRow extends Component<TableRowProps, any> {
       rowProps.hidden = true;
     }
     const Element = hidden && parityRow ? 'div' : 'tr';
-    if (this.needSaveRowHeight()) {
-      rowProps.style.height = pxToRem(get(tableStore.lockColumnsBodyRowsHeight, key) as number);
-    }
     if (selectionMode === SelectionMode.click) {
       rowProps.onClick = this.handleSelectionByClick;
     } else if (selectionMode === SelectionMode.dblclick) {
@@ -631,12 +621,24 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (rowDraggable && provided) {
       Object.assign(rowProps, provided.draggableProps);
       rowProps.style = {
-        ...provided.draggableProps.style, ...rowExternalProps.style,
+        ...provided.draggableProps.style, ...style,
         width: Math.max(tableStore.totalLeafColumnsWidth, tableStore.width),
       };
       if (!dragColumnAlign) {
-        rowProps.style.cursor = 'move';
+        rowProps.style!.cursor = 'move';
         Object.assign(rowProps, provided.dragHandleProps);
+      }
+    } else if (style) {
+      rowProps.style = { ...style };
+    }
+    if (this.needSaveRowHeight()) {
+      const height = pxToRem(get(tableStore.lockColumnsBodyRowsHeight, key) as number);
+      if (height) {
+        if (rowProps.style) {
+          rowProps.style.height = height;
+        } else {
+          rowProps.style = { height };
+        }
       }
     }
 
@@ -651,7 +653,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     );
     return [
       this.needSaveRowHeight() ? (
-        <ResizeObservedRow onResize={this.handleResize} rowIndex={key}>
+        <ResizeObservedRow onResize={this.handleResize} rowIndex={key} key={key}>
           {tr}
         </ResizeObservedRow>
       ) : tr,

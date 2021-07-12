@@ -11,7 +11,7 @@ import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { Customized, expandIconProps, Suffixes, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
-import { DragColumnAlign, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import { DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
 import defaultFeedback, { FeedBack } from 'choerodon-ui/pro/lib/data-set/FeedBack';
@@ -114,7 +114,7 @@ export type Config = {
   queryBar?: TableQueryBarType | TableQueryBarHook;
   tableBorder?: boolean;
   tableColumnEditorBorder?: boolean;
-  tableHighLightRow?: boolean;
+  tableHighLightRow?: boolean | HighLightRowType;
   tableParityRow?: boolean;
   tableSelectedHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;

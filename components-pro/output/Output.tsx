@@ -51,6 +51,18 @@ export default class Output extends FormField<OutputProps> {
     ]);
   }
 
+  getOtherPropsExcludeOutput(otherProps) {
+    return otherProps;
+  }
+
+  getWrapperClassNamesExcludeOutput() {
+    return undefined;
+  }
+
+  getObservablePropsExcludeOutput() {
+    return undefined;
+  }
+
   getValueKey(value) {
     if (isArrayLike(value)) {
       return value.map(this.getValueKey, this).join(',');
@@ -153,17 +165,16 @@ export default class Output extends FormField<OutputProps> {
   }
 
   getRenderedValue(): ReactNode {
-    const { multiple, range, multiLine } = this;
-    if (multiple) {
+    if (this.multiple) {
       return this.renderMultipleValues(true);
     }
-    if (range) {
+    if (this.range) {
       return this.renderRangeValue(true);
     }
     /**
      * 多行单元格渲染
      */
-    if (multiLine) {
+    if (this.multiLine) {
       return this.renderMultiLine(true);
     }
     const textNode = this.getTextNode();
