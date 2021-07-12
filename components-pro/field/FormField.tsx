@@ -789,6 +789,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   componentDidMount() {
+    super.componentDidMount();
     this.addToForm(this.props, this.context);
   }
 

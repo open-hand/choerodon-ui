@@ -100,6 +100,7 @@ export default class TimesView extends DaysView {
   }
 
   componentDidMount(): void {
+    super.componentDidMount();
     if (this.panel) {
       // 兼容Firefox wheel为通用事件
       this.panel.addEventListener('wheel', this.handleWheel, { passive: false });
@@ -269,8 +270,8 @@ export default class TimesView extends DaysView {
       className: classNames(`${prefixCls}-footer-now-btn`, {
         [`${prefixCls}-now-disabled`]: disabledNow,
       }),
-      onClick: !disabledNow ? this.choose.bind(this, moment()):noop,
-    }
+      onClick: !disabledNow ? this.choose.bind(this, moment()) : noop,
+    };
 
     return (
       <div className={`${prefixCls}-footer`}>
