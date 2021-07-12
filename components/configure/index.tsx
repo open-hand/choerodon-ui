@@ -112,6 +112,7 @@ export type Config = {
   exportMode?: ExportMode;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
+  tableVirtualCell?: boolean;
   tableBorder?: boolean;
   tableColumnEditorBorder?: boolean;
   tableHighLightRow?: boolean | HighLightRowType;

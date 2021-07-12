@@ -1,6 +1,7 @@
 import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { action } from 'mobx';
+import { action, get, runInAction, set } from 'mobx';
+import ReactIntersectionObserver from 'react-intersection-observer';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
@@ -411,7 +412,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       style: omit(cellStyle, ['width', 'height']),
     };
 
-    return (
+    const th = (
       <th {...thProps}>
         <div
           {...innerProps}
@@ -419,6 +420,26 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         {columnResizable && this.renderResizer()}
       </th>
     );
+
+    if (tableStore.virtualCell) {
+      const { node } = tableStore;
+      return (
+        <ReactIntersectionObserver
+          root={node.wrapper}
+          rootMargin="100px"
+        >
+          {
+            ({ ref, inView }) => {
+              if (get(column, '_inView') !== inView) {
+                runInAction(() => set(column, '_inView', inView));
+              }
+              return cloneElement<any>(th, { ref });
+            }
+          }
+        </ReactIntersectionObserver>
+      );
+    }
+    return th;
   }
 
   componentWillUnmount() {

@@ -4,12 +4,11 @@ import { isArrayLike } from 'mobx';
 import isPlainObject from 'lodash/isPlainObject';
 import isNil from 'lodash/isNil';
 import defaultTo from 'lodash/defaultTo';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import { BooleanValue, FieldType, RecordStatus } from '../data-set/enum';
 import { Tooltip as TextTooltip } from '../core/enum';
-import ObserverCheckBox from '../check-box/CheckBox';
 import { findBindFields } from '../data-set/utils';
 import { processFieldValue } from '../field/utils';
 import isEmpty from '../_util/isEmpty';
@@ -48,6 +47,7 @@ export default class Output extends FormField<OutputProps> {
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'name',
+      'renderEmpty',
     ]);
   }
 
@@ -83,7 +83,13 @@ export default class Output extends FormField<OutputProps> {
   defaultRenderer({ value, text, repeat, maxTagTextLength }: RenderProps): ReactNode {
     const { field } = this;
     if (field && field.type === FieldType.boolean) {
-      return <ObserverCheckBox disabled checked={value === field.get(BooleanValue.trueValue)} />;
+      const checkBoxPrefix = getProPrefixCls('checkbox');
+      return (
+        <label className={`${checkBoxPrefix}-wrapper ${checkBoxPrefix}-disabled`}>
+          <input disabled className={checkBoxPrefix} type="checkbox" checked={value === field.get(BooleanValue.trueValue)} />
+          <i className={`${checkBoxPrefix}-inner`} />
+        </label>
+      );
     }
     return super.defaultRenderer({ text, repeat, maxTagTextLength });
   }

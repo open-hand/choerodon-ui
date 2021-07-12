@@ -9,10 +9,9 @@ import React, {
   useCallback,
   useContext,
   useMemo,
-  useRef,
 } from 'react';
 import { observer, useComputed } from 'mobx-react-lite';
-import { isArrayLike } from 'mobx';
+import { get, isArrayLike } from 'mobx';
 import raf from 'raf';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
@@ -26,10 +25,10 @@ import Record from '../data-set/Record';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
 import { Commands, TableButtonProps } from './Table';
-import { findCell, getColumnKey, getEditorByColumnAndRecord, isDisabledRow, isInCellEditor, isStickySupport } from './utils';
+import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import { SELECTION_KEY } from './TableStore';
-import { TableColumnTooltip, TableCommandType } from './enum';
+import { TableCommandType } from './enum';
 import Output from '../output/Output';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip/Tooltip';
@@ -43,30 +42,29 @@ import { findFirstFocusableElement } from '../_util/focusable';
 let inTab: boolean = false;
 
 export interface TableCellInnerProps {
-  inView: boolean;
   column: ColumnProps;
   record: Record;
   command?: Commands[];
   style?: CSSProperties;
+  disabled?: boolean;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) => {
-  const { column, record, command, children, style, inView } = props;
+  const { column, record, command, children, style, disabled } = props;
   const { tableStore } = useContext(TableContext);
-  const outputRef = useRef<Output | null>(null);
   const {
     dataSet,
     rowHeight,
     pristine,
     aggregation,
   } = tableStore;
+  const inView = record.getState('__inView') !== false && get(column, '_inView') !== false;
   const prefixCls = `${tableStore.prefixCls}-cell`;
   const tooltip = tableStore.getColumnTooltip(column);
   const { name, key, lock, highlightRenderer = tableStore.cellHighlightRenderer, renderer } = column;
   const columnKey = getColumnKey(column);
   const { checkField } = dataSet.props;
   const height = record.getState(`__column_resize_height_${name}`);
-  const disabled = useComputed(() => isDisabledRow(record), [record]);
   const canFocus = useComputed(() => !disabled && (!tableStore.inlineEdit || record === tableStore.currentEditRecord), [disabled, record, tableStore]);
   const cellEditor = useComputed(() => getEditorByColumnAndRecord(column, record), [record, column]);
   const cellEditorInCell = useMemo(() => isInCellEditor(cellEditor), [cellEditor]);
@@ -188,8 +186,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     dataSet.delete(record);
   }, [dataSet, record]);
   const field = record.getField(name);
+  const multiLine = field && field.get('multiLine');
   const rows = useComputed(() => {
-    if (field && field.get('multiLine')) {
+    if (multiLine) {
       return [...record.fields.values()].reduce((count, dsField) => {
         const bind = dsField.get('bind');
         if (bind && bind.startsWith(`${name}.`)) {
@@ -199,7 +198,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       }, 0);
     }
     return 0;
-  }, [field, record]);
+  }, [multiLine, record]);
   const checkBox = useComputed(() => {
     if (children && checkField && !tableStore.hasCheckFieldColumn) {
       return (
@@ -303,6 +302,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   }, [prefixCls, record, command, aggregation, getButtonProps, handleCommandSave, handleCommandCancel]);
   const renderEditor = useCallback(() => {
     if (isValidElement(cellEditor)) {
+      /**
+       * 渲染多行编辑器
+       */
+      if (multiLine) {
+        return cellEditor;
+      }
       const newEditorProps = {
         ...cellEditor.props,
         record,
@@ -312,15 +317,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
       };
-      /**
-       * 渲染多行编辑器
-       */
-      if (field && field.get('multiLine')) {
-        return cellEditor;
-      }
       return cloneElement(cellEditor, newEditorProps as FormFieldProps);
     }
-  }, [disabled, cellEditor, checkField, field, record, name, pristine, tableStore]);
+  }, [disabled, cellEditor, checkField, multiLine, record, name, pristine, tableStore]);
 
   const cellRenderer = useComputed((): Renderer | undefined => {
     if (command) {
@@ -335,7 +334,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       };
     }
     return renderer;
-  }, [command, cellEditorInCell, renderCommand, renderEditor, renderer, aggregation]);
+  }, [command, cellEditorInCell, renderEditor, renderCommand, renderer, aggregation]);
   const innerStyle = useComputed(() => {
     if (!aggregation) {
       if (height !== undefined && rows === 0) {
@@ -362,9 +361,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
-    pristine,
-    highlightRenderer,
-    _inTable: true,
   };
   if (!inView) {
     if (rowHeight === 'auto') {
@@ -374,9 +370,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     } else {
       innerProps.style = {
         height: pxToRem(rowHeight),
-      };
-      innerProps.style = {
-        minHeight: 30,
       };
     }
     return (
@@ -391,11 +384,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   if (!isStickySupport() && !hasEditor) {
     innerProps.onKeyDown = handleEditorKeyDown;
   }
-  if (rowHeight !== 'auto') {
-    if (tooltip === TableColumnTooltip.overflow) {
-      innerProps.ref = outputRef;
-    }
-  } else {
+  if (rowHeight === 'auto') {
     innerClassName.push(`${prefixCls}-inner-auto-height`);
   }
   if (height !== undefined && rows === 0) {
@@ -412,25 +401,40 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       {checkBox}
     </span>
   );
-  const output = (
-    <Output
-      key="output"
-      {...innerProps}
-      style={innerStyle}
-      className={innerClassName.join(' ')}
-      record={record}
-      renderer={cellRenderer}
-      name={name}
-      disabled={disabled}
-      showHelp={ShowHelp.none}
-      tooltip={tooltip}
-      renderEmpty={hasEditor && !tableStore.inlineEdit ? noop : undefined}
-    />
-  );
+  if (cellEditorInCell || !name) {
+    const value = name ? record.get(name) : undefined;
+    return (
+      <>
+        {prefix}
+        <span
+          key="output"
+          {...innerProps}
+          style={innerStyle}
+          className={innerClassName.join(' ')}
+        >
+          {cellRenderer ? cellRenderer({ record, dataSet, name, value }) : undefined}
+        </span>
+      </>
+    );
+  }
   return (
     <>
       {prefix}
-      {output}
+      <Output
+        key="output"
+        {...innerProps}
+        pristine={pristine}
+        highlightRenderer={highlightRenderer}
+        style={innerStyle}
+        className={innerClassName.join(' ')}
+        record={record}
+        renderer={cellRenderer}
+        name={name}
+        disabled={disabled}
+        showHelp={ShowHelp.none}
+        tooltip={tooltip}
+        renderEmpty={hasEditor && !tableStore.inlineEdit ? noop : undefined}
+      />
     </>
   );
 });

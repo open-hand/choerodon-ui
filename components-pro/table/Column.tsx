@@ -157,6 +157,7 @@ export interface ColumnPropsBase extends ElementProps {
    * 高亮渲染器
    */
   highlightRenderer?: HighlightRenderer;
+  _inView?: boolean;
 }
 
 export interface ColumnProps extends ColumnPropsBase {
