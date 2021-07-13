@@ -135,7 +135,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (!isStickySupport()) {
       const { lock, record } = this.props;
       const { tableStore } = this.context;
-      return !lock && (tableStore.rowHeight === 'auto' || [...record.fields.values()].some(field => field.get('multiLine')));
+      return !lock && (tableStore.rowHeight === 'auto' || (tableStore.hasAggregationColumn && tableStore.aggregation) || [...record.fields.values()].some(field => field.get('multiLine')));
     }
     return false;
   }
@@ -520,7 +520,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   render() {
-    const { record, hidden, index, provided, className } = this.props;
+    const { record, hidden, index, provided, className, lock } = this.props;
     const {
       tableStore,
     } = this.context;
@@ -604,7 +604,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     } else if (style) {
       rowProps.style = { ...style };
     }
-    if (this.needSaveRowHeight()) {
+    if (lock) {
       const height = pxToRem(get(tableStore.lockColumnsBodyRowsHeight, key) as number);
       if (height) {
         if (rowProps.style) {

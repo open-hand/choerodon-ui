@@ -28,7 +28,7 @@ import EmailField from '../email-field/EmailField';
 import ColorPicker from '../color-picker/ColorPicker';
 import Output from '../output/Output';
 import DataSet from '../data-set/DataSet';
-import TableStore from './TableStore';
+import TableStore, { CUSTOMIZED_KEY } from './TableStore';
 import { TablePaginationConfig } from './Table';
 import { $l } from '../locale-context';
 import { TooltipPlacement } from '../tooltip/Tooltip';
@@ -315,4 +315,9 @@ export function getMaxClientWidth(element: Element): number {
     }
   }
   return clientWidth;
+}
+
+export function onlyCustomizedColumn(tableStore: TableStore): boolean {
+  const columns = tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
+  return columns.length === 0 || columns[0].key === CUSTOMIZED_KEY;
 }
