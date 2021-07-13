@@ -5,6 +5,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import useComputed from '../use-computed';
 import TableContext from './TableContext';
+import { onlyCustomizedColumn } from './utils';
 
 export interface StickyShadowProps {
   position: 'left' | 'right'
@@ -14,21 +15,28 @@ const StickyShadow: FunctionComponent<StickyShadowProps> = observer((props) => {
   const { position } = props;
   const { tableStore } = useContext(TableContext);
   const { prefixCls } = tableStore;
-  const classString = classNames(`${prefixCls}-sticky-shadow`, {
-    [`${prefixCls}-sticky-left`]: position === 'left' && tableStore.leftLeafColumns.length && tableStore.stickyLeft,
-    [`${prefixCls}-sticky-right`]: position === 'right' && tableStore.rightLeafColumns.length && tableStore.stickyRight,
-  });
+  const disabled = (position === 'left' && tableStore.leftLeafColumns.length === 0) ||
+    (position === 'right' && onlyCustomizedColumn(tableStore));
   const computedStyle = useComputed(() => {
-    const style: CSSProperties = {};
-    const scrollBarWidth = measureScrollbar();
-    if (position === 'left') {
-      style.left = pxToRem(tableStore.leftLeafColumnsWidth)!;
-    } else if (position === 'right') {
-      style.right = pxToRem(tableStore.rightLeafColumnsWidth + (tableStore.overflowY ? scrollBarWidth : 0))!;
+    if (!disabled) {
+      const style: CSSProperties = {};
+      const scrollBarWidth = measureScrollbar();
+      if (position === 'left') {
+        style.left = pxToRem(tableStore.leftLeafColumnsWidth)!;
+      } else if (position === 'right') {
+        style.right = pxToRem(tableStore.rightLeafColumnsWidth + (tableStore.overflowY ? scrollBarWidth : 0))!;
+      }
+      style.bottom = pxToRem(tableStore.overflowY ? scrollBarWidth : undefined)!;
+      return style;
     }
-    style.bottom = pxToRem(scrollBarWidth)!;
-    return style;
-  }, [position, tableStore]);
+  }, [disabled, position, tableStore]);
+  if (disabled) {
+    return null;
+  }
+  const classString = classNames(`${prefixCls}-sticky-shadow`, {
+    [`${prefixCls}-sticky-left`]: position === 'left' && tableStore.stickyLeft,
+    [`${prefixCls}-sticky-right`]: position === 'right' && tableStore.stickyRight,
+  });
   return (
     <div className={classString} style={computedStyle} />
   );

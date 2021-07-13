@@ -26,6 +26,7 @@ import autobind from '../_util/autobind';
 import transform from '../_util/transform';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
+import { CUSTOMIZED_KEY } from './TableStore';
 
 export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
@@ -402,6 +403,10 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         height: pxToRem(height),
         lineHeight: pxToRem(height - 2),
       };
+    }
+
+    if (columnKey === CUSTOMIZED_KEY && tableStore.rightLeafColumns.filter(({ hidden }) => !hidden).length === 1 && tableStore.stickyRight) {
+      classList.push(`${prefixCls}-cell-sticky-shadow`);
     }
 
     const thProps: any = {

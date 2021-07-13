@@ -47,15 +47,16 @@ export default class TableBody extends Component<TableBodyProps> {
   }
 
   getHeightStyle() {
-    const {
-      tableStore: {
-        height, autoHeight, customized: { heightType },
-      },
-    } = this.context;
-    if (!heightType && autoHeight && autoHeight.type === TableAutoHeightType.maxHeight) {
-      return undefined;
+    const { tableStore } = this.context;
+    if (!tableStore.customized.heightType) {
+      const {
+        autoHeight,
+      } = tableStore;
+      if (autoHeight && autoHeight.type === TableAutoHeightType.maxHeight) {
+        return undefined;
+      }
     }
-    return height;
+    return tableStore.height;
   }
 
   render() {
@@ -68,7 +69,7 @@ export default class TableBody extends Component<TableBodyProps> {
     const fixedLeft = lock === true || lock === ColumnLock.left;
     const scrollbar = measureScrollbar();
     const hasFooterAndNotLock = !lock && hasFooter && overflowX && scrollbar;
-    const hasLockAndNoFooter = lock && !hasFooter && overflowX && scrollbar;
+    const hasLockAndNoFooter = lock && !hasFooter && overflowX && overflowY && scrollbar;
     const height = this.getHeightStyle();
     const tableBody = (
       <div

@@ -64,7 +64,16 @@ import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
-import { findCell, findIndexedSibling, getHeight, getPaginationPosition, isCanEdictingRow, isDropresult, isStickySupport } from './utils';
+import {
+  findCell,
+  findIndexedSibling,
+  getHeight,
+  getPaginationPosition,
+  isCanEdictingRow,
+  isDropresult,
+  isStickySupport,
+  onlyCustomizedColumn,
+} from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
@@ -1300,7 +1309,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       tableStore: { prefixCls, border, columnEditorBorder, rowHeight, parityRow, aggregation, size },
     } = this;
-    return super.getClassName(`${prefixCls}-scroll-position-left`, {
+    return super.getClassName({
       [`${prefixCls}-${size}`]: size !== Size.default,
       [`${prefixCls}-bordered`]: border,
       [`${prefixCls}-cell-editor-bordered`]: columnEditorBorder,
@@ -1455,8 +1464,8 @@ export default class Table extends DataSetComponent<TableProps> {
                     {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
                     {content}
                     {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
-                    {isStickySupport() && <StickyShadow position="left" />}
-                    {isStickySupport() && <StickyShadow position="right" />}
+                    {isStickySupport() && overflowX && <StickyShadow position="left" />}
+                    {isStickySupport() && overflowX && <StickyShadow position="right" />}
                   </div>
                   <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                   {this.getFooter()}
@@ -1798,18 +1807,19 @@ export default class Table extends DataSetComponent<TableProps> {
           {this.renderTable(true, false, false, lock)}
         </div>
       );
-
-      tableBody = (
-        <TableBody
-          key="tableBody"
-          getRef={tableBodyRef}
-          lock={lock}
-          onScroll={this.handleBodyScroll}
-          style={pick(props.style, ['maxHeight', 'minHeight'])}
-        >
-          {this.renderTable(false, true, false, lock)}
-        </TableBody>
-      );
+      if (lock !== ColumnLock.right || !onlyCustomizedColumn(tableStore)) {
+        tableBody = (
+          <TableBody
+            key="tableBody"
+            getRef={tableBodyRef}
+            lock={lock}
+            onScroll={this.handleBodyScroll}
+            style={pick(props.style, ['maxHeight', 'minHeight'])}
+          >
+            {this.renderTable(false, true, false, lock)}
+          </TableBody>
+        );
+      }
 
       if (footer) {
         tableFooter = (
