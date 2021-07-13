@@ -24,6 +24,7 @@ import {
   ColumnAlign,
   ColumnLock,
   DragColumnAlign,
+  ScrollPosition,
   SelectionMode,
   TableAutoHeightType,
   TableColumnTooltip,
@@ -457,6 +458,8 @@ export default class TableStore {
 
   @observable columnResizing?: boolean;
 
+  @observable scrollPosition: ScrollPosition;
+
   inBatchExpansion: boolean = false;
 
   performanceOn: boolean = false;
@@ -465,6 +468,16 @@ export default class TableStore {
     renderStart: number;
     renderEnd: number;
   } = { renderStart: 0, renderEnd: 0 };
+
+  @computed
+  get stickyLeft(): boolean {
+    return [ScrollPosition.right, ScrollPosition.middle].includes(this.scrollPosition);
+  }
+
+  @computed
+  get stickyRight(): boolean {
+    return [ScrollPosition.left, ScrollPosition.middle].includes(this.scrollPosition);
+  }
 
   @computed
   get performanceEnabled(): boolean {

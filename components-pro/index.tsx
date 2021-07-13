@@ -136,4 +136,6 @@ export { default as injectModal } from './inject-modal';
 
 export { default as useModal } from './use-modal';
 
+export { default as useComputed } from './use-computed';
+
 export { default as TreeSelect } from './tree-select';

@@ -10,7 +10,7 @@ import React, {
   useContext,
   useMemo,
 } from 'react';
-import { observer, useComputed } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 import { get, isArrayLike } from 'mobx';
 import raf from 'raf';
 import classNames from 'classnames';
@@ -38,6 +38,7 @@ import { $l } from '../locale-context';
 import Button, { ButtonProps } from '../button/Button';
 import { LabelLayout } from '../form/enum';
 import { findFirstFocusableElement } from '../_util/focusable';
+import useComputed from '../use-computed';
 
 let inTab: boolean = false;
 

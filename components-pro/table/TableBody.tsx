@@ -68,6 +68,7 @@ export default class TableBody extends Component<TableBodyProps> {
     const fixedLeft = lock === true || lock === ColumnLock.left;
     const scrollbar = measureScrollbar();
     const hasFooterAndNotLock = !lock && hasFooter && overflowX && scrollbar;
+    const hasLockAndNoFooter = lock && !hasFooter && overflowX && scrollbar;
     const height = this.getHeightStyle();
     const tableBody = (
       <div
@@ -78,7 +79,7 @@ export default class TableBody extends Component<TableBodyProps> {
           height: pxToRem(
             hasFooterAndNotLock && height !== undefined ? height + scrollbar : height,
           ),
-          marginBottom: hasFooterAndNotLock ? pxToRem(-scrollbar) : undefined,
+          marginBottom: hasFooterAndNotLock || hasLockAndNoFooter ? pxToRem(-scrollbar) : undefined,
           width: fixedLeft ? pxToRem(leftLeafColumnsWidth + (scrollbar || 20)) :
             lock === ColumnLock.right
               ? pxToRem(rightLeafColumnsWidth - 1 + (overflowY ? scrollbar : 0))

@@ -421,12 +421,13 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       </th>
     );
 
-    if (tableStore.virtualCell) {
+    if (tableStore.virtualCell && tableStore.overflowX) {
       const { node } = tableStore;
       return (
         <ReactIntersectionObserver
           root={node.wrapper}
           rootMargin="100px"
+          triggerOnce
         >
           {
             ({ ref, inView }) => {

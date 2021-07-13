@@ -73,17 +73,9 @@ export default class TableFooter extends Component<TableFooterProps, any> {
             props.style = {
               left: pxToRem(leftWidth)!,
             };
-            const next = cols[index + 1];
-            if (!next || getColumnLock(next.lock) !== ColumnLock.left) {
-              props.className = `${prefixCls}-cell-fix-left-last`;
-            }
             leftWidth += columnWidth(column);
           } else if (columnLock === ColumnLock.right) {
             rightWidth -= columnWidth(column);
-            const prev = cols[index - 1];
-            if (!prev || prev.lock !== ColumnLock.right) {
-              props.className = `${prefixCls}-cell-fix-right-first`;
-            }
             if (colSpan > 1) {
               for (let i = 1; i < colSpan; i++) {
                 const next = cols[index + i];

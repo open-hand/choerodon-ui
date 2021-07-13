@@ -76,7 +76,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
         const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && lock !== ColumnLock.left;
         let prevColumn: ColumnProps | undefined;
         const placeholderWidth = hasPlaceholder ? measureScrollbar() : 0;
-        const tds = row.map((col, index, cols) => {
+        const tds = row.map((col) => {
           if (!col.hidden) {
             const { column, rowSpan, colSpan, lastLeaf, children } = col;
             const key = String(getColumnKey(column));
@@ -101,18 +101,10 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
                 props.style = {
                   left: pxToRem(col.left)!,
                 };
-                const next = cols[index + 1];
-                if (!next || getColumnLock(next.column.lock) !== ColumnLock.left) {
-                  props.className = `${prefixCls}-cell-fix-left-last`;
-                }
               } else if (columnLock === ColumnLock.right) {
                 props.style = {
                   right: pxToRem(col.right + placeholderWidth)!,
                 };
-                const prev = cols[index - 1];
-                if (!prev || prev.column.lock !== ColumnLock.right) {
-                  props.className = `${prefixCls}-cell-fix-right-first`;
-                }
               }
             }
             return (

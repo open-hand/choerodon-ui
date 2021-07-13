@@ -10,7 +10,6 @@ import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import classes from 'component-classes';
 import { action, computed, get, toJS } from 'mobx';
 import {
   DragDropContext,
@@ -74,6 +73,7 @@ import SelectionTips from './SelectionTips';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
+import StickyShadow from './StickyShadow';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
 
@@ -134,6 +134,7 @@ export interface onRowProps {
   index: number;
   expandedRow: boolean;
 }
+
 export type TableQueryBarHookCustomProps = object;
 export type TableQueryBarHook = (props: TableQueryBarHookCustomProps & TableQueryBarHookProps) => ReactNode;
 export type Commands =
@@ -778,8 +779,6 @@ export default class Table extends DataSetComponent<TableProps> {
   tableFooter: TableFooter | null;
 
   lastScrollLeft: number;
-
-  scrollPosition: ScrollPosition;
 
   refSpin: HTMLDivElement | null;
 
@@ -1456,6 +1455,8 @@ export default class Table extends DataSetComponent<TableProps> {
                     {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
                     {content}
                     {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+                    {isStickySupport() && <StickyShadow position="left" />}
+                    {isStickySupport() && <StickyShadow position="right" />}
                   </div>
                   <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                   {this.getFooter()}
@@ -1625,16 +1626,11 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
+  @action
   setScrollPosition(position: ScrollPosition): void {
-    if (this.scrollPosition !== position) {
-      this.scrollPosition = position;
-      const { prefixCls } = this.tableStore;
-      const cls = classes(this.element).remove(new RegExp(`^${prefixCls}-scroll-position-.+$`));
-      if (position === ScrollPosition.both) {
-        cls.add(`${prefixCls}-scroll-position-left`).add(`${prefixCls}-scroll-position-right`);
-      } else {
-        cls.add(`${prefixCls}-scroll-position-${position}`);
-      }
+    const { tableStore } = this;
+    if (tableStore.scrollPosition !== position) {
+      tableStore.scrollPosition = position;
     }
   }
 
@@ -1835,15 +1831,24 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getLeftFixedTable(): ReactNode {
-    const { prefixCls } = this.tableStore;
+    const { tableStore } = this;
+    const { prefixCls } = tableStore;
     const table = this.getTable(ColumnLock.left);
-    return <div className={`${prefixCls}-fixed-left`}>{table}</div>;
+    return (
+      <div className={classNames(`${prefixCls}-fixed-left`, { [`${prefixCls}-sticky-left`]: !isStickySupport() && tableStore.stickyLeft })}>
+        {table}
+      </div>
+    );
   }
 
   getRightFixedTable(): ReactNode | undefined {
-    const { prefixCls } = this.tableStore;
+    const { tableStore } = this;
+    const { prefixCls } = tableStore;
     const table = this.getTable(ColumnLock.right);
-    return <div className={`${prefixCls}-fixed-right`}>{table}</div>;
+    return (
+      <div
+        className={classNames(`${prefixCls}-fixed-right`, { [`${prefixCls}-sticky-right`]: !isStickySupport() && tableStore.stickyRight })}>{table}</div>
+    );
   }
 
   getTableBody(lock?: ColumnLock | boolean): ReactNode {
