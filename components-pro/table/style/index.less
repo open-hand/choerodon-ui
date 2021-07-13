@@ -219,6 +219,7 @@
       color: @primary-color;
 
       &-btn {
+        padding: 0;
         background-color: @btn-default-bg;
         border: none;
         cursor: pointer;
@@ -290,8 +291,8 @@
     &-command {
       display: block;
       height: 0.2rem;
-      margin-left: 0 !important;
       margin-bottom: 0.04rem;
+      margin-left: 0 !important;
       text-align: inherit;
     }
   }
@@ -434,49 +435,38 @@
 
   &-fixed-left {
     left: 0;
-    box-shadow: 0.06rem 0 0.06rem -0.04rem @shadow-color;
+    box-shadow: none;
   }
 
   &-fixed-right {
     right: 0;
-    box-shadow: -0.06rem 0 0.06rem -0.04rem @shadow-color;
-  }
-
-  &-scroll-position-left &-fixed-left,
-  &-scroll-position-right &-fixed-right {
     box-shadow: none;
   }
 
-  &-cell-fix-left-last,
-  &-cell-fix-right-first {
-    &::after {
-      position: absolute;
-      top: 0;
-      bottom: -.01rem;
-      width: .3rem;
-      transition: box-shadow .3s;
-      content: "";
-      pointer-events: none;
-    }
+  &-sticky-left&-fixed-left {
+    box-shadow: 0.06rem 0 0.06rem -0.04rem @shadow-color;
   }
 
-  &-cell-fix-left-last::after {
-    right: 0;
-    transform: translateX(100%);
+  &-sticky-right&-fixed-right {
+    box-shadow: -0.06rem 0 0.06rem -0.04rem @shadow-color;
   }
 
-  &-cell-fix-right-first::after {
-    left: 0;
-    transform: translateX(-100%);
+  &-sticky-shadow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: none;
+    width: .1rem;
+    pointer-events: none;
   }
 
-  &-scroll-position-right &-cell-fix-left-last::after,
-  &-scroll-position-middle &-cell-fix-left-last::after {
+  &-sticky-left&-sticky-shadow {
+    display: block;
     box-shadow: inset 0.06rem 0 0.06rem -0.04rem @shadow-color;
   }
 
-  &-scroll-position-left &-cell-fix-right-first::after,
-  &-scroll-position-middle &-cell-fix-right-first::after {
+  &-sticky-right&-sticky-shadow {
+    display: block;
     box-shadow: inset -0.06rem 0 0.06rem -0.04rem @shadow-color;
   }
 
@@ -488,9 +478,9 @@
 
     .@{table-prefix-cls}-content,
     .@{table-prefix-cls}-filter-bar,
-    .@{table-prefix-cls}-head,
+    //.@{table-prefix-cls}-head,
       //.@{table-prefix-cls}-body,
-    .@{table-prefix-cls}-foot,
+    //.@{table-prefix-cls}-foot,
     .@{table-prefix-cls}-empty-row {
       border-right: @table-border;
     }
@@ -504,7 +494,7 @@
     .@{table-prefix-cls}-thead,
     .@{table-prefix-cls}-tfoot {
       .@{table-prefix-cls}-cell:last-child {
-        border-right: @table-border;
+        border-right: @border-width-base @border-style-base transparent;
       }
     }
 
@@ -533,13 +523,6 @@
       .@{table-prefix-cls}-cell:last-child {
         border-right: @table-border;
       }
-    }
-  }
-
-  &-scroll-position-middle {
-    .@{table-prefix-cls}-tfoot,
-    .@{table-prefix-cls}-cell-fix-left-last {
-      border-right: @border-width-base @border-style-base transparent;
     }
   }
 
