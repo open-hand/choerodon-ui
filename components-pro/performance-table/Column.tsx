@@ -8,6 +8,7 @@ function Column(_props: ColumnProps) {
 
 Column.defaultProps = {
   width: 100,
+  hideable: true,
 };
 
 Column.propTypes = {
@@ -21,6 +22,8 @@ Column.propTypes = {
   minWidth: PropTypes.number,
   colSpan: PropTypes.number,
   treeCol: PropTypes.bool,
+  hidden: PropTypes.bool,
+  hideable: PropTypes.bool,
   onResize: PropTypes.func,
   render: PropTypes.func,
 };

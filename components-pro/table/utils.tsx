@@ -61,13 +61,13 @@ export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: 
   switch (type) {
     case FieldType.boolean:
       return isQueryField ? (
-        <ObserverSelect clearButton>
+        <ObserverSelect clearButton {...flatProps}>
           <Option value>{$l('Table', 'query_option_yes')}</Option>
           <Option value={false}>{$l('Table', 'query_option_no')}</Option>
         </ObserverSelect>
       ) : <ObserverCheckBox />;
     case FieldType.number:
-      return <ObserverNumberField  {...flatProps} />;
+      return <ObserverNumberField {...flatProps} />;
     case FieldType.currency:
       return <Currency isFlat={isFlat} />;
     case FieldType.date:

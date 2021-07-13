@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { StandardProps, SortType, RowDataType } from './common';
 import { ColumnProps } from './Column.d';
+import { ToolBarProps } from './tool-bar';
+import DataSet from '../data-set';
+import { TransportProps } from '../data-set/Transport';
+import { TableQueryBarType } from './Table';
+import { FormProps } from 'choerodon-ui/pro/lib/form/Form';
 
 export interface TableLocale {
   emptyMessage?: string;
@@ -13,7 +18,41 @@ export interface TableScrollLength {
   vertical?: number;
 }
 
+export interface TableQueryBarProps {
+  type?: TableQueryBarType;
+  renderer?: (props: TableQueryBarHookProps) => React.ReactNode;
+  dataSet?: DataSet;
+  queryFormProps?: FormProps;
+  defaultExpanded?: Boolean;
+  queryDataSet?: DataSet;
+  queryFields?: React.ReactElement<any>[];
+  queryFieldsLimit?: number;
+  onQuery?: (props: object) => void;
+  onReset?: () => void;
+}
+
+export interface TableQueryBarHookProps {
+  dataSet: DataSet;
+  queryDataSet?: DataSet;
+  queryFields: React.ReactElement<any>[];
+  queryFieldsLimit?: number;
+  onQuery?: (props: object) => void;
+  onReset?: () => void;
+}
+
+export interface DynamicFilterBarConfig {
+  searchCode: string;
+  searchText?: string;
+  quickSearch?: boolean;
+  tableFilterAdapter?: TransportProps;
+}
+
 export interface TableProps extends StandardProps {
+  /** 左上角的 title */
+  headerTitle?: React.ReactNode;
+  queryBar?: false | TableQueryBarProps;
+  // /** 渲染操作栏 */
+  // toolBarRender?: ToolBarProps<T>['toolBarRender'] | false;
   columns?: ColumnProps[];
   autoHeight?: boolean;
   affixHeader?: boolean | number;

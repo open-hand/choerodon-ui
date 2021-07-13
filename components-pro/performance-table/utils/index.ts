@@ -14,3 +14,4 @@ export { default as shouldShowRowByExpanded } from './shouldShowRowByExpanded';
 export { default as resetLeftForCells } from './resetLeftForCells';
 export { default as isNumberOrTrue } from './isNumberOrTrue';
 export * from './requestAnimationTimeout';
+export * from './domFns';

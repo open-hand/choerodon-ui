@@ -1,0 +1,44 @@
+&-table {
+  &-toolbar {
+    overflow-x: auto;
+    overflow-y: hidden;
+    line-height: 1;
+
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    &-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+    }
+
+    &-setting-items {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    &-setting-item {
+      margin: 0 4px;
+      font-size: 16px;
+      cursor: pointer;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+  }
+}

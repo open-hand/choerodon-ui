@@ -263,7 +263,10 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
         onClick={this.handleClick}
       >
         {showScrollArrow && (
-          <div className={addPrefix(`handle-${vertical ? 'vertical' : 'horizontal'}-fir`)} onClick={(e) => this.handleArrowClick(e, 'fir')}>
+          <div
+            className={addPrefix(`handle-${vertical ? 'vertical' : 'horizontal'}-fir`)}
+            onClick={(e) => this.handleArrowClick(e, 'fir')}
+          >
             <Icon type="baseline-arrow_drop_up" />
           </div>
         )}
@@ -272,6 +275,7 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
           className={addPrefix(`handle ${showScrollArrow ? 'has-arrow' : ''}`)}
           style={styles}
           onMouseDown={this.handleMouseDown}
+          onTouchMove={(e) => e.stopPropagation()}
           role="button"
           tabIndex={-1}
         />

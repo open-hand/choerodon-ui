@@ -1,3 +1,5 @@
+import { ColumnProps } from '../Column.d';
+
 // @ts-ignore
 export function addEvent(el?: any, event: string, handler: EventListener | EventListenerObject | null, inputOptions?: Object): void {
   if (!el) return;
@@ -23,4 +25,27 @@ export function removeEvent(el: any, event: string, handler: Function, inputOpti
     // $FlowIgnore: Doesn't think elements are indexable
     el['on' + event] = null;
   }
+}
+
+export function findHiddenKeys(children, columns: ColumnProps[]): string[] {
+  const hiddenColumnKeys: string[] = [];
+  if (columns && columns.length) {
+    Array.from(columns as Iterable<any>).map(
+      (child: any) => {
+        if (child && child.hidden) {
+          hiddenColumnKeys.push(child.dataIndex);
+        }
+      },
+    );
+  } else if (children && children.length) {
+    Array.from(children as Iterable<any>).map(
+      (child: any) => {
+        if (child.props && child.props.hidden) {
+          const columnChildren: any = child.props.children;
+          hiddenColumnKeys.push(columnChildren[1].props.dataKey);
+        }
+      },
+    );
+  }
+  return hiddenColumnKeys;
 }
