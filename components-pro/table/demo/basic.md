@@ -131,15 +131,11 @@ class App extends React.Component {
   userDs = new DataSet({
     primaryKey: 'userid',
     autoQuery: true,
+    name: 'large-user',
     exportMode:'client',
     pageSize: 20,
     cacheSelection: true,
     transport: {
-      read({ params: { page, pagesize } }) {
-        return {
-          url: `/dataset/user/page/${pagesize}/${page}`,
-        };
-      },
       create: {
         url: '/dataset/user/mutations',
         method: 'put',
@@ -485,7 +481,7 @@ class App extends React.Component {
         summary="BASIC DEMO"
         pagination={{ 
           pageSizeEditable: true,
-          pageSizeOptions: ['10', '50', '100', '200'],
+          pageSizeOptions: ['10', '20', '100', '200', '500', '1000'],
         }}
       >
         <Column

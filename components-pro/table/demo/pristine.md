@@ -42,13 +42,7 @@ class EditButton extends React.Component {
 class App extends React.Component {
   userDs = new DataSet({
     primaryKey: 'userid',
-    transport: {
-      read({ params: { page, pagesize } }) {
-        return {
-          url: `/dataset/user/page/${pagesize}/${page}`,
-        };
-      },
-    },
+    queryUrl: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/guide/user',
     autoQuery: true,
     combineSort: true,
     pageSize: 5,
@@ -128,9 +122,9 @@ class App extends React.Component {
     return (
       <Table key="user" buttons={buttons} dataSet={this.userDs} pristine>
         <Column name="userid" sortable />
-        <Column name="age" sortable />
-        <Column name="enable" />
-        <Column name="name" />
+        <Column name="age" sortable width={200} />
+        <Column name="enable" width={200} />
+        <Column name="name" width={200} />
         <Column header="操作" align="center" renderer={this.renderEdit} lock="right" />
       </Table>
     );

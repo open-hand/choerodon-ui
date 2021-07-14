@@ -20,7 +20,9 @@ timeline: true
 - 🌟 `<pro>DataSet`: dataToJSON adds `dirty-field`, `dirty-field-self` types.
 - 🌟 `<pro>DataSet.Field`: Added `json` type.
 - 🌟 `<pro>DataSet`: Added the `combineSort` property to support the parameter passing of combined column sorting.
+- 🌟 `<pro>Table`: Fix the effect of local export in large data volume.
 - 🌟 `<pro>Select`: `selectAllButton` added hook type to support custom buttons.
+- 🌟 `<pro>PerformanceTable`: Added `queryBar`, `toolbar` attributes to support query bar and toolbar.
 - 💄 `<pro>Modal`: Support traversing iframes in the same domain.
 - 💄 `<pro>DataSet`: The `all` value of the `dataToJSON` property will verify all records.
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
@@ -35,6 +37,8 @@ timeline: true
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
 - 🐞 `<pro>Table`: Fix the issue that under the peacock blue theme, when the editor of the Column is function, after entering the editing mode and clicking exit, the width of the component in the editing mode will be incorrect next time.
 - 🐞 `<pro>Table`: Fix the problem that editing cannot be cancelled when editing in-line.
+-🐞  `<pro>PerformanceTable`: Fix scroll bar events.
+-🐞  `<pro>PerformanceTable`: Fix the problem of invalid clicks in the table.
 
 ## 1.4.1
 

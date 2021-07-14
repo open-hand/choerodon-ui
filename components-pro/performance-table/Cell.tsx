@@ -1,5 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import isString from 'lodash/isString';
+import isNumber from 'lodash/isNumber';
 import classNames from 'classnames';
 import { LAYER_WIDTH } from './constants';
 import { isNullOrUndefined, defaultClassPrefix, getUnhandledProps, prefix } from './utils';
@@ -124,6 +126,7 @@ class Cell extends React.PureComponent<CellProps> {
       onClick, // Fix sortColumn not getting fired in Gatsby production build
       ...rest
     } = this.props;
+    const { tableStore } = this.context;
 
     if (removed) {
       return null;
@@ -169,7 +172,24 @@ class Cell extends React.PureComponent<CellProps> {
 
     // fix unable to get propTypes after gatsby is compiled
     const unhandledProps = getUnhandledProps(propTypes, getUnhandledProps(Column.propTypes, rest));
-    const cell = renderCell ? renderCell(cellContent) : cellContent;
+    let cell = renderCell ? renderCell(cellContent) : cellContent;
+    const { searchText, highlightRowIndexs } = tableStore;
+    if (isNumber(cell)) cell = String(cell);
+    if (isString(cell) && searchText) {
+      const index = cell.indexOf(searchText);
+      const beforeStr = cell.substr(0, index);
+      const afterStr = cell.substr(index + searchText.length);
+      if (index > -1) {
+        highlightRowIndexs.push(rowIndex);
+      }
+      cell = index > -1 ? (
+        <span>
+          {beforeStr}
+          <span className={this.addPrefix('letter-highlight')}>{searchText}</span>
+          {afterStr}
+        </span>
+      ) : <span>{cell}</span>;
+    }
     const content = wordWrap ? (
       <div className={this.addPrefix('wrap')}>
         {this.renderTreeNodeExpandIcon()}

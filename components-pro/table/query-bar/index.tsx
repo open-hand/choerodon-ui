@@ -47,7 +47,7 @@ import TextField from '../../text-field';
 
 export interface TableQueryBarProps {
   buttons?: Buttons[];
-  queryFields?: { [key: string]: ReactElement<any> };
+  queryFields?: { [key: string]: ReactElement<any>; };
   queryFieldsLimit?: number;
   summaryFieldsLimit?: number;
   showQueryBar?: boolean;
@@ -79,13 +79,13 @@ const ExportBody = observer((props) => {
       break;
     case DataSetExportStatus.exporting:
       exportProgress = {
-        percent: 20,
+        percent: dataSet.exportProgress,
         status: ProgressStatus.active,
       };
       break;
     case DataSetExportStatus.progressing:
       exportProgress = {
-        percent: 50,
+        percent: dataSet.exportProgress,
         status: ProgressStatus.active,
       };
       break;
@@ -148,9 +148,9 @@ const ExportFooter = observer((props) => {
         }} /></div>
         <Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
       {dataSet.exportStatus !== DataSetExportStatus.success &&
-      dataSet.exportStatus !== DataSetExportStatus.failed &&
-      <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray}
-                                                                                onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
+        dataSet.exportStatus !== DataSetExportStatus.failed &&
+        <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray}
+          onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
       }
     </div>
   );
@@ -329,6 +329,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             children: (
               <ExportBody prefixCls={prefixCls} dataSet={dataSet} />
             ),
+            onCancel:this.handleExportButton,
             footer: <ExportFooter prefixCls={prefixCls} exportButton={this.handleExportButton} exportModal={exportModal} dataSet={dataSet} />,
           });
       }
@@ -360,7 +361,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   getButtonProps(
     type: TableButtonType,
-  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined {
+  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode; } | undefined {
     const {
       tableStore: { isTree, dataSet },
     } = this.context;
@@ -760,21 +761,21 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   @autobind
   expandTree() {
-    const {
-      context: {
-        tableStore,
-      },
-    } = this;
+    const { tableStore } = this.context;
+    const { props: { queryBarProps } } = tableStore;
+    if (typeof queryBarProps.onQuery === 'function') {
+      queryBarProps.onQuery();
+    }
     tableStore.expandAll();
   }
 
   @autobind
   collapseTree() {
-    const {
-      context: {
-        tableStore,
-      },
-    } = this;
+    const { tableStore } = this.context;
+    const { props: { queryBarProps } } = tableStore;
+    if (typeof queryBarProps.onReset === 'function') {
+      queryBarProps.onReset();
+    }
     tableStore.collapseAll();
   }
 
@@ -787,8 +788,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       },
       props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded },
       showQueryBar,
-      expandTree,
-      collapseTree,
     } = this;
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
@@ -803,8 +802,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         queryFieldsLimit: queryFieldsLimit!,
         summaryFieldsLimit: summaryFieldsLimit!,
         summaryBar,
-        onQuery: treeQueryExpanded && isTree ? expandTree : noop,
-        onReset: treeQueryExpanded && isTree ? collapseTree : noop,
+        onQuery: treeQueryExpanded && isTree ? this.expandTree : noop,
+        onReset: treeQueryExpanded && isTree ? this.collapseTree : noop,
       };
       if (typeof queryBar === 'function') {
         return (queryBar as TableQueryBarHook)(props);

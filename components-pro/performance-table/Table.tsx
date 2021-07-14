@@ -1,13 +1,16 @@
 import * as React from 'react';
+import { action } from 'mobx';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import isFunction from 'lodash/isFunction';
 import flatten from 'lodash/flatten';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
+import includes from 'lodash/includes';
 import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
+import pull from 'lodash/pull';
 import BScroll from '@better-scroll/core'
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
@@ -37,8 +40,10 @@ import {
   resetLeftForCells,
   shouldShowRowByExpanded,
   toggleClass,
+  findHiddenKeys,
 } from './utils';
 
+import isMobile from '../_util/isMobile';
 import { TableProps } from './Table.d';
 import { RowProps } from './Row.d';
 import { SortType } from './common.d';
@@ -48,6 +53,11 @@ import Cell from './Cell';
 import HeaderCell from './HeaderCell';
 import { ColumnProps } from './Column.d';
 import Spin from '../spin';
+import PerformanceTableQueryBar from './query-bar';
+import ProfessionalBar from './query-bar/TableProfessionalBar';
+import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
+import TableStore from './TableStore';
+import Toolbar from './tool-bar';
 
 interface TableRowProps extends RowProps {
   key?: string | number;
@@ -58,6 +68,11 @@ const SORT_TYPE = {
   DESC: 'desc',
   ASC: 'asc',
 };
+
+export enum TableQueryBarType {
+  professionalBar = 'professionalBar',
+  filterBar = 'filterBar',
+}
 
 type Offset = {
   top?: number;
@@ -78,6 +93,8 @@ interface TableState {
   tableRowsMaxHeight: number[];
   isColumnResizing?: boolean;
   expandedRowKeys: string[] | number[];
+  hiddenColumnKeys: string[] | number[];
+  searchText: string;
   sortType?: SortType;
   scrollY: number;
   isScrolling?: boolean;
@@ -146,6 +163,10 @@ const propTypes = {
   onTouchMove: PropTypes.func,
   onDataUpdated: PropTypes.func,
   highLightRow: PropTypes.bool,
+  /**
+   * 显示查询条
+   */
+  queryBar: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 export default class PerformanceTable extends React.Component<TableProps, TableState> {
@@ -158,6 +179,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   static HeaderCell = HeaderCell;
 
   static propTypes = propTypes;
+
+  static ProfessionalBar = ProfessionalBar;
+
+  static DynamicFilterBar = DynamicFilterBar;
 
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table'),
@@ -231,6 +256,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   _visibleRows = [];
   _lastRowIndex: string | number;
 
+  tableStore: TableStore = new TableStore(this);
+
   constructor(props: TableProps) {
     super(props);
     const {
@@ -250,6 +277,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       ? findRowKeys(data, rowKey, isFunction(renderRowExpanded))
       : defaultExpandedRowKeys || [];
 
+    const hiddenColumnKeys = findHiddenKeys(children, columns);
+
     let shouldFixedColumn = Array.from(children as Iterable<any>).some(
       (child: any) => child && child.props && child.props.fixed,
     );
@@ -266,6 +295,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.state = {
       isTree,
       expandedRowKeys,
+      hiddenColumnKeys,
       shouldFixedColumn,
       cacheData: data,
       data: isTree ? flattenData(data) : data,
@@ -279,6 +309,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       scrollY: 0,
       isScrolling: false,
       fixedHeader: false,
+      searchText: '',
     };
 
     this.scrollY = 0;
@@ -323,7 +354,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const options = { passive: false };
     const tableBody = this.tableBodyRef.current;
     if (tableBody) {
-      this.initBScroll(tableBody);
+      if (isMobile()) {
+        this.initBScroll(tableBody);
+      }
       this.wheelListener = on(tableBody, 'wheel', this.wheelHandler.onWheel, options);
       // this.touchStartListener = on(tableBody, 'touchstart', this.handleTouchStart, options);
       // this.touchMoveListener = on(tableBody, 'touchmove', this.handleTouchMove, options);
@@ -350,12 +383,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.props.children !== nextProps.children ||
       this.props.columns !== nextProps.columns ||
       this.props.sortColumn !== nextProps.sortColumn ||
-      this.props.sortType !== nextProps.sortType
+      this.props.sortType !== nextProps.sortType ||
+      // 重新计算 调整显示列
+      this.state.hiddenColumnKeys.length !== nextState.hiddenColumnKeys.length
     ) {
       this._cacheCells = null;
     }
 
     return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.tableStore.updateProps(nextProps);
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
@@ -506,6 +545,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    * - 处理 children 中存在 <Column> 数组的情况
    * - 过滤 children 中的空项
    */
+  @action
   getTableColumns(): React.ReactNodeArray {
     const { columns } = this.props;
     let children = this.props.children;
@@ -520,12 +560,23 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     // Fix that the `ColumnGroup` array cannot be rendered in the Table
     const flattenColumns = flatten(children).map((column: React.ReactElement) => {
       if (column) {
+        const { hiddenColumnKeys } = this.state;
+        const columnChildren: any = column.props.children;
+        // @ts-ignore
+        const columnHidden = includes(hiddenColumnKeys, `${columnChildren[1].props.dataKey}`);
+        let cellProps: ColumnProps = {};
+        if (columnHidden !== undefined) {
+          cellProps = {
+            hidden: columnHidden
+          }
+        }
         if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
           const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
           return childColumns.map((childColumn, index) => {
             // 把 ColumnGroup 设置的属性覆盖到 Column
             const groupCellProps: any = {
               ...childColumn?.props,
+              ...cellProps,
               align,
               fixed,
               verticalAlign,
@@ -546,12 +597,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             return React.cloneElement(childColumn, groupCellProps);
           });
         }
+        return React.cloneElement(column, cellProps);
       }
       return column;
     });
 
+    this.tableStore.originalColumns = flatten(flattenColumns);
     // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
-    return flatten(flattenColumns).filter(col => col);
+    return flatten(flattenColumns).filter(col => col && !col.props.hidden);
   }
 
   getCellDescriptor() {
@@ -761,6 +814,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.handleColumnResizeMove(width, left, fixed);
   };
 
+  handleColumnHidden = (dataKey: any, hidden: boolean) => {
+    const hiddenKeys: any = [...this.state.hiddenColumnKeys];
+    if (hidden) {
+      hiddenKeys.push(dataKey);
+    } else {
+      pull(hiddenKeys, dataKey);
+    }
+    this.setState({ hiddenColumnKeys: hiddenKeys });
+  };
+
   handleColumnResizeMove = (width: number, left: number, fixed: boolean) => {
     let mouseAreaLeft = width + left;
     let x = mouseAreaLeft;
@@ -928,8 +991,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       scrollbar: false,
       probeType: 3,
       scrollX: true,
-      click: true
+      click: true,
+      momentumLimitTime: 500,
     });
+
     const hooks = this.bscroll.scroller.actions.hooks;
 
     hooks.on('start', this.handleTouchStart);
@@ -939,8 +1004,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     thHooks.on('move', this.handleTouchMove);
 
     this.bscroll.on('scroll', (pos) => {
+      this.handleScrollY(this.scrollY - pos.y);
       this.scrollY = pos.y;
-      this.scrollTop(-pos.y);
     });
   }
 
@@ -1740,6 +1805,30 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return renderLoading ? renderLoading(loadingElement) : loadingElement;
   }
 
+  renderTableToolbar() {
+    const {
+      toolbar,
+      toolBarRender,
+    } = this.props;
+
+    if (toolBarRender === false || !toolbar) return null;
+
+    const { header, buttons, settings } = toolbar;
+
+    /** 内置的工具栏 */
+    return (
+      <Toolbar
+        header={header}
+        hideToolbar={
+          settings === false && !header && !toolBarRender && !toolbar
+        }
+        buttons={buttons}
+        settings={settings}
+        toolBarRender={toolBarRender}
+      />
+    );
+  }
+
   render() {
     const {
       children,
@@ -1756,6 +1845,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       classPrefix,
       loading,
       showHeader,
+      queryBar,
       ...rest
     } = this.props;
 
@@ -1781,16 +1871,20 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const unhandled = getUnhandledProps(propTypes, rest);
 
+    const { tableStore, translateDOMPositionXY } = this;
+
     return (
       <TableContext.Provider
         value={{
-          // @ts-ignore
-          translateDOMPositionXY: this.translateDOMPositionXY,
+          translateDOMPositionXY,
           rtl: this.isRTL(),
           isTree,
           hasCustomTreeCol,
+          tableStore,
         }}
       >
+        {queryBar === false ? null : <PerformanceTableQueryBar />}
+        {this.renderTableToolbar()}
         <div
           role={isTree ? 'treegrid' : 'grid'}
           // The aria-rowcount is specified on the element with the table.

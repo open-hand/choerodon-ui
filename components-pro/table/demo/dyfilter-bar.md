@@ -19,6 +19,8 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx-react-lite';
 import { action, toJS } from 'mobx';
 
+const { DynamicFilterBar } = Table;
+
 const optionData = [{ text: '男', value: 'M' }, { text: '女', value: 'F' }];
 
 const codeDynamicProps = {
@@ -179,7 +181,7 @@ class App extends React.Component {
       <Table
         buttons={['add', 'query']}
         dataSet={this.ds}
-        queryBar="filterBar"
+        queryBar={(props) => <DynamicFilterBar {...props} dynamicFilterBar={{ suffixes: ['filter'] }} />}
         border={false}
         columns={this.columns}
         queryFieldsLimit={2}

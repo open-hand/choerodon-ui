@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: 新增 json 类型。
 - 🌟 `<pro>DataSet`: 新增 combineSort 属性支持组合列排序传参。
 - 🌟 `<pro>Select`: selectAllButton 新增钩子类型用于支持自定义按钮。
+- 🌟 `<pro>PerformanceTable`: 新增 queryBar, toolbar 属性，用于支持查询条及工具栏。
 - 💄 `<pro>Modal`: 支持穿越同域 iframe。
 - 💄 `<pro>DataSet`: dataToJSON 属性的 all 值将校验所有记录。
 - 💄 `<pro>DataSet`: 优化 addField 方法将自动创建已有 Record 对应的 Field。
@@ -35,6 +36,8 @@ timeline: true
 - 🐞 `<pro>IconPicker`: 修复当点击分页按钮并按钮成禁用状态时，弹窗无法关闭的问题。
 - 🐞 `<pro>Table`: 修复在孔雀蓝主题下，当Column的editor为function的时候，进入编辑态点击退出后会导致下次进入编辑态组件宽度不正确的问题
 - 🐞 `<pro>Table`: 修复行内编辑时无法取消编辑的问题。
+- 🐞 `<pro>PerformanceTable`: 修复滚动条事件。
+- 🐞 `<pro>PerformanceTable`: 修复表格内点击无效问题。
 
 ## 1.4.1
 
@@ -50,6 +53,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`：新增 showCheckedStrategy 属性, 配置 treeCheckable 时，定义选中项回填的方式。
 - 🌟 `<pro>PerformanceTable`：新增点击行高亮属性 highlightRow。
 - 🌟 `<pro>DataSet.Record`: get 方法支持字段名数组参数。
+- 🌟 `<pro>Table`：修复本地导出在超大数据量时的效果。
 - 💄 `<pro>PerformanceTable`：兼容移动端拖拽列宽。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。

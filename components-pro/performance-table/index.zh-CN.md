@@ -93,6 +93,8 @@ scrollLeft: (left: number) => void;
 | treeCol       | boolean                                          | 指定列显示为 Tree                                                                     |
 | verticalAlign | enum: 'top', 'middle', 'bottom'                  | 垂直对齐方式                                                                          |
 | width         | number                                           | 列宽                                                                                  |
+| hidden         | boolean                                           | 隐藏                                                                                  |
+| hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
 
 > `sortable` 是用来定义该列是否可排序，但是根据什么 `key` 排序需要 在 `Cell` 设置一个 `dataKey`
 > 这里的排序是服务端排序，所以需要在 `<Table>` 的 `onSortColumn` 回调函数中处理逻辑，回调函数会返回 `sortColumn`, `sortType` 这两个值。
