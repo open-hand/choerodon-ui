@@ -1464,9 +1464,9 @@ export default class Table extends DataSetComponent<TableProps> {
                     {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
                     {content}
                     {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
-                    {isStickySupport() && overflowX && <StickyShadow position="left" />}
-                    {isStickySupport() && overflowX && <StickyShadow position="right" />}
                   </div>
+                  {isStickySupport() && overflowX && <StickyShadow position="left" />}
+                  {isStickySupport() && overflowX && <StickyShadow position="right" />}
                   <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                   {this.getFooter()}
                 </div>

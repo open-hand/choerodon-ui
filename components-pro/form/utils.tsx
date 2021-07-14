@@ -38,3 +38,13 @@ export function getProperty(props: any, key: string, dataSet?: DataSet, record?:
 }
 
 export const defaultExcludeUseColonTag: string[] = ['div', 'button', 'Button'];
+
+export function hasParentElement(parentElement: HTMLElement | null, tagName: string): boolean {
+  while (parentElement) {
+    if (parentElement.tagName.toLowerCase() === tagName) {
+      return true;
+    }
+    parentElement = parentElement.parentElement;
+  }
+  return false;
+}

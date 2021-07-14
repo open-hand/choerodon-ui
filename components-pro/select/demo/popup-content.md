@@ -14,7 +14,8 @@ title:
 Custom dropdown
 
 ```jsx
-import { Select, Button, TextField } from 'choerodon-ui/pro';
+import { Select, Button, TextField, Form, DataSet } from 'choerodon-ui/pro';
+import { observer } from 'mobx-react-lite';
 
 function handleChange(value, oldValue) {
   console.log('[basic new]', value, '[basic old]', oldValue);
@@ -44,31 +45,61 @@ const SelectContent = ({ children, dataSet, textField, valueField, setPopup }) =
   );
 }
 
+const App = observer(() => {
+  const ds = React.useMemo(() => new DataSet({ autoCreate: true }), []);
+  const options = React.useMemo(() => new DataSet({
+    data: [
+      { value: 'jack', meaning: 'Jack' },
+      { value: 'lucy', meaning: 'Lucy' },
+      { value: 'wu', meaning: 'Wu' },
+    ],
+  }), []);
+  const [created, setCreated] = React.useState(null);
+  const [isCreate, setIsCreate] = React.useState(false);
+  const reset = React.useCallback(() => {
+    setIsCreate(false);
+     setCreated(null);
+     if (created && (!created.get('value') || !created.get('meaning'))) {
+       options.remove(created);
+     }
+  }, [created, options]);
+  const handlePopupHiddenChange = React.useCallback((hidden) =>{
+    if (hidden) {
+      reset();
+    }
+  }, [reset]);
+  const renderPopupContent = React.useCallback(({ content, dataSet, textField, valueField, setPopup }) => isCreate? (
+    <Form dataSet={dataSet}>
+      <TextField name="value" label="值" />
+      <TextField name="meaning" label="标题" />
+      <Button onClick={reset}>还原</Button>
+    </Form>
+  ) : (
+    <SelectContent dataSet={dataSet} textField={textField} valueField={valueField} setPopup={setPopup}>
+      {content}
+    </SelectContent>
+  ), [isCreate, reset]);
+  const renderSelectAllButton = React.useCallback((buttons) => [
+    ...buttons,
+    { key: 'add', children: '新增', onClick: () => {setCreated(options.create());setIsCreate(true);}},
+  ], []);
 
-class App extends React.Component {
-  renderPopupContent = ({ content, dataSet, textField, valueField, setPopup }) => {
-    return (
-      <SelectContent dataSet={dataSet} textField={textField} valueField={valueField} setPopup={setPopup}>
-        {content}
-      </SelectContent>
-    )
-  }
-  render() {
-    return (
+  return (
+    <Form dataSet={ds} labelLayout="float">
       <Select
+        searchable
+        name="value"
+        options={options}
         placeholder="请选择"
-        popupContent={this.renderPopupContent}
+        popupContent={renderPopupContent}
+        selectAllButton={renderSelectAllButton}
+        onPopupHiddenChange={handlePopupHiddenChange}
         tabIntoPopupContent
-      >
-        <Option value="jack"><em>Jack</em> </Option>
-        <Option value="lucy">Lucy</Option>
-        <Option value="wu">
-          Wu
-        </Option>
-      </Select>
-    );
-  }
-}
+        multiple
+      />
+    </Form>
+  );
+});
 
 ReactDOM.render(<App />, mountNode);
 ```

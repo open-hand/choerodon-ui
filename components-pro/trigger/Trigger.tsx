@@ -198,7 +198,13 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   getFocusableElements(elements) {
-    this.focusElements = elements && elements.sort((e1, e2) => e1.tabIndex - e2.tabIndex);
+    const focusElements = elements && elements.sort((e1, e2) => e1.tabIndex - e2.tabIndex);
+    this.focusElements = focusElements;
+    const { activeElement, focusTarget } = this;
+    if (focusTarget && activeElement && activeElement !== true && (!focusElements || !focusElements.includes(activeElement))) {
+      this.activeElement = null;
+      focusTarget.focus();
+    }
   }
 
   @autobind
