@@ -38,6 +38,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复行内编辑时无法取消编辑的问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动条事件。
 - 🐞 `<pro>PerformanceTable`: 修复表格内点击无效问题。
+- 🐞 `<pro>Form`: 修复嵌套表单的 dataSet 属性不起作用的问题。
+- 🐞 `<pro>Select`: 修复自定义弹窗可能无法关闭的问题。
 
 ## 1.4.1
 

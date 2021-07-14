@@ -37,8 +37,10 @@ timeline: true
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
 - 🐞 `<pro>Table`: Fix the issue that under the peacock blue theme, when the editor of the Column is function, after entering the editing mode and clicking exit, the width of the component in the editing mode will be incorrect next time.
 - 🐞 `<pro>Table`: Fix the problem that editing cannot be cancelled when editing in-line.
--🐞  `<pro>PerformanceTable`: Fix scroll bar events.
--🐞  `<pro>PerformanceTable`: Fix the problem of invalid clicks in the table.
+- 🐞  `<pro>PerformanceTable`: Fix scroll bar events.
+- 🐞  `<pro>PerformanceTable`: Fix the problem of invalid clicks in the table.
+- 🐞 `<pro>Form`: Fix the problem that the `dataSet` property of nested forms does not work.
+- 🐞 `<pro>Select`: Fix the problem that the custom pop-up window may not be closed.
 
 ## 1.4.1
 

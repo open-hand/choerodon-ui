@@ -31,7 +31,15 @@ import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComp
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
-import { defaultColumns, defaultExcludeUseColonTag, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
+import {
+  defaultColumns,
+  defaultExcludeUseColonTag,
+  defaultLabelWidth,
+  FIELD_SUFFIX,
+  getProperty,
+  hasParentElement,
+  normalizeLabelWidth,
+} from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import { DataSetEvents } from '../data-set/enum';
@@ -315,6 +323,8 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @observable responsiveItems: any[];
 
+  @observable isUnderForm?: boolean;
+
   name = NameGen.next().value;
 
   validating: boolean = false;
@@ -333,34 +343,47 @@ export default class Form extends DataSetComponent<FormProps> {
     return this.observableProps.axios || getConfig('axios') || axios;
   }
 
-
   @computed
   get dataSet(): DataSet | undefined {
     const { record } = this;
     if (record) {
       return record.dataSet;
     }
-    return this.observableProps.dataSet;
+    const { observableProps } = this;
+    const { dataSet } = observableProps;
+    if (dataSet) {
+      return dataSet;
+    }
+    return observableProps.contextDataSet;
   }
 
   @computed
   get record(): Record | undefined {
-    const { record, dataSet, dataIndex } = this.observableProps;
+    const { observableProps } = this;
+    const { record } = observableProps;
     if (record) {
       return record;
     }
+    const { dataSet, dataIndex } = observableProps;
     if (dataSet) {
       if (isNumber(dataIndex)) {
         return dataSet.get(dataIndex);
       }
       return dataSet.current;
     }
-    return undefined;
+    if (isNumber(dataIndex)) {
+      const { contextDataSet } = observableProps;
+      if (contextDataSet) {
+        return contextDataSet.get(dataIndex);
+      }
+    }
+    return observableProps.contextRecord;
   }
 
   @computed
   get dataIndex(): number | undefined {
-    return this.observableProps.dataIndex;
+    const { dataIndex, contextDataIndex } = this.observableProps;
+    return defaultTo(dataIndex, contextDataIndex);
   }
 
   @computed
@@ -506,9 +529,12 @@ export default class Form extends DataSetComponent<FormProps> {
   getObservableProps(props, context) {
     return {
       ...super.getObservableProps(props, context),
-      dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
-      record: 'record' in props ? props.record : context.record,
-      dataIndex: defaultTo(props.dataIndex, context.dataIndex),
+      dataSet: props.dataSet,
+      contextDataSet: context.dataSet,
+      record: props.record,
+      contextRecord: context.record,
+      dataIndex: props.dataIndex,
+      contextDataIndex: context.dataIndex,
       labelLayout: 'labelLayout' in props ? props.labelLayout : context.labelLayout,
       labelAlign: 'labelAlign' in props ? props.labelAlign : context.labelAlign,
       labelTooltip: 'labelTooltip' in props ? props.labelTooltip : context.labelTooltip,
@@ -582,9 +608,29 @@ export default class Form extends DataSetComponent<FormProps> {
     this.processDataSetListener(true);
   }
 
+  componentDidMount() {
+    this.componentDidMountOrUpdate();
+    super.componentDidMount();
+  }
+
+  componentDidUpdate() {
+    this.componentDidMountOrUpdate();
+  }
 
   componentWillUnmount() {
     this.processDataSetListener(false);
+  }
+
+  @mobxAction
+  componentDidMountOrUpdate() {
+    const { formNode } = this.context;
+    const { element } = this;
+    if (formNode && element) {
+      const isUnderForm = hasParentElement(element.parentElement, 'form');
+      if (isUnderForm !== this.isUnderForm) {
+        this.isUnderForm = isUnderForm;
+      }
+    }
   }
 
   processDataSetListener(flag: boolean) {
@@ -892,11 +938,16 @@ export default class Form extends DataSetComponent<FormProps> {
       >
         <FormContext.Provider value={value}>
           {
-            formNode ? children : (
-              <form {...this.getMergedProps()} noValidate>
-                {children}
-              </form>
-            )
+            this.isUnderForm ? children :
+              formNode && this.isUnderForm === undefined ? (
+                <div {...this.getMergedProps()}>
+                  {children}
+                </div>
+              ) : (
+                <form {...this.getMergedProps()} noValidate>
+                  {children}
+                </form>
+              )
           }
         </FormContext.Provider>
       </Responsive>

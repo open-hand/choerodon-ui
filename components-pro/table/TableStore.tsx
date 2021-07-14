@@ -1281,6 +1281,7 @@ export default class TableStore {
 
   constructor(node) {
     runInAction(() => {
+      this.scrollPosition = ScrollPosition.left;
       this.mouseBatchChooseIdList = [];
       this.mouseBatchChooseState = false;
       this.showCachedSelection = false;

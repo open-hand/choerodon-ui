@@ -26,7 +26,7 @@ const StickyShadow: FunctionComponent<StickyShadowProps> = observer((props) => {
       } else if (position === 'right') {
         style.right = pxToRem(tableStore.rightLeafColumnsWidth + (tableStore.overflowY ? scrollBarWidth : 0))!;
       }
-      style.bottom = pxToRem(tableStore.overflowY ? scrollBarWidth : undefined)!;
+      style.bottom = pxToRem(scrollBarWidth)!;
       return style;
     }
   }, [disabled, position, tableStore]);

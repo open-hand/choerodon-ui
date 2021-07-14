@@ -477,22 +477,41 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (record) {
       return record.dataSet;
     }
-    return this.observableProps.dataSet;
+    const { observableProps } = this;
+    const { dataSet } = observableProps;
+    if (dataSet) {
+      return dataSet;
+    }
+    return observableProps.contextDataSet;
   }
 
   @computed
   get record(): Record | undefined {
-    const { record, dataSet, dataIndex } = this.observableProps;
+    const { observableProps } = this;
+    const { record } = observableProps;
     if (record) {
       return record;
     }
+    const { dataSet, dataIndex } = observableProps;
     if (dataSet) {
       if (isNumber(dataIndex)) {
         return dataSet.get(dataIndex);
       }
       return dataSet.current;
     }
-    return undefined;
+    if (isNumber(dataIndex)) {
+      const { contextDataSet } = observableProps;
+      if (contextDataSet) {
+        return contextDataSet.get(dataIndex);
+      }
+    }
+    return observableProps.contextRecord;
+  }
+
+  @computed
+  get dataIndex(): number | undefined {
+    const { dataIndex, contextDataIndex } = this.observableProps;
+    return defaultTo(dataIndex, contextDataIndex);
   }
 
   @computed
@@ -653,9 +672,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       ...this.getObservablePropsExcludeOutput(props, context),
       label: props.label,
       name: props.name,
-      record: 'record' in props ? props.record : context.record,
-      dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
-      dataIndex: defaultTo(props.dataIndex, context.dataIndex),
+      dataSet: props.dataSet,
+      contextDataSet: context.dataSet,
+      record: props.record,
+      contextRecord: context.record,
+      dataIndex: props.dataIndex,
+      contextDataIndex: context.dataIndex,
       value: 'value' in props ? props.value : this.observableProps ? this.observableProps.value : props.defaultValue,
       disabled: context.disabled || props.disabled,
       pristine: context.pristine || props.pristine,
@@ -1227,7 +1249,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         dataSet,
         trim,
         format,
-        observableProps: { dataIndex },
+        dataIndex,
       } = this;
       const { onChange = noop, onBeforeChange = noop } = this.props;
       const old = toJS(this.getOldValue());
