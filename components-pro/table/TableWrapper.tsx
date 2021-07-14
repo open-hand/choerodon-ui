@@ -107,11 +107,12 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     }
   }
 
-  getCol(column, width): ReactNode {
+  getCol(prefixCls: string, column: ColumnProps, width?: number | string): ReactNode {
     if (!column.hidden) {
       return (
         <TableCol
           key={getColumnKey(column)}
+          prefixCls={prefixCls}
           width={width}
           minWidth={minColumnWidth(column)}
         />
@@ -122,7 +123,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   getColGroup(): ReactNode {
     const { lock, hasHeader, hasFooter } = this.props;
     const {
-      tableStore: { overflowY, overflowX, customizable, rowDraggable, dragColumnAlign },
+      tableStore: { overflowY, overflowX, customizable, rowDraggable, dragColumnAlign, prefixCls },
     } = this.context;
     let hasEmptyWidth = false;
     let fixedColumnLength = 1;
@@ -142,7 +143,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
           hasEmptyWidth = true;
         }
       }
-      return this.getCol(column, width);
+      return this.getCol(prefixCls, column, width);
     });
     if (overflowY && lock !== ColumnLock.left && (hasHeader || hasFooter)) {
       cols.push(<col key="fixed-column" style={{ width: pxToRem(measureScrollbar()) }} />);
@@ -184,7 +185,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     const { prefixCls, props: { summary } } = tableStore;
     const editors = hasBody && this.getEditors();
     const className = classNames({
-      [`${prefixCls}-last-row-bordered`]: hasBody && !tableStore.overflowY && tableStore.height !== undefined,
+      [`${prefixCls}-last-row-bordered`]: hasBody && !tableStore.overflowY && (tableStore.height !== undefined || (!tableStore.hasFooter && tableStore.overflowX)),
     });
     const table = (
       <table

@@ -20,9 +20,10 @@ export default class TableCol extends PureComponent<TableColProps> {
   };
 
   render() {
-    const { width, minWidth } = this.props;
+    const { width, minWidth, prefixCls } = this.props;
     return (
       <col
+        className={`${prefixCls}-col`}
         style={{ width: pxToRem(width), minWidth: pxToRem(minWidth) }}
       />
     );
