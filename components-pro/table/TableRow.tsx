@@ -451,7 +451,7 @@ export default class TableRow extends Component<TableRowProps, any> {
           const Element = isExpanded || !parityRow ? 'tr' : 'div';
           expandRows.push(
             <Element {...rowExternalProps} {...rowProps}>
-              {expandIconAsCell && <td key={EXPAND_KEY} />}
+              {expandIconAsCell && <td className={`${prefixCls}-cell`} key={EXPAND_KEY} />}
               <td
                 key={`${EXPAND_KEY}-rest`}
                 className={`${prefixCls}-cell`}

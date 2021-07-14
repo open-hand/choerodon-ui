@@ -145,8 +145,11 @@ export default class TableFooter extends Component<TableFooterProps, any> {
         {tds}
       </tr>
     );
+    const classString = classNames(`${prefixCls}-tfoot`, {
+      [`${prefixCls}-tfoot-bordered`]: overflowX,
+    });
     return (
-      <tfoot ref={this.saveRef} className={classNames(`${prefixCls}-tfoot`, { [`${prefixCls}-tfoot-bordered`]: overflowX })}>
+      <tfoot ref={this.saveRef} className={classString}>
         {
           !isStickySupport() && !lock && (rowHeight === 'auto' || autoFootHeight) ? (
             <ResizeObservedRow onResize={this.handleResize} rowIndex={0}>

@@ -14,7 +14,7 @@ title:
 Grouped Columns.
 
 ```jsx
-import { DataSet, Table } from 'choerodon-ui/pro';
+import { DataSet, Table, CheckBox } from 'choerodon-ui/pro';
 
 const { Column } = Table;
 
@@ -60,16 +60,35 @@ class App extends React.Component {
     ],
   });
 
+  state = { border: true, resizable: true };
+
+  expandedRowRenderer() { return '---' }
+
   render() {
+    const { border, resizable, footer } = this.state;
+    const buttons = [
+      <CheckBox key="border" checked={border} onChange={() => this.setState({ border: !border })} label="边框" labelLayout="float" />,
+      <CheckBox ket="resizable" checked={resizable} onChange={() => this.setState({ resizable: !resizable })} label="可调整列宽" labelLayout="float" />,
+      <CheckBox key="footer" checked={footer} onChange={() => this.setState({ footer: !footer })} label="表脚" labelLayout="float" />,
+    ];
     return (
-      <Table dataSet={this.ds}>
+      <Table
+        dataSet={this.ds}
+        border={border}
+        buttons={buttons}
+        customizable
+        customizedCode="column-group"
+        columnResizable={resizable}
+        expandedRowRenderer={this.expandedRowRenderer}
+        parityRow
+      >
         <Column header="组合">
           <Column name="name" editor width={450} />
           <Column name="age" editor />
         </Column>
         <Column header="组合3">
           <Column header="组合2">
-            <Column name="sex" editor />
+            <Column name="sex" editor footer={footer ? (() => '--') : undefined} />
             <Column name="date.startDate" editor />
           </Column>
           <Column name="sexMultiple" editor />

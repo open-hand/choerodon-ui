@@ -72,11 +72,14 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
     const { prefixCls } = tableStore;
     const rows = this.getTableHeaderRows(this.groupedColumns);
     return rows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
-      if (row.length) {
-        const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && lock !== ColumnLock.left;
+      const { length } = row;
+      if (length) {
+        const notLockLeft = lock !== ColumnLock.left;
+        const lastColumnClassName = notLockLeft ? `${prefixCls}-cell-last` : undefined;
+        const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && notLockLeft;
         let prevColumn: ColumnProps | undefined;
         const placeholderWidth = hasPlaceholder ? measureScrollbar() : 0;
-        const tds = row.map((col) => {
+        const tds = row.map((col, index) => {
           if (!col.hidden) {
             const { column, rowSpan, colSpan, lastLeaf, children } = col;
             const key = String(getColumnKey(column));
@@ -88,6 +91,9 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
               resizeColumn: lastLeaf,
               getHeaderNode: this.getHeaderNode,
             };
+            if (notLockLeft && !hasPlaceholder && index === length - 1 && tableStore.leafColumns[tableStore.leafColumns.length - 1] === lastLeaf) {
+              props.className = lastColumnClassName;
+            }
             if (rowSpan > 1 || children) {
               props.rowSpan = rowSpan;
             }
@@ -118,7 +124,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
             key: 'fixed-column',
             rowSpan: rows.length,
           };
-          const classList = [`${prefixCls}-cell`];
+          const classList = [`${prefixCls}-cell`, lastColumnClassName];
           if (isStickySupport() && tableStore.overflowX) {
             const hasColRightLock = tds.some(td => {
               if (td) {
