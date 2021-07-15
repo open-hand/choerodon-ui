@@ -128,6 +128,7 @@ const prefixCls = getConfig('prefixCls');
 | week     | YYYY-Wo             | string |
 | month    | YYYY-MM             | string |
 | year     | YYYY                | string |
+| timeZone |                     | string \| (moment) => string |
 
 ### ValidationMessages
 

@@ -64,7 +64,7 @@ function contains(root, n) {
 
 export type RenderFunction = (props?: { trigger?: ReactNode }) => React.ReactNode;
 
-export type ChildrenFunction = (caller: (node: ReactElement) => ReactElement) => ReactElement;
+export type ChildrenFunction = (caller: (node: ReactElement) => ReactElement, childrenProps?: any) => ReactElement;
 
 function isChildrenFunction(fn: ReactNode | ChildrenFunction): fn is ChildrenFunction {
   return typeof fn === 'function';
@@ -104,6 +104,7 @@ export interface TriggerProps extends ElementProps {
   tabIntoPopupContent?: boolean;
   popupClassName?: string;
   children?: ReactNode | ChildrenFunction;
+  childrenProps?: any;
 }
 
 @observer
@@ -235,9 +236,9 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, childrenProps } = this.props;
     const popup = this.getPopup();
-    const newChildren = isChildrenFunction(children) ? children(this.renderTriggerChild) : Children.map(children, child => (
+    const newChildren = isChildrenFunction(children) ? children(this.renderTriggerChild, childrenProps) : Children.map(children, child => (
       isValidElement(child) ? this.renderTriggerChild(child) : child
     ));
     return [newChildren, popup];

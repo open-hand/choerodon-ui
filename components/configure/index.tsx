@@ -24,6 +24,7 @@ import { HighlightRenderer, Renderer } from 'choerodon-ui/pro/lib/field/FormFiel
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { onCellProps } from 'choerodon-ui/pro/lib/table/Column';
+import { TimeZone } from 'choerodon-ui/pro/lib/date-picker/DatePicker';
 import { TooltipTheme } from '../tooltip';
 import { SpinProps } from '../spin';
 import { PanelProps } from '../collapse';
@@ -64,6 +65,7 @@ export type Formatter = {
   year?: string;
   month?: string;
   week?: string;
+  timeZone?: TimeZone;
 };
 
 export type Config = {

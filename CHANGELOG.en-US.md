@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableVirtualCell` property.
+- 🌟 `configure`: Added `tableVirtualCell`, `formatter.timeZone` properties.
+- 🌟 `<pro>DatePicker`: Added `timeZone` property.
 - 🌟 `<pro>Tooltip`: Added singleton mode, added `show` and `hide` static methods.
 - 🌟 `<pro>DataSet`: dataToJSON adds `dirty-field`, `dirty-field-self` types.
 - 🌟 `<pro>DataSet.Field`: Added `json` type.

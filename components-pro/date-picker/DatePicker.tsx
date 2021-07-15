@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import DaysView, { DateViewProps } from './DaysView';
 import DateTimesView from './DateTimesView';
@@ -27,6 +28,7 @@ import { $l } from '../locale-context';
 import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
 import Field from '../data-set/Field';
+import { RenderProps } from '../field/FormField';
 
 export type RenderFunction = (
   props: object,
@@ -40,6 +42,8 @@ export type TimeStep = {
   minute?: number;
   second?: number;
 };
+
+export type TimeZone = string | ((moment: Moment) => string);
 
 const viewComponents: { [x: string]: typeof DaysView; } = {
   [ViewMode.decade]: DecadeYearsView,
@@ -66,7 +70,10 @@ export interface DatePickerProps extends TriggerFieldProps {
   step?: TimeStep;
   renderExtraFooter?: () => ReactNode;
   extraFooterPlacement?: 'top' | 'bottom';
-
+  /**
+   * 时区显示
+   */
+  timeZone?: TimeZone;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -119,6 +126,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       minute: PropTypes.number,
       second: PropTypes.number,
     }),
+    /**
+     * 时区显示
+     */
+    timeZone: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     ...TriggerField.propTypes,
   };
 
@@ -196,7 +207,22 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       'cellRenderer',
       'maxLength',
       'minLength',
+      'timeZone',
     ]);
+  }
+
+  @autobind
+  defaultRenderer(props: RenderProps): ReactNode {
+    const renderedText = super.defaultRenderer(props);
+    const mode = this.getDefaultViewMode();
+    const { value } = props;
+    if (value && [ViewMode.time, ViewMode.dateTime].includes(mode)) {
+      const { timeZone = getConfig('formatter').timeZone } = this.props;
+      if (timeZone) {
+        return [renderedText, typeof timeZone === 'function' ? timeZone(value) : value.format(timeZone)];
+      }
+    }
+    return renderedText;
   }
 
   getDefaultViewMode() {
