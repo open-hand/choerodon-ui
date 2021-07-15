@@ -12,14 +12,16 @@ import React, {
 import { Cancelable, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
+import flattenDeep from 'lodash/flattenDeep';
 import isArray from 'lodash/isArray';
+import isBoolean from 'lodash/isBoolean';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, computed, observable } from 'mobx';
+import { action, computed, isArrayLike, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -414,7 +416,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderInputElement(): ReactNode {
     const { addonBefore, addonAfter } = this.props;
-    const input = this.getWrappedEditor();
     const button = this.getInnerSpanButton();
     const suffix = this.getSuffix();
     const prefix = this.getPrefix();
@@ -422,6 +423,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const otherNextNode = this.getOtherNextNode();
     const placeholderDiv = this.renderPlaceHolder();
     const renderedValue = this.renderRenderedValue();
+    const input = this.getWrappedEditor(renderedValue);
     const floatLabel = this.renderFloatLabel();
     const multipleHolder = this.renderMultipleHolder();
     const wrapperProps = this.getWrapperProps();
@@ -655,8 +657,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
-  getWrappedEditor(): ReactNode {
-    return this.getEditor(defaultWrap);
+  getWrappedEditor(renderedValue?: ReactNode): ReactNode {
+    return this.getEditor(defaultWrap, renderedValue);
   }
 
   getClassName(...props): string | undefined {
@@ -693,7 +695,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  getEditor(wrap: (node: ReactElement) => ReactElement): ReactNode {
+  getEditor(wrap: (node: ReactElement) => ReactElement, renderedValue?: ReactNode): ReactNode {
     const {
       prefixCls,
       multiple,
@@ -753,8 +755,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     const text = this.getTextNode();
     const value = this.getValue();
-    const unRenderedText = this.getText(value);
-    const finalText = isString(text) ? text : isString(unRenderedText) ? unRenderedText : (this.renderedTextContent || '');
+    const finalText = (renderedValue ? this.renderedTextContent : isString(text) ? text : isArrayLike(text) && flattenDeep(text).filter(v => !isBoolean(v)).join('')) || '';
     const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
     if ((!this.isFocused || !this.editable) && isValidElement(text)) {
       otherProps.style = {
@@ -1094,7 +1095,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getTextNode() {
-    return this.text === undefined ? (super.getTextNode() as string) : this.text;
+    return this.text === undefined ? super.getTextNode() : this.text;
   }
 
   @action

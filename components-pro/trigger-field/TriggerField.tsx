@@ -231,7 +231,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     return popupContent;
   }
 
-  getWrappedEditor() {
+  getWrappedEditor(renderedValue?: ReactNode) {
     const {
       prefixCls,
       props: {
@@ -267,6 +267,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         getRootDomNode={this.getRootDomNode}
         getPopupContainer={getPopupContainer}
         tabIntoPopupContent={tabIntoPopupContent}
+        childrenProps={renderedValue}
       >
         {this.getEditor}
       </Trigger>

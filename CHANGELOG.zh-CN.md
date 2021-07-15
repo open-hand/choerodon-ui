@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableVirtualCell 属性。
+- 🌟 `configure`: 新增 tableVirtualCell, formatter.timeZone 属性。
+- 🌟 `<pro>DatePicker`: 新增 timeZone 属性。
 - 🌟 `<pro>Tooltip`: 新增单例模式， 添加 show 和 hide 静态方法。
 - 🌟 `<pro>DataSet`: dataToJSON 新增 dirty-field, dirty-field-self 类型。
 - 🌟 `<pro>DataSet.Field`: 新增 json 类型。
