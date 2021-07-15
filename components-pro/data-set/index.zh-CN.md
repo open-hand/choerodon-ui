@@ -23,6 +23,7 @@ title: DataSet
 | autoLocateAfterRemove | 当前数据被删除后自动定位到其他记录 | boolean | true |
 | validateBeforeQuery | 查询时是否校验查询字段或查询数据集 | boolean | true |
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | boolean \| string | 'multiple' |
+| selectionStrategy | 树形选择记录策略， `SHOW_ALL` `SHOW_CHILD` `SHOW_PARENT` | string | 'SHOW_ALL' |
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | false |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
@@ -65,6 +66,7 @@ title: DataSet
 | paging | 是否分页 | observable&lt;boolean&gt; |
 | status | 状态，`loading` `submitting` `ready` | observable&lt;string&gt; |
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | observable&lt;string\|boolean&gt; |
+| selectionStrategy | 树形选择记录策略， `SHOW_ALL` `SHOW_CHILD` `SHOW_PARENT` | observable&lt;string[]&gt; |
 | records | 所有记录 | observable&lt;Record[]&gt; |
 | all | 所有记录, 包括缓存的选择记录 | observable&lt;Record[]&gt; |
 | data | 数据, 不包括删除状态的 Record | observable&lt;Record[]&gt; |
@@ -76,6 +78,7 @@ title: DataSet
 | currentSelected | 当前页选中记录 | readonly observable&lt;Record[]&gt; |
 | currentUnSelected | 当前页未选中记录 | readonly observable&lt;Record[]&gt; |
 | cachedSelected | isAllPageSelection 为 false 时缓存的选中记录 或 isAllPageSelection 为 true 时缓存的未选中记录 | readonly observable&lt;Record[]&gt; |
+| treeSelected | 树形选中记录， 受 selectionStrategy 影响 | readonly observable&lt;Record[]&gt; |
 | length | 数据量 | readonly observable&lt;number&gt; |
 | queryDataSet | 查询数据源 | observable&lt;DataSet&gt; |
 | parent | 级联头数据源 | readonly observable&lt;DataSet&gt; |
@@ -130,6 +133,8 @@ title: DataSet
 | unSelectAll() | 取消全选当前页 |  |  |
 | batchSelect(recordOrId) | 批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
 | batchUnSelect(recordOrId) | 取消批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
+| treeSelect(record) | 选择记录和其子记录 | `record` - 记录对象 |  |
+| treeUnSelect(record) | 取消选择记录和其子记录 | `record` - 记录对象 |  |
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |
 | get(index) | 获取指定索引的记录 | `index` - 记录索引 | Record |
 | getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | `index` - 记录索引 | Record |
@@ -165,10 +170,10 @@ title: DataSet
 | submitFailed | 提交失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | select | 选择记录事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 选择的记录 `previous` - 之前选择的记录，单选模式下有效 | 是 |
 | unSelect | 撤销选择记录事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 撤销选择的记录 | 是 |
-| selectAll | 全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
-| unSelectAll | 撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
-| batchSelect | 批量选择记录事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
-| batchUnSelect | 批量取消选择记录事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
+| selectAll | <废弃>全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| unSelectAll | <废弃>撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| batchSelect | 批量选择记录事件, 由 select, selectAll, batchSelect 和 treeSelect 方法触发 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
+| batchUnSelect | 批量取消选择记录事件, 由 unSelect, unSelectAll, batchUnSelect 和 treeUnSelect 方法触发 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 | 是 |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 | 是 |
 | create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 | 是 |

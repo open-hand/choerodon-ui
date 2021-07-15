@@ -16,6 +16,8 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tableVirtualCell`, `formatter.timeZone` properties.
+- 🌟 `<pro>DataSet`: Added `selectionStrategy` property, `selectionStrategy`, `treeSelected` values, `treeSelect`, `treeUnSelect` methods.
+- 🌟 `<pro>Lov`: Added `showCheckedStrategy` property.
 - 🌟 `<pro>DatePicker`: Added `timeZone` property.
 - 🌟 `<pro>Tooltip`: Added singleton mode, added `show` and `hide` static methods.
 - 🌟 `<pro>DataSet`: dataToJSON adds `dirty-field`, `dirty-field-self` types.

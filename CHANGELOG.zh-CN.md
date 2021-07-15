@@ -16,8 +16,10 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 tableVirtualCell, formatter.timeZone 属性。
+- 🌟 `<pro>DataSet`: 新增 selectionStrategy 属性， selectionStrategy, treeSelected 值， treeSelect, treeUnSelect 方法。
+- 🌟 `<pro>Lov`: 新增 showCheckedStrategy 属性。
 - 🌟 `<pro>DatePicker`: 新增 timeZone 属性。
-- 🌟 `<pro>Tooltip`: 新增单例模式， 添加 show 和 hide 静态方法。
+- 🌟 `<pro>Tooltip`: 新增单例模式, 添加 show 和 hide 静态方法。
 - 🌟 `<pro>DataSet`: dataToJSON 新增 dirty-field, dirty-field-self 类型。
 - 🌟 `<pro>DataSet.Field`: 新增 json 类型。
 - 🌟 `<pro>DataSet`: 新增 combineSort 属性支持组合列排序传参。

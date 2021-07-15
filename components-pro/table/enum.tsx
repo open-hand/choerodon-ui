@@ -25,6 +25,7 @@ export enum ScrollPosition {
 
 export enum SelectionMode {
   rowbox = 'rowbox',
+  treebox = 'treebox',
   click = 'click',
   none = 'none',
   dblclick = 'dblclick',

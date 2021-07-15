@@ -15,12 +15,7 @@ import { defaultRenderer } from '../tree';
 import { getTreeNodes } from '../tree/util';
 import Icon from '../icon';
 import { preventDefault } from '../_util/EventManager';
-
-export enum CheckedStrategy {
-  SHOW_ALL = 'SHOW_ALL',
-  SHOW_PARENT = 'SHOW_PARENT',
-  SHOW_CHILD = 'SHOW_CHILD',
-}
+import { CheckedStrategy } from '../data-set/enum';
 
 export interface TreeSelectProps extends SelectProps {
   treeCheckable?: boolean;
@@ -178,7 +173,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
           }
           return false;
         });
-        if (showCheckedStrategy === 'SHOW_ALL') {
+        if (showCheckedStrategy === CheckedStrategy.SHOW_ALL) {
           if (this.isSelected(record)) {
             const unChooseRecords = record.treeReduce((array, r) => this.isSelected(r) ? array.concat(r) : array, []);
             const unChooseParents = record.parents.filter(parent => this.isSelected(parent));
@@ -186,8 +181,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
           } else {
             this.choose(records.concat(parents));
           }
-        }
-        if (showCheckedStrategy === 'SHOW_PARENT') {
+        } else if (showCheckedStrategy === CheckedStrategy.SHOW_PARENT) {
           if (this.isSelected(record) || record.parents.some(parent => this.isSelected(parent))) {
             const selectedRecords = this.options.filter(option => {
               if (key === option.get(valueField) || (option.children && option.children.includes(record))) {
@@ -207,8 +201,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
             });
             this.setValue(selectedRecords.map(this.processRecordToObject, this));
           }
-        }
-        if (showCheckedStrategy === 'SHOW_CHILD') {
+        } else if (showCheckedStrategy === 'SHOW_CHILD') {
           if (!record.parent) {
             if (this.options.every(option => (!option.children && this.isSelected(option)) || !!option.children)) {
               this.unChooseAll();

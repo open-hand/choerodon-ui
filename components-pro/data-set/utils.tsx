@@ -410,7 +410,7 @@ export function checkFieldType(value: any, field: Field): boolean {
       }
       const valueType =
         field.type === FieldType.boolean &&
-          [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
+        [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -652,7 +652,7 @@ export function axiosConfigAdapter(
   };
 
   const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
-    getConfig('transport') || {};
+  getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
   if (globalConfig) {
     Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params, options));
@@ -1025,7 +1025,7 @@ export function getUniqueKeysAndPrimaryKey(dataSet?: DataSet): string[] {
 
 export async function concurrentPromise(
   promiseLoaders: { getPromise: () => Promise<any>; }[],
-  cancelFnc: (readyPromiseNumber:number) => boolean,
+  cancelFnc: (readyPromiseNumber: number) => boolean,
 ) {
   const promiseLoadersLength = promiseLoaders.length;
   let fail = false;
@@ -1042,7 +1042,7 @@ export async function concurrentPromise(
       if (cancelFnc(resulet.filter(Boolean).length)) {
         fail = true;
         reject();
-        return
+        return;
       }
       let res;
       try {
@@ -1050,7 +1050,7 @@ export async function concurrentPromise(
       } catch (error) {
         fail = true;
         reject(error);
-        return
+        return;
       }
       resulet[index] = res;
       // 判断是否完结
@@ -1071,4 +1071,47 @@ export async function concurrentPromise(
     }
     currentPromiseIndex = maxConcurrent - 1;
   });
+}
+
+export function treeSelect(dataSet: DataSet, record: Record, selected: Record[]) {
+  dataSet.select(record);
+  if (record.isSelected) {
+    selected.push(record);
+    const { children } = record;
+    if (children) {
+      children.forEach(child => treeSelect(dataSet, child, selected));
+    }
+  }
+}
+
+export function treeUnSelect(dataSet: DataSet, record: Record, unSelected: Record[]) {
+  dataSet.unSelect(record);
+  if (!record.isSelected) {
+    unSelected.push(record);
+    const { children } = record;
+    if (children) {
+      children.forEach(child => treeUnSelect(dataSet, child, unSelected));
+    }
+  }
+}
+
+export function treeSelectParent(dataSet: DataSet, record: Record, selected: Record[]) {
+  const { parent } = record;
+  if (parent && !parent.isSelected) {
+    dataSet.select(parent);
+    selected.push(parent);
+    treeSelectParent(dataSet, parent, selected);
+  }
+}
+
+export function treeUnSelectParent(dataSet: DataSet, record: Record, unSelected: Record[]) {
+  const { parent } = record;
+  if (parent && parent.isSelected) {
+    const { children } = parent;
+    if (children && children.every(child => !child.isSelected)) {
+      dataSet.unSelect(parent);
+      unSelected.push(parent);
+      treeUnSelectParent(dataSet, parent, unSelected);
+    }
+  }
 }

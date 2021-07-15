@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
-import { action, computed, observable, toJS } from 'mobx';
+import { action, computed, isArrayLike, observable, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -23,8 +23,8 @@ import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
 import { ParamMatcher, SearchMatcher, Select, SelectProps } from '../select/Select';
-import { ColumnAlign, SelectionMode, TableQueryBarType } from '../table/enum';
-import { DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
+import { ColumnAlign, TableQueryBarType } from '../table/enum';
+import { CheckedStrategy, DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
 import { LovFieldType, SearchAction, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
@@ -96,6 +96,7 @@ export interface LovProps extends SelectProps, ButtonProps {
    * 点击查询仅存在一条数据时自动选中
    */
   autoSelectSingle?: boolean;
+  showCheckedStrategy?: CheckedStrategy;
 }
 
 @observer
@@ -114,6 +115,7 @@ export default class Lov extends Select<LovProps> {
      * 触发查询变更的动作， default: input
      */
     searchAction: PropTypes.oneOf([SearchAction.blur, SearchAction.input]),
+    showCheckedStrategy: PropTypes.string,
   };
 
   static defaultProps = {
@@ -214,7 +216,7 @@ export default class Lov extends Select<LovProps> {
     const config = this.getConfig();
     const { options, multiple, primitive, valueField } = this;
     // TODO：lovEvents deprecated
-    const { lovEvents } = this.props;
+    const { lovEvents, showCheckedStrategy } = this.props;
     const modalProps = this.getModalProps();
     const tableProps = this.getTableProps();
     const noCache = this.getProp('noCache');
@@ -223,6 +225,7 @@ export default class Lov extends Select<LovProps> {
       options.unSelectAll();
       options.clearCachedSelected();
       if (multiple) {
+        options.selectionStrategy = showCheckedStrategy || CheckedStrategy.SHOW_ALL;
         options.setCachedSelected(
           this.getValues().map(value => {
             const selected = new Record(primitive ? { [valueField]: value } : toJS(value), options);
@@ -243,14 +246,13 @@ export default class Lov extends Select<LovProps> {
             dataSet={options}
             config={config}
             tableProps={tableProps}
-            onDoubleClick={this.handleLovViewSelect}
-            onEnterDown={this.handleLovViewSelect}
+            onSelect={this.handleLovViewSelect}
             multiple={this.multiple}
             values={this.getValues()}
           />
         ),
         onClose: this.handleLovViewClose,
-        onOk: this.handleLovViewOk,
+        // onOk: this.handleLovViewOk,
         destroyOnClose: true,
         closable: true,
         bodyStyle: {
@@ -296,11 +298,6 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
-  handleLovViewSelect = () => {
-    this.modal.close();
-    this.handleLovViewOk();
-  };
-
   handleLovViewClose = async () => {
     delete this.modal;
     this.focus();
@@ -319,26 +316,11 @@ export default class Lov extends Select<LovProps> {
     }
   };
 
-  handleLovViewOk = async () => {
-    const { options, multiple } = this;
-    const tableProps = this.getTableProps();
-
-    // 根据 mode 进行区分 假如 存在 rowbox 这些 不应该以 current 作为基准
-    let selectionMode = {
-      selectionMode: multiple ? SelectionMode.rowbox : SelectionMode.none,
-      ...tableProps,
-    }.selectionMode;
-
-    if (tableProps.alwaysShowRowBox) {
-      selectionMode = SelectionMode.rowbox;
-    }
-
-    const result: Record[] = [];
-    const records = selectionMode === SelectionMode.rowbox || multiple ? options.selected : result.concat(options.current || []);
-    const values = records.map(record => this.processRecordToObject(record));
-
-    if (values[0] || multiple) {
-      this.setValue(multiple ? values : values[0] || this.emptyValue);
+  handleLovViewSelect = (records: Record | Record[]) => {
+    if (isArrayLike(records)) {
+      this.setValue(records.map(record => this.processRecordToObject(record)));
+    } else {
+      this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
     }
   };
 
