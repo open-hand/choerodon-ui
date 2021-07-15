@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { action } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -158,6 +159,12 @@ export default class LovView extends Component<LovViewProps> {
       selectionMode: SelectionMode.none,
       ...configTableProps,
       ...tableProps,
+      className: classNames(configTableProps && configTableProps.className, tableProps && tableProps.className),
+      style: {
+        ...(configTableProps && configTableProps.style),
+        height,
+        ...(tableProps && tableProps.style),
+      },
     };
     if (multiple) {
       if (!tableProps || !tableProps.selectionMode) {
@@ -169,10 +176,6 @@ export default class LovView extends Component<LovViewProps> {
       }
     } else if (lovTableProps.selectionMode !== SelectionMode.rowbox) {
       lovTableProps.onRow = this.handleRow;
-    }
-
-    if (height) {
-      lovTableProps.style = { ...lovTableProps.style, height };
     }
 
     const isProfessionalBar = getConfig('queryBar') === TableQueryBarType.professionalBar;

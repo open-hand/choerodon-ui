@@ -32,6 +32,7 @@ import { $l } from '../locale-context';
 import { getLovPara } from '../stores/utils';
 import { TableProps, TableQueryBarHook } from '../table/Table';
 import { FieldProps } from '../data-set/Field';
+import isIE from '../_util/isIE';
 
 export type Events = { [key: string]: Function };
 
@@ -256,7 +257,7 @@ export default class Lov extends Select<LovProps> {
         destroyOnClose: true,
         closable: true,
         bodyStyle: {
-          minHeight: pxToRem(Math.min(350, window.innerHeight)),
+          minHeight: isIE() ? pxToRem(Math.min(350, window.innerHeight)) : 'min(3.5rem, 100vh)',
         },
         ...modalProps,
         style: {

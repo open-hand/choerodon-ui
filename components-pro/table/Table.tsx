@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import defaultTo from 'lodash/defaultTo';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
+import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
@@ -22,7 +23,7 @@ import {
 } from 'react-beautiful-dnd';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { isCalcSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
@@ -1365,7 +1366,9 @@ export default class Table extends DataSetComponent<TableProps> {
 
   connect() {
     this.processDataSetListener(true);
-    if (this.tableStore.heightType === TableHeightType.flex) {
+    const { style } = this.props;
+    const { maxHeight, minHeight } = style || {};
+    if (this.tableStore.heightType === TableHeightType.flex || (isString(maxHeight) && isCalcSize(maxHeight)) || (isString(minHeight) && isCalcSize(minHeight))) {
       window.addEventListener('resize', this.handleWindowResize, false);
     }
   }
@@ -1974,7 +1977,8 @@ export default class Table extends DataSetComponent<TableProps> {
       const { style } = this.props;
       const maxHeight = style && toPx(style.maxHeight);
       const minHeight = style && toPx(style.minHeight);
-      const height = defaultTo(defaultTo(this.getContentHeight(), maxHeight), minHeight);
+      const contentHeight = this.getContentHeight();
+      const height = defaultTo(defaultTo(contentHeight, maxHeight), minHeight);
       if (isNumber(height)) {
         const { rowHeight, lockColumnsBodyRowsHeight } = tableStore;
         const { tableHeader, tableFooter } = this;
@@ -1982,12 +1986,17 @@ export default class Table extends DataSetComponent<TableProps> {
         const footerHeight = tableFooter ? tableFooter.getHeight() : 0;
         const rowMinHeight = defaultTo(minHeight, isNumber(rowHeight) ? rowHeight : lockColumnsBodyRowsHeight[0] || 0) + headerHeight + footerHeight;
         const minTotalHeight = Math.max(
-          height,
           rowMinHeight,
+          minHeight || height,
         );
-        const totalHeight = maxHeight ? Math.min(maxHeight, minTotalHeight) : minTotalHeight;
-        tableStore.totalHeight = totalHeight;
-        tableStore.height = totalHeight - headerHeight - footerHeight;
+        const bodyHeight = tableStore.bodyHeight + headerHeight + footerHeight;
+        const totalHeight = maxHeight ? Math.min(maxHeight, minTotalHeight, minHeight ? Math.max(bodyHeight, minHeight) : bodyHeight) : minTotalHeight;
+        if (contentHeight === undefined && totalHeight === bodyHeight) {
+          tableStore.height = undefined;
+        } else {
+          tableStore.totalHeight = totalHeight;
+          tableStore.height = totalHeight - headerHeight - footerHeight;
+        }
       } else {
         tableStore.height = undefined;
       }

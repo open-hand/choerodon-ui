@@ -36,6 +36,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: Optimized currency type columns are aligned to the right by default.
 - 💄 `<pro>Output`: Optimize the display of number and currency, Optimize the display of empty values.
 - 💄 `<pro>DataSet.Record`: In the absence of a field, the addField method will process the existing value of the field.
+- 🐞 `<pro>Table`: Correct the calculation logic of `maxHeight` and `minHeight`.
 - 🐞 `<pro>Pagination`: Fix the problem that the pagination option exceeds the default maximum of 100 pagination when the maximum pagination is not set.
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
 - 🐞 `<pro>Table`: Fix the issue that under the peacock blue theme, when the editor of the Column is function, after entering the editing mode and clicking exit, the width of the component in the editing mode will be incorrect next time.
