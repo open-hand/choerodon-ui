@@ -9,7 +9,7 @@ import ReactIntersectionObserver from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { ColumnProps, columnWidth } from './Column';
+import { ColumnProps } from './Column';
 import TableCell, { TableCellProps } from './TableCell';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
@@ -477,10 +477,8 @@ export default class TableRow extends Component<TableRowProps, any> {
     const { columns, lock } = this.props;
     const { tableStore } = this.context;
     const { customizable, rowDraggable, dragColumnAlign } = tableStore;
-    let leftWidth = 0;
-    let rightWidth = isStickySupport() && tableStore.overflowX ? tableStore.rightLeafColumnsWidth : 0;
     const columnLength = columns.length;
-    return columns.map((column, index, cols) => {
+    return columns.map((column, index) => {
       const key = getColumnKey(column);
       if (key !== CUSTOMIZED_KEY) {
         const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && index === columnLength - 2 ? 2 : 1;
@@ -490,28 +488,6 @@ export default class TableRow extends Component<TableRowProps, any> {
         };
         if (colSpan > 1) {
           props.colSpan = colSpan;
-        }
-        if (isStickySupport() && tableStore.overflowX) {
-          const columnLock = getColumnLock(column.lock);
-          if (columnLock === ColumnLock.left) {
-            props.style = {
-              left: pxToRem(leftWidth)!,
-            };
-            leftWidth += columnWidth(column);
-          } else if (columnLock === ColumnLock.right) {
-            rightWidth -= columnWidth(column);
-            if (colSpan > 1) {
-              for (let i = 1; i < colSpan; i++) {
-                const next = cols[index + i];
-                if (next) {
-                  rightWidth -= columnWidth(next);
-                }
-              }
-            }
-            props.style = {
-              right: pxToRem(rightWidth)!,
-            };
-          }
         }
         return this.getCell(column, index, props);
       }

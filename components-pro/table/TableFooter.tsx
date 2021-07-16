@@ -4,14 +4,13 @@ import { observer } from 'mobx-react';
 import { action, computed, get, set } from 'mobx';
 import classNames from 'classnames';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { ColumnProps, columnWidth } from './Column';
+import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import { ColumnLock, DragColumnAlign } from './enum';
 import DataSet from '../data-set/DataSet';
 import TableFooterCell, { TableFooterCellProps } from './TableFooterCell';
-import { getColumnKey, getColumnLock, getHeight, isStickySupport } from './utils';
+import { getColumnKey, getHeight, isStickySupport } from './utils';
 import autobind from '../_util/autobind';
 import ResizeObservedRow from './ResizeObservedRow';
 import { CUSTOMIZED_KEY } from './TableStore';
@@ -57,8 +56,6 @@ export default class TableFooter extends Component<TableFooterProps, any> {
     const { tableStore } = this.context;
     const { prefixCls, customizable, rowDraggable, dragColumnAlign } = tableStore;
     const hasPlaceholder = tableStore.overflowY && lock !== ColumnLock.left;
-    let leftWidth = 0;
-    let rightWidth = isStickySupport() && tableStore.overflowX ? tableStore.rightLeafColumnsWidth + (hasPlaceholder ? measureScrollbar() : 0) : 0;
     const tds = this.leafColumns.map((column, index, cols) => {
       const key = getColumnKey(column);
       if (key !== CUSTOMIZED_KEY) {
@@ -66,28 +63,6 @@ export default class TableFooter extends Component<TableFooterProps, any> {
         const props: Partial<TableFooterCellProps> = {};
         if (colSpan > 1) {
           props.colSpan = colSpan;
-        }
-        if (isStickySupport() && tableStore.overflowX) {
-          const columnLock = getColumnLock(column.lock);
-          if (columnLock === ColumnLock.left) {
-            props.style = {
-              left: pxToRem(leftWidth)!,
-            };
-            leftWidth += columnWidth(column);
-          } else if (columnLock === ColumnLock.right) {
-            rightWidth -= columnWidth(column);
-            if (colSpan > 1) {
-              for (let i = 1; i < colSpan; i++) {
-                const next = cols[index + i];
-                if (next) {
-                  rightWidth -= columnWidth(next);
-                }
-              }
-            }
-            props.style = {
-              right: pxToRem(rightWidth)!,
-            };
-          }
         }
         return (
           <TableFooterCell

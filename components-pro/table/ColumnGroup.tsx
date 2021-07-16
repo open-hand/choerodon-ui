@@ -27,35 +27,41 @@ export default class ColumnGroup {
 
   @computed
   get colSpan(): number {
-    return this.children ? this.children.wide : 1;
+    const { children } = this;
+    return children ? children.wide : 1;
   }
 
   @computed
   get deep(): number {
-    return this.children ? this.children.deep + 1 : this.hidden ? 0 : 1;
+    const { children } = this;
+    return children ? children.deep + 1 : this.hidden ? 0 : 1;
   }
 
   @computed
   get hidden(): boolean {
-    return this.children ? this.children.hidden : !!this.column.hidden;
+    const { children } = this;
+    return children ? children.hidden : !!this.column.hidden;
   }
 
   @computed
   get lastLeaf(): ColumnProps {
-    return this.children ? this.children.lastLeaf : this.column;
+    const { children } = this;
+    return children ? children.lastLeaf : this.column;
   }
 
   @computed
   get width(): number {
-    return this.children ? this.children.width : columnWidth(this.column);
+    const { children } = this;
+    return children ? children.width : columnWidth(this.column);
   }
 
   @computed
   get left(): number {
-    const { prev, parent } = this;
+    const { prev } = this;
     if (prev) {
       return prev.left + prev.width;
     }
+    const { parent } = this;
     if (parent) {
       return parent.left;
     }
@@ -64,10 +70,11 @@ export default class ColumnGroup {
 
   @computed
   get right(): number {
-    const { next, parent } = this;
+    const { next } = this;
     if (next) {
       return next.right + next.width;
     }
+    const { parent } = this;
     if (parent) {
       return parent.right;
     }
@@ -76,6 +83,7 @@ export default class ColumnGroup {
 
   constructor(column: ColumnProps, parent: ColumnGroups) {
     this.column = column;
+    column._group = this;
     this.parent = parent;
     const { children } = column;
     const { aggregation } = parent;
