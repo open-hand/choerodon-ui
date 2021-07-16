@@ -434,7 +434,7 @@ const lovTreeDefineTemple = {
   objectVersionNumber: 1,
   code: 'LOV_TREE_CODE',
   description: '快码',
-  height: 300,
+  height: null,
   lovId: 10015,
   lovItems: [
     {
@@ -509,6 +509,11 @@ const lovTreeDefineTemple = {
   treeFlag: 'Y',
   idField: 'id',
   parentIdField: 'parentId',
+  tableProps: {
+    style: {
+      maxHeight: 'calc(100vh - 400px)',
+    },
+  },
 };
 
 const dataSetLovData = Mock.mock(dataSetLovTemple);

@@ -11,7 +11,7 @@ import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, computed, get, toJS } from 'mobx';
+import { action, computed, get, IReactionDisposer, reaction, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -796,6 +796,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   wrapperWidthTimer?: number;
 
+  bodyHeightReaction?: IReactionDisposer;
+
   @computed
   get tableContext() {
     return {
@@ -1362,6 +1364,10 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.scrollId !== undefined) {
       raf.cancel(this.scrollId);
     }
+    const { bodyHeightReaction } = this;
+    if (bodyHeightReaction) {
+      bodyHeightReaction();
+    }
   }
 
   connect() {
@@ -1902,7 +1908,7 @@ export default class Table extends DataSetComponent<TableProps> {
     this.nextFrameActionId = raf(this.syncSize.bind(this, width));
   }
 
-  getContentHeight() {
+  getComputedHeight() {
     const {
       wrapper, element, tableBodyWrap,
       tableStore: {
@@ -1971,28 +1977,35 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   @action
   syncSize(width: number = this.getWidth()) {
-    const { element, tableStore } = this;
+    const { element, tableStore, bodyHeightReaction } = this;
+    if (bodyHeightReaction) {
+      bodyHeightReaction();
+      delete this.bodyHeightReaction;
+    }
     if (element) {
       tableStore.width = Math.floor(width);
       const { style } = this.props;
       const maxHeight = style && toPx(style.maxHeight);
       const minHeight = style && toPx(style.minHeight);
-      const contentHeight = this.getContentHeight();
-      const height = defaultTo(defaultTo(contentHeight, maxHeight), minHeight);
-      if (isNumber(height)) {
-        const { rowHeight, lockColumnsBodyRowsHeight } = tableStore;
+      const computedHeight = this.getComputedHeight();
+      const isComputedHeight = isNumber(computedHeight);
+      if (isComputedHeight || isNumber(maxHeight) || isNumber(minHeight)) {
+        const { rowHeight } = tableStore;
         const { tableHeader, tableFooter } = this;
         const headerHeight = tableHeader ? tableHeader.getHeight() : 0;
         const footerHeight = tableFooter ? tableFooter.getHeight() : 0;
-        const rowMinHeight = defaultTo(minHeight, isNumber(rowHeight) ? rowHeight : lockColumnsBodyRowsHeight[0] || 0) + headerHeight + footerHeight;
-        const minTotalHeight = Math.max(
+        const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + headerHeight + footerHeight;
+        const minTotalHeight = minHeight ? Math.max(
           rowMinHeight,
-          minHeight || height,
-        );
-        const bodyHeight = tableStore.bodyHeight + headerHeight + footerHeight;
-        const totalHeight = maxHeight ? Math.min(maxHeight, minTotalHeight, minHeight ? Math.max(bodyHeight, minHeight) : bodyHeight) : minTotalHeight;
+          minHeight,
+        ) : rowMinHeight;
+        const height = defaultTo(computedHeight, tableStore.bodyHeight + headerHeight + footerHeight);
+        const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : height);
         tableStore.totalHeight = totalHeight;
-        tableStore.height = contentHeight === undefined && totalHeight === bodyHeight ? undefined : totalHeight - headerHeight - footerHeight;
+        tableStore.height = isComputedHeight || totalHeight !== height ? totalHeight - headerHeight - footerHeight : undefined;
+        if (!isComputedHeight) {
+          this.bodyHeightReaction = reaction(() => tableStore.bodyHeight, () => this.syncSize());
+        }
       } else {
         tableStore.height = undefined;
       }
