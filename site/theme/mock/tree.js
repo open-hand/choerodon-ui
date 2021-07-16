@@ -1359,5 +1359,8 @@ export default function () {
     Mock.mock(asyncRuleEmpty, asyncTreeMockEmpty);
   }
 }
-
-export const treeTempList = [{ rule: treeRule, data: treeData },{rule:lessTreeRule,data:lessTreeData},{rule:asyncRule,data:asyncTreeMock}];
+export const treeMockTemple = mockTemple;
+export const treeTempList = [{ rule: treeRule, data: treeData }, { rule: lessTreeRule, data: lessTreeData }, {
+  rule: asyncRule,
+  data: asyncTreeMock,
+}];

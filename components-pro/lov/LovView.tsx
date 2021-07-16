@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { action } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import pick from 'lodash/pick';
 import DataSet from '../data-set/DataSet';
+import Record from '../data-set/Record';
 import Table, { TableProps } from '../table/Table';
 import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
 import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
@@ -18,8 +19,8 @@ export interface LovViewProps {
   tableProps?: Partial<TableProps>;
   multiple: boolean;
   values: any[];
-  onDoubleClick: () => void;
-  onEnterDown: () => void;
+  onSelect: (records: Record | Record[]) => void;
+  modal?: { close: Function, handleOk: Function }
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -27,11 +28,12 @@ export default class LovView extends Component<LovViewProps> {
     dataSet: PropTypes.object.isRequired,
     config: PropTypes.object.isRequired,
     tableProps: PropTypes.object,
-    onDoubleClick: PropTypes.func.isRequired,
-    onEnterDown: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
   };
 
   selection: DataSetSelection | false;
+
+  selectionMode: SelectionMode | undefined;
 
   @action
   componentWillMount() {
@@ -78,11 +80,26 @@ export default class LovView extends Component<LovViewProps> {
       : undefined;
   }
 
+  handleSelect = () => {
+    const { selectionMode } = this;
+    const { onSelect, modal, multiple, dataSet } = this.props;
+    const records: Record[] = selectionMode === SelectionMode.treebox ?
+      dataSet.treeSelected : selectionMode === SelectionMode.rowbox ?
+        dataSet.selected : dataSet.current ? [dataSet.current] : [];
+    const record: Record | Record[] | undefined = multiple ? records : records[0];
+    if (record) {
+      onSelect(record);
+      if (modal) {
+        modal.close();
+      }
+    }
+    return false;
+  };
+
   /* istanbul ignore next */
   handleKeyDown = e => {
     if (e.keyCode === KeyCode.ENTER) {
-      const { onEnterDown } = this.props;
-      onEnterDown();
+      this.handleSelect();
     }
   };
 
@@ -91,12 +108,18 @@ export default class LovView extends Component<LovViewProps> {
    * @param props
    */
   handleRow = (props) => {
-    const { onDoubleClick, tableProps } = this.props;
-    let tablePropsOnRow;
-    if (tableProps?.onRow) tablePropsOnRow = tableProps.onRow(props);
+    const { tableProps } = this.props;
+    if (tableProps) {
+      const { onRow } = tableProps;
+      if (onRow) {
+        return {
+          onDoubleClick: this.handleSelect,
+          ...onRow(props),
+        };
+      }
+    }
     return {
-      onDoubleClick,
-      ...tablePropsOnRow,
+      onDoubleClick: this.handleSelect,
     };
   };
 
@@ -119,7 +142,11 @@ export default class LovView extends Component<LovViewProps> {
       config: { height, treeFlag, queryColumns, tableProps: configTableProps },
       multiple,
       tableProps,
+      modal,
     } = this.props;
+    if (modal) {
+      modal.handleOk(this.handleSelect);
+    }
     const lovTableProps: TableProps = {
       customizable: getConfig('lovTableCustomizable'),
       autoFocus: true,
@@ -129,19 +156,26 @@ export default class LovView extends Component<LovViewProps> {
       columns: this.getColumns(),
       queryFieldsLimit: queryColumns,
       queryBar: this.getQueryBar(),
+      selectionMode: SelectionMode.none,
       ...configTableProps,
       ...tableProps,
+      className: classNames(configTableProps && configTableProps.className, tableProps && tableProps.className),
+      style: {
+        ...(configTableProps && configTableProps.style),
+        height,
+        ...(tableProps && tableProps.style),
+      },
     };
-
     if (multiple) {
-      lovTableProps.selectionMode = SelectionMode.rowbox;
-    } else {
-      lovTableProps.selectionMode = tableProps?.selectionMode ? tableProps.selectionMode : SelectionMode.none;
+      if (!tableProps || !tableProps.selectionMode) {
+        if (lovTableProps.mode === TableMode.tree) {
+          lovTableProps.selectionMode = SelectionMode.treebox;
+        } else {
+          lovTableProps.selectionMode = SelectionMode.rowbox;
+        }
+      }
+    } else if (lovTableProps.selectionMode !== SelectionMode.rowbox) {
       lovTableProps.onRow = this.handleRow;
-    }
-
-    if (height) {
-      lovTableProps.style = { ...lovTableProps.style, height };
     }
 
     const isProfessionalBar = getConfig('queryBar') === TableQueryBarType.professionalBar;
@@ -149,11 +183,7 @@ export default class LovView extends Component<LovViewProps> {
       lovTableProps.queryBar = (props) => <TableProfessionalBar {...props} queryBarProps={{ labelWidth: 80 }} />;
     }
 
-    // 优化优先级 让 部分tableProps属性 的优先级大于dataSet的设置
-    // 目前需要处理 selectionMode
-    Object.assign(lovTableProps, pick({ ...tableProps }, [
-      'selectionMode',
-    ]));
+    this.selectionMode = lovTableProps.selectionMode;
 
     return <Table {...lovTableProps} />;
   }

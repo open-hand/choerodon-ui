@@ -23,6 +23,7 @@ import {
   arrayMove,
   axiosConfigAdapter,
   checkParentByInsert,
+  concurrentPromise,
   doExport,
   exportExcel,
   findBindFieldBy,
@@ -43,15 +44,20 @@ import {
   processExportValue,
   processIntlField,
   sliceTree,
-  sortTree, useAll,
+  sortTree,
+  treeSelect,
+  treeSelectParent,
+  treeUnSelect,
+  treeUnSelectParent,
+  useAll,
   useCascade,
   useSelected,
-  concurrentPromise,
 } from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
 import {
+  CheckedStrategy,
   DataSetEvents,
   DataSetExportStatus,
   DataSetSelection,
@@ -322,6 +328,10 @@ export interface DataSetProps {
    * 组合列排序查询
    */
   combineSort?: boolean;
+  /**
+   * 树形选择策略
+   */
+  selectionStrategy?: CheckedStrategy;
 }
 
 export default class DataSet extends EventManager {
@@ -383,6 +393,8 @@ export default class DataSet extends EventManager {
   resetInBatch: boolean = false;
 
   validating: boolean = false;
+
+  @observable selectionStrategy?: CheckedStrategy;
 
   @observable parent?: DataSet;
 
@@ -678,6 +690,21 @@ export default class DataSet extends EventManager {
   }
 
   @computed
+  get treeSelected(): Record[] {
+    const { selected, selectionStrategy } = this;
+    if (selectionStrategy === CheckedStrategy.SHOW_CHILD) {
+      return selected.filter((record) => !record.children);
+    }
+    if (selectionStrategy === CheckedStrategy.SHOW_PARENT) {
+      return selected.filter((record) => {
+        const { parent } = record;
+        return !parent || parent.isSelectionIndeterminate ? !record.isSelectionIndeterminate : false;
+      });
+    }
+    return selected;
+  }
+
+  @computed
   get totalPage(): number {
     return this.paging ? Math.ceil(this.totalCount / this.pageSize) : 1;
   }
@@ -867,8 +894,10 @@ export default class DataSet extends EventManager {
         children,
         queryParameter = {},
         dataToJSON,
+        selectionStrategy,
       } = props;
       this.name = name;
+      this.selectionStrategy = selectionStrategy;
       this.dataToJSON = dataToJSON!;
       this.records = [];
       this.state = observable.map<string, any>();
@@ -1731,6 +1760,7 @@ export default class DataSet extends EventManager {
             }
           }
           this.fireEvent(DataSetEvents.select, { dataSet: this, record, previous });
+          this.fireEvent(DataSetEvents.batchSelect, { dataSet: this, records: [record] });
         }
       }
     }
@@ -1757,6 +1787,7 @@ export default class DataSet extends EventManager {
             }
           }
           this.fireEvent(DataSetEvents.unSelect, { dataSet: this, record });
+          this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: [record] });
         }
       }
     }
@@ -1771,18 +1802,25 @@ export default class DataSet extends EventManager {
     if (selection) {
       this.inBatchSelection = true;
       try {
+        const records: Record[] = [];
         if (selection === DataSetSelection.single) {
           if (!this.currentSelected.length) {
-            this.select(filter ? this.filter(filter)[0] : 0);
+            const record = filter ? this.filter(filter)[0] : this.get(0);
+            if (record) {
+              this.select(record);
+              records.push(record);
+            }
           }
         } else {
           this.records.forEach(record => {
             if (!filter || filter(record) !== false) {
               this.select(record);
+              records.push(record);
             }
           });
         }
-        this.fireEvent(DataSetEvents.selectAll, { dataSet: this });
+        this.fireEvent(DataSetEvents.selectAll, { dataSet: this, records });
+        this.fireEvent(DataSetEvents.batchSelect, { dataSet: this, records });
       } finally {
         this.inBatchSelection = false;
       }
@@ -1797,10 +1835,13 @@ export default class DataSet extends EventManager {
     if (this.selection) {
       this.inBatchSelection = true;
       try {
+        const records: Record[] = [];
         this.currentSelected.forEach(record => {
           this.unSelect(record);
+          records.push(record);
         });
-        this.fireEvent(DataSetEvents.unSelectAll, { dataSet: this });
+        this.fireEvent(DataSetEvents.unSelectAll, { dataSet: this, records });
+        this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records });
       } finally {
         this.inBatchSelection = false;
       }
@@ -1810,6 +1851,7 @@ export default class DataSet extends EventManager {
   /**
    * 批量勾选
    */
+  @action
   batchSelect(recordOrId: (Record | number)[]): void {
     const { selection } = this;
     if (selection) {
@@ -1848,6 +1890,7 @@ export default class DataSet extends EventManager {
   /**
    * 批量取消勾选
    */
+  @action
   batchUnSelect(recordOrId: (Record | number)[]): void {
     const { selection } = this;
     if (selection) {
@@ -1871,6 +1914,38 @@ export default class DataSet extends EventManager {
     }
   }
 
+  @action
+  treeSelect(record: Record) {
+    const { selection } = this;
+    if (selection && selection === DataSetSelection.multiple) {
+      this.inBatchSelection = true;
+      try {
+        const records = [];
+        treeSelect(this, record, records);
+        treeSelectParent(this, record, records);
+        this.fireEvent(DataSetEvents.batchSelect, { dataSet: this, records });
+      } finally {
+        this.inBatchSelection = false;
+      }
+    }
+  }
+
+  @action
+  treeUnSelect(record: Record) {
+    const { selection } = this;
+    if (selection && selection === DataSetSelection.multiple) {
+      this.inBatchSelection = true;
+      try {
+        const records = [];
+        treeUnSelect(this, record, records);
+        treeUnSelectParent(this, record, records);
+        this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records });
+      } finally {
+        this.inBatchSelection = false;
+      }
+    }
+  }
+
   clearCachedSelected(): void {
     this.setCachedSelected([]);
   }
@@ -1878,6 +1953,12 @@ export default class DataSet extends EventManager {
   @action
   setCachedSelected(cachedSelected: Record[]): void {
     this.cachedSelected = cachedSelected;
+    const { selectionStrategy } = this;
+    if (selectionStrategy === CheckedStrategy.SHOW_PARENT) {
+      cachedSelected.forEach(record => treeSelect(this, record, []));
+    } else if (selectionStrategy === CheckedStrategy.SHOW_CHILD) {
+      cachedSelected.forEach(record => treeSelectParent(this, record, []));
+    }
   }
 
   /**

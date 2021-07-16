@@ -119,3 +119,9 @@ export enum DataToJSON {
   'normal-self' = 'normal-self',
   'dirty-field-self' = 'dirty-field-self',
 }
+
+export enum CheckedStrategy {
+  SHOW_ALL = 'SHOW_ALL',
+  SHOW_PARENT = 'SHOW_PARENT',
+  SHOW_CHILD = 'SHOW_CHILD',
+}

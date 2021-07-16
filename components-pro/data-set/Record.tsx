@@ -33,7 +33,7 @@ import {
 } from './utils';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import DataSetSnapshot from './DataSetSnapshot';
-import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
+import { BooleanValue, DataSetEvents, DataSetSelection, FieldIgnore, FieldType, RecordStatus } from './enum';
 import isSame from '../_util/isSame';
 import { treeReduce } from '../_util/treeUtils';
 
@@ -205,6 +205,30 @@ export default class Record {
   @computed
   get isNew(): boolean {
     return this.status === RecordStatus.add;
+  }
+
+  @computed
+  get isSelectionIndeterminate(): boolean {
+    const { dataSet } = this;
+    if (dataSet && dataSet.selection === DataSetSelection.multiple) {
+      const { children } = this;
+      if (children) {
+        let checkedLength = 0;
+        return (
+          children.some(record => {
+            if (record.isSelectionIndeterminate) {
+              return true;
+            }
+            if (record.isSelected) {
+              checkedLength += 1;
+            }
+            return false;
+          }) ||
+          (checkedLength > 0 && checkedLength !== children.length)
+        );
+      }
+    }
+    return false;
   }
 
   @computed

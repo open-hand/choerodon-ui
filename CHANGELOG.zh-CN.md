@@ -16,8 +16,10 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 tableVirtualCell, formatter.timeZone 属性。
+- 🌟 `<pro>DataSet`: 新增 selectionStrategy 属性， selectionStrategy, treeSelected 值， treeSelect, treeUnSelect 方法。
+- 🌟 `<pro>Lov`: 新增 showCheckedStrategy 属性。
 - 🌟 `<pro>DatePicker`: 新增 timeZone 属性。
-- 🌟 `<pro>Tooltip`: 新增单例模式， 添加 show 和 hide 静态方法。
+- 🌟 `<pro>Tooltip`: 新增单例模式, 添加 show 和 hide 静态方法。
 - 🌟 `<pro>DataSet`: dataToJSON 新增 dirty-field, dirty-field-self 类型。
 - 🌟 `<pro>DataSet.Field`: 新增 json 类型。
 - 🌟 `<pro>DataSet`: 新增 combineSort 属性支持组合列排序传参。
@@ -33,6 +35,7 @@ timeline: true
 - 💄 `<pro>Table.Column`： 优化货币类型的列默认靠右对齐。
 - 💄 `<pro>Output`： 优化数字货币显示, 优化空值显示。
 - 💄 `<pro>DataSet.Record`: 在没有 field 的情况下， addField 方法会对该 field 已有值进行处理。
+- 🐞 `<pro>Table`: 修正 maxHeight 和 minHeight 的计算逻辑。
 - 🐞 `<pro>Pagination`: 修复最大分页没有设置时，分页选项有超过默认最大100分页无法选择的问题。
 - 🐞 `<pro>IconPicker`: 修复当点击分页按钮并按钮成禁用状态时，弹窗无法关闭的问题。
 - 🐞 `<pro>Table`: 修复在孔雀蓝主题下，当Column的editor为function的时候，进入编辑态点击退出后会导致下次进入编辑态组件宽度不正确的问题

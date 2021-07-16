@@ -102,8 +102,8 @@ function getRowNumbers(record?: Record | null, dataSet?: DataSet | null, isTree?
   return [0];
 }
 
-function hasCheckField({ editor, name }: ColumnProps, checkField: string): boolean {
-  return !!editor && checkField === name;
+function hasCheckField({ editor, name, hidden }: ColumnProps, checkField: string): boolean {
+  return !hidden && !!editor && checkField === name;
 }
 
 function renderSelectionBox({ record, store }: { record: any, store: TableStore; }): ReactNode {

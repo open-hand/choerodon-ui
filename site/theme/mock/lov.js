@@ -1,4 +1,5 @@
 import Mock from 'mockjs';
+import { treeMockTemple } from './tree';
 
 const dataSetLovTemple = {
   rows: [
@@ -252,7 +253,7 @@ const dataSetLovMockTemple = {
     {
       _token: '@guid()',
       'objectVersionNumber|1-10': 1,
-      code: "@pick(['HR', 'SYS']).@upper(@word)",
+      code: '@pick([\'HR\', \'SYS\']).@upper(@word)',
       'codeId|+1': 10001,
       codeValues: '@ctitle()',
       description: '@ctitle()',
@@ -428,36 +429,127 @@ const lovMockDefineTemple = {
   idField: null,
   parentIdField: null,
 };
+const lovTreeDefineTemple = {
+  _token: '@guid()',
+  objectVersionNumber: 1,
+  code: 'LOV_TREE_CODE',
+  description: '快码',
+  height: 300,
+  lovId: 10015,
+  lovItems: [
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10033,
+      lovId: 10015,
+      display: '页面地址',
+      gridFieldName: 'url',
+      gridFieldWidth: 300,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'N',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldWidth: null,
+      conditionFieldLabelWidth: null,
+      conditionFieldType: null,
+      conditionFieldName: null,
+      conditionFieldTextfield: null,
+      conditionFieldNewline: 'N',
+      conditionFieldSelectUrl: null,
+      conditionFieldSelectVf: null,
+      conditionFieldSelectTf: null,
+      conditionFieldSelectCode: null,
+      conditionFieldLovCode: null,
+      conditionFieldSequence: 1,
+      gridFieldSequence: 2,
+    },
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10034,
+      lovId: 10015,
+      display: '功能名称',
+      gridFieldName: 'text',
+      gridFieldWidth: 300,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldWidth: null,
+      conditionFieldLabelWidth: null,
+      conditionFieldType: null,
+      conditionFieldName: null,
+      conditionFieldTextfield: null,
+      conditionFieldNewline: 'N',
+      conditionFieldSelectUrl: null,
+      conditionFieldSelectVf: null,
+      conditionFieldSelectTf: null,
+      conditionFieldSelectCode: null,
+      conditionFieldLovCode: null,
+      conditionFieldSequence: 2,
+      gridFieldSequence: 1,
+    },
+  ],
+  placeholder: '请选择功能',
+  sqlId: 'CodeMapper.select',
+  customSql: null,
+  queryColumns: 2,
+  customUrl: null,
+  textField: 'text',
+  title: '父级功能',
+  valueField: 'id',
+  width: 710,
+  delayLoad: 'N',
+  needQueryParam: 'N',
+  editableFlag: 'Y',
+  canPopup: 'Y',
+  lovPageSize: '10',
+  treeFlag: 'Y',
+  idField: 'id',
+  parentIdField: 'parentId',
+};
 
 const dataSetLovData = Mock.mock(dataSetLovTemple);
 const dataSetLovMockData = Mock.mock(dataSetLovMockTemple);
+const dataSetLovTreeData = Mock.mock(treeMockTemple);
 
 const lovDefineData = Mock.mock(lovDefineTemple);
 const lovDefineMockData = Mock.mock(lovMockDefineTemple);
+const lovDefineTreeData = Mock.mock(lovTreeDefineTemple);
 
 const dataSetLovRule = /\/common\/lov\/dataset\/LOV_CODE/;
 const dataSetLovMockRule = /\/common\/lov\/dataset\/LOV_MOCK_CODE/;
+const dataSetLovTreeRule = /\/common\/lov\/dataset\/LOV_TREE_CODE/;
 
 const lovDefineRule = /\/sys\/lov\/lov_define\?code=LOV_CODE/;
 const lovDefineMockRule = /\/sys\/lov\/lov_define\?code=LOV_MOCK_CODE/;
+const lovTreeDefineRule = /\/sys\/lov\/lov_define\?code=LOV_TREE_CODE/;
 
-export default function() {
+export default function () {
   if (typeof window !== 'undefined') {
-    Mock.setup({timeout:0});
+    Mock.setup({ timeout: 0 });
 
     Mock.mock(dataSetLovRule, dataSetLovTemple);
 
     Mock.mock(dataSetLovMockRule, dataSetLovMockTemple);
 
+    Mock.mock(dataSetLovTreeRule, treeMockTemple);
+
     Mock.mock(lovDefineRule, lovDefineTemple);
 
     Mock.mock(lovDefineMockRule, lovMockDefineTemple);
+
+    Mock.mock(lovTreeDefineRule, lovTreeDefineTemple);
   }
 }
 
 export const lovTempleList = [
   { rule: dataSetLovRule, data: dataSetLovData },
   { rule: dataSetLovMockRule, data: dataSetLovMockData },
+  { rule: dataSetLovTreeRule, data: dataSetLovTreeData },
   { rule: lovDefineRule, data: lovDefineData },
   { rule: lovDefineMockRule, data: lovDefineMockData },
+  { rule: lovDefineTreeData, data: lovDefineTreeData },
 ];

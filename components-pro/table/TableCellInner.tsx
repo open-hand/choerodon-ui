@@ -28,7 +28,7 @@ import { Commands, TableButtonProps } from './Table';
 import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import { SELECTION_KEY } from './TableStore';
-import { TableCommandType } from './enum';
+import { SelectionMode, TableCommandType } from './enum';
 import Output from '../output/Output';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip/Tooltip';
@@ -39,6 +39,7 @@ import Button, { ButtonProps } from '../button/Button';
 import { LabelLayout } from '../form/enum';
 import { findFirstFocusableElement } from '../_util/focusable';
 import useComputed from '../use-computed';
+import SelectionTreeBox from './SelectionTreeBox';
 
 let inTab: boolean = false;
 
@@ -201,15 +202,22 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     return 0;
   }, [multiLine, record]);
   const checkBox = useComputed(() => {
-    if (children && checkField && !tableStore.hasCheckFieldColumn) {
-      return (
-        <ObserverCheckBox
-          name={checkField}
-          record={record}
-          disabled={disabled}
-          indeterminate={record.isIndeterminate}
-        />
-      );
+    if (children) {
+      if (tableStore.props.selectionMode === SelectionMode.treebox) {
+        return (
+          <SelectionTreeBox record={record} />
+        );
+      }
+      if (checkField && !tableStore.hasCheckFieldColumn) {
+        return (
+          <ObserverCheckBox
+            name={checkField}
+            record={record}
+            disabled={disabled}
+            indeterminate={record.isIndeterminate}
+          />
+        );
+      }
     }
   }, [disabled, children, tableStore, record, checkField]);
 
@@ -396,7 +404,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   );
 
   const prefix = (indentText || children || checkBox) && (
-    <span key="prefix" className={`${prefixCls}-prefix`} style={innerProps.style}>
+    <span key="prefix" className={`${prefixCls}-prefix`} style={innerStyle}>
       {indentText}
       {children}
       {checkBox}
