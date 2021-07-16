@@ -7,6 +7,7 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
 import Tree, { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, defaultAggregationRenderer } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
@@ -239,7 +240,7 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   render() {
-    const { column, record, isDragging, provided, colSpan, style: propsStyle, className: propsClassName } = this.props;
+    const { column, record, isDragging, provided, colSpan, className: propsClassName } = this.props;
     const {
       tableStore,
     } = this.context;
@@ -277,6 +278,17 @@ export default class TableCell extends Component<TableCellProps> {
       propsClassName,
       cellExternalProps.className,
     );
+
+    if (columnLock) {
+      const { _group } = column;
+      if (_group) {
+        if (columnLock === ColumnLock.left) {
+          cellStyle.left = pxToRem(_group.left)!;
+        } else if (columnLock === ColumnLock.right) {
+          cellStyle.right = pxToRem(_group.right)!;
+        }
+      }
+    }
     const widthDraggingStyle = (): React.CSSProperties => {
       const draggingStyle: React.CSSProperties = {};
       if (isDragging) {
@@ -297,7 +309,7 @@ export default class TableCell extends Component<TableCellProps> {
         className={classString}
         data-index={getColumnKey(column)}
         {...(provided && provided.dragHandleProps)}
-        style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...propsStyle }}
+        style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
       >
         {this.renderInnerNode(cellPrefix, command, onCellStyle)}
       </td>

@@ -10,6 +10,7 @@ import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
 import classes from 'component-classes';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
 import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
@@ -19,7 +20,7 @@ import DataSet from '../data-set/DataSet';
 import Field from '../data-set/Field';
 import EventManager from '../_util/EventManager';
 import { getAlignByField, getColumnKey, getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
-import { ColumnAlign, TableColumnTooltip } from './enum';
+import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import autobind from '../_util/autobind';
@@ -27,14 +28,17 @@ import transform from '../_util/transform';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { CUSTOMIZED_KEY } from './TableStore';
+import ColumnGroup from './ColumnGroup';
 
 export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
   prevColumn?: ColumnProps;
   column: ColumnProps;
+  columnGroup: ColumnGroup;
   resizeColumn?: ColumnProps;
   rowSpan?: number;
   colSpan?: number;
+  rowIndex?: number;
   getHeaderNode: () => HTMLTableSectionElement | null;
 }
 
@@ -318,7 +322,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   render() {
-    const { column, dataSet, rowSpan, colSpan, style, className } = this.props;
+    const { column, columnGroup, dataSet, rowSpan, colSpan, className, rowIndex } = this.props;
     const { tableStore } = this.context;
     const {
       prefixCls,
@@ -337,23 +341,26 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const columnKey = getColumnKey(column);
     const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classList: string[] = [`${prefixCls}-cell`];
-    if (columnLock) {
-      classList.push(`${prefixCls}-cell-fix-${columnLock}`);
-    }
-    if (className) {
-      classList.push(className);
-    }
     const field = dataSet.getField(name);
-    if (headerClassName) {
-      classList.push(headerClassName);
-    }
-
     const cellStyle: CSSProperties = {
       textAlign: align ||
         (command || (children && children.length) ? ColumnAlign.center : getAlignByField(field)),
       ...headerStyle,
-      ...style,
     };
+    if (columnLock) {
+      classList.push(`${prefixCls}-cell-fix-${columnLock}`);
+      if (columnLock === ColumnLock.left) {
+        cellStyle.left = pxToRem(columnGroup.left)!;
+      } else if (columnLock === ColumnLock.right) {
+        cellStyle.right = pxToRem(columnGroup.right + (rowIndex === 0 && tableStore.overflowY ? measureScrollbar() : 0))!;
+      }
+    }
+    if (className) {
+      classList.push(className);
+    }
+    if (headerClassName) {
+      classList.push(headerClassName);
+    }
 
     const header = this.getHeader();
 
@@ -416,7 +423,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       'data-index': columnKey,
       style: omit(cellStyle, ['width', 'height']),
     };
-
     const th = (
       <th {...thProps}>
         <div

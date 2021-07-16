@@ -1991,12 +1991,8 @@ export default class Table extends DataSetComponent<TableProps> {
         );
         const bodyHeight = tableStore.bodyHeight + headerHeight + footerHeight;
         const totalHeight = maxHeight ? Math.min(maxHeight, minTotalHeight, minHeight ? Math.max(bodyHeight, minHeight) : bodyHeight) : minTotalHeight;
-        if (contentHeight === undefined && totalHeight === bodyHeight) {
-          tableStore.height = undefined;
-        } else {
-          tableStore.totalHeight = totalHeight;
-          tableStore.height = totalHeight - headerHeight - footerHeight;
-        }
+        tableStore.totalHeight = totalHeight;
+        tableStore.height = contentHeight === undefined && totalHeight === bodyHeight ? undefined : totalHeight - headerHeight - footerHeight;
       } else {
         tableStore.height = undefined;
       }

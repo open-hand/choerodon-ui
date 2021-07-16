@@ -1177,18 +1177,18 @@ export default class TableStore {
   }
 
   @computed
-  get isAnyColumnsLock(): boolean {
-    return this.columns.some(column => !!column.lock);
-  }
-
-  @computed
   get isAnyColumnsLeftLock(): boolean {
-    return this.columns.some(column => column.lock === ColumnLock.left || column.lock === true);
+    return this.leftColumns.length > 0;
   }
 
   @computed
   get isAnyColumnsRightLock(): boolean {
-    return this.columns.some(column => column.lock === ColumnLock.right);
+    return this.rightColumns.length > 0;
+  }
+
+  @computed
+  get isAnyColumnsLock(): boolean {
+    return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
   }
 
   @computed

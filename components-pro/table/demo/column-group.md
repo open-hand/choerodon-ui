@@ -82,7 +82,7 @@ class App extends React.Component {
         expandedRowRenderer={this.expandedRowRenderer}
         parityRow
       >
-        <Column header="组合">
+        <Column header="组合" lock>
           <Column name="name" editor width={450} />
           <Column name="age" editor />
         </Column>

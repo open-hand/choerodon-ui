@@ -9,7 +9,7 @@ import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import DataSet from '../data-set/DataSet';
 import { getAlignByField, getColumnLock, isStickySupport } from './utils';
-import { ColumnAlign } from './enum';
+import { ColumnAlign, ColumnLock } from './enum';
 
 export interface TableFooterCellProps extends ElementProps {
   dataSet: DataSet;
@@ -64,6 +64,17 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
       ...footerStyle,
       ...style,
     };
+
+    if (columnLock) {
+      const { _group } = column;
+      if (_group) {
+        if (columnLock === ColumnLock.left) {
+          cellStyle.left = pxToRem(_group.left)!;
+        } else if (columnLock === ColumnLock.right) {
+          cellStyle.right = pxToRem(_group.right)!;
+        }
+      }
+    }
     return (
       <th className={classString} style={omit(cellStyle, ['width', 'height'])} colSpan={colSpan}>
         <div {...innerProps}>{this.getFooter(footer, dataSet)}</div>

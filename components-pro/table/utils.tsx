@@ -33,6 +33,7 @@ import { TablePaginationConfig } from './Table';
 import { $l } from '../locale-context';
 import { TooltipPlacement } from '../tooltip/Tooltip';
 import measureTextWidth from '../_util/measureTextWidth';
+import ColumnGroup from './ColumnGroup';
 
 export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
@@ -279,6 +280,30 @@ export function getHeight(el: HTMLElement): number {
   return el.getBoundingClientRect().height;
 }
 
+export function getTableHeaderRows(
+  columns: ColumnGroup[],
+  currentRow: number = 0,
+  rows: ColumnGroup[][] = [],
+): ColumnGroup[][] {
+  rows[currentRow] = rows[currentRow] || [];
+  columns.forEach(column => {
+    const { hidden, rowSpan, colSpan, children } = column;
+    if (!hidden) {
+      if (rowSpan && rows.length < rowSpan) {
+        while (rows.length < rowSpan) {
+          rows.push([]);
+        }
+      }
+      if (children) {
+        getTableHeaderRows(children.columns, currentRow + rowSpan, rows);
+      }
+      if (colSpan !== 0) {
+        rows[currentRow].push(column);
+      }
+    }
+  });
+  return rows;
+}
 
 export function isDropresult(dropResult: any): dropResult is DropResult {
   if (dropResult && dropResult.destination) {
