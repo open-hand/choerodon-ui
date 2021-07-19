@@ -33,7 +33,6 @@
 
 .disabled() {
   color: @input-disabled-color;
-  background-color: @input-disabled-bg;
   cursor: not-allowed;
   opacity: 1;
   &,
@@ -127,6 +126,10 @@
     .active;
   }
 
+  &-disabled {
+    background-color: @input-disabled-bg;
+  }
+
   &-disabled &,
   &-disabled label:hover &,
   &:disabled {
@@ -171,6 +174,10 @@
     color: @input-placeholder-color;
     white-space: nowrap;
     opacity: 0;
+  }
+
+  &-disabled &-rendered-value {
+    color: @input-disabled-color;
   }
 
   // Reset height for `textarea`s

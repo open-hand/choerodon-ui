@@ -8,7 +8,7 @@ import noop from 'lodash/noop';
 import defer from 'lodash/defer';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
+import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
@@ -748,7 +748,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       } : itemProps;
       const option: ReactElement = (
         <Item {...mergedProps}>
-          {itemContent}
+          {toJS(itemContent)}
         </Item>
       );
       if (previousGroup) {

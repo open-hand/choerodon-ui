@@ -64,20 +64,6 @@ export default class TableCell extends Component<TableCellProps> {
     return undefined;
   }
 
-  hasEditor(column: ColumnProps) {
-    const {
-      tableStore: { pristine },
-    } = this.context;
-    if (!pristine) {
-      const { record } = this.props;
-      const cellEditor = getEditorByColumnAndRecord(column, record);
-      if (cellEditor) {
-        return !isInCellEditor(cellEditor);
-      }
-    }
-    return false;
-  }
-
   componentDidMount(): void {
     const { currentEditor } = this;
     if (currentEditor) {
@@ -161,7 +147,7 @@ export default class TableCell extends Component<TableCellProps> {
           <Tree.TreeNode
             {...cellExternalProps}
             key={columnKey}
-            className={classNames(cellExternalProps.className, this.getColumnClassName(prefixCls, column, field))}
+            className={classNames(cellExternalProps.className, this.getColumnClassName(prefixCls, field))}
             title={
               <>
                 <span className={`${prefixCls}-label`}>{header}</span>
@@ -223,20 +209,18 @@ export default class TableCell extends Component<TableCellProps> {
     return this.getInnerNode(column, command, onCellStyle);
   }
 
-  getColumnClassName(cellPrefix, column: ColumnProps, field?: Field) {
-    const {
-      tableStore,
-    } = this.context;
-    const { inlineEdit, pristine } = tableStore;
-    const className = {
-      [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor(column),
-    };
+  getColumnClassName(cellPrefix, field?: Field) {
     if (field) {
-      className[`${cellPrefix}-dirty`] = !pristine && field.dirty;
-      className[`${cellPrefix}-required`] = !inlineEdit && field.required;
-      className[`${cellPrefix}-multiLine`] = field.get('multiLine');
+      const {
+        tableStore: { inlineEdit, pristine },
+      } = this.context;
+      return {
+        [`${cellPrefix}-dirty`]: !pristine && field.dirty,
+        [`${cellPrefix}-required`]: !inlineEdit && field.required,
+        [`${cellPrefix}-multiLine`]: field.get('multiLine'),
+      };
     }
-    return className;
+    return undefined;
   }
 
   render() {
@@ -269,7 +253,7 @@ export default class TableCell extends Component<TableCellProps> {
     const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classString = classNames(
       cellPrefix,
-      !aggregation && this.getColumnClassName(cellPrefix, column, field),
+      !aggregation && this.getColumnClassName(cellPrefix, field),
       {
         [`${cellPrefix}-aggregation`]: aggregation,
         [`${cellPrefix}-fix-${columnLock}`]: columnLock,

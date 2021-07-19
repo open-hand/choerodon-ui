@@ -183,7 +183,7 @@ export default class Output extends FormField<OutputProps> {
     if (this.multiLine) {
       return this.renderMultiLine(true);
     }
-    const textNode = this.getTextNode();
+    const textNode = this.processRenderer(this.getValue());
     return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;
   }
 

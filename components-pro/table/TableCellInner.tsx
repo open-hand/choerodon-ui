@@ -59,6 +59,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     rowHeight,
     pristine,
     aggregation,
+    inlineEdit,
+    columnEditorBorder,
   } = tableStore;
   const inView = record.getState('__inView') !== false && get(column, '_inView') !== false;
   const prefixCls = `${tableStore.prefixCls}-cell`;
@@ -390,11 +392,20 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     );
   }
   const innerClassName: string[] = [`${prefixCls}-inner`];
+  const editorBorder = !inlineEdit && hasEditor;
+  if (columnEditorBorder) {
+    innerClassName.push(`${prefixCls}-inner-bordered`);
+  }
+  if (editorBorder) {
+    innerClassName.push(`${prefixCls}-inner-editable`);
+  }
   if (!isStickySupport() && !hasEditor) {
     innerProps.onKeyDown = handleEditorKeyDown;
   }
   if (rowHeight === 'auto') {
     innerClassName.push(`${prefixCls}-inner-auto-height`);
+  } else {
+    innerClassName.push(`${prefixCls}-inner-row-height-fixed`);
   }
   if (height !== undefined && rows === 0) {
     innerClassName.push(`${prefixCls}-inner-fixed-height`);
@@ -442,7 +453,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         disabled={disabled}
         showHelp={ShowHelp.none}
         tooltip={tooltip}
-        renderEmpty={hasEditor && !tableStore.inlineEdit ? noop : undefined}
+        renderEmpty={editorBorder ? noop : undefined}
       />
     </>
   );

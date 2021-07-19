@@ -1,5 +1,3 @@
-import Set from 'core-js/library/fn/set';
-
 export default function diff(obj1, obj2, depth = 10, path = [], diffList = []) {
   if (depth <= 0) return diffList;
 

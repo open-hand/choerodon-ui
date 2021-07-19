@@ -1310,14 +1310,12 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getClassName(): string | undefined {
     const {
-      tableStore: { prefixCls, border, columnEditorBorder, rowHeight, parityRow, aggregation, size },
+      tableStore: { prefixCls, border, parityRow, aggregation, size },
     } = this;
     return super.getClassName({
       [`${prefixCls}-${size}`]: size !== Size.default,
       [`${prefixCls}-bordered`]: border,
-      [`${prefixCls}-cell-editor-bordered`]: columnEditorBorder,
       [`${prefixCls}-parity-row`]: parityRow,
-      [`${prefixCls}-row-height-fixed`]: isNumber(rowHeight),
       [`${prefixCls}-aggregation`]: aggregation,
     });
   }

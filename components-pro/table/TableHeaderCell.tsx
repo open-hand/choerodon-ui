@@ -2,7 +2,6 @@ import React, { cloneElement, Component, CSSProperties, isValidElement, ReactEle
 import PropTypes from 'prop-types';
 import { action, get, runInAction, set } from 'mobx';
 import ReactIntersectionObserver from 'react-intersection-observer';
-import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
@@ -379,8 +378,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const childNodes = [
       headerNode,
     ];
+    const innerClassNames = [`${prefixCls}-cell-inner`];
     const innerProps: any = {
-      className: classNames(`${prefixCls}-cell-inner`),
       children: childNodes,
       onMouseEnter: this.handleMouseEnter,
       onMouseLeave: hide,
@@ -410,6 +409,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         height: pxToRem(height),
         lineHeight: pxToRem(height - 2),
       };
+      innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
     }
 
     if (columnKey === CUSTOMIZED_KEY && tableStore.rightLeafColumns.filter(({ hidden }) => !hidden).length === 1 && tableStore.stickyRight) {
@@ -427,6 +427,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       <th {...thProps}>
         <div
           {...innerProps}
+          className={innerClassNames.join(' ')}
         />
         {columnResizable && this.renderResizer()}
       </th>
@@ -442,7 +443,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         >
           {
             ({ ref, inView }) => {
-              if (get(column, '_inView') !== inView) {
+              if (get(column, '_inView') !== true) {
                 runInAction(() => set(column, '_inView', inView));
               }
               return cloneElement<any>(th, { ref });
