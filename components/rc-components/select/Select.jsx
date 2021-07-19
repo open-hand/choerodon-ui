@@ -1,5 +1,4 @@
 /* eslint func-names: 1 */
-import Set from 'core-js/library/fn/set';
 import React, { Children, cloneElement, Component } from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import classnames from 'classnames';

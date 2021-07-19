@@ -102,18 +102,19 @@ export function addDataSetField(dataSet: DataSet, name: string, fieldProps: Fiel
   );
 }
 
-export function addRecordField(record: Record, name: string, fieldProps: FieldProps = {}): Field {
+export function addRecordField(record: Record, name: string, fieldProps: FieldProps = {}, dsField?: Field): Field {
   const { dataSet } = record;
   fieldProps.name = name;
   return processIntlField(
     name,
     fieldProps,
-    (langName, langProps) => {
-      const field = new Field(langProps, dataSet, record);
+    (langName, langProps, dataSetField) => {
+      const field = new Field(langProps, dataSet, record, dataSetField);
       record.fields.set(langName, field);
       return field;
     },
     dataSet,
+    dsField || (dataSet && dataSet.getField(name)),
   );
 }
 
@@ -2105,7 +2106,7 @@ export default class DataSet extends EventManager {
   @action
   addField(name: string, fieldProps?: FieldProps): Field {
     const field = addDataSetField(this, name, fieldProps);
-    this.records.forEach(record => record.addField(name));
+    this.records.forEach(record => record.addField(name, undefined, field));
     return field;
   }
 

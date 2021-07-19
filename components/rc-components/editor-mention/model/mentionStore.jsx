@@ -1,5 +1,3 @@
-import Map from 'core-js/library/fn/map';
-
 let offset = new Map();
 const mentionStore = {
   offset,

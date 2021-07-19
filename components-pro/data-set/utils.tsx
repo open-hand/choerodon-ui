@@ -754,8 +754,9 @@ export function getRecordValue(
 export function processIntlField(
   name: string,
   fieldProps: FieldProps,
-  callback: (name: string, props: FieldProps) => Field,
+  callback: (name: string, props: FieldProps, dsField?:Field) => Field,
   dataSet?: DataSet,
+  dsField?: Field,
 ): Field {
   if (fieldProps.type === FieldType.intl) {
     const { transformRequest } = fieldProps;
@@ -780,7 +781,7 @@ export function processIntlField(
       }),
     );
   }
-  return callback(name, fieldProps);
+  return callback(name, fieldProps, dsField);
 }
 
 export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {

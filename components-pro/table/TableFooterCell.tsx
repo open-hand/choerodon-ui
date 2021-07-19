@@ -51,13 +51,13 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
     const classString = classNames(`${prefixCls}-cell`, {
       [`${prefixCls}-cell-fix-${columnLock}`]: columnLock,
     }, className, footerClassName);
-    const innerProps: any = {
-      className: `${prefixCls}-cell-inner`,
-    };
+    const innerClassNames = [`${prefixCls}-cell-inner`];
+    const innerProps: any = {};
     if (rowHeight !== 'auto' && !autoFootHeight) {
       innerProps.style = {
         height: pxToRem(rowHeight),
       };
+      innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
     }
     const cellStyle: CSSProperties = {
       textAlign: align || (command ? ColumnAlign.center : getAlignByField(dataSet.getField(name))),
@@ -77,7 +77,7 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
     }
     return (
       <th className={classString} style={omit(cellStyle, ['width', 'height'])} colSpan={colSpan}>
-        <div {...innerProps}>{this.getFooter(footer, dataSet)}</div>
+        <div {...innerProps} className={innerClassNames.join(' ')}>{this.getFooter(footer, dataSet)}</div>
       </th>
     );
   }

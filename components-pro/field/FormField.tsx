@@ -1,4 +1,3 @@
-import Map from 'core-js/library/fn/map';
 import React, { cloneElement, FormEventHandler, isValidElement, ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';

@@ -75,6 +75,10 @@
         content: ' ';
       }
 
+      &-bordered {
+        border: @border-width-base @border-style-base transparent;
+      }
+
       &-edit {
         background-color: transparent;
 
@@ -91,6 +95,34 @@
 
       &-auto-height {
         word-break: break-all;
+      }
+
+      &-row-height-fixed {
+        padding: 0 @table-padding-horizontal;
+        overflow: hidden;
+        line-height: inherit;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      &-row-height-fixed&-fixed-height {
+        padding: .07rem @table-padding-horizontal;
+        white-space: normal;
+        overflow-wrap: break-word;
+      }
+
+      &-row-height-fixed.@{output-prefix-cls}-multi {
+        div {
+          overflow: hidden;
+          line-height: inherit;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .@{c7n-pro-prefix}-validation-message {
+          padding-left: 0;
+          font-size: inherit;
+        }
       }
     }
 
@@ -114,6 +146,7 @@
 
     &-prefix {
       float: left;
+      padding-right: @table-padding-horizontal;
       padding-left: @table-padding-horizontal;
 
       > * {
@@ -152,7 +185,7 @@
         padding: 0 0 (@padding-xs / 2) 0;
         outline: none;
 
-        &:not(.@{table-prefix-cls}-cell-editable) .@{table-prefix-cls}-cell-inner {
+        .@{table-prefix-cls}-cell-inner:not(.@{table-prefix-cls}-cell-inner-editable) {
           padding-right: 0;
           padding-left: 0;
         }
@@ -198,10 +231,10 @@
         align-items: center;
         font-size: @font-size-sm;
         line-height: .2rem;
-      }
 
-      .@{table-prefix-cls}-cell-editable &-title {
-        line-height: .18rem;
+        .@{table-prefix-cls}-cell-inner-editable {
+          line-height: .18rem;
+        }
       }
     }
 
@@ -252,10 +285,6 @@
     }
   }
 
-  &-cell-editor-bordered &-cell-inner {
-    border: @border-width-base @border-style-base transparent;
-  }
-
   &-thead &-cell,
   &-tfoot &-cell {
     position: relative;
@@ -289,34 +318,6 @@
     .@{table-prefix-cls}-cell-inner {
       padding-right: 0 !important;
       padding-left: 0 !important;
-    }
-  }
-
-  &-row-height-fixed &-cell-inner {
-    padding: 0 @table-padding-horizontal;
-    overflow: hidden;
-    line-height: inherit;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
-    &-fixed-height {
-      padding: .07rem @table-padding-horizontal;
-      white-space: normal;
-      overflow-wrap: break-word;
-    }
-
-    .@{output-prefix-cls}-multi {
-      div {
-        overflow: hidden;
-        line-height: inherit;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-
-      .@{c7n-pro-prefix}-validation-message {
-        padding-left: 0;
-        font-size: inherit;
-      }
     }
   }
 
@@ -538,29 +539,29 @@
     }
   }
 
-  &-cell-editable &-cell-prefix {
-    padding-right: @table-padding-horizontal;
+  &-cell-prefix + &-cell-inner:not(&-cell-inner-editable) {
+    padding-left: 0;
   }
 
-  &-cell-editable &-cell-inner {
+  &-cell-inner-editable {
     border-color: @table-editable-cell-border-color;
   }
 
-  &-cell-editable&-cell-required &-cell-inner.@{output-prefix-cls}-required-colors {
+  &-cell-required &-cell-inner-editable.@{output-prefix-cls}-required-colors {
     background-color: @table-editable-cell-required-bg;
     border-color: @table-editable-cell-required-border-color;
   }
 
-  &-cell-editable&-cell &-cell-inner.@{output-prefix-cls}-highlight {
+  &-cell &-cell-inner-editable.@{output-prefix-cls}-highlight {
     border-color: @table-editable-cell-highlight-border-color;
   }
 
-  &-cell-editable&-cell &-cell-inner.@{output-prefix-cls}-invalid {
+  &-cell &-cell-inner-editable.@{output-prefix-cls}-invalid {
     background-color: @table-editable-cell-error-bg;
     border-color: @table-editable-cell-error-border-color;
   }
 
-  &-cell-editable&-cell &-cell-inner.@{output-prefix-cls}-disabled {
+  &-cell &-cell-inner-editable.@{output-prefix-cls}-disabled {
     background-color: @table-editable-cell-disabled-bg;
     border-color: @table-editable-cell-disabled-border-color;
   }

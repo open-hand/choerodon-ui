@@ -21,7 +21,7 @@ import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, computed, isArrayLike, observable } from 'mobx';
+import { action, computed, isArrayLike, observable, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -421,8 +421,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const prefix = this.getPrefix();
     const otherPrevNode = this.getOtherPrevNode();
     const otherNextNode = this.getOtherNextNode();
-    const placeholderDiv = this.renderPlaceHolder();
     const renderedValue = this.renderRenderedValue();
+    const placeholderDiv = renderedValue ? undefined : this.renderPlaceHolder();
     const input = this.getWrappedEditor(renderedValue);
     const floatLabel = this.renderFloatLabel();
     const multipleHolder = this.renderMultipleHolder();
@@ -756,7 +756,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const text = this.getTextNode();
     const value = this.getValue();
     const finalText = (renderedValue ? this.renderedTextContent : isString(text) ? text : isArrayLike(text) && flattenDeep(text).filter(v => !isBoolean(v)).join('')) || '';
-    const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
+    const placeholder = this.hasFloatLabel || renderedValue ? undefined : this.getPlaceholders()[0];
     if ((!this.isFocused || !this.editable) && isValidElement(text)) {
       otherProps.style = {
         ...otherProps.style,
@@ -777,7 +777,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         key="text"
         {...otherProps}
         placeholder={placeholder}
-        value={finalText}
+        value={renderedValue ? '' : finalText}
         readOnly={!this.editable}
       />,
     );
@@ -876,10 +876,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           <RenderedText
             key="renderedText"
             prefixCls={prefixCls}
-            onContentChange={isNodeValue ? this.handleRenderedValueChange : undefined}
+            onContentChange={this.handleRenderedValueChange}
             hidden={hidden}
           >
-            {text}
+            {toJS(text)}
           </RenderedText>
         );
       }

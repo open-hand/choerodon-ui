@@ -45,6 +45,7 @@ timeline: true
 - 🐞  `<pro>PerformanceTable`: Fix the problem of invalid clicks in the table.
 - 🐞 `<pro>Form`: Fix the problem that the `dataSet` property of nested forms does not work.
 - 🐞 `<pro>Select`: Fix the problem that the custom pop-up window may not be closed.
+- 🐞 `<pro>TextField`: Fix the value rendered by the renderer cannot be displayed in the disabled state.
 
 ## 1.4.1
 

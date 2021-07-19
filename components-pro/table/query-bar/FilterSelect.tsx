@@ -1,4 +1,3 @@
-import Set from 'core-js/library/fn/set';
 import React, { cloneElement, CSSProperties, ReactElement, ReactNode } from 'react';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';

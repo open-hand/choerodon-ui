@@ -1,4 +1,3 @@
-import WeakMap from 'core-js/library/fn/weak-map';
 import createDefaultSetter from './createDefaultSetter';
 
 let mapStore;
