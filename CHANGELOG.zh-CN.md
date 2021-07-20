@@ -30,7 +30,7 @@ timeline: true
 - 💄 `<pro>DataSet`: 优化 addField 方法将自动创建已有 Record 对应的 Field。
 - 💄 `<pro>Radio`：优化 label 内容溢出提示。
 - 💄 `<pro>Table`：优化性能。
-- 💄 `<pro>Table`：优化性能动态搜索条样式交互。
+- 💄 `<pro>Table`：优化动态搜索条样式交互。
 - 💄 `<pro>NumberField`：step 兼容移动端事件。
 - 💄 `Progress`：优化动画性能。
 - 💄 `<pro>Table.Column`： 优化货币类型的列默认靠右对齐。

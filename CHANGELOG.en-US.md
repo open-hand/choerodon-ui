@@ -31,7 +31,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
 - 💄 `<pro>Radio`: Optimize the label content overflow tooltip.
 - 💄 `<pro>Table`: Optimize the performance.
-- 💄 `<pro>Table`: Optimize performance dynamic search bar style interaction.
+- 💄 `<pro>Table`: Optimize dynamic search bar style interaction.
 - 💄 `<pro>NumberField`: Compatible with mobile events.
 - 💄 `Progress`: Optimize animation performance.
 - 💄 `<pro>Table.Column`: Optimized currency type columns are aligned to the right by default.

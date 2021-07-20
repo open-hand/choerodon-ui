@@ -266,7 +266,7 @@
     "test-all-skip": "sh ./scripts/test-all.sh --skip",
     "lint": "npm run lint:script && npm run lint:demo && npm run lint:style",
     "lint:tsc": "npm run tsc",
-    "lint:script": "eslint '**/*.{js,jsx,ts,tsx}' --ext '.js,.jsx,.ts,.tsx'",
+    "lint:script": "eslint **/*.{js,jsx,ts,tsx} --ext '.js,.jsx,.ts,.tsx'",
     "lint:md": "remark components/",
     "lint:demo": "cross-env RUN_ENV=DEMO eslint components/*/demo/*.md --ext '.md'",
     "lint:style": "stylelint {site,components,components-pro}/**/*.less --syntax less",
