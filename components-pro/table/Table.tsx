@@ -270,6 +270,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   header?: ReactNode | ((records: Record[]) => ReactNode);
   /**
+   * 是否显示表头
+   */
+  showHeader?: boolean;
+  /**
    * 表脚
    */
   footer?: ReactNode | ((records: Record[]) => ReactNode);
@@ -626,6 +630,10 @@ export default class Table extends DataSetComponent<TableProps> {
      */
     header: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /**
+     * 是否显示表头
+     */
+    showHeader: PropTypes.bool,
+    /**
      * 表脚
      */
     footer: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
@@ -765,6 +773,7 @@ export default class Table extends DataSetComponent<TableProps> {
     clientExportQuantity: 100,
     aggregation: false,
     showSelectionCachedButton: true,
+    showHeader: true,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1227,6 +1236,7 @@ export default class Table extends DataSetComponent<TableProps> {
     return super.getOmitPropsKeys().concat([
       'columns',
       'header',
+      'showHeader',
       'footer',
       'border',
       'columnEditorBorder',

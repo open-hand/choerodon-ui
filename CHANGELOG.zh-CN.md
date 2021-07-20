@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 combineSort 属性支持组合列排序传参。
 - 🌟 `<pro>Select`: selectAllButton 新增钩子类型用于支持自定义按钮。
 - 🌟 `<pro>PerformanceTable`: 新增 queryBar, toolbar 属性，用于支持查询条及工具栏。
+- 🌟 `<pro>Table`: 新增 showHeader 属性。
 - 💄 `<pro>Modal`: 支持穿越同域 iframe。
 - 💄 `<pro>DataSet`: dataToJSON 属性的 all 值将校验所有记录。
 - 💄 `<pro>DataSet`: 优化 addField 方法将自动创建已有 Record 对应的 Field。

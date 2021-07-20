@@ -141,8 +141,9 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
 
   render() {
     const {
-      tableStore: { prefixCls, overflowX, columnResizable, isHeaderHover, columnResizing, props: { border } },
+      tableStore: { prefixCls, overflowX, columnResizable, isHeaderHover, columnResizing, customizable, props: { border, showHeader } },
     } = this.context;
+    const hasHeader = showHeader || customizable;
     const trs = this.getTrs();
     const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
       ref: this.saveRef,
@@ -150,6 +151,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
         [`${prefixCls}-column-resizable`]: columnResizable,
         [`${prefixCls}-column-group`]: trs && trs.length > 1,
         [`${prefixCls}-thead-hover`]: isHeaderHover || columnResizing,
+        [`${prefixCls}-thead-hidden`]: !hasHeader,
       }),
     };
     if (!isStickySupport() && overflowX && !border) {

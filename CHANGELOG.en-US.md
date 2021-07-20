@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `<pro>Table`: Fix the effect of local export in large data volume.
 - 🌟 `<pro>Select`: `selectAllButton` added hook type to support custom buttons.
 - 🌟 `<pro>PerformanceTable`: Added `queryBar`, `toolbar` attributes to support query bar and toolbar.
+- 🌟 `<pro>Table`: Added `showHeader` property.
 - 💄 `<pro>Modal`: Support traversing iframes in the same domain.
 - 💄 `<pro>DataSet`: The `all` value of the `dataToJSON` property will verify all records.
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
