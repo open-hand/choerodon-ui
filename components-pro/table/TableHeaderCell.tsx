@@ -165,7 +165,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     if (column) {
       const maxWidth = Math.max(
         ...[
-          ...element.querySelectorAll(`[data-index=${getColumnKey(column)}] > .${prefixCls}-cell-inner`),
+          ...element.querySelectorAll(`[data-index="${getColumnKey(column)}"] > .${prefixCls}-cell-inner`),
         ].map((node) => node.parentNode.offsetWidth + getMaxClientWidth(node) - node.clientWidth + 1),
         minColumnWidth(column),
         column.width ? column.width : 0,
