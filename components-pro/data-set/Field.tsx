@@ -375,8 +375,6 @@ export default class Field {
 
   record?: Record;
 
-  dsField?: Field;
-
   validator: Validator;
 
   pending: PromiseQueue;
@@ -392,6 +390,15 @@ export default class Field {
   @observable props: FieldProps & { [key: string]: any; };
 
   @observable dirtyProps: Partial<FieldProps>;
+
+  @computed
+  get dsField(): Field | undefined {
+    const { dataSet, name, record } = this;
+    if (record && dataSet && name) {
+      return dataSet.getField(name);
+    }
+    return undefined;
+  }
 
   @computed
   get pristineProps(): FieldProps {
@@ -537,13 +544,12 @@ export default class Field {
     return this.validator.validationMessage;
   }
 
-  constructor(props: FieldProps = {}, dataSet?: DataSet, record?: Record, dsField?: Field) {
+  constructor(props: FieldProps = {}, dataSet?: DataSet, record?: Record) {
     runInAction(() => {
       this.validator = new Validator(this);
       this.pending = new PromiseQueue();
       this.dataSet = dataSet;
       this.record = record;
-      this.dsField = dsField;
       this.dirtyProps = {};
       this.props = props;
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
@@ -1105,10 +1111,6 @@ export default class Field {
 
   private findDataSetField(): Field | undefined {
     return this.dsField;
-    // const { dataSet, name, record } = this;
-    // if (record && dataSet && name) {
-    //   return dataSet.getField(name);
-    // }
   }
 
   private checkDynamicProp(propsName, newProp) {

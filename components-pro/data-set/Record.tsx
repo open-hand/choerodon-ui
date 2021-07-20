@@ -890,13 +890,13 @@ export default class Record {
   }
 
   private initFields(fields: Fields) {
-    [...fields.entries()].forEach(([key, field]) => addRecordField(this, key, undefined, field));
+    [...fields.keys()].forEach((key) => addRecordField(this, key));
   }
 
   @action
-  addField(name: string, fieldProps: FieldProps = {}, dsField?: Field): Field {
+  addField(name: string, fieldProps: FieldProps = {}): Field {
     const old = this.fields.get(name);
-    const field = addRecordField(this, name, fieldProps, dsField);
+    const field = addRecordField(this, name, fieldProps);
     if (!old) {
       const data = toJS(this.data);
       const newData = { ...data };

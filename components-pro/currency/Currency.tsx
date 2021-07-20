@@ -19,10 +19,10 @@ export default class Currency extends NumberField<CurrencyProps> {
   }
 
   getFormatter() {
-    return getCurrencyFormatter(this);
+    return this.getProp('formatter') || getCurrencyFormatter();
   }
 
   getFormatOptions(): FormatNumberFuncOptions {
-    return getCurrencyFormatOptions(this);
+    return getCurrencyFormatOptions((name) => this.getProp(name), this.lang);
   }
 }

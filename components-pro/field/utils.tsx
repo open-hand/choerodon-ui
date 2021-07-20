@@ -1,18 +1,36 @@
-import { isValidElement, ReactNode } from 'react';
+import React, { cloneElement, isValidElement, ReactNode } from 'react';
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import defaultTo from 'lodash/defaultTo';
+import isPlainObject from 'lodash/isPlainObject';
 import { isArrayLike } from 'mobx';
-import moment from 'moment';
-import { getConfig } from 'choerodon-ui/lib/configure';
-import { FieldType } from '../data-set/enum';
+import classNames from 'classnames';
+import moment, { isMoment } from 'moment';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { BooleanValue, FieldType, RecordStatus } from '../data-set/enum';
 import Field, { HighlightProps } from '../data-set/Field';
-import { FormField, FormFieldProps } from './FormField';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
 import { getPrecision } from '../number-field/utils';
+import isEmpty from '../_util/isEmpty';
+import CloseButton from './CloseButton';
+import { hide, show } from '../tooltip/singleton';
+import Validator from '../validator/Validator';
+import ValidationResult from '../validator/ValidationResult';
+import { LabelLayout } from '../form/enum';
+import Icon from '../icon';
+import { $l } from '../locale-context';
+import isReactChildren from '../_util/isReactChildren';
+import { findBindFields } from '../data-set/utils';
+import * as ObjectChainValue from '../_util/ObjectChainValue';
+import MultiLine from '../output/MultiLine';
+import DataSet from '../data-set/DataSet';
+import Record from '../data-set/Record';
+import { Renderer, RenderProps } from './FormField';
+import { Tooltip } from '../core/enum';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
   if (isArrayLike(range)) {
@@ -94,11 +112,7 @@ export function transformHighlightProps(highlight: true | ReactNode | HighlightP
   return props;
 }
 
-export function getCurrencyFormatter(control: FormField) {
-  const formatter = control.getProp('formatter');
-  if (formatter !== undefined) {
-    return formatter;
-  }
+export function getCurrencyFormatter() {
   const currencyFormatter = getConfig('currencyFormatter');
   if (currencyFormatter !== undefined) {
     return currencyFormatter;
@@ -106,11 +120,7 @@ export function getCurrencyFormatter(control: FormField) {
   return formatCurrency;
 }
 
-export function getNumberFormatter(control: FormField) {
-  const formatter = control.getProp('formatter');
-  if (formatter !== undefined) {
-    return formatter;
-  }
+export function getNumberFormatter() {
   const numberFieldFormatter = getConfig('numberFieldFormatter');
   if (numberFieldFormatter !== undefined) {
     return numberFieldFormatter;
@@ -118,11 +128,11 @@ export function getNumberFormatter(control: FormField) {
   return formatNumber;
 }
 
-export function getCurrencyFormatOptions(control: FormField): FormatNumberFuncOptions {
-  const precision = control.getProp('precision');
-  const formatterOptions: FormatNumberFuncOptions = control.getProp('formatterOptions') || {};
+export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: string): FormatNumberFuncOptions {
+  const precision = getProp('precision');
+  const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
   const currencyFormatterOptions: FormatNumberFuncOptions = getConfig('currencyFormatterOptions') || {};
-  const lang = formatterOptions.lang || currencyFormatterOptions.lang || control.lang;
+  const lang = formatterOptions.lang || currencyFormatterOptions.lang || controlLang;
   const options: Intl.NumberFormatOptions = {};
   if (isNumber(precision)) {
     options.minimumFractionDigits = precision;
@@ -130,8 +140,8 @@ export function getCurrencyFormatOptions(control: FormField): FormatNumberFuncOp
   }
   Object.assign(options, currencyFormatterOptions.options, formatterOptions.options);
 
-  const numberGrouping = control.getProp('numberGrouping');
-  const currency = control.getProp('currency');
+  const numberGrouping = getProp('numberGrouping');
+  const currency = getProp('currency');
   if (currency) {
     options.currency = currency;
   }
@@ -144,18 +154,18 @@ export function getCurrencyFormatOptions(control: FormField): FormatNumberFuncOp
   };
 }
 
-export function getNumberFormatOptions(control: FormField, value?: number): FormatNumberFuncOptions {
-  const precision = control.getProp('precision');
-  const precisionInValue = isNumber(precision) ? precision : getPrecision(isNil(value) ? control.getValue() || 0 : value);
-  const formatterOptions: FormatNumberFuncOptions = control.getProp('formatterOptions') || {};
+export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => number | undefined, value?: number, controlLang?: string): FormatNumberFuncOptions {
+  const precision = getProp('precision');
+  const precisionInValue = isNumber(precision) ? precision : getPrecision(isNil(value) ? getValue ? getValue() || 0 : 0 : value);
+  const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
   const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
-  const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || control.lang;
+  const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || controlLang;
   const options: Intl.NumberFormatOptions = {
     maximumFractionDigits: precisionInValue,
     ...numberFieldFormatterOptions.options,
     ...formatterOptions.options,
   };
-  const numberGrouping = control.getProp('numberGrouping');
+  const numberGrouping = getProp('numberGrouping');
   if (numberGrouping === false) {
     options.useGrouping = false;
   }
@@ -165,19 +175,315 @@ export function getNumberFormatOptions(control: FormField, value?: number): Form
   };
 }
 
-export function processFieldValue<T extends FormFieldProps>(value, field: Field | undefined, control: FormField<T>, showValueIfNotFound?: boolean) {
+export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any, getValue?(): any, lang?: string }, showValueIfNotFound?: boolean) {
+  const { getProp, getValue, lang } = options;
   const type = field && field.type;
-  const currency = control.getProp('currency');
+  const currency = getProp('currency');
   if (currency || type === FieldType.currency) {
-    const formatOptions = getCurrencyFormatOptions(control);
-    return getCurrencyFormatter(control)(value, formatOptions.lang, formatOptions.options);
+    const formatOptions = getCurrencyFormatOptions(getProp, lang);
+    const formatter = getProp('formatter');
+    return (formatter || getCurrencyFormatter())(value, formatOptions.lang, formatOptions.options);
   }
   if (type === FieldType.number) {
-    const formatOptions = getNumberFormatOptions(control, value);
-    return getNumberFormatter(control)(value, formatOptions.lang, formatOptions.options);
+    const formatOptions = getNumberFormatOptions(getProp, getValue, value, lang);
+    const formatter = getProp('formatter');
+    return (formatter || getNumberFormatter())(value, formatOptions.lang, formatOptions.options);
   }
   if (field) {
     return field.getText(value, showValueIfNotFound);
   }
   return value;
+}
+
+export function processValue(value, format) {
+  if (!isNil(value)) {
+    if (isMoment(value)) {
+      if (value.isValid()) {
+        return value.format(format);
+      }
+      if (getConfig('showInvalidDate')) {
+        return $l('DatePicker', 'invalid_date') as string;
+      }
+      return '';
+    }
+    if (isReactChildren(value)) {
+      // For Select's Option and TreeSelect's TreeNode which type may be ReactElement
+      // @ts-ignore
+      return value;
+    }
+    return value.toString();
+  }
+  return '';
+}
+
+export function isFieldValueEmpty(value: any, range?: boolean | [string, string]) {
+
+  if (range === true) {
+    if (isArrayLike(value) && value.every(v => isEmpty(v))) {
+      return true;
+    }
+  } else if (isArrayLike(range)) {
+    if (value && Object.values(value).every(v => isEmpty(v))) {
+      return true;
+    }
+  }
+  return isArrayLike(value) ? !value.length : isEmpty(value);
+}
+
+export type MultipleRenderOption = {
+  range?: boolean | [string, string] | undefined;
+  maxTagCount?: number | undefined;
+  maxTagPlaceholder?: ReactNode | ((omittedValues: any[]) => ReactNode);
+  prefixCls?: string | undefined;
+  disabled?: boolean | undefined;
+  readOnly?: boolean | undefined;
+  validator: Validator;
+  isMultipleBlockDisabled?(v: any): boolean;
+  processRenderer(v: any, repeat?: number): ReactNode;
+  renderValidationResult(result: ValidationResult): ReactNode;
+  handleMutipleValueRemove?(e, value: any, index: number): void;
+  isValidationMessageHidden(message?: ReactNode): boolean;
+  showValidationMessage(e, message?: ReactNode): void;
+  getKey?(v: any): string;
+}
+
+export type RangeRenderOption = {
+  repeat?: number | undefined;
+  processRenderer(v: any, repeat?: number): ReactNode;
+}
+
+
+export type MultiLineRenderOption = {
+  prefixCls?: string | undefined;
+  field: Field;
+  record?: Record;
+  dataSet?: DataSet;
+  renderer?: Renderer;
+  name?: string;
+  tooltip?: Tooltip;
+  labelTooltip?: Tooltip;
+  renderValidationResult(result: ValidationResult): ReactNode;
+  isValidationMessageHidden(message?: ReactNode): boolean;
+  processValue(value): ReactNode;
+}
+
+export function renderRangeValue(value, option: RangeRenderOption) {
+  const { repeat, processRenderer } = option;
+  const rangeValue = (value || []).reduce((values, item) => {
+    const v = processRenderer(item, repeat);
+    if (!isEmpty(v)) {
+      values.push(v);
+    }
+    return values;
+  }, []) as [any, any];
+  if (rangeValue.length) {
+    return (
+      <>
+        {rangeValue[0]}~{rangeValue[1]}
+      </>
+    );
+  }
+}
+
+export function getValueKey(v: any) {
+  if (isArrayLike(v)) {
+    return v.join(',');
+  }
+  return v;
+}
+
+export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode, multipleValidateMessageLength: number } {
+  const {
+    range, maxTagPlaceholder, prefixCls, validator: { validationResults }, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
+    renderValidationResult, handleMutipleValueRemove, getKey = getValueKey, isValidationMessageHidden, showValidationMessage: selfShowValidationMessage,
+  } = option;
+  const values = toMultipleValue(value, range);
+  const valueLength = values.length;
+  const { maxTagCount = valueLength } = option;
+  const repeats: Map<any, number> = new Map<any, number>();
+  const blockClassName = classNames(
+    {
+      [`${prefixCls}-multiple-block-disabled`]: disabled,
+    },
+    `${prefixCls}-multiple-block`,
+  );
+  let multipleValidateMessageLength = 0;
+  const tags = values.slice(0, maxTagCount).map((v, index) => {
+    const key = getKey(v);
+    const repeat = repeats.get(key) || 0;
+    const text = range ? renderRangeValue(v, { repeat, processRenderer }) : processRenderer(v, repeat);
+    repeats.set(key, repeat + 1);
+    if (!isEmpty(text)) {
+      const validationResult = validationResults.find(error => error.value === v);
+      const blockDisabled = isMultipleBlockDisabled ? isMultipleBlockDisabled(v) : disabled;
+      const className = classNames(
+        {
+          [`${prefixCls}-multiple-block-invalid`]: validationResult,
+          [`${prefixCls}-multiple-block-disabled`]: blockDisabled,
+        },
+        `${prefixCls}-multiple-block`,
+      );
+      const validationMessage =
+        validationResult && renderValidationResult(validationResult);
+      if (validationMessage) {
+        multipleValidateMessageLength++;
+      }
+      const closeBtn = !blockDisabled && !readOnly && (
+        <CloseButton onClose={handleMutipleValueRemove} value={v} index={repeat} />
+      );
+      const inner = readOnly ? (
+        <span key={String(index)} className={className}>{text}</span>
+      ) : (
+        <li key={String(index)} className={className}>
+          <div>{text}</div>
+          {closeBtn}
+        </li>
+      );
+      if (!isValidationMessageHidden(validationMessage)) {
+        return cloneElement(inner, {
+          onMouseEnter: (e) => selfShowValidationMessage(e, validationMessage),
+          onMouseLeave: () => hide(),
+        });
+      }
+
+      return inner;
+    }
+    return undefined;
+  });
+
+  if (valueLength > maxTagCount) {
+    let content: ReactNode = `+ ${valueLength - maxTagCount} ...`;
+    if (maxTagPlaceholder) {
+      const omittedValues = values.slice(maxTagCount, valueLength);
+      content =
+        typeof maxTagPlaceholder === 'function'
+          ? maxTagPlaceholder(omittedValues)
+          : maxTagPlaceholder;
+    }
+    tags.push(
+      <li key="maxTagPlaceholder" className={blockClassName}>
+        <div>{content}</div>
+      </li>,
+    );
+  }
+
+  return { tags, multipleValidateMessageLength };
+}
+
+export function renderMultiLine(options: MultiLineRenderOption): { lines?: ReactNode, multipleValidateMessageLength: number } {
+  const {
+    field, record, dataSet, name, prefixCls, renderer, renderValidationResult, isValidationMessageHidden,
+    processValue: selfProcessValue, labelTooltip, tooltip,
+  } = options;
+  let multipleValidateMessageLength = 0;
+  if (record) {
+    const multiLineFields = findBindFields(field, record.fields);
+    if (renderer) {
+      return {
+        lines: renderer({
+          multiLineFields,
+          record,
+          dataSet,
+          name,
+        }),
+        multipleValidateMessageLength,
+      };
+    }
+    if (multiLineFields.length) {
+      const lines = (
+        multiLineFields.map(fieldItem => {
+          if (fieldItem) {
+            const { validationResults } = fieldItem.validator;
+            const required = defaultTo(fieldItem.get('required'), field.get('required'));
+            const fieldName = fieldItem.get('name');
+            const value = record.get(fieldName);
+            const validationResult = validationResults.find(error => error.value === value);
+            const validationMessage =
+              validationResult && renderValidationResult(validationResult);
+            const validationHidden = isValidationMessageHidden(validationMessage);
+            let processedValue = '';
+            if (fieldItem.get('lovCode')) {
+              const fieldValue = fieldItem.getValue();
+              if (isPlainObject(fieldValue)) {
+                processedValue = ObjectChainValue.get(fieldValue, fieldItem.get('textField') || Field.defaultProps.textField);
+              }
+            }
+            const notEmpty = !isEmpty(value);
+            // 值集中不存在 再去取直接返回的值
+            const text = processedValue || selfProcessValue(value);
+            multipleValidateMessageLength++;
+            const validationInner = notEmpty ? text :
+              validationHidden ? record.status === RecordStatus.add ? '' :
+                <span className={`${prefixCls}-multi-value-invalid`}>{text}</span> : validationMessage;
+            const label = fieldItem.get('label');
+            return (
+              <MultiLine
+                key={`${record!.index}-multi-${fieldName}`}
+                prefixCls={prefixCls}
+                label={label}
+                required={required}
+                validationMessage={validationMessage}
+                validationHidden={validationHidden}
+                tooltip={tooltip}
+                labelTooltip={labelTooltip}
+              >
+                {validationInner}
+              </MultiLine>
+            );
+          }
+          return null;
+        })
+      );
+      return {
+        lines,
+        multipleValidateMessageLength,
+      };
+    }
+  }
+  return { multipleValidateMessageLength };
+}
+
+export function renderValidationMessage(validationMessage: ReactNode, labelLayout?: LabelLayout): ReactNode {
+  if (validationMessage) {
+    return (
+      <div className={getProPrefixCls('validation-message')}>
+        {labelLayout !== LabelLayout.float && <Icon type="error" />}
+        <span>{validationMessage}</span>
+      </div>
+    );
+  }
+}
+
+export function defaultRenderer(renderOption: RenderProps) {
+  const { text, repeat, maxTagTextLength } = renderOption;
+  return repeat !== undefined &&
+  maxTagTextLength &&
+  isString(text) &&
+  text.length > maxTagTextLength
+    ? `${text.slice(0, maxTagTextLength)}...`
+    : text;
+}
+
+export function defaultOutputRenderer(renderOption: RenderProps) {
+  const { value, name, record } = renderOption;
+  const field = record && record.getField(name);
+  if (field && field.type === FieldType.boolean) {
+    const checkBoxPrefix = getProPrefixCls('checkbox');
+    return (
+      <label className={`${checkBoxPrefix}-wrapper ${checkBoxPrefix}-disabled`}>
+        <input disabled className={checkBoxPrefix} type="checkbox" checked={value === field.get(BooleanValue.trueValue)} />
+        <i className={`${checkBoxPrefix}-inner`} />
+      </label>
+    );
+  }
+  return defaultRenderer(renderOption);
+}
+
+export function showValidationMessage(e, message?: ReactNode): void {
+  show(e.currentTarget, {
+    suffixCls: `form-tooltip ${getConfig('proPrefixCls')}-tooltip`,
+    title: message,
+    theme: getConfig('validationTooltipTheme') || getConfig('tooltipTheme'),
+    placement: 'bottomLeft',
+  });
 }

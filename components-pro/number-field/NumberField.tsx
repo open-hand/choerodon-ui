@@ -459,11 +459,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getFormatOptions(value?: number): FormatNumberFuncOptions {
-    return getNumberFormatOptions(this, value);
+    return getNumberFormatOptions((name) => this.getProp(name), () => this.getValue(), value, this.lang);
   }
 
   getFormatter() {
-    return getNumberFormatter(this);
+    return this.getProp('formatter') || getNumberFormatter();
   }
 
   processText(value: ReactNode): ReactNode {

@@ -1075,6 +1075,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   handlePopupAnimateAppear() {
   }
 
+  @autobind
   getValueKey(v) {
     if (isArrayLike(v)) {
       return v.map(this.getValueKey, this).join(',');

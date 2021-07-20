@@ -443,8 +443,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         >
           {
             ({ ref, inView }) => {
-              if (get(column, '_inView') !== true) {
-                runInAction(() => set(column, '_inView', inView));
+              if (inView && get(column, '_inView') !== true) {
+                runInAction(() => set(column, '_inView', true));
               }
               return cloneElement<any>(th, { ref });
             }

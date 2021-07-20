@@ -193,10 +193,14 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             fieldValue = (fieldValue || [])[repeat];
           }
           if (field.get('bind') || !fieldValue) return;
-          return `${this.getFieldLabel(field)}: ${processFieldValue<FilterSelectProps>(
+          return `${this.getFieldLabel(field)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : super.processValue(fieldValue),
             field,
-            this,
+            {
+              getProp: (name) => this.getProp(name),
+              getValue: () => this.getValue(),
+              lang: this.lang,
+            },
           )}`;
         }
         return value;

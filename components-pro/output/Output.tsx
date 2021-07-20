@@ -3,21 +3,16 @@ import { observer } from 'mobx-react';
 import { isArrayLike } from 'mobx';
 import isPlainObject from 'lodash/isPlainObject';
 import isNil from 'lodash/isNil';
-import defaultTo from 'lodash/defaultTo';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
-import { BooleanValue, FieldType, RecordStatus } from '../data-set/enum';
 import { Tooltip as TextTooltip } from '../core/enum';
-import { findBindFields } from '../data-set/utils';
-import { processFieldValue } from '../field/utils';
+import { defaultOutputRenderer, processFieldValue, renderMultiLine, toRangeValue } from '../field/utils';
 import isEmpty from '../_util/isEmpty';
-import Field from '../data-set/Field';
-import * as ObjectChainValue from '../_util/ObjectChainValue';
 import isOverflow from '../overflow-tip/util';
 import { show } from '../tooltip/singleton';
-import MultiLine from './MultiLine';
 import { CurrencyProps } from '../currency/Currency';
+import Field from '../data-set/Field';
 
 export interface OutputProps extends FormFieldProps<any>, CurrencyProps<any> {
   renderEmpty?: () => ReactNode;
@@ -63,6 +58,7 @@ export default class Output extends FormField<OutputProps> {
     return undefined;
   }
 
+  @autobind
   getValueKey(value) {
     if (isArrayLike(value)) {
       return value.map(this.getValueKey, this).join(',');
@@ -74,100 +70,46 @@ export default class Output extends FormField<OutputProps> {
     if (!isNil(value)) {
       const text = isPlainObject(value) ? value : super.processValue(value);
       const { field } = this;
-      return processFieldValue<OutputProps>(text, field, this, true);
+      return processFieldValue(text, field, {
+        getProp: (name) => this.getProp(name),
+        getValue: () => this.getValue(),
+        lang: this.lang,
+      }, true);
     }
     return '';
   }
 
   @autobind
-  defaultRenderer({ value, text, repeat, maxTagTextLength }: RenderProps): ReactNode {
-    const { field } = this;
-    if (field && field.type === FieldType.boolean) {
-      const checkBoxPrefix = getProPrefixCls('checkbox');
-      return (
-        <label className={`${checkBoxPrefix}-wrapper ${checkBoxPrefix}-disabled`}>
-          <input disabled className={checkBoxPrefix} type="checkbox" checked={value === field.get(BooleanValue.trueValue)} />
-          <i className={`${checkBoxPrefix}-inner`} />
-        </label>
-      );
-    }
-    return super.defaultRenderer({ text, repeat, maxTagTextLength });
+  defaultRenderer(renderProps: RenderProps): ReactNode {
+    return defaultOutputRenderer(renderProps);
   }
-
 
   /**
    * 多行单元格渲染
-   * @param readOnly
    */
-  renderMultiLine(readOnly?: boolean): ReactNode {
+  renderMultiLine(field: Field): ReactNode {
     const {
       name,
       record,
-      field,
       dataSet,
       prefixCls,
       props: { renderer },
     } = this;
-    if (record) {
-      const multiLineFields = findBindFields(field as Field, record.fields);
-      if (renderer) {
-        return renderer({
-          multiLineFields,
-          record,
-          dataSet,
-          name,
-        });
-      }
-      if (readOnly) {
-        if (multiLineFields.length) {
-          this.multipleValidateMessageLength = 0;
-          return (
-            multiLineFields.map(fieldItem => {
-              if (fieldItem) {
-                const { validationResults } = this.multiLineValidator(fieldItem);
-                const required = defaultTo(fieldItem.get('required'), this.props.required);
-                const fieldName = fieldItem.get('name');
-                const value = record.get(fieldName);
-                const validationResult = validationResults.find(error => error.value === value);
-                const validationMessage =
-                  validationResult && this.renderValidationMessage(validationResult);
-                const validationHidden = this.isValidationMessageHidden(validationMessage);
-                let processValue = '';
-                if (fieldItem.get('lovCode')) {
-                  const fieldValue = fieldItem.getValue();
-                  if (isPlainObject(fieldValue)) {
-                    processValue = ObjectChainValue.get(fieldValue, fieldItem.get('textField') || Field.defaultProps.textField);
-                  }
-                }
-                const notEmpty = !isEmpty(value);
-                // 值集中不存在 再去取直接返回的值
-                const text = this.processText(processValue || this.getText(value));
-                this.multipleValidateMessageLength++;
-                const validationInner = notEmpty ? text :
-                  validationHidden ? record.status === RecordStatus.add ? '' :
-                    <span className={`${prefixCls}-multi-value-invalid`}>{text}</span> : validationMessage;
-                const label = fieldItem.get('label');
-                return (
-                  <MultiLine
-                    key={`${record!.index}-multi-${fieldName}`}
-                    prefixCls={prefixCls}
-                    label={label}
-                    required={required}
-                    validationMessage={validationMessage}
-                    validationHidden={validationHidden}
-                    tooltip={this.props.tooltip}
-                    labelTooltip={this.props.labelTooltip}
-                  >
-                    {validationInner}
-                  </MultiLine>
-                );
-              }
-              return null;
-            })
-          );
-        }
-      }
-    }
+    const { lines, multipleValidateMessageLength } = renderMultiLine({
+      name,
+      field,
+      record,
+      dataSet,
+      prefixCls,
+      renderer,
+      renderValidationResult: this.renderValidationResult,
+      isValidationMessageHidden: this.isValidationMessageHidden,
+      processValue: this.processValue.bind(this),
+      tooltip: this.props.tooltip,
+      labelTooltip: this.labelTooltip,
+    });
+    this.multipleValidateMessageLength = multipleValidateMessageLength;
+    return lines;
   }
 
   getRenderedValue(): ReactNode {
@@ -175,16 +117,16 @@ export default class Output extends FormField<OutputProps> {
       return this.renderMultipleValues(true);
     }
     if (this.range) {
-      return this.renderRangeValue(true);
+      return this.renderRangeValue(toRangeValue(this.getValue(), this.range));
     }
     /**
      * 多行单元格渲染
      */
-    if (this.multiLine) {
-      return this.renderMultiLine(true);
+    const { field } = this;
+    if (field && field.get('multiLine')) {
+      return this.renderMultiLine(field);
     }
-    const textNode = this.processRenderer(this.getValue());
-    return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;
+    return this.processRenderer(this.getValue());
   }
 
   showTooltip(e): boolean {
@@ -192,8 +134,8 @@ export default class Output extends FormField<OutputProps> {
       return true;
     }
     const { tooltip } = this.props;
-    const { element } = this;
-    if (element && !this.multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
+    const { element, field } = this;
+    if (element && !(field && field.get('multiLine')) && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
       const title = this.getRenderedValue();
       if (title) {
         show(element, {

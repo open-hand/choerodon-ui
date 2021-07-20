@@ -170,7 +170,8 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     this.trigger = node;
   }
 
-  isValidationMessageHidden(message?: ReactNode): undefined | boolean {
+  @autobind
+  isValidationMessageHidden(message?: ReactNode): boolean {
     return super.isValidationMessageHidden(message) || this.popup;
   }
 
