@@ -36,6 +36,7 @@ timeline: true
 - 💄 `<pro>Table.Column`： 优化货币类型的列默认靠右对齐。
 - 💄 `<pro>Output`： 优化数字货币显示, 优化空值显示。
 - 💄 `<pro>DataSet.Record`: 在没有 field 的情况下， addField 方法会对该 field 已有值进行处理。
+- 💄 `<pro>NumberField`: 移除 suffix，prefix 属性支持。
 - 🐞 `<pro>Table`: 修正 maxHeight 和 minHeight 的计算逻辑。
 - 🐞 `<pro>Pagination`: 修复最大分页没有设置时，分页选项有超过默认最大100分页无法选择的问题。
 - 🐞 `<pro>IconPicker`: 修复当点击分页按钮并按钮成禁用状态时，弹窗无法关闭的问题。

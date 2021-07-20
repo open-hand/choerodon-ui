@@ -3,7 +3,6 @@ order: 24
 title:
   zh-CN: 动态筛选条
   en-US: DynamicFilterBar
-only: true  
 ---
 
 ## zh-CN
