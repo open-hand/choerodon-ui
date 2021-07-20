@@ -26,7 +26,6 @@ import Dropdown from '../../dropdown';
 import TextField from '../../text-field';
 import TableContext from '../TableContext';
 import { ElementProps } from '../../core/ViewComponent';
-import { ButtonColor } from '../../button/enum';
 import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
@@ -253,6 +252,31 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return null;
   }
 
+  renderPrefix() {
+    const { prefixCls, dynamicFilterBar, queryDataSet, dataSet } = this.props;
+    const prefixes = dynamicFilterBar?.prefixes;
+    const children: ReactElement[] = [];
+    if (prefixes && prefixes.length) {
+      prefixes.forEach((prefix: any) => {
+        if (isString(prefix) && prefix === 'filter') {
+          children.push(<ColumnFilter prefixCls={prefixCls} />);
+        } else if (isValidElement(prefix)) {
+          children.push(prefix);
+        } else if (isFunction(prefix)) {
+          children.push(prefix({ queryDataSet, dataSet }));
+        }
+      });
+      return (<>
+          <div className={`${prefixCls}-dynamic-filter-bar-prefix`}>
+            {children}
+          </div>
+          <span className={`${prefixCls}-filter-search-divide`} />
+        </>
+      );
+    }
+    return null;
+  }
+
   /**
    * 注入 onEnterDown 事件
    * @param element
@@ -324,7 +348,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               // 收起全部
               this.refFilterWrapper!.style.display = 'none';
             } else {
-              this.refFilterWrapper!.style.display = 'inline-flex';
+              this.refFilterWrapper!.style.display = 'flex';
               this.refFilterWrapper!.style.height = '';
               this.refFilterWrapper!.style.overflow = '';
           }
@@ -339,11 +363,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         }}
       >
           {this.expand ? (<>
-            {$l('Table', 'collapse')}
-            <Icon type='expand_less' />
+            <Icon type="baseline-arrow_drop_up" />
           </>) : (<>
-            {$l('Table', 'expand_button')}
-            <Icon type='expand_more' />
+            <Icon type="baseline-arrow_drop_down" />
           </>)}
        </span>
     );
@@ -355,42 +377,70 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getFilterMenu(): ReactNode {
     const { prefixCls, queryFields, queryDataSet, dataSet, dynamicFilterBar, onReset = noop } = this.props;
+    const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
     const tableFilterAdapter = dynamicFilterBar?.tableFilterAdapter || getConfig('tableFilterAdapter');
-    if (queryDataSet && queryFields.length && tableFilterAdapter) {
+    if (queryDataSet && queryFields.length) {
       return (
         <div className={`${prefixCls}-filter-menu`}>
-          <QuickFilterMenu
-            prefixCls={prefixCls}
-            expand={this.expand}
-            dynamicFilterBar={dynamicFilterBar}
-            dataSet={dataSet}
-            queryDataSet={queryDataSet}
-            onChange={this.handleSelect}
-            conditionStatus={this.conditionStatus}
-            onStatusChange={this.setConditionStatus}
-          />
+          {this.renderPrefix()}
+          <div className={`${prefixCls}-filter-search`}>
+            <TextField
+              style={{ width: 280 }}
+              clearButton
+              placeholder={$l('Table', 'enter_search_content')}
+              prefix={<Icon type="search" />}
+              value={this.searchText}
+              onChange={() => noop}
+              onClear={() => {
+                runInAction(() => {
+                  this.searchText = '';
+                });
+                onReset();
+                dataSet.setQueryParameter(searchText, undefined);
+                this.handleQuery(true);
+              }}
+              onInput={(e) => {
+                // @ts-ignore
+                const { value } = e.target;
+                runInAction(() => {
+                  this.searchText = value || '';
+                });
+                dataSet.setQueryParameter(searchText, value);
+                this.handleQuery();
+              }}
+            />
+          </div>
+          {tableFilterAdapter ? (
+            <QuickFilterMenu
+              prefixCls={prefixCls}
+              expand={this.expand}
+              dynamicFilterBar={dynamicFilterBar}
+              dataSet={dataSet}
+              queryDataSet={queryDataSet}
+              onChange={this.handleSelect}
+              conditionStatus={this.conditionStatus}
+              onStatusChange={this.setConditionStatus}
+            />
+          ) : (
+              <div className={`${prefixCls}-filter-buttons`}>
+                {this.conditionStatus === RecordStatus.update && <Button
+                  onClick={() => {
+                    if (queryDataSet && queryDataSet.current) {
+                      queryDataSet.current.reset();
+                    }
+                    this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.current });
+                    this.setConditionStatus(RecordStatus.sync);
+                    dataSet.query();
+                    onReset();
+                  }}
+                >
+                  {$l('Table', 'reset_button')}
+                </Button>}
+              </div>
+          )}
+          <span className={`${prefixCls}-filter-search-divide`} />
           {this.getExpandNode(true)}
-        </div>
-      );
-    }
-    if (queryDataSet && queryDataSet.current) {
-      return (
-        <div className={`${prefixCls}-filter-rest-buttons`}>
-          {this.conditionStatus === RecordStatus.update && <Button
-            onClick={() => {
-              if (queryDataSet && queryDataSet.current) {
-                queryDataSet.current.reset();
-              }
-              this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.current });
-              this.setConditionStatus(RecordStatus.sync);
-              dataSet.query();
-              onReset();
-            }}
-            color={ButtonColor.primary}
-          >
-            {$l('Table', 'reset_button')}
-          </Button>}
-          {this.getExpandNode(false)}
+          {this.renderSuffix()}
         </div>
       );
     }
@@ -401,8 +451,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit = 3, queryFields, queryDataSet, onReset = noop, dataSet, dynamicFilterBar } = this.props;
-    const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
+    const { prefixCls, queryFieldsLimit = 3, queryFields, queryDataSet } = this.props;
     if (queryDataSet && queryFields.length) {
       return (
         <div key="query_bar" className={`${prefixCls}-dynamic-filter-bar`}>
@@ -481,37 +530,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     });
                   }}
                 >
+                  <Icon type="add" />
                   {$l('Table', 'add_filter')}
                   <Icon type="arrow_drop_down" />
                 </span>
               </Dropdown>
             </div>)}
-            <div className={`${prefixCls}-filter-search`}>
-              <TextField
-                clearButton
-                placeholder={$l('Table', 'enter_search_content')}
-                suffix={<Icon type="search" />}
-                value={this.searchText}
-                onChange={() => noop}
-                onClear={() => {
-                  runInAction(() => {
-                    this.searchText = '';
-                  });
-                  onReset();
-                  dataSet.setQueryParameter(searchText, undefined);
-                  this.handleQuery(true);
-                }}
-                onInput={(e) => {
-                  // @ts-ignore
-                  const { value } = e.target;
-                  runInAction(() => {
-                    this.searchText = value || '';
-                  });
-                  dataSet.setQueryParameter(searchText, value);
-                  this.handleQuery();
-                }}
-              />
-            </div>
           </div>
         </div>
       );
@@ -535,7 +559,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       <div key="dynamic_filter_toolbar" className={`${prefixCls}-dynamic-filter-toolbar`}>
         <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons}>
           {summaryBar}
-          {this.renderSuffix()}
         </TableButtons>
       </div>
     ) : (

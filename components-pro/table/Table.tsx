@@ -179,6 +179,7 @@ export interface DynamicFilterBarConfig {
   searchCode: string;
   searchText?: string;
   suffixes?: Suffixes[];
+  prefixes?: React.ReactElement<any>[];
   tableFilterAdapter?: TransportProps;
 }
 

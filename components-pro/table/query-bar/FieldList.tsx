@@ -1,10 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import Icon from 'choerodon-ui/lib/icon';
-import Button from '../../button';
 import TextField from '../../text-field';
 import CheckBox from '../../check-box';
 import Field from '../../data-set/Field';
-import { FuncType } from '../../button/enum';
 import { $l } from '../../locale-context';
 
 interface Group {
@@ -26,7 +24,7 @@ type Props = {
   groups: Group[]
 }
 
-const FieldList: React.FC<Props> = ({ closeMenu, value, onSelect, onUnSelect, groups, prefixCls }) => {
+const FieldList: React.FC<Props> = ({ value, onSelect, onUnSelect, groups, prefixCls }) => {
   const [searchText, setSearchText] = useState('');
   const codes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => o.get('name'))], []), [groups]);
   const hasSelect = useMemo(() => value.length > 0, [value.length]);
@@ -41,7 +39,6 @@ const FieldList: React.FC<Props> = ({ closeMenu, value, onSelect, onUnSelect, gr
   }, [onSelect, onUnSelect]);
   const renderGroup = useCallback((group: Group) => group.fields.length > 0 && (
     <div className={`${prefixCls}-section`} key={group.title}>
-      <div className={`${prefixCls}-title`}>{group.title}</div>
       <div className={`${prefixCls}-list`}>
         {group.fields.map((field) => {
           const code = field.get('name');
@@ -66,6 +63,9 @@ const FieldList: React.FC<Props> = ({ closeMenu, value, onSelect, onUnSelect, gr
       </div>
     </div>
   ), [handleChange, isChecked, searchText]);
+
+  const selectItems = value.filter(v => codes.includes(v));
+
   return (
     <div
       className={prefixCls}
@@ -91,31 +91,32 @@ const FieldList: React.FC<Props> = ({ closeMenu, value, onSelect, onUnSelect, gr
         />
       </div>
       <div className={`${prefixCls}-header`}>
-        <CheckBox
-          indeterminate={!hasSelectAll && hasSelect}
-          checked={hasSelectAll}
-          onChange={(checkAll) => {
-            if (checkAll) {
-              // 避免焦点丢失时无法再次点击添加筛选
-              closeMenu();
-              // TODO: 过滤disabled的code 如果存在
-              handleChange(codes, true);
-            } else {
-              handleChange(codes, false);
-            }
+        <span className={`${prefixCls}-search-selected`}>
+          {$l('Screening', 'selected')}
+          <span className={`${prefixCls}-search-items`}>
+            {selectItems.length}
+          </span>
+          {$l('Transfer', 'items')}
+        </span>
+        <span className={`${prefixCls}-search-divide`} />
+        <span
+          style={{ display: !hasSelectAll ? 'inline-block' : 'none' }}
+          className={`${prefixCls}-search-action`}
+          onClick={() => {
+            handleChange(codes, true);
           }}
         >
           {$l('Select', 'select_all')}
-        </CheckBox>
-        <Button
+        </span>
+        <span
           style={{ display: hasSelect ? 'inline-block' : 'none' }}
-          funcType={FuncType.flat}
+          className={`${prefixCls}-search-action`}
           onClick={() => {
             handleChange(codes, false);
           }}
         >
           {$l('Table', 'clear_filter')}
-        </Button>
+        </span>
       </div>
       <div className={`${prefixCls}-content`}>
         {groups.map((group) => renderGroup(group))}

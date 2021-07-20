@@ -74,7 +74,7 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
           hidden={this.hidden}
           onHiddenChange={this.handleHiddenChange}
         >
-          <Icon type="view_column" onClick={this.handleKeyDown} />
+          <Icon type="view_column" onClick={this.handleKeyDown} style={{ cursor: 'pointer' }} />
         </Dropdown>
       </div>
     );

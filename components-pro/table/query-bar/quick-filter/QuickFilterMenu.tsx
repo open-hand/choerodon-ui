@@ -6,19 +6,22 @@ import isObject from 'lodash/isObject';
 import isEnumEmpty from 'lodash/isEmpty';
 import isArray from 'lodash/isArray';
 import Icon from 'choerodon-ui/lib/icon';
+import Tag from 'choerodon-ui/lib/tag';
 import { getConfig } from 'choerodon-ui/lib/configure';
 
 import isSampleEmpty from '../../../_util/isEmpty';
 import { $l } from '../../../locale-context';
 import Button from '../../../button';
-import { ButtonColor } from '../../../button/enum';
 import Select from '../../../select';
 import Modal from '../../../modal';
 import CheckBox from '../../../check-box';
 import TextField from '../../../text-field';
-import Tooltip from '../../../tooltip';
+import Dropdown from '../../../dropdown';
+import Menu from '../../../menu';
 import Record from '../../../data-set/Record';
 import { RecordStatus } from '../../../data-set/enum';
+import { hide, show } from '../../../tooltip/singleton';
+import isOverflow from '../../../overflow-tip/util';
 
 import Store from './QuickFilterDataSet';
 
@@ -162,7 +165,7 @@ const QuickFilterMenu = observer(() => {
     filterMenuDS,
     conditionDataSet,
     onChange,
-    expand,
+    // expand,
     conditionStatus,
     onStatusChange,
   } = useContext(Store);
@@ -374,59 +377,58 @@ const QuickFilterMenu = observer(() => {
     }
   };
 
-
   /**
    * 渲染下拉选项
    * @param record
    * @param text
    */
   const optionRenderer = ({ record, text }) => {
+    const menu = (
+      <Menu onClick={({ key, domEvent }) => {
+        domEvent.preventDefault();
+        domEvent.stopPropagation();
+        if (key === 'filter_default') {
+          setDefaultFlag(record?.get('defaultFlag') ? 0 : 1, record);
+        } else if (key === 'filter_rename') {
+          handleEdit(record);
+        } else {
+          handleDelete(record);
+        }
+      }}>
+        <Menu.Item key='filter_default'>
+          {record?.get('defaultFlag') ? $l('Table', 'cancel_default') : $l('Table', 'set_default')}
+        </Menu.Item>
+        <Menu.Item key='filter_rename'>
+          {$l('Table', 'rename')}
+        </Menu.Item>
+        <Menu.Item key='filter_delete'>
+          <span style={{color: '#F13131'}}>
+            {$l('Table', 'delete_button')}
+          </span>
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <div className={`${prefixCls}-filter-menu-option`}>
-        {text}
+        <span
+          className={`${prefixCls}-filter-menu-option-content`}
+          onMouseEnter={(e) => {
+            const { currentTarget } = e;
+            if (isOverflow(currentTarget)) {
+              show(currentTarget, {
+                title: text,
+              });
+            }
+          }}
+          // @ts-ignore
+          onMouseLeave={hide}
+        >
+          {text}
+        </span>
         <div className={`${prefixCls}-filter-menu-option-icons`}>
-          <Tooltip title={record?.get('defaultFlag') ? $l('Table', 'cancel_default') : $l('Table', 'set_default')}>
-            {record?.get('defaultFlag') ? (
-                <Icon
-                  type="star"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setDefaultFlag(0, record);
-                  }}
-                />
-              ) :
-              (
-                <Icon
-                  type="grade-o"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setDefaultFlag(1, record);
-                  }}
-                />
-              )}
-          </Tooltip>
-          <Tooltip title={$l('Table', 'rename')}>
-            <Icon
-              type="edit-o"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleEdit(record);
-              }}
-            />
-          </Tooltip>
-          <Tooltip title={$l('Table', 'delete_button')}>
-            <Icon
-              type="delete_forever-o"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleDelete(record);
-              }}
-            />
-          </Tooltip>
+          <Dropdown overlay={menu}>
+            <span style={{ userSelect: 'none' }}><Icon type="more_horiz" /></span>
+          </Dropdown>
         </div>
       </div>
     );
@@ -434,28 +436,33 @@ const QuickFilterMenu = observer(() => {
 
   return (
     <>
-      <Icon type="sort" style={{ transform: 'rotateY(180deg)' }} />
       <Select
         isFlat
         placeholder={$l('Table', 'fast_filter')}
-        style={{ border: 'none', minWidth: '0.9rem' }}
+        style={{ border: 'none', minWidth: '0.9rem', marginLeft: '0.12rem' }}
         dataSet={filterMenuDS}
         name="filterName"
         dropdownMatchSelectWidth={false}
-        dropdownMenuStyle={{ minWidth: '2rem' }}
+        dropdownMenuStyle={{ width: '2rem' }}
         optionRenderer={optionRenderer}
         onChange={handleChange}
+        notFoundContent={$l('Table', 'no_save_filter')}
       />
+      {conditionStatus === RecordStatus.update ? (
+        <Tag className={`${prefixCls}-filter-status`}>
+          <span>{$l('Table', 'modified')}</span>
+        </Tag>
+      ): null}
       {conditionStatus === RecordStatus.update && (
-        <div className={`${prefixCls}-filter-buttons`} style={expand ? {} : { display: 'none' }}>
-          <Button color={ButtonColor.primary} onClick={handleSave}>
-            {$l('Table', 'save_filter')}
-          </Button>
+        <div className={`${prefixCls}-filter-buttons`}>
           {filterMenuDS.current?.get('filterName') && (
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>
           )}
+          <Button onClick={handleSave}>
+            {$l('Table', 'save_button')}
+          </Button>
           <Button onClick={handleQueryReset}>
             {$l('Table', 'reset_button')}
           </Button>

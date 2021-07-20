@@ -3,6 +3,7 @@ order: 24
 title:
   zh-CN: 动态筛选条
   en-US: DynamicFilterBar
+only: true  
 ---
 
 ## zh-CN
@@ -181,7 +182,10 @@ class App extends React.Component {
       <Table
         buttons={['add', 'query']}
         dataSet={this.ds}
-        queryBar={(props) => <DynamicFilterBar {...props} dynamicFilterBar={{ suffixes: ['filter'] }} />}
+        queryBar="filterBar"
+        queryBarProps={{
+          dynamicFilterBar: { suffixes: ['filter'], prefixes: ['filter'] }
+        }}
         border={false}
         columns={this.columns}
         queryFieldsLimit={2}
