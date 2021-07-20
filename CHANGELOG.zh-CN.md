@@ -45,6 +45,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复嵌套表单的 dataSet 属性不起作用的问题。
 - 🐞 `<pro>Select`: 修复自定义弹窗可能无法关闭的问题。
 - 🐞 `<pro>TextField`: 修复禁用状态下无法显示渲染器渲染的值。
+- 🐞 `<pro>Table`: 修复双击调整名字中带有.的列宽时报错。
 
 ## 1.4.1
 

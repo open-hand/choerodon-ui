@@ -46,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fix the problem that the `dataSet` property of nested forms does not work.
 - 🐞 `<pro>Select`: Fix the problem that the custom pop-up window may not be closed.
 - 🐞 `<pro>TextField`: Fix the value rendered by the renderer cannot be displayed in the disabled state.
+- 🐞 `<pro>Table`: Fixed an error when double-clicking to adjust the column width with "." in the name.
 
 ## 1.4.1
 
