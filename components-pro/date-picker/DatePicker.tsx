@@ -547,6 +547,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
+  @autobind
   getValueKey(v: any) {
     if (isArrayLike(v)) {
       return v.map(this.getValueKey, this).join(',');

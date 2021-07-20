@@ -1,0 +1,18 @@
+@import '../../../components/style/themes/default';
+
+.multi() {
+  &-multi-value-invalid {
+    color: @error-color;
+  }
+
+  &-multi-label-required::after {
+    display: inline-block;
+    width: 0.08rem;
+    margin-left: 0.04rem;
+    color: @label-required-color;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    vertical-align: middle;
+    content: '*';
+  }
+}

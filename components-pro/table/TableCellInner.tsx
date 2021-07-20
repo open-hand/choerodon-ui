@@ -9,12 +9,14 @@ import React, {
   useCallback,
   useContext,
   useMemo,
+  useRef,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import { get, isArrayLike } from 'mobx';
 import raf from 'raf';
 import classNames from 'classnames';
-import noop from 'lodash/noop';
+import isNil from 'lodash/isNil';
+import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -29,8 +31,6 @@ import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isS
 import { FieldType, RecordStatus } from '../data-set/enum';
 import { SELECTION_KEY } from './TableStore';
 import { SelectionMode, TableCommandType } from './enum';
-import Output from '../output/Output';
-import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip/Tooltip';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { FormFieldProps, Renderer } from '../field/FormField';
@@ -40,6 +40,26 @@ import { LabelLayout } from '../form/enum';
 import { findFirstFocusableElement } from '../_util/focusable';
 import useComputed from '../use-computed';
 import SelectionTreeBox from './SelectionTreeBox';
+import {
+  defaultOutputRenderer,
+  getDateFormatByField,
+  isFieldValueEmpty,
+  processFieldValue,
+  processValue as utilProcessValue,
+  renderMultiLine,
+  renderMultipleValues,
+  renderRangeValue,
+  renderValidationMessage as utilRenderValidationMessage,
+  showValidationMessage,
+  toMultipleValue,
+  transformHighlightProps,
+} from '../field/utils';
+import ValidationResult from '../validator/ValidationResult';
+import localeContext from '../locale-context/LocaleContext';
+import isEmpty from '../_util/isEmpty';
+import { Tooltip as TextTooltip } from '../core/enum';
+import isOverflow from '../overflow-tip/util';
+import { hide, show } from '../tooltip/singleton';
 
 let inTab: boolean = false;
 
@@ -53,6 +73,8 @@ export interface TableCellInnerProps {
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) => {
   const { column, record, command, children, style, disabled } = props;
+  const multipleValidateMessageLengthRef = useRef<number>(0);
+  const tooltipShownRef = useRef<boolean | undefined>();
   const { tableStore } = useContext(TableContext);
   const {
     dataSet,
@@ -64,8 +86,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   } = tableStore;
   const inView = record.getState('__inView') !== false && get(column, '_inView') !== false;
   const prefixCls = `${tableStore.prefixCls}-cell`;
+  const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
-  const { name, key, lock, highlightRenderer = tableStore.cellHighlightRenderer, renderer } = column;
+  const { name, key, lock, renderer } = column;
   const columnKey = getColumnKey(column);
   const { checkField } = dataSet.props;
   const height = record.getState(`__column_resize_height_${name}`);
@@ -345,7 +368,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       };
     }
     return renderer;
-  }, [command, cellEditorInCell, renderEditor, renderCommand, renderer, aggregation]);
+  }, [command, cellEditorInCell, renderEditor, renderCommand, renderer, field, aggregation]);
   const innerStyle = useComputed(() => {
     if (!aggregation) {
       if (height !== undefined && rows === 0) {
@@ -369,9 +392,127 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     }
     return style;
   }, [field, key, rows, rowHeight, height, style, aggregation, hasEditor]);
+  const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
+  const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
+    if (validationResult && validationResult.validationMessage) {
+      return utilRenderValidationMessage(validationResult.validationMessage);
+    }
+  }, []);
+  const isValidationMessageHidden = useCallback((message?: ReactNode): boolean => {
+    return !message || pristine;
+  }, [pristine]);
+  const getRenderedValue = useCallback(() => {
+    const processValue = (v) => {
+      if (!isNil(v)) {
+        const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field, FieldType.string));
+        return processFieldValue(text, field, {
+          getProp: (propName) => field && field.get(propName),
+          lang: dataSet && dataSet.lang || localeContext.locale.lang,
+        }, true);
+      }
+      return '';
+    };
+    const processRenderer = (v, repeat?: number) => {
+      let processedValue;
+      if (field && (field.lookup || field.get('options') || field.get('lovCode'))) {
+        processedValue = field.getText(v) as string;
+      }
+      // 值集中不存在 再去取直接返回的值
+      const text = isNil(processedValue) ? processValue(v) : processedValue;
+      return (cellRenderer || defaultOutputRenderer)({
+        value: v,
+        text,
+        record,
+        dataSet,
+        name,
+        repeat,
+      });
+    };
+    if (field) {
+      const multiple = field.get('multiple');
+      const range = field.get('range');
+      if (multiple) {
+        const { tags, multipleValidateMessageLength } = renderMultipleValues(value, {
+          disabled,
+          readOnly: true,
+          range,
+          prefixCls,
+          processRenderer,
+          renderValidationResult,
+          isValidationMessageHidden,
+          showValidationMessage,
+          validator: field.validator,
+        });
+        multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
+        return tags;
+      }
+      if (range) {
+        return renderRangeValue(value, { processRenderer });
+      }
+      if (field.get('multiLine')) {
+        const { lines, multipleValidateMessageLength } = renderMultiLine({
+          name,
+          field,
+          record,
+          dataSet,
+          prefixCls: innerPrefixCls,
+          renderer: cellRenderer,
+          renderValidationResult,
+          isValidationMessageHidden,
+          processValue,
+          tooltip,
+          labelTooltip: getConfig('labelTooltip'),
+        });
+        multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
+        return lines;
+      }
+    }
+    const textNode = processRenderer(value);
+    return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;
+  }, [multipleValidateMessageLengthRef, renderValidationResult, isValidationMessageHidden, name, record, dataSet, field, value, disabled, prefixCls, cellRenderer, tooltip]);
+  const editorBorder = !inlineEdit && hasEditor;
+  const text = useComputed(() => {
+    if (inView) {
+      const result = getRenderedValue();
+      return isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : getConfig('renderEmpty')('Output') : result;
+    }
+  }, [inView, getRenderedValue, editorBorder]);
+
+  const showTooltip = useCallback((e) => {
+    if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator') && field.get('multiple') && toMultipleValue(value, field.get('range')).length))) {
+      const message = renderValidationResult(field.validator.currentValidationResult);
+      if (!isValidationMessageHidden(message)) {
+        showValidationMessage(e, message);
+        return true;
+      }
+    }
+    const element = e.target;
+    if (element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
+      if (text) {
+        show(element, {
+          title: text,
+          placement: 'right',
+        });
+        return true;
+      }
+    }
+    return false;
+  }, [renderValidationResult, isValidationMessageHidden, field, tooltip, multiLine, text]);
+  const handleMouseEnter = useCallback((e) => {
+    if (showTooltip(e)) {
+      tooltipShownRef.current = true;
+    }
+  }, [tooltipShownRef]);
+  const handleMouseLeave = useCallback(() => {
+    if (tooltipShownRef.current) {
+      hide();
+      tooltipShownRef.current = false;
+    }
+  }, [tooltipShownRef]);
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
+    children: text,
   };
   if (!inView) {
     if (rowHeight === 'auto') {
@@ -387,20 +528,50 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       <span
         key="output"
         {...innerProps}
-        className={`${prefixCls}-inner`}
+        className={innerPrefixCls}
       />
     );
   }
-  const innerClassName: string[] = [`${prefixCls}-inner`];
-  const editorBorder = !inlineEdit && hasEditor;
+  const empty = field ? isFieldValueEmpty(value, field.get('range')) : false;
+  const innerClassName: string[] = [innerPrefixCls];
   if (columnEditorBorder) {
     innerClassName.push(`${prefixCls}-inner-bordered`);
   }
   if (editorBorder) {
     innerClassName.push(`${prefixCls}-inner-editable`);
   }
+  let highlight;
+  let inValid;
+  if (field) {
+    if (cellEditor && !pristine && field.dirty) {
+      innerClassName.push(`${prefixCls}-inner-dirty`);
+    }
+    if (!inlineEdit && editorBorder) {
+      if (field.required && (empty || !getConfig('showRequiredColorsOnlyEmpty'))) {
+        innerClassName.push(`${prefixCls}-inner-required`);
+      }
+      inValid = !field.valid;
+      if (inValid) {
+        innerClassName.push(`${prefixCls}-inner-invalid`);
+      }
+      highlight = field.get('highlight');
+      if (highlight) {
+        innerClassName.push(`${prefixCls}-inner-highlight`);
+      }
+    }
+  }
+  if (disabled || (field && field.get('disabled'))) {
+    innerClassName.push(`${prefixCls}-inner-disabled`);
+  }
+  if (multiLine) {
+    innerClassName.push(`${prefixCls}-inner-multiLine`);
+  }
   if (!isStickySupport() && !hasEditor) {
     innerProps.onKeyDown = handleEditorKeyDown;
+  }
+  if (inValid || tooltip) {
+    innerProps.onMouseEnter = handleMouseEnter;
+    innerProps.onMouseLeave = handleMouseLeave;
   }
   if (rowHeight === 'auto') {
     innerClassName.push(`${prefixCls}-inner-auto-height`);
@@ -421,40 +592,23 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       {checkBox}
     </span>
   );
-  if (cellEditorInCell || !name) {
-    const value = name ? record.get(name) : undefined;
-    return (
-      <>
-        {prefix}
-        <span
-          key="output"
-          {...innerProps}
-          style={innerStyle}
-          className={innerClassName.join(' ')}
-        >
-          {cellRenderer ? cellRenderer({ record, dataSet, name, value }) : undefined}
-        </span>
-      </>
-    );
+
+  let output: ReactNode = (
+    <span
+      key="output"
+      {...innerProps}
+      style={innerStyle}
+      className={innerClassName.join(' ')}
+    />
+  );
+  if (highlight) {
+    const { highlightRenderer = tableStore.cellHighlightRenderer } = column;
+    output = highlightRenderer(transformHighlightProps(highlight, { dataSet, record, name }), output);
   }
   return (
     <>
       {prefix}
-      <Output
-        key="output"
-        {...innerProps}
-        pristine={pristine}
-        highlightRenderer={highlightRenderer}
-        style={innerStyle}
-        className={innerClassName.join(' ')}
-        record={record}
-        renderer={cellRenderer}
-        name={name}
-        disabled={disabled}
-        showHelp={ShowHelp.none}
-        tooltip={tooltip}
-        renderEmpty={editorBorder ? noop : undefined}
-      />
+      {output}
     </>
   );
 });

@@ -102,19 +102,18 @@ export function addDataSetField(dataSet: DataSet, name: string, fieldProps: Fiel
   );
 }
 
-export function addRecordField(record: Record, name: string, fieldProps: FieldProps = {}, dsField?: Field): Field {
+export function addRecordField(record: Record, name: string, fieldProps: FieldProps = {}): Field {
   const { dataSet } = record;
   fieldProps.name = name;
   return processIntlField(
     name,
     fieldProps,
-    (langName, langProps, dataSetField) => {
-      const field = new Field(langProps, dataSet, record, dataSetField);
+    (langName, langProps) => {
+      const field = new Field(langProps, dataSet, record);
       record.fields.set(langName, field);
       return field;
     },
     dataSet,
-    dsField || (dataSet && dataSet.getField(name)),
   );
 }
 
@@ -2106,7 +2105,7 @@ export default class DataSet extends EventManager {
   @action
   addField(name: string, fieldProps?: FieldProps): Field {
     const field = addDataSetField(this, name, fieldProps);
-    this.records.forEach(record => record.addField(name, undefined, field));
+    this.records.forEach(record => record.addField(name));
     return field;
   }
 
@@ -2428,7 +2427,6 @@ Then the query method will be auto invoke.`,
       this.appendData(data);
     }
     return this;
-
   }
 
   // private groupData(allData: object[]): object[] {

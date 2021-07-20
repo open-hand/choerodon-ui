@@ -71,7 +71,7 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
         if (columnLock === ColumnLock.left) {
           cellStyle.left = pxToRem(_group.left)!;
         } else if (columnLock === ColumnLock.right) {
-          cellStyle.right = pxToRem(_group.right)!;
+          cellStyle.right = pxToRem(colSpan && colSpan > 1 ? 0 : _group.right)!;
         }
       }
     }

@@ -936,6 +936,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     super.handleKeyDown(e);
   }
 
+  @autobind
   isMultipleBlockDisabled(v) {
     const {
       props: { onOption },
@@ -1128,6 +1129,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   handlePopupAnimateAppear() {
   }
 
+  @autobind
   getValueKey(v) {
     if (isArrayLike(v)) {
       return v.map(this.getValueKey, this).join(',');

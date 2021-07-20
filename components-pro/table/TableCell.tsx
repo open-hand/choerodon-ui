@@ -16,7 +16,6 @@ import { getAlignByField, getColumnKey, getColumnLock, getEditorByColumnAndRecor
 import { ColumnAlign, ColumnLock } from './enum';
 import { Commands } from './Table';
 import TableEditor from './TableEditor';
-import Field from '../data-set/Field';
 import TableCellInner from './TableCellInner';
 import AggregationButton from './AggregationButton';
 
@@ -141,13 +140,11 @@ export default class TableCell extends Component<TableCellProps> {
             </Tree.TreeNode>
           );
         }
-        const field = record.getField(column.name);
         const innerNode = this.getInnerNode(column, command, onCellStyle);
         return (
           <Tree.TreeNode
             {...cellExternalProps}
             key={columnKey}
-            className={classNames(cellExternalProps.className, this.getColumnClassName(prefixCls, field))}
             title={
               <>
                 <span className={`${prefixCls}-label`}>{header}</span>
@@ -209,20 +206,6 @@ export default class TableCell extends Component<TableCellProps> {
     return this.getInnerNode(column, command, onCellStyle);
   }
 
-  getColumnClassName(cellPrefix, field?: Field) {
-    if (field) {
-      const {
-        tableStore: { inlineEdit, pristine },
-      } = this.context;
-      return {
-        [`${cellPrefix}-dirty`]: !pristine && field.dirty,
-        [`${cellPrefix}-required`]: !inlineEdit && field.required,
-        [`${cellPrefix}-multiLine`]: field.get('multiLine'),
-      };
-    }
-    return undefined;
-  }
-
   render() {
     const { column, record, isDragging, provided, colSpan, className: propsClassName } = this.props;
     const {
@@ -253,7 +236,6 @@ export default class TableCell extends Component<TableCellProps> {
     const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classString = classNames(
       cellPrefix,
-      !aggregation && this.getColumnClassName(cellPrefix, field),
       {
         [`${cellPrefix}-aggregation`]: aggregation,
         [`${cellPrefix}-fix-${columnLock}`]: columnLock,
@@ -269,7 +251,7 @@ export default class TableCell extends Component<TableCellProps> {
         if (columnLock === ColumnLock.left) {
           cellStyle.left = pxToRem(_group.left)!;
         } else if (columnLock === ColumnLock.right) {
-          cellStyle.right = pxToRem(_group.right)!;
+          cellStyle.right = pxToRem(colSpan && colSpan > 1 ? 0 : _group.right)!;
         }
       }
     }

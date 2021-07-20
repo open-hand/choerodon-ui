@@ -1,23 +1,26 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo, useCallback } from 'react';
+import noop from 'lodash/noop';
 import Icon from '../icon';
 import { stopEvent, stopPropagation } from '../_util/EventManager';
 
 export interface CloseButtonProps {
   value: any;
   index: number;
-  onClose: (e, value: any, index: number) => void;
+  onClose?: (e, value: any, index: number) => void;
 }
 
-export default class CloseButton extends PureComponent<CloseButtonProps> {
-  handleClick = (e) => {
+const CloseButton: FunctionComponent<CloseButtonProps> = memo((props) => {
+  const { onClose = noop, value, index } = props;
+  const handleClick = useCallback((e) => {
     stopEvent(e);
-    const { onClose, value, index } = this.props;
     onClose(e, value, index);
-  };
+  }, [onClose, value, index]);
 
-  render() {
-    return (
-      <Icon type="cancel" onClick={this.handleClick} onFocus={stopPropagation} onMouseDown={stopEvent} tabIndex={-1} />
-    );
-  }
-}
+  return (
+    <Icon type="cancel" onClick={handleClick} onFocus={stopPropagation} onMouseDown={stopEvent} tabIndex={-1} />
+  );
+});
+
+CloseButton.displayName = 'CloseButton';
+
+export default CloseButton;

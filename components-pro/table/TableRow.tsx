@@ -614,8 +614,8 @@ export default class TableRow extends Component<TableRowProps, any> {
         >
           {
             ({ ref, inView }) => {
-              if (record.getState('__inView') !== true) {
-                record.setState('__inView', inView);
+              if (inView && record.getState('__inView') !== true) {
+                record.setState('__inView', true);
               }
               return cloneElement<any>(tr, { ref });
             }

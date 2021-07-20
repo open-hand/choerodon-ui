@@ -1,6 +1,7 @@
 @import '../../../components/style/themes/default';
 @import '../../../components/style/mixins/index';
 @import '../../text-field/style/mixin';
+@import 'mixin';
 
 @output-prefix-cls: ~'@{c7n-pro-prefix}-output';
 
@@ -26,22 +27,8 @@
     content: '';
   }
 
-  &-multi-value-invalid {
-    color: @error-color;
-  }
-
-  &-multi-label-required::after {
-    display: inline-block;
-    width: 0.08rem;
-    margin-left: 0.04rem;
-    color: @label-required-color;
-    font-family: SimSun, sans-serif;
-    line-height: 1;
-    vertical-align: middle;
-    content: '*';
-  }
-
   &-highlight {
     border-color: @input-highlight-border-color;
   }
+  .multi;
 }
