@@ -230,6 +230,24 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     if (resizePosition && resizeColumn) {
       const newWidth = Math.round(Math.max(resizePosition - this.resizeBoundary, minColumnWidth(resizeColumn)));
       if (newWidth !== resizeColumn.width) {
+        const { _group } = resizeColumn;
+        if (_group) {
+          let { prev } = _group;
+          const { node: { element }, prefixCls } = tableStore;
+          while (prev) {
+            const { column } = prev;
+            if (column.width === undefined) {
+              const { name } = column;
+              const th = element.querySelector(`.${prefixCls}-thead .${prefixCls}-cell[data-index="${name}"]`);
+              if (th) {
+                tableStore.changeCustomizedColumnValue(column, {
+                  width: th.offsetWidth,
+                });
+              }
+            }
+            prev = prev.prev;
+          }
+        }
         tableStore.changeCustomizedColumnValue(resizeColumn, {
           width: newWidth,
         });

@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table.Column`: Added `hiddenInAggregation` property.
-- 💄 `<pro>Table`: Optimize the performance of adjusting column width.
+- 💄 `<pro>Table`: Optimize the performance and logic of adjusting column width.
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
