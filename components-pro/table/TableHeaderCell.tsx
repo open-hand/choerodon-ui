@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { action, get, runInAction, set } from 'mobx';
 import ReactIntersectionObserver from 'react-intersection-observer';
 import { observer } from 'mobx-react';
+import raf from 'raf';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
@@ -230,27 +231,33 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     if (resizePosition && resizeColumn) {
       const newWidth = Math.round(Math.max(resizePosition - this.resizeBoundary, minColumnWidth(resizeColumn)));
       if (newWidth !== resizeColumn.width) {
-        const { _group } = resizeColumn;
-        if (_group) {
-          let { prev } = _group;
-          const { node: { element }, prefixCls } = tableStore;
-          while (prev) {
-            const { column } = prev;
-            if (column.width === undefined) {
-              const { name } = column;
-              const th = element.querySelector(`.${prefixCls}-thead .${prefixCls}-cell[data-index="${name}"]`);
-              if (th) {
-                tableStore.changeCustomizedColumnValue(column, {
-                  width: th.offsetWidth,
-                });
-              }
+        const { width } = resizeColumn;
+        let { _group } = resizeColumn;
+        const { node: { element }, prefixCls } = tableStore;
+        while (_group) {
+          const { column } = _group;
+          if (column.width === undefined) {
+            const { name } = column;
+            const th = element.querySelector(`.${prefixCls}-thead .${prefixCls}-cell[data-index="${name}"]`);
+            if (th) {
+              tableStore.changeCustomizedColumnValue(column, {
+                width: th.offsetWidth,
+              });
             }
-            prev = prev.prev;
           }
+          _group = _group.prev;
         }
-        tableStore.changeCustomizedColumnValue(resizeColumn, {
-          width: newWidth,
-        });
+        if (width === undefined) {
+          raf(() => {
+            tableStore.changeCustomizedColumnValue(resizeColumn, {
+              width: newWidth,
+            });
+          });
+        } else {
+          tableStore.changeCustomizedColumnValue(resizeColumn, {
+            width: newWidth,
+          });
+        }
       }
     }
   }
