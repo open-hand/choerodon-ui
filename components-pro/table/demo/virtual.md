@@ -178,7 +178,6 @@ class App extends React.Component {
     return (
       <Table
         key="user"
-        virtual
         virtualCell
         selectionMode='click'
         selectedHighLightRow
