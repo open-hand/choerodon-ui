@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { action, computed, observable, runInAction } from 'mobx';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import DataSet from '../data-set';
 import { TableQueryBarHookProps } from './Table.d';
 import { ColumnProps } from './Column.d';
@@ -18,7 +18,7 @@ export default class TableStore {
 
   @computed
   get queryBar(): TableQueryBarHookProps {
-    return this.props.queryBar || getConfig('queryBar');
+    return this.props.queryBar;
   }
 
   // @computed

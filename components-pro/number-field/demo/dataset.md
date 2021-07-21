@@ -32,7 +32,7 @@ class App extends React.Component {
   });
 
   render() {
-    return <NumberField dataSet={this.ds} name="age" />;
+    return <NumberField prefix={'PX'} dataSet={this.ds} name="age" />;
   }
 }
 

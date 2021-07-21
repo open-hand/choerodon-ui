@@ -51,7 +51,9 @@ export interface Locale {
     predefined_fields;
     add_filter;
     enter_search_content;
+    no_save_filter;
     save_as;
+    modified;
     fast_filter;
     rename;
     set_default;

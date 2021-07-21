@@ -767,8 +767,30 @@
   }
 
   &-dynamic-filter-bar-suffix {
-    display: inline-block;
-    border-left: @table-border;
+    gap: 0.08rem;
+    margin-left: auto;
+
+    .@{table-prefix-cls}-columns-chooser {
+      width: unset;
+      border-left: none;
+
+      &-dropdown-menu {
+        min-width: 1.8rem;
+      }
+    }
+  }
+
+  &-dynamic-filter-bar-prefix {
+    gap: 0.08rem;
+
+    .@{table-prefix-cls}-columns-chooser {
+      width: unset;
+      border-left: none;
+
+      &-dropdown-menu {
+        min-width: 1.8rem;
+      }
+    }
   }
 
   &-dynamic-filter-toolbar {
@@ -782,29 +804,20 @@
         margin-left: 0.16rem;
       }
     }
-
-    .@{table-prefix-cls}-columns-chooser {
-      display: inline-block;
-      width: auto;
-      margin-left: 0.16rem;
-      border-left: none;
-
-      button {
-        margin: 0 0.05rem;
-      }
-
-      button:not(:last-child) {
-        margin-right: 0.05rem;
-      }
-    }
   }
 
   &-filter-menu {
+    display: flex;
+    align-items: center;
+
     .@{c7n-pro-prefix}-select {
-      //width: 0.9rem;
+      display: inline-block;
       min-width: 0.9rem;
       max-width: 2rem;
       margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       border: none;
 
       &-clear-button-flat {
@@ -814,8 +827,13 @@
     }
 
     &-expand {
-      color: @primary-color;
       cursor: pointer;
+
+      i {
+        font-size: 0.16rem;
+        background-color: #fafafa;
+        border-radius: 0.02rem;
+      }
     }
   }
 
@@ -825,45 +843,55 @@
   }
 
   &-filter-wrapper {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
-    width: calc(100% - 2.3rem);
-    margin: 0.06rem 0 0;
+    margin: 0.08rem 0 0;
+    padding: 0.01rem 0.06rem;
+    background: rgba(232,232,232,0.20);
+    border-radius: 1px;
+
+    span, input {
+      background-color: transparent;
+    }
   }
 
   &-add-fields {
     display: flex;
     align-items: center;
-    color: @primary-color;
+    color: @text-color;
     cursor: pointer;
   }
 
-  &-filter-rest-buttons {
-    display: inline-flex;
-    align-items: center;
-    float: right;
-    height: 0.36rem;
+  &-filter-buttons {
+    display: flex;
+    gap: 0.08rem;
 
-    button {
-      margin-right: 0.08rem;
+    button:first-child {
+      margin-left: 0.16rem;
     }
   }
 
-  &-filter-buttons {
-    position: relative;
-    top: 0.36rem;
-    float: right;
-    width: 2.3rem;
-    vertical-align: top;
+  &-filter-status {
+    width: 0.38rem;
+    height: 0.16rem;
+    margin: 0 0.12rem;
+    padding: 0;
+    color: #20D489;
+    text-align: center;
+    background: rgba(32,212,137,0.12);
+    border: none;
+    border-radius: 0.02rem;
 
-    button {
-      float: right;
-      margin: 0 0 0 0.08rem;
+    span {
+      display: block;
+      font-size: 0.12rem;
+      line-height: 0.16rem;
+      transform: scale(0.8);
     }
   }
 
   &-filter-modal-item {
-    font-size: 12px;
+    font-size: 0.12rem;
 
     &:not(:last-child) {
       margin-bottom: 0.2rem;
@@ -876,7 +904,13 @@
   }
 
   &-filter-menu-option {
-    display: flex;
+    &-content {
+      display: inline-block;
+      width: 1.6rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
     &:hover {
       i {
@@ -885,20 +919,14 @@
     }
 
     &-icons {
-      margin-left: auto;
+      position: absolute;
+      right: 8px;
+      display: inline-block;
+      color: @primary-color;
 
       i {
         display: none;
-        margin-left: 0.08rem;
-        font-size: 0.15rem;
-      }
-
-      .icon-delete_forever-o {
-        color: @error-color;
-      }
-
-      .icon-star {
-        color: @primary-color;
+        font-size: 0.16rem;
       }
     }
   }
@@ -914,18 +942,25 @@
   }
 
   &-filter-search {
-    display: flex;
-    width: 2rem;
+    color: #A4A4A4;
+    font-weight: 400;
     font-size: 0.12rem;
 
     i {
       height: 0.2rem;
-      font-size: 0.15rem;
+      font-size: 0.16rem;
       line-height: 0.2rem;
 
       &:hover {
         color: @primary-color;
       }
+    }
+
+    &-divide {
+      width: 0.01rem;
+      height: 0.12rem;
+      margin: 0 0.16rem;
+      background-color: #DBE1F1;
     }
   }
 
@@ -1257,6 +1292,10 @@
         border-bottom-color: @table-border-color;
       }
     }
+  }
+
+  &-thead-hidden {
+    display: none;
   }
 
   &-bordered {

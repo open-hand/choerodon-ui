@@ -470,6 +470,14 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const formatOptions = this.getFormatOptions(Number(value));
     return this.getFormatter()(value, formatOptions.lang, formatOptions.options);
   }
+
+  getSuffix(): ReactNode {
+    return undefined;
+  }
+
+  getPrefix(): ReactNode {
+    return undefined;
+  }
 }
 
 @observer

@@ -91,6 +91,7 @@ subtitle: 表格
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
+| showHeader |	是否显示表头 |	boolean |	true |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

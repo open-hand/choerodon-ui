@@ -44,6 +44,8 @@ export interface DynamicFilterBarConfig {
   searchCode: string;
   searchText?: string;
   quickSearch?: boolean;
+  suffixes?: React.ReactElement<any>[];
+  prefixes?: React.ReactElement<any>[];
   tableFilterAdapter?: TransportProps;
 }
 

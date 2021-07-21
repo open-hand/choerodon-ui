@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.2
+
+`2021-07-21`
+
 - 🌟 `configure`: Added `tableVirtualCell`, `formatter.timeZone` properties.
 - 🌟 `<pro>DataSet`: Added `selectionStrategy` property, `selectionStrategy`, `treeSelected` values, `treeSelect`, `treeUnSelect` methods.
 - 🌟 `<pro>Lov`: Added `showCheckedStrategy` property.
@@ -26,16 +30,19 @@ timeline: true
 - 🌟 `<pro>Table`: Fix the effect of local export in large data volume.
 - 🌟 `<pro>Select`: `selectAllButton` added hook type to support custom buttons.
 - 🌟 `<pro>PerformanceTable`: Added `queryBar`, `toolbar` attributes to support query bar and toolbar.
+- 🌟 `<pro>Table`: Added `showHeader` property.
 - 💄 `<pro>Modal`: Support traversing iframes in the same domain.
 - 💄 `<pro>DataSet`: The `all` value of the `dataToJSON` property will verify all records.
 - 💄 `<pro>DataSet`: Optimize the `addField` method to automatically create the Field corresponding to the existing Record.
 - 💄 `<pro>Radio`: Optimize the label content overflow tooltip.
 - 💄 `<pro>Table`: Optimize the performance.
+- 💄 `<pro>Table`: Optimize dynamic search bar style interaction.
 - 💄 `<pro>NumberField`: Compatible with mobile events.
 - 💄 `Progress`: Optimize animation performance.
 - 💄 `<pro>Table.Column`: Optimized currency type columns are aligned to the right by default.
 - 💄 `<pro>Output`: Optimize the display of number and currency, Optimize the display of empty values.
 - 💄 `<pro>DataSet.Record`: In the absence of a field, the addField method will process the existing value of the field.
+- 💄 `<pro>NumberField`: Remove `suffix`, `prefix` attribute support.
 - 🐞 `<pro>Table`: Correct the calculation logic of `maxHeight` and `minHeight`.
 - 🐞 `<pro>Pagination`: Fix the problem that the pagination option exceeds the default maximum of 100 pagination when the maximum pagination is not set.
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.

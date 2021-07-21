@@ -87,7 +87,7 @@ class EmptyDataTable extends React.Component {
         queryBar={{
           type: 'filterBar',
           defaultExpanded: true, 
-          dynamicFilterBar: { suffixes: ['filter'], quickSearch: true },
+          dynamicFilterBar: { suffixes: ['filter'], prefixes: ['filter'], quickSearch: true },
           dataSet: this.ds, 
           onQuery: this.handleQuery, 
           onReset: this.handleReset,

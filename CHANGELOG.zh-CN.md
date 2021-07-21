@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.2
+
+`2021-07-21`
+
 - 🌟 `configure`: 新增 tableVirtualCell, formatter.timeZone 属性。
 - 🌟 `<pro>DataSet`: 新增 selectionStrategy 属性， selectionStrategy, treeSelected 值， treeSelect, treeUnSelect 方法。
 - 🌟 `<pro>Lov`: 新增 showCheckedStrategy 属性。
@@ -25,16 +29,19 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 combineSort 属性支持组合列排序传参。
 - 🌟 `<pro>Select`: selectAllButton 新增钩子类型用于支持自定义按钮。
 - 🌟 `<pro>PerformanceTable`: 新增 queryBar, toolbar 属性，用于支持查询条及工具栏。
+- 🌟 `<pro>Table`: 新增 showHeader 属性。
 - 💄 `<pro>Modal`: 支持穿越同域 iframe。
 - 💄 `<pro>DataSet`: dataToJSON 属性的 all 值将校验所有记录。
 - 💄 `<pro>DataSet`: 优化 addField 方法将自动创建已有 Record 对应的 Field。
 - 💄 `<pro>Radio`：优化 label 内容溢出提示。
 - 💄 `<pro>Table`：优化性能。
+- 💄 `<pro>Table`：优化动态搜索条样式交互。
 - 💄 `<pro>NumberField`：step 兼容移动端事件。
 - 💄 `Progress`：优化动画性能。
 - 💄 `<pro>Table.Column`： 优化货币类型的列默认靠右对齐。
 - 💄 `<pro>Output`： 优化数字货币显示, 优化空值显示。
 - 💄 `<pro>DataSet.Record`: 在没有 field 的情况下， addField 方法会对该 field 已有值进行处理。
+- 💄 `<pro>NumberField`: 移除 suffix，prefix 属性支持。
 - 🐞 `<pro>Table`: 修正 maxHeight 和 minHeight 的计算逻辑。
 - 🐞 `<pro>Pagination`: 修复最大分页没有设置时，分页选项有超过默认最大100分页无法选择的问题。
 - 🐞 `<pro>IconPicker`: 修复当点击分页按钮并按钮成禁用状态时，弹窗无法关闭的问题。
