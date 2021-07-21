@@ -6,7 +6,7 @@ title: Table
 subtitle: 表格
 ---
 
-展示行列数据。
+展示行列数据，导出和分页配置参见底部。
 
 ## 何时使用
 
@@ -84,7 +84,7 @@ subtitle: 表格
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
 | clientExportQuantity | 客户端查询导出，查询数目设置  | number | |
 | virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | |
-| treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | number | |
+| treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
@@ -126,6 +126,7 @@ subtitle: 表格
 | aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
 | aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
+| hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |
 | highlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 
 ### Table.FilterBar
@@ -153,7 +154,6 @@ subtitle: 表格
 | pagination | 分页器，参考[pagination](/components-pro/pagination/) | PaginationComponent | null |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
-
 
 ### Table.DynamicFilterBar
 
@@ -213,7 +213,6 @@ configure({
 ```
 
 全局配置操作，建议在初始化的时候进行。更多的配置参考[pagination](/components-pro/pagination/);
-
 
 ### 导出配置
 

@@ -52,7 +52,7 @@ subtitle: 表格
 | highLightRow | 当前行高亮, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行  | boolean \| string | true |
 | selectedHighLightRow | 勾选行高亮 | boolean | false |
 | parityRow | 奇偶行 | boolean |  |
-| columnResizable | 可调整列宽 | boolean | true |
+| columnResizable | 可调整列宽 | boolean |  |
 | columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | true |
 | columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean |  |
 | columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | false |
@@ -63,14 +63,14 @@ subtitle: 表格
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | false |
 | virtualCell | 虚拟单元格 | boolean | false |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
-| autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number } | false |
+| autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
-| editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
 | autoMaxWidth | 是否开启双击侧边栏宽度最大自适应,初次双击为最大值再次双击为`minWidth` | boolean | false |
+| editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
 | onDragEnd | 完成拖拽后的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
 | columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender)  |  |
 | rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender) |  |
-| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false /| void /|resultDrag   | - |
+| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   | - |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |
 | dynamicFilterBar | `queryBar`为`filterBar`时筛选条属性配置 | DynamicFilterBarConfig | |
 | treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | |
@@ -80,15 +80,12 @@ subtitle: 表格
 | showSelectionTips | 是否显示选中记录提示  | boolean | |
 | showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | |
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮  | boolean | |
-| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
 | clientExportQuantity | 客户端查询导出，查询数目设置  | number | |
 | virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | |
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | |
-| aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
-| aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
-| aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | showHeader |	是否显示表头 |	boolean |	true |
@@ -102,6 +99,7 @@ subtitle: 表格
 | name | 列对照的字段名 | string |  |
 | width | 列宽，不推荐给所有列设置宽度，而是给某一列不设置宽度达到自动宽度的效果 | number |  |
 | minWidth | 最小列宽 | number | 100 |
+| title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |
 | header | 列头 | ReactNode \| (dataSet, name, title, aggregation) => ReactNode |  |
 | footer | 列脚 | ReactNode \| (dataSet, name) => ReactNode |  |
 | renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet }) => ReactNode |  |
@@ -125,6 +123,10 @@ subtitle: 表格
 | hidden | 隐藏 | boolean |  |
 | tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | 'none' |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |
+| aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
+| aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
+| aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
+| hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |
 | highlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 
 ### Table.FilterBar
@@ -196,17 +198,91 @@ spin的配置项。
 
 More cases and properties please refer to [Spin](/components-pro/spin/)。
 
+### 分页配置
+
+分页功能配置可以按照如下配置进行全局配置
+
+
+```js
+import { configure } from 'choerodon-ui';
+
+configure({
+  pagination: {pageSizeOptions: ['10', '20', '50', '100', '1000']},
+});
+
+```
+
+全局配置操作，建议在初始化的时候进行。更多的配置参考[pagination](/components-pro/pagination/);
+
 ### 导出配置
 
+可以根据需求进行全局配置，和局部配置
 
+```js
+import { configure } from 'choerodon-ui';
+import { DataSet } from 'choerodon-ui/pro';
 
-### table 新增快捷键
+// 全局配置
 
- 1 Alt+N，焦点在Table单元格内（非querybar区）时，新增行（代码可配置是首行还是末行新建）
- 2 Ctrl+s，焦点在table单元格，则保存当前table
- 3 Ctrl+D（或Control+D）：
-    a. 焦点在table单元格，则复制上一行的单元格内容。
-    b. 焦点在table某行， 则复制上一行的所有单元格内容。
- 4 Delete，当前焦点元素内时，删除1个字符
- 5 Alt+delete，焦点在table单元格内，删除当前行，弹出二次提示框
- 6 Shift+方向键，焦点在table某行，当前table可多选的情况，可选择多行
+const basicUrl = ``;
+
+configure(
+  {
+    transport: {
+      exports: ({ dataSet, name: fieldName }) => {
+        const _token = dataSet.current.get('_token');
+        return {
+          url: `${basicUrl}/v1/export`,
+          method: 'POST',
+          params: { _token, fieldName },
+          transformResponse: res => {
+            try {
+             const aLink = document.createElement("a");
+             const blob = new Blob([res.data], {type: "application/vnd.ms-excel"})
+             aLink.href = URL.createObjectURL(blob)
+             aLink.download = fieldName
+             aLink.click()
+             document.body.appendChild(aLink)
+            } catch (e) {
+              // do nothing, use default error deal
+            }
+          },
+        };
+      },
+    },
+  })
+
+  // 局部使用
+  // eslint-disable-next-line no-unused-vars
+  const tableDs = new DataSet({
+    primaryKey: 'userid',
+    name: 'user',
+    autoQuery: true,
+    pageSize: 5,
+    cacheSelection: true,
+    transport: {
+    exports: ({dataSet }) => {
+        const fileId = dataSet.name
+        return ({
+            url: `/_api/table/${fileId}`,
+            method: 'get',
+        })
+    },
+   },
+  })
+
+```
+### 新增快捷键
+
+> keyboard 控制是否开启
+
+- Alt + n，焦点在 table 单元格内（非 querybar 区）时，新增行（代码可配置是首行还是末行新建）
+- Ctrl + s，焦点在table单元格，则保存当前 table 
+- Ctrl + d（或 Command + d）：
+- 焦点在 table 单元格，则复制上一行的单元格内容
+- 焦点在 table 某行， 则复制上一行的所有单元格内容
+- Delete，当前焦点元素内时，删除 1 个字符
+- Alt + delete，焦点在 table 单元格内，删除当前行，弹出二次提示框 
+- Shift + 方向键，焦点在 table 某行，当前 table 可多选的情况，可选择多行
+
+局部的使用 demo 方法参见[Table](/zh/procmp/data-display/table#components-pro-table-demo-basic);

@@ -8,6 +8,7 @@ import React, {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
 } from 'react';
@@ -26,11 +27,11 @@ import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import Record from '../data-set/Record';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
-import { Commands, TableButtonProps } from './Table';
-import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
+import { TableButtonProps } from './Table';
+import { findCell, getAlignByField, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import { SELECTION_KEY } from './TableStore';
-import { SelectionMode, TableCommandType } from './enum';
+import { ColumnAlign, SelectionMode, TableCommandType } from './enum';
 import Tooltip from '../tooltip/Tooltip';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { FormFieldProps, Renderer } from '../field/FormField';
@@ -66,13 +67,13 @@ let inTab: boolean = false;
 export interface TableCellInnerProps {
   column: ColumnProps;
   record: Record;
-  command?: Commands[];
   style?: CSSProperties;
   disabled?: boolean;
+  inAggregation?: boolean;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) => {
-  const { column, record, command, children, style, disabled } = props;
+  const { column, record, children, style, disabled, inAggregation } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { tableStore } = useContext(TableContext);
@@ -88,10 +89,16 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   const prefixCls = `${tableStore.prefixCls}-cell`;
   const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
-  const { name, key, lock, renderer } = column;
+  const { name, key, lock, renderer, command, align } = column;
   const columnKey = getColumnKey(column);
   const { checkField } = dataSet.props;
   const height = record.getState(`__column_resize_height_${name}`);
+  const columnCommand = useMemo(() => {
+    if (typeof command === 'function') {
+      return command({ dataSet, record });
+    }
+    return command;
+  }, [record, command, dataSet]);
   const canFocus = useComputed(() => !disabled && (!tableStore.inlineEdit || record === tableStore.currentEditRecord), [disabled, record, tableStore]);
   const cellEditor = useComputed(() => getEditorByColumnAndRecord(column, record), [record, column]);
   const cellEditorInCell = useMemo(() => isInCellEditor(cellEditor), [cellEditor]);
@@ -280,9 +287,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         </Tooltip>,
       ];
     }
-    if (command) {
+    if (columnCommand) {
       const commands: ReactElement<ButtonProps>[] = [];
-      command.forEach(button => {
+      columnCommand.forEach(button => {
         let tableButtonProps: TableButtonProps = {};
         if (isArrayLike(button)) {
           tableButtonProps = button[1] || {};
@@ -333,7 +340,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       });
       return commands;
     }
-  }, [prefixCls, record, command, aggregation, getButtonProps, handleCommandSave, handleCommandCancel]);
+  }, [prefixCls, record, columnCommand, aggregation, getButtonProps, handleCommandSave, handleCommandCancel]);
   const renderEditor = useCallback(() => {
     if (isValidElement(cellEditor)) {
       /**
@@ -356,7 +363,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   }, [disabled, cellEditor, checkField, multiLine, record, name, pristine, tableStore]);
 
   const cellRenderer = useComputed((): Renderer | undefined => {
-    if (command) {
+    if (columnCommand) {
       return renderCommand;
     }
     if (cellEditorInCell) {
@@ -368,8 +375,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       };
     }
     return renderer;
-  }, [command, cellEditorInCell, renderEditor, renderCommand, renderer, field, aggregation]);
-  const innerStyle = useComputed(() => {
+  }, [columnCommand, cellEditorInCell, renderEditor, renderCommand, renderer, field, aggregation]);
+  const prefixStyle = useComputed(() => {
     if (!aggregation) {
       if (height !== undefined && rows === 0) {
         return {
@@ -392,6 +399,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     }
     return style;
   }, [field, key, rows, rowHeight, height, style, aggregation, hasEditor]);
+  const innerStyle = useMemo(() => inAggregation ? prefixStyle : ({ textAlign: align || (columnCommand ? ColumnAlign.center : getAlignByField(field)), ...prefixStyle }), [inAggregation, align, field, columnCommand, prefixStyle]);
   const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
   const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
     if (validationResult && validationResult.validationMessage) {
@@ -509,6 +517,19 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       tooltipShownRef.current = false;
     }
   }, [tooltipShownRef]);
+  useEffect(() => {
+    if (name && inlineEdit && record === tableStore.currentEditRecord) {
+      const currentEditor = tableStore.editors.get(name);
+      if (currentEditor) {
+        currentEditor.alignEditor();
+      }
+      return () => {
+        if (currentEditor) {
+          currentEditor.hideEditor();
+        }
+      };
+    }
+  }, []);
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
@@ -586,7 +607,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   );
 
   const prefix = (indentText || children || checkBox) && (
-    <span key="prefix" className={`${prefixCls}-prefix`} style={innerStyle}>
+    <span key="prefix" className={`${prefixCls}-prefix`} style={prefixStyle}>
       {indentText}
       {children}
       {checkBox}

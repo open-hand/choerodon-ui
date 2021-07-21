@@ -398,7 +398,7 @@ class App extends React.Component {
         <Column header="基本组" align="left" aggregation key="basic-group" aggregationDefaultExpandedKeys={['basic-subgroup-1']}>
           <Column header="基本组-分类1" key="basic-subgroup-1">
             <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
-            <Column name="email" lock editor={
+            <Column name="email" lock hiddenInAggregation={record => record.index === 0} editor={
               <AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
           </Column>
           <Column header="基本组-分类2" key="basic-subgroup-2">
