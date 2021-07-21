@@ -411,7 +411,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   const getRenderedValue = useCallback(() => {
     const processValue = (v) => {
       if (!isNil(v)) {
-        const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field, FieldType.string));
+        const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field));
         return processFieldValue(text, field, {
           getProp: (propName) => field && field.get(propName),
           lang: dataSet && dataSet.lang || localeContext.locale.lang,

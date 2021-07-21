@@ -21,6 +21,7 @@ timeline: true
 - 🐞 修复循环依赖问题。
 - 🐞 `<pro>Table`: 修复右侧锁定列脚样式问题。
 - 🐞 `<pro>Table`: 修复 virtualCell 不起作用。
+- 🐞 `<pro>Table`: 修复 dateTime 类型列渲染格式问题。
 - 🐞 `<pro>FormField`: 修复渲染器返回数字时不渲染的问题。
 
 ## 1.4.2

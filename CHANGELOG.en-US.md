@@ -20,8 +20,9 @@ timeline: true
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
-- 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
 - 🐞 `<pro>Table`: Fix `virtualCell` not working.
+- 🐞 `<pro>Table`: Fix the rendering format problem of `dateTime` type column.
+- 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
 
 ## 1.4.2
 
