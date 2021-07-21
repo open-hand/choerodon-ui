@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.2
+
+`2021-07-21`
+
 - 🌟 `configure`: Added `tableVirtualCell`, `formatter.timeZone` properties.
 - 🌟 `<pro>DataSet`: Added `selectionStrategy` property, `selectionStrategy`, `treeSelected` values, `treeSelect`, `treeUnSelect` methods.
 - 🌟 `<pro>Lov`: Added `showCheckedStrategy` property.

@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.2
+
+`2021-07-21`
+
 - 🌟 `configure`: 新增 tableVirtualCell, formatter.timeZone 属性。
 - 🌟 `<pro>DataSet`: 新增 selectionStrategy 属性， selectionStrategy, treeSelected 值， treeSelect, treeUnSelect 方法。
 - 🌟 `<pro>Lov`: 新增 showCheckedStrategy 属性。

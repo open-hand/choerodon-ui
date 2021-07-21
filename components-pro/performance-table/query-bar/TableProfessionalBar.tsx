@@ -90,7 +90,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   async handleQuery(collapse?: boolean) {
     const { dataSet, queryDataSet, onQuery = noop } = this.props;
     if (await queryDataSet?.validate()) {
-      dataSet.query();
+      await dataSet.query();
       if (!collapse) {
         const queryData = omit(queryDataSet?.current?.toData(true), ['__dirty']);
         const data = Object.keys(queryData).reduce((p, key) => {
@@ -100,7 +100,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
           }
           return p;
         }, {});
-        onQuery({ dataSet, queryDataSet, data });
+        await onQuery({ dataSet, queryDataSet, data });
       }
     }
   }
