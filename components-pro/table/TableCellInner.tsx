@@ -507,16 +507,16 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     return false;
   }, [renderValidationResult, isValidationMessageHidden, field, tooltip, multiLine, text]);
   const handleMouseEnter = useCallback((e) => {
-    if (showTooltip(e)) {
+    if (!tableStore.columnResizing && showTooltip(e)) {
       tooltipShownRef.current = true;
     }
-  }, [tooltipShownRef]);
+  }, [tooltipShownRef, tableStore]);
   const handleMouseLeave = useCallback(() => {
-    if (tooltipShownRef.current) {
+    if (!tableStore.columnResizing && tooltipShownRef.current) {
       hide();
       tooltipShownRef.current = false;
     }
-  }, [tooltipShownRef]);
+  }, [tooltipShownRef, tableStore]);
   useEffect(() => {
     if (name && inlineEdit && record === tableStore.currentEditRecord) {
       const currentEditor = tableStore.editors.get(name);

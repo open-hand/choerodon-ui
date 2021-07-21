@@ -148,6 +148,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
     const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
       ref: this.saveRef,
       className: classNames(`${prefixCls}-thead`, {
+        [`${prefixCls}-column-resizing`]: columnResizing,
         [`${prefixCls}-column-resizable`]: columnResizable,
         [`${prefixCls}-column-group`]: trs && trs.length > 1,
         [`${prefixCls}-thead-hover`]: isHeaderHover || columnResizing,
