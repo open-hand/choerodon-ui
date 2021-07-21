@@ -383,6 +383,7 @@ class App extends React.Component {
         style={{ height: 'calc(100vh - 100px)', maxHeight: 300 }}
         aggregation={aggregation}
         onAggregationChange={this.handleAggregationChange}
+        virtualCell
       >
         <Column
           name="userid"

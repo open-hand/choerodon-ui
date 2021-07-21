@@ -13,7 +13,7 @@ import React, {
   useRef,
 } from 'react';
 import { observer } from 'mobx-react-lite';
-import { get, isArrayLike } from 'mobx';
+import { isArrayLike } from 'mobx';
 import raf from 'raf';
 import classNames from 'classnames';
 import isNil from 'lodash/isNil';
@@ -85,7 +85,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     inlineEdit,
     columnEditorBorder,
   } = tableStore;
-  const inView = record.getState('__inView') !== false && get(column, '_inView') !== false;
   const prefixCls = `${tableStore.prefixCls}-cell`;
   const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
@@ -480,11 +479,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   }, [multipleValidateMessageLengthRef, renderValidationResult, isValidationMessageHidden, name, record, dataSet, field, value, disabled, prefixCls, cellRenderer, tooltip]);
   const editorBorder = !inlineEdit && hasEditor;
   const text = useComputed(() => {
-    if (inView) {
-      const result = getRenderedValue();
-      return isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : getConfig('renderEmpty')('Output') : result;
-    }
-  }, [inView, getRenderedValue, editorBorder]);
+    const result = getRenderedValue();
+    return isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : getConfig('renderEmpty')('Output') : result;
+  }, [getRenderedValue, editorBorder]);
 
   const showTooltip = useCallback((e) => {
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator') && field.get('multiple') && toMultipleValue(value, field.get('range')).length))) {
@@ -535,24 +532,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     onFocus: handleFocus,
     children: text,
   };
-  if (!inView) {
-    if (rowHeight === 'auto') {
-      innerProps.style = {
-        minHeight: 30,
-      };
-    } else {
-      innerProps.style = {
-        height: pxToRem(rowHeight),
-      };
-    }
-    return (
-      <span
-        key="output"
-        {...innerProps}
-        className={innerPrefixCls}
-      />
-    );
-  }
   const empty = field ? isFieldValueEmpty(value, field.get('range')) : false;
   const innerClassName: string[] = [innerPrefixCls];
   if (columnEditorBorder) {

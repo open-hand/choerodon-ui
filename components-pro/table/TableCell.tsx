@@ -1,5 +1,6 @@
 import React, { Component, CSSProperties, HTMLProps } from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
@@ -160,6 +161,15 @@ export default class TableCell extends Component<TableCellProps> {
     const {
       tableStore,
     } = this.context;
+    const inView = record.getState('__inView') !== false && get(column, '_inView') !== false;
+    if (!inView) {
+      return (
+        <td
+          colSpan={colSpan}
+          data-index={getColumnKey(column)}
+        />
+      );
+    }
     const { prefixCls, node } = tableStore;
     const tableColumnOnCell = getConfig('tableColumnOnCell');
     const { className, style, onCell, lock, aggregation } = column;

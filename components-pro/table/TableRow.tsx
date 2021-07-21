@@ -614,10 +614,20 @@ export default class TableRow extends Component<TableRowProps, any> {
         >
           {
             ({ ref, inView }) => {
-              if (inView && record.getState('__inView') !== true) {
-                record.setState('__inView', true);
+              if (record.getState('__inView') !== true) {
+                record.setState('__inView', inView);
               }
-              return cloneElement<any>(tr, { ref });
+              const trProps: { ref, style?: CSSProperties } = {
+                ref,
+              };
+              if (record.getState('__inView') !== true) {
+                const { rowHeight, aggregation } = tableStore;
+                trProps.style = {
+                  ...tr.props.style,
+                  height: pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)),
+                };
+              }
+              return cloneElement<any>(tr, trProps);
             }
           }
         </ReactIntersectionObserver>

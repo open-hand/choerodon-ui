@@ -21,6 +21,7 @@ timeline: true
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
 - 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
+- 🐞 `<pro>Table`: Fix `virtualCell` not working.
 
 ## 1.4.2
 
