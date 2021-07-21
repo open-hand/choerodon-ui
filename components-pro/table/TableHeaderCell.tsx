@@ -7,7 +7,6 @@ import omit from 'lodash/omit';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
-import classes from 'component-classes';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
@@ -76,11 +75,19 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const { tableStore } = this.context;
     const tooltip = tableStore.getColumnTooltip(column);
     const { currentTarget } = e;
-    if (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget))) {
+    if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget)))) {
       show(currentTarget, {
         title: this.getHeader(),
         placement: 'right',
       });
+    }
+  }
+
+  @autobind
+  handleMouseLeave() {
+    const { tableStore } = this.context;
+    if (!tableStore.columnResizing) {
+      hide();
     }
   }
 
@@ -187,10 +194,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const {
       tableStore,
     } = this.context;
-    const { prefixCls, node: { element } } = tableStore;
     tableStore.columnResizing = true;
-    classes(element).add(`${prefixCls}-resizing`);
     delete this.resizePosition;
+    this.setSplitLineHidden(false);
     this.setSplitLinePosition(e.pageX);
     this.resizeEvent
       .addEventListener('mousemove', this.resize)
@@ -214,11 +220,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const {
       tableStore,
     } = this.context;
-    const {
-      prefixCls, node: { element },
-    } = tableStore;
     tableStore.columnResizing = false;
-    classes(element).remove(`${prefixCls}-resizing`);
+    this.setSplitLineHidden(true);
     this.resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
     const { resizeColumn, resizePosition } = this;
     if (resizePosition && resizeColumn) {
@@ -229,6 +232,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         });
       }
     }
+  }
+
+  setSplitLineHidden(hidden: boolean) {
+    const {
+      tableStore: {
+        node: { resizeLine },
+      },
+    } = this.context;
+    resizeLine.style.display = hidden ? 'none' : 'block';
   }
 
   @action
@@ -382,7 +394,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const innerProps: any = {
       children: childNodes,
       onMouseEnter: this.handleMouseEnter,
-      onMouseLeave: hide,
+      onMouseLeave: this.handleMouseLeave,
     };
 
     if (helpIcon) {

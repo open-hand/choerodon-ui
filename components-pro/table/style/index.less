@@ -475,14 +475,6 @@
     background-color: @table-split-color;
   }
 
-  &-resizing {
-    user-select: none;
-
-    .@{table-prefix-cls}-split-line {
-      display: block;
-    }
-  }
-
   //ROW
   &-empty-row div {
     display: inline-block;
@@ -847,7 +839,7 @@
     flex-wrap: wrap;
     margin: 0.08rem 0 0;
     padding: 0.01rem 0.06rem;
-    background: rgba(232,232,232,0.20);
+    background: rgba(232, 232, 232, 0.20);
     border-radius: 1px;
 
     span, input {
@@ -878,7 +870,7 @@
     padding: 0;
     color: #20D489;
     text-align: center;
-    background: rgba(32,212,137,0.12);
+    background: rgba(32, 212, 137, 0.12);
     border: none;
     border-radius: 0.02rem;
 
@@ -1204,7 +1196,11 @@
     }
   }
 
-  &:not(&-resizing) &-cell-inner:hover &-sort-icon {
+  &-column-resizing {
+    user-select: none;
+  }
+
+  &-thead:not(&-column-resizing) &-cell-inner:hover &-sort-icon {
     opacity: 1;
   }
 

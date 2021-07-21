@@ -155,6 +155,10 @@ export interface ColumnPropsBase extends ElementProps {
    */
   aggregationDefaultExpandAll?: boolean;
   /**
+   * 在聚合列下是否隐藏
+   */
+  hiddenInAggregation?: boolean | ((record: Record) => boolean);
+  /**
    * 高亮渲染器
    */
   highlightRenderer?: HighlightRenderer;
@@ -259,6 +263,10 @@ export default class Column extends Component<ColumnPropsInner, ComponentState> 
      * 默认展开所有聚合列树节点
      */
     aggregationDefaultExpandAll: PropTypes.bool,
+    /**
+     * 在聚合列下是否隐藏
+     */
+    hiddenInAggregation: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     /**
      * 高亮渲染器
      */

@@ -16,6 +16,7 @@ import flattenDeep from 'lodash/flattenDeep';
 import isArray from 'lodash/isArray';
 import isBoolean from 'lodash/isBoolean';
 import isString from 'lodash/isString';
+import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
@@ -755,7 +756,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     const text = this.getTextNode();
     const value = this.getValue();
-    const finalText = (renderedValue ? this.renderedTextContent : isString(text) ? text : isArrayLike(text) && flattenDeep(text).filter(v => !isBoolean(v)).join('')) || '';
+    const finalText = (renderedValue ? this.renderedTextContent : isString(text) ? text : isNumber(text) ? String(text) : isArrayLike(text) && flattenDeep(text).filter(v => !isBoolean(v)).join('')) || '';
     const placeholder = this.hasFloatLabel || renderedValue ? undefined : this.getPlaceholders()[0];
     if ((!this.isFocused || !this.editable) && isValidElement(text)) {
       otherProps.style = {

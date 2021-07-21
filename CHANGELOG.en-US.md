@@ -15,8 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table.Column`: Added `hiddenInAggregation` property.
+- 💄 `<pro>Table`: Optimize the performance of adjusting column width.
+- 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
+- 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
 
 ## 1.4.2
 

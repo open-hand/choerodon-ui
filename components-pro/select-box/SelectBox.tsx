@@ -50,6 +50,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
     suffixCls: 'select-box',
     vertical: false,
     selectAllButton: false,
+    checkValueOnOptionsChange: false,
   };
 
   static Option = Option;

@@ -15,8 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table.Column`: 新增 hiddenInAggregation 属性。
+- 💄 `<pro>Table`：优化调整列宽的性能。
+- 💄 `<pro>SelectBox`: 调整 checkValueOnOptionsChange 默认值为 false。
 - 🐞 修复循环依赖问题。
 - 🐞 `<pro>Table`: 修复右侧锁定列脚样式问题。
+- 🐞 `<pro>FormField`: 修复渲染器返回数字时不渲染的问题。
 
 ## 1.4.2
 
