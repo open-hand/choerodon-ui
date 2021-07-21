@@ -15,6 +15,7 @@ export interface TableFooterCellProps extends ElementProps {
   dataSet: DataSet;
   column: ColumnProps;
   colSpan?: number;
+  right: number;
 }
 
 @observer
@@ -41,7 +42,7 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
   }
 
   render() {
-    const { column, dataSet, style, className, colSpan } = this.props;
+    const { column, dataSet, style, className, colSpan, right } = this.props;
     const {
       tableStore,
     } = this.context;
@@ -71,7 +72,7 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
         if (columnLock === ColumnLock.left) {
           cellStyle.left = pxToRem(_group.left)!;
         } else if (columnLock === ColumnLock.right) {
-          cellStyle.right = pxToRem(colSpan && colSpan > 1 ? 0 : _group.right)!;
+          cellStyle.right = pxToRem(colSpan && colSpan > 1 ? right : _group.right + right)!;
         }
       }
     }

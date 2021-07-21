@@ -24,6 +24,9 @@ import formatString from '../formatter/formatString';
 import { parseNumber } from '../number-field/utils';
 import { treeReduce } from '../_util/treeUtils';
 
+export const defaultTextField = 'meaning';
+export const defaultValueField = 'value';
+
 export function useNormal(dataToJSON: DataToJSON): boolean {
   return [DataToJSON.normal, DataToJSON['normal-self']].includes(dataToJSON);
 }

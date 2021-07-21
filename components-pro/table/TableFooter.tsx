@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, set } from 'mobx';
 import classNames from 'classnames';
+import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
@@ -56,6 +57,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
     const { tableStore } = this.context;
     const { prefixCls, customizable, rowDraggable, dragColumnAlign } = tableStore;
     const hasPlaceholder = tableStore.overflowY && lock !== ColumnLock.left;
+    const right = hasPlaceholder ? measureScrollbar() : 0;
     const tds = this.leafColumns.map((column, index, cols) => {
       const key = getColumnKey(column);
       if (key !== CUSTOMIZED_KEY) {
@@ -69,6 +71,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
             key={key}
             dataSet={dataSet}
             column={column}
+            right={right}
             {...props}
           />
         );
