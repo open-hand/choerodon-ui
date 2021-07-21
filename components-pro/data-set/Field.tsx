@@ -18,7 +18,7 @@ import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, F
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { getBaseType, getChainFieldName, getLimit, processValue } from './utils';
+import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getLimit, processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -364,8 +364,8 @@ export default class Field {
     readOnly: false,
     disabled: false,
     group: false,
-    textField: 'meaning',
-    valueField: 'value',
+    textField: defaultTextField,
+    valueField: defaultValueField,
     trueValue: true,
     falseValue: false,
     trim: FieldTrim.both,

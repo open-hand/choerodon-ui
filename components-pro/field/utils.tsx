@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import moment, { isMoment } from 'moment';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { BooleanValue, FieldType, RecordStatus } from '../data-set/enum';
-import Field, { HighlightProps } from '../data-set/Field';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
@@ -24,11 +23,12 @@ import { LabelLayout } from '../form/enum';
 import Icon from '../icon';
 import { $l } from '../locale-context';
 import isReactChildren from '../_util/isReactChildren';
-import { findBindFields } from '../data-set/utils';
+import { defaultTextField, findBindFields } from '../data-set/utils';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import MultiLine from '../output/MultiLine';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
+import Field, { HighlightProps } from '../data-set/Field';
 import { Renderer, RenderProps } from './FormField';
 import { Tooltip } from '../core/enum';
 
@@ -405,7 +405,7 @@ export function renderMultiLine(options: MultiLineRenderOption): { lines?: React
             if (fieldItem.get('lovCode')) {
               const fieldValue = fieldItem.getValue();
               if (isPlainObject(fieldValue)) {
-                processedValue = ObjectChainValue.get(fieldValue, fieldItem.get('textField') || Field.defaultProps.textField);
+                processedValue = ObjectChainValue.get(fieldValue, fieldItem.get('textField') || defaultTextField);
               }
             }
             const notEmpty = !isEmpty(value);

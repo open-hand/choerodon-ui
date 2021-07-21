@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 Fix the circular dependency problem.
+- 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
+
 ## 1.4.2
 
 `2021-07-21`
