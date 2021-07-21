@@ -50,6 +50,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   static contextType = TableContext;
 
+  bodyLeft: number = 0;
+
   resizeEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
 
   resizeBoundary: number = 0;
@@ -197,7 +199,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     tableStore.columnResizing = true;
     delete this.resizePosition;
     this.setSplitLineHidden(false);
-    this.setSplitLinePosition(e.pageX);
+    this.calcBodyLeft();
+    this.setSplitLinePosition(e.clientX);
     this.resizeEvent
       .addEventListener('mousemove', this.resize)
       .addEventListener('mouseup', this.resizeEnd);
@@ -207,7 +210,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   resize(e): void {
     const column = this.resizeColumn;
     const limit = this.resizeBoundary + minColumnWidth(column);
-    let left = e.pageX;
+    let left = e.clientX;
     if (left < limit) {
       left = limit;
     }
@@ -234,6 +237,17 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     }
   }
 
+  calcBodyLeft() {
+    const {
+      tableStore: {
+        border,
+        node: { element },
+      },
+    } = this.context;
+    const { left } = element.getBoundingClientRect();
+    this.bodyLeft = border ? left + 1 : left;
+  }
+
   setSplitLineHidden(hidden: boolean) {
     const {
       tableStore: {
@@ -250,21 +264,13 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         node: { resizeLine },
       },
     } = this.context;
-    const { offsetParent, ownerDocument } = resizeLine;
-    let { left: rectLeft } = offsetParent.getBoundingClientRect();
-    if (ownerDocument) {
-      const { defaultView } = ownerDocument;
-      if (defaultView) {
-        const { borderLeftWidth } = defaultView.getComputedStyle(offsetParent);
-        rectLeft += parseFloat(borderLeftWidth);
-      }
-    }
-    left -= rectLeft;
+    const { bodyLeft } = this;
+    left -= bodyLeft;
     if (left < 0) {
       left = 0;
     }
     transform(`translateX(${pxToRem(left) || 0})`, resizeLine.style);
-    return left + rectLeft;
+    return left + bodyLeft;
   }
 
   renderResizer() {
