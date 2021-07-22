@@ -1154,6 +1154,11 @@ export default class TableStore {
   }
 
   @computed
+  get hasEmptyWidthColumn(): boolean {
+    return this.leafColumns.some(column => !column.hidden && isNil(column.width));
+  }
+
+  @computed
   get hasCheckFieldColumn(): boolean {
     const { checkField } = this.dataSet.props;
     if (checkField) {

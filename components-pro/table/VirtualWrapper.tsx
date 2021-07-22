@@ -9,21 +9,23 @@ export interface VirtualWrapperProps {
 }
 
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer((props) => {
-  const { children } = props;
   const {
     tableStore: { virtualTop, virtualHeight, prefixCls },
   } = useContext(TableContext);
+  const wrapperStyle = useMemo(() => ({ height: pxToRem(virtualHeight) }), [virtualHeight]);
   const style = useMemo(() => ({ transform: `translate(0, ${pxToRem(virtualTop)})` }), [virtualTop]);
   return (
     <div
       className={`${prefixCls}-tbody-wrapper`}
-      style={{ height: pxToRem(virtualHeight) }}
+      style={wrapperStyle}
     >
       <div style={style}>
-        {children}
+        {props.children}
       </div>
     </div>
   );
 });
+
+VirtualWrapper.displayName = 'VirtualWrapper';
 
 export default VirtualWrapper;
