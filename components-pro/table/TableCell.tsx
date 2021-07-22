@@ -1,7 +1,7 @@
-import React, { Component, CSSProperties, HTMLProps } from 'react';
+import React, { CSSProperties, FunctionComponent, HTMLProps, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'mobx';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
@@ -16,6 +16,7 @@ import { getColumnKey, getColumnLock, getHeader, isStickySupport } from './utils
 import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
 import AggregationButton from './AggregationButton';
+import useComputed from '../use-computed';
 
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
@@ -27,116 +28,96 @@ export interface TableCellProps extends ElementProps {
   disabled?: boolean;
 }
 
-@observer
-export default class TableCell extends Component<TableCellProps> {
-  static displayName = 'TableCell';
+const TableCell: FunctionComponent<TableCellProps> = observer((props) => {
+  const { column, record, isDragging, provided, colSpan, className, children, disabled } = props;
+  const { tableStore } = useContext(TableContext);
+  const { prefixCls, dataSet } = tableStore;
+  const cellPrefix = `${prefixCls}-cell`;
+  const tableColumnOnCell = getConfig('tableColumnOnCell');
+  const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean) => (
+    <TableCellInner
+      column={col}
+      record={record}
+      style={onCellStyle}
+      disabled={disabled}
+      inAggregation={inAggregation}
+    >
+      {children}
+    </TableCellInner>
+  ), [record, disabled, children]);
 
-  static propTypes = {
-    column: PropTypes.object.isRequired,
-    record: PropTypes.instanceOf(Record).isRequired,
-  };
-
-  static contextType = TableContext;
-
-  getInnerNode(column: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean) {
-    const { record, children, disabled } = this.props;
-    return (
-      <TableCellInner
-        column={column}
-        record={record}
-        style={onCellStyle}
-        disabled={disabled}
-        inAggregation={inAggregation}
-      >
-        {children}
-      </TableCellInner>
-    );
-  }
-
-  getColumnsInnerNode(columns: ColumnProps[], prefixCls) {
-    const { tableStore } = this.context;
-    const { dataSet } = tableStore;
-    return columns.map((column) => {
-      const { children, hidden } = column;
-      if (!hidden) {
-        const { record } = this.props;
-        const { onCell, hiddenInAggregation } = column;
-        const isHidden: boolean | undefined = typeof hiddenInAggregation === 'function' ? hiddenInAggregation(record) : hiddenInAggregation;
-        if (!isHidden) {
-          const tableColumnOnCell = getConfig('tableColumnOnCell');
-          const isBuiltInColumn = tableStore.isBuiltInColumn(column);
-          const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
-          const cellExternalProps: Partial<TreeNodeProps> =
-            typeof columnOnCell === 'function'
-              ? columnOnCell({
-                dataSet: record.dataSet!,
-                record,
-                column,
-              })
-              : {};
-          const columnKey = getColumnKey(column);
-          const header = getHeader(column, dataSet, tableStore);
-          // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
-          const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
-          if (children && children.length) {
-            return (
-              <Tree.TreeNode
-                {...cellExternalProps}
-                key={columnKey}
-                title={header}
-              >
-                {this.getColumnsInnerNode(children, prefixCls)}
-              </Tree.TreeNode>
-            );
-          }
-          const innerNode = this.getInnerNode(column, onCellStyle, true);
+  const getColumnsInnerNode = useCallback((columns: ColumnProps[]) => {
+    return columns.map((col) => {
+      const { children: childColumns, hidden, hiddenInAggregation } = col;
+      if (!hidden && !(typeof hiddenInAggregation === 'function' ? hiddenInAggregation(record) : hiddenInAggregation)) {
+        const { onCell } = col;
+        const isBuiltInColumn = tableStore.isBuiltInColumn(col);
+        const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
+        const cellExternalProps: Partial<TreeNodeProps> =
+          typeof columnOnCell === 'function'
+            ? columnOnCell({
+              dataSet,
+              record,
+              column: col,
+            })
+            : {};
+        const columnKey = getColumnKey(col);
+        const header = getHeader(col, dataSet, tableStore);
+        // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
+        const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
+        if (childColumns && childColumns.length) {
           return (
             <Tree.TreeNode
               {...cellExternalProps}
               key={columnKey}
-              title={
-                <>
-                  <span className={`${prefixCls}-label`}>{header}</span>
-                  {innerNode}
-                </>
-              }
-            />
+              title={header}
+            >
+              {getColumnsInnerNode(childColumns)}
+            </Tree.TreeNode>
           );
         }
+        const innerNode = getInnerNode(col, onCellStyle, true);
+        return (
+          <Tree.TreeNode
+            {...cellExternalProps}
+            key={columnKey}
+            title={
+              <>
+                <span className={`${cellPrefix}-label`}>{header}</span>
+                {innerNode}
+              </>
+            }
+          />
+        );
       }
       return undefined;
     });
-  }
-
-  renderInnerNode(prefixCls, onCellStyle?: CSSProperties) {
-    const {
-      context: { tableStore },
-      props,
-    } = this;
-    if (tableStore.expandIconAsCell && props.children) {
-      return props.children;
+  }, [tableStore, record, dataSet, cellPrefix, getInnerNode, tableColumnOnCell]);
+  const renderInnerNode = useCallback((aggregation, onCellStyle?: CSSProperties) => {
+    if (tableStore.expandIconAsCell && children) {
+      return children;
     }
-    const { column, record } = props;
-    if (column.aggregation) {
-      const { children, renderer = defaultAggregationRenderer, aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll } = column;
-      if (children) {
-        const visibleChildren = children.filter(child => !child.hidden);
+    if (aggregation) {
+      const { children: childColumns } = column;
+      if (childColumns) {
+        const visibleChildren = childColumns.filter(child => !child.hidden);
         const { length } = visibleChildren;
         if (length > 0) {
+          const { renderer = defaultAggregationRenderer, aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll } = column;
           const expanded = tableStore.isAggregationCellExpanded(record, column);
           const hasExpand = length > aggregationLimit!;
           const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
 
           const text = (
             <Tree
-              prefixCls={`${prefixCls}-tree`}
+              prefixCls={`${cellPrefix}-tree`}
               virtual={false}
               focusable={false}
               defaultExpandedKeys={aggregationDefaultExpandedKeys}
               defaultExpandAll={aggregationDefaultExpandAll}
             >
               {
-                this.getColumnsInnerNode(nodes, prefixCls)
+                getColumnsInnerNode(nodes)
               }
               {
                 hasExpand && (
@@ -146,95 +127,106 @@ export default class TableCell extends Component<TableCellProps> {
             </Tree>
           );
           return (
-            <div className={`${prefixCls}-inner`}>
-              {renderer({ text, record, dataSet: tableStore.dataSet, aggregation: tableStore.aggregation })}
+            <div className={`${cellPrefix}-inner`}>
+              {renderer({ text, record, dataSet, aggregation: tableStore.aggregation })}
             </div>
           );
         }
       }
     }
-    return this.getInnerNode(column, onCellStyle);
-  }
-
-  render() {
-    const { column, record, isDragging, provided, colSpan, className: propsClassName } = this.props;
-    const {
-      tableStore,
-    } = this.context;
-    const inView = record.getState('__inView') !== false && get(column, '_inView') !== false;
-    if (!inView) {
-      return (
-        <td
-          colSpan={colSpan}
-          data-index={getColumnKey(column)}
-        />
-      );
-    }
-    const { prefixCls, node } = tableStore;
-    const tableColumnOnCell = getConfig('tableColumnOnCell');
-    const { className, style, onCell, lock, aggregation } = column;
-    const cellPrefix = `${prefixCls}-cell`;
-    const isBuiltInColumn = tableStore.isBuiltInColumn(column);
-    const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
-    const cellExternalProps: HTMLProps<HTMLTableCellElement> =
-      typeof columnOnCell === 'function'
-        ? columnOnCell({
-          dataSet: record.dataSet!,
-          record,
-          column,
-        })
-        : {};
-    const cellStyle: CSSProperties = {
-      ...style,
-      ...cellExternalProps.style,
-      ...(provided && { cursor: 'move' }),
-    };
-    const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
-    const classString = classNames(
-      cellPrefix,
-      {
-        [`${cellPrefix}-aggregation`]: aggregation,
-        [`${cellPrefix}-fix-${columnLock}`]: columnLock,
-      },
-      className,
-      propsClassName,
-      cellExternalProps.className,
-    );
-
+    return getInnerNode(column, onCellStyle);
+  }, [tableStore, column, record, dataSet, children, getInnerNode]);
+  const { style, lock, _group } = column;
+  const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
+  const baseStyle: CSSProperties | undefined = useComputed(() => {
     if (columnLock) {
-      const { _group } = column;
       if (_group) {
         if (columnLock === ColumnLock.left) {
-          cellStyle.left = pxToRem(_group.left)!;
-        } else if (columnLock === ColumnLock.right) {
-          cellStyle.right = pxToRem(colSpan && colSpan > 1 ? 0 : _group.right)!;
+          return {
+            ...style,
+            left: pxToRem(_group.left)!,
+          };
+        }
+        if (columnLock === ColumnLock.right) {
+          return {
+            ...style,
+            right: pxToRem(colSpan && colSpan > 1 ? 0 : _group.right)!,
+          };
         }
       }
     }
-    const widthDraggingStyle = (): React.CSSProperties => {
-      const draggingStyle: React.CSSProperties = {};
-      if (isDragging) {
-        const dom = node.element.querySelector(`.${prefixCls}-tbody .${prefixCls}-cell[data-index="${getColumnKey(column)}"]`);
-        if (dom) {
-          draggingStyle.width = dom.clientWidth;
-          draggingStyle.whiteSpace = 'nowrap';
-        }
-      }
-      return draggingStyle;
-    };
-    // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
-    const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
+    return style;
+  }, [style, columnLock, _group]);
+  const baseClassName = classNames(cellPrefix, {
+    [`${cellPrefix}-fix-${columnLock}`]: columnLock,
+  });
+  if (record.getState('__inView') === false || get(column, '_inView') === false) {
     return (
       <td
         colSpan={colSpan}
-        {...cellExternalProps}
-        className={classString}
         data-index={getColumnKey(column)}
-        {...(provided && provided.dragHandleProps)}
-        style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
-      >
-        {this.renderInnerNode(cellPrefix, onCellStyle)}
-      </td>
+        className={baseClassName}
+        style={baseStyle}
+      />
     );
   }
-}
+  const { onCell, aggregation } = column;
+  const isBuiltInColumn = tableStore.isBuiltInColumn(column);
+  const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
+  const cellExternalProps: HTMLProps<HTMLTableCellElement> =
+    typeof columnOnCell === 'function'
+      ? columnOnCell({
+        dataSet: record.dataSet!,
+        record,
+        column,
+      })
+      : {};
+  const cellStyle: CSSProperties = {
+    ...baseStyle,
+    ...cellExternalProps.style,
+    ...(provided && { cursor: 'move' }),
+  };
+  const classString = classNames(
+    baseClassName,
+    {
+      [`${cellPrefix}-aggregation`]: aggregation,
+    },
+    column.className,
+    className,
+    cellExternalProps.className,
+  );
+  const widthDraggingStyle = (): React.CSSProperties => {
+    const draggingStyle: React.CSSProperties = {};
+    if (isDragging) {
+      const dom = tableStore.node.element.querySelector(`.${prefixCls}-tbody .${prefixCls}-cell[data-index="${getColumnKey(column)}"]`);
+      if (dom) {
+        draggingStyle.width = dom.clientWidth;
+        draggingStyle.whiteSpace = 'nowrap';
+      }
+    }
+    return draggingStyle;
+  };
+  // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
+  const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
+  return (
+    <td
+      colSpan={colSpan}
+      {...cellExternalProps}
+      className={classString}
+      data-index={getColumnKey(column)}
+      {...(provided && provided.dragHandleProps)}
+      style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
+    >
+      {renderInnerNode(aggregation, onCellStyle)}
+    </td>
+  );
+});
+
+TableCell.displayName = 'TableCell';
+
+TableCell.propTypes = {
+  column: PropTypes.object.isRequired,
+  record: PropTypes.instanceOf(Record).isRequired,
+};
+
+export default TableCell;
