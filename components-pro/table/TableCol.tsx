@@ -1,31 +1,38 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
+import { get } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
+import { ColumnProps, minColumnWidth } from './Column';
+import useComputed from '../use-computed';
 
 export interface TableColProps extends ElementProps {
-  width?: number | string;
-  minWidth?: number | string;
+  column: ColumnProps;
+  last: boolean;
 }
 
-export default class TableCol extends PureComponent<TableColProps> {
-  static displayName = 'TableCol';
+const TableCol: FunctionComponent<TableColProps> = observer((props) => {
+  const { column, last } = props;
+  const { tableStore } = useContext(TableContext);
+  const style = useComputed(() => ({
+    width: pxToRem(last && !tableStore.hasEmptyWidthColumn ? undefined : get(column, 'width')),
+    minWidth: pxToRem(minColumnWidth(column)),
+  }), [last, column, tableStore]);
+  return (
+    <col
+      className={`${tableStore.prefixCls}-col`}
+      style={style}
+    />
+  );
+});
 
-  static contextType = TableContext;
+TableCol.displayName = 'TableCol';
 
-  static propTypes = {
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    minWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  };
+TableCol.propTypes = {
+  column: PropTypes.object.isRequired,
+  last: PropTypes.bool.isRequired,
+};
 
-  render() {
-    const { width, minWidth, prefixCls } = this.props;
-    return (
-      <col
-        className={`${prefixCls}-col`}
-        style={{ width: pxToRem(width), minWidth: pxToRem(minWidth) }}
-      />
-    );
-  }
-}
+export default TableCol;

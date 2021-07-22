@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复右侧锁定列脚样式问题。
 - 🐞 `<pro>Table`: 修复 virtualCell 不起作用。
 - 🐞 `<pro>Table`: 修复 dateTime 类型列渲染格式问题。
+- 🐞 `<pro>Table`: 修复 range 为数组类型列报错的问题。
 - 🐞 `<pro>FormField`: 修复渲染器返回数字时不渲染的问题。
 
 ## 1.4.2

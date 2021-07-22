@@ -53,6 +53,7 @@ import {
   renderValidationMessage as utilRenderValidationMessage,
   showValidationMessage,
   toMultipleValue,
+  toRangeValue,
   transformHighlightProps,
 } from '../field/utils';
 import ValidationResult from '../validator/ValidationResult';
@@ -454,7 +455,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         return tags;
       }
       if (range) {
-        return renderRangeValue(value, { processRenderer });
+        return renderRangeValue(toRangeValue(value, range), { processRenderer });
       }
       if (field.get('multiLine')) {
         const { lines, multipleValidateMessageLength } = renderMultiLine({

@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
 - 🐞 `<pro>Table`: Fix `virtualCell` not working.
 - 🐞 `<pro>Table`: Fix the rendering format problem of `dateTime` type column.
+- 🐞 `<pro>Table`: Fix the problem that array typed `range` property reports errors in columns.
 - 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
 
 ## 1.4.2

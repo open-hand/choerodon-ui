@@ -1,20 +1,18 @@
-import React, { Component, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
-import { computed, get } from 'mobx';
+import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
-import isNil from 'lodash/isNil';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
-import { ColumnProps, minColumnWidth } from './Column';
+import { ColumnProps } from './Column';
 import { ColumnLock, DragColumnAlign } from './enum';
 import TableEditor from './TableEditor';
 import TableCol from './TableCol';
 import { getColumnKey, isStickySupport } from './utils';
-import autobind from '../_util/autobind';
 import { treeReduce } from '../_util/treeUtils';
+import useComputed from '../use-computed';
 
 export interface TableWrapperProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -23,109 +21,60 @@ export interface TableWrapperProps extends ElementProps {
   hasFooter?: boolean;
 }
 
-@observer
-export default class TableWrapper extends Component<TableWrapperProps, any> {
-  static displayName = 'TableWrapper';
-
-  static contextType = TableContext;
-
-  static propTypes = {
-    lock: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
-    ]),
-    hasBody: PropTypes.bool,
-    hasHeader: PropTypes.bool,
-    hasFooter: PropTypes.bool,
-  };
-
-  tableWrapper: HTMLTableElement | null;
-
-  @computed
-  get leafColumnsWidth(): number | undefined {
-    const { tableStore } = this.context;
-    const { lock } = this.props;
+const TableWrapper: FunctionComponent<TableWrapperProps> = observer((props) => {
+  const { children, hasBody, lock, hasHeader, hasFooter } = props;
+  const { tableStore } = useContext(TableContext);
+  const { prefixCls } = tableStore;
+  type MemoColumns = { leafColumnsWidth?: number, leafEditorColumns?: ColumnProps[] | undefined, leafColumns: ColumnProps[] };
+  const { leafColumnsWidth, leafEditorColumns, leafColumns } = useComputed((): MemoColumns => {
     switch (lock) {
       case ColumnLock.left:
       case true:
-        return tableStore.leftLeafColumnsWidth;
+        return {
+          leafColumnsWidth: tableStore.leftLeafColumnsWidth,
+          leafEditorColumns: hasBody ? treeReduce<ColumnProps[], ColumnProps>(tableStore.leftLeafColumns, (columns, column) => {
+            const { editor, name, hidden } = column;
+            if (editor && name && !hidden) {
+              columns.push(column);
+            }
+            return columns;
+          }, []) : undefined,
+          leafColumns: tableStore.leftLeafColumns.filter(({ hidden }) => !hidden),
+        };
       case ColumnLock.right:
-        return tableStore.rightLeafColumnsWidth;
-      default:
-        if (tableStore.overflowX) {
-          return tableStore.totalLeafColumnsWidth;
-        }
-    }
-    return undefined;
-  }
-
-  @computed
-  get leafEditorColumns(): ColumnProps[] {
-    const { tableStore } = this.context;
-    const { lock } = this.props;
-    switch (lock) {
-      case ColumnLock.left:
-      case true:
-        return treeReduce<ColumnProps[], ColumnProps>(tableStore.leftLeafColumns, (columns, column) => {
-          const { editor, name, hidden } = column;
-          if (editor && name && !hidden) {
-            columns.push(column);
-          }
-          return columns;
-        }, []);
-      case ColumnLock.right:
-        return treeReduce<ColumnProps[], ColumnProps>(tableStore.rightLeafColumns, (columns, column) => {
-          const { editor, name, hidden } = column;
-          if (editor && name && !hidden) {
-            columns.push(column);
-          }
-          return columns;
-        }, []);
-      default:
-        return treeReduce<ColumnProps[], ColumnProps>(tableStore.leafColumns, (columns, column) => {
+        return {
+          leafColumnsWidth: tableStore.rightLeafColumnsWidth,
+          leafEditorColumns: hasBody ? treeReduce<ColumnProps[], ColumnProps>(tableStore.rightLeafColumns, (columns, column) => {
+            const { editor, name, hidden } = column;
+            if (editor && name && !hidden) {
+              columns.push(column);
+            }
+            return columns;
+          }, []) : undefined,
+          leafColumns: tableStore.rightLeafColumns.filter(({ hidden }) => !hidden),
+        };
+      default: {
+        const editorColumns = treeReduce<ColumnProps[], ColumnProps>(tableStore.leafColumns, (columns, column) => {
           const { editor, name, hidden, lock: columnLock } = column;
           if (editor && name && !hidden && (isStickySupport() || !columnLock || !tableStore.overflowX)) {
             columns.push(column);
           }
           return columns;
         }, []);
+        const result: MemoColumns = {
+          leafEditorColumns: hasBody ? editorColumns : undefined,
+          leafColumns: tableStore.leafColumns.filter(({ hidden }) => !hidden),
+        };
+        if (tableStore.overflowX) {
+          result.leafColumnsWidth = tableStore.totalLeafColumnsWidth;
+        }
+        return result;
+      }
     }
-  }
+  }, [tableStore, lock, hasBody]);
 
-  @computed
-  get leafColumns(): ColumnProps[] {
-    const { tableStore } = this.context;
-    const { lock } = this.props;
-    switch (lock) {
-      case ColumnLock.left:
-      case true:
-        return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
-      case ColumnLock.right:
-        return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
-      default:
-        return tableStore.leafColumns.filter(({ hidden }) => !hidden);
-    }
-  }
-
-  getCol(prefixCls: string, column: ColumnProps, width?: number | string): ReactNode {
-    if (!column.hidden) {
-      return (
-        <TableCol
-          key={getColumnKey(column)}
-          prefixCls={prefixCls}
-          width={width}
-          minWidth={minColumnWidth(column)}
-        />
-      );
-    }
-  }
-
-  getColGroup(): ReactNode {
-    const { lock, hasHeader, hasFooter } = this.props;
-    const {
-      tableStore: { overflowY, overflowX, customizable, rowDraggable, dragColumnAlign, prefixCls },
-    } = this.context;
-    let hasEmptyWidth = false;
+  const colGroup = useComputed((): ReactNode => {
+    const { overflowX, customizable, rowDraggable, dragColumnAlign } = tableStore;
     let fixedColumnLength = 1;
     if (customizable) {
       fixedColumnLength += 1;
@@ -134,72 +83,62 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
       fixedColumnLength += 1;
     }
 
-    const cols = this.leafColumns.map((column, index, array) => {
-      let width = get(column, 'width');
-      if (!overflowX) {
-        if (!hasEmptyWidth && index === array.length - fixedColumnLength) {
-          width = undefined;
-        } else if (isNil(width)) {
-          hasEmptyWidth = true;
-        }
-      }
-      return this.getCol(prefixCls, column, width);
-    });
-    if (overflowY && lock !== ColumnLock.left && (hasHeader || hasFooter)) {
+    const cols = leafColumns.map((column, index, array) => (
+      <TableCol
+        key={getColumnKey(column)}
+        column={column}
+        last={!overflowX && index === array.length - fixedColumnLength}
+      />
+    ));
+    if (lock !== ColumnLock.left && (hasHeader || hasFooter) && tableStore.overflowY) {
       cols.push(<col key="fixed-column" style={{ width: pxToRem(measureScrollbar()) }} />);
     }
     return <colgroup>{cols}</colgroup>;
-  }
+  }, [lock, hasHeader, hasFooter, leafColumns, prefixCls]);
 
-  getEditors() {
-    return this.leafEditorColumns.map(column => (
-      <TableEditor key={getColumnKey(column)} column={column} />
-    ));
-  }
+  const editors = useMemo(() => leafEditorColumns && leafEditorColumns.map(column => (
+    <TableEditor key={getColumnKey(column)} column={column} />
+  )), [leafEditorColumns]);
 
-  @autobind
-  saveRef(node) {
-    this.tableWrapper = node;
-  }
-
-  @computed
-  get tableWidth() {
-    const { lock, hasBody } = this.props;
-    const { tableStore } = this.context;
-
+  const style = useComputed(() => {
     if (tableStore.overflowX) {
-      let tableWidth = this.leafColumnsWidth;
-      if (tableWidth !== undefined && lock !== ColumnLock.left && !hasBody && tableStore.overflowY) {
-        tableWidth += measureScrollbar();
+      if (leafColumnsWidth !== undefined && lock !== ColumnLock.left && !hasBody && tableStore.overflowY) {
+        return { width: pxToRem(leafColumnsWidth + measureScrollbar()) };
       }
-      return pxToRem(tableWidth);
+      return { width: pxToRem(leafColumnsWidth) };
     }
-    return '100%';
-  }
+    return { width: '100%' };
+  }, [tableStore, hasBody, lock, leafColumnsWidth]);
 
-  render() {
-    const { children, lock, hasBody } = this.props;
-    const {
-      tableStore,
-    } = this.context;
-    const { prefixCls, props: { summary } } = tableStore;
-    const editors = hasBody && this.getEditors();
-    const className = classNames({
-      [`${prefixCls}-last-row-bordered`]: hasBody && !tableStore.overflowY && (tableStore.height !== undefined || (!tableStore.hasFooter && tableStore.overflowX)),
-    });
-    const table = (
+  const className = classNames({
+    [`${prefixCls}-last-row-bordered`]: hasBody && !tableStore.overflowY && (tableStore.height !== undefined || (!tableStore.hasFooter && tableStore.overflowX)),
+  });
+
+  return (
+    <>
       <table
         key="table"
-        ref={lock ? undefined : this.saveRef}
         className={className}
-        style={{ width: this.tableWidth }}
-        summary={summary}
+        style={style}
+        summary={hasBody && tableStore.props.summary}
       >
-        {this.getColGroup()}
+        {colGroup}
         {children}
       </table>
-    );
+      {editors}
+    </>
+  );
+});
 
-    return [table, editors];
-  }
-}
+TableWrapper.displayName = 'TableWrapper';
+TableWrapper.propTypes = {
+  lock: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
+  ]),
+  hasBody: PropTypes.bool,
+  hasHeader: PropTypes.bool,
+  hasFooter: PropTypes.bool,
+};
+
+export default TableWrapper;
