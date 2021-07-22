@@ -350,9 +350,8 @@ export default class Form extends DataSetComponent<FormProps> {
       return record.dataSet;
     }
     const { observableProps } = this;
-    const { dataSet } = observableProps;
-    if (dataSet) {
-      return dataSet;
+    if ('dataSet' in observableProps) {
+      return observableProps.dataSet;
     }
     return observableProps.contextDataSet;
   }
@@ -360,9 +359,8 @@ export default class Form extends DataSetComponent<FormProps> {
   @computed
   get record(): Record | undefined {
     const { observableProps } = this;
-    const { record } = observableProps;
-    if (record) {
-      return record;
+    if ('record' in observableProps) {
+      return observableProps.record;
     }
     const { dataSet, dataIndex } = observableProps;
     if (dataSet) {
@@ -527,11 +525,9 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   getObservableProps(props, context) {
-    return {
+    const observableProps: any = {
       ...super.getObservableProps(props, context),
-      dataSet: props.dataSet,
       contextDataSet: context.dataSet,
-      record: props.record,
       contextRecord: context.record,
       dataIndex: props.dataIndex,
       contextDataIndex: context.dataIndex,
@@ -548,6 +544,13 @@ export default class Form extends DataSetComponent<FormProps> {
       separateSpacing: props.separateSpacing,
       fieldHighlightRenderer: 'fieldHighlightRenderer' in props ? props.fieldHighlightRenderer : context.fieldHighlightRenderer,
     };
+    if ('record' in props) {
+      observableProps.record = props.record;
+    }
+    if ('dataSet' in props) {
+      observableProps.dataSet = props.dataSet;
+    }
+    return observableProps;
   }
 
   getOmitPropsKeys(): string[] {
