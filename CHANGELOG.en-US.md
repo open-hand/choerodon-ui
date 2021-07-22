@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the rendering format problem of `dateTime` type column.
 - 🐞 `<pro>Table`: Fix the problem that array typed `range` property reports errors in columns.
 - 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
+- 🐞 `<pro>SelectBox`: Fix the set value problem with data source binding.
 
 ## 1.4.2
 

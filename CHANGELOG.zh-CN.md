@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 dateTime 类型列渲染格式问题。
 - 🐞 `<pro>Table`: 修复 range 为数组类型列报错的问题。
 - 🐞 `<pro>FormField`: 修复渲染器返回数字时不渲染的问题。
+- 🐞 `<pro>SelectBox`: 修复数据源绑定后设置问题。
 
 ## 1.4.2
 
