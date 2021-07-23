@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { action, computed, observable, runInAction } from 'mobx';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import DataSet from '../data-set';
@@ -18,32 +18,23 @@ export default class TableStore {
 
   @computed
   get queryBar(): TableQueryBarHookProps {
-    return this.props.queryBar;
+    return this.node.props.queryBar;
   }
-
-  // @computed
-  // get queryBarProps(): TableQueryBarHookProps {
-  //   return this.props.queryBarProps || getConfig('queryBar');
-  // }
 
   @computed
   get dataSet(): DataSet {
-    return this.props.queryBar?.dataSet;
+    return this.node.props.queryBar?.dataSet;
   }
 
   @action
-  setProps(props) {
-    this.props = props;
-  }
-
-  @action
-  updateProps(props) {
-    this.setProps(props);
+  updateProps(node) {
+    // this.setProps(props);
+    this.node = node;
   }
 
   @computed
   get prefixCls() {
-    const { classPrefix } = this.props;
+    const { classPrefix } = this.node.props;
     return classPrefix;
   }
 
@@ -54,8 +45,8 @@ export default class TableStore {
 
   constructor(node) {
     runInAction(() => {
+      // this.setProps(node.props);
       this.node = node;
-      this.setProps(node.props);
     });
   }
 }
