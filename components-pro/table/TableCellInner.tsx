@@ -95,10 +95,10 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   const height = record.getState(`__column_resize_height_${name}`);
   const columnCommand = useMemo(() => {
     if (typeof command === 'function') {
-      return command({ dataSet, record });
+      return command({ dataSet, record, aggregation });
     }
     return command;
-  }, [record, command, dataSet]);
+  }, [record, command, dataSet, aggregation]);
   const canFocus = useComputed(() => !disabled && (!tableStore.inlineEdit || record === tableStore.currentEditRecord), [disabled, record, tableStore]);
   const cellEditor = useComputed(() => getEditorByColumnAndRecord(column, record), [record, column]);
   const cellEditorInCell = useMemo(() => isInCellEditor(cellEditor), [cellEditor]);
@@ -486,7 +486,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
 
   const showTooltip = useCallback((e) => {
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator') && field.get('multiple') && toMultipleValue(value, field.get('range')).length))) {
-      const message = renderValidationResult(field.validator.currentValidationResult);
+      const { validator } = field;
+      const message = validator && renderValidationResult(validator.currentValidationResult);
       if (!isValidationMessageHidden(message)) {
         showValidationMessage(e, message);
         return true;

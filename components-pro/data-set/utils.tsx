@@ -1002,27 +1002,26 @@ export function getSortedFields(fields: Fields): [string, Field][] {
   ];
 }
 
-export function getUniqueFieldNames(dataSet?: DataSet): string[] {
+export function getUniqueFieldNames(dataSet: DataSet): string[] {
   const keys: string[] = [];
-  if (dataSet) {
-    [...dataSet.fields.entries()].forEach(([key, field]) => {
-      if (field.get('unique')) {
-        keys.push(key);
-      }
-    });
-  }
+  [...dataSet.fields.entries()].forEach(([key, field]) => {
+    if (field.get('unique')) {
+      keys.push(key);
+    }
+  });
   return keys;
 }
 
 export function getUniqueKeysAndPrimaryKey(dataSet?: DataSet): string[] {
-  const keys: string[] = getUniqueFieldNames(dataSet);
   if (dataSet) {
+    const keys: string[] = getUniqueFieldNames(dataSet);
     const { primaryKey } = dataSet.props;
     if (primaryKey) {
       keys.push(primaryKey);
     }
+    return keys;
   }
-  return keys;
+  return [];
 }
 
 
@@ -1117,4 +1116,13 @@ export function treeUnSelectParent(dataSet: DataSet, record: Record, unSelected:
       treeUnSelectParent(dataSet, parent, unSelected);
     }
   }
+}
+
+export function getIf<T, V>(target: T, propName: string, defaultValue: V | (() => V)): V {
+  const value = target[propName];
+  if (value === undefined) {
+    target[propName] = typeof defaultValue === 'function' ? (defaultValue as () => V)() : defaultValue;
+    return target[propName];
+  }
+  return value;
 }

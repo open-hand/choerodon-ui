@@ -20,6 +20,7 @@ import {
   generateJSONData,
   generateResponseData,
   getChainFieldName,
+  getIf,
   getRecordValue,
   getSortedFields,
   getUniqueKeysAndPrimaryKey,
@@ -58,48 +59,50 @@ export default class Record {
 
   @observable fields: Fields;
 
-  tempFields: Map<string, Field> = new Map();
-
   memo?: object;
 
-  prepareForReport: { result?: boolean, timeout?: number } = {};
+  prepareForReport?: { result?: boolean, timeout?: number } | undefined;
 
-  dataSetSnapshot: { [key: string]: DataSetSnapshot } = {};
+  dataSetSnapshot?: { [key: string]: DataSetSnapshot } | undefined;
 
-  cascadeRecordsMap: { [key: string]: Record[] } = {};
+  cascadeRecordsMap?: { [key: string]: Record[] } | undefined;
 
-  cascading = {};
+  cascading?: { [key: string]: boolean } | undefined;
 
-  validating: boolean = false;
+  validating?: boolean | undefined;
 
   @observable data: object;
 
-  @observable dirtyData: ObservableMap<string, any>;
+  @observable dirtyData?: ObservableMap<string, any> | undefined;
 
   @computed
   get pristineData(): object {
-    return [...this.dirtyData.entries()].reduce<object>((data, [key, value]) => {
-      ObjectChainValue.set(data, key, value);
-      return data;
-    }, toJS(this.data));
+    const { dirtyData } = this;
+    const data = toJS(this.data);
+    if (dirtyData) {
+      [...dirtyData.entries()].forEach(([key, value]) => ObjectChainValue.set(data, key, value));
+    }
+    return data;
   }
 
   set pristineData(data: object) {
     runInAction(() => {
       const { dirtyData } = this;
-      const dirtyKeys = [...dirtyData.keys()];
-      if (dirtyKeys.length) {
+      if (dirtyData) {
+        const dirtyKeys = [...dirtyData.keys()];
         const newData = {};
-        dirtyKeys.forEach((key) => {
-          const item = ObjectChainValue.get(this.data, key);
-          ObjectChainValue.set(newData, key, item);
-          const newItem = ObjectChainValue.get(data, key);
-          if (isSame(item, newItem)) {
-            dirtyData.delete(key);
-          } else {
-            dirtyData.set(key, newItem);
-          }
-        });
+        if (dirtyKeys.length) {
+          dirtyKeys.forEach((key) => {
+            const item = ObjectChainValue.get(this.data, key);
+            ObjectChainValue.set(newData, key, item);
+            const newItem = ObjectChainValue.get(data, key);
+            if (isSame(item, newItem)) {
+              dirtyData.delete(key);
+            } else {
+              dirtyData.set(key, newItem);
+            }
+          });
+        }
         this.data = merge({}, data, newData);
       } else {
         this.data = data;
@@ -109,7 +112,6 @@ export default class Record {
 
   @observable status: RecordStatus;
 
-  @computed
   get selectable(): boolean {
     return this.getState(SELECTABLE_KEY);
   }
@@ -131,7 +133,6 @@ export default class Record {
     return false;
   }
 
-  @computed
   get isSelected(): boolean {
     if (this.isDataSetInAllPageSelection) {
       return !this.getState(UNSELECT_KEY);
@@ -147,9 +148,9 @@ export default class Record {
     }
   }
 
-  @observable isCurrent: boolean;
+  @observable isCurrent?: boolean;
 
-  @observable isCached: boolean;
+  @observable isCached?: boolean;
 
   @observable editing?: boolean;
 
@@ -157,7 +158,7 @@ export default class Record {
 
   @observable childrenLoaded?: boolean;
 
-  @observable state: ObservableMap<string, any>;
+  @observable state?: ObservableMap<string, any> | undefined;
 
   @computed
   get key(): string | number {
@@ -197,12 +198,10 @@ export default class Record {
     return -1;
   }
 
-  @computed
   get isRemoved(): boolean {
     return this.status === RecordStatus.delete;
   }
 
-  @computed
   get isNew(): boolean {
     return this.status === RecordStatus.add;
   }
@@ -379,12 +378,10 @@ export default class Record {
     return [];
   }
 
-  @computed
   get path(): Record[] {
     return [...this.parents, this];
   }
 
-  @computed
   get level(): number {
     const { parent } = this;
     if (parent) {
@@ -395,10 +392,15 @@ export default class Record {
 
   @computed
   get dirty(): boolean {
-    const { fields, status, dataSet, dirtyData } = this;
-    if (status === RecordStatus.update || dirtyData.size > 0 || [...fields.values()].some(({ dirty }) => dirty)) {
+    const { status } = this;
+    if (status === RecordStatus.update) {
       return true;
     }
+    const { dirtyData } = this;
+    if (dirtyData && dirtyData.size > 0) {
+      return true;
+    }
+    const { dataSet } = this;
     if (dataSet) {
       const { children } = dataSet;
       return Object.keys(children).some(key => (this.getCascadeRecordsIncludeDelete(key) || []).some(isDirtyRecord));
@@ -423,16 +425,12 @@ export default class Record {
   constructor(data: object = {}, dataSet?: DataSet, status: RecordStatus = RecordStatus.add) {
     runInAction(() => {
       const initData = isObservableObject(data) ? toJS(data) : data;
-      this.state = observable.map<string, any>();
       this.fields = observable.map<string, Field>();
       this.status = status;
       this.selectable = true;
       this.isSelected = false;
-      this.isCurrent = false;
-      this.isCached = false;
       this.id = IDGen.next().value;
       this.data = initData;
-      this.dirtyData = observable.map<string, any>();
       if (dataSet) {
         this.dataSet = dataSet;
         const { fields } = dataSet;
@@ -495,41 +493,49 @@ export default class Record {
   }
 
   validate(all?: boolean, noCascade?: boolean): Promise<boolean> {
-    const { dataSetSnapshot, dataSet, status, fields, isCurrent } = this;
+    const { dataSet } = this;
     this.validating = true;
-    return Promise.all([
-      ...[...fields.values()].map(field =>
-        all || status !== RecordStatus.sync ? field.checkValidity(false) : true,
-      ),
-      ...(!noCascade && dataSet ? Object.keys(dataSet.children).map((key) => {
-        const { children } = dataSet;
-        const snapshot = dataSetSnapshot[key];
-        const ds = children[key];
-        const child = isCurrent ? ds : snapshot && new DataSet().restore(snapshot);
-        if (child) {
-          return child.validate();
-        }
-        const { dataToJSON } = ds;
-        const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
-        return ((useSelected(dataToJSON) ? this.getCascadeSelectedRecords(key) : this.getCascadeRecords(key)) || []).map(record =>
-          record.validate(false, !cascade),
-        );
-      }) : []),
-    ]).then((results) => {
-      const valid = results.every(result => result);
-      this.reportValidity(valid);
-      this.validating = false;
-      return valid;
-    }).catch((error) => {
-      this.validating = false;
-      throw error;
-    });
+    const promises: Promise<boolean>[] = [];
+    if (all || this.status !== RecordStatus.sync) {
+      [...this.fields.values()].forEach(field => promises.push(field.checkValidity(false)));
+    }
+    if (!noCascade && dataSet) {
+      const childrenKeys = Object.keys(dataSet.children);
+      if (childrenKeys.length) {
+        const { dataSetSnapshot, isCurrent } = this;
+        childrenKeys.forEach((key) => {
+          const { children } = dataSet;
+          const snapshot = dataSetSnapshot && dataSetSnapshot[key];
+          const ds = children[key];
+          const child = isCurrent ? ds : snapshot && new DataSet().restore(snapshot);
+          if (child) {
+            promises.push(child.validate());
+          } else {
+            const { dataToJSON } = ds;
+            const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
+            ((useSelected(dataToJSON) ? this.getCascadeSelectedRecords(key) : this.getCascadeRecords(key)) || []).forEach(record =>
+              promises.push(record.validate(false, !cascade)),
+            );
+          }
+        });
+      }
+    }
+    return Promise.all(promises)
+      .then((results) => {
+        const valid = results.every(result => result);
+        this.reportValidity(valid);
+        delete this.validating;
+        return valid;
+      }).catch((error) => {
+        delete this.validating;
+        throw error;
+      });
   }
 
   reportValidity(result: boolean) {
     const { dataSet } = this;
     if (dataSet && !dataSet.validating) {
-      const { prepareForReport } = this;
+      const prepareForReport = getIf<Record, { result?: boolean, timeout?: number }>(this, 'prepareForReport', {});
       if (!result) {
         prepareForReport.result = result;
       }
@@ -538,7 +544,7 @@ export default class Record {
       }
       prepareForReport.timeout = window.setTimeout(() => {
         dataSet.reportValidity(prepareForReport.result || true);
-        this.prepareForReport = {};
+        delete this.prepareForReport;
       }, 200);
     }
   };
@@ -569,20 +575,23 @@ export default class Record {
         if (this.isCurrent) {
           return childDataSet.records.slice();
         }
-        const snapshot = this.dataSetSnapshot[fieldName];
+        const { dataSetSnapshot } = this;
+        const snapshot = dataSetSnapshot && dataSetSnapshot[fieldName];
         if (snapshot) {
           return snapshot.records;
         }
-        const cascadeRecords = this.cascadeRecordsMap[fieldName];
+        const cascadeRecordsMap = getIf<Record, { [key: string]: Record[] }>(this, 'cascadeRecordsMap', {});
+        const cascadeRecords = cascadeRecordsMap[fieldName];
         if (cascadeRecords) {
           return cascadeRecords;
         }
         const data = this.get(fieldName);
-        if (!this.cascading[fieldName] && isObservableArray(data)) {
-          this.cascading[fieldName] = true;
+        const cascading = getIf<Record, { [key: string]: boolean }>(this, 'cascading', {});
+        if (!cascading[fieldName] && isObservableArray(data)) {
+          cascading[fieldName] = true;
           const records = childDataSet.processData(data, this.isNew ? RecordStatus.add : RecordStatus.sync);
-          this.cascading[fieldName] = false;
-          this.cascadeRecordsMap[fieldName] = records;
+          delete cascading[fieldName];
+          cascadeRecordsMap[fieldName] = records;
           return records;
         }
       }
@@ -631,14 +640,15 @@ export default class Record {
       if (!isSame(processToJSON(oldValue, field), newValueForCompare)) {
         const { fields } = this;
         ObjectChainValue.set(this.data, fieldName, newValue, fields);
-        if (!(this.dirtyData.has(fieldName))) {
-          this.dirtyData.set(fieldName, oldValue);
+        const dirtyData = getIf<Record, ObservableMap<string, any>>(this, 'dirtyData', () => observable.map<string, any>());
+        if (!(dirtyData.has(fieldName))) {
+          dirtyData.set(fieldName, oldValue);
           if (this.status === RecordStatus.sync) {
             this.status = RecordStatus.update;
           }
-        } else if (isSame(processToJSON(this.dirtyData.get(fieldName), field), newValueForCompare)) {
-          this.dirtyData.delete(fieldName);
-          if (this.status === RecordStatus.update && this.dirtyData.size === 0 && [...fields.values()].every(f => !f.dirty)) {
+        } else if (isSame(processToJSON(dirtyData.get(fieldName), field), newValueForCompare)) {
+          dirtyData.delete(fieldName);
+          if (this.status === RecordStatus.update && dirtyData.size === 0 && [...fields.values()].every(f => !f.dirty)) {
             this.status = RecordStatus.sync;
           }
         }
@@ -662,7 +672,10 @@ export default class Record {
       }
       const { fields } = this;
       [field, ...findBindFields(field, fields, true), ...findBindTargetFields(field, fields, true)].forEach((oneField) => {
-        oneField.validator.reset();
+        const { validator } = oneField;
+        if (validator) {
+          validator.reset();
+        }
         oneField.checkValidity(false);
       });
     } else if (isPlainObject(item)) {
@@ -674,7 +687,11 @@ export default class Record {
   getPristineValue(fieldName?: string): any {
     if (fieldName) {
       const chainFieldName = getChainFieldName(this, fieldName);
-      return this.dirtyData.has(chainFieldName) ? this.dirtyData.get(chainFieldName) : this.get(chainFieldName);
+      const { dirtyData } = this;
+      if (dirtyData && dirtyData.has(chainFieldName)) {
+        return dirtyData.get(chainFieldName);
+      }
+      return this.get(chainFieldName);
     }
   }
 
@@ -686,7 +703,9 @@ export default class Record {
       const fieldName: string = getChainFieldName(this, oldName);
       const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || addRecordField(this, fieldName);
       const newValue = processValue(value, field);
-      dirtyData.delete(fieldName);
+      if (dirtyData) {
+        dirtyData.delete(fieldName);
+      }
       ObjectChainValue.set(data, fieldName, newValue, fields);
       field.commit();
     } else if (isPlainObject(item)) {
@@ -709,7 +728,8 @@ export default class Record {
   }
 
   ready(): Promise<any> {
-    return Promise.all([...this.fields.values()].map(field => field.ready()));
+    return Promise.resolve(true);
+    // return Promise.all([...this.fields.values()].map(field => field.ready()));
   }
 
   @action
@@ -760,7 +780,7 @@ export default class Record {
     }
     if (isRemoved || dirty) {
       this.data = toJS(this.pristineData);
-      this.dirtyData.clear();
+      this.dirtyData = undefined;
       this.memo = undefined;
       if (dataSet && !dataSet.resetInBatch) {
         dataSet.fireEvent(DataSetEvents.reset, { records: [this], dataSet });
@@ -797,9 +817,9 @@ export default class Record {
 
   @action
   commit(data?: object, dataSet?: DataSet): Record {
-    const { dataSetSnapshot, fields, isRemoved, records, isNew } = this;
     if (dataSet) {
-      if (isRemoved) {
+      const { records } = this;
+      if (this.isRemoved) {
         const index = records.indexOf(this);
         if (index !== -1) {
           if (dataSet.records === records) {
@@ -809,7 +829,7 @@ export default class Record {
         }
         return this;
       }
-      if (isNew) {
+      if (this.isNew) {
         const index = records.indexOf(this);
         if (index !== -1 && dataSet.records === records) {
           dataSet.totalCount += 1;
@@ -822,6 +842,7 @@ export default class Record {
         if (keys.length) {
           const { isCurrent } = this;
           const tmpDs = new DataSet();
+          const dataSetSnapshot = getIf<Record, { [key: string]: DataSetSnapshot }>(this, 'dataSetSnapshot', {});
           keys.forEach(key => {
             const snapshot = dataSetSnapshot[key];
             const ds = children[key];
@@ -840,24 +861,26 @@ export default class Record {
         }
       }
     }
-    this.dirtyData.clear();
-    [...fields.values()].forEach(field => field.commit());
+    this.dirtyData = undefined;
+    [...this.fields.values()].forEach(field => field.commit());
     this.status = RecordStatus.sync;
     return this;
   }
 
   @action
   setState(item: string | object, value?: any) {
+    const state = getIf<Record, ObservableMap<string, any>>(this, 'state', () => observable.map<string, any>());
     if (isString(item)) {
-      this.state.set(item, value);
+      state.set(item, value);
     } else if (isPlainObject(item)) {
-      this.state.merge(item);
+      state.merge(item);
     }
     return this;
   }
 
   getState(key: string) {
-    return this.state.get(key);
+    const { state } = this;
+    return state && state.get(key);
   }
 
   treeReduce<U>(
@@ -1014,7 +1037,7 @@ export default class Record {
         if (keys.length) {
           const { isCurrent } = this;
           keys.forEach(name => {
-            const snapshot = dataSetSnapshot[name];
+            const snapshot = dataSetSnapshot && dataSetSnapshot[name];
             const child = (!isCurrent && snapshot && new DataSet().restore(snapshot)) || children[name];
             if (child) {
               const { dataToJSON } = child;

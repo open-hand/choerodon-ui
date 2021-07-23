@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react';
-import { computed } from 'mobx';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 
-export interface UrlFieldProps extends TextFieldProps {}
+export interface UrlFieldProps extends TextFieldProps {
+}
 
 @observer
 export default class UrlField extends TextField<UrlFieldProps> {
@@ -13,7 +13,6 @@ export default class UrlField extends TextField<UrlFieldProps> {
 
   type: string = 'url';
 
-  @computed
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {

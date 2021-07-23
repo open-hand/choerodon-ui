@@ -54,7 +54,7 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   childrenRendered: boolean = false;
 
-  isCurrent: boolean = false;
+  isCurrent: boolean | undefined;
 
   node: HTMLTableRowElement | null;
 

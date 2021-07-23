@@ -237,7 +237,7 @@ export type MultipleRenderOption = {
   prefixCls?: string | undefined;
   disabled?: boolean | undefined;
   readOnly?: boolean | undefined;
-  validator: Validator;
+  validator?: Validator | undefined;
   isMultipleBlockDisabled?(v: any): boolean;
   processRenderer(v: any, repeat?: number): ReactNode;
   renderValidationResult(result: ValidationResult): ReactNode;
@@ -294,7 +294,7 @@ export function getValueKey(v: any) {
 
 export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode, multipleValidateMessageLength: number } {
   const {
-    range, maxTagPlaceholder, prefixCls, validator: { validationResults }, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
+    range, maxTagPlaceholder, prefixCls, validator, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
     renderValidationResult, handleMutipleValueRemove, getKey = getValueKey, isValidationMessageHidden, showValidationMessage: selfShowValidationMessage,
   } = option;
   const values = toMultipleValue(value, range);
@@ -308,13 +308,14 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     `${prefixCls}-multiple-block`,
   );
   let multipleValidateMessageLength = 0;
+  const validationResults: ValidationResult[] | undefined = validator && validator.validationResults;
   const tags = values.slice(0, maxTagCount).map((v, index) => {
     const key = getKey(v);
     const repeat = repeats.get(key) || 0;
     const text = range ? renderRangeValue(v, { repeat, processRenderer }) : processRenderer(v, repeat);
     repeats.set(key, repeat + 1);
     if (!isEmpty(text)) {
-      const validationResult = validationResults.find(error => error.value === v);
+      const validationResult: ValidationResult | undefined = validationResults && validationResults.find(error => error.value === v);
       const blockDisabled = isMultipleBlockDisabled ? isMultipleBlockDisabled(v) : disabled;
       const className = classNames(
         {
@@ -393,11 +394,11 @@ export function renderMultiLine(options: MultiLineRenderOption): { lines?: React
       const lines = (
         multiLineFields.map(fieldItem => {
           if (fieldItem) {
-            const { validationResults } = fieldItem.validator;
+            const { validator } = fieldItem;
             const required = defaultTo(fieldItem.get('required'), field.get('required'));
             const fieldName = fieldItem.get('name');
             const value = record.get(fieldName);
-            const validationResult = validationResults.find(error => error.value === value);
+            const validationResult = validator && validator.validationResults.find(error => error.value === value);
             const validationMessage =
               validationResult && renderValidationResult(validationResult);
             const validationHidden = isValidationMessageHidden(validationMessage);

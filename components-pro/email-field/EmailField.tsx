@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react';
-import { computed } from 'mobx';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
@@ -17,7 +16,6 @@ export default class EmailField extends TextField<EmailFieldProps> {
     return FieldType.email;
   }
 
-  @computed
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {

@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table.Column`: 新增 hiddenInAggregation 属性。
+- 🌟 `<pro>Table.Column`: 新增 hiddenInAggregation 属性, command 钩子新增 aggregation 参数。
+- 💄 `<pro>DataSet`：内存优化。
 - 💄 `<pro>Table`：优化调整列宽的性能和逻辑。
 - 💄 `<pro>SelectBox`: 调整 checkValueOnOptionsChange 默认值为 false。
 - 🐞 修复循环依赖问题。

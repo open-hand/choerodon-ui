@@ -119,7 +119,7 @@ subtitle: 表格
 | help | 额外信息，常用于提示 | `string` |  |
 | showHelp | 展示提示信息的方式。可选值 `tooltip` `newLine` `none` | string | 'tooltip' |
 | onCell | 设置单元格属性 | ({ dataSet, record, column }) => object |  |
-| command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode \| object )[] |  |
+| command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] |  |
 | hidden | 隐藏 | boolean |  |
 | tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | 'none' |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |

@@ -33,6 +33,7 @@ import {
   generateJSONData,
   generateResponseData,
   getFieldSorter,
+  getIf,
   getOrderFields,
   getSpliceRecord,
   getSplitValue,
@@ -428,7 +429,6 @@ export default class DataSet extends EventManager {
 
   @observable state: ObservableMap<string, any>;
 
-  @computed
   get isAllPageSelection(): boolean {
     return this.getState(ALL_PAGE_SELECTION) === true;
   }
@@ -442,23 +442,19 @@ export default class DataSet extends EventManager {
     return this.records;
   }
 
-  @computed
   get axios(): AxiosInstance {
     return this.props.axios || getConfig('axios') || axios;
   }
 
-  @computed
   get dataKey(): string {
     const { dataKey = getConfig('dataKey') } = this.props;
     return dataKey;
   }
 
-  @computed
   get totalKey(): string {
     return this.props.totalKey || getConfig('totalKey');
   }
 
-  @computed
   get lang(): Lang {
     return get(this.props, 'lang') || localeContext.locale.lang;
   }
@@ -498,7 +494,6 @@ export default class DataSet extends EventManager {
     });
   }
 
-  @computed
   get queryUrl(): string | undefined {
     return get(this.props, 'queryUrl') || (this.name && `/dataset/${this.name}/queries`);
   }
@@ -513,7 +508,6 @@ export default class DataSet extends EventManager {
     });
   }
 
-  @computed
   get submitUrl(): string | undefined {
     return get(this.props, 'submitUrl') || (this.name && `/dataset/${this.name}/mutations`);
   }
@@ -528,7 +522,6 @@ export default class DataSet extends EventManager {
     });
   }
 
-  @computed
   get tlsUrl(): string | undefined {
     return get(this.props, 'tlsUrl') || (this.name && `/dataset/${this.name}/languages`);
   }
@@ -543,7 +536,6 @@ export default class DataSet extends EventManager {
     });
   }
 
-  @computed
   get validateUrl(): string | undefined {
     return get(this.props, 'validateUrl') || (this.name && `/dataset/${this.name}/validate`);
   }
@@ -558,7 +550,6 @@ export default class DataSet extends EventManager {
     });
   }
 
-  @computed
   get exportUrl(): string | undefined {
     return get(this.props, 'exportUrl') || (this.name && `/dataset/${this.name}/export`);
   }
@@ -591,7 +582,6 @@ export default class DataSet extends EventManager {
     return new Transport(this.props.transport, this);
   }
 
-  @computed
   get feedback(): FeedBack {
     return {
       ...getConfig('feedback'),
@@ -638,7 +628,6 @@ export default class DataSet extends EventManager {
    * 获取新建的记录集
    * @return 记录集
    */
-  @computed
   get created(): Record[] {
     return this.dirtyRecords[0];
   }
@@ -647,7 +636,6 @@ export default class DataSet extends EventManager {
    * 获取变更的记录集
    * @return 记录集
    */
-  @computed
   get updated(): Record[] {
     return this.dirtyRecords[1];
   }
@@ -656,7 +644,6 @@ export default class DataSet extends EventManager {
    * 获取删除的记录集
    * @return 记录集
    */
-  @computed
   get destroyed(): Record[] {
     return this.dirtyRecords[2];
   }
@@ -704,7 +691,6 @@ export default class DataSet extends EventManager {
     return selected;
   }
 
-  @computed
   get totalPage(): number {
     return this.paging ? Math.ceil(this.totalCount / this.pageSize) : 1;
   }
@@ -734,7 +720,6 @@ export default class DataSet extends EventManager {
   /**
    * 记录数
    */
-  @computed
   get length(): number {
     return this.data.length;
   }
@@ -753,7 +738,6 @@ export default class DataSet extends EventManager {
     return sortTree(this.filter(record => !record.parent), getOrderFields(this.fields)[0]);
   }
 
-  @computed
   get paging(): boolean | 'server' {
     const { idField, parentField, paging } = this.props;
     return (paging === `server`) && parentField && idField ? paging : (parentField === undefined || idField === undefined) && !!paging!;
@@ -840,7 +824,6 @@ export default class DataSet extends EventManager {
     return undefined;
   }
 
-  @computed
   get cacheSelectionKeys(): string[] | undefined {
     const { cacheSelection, selection } = this.props;
     if (cacheSelection && selection === DataSetSelection.multiple) {
@@ -854,7 +837,6 @@ export default class DataSet extends EventManager {
    * @param index 索引
    * @returns {Record}
    */
-  @computed
   get all(): Record[] {
     if (this.isAllPageSelection) {
       return this.records;
@@ -862,7 +844,6 @@ export default class DataSet extends EventManager {
     return this.records.concat(this.cachedSelected.slice());
   }
 
-  @computed
   get dirty(): boolean {
     return this.records.some(isDirtyRecord);
   }
@@ -1022,14 +1003,15 @@ export default class DataSet extends EventManager {
    * 等待选中或者所有记录准备就绪
    * @returns Promise
    */
-  ready(isSelect?: boolean): Promise<any> {
-    return Promise.all([
-      this.pending.ready(),
-      ...(isSelect || useSelected(this.dataToJSON) ? this.selected : this.data).map(record =>
-        record.ready(),
-      ),
-      ...[...this.fields.values()].map(field => field.ready()),
-    ]);
+  ready(_isSelect?: boolean): Promise<any> {
+    // return Promise.all([
+    //   this.pending.ready(),
+    //   ...(isSelect || useSelected(this.dataToJSON) ? this.selected : this.data).map(record =>
+    //     record.ready(),
+    //   ),
+    //   ...[...this.fields.values()].map(field => field.ready()),
+    // ]);
+    return this.pending.ready();
   }
 
   /**
@@ -2634,12 +2616,16 @@ Then the query method will be auto invoke.`,
     const remoteKeys: string[] = [];
     keys.forEach(childName => {
       const ds = children[childName];
-      if (previous && ds.status === DataSetStatus.ready && previous.dataSetSnapshot[childName]) {
-        previous.dataSetSnapshot[childName] = ds.snapshot();
-        ds.current = undefined;
+      if (previous && ds.status === DataSetStatus.ready) {
+        const { dataSetSnapshot } = previous;
+        if (dataSetSnapshot && dataSetSnapshot[childName]) {
+          dataSetSnapshot[childName] = ds.snapshot();
+          ds.current = undefined;
+        }
       }
       if (current) {
-        const snapshot = current.dataSetSnapshot[childName];
+        const { dataSetSnapshot } = current;
+        const snapshot = dataSetSnapshot && dataSetSnapshot[childName];
         if (snapshot instanceof DataSetSnapshot) {
           ds.restore(snapshot);
         } else if (!this.syncChild(ds, current, childName, true)) {
@@ -2662,11 +2648,12 @@ Then the query method will be auto invoke.`,
     childName: string,
     onlyClient?: boolean,
   ): boolean {
-    const cascadeRecords = currentRecord.cascadeRecordsMap[childName];
+    const { cascadeRecordsMap } = currentRecord;
+    const cascadeRecords = cascadeRecordsMap && cascadeRecordsMap[childName];
     const childRecords = cascadeRecords || currentRecord.get(childName);
     if (currentRecord.isNew || isArrayLike(childRecords)) {
-      if (cascadeRecords) {
-        delete currentRecord.cascadeRecordsMap[childName];
+      if (cascadeRecords && cascadeRecordsMap) {
+        delete cascadeRecordsMap[childName];
       }
       ds.clearCachedSelected();
       ds.loadData(childRecords ? childRecords.slice() : []);
@@ -2677,7 +2664,8 @@ Then the query method will be auto invoke.`,
           ds.create();
         }
       }
-      currentRecord.dataSetSnapshot[childName] = ds.snapshot();
+      const dataSetSnapshot = getIf<Record, { [key: string]: DataSetSnapshot }>(currentRecord, 'dataSetSnapshot', {});
+      dataSetSnapshot[childName] = ds.snapshot();
       return true;
     }
     if (!onlyClient) {
@@ -2688,7 +2676,8 @@ Then the query method will be auto invoke.`,
           ds = new DataSet().restore(oldSnapshot);
         }
         ds.clearCachedSelected();
-        currentRecord.dataSetSnapshot[childName] = ds.loadDataFromResponse(resp).snapshot();
+        const dataSetSnapshot = getIf<Record, { [key: string]: DataSetSnapshot }>(currentRecord, 'dataSetSnapshot', {});
+        dataSetSnapshot[childName] = ds.loadDataFromResponse(resp).snapshot();
       });
     }
     return false;
@@ -2761,12 +2750,9 @@ Then the query method will be auto invoke.`,
     const order: any = this.generateOrderQueryString();
     const pageQuery = this.generatePageQueryString(page, pageSizeInner);
     const generatePageQuery = getConfig('generatePageQuery');
-    let sortParams: {} = order;
-    if (combineSort && order.length) {
-      sortParams = {
-        sort: order,
-      };
-    }
+    const sortParams: {} = combineSort && order.length ? {
+      sort: order,
+    } : order;
     if (typeof generatePageQuery === 'function') {
       return generatePageQuery({
         ...sortParams,

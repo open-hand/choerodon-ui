@@ -41,10 +41,6 @@ export interface ValidationMessages {
 
 export default class Validator {
 
-  defaultValidationMessages?: ValidationMessages;
-
-  @observable private dirty?: boolean;
-
   @observable private field?: Field;
 
   @observable private control?: FormField<any>;
@@ -63,7 +59,6 @@ export default class Validator {
         ...(controlProps && controlProps.defaultValidationMessages),
         ...getConfig('defaultValidationMessages'),
         ...(fieldProps && fieldProps.defaultValidationMessages),
-        ...this.defaultValidationMessages,
       },
     };
   }
@@ -95,47 +90,41 @@ export default class Validator {
   @computed
   private get uniqueRefValidationResult(): ValidationResult | undefined {
     let validationResult: ValidationResult | undefined;
-    if (this.dirty) {
-      const { uniqueRefFields } = this;
-      if (
-        uniqueRefFields.length &&
-        this.innerValidationResults.every(result => result.ruleName !== 'uniqueError')
-      ) {
-        uniqueRefFields.some(uniqueRefField => {
-          validationResult = uniqueRefField.validator.innerValidationResults.find(
-            result => result.ruleName === 'uniqueError',
-          );
-          return !!validationResult;
-        });
-      }
+    const { uniqueRefFields } = this;
+    if (
+      uniqueRefFields.length &&
+      this.innerValidationResults.every(result => result.ruleName !== 'uniqueError')
+    ) {
+      uniqueRefFields.some(uniqueRefField => {
+        const { validator } = uniqueRefField;
+        validationResult = validator && validator.innerValidationResults.find(
+          result => result.ruleName === 'uniqueError',
+        );
+        return !!validationResult;
+      });
     }
     return validationResult;
   }
 
   @computed
   get validationResults(): ValidationResult[] {
-    if (this.dirty) {
-      const { uniqueRefValidationResult } = this;
-      if (uniqueRefValidationResult) {
-        return [uniqueRefValidationResult];
-      }
-      const { innerValidationResults } = this;
-      if (innerValidationResults.length) {
-        return innerValidationResults;
-      }
-      // const { bindingFieldWithValidationResult } = this;
-      // if (bindingFieldWithValidationResult) {
-      //   return bindingFieldWithValidationResult.getValidationErrorValues();
-      // }
+    const { uniqueRefValidationResult } = this;
+    if (uniqueRefValidationResult) {
+      return [uniqueRefValidationResult];
     }
+    const { innerValidationResults } = this;
+    if (innerValidationResults.length) {
+      return innerValidationResults;
+    }
+    // const { bindingFieldWithValidationResult } = this;
+    // if (bindingFieldWithValidationResult) {
+    //   return bindingFieldWithValidationResult.getValidationErrorValues();
+    // }
     return [];
   }
 
   @computed
   get currentValidationResult(): ValidationResult | undefined {
-    if (!this.dirty) {
-      return undefined;
-    }
     const { validationResults } = this;
     return validationResults.length ? validationResults[0] : undefined;
   }
@@ -173,7 +162,12 @@ export default class Validator {
     this.clearErrors();
     const { uniqueRefFields } = this;
     if (uniqueRefFields.length) {
-      uniqueRefFields.forEach(uniqueRefField => uniqueRefField.validator.clearErrors());
+      uniqueRefFields.forEach(uniqueRefField => {
+        const { validator } = uniqueRefField;
+        if (validator) {
+          validator.clearErrors();
+        }
+      });
     }
   }
 
@@ -257,9 +251,6 @@ export default class Validator {
   }
 
   async checkValidity(value: any = null): Promise<boolean> {
-    runInAction(() => {
-      this.dirty = true;
-    });
     const valueMiss: methodReturn = valueMissing(value, this.props);
     this.clearErrors();
     if (valueMiss !== true) {

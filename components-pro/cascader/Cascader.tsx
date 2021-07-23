@@ -301,7 +301,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     this.menuItemWith = width;
   }
 
-  @computed
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {
@@ -751,7 +750,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   @computed
   get loading(): boolean {
     const { field, options } = this;
-    return options.status === DataSetStatus.loading || (!!field && field.pending.length > 0);
+    return options.status === DataSetStatus.loading || !!(field && field.pending);
   }
 
   isEditable(): boolean {
