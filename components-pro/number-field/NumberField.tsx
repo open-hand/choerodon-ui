@@ -141,7 +141,6 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return locale.lang;
   }
 
-  @computed
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {

@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
@@ -48,7 +48,6 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @observable hueColor?: string;
 
-  @computed
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {

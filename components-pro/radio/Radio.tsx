@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, computed, toJS } from 'mobx';
+import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import { FormField, FormFieldProps } from '../field/FormField';
@@ -66,7 +66,6 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 
   labelRef: HTMLSpanElement | null;
 
-  @computed
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {

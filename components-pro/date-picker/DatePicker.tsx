@@ -169,7 +169,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     });
   }
 
-  @computed
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {

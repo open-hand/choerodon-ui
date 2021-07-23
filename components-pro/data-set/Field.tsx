@@ -7,7 +7,6 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
-import unionBy from 'lodash/unionBy';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -18,12 +17,11 @@ import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, F
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getLimit, processValue } from './utils';
+import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit, processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
-import PromiseQueue from '../_util/PromiseQueue';
 import { LovConfig } from '../lov/Lov';
 import { TransportHookProps } from './Transport';
 import isSameLike from '../_util/isSameLike';
@@ -375,32 +373,22 @@ export default class Field {
 
   record?: Record;
 
-  validator: Validator;
+  @observable validator?: Validator;
 
-  pending: PromiseQueue;
+  @observable pending?: boolean;
 
-  lastDynamicProps: any = {};
+  lastDynamicProps?: { [key: string]: any } | undefined;
 
-  validatorPropKeys: string[] = [];
+  validatorPropKeys?: string[] | undefined;
 
-  dynamicPropsComputingChains: string[] = [];
+  dynamicPropsComputingChains?: string[] | undefined;
 
-  computedProps: Map<string, IComputedValue<any>> = new Map();
+  computedProps?: Map<string | symbol, IComputedValue<any>> | undefined;
 
   @observable props: FieldProps & { [key: string]: any; };
 
-  @observable dirtyProps: Partial<FieldProps>;
+  @observable dirtyProps?: Partial<FieldProps> | undefined;
 
-  @computed
-  get dsField(): Field | undefined {
-    const { dataSet, name, record } = this;
-    if (record && dataSet && name) {
-      return dataSet.getField(name);
-    }
-    return undefined;
-  }
-
-  @computed
   get pristineProps(): FieldProps {
     return {
       ...this.props,
@@ -411,18 +399,20 @@ export default class Field {
   set pristineProps(props: FieldProps) {
     runInAction(() => {
       const { dirtyProps } = this;
-      const dirtyKeys = Object.keys(dirtyProps);
-      if (dirtyKeys.length) {
+      if (dirtyProps) {
         const newProps = {};
-        dirtyKeys.forEach((key) => {
-          const item = this.props[key];
-          newProps[key] = item;
-          if (isSame(item, props[key])) {
-            delete dirtyProps[key];
-          } else {
-            dirtyProps[key] = props[key];
-          }
-        });
+        const dirtyKeys = Object.keys(dirtyProps);
+        if (dirtyKeys.length) {
+          dirtyKeys.forEach((key) => {
+            const item = this.props[key];
+            newProps[key] = item;
+            if (isSame(item, props[key])) {
+              delete dirtyProps[key];
+            } else {
+              dirtyProps[key] = props[key];
+            }
+          });
+        }
         this.props = {
           ...props,
           ...newProps,
@@ -433,14 +423,16 @@ export default class Field {
     });
   }
 
-  @computed
   get lookup(): object[] | undefined {
     const lookup = this.get('lookup');
     const valueField = this.get('valueField');
     if (lookup) {
       const lookupData = this.get('lookupData');
       if (lookupData) {
-        return unionBy(lookup.concat(lookupData), valueField);
+        const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
+        if (others.length) {
+          return others.concat(lookup);
+        }
       }
       return lookup;
     }
@@ -479,35 +471,23 @@ export default class Field {
     return undefined;
   }
 
-  @computed
-  get intlFields(): Field[] {
-    const { record, type, name } = this;
-    if (type === FieldType.intl && record) {
-      const tlsKey = getConfig('tlsKey');
-      if (record.get(tlsKey)) {
-        return Object.keys(localeContext.supports).reduce<Field[]>((arr, lang) => {
-          const field = record.getField(`${tlsKey}.${name}.${lang}`);
-          if (field) {
-            arr.push(field);
-          }
-          return arr;
-        }, []);
-      }
-    }
-    return [];
-  }
-
-  @computed
   get dirty(): boolean {
-    const { record, name, intlFields } = this;
-    if (intlFields.length) {
-      return intlFields.some(langField => langField.dirty);
-    }
+    const { record, name } = this;
     if (record) {
       const { dirtyData } = record;
-      const dirtyNames = [...dirtyData.keys()];
-      if (dirtyNames.includes(getChainFieldName(record, name))) {
-        return true;
+      if (dirtyData) {
+        const dirtyNames = [...dirtyData.keys()];
+        if (dirtyNames.length) {
+          if (dirtyNames.includes(getChainFieldName(record, name))) {
+            return true;
+          }
+          if (this.type === FieldType.intl) {
+            const tlsKey = getConfig('tlsKey');
+            if (record.get(tlsKey) && Object.keys(localeContext.supports).some(lang => dirtyNames.includes(getChainFieldName(record, `${tlsKey}.${name}.${lang}`)))) {
+              return true;
+            }
+          }
+        }
       }
     }
     return false;
@@ -525,32 +505,19 @@ export default class Field {
     this.set('order', order);
   }
 
-  @computed
   get valid(): boolean {
-    const {
-      intlFields,
-      validator: {
-        validity: { valid },
-      },
-    } = this;
-    if (valid && intlFields.length) {
-      return intlFields.every(field => field.valid);
-    }
-    return valid;
+    const { validator } = this;
+    return validator ? validator.validity.valid : true;
   }
 
-  @computed
   get validationMessage() {
-    return this.validator.validationMessage;
+    return this.getValidationMessage();
   }
 
   constructor(props: FieldProps = {}, dataSet?: DataSet, record?: Record) {
     runInAction(() => {
-      this.validator = new Validator(this);
-      this.pending = new PromiseQueue();
       this.dataSet = dataSet;
       this.record = record;
-      this.dirtyProps = {};
       this.props = props;
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
       if (
@@ -614,7 +581,8 @@ export default class Field {
 
   private getProp(propsName: string): any {
     if (!['computedProps', 'dynamicProps'].includes(propsName)) {
-      const computedProp = this.computedProps.get(propsName);
+      const computedPropsMap = getIf<Field, Map<string | symbol, IComputedValue<any>>>(this, 'computedProps', () => new Map());
+      const computedProp = computedPropsMap.get(propsName);
       if (computedProp) {
         const computedValue = computedProp.get();
         if (computedValue !== undefined) {
@@ -633,7 +601,7 @@ export default class Field {
               }
             }
           }, { name: propsName, context: this });
-          this.computedProps.set(propsName, newComputedProp);
+          computedPropsMap.set(propsName, newComputedProp);
           const computedValue = newComputedProp.get();
           if (computedValue !== undefined) {
             return computedValue;
@@ -725,10 +693,11 @@ export default class Field {
   set(propsName: string, value: any): void {
     const oldValue = this.get(propsName);
     if (!isEqualDynamicProps(toJS(oldValue), value)) {
-      if (!(propsName in this.dirtyProps)) {
-        set(this.dirtyProps, propsName, oldValue);
-      } else if (isSame(toJS(this.dirtyProps[propsName]), value)) {
-        remove(this.dirtyProps, propsName);
+      const dirtyProps = getIf<Field, Partial<FieldProps>>(this, 'dirtyProps', {});
+      if (!(propsName in dirtyProps)) {
+        set(dirtyProps, propsName, oldValue);
+      } else if (isSame(toJS(dirtyProps[propsName]), value)) {
+        remove(dirtyProps, propsName);
       }
       set(this.props, propsName, value);
       const { record, dataSet, name } = this;
@@ -858,20 +827,25 @@ export default class Field {
    */
   @action
   reset(): void {
-    Object.assign(this.props, this.dirtyProps);
-    this.dirtyProps = {};
+    const { dirtyProps } = this;
+    if (dirtyProps) {
+      Object.assign(this.props, dirtyProps);
+      this.dirtyProps = undefined;
+    }
   }
 
   @action
   commit(): void {
-    this.validator.reset();
+    const { validator } = this;
+    if (validator) {
+      validator.reset();
+    }
   }
 
   /**
    * 是否必选
    * @return true | false
    */
-  @computed
   get required(): boolean {
     return this.get('required');
   }
@@ -888,7 +862,6 @@ export default class Field {
    * 是否只读
    * @return true | false
    */
-  @computed
   get readOnly(): boolean {
     return this.get('readOnly');
   }
@@ -897,7 +870,6 @@ export default class Field {
    * 是否禁用
    * @return true | false
    */
-  @computed
   get disabled(): boolean {
     return this.get('disabled');
   }
@@ -922,7 +894,6 @@ export default class Field {
    * 获取字段类型
    * @return 获取字段类型
    */
-  @computed
   get type(): FieldType {
     return this.get('type');
   }
@@ -952,8 +923,9 @@ export default class Field {
   }
 
   getValidatorProps(): ValidatorProps | undefined {
-    const { record, dataSet, name, type, required } = this;
+    const { record } = this;
     if (record) {
+      const { dataSet, name, type, required } = this;
       const baseType = getBaseType(type);
       const customValidator = this.get('validator');
       const max = this.get('max');
@@ -990,7 +962,7 @@ export default class Field {
         format,
         defaultValidationMessages,
       };
-      if (!this.validatorPropKeys.length) {
+      if (!this.validatorPropKeys) {
         this.validatorPropKeys = Object.keys(omit(validatorProps, ['label', 'defaultValidationMessages']));
       }
       return validatorProps;
@@ -1005,10 +977,16 @@ export default class Field {
   @action
   async checkValidity(report: boolean = true): Promise<boolean> {
     let valid = true;
-    const { record, validator, name } = this;
+    const { record } = this;
     if (record) {
-      validator.reset();
-      const value = record.get(name);
+      let { validator } = this;
+      if (validator) {
+        validator.reset();
+      } else {
+        validator = new Validator(this);
+        this.validator = validator;
+      }
+      const value = record.get(this.name);
       valid = await validator.checkValidity(value);
       if (report && !record.validating) {
         record.reportValidity(valid);
@@ -1022,6 +1000,7 @@ export default class Field {
    * @param noCache default: undefined
    * @return Promise<object[]>
    */
+  @action
   fetchLookup(noCache = false): Promise<object[] | undefined> {
     const batch = this.get('lookupBatchAxiosConfig') || getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode');
@@ -1034,9 +1013,7 @@ export default class Field {
         return Promise.resolve(dsField.get('lookup'));
       }
 
-      promise = this.pending.add<object[] | undefined>(
-        lookupStore.fetchLookupDataInBatch(lookupCode, batch),
-      );
+      promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch);
     } else {
       const axiosConfig = lookupStore.getAxiosConfig(this, noCache);
       if (dsField && noCache === false) {
@@ -1050,13 +1027,13 @@ export default class Field {
         }
       }
       if (axiosConfig.url) {
-        promise = this.pending.add<object[] | undefined>(
-          lookupStore.fetchLookupData(axiosConfig),
-        );
+        promise = lookupStore.fetchLookupData(axiosConfig);
       }
     }
     if (promise) {
+      this.pending = true;
       return promise.then(action((result) => {
+        this.pending = false;
         const { lookup } = this;
         this.set('lookup', result);
         const value = this.getValue();
@@ -1075,7 +1052,10 @@ export default class Field {
           );
         }
         return result;
-      }));
+      })).catch(e => {
+        this.pending = false;
+        throw e;
+      });
     }
     return Promise.resolve(undefined);
   }
@@ -1083,7 +1063,7 @@ export default class Field {
   fetchLovConfig() {
     const lovCode = this.get('lovCode');
     if (lovCode) {
-      this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
+      lovCodeStore.fetchConfig(lovCode, this);
     }
   }
 
@@ -1092,38 +1072,44 @@ export default class Field {
   }
 
   getValidationMessage() {
-    return this.validator.validationMessage;
+    const { validator } = this;
+    return validator ? validator.validationMessage : undefined;
   }
 
-  getValidityState(): Validity {
-    return this.validator.validity;
+  getValidityState(): Validity | undefined {
+    const { validator } = this;
+    return validator ? validator.validity : undefined;
   }
 
   getValidationErrorValues(): ValidationResult[] {
-    return this.validator.validationResults;
+    const { validator } = this;
+    return validator ? validator.validationResults : [];
   }
 
   ready(): Promise<any> {
-    // const { options } = this;
-    // return Promise.all([this.pending.ready(), options && options.ready()]);
-    return this.pending.ready();
+    return Promise.resolve(true);
   }
 
   private findDataSetField(): Field | undefined {
-    return this.dsField;
+    const { dataSet, name, record } = this;
+    if (record && dataSet && name) {
+      return dataSet.getField(name);
+    }
   }
 
   private checkDynamicProp(propsName, newProp) {
-    const oldProp = this.lastDynamicProps[propsName];
+    const lastDynamicProps = getIf<Field, { [key: string]: any }>(this, 'lastDynamicProps', {});
+    const oldProp = lastDynamicProps[propsName];
     if (!isEqualDynamicProps(oldProp, newProp)) {
       raf(action(() => {
-        if (this.validatorPropKeys.includes(propsName) || propsName === 'validator') {
-          this.validator.reset();
+        const { validator, validatorPropKeys } = this;
+        if (validator && (propsName === 'validator' || (validatorPropKeys && validatorPropKeys.includes(propsName)))) {
+          validator.reset();
         }
         this.handlePropChange(propsName, newProp, oldProp);
       }));
     }
-    this.lastDynamicProps[propsName] = newProp;
+    lastDynamicProps[propsName] = newProp;
   }
 
   private handlePropChange(propsName, newProp, oldProp) {
@@ -1151,7 +1137,8 @@ export default class Field {
   }
 
   private executeDynamicProps(dynamicProps: (DynamicPropsArguments) => any, propsName: string) {
-    const { dataSet, name, record, dynamicPropsComputingChains } = this;
+    const { dataSet, name, record } = this;
+    const dynamicPropsComputingChains = getIf<Field, string[]>(this, 'dynamicPropsComputingChains', []);
     if (dynamicPropsComputingChains.includes(propsName)) {
       warning(false, `Cycle dynamicProps execution of field<${name}>. [${dynamicPropsComputingChains.join(' -> ')} -> ${propsName}]`);
     } else if (dataSet) {

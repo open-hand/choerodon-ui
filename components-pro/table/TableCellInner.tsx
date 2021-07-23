@@ -486,7 +486,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
 
   const showTooltip = useCallback((e) => {
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator') && field.get('multiple') && toMultipleValue(value, field.get('range')).length))) {
-      const message = renderValidationResult(field.validator.currentValidationResult);
+      const { validator } = field;
+      const message = validator && renderValidationResult(validator.currentValidationResult);
       if (!isValidationMessageHidden(message)) {
         showValidationMessage(e, message);
         return true;
