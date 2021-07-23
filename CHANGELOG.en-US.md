@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table.Column`: Added `hiddenInAggregation` property.
+- 🌟 `<pro>Table.Column`: Added `hiddenInAggregation` property, added `aggregation` parameter to the `command` hook.
 - 💄 `<pro>DataSet`: Memory optimization.
 - 💄 `<pro>Table`: Optimize the performance and logic of adjusting column width.
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
