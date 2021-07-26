@@ -1317,8 +1317,14 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       if (validator) {
         validator.reset();
       } else {
-        this.$validator = new Validator(undefined, this);
-        validator = this.$validator;
+        const { field } = this;
+        if (field) {
+          validator = new Validator(field);
+          field.validator = validator;
+        } else {
+          validator = new Validator(undefined, this);
+          this.$validator = validator;
+        }
       }
       return validator.checkValidity(value).then((valid) => {
         if (report) {
