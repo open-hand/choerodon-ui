@@ -651,9 +651,6 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if ('record' in props) {
       observableProps.record = props.record;
     }
-    if ('dataSet' in props) {
-      observableProps.dataSet = props.dataSet;
-    }
     return observableProps;
   }
 
