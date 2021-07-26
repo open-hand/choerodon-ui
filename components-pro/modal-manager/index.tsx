@@ -1,7 +1,6 @@
 import { action, observable } from 'mobx';
 import { ModalProps } from '../modal/Modal';
-
-export type MousePosition = { x: number; y: number };
+import { MousePosition } from '../_util/DocumentUtils';
 
 export type DrawerOffsets = { 'slide-up': number[], 'slide-right': number[], 'slide-down': number[], 'slide-left': number[] };
 

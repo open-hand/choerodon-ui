@@ -476,27 +476,29 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       </th>
     );
 
-    if (tableStore.virtualCell && tableStore.overflowX) {
-      const { node } = tableStore;
-      return (
-        <ReactIntersectionObserver
-          root={node.wrapper}
-          rootMargin="100px"
-          triggerOnce
-        >
-          {
-            ({ ref, inView }) => {
-              if (get(column, '_inView') !== true) {
-                runInAction(() => set(column, '_inView', inView));
+    if (tableStore.virtualCell) {
+      if (tableStore.overflowX) {
+        const { node } = tableStore;
+        return (
+          <ReactIntersectionObserver
+            root={node.wrapper}
+            rootMargin="100px"
+            triggerOnce
+          >
+            {
+              ({ ref, inView }) => {
+                if (get(column, '_inView') !== true) {
+                  runInAction(() => set(column, '_inView', inView));
+                }
+                return cloneElement<any>(th, { ref });
               }
-              return cloneElement<any>(th, { ref });
             }
-          }
-        </ReactIntersectionObserver>
-      );
-    }
-    if (get(column, '_inView') === false) {
-      runInAction(() => set(column, '_inView', undefined));
+          </ReactIntersectionObserver>
+        );
+      }
+      if (get(column, '_inView') === false) {
+        runInAction(() => set(column, '_inView', undefined));
+      }
     }
     return th;
   }

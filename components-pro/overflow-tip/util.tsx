@@ -1,4 +1,4 @@
-import measureTextWidth from 'choerodon-ui/pro/lib/_util/measureTextWidth';
+import measureTextWidth from '../_util/measureTextWidth';
 
 export default function isOverflow(element: Element) {
   const { textContent, ownerDocument } = element;

@@ -13,6 +13,7 @@ import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import PopupInner from './PopupInner';
 import autobind from '../_util/autobind';
 import { findFocusableElements } from '../_util/focusable';
+import { getDocument } from '../_util/DocumentUtils';
 
 /**
  * 记录ID生成器
@@ -41,7 +42,7 @@ export interface PopupProps extends ViewComponentProps {
 }
 
 function newPopupContainer() {
-  const doc = window.document;
+  const doc = getDocument(window);
   const popupContainer = doc.createElement('div');
   popupContainer.className = getProPrefixCls('popup-container');
   return popupContainer;
@@ -248,7 +249,7 @@ export function getGlobalPopupContainer() {
     return Popup.popupContainer;
   }
   const popupContainer = newPopupContainer();
-  const root = window.document.body;
+  const root = getDocument(window).body;
   root.appendChild(popupContainer);
   Popup.popupContainer = popupContainer;
   return popupContainer;
