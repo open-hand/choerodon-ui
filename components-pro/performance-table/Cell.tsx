@@ -133,7 +133,6 @@ class Cell extends React.PureComponent<CellProps> {
       return null;
     }
 
-    // console.log('render cell')
     const classes = classNames(classPrefix, className, {
       [this.addPrefix('expanded')]: expanded && this.isTreeCol(),
       [this.addPrefix('first')]: firstColumn,

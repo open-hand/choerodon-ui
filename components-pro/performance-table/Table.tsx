@@ -652,11 +652,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return column;
     });
 
-    // if (!this.tableStore.originalColumns) {
-    //   runInAction(() => {
-    //     this.tableStore.originalColumns = flatten(flattenColumns);
-    //   });
-    // }
     // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
     return flatten(flattenColumns).filter(col => col && !col.props.hidden);
   }
@@ -789,9 +784,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         height: rowHeight,
         fixed: 'right',
         className: this.addPrefix('customization-header'),
-        // firstColumn: index === 0,
-        // lastColumn: true,
-        // dataKey: columnChildren[1].props.dataKey,
         isHeaderCell: true,
       };
 

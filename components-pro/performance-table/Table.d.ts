@@ -5,10 +5,9 @@ import { ToolBarProps } from './tool-bar';
 import DataSet from '../data-set';
 import { TransportProps } from '../data-set/Transport';
 import { TableQueryBarType } from './Table';
-import { FormProps } from 'choerodon-ui/pro/lib/form/Form';
-import { TableHeightType } from 'choerodon-ui/pro/lib/table/enum';
+import { FormProps } from '../form/Form';
+import { TableHeightType } from '../table/enum';
 import { Size } from 'choerodon-ui/lib/_util/enum';
-import PropTypes from 'prop-types';
 
 export interface TableLocale {
   emptyMessage?: string;

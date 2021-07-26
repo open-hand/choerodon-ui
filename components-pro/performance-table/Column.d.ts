@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import React from 'react';
 
 export interface ColumnProps {
@@ -20,11 +19,11 @@ export interface ColumnProps {
    */
   hideable?: boolean;
   onResize?: (columnWidth?: number, dataIndex?: string) => void;
-  render?: (props: { rowData: any, rowIndex: number, dataIndex?: string | undefined }) => ReactNode;
+  render?: (props: { rowData: any, rowIndex: number, dataIndex?: string | undefined }) => React.ReactNode;
   dataIndex?: string;
   key?: string;
   sort?: number;
-  title?: ReactNode | (() => ReactNode);
+  title?: React.ReactNode | (() => React.ReactNode);
   children?: React.ReactElement<ColumnProps>[] | ColumnProps[];
   type?: 'ColumnGroup';
 }
