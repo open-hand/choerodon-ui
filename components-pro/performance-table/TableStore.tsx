@@ -1,4 +1,4 @@
-import React, { Key } from 'react';
+import React from 'react';
 import { action, computed, get, isArrayLike, observable, runInAction, set } from 'mobx';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
@@ -14,6 +14,7 @@ import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
 import CustomizationSettings from './customization-settings';
 import DataSet from '../data-set';
+import { getColumnKey } from './utils';
 import { Customized, TableQueryBarHookProps } from './Table.d';
 import { ColumnProps } from './Column.d';
 import Column from './Column';
@@ -101,11 +102,6 @@ import { findHiddenKeys } from './utils';
 //     ...sortBy(rightColumns, ({ props: { sort } }) => sort),
 //   ];
 // }
-
-export function getColumnKey({ dataIndex, key }: ColumnProps): Key {
-  return key || dataIndex!;
-}
-
 
 export function mergeDefaultProps(
   originalColumns: ColumnProps[],

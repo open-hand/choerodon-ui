@@ -5,6 +5,7 @@ import noop from 'lodash/noop';
 import Collapse from 'choerodon-ui/lib/collapse';
 import CollapsePanel from 'choerodon-ui/lib/collapse/CollapsePanel';
 import ColumnGroups from './column-groups';
+import { getColumnKey, getColumnFixed } from '../utils';
 import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import { ColumnProps } from '../Column.d';
@@ -22,6 +23,22 @@ import { TableHeightType } from '../../table/enum';
 import { LabelLayout } from '../../form/enum';
 import { ShowHelp } from '../../field/enum';
 import Icon from '../../icon';
+import { treeReduce } from '../../_util/treeUtils';
+
+function normalizeColumnsToTreeData(columns: ColumnProps[]) {
+  return treeReduce<object[], ColumnProps>(columns, (list, column, _sort, parentColumn) => list.concat({
+    key: getColumnKey(column),
+    parentKey: parentColumn && getColumnKey(parentColumn),
+    fixed: getColumnFixed(column.fixed),
+    width: column.width,
+    title: column.title,
+    header: column.header,
+    hidden: column.hidden,
+    sort: column.sort,
+    titleEditable: column.titleEditable,
+    hideable: column.hideable,
+  }), []);
+}
 
 function diff(height: number = 0): number {
   if (typeof document !== 'undefined') {
@@ -36,29 +53,13 @@ export interface CustomizationSettingsProps {
   modal?: { handleOk: Function, handleCancel: Function, update: (props: ModalProps) => void };
 }
 
-function getColumnFixed(fixed) {
-  if (fixed === true) {
-    return 'left';
-  }
-  if (fixed) {
-    return fixed;
-  }
-  return false;
-}
-
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = observer((props) => {
   const { modal } = props;
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { tableStore } = useContext(TableContext);
   const { originalColumns, customized, proPrefixCls: prefixCls } = tableStore;
 
-  const initColumns = useMemo(() => originalColumns.map((column) => {
-    const fixed = getColumnFixed(column.fixed);
-    const hidden = column.hidden || false;
-    return {...column, fixed, hidden};
-  }), [originalColumns]);
-
-  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(initColumns);
+  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(originalColumns);
 
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
@@ -98,7 +99,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
   }).current!, [tableStore]);
 
   const columnDataSet = useMemo(() => new DataSet({
-    data: customizedColumns,
+    data: normalizeColumnsToTreeData(customizedColumns),
     paging: false,
     primaryKey: 'key',
     idField: 'key',
@@ -141,10 +142,8 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
     e.stopPropagation();
     const { columns } = tableStore.node.props;
     setCustomizedColumns(columns.map((column) => {
-      // @ts-ignore
       const fixed = getColumnFixed(column.fixed);
       const hidden = column.hidden || false;
-      // @ts-ignore
       return {...column, fixed, hidden};
     }));
     tableStore.tempCustomized.columns = {};

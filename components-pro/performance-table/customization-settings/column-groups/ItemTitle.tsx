@@ -37,7 +37,7 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
   const handleHeaderChange = useCallback((value) => {
     record.set('title', value);
   }, [record]);
-  const title = record.get('title');
+  const title = record.get('title') || record.get('header');
   const header = getHeader(record, title);
   const titleEditable = columnTitleEditable && record.get('titleEditable') !== false;
 

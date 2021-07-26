@@ -1,3 +1,6 @@
+import { Key } from 'react';
+import { ColumnProps } from '../Column.d';
+
 // @ts-ignore
 export function addEvent(el?: any, event: string, handler: EventListener | EventListenerObject | null, inputOptions?: Object): void {
   if (!el) return;
@@ -47,4 +50,20 @@ export function findHiddenKeys(children, columns: any[]): string[] {
     );
   }
   return hiddenColumnKeys;
+}
+
+
+export function getColumnKey({ dataIndex, key }: ColumnProps): Key {
+  return key || dataIndex!;
+}
+
+export function getColumnFixed(fixed?: boolean | 'left' | 'right'): 'left' | 'right' | false {
+  if (fixed === true) {
+    return 'left';
+  }
+  if (fixed) {
+    return fixed;
+  }
+
+  return false;
 }

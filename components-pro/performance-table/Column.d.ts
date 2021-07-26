@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 export interface ColumnProps {
   align?: 'left' | 'center' | 'right';
@@ -24,6 +24,10 @@ export interface ColumnProps {
   key?: string;
   sort?: number;
   title?: React.ReactNode | (() => React.ReactNode);
+  /**
+   * column group header
+   */
+  header?: ReactNode;
   children?: React.ReactElement<ColumnProps>[] | ColumnProps[];
   type?: 'ColumnGroup';
 }

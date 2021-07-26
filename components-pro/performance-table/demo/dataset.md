@@ -123,7 +123,6 @@ class SortTable extends React.Component {
             onChange={this.handleCheckAllChange}
           />
         ),
-        dataIndex: 'checkbox',
         key: 'checkbox',
         width: 50,
         align: 'center',
