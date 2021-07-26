@@ -20,63 +20,76 @@ import { Button, PerformanceTable } from 'choerodon-ui/pro';
 
 const { Column, HeaderCell, Cell } = PerformanceTable;
 
-class EmptyDataTable extends React.Component {
-  render() {
-    const tableRef = React.createRef();
-    return (
+const Table = () => {
+  const tableRef = React.createRef();
+  const columns = [
+    {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+      width: 70,
+      fixed: true,
+    },
+    {
+      title: '姓',
+      dataIndex: 'lastName',
+      key: 'lastName',
+      width: 150,
+    },
+    {
+      title: '名',
+      dataIndex: 'firstName',
+      key: 'firstName',
+      width: 150,
+    },
+    {
+      title: '城市',
+      dataIndex: 'city',
+      key: 'city',
+      width: 300,
+    },
+    {
+      title: '街道',
+      dataIndex: 'street',
+      key: 'street',
+      width: 300,
+    },
+    {
+      title: '公司',
+      dataIndex: 'companyName',
+      key: 'companyName',
+      width: 300,
+    },
+  ];
+
+  return (
     <div>
       <PerformanceTable
-        virtualized
+        customizable
+        customizedCode="pre-customized-p"
+        columnDraggable
+        columnTitleEditable
+        columns={columns}
         height={400}
-        data={fakeLargeData.slice(0, 500)}
+        data={fakeLargeData.slice(0, 20)}
         ref={tableRef}
-        onRowClick={data => {
+        onRowClick={(data) => {
           console.log(data);
         }}
-      >
-        <Column width={70} align="center" fixed>
-          <HeaderCell>Id</HeaderCell>
-          <Cell dataKey="id" />
-        </Column>
-
-        <Column resizable width={130}>
-          <HeaderCell>First Name</HeaderCell>
-          <Cell dataKey="firstName" />
-        </Column>
-
-        <Column resizable width={130}>
-          <HeaderCell>Last Name</HeaderCell>
-          <Cell dataKey="lastName" />
-        </Column>
-
-        <Column width={200}>
-          <HeaderCell>City</HeaderCell>
-          <Cell dataKey="city" />
-        </Column>
-
-        <Column width={200}>
-          <HeaderCell>Street</HeaderCell>
-          <Cell dataKey="street" />
-        </Column>
-
-        <Column minWidth={200} flexGrow={1}>
-          <HeaderCell>Company Name</HeaderCell>
-          <Cell dataKey="companyName" />
-        </Column>
-      </PerformanceTable>
+      />
+      <br />
       <Button
         onClick={() => {
-          tableRef.current.scrollTop(10000);
+          tableRef.current.scrollTop(0);
         }}
       >
         Scroll top
       </Button>
     </div>
-    );
-  }
-}
-ReactDOM.render(
-  <EmptyDataTable />,
+  );
+};
+
+ReactDOM.render(<Table />,
   mountNode
 );
 ````

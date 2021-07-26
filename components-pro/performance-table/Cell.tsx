@@ -42,6 +42,7 @@ export const propTypes = {
 
 class Cell extends React.PureComponent<CellProps> {
   static contextType = TableContext;
+
   static propTypes = propTypes;
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-cell'),
@@ -132,6 +133,7 @@ class Cell extends React.PureComponent<CellProps> {
       return null;
     }
 
+    // console.log('render cell')
     const classes = classNames(classPrefix, className, {
       [this.addPrefix('expanded')]: expanded && this.isTreeCol(),
       [this.addPrefix('first')]: firstColumn,

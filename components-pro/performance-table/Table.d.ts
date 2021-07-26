@@ -6,6 +6,9 @@ import DataSet from '../data-set';
 import { TransportProps } from '../data-set/Transport';
 import { TableQueryBarType } from './Table';
 import { FormProps } from 'choerodon-ui/pro/lib/form/Form';
+import { TableHeightType } from 'choerodon-ui/pro/lib/table/enum';
+import { Size } from 'choerodon-ui/lib/_util/enum';
+import PropTypes from 'prop-types';
 
 export interface TableLocale {
   emptyMessage?: string;
@@ -49,12 +52,20 @@ export interface DynamicFilterBarConfig {
   tableFilterAdapter?: TransportProps;
 }
 
+export interface Customized {
+  columns: object;
+  heightType?: TableHeightType;
+  height?: number;
+  heightDiff?: number;
+}
+
 export interface TableProps extends StandardProps {
   /** 左上角的 title */
   headerTitle?: React.ReactNode;
   queryBar?: false | TableQueryBarProps;
-  // /** 渲染操作栏 */
-  // toolBarRender?: ToolBarProps<T>['toolBarRender'] | false;
+  toolbar?: ToolBarProps,
+  /** 渲染操作栏 */
+  toolBarRender?: ToolBarProps['toolBarRender'] | false,
   columns?: ColumnProps[];
   autoHeight?: boolean;
   affixHeader?: boolean | number;
@@ -62,7 +73,7 @@ export interface TableProps extends StandardProps {
   bodyRef?: (ref: HTMLElement) => void;
   bordered?: boolean;
   className?: string;
-  classPrefix?: string;
+  classPrefix: string;
   children: React.ReactNode;
   cellBordered?: boolean;
   defaultSortType?: SortType;
@@ -111,6 +122,11 @@ export interface TableProps extends StandardProps {
   onTouchStart?: (event: React.TouchEvent) => void; // for tests
   onTouchMove?: (event: React.TouchEvent) => void; // for tests
   onDataUpdated?: (nextData: object[], scrollTo: (coord: { x: number; y: number }) => void) => void;
+  customizedCode?: string;
+  customizable?: boolean;
+  columnDraggable?: boolean;
+  columnTitleEditable?: boolean;
+  columnsDragRender?: object;
 }
 
 // Fix the type definition error of typescript
