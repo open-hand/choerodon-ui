@@ -9,7 +9,6 @@ import classes from 'component-classes';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import { MousePosition } from '../modal-manager';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
@@ -22,8 +21,9 @@ import message from '../message';
 import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
-import { getDocument, suffixCls } from './utils';
+import { suffixCls } from './utils';
 import { modalChildrenProps } from './interface';
+import { getDocument, MousePosition } from '../_util/DocumentUtils';
 
 function fixUnit(n) {
   if (isNumber(n)) {

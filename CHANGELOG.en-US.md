@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Memory optimization.
 - 💄 `<pro>Table`: Optimize the performance and logic of adjusting column width.
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
+- 💄 `<pro>Trigger`: Support traversing iframes in the same domain.
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
 - 🐞 `<pro>Table`: Fix `virtualCell` not working.

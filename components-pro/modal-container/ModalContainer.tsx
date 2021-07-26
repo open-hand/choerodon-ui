@@ -14,7 +14,8 @@ import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
-import { getDocument, getMousePosition, suffixCls } from '../modal/utils';
+import { suffixCls } from '../modal/utils';
+import { getDocument, getMousePosition } from '../_util/DocumentUtils';
 
 const { containerInstances } = ModalManager;
 
