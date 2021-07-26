@@ -547,9 +547,6 @@ export default class Form extends DataSetComponent<FormProps> {
     if ('record' in props) {
       observableProps.record = props.record;
     }
-    if ('dataSet' in props) {
-      observableProps.dataSet = props.dataSet;
-    }
     return observableProps;
   }
 

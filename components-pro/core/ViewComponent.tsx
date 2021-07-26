@@ -408,7 +408,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     return mergedProps;
   }
 
-  getObservableProps(props, _context: any) {
+  getObservableProps(props, _context: any): any {
     return {
       lang: props.lang,
       disabled: props.disabled,
