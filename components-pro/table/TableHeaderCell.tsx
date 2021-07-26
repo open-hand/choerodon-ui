@@ -495,6 +495,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         </ReactIntersectionObserver>
       );
     }
+    if (get(column, '_inView') === false) {
+      runInAction(() => set(column, '_inView', undefined));
+    }
     return th;
   }
 

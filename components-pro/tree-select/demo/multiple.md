@@ -54,7 +54,7 @@ class App extends React.Component {
 
   render() {
     const { showCheckedStrategy } = this.state;
-    console.log('showCheckedStrategy', howCheckedStrategy)
+    console.log('showCheckedStrategy', showCheckedStrategy)
     return (
       <Row gutter={10}>
         <Col span={24}>
