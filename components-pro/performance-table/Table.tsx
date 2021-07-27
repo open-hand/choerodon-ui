@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { action } from 'mobx';
+import { get, runInAction } from 'mobx';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import isFunction from 'lodash/isFunction';
@@ -19,6 +19,7 @@ import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import LocaleReceiver from 'choerodon-ui/lib/locale-provider/LocaleReceiver';
 import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider';
 import defaultLocale from 'choerodon-ui/lib/locale-provider/default';
+import ModalProvider from '../modal-provider/ModalProvider';
 import Row from './Row';
 import CellGroup from './CellGroup';
 import Scrollbar from './Scrollbar';
@@ -58,6 +59,7 @@ import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import TableStore from './TableStore';
 import Toolbar from './tool-bar';
+import { TableHeightType } from '../table/enum';
 
 interface TableRowProps extends RowProps {
   key?: string | number;
@@ -167,7 +169,14 @@ const propTypes = {
    * 显示查询条
    */
   queryBar: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  customizedCode: PropTypes.string,
+  customizable: PropTypes.bool,
+  columnDraggable: PropTypes.bool,
+  columnTitleEditable: PropTypes.bool,
+  columnsDragRender: PropTypes.object,
 };
+
+export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
 
 export default class PerformanceTable extends React.Component<TableProps, TableState> {
   static displayName = 'performance';
@@ -262,6 +271,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     super(props);
     const {
       width,
+      height,
       data,
       rowKey,
       defaultExpandAllRows,
@@ -292,6 +302,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (isTree && !rowKey) {
       throw new Error('The `rowKey` is required when set isTree');
     }
+
     this.state = {
       isTree,
       expandedRowKeys,
@@ -300,6 +311,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       cacheData: data,
       data: isTree ? flattenData(data) : data,
       width: width || 0,
+      height: height || 0,
       columnWidth: 0,
       dataKey: 0,
       contentHeight: 0,
@@ -335,6 +347,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.headerWrapperRef = React.createRef();
     this.wheelWrapperRef = React.createRef();
     this.tableHeaderRef = React.createRef();
+
+    runInAction(() => {
+      this.tableStore.originalColumns = columns;
+      this.tableStore.originalChildren = children as any[];
+    });
   }
 
   listenWheel = (deltaX: number, deltaY: number) => {
@@ -388,13 +405,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.state.hiddenColumnKeys.length !== nextState.hiddenColumnKeys.length
     ) {
       this._cacheCells = null;
+      this.tableStore.updateProps(nextProps, this);
     }
 
     return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.tableStore.updateProps(nextProps);
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
@@ -485,18 +499,57 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   /**
+   * Table 个性化高度变更
+   */
+  handleHeightTypeChange() {
+    this.calculateTableContextHeight();
+  }
+
+  /**
    * 获取 Table 需要渲染的高度
    */
   getTableHeight() {
     const { contentHeight } = this.state;
     const { minHeight, height, autoHeight, data } = this.props;
     const headerHeight = this.getTableHeaderHeight();
+    const {
+      tableStore: {
+        customized: { heightType, height: cusHeight, heightDiff },
+        tempCustomized,
+      },
+    } = this;
 
-    if (data.length === 0 && autoHeight) {
-      return height;
+    let tableHeight: number = height;
+
+    if (this.tableStore.customizable) {
+      const tempHeightType = get(tempCustomized, 'heightType');
+      if (tempHeightType) {
+        if (tempHeightType === TableHeightType.fixed) {
+          tableHeight = get(tempCustomized, 'height');
+        }
+        if (tempHeightType === TableHeightType.flex) {
+          tableHeight = document.documentElement.clientHeight - (get(tempCustomized, 'heightDiff') || 0);
+        }
+      }
+      if (heightType) {
+        if (heightType === TableHeightType.fixed) {
+          tableHeight = cusHeight as number;
+        }
+        if (heightType === TableHeightType.flex) {
+          tableHeight = document.documentElement.clientHeight - (heightDiff || 0);
+        }
+      }
+
+      this.setState({
+        height: tableHeight,
+      });
     }
 
-    return autoHeight ? Math.max(headerHeight + contentHeight, minHeight) : height;
+    if (data.length === 0 && autoHeight) {
+      return tableHeight;
+    }
+
+    return autoHeight ? Math.max(headerHeight + contentHeight, minHeight) : tableHeight;
   }
 
   /**
@@ -511,8 +564,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    * 处理columns json -> reactNode
    * @param columns
    */
-  processTableColumns(columns?: ColumnProps[]) {
-    return columns && columns.map((column) => {
+  processTableColumns(columns: any[]) {
+    const visibleColumn = columns.filter(col => !col.hidden);
+    return visibleColumn.map((column) => {
       const dataKey = column.dataIndex;
       if (column.type === 'ColumnGroup') {
         return <ColumnGroup {...this.getColumnProps(column)}>{this.processTableColumns(column.children)}</ColumnGroup>;
@@ -521,19 +575,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         // @ts-ignore
         <Column {...this.getColumnProps(column)} dataKey={dataKey}>
           {
-            // @ts-ignore
             <HeaderCell>
               {typeof column.title === 'function' ? column.title() : column.title}
             </HeaderCell>
           }
           {typeof column.render === 'function' ? (
-            // @ts-ignore
             <Cell dataKey={dataKey}>
               {
                 (rowData, rowIndex) => column.render!({ rowData, rowIndex, dataIndex: dataKey })
               }
             </Cell>
-            // @ts-ignore
           ) : <Cell dataKey={dataKey} />}
         </Column>
       );
@@ -545,12 +596,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    * - 处理 children 中存在 <Column> 数组的情况
    * - 过滤 children 中的空项
    */
-  @action
   getTableColumns(): React.ReactNodeArray {
-    const { columns } = this.props;
+    const { originalColumns } = this.tableStore;
     let children = this.props.children;
-    if (columns && columns.length) {
-      children = this.processTableColumns(columns);
+    if (originalColumns && originalColumns.length) {
+      children = this.processTableColumns(originalColumns);
     }
 
     if (!Array.isArray(children)) {
@@ -564,11 +614,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         const columnChildren: any = column.props.children;
         // @ts-ignore
         const columnHidden = includes(hiddenColumnKeys, `${columnChildren[1].props.dataKey}`);
-        let cellProps: ColumnProps = {};
+        let cellProps: ColumnProps = {
+          dataIndex: columnChildren[1].props.dataKey,
+        };
         if (columnHidden !== undefined) {
-          cellProps = {
-            hidden: columnHidden
-          }
+          cellProps.hidden = columnHidden;
         }
         if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
           const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
@@ -602,7 +652,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return column;
     });
 
-    this.tableStore.originalColumns = flatten(flattenColumns);
     // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
     return flatten(flattenColumns).filter(col => col && !col.props.hidden);
   }
@@ -630,6 +679,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       };
       return this._cacheCells;
     }
+
+    // let columns: React.ReactNodeArray;
+    //
+    // const { customizable, originalColumns } = this.tableStore;
+    // if (customizable && originalColumns && originalColumns.length) {
+    //   columns = flatten(originalColumns).filter(col => col && !col.props.hidden);
+    // } else {
+    //   columns = this.getTableColumns();
+    // }
 
     const columns = this.getTableColumns();
 
@@ -715,6 +773,24 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         left += nextWidth;
       }
     });
+
+    if (this.tableStore.customizable) {
+      const customizationHeaderProps = {
+        'aria-colindex': 999, // Use ARIA to improve accessibility
+        left: left - 30,
+        headerHeight,
+        key: CUSTOMIZED_KEY,
+        width: 30,
+        height: rowHeight,
+        fixed: 'right',
+        className: this.addPrefix('customization-header'),
+        isHeaderCell: true,
+      };
+
+      const { tableStore: { customizedColumnHeader } } = this;
+      // @ts-ignore
+      headerCells.push(<HeaderCell {...customizationHeaderProps}>{customizedColumnHeader()}</HeaderCell>);
+    }
 
     return (this._cacheCells = {
       headerCells,
@@ -804,6 +880,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   ) => {
     this._cacheCells = null;
 
+    if (this.tableStore.customizable) {
+      this.tableStore.changeCustomizedColumnValue(dataKey, {
+        width: columnWidth,
+      });
+    }
     this.setState({ isColumnResizing: false, [`${dataKey}_${index}_width`]: columnWidth });
 
     addStyle(this.mouseAreaRef.current, { display: 'none' });
@@ -1106,7 +1187,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     );
   }
 
-  // @ts-ignore
   addPrefix = (name: string): string => prefix(this.props.classPrefix)(name);
 
   calculateRowMaxHeight() {
@@ -1184,7 +1264,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   calculateTableContextHeight(prevProps?: TableProps) {
     const table = this.tableRef.current;
     const rows = table.querySelectorAll(`.${this.addPrefix('row')}`) || [];
-    const { height, autoHeight, affixHeader } = this.props;
+    const { autoHeight, affixHeader } = this.props;
+    const height = this.getTableHeight();
+
     const headerHeight = this.getTableHeaderHeight();
     const contentHeight = rows.length
       ? Array.from(rows)
@@ -1267,7 +1349,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
      * 原因是直接操作 DOM 的坐标，但是组件没有重新渲染，需要调用 forceUpdate 重新进入 render。
      * Fix: rsuite#1044
      */
-    if (this.props.virtualized && this.state.contentHeight > this.props.height) {
+    if (this.props.virtualized && this.state.contentHeight > this.getTableHeight()) {
       this.forceUpdate();
     }
   };
@@ -1423,7 +1505,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         } else if (isFixedEnd) {
           // @ts-ignore
           fixedRightCells.push(cell);
-          fixedRightCellGroupWidth += width;
+          if (cell.key !== CUSTOMIZED_KEY) {
+            fixedRightCellGroupWidth += width;
+          }
         } else {
           // @ts-ignore
           scrollCells.push(cell);
@@ -1446,7 +1530,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
           <CellGroup>{mergeCells(scrollCells)}</CellGroup>
 
-          {fixedRightCellGroupWidth ? (
+          {fixedRightCellGroupWidth || fixedRightCells.length ? (
             <CellGroup
               fixed="right"
               style={
@@ -1785,15 +1869,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return null;
     }
 
-    // old Spin
-    // const loadingElement = (
-    //   <div className={this.addPrefix('loader-wrapper')}>
-    //     <div className={this.addPrefix('loader')}>
-    //       <i className={this.addPrefix('loader-icon')} />
-    //       <span className={this.addPrefix('loader-text')}>{locale.loading}</span>
-    //     </div>
-    //   </div>
-    // );
     const loadingElement = (
       <div className={this.addPrefix('loader-wrapper')}>
         <div className={this.addPrefix('loader')}>
@@ -1862,12 +1937,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       [this.addPrefix('loading')]: loading,
     });
 
+    const height = this.getTableHeight();
+
     const styles = {
       width: width || 'auto',
-      height: this.getTableHeight(),
+      height: height,
       lineHeight: `${toPx(this.getRowHeight())}px`,
       ...style,
     };
+
+    runInAction(() => {
+      this.tableStore.totalHeight = height;
+    });
 
     const unhandled = getUnhandledProps(propTypes, rest);
 
@@ -1883,23 +1964,25 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           tableStore,
         }}
       >
-        {queryBar === false ? null : <PerformanceTableQueryBar />}
-        {this.renderTableToolbar()}
-        <div
-          role={isTree ? 'treegrid' : 'grid'}
-          // The aria-rowcount is specified on the element with the table.
-          // Its value is an integer equal to the total number of rows available, including header rows.
-          aria-rowcount={data.length + 1}
-          aria-colcount={this._cacheChildrenSize}
-          {...unhandled}
-          className={clesses}
-          style={styles}
-          ref={this.tableRef}
-        >
-          {showHeader && this.renderTableHeader(headerCells, rowWidth)}
-          {columns && columns.length ? this.renderTableBody(bodyCells, rowWidth) : children && this.renderTableBody(bodyCells, rowWidth)}
-          {showHeader && this.renderMouseArea()}
-        </div>
+        <ModalProvider>
+          {queryBar === false ? null : <PerformanceTableQueryBar />}
+          {this.renderTableToolbar()}
+          <div
+            role={isTree ? 'treegrid' : 'grid'}
+            // The aria-rowcount is specified on the element with the table.
+            // Its value is an integer equal to the total number of rows available, including header rows.
+            aria-rowcount={data.length + 1}
+            aria-colcount={this._cacheChildrenSize}
+            {...unhandled}
+            className={clesses}
+            style={styles}
+            ref={this.tableRef}
+          >
+            {showHeader && this.renderTableHeader(headerCells, rowWidth)}
+            {columns && columns.length ? this.renderTableBody(bodyCells, rowWidth) : children && this.renderTableBody(bodyCells, rowWidth)}
+            {showHeader && this.renderMouseArea()}
+          </div>
+        </ModalProvider>
       </TableContext.Provider>
     );
   }

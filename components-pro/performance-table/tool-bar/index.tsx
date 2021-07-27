@@ -24,7 +24,7 @@ export type ToolBarProps = {
   /** 工具栏右侧操作区 */
   buttons?: React.ReactNode[];
   /** 工作栏右侧设置区 */
-  settings?: SettingPropType[];
+  settings?: SettingPropType[] | boolean;
   /** 过滤区 todo */
   // filter?: React.ReactNode;
 };

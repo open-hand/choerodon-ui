@@ -5,6 +5,7 @@ import ColumnResizeHandler from './ColumnResizeHandler';
 import { isNullOrUndefined, getUnhandledProps, defaultClassPrefix, prefix } from './utils';
 import Cell from './Cell';
 import { HeaderCellProps } from './HeaderCell.d';
+import TableContext from './TableContext';
 
 interface HeaderCelltate {
   columnWidth?: number;
@@ -15,6 +16,7 @@ interface HeaderCelltate {
 const propTypes = {
   index: PropTypes.number,
   sortColumn: PropTypes.string,
+  dataIndex: PropTypes.string,
   sortType: PropTypes.oneOf(['desc', 'asc']),
   sortable: PropTypes.bool,
   resizable: PropTypes.bool,
@@ -31,6 +33,8 @@ const propTypes = {
 
 class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
   static propTypes = propTypes;
+
+  static contextType = TableContext;
 
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-cell-header'),

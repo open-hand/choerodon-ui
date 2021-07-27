@@ -1,3 +1,4 @@
+import { Key } from 'react';
 import { ColumnProps } from '../Column.d';
 
 // @ts-ignore
@@ -27,17 +28,9 @@ export function removeEvent(el: any, event: string, handler: Function, inputOpti
   }
 }
 
-export function findHiddenKeys(children, columns: ColumnProps[]): string[] {
+export function findHiddenKeys(children, columns: any[]): string[] {
   const hiddenColumnKeys: string[] = [];
-  if (columns && columns.length) {
-    Array.from(columns as Iterable<any>).map(
-      (child: any) => {
-        if (child && child.hidden) {
-          hiddenColumnKeys.push(child.dataIndex);
-        }
-      },
-    );
-  } else if (children && children.length) {
+  if (children && children.length) {
     Array.from(children as Iterable<any>).map(
       (child: any) => {
         if (child.props && child.props.hidden) {
@@ -47,5 +40,30 @@ export function findHiddenKeys(children, columns: ColumnProps[]): string[] {
       },
     );
   }
+  if (columns && columns.length) {
+    Array.from(columns as Iterable<any>).map(
+      (child: any) => {
+        if (child && child.hidden) {
+          hiddenColumnKeys.push(child.dataIndex);
+        }
+      },
+    );
+  }
   return hiddenColumnKeys;
+}
+
+
+export function getColumnKey({ dataIndex, key }: ColumnProps): Key {
+  return key || dataIndex!;
+}
+
+export function getColumnFixed(fixed?: boolean | 'left' | 'right'): 'left' | 'right' | false {
+  if (fixed === true) {
+    return 'left';
+  }
+  if (fixed) {
+    return fixed;
+  }
+
+  return false;
 }

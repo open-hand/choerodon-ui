@@ -16,6 +16,7 @@ const TableContext = createContext<Props>({
   hasCustomTreeCol: false,
   isTree: false,
   translateDOMPositionXY,
+  tableStore: {} as TableStore,
 });
 
 export default TableContext;

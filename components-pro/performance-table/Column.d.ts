@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 export interface ColumnProps {
   align?: 'left' | 'center' | 'right';
@@ -12,16 +12,23 @@ export interface ColumnProps {
   colSpan?: number;
   treeCol?: boolean;
   hidden?: boolean;
+  titleEditable?: boolean;
   /**
    * 是否可隐藏，设为false时不会出现在列过滤选项中
    * @default true
    */
   hideable?: boolean;
   onResize?: (columnWidth?: number, dataIndex?: string) => void;
-  render?: (props: { rowData: any, rowIndex: number, dataIndex?: string | undefined }) => ReactNode;
+  render?: (props: { rowData: any, rowIndex: number, dataIndex?: string | undefined }) => React.ReactNode;
   dataIndex?: string;
-  title?: ReactNode | (() => ReactNode);
-  children?: ColumnProps[];
+  key?: string;
+  sort?: number;
+  title?: React.ReactNode | (() => React.ReactNode);
+  /**
+   * column group header
+   */
+  header?: ReactNode;
+  children?: React.ReactElement<ColumnProps>[] | ColumnProps[];
   type?: 'ColumnGroup';
 }
 

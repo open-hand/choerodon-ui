@@ -10,6 +10,7 @@ import { Placements } from '../../dropdown/enum';
 import { ColumnProps } from '../Column.d';
 import { stopEvent, stopPropagation } from '../../_util/EventManager';
 import autobind from '../../_util/autobind';
+import Column from '../Column';
 
 function handleMenuClick({ domEvent }) {
   domEvent.preventDefault();
@@ -108,25 +109,41 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
 
   @autobind
   getMenu() {
-    const { tableStore: { proPrefixCls } } = this.context;
+    const { tableStore: { proPrefixCls, node, originalChildren } } = this.context;
     const selfPrefixCls = `${proPrefixCls}-columns-chooser`;
-    const { tableStore } = this.context;
-    const { originalColumns } = tableStore;
+    const { props: { columns } } = node;
     const selectedKeys: Key[] = [];
-    const columns: [ColumnProps, ReactNode, Key][] = [];
-    React.Children.forEach(originalColumns, (column: React.ReactElement<ColumnProps>) => {
-      if (React.isValidElement(column)) {
-        const columnChildren: any = column.props.children;
-        const { hideable, hidden } = column.props;
-        if (hideable && columnChildren[0]) {
-          const key: Key = columnChildren[1].props.dataKey;
+    const menuColumns: [ColumnProps, ReactNode, Key][] = [];
+    if (columns && columns.length) {
+      columns.map((column: ColumnProps) => {
+        const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
+        const { hideable, hidden, title, dataIndex, key } = newColumn;
+        if (hideable && title) {
+          const keys: Key = key || dataIndex!;
           if (!hidden) {
-            selectedKeys.push(key);
+            selectedKeys.push(keys);
           }
-          columns.push([column.props, columnChildren[0].props.children, key]);
+          const header = typeof title === 'function' ? title() : title;
+          menuColumns.push([column, header, keys]);
         }
-      }
-    });
+        return null;
+      });
+    } else if (originalChildren && originalChildren.length) {
+      React.Children.forEach(originalChildren, (column: React.ReactElement<ColumnProps>) => {
+        if (React.isValidElement(column)) {
+          const columnChildren: any = column.props.children;
+          const { hideable, hidden } = column.props;
+          if (hideable && columnChildren[0]) {
+            const key: Key = columnChildren[1].props.dataKey;
+            if (!hidden) {
+              selectedKeys.push(key);
+            }
+            menuColumns.push([column.props, columnChildren[0].props.children, key]);
+          }
+        }
+      });
+    }
+
     return (
       <Menu
         ref={this.saveMenu}
@@ -139,7 +156,7 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
         onDeselect={this.handleMenuUnSelect}
         onClick={handleMenuClick}
       >
-        {this.getOptions(columns)}
+        {this.getOptions(menuColumns)}
       </Menu>
     );
   }

@@ -14,11 +14,9 @@ filterBar
 filterBar example.
 
 ````jsx
+import { Button, PerformanceTable, DataSet } from 'choerodon-ui/pro';
 import '../../../components-pro/performance-table/style/index.less';
 import fakeLargeData from '../../../site/theme/mock/performance-data/fakeLargeData.json';
-import { Button, PerformanceTable, DataSet } from 'choerodon-ui/pro';
-
-const { Column, HeaderCell, Cell } = PerformanceTable;
 
 const optionData = [
   { text: '男', value: 'M' },
@@ -30,7 +28,7 @@ class EmptyDataTable extends React.Component {
     data: optionData,
     selection: 'single',
   });
-  
+
   ds = new DataSet({
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
@@ -55,93 +53,142 @@ class EmptyDataTable extends React.Component {
       },
     ],
   });
-  
+
   handleQuery = (props) => {
     console.log('handleQuery', props);
-  }
-  
+  };
+
   handleReset = (props) => {
     console.log('handleReset', props);
-  }
-  
+  };
+
   render() {
     const tableRef = React.createRef();
+    const columns = [
+      {
+        title: 'Id',
+        dataIndex: 'id',
+        key: 'id',
+        width: 70,
+        fixed: true,
+      },
+      {
+        title: '姓',
+        dataIndex: 'lastName',
+        key: 'lastName',
+        width: 150,
+      },
+      {
+        title: '名',
+        dataIndex: 'firstName',
+        key: 'firstName',
+        width: 150,
+      },
+      {
+        title: '城市',
+        dataIndex: 'city',
+        key: 'city',
+        width: 300,
+      },
+      {
+        title: '街道',
+        dataIndex: 'street',
+        key: 'street',
+        width: 300,
+      },
+      {
+        title: '公司',
+        dataIndex: 'companyName',
+        key: 'companyName',
+        width: 300,
+      },
+    ];
+    
     return (
-    <div>
-      <PerformanceTable
-        // virtualized
-        height={400}
-        toolbar={{
-          header: '表格标题',
-          buttons: [
-            <Button
-             onClick={() => {
-               tableRef.current.scrollTop(0);
-             }}
-            >
-              Scroll top
-            </Button>
-          ],
-          settings: ['columnFilter']
-        }}
-        queryBar={{
-          type: 'filterBar',
-          defaultExpanded: true, 
-          dynamicFilterBar: { suffixes: ['filter'], prefixes: ['filter'], quickSearch: true },
-          dataSet: this.ds, 
-          onQuery: this.handleQuery, 
-          onReset: this.handleReset,
-          // onCollapse: this.handleCollapse,
-        }}
-        data={fakeLargeData.slice(0, 500)}
-        ref={tableRef}
-        onRowClick={data => {
-          console.log(data);
-        }}
-      >
-        <Column width={70} align="center" fixed>
-          <HeaderCell>Id</HeaderCell>
-          <Cell dataKey="id" />
-        </Column>
-
-        <Column sortable resizable width={130}>
-          <HeaderCell>First Name</HeaderCell>
-          <Cell dataKey="firstName" />
-        </Column>
-
-        <Column sortable resizable width={130}>
-          <HeaderCell>Last Name</HeaderCell>
-          <Cell dataKey="lastName" />
-        </Column>
-
-        <Column sortable width={200} hideable={false}>
-          <HeaderCell>City</HeaderCell>
-          <Cell dataKey="city" />
-        </Column>
-
-        <Column width={200} hidden>
-          <HeaderCell>Street</HeaderCell>
-          <Cell dataKey="street" />
-        </Column>
-
-        <Column minWidth={200} flexGrow={1}>
-          <HeaderCell>Company Name</HeaderCell>
-          <Cell dataKey="companyName" />
-        </Column>
-      </PerformanceTable>
-      <Button
-        onClick={() => {
-          tableRef.current.scrollTop(10000);
-        }}
-      >
-        Scroll top
-      </Button>
-    </div>
+      <div>
+        <PerformanceTable
+          // virtualized
+          height={400}
+          toolbar={{
+            header: '表格标题',
+            buttons: [
+              <Button
+                onClick={() => {
+                  tableRef.current.scrollTop(0);
+                }}
+              >
+                Scroll top
+              </Button>,
+            ],
+            settings: ['columnFilter'],
+          }}
+          queryBar={{
+            type: 'filterBar',
+            defaultExpanded: true,
+            dynamicFilterBar: {
+              quickSearch: true,
+              searchCode: 'xxx',
+              tableFilterAdapter: (props) => {
+                console.log('defaultTableFilterAdapter', props);
+                const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
+                console.log('defaultTableFilterAdapter config', config);
+                const userId = 1;
+                const tenantId = 0;
+                switch (type) {
+                  case 'read':
+                    return {
+                      // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
+                      url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+                      method: 'get',
+                    };
+                  case 'create':
+                    return {
+                      // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+                      method: 'put',
+                      data: data[0],
+                    };
+                  case 'update':
+                    return {
+                      // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+                      method: 'put',
+                      data: data[0],
+                    };
+                  case 'destroy':
+                    return {
+                      // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
+                      url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+                      data: data[0],
+                      method: 'delete',
+                    };
+                }
+              },
+            },
+            dataSet: this.ds,
+            onQuery: this.handleQuery,
+            onReset: this.handleReset,
+            // onCollapse: this.handleCollapse,
+          }}
+          columns={columns}
+          data={fakeLargeData.slice(0, 500)}
+          ref={tableRef}
+          onRowClick={data => {
+            console.log(data);
+          }}
+        />
+        <Button
+          onClick={() => {
+            tableRef.current.scrollTop(10000);
+          }}
+        >
+          Scroll top
+        </Button>
+      </div>
     );
   }
 }
+
 ReactDOM.render(
   <EmptyDataTable />,
-  mountNode
+  mountNode,
 );
 ````
