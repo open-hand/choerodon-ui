@@ -124,9 +124,12 @@ export type Config = {
   tableColumnTooltip?: Tooltip;
   tableColumnResizable?: boolean;
   tableColumnHideable?: boolean;
+  performanceTableColumnHideable?: boolean;
   tableColumnTitleEditable?: boolean;
+  performanceTableColumnTitleEditable?: boolean;
   tableDragColumnAlign?: DragColumnAlign;
   tableColumnDraggable?: boolean;
+  performanceTableColumnDraggable?: boolean;
   tableRowDraggable?: boolean;
   tableExpandIcon?: (props: expandIconProps) => ReactNode;
   tableSpinProps?: SpinProps;
@@ -145,6 +148,7 @@ export type Config = {
   tableFilterSearchText?: string;
   tableAutoHeightDiff?: number;
   tableCustomizable?: boolean;
+  performanceTableCustomizable?: boolean;
   tableCustomizedSave?: (code: string, customized: Customized) => void;
   tableCustomizedLoad?: (code: string) => Promise<Customized | null>;
   pagination?: TablePaginationConfig | false;
@@ -298,8 +302,10 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableDefaultRenderer', ''],
   ['tableColumnResizable', true],
   ['tableColumnHideable', true],
+  ['performanceTableColumnHideable', true],
   ['tableRowDraggable', false],
   ['tableColumnDraggable', false],
+  ['performanceTableColumnDraggable', false],
   ['tableSpinProps', defaultSpinProps],
   ['tableButtonProps', defaultButtonProps],
   ['tableCommandProps', defaultButtonProps],

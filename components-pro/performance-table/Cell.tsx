@@ -42,6 +42,7 @@ export const propTypes = {
 
 class Cell extends React.PureComponent<CellProps> {
   static contextType = TableContext;
+
   static propTypes = propTypes;
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-cell'),

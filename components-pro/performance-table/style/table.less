@@ -5,6 +5,19 @@
   position: relative;
   overflow: hidden;
 
+  &-customization-header {
+    .c7n-performance-table-cell {
+      left: unset !important;
+      right: 0;
+    }
+    .c7n-performance-table-cell-content {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   &-bordered {
     border: 1px solid @border-color-base;
   }

@@ -9,6 +9,9 @@ function Column(_props: ColumnProps) {
 Column.defaultProps = {
   width: 100,
   hideable: true,
+  hidden: false,
+  fixed: false,
+  sortable: false,
 };
 
 Column.propTypes = {
@@ -21,11 +24,16 @@ Column.propTypes = {
   flexGrow: PropTypes.number,
   minWidth: PropTypes.number,
   colSpan: PropTypes.number,
+  sort: PropTypes.number,
   treeCol: PropTypes.bool,
   hidden: PropTypes.bool,
   hideable: PropTypes.bool,
+  titleEditable: PropTypes.bool,
   onResize: PropTypes.func,
   render: PropTypes.func,
+  dataIndex: PropTypes.string,
 };
+
+Column.__PFM_TABLE_COLUMN = true;
 
 export default Column;

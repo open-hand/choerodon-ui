@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `performanceTableColumnHideable`, `performanceTableColumnTitleEditable`, `performanceTableColumnDraggable` properties.
 - 🌟 `<pro>Table.Column`: Added `hiddenInAggregation` property, added `aggregation` parameter to the `command` hook.
+- 🌟 `<pro>PerformanceTable`: Added personalization features, including `customizedCode`, `customizable`, `columnDraggable`, `columnTitleEditable`, `columnsDragRender` properties.
 - 💄 `<pro>DataSet`: Memory optimization.
 - 💄 `<pro>Table`: Optimize the performance and logic of adjusting column width.
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.

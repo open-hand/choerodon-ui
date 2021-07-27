@@ -19,7 +19,6 @@ export default class DataSetComponent<T extends DataSetComponentProps> extends V
     ...ViewComponent.propTypes,
   };
 
-  @computed
   get dataSet(): DataSet | undefined {
     return this.observableProps.dataSet;
   }
@@ -38,10 +37,11 @@ export default class DataSetComponent<T extends DataSetComponentProps> extends V
   }
 
   getObservableProps(props, context) {
-    return {
-      ...super.getObservableProps(props, context),
-      dataSet: props.dataSet,
-    };
+    const observableProps = super.getObservableProps(props, context);
+    if ('dataSet' in props) {
+      observableProps.dataSet = props.dataSet;
+    }
+    return observableProps;
   }
 
   getOmitPropsKeys(): string[] {

@@ -63,8 +63,11 @@ const prefixCls = getConfig('prefixCls');
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
 | tableColumnResizable | Default Table column resizable | boolean | true |
 | tableColumnHideable | Default Table column hideable | boolean | true |
+| performanceTableColumnHideable | 默认 performanceTable 列可调整显示 | boolean | true |
 | tableColumnTitleEditable | Default Table column title editable | boolean | false |
+| performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |
 | tableColumnDraggable | Default Table column draggable| boolean | false |
+| performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | tableRowDraggable | Default Table row draggable | boolean | false |
 | tableDragColumnAlign | Default align of Table row drag handler | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
@@ -77,6 +80,7 @@ const prefixCls = getConfig('prefixCls');
 | tableCustomizedSave | Table 个性化保存的钩子 | (code, customized) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
 | tableCustomizedLoad | Table 个性化加载的钩子 | (code) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
 | tableCustomizable | Table 是否显示个性化设置入口按钮 | boolean | false |
+| performanceTableCustomizable | performanceTable 是否显示个性化设置入口按钮 | boolean | false |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |

@@ -59,6 +59,15 @@ cols: 1
 | width                    | number                                                                            | 宽度                                                         |
 | wordWrap                 | boolean                                                                           | 单元格自动换行                                               |
 | highLightRow             | boolean`(true)`                                                                   | 点击行显示高亮行                                             |
+| queryBar                 | queryBarProps                                                                     | 配置查询条                                                  |
+| toolbar                  | toolBarProps                                                                     | 配置工具栏                                                  |
+| toolBarRender            | (props: object) => React.ReactNode[]                                             | 工具栏渲染                                                  |
+| columnHideable | boolean`(true)` | 可调整列显示, customizable 为 true 才起作用 |
+| columnTitleEditable | boolean | 可编辑列标题, customizable 为 true 才起作用 |
+| columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 |
+| customizable | boolean | 是否显示个性化设置入口按钮  |  |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
+
 
 ### Form methods
 
@@ -95,6 +104,7 @@ scrollLeft: (left: number) => void;
 | width         | number                                           | 列宽                                                                                  |
 | hidden         | boolean                                           | 隐藏                                                                                  |
 | hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
+| titleEditable         | boolean`(true)`                                       | 个性化是否可编辑列头                                                                                |
 
 > `sortable` 是用来定义该列是否可排序，但是根据什么 `key` 排序需要 在 `Cell` 设置一个 `dataKey`
 > 这里的排序是服务端排序，所以需要在 `<Table>` 的 `onSortColumn` 回调函数中处理逻辑，回调函数会返回 `sortColumn`, `sortType` 这两个值。
@@ -117,3 +127,28 @@ scrollLeft: (left: number) => void;
 | rowIndex | number          | 行号                                    |
 
 > 分页请结合 Pagination 组件。
+
+
+### toolBarProps
+
+| 属性名称 | 类型 `(默认值)` | 描述                                    |
+| -------- | --------------- | --------------------------------------- |
+| header  | React.ReactNode          | 表格标题 |
+| hideToolbar  | boolean          | 是否显示工具栏                                  |
+| buttons | React.ReactNode[]          | 工具栏右侧操作区                                     |
+| settings | (ReactNode \| Setting)[]         | 工作栏右侧设置区                                    |
+
+### queryBarProps
+
+| 属性名称 | 类型 `(默认值)` | 描述                                    |
+| -------- | --------------- | --------------------------------------- |
+| type  | TableQueryBarType: filter, professionalBar   | 查询条类型 |
+| renderer  | (props: TableQueryBarHookProps) => React.ReactNode          | 渲染覆盖                                  |
+| dataSet | DataSet          | 数据源                                     |
+| queryFormProps | FormProps         | 查询条表单属性                                    |
+| defaultExpanded | Boolean         | 是否默认展开                                    |
+| queryDataSet | DataSet         | 查询数据源                                   |
+| queryFields | React.ReactElement<any>[]         | 自定义查询字段组件或默认组件属性                                    |
+| queryFieldsLimit | ReactElement         | 显示的查询字段的数量                                    |
+| onQuery | (props: object) => void         | 查询回调                                    |
+| onReset | () => void         | 重置回调                                    |
