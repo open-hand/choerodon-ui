@@ -23,7 +23,7 @@ import Row from './Row';
 import CellGroup from './CellGroup';
 import Scrollbar from './Scrollbar';
 import TableContext from './TableContext';
-import { CELL_PADDING_HEIGHT, SCROLLBAR_WIDTH, SCROLLBAR_LARGE_WIDTH } from './constants';
+import { CELL_PADDING_HEIGHT, SCROLLBAR_WIDTH } from './constants';
 import {
   cancelAnimationTimeout,
   defaultClassPrefix,
@@ -489,22 +489,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    */
   getTableHeight() {
     const { contentHeight } = this.state;
-    const { minHeight, height, autoHeight, data, showScrollArrow } = this.props;
+    const { minHeight, height, autoHeight, data } = this.props;
     const headerHeight = this.getTableHeaderHeight();
 
     if (data.length === 0 && autoHeight) {
       return height;
     }
 
-    if(!!autoHeight) {
-      if(!!showScrollArrow) {
-        return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight + SCROLLBAR_LARGE_WIDTH);
-      } else {
-        return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight + SCROLLBAR_WIDTH);
-      }
-    } else {
-      return height;
-    }
+    return autoHeight ? Math.max(headerHeight + contentHeight, minHeight) : height;
   }
 
   /**
@@ -1192,7 +1184,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   calculateTableContextHeight(prevProps?: TableProps) {
     const table = this.tableRef.current;
     const rows = table.querySelectorAll(`.${this.addPrefix('row')}`) || [];
-    const { height, autoHeight, affixHeader, showScrollArrow } = this.props;
+    const { height, autoHeight, affixHeader } = this.props;
     const headerHeight = this.getTableHeaderHeight();
     const contentHeight = rows.length
       ? Array.from(rows)
@@ -1220,12 +1212,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
 
     if (!autoHeight) {
-      // 这里 -SCROLLBAR_WIDTH 和 -SCROLLBAR_LARGE_WIDTH 是为了让滚动条不挡住内容部分
-      if(!showScrollArrow) {
-        this.minScrollY = -(contentHeight - height) - SCROLLBAR_WIDTH;
-      } else {
-        this.minScrollY = -(contentHeight - height) - SCROLLBAR_LARGE_WIDTH;
-      }
+      // 这里 -SCROLLBAR_WIDTH 是为了让滚动条不挡住内容部分
+      this.minScrollY = -(contentHeight - height) - SCROLLBAR_WIDTH;
     }
 
     // 如果内容区域的高度小于表格的高度，则重置 Y 坐标滚动条
