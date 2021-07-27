@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, computed, observable } from 'mobx';
 import omit from 'lodash/omit';
+import defer from 'lodash/defer';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -626,10 +627,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     this.updateObservableProps(nextProps, nextContext);
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     const { tabIndex, autoFocus } = this.props;
     if (autoFocus && (tabIndex === undefined || tabIndex > -1) && !this.disabled) {
-      this.focus();
+      defer(() => this.focus());
     }
   }
 

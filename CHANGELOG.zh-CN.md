@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 range 为数组类型列报错的问题。
 - 🐞 `<pro>FormField`: 修复渲染器返回数字时不渲染的问题。
 - 🐞 `<pro>SelectBox`: 修复数据源绑定后设置问题。
+- 🐞 `<pro>Lov`: 修复弹窗没有动画的问题。
 
 ## 1.4.2
 
