@@ -21,6 +21,7 @@ timeline: true
 - 💄 `<pro>DataSet`：内存优化。
 - 💄 `<pro>Table`：优化调整列宽的性能和逻辑。
 - 💄 `<pro>SelectBox`: 调整 checkValueOnOptionsChange 默认值为 false。
+- 💄 `<pro>SelectBox`：优化 label 内容溢出提示。
 - 💄 `<pro>Trigger`: 支持穿越同域 iframe。
 - 🐞 修复循环依赖问题。
 - 🐞 `<pro>Table`: 修复右侧锁定列脚样式问题。
