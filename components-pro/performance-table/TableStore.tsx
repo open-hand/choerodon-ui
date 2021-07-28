@@ -235,6 +235,7 @@ export default class TableStore {
   @action
   updateProps(props, node) {
     this.node = node;
+    this.originalColumns = props.columns;
     if (this.customizable && props.columns) {
       this.loadCustomized().then(this.handleLoadCustomized);
     }
