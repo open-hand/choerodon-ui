@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that array typed `range` property reports errors in columns.
 - 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
 - 🐞 `<pro>SelectBox`: Fix the set value problem with data source binding.
+- 🐞 `<pro>PerformanceTable`: Fix an issue that sets the auto height scrollbar to mask content.
 - 🐞 `<pro>Lov`: Fix the problem that there is no animation in the pop-up window.
 
 ## 1.4.2
