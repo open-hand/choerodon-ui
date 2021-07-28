@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table.Column`: 新增 hiddenInAggregation 属性, command 钩子新增 aggregation 参数。
 - 🌟 `<pro>PerformanceTable`: 新增 customizedCode, customizable, columnDraggable, columnTitleEditable, columnsDragRender 属性，支持个性化。
 - 💄 `<pro>DataSet`：内存优化。
+- 💄 `<pro>Select`：内存优化。
 - 💄 `<pro>Table`：优化调整列宽的性能和逻辑。
 - 💄 `<pro>SelectBox`: 调整 checkValueOnOptionsChange 默认值为 false。
 - 💄 `<pro>Trigger`: 支持穿越同域 iframe。
@@ -30,7 +31,7 @@ timeline: true
 - 🐞 `<pro>FormField`: 修复渲染器返回数字时不渲染的问题。
 - 🐞 `<pro>SelectBox`: 修复数据源绑定后设置问题。
 - 🐞 `<pro>PerformanceTable`: 修复设置自动高度时滚动条遮挡展示内容的问题。
-
+- 🐞 `<pro>Lov`: 修复弹窗没有动画的问题。
 
 ## 1.4.2
 
