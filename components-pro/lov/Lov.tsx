@@ -256,6 +256,7 @@ export default class Lov extends Select<LovProps> {
         // onOk: this.handleLovViewOk,
         destroyOnClose: true,
         closable: true,
+        autoFocus: false,
         bodyStyle: {
           minHeight: isIE() ? pxToRem(Math.min(350, window.innerHeight)) : 'min(3.5rem, 100vh)',
         },

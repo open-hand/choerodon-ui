@@ -176,6 +176,9 @@ export default class LovView extends Component<LovViewProps> {
       }
     } else if (lovTableProps.selectionMode !== SelectionMode.rowbox) {
       lovTableProps.onRow = this.handleRow;
+    } else {
+      lovTableProps.highLightRow = false;
+      lovTableProps.selectedHighLightRow = true;
     }
 
     const isProfessionalBar = getConfig('queryBar') === TableQueryBarType.professionalBar;

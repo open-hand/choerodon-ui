@@ -91,6 +91,7 @@ const LOV_SIDE_EFFECT_KEYS = ['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl',
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string; };
+export type DynamicProps = { [P in keyof FieldProps]?: (DynamicPropsArguments) => FieldProps[P]; }
 export type HighlightProps = {
   title?: ReactNode;
   content?: ReactNode;
@@ -290,9 +291,7 @@ export type FieldProps = {
   /**
    * LOV查询请求的钩子
    */
-  lovQueryAxiosConfig?:
-    | AxiosRequestConfig
-    | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
+  lovQueryAxiosConfig?: AxiosRequestConfig | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
   /**
    * 批量值列表请求的axiosConfig
    */
@@ -302,16 +301,13 @@ export type FieldProps = {
    */
   bind?: string;
   /**
-   * @deprecated
    * 动态属性
    */
-  dynamicProps?:
-    | ((props: DynamicPropsArguments) => FieldProps | undefined)
-    | { [key: string]: (DynamicPropsArguments) => any; };
+  dynamicProps?: DynamicProps | /* @deprecated */ ((props: DynamicPropsArguments) => FieldProps | undefined);
   /**
    * 计算属性，具有 mobx-computed 的缓存功能
    */
-  computedProps?: { [key: string]: (DynamicPropsArguments) => any; }
+  computedProps?: DynamicProps;
   /**
    * 快码和LOV查询时的级联参数映射
    * @example

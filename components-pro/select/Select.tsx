@@ -8,7 +8,7 @@ import noop from 'lodash/noop';
 import defer from 'lodash/defer';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction, toJS } from 'mobx';
+import { action, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
@@ -36,6 +36,7 @@ import { Renderer } from '../field/FormField';
 import isIE from '../_util/isIE';
 import Field from '../data-set/Field';
 import { ButtonProps } from '../button/Button';
+import { getIf } from '../data-set/utils';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -216,7 +217,7 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
   optionTooltip?: OptionTooltip;
 }
 
-export class Select<T extends SelectProps> extends TriggerField<T> {
+export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
   static displayName = 'Select';
 
   static propTypes = {
@@ -297,7 +298,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * 多选时显示全选按钮;
      * @default true
      */
-    selectAllButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.arrayOf(PropTypes.object)]),
+    selectAllButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     /**
      * 多选是否开启反选
      * @default false
@@ -326,7 +327,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   static __PRO_SELECT = true;
 
-  comboOptions: DataSet = new DataSet();
+  @observable comboOptions?: DataSet;
 
   menu?: Menu | null;
 
@@ -360,7 +361,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   get currentComboOption(): Record | undefined {
-    return this.comboOptions.filter(record => !this.isSelected(record))[0];
+    const { comboOptions } = this;
+    return comboOptions && comboOptions.filter(record => !this.isSelected(record))[0];
   }
 
   @computed
@@ -371,7 +373,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @computed
   get optionsWithCombo(): Record[] {
-    return [...this.comboOptions.data, ...this.cascadeOptions];
+    const { comboOptions } = this;
+    return comboOptions ? [...comboOptions.data, ...this.cascadeOptions] : this.cascadeOptions;
   }
 
   @computed
@@ -1016,7 +1019,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   syncValueOnBlur(value) {
     if (value) {
-      const { data } = this.comboOptions;
+      const { comboOptions } = this;
+      const data = comboOptions ? comboOptions.data : [];
       this.options.ready().then(() => {
         const record = this.findByTextWithValue(value, data);
         if (record) {
@@ -1098,9 +1102,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
+  @action
   createComboOption(value): void {
     const { textField, valueField, menu } = this;
-    const record = this.comboOptions.create(
+    const comboOptions = getIf<Select, DataSet>(this, 'comboOptions', () => new DataSet());
+    const record = comboOptions.create(
       {
         [textField]: value,
         [valueField]: value,
@@ -1113,7 +1119,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   removeComboOptions() {
-    this.comboOptions.forEach(record => this.removeComboOption(record));
+    const { comboOptions } = this;
+    if (comboOptions) {
+      comboOptions.forEach(record => this.removeComboOption(record));
+    }
   }
 
   removeComboOption(record?: Record): void {
@@ -1121,7 +1130,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       record = this.currentComboOption;
     }
     if (record && !this.isSelected(record)) {
-      this.comboOptions.remove(record);
+      const { comboOptions } = this;
+      if (comboOptions) {
+        comboOptions.remove(record);
+      }
     }
   }
 
@@ -1395,7 +1407,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   async processSelectedData() {
-    this.comboOptions.removeAll();
+    const { comboOptions } = this;
+    if (comboOptions) {
+      comboOptions.removeAll();
+    }
     const values = this.getValues();
     const { field } = this;
     if (field) {

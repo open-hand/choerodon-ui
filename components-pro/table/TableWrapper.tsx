@@ -120,7 +120,7 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = observer((props) => {
         key="table"
         className={className}
         style={style}
-        summary={hasBody && tableStore.props.summary}
+        summary={hasBody ? tableStore.props.summary : undefined}
       >
         {colGroup}
         {children}

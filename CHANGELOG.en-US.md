@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table.Column`: Added `hiddenInAggregation` property, added `aggregation` parameter to the `command` hook.
 - 🌟 `<pro>PerformanceTable`: Added personalization features, including `customizedCode`, `customizable`, `columnDraggable`, `columnTitleEditable`, `columnsDragRender` properties.
 - 💄 `<pro>DataSet`: Memory optimization.
+- 💄 `<pro>Select`: Memory optimization.
 - 💄 `<pro>Table`: Optimize the performance and logic of adjusting column width.
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
 - 💄 `<pro>Trigger`: Support traversing iframes in the same domain.
@@ -29,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that array typed `range` property reports errors in columns.
 - 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
 - 🐞 `<pro>SelectBox`: Fix the set value problem with data source binding.
+- 🐞 `<pro>Lov`: Fix the problem that there is no animation in the pop-up window.
 
 ## 1.4.2
 
