@@ -1,16 +1,14 @@
 import * as React from 'react';
-import { get, runInAction } from 'mobx';
+import { get, isArrayLike, runInAction } from 'mobx';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import isFunction from 'lodash/isFunction';
 import flatten from 'lodash/flatten';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
-import includes from 'lodash/includes';
 import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
-import pull from 'lodash/pull';
 import BScroll from '@better-scroll/core'
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
@@ -41,7 +39,6 @@ import {
   resetLeftForCells,
   shouldShowRowByExpanded,
   toggleClass,
-  findHiddenKeys,
 } from './utils';
 
 import isMobile from '../_util/isMobile';
@@ -95,7 +92,6 @@ interface TableState {
   tableRowsMaxHeight: number[];
   isColumnResizing?: boolean;
   expandedRowKeys: string[] | number[];
-  hiddenColumnKeys: string[] | number[];
   searchText: string;
   sortType?: SortType;
   scrollY: number;
@@ -287,8 +283,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       ? findRowKeys(data, rowKey, isFunction(renderRowExpanded))
       : defaultExpandedRowKeys || [];
 
-    const hiddenColumnKeys = findHiddenKeys(children, columns);
-
     let shouldFixedColumn = Array.from(children as Iterable<any>).some(
       (child: any) => child && child.props && child.props.fixed,
     );
@@ -306,7 +300,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.state = {
       isTree,
       expandedRowKeys,
-      hiddenColumnKeys,
       shouldFixedColumn,
       cacheData: data,
       data: isTree ? flattenData(data) : data,
@@ -400,9 +393,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.props.children !== nextProps.children ||
       this.props.columns !== nextProps.columns ||
       this.props.sortColumn !== nextProps.sortColumn ||
-      this.props.sortType !== nextProps.sortType ||
-      // 重新计算 调整显示列
-      this.state.hiddenColumnKeys.length !== nextState.hiddenColumnKeys.length
+      this.props.sortType !== nextProps.sortType
     ) {
       this._cacheCells = null;
       this.tableStore.updateProps(nextProps, this);
@@ -605,29 +596,24 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    * - 过滤 children 中的空项
    */
   getTableColumns(): React.ReactNodeArray {
-    const { originalColumns } = this.tableStore;
-    let children = this.props.children;
+    const { originalColumns, originalChildren } = this.tableStore;
+    let children = originalChildren;
     if (originalColumns && originalColumns.length) {
       children = this.processTableColumns(originalColumns);
     }
 
-    if (!Array.isArray(children)) {
+    if (!Array.isArray(children) && !isArrayLike(children)) {
       return children as React.ReactNodeArray;
     }
 
     // Fix that the `ColumnGroup` array cannot be rendered in the Table
     const flattenColumns = flatten(children).map((column: React.ReactElement) => {
       if (column) {
-        const { hiddenColumnKeys } = this.state;
         const columnChildren: any = column.props.children;
-        // @ts-ignore
-        const columnHidden = includes(hiddenColumnKeys, `${columnChildren[1].props.dataKey}`);
         let cellProps: ColumnProps = {
           dataIndex: columnChildren[1].props.dataKey,
         };
-        if (columnHidden !== undefined) {
-          cellProps.hidden = columnHidden;
-        }
+        cellProps.hidden = column.props.hidden;
         if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
           const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
           return childColumns.map((childColumn, index) => {
@@ -901,16 +887,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   handleColumnResizeStart = (width: number, left: number, fixed: boolean) => {
     this.setState({ isColumnResizing: true });
     this.handleColumnResizeMove(width, left, fixed);
-  };
-
-  handleColumnHidden = (dataKey: any, hidden: boolean) => {
-    const hiddenKeys: any = [...this.state.hiddenColumnKeys];
-    if (hidden) {
-      hiddenKeys.push(dataKey);
-    } else {
-      pull(hiddenKeys, dataKey);
-    }
-    this.setState({ hiddenColumnKeys: hiddenKeys });
   };
 
   handleColumnResizeMove = (width: number, left: number, fixed: boolean) => {

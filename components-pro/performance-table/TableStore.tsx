@@ -1,11 +1,9 @@
 import React from 'react';
-import { action, computed, get, isArrayLike, observable, runInAction, set } from 'mobx';
+import { action, computed, get, observable, runInAction, set } from 'mobx';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import sortBy from 'lodash/sortBy';
-import flatten from 'lodash/flatten';
 import debounce from 'lodash/debounce';
-import includes from 'lodash/includes';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -22,8 +20,6 @@ import autobind from '../_util/autobind';
 import { ModalProps } from '../modal/Modal';
 import { $l } from '../locale-context';
 import { ColumnLock, TableHeightType } from '../table/enum';
-import ColumnGroup from './ColumnGroup';
-import { findHiddenKeys } from './utils';
 // import isFragment from '../_util/isFragment';
 
 // export function normalizeColumns(
@@ -385,72 +381,8 @@ export default class TableStore {
     return getConfig('performanceTableColumnDraggable') === true;
   }
 
-  @computed
-  get primevalColumns(): React.ReactNodeArray {
-    const { columns } = this.node.props;
-    let children = this.node.props.children;
-    if (columns && columns.length) {
-      children = this.node.processTableColumns(columns);
-    }
-
-    if (!Array.isArray(children) && !isArrayLike(children)) {
-      return children as React.ReactNodeArray;
-    }
-
-    // Fix that the `ColumnGroup` array cannot be rendered in the Table
-    const flattenColumns = flatten(children).map((column: React.ReactElement) => {
-      if (column) {
-        const hiddenColumnKeys = findHiddenKeys(children, columns);
-        const columnChildren: any = column.props.children;
-        // @ts-ignore
-        const columnHidden = includes(hiddenColumnKeys, `${columnChildren[1].props.dataKey}`);
-        let cellProps: ColumnProps = {
-          dataIndex: columnChildren[1].props.dataKey,
-        };
-        cellProps.hidden = columnHidden !== undefined ? columnHidden : false;
-        if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
-          const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
-          return childColumns.map((childColumn, index) => {
-            // 把 ColumnGroup 设置的属性覆盖到 Column
-            const groupCellProps: any = {
-              ...childColumn?.props,
-              ...cellProps,
-              align,
-              fixed,
-              verticalAlign,
-            };
-
-            /**
-             * 为分组中的第一列设置属性:
-             * groupCount: 分组子项个数
-             * groupHeader: 分组标题
-             * resizable: 设置为不可自定义列宽
-             */
-            if (index === 0) {
-              groupCellProps.groupCount = childColumns.length;
-              groupCellProps.groupHeader = header;
-              groupCellProps.resizable = false;
-            }
-
-            return React.cloneElement(childColumn, groupCellProps);
-          });
-        }
-        return React.cloneElement(column, cellProps);
-      }
-      return column;
-    });
-
-    // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
-    return flatten(flattenColumns);
-    // return flatten(flattenColumns).map((column) => {
-    //   const fixed = getColumnFixed(column.props.fixed);
-    //   return {...column.props, fixed};
-    // });
-  }
-
   constructor(node) {
     runInAction(() => {
-      // this.setProps(node.props);
       this.node = node;
       this.customizedActiveKey = ['columns'];
       this.tempCustomized = { columns: {} };

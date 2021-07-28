@@ -28,7 +28,7 @@ class SortTable extends React.Component {
     this.state = {
       sortColumn: 'id',
       data: fakeData,
-      hid: false,
+      hid: true,
       checkValues: [],
     };
     this.handleSortColumn = this.handleSortColumn.bind(this);
@@ -145,6 +145,7 @@ class SortTable extends React.Component {
         width: 130,
         sortable: true,
         hidden: this.state.hid,
+        hideable: false,
       },
       {
         title: '名',
@@ -199,7 +200,7 @@ class SortTable extends React.Component {
             console.log(data);
           }}
         />
-        <Button onClick={() => this.setState({ hid: !this.state.hid })}>cc</Button>
+        <Button onClick={() => this.setState({ hid: !this.state.hid })}>显隐控制</Button>
       </>
     );
   }
