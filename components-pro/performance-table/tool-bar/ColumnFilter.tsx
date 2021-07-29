@@ -84,38 +84,37 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
   @autobind
   @action
   handleMenuSelect({
-    key,
     item: {
       props: { value },
     },
   }) {
     const { tableStore: { node } } = this.context;
     value.hidden = false;
-    node.handleColumnHidden(key, false);
+    node._cacheCells = null;
+    node.forceUpdate();
   }
 
   @autobind
   @action
   handleMenuUnSelect({
-    key,
     item: {
       props: { value },
     },
   }) {
     const { tableStore: { node } } = this.context;
     value.hidden = true;
-    node.handleColumnHidden(key, true);
+    node._cacheCells = null;
+    node.forceUpdate();
   }
 
   @autobind
   getMenu() {
-    const { tableStore: { proPrefixCls, node, originalChildren } } = this.context;
+    const { tableStore: { proPrefixCls, originalChildren, originalColumns } } = this.context;
     const selfPrefixCls = `${proPrefixCls}-columns-chooser`;
-    const { props: { columns } } = node;
     const selectedKeys: Key[] = [];
     const menuColumns: [ColumnProps, ReactNode, Key][] = [];
-    if (columns && columns.length) {
-      columns.map((column: ColumnProps) => {
+    if (originalColumns && originalColumns.length) {
+      originalColumns.map((column: ColumnProps) => {
         const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
         const { hideable, hidden, title, dataIndex, key } = newColumn;
         if (hideable && title) {

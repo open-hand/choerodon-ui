@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Select`: Memory optimization.
 - 💄 `<pro>Table`: Optimize the performance and logic of adjusting column width.
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
+- 💄 `<pro>SelectBox`: Optimize the label content overflow tooltip.
 - 💄 `<pro>Trigger`: Support traversing iframes in the same domain.
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
@@ -30,6 +31,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that array typed `range` property reports errors in columns.
 - 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
 - 🐞 `<pro>SelectBox`: Fix the set value problem with data source binding.
+- 🐞 `<pro>PerformanceTable`: Fix an issue that sets the auto height scrollbar to mask content.
 - 🐞 `<pro>Lov`: Fix the problem that there is no animation in the pop-up window.
 
 ## 1.4.2

@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Select`：内存优化。
 - 💄 `<pro>Table`：优化调整列宽的性能和逻辑。
 - 💄 `<pro>SelectBox`: 调整 checkValueOnOptionsChange 默认值为 false。
+- 💄 `<pro>SelectBox`：优化 label 内容溢出提示。
 - 💄 `<pro>Trigger`: 支持穿越同域 iframe。
 - 🐞 修复循环依赖问题。
 - 🐞 `<pro>Table`: 修复右侧锁定列脚样式问题。
@@ -30,6 +31,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 range 为数组类型列报错的问题。
 - 🐞 `<pro>FormField`: 修复渲染器返回数字时不渲染的问题。
 - 🐞 `<pro>SelectBox`: 修复数据源绑定后设置问题。
+- 🐞 `<pro>PerformanceTable`: 修复设置自动高度时滚动条遮挡展示内容的问题。
 - 🐞 `<pro>Lov`: 修复弹窗没有动画的问题。
 
 ## 1.4.2

@@ -77,6 +77,7 @@ class EmptyDataTable extends React.Component {
         dataIndex: 'lastName',
         key: 'lastName',
         width: 150,
+        hideable: false,
       },
       {
         title: '名',
@@ -169,7 +170,7 @@ class EmptyDataTable extends React.Component {
             // onCollapse: this.handleCollapse,
           }}
           columns={columns}
-          data={fakeLargeData.slice(0, 500)}
+          data={fakeLargeData.slice(0, 20)}
           ref={tableRef}
           onRowClick={data => {
             console.log(data);

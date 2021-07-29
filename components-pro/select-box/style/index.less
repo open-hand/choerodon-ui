@@ -25,6 +25,20 @@
     min-height: .36rem;
   }
 
+  &-wrapper {
+    max-width: 100%;
+    .@{select-box-prefix} {
+      max-width: 100%;
+
+      .@{pro-checkbox-prefix-cls}-wrapper,
+      .@{pro-radio-prefix-cls}-wrapper {
+        max-width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
   &-wrapper,
   &-float-label&-wrapper,
   &-invalid&-wrapper {
