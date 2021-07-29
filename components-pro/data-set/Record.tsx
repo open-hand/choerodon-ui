@@ -836,6 +836,7 @@ export default class Record {
         }
       }
       if (data) {
+        this.data = data;
         this.processData(data, true);
         const { children } = dataSet;
         const keys = Object.keys(children);
