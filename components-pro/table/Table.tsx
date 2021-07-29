@@ -2050,7 +2050,7 @@ export default class Table extends DataSetComponent<TableProps> {
   getWidth(): number {
     const { wrapper } = this;
     if (wrapper) {
-      return Math.floor(wrapper.getBoundingClientRect().width);
+      return wrapper.offsetWidth;
     }
     return 0;
   }
