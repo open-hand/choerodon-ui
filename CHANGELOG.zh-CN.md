@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 virtualCell 不起作用。
 - 🐞 `<pro>Table`: 修复 dateTime 类型列渲染格式问题。
 - 🐞 `<pro>Table`: 修复 range 为数组类型列报错的问题。
+- 🐞 `<pro>Table`: 修复 maxHeight 和 minHeight 可能导致列不撑满的问题。
 - 🐞 `<pro>FormField`: 修复渲染器返回数字时不渲染的问题。
 - 🐞 `<pro>SelectBox`: 修复数据源绑定后设置问题。
 - 🐞 `<pro>PerformanceTable`: 修复设置自动高度时滚动条遮挡展示内容的问题。
