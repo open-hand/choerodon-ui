@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix `virtualCell` not working.
 - 🐞 `<pro>Table`: Fix the rendering format problem of `dateTime` type column.
 - 🐞 `<pro>Table`: Fix the problem that array typed `range` property reports errors in columns.
+- 🐞 `<pro>Table`: Fix the problem that `maxHeight` and `minHeight` of `style` property may cause the column to not fill up.
 - 🐞 `<pro>FormField`: Fix the problem of not rendering when the `renderer` returns a number.
 - 🐞 `<pro>SelectBox`: Fix the set value problem with data source binding.
 - 🐞 `<pro>PerformanceTable`: Fix an issue that sets the auto height scrollbar to mask content.
