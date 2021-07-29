@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>SelectBox`: Fix the set value problem with data source binding.
 - 🐞 `<pro>PerformanceTable`: Fix an issue that sets the auto height scrollbar to mask content.
 - 🐞 `<pro>Lov`: Fix the problem that there is no animation in the pop-up window.
+- 🐞 `<pro>DataSet.Record`: Fix the problem of missing data in write-back.
 
 ## 1.4.2
 

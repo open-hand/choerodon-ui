@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>SelectBox`: 修复数据源绑定后设置问题。
 - 🐞 `<pro>PerformanceTable`: 修复设置自动高度时滚动条遮挡展示内容的问题。
 - 🐞 `<pro>Lov`: 修复弹窗没有动画的问题。
+- 🐞 `<pro>DataSet.Record`: 修复回写数据遗漏的问题。
 
 ## 1.4.2
 
