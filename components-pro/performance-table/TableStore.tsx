@@ -166,11 +166,11 @@ export default class TableStore {
 
   highlightRowIndexs: number[] = [];
 
+  originalChildren: any[];
+
   @observable props: any;
 
   @observable originalColumns: ColumnProps[];
-
-  @observable originalChildren: any[];
 
   @observable customizedActiveKey: string[];
 

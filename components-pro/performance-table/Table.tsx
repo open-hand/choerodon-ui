@@ -647,7 +647,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     });
 
     // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
-    return flatten(flattenColumns).filter(col => col && !col.props.hidden);
+    return flatten(flattenColumns).filter(col => col && col.props && !col.props.hidden);
   }
 
   getCellDescriptor() {
