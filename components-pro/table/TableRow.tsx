@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, Key, ReactElement, ReactNode } from 'react';
+import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, Key, ReactElement, ReactNode, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, remove, set } from 'mobx';
@@ -57,6 +57,8 @@ export default class TableRow extends Component<TableRowProps, any> {
   isCurrent: boolean | undefined;
 
   node: HTMLTableRowElement | null;
+
+  intersectionRef?: RefObject<HTMLTableRowElement> | ((node?: HTMLTableRowElement | null | undefined) => void);
 
   @computed
   get expandable(): boolean {
@@ -152,6 +154,10 @@ export default class TableRow extends Component<TableRowProps, any> {
     const { provided } = this.props;
     if (provided) {
       provided.innerRef(node);
+    }
+    const { intersectionRef } = this;
+    if (typeof intersectionRef === 'function') {
+      intersectionRef(node);
     }
   }
 
@@ -614,20 +620,18 @@ export default class TableRow extends Component<TableRowProps, any> {
         >
           {
             ({ ref, inView }) => {
+              this.intersectionRef = ref;
               if (record.getState('__inView') !== true) {
                 record.setState('__inView', inView);
-              }
-              const trProps: { ref, style?: CSSProperties } = {
-                ref,
-              };
-              if (record.getState('__inView') !== true) {
                 const { rowHeight, aggregation } = tableStore;
-                trProps.style = {
-                  ...tr.props.style,
-                  height: pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)),
-                };
+                return cloneElement<any>(tr, {
+                  style: {
+                    ...rowProps.style,
+                    height: pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)),
+                  },
+                });
               }
-              return cloneElement<any>(tr, trProps);
+              return tr;
             }
           }
         </ReactIntersectionObserver>
