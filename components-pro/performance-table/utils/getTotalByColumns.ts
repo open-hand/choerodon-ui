@@ -1,18 +1,19 @@
 import * as React from 'react';
 import isPlainObject from 'lodash/isPlainObject';
 
-function getTotalByColumns(columns) {
+function getTotalByColumns(columns, state) {
   let totalFlexGrow = 0;
   let totalWidth = 0;
-
+  
   const count = items => {
-    Array.from(items).forEach(column => {
+    Array.from(items).forEach((column: any, index: number) => {
+      const { dataIndex } = column.props;
       // @ts-ignore
       if (React.isValidElement(column)) {
         // @ts-ignore
         const { flexGrow, width = 0 } = column.props;
         totalFlexGrow += flexGrow || 0;
-        totalWidth += flexGrow ? 0 : width;
+        totalWidth += flexGrow ? 0 : state[`${dataIndex}_${index}_width`] || width;
       } else if (Array.isArray(column)) {
         count(column);
       }
