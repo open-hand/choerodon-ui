@@ -114,7 +114,7 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     const selectedKeys: Key[] = [];
     const menuColumns: [ColumnProps, ReactNode, Key][] = [];
     if (originalColumns && originalColumns.length) {
-      originalColumns.map((column: ColumnProps) => {
+      originalColumns.forEach((column: ColumnProps) => {
         const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
         const { hideable, hidden, title, dataIndex, key } = newColumn;
         if (hideable && title) {
@@ -125,10 +125,10 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
           const header = typeof title === 'function' ? title() : title;
           menuColumns.push([column, header, keys]);
         }
-        return null;
       });
     } else if (originalChildren && originalChildren.length) {
-      React.Children.forEach(originalChildren, (column: React.ReactElement<ColumnProps>) => {
+      // todo children hidden
+      originalChildren.forEach((column: React.ReactElement<ColumnProps>) => {
         if (React.isValidElement(column)) {
           const columnChildren: any = column.props.children;
           const { hideable, hidden } = column.props;
