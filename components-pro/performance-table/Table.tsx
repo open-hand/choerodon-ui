@@ -389,6 +389,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (_cacheChildrenSize !== this._cacheChildrenSize) {
       this._cacheChildrenSize = _cacheChildrenSize;
       this._cacheCells = null;
+      this.tableStore.updateProps(nextProps, this);
     } else if (
       this.props.children !== nextProps.children ||
       this.props.columns !== nextProps.columns ||
