@@ -27,6 +27,7 @@ timeline: true
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
 - 🐞 `<pro>Table`: Fix `virtualCell` not working.
+- 🐞 `<pro>Table`: Fix the problem that drag and drop rows report error when `virtualCell` is set.
 - 🐞 `<pro>Table`: Fix the rendering format problem of `dateTime` type column.
 - 🐞 `<pro>Table`: Fix the problem that array typed `range` property reports errors in columns.
 - 🐞 `<pro>Table`: Fix the problem that `maxHeight` and `minHeight` of `style` property may cause the column to not fill up.
