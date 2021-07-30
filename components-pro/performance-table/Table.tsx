@@ -688,7 +688,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const { width: tableWidth } = this.state;
     const { sortColumn, rowHeight, showHeader } = this.props;
-    const { totalFlexGrow, totalWidth } = getTotalByColumns(columns);
+    const { totalFlexGrow, totalWidth } = getTotalByColumns(columns, this.state);
     const headerHeight = this.getTableHeaderHeight();
 
     React.Children.forEach(columns, (column, index) => {
