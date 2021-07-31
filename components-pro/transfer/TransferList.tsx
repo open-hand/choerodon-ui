@@ -22,7 +22,6 @@ export interface TransferListProps extends SelectProps {
 
 @observer
 export default class TransferList extends Select<TransferListProps> {
-  @computed
   get popup() {
     return true;
   }

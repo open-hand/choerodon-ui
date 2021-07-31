@@ -1,10 +1,10 @@
 import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import { action, get, runInAction, set } from 'mobx';
 import ReactIntersectionObserver from 'react-intersection-observer';
 import { observer } from 'mobx-react';
 import raf from 'raf';
 import omit from 'lodash/omit';
+import noop from 'lodash/noop';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
@@ -15,7 +15,6 @@ import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import Icon from '../icon';
-import DataSet from '../data-set/DataSet';
 import Field from '../data-set/Field';
 import EventManager from '../_util/EventManager';
 import { getAlignByField, getColumnKey, getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
@@ -30,7 +29,6 @@ import { CUSTOMIZED_KEY } from './TableStore';
 import ColumnGroup from './ColumnGroup';
 
 export interface TableHeaderCellProps extends ElementProps {
-  dataSet: DataSet;
   prevColumn?: ColumnProps;
   column: ColumnProps;
   columnGroup: ColumnGroup;
@@ -38,16 +36,12 @@ export interface TableHeaderCellProps extends ElementProps {
   rowSpan?: number;
   colSpan?: number;
   rowIndex?: number;
-  getHeaderNode: () => HTMLTableSectionElement | null;
+  getHeaderNode?: () => HTMLTableSectionElement | null;
 }
 
 @observer
 export default class TableHeaderCell extends Component<TableHeaderCellProps, any> {
   static displayName = 'TableHeaderCell';
-
-  static propTypes = {
-    column: PropTypes.object.isRequired,
-  };
 
   static contextType = TableContext;
 
@@ -65,9 +59,10 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   @autobind
   handleClick() {
-    const { column, dataSet } = this.props;
+    const { column } = this.props;
     const { name } = column;
     if (name) {
+      const { dataSet } = this.context;
       dataSet.sort(name);
     }
   }
@@ -95,7 +90,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   getNode(column) {
-    const { getHeaderNode } = this.props;
+    const { getHeaderNode = noop } = this.props;
     const headerDom: Element | null = getHeaderNode();
     if (headerDom) {
       return headerDom.querySelector(`[data-index="${getColumnKey(column)}"]`);
@@ -170,8 +165,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   @action
   resizeDoubleClick(): void {
     const column = this.resizeColumn;
-    const { tableStore } = this.context;
-    const { prefixCls, node: { element } } = tableStore;
+    const { prefixCls, tableStore } = this.context;
+    const { node: { element } } = tableStore;
     if (column) {
       const maxWidth = Math.max(
         ...[
@@ -222,7 +217,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   @action
   resizeEnd(): void {
     const {
-      tableStore,
+      tableStore, prefixCls,
     } = this.context;
     tableStore.columnResizing = false;
     this.setSplitLineHidden(true);
@@ -233,7 +228,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       if (newWidth !== resizeColumn.width) {
         const { width } = resizeColumn;
         let { _group } = resizeColumn;
-        const { node: { element }, prefixCls } = tableStore;
+        const { node: { element } } = tableStore;
         while (_group) {
           const { column } = _group;
           if (column.width === undefined) {
@@ -300,7 +295,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   renderResizer() {
     const { prevColumn, column } = this.props;
-    const { tableStore: { prefixCls, props: { autoMaxWidth } } } = this.context;
+    const { prefixCls, tableStore: { props: { autoMaxWidth } } } = this.context;
     const resizerPrefixCls = `${prefixCls}-resizer`;
     const pre = prevColumn && prevColumn.resizable && (
       <div
@@ -326,7 +321,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   getHelpIcon(field?: Field) {
     const { column } = this.props;
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     const {
       help,
       showHelp,
@@ -345,7 +340,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   getSortIcon() {
     const { column } = this.props;
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     const {
       aggregation,
       sortable,
@@ -358,16 +353,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   @autobind
   getHeader() {
-    const { column, dataSet } = this.props;
-    const { tableStore } = this.context;
-    return getHeader(column, dataSet, tableStore);
+    const { column } = this.props;
+    const { dataSet, aggregation } = this.context;
+    return getHeader(column, dataSet, aggregation);
   }
 
   render() {
-    const { column, columnGroup, dataSet, rowSpan, colSpan, className, rowIndex } = this.props;
-    const { tableStore } = this.context;
+    const { column, columnGroup, rowSpan, colSpan, className, rowIndex, hidden } = this.props;
+    const { prefixCls, tableStore, dataSet } = this.context;
     const {
-      prefixCls,
       rowHeight,
       columnResizable,
     } = tableStore;
@@ -455,7 +449,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
     }
 
-    if (columnKey === CUSTOMIZED_KEY && tableStore.rightLeafColumns.filter(({ hidden }) => !hidden).length === 1 && tableStore.stickyRight) {
+    if (columnKey === CUSTOMIZED_KEY && tableStore.rightLeafColumns.filter((col) => !col.hidden).length === 1 && tableStore.stickyRight && tableStore.overflowX) {
       classList.push(`${prefixCls}-cell-sticky-shadow`);
     }
 
@@ -476,7 +470,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       </th>
     );
 
-    if (tableStore.virtualCell) {
+    if (!hidden && tableStore.virtualCell) {
       if (tableStore.overflowX) {
         const { node } = tableStore;
         return (

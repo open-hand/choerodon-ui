@@ -242,7 +242,7 @@ export type MultipleRenderOption = {
   processRenderer(v: any, repeat?: number): ReactNode;
   renderValidationResult(result: ValidationResult): ReactNode;
   handleMutipleValueRemove?(e, value: any, index: number): void;
-  isValidationMessageHidden(message?: ReactNode): boolean;
+  isValidationMessageHidden(message?: ReactNode): boolean | undefined;
   showValidationMessage(e, message?: ReactNode): void;
   getKey?(v: any): string;
 }
@@ -263,7 +263,7 @@ export type MultiLineRenderOption = {
   tooltip?: Tooltip;
   labelTooltip?: Tooltip;
   renderValidationResult(result: ValidationResult): ReactNode;
-  isValidationMessageHidden(message?: ReactNode): boolean;
+  isValidationMessageHidden(message?: ReactNode): boolean | undefined;
   processValue(value): ReactNode;
 }
 

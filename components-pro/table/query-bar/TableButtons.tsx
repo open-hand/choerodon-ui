@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { memo, ReactElement, ReactNode } from 'react';
 import { ButtonProps } from '../../button/Button';
 
 export interface TableButtonProps {
@@ -7,7 +7,7 @@ export interface TableButtonProps {
   children?: ReactNode;
 }
 
-export default function TableButtons({ prefixCls, buttons, children }: TableButtonProps) {
+export default memo(function TableButtons({ prefixCls, buttons, children }: TableButtonProps) {
   const buttonGroup = buttons.length ? (
     <span className={`${prefixCls}-toolbar-button-group`}>{buttons}</span>
   ) : null;
@@ -21,4 +21,4 @@ export default function TableButtons({ prefixCls, buttons, children }: TableButt
   }
 
   return null;
-}
+});

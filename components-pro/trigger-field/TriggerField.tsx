@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 import { PropTypes as MobxPropTypes } from 'mobx-react';
 import Trigger from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
@@ -155,7 +155,6 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   @observable statePopup: boolean;
 
-  @computed
   get popup(): boolean {
     return this.statePopup;
   }

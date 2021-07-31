@@ -20,14 +20,17 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 新增 customizedCode, customizable, columnDraggable, columnTitleEditable, columnsDragRender 属性，支持个性化。
 - 💄 `<pro>DataSet`：内存优化。
 - 💄 `<pro>Select`：内存优化。
+- 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Table`：优化调整列宽的性能和逻辑。
 - 💄 `<pro>SelectBox`: 调整 checkValueOnOptionsChange 默认值为 false。
 - 💄 `<pro>SelectBox`：优化 label 内容溢出提示。
 - 💄 `<pro>Trigger`: 支持穿越同域 iframe。
 - 🐞 修复循环依赖问题。
+- 🐞 `<pro>DataSet`: 修复新建记录数大于分页数时向前翻页问题。
 - 🐞 `<pro>Table`: 修复右侧锁定列脚样式问题。
 - 🐞 `<pro>Table`: 修复 virtualCell 不起作用。
 - 🐞 `<pro>Table`: 修复设置了 virtualCell 时拖拽行报错的问题。
+- 🐞 `<pro>Table`: 修复 showHeader 为 false 时虚拟单元格不显示的问题。
 - 🐞 `<pro>Table`: 修复 dateTime 类型列渲染格式问题。
 - 🐞 `<pro>Table`: 修复 range 为数组类型列报错的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 和 minHeight 可能导致列不撑满的问题。

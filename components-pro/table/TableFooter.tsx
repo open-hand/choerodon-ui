@@ -1,5 +1,4 @@
 import React, { Component, DetailedHTMLProps, Key, ThHTMLAttributes } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, set } from 'mobx';
 import classNames from 'classnames';
@@ -9,7 +8,6 @@ import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import { ColumnLock, DragColumnAlign } from './enum';
-import DataSet from '../data-set/DataSet';
 import TableFooterCell, { TableFooterCellProps } from './TableFooterCell';
 import { getColumnKey, getHeight, isStickySupport } from './utils';
 import autobind from '../_util/autobind';
@@ -17,20 +15,12 @@ import ResizeObservedRow from './ResizeObservedRow';
 import { CUSTOMIZED_KEY } from './TableStore';
 
 export interface TableFooterProps extends ElementProps {
-  dataSet: DataSet;
   lock?: ColumnLock | boolean;
 }
 
 @observer
 export default class TableFooter extends Component<TableFooterProps, any> {
   static displayName = 'TableFooter';
-
-  static propTypes = {
-    lock: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
-    ]),
-  };
 
   static contextType = TableContext;
 
@@ -53,9 +43,9 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   }
 
   getTds() {
-    const { lock, dataSet } = this.props;
-    const { tableStore } = this.context;
-    const { prefixCls, customizable, rowDraggable, dragColumnAlign } = tableStore;
+    const { lock } = this.props;
+    const { prefixCls, tableStore } = this.context;
+    const { customizable, rowDraggable, dragColumnAlign } = tableStore;
     const hasPlaceholder = tableStore.overflowY && lock !== ColumnLock.left;
     const right = hasPlaceholder ? measureScrollbar() : 0;
     const tds = this.leafColumns.map((column, index, cols) => {
@@ -69,7 +59,6 @@ export default class TableFooter extends Component<TableFooterProps, any> {
         return (
           <TableFooterCell
             key={key}
-            dataSet={dataSet}
             column={column}
             right={right}
             {...props}
@@ -109,9 +98,11 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   render() {
     const { lock } = this.props;
     const {
+      prefixCls,
+      rowHeight,
       tableStore,
     } = this.context;
-    const { prefixCls, autoFootHeight, rowHeight, overflowX } = tableStore;
+    const { autoFootHeight, overflowX } = tableStore;
     const tds = this.getTds();
     const tr = (
       <tr

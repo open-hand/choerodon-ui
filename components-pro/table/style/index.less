@@ -433,8 +433,18 @@
     pointer-events: none;
   }
 
+  &-sticky-shadow {
+    z-index: 2;
+    border-color: transparent;
+  }
+
   &-sticky-left&-sticky-shadow {
+    border-left: @table-border;
     box-shadow: inset 0.06rem 0 0.06rem -0.04rem @shadow-color;
+  }
+
+  &-sticky-right&-sticky-shadow {
+    border-right: @table-border;
   }
 
   &-sticky-right&-sticky-shadow,
@@ -1288,10 +1298,6 @@
         border-bottom-color: @table-border-color;
       }
     }
-  }
-
-  &-thead-hidden {
-    display: none;
   }
 
   &-bordered {

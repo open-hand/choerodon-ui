@@ -11,10 +11,10 @@ export interface ItemTitleProps {
   provided?: DraggableProvided;
 }
 
-const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
+const ItemTitle: FunctionComponent<ItemTitleProps> = observer(function ItemTitle(props) {
   const { record, provided } = props;
-  const { tableStore } = useContext(TableContext);
-  const { dataSet, columnTitleEditable } = tableStore;
+  const { dataSet, tableStore, aggregation } = useContext(TableContext);
+  const { columnTitleEditable } = tableStore;
   const editing = record.getState('editing');
   const handleEditBlur = useCallback(() => {
     record.setState('editing', false);
@@ -27,7 +27,7 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
     name: record.get('name'),
     title,
     header: record.get('header'),
-  }, dataSet, tableStore);
+  }, dataSet, aggregation);
   const titleEditable = columnTitleEditable && record.get('titleEditable') !== false;
 
   return (

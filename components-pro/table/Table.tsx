@@ -11,10 +11,11 @@ import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, computed, get, IReactionDisposer, reaction, toJS } from 'mobx';
+import { action, get, IReactionDisposer, reaction, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
+  DraggableProvided,
   DraggableRubric,
   DraggableStateSnapshot,
   DroppableProps,
@@ -29,7 +30,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
-import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
+import TableHeaderCell from './TableHeaderCell';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
@@ -40,7 +41,7 @@ import autobind from '../_util/autobind';
 import Pagination, { PaginationProps } from '../pagination/Pagination';
 import Spin, { SpinProps } from '../spin';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
-import TableContext from './TableContext';
+import { TableContextProvider } from './TableContext';
 import TableWrapper from './TableWrapper';
 import TableTBody from './TableTBody';
 import TableFooter from './TableFooter';
@@ -78,7 +79,6 @@ import {
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
-import ModalProvider from '../modal-provider/ModalProvider';
 import SelectionTips from './SelectionTips';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { Size } from '../core/enum';
@@ -134,7 +134,7 @@ export interface expandIconProps {
   expanded: boolean;
   onExpand: Function;
   record: Record;
-  expandable: boolean;
+  expandable?: boolean;
   needIndentSpaced: boolean;
 }
 
@@ -191,12 +191,14 @@ export interface Instance {
 /**
  * DraggableRubric 可以获取拖动起来item的index和id从列表获取信息
  */
-export interface DragTableHeaderCellProps extends TableHeaderCellProps {
-  rubric: DraggableRubric
+export interface DragTableHeaderCellProps {
+  rubric: DraggableRubric;
+  snapshot: DraggableStateSnapshot;
+  provided: DraggableProvided;
 }
 
 export interface DragTableRowProps extends TableRowProps {
-  rubric: DraggableRubric
+  rubric: DraggableRubric;
 }
 
 export interface RowRenderIcon {
@@ -212,8 +214,8 @@ export interface ColumnRenderIcon {
 export interface DragRender {
   droppableProps?: DroppableProps;
   draggableProps?: DraggableProps;
-  renderClone?: ((dragRenderProps: DragTableRowProps) => ReactElement<any>) | ((dragRenderProps: DragTableHeaderCellProps) => ReactElement<any>);
-  renderIcon?: ((rowRenderIcon: RowRenderIcon) => ReactElement<any>) | ((columnRenderIcon: ColumnRenderIcon) => ReactElement<any>);
+  renderClone?: ((dragRenderProps: DragTableRowProps | DragTableHeaderCellProps) => ReactElement<any>);
+  renderIcon?: ((rowRenderIcon: RowRenderIcon | ColumnRenderIcon) => ReactElement<any>);
 }
 
 export interface Customized {
@@ -229,13 +231,14 @@ export interface Customized {
 
 let _instance;
 // 构造一个单例table来防止body下不能有table元素的报错
-export const instance = (wrapperClassName: string, prefixCls?: string): Instance => {
+export const instance = (wrapperClassName: string | undefined, prefixCls?: string): Instance => {
   // Using a table as the portal so that we do not get react
   // warnings when mounting a tr element
   const _tableContain = (): Instance => {
     const table: HTMLElement = document.createElement('table');
-    table.className = wrapperClassName;
-
+    if (wrapperClassName) {
+      table.className = wrapperClassName;
+    }
     const thead: HTMLElement = document.createElement('thead');
     thead.className = `${prefixCls}-thead`;
     table.appendChild(thead);
@@ -265,6 +268,7 @@ export const instance = (wrapperClassName: string, prefixCls?: string): Instance
 
 export interface TableProps extends DataSetComponentProps {
   columns?: ColumnProps[];
+  children?: ReactNode;
   /**
    * 表头
    */
@@ -404,6 +408,10 @@ export interface TableProps extends DataSetComponentProps {
    * 自定义展开图标
    */
   expandIcon?: (props: expandIconProps) => ReactNode;
+  /**
+   * 展开图标是否单独单元格展示
+   */
+  expandIconAsCell?: boolean;
   /**
    * 展开图标所在列索引
    */
@@ -730,6 +738,8 @@ export default class Table extends DataSetComponent<TableProps> {
     rowDraggable: PropTypes.bool,
     columnsDragRender: PropTypes.object,
     expandIcon: PropTypes.func,
+    expandIconAsCell: PropTypes.bool,
+    expandIconColumnIndex: PropTypes.number,
     rowDragRender: PropTypes.object,
     onDragEndBefore: PropTypes.func,
     /**
@@ -808,29 +818,22 @@ export default class Table extends DataSetComponent<TableProps> {
 
   bodyHeightReaction?: IReactionDisposer;
 
-  @computed
-  get tableContext() {
-    return {
-      tableStore: this.tableStore,
-    };
-  }
-
   get currentRow(): HTMLTableRowElement | null {
-    const { tableStore: { prefixCls } } = this;
+    const { prefixCls } = this;
     return this.element.querySelector(
       `.${prefixCls}-row-current`,
     ) as HTMLTableRowElement | null;
   }
 
   get firstRow(): HTMLTableRowElement | null {
-    const { tableStore: { prefixCls } } = this;
+    const { prefixCls } = this;
     return this.element.querySelector(
       `.${prefixCls}-row:first-child`,
     ) as HTMLTableRowElement | null;
   }
 
   get lastRow(): HTMLTableRowElement | null {
-    const { tableStore: { prefixCls } } = this;
+    const { prefixCls } = this;
     return this.element.querySelector(
       `.${prefixCls}-row:last-child`,
     ) as HTMLTableRowElement | null;
@@ -858,6 +861,15 @@ export default class Table extends DataSetComponent<TableProps> {
 
   useFocusedClassName() {
     return false;
+  }
+
+  setCode(props) {
+    const { customizedCode } = props;
+    if (customizedCode) {
+      this.code = customizedCode;
+    } else {
+      super.setCode(props);
+    }
   }
 
   @autobind
@@ -1321,7 +1333,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getClassName(): string | undefined {
     const {
-      tableStore: { prefixCls, border, parityRow, aggregation, size },
+      tableStore: { border, parityRow, aggregation, size },
+      prefixCls,
     } = this;
     return super.getClassName({
       [`${prefixCls}-${size}`]: size !== Size.default,
@@ -1409,9 +1422,9 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      tableContext,
-      tableStore: { prefixCls, virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      tableStore: { virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
+        dataSet,
         style,
         treeQueryExpanded,
         spin,
@@ -1425,73 +1438,101 @@ export default class Table extends DataSetComponent<TableProps> {
         summaryBar,
         dynamicFilterBar,
         clientExportQuantity,
+        indentSize,
+        selectionMode,
+        rowRenderer,
+        onRow,
+        expandedRowRenderer,
+        expandRowByClick,
+        rowDragRender,
+        columnsDragRender,
+        mode,
+        pristine,
+        showHeader,
+        showSelectionCachedButton,
       },
+      tableStore,
+      prefixCls,
     } = this;
     const content = this.getTable();
     const pagination = this.getPagination(TablePaginationPosition.top);
     const tableSpinProps = getConfig('tableSpinProps');
     const styleHeight = style ? toPx(style.height) : 0;
-
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
         <div {...this.getWrapperProps()}>
-          <TableContext.Provider value={tableContext}>
-            <ModalProvider>
-              {this.getHeader()}
-              <TableQueryBar
-                buttons={buttons}
-                pagination={pagination}
-                queryFields={queryFields}
-                clientExportQuantity={clientExportQuantity}
-                summaryBar={summaryBar}
-                dynamicFilterBar={dynamicFilterBar}
-                queryFieldsLimit={queryFieldsLimit}
-                summaryFieldsLimit={summaryFieldsLimit}
-                filterBarFieldName={filterBarFieldName}
-                filterBarPlaceholder={filterBarPlaceholder}
-                treeQueryExpanded={treeQueryExpanded}
-              />
-              <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
-                {
-                  virtual && virtualSpin && (
-                    <div
-                      ref={this.saveVirtualSpinRef}
-                      style={{ display: 'none' }}
-                    >
-                      <Spin
-                        key="virtual"
-                        spinning
-                        style={{
-                          height: pxToRem(styleHeight),
-                          lineHeight: pxToRem(styleHeight),
-                          position: 'absolute',
-                          width: '100%',
-                          zIndex: 4,
-                        }}
-                        {...tableSpinProps}
-                        {...spin}
-                      />
-                    </div>
-                  )
-                }
-                <div {...this.getOtherProps()}>
+          <TableContextProvider
+            code={this.code}
+            prefixCls={prefixCls}
+            dataSet={dataSet}
+            tableStore={tableStore}
+            indentSize={indentSize!}
+            selectionMode={selectionMode}
+            onRow={onRow}
+            rowRenderer={rowRenderer}
+            expandedRowRenderer={expandedRowRenderer}
+            expandRowByClick={expandRowByClick}
+            rowDragRender={rowDragRender}
+            columnsDragRender={columnsDragRender}
+            showSelectionCachedButton={showSelectionCachedButton}
+            pristine={pristine}
+            showHeader={showHeader}
+            isTree={mode === TableMode.tree}
+          >
+            {this.getHeader()}
+            <TableQueryBar
+              buttons={buttons}
+              pagination={pagination}
+              queryFields={queryFields}
+              clientExportQuantity={clientExportQuantity}
+              summaryBar={summaryBar}
+              dynamicFilterBar={dynamicFilterBar}
+              queryFieldsLimit={queryFieldsLimit}
+              summaryFieldsLimit={summaryFieldsLimit}
+              filterBarFieldName={filterBarFieldName}
+              filterBarPlaceholder={filterBarPlaceholder}
+              treeQueryExpanded={treeQueryExpanded}
+            />
+            <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
+              {
+                virtual && virtualSpin && (
                   <div
-                    className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
-                    onScroll={this.handleBodyScroll}
+                    ref={this.saveVirtualSpinRef}
+                    style={{ display: 'none' }}
                   >
-                    {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
-                    {content}
-                    {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+                    <Spin
+                      key="virtual"
+                      spinning
+                      style={{
+                        height: pxToRem(styleHeight),
+                        lineHeight: pxToRem(styleHeight),
+                        position: 'absolute',
+                        width: '100%',
+                        zIndex: 4,
+                      }}
+                      {...tableSpinProps}
+                      {...spin}
+                    />
                   </div>
-                  {isStickySupport() && overflowX && <StickyShadow position="left" />}
-                  {isStickySupport() && overflowX && <StickyShadow position="right" />}
-                  <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
-                  {this.getFooter()}
+                )
+              }
+              <div {...this.getOtherProps()}>
+                <div
+                  className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
+                  onScroll={this.handleBodyScroll}
+                >
+                  {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
+                  {content}
+                  {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
                 </div>
-              </Spin>
-              {this.getPagination(TablePaginationPosition.bottom)}
-            </ModalProvider>
-          </TableContext.Provider>
+                {isStickySupport() && overflowX && <StickyShadow position="left" />}
+                {isStickySupport() && overflowX && <StickyShadow position="right" />}
+                <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
+                {this.getFooter()}
+              </div>
+            </Spin>
+            {this.getPagination(TablePaginationPosition.bottom)}
+          </TableContextProvider>
         </div>
       </ReactResizeObserver>
     );
@@ -1634,7 +1675,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   setScrollPositionClassName(target?: any): void {
-    if (this.tableStore.isAnyColumnsLock) {
+    const { tableStore } = this;
+    if (tableStore.isAnyColumnsLock && tableStore.overflowX) {
       const node = target || this.tableBodyWrap;
       if (node) {
         const scrollToLeft = node.scrollLeft === 0;
@@ -1735,7 +1777,7 @@ export default class Table extends DataSetComponent<TableProps> {
       props: { header, dataSet },
     } = this;
     if (header) {
-      const { prefixCls } = this.tableStore;
+      const { prefixCls } = this;
       const data = dataSet ? dataSet.records : [];
       return (
         <div key="header" className={`${prefixCls}-header`}>
@@ -1750,7 +1792,7 @@ export default class Table extends DataSetComponent<TableProps> {
       props: { footer, dataSet },
     } = this;
     if (footer) {
-      const { prefixCls } = this.tableStore;
+      const { prefixCls } = this;
       const data = dataSet ? dataSet.records : [];
       return (
         <div key="footer" className={`${prefixCls}-footer`}>
@@ -1763,7 +1805,8 @@ export default class Table extends DataSetComponent<TableProps> {
   getPagination(position: TablePaginationPosition): ReactElement<PaginationProps> | undefined {
     const {
       props: { dataSet, selectionMode },
-      tableStore: { prefixCls, pagination, showSelectionTips },
+      prefixCls,
+      tableStore: { pagination, showSelectionTips },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
       const paginationPosition = getPaginationPosition(pagination);
@@ -1790,7 +1833,8 @@ export default class Table extends DataSetComponent<TableProps> {
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
     if ((!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType) || tableStore.height !== undefined) {
-      const { prefixCls, leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = tableStore;
+      const { leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = tableStore;
+      const { prefixCls } = this;
       let tableHeadRef;
       let tableBodyRef;
       let tableFootRef;
@@ -1859,23 +1903,22 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getLeftFixedTable(): ReactNode {
-    const { tableStore } = this;
-    const { prefixCls } = tableStore;
+    const { tableStore, prefixCls } = this;
     const table = this.getTable(ColumnLock.left);
     return (
-      <div className={classNames(`${prefixCls}-fixed-left`, { [`${prefixCls}-sticky-left`]: !isStickySupport() && tableStore.stickyLeft })}>
+      <div className={classNames(`${prefixCls}-fixed-left`, { [`${prefixCls}-sticky-left`]: tableStore.stickyLeft })}>
         {table}
       </div>
     );
   }
 
   getRightFixedTable(): ReactNode | undefined {
-    const { tableStore } = this;
-    const { prefixCls } = tableStore;
+    const { tableStore, prefixCls } = this;
     const table = this.getTable(ColumnLock.right);
     return (
-      <div
-        className={classNames(`${prefixCls}-fixed-right`, { [`${prefixCls}-sticky-right`]: !isStickySupport() && tableStore.stickyRight })}>{table}</div>
+      <div className={classNames(`${prefixCls}-fixed-right`, { [`${prefixCls}-sticky-right`]: tableStore.stickyRight })}>
+        {table}
+      </div>
     );
   }
 
@@ -1890,17 +1933,13 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableHeader(lock?: ColumnLock | boolean): ReactNode {
-    const { props: { dataSet } } = this;
     return (
-      <TableHeader key="thead" ref={lock ? undefined : this.saveTableHeader} lock={lock} dataSet={dataSet} />
+      <TableHeader key="thead" ref={lock ? undefined : this.saveTableHeader} lock={lock} />
     );
   }
 
   getTableFooter(lock?: ColumnLock | boolean): ReactNode {
-    const {
-      props: { dataSet },
-    } = this;
-    return <TableFooter key="tfoot" ref={lock ? undefined : this.saveTableFooter} lock={lock} dataSet={dataSet} />;
+    return <TableFooter key="tfoot" ref={lock ? undefined : this.saveTableFooter} lock={lock} />;
   }
 
   getStyleHeight(): number | undefined {
@@ -1921,7 +1960,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       wrapper, element, tableBodyWrap,
       tableStore: {
-        prefixCls, autoHeight,
+        autoHeight,
         customized: { heightType, height, heightDiff },
         tempCustomized,
       },
@@ -1959,6 +1998,7 @@ export default class Table extends DataSetComponent<TableProps> {
         // 保证max高度和Height维持一致防止scroll问题 maxHeight - 外框paddingBottom 以及 diff 和其他 tableBody 以外的高度。
         if (tableBodyWrap) {
           let maxBodyHeight = maxHeight;
+          const { prefixCls } = this;
           const tableHeader: HTMLTableSectionElement | null = element.querySelector(
             `.${prefixCls}-thead`,
           );

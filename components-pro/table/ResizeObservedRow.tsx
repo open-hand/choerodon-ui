@@ -1,26 +1,23 @@
-import React, { Component, Key } from 'react';
+import React, { FunctionComponent, Key, memo, useCallback } from 'react';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
-import autobind from '../_util/autobind';
 
 export interface ResizeObservedRowProps {
   onResize: (rowIndex: Key, height: number) => void;
   rowIndex: Key;
 }
 
-export default class ResizeObservedRow extends Component<ResizeObservedRowProps> {
-
-  @autobind
-  handleResize(_width: number, height: number) {
-    const { onResize, rowIndex } = this.props;
+const ResizeObservedRow: FunctionComponent<ResizeObservedRowProps> = memo(function ResizeObservedRow(props) {
+  const { children, onResize, rowIndex } = props;
+  const handleResize = useCallback((_width: number, height: number) => {
     onResize(rowIndex, height);
-  }
+  }, [onResize, rowIndex]);
+  return (
+    <ReactResizeObserver resizeProp="height" onResize={handleResize}>
+      {children}
+    </ReactResizeObserver>
+  );
+});
 
-  render() {
-    const { children } = this.props;
-    return (
-      <ReactResizeObserver resizeProp="height" onResize={this.handleResize}>
-        {children}
-      </ReactResizeObserver>
-    );
-  }
-}
+ResizeObservedRow.displayName = 'ResizeObservedRow';
+
+export default ResizeObservedRow;

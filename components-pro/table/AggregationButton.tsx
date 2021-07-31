@@ -16,8 +16,7 @@ export interface AggregationButtonProps {
 
 const AggregationButton: FunctionComponent<AggregationButtonProps> = (props) => {
   const { expanded, record, column } = props;
-  const { tableStore } = useContext(TableContext);
-  const { prefixCls } = tableStore;
+  const { tableStore, prefixCls } = useContext(TableContext);
   const handleMenuClick = useCallback(action(({ key }: Partial<ClickParam>) => {
     switch (key) {
       case 'cell':

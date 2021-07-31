@@ -1,5 +1,4 @@
 import React, { CSSProperties, FunctionComponent, HTMLProps, useCallback, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { get } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
@@ -16,7 +15,6 @@ import { getColumnKey, getColumnLock, getHeader, isStickySupport } from './utils
 import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
 import AggregationButton from './AggregationButton';
-import useComputed from '../use-computed';
 
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
@@ -28,10 +26,9 @@ export interface TableCellProps extends ElementProps {
   disabled?: boolean;
 }
 
-const TableCell: FunctionComponent<TableCellProps> = observer((props) => {
+const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell(props) {
   const { column, record, isDragging, provided, colSpan, className, children, disabled } = props;
-  const { tableStore } = useContext(TableContext);
-  const { prefixCls, dataSet } = tableStore;
+  const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = getConfig('tableColumnOnCell');
   const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean) => (
@@ -41,10 +38,11 @@ const TableCell: FunctionComponent<TableCellProps> = observer((props) => {
       style={onCellStyle}
       disabled={disabled}
       inAggregation={inAggregation}
+      prefixCls={cellPrefix}
     >
       {children}
     </TableCellInner>
-  ), [record, disabled, children]);
+  ), [record, disabled, children, cellPrefix]);
 
   const getColumnsInnerNode = useCallback((columns: ColumnProps[]) => {
     return columns.map((col) => {
@@ -62,7 +60,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer((props) => {
             })
             : {};
         const columnKey = getColumnKey(col);
-        const header = getHeader(col, dataSet, tableStore);
+        const header = getHeader(col, dataSet, tableAggregation);
         // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
         const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
         if (childColumns && childColumns.length) {
@@ -92,9 +90,9 @@ const TableCell: FunctionComponent<TableCellProps> = observer((props) => {
       }
       return undefined;
     });
-  }, [tableStore, record, dataSet, cellPrefix, getInnerNode, tableColumnOnCell]);
-  const renderInnerNode = useCallback((aggregation, onCellStyle?: CSSProperties) => {
-    if (tableStore.expandIconAsCell && children) {
+  }, [tableStore, record, dataSet, cellPrefix, getInnerNode, tableColumnOnCell, tableAggregation]);
+  const renderInnerNode = (aggregation, onCellStyle?: CSSProperties) => {
+    if (expandIconAsCell && children) {
       return children;
     }
     if (aggregation) {
@@ -128,17 +126,17 @@ const TableCell: FunctionComponent<TableCellProps> = observer((props) => {
           );
           return (
             <div className={`${cellPrefix}-inner`}>
-              {renderer({ text, record, dataSet, aggregation: tableStore.aggregation })}
+              {renderer({ text, record, dataSet, aggregation: tableAggregation })}
             </div>
           );
         }
       }
     }
     return getInnerNode(column, onCellStyle);
-  }, [tableStore, column, record, dataSet, children, getInnerNode]);
+  };
   const { style, lock, _group } = column;
-  const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
-  const baseStyle: CSSProperties | undefined = useComputed(() => {
+  const columnLock = isStickySupport() && getColumnLock(lock);
+  const baseStyle: CSSProperties | undefined = (() => {
     if (columnLock) {
       if (_group) {
         if (columnLock === ColumnLock.left) {
@@ -156,7 +154,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer((props) => {
       }
     }
     return style;
-  }, [style, columnLock, _group]);
+  })();
   const baseClassName = classNames(cellPrefix, {
     [`${cellPrefix}-fix-${columnLock}`]: columnLock,
   });
@@ -223,10 +221,5 @@ const TableCell: FunctionComponent<TableCellProps> = observer((props) => {
 });
 
 TableCell.displayName = 'TableCell';
-
-TableCell.propTypes = {
-  column: PropTypes.object.isRequired,
-  record: PropTypes.instanceOf(Record).isRequired,
-};
 
 export default TableCell;

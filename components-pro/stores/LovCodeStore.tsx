@@ -75,13 +75,11 @@ function generateConditionField(
 function generateGridField(
   fields: FieldProps[],
   { gridField, gridFieldName, display, fieldProps }: LovConfigItem,
-  valueField?: string,
 ): void {
   if (gridField === 'Y') {
     fields.push({
       name: gridFieldName,
       label: display,
-      unique: valueField === gridFieldName,
       ...fieldProps,
     });
   }
@@ -147,7 +145,8 @@ export class LovCodeStore {
   getLovDataSet(code: string, field?: Field, dataSetProps?: DataSetProps): DataSet | undefined {
     const config = this.getConfig(code);
     if (config) {
-      const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag, dataSetProps: configDataSetProps } = config;
+      const { lovPageSize, lovItems, parentIdField, idField, treeFlag, dataSetProps: configDataSetProps } = config;
+      const valueField = field ? field.get('valueField') : config.valueField;
       const dsProps: DataSetProps = {
         transport: {
           read: this.getQueryAxiosConfig(code, field, config),
@@ -174,7 +173,7 @@ export class LovCodeStore {
           .reduce(
             (obj, configItem) => {
               generateConditionField(obj.querys, configItem);
-              generateGridField(obj.fields, configItem, valueField);
+              generateGridField(obj.fields, configItem);
               return obj;
             },
             { querys: [] as FieldProps[], fields: [] as FieldProps[] },

@@ -20,14 +20,17 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added personalization features, including `customizedCode`, `customizable`, `columnDraggable`, `columnTitleEditable`, `columnsDragRender` properties.
 - 💄 `<pro>DataSet`: Memory optimization.
 - 💄 `<pro>Select`: Memory optimization.
+- 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Table`: Optimize the performance and logic of adjusting column width.
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
 - 💄 `<pro>SelectBox`: Optimize the label content overflow tooltip.
 - 💄 `<pro>Trigger`: Support traversing iframes in the same domain.
 - 🐞 Fix the circular dependency problem.
+- 🐞 `<pro>DataSet`: Fix the problem of page forwarding when the number of newly created records is greater than the number of pages.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
 - 🐞 `<pro>Table`: Fix `virtualCell` not working.
 - 🐞 `<pro>Table`: Fix the problem that drag and drop rows report error when `virtualCell` is set.
+- 🐞 `<pro>Table`: Fix the problem that the cells are not displayed when `virtualCell` is set to true and `showHeader` is set to false.
 - 🐞 `<pro>Table`: Fix the rendering format problem of `dateTime` type column.
 - 🐞 `<pro>Table`: Fix the problem that array typed `range` property reports errors in columns.
 - 🐞 `<pro>Table`: Fix the problem that `maxHeight` and `minHeight` of `style` property may cause the column to not fill up.

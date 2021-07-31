@@ -5,7 +5,7 @@ import ColumnGroup from './ColumnGroup';
 export default class ColumnGroups {
   columns: ColumnGroup[];
 
-  aggregation: boolean;
+  aggregation?: boolean | undefined;
 
   parent?: ColumnGroup;
 
@@ -35,7 +35,6 @@ export default class ColumnGroups {
     return this.columns.reduce((sum, { width }) => sum + width, 0);
   }
 
-  @computed
   get left(): number {
     const { parent } = this;
     if (parent) {
@@ -44,7 +43,6 @@ export default class ColumnGroups {
     return 0;
   }
 
-  @computed
   get right(): number {
     const { parent } = this;
     if (parent) {
@@ -53,7 +51,7 @@ export default class ColumnGroups {
     return 0;
   }
 
-  constructor(columns: ColumnProps[], aggregation: boolean, parent?: ColumnGroup) {
+  constructor(columns: ColumnProps[], aggregation?: boolean | undefined, parent?: ColumnGroup) {
     this.aggregation = aggregation;
     this.parent = parent;
     let prev: ColumnGroup | undefined;

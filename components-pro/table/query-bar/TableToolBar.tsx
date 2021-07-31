@@ -13,7 +13,6 @@ import { ButtonColor, FuncType } from '../../button/enum';
 import Modal from '../../modal';
 import Form from '../../form/Form';
 import Icon from '../../icon';
-import TableContext from '../TableContext';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import TableButtons from './TableButtons';
@@ -51,8 +50,6 @@ export interface TableToolBarProps extends ElementProps {
 @observer
 export default class TableToolBar extends Component<TableToolBarProps, any> {
   static displayName = 'TableToolBar';
-
-  static contextType = TableContext;
 
   static defaultProps = {
     prefixCls: getProPrefixCls('table'),
