@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复设置自动高度时滚动条遮挡展示内容的问题。
 - 🐞 `<pro>Lov`: 修复弹窗没有动画的问题。
 - 🐞 `<pro>DataSet.Record`: 修复回写数据遗漏的问题。
+- 🐞 `<pro>PerformanceTable`: 修复设置流体列宽后手动拖拽更改列宽后未触发更新的问题。
 
 ## 1.4.2
 
