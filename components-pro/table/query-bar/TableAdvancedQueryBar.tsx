@@ -7,7 +7,6 @@ import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
 import Button from '../../button';
-import TableContext from '../TableContext';
 import { ElementProps } from '../../core/ViewComponent';
 import { ButtonColor, FuncType } from '../../button/enum';
 import { ButtonProps } from '../../button/Button';
@@ -33,8 +32,6 @@ export interface TableAdvancedQueryBarProps extends ElementProps {
 
 @observer
 export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryBarProps> {
-  static contextType = TableContext;
-
   static defaultProps = {
     prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 1,

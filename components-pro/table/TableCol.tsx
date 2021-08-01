@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { get } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -13,26 +12,21 @@ export interface TableColProps extends ElementProps {
   last: boolean;
 }
 
-const TableCol: FunctionComponent<TableColProps> = observer((props) => {
+const TableCol: FunctionComponent<TableColProps> = observer(function TableCol(props) {
   const { column, last } = props;
-  const { tableStore } = useContext(TableContext);
+  const { tableStore, prefixCls } = useContext(TableContext);
   const style = useComputed(() => ({
     width: pxToRem(last && !tableStore.hasEmptyWidthColumn ? undefined : get(column, 'width')),
     minWidth: pxToRem(minColumnWidth(column)),
   }), [last, column, tableStore]);
   return (
     <col
-      className={`${tableStore.prefixCls}-col`}
+      className={`${prefixCls}-col`}
       style={style}
     />
   );
 });
 
 TableCol.displayName = 'TableCol';
-
-TableCol.propTypes = {
-  column: PropTypes.object.isRequired,
-  last: PropTypes.bool.isRequired,
-};
 
 export default TableCol;

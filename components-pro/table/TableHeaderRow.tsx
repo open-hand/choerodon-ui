@@ -59,7 +59,7 @@ export default class TableHeaderRow extends Component<TableHeaderRowProps> {
   render() {
     const { rowIndex, lock, tds, rows } = this.props;
     const {
-      tableStore: { rowHeight },
+      rowHeight,
     } = this.context;
     const needStoreRowHeight = !isStickySupport() && (rowHeight === 'auto' || rows.length > 1);
     const tr = (

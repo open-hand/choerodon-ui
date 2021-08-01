@@ -24,7 +24,6 @@ import { RecordStatus } from '../../data-set/enum';
 import Button from '../../button';
 import Dropdown from '../../dropdown';
 import TextField from '../../text-field';
-import TableContext from '../TableContext';
 import { ElementProps } from '../../core/ViewComponent';
 import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
@@ -84,8 +83,6 @@ export interface TableDynamicFilterBarProps extends ElementProps {
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
-  static contextType = TableContext;
-
   static defaultProps = {
     prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 3,

@@ -57,11 +57,11 @@ export interface CustomizationSettingsProps {
   modal?: { handleOk: Function, handleCancel: Function, update: (props: ModalProps) => void };
 }
 
-const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = observer((props) => {
+const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = observer(function CustomizationSettings(props) {
   const { modal } = props;
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
-  const { tableStore } = useContext(TableContext);
-  const { originalColumns, prefixCls, customized } = tableStore;
+  const { prefixCls, tableStore } = useContext(TableContext);
+  const { originalColumns, customized } = tableStore;
   const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(originalColumns);
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [

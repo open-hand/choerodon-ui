@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useContext, useMemo } from 'react';
+import React, { FunctionComponent, ReactElement, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import TableContext from './TableContext';
@@ -8,18 +8,16 @@ export interface VirtualWrapperProps {
   children?: ReactElement<TableWrapperProps>
 }
 
-const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer((props) => {
+const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer(function VirtualWrapper(props) {
   const {
-    tableStore: { virtualTop, virtualHeight, prefixCls },
+    tableStore: { virtualTop, virtualHeight }, prefixCls,
   } = useContext(TableContext);
-  const wrapperStyle = useMemo(() => ({ height: pxToRem(virtualHeight) }), [virtualHeight]);
-  const style = useMemo(() => ({ transform: `translate(0, ${pxToRem(virtualTop)})` }), [virtualTop]);
   return (
     <div
       className={`${prefixCls}-tbody-wrapper`}
-      style={wrapperStyle}
+      style={{ height: pxToRem(virtualHeight) }}
     >
-      <div style={style}>
+      <div style={{ transform: `translate(0, ${pxToRem(virtualTop)})` }}>
         {props.children}
       </div>
     </div>

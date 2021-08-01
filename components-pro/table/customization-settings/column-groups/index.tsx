@@ -19,7 +19,7 @@ export interface ColumnGroupsProps {
 const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroupsProps>((props) => {
   const { dataSet } = props;
   const { groupedTreeRecords } = dataSet;
-  const { tableStore: { columnDraggable, prefixCls } } = useContext(TableContext);
+  const { tableStore: { columnDraggable }, prefixCls } = useContext(TableContext);
   const groups = useMemo(() => {
     const array: { value: ColumnLock | false, records: Record[] }[] = [
       { value: ColumnLock.left, records: [] },

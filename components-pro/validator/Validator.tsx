@@ -13,8 +13,7 @@ import valueMissing from './rules/valueMissing';
 import getReactNodeText from '../_util/getReactNodeText';
 import Field from '../data-set/Field';
 import { FormField } from '../field/FormField';
-// import { FieldType } from '../data-set/enum';
-// import { findBindField } from '../data-set/utils';
+import { getIf } from '../data-set/utils';
 
 export type CustomValidator = (
   value: any,
@@ -45,7 +44,7 @@ export default class Validator {
 
   @observable private control?: FormField<any>;
 
-  @observable private innerValidationResults: ValidationResult[];
+  @observable private innerValidationResults?: ValidationResult[] | undefined;
 
   @computed
   get props(): ValidatorProps {
@@ -63,7 +62,6 @@ export default class Validator {
     };
   }
 
-  @computed
   private get uniqueRefFields(): Field[] {
     const { name, unique, record } = this.props;
     if (record && isString(unique)) {
@@ -86,34 +84,35 @@ export default class Validator {
   //   }
   //   return undefined;
   // }
-
   @computed
   private get uniqueRefValidationResult(): ValidationResult | undefined {
     let validationResult: ValidationResult | undefined;
-    const { uniqueRefFields } = this;
+    const { uniqueRefFields, innerValidationResults } = this;
     if (
       uniqueRefFields.length &&
-      this.innerValidationResults.every(result => result.ruleName !== 'uniqueError')
+      (!innerValidationResults || innerValidationResults.every(result => result.ruleName !== 'uniqueError'))
     ) {
       uniqueRefFields.some(uniqueRefField => {
         const { validator } = uniqueRefField;
-        validationResult = validator && validator.innerValidationResults.find(
-          result => result.ruleName === 'uniqueError',
-        );
+        if (validator) {
+          const validatorInnerValidationResults = validator.innerValidationResults;
+          validationResult = validatorInnerValidationResults && validatorInnerValidationResults.find(
+            result => result.ruleName === 'uniqueError',
+          );
+        }
         return !!validationResult;
       });
     }
     return validationResult;
   }
 
-  @computed
   get validationResults(): ValidationResult[] {
     const { uniqueRefValidationResult } = this;
     if (uniqueRefValidationResult) {
       return [uniqueRefValidationResult];
     }
     const { innerValidationResults } = this;
-    if (innerValidationResults.length) {
+    if (innerValidationResults && innerValidationResults.length) {
       return innerValidationResults;
     }
     // const { bindingFieldWithValidationResult } = this;
@@ -123,7 +122,6 @@ export default class Validator {
     return [];
   }
 
-  @computed
   get currentValidationResult(): ValidationResult | undefined {
     const { validationResults } = this;
     return validationResults.length ? validationResults[0] : undefined;
@@ -137,13 +135,11 @@ export default class Validator {
     );
   }
 
-  @computed
   get injectionOptions(): object {
     const { currentValidationResult } = this;
     return (currentValidationResult && currentValidationResult.injectionOptions) || {};
   }
 
-  @computed
   get validationMessage(): ReactNode {
     const { currentValidationResult } = this;
     return currentValidationResult && currentValidationResult.validationMessage;
@@ -153,7 +149,6 @@ export default class Validator {
     runInAction(() => {
       this.field = field;
       this.control = control;
-      this.innerValidationResults = [];
     });
   }
 
@@ -219,12 +214,13 @@ export default class Validator {
 
   @action
   clearErrors() {
-    this.innerValidationResults = [];
+    this.innerValidationResults = undefined;
   }
 
   @action
   addError(result: ValidationResult) {
-    this.innerValidationResults.push(result);
+    const innerValidationResults = getIf<Validator, ValidationResult[]>(this, 'innerValidationResults', []);
+    innerValidationResults.push(result);
     this.report(result);
   }
 

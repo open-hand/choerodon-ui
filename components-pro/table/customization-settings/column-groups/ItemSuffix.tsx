@@ -36,9 +36,9 @@ function findRecords(record: Record, groups: { value: ColumnLock | false, record
   return [];
 }
 
-const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
+const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuffix(props) {
   const { record, index, records, groups } = props;
-  const { tableStore: { columnHideable, prefixCls, columnTitleEditable, columnDraggable } } = useContext(TableContext);
+  const { prefixCls, tableStore: { columnHideable, columnTitleEditable, columnDraggable } } = useContext(TableContext);
   const changeLock = useCallback((lock: ColumnLock | false) => {
     const oldLock = record.get('lock');
     const group = groups.find(({ value }) => value === lock);

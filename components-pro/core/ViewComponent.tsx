@@ -362,10 +362,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   @observable observableProps: any;
 
-  get prefixCls(): string {
-    const { suffixCls, prefixCls } = this.props;
-    return getProPrefixCls(suffixCls!, prefixCls);
-  }
+  prefixCls?: string;
 
   @computed
   get lang(): Lang {
@@ -385,6 +382,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     super(props, context);
     this.setCode(props);
     this.setObservableProps(props, context);
+    this.prefixCls = getProPrefixCls(props.suffixCls!, props.prefixCls);
   }
 
   setCode(props) {
@@ -619,8 +617,12 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     this.wrapper = node;
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    const { code } = this.props;
+  componentWillReceiveProps(nextProps: P, nextContext) {
+    const { code, prefixCls } = this.props;
+    const { prefixCls: nextPrefixCls } = nextProps;
+    if (prefixCls !== nextPrefixCls) {
+      this.prefixCls = getProPrefixCls(nextProps.suffixCls!, nextPrefixCls);
+    }
     if (nextProps.code !== code) {
       this.setCode(nextProps);
     }

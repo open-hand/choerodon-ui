@@ -1,5 +1,4 @@
-import { Component, ComponentState, CSSProperties, Key, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import { CSSProperties, FunctionComponent, Key, ReactElement, ReactNode } from 'react';
 import { get } from 'mobx';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -174,121 +173,26 @@ export interface ColumnPropsInner extends ColumnPropsBase {
   children?: ReactElement<ColumnProps>[] | ReactElement<ColumnProps>;
 }
 
-/* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */
-export default class Column extends Component<ColumnPropsInner, ComponentState> {
-
-  static propTypes = {
-    /**
-     * 列对照的字段名
-     */
-    name: PropTypes.string,
-    /**
-     * 列宽
-     * 不推荐给所有列设置宽度，而是给某一列不设置宽度达到自动宽度的效果
-     */
-    width: PropTypes.number,
-    /**
-     * 最小列宽
-     */
-    minWidth: PropTypes.number,
-    /**
-     * 列头
-     */
-    header: PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func]),
-    /**
-     * 列脚
-     */
-    footer: PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func]),
-    /**
-     * 单元格渲染回调
-     */
-    renderer: PropTypes.func,
-    /**
-     * 编辑器
-     */
-    editor: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.bool]),
-    /**
-     * 是否锁定
-     * 可选值： false | true | 'left' | 'right'
-     * @default false
-     */
-    lock: PropTypes.oneOf([ColumnLock.left, ColumnLock.right, true, false]),
-    /**
-     * 文字对齐方式
-     * 可选值： 'left' | 'center' | 'right'
-     */
-    align: PropTypes.oneOf([ColumnAlign.left, ColumnAlign.center, ColumnAlign.right]),
-    /**
-     * 是否可调整宽度
-     * @default true
-     */
-    resizable: PropTypes.bool,
-    /**
-     * 是否可排序
-     * @default false
-     */
-    sortable: PropTypes.bool,
-    /**
-     * 是否可隐藏，设为false时不会出现在列过滤选项中
-     * @default true
-     */
-    hideable: PropTypes.bool,
-    /**
-     * 是否可排序
-     * @default false
-     */
-    /**
-     * 列头提示信息
-     */
-    help: PropTypes.string,
-    /**
-     * 显示提示信息的方式
-     *
-     */
-    showHelp: PropTypes.oneOf([ShowHelp.tooltip, ShowHelp.newLine, ShowHelp.none]),
-    /**
-     * 是否聚合
-     */
-    aggregation: PropTypes.bool,
-    /**
-     * 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示
-     * @default 4
-     */
-    aggregationLimit: PropTypes.number,
-    /**
-     * 默认展开指定的聚合列树节点
-     */
-    aggregationDefaultExpandedKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    /**
-     * 默认展开所有聚合列树节点
-     */
-    aggregationDefaultExpandAll: PropTypes.bool,
-    /**
-     * 在聚合列下是否隐藏
-     */
-    hiddenInAggregation: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    /**
-     * 高亮渲染器
-     */
-    highlightRenderer: PropTypes.func,
-    hidden: PropTypes.bool,
-    colSpan: PropTypes.number,
-    rowSpan: PropTypes.number,
-    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  };
-
-  static __PRO_TABLE_COLUMN = true;
-
-  static defaultProps = {
-    hidden: false,
-    lock: false,
-    resizable: true,
-    sortable: false,
-    hideable: true,
-    aggregationLimit: 4,
-    showHelp: ShowHelp.tooltip,
-  };
+export interface IColumn extends FunctionComponent<ColumnPropsInner> {
+  __PRO_TABLE_COLUMN?: boolean;
 }
+
+export const ColumnDefaultProps: ColumnPropsBase = {
+  hidden: false,
+  lock: false,
+  resizable: true,
+  sortable: false,
+  hideable: true,
+  aggregationLimit: 4,
+  showHelp: ShowHelp.tooltip,
+};
+const Column: IColumn = function Column() {
+  return null;
+};
+
+Column.__PRO_TABLE_COLUMN = true;
+Column.defaultProps = ColumnDefaultProps;
+export default Column;
 
 export function minColumnWidth(col): number {
   const hidden = get(col, 'hidden');

@@ -1220,7 +1220,7 @@ export default class DataSet extends EventManager {
    */
   page(page: number): Promise<any> {
     if (page > 0 && this.paging) {
-      return this.locate((page - 1) * this.pageSize + this.created.length - this.destroyed.length);
+      return this.locate((page - 1) * this.pageSize + (page > this.currentPage ? this.created.length - this.destroyed.length : 0));
     }
     warning(page > 0, 'Page number is incorrect.');
     warning(!!this.paging, 'Can not paging query util the property<paging> of DataSet is true or `server`.');

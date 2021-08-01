@@ -15,41 +15,34 @@ export default class ColumnGroup {
 
   next?: ColumnGroup;
 
-  @computed
   get key(): Key {
     return getColumnKey(this.column);
   }
 
-  @computed
   get rowSpan(): number {
     return this.parent.deep - this.deep + 1;
   }
 
-  @computed
   get colSpan(): number {
     const { children } = this;
     return children ? children.wide : 1;
   }
 
-  @computed
   get deep(): number {
     const { children } = this;
     return children ? children.deep + 1 : this.hidden ? 0 : 1;
   }
 
-  @computed
   get hidden(): boolean {
     const { children } = this;
     return children ? children.hidden : !!this.column.hidden;
   }
 
-  @computed
   get lastLeaf(): ColumnProps {
     const { children } = this;
     return children ? children.lastLeaf : this.column;
   }
 
-  @computed
   get width(): number {
     const { children } = this;
     return children ? children.width : columnWidth(this.column);

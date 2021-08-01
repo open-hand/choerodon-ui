@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import { DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import TableContext from '../../TableContext';
 
 export interface TreeProps {
@@ -8,15 +8,19 @@ export interface TreeProps {
   children?: ReactNode
 }
 
-const Tree: FunctionComponent<TreeProps> = observer((props) => {
+const Tree: FunctionComponent<TreeProps> = observer(function Tree(props) {
   const { children, value } = props;
-  const { tableStore: { prefixCls, columnDraggable, props: { columnsDragRender = {} } } } = useContext(TableContext);
+  const { prefixCls, columnsDragRender = {}, tableStore: { columnDraggable } } = useContext(TableContext);
   const { droppableProps, renderClone } = columnsDragRender;
   return columnDraggable ? (
     <Droppable
       droppableId={`tree__--__${value}`}
       key="tree"
-      renderClone={renderClone}
+      renderClone={renderClone ? (
+        provided: DraggableProvided,
+        snapshot: DraggableStateSnapshot,
+        rubric: DraggableRubric,
+      ) => renderClone({ provided, snapshot, rubric }) : undefined}
       {...droppableProps}
     >
       {

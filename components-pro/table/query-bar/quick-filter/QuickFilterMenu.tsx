@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { FunctionComponent, memo, useContext, useEffect } from 'react';
 import { isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import map from 'lodash/map';
@@ -78,9 +78,9 @@ function isSelect(data) {
  * @param onLocateData
  * @constructor
  */
-const ModalContent: React.FC<any> = ({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type }) => {
+const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type }) {
   modal.handleOk(async () => {
-    const putData:any[] = [];
+    const putData: any[] = [];
     const statusKey = getConfig('statusKey');
     const statusAdd = getConfig('status').add;
     const status = {};
@@ -107,7 +107,7 @@ const ModalContent: React.FC<any> = ({ prefixCls, modal, menuDataSet, queryDataS
       otherRecord.set('conditionList', putData);
       menuDataSet.current.reset();
       menuDataSet.create({ ...otherRecord.toData(), searchId: undefined });
-    // 新建
+      // 新建
     } else if (type === 'create') {
       menuDataSet.current.set('conditionList', putData);
     }
@@ -151,12 +151,12 @@ const ModalContent: React.FC<any> = ({ prefixCls, modal, menuDataSet, queryDataS
       )}
     </>
   );
-};
+});
 
 /**
  * 快速筛选下拉
  */
-const QuickFilterMenu = observer(() => {
+const QuickFilterMenu = observer(function QuickFilterMenu() {
   const {
     dataSet,
     menuDataSet,
@@ -306,7 +306,8 @@ const QuickFilterMenu = observer(() => {
       key: modalKey,
       closable: true,
       title: getTitle(type),
-      children: <ModalContent prefixCls={prefixCls} type={type} menuDataSet={menuDataSet} conditionDataSet={conditionDataSet} onLoadData={loadData} queryDataSet={queryDataSet} />,
+      children: <ModalContent prefixCls={prefixCls} type={type} menuDataSet={menuDataSet} conditionDataSet={conditionDataSet} onLoadData={loadData}
+                              queryDataSet={queryDataSet} />,
       okFirst: false,
       destroyOnClose: true,
     });
@@ -315,7 +316,7 @@ const QuickFilterMenu = observer(() => {
   async function handleSave() {
     if (!filterMenuDS.current?.get('filterName')) {
       menuDataSet.create({});
-      openModal('create')
+      openModal('create');
     } else {
       const conditionData = Object.entries(queryDataSet.current.toData());
       conditionDataSet.reset();
@@ -329,11 +330,11 @@ const QuickFilterMenu = observer(() => {
             } else {
               currentRecord.set('value', fieldObj.value);
             }
-          } else if (isSelect(data)){
+          } else if (isSelect(data)) {
             conditionDataSet.create({
               fieldName: fieldObj.name,
               value: fieldObj.value,
-            })
+            });
           }
         }
       });
@@ -346,13 +347,13 @@ const QuickFilterMenu = observer(() => {
   }
 
   function handleEdit(record) {
-    openModal('edit', record.get('searchId'))
+    openModal('edit', record.get('searchId'));
   }
 
   function handleSaveOther() {
     menuDataSet.current.set('searchName', '');
     menuDataSet.current.getField('searchName').validator.reset();
-    openModal('save')
+    openModal('save');
   }
 
   useEffect(() => {
@@ -402,7 +403,7 @@ const QuickFilterMenu = observer(() => {
           {$l('Table', 'rename')}
         </Menu.Item>
         <Menu.Item key='filter_delete'>
-          <span style={{color: '#F13131'}}>
+          <span style={{ color: '#F13131' }}>
             {$l('Table', 'delete_button')}
           </span>
         </Menu.Item>
@@ -452,7 +453,7 @@ const QuickFilterMenu = observer(() => {
         <Tag className={`${prefixCls}-filter-status`}>
           <span>{$l('Table', 'modified')}</span>
         </Tag>
-      ): null}
+      ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
           {filterMenuDS.current?.get('filterName') && (
@@ -471,5 +472,7 @@ const QuickFilterMenu = observer(() => {
     </>
   );
 });
+
+QuickFilterMenu.displayName = 'QuickFilterMenu';
 
 export default QuickFilterMenu;

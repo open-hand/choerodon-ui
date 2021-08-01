@@ -1,5 +1,4 @@
 import React, { FunctionComponent, ReactNode, useContext, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -21,10 +20,9 @@ export interface TableWrapperProps extends ElementProps {
   hasFooter?: boolean;
 }
 
-const TableWrapper: FunctionComponent<TableWrapperProps> = observer((props) => {
+const TableWrapper: FunctionComponent<TableWrapperProps> = observer(function TableWrapper(props) {
   const { children, hasBody, lock, hasHeader, hasFooter } = props;
-  const { tableStore } = useContext(TableContext);
-  const { prefixCls } = tableStore;
+  const { prefixCls, tableStore } = useContext(TableContext);
   type MemoColumns = { leafColumnsWidth?: number, leafEditorColumns?: ColumnProps[] | undefined, leafColumns: ColumnProps[] };
   const { leafColumnsWidth, leafEditorColumns, leafColumns } = useComputed((): MemoColumns => {
     switch (lock) {
@@ -131,14 +129,5 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = observer((props) => {
 });
 
 TableWrapper.displayName = 'TableWrapper';
-TableWrapper.propTypes = {
-  lock: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
-  ]),
-  hasBody: PropTypes.bool,
-  hasHeader: PropTypes.bool,
-  hasFooter: PropTypes.bool,
-};
 
 export default TableWrapper;

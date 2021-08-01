@@ -1,5 +1,4 @@
 import React, { Component, CSSProperties, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
@@ -7,12 +6,10 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
-import DataSet from '../data-set/DataSet';
 import { getAlignByField, getColumnLock, isStickySupport } from './utils';
 import { ColumnAlign, ColumnLock } from './enum';
 
 export interface TableFooterCellProps extends ElementProps {
-  dataSet: DataSet;
   column: ColumnProps;
   colSpan?: number;
   right: number;
@@ -21,10 +18,6 @@ export interface TableFooterCellProps extends ElementProps {
 @observer
 export default class TableFooterCell extends Component<TableFooterCellProps, any> {
   static displayName = 'TableFooterCell';
-
-  static propTypes = {
-    column: PropTypes.object.isRequired,
-  };
 
   static contextType = TableContext;
 
@@ -42,11 +35,11 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
   }
 
   render() {
-    const { column, dataSet, style, className, colSpan, right } = this.props;
+    const { column, style, className, colSpan, right } = this.props;
     const {
-      tableStore,
+      rowHeight, dataSet, prefixCls, tableStore,
     } = this.context;
-    const { prefixCls, rowHeight, autoFootHeight } = tableStore;
+    const { autoFootHeight } = tableStore;
     const { footer, footerClassName, footerStyle = {}, align, name, command, lock } = column;
     const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
     const classString = classNames(`${prefixCls}-cell`, {

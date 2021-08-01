@@ -168,7 +168,6 @@ export default class Lov extends Select<LovProps> {
     return undefined;
   }
 
-  @computed
   get popup(): boolean {
     return !this.filterText || this.modal ? false : this.statePopup;
   }

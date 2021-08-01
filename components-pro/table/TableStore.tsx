@@ -12,7 +12,7 @@ import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
-import Column, { ColumnProps, columnWidth } from './Column';
+import Column, { ColumnDefaultProps, ColumnProps, columnWidth } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
 import isFragment from '../_util/isFragment';
 import DataSet from '../data-set/DataSet';
@@ -39,7 +39,7 @@ import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
 import ColumnGroup from './ColumnGroup';
-import { Customized, expandIconProps, TablePaginationConfig } from './Table';
+import Table, { Customized, expandIconProps, TablePaginationConfig, TableProps } from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
@@ -67,6 +67,10 @@ export type HeaderText = { name: string; label: string; };
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
 }
+
+// function hasProperty<T>(target: T, property: string): (keyof T) is undefined {
+//   return property in target;
+// }
 
 export function getIdList(store: TableStore) {
   const { mouseBatchChooseStartId, mouseBatchChooseEndId, node: { element }, prefixCls } = store;
@@ -218,7 +222,7 @@ export function mergeDefaultProps(
   let hasAggregationColumn: boolean = false;
   originalColumns.forEach((column) => {
     if (isPlainObject(column)) {
-      const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
+      const newColumn: ColumnProps = { ...ColumnDefaultProps, ...column };
       if (isNil(getColumnKey(newColumn))) {
         newColumn.key = `anonymous-${defaultKey[0]++}`;
       }
@@ -388,25 +392,25 @@ export function normalizeColumns(
 async function getHeaderTexts(
   dataSet: DataSet,
   columns: ColumnProps[],
-  store: TableStore,
+  aggregation: boolean | undefined,
   headers: HeaderText[] = [],
 ): Promise<HeaderText[]> {
   const column = columns.shift();
   if (column) {
-    headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet, store)) });
+    headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet, aggregation)) });
   }
   if (columns.length) {
-    await getHeaderTexts(dataSet, columns, store, headers);
+    await getHeaderTexts(dataSet, columns, aggregation, headers);
   }
   return headers;
 }
 
 export default class TableStore {
-  node: any;
+  node: Table;
 
   editors: Map<string, TableEditor> = new Map();
 
-  @observable props: any;
+  @observable props: TableProps;
 
   @observable customized: Customized;
 
@@ -469,35 +473,29 @@ export default class TableStore {
     renderEnd: number;
   } = { renderStart: 0, renderEnd: 0 };
 
-  @computed
   get stickyLeft(): boolean {
     return [ScrollPosition.right, ScrollPosition.middle].includes(this.scrollPosition);
   }
 
-  @computed
   get stickyRight(): boolean {
     return [ScrollPosition.left, ScrollPosition.middle].includes(this.scrollPosition);
   }
 
-  @computed
   get performanceEnabled(): boolean {
     const performanceEnabled = getConfig('performanceEnabled');
     return performanceEnabled && performanceEnabled.Table;
   }
 
-  @computed
   get dataSet(): DataSet {
     return this.props.dataSet;
   }
 
-  @computed
   get prefixCls() {
     const { suffixCls, prefixCls } = this.props;
     return getProPrefixCls(suffixCls!, prefixCls);
   }
 
-  @computed
-  get customizable(): boolean {
+  get customizable(): boolean | undefined {
     const { customizedCode } = this.props;
     if (customizedCode && (this.columnTitleEditable || this.columnDraggable || this.columnHideable)) {
       if ('customizable' in this.props) {
@@ -508,8 +506,7 @@ export default class TableStore {
     return false;
   }
 
-  @computed
-  get aggregation(): boolean {
+  get aggregation(): boolean | undefined {
     const { aggregation } = this.customized;
     if (aggregation !== undefined) {
       return aggregation;
@@ -518,7 +515,6 @@ export default class TableStore {
     return propAggregation;
   }
 
-  @computed
   get aggregationExpandType(): 'cell' | 'row' | 'column' {
     return this.customized.aggregationExpandType || 'cell';
   }
@@ -542,7 +538,6 @@ export default class TableStore {
     return undefined;
   }
 
-  @computed
   get heightType(): TableHeightType {
     const tempHeightType = get(this.tempCustomized, 'heightType');
     if (tempHeightType !== undefined) {
@@ -555,7 +550,6 @@ export default class TableStore {
     return this.originalHeightType;
   }
 
-  @computed
   get originalHeightType(): TableHeightType {
     const { style, autoHeight } = this.props;
     if (autoHeight) {
@@ -573,10 +567,9 @@ export default class TableStore {
     return TableHeightType.auto;
   }
 
-  @computed
   get virtualCell(): boolean {
     if ('virtualCell' in this.props) {
-      return this.props.virtualCell;
+      return this.props.virtualCell!;
     }
     return getConfig('tableVirtualCell');
   }
@@ -584,7 +577,6 @@ export default class TableStore {
   /**
    * number 矫正虚拟滚动由于样式问题导致的高度不符问题
    */
-  @computed
   get virtualRowHeight(): number {
     const { virtualRowHeight } = this.props;
     if (virtualRowHeight) {
@@ -593,12 +585,10 @@ export default class TableStore {
     return isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
   }
 
-  @computed
-  get virtual(): boolean {
+  get virtual(): boolean | undefined {
     return this.props.virtual && this.height !== undefined && isNumber(this.virtualRowHeight);
   }
 
-  @computed
   get virtualHeight(): number {
     const { virtualRowHeight, data } = this;
     return Math.round(data.length * virtualRowHeight);
@@ -611,6 +601,11 @@ export default class TableStore {
   }
 
   @computed
+  get virtualEndIndex(): number {
+    const { virtualRowHeight, lastScrollTop, height, data } = this;
+    return Math.min(height !== undefined ? Math.round((lastScrollTop + height) / virtualRowHeight) + 3 : Infinity, data.length);
+  }
+
   get virtualTop(): number {
     const { virtualRowHeight, virtualStartIndex } = this;
     return virtualStartIndex * virtualRowHeight;
@@ -618,23 +613,21 @@ export default class TableStore {
 
   @computed
   get virtualData(): Record[] {
-    const { data, height, virtualRowHeight, props: { virtual } } = this;
-    if (virtual && height !== undefined && isNumber(virtualRowHeight)) {
-      const { lastScrollTop, virtualStartIndex } = this;
-      const virtualEndIndex = Math.min(Math.round((lastScrollTop + height) / virtualRowHeight) + 3, data.length);
+    const { data, virtual } = this;
+    if (virtual) {
+      const { virtualEndIndex, virtualStartIndex } = this;
       return data.slice(virtualStartIndex, virtualEndIndex);
     }
     return data;
   }
 
-  get hidden(): boolean {
-    return !!this.styledHidden || this.props.hidden;
+  get hidden(): boolean | undefined {
+    return this.styledHidden || this.props.hidden;
   }
 
-  @computed
   get alwaysShowRowBox(): boolean {
     if ('alwaysShowRowBox' in this.props) {
-      return this.props.alwaysShowRowBox;
+      return this.props.alwaysShowRowBox!;
     }
     const alwaysShowRowBox = getConfig('tableAlwaysShowRowBox');
     if (typeof alwaysShowRowBox !== 'undefined') {
@@ -643,10 +636,9 @@ export default class TableStore {
     return false;
   }
 
-  @computed
   get keyboard(): boolean {
     if ('keyboard' in this.props) {
-      return this.props.keyboard;
+      return this.props.keyboard!;
     }
     const keyboard = getConfig('tableKeyboard');
     if (typeof keyboard !== 'undefined') {
@@ -655,21 +647,19 @@ export default class TableStore {
     return false;
   }
 
-  @computed
   get columnResizable(): boolean {
     if (this.currentEditRecord) {
       return false;
     }
     if ('columnResizable' in this.props) {
-      return this.props.columnResizable;
+      return this.props.columnResizable!;
     }
     return getConfig('tableColumnResizable') !== false;
   }
 
-  @computed
   get columnHideable(): boolean {
     if ('columnHideable' in this.props) {
-      return this.props.columnHideable;
+      return this.props.columnHideable!;
     }
     return getConfig('tableColumnHideable') !== false;
   }
@@ -677,15 +667,13 @@ export default class TableStore {
   /**
    * 表头支持编辑
    */
-  @computed
   get columnTitleEditable(): boolean {
     if ('columnTitleEditable' in this.props) {
-      return this.props.columnTitleEditable;
+      return this.props.columnTitleEditable!;
     }
     return getConfig('tableColumnTitleEditable') === true;
   }
 
-  @computed
   get pagination(): TablePaginationConfig | false | undefined {
     if ('pagination' in this.props) {
       return this.props.pagination;
@@ -693,7 +681,6 @@ export default class TableStore {
     return getConfig('pagination');
   }
 
-  @computed
   get dragColumnAlign(): DragColumnAlign | undefined {
     if ('dragColumnAlign' in this.props) {
       return this.props.dragColumnAlign;
@@ -701,13 +688,12 @@ export default class TableStore {
     return getConfig('tableDragColumnAlign');
   }
 
-  @computed
   get columnDraggable(): boolean {
     if ('columnDraggable' in this.props) {
-      return this.props.columnDraggable;
+      return this.props.columnDraggable!;
     }
     if ('dragColumn' in this.props) {
-      return this.props.dragColumn;
+      return this.props.dragColumn!;
     }
     if (getConfig('tableColumnDraggable') === true) {
       return true;
@@ -715,16 +701,15 @@ export default class TableStore {
     return getConfig('tableDragColumn') === true;
   }
 
-  @computed
   get rowDraggable(): boolean {
     if (this.isTree) {
       return false;
     }
     if ('rowDraggable' in this.props) {
-      return this.props.rowDraggable;
+      return this.props.rowDraggable!;
     }
     if ('dragRow' in this.props) {
-      return this.props.dragRow;
+      return this.props.dragRow!;
     }
     if (getConfig('tableRowDraggable') === true) {
       return true;
@@ -732,7 +717,6 @@ export default class TableStore {
     return getConfig('tableDragRow') === true;
   }
 
-  @computed
   get size(): Size {
     const { size } = this.customized;
     if (size !== undefined) {
@@ -741,11 +725,10 @@ export default class TableStore {
     return this.props.size || Size.default;
   }
 
-  @computed
   get rowHeight(): 'auto' | number {
-    let rowHeight = 30;
+    let rowHeight: 'auto' | number = 30;
     if ('rowHeight' in this.props) {
-      rowHeight = this.props.rowHeight;
+      rowHeight = this.props.rowHeight!;
     } else {
       const tableRowHeight = getConfig('tableRowHeight');
       if (typeof tableRowHeight !== 'undefined') {
@@ -764,75 +747,66 @@ export default class TableStore {
     return rowHeight;
   }
 
-  @computed
   get autoFootHeight(): boolean {
     if ('autoFootHeight' in this.props) {
-      return this.props.autoFootHeight;
+      return this.props.autoFootHeight!;
     }
     return false;
   }
 
-  @computed
   get emptyText(): ReactNode {
     return getConfig('renderEmpty')('Table');
   }
 
-  @computed
   get highLightRow(): boolean | string {
     if ('highLightRow' in this.props) {
-      return this.props.highLightRow;
+      return this.props.highLightRow!;
     }
     return getConfig('tableHighLightRow');
   }
 
-  @computed
   get parityRow(): boolean {
     const { parityRow } = this.customized;
     if (parityRow !== undefined) {
       return parityRow;
     }
     if ('parityRow' in this.props) {
-      return this.props.parityRow;
+      return this.props.parityRow!;
     }
     return getConfig('tableParityRow') === true;
   }
 
-  @computed
   get autoFocus(): boolean {
     if ('autoFocus' in this.props) {
-      return this.props.autoFocus;
+      return this.props.autoFocus!;
     }
     return getConfig('tableAutoFocus') !== false;
   }
 
-  @computed
   get selectedHighLightRow(): boolean {
     if ('selectedHighLightRow' in this.props) {
-      return this.props.selectedHighLightRow;
+      return this.props.selectedHighLightRow!;
     }
     return getConfig('tableSelectedHighLightRow') !== false;
   }
 
-  @computed
   get editorNextKeyEnterDown(): boolean {
     if ('editorNextKeyEnterDown' in this.props) {
-      return this.props.editorNextKeyEnterDown;
+      return this.props.editorNextKeyEnterDown!;
     }
     return getConfig('tableEditorNextKeyEnterDown') !== false;
   }
 
-  @computed
   get border(): boolean {
     if ('border' in this.props) {
-      return this.props.border;
+      return this.props.border!;
     }
     return getConfig('tableBorder') !== false;
   }
 
-  @computed
   get columnEditorBorder(): boolean {
     if ('columnEditorBorder' in this.props) {
-      return this.props.columnEditorBorder;
+      return this.props.columnEditorBorder!;
     }
     const tableColumnEditorBorder = getConfig('tableColumnEditorBorder');
     if (tableColumnEditorBorder !== undefined) {
@@ -841,19 +815,17 @@ export default class TableStore {
     return this.border;
   }
 
-  @computed
   get queryBar(): TableQueryBarType {
     return this.props.queryBar || getConfig('queryBar');
   }
 
-  @computed
   get expandIcon(): (props: expandIconProps) => ReactNode {
     return this.props.expandIcon || getConfig('tableExpandIcon');
   }
 
-  get pristine(): boolean {
-    return this.props.pristine;
-  }
+  // get pristine(): boolean | undefined {
+  //   return this.props.pristine;
+  // }
 
   @computed
   get currentEditRecord(): Record | undefined {
@@ -883,12 +855,10 @@ export default class TableStore {
     return this.props.mode === TableMode.tree;
   }
 
-  @computed
   get editing(): boolean {
     return this.currentEditorName !== undefined || this.currentEditRecord !== undefined;
   }
 
-  @computed
   get hasRowBox(): boolean {
     const { dataSet, selectionMode } = this.props;
     const { alwaysShowRowBox } = this;
@@ -899,7 +869,6 @@ export default class TableStore {
     return false;
   }
 
-  @computed
   get useMouseBatchChoose(): boolean {
     const { useMouseBatchChoose } = this.props;
     if (useMouseBatchChoose !== undefined) {
@@ -911,7 +880,6 @@ export default class TableStore {
     return false;
   }
 
-  @computed
   get showSelectionTips(): boolean {
     const { showSelectionTips } = this.props;
     if (showSelectionTips !== undefined) {
@@ -923,7 +891,6 @@ export default class TableStore {
     return false;
   }
 
-  @computed
   get overflowX(): boolean {
     if (isNumber(this.width)) {
       return this.totalLeafColumnsWidth > this.width;
@@ -937,7 +904,7 @@ export default class TableStore {
     return (
       bodyHeight !== undefined &&
       height !== undefined &&
-      height < bodyHeight + (this.overflowX ? measureScrollbar() : 0)
+      height < bodyHeight + (this.overflowX && !this.hasFooter ? measureScrollbar() : 0)
     );
   }
 
@@ -1233,7 +1200,6 @@ export default class TableStore {
     return false;
   }
 
-  @computed
   get expandIconAsCell(): boolean {
     const { expandedRowRenderer, expandIconAsCell } = this.props;
     if (expandIconAsCell !== undefined) {
@@ -1256,7 +1222,6 @@ export default class TableStore {
     return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable].filter(Boolean).length;
   }
 
-  @computed
   get inlineEdit() {
     return this.props.editMode === TableEditMode.inline;
   }
@@ -1284,7 +1249,7 @@ export default class TableStore {
     }
   }
 
-  constructor(node) {
+  constructor(node: Table) {
     runInAction(() => {
       this.scrollPosition = ScrollPosition.left;
       this.mouseBatchChooseIdList = [];
@@ -1325,7 +1290,7 @@ export default class TableStore {
 
   getColumnHeaders(): Promise<HeaderText[]> {
     const { leafNamedColumns, dataSet } = this;
-    return getHeaderTexts(dataSet, leafNamedColumns.slice(), this);
+    return getHeaderTexts(dataSet, leafNamedColumns.slice(), this.aggregation);
   }
 
   @action
@@ -1463,7 +1428,6 @@ export default class TableStore {
     return this.hoverRow === record;
   }
 
-  @computed
   get canTreeLoadData(): boolean {
     const { treeLoadData, treeAsync } = this.props;
     return treeAsync || !!treeLoadData;

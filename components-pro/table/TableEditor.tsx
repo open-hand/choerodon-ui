@@ -1,5 +1,4 @@
 import React, { cloneElement, Component, isValidElement, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import { action, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
@@ -51,10 +50,6 @@ function offset(node: HTMLElement, topNode: HTMLElement | null, initialize: [num
 export default class TableEditor extends Component<TableEditorProps> {
   static displayName = 'TableEditor';
 
-  static propTypes = {
-    column: PropTypes.object.isRequired,
-  };
-
   static contextType = TableContext;
 
   editorProps?: any;
@@ -95,7 +90,7 @@ export default class TableEditor extends Component<TableEditorProps> {
    */
   @autobind
   handleWindowClick(e) {
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     if (e.target.className !== `${prefixCls}-content` && e.target.className !== `${prefixCls}-body`) {
       this.handleEditorBlur(e);
     }
@@ -276,8 +271,8 @@ export default class TableEditor extends Component<TableEditorProps> {
     const { editorProps, cellNode } = this;
     const { column: { name } } = this.props;
     if (cellNode && editorProps) {
-      const { tableStore } = this.context;
-      const { currentEditRecord, dataSet, inlineEdit, rowHeight } = tableStore;
+      const { tableStore, dataSet, inlineEdit, rowHeight } = this.context;
+      const { currentEditRecord } = tableStore;
       const { onResize = noop } = editorProps;
       onResize(width, height, target);
       const current = currentEditRecord || dataSet.current;
@@ -375,7 +370,11 @@ export default class TableEditor extends Component<TableEditorProps> {
   renderMultiLineEditor(): ReactElement<FormFieldProps> | undefined {
     const { column: { name } } = this.props;
     const {
-      tableStore: { dataSet, currentEditRecord, inlineEdit, prefixCls, rowHeight },
+      prefixCls,
+      dataSet,
+      inlineEdit,
+      rowHeight,
+      tableStore: { currentEditRecord },
     } = this.context;
     const record = currentEditRecord || dataSet.current;
     const multiLineFields = dataSet.props.fields.map(field => {
@@ -427,7 +426,10 @@ export default class TableEditor extends Component<TableEditorProps> {
   renderEditor(): ReactElement<FormFieldProps> | undefined {
     const { column } = this.props;
     const {
-      tableStore: { dataSet, currentEditRecord, currentEditorName, pristine, inlineEdit },
+      dataSet,
+      pristine,
+      inlineEdit,
+      tableStore: { currentEditRecord, currentEditorName },
     } = this.context;
     const { name } = column;
     const record = currentEditRecord || dataSet.current;
@@ -471,8 +473,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         const {
           column: { lock },
         } = this.props;
-        const { tableStore } = this.context;
-        const { prefixCls } = tableStore;
+        const { prefixCls } = this.context;
         const props: any = {
           className: classNames(`${prefixCls}-editor`, { [`${prefixCls}-editor-lock`]: isStickySupport() && lock }),
         };

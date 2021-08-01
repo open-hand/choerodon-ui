@@ -1,7 +1,7 @@
 import React, { Children, cloneElement, FunctionComponent, isValidElement, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
-import { DraggableProvided, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import { DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import defaultTo from 'lodash/defaultTo';
 import isFunction from 'lodash/isFunction';
 import Record from '../../../data-set/Record';
@@ -22,8 +22,8 @@ export interface TreeNodeProps {
   children?: ReactNode;
 }
 
-const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
-  const { tableStore: { dataSet, prefixCls, columnDraggable, props: { columnsDragRender = {} } } } = useContext(TableContext);
+const TreeNode: FunctionComponent<TreeNodeProps> = observer(function TreeNode(props) {
+  const { dataSet, prefixCls, columnsDragRender = {}, tableStore: { columnDraggable } } = useContext(TableContext);
   const { droppableProps, renderClone, renderIcon } = columnsDragRender;
   const selfPrefixCls = `${prefixCls}-customization-tree-treenode`;
   const { renderer, suffix, children, className, isLeaf, hidden, record, index, records, provided, snapshot } = props;
@@ -107,7 +107,11 @@ const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
           <Droppable
             droppableId={`treenode__--__${record.key}`}
             key="treenode"
-            renderClone={renderClone}
+            renderClone={renderClone ? (
+              cloneProvided: DraggableProvided,
+              cloneSnapshot: DraggableStateSnapshot,
+              rubric: DraggableRubric,
+            ) => renderClone({ provided: cloneProvided, snapshot: cloneSnapshot, rubric }) : undefined}
             {...droppableProps}
           >
             {

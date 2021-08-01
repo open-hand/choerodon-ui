@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, memo, useCallback } from 'react';
 import classNames from 'classnames';
-import shallowequal from 'lodash/isEqual';
 import Icon from '../icon';
 import { ElementProps } from '../core/ViewComponent';
-import autobind from '../_util/autobind';
 
 export interface ExpandIconProps extends ElementProps {
   expandable?: boolean;
@@ -12,38 +9,27 @@ export interface ExpandIconProps extends ElementProps {
   onChange: (e) => void;
 }
 
-export default class ExpandIcon extends Component<ExpandIconProps> {
-  static propTypes = {
-    expandable: PropTypes.bool,
-    expanded: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
-  };
-
-  shouldComponentUpdate(nextProps) {
-    return !shallowequal(nextProps, this.props);
-  }
-
-  @autobind
-  handleClick(e) {
+const ExpandIcon: FunctionComponent<ExpandIconProps> = memo(function ExpandIcon(props) {
+  const { prefixCls, expanded, expandable, onChange } = props;
+  const iconPrefixCls = `${prefixCls}-expand-icon`;
+  const classString = classNames(iconPrefixCls, {
+    [`${iconPrefixCls}-expanded`]: expanded,
+    [`${iconPrefixCls}-spaced`]: !expandable,
+  });
+  const handleClick = useCallback((e) => {
     e.stopPropagation();
-    const { onChange } = this.props;
     onChange(e);
-  }
+  }, [onChange]);
+  return (
+    <Icon
+      type="baseline-arrow_right"
+      className={classString}
+      onClick={expandable ? handleClick : undefined}
+      tabIndex={expandable ? 0 : -1}
+    />
+  );
+});
 
-  render() {
-    const { prefixCls, expanded, expandable } = this.props;
-    const iconPrefixCls = `${prefixCls}-expand-icon`;
-    const classString = classNames(iconPrefixCls, {
-      [`${iconPrefixCls}-expanded`]: expanded,
-      [`${iconPrefixCls}-spaced`]: !expandable,
-    });
-    return (
-      <Icon
-        type="baseline-arrow_right"
-        className={classString}
-        onClick={expandable ? this.handleClick : undefined}
-        tabIndex={expandable ? 0 : -1}
-      />
-    );
-  }
-}
+ExpandIcon.displayName = 'ExpandIcon';
+
+export default ExpandIcon;

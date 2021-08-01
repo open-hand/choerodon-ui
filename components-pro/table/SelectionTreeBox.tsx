@@ -9,7 +9,7 @@ export interface SelectionTreeBoxProps {
   record: Record;
 }
 
-const SelectionTreeBox: FunctionComponent<SelectionTreeBoxProps> = observer((props) => {
+const SelectionTreeBox: FunctionComponent<SelectionTreeBoxProps> = observer(function SelectionTreeBox(props) {
   const { record } = props;
   const handleChange = useCallback((value) => {
     const { dataSet } = record;

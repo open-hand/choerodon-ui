@@ -16,7 +16,7 @@ export interface SubGroupProps {
   treeNodeSuffix: (record: Record, index: number, records: Record[]) => ReactNode;
 }
 
-const SubGroup: FunctionComponent<SubGroupProps> = observer((props) => {
+const SubGroup: FunctionComponent<SubGroupProps> = observer(function SubGroup(props) {
   const { treeNodeRenderer, treeNodeSuffix, childrenRecords, onDragEnd, ...rest } = props;
   const { tableStore } = useContext(TableContext);
   const treeNode = (

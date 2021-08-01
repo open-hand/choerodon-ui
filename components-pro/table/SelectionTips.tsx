@@ -7,25 +7,23 @@ import Tooltip from '../tooltip';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 
-const SelectionTips: FunctionComponent<any> = observer(() => {
-  const { tableStore } = useContext(TableContext);
-  const { prefixCls, dataSet, showCachedSelection, props: { showSelectionCachedButton } } = tableStore;
+const SelectionTips: FunctionComponent<any> = observer(function SelectionTips() {
+  const { prefixCls, dataSet, tableStore, showSelectionCachedButton } = useContext(TableContext);
+  const { showCachedSelection } = tableStore;
   const handleSwitch = useCallback(action(() => {
     tableStore.showCachedSelection = !showCachedSelection;
   }), [showCachedSelection]);
   const cachedButton = showSelectionCachedButton && dataSet.cacheSelectionKeys && dataSet.cachedSelected.length > 0 ? (
-    (
-      <Tooltip
-        title={$l('Table', showCachedSelection ? 'hide_cached_seletion' : 'show_cached_seletion')}
-      >
-        <Button
-          className={`${prefixCls}-switch`}
-          funcType={FuncType.flat}
-          icon={showCachedSelection ? 'visibility_off' : 'visibility'}
-          onClick={handleSwitch}
-        />
-      </Tooltip>
-    )
+    <Tooltip
+      title={$l('Table', showCachedSelection ? 'hide_cached_seletion' : 'show_cached_seletion')}
+    >
+      <Button
+        className={`${prefixCls}-switch`}
+        funcType={FuncType.flat}
+        icon={showCachedSelection ? 'visibility_off' : 'visibility'}
+        onClick={handleSwitch}
+      />
+    </Tooltip>
   ) : null;
   return tableStore.showSelectionTips ? (
     <div className={`${prefixCls}-selection-tips`}>

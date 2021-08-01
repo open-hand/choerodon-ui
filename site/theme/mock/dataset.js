@@ -1,4 +1,5 @@
 import Mock from 'mockjs';
+import omit from 'lodash/omit';
 
 const dsMutationsT = {
   rows: [],
@@ -60,7 +61,7 @@ const dsLargeQueriesT = {
   rows: new Array(50)
     .fill(null)
     .reduce((rows, _empty, index) => rows.concat(dsQueriesT.rows.map((item, useid, size) => ({
-      ...item,
+      ...omit(item, ['other']),
       userid: String((useid + index * size.length) + 1),
     }))), []),
   total: 1000,

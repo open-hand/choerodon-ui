@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { FunctionComponent, useCallback, memo } from 'react';
 import { FuncType } from '../../button/enum';
 import { Size } from '../../core/enum';
 import Button from '../../button/Button';
@@ -8,14 +8,14 @@ export interface CustomizationColumnHeaderProps {
   onHeaderClick: (modal: { open: Function }) => void;
 }
 
-const CustomizationColumnHeader: FunctionComponent<CustomizationColumnHeaderProps> = (props) => {
+const CustomizationColumnHeader: FunctionComponent<CustomizationColumnHeaderProps> = memo(function CustomizationColumnHeader(props) {
   const { onHeaderClick } = props;
   const modal = useModal();
   const openCustomizationModal = useCallback(() => onHeaderClick(modal), [modal, onHeaderClick]);
   return (
     <Button funcType={FuncType.flat} size={Size.small} icon="settings" onClick={openCustomizationModal} />
   );
-};
+});
 
 CustomizationColumnHeader.displayName = 'CustomizationColumnHeader';
 

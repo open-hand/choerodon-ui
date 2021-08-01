@@ -363,7 +363,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     type: TableButtonType,
   ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode; } | undefined {
     const {
-      tableStore: { isTree, dataSet },
+      isTree, tableStore: { dataSet },
     } = this.context;
     const disabled = dataSet.status !== DataSetStatus.ready;
     switch (type) {

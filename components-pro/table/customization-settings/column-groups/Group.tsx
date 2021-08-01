@@ -15,9 +15,9 @@ export interface GroupProps {
   treeNodeSuffix: (record: Record, index: number, records: Record[]) => ReactNode;
 }
 
-const Group: FunctionComponent<GroupProps> = observer((props) => {
+const Group: FunctionComponent<GroupProps> = observer(function Group(props) {
   const { header, records, value, onDragEnd, treeNodeRenderer, treeNodeSuffix } = props;
-  const { tableStore: { prefixCls } } = useContext(TableContext);
+  const { prefixCls } = useContext(TableContext);
   return (
     <>
       <div className={`${prefixCls}-customization-tree-group-header`}>

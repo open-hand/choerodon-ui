@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { FunctionComponent, useCallback, useMemo, useState, memo } from 'react';
 import Icon from 'choerodon-ui/lib/icon';
 import TextField from '../../text-field';
 import CheckBox from '../../check-box';
@@ -15,7 +15,7 @@ interface Group {
  *
  * groups.fields 弹窗内字段
  */
-type Props = {
+type FieldListProps = {
   closeMenu: () => void,
   value: string[]
   prefixCls: string
@@ -24,7 +24,7 @@ type Props = {
   groups: Group[]
 }
 
-const FieldList: React.FC<Props> = ({ value, onSelect, onUnSelect, groups, prefixCls }) => {
+const FieldList: FunctionComponent<FieldListProps> = memo(function FieldList({ value, onSelect, onUnSelect, groups, prefixCls }) {
   const [searchText, setSearchText] = useState('');
   const codes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => o.get('name'))], []), [groups]);
   const hasSelect = useMemo(() => value.length > 0, [value.length]);
@@ -123,5 +123,8 @@ const FieldList: React.FC<Props> = ({ value, onSelect, onUnSelect, groups, prefi
       </div>
     </div>
   );
-};
+});
+
+FieldList.displayName = 'FieldList';
+
 export default FieldList;

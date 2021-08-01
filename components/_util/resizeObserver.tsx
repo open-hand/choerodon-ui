@@ -9,6 +9,7 @@ interface ResizeObserverProps {
   disabled?: boolean;
   onResize?: (width: number, height: number, target: DomElement) => void;
   resizeProp?: 'width' | 'height' | 'both';
+  immediately?: boolean;
 }
 
 class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
@@ -36,11 +37,15 @@ class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
 
   onComponentUpdated() {
     const { disabled } = this.props;
-    const element = findDOMNode(this) as DomElement;
+    const element = findDOMNode(this) as HTMLElement | null;
     if (!this.resizeObserver && !disabled && element) {
       // Add resize observer
       this.resizeObserver = new ResizeObserver(this.onResize);
       this.resizeObserver.observe(element);
+      const { onResize, immediately } = this.props;
+      if (immediately && onResize) {
+        onResize(element.offsetWidth, element.offsetHeight, element);
+      }
     } else if (disabled) {
       // Remove resize observer
       this.destroyObserver();
@@ -58,7 +63,7 @@ class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
     /**
      * getBoundingClientRect return wrong size in transform case.
      */
-    // const { width, height } = target.getBoundingClientRect();
+      // const { width, height } = target.getBoundingClientRect();
 
     const fixedWidth = Math.floor(width);
     const fixedHeight = Math.floor(height);

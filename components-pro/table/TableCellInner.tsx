@@ -39,7 +39,6 @@ import { $l } from '../locale-context';
 import Button, { ButtonProps } from '../button/Button';
 import { LabelLayout } from '../form/enum';
 import { findFirstFocusableElement } from '../_util/focusable';
-import useComputed from '../use-computed';
 import SelectionTreeBox from './SelectionTreeBox';
 import {
   defaultOutputRenderer,
@@ -62,6 +61,7 @@ import isEmpty from '../_util/isEmpty';
 import { Tooltip as TextTooltip } from '../core/enum';
 import isOverflow from '../overflow-tip/util';
 import { hide, show } from '../tooltip/singleton';
+import useComputed from '../use-computed';
 
 let inTab: boolean = false;
 
@@ -71,66 +71,51 @@ export interface TableCellInnerProps {
   style?: CSSProperties;
   disabled?: boolean;
   inAggregation?: boolean;
+  prefixCls?: string;
 }
 
-const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) => {
-  const { column, record, children, style, disabled, inAggregation } = props;
+const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function TableCellInner(props) {
+  const { column, record, children, style, disabled, inAggregation, prefixCls } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
-  const { tableStore } = useContext(TableContext);
-  const {
-    dataSet,
-    rowHeight,
-    pristine,
-    aggregation,
-    inlineEdit,
-    columnEditorBorder,
-  } = tableStore;
-  const prefixCls = `${tableStore.prefixCls}-cell`;
+  const { pristine, aggregation, inlineEdit, rowHeight, tableStore, dataSet, columnEditorBorder, indentSize, checkField, selectionMode } = useContext(TableContext);
   const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
   const { name, key, lock, renderer, command, align } = column;
   const columnKey = getColumnKey(column);
-  const { checkField } = dataSet.props;
   const height = record.getState(`__column_resize_height_${name}`);
-  const columnCommand = useMemo(() => {
+  const { currentEditRecord } = tableStore;
+  const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
       return command({ dataSet, record, aggregation });
     }
     return command;
   }, [record, command, dataSet, aggregation]);
-  const canFocus = useComputed(() => !disabled && (!tableStore.inlineEdit || record === tableStore.currentEditRecord), [disabled, record, tableStore]);
-  const cellEditor = useComputed(() => getEditorByColumnAndRecord(column, record), [record, column]);
-  const cellEditorInCell = useMemo(() => isInCellEditor(cellEditor), [cellEditor]);
-  const hasEditor = useMemo(() => !pristine && cellEditor && !cellEditorInCell, [pristine, cellEditor, cellEditorInCell]);
+  const canFocus = useMemo(() => !disabled && (!inlineEdit || record === currentEditRecord), [disabled, record, currentEditRecord, inlineEdit]);
+  const cellEditor = getEditorByColumnAndRecord(column, record);
+  const cellEditorInCell = isInCellEditor(cellEditor);
+  const hasEditor = !pristine && cellEditor && !cellEditorInCell;
   const showEditor = useCallback((cell) => {
     if (name && hasEditor) {
-      if (!lock) {
-        const { node, overflowX, virtual } = tableStore;
-        if (overflowX) {
-          const tableBodyWrap = virtual ? cell.offsetParent.parentNode.parentNode : cell.offsetParent;
-          if (tableBodyWrap) {
-            const { leftLeafColumnsWidth, rightLeafColumnsWidth } = tableStore;
-            const { offsetLeft, offsetWidth } = cell;
-            const { scrollLeft } = tableBodyWrap;
-            const { width } = tableBodyWrap.getBoundingClientRect();
-            const leftSide = offsetLeft - leftLeafColumnsWidth;
-            const rightSide =
-              offsetLeft + offsetWidth - width + rightLeafColumnsWidth + measureScrollbar();
-            let sl = scrollLeft;
-            if (sl < rightSide) {
-              sl = rightSide;
-            }
-            if (sl > leftSide) {
-              sl = leftSide;
-            }
-            if (sl !== scrollLeft) {
-              tableBodyWrap.scrollLeft = sl;
-              node.handleBodyScrollLeft({
-                target: tableBodyWrap,
-                currentTarget: tableBodyWrap,
-              });
-            }
+      if (!lock && tableStore.overflowX) {
+        const tableBodyWrap = tableStore.virtual ? cell.offsetParent.parentNode.parentNode : cell.offsetParent;
+        if (tableBodyWrap) {
+          const { leftLeafColumnsWidth, rightLeafColumnsWidth } = tableStore;
+          const { offsetLeft, offsetWidth } = cell;
+          const { scrollLeft } = tableBodyWrap;
+          const { width } = tableBodyWrap.getBoundingClientRect();
+          const leftSide = offsetLeft - leftLeafColumnsWidth;
+          const rightSide =
+            offsetLeft + offsetWidth - width + rightLeafColumnsWidth + measureScrollbar();
+          let sl = scrollLeft;
+          if (sl < rightSide) {
+            sl = rightSide;
+          }
+          if (sl > leftSide) {
+            sl = leftSide;
+          }
+          if (sl !== scrollLeft) {
+            tableBodyWrap.scrollLeft = sl;
           }
         }
       }
@@ -221,21 +206,17 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
   }, [dataSet, record]);
   const field = record.getField(name);
   const multiLine = field && field.get('multiLine');
-  const rows = useComputed(() => {
-    if (multiLine) {
-      return [...record.fields.values()].reduce((count, dsField) => {
-        const bind = dsField.get('bind');
-        if (bind && bind.startsWith(`${name}.`)) {
-          return count + 1;
-        }
-        return count;
-      }, 0);
+  const fieldType = !aggregation && rowHeight !== 'auto' && field && field.type;
+  const rows = multiLine ? [...record.fields.values()].reduce((count, dsField) => {
+    const bind = dsField.get('bind');
+    if (bind && bind.startsWith(`${name}.`)) {
+      return count + 1;
     }
-    return 0;
-  }, [multiLine, record]);
-  const checkBox = useComputed(() => {
+    return count;
+  }, 0) : 0;
+  const checkBox = (() => {
     if (children) {
-      if (tableStore.props.selectionMode === SelectionMode.treebox) {
+      if (selectionMode === SelectionMode.treebox) {
         return (
           <SelectionTreeBox record={record} />
         );
@@ -251,29 +232,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         );
       }
     }
-  }, [disabled, children, tableStore, record, checkField]);
+  })();
 
-  const getButtonProps = useCallback((
-    type: TableCommandType,
-  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined => {
-    switch (type) {
-      case TableCommandType.edit:
-        return {
-          icon: 'mode_edit',
-          onClick: handleCommandEdit,
-          disabled,
-          title: $l('Table', 'edit_button'),
-        };
-      case TableCommandType.delete:
-        return {
-          icon: 'delete',
-          onClick: handleCommandDelete,
-          disabled,
-          title: $l('Table', 'delete_button'),
-        };
-      default:
-    }
-  }, [disabled, handleCommandEdit, handleCommandDelete]);
   const renderCommand = useCallback(() => {
     const tableCommandProps = getConfig('tableCommandProps');
     const classString = classNames(`${prefixCls}-command`, tableCommandProps && tableCommandProps.className);
@@ -296,6 +256,27 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
           button = button[0];
         }
         if (isString(button) && button in TableCommandType) {
+          const getButtonProps = (
+            type: TableCommandType,
+          ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined => {
+            switch (type) {
+              case TableCommandType.edit:
+                return {
+                  icon: 'mode_edit',
+                  onClick: handleCommandEdit,
+                  disabled,
+                  title: $l('Table', 'edit_button'),
+                };
+              case TableCommandType.delete:
+                return {
+                  icon: 'delete',
+                  onClick: handleCommandDelete,
+                  disabled,
+                  title: $l('Table', 'delete_button'),
+                };
+              default:
+            }
+          };
           const defaultButtonProps = getButtonProps(button);
           if (defaultButtonProps) {
             const { afterClick, ...buttonProps } = tableButtonProps;
@@ -340,7 +321,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       });
       return commands;
     }
-  }, [prefixCls, record, columnCommand, aggregation, getButtonProps, handleCommandSave, handleCommandCancel]);
+  }, [prefixCls, record, columnCommand, aggregation, disabled, handleCommandEdit, handleCommandDelete, handleCommandSave, handleCommandCancel]);
   const renderEditor = useCallback(() => {
     if (isValidElement(cellEditor)) {
       /**
@@ -354,15 +335,15 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         record,
         name,
         pristine,
-        disabled: disabled || (tableStore.inlineEdit && !record.editing),
+        disabled: disabled || (inlineEdit && !record.editing),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
       };
       return cloneElement(cellEditor, newEditorProps as FormFieldProps);
     }
-  }, [disabled, cellEditor, checkField, multiLine, record, name, pristine, tableStore]);
+  }, [disabled, cellEditor, checkField, multiLine, record, name, pristine, inlineEdit]);
 
-  const cellRenderer = useComputed((): Renderer | undefined => {
+  const cellRenderer = useMemo((): Renderer | undefined => {
     if (columnCommand) {
       return renderCommand;
     }
@@ -376,7 +357,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     }
     return renderer;
   }, [columnCommand, cellEditorInCell, renderEditor, renderCommand, renderer, field, aggregation]);
-  const prefixStyle = useComputed(() => {
+  const prefixStyle = useMemo(() => {
     if (!aggregation) {
       if (height !== undefined && rows === 0) {
         return {
@@ -386,7 +367,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
         };
       }
       if (rowHeight !== 'auto') {
-        const isCheckBox = field && field.type === FieldType.boolean || key === SELECTION_KEY;
+        const isCheckBox = fieldType === FieldType.boolean || key === SELECTION_KEY;
         const borderPadding = isCheckBox ? 4 : 2;
         const heightPx = rows > 0 ? (rowHeight + 2) * rows + 1 : rowHeight;
         const lineHeightPx = hasEditor || isCheckBox ? rowHeight - borderPadding : rowHeight;
@@ -398,7 +379,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       }
     }
     return style;
-  }, [field, key, rows, rowHeight, height, style, aggregation, hasEditor]);
+  }, [fieldType, key, rows, rowHeight, height, style, aggregation, hasEditor]);
   const innerStyle = useMemo(() => inAggregation ? prefixStyle : ({ textAlign: align || (columnCommand ? ColumnAlign.center : getAlignByField(field)), ...prefixStyle }), [inAggregation, align, field, columnCommand, prefixStyle]);
   const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
   const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
@@ -406,10 +387,11 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
       return utilRenderValidationMessage(validationResult.validationMessage);
     }
   }, []);
-  const isValidationMessageHidden = useCallback((message?: ReactNode): boolean => {
+  const isValidationMessageHidden = useCallback((message?: ReactNode): boolean | undefined => {
     return !message || pristine;
   }, [pristine]);
-  const getRenderedValue = useCallback(() => {
+  const editorBorder = !inlineEdit && hasEditor;
+  const getRenderedValue = () => {
     const processValue = (v) => {
       if (!isNil(v)) {
         const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field));
@@ -477,12 +459,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     }
     const textNode = processRenderer(value);
     return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;
-  }, [multipleValidateMessageLengthRef, renderValidationResult, isValidationMessageHidden, name, record, dataSet, field, value, disabled, prefixCls, cellRenderer, tooltip]);
-  const editorBorder = !inlineEdit && hasEditor;
-  const text = useComputed(() => {
-    const result = getRenderedValue();
-    return isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : getConfig('renderEmpty')('Output') : result;
-  }, [getRenderedValue, editorBorder]);
+  };
+  const result = getRenderedValue();
+  const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : getConfig('renderEmpty')('Output') : result;
 
   const showTooltip = useCallback((e) => {
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator') && field.get('multiple') && toMultipleValue(value, field.get('range')).length))) {
@@ -517,7 +496,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     }
   }, [tooltipShownRef, tableStore]);
   useEffect(() => {
-    if (name && inlineEdit && record === tableStore.currentEditRecord) {
+    if (name && inlineEdit && record === currentEditRecord) {
       const currentEditor = tableStore.editors.get(name);
       if (currentEditor) {
         currentEditor.alignEditor();
@@ -584,7 +563,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer((props) 
     innerClassName.push(`${prefixCls}-inner-fixed-height`);
   }
   const indentText = children && (
-    <span style={{ paddingLeft: pxToRem(tableStore.props.indentSize * record.level) }} />
+    <span style={{ paddingLeft: pxToRem(indentSize * record.level) }} />
   );
 
   const prefix = (indentText || children || checkBox) && (
