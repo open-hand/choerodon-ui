@@ -404,7 +404,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, height, virtualized } = prevProps;
+    const { rowHeight, data, height, virtualized, children, columns } = prevProps;
 
     if (data !== this.props.data) {
       this.calculateRowMaxHeight();
@@ -418,6 +418,23 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
     } else {
       this.updatePosition();
+    }
+
+    if (columns !== this.props.columns || children !== this.props.children) {
+      let shouldFixedColumn = false;
+
+      if (this.props.children) {
+        shouldFixedColumn = Array.from(this.props.children as Iterable<any>).some(
+          (child: any) => child && child.props && child.props.fixed,
+        );
+      }
+
+      if (this.props.columns && this.props.columns.length) {
+        shouldFixedColumn = Array.from(this.props.columns as Iterable<any>).some(
+          (child: any) => child && child.fixed,
+        );
+      }
+      this.setState({ shouldFixedColumn: shouldFixedColumn });
     }
 
     if (
@@ -437,6 +454,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.calculateTableContentWidth(prevProps);
     if (virtualized) {
       this.calculateTableWidth();
+    }
+
+    const tableBody = this.tableBodyRef.current;
+
+    if (!this.wheelListener && tableBody) {
+      const options = { passive: false };
+      if (isMobile()) {
+        this.initBScroll(tableBody);
+      }
+      this.wheelListener = on(tableBody, 'wheel', this.wheelHandler.onWheel, options);
     }
   }
 

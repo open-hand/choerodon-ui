@@ -40,6 +40,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复弹窗没有动画的问题。
 - 🐞 `<pro>DataSet.Record`: 修复回写数据遗漏的问题。
 - 🐞 `<pro>PerformanceTable`: 修复设置流体列宽后手动拖拽更改列宽后未触发更新的问题。
+- 🐞 `<pro>PerformanceTable`: 修复动态调整列缺少滚轮监听及固定列失效问题。
 
 ## 1.4.2
 
