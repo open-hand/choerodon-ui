@@ -114,6 +114,7 @@ export type Config = {
   exportMode?: ExportMode;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
+  tableVirtual?: boolean;
   tableVirtualCell?: boolean;
   tableBorder?: boolean;
   tableColumnEditorBorder?: boolean;
