@@ -586,7 +586,13 @@ export default class TableStore {
   }
 
   get virtual(): boolean | undefined {
-    return this.props.virtual && this.height !== undefined && isNumber(this.virtualRowHeight);
+    if (this.height !== undefined && isNumber(this.virtualRowHeight)) {
+      if ('virtual' in this.props) {
+        return this.props.virtual;
+      }
+      return getConfig('tableVirtual');
+    }
+    return false;
   }
 
   get virtualHeight(): number {

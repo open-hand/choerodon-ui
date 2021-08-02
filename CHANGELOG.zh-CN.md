@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 performanceTableColumnHideable, performanceTableColumnTitleEditable, performanceTableColumnDraggable 属性。
+- 🌟 `configure`: 新增 performanceTableColumnHideable, performanceTableColumnTitleEditable, performanceTableColumnDraggable, tableVirtual 属性。
 - 🌟 `<pro>Table.Column`: 新增 hiddenInAggregation 属性, command 钩子新增 aggregation 参数。
 - 🌟 `<pro>PerformanceTable`: 新增 customizedCode, customizable, columnDraggable, columnTitleEditable, columnsDragRender 属性，支持个性化。
 - 💄 `<pro>DataSet`：内存优化。

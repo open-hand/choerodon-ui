@@ -46,6 +46,8 @@ const prefixCls = getConfig('prefixCls');
 | status | Default status map of data submitted by DataSet. | { add: string, update: string, delete: string } | { add: 'add', update: 'update', delete: 'delete' } |
 | labelLayout | default labelLayout of Form | string | horizontal |
 | queryBar | default queryBar of table | string | normal |
+| tableVirtual | default virtual of Table | boolean | |
+| tableVirtualCell | default virtualCell of Table | boolean | |
 | tableBorder | default border of table | boolean | true |
 | tableColumnEditorBorder | default columnEditorBorder of Table | boolean | tableBorder |
 | tableHighLightRow | Default Table current line highlight, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean | true |

@@ -15,7 +15,6 @@ import {
 } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
-import intersection from 'lodash/intersection';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
@@ -539,6 +538,7 @@ export default class Field {
       this.dataSet = dataSet;
       this.record = record;
       this.props = props;
+
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
       if (
         !this.getProp('options')
@@ -553,15 +553,17 @@ export default class Field {
           const computedProps = this.getProp('computedProps');
           if (computedProps || dynamicProps) {
             const keys = Object.keys({ ...computedProps, ...dynamicProps });
-            const fetches: Function[] = [];
-            if (intersection(LOOKUP_SIDE_EFFECT_KEYS, keys).length) {
-              fetches.push(this.fetchLookup);
-            }
-            if (intersection(LOV_SIDE_EFFECT_KEYS, keys).length) {
-              fetches.push(this.fetchLovConfig);
-            }
-            if (fetches.length) {
-              raf(() => fetches.forEach(one => one.call(this)));
+            if (keys.length) {
+              const fetches: Function[] = [];
+              if (keys.some(key => LOOKUP_SIDE_EFFECT_KEYS.includes(key))) {
+                fetches.push(this.fetchLookup);
+              }
+              if (keys.some(key => LOV_SIDE_EFFECT_KEYS.includes(key))) {
+                fetches.push(this.fetchLovConfig);
+              }
+              if (fetches.length) {
+                raf(() => fetches.forEach(one => one.call(this)));
+              }
             }
           }
         }

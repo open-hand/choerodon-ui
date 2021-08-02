@@ -49,6 +49,8 @@ const prefixCls = getConfig('prefixCls');
 | status | 默认 DataSet 提交的数据的状态映射 | { add: string, update: string, delete: string } | { add: 'add', update: 'update', delete: 'delete' } |
 | labelLayout | 默认 Form 的 labelLayout | string | horizontal |
 | queryBar | 默认 Table 的 queryBar | string | normal |
+| tableVirtual | 默认 Table 的 virtual | boolean | |
+| tableVirtualCell | 默认 Table 的 virtualCell | boolean | |
 | tableBorder | 默认 Table 的 border | boolean | true |
 | tableColumnEditorBorder | 默认 Table 的 columnEditorBorder | boolean | tableBorder |
 | tableHighLightRow | 默认 Table 当前行高亮, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean \| string | true |
