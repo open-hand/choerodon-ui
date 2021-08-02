@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `performanceTableColumnHideable`, `performanceTableColumnTitleEditable`, `performanceTableColumnDraggable` properties.
+- 🌟 `configure`: Added `performanceTableColumnHideable`, `performanceTableColumnTitleEditable`, `performanceTableColumnDraggable`, `tableVirtual` properties.
 - 🌟 `<pro>Table.Column`: Added `hiddenInAggregation` property, added `aggregation` parameter to the `command` hook.
 - 🌟 `<pro>PerformanceTable`: Added personalization features, including `customizedCode`, `customizable`, `columnDraggable`, `columnTitleEditable`, `columnsDragRender` properties.
 - 💄 `<pro>DataSet`: Memory optimization.

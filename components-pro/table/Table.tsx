@@ -775,7 +775,6 @@ export default class Table extends DataSetComponent<TableProps> {
     indentSize: 15,
     summaryFieldsLimit: 3,
     filterBarFieldName: 'params',
-    virtual: false,
     virtualSpin: false,
     autoHeight: false,
     autoMaxWidth: true,
