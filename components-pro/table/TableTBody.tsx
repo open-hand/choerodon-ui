@@ -1,9 +1,10 @@
-import React, { CSSProperties, FunctionComponent, ReactNode, useCallback, useContext } from 'react';
-import { action } from 'mobx';
-import { observer } from 'mobx-react-lite';
+import React, { Component, CSSProperties, ReactNode } from 'react';
+import { observer } from 'mobx-react';
+import { action, computed } from 'mobx';
 import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import isFunction from 'lodash/isFunction';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
@@ -13,53 +14,247 @@ import Record from '../data-set/Record';
 import { ColumnLock, DragColumnAlign } from './enum';
 import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
+import autobind from '../_util/autobind';
 import { DragTableRowProps, instance } from './Table';
 import { isDraggingStyle, isStickySupport } from './utils';
-import useComputed from '../use-computed';
 
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
 }
 
-const TableTBody: FunctionComponent<TableTBodyProps> = observer(function TableTBody(props) {
-  const { lock } = props;
-  const { prefixCls, tableStore, dataSet, rowDragRender, isTree } = useContext(TableContext);
+@observer
+export default class TableTBody extends Component<TableTBodyProps> {
+  static displayName = 'TableTBody';
 
-  const leafColumnsBody: ColumnProps[] = useComputed(() => tableStore.leafColumns.filter(({ hidden }) => !hidden), [tableStore]);
-  const leafColumns: ColumnProps[] = useComputed(() => {
+  static contextType = TableContext;
+
+  @computed
+  get leafColumns(): ColumnProps[] {
+    const { tableStore } = this.context;
+    const { lock } = this.props;
     if (lock === ColumnLock.right) {
       return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
     }
     if (lock) {
       return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
     }
-    return [];
-  }, [tableStore, lock]);
-  const columns = lock ? leafColumns : leafColumnsBody;
+    return this.leafColumnsBody;
+  }
 
-  const handleResize = useCallback(action<(width: number, height: number) => void>((_width, height) => {
+  @computed
+  get leafColumnsBody(): ColumnProps[] {
+    const { tableStore } = this.context;
+    return tableStore.leafColumns.filter(({ hidden }) => !hidden);
+  }
+
+  constructor(props, context) {
+    super(props, context);
+    const { tableStore, dataSet } = context;
+    if (tableStore.performanceEnabled) {
+      if (dataSet.status === DataSetStatus.ready && dataSet.length) {
+        tableStore.performanceOn = true;
+        tableStore.timing.renderStart = Date.now();
+      }
+    }
+  }
+
+  handlePerformance() {
+    const { code, tableStore, dataSet } = this.context;
+    if (tableStore.performanceEnabled && tableStore.performanceOn) {
+      const { timing } = tableStore;
+      const { performance } = dataSet;
+      const onPerformance = getConfig('onPerformance');
+      timing.renderEnd = Date.now();
+      onPerformance('Table', {
+        name: code,
+        url: performance.url,
+        size: dataSet.length,
+        timing: {
+          ...performance.timing,
+          ...timing,
+        },
+      });
+      tableStore.performanceOn = false;
+    }
+  }
+
+  componentDidMount(): void {
+    this.handlePerformance();
+  }
+
+  componentWillUpdate(): void {
+    const { tableStore } = this.context;
+    if (tableStore.performanceEnabled && tableStore.performanceOn) {
+      tableStore.timing.renderStart = Date.now();
+    }
+  }
+
+  componentDidUpdate() {
+    this.handlePerformance();
+    const { lock } = this.props;
+    if (!lock) {
+      const {
+        tableStore: { node },
+      } = this.context;
+      if (
+        node.isFocus &&
+        !node.wrapper.contains(document.activeElement)
+      ) {
+        node.focus();
+      }
+    }
+  }
+
+  @autobind
+  @action
+  handleResize(_width: number, height: number) {
+    const { tableStore } = this.context;
     if (!tableStore.hidden) {
       tableStore.bodyHeight = height;
     }
-  }), [tableStore]);
+  }
 
-  const renderExpandedRows = (
+  render() {
+    const { lock } = this.props;
+    const { leafColumns, leafColumnsBody } = this;
+    const {
+      prefixCls, tableStore, rowDragRender, dataSet,
+    } = this.context;
+    const {
+      data, virtual, rowDraggable,
+    } = tableStore;
+    const virtualData = virtual ? data.slice(tableStore.virtualStartIndex, tableStore.virtualEndIndex) : data;
+    const rows = virtualData.length
+      ? this.getRows(virtualData, leafColumns, true, virtual)
+      : this.getEmptyRow(leafColumns);
+    const body = rowDraggable ? (
+      <Droppable
+        droppableId="table"
+        key="table"
+        renderClone={(
+          provided: DraggableProvided,
+          snapshot: DraggableStateSnapshot,
+          rubric: DraggableRubric,
+        ) => {
+          if (snapshot.isDragging && tableStore.overflowX && tableStore.dragColumnAlign === DragColumnAlign.right) {
+            const { style } = provided.draggableProps;
+            if (isDraggingStyle(style)) {
+              const { left, width } = style;
+              style.left = left - Math.max(tableStore.totalLeafColumnsWidth - 50, width);
+            }
+          }
+          const record = dataSet.get(rubric.source.index);
+          if (record) {
+            const renderClone = rowDragRender && rowDragRender.renderClone;
+            const { id } = record;
+            if (renderClone && isFunction(renderClone)) {
+              return renderClone({
+                provided,
+                snapshot,
+                rubric,
+                key: id,
+                hidden: false,
+                lock: false,
+                prefixCls,
+                columns: leafColumnsBody,
+                record,
+                index: id,
+              } as DragTableRowProps);
+            }
+            return (
+              <TableRow
+                provided={provided}
+                snapshot={snapshot}
+                key={id}
+                hidden={false}
+                lock={false}
+                columns={leafColumnsBody}
+                record={record}
+                index={id}
+              />
+            );
+          }
+          return <span />;
+        }}
+        getContainerForClone={() => instance(tableStore.node.getClassName(), prefixCls).tbody}
+        {...(rowDragRender && rowDragRender.droppableProps)}
+      >
+        {(droppableProvided: DroppableProvided) => (
+          <tbody
+            ref={droppableProvided.innerRef}
+            {...droppableProvided.droppableProps}
+            className={`${prefixCls}-tbody`}>
+            {rows}
+            {droppableProvided.placeholder}
+          </tbody>
+        )}
+      </Droppable>
+    ) : (
+      <tbody className={`${prefixCls}-tbody`}>
+        {rows}
+      </tbody>
+    );
+    return lock ? (
+      body
+    ) : (
+      <ReactResizeObserver onResize={this.handleResize} resizeProp="height" immediately>
+        {body}
+      </ReactResizeObserver>
+    );
+  }
+
+  getRows(
+    records: Record[],
+    columns: ColumnProps[],
+    expanded?: boolean,
+    virtual?: boolean,
+  ): ReactNode {
+    return records.map((record, index) => this.getRow(columns, record, virtual ? record.index : index, expanded));
+  }
+
+  getEmptyRow(columns: ColumnProps[]): ReactNode | undefined {
+    const {
+      prefixCls, dataSet, tableStore: { emptyText, width },
+    } = this.context;
+    const { lock } = this.props;
+    const styles: CSSProperties = width ? {
+      position: isStickySupport() ? 'sticky' : 'absolute',
+      left: pxToRem(width / 2),
+    } : {
+      transform: 'none',
+      display: 'inline-block',
+    };
+    const tdStyle: CSSProperties | undefined = width ? undefined : { textAlign: 'center' };
+    return (
+      <tr className={`${prefixCls}-empty-row`}>
+        <td colSpan={columns.length} style={tdStyle}>
+          <div style={styles}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
+        </td>
+      </tr>
+    );
+  }
+
+  @autobind
+  renderExpandedRows(
+    columns: ColumnProps[],
     record: Record,
     isExpanded?: boolean,
-  ): ReactNode => {
-    // eslint-disable-next-line
-    return getRows(record.children || [], isExpanded);
-  };
+  ): ReactNode {
+    return this.getRows(record.children || [], columns, isExpanded);
+  }
 
-  const getRow = (
+  getRow(
+    columns: ColumnProps[],
     record: Record,
     index: number,
     expanded?: boolean,
-  ): ReactNode => {
+  ): ReactNode {
+    const { lock } = this.props;
+    const { tableStore, rowDragRender } = this.context;
     const { key } = record;
-    const children = isTree && (
-      <ExpandedRow record={record}>
-        {renderExpandedRows}
+    const children = tableStore.isTree && (
+      <ExpandedRow record={record} columns={columns}>
+        {this.renderExpandedRows}
       </ExpandedRow>
     );
     if (tableStore.rowDraggable) {
@@ -105,116 +300,5 @@ const TableTBody: FunctionComponent<TableTBodyProps> = observer(function TableTB
         {children}
       </TableRow>
     );
-  };
-
-  const getRows = (
-    records: Record[],
-    expanded?: boolean,
-    virtual?: boolean,
-  ): ReactNode => {
-    return records.map((record, index) => getRow(record, virtual ? record.index : index, expanded));
-  };
-
-  const getEmptyRow = (): ReactNode | undefined => {
-    const { emptyText, width } = tableStore;
-    const styles: CSSProperties = width ? {
-      position: isStickySupport() ? 'sticky' : 'absolute',
-      left: pxToRem(width / 2),
-    } : {
-      transform: 'none',
-      display: 'inline-block',
-    };
-    const tdStyle: CSSProperties | undefined = width ? undefined : { textAlign: 'center' };
-    return (
-      <tr className={`${prefixCls}-empty-row`}>
-        <td colSpan={columns.length} style={tdStyle}>
-          <div style={styles}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
-        </td>
-      </tr>
-    );
-  };
-
-  const { data, virtual, rowDraggable } = tableStore;
-  const virtualData = virtual ? data.slice(tableStore.virtualStartIndex, tableStore.virtualEndIndex) : data;
-  const rows = virtualData.length
-    ? getRows(virtualData, true, virtual)
-    : getEmptyRow();
-  const body = rowDraggable ? (
-    <Droppable
-      droppableId="table"
-      key="table"
-      renderClone={(
-        provided: DraggableProvided,
-        snapshot: DraggableStateSnapshot,
-        rubric: DraggableRubric,
-      ) => {
-        if (snapshot.isDragging && tableStore.overflowX && tableStore.dragColumnAlign === DragColumnAlign.right) {
-          const { style } = provided.draggableProps;
-          if (isDraggingStyle(style)) {
-            const { left, width } = style;
-            style.left = left - Math.max(tableStore.totalLeafColumnsWidth - 50, width);
-          }
-        }
-        const record = dataSet.get(rubric.source.index);
-        if (record) {
-          const renderClone = rowDragRender && rowDragRender.renderClone;
-          const { id } = record;
-          if (renderClone && isFunction(renderClone)) {
-            return renderClone({
-              provided,
-              snapshot,
-              rubric,
-              key: id,
-              hidden: false,
-              lock,
-              prefixCls,
-              columns: leafColumnsBody,
-              record,
-              index: id,
-            } as DragTableRowProps);
-          }
-          return (
-            <TableRow
-              provided={provided}
-              snapshot={snapshot}
-              key={id}
-              hidden={false}
-              lock={false}
-              columns={leafColumnsBody}
-              record={record}
-              index={id}
-            />
-          );
-        }
-        return <span />;
-      }}
-      getContainerForClone={() => instance(tableStore.node.getClassName(), prefixCls).tbody}
-      {...(rowDragRender && rowDragRender.droppableProps)}
-    >
-      {(droppableProvided: DroppableProvided) => (
-        <tbody
-          ref={droppableProvided.innerRef}
-          {...droppableProvided.droppableProps}
-          className={`${prefixCls}-tbody`}>
-          {rows}
-          {droppableProvided.placeholder}
-        </tbody>
-      )}
-    </Droppable>
-  ) : (
-    <tbody className={`${prefixCls}-tbody`}>
-      {rows}
-    </tbody>
-  );
-  return lock ? (
-    body
-  ) : (
-    <ReactResizeObserver onResize={handleResize} resizeProp="height" immediately>
-      {body}
-    </ReactResizeObserver>
-  );
-});
-
-TableTBody.displayName = 'TableTBody';
-
-export default TableTBody;
+  }
+}
