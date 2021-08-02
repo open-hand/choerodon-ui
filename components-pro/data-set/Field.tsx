@@ -1049,10 +1049,12 @@ export default class Field {
           if (isArrayLike(cachedLookup)) {
             promise = Promise.resolve<object[] | undefined>(cachedLookup);
           } else {
+            this.pending = true;
             promise = cachedLookup;
           }
         }
         if (!promise) {
+          this.pending = true;
           promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch).then(action((result) => {
             if (result) {
               lookupCaches.set(lookupCode, result);
@@ -1074,11 +1076,13 @@ export default class Field {
               if (isArrayLike(cachedLookup)) {
                 promise = Promise.resolve<object[] | undefined>(cachedLookup);
               } else {
+                this.pending = true;
                 promise = cachedLookup;
               }
             }
           }
           if (!promise) {
+            this.pending = true;
             promise = lookupStore.fetchLookupData(axiosConfig).then(action((result) => {
               if (result) {
                 lookupCaches.set(lookupToken, result);
@@ -1090,7 +1094,6 @@ export default class Field {
         }
       }
       if (promise) {
-        this.pending = true;
         return promise.then(action((result) => {
           this.pending = false;
           if (lookup && oldToken !== this.get(LOOKUP_TOKEN)) {
