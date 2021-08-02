@@ -442,16 +442,14 @@ export default class Field {
         const lookup = lookupCaches.get(lookupToken);
         if (isArrayLike(lookup)) {
           const valueField = this.get('valueField');
-          if (lookup) {
-            const lookupData = this.get('lookupData');
-            if (lookupData) {
-              const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
-              if (others.length) {
-                return others.concat(lookup);
-              }
+          const lookupData = this.get('lookupData');
+          if (lookupData) {
+            const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
+            if (others.length) {
+              return others.concat(lookup.slice());
             }
-            return lookup;
           }
+          return lookup;
         }
       }
     }
