@@ -89,6 +89,8 @@ const LOOKUP_SIDE_EFFECT_KEYS = [
 
 const LOV_SIDE_EFFECT_KEYS = ['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl', 'optionsProps'];
 
+const LOOKUP_TOKEN = '__lookup_token__';
+
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string; };
 export type DynamicProps = { [P in keyof FieldProps]?: (DynamicPropsArguments) => FieldProps[P]; }
@@ -420,17 +422,24 @@ export default class Field {
   }
 
   get lookup(): object[] | undefined {
-    const lookup = this.get('lookup');
-    const valueField = this.get('valueField');
-    if (lookup) {
-      const lookupData = this.get('lookupData');
-      if (lookupData) {
-        const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
-        if (others.length) {
-          return others.concat(lookup);
+    const { dataSet } = this;
+    if (dataSet) {
+      const lookupToken = this.get(LOOKUP_TOKEN);
+      const { lookupCaches } = dataSet;
+      if (lookupToken && lookupCaches) {
+        const lookup = lookupCaches.get(lookupToken);
+        const valueField = this.get('valueField');
+        if (lookup) {
+          const lookupData = this.get('lookupData');
+          if (lookupData) {
+            const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
+            if (others.length) {
+              return others.concat(lookup);
+            }
+          }
+          return lookup;
         }
       }
-      return lookup;
     }
     return undefined;
   }
@@ -656,6 +665,16 @@ export default class Field {
       const dsValue = dsField.getProp(propsName);
       if (dsValue !== undefined) {
         return dsValue;
+      }
+    }
+    if (propsName === 'lookup') {
+      const { dataSet } = this;
+      if (dataSet) {
+        const lookupToken = this.get(LOOKUP_TOKEN);
+        const { lookupCaches } = dataSet;
+        if (lookupToken && lookupCaches) {
+          return lookupCaches.get(lookupToken);
+        }
       }
     }
     if (propsName === 'textField' || propsName === 'valueField') {
@@ -998,31 +1017,26 @@ export default class Field {
    */
   @action
   fetchLookup(noCache = false): Promise<object[] | undefined> {
+    const { dataSet } = this;
+    const lookupCaches = dataSet ? getIf<DataSet, ObservableMap<string, object[]>>(dataSet, 'lookupCaches', () => observable.map()) : undefined;
+    const oldToken = this.get(LOOKUP_TOKEN);
     const batch = this.get('lookupBatchAxiosConfig') || getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode');
-    const lovPara = getLovPara(this, this.record);
-    const dsField = this.findDataSetField();
     let promise;
-    if (batch && lookupCode && Object.keys(lovPara).length === 0) {
-      if (dsField && dsField.get('lookupCode') === lookupCode) {
-        this.set('lookup', undefined);
-        return Promise.resolve(dsField.get('lookup'));
+    if (batch && lookupCode && Object.keys(getLovPara(this, this.record)).length === 0) {
+      if (lookupCaches && lookupCode === oldToken) {
+        return Promise.resolve<object[] | undefined>(lookupCaches.get(lookupCode));
       }
-
+      this.set(LOOKUP_TOKEN, lookupCode);
       promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch);
     } else {
       const axiosConfig = lookupStore.getAxiosConfig(this, noCache);
-      if (dsField && noCache === false) {
-        const dsConfig = lookupStore.getAxiosConfig(dsField);
-        if (
-          dsConfig.url &&
-          buildURLWithAxiosConfig(dsConfig) === buildURLWithAxiosConfig(axiosConfig)
-        ) {
-          this.set('lookup', undefined);
-          return Promise.resolve(dsField.get('lookup'));
-        }
-      }
       if (axiosConfig.url) {
+        const lookupToken = buildURLWithAxiosConfig(axiosConfig);
+        if (!noCache && lookupCaches && lookupToken === oldToken) {
+          return Promise.resolve<object[] | undefined>(lookupCaches.get(lookupToken));
+        }
+        this.set(LOOKUP_TOKEN, lookupToken);
         promise = lookupStore.fetchLookupData(axiosConfig);
       }
     }
@@ -1030,22 +1044,29 @@ export default class Field {
       this.pending = true;
       return promise.then(action((result) => {
         this.pending = false;
-        const { lookup } = this;
-        this.set('lookup', result);
-        const value = this.getValue();
-        const valueField = this.get('valueField');
-        if (value && valueField && lookup) {
-          const values = this.get('multiple') ? [].concat(...value) : [].concat(value);
-          this.set(
-            'lookupData',
-            values.reduce<object[]>((lookupData, v) => {
-              const found = lookup.find(item => isSameLike(item[valueField], v));
-              if (found) {
-                lookupData.push(found);
+        const lookupToken = this.get(LOOKUP_TOKEN);
+        if (lookupCaches && lookupToken && lookupToken !== oldToken) {
+          lookupCaches.set(lookupToken, result);
+          if (oldToken) {
+            const lookup = lookupCaches.get(oldToken);
+            if (lookup) {
+              const value = this.getValue();
+              const valueField = this.get('valueField');
+              if (value && valueField) {
+                const values = this.get('multiple') ? [].concat(...value) : [].concat(value);
+                this.set(
+                  'lookupData',
+                  values.reduce<object[]>((lookupData, v) => {
+                    const found = lookup.find(item => isSameLike(item[valueField], v));
+                    if (found) {
+                      lookupData.push(found);
+                    }
+                    return lookupData;
+                  }, []),
+                );
               }
-              return lookupData;
-            }, []),
-          );
+            }
+          }
         }
         return result;
       })).catch(e => {

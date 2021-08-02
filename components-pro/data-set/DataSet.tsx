@@ -395,6 +395,8 @@ export default class DataSet extends EventManager {
 
   validating: boolean = false;
 
+  @observable lookupCaches?: ObservableMap<string, object[]>;
+
   @observable selectionStrategy?: CheckedStrategy;
 
   @observable parent?: DataSet;
