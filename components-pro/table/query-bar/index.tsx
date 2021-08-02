@@ -694,7 +694,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const { fields } = queryDataSet;
       return [...fields.entries()].reduce((list, [name, field]) => {
         if (!field.get('bind') && !name.includes('__tls')) {
-          const element = queryFields![name];
+          const element: ReactNode = queryFields![name];
           let filterBarProps = {};
           if (queryBar === TableQueryBarType.filterBar) {
             const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field);

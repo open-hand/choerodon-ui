@@ -568,8 +568,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return tableHeight;
     }
 
-    if(!!autoHeight) {
-      if(!!showScrollArrow) {
+    if(autoHeight) {
+      if(showScrollArrow) {
         return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight + SCROLLBAR_LARGE_WIDTH);
       } else {
         return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight + SCROLLBAR_WIDTH);
@@ -701,15 +701,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       };
       return this._cacheCells;
     }
-
-    // let columns: React.ReactNodeArray;
-    //
-    // const { customizable, originalColumns } = this.tableStore;
-    // if (customizable && originalColumns && originalColumns.length) {
-    //   columns = flatten(originalColumns).filter(col => col && !col.props.hidden);
-    // } else {
-    //   columns = this.getTableColumns();
-    // }
 
     const columns = this.getTableColumns();
 
