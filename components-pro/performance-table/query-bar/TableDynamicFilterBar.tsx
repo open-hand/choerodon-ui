@@ -13,7 +13,6 @@ import isEqual from 'lodash/isEqual';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import omit from 'lodash/omit';
-import classNames from 'classnames';
 
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -131,7 +130,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   refFilterWrapper: HTMLDivElement | null = null;
 
+  refEditors: Map<string, any> = new Map();
+
   originalValue: object;
+
+  originalConditionKeys: string[] = [];
 
   enterNum: number = 0;
 
@@ -242,8 +245,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   /**
    * 注入 onEnterDown 事件
    * @param element
+   * @param name
    */
-  createFields(element): ReactElement {
+  createFields(element, name): ReactElement {
     const { onEnterDown } = element.props;
     if (onEnterDown && isFunction(onEnterDown)) {
       return element;
@@ -252,6 +256,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       onEnterDown: () => {
         this.handleQuery();
       },
+      ref: (node) => this.refEditors.set(name, node),
     };
     return cloneElement(element, props);
   }
@@ -496,40 +501,40 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           {this.getFilterMenu()}
           <div className={`${proPrefixCls}-filter-wrapper`} ref={(wrapperNode) => this.refFilterWrapper = wrapperNode}>
             {queryFields.slice(0, queryFieldsLimit).map(element => {
-              const { name, suffixCls } = element.props;
-              const value = element.props.dataSet.current && element.props.dataSet.current.get(name);
+              const { name } = element.props;
               const queryField = queryDataSet.getField(name);
-              const hasLabel = !this.isEmpty(value) || suffixCls === 'checkbox';
-              const itemClassName = classNames(
-                `${proPrefixCls}-filter-item`,
-                {
-                  [`${proPrefixCls}-filter-item-label`]: hasLabel,
-                },
-              );
+              const itemClassName = `${proPrefixCls}-filter-item ${proPrefixCls}-filter-item-label`;
               return (
-                <div className={`${proPrefixCls}-filter-content`} key={`${name}-label`}>
-                  {hasLabel ? <span className={`${proPrefixCls}-filter-label`}>{queryField?.get('label')}</span> : null}
-                  <span className={itemClassName}>{this.createFields(element)}</span>
+                <div
+                  className={`${proPrefixCls}-filter-content`}
+                  key={name}
+                  onClick={() => this.refEditors.get(name).focus()}
+                >
+                  <span className={`${proPrefixCls}-filter-label`}>{queryField?.get('label')}</span>
+                  <span className={itemClassName}>{this.createFields(element, name)}</span>
                 </div>
               );
             })}
             {queryFields.slice(queryFieldsLimit).map(element => {
-              const { name, suffixCls } = element.props;
-              const value = element.props.dataSet.current && element.props.dataSet.current.get(name);
+              const { name } = element.props;
               const queryField = queryDataSet.getField(name);
               if (this.selectFields.includes(name)) {
                 return (
-                  <div className={`${proPrefixCls}-filter-content`} key={name}>
-                    <span className={`${proPrefixCls}-filter-label`}>{!this.isEmpty(value) || suffixCls === 'checkbox' ? queryField?.get('label') : ''}</span>
+                  <div
+                    className={`${proPrefixCls}-filter-content`}
+                    key={name}
+                    onClick={() => this.refEditors.get(name).focus()}
+                  >
+                    <Icon
+                      type="cancel"
+                      className={`${proPrefixCls}-filter-item-close`}
+                      onClick={() => {
+                        this.handleUnSelect([name]);
+                      }}
+                    />
+                    <span className={`${proPrefixCls}-filter-label`}>{queryField?.get('label')}</span>
                     <span className={`${proPrefixCls}-filter-item`}>
-                      {this.createFields(element)}
-                      <Icon
-                        type="cancel"
-                        className={`${proPrefixCls}-filter-item-close`}
-                        onClick={() => {
-                          this.handleUnSelect([name]);
-                        }}
-                      />
+                      {this.createFields(element, name)}
                     </span>
                   </div>
                 );
@@ -571,8 +576,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     });
                   }}
                 >
+                  <Icon type="add" />
                   {$l('Table', 'add_filter')}
-                  <Icon type="arrow_drop_down" />
                 </span>
               </Dropdown>
             </div>)}

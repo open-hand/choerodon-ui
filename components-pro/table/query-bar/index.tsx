@@ -32,7 +32,7 @@ import DataSet from '../../data-set';
 import Modal from '../../modal';
 import Progress from '../../progress';
 import Column from '../Column';
-import { getEditorByField } from '../utils';
+import { getEditorByField, getPlaceholderByField } from '../utils';
 import TableToolBar from './TableToolBar';
 import TableFilterBar from './TableFilterBar';
 import TableAdvancedQueryBar from './TableAdvancedQueryBar';
@@ -694,19 +694,21 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const { fields } = queryDataSet;
       return [...fields.entries()].reduce((list, [name, field]) => {
         if (!field.get('bind') && !name.includes('__tls')) {
+          const element = queryFields![name];
           let filterBarProps = {};
           if (queryBar === TableQueryBarType.filterBar) {
+            const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field);
             filterBarProps = {
-              placeholder: field.get('label'),
+              placeholder,
             };
           }
           const props: any = {
             key: name,
             name,
             dataSet: queryDataSet,
+            isFlat: queryBar === TableQueryBarType.filterBar,
             ...filterBarProps,
           };
-          const element = queryFields![name];
           list.push(
             isValidElement(element)
               ? cloneElement(element, props)

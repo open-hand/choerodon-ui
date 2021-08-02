@@ -116,6 +116,32 @@ export function getAlignByField(field?: Field): ColumnAlign | undefined {
   }
 }
 
+export function getPlaceholderByField(field?: Field): string | undefined {
+  if (field) {
+    const { type } = field;
+    const lookupCode = field.get('lookupCode');
+    const lookupUrl = field.get('lookupUrl');
+    const lovCode = field.get('lovCode');
+    if (
+      lookupCode ||
+      isString(lookupUrl) ||
+      (type !== FieldType.object && (lovCode || field.lookup || field.get('options')))
+    ) {
+      return undefined;
+    }
+    switch (type) {
+      case FieldType.number:
+      case FieldType.currency:
+      case FieldType.string:
+      case FieldType.intl:
+      case FieldType.email:
+      case FieldType.url:
+        return $l('Table', 'please_enter') as string;
+      default:
+    }
+  }
+}
+
 export function getPlacementByAlign(align?: ColumnAlign): TooltipPlacement | undefined {
   if (align === ColumnAlign.center) {
     return 'bottom';

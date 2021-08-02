@@ -14,7 +14,7 @@ filterBar
 filterBar example.
 
 ````jsx
-import { Button, PerformanceTable, DataSet } from 'choerodon-ui/pro';
+import { Button, PerformanceTable, DataSet, TextField } from 'choerodon-ui/pro';
 import '../../../components-pro/performance-table/style/index.less';
 import fakeLargeData from '../../../site/theme/mock/performance-data/fakeLargeData.json';
 
@@ -126,6 +126,7 @@ class EmptyDataTable extends React.Component {
           queryBar={{
             type: 'filterBar',
             defaultExpanded: true,
+            queryFields: { name: <TextField placeholder="测试默认值" /> },
             dynamicFilterBar: {
               quickSearch: true,
               searchCode: 'xxx',
