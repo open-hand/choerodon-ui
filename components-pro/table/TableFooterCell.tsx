@@ -3,10 +3,11 @@ import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
-import { getAlignByField, getColumnLock, isStickySupport } from './utils';
+import { getColumnLock, isStickySupport } from './utils';
 import { ColumnAlign, ColumnLock } from './enum';
 
 export interface TableFooterCellProps extends ElementProps {
@@ -33,7 +34,7 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = observer(functi
     innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
   }
   const cellStyle: CSSProperties = {
-    textAlign: align || (command ? ColumnAlign.center : getAlignByField(dataSet.getField(name))),
+    textAlign: align || (command ? ColumnAlign.center : getConfig('tableColumnAlign')(column, dataSet.getField(name))),
     ...footerStyle,
     ...style,
   };

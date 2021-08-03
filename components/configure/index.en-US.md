@@ -73,7 +73,8 @@ const prefixCls = getConfig('prefixCls');
 | tableRowDraggable | Default Table row draggable | boolean | false |
 | tableDragColumnAlign | Default align of Table row drag handler | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
-| tableColumnOnCell | Custom cell property configuration | ( dataSet, record, column) => object | - |
+| tableColumnOnCell | Custom cell property configuration | (dataSet, record, column) => object | - |
+| tableColumnAlign | 默认表格列对齐方式 | (column, field) => 'left' \| 'center' \| 'right' \| undefined | Function |
 | tableKeyboard | Table 开启或关闭新增的快捷按钮事件 | boolean | false |
 | tableFilterAdapter | Table 筛选条请求适配器 | AxiosRequestConfig | |
 | tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |

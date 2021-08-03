@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 tableColumnAlign 属性。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 
 ## 1.4.3

@@ -20,7 +20,7 @@ import WeekPicker from '../week-picker/WeekPicker';
 import MonthPicker from '../month-picker/MonthPicker';
 import YearPicker from '../year-picker/YearPicker';
 import ObserverTextField from '../text-field/TextField';
-import { ColumnAlign, ColumnLock, TablePaginationPosition } from './enum';
+import { ColumnLock, TablePaginationPosition } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import IntlField from '../intl-field/IntlField';
 import UrlField from '../url-field/UrlField';
@@ -31,7 +31,6 @@ import DataSet from '../data-set/DataSet';
 import TableStore, { CUSTOMIZED_KEY } from './TableStore';
 import { TablePaginationConfig } from './Table';
 import { $l } from '../locale-context';
-import { TooltipPlacement } from '../tooltip/Tooltip';
 import measureTextWidth from '../_util/measureTextWidth';
 import ColumnGroup from './ColumnGroup';
 
@@ -102,20 +101,6 @@ export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: 
   }
 }
 
-export function getAlignByField(field?: Field): ColumnAlign | undefined {
-  if (field) {
-    const { type } = field;
-    switch (type) {
-      case FieldType.number:
-      case FieldType.currency:
-        return ColumnAlign.right;
-      case FieldType.boolean:
-        return ColumnAlign.center;
-      default:
-    }
-  }
-}
-
 export function getPlaceholderByField(field?: Field): string | undefined {
   if (field) {
     const { type } = field;
@@ -140,16 +125,6 @@ export function getPlaceholderByField(field?: Field): string | undefined {
       default:
     }
   }
-}
-
-export function getPlacementByAlign(align?: ColumnAlign): TooltipPlacement | undefined {
-  if (align === ColumnAlign.center) {
-    return 'bottom';
-  }
-  if (align === ColumnAlign.right) {
-    return 'bottomRight';
-  }
-  return 'bottomLeft';
 }
 
 export function getEditorByColumnAndRecord(

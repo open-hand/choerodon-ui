@@ -6,16 +6,17 @@ import isObject from 'lodash/isObject';
 import { categories } from 'choerodon-ui-font';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
-import { ExportMode, RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
+import { ExportMode, FieldType, RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { Customized, expandIconProps, Suffixes, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
-import { DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
 import defaultFeedback, { FeedBack } from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
+import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
 import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
@@ -23,7 +24,7 @@ import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import { HighlightRenderer, Renderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
-import { onCellProps } from 'choerodon-ui/pro/lib/table/Column';
+import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { TimeZone } from 'choerodon-ui/pro/lib/date-picker/DatePicker';
 import { TooltipTheme } from '../tooltip';
 import { SpinProps } from '../spin';
@@ -138,6 +139,7 @@ export type Config = {
   tableCommandProps?: ButtonProps;
   tableDefaultRenderer?: Renderer;
   tableColumnOnCell?: (props: onCellProps) => object;
+  tableColumnAlign?: (column: ColumnProps, field?: Field) => ColumnAlign | undefined;
   tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
@@ -260,6 +262,20 @@ const defaultButtonProps = { color: ButtonColor.primary, funcType: FuncType.flat
 
 const defaultSpinProps = { size: Size.default, wrapperClassName: '' };
 
+const defaultTableColumnAlign = (_column: ColumnProps, field?: Field): ColumnAlign | undefined => {
+  if (field) {
+    const { type } = field;
+    switch (type) {
+      case FieldType.number:
+      case FieldType.currency:
+        return ColumnAlign.right;
+      case FieldType.boolean:
+        return ColumnAlign.center;
+      default:
+    }
+  }
+};
+
 const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
   Config[ConfigKeys]>([
   ['prefixCls', 'c7n'],
@@ -307,6 +323,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableRowDraggable', false],
   ['tableColumnDraggable', false],
   ['performanceTableColumnDraggable', false],
+  ['tableColumnAlign', defaultTableColumnAlign],
   ['tableSpinProps', defaultSpinProps],
   ['tableButtonProps', defaultButtonProps],
   ['tableCommandProps', defaultButtonProps],

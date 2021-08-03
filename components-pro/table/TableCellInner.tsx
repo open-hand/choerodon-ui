@@ -28,7 +28,7 @@ import Record from '../data-set/Record';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
 import { TableButtonProps } from './Table';
-import { findCell, getAlignByField, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
+import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import { SELECTION_KEY } from './TableStore';
 import { ColumnAlign, SelectionMode, TableCommandType } from './enum';
@@ -380,7 +380,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     }
     return style;
   }, [fieldType, key, rows, rowHeight, height, style, aggregation, hasEditor]);
-  const innerStyle = useMemo(() => inAggregation ? prefixStyle : ({ textAlign: align || (columnCommand ? ColumnAlign.center : getAlignByField(field)), ...prefixStyle }), [inAggregation, align, field, columnCommand, prefixStyle]);
+  const innerStyle = useMemo(() => inAggregation ? prefixStyle : ({ textAlign: align || (columnCommand ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field)), ...prefixStyle }), [inAggregation, align, column, field, columnCommand, prefixStyle]);
   const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
   const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
     if (validationResult && validationResult.validationMessage) {
