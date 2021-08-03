@@ -7,7 +7,7 @@ const { Column } = Table;
 const nameDynamicProps = {
   // 当Sex为M(男)的时候 该属性为必须输入字段 即为 field 中 require = true
   required({ record }) {
-    return record.get('sex') === 'M';
+    return record && record.get('sex') === 'M';
   },
 };
 

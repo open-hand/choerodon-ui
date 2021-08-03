@@ -29,3 +29,10 @@ title: API
 ## 注意
 
 请确保 `Tooltip` 的子元素能接受 `onMouseEnter`、`onMouseLeave`、`onFocus`、`onClick` 事件。
+
+### static Methods
+
+| 名称 | 说明 |
+| --- | --- |
+| show(target, tooltipProps, duration) | 显示单例 Tooltip， duration 默认 100 |
+| hide(duration) | 隐藏单例 Tooltip， duration 默认 100 |

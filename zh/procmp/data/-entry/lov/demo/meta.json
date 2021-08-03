@@ -75,6 +75,21 @@
       "screenshot": "",
       "height": 200,
       "category": "pro"
+    },
+    {
+      "filename": "tree-data.js",
+      "title": {
+        "zh": "树形数据",
+        "en": "Tree Data"
+      },
+      "description": {
+        "zh": "树形数据, LovConfig 配置中需要有 treeFlag、parentIdField、idField， 如果配置无法辨别是否是树形， 可以给 tableProps 加上 mode: 'tree'，以及 dataSetProps 加上 parentField 和 idField。\n",
+        "en": "For tree data, the LovConfig configuration requires treeFlag, parentIdField, and idField. If the configuration cannot distinguish whether it is a tree, you can add mode:'tree' to tableProps, and add parentField and idField to dataSetProps.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
     }
   ]
 }

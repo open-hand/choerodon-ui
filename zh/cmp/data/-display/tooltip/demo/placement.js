@@ -32,7 +32,7 @@ const App = () => {
           <Button>LB</Button>
         </Tooltip>
       </div>
-      <div style={{ width: buttonWidth, marginLeft: (buttonWidth * 4) + 24 }}>
+      <div style={{ width: buttonWidth, marginLeft: buttonWidth * 4 + 24 }}>
         <Tooltip placement="rightTop" title={text} theme={theme}>
           <Button>RT</Button>
         </Tooltip>
@@ -43,7 +43,9 @@ const App = () => {
           <Button>RB</Button>
         </Tooltip>
       </div>
-      <div style={{ marginLeft: buttonWidth, clear: 'both', whiteSpace: 'nowrap' }}>
+      <div
+        style={{ marginLeft: buttonWidth, clear: 'both', whiteSpace: 'nowrap' }}
+      >
         <Tooltip placement="bottomLeft" title={text} theme={theme}>
           <Button>BL</Button>
         </Tooltip>
@@ -55,12 +57,11 @@ const App = () => {
         </Tooltip>
       </div>
       <Button onClick={() => setTheme('light')}>Light</Button>
-      <Button onClick={() => setTheme('dark')} color="dark">Dark</Button>
+      <Button onClick={() => setTheme('dark')} color="dark">
+        Dark
+      </Button>
     </div>
   );
 };
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container'),
-);
+ReactDOM.render(<App />, document.getElementById('container'));

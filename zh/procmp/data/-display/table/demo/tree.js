@@ -58,27 +58,9 @@ class App extends React.Component {
     border: true,
     mode: 'tree',
     expandedRender: false,
+    checkFieldAsColumn: true,
+    selectionMode: 'rowbox',
   };
-
-  handleCreateChild = () => {
-    this.ds.create({ parentId: this.ds.current.get('id') });
-  };
-
-  handleChangeExpandRender = () =>
-    this.setState({ expandedRender: !this.state.expandedRender });
-
-  handleChangeExpandIconIndex = () =>
-    this.setState({
-      expandIconColumnIndex:
-        this.state.expandIconColumnIndex > 2
-          ? 0
-          : this.state.expandIconColumnIndex + 1,
-    });
-
-  handleChangeBorder = () => this.setState({ border: !this.state.border });
-
-  handleChangeMode = () =>
-    this.setState({ mode: this.state.mode === 'tree' ? 'list' : 'tree' });
 
   buttons = [
     'add',
@@ -107,15 +89,68 @@ class App extends React.Component {
     <Button key="change-expand-render" onClick={this.handleChangeExpandRender}>
       切换展开行渲染
     </Button>,
+    <Button
+      key="change-check-field-as-column"
+      onClick={this.handleChangeCheckFieldAsColumn}
+    >
+      切换checkField显示模式
+    </Button>,
+    <Button
+      key="change-selection-mode"
+      onClick={this.handleChangeSelectionMode}
+    >
+      切换选择模式
+    </Button>,
   ];
 
+  handleCreateChild = () => {
+    this.ds.create({ parentId: this.ds.current.get('id') });
+  };
+
+  handleChangeExpandRender = () =>
+    this.setState({ expandedRender: !this.state.expandedRender });
+
+  handleChangeExpandIconIndex = () =>
+    this.setState((prevState) => ({
+      expandIconColumnIndex:
+        prevState.expandIconColumnIndex > 2
+          ? 0
+          : prevState.expandIconColumnIndex + 1,
+    }));
+
+  handleChangeBorder = () => this.setState({ border: !this.state.border });
+
+  handleChangeMode = () =>
+    this.setState((prevState) => ({
+      mode: prevState.mode === 'tree' ? 'list' : 'tree',
+    }));
+
+  handleChangeCheckFieldAsColumn = () =>
+    this.setState((prevState) => ({
+      checkFieldAsColumn: !prevState.checkFieldAsColumn,
+    }));
+
+  handleChangeSelectionMode = () =>
+    this.setState((prevState) => ({
+      selectionMode:
+        prevState.selectionMode === 'rowbox' ? 'treebox' : 'rowbox',
+    }));
+
   render() {
-    const { mode, expandIconColumnIndex, border, expandedRender } = this.state;
+    const {
+      mode,
+      expandIconColumnIndex,
+      border,
+      expandedRender,
+      checkFieldAsColumn,
+      selectionMode,
+    } = this.state;
     return (
       <Table
         parityRow
         rowNumber
         mode={mode}
+        selectionMode={selectionMode}
         buttons={this.buttons}
         dataSet={this.ds}
         expandIconColumnIndex={expandIconColumnIndex}
@@ -124,7 +159,7 @@ class App extends React.Component {
       >
         <Column name="text" editor renderer={iconRenderer} width={250} />
         <Column name="url" editor />
-        <Column name="ischecked" editor />
+        <Column name="ischecked" editor hidden={!checkFieldAsColumn} />
         <Column name="expand" editor />
         <Column header="权限设置" width={150} align="center" />
       </Table>

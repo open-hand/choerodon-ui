@@ -51,6 +51,7 @@ class App extends React.Component {
         type: 'date',
         label: '生日',
       },
+      { name: 'currency', defaultValue: 12, type: 'currency', label: '金额' },
     ],
   });
 
@@ -64,6 +65,7 @@ class App extends React.Component {
         <EmailField name="email" />
         <Output name="homepage" />
         <Output name="birth" />
+        <Output name="currency" currency="CNY" />
       </Form>
     );
   }

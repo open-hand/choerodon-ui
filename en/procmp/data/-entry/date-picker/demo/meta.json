@@ -138,6 +138,21 @@
       "screenshot": "",
       "height": 133,
       "category": "pro"
+    },
+    {
+      "filename": "time-zone.js",
+      "title": {
+        "zh": "显示时区",
+        "en": "show time zone"
+      },
+      "description": {
+        "zh": "显示时区。\n",
+        "en": "show time zone.\n"
+      },
+      "order": 9,
+      "screenshot": "",
+      "height": 153,
+      "category": "pro"
     }
   ]
 }

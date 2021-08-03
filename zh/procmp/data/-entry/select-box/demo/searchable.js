@@ -41,7 +41,7 @@ class App extends React.Component {
     return (
       <Row>
         <Col span={24}>
-          <Form labelLayout="float">
+          <Form labelLayout="float" labelWidth="auto">
             <SelectBox
               label="demo"
               dataSet={this.ds}

@@ -258,6 +258,51 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
+    },
+    {
+      "filename": "professional-bar.js",
+      "title": {
+        "zh": "专业搜索条",
+        "en": "Professional Search Bar"
+      },
+      "description": {
+        "zh": "queryBar type 设为 professionalBar 展示专业搜索条。\n",
+        "en": "Professional Search Bar.\n"
+      },
+      "order": 17,
+      "screenshot": "",
+      "height": 620,
+      "category": "pro"
+    },
+    {
+      "filename": "filter-bar.js",
+      "title": {
+        "zh": "动态筛选条",
+        "en": "Filter Bar"
+      },
+      "description": {
+        "zh": "queryBar type 设为 filterBar，查询条件为无边框可动态配置筛选条，结合后端标准接口可实现筛选列表保存。",
+        "en": "There is no border to dynamically filter the bar, combined with the back-end standard interface to realize the preservation of the filter list.\n"
+      },
+      "order": 18,
+      "screenshot": "",
+      "height": 620,
+      "category": "pro"
+    },
+    {
+      "filename": "customized.js",
+      "title": {
+        "zh": "用户个性化",
+        "en": "Customized"
+      },
+      "description": {
+        "zh": "支持对列的各项属性进行配置并个性化存储。\n",
+        "en": "Support the configuration and personalized storage of each attribute of the column.\n"
+      },
+      "order": 19,
+      "screenshot": "",
+      "height": 535,
+      "category": "pro"
     }
   ]
 }

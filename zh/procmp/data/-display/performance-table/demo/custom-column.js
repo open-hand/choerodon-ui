@@ -58,7 +58,7 @@ class CustomColumnTable extends React.Component {
     if (value) {
       checkValues.push(value);
     } else {
-      checkValues.splice(checkValues.indexOf(value), 1);
+      checkValues.splice(checkValues.indexOf(oldValue), 1);
     }
     this.setState({
       checkValues,

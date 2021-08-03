@@ -37,7 +37,7 @@ title: API
 | pagination            | 分页器，参考[配置项](#pagination)或 [pagination](/zh/procmp/navigation/pagination/)，设为 false 时不展示分页                                                                                                                             | object \| false                                                                                        |          |
 | highLightRow | 当前行高亮, 可选值: boolean \| focus \| click, true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean \| string | true |
 | selectedHighLightRow  | 勾选行高亮                                                                                                                                                                                                                     | boolean                                                                                                | false    |
-| columnResizable       | 可调整列宽                                                                                                                                                                                                                     | boolean                                                                                                | true     |
+| columnResizable       | 可调整列宽                                                                                                                                                                                                                     | boolean                                                                                                |     |
 | columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | true |
 | columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean |  |
 | columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | false |
@@ -77,6 +77,7 @@ title: API
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
+| showHeader |	是否显示表头 |	boolean |	true |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
 
@@ -87,6 +88,7 @@ title: API
 | name            | 列对照的字段名                                                                                                                                                                                    | string                                                                                                                             |           |
 | width           | 列宽，不推荐给所有列设置宽度，而是给某一列不设置宽度达到自动宽度的效果                                                                                                                            | number                                                                                                                             |           |
 | minWidth        | 最小列宽                                                                                                                                                                                          | number                                                                                                                             | 100       |
+| title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |
 | header | 列头 | ReactNode \| (dataSet, name, title, aggregation) => ReactNode |  |
 | footer          | 列脚                                                                                                                                                                                              | ReactNode \| (dataSet, name) => ReactNode                                                                                          |           |
 | renderer        | 单元格渲染回调                                                                                                                                                                                    | ({ value, text, name, record, dataSet }) => ReactNode                                                                              |           |
@@ -106,10 +108,14 @@ title: API
 | help            | 额外信息，常用于提示                                                                                                                                                                              | `string`                                                                                                                           |           |
 | showHelp        | 展示提示信息的方式。可选值 tooltip \| newLine \| none                                                                                                                                             | string                                                                                                                             | tooltip |
 | onCell          | 设置单元格属性                                                                                                                                                                                    | ({ dataSet, record, column }) => object                                                                                            |           |
-| command         | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode \| object )[] |           |
+| command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] | |
 | hidden          | 隐藏                                                                                                                                                                                              | boolean                                                                                                                            |           |
 | tooltip         | 用 Tooltip 显示单元格内容。可选值 none \| always \| overflow                                                                                                                                      | string                                                                                                                             | none    |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |
+| aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
+| aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
+| aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
+| hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |
 | highlightRenderer | 单元格高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 
 ### Table.FilterBar

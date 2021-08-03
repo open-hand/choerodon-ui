@@ -30,13 +30,16 @@ class App extends React.Component {
         name: 'sex2',
         type: 'string',
         computedProps: {
-          lookupAxiosConfig: ({ record }) => ({
-            url: record.get('sex') ? '/common/code/HR.EMPLOYEE_GENDER/' : null,
-            transformResponse(data) {
-              console.log('transformResponse', data);
-              return data;
+          lookupAxiosConfig: ({ record }) =>
+            record && {
+              url: record.get('sex')
+                ? '/common/code/HR.EMPLOYEE_GENDER/'
+                : null,
+              transformResponse(data) {
+                console.log('transformResponse', data);
+                return data;
+              },
             },
-          }),
         },
       },
       {

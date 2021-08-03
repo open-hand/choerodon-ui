@@ -79,6 +79,21 @@
       "height": 131,
       "ignores": ["theme1", "theme3"],
       "category": "pro"
+    },
+    {
+      "filename": "singleton.js",
+      "title": {
+        "zh": "单例模式",
+        "en": "Singleton"
+      },
+      "description": {
+        "zh": "单例模式。\n",
+        "en": "Singleton.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 131,
+      "category": "pro"
     }
   ]
 }

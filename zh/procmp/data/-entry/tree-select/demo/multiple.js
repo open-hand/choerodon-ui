@@ -48,21 +48,21 @@ class App extends React.Component {
   });
 
   handleChange = (value) => {
-    console.log('handleChange', value)
-    this.setState({ showCheckedStrategy: value })
+    console.log('handleChange', value);
+    this.setState({ showCheckedStrategy: value });
   };
-
 
   render() {
     return (
       <Row gutter={10}>
         <Col span={24}>
-          <SelectBox value={this.state.showCheckedStrategy} onChange={this.handleChange}>
+          <SelectBox
+            value={this.state.showCheckedStrategy}
+            onChange={this.handleChange}
+          >
             <Option value="SHOW_CHILD">SHOW_CHILD</Option>
             <Option value="SHOW_PARENT">SHOW_PARENT</Option>
-            <Option value="SHOW_ALL">
-              SHOW_All
-            </Option>
+            <Option value="SHOW_ALL">SHOW_All</Option>
           </SelectBox>
         </Col>
         <Col span={24}>

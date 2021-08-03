@@ -11,20 +11,24 @@ const optionData = [
 const codeCodeDynamicProps = {
   // 代码code_code值绑定 为 字段code 的 值列表的值字段为code.codevalue
   bind({ record }) {
-    const field = record.getField('code');
-    if (field) {
-      const valueField = field.get('valueField');
-      return `code.${valueField}`;
+    if (record) {
+      const field = record.getField('code');
+      if (field) {
+        const valueField = field.get('valueField');
+        return `code.${valueField}`;
+      }
     }
   },
 };
 
 const codeDescriptionDynamicProps = {
   bind({ record }) {
-    const field = record.getField('code');
-    if (field) {
-      const textField = field.get('textField');
-      return `code.${textField}`;
+    if (record) {
+      const field = record.getField('code');
+      if (field) {
+        const textField = field.get('textField');
+        return `code.${textField}`;
+      }
     }
   },
 };
@@ -160,6 +164,9 @@ class App extends React.Component {
         buttons={['add', 'query']}
         dataSet={this.ds}
         queryBar="filterBar"
+        queryBarProps={{
+          dynamicFilterBar: { suffixes: ['filter'], prefixes: ['filter'] },
+        }}
         border={false}
         columns={this.columns}
         queryFieldsLimit={2}

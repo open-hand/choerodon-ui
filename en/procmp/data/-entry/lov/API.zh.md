@@ -13,6 +13,7 @@ title: API
 | searchAction | 搜索触发变更的动作, 可选值：`blur` `input`， | string | input ||
 | fetchSingle | searchAction 为 blur 时生效，获取记录有重复时弹出选择窗口 | boolean | false ||
 | autoSelectSingle | 点击查询仅存在一条数据时自动选中 | boolean | false |
+| showCheckedStrategy | 定义选中项回填的方式。`SHOW_CHILD`: 只显示子节点. `SHOW_PARENT`: 只显示父节点(当父节点下所有子节点都选中时). 默认显示所有选中节点(包括父节点). | string | SHOW_ALL |
 
 更多属性请参考[Select](/zh/procmp/data-entry/select/#API), [TextField](/zh/procmp/data-entry/text-field/#TextField), [Button](/zh/procmp/general/button/#Button)。
 

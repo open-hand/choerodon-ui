@@ -9,18 +9,26 @@ import {
   SelectBox,
   Modal,
   Button,
+  CheckBox,
 } from 'choerodon-ui/pro';
 
 const { Column } = Table;
 
 class EditButton extends React.Component {
-  handleClick = e => {
+  handleClick = (e) => {
     const { record, onClick } = this.props;
     onClick(record, e);
   };
 
   render() {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.handleClick} size="small" />;
+    return (
+      <Button
+        funcType="flat"
+        icon="mode_edit"
+        onClick={this.handleClick}
+        size="small"
+      />
+    );
   }
 }
 
@@ -74,6 +82,7 @@ class App extends React.Component {
           <TextField name="name" />
           <NumberField name="age" />
           <SelectBox name="sex" />
+          <CheckBox name="enable" />
         </Form>
       ),
       onOk: () => this.userDs.submit(),
@@ -82,7 +91,7 @@ class App extends React.Component {
     });
   };
 
-  editUser = record => {
+  editUser = (record) => {
     this.openModal(record);
   };
 
@@ -108,7 +117,12 @@ class App extends React.Component {
         <Column name="age" />
         <Column name="enable" />
         <Column name="name" />
-        <Column header="操作" align="center" renderer={this.renderEdit} lock="right" />
+        <Column
+          header="操作"
+          align="center"
+          renderer={this.renderEdit}
+          lock="right"
+        />
       </Table>
     );
   }

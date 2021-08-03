@@ -52,7 +52,8 @@ class App extends React.Component {
       },
     ],
     events: {
-      query: ({ params, data }) => console.log('friend query parameter', params, data),
+      query: ({ params, data }) =>
+        console.log('friend query parameter', params, data),
     },
   });
 
@@ -95,7 +96,8 @@ class App extends React.Component {
     },
     events: {
       indexChange: ({ record }) =>
-        record && console.log('enemyRecord cascadeParent', record.cascadeParent),
+        record &&
+        console.log('enemyRecord cascadeParent', record.cascadeParent),
     },
   });
 
@@ -143,7 +145,7 @@ class App extends React.Component {
         type: 'object',
         label: '代码描述',
         lovCode: 'LOV_CODE',
-        transformRequest: value => value && value.code,
+        transformRequest: (value) => value && value.code,
       },
       {
         name: 'code2',
@@ -182,7 +184,7 @@ class App extends React.Component {
     },
   });
 
-  openModal = record => {
+  openModal = (record) => {
     const { Modal: modal } = this.props;
     let isCancel = false;
     modal.open({
@@ -204,7 +206,11 @@ class App extends React.Component {
             </Table>
           </TabPane>
           <TabPane tab="Friends(F)">
-            <Table dataSet={this.friendsDs} rowHeight={40} filter={femaleFilter}>
+            <Table
+              dataSet={this.friendsDs}
+              rowHeight={40}
+              filter={femaleFilter}
+            >
               <Column name="name" editor={editorRenderer} sortable />
               <Column name="age" editor sortable />
               <Column name="sex" editor width={150} />
@@ -212,7 +218,7 @@ class App extends React.Component {
           </TabPane>
         </Tabs>
       ),
-      onOk: async () => await Modal.confirm('ok?') === 'ok',
+      onOk: async () => (await Modal.confirm('ok?')) === 'ok',
       onCancel: () => (isCancel = true),
       afterClose: () => record && isCancel && this.userDs.remove(record),
     });
@@ -254,7 +260,14 @@ class App extends React.Component {
   };
 
   renderEdit = () => {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} size="small" />;
+    return (
+      <Button
+        funcType="flat"
+        icon="mode_edit"
+        onClick={this.editUser}
+        size="small"
+      />
+    );
   };
 
   render() {
@@ -267,7 +280,15 @@ class App extends React.Component {
       this.toJSONDataButton,
     ];
     return [
-      <Table key="user" buttons={buttons} dataSet={this.userDs} header="User" rowHeight="auto" columnDraggable rowNumber={({ text }) => `#${text}`}>
+      <Table
+        key="user"
+        buttons={buttons}
+        dataSet={this.userDs}
+        header="User"
+        rowHeight="auto"
+        columnDraggable
+        rowNumber={({ text }) => `#${text}`}
+      >
         <Column name="userid" editor />
         <Column name="age" editor width={150} />
         <Column name="enable" editor width={50} />
@@ -276,7 +297,12 @@ class App extends React.Component {
         <Column name="code2" editor width={150} />
         <Column name="code_code" editor width={150} />
         <Column name="code_description" editor width={150} />
-        <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />
+        <Column
+          header="编辑Friends"
+          align="center"
+          renderer={this.renderEdit}
+          lock="right"
+        />
       </Table>,
       <Table
         key="cascade1"
@@ -295,7 +321,12 @@ class App extends React.Component {
         buttons={[
           'add',
           'delete',
-          <Lov dataSet={this.enemyFriendsDs} name="code" mode="button" clearButton={false}>
+          <Lov
+            dataSet={this.enemyFriendsDs}
+            name="code"
+            mode="button"
+            clearButton={false}
+          >
             Lov
           </Lov>,
         ]}

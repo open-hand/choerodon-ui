@@ -30,17 +30,18 @@ class App extends React.Component {
         name: 'sex2',
         type: 'string',
         computedProps: {
-          lookupAxiosConfig: ({ record }) => ({
-            url: record.get('sex') ? '/tree-less.mock' : null,
-            transformResponse(data) {
-              console.log('transformResponse', data);
-              try {
-                return JSON.parse(data);
-              } catch (e) {
-                return data;
-              }
+          lookupAxiosConfig: ({ record }) =>
+            record && {
+              url: record.get('sex') ? '/tree-less.mock' : null,
+              transformResponse(data) {
+                console.log('transformResponse', data);
+                try {
+                  return JSON.parse(data);
+                } catch (e) {
+                  return data;
+                }
+              },
             },
-          }),
         },
         textField: 'text',
         valueField: 'functionCode',

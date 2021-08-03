@@ -26,6 +26,7 @@ abstract: true
 | autoLocateAfterRemove | 当前数据被删除后自动定位到其他记录 | boolean | true |
 | validateBeforeQuery | 查询时是否校验查询字段或查询数据集 | boolean | true |
 | selection | 选择的模式, 可选值: false 'multiple' 'single' | boolean \| string | multiple |
+| selectionStrategy | 树形选择记录策略， `SHOW_ALL` `SHOW_CHILD` `SHOW_PARENT` | string | 'SHOW_ALL' |
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | true |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
@@ -54,6 +55,7 @@ abstract: true
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#dataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |
 | exportMode | 导出模式选择：前端导出，后端导出 | client \| server | server |
+| combineSort | 是否开启组件列排序传参 | boolean | false |
 
 ### DataSet Values
 
@@ -68,6 +70,7 @@ abstract: true
 | paging | 是否分页 | observable&lt;boolean&gt; |
 | status | 状态，loading submitting ready | observable&lt;string&gt; |
 | selection | 选择的模式, 可选值: false 'multiple' 'single' | observable&lt;string\|boolean&gt; |
+| selectionStrategy | 树形选择记录策略， `SHOW_ALL` `SHOW_CHILD` `SHOW_PARENT` | observable&lt;string[]&gt; |
 | records | 所有记录 | observable&lt;Record[]&gt; |
 | all | 所有记录, 包括缓存的选择记录 | observable&lt;Record[]&gt; |
 | data | 数据, 不包括删除状态的 Record | observable&lt;Record[]&gt; |
@@ -80,6 +83,7 @@ abstract: true
 | currentUnSelected | 当前页未选中记录 | readonly observable&lt;Record[]&gt; |
 | cachedSelected | isAllPageSelection 为 false 时缓存的选中记录 或 isAllPageSelection 为 true 时缓存的未选中记录 | readonly observable&lt;Record[]&gt; |
 | cachedSelected | 缓存的选中记录 | readonly observable&lt;Record[]&gt; |
+| treeSelected | 树形选中记录， 受 selectionStrategy 影响 | readonly observable&lt;Record[]&gt; |
 | length | 数据量 | readonly observable&lt;number&gt; |
 | queryDataSet | 查询数据源 | observable&lt;DataSet&gt; |
 | parent | 级联头数据源 | readonly observable&lt;DataSet&gt; |
@@ -133,7 +137,9 @@ abstract: true
 | selectAll() | 全选当前页 |  |  |
 | unSelectAll() | 取消全选当前页 |  |  |
 | batchSelect(recordOrId) | 批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
-| unSelectAll(recordOrId) | 取消批量选择记录 | `recordOrId` - 记录对象或记录的id集 |  |
+| batchUnSelect(recordOrId) | 取消批量选择记录 | `recordOrId` - 记录对象或记录的id集 | |
+| treeSelect(record) | 选择记录和其子记录 | `record` - 记录对象 |  |
+| treeUnSelect(record) | 取消选择记录和其子记录 | `record` - 记录对象 |  |
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |
 | get(index) | 获取指定索引的记录 | `index` - 记录索引 | Record |
 | getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | `index` - 记录索引 | Record |
@@ -169,10 +175,10 @@ abstract: true
 | submitFailed | 提交失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | select | 选择记录事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 选择的记录 `previous` - 之前选择的记录，单选模式下有效 | 是 |
 | unSelect | 撤销选择记录事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 撤销选择的记录 | 是 |
-| selectAll | 全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
-| unSelectAll | 撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
-| batchSelect | 批量选择记录事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
-| batchUnSelect | 批量取消选择记录事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
+| selectAll | <废弃>全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| unSelectAll | <废弃>撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
+| batchSelect | 批量选择记录事件, 由 select, selectAll, batchSelect 和 treeSelect 方法触发 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
+| batchUnSelect | 批量取消选择记录事件, 由 unSelect, unSelectAll, batchUnSelect 和 treeUnSelect 方法触发 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 选择的记录集 | 是 |
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 | 是 |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 | 是 |
 | create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 | 是 |
@@ -240,7 +246,7 @@ abstract: true
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | name | 字段名 | string |  |
-| type | 字段类型，可选值: `boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` | string | string |
+| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` `json` | string | string |
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值: `asc` `desc` | string |  |
 | label | 字段标签 | string |  |
 | labelWidth | 字段标签宽度 | number |  |
@@ -283,7 +289,7 @@ abstract: true
 | computedProps | [计算属性对象](https://huihuawk.gitee.io/c7n-ui/zh/tutorials/dataSet-more#computedProps)。对象为字段属性和返回该字段值的钩子的键值对。功能和用法同 dynamicProps，具有 mobx computed 的缓存功能，避免重复计算，提高性能。请确保计算依赖的值是可观察的。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |
-| ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | never |
+| ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | |
 | transformRequest | 在发送请求之前对数据进行处理 | (value: any, record: Record) => any |  |
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any, object: any) => any |  |
 | trim | 字符串值是否去掉首尾空格，可选值: both \| left \| right \| none | string | both |
@@ -352,10 +358,12 @@ abstract: true
 | 枚举值 | 说明 |
 | --- | --- |
 | dirty | 只转换变更的数据，包括本身无变更但级联有变更的数据 |
+| dirty-field | 只转数据中变更了的字段（包括主键和unique以及ignore为never的字段），包括本身无变更但级联有变更的数据 |
 | selected | 只转换选中的数据，无关数据的变更状态 |
 | all | 转换所有数据 |
 | normal | 转换所有数据为普通 json，不会带上\_\_status, \_\_id 等附加字段，也不会出现临时删除的数据， 一般用于大 JSON 字段 |
 | dirty-self | 同 dirty， 但不转换级联数据 |
+| dirty-field-self | 同 dirty-field， 但不转换级联数据 |
 | selected-self | 同 selected， 但不转换级联数据 |
 | all-self | 同 all， 但不转换级联数据 |
 | normal-self | 同 normal， 但不转换级联数据 |

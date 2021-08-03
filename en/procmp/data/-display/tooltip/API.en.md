@@ -30,3 +30,10 @@ The following APIs are shared by Tooltip, Popconfirm, Popover.
 ## Note
 
 Please ensure that the child node of `Tooltip` accepts `onMouseEnter`, `onMouseLeave`, `onFocus`, `onClick` events.
+
+### static Methods
+
+| Name | Description |
+| --- | --- |
+| show(target, tooltipProps, duration) | show singleton Tooltip, duration is 100 by default. |
+| hide(duration) |  hide singleton Tooltip, duration is 100 by default. |

@@ -14,5 +14,5 @@ ReactDOM.render(
       <TextArea placeholder="resize horizontal" resize="horizontal" cols={40} />
     </Col>
   </Row>,
-  document.getElementById('container')
+  document.getElementById('container'),
 );

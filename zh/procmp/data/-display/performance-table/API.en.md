@@ -46,6 +46,14 @@ title: API
 | width                    | number                                                                            | Table width                                                                                   |
 | wordWrap                 | boolean                                                                           | The cell wraps automatically                                                                  |
 | highLightRow             | boolean`(true)`                                                                   | Click on the row to display the highlighted row                                       |
+| queryBar             | queryBarProps                                                                | 查询条                                  |
+| toolbar             | toolbarProps                                                                | 工具栏                                  |
+| toolBarRender            | (props: object) => React.ReactNode[]                                             | 工具栏渲染                                                  |
+| columnHideable | boolean`(true)` | 可调整列显示, customizable 为 true 才起作用 |
+| columnTitleEditable | boolean | 可编辑列标题, customizable 为 true 才起作用 |
+| columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 |
+| customizable | boolean | 是否显示个性化设置入口按钮  |  |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
 
 ### Form methods
 
@@ -80,6 +88,9 @@ scrollLeft: (left: number) => void;
 | treeCol       | boolean                                          | A column of a tree.                                                                                         |
 | verticalAlign | enum: 'top', 'middle', 'bottom'                  | Vertical alignment                                                                                          |
 | width         | number                                           | Column width                                                                                                |
+| hidden         | boolean                                           | 隐藏                                                                                  |
+| hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
+| titleEditable         | boolean`(true)`                                       | 个性化是否可编辑列头                                                                                |
 
 > `sortable` is used to define whether the column is sortable, but depending on what `key` sort needs to set a `dataKey` in `Cell`.
 > The sort here is the service-side sort, so you need to handle the logic in the ' Onsortcolumn ' callback function of `<Table>`, and the callback function returns `sortColumn`, `sortType` values.
@@ -100,3 +111,27 @@ scrollLeft: (left: number) => void;
 | dataKey  | string           | Data binding `key`, but also a sort of `key` |
 | rowData  | object           | Row data                                     |
 | rowIndex | number           | Row number                                   |
+
+### toolBarProps
+
+| 属性名称 | 类型 `(默认值)` | 描述                                    |
+| -------- | --------------- | --------------------------------------- |
+| header  | React.ReactNode          | 表格标题 |
+| hideToolbar  | boolean          | 是否显示工具栏                                  |
+| buttons | React.ReactNode[]          | 工具栏右侧操作区                                     |
+| settings | (ReactNode \| Setting)[]         | 工作栏右侧设置区                                    |
+
+### queryBarProps
+
+| 属性名称 | 类型 `(默认值)` | 描述                                    |
+| -------- | --------------- | --------------------------------------- |
+| type  | TableQueryBarType: filter, professionalBar   | 查询条类型 |
+| renderer  | (props: TableQueryBarHookProps) => React.ReactNode          | 渲染覆盖                                  |
+| dataSet | DataSet          | 数据源                                     |
+| queryFormProps | FormProps         | 查询条表单属性                                    |
+| defaultExpanded | Boolean         | 是否默认展开                                    |
+| queryDataSet | DataSet         | 查询数据源                                   |
+| queryFields | React.ReactElement<any>[]         | 自定义查询字段组件或默认组件属性                                    |
+| queryFieldsLimit | ReactElement         | 显示的查询字段的数量                                    |
+| onQuery | (props: object) => void         | 查询回调                                    |
+| onReset | () => void         | 重置回调                                    |

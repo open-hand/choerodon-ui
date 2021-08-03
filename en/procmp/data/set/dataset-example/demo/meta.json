@@ -1,0 +1,23 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "dataToJson.js",
+      "title": {
+        "zh": "数据转化案例",
+        "en": "dataToJson"
+      },
+      "description": {
+        "zh": "通过表格示例，观察执行结果理解 DataSet 数据转化 dataToJSON 属性。\n\n",
+        "en": "Through the table example, observe the execution result to understand the dataToJSON attribute of DataSet data conversion.\n\n"
+      },
+      "order": 0,
+      "height": 1236,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}

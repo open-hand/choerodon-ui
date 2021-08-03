@@ -27,13 +27,15 @@ class App extends React.Component {
         label: '性别',
         computedProps: {
           type: ({ record }) => {
-            return record.get('base') === 'Lov' ? 'object' : 'string';
+            return record && record.get('base') === 'Lov' ? 'object' : 'string';
           },
           lovCode: ({ record }) => {
-            return record.get('base') === 'Lov' ? 'LOV_CODE' : null;
+            return record && record.get('base') === 'Lov' ? 'LOV_CODE' : null;
           },
           options: ({ record }) => {
-            return record.get('base') === 'Lov' ? null : this.optionDs;
+            return record && record.get('base') === 'Lov'
+              ? null
+              : this.optionDs;
           },
         },
         required: true,
@@ -84,13 +86,15 @@ class App extends React.Component {
         label: '性别',
         computedProps: {
           type: ({ record }) => {
-            return record.get('base') === 'Lov' ? 'object' : 'string';
+            return record && record.get('base') === 'Lov' ? 'object' : 'string';
           },
           lovCode: ({ record }) => {
-            return record.get('base') === 'Lov' ? 'LOV_CODE' : null;
+            return record && record.get('base') === 'Lov' ? 'LOV_CODE' : null;
           },
           lookupCode: ({ record }) => {
-            return record.get('base') === 'Lov' ? null : 'HR.EMPLOYEE_GENDER';
+            return record && record.get('base') === 'Lov'
+              ? null
+              : 'HR.EMPLOYEE_GENDER';
           },
         },
         required: true,

@@ -28,9 +28,12 @@ class App extends React.Component {
         label: 'LOV',
         lovCode: 'LOV_CODE',
         computedProps: {
-          lovPara: ({ record }) => ({
-            companyId: record.get('mySex'),
-          }),
+          lovPara: ({ record }) =>
+            record
+              ? {
+                  companyId: record.get('mySex'),
+                }
+              : {},
         },
         cascadeMap: { sex: 'mySex' },
       },

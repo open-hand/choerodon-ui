@@ -10,21 +10,31 @@ const optionData = [
 ];
 
 const QueryBar = (props) => {
-  const { queryFields, queryDataSet, queryFieldsLimit, dataSet, buttons, defaultShowMore = true } = props;
+  const {
+    queryFields,
+    queryDataSet,
+    queryFieldsLimit,
+    dataSet,
+    buttons,
+    defaultShowMore = true,
+  } = props;
   const [showMore, setShowMore] = React.useState(defaultShowMore);
-  const toggleShowMore = React.useCallback(() => setShowMore(!showMore), [showMore]);
-  const handleQuery = React.useCallback(() => queryDataSet.query(), [queryDataSet]);
-  const handleReset = React.useCallback(() => queryDataSet.reset(), [queryDataSet]);
+  const toggleShowMore = React.useCallback(() => setShowMore(!showMore), [
+    showMore,
+  ]);
+  const handleQuery = React.useCallback(() => queryDataSet.query(), [
+    queryDataSet,
+  ]);
+  const handleReset = React.useCallback(() => queryDataSet.reset(), [
+    queryDataSet,
+  ]);
   if (queryDataSet) {
     return (
       <>
         <Form columns={queryFieldsLimit} dataSet={queryDataSet}>
           {showMore ? queryFields : queryFields.slice(0, queryFieldsLimit)}
           <div newLine>
-            <Button
-              dataSet={null}
-              onClick={handleQuery}
-            >
+            <Button dataSet={null} onClick={handleQuery}>
               查询
             </Button>
             <Button onClick={handleReset}>重置</Button>
@@ -99,7 +109,7 @@ class App extends React.Component {
     ];
   }
 
-  renderBar = props => <QueryBar {...props} />;
+  renderBar = (props) => <QueryBar {...props} />;
 
   render() {
     return (

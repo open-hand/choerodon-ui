@@ -48,7 +48,14 @@ ReactDOM.render(
       help="请输入与左侧相同的密码"
       disabled
     />
-    <NumberField rowSpan={2} label="年龄" name="age" min={18} step={1} required />
+    <NumberField
+      rowSpan={2}
+      label="年龄"
+      name="age"
+      min={18}
+      step={1}
+      required
+    />
     <SelectBox label="性别" name="sex" required>
       <Option value="M">男</Option>
       <Option value="F">女</Option>
@@ -58,7 +65,12 @@ ReactDOM.render(
       <Option value="en-us">英语(美国)</Option>
       <Option value="ja-jp">日本語</Option>
     </Select>
-    <EmailField prefix={<Icon type="mail_outline" />} label="邮箱" name="email" multiple />
+    <EmailField
+      prefix={<Icon type="mail_outline" />}
+      label="邮箱"
+      name="email"
+      multiple
+    />
     <TextArea
       rowSpan={2}
       colSpan={2}
@@ -74,7 +86,7 @@ ReactDOM.render(
       required
       help="请输入你的个人主页，如Github Pages个人博客"
       showHelp="tooltip"
-      renderer={({ text }) => text || '首页' }
+      renderer={({ text }) => text || '首页'}
     />
     <DatePicker label="生日" name="birth" required />
     <Range label="阈值" name="threshold" required />

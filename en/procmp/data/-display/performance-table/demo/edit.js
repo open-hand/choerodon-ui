@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { PerformanceTable } from 'choerodon-ui/pro';
-import _ from 'lodash';
 
 export const EditCell = ({ rowData, dataIndex, onChange }) => {
   return rowData.status === 'EDIT' ? (
