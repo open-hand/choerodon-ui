@@ -3,6 +3,8 @@ order: 7
 title:
   zh-CN: YAML格式化
   en-US: YAML Format
+iframe: 320
+across: true
 ---
 
 ## zh-CN

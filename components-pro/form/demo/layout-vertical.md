@@ -26,7 +26,7 @@ function passwordValidator(value, name, form) {
 }
 
 ReactDOM.render(
-  <Form labelLayout="vertical" columns={3}>
+  <Form labelLayout="float" columns={3}>
     <TextField colSpan={3} label="手机号" pattern="1[3-9]\d{9}" name="phone" required />
     <Password label="密码" name="password" required />
     <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} help="请输入与左侧相同的密码" />

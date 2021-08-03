@@ -3,6 +3,8 @@ order: 1
 title:
   zh-CN: 受控代码框
   en-US: Controlled Code Area
+iframe: 150
+across: true
 ---
 
 ## zh-CN
