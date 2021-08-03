@@ -11,13 +11,14 @@ import defaultTo from 'lodash/defaultTo';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import Field from '../data-set/Field';
 import EventManager from '../_util/EventManager';
-import { getAlignByField, getColumnKey, getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
+import { getColumnKey, getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
@@ -383,7 +384,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const field = dataSet.getField(name);
     const cellStyle: CSSProperties = {
       textAlign: align ||
-        (command || (children && children.length) ? ColumnAlign.center : getAlignByField(field)),
+        (command || (children && children.length) ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field)),
       ...headerStyle,
     };
     if (columnLock) {

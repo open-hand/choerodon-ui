@@ -368,12 +368,18 @@ class App extends React.Component {
 
   render() {
     const { aggregation } = this.state;
+    const buttons = [
+      <Button key="aggregation" onClick={() => this.handleAggregationChange(!aggregation)}>
+        {aggregation ? '平铺' : '聚合'}
+      </Button>,
+    ];
     const command = [
       <Button key="edit" funcType="link">编辑</Button>,
       <Button key="opera" funcType="link">操作记录</Button>,
     ];
     return (
       <Table
+        buttons={buttons}
         customizable
         customizedCode="aggregation"
         key="user"

@@ -10,11 +10,13 @@ interface ResizeObserverProps {
   onResize?: (width: number, height: number, target: DomElement) => void;
   resizeProp?: 'width' | 'height' | 'both';
   immediately?: boolean;
+  boxSize?: 'borderBox' | 'contentBox';
 }
 
 class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
   static defaultProps = {
     resizeProp: 'both',
+    boxSize: 'borderBox',
   };
 
   resizeObserver: ResizeObserver | null = null;
@@ -53,18 +55,24 @@ class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
   }
 
   onResize: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
-    const { onResize, resizeProp } = this.props;
-
+    const { onResize, resizeProp, boxSize } = this.props;
+    const entry = entries[0];
     const {
       target,
-      contentRect: { width, height },
-    } = entries[0];
-
-    /**
-     * getBoundingClientRect return wrong size in transform case.
-     */
-      // const { width, height } = target.getBoundingClientRect();
-
+      contentRect,
+    } = entry;
+    const { borderBoxSize } = entry as any;
+    const borderBox = borderBoxSize && borderBoxSize[0];
+    const isBorderBox = boxSize === 'borderBox';
+    const { width, height } = (() => {
+      if (isBorderBox) {
+        if (borderBox) {
+          return { width: borderBox.inlineSize, height: borderBox.blockSize };
+        }
+        return target.getBoundingClientRect();
+      }
+      return contentRect;
+    })();
     const fixedWidth = Math.floor(width);
     const fixedHeight = Math.floor(height);
 

@@ -410,6 +410,8 @@ export default class TableStore {
 
   editors: Map<string, TableEditor> = new Map();
 
+  customizedLoaded?: boolean;
+
   @observable props: TableProps;
 
   @observable customized: Customized;
@@ -1336,13 +1338,21 @@ export default class TableStore {
 
   @action
   updateProps(props) {
-    this.setProps(props);
     const { customizedCode } = this.props;
-    if (this.customizable && customizedCode !== props.customizedCode) {
-      this.loadCustomized().then(this.handleLoadCustomized);
-    } else {
-      this.initColumns();
+    this.setProps(props);
+    if (this.customizable) {
+      if (customizedCode !== props.customizedCode) {
+        this.loadCustomized().then(this.handleLoadCustomized);
+        return;
+      }
+      const { aggregation } = props;
+      const { customized } = this;
+      if (!isNil(aggregation) && aggregation !== customized.aggregation) {
+        customized.aggregation = aggregation;
+        this.saveCustomized();
+      }
     }
+    this.initColumns();
   }
 
   @action
@@ -1545,7 +1555,7 @@ export default class TableStore {
 
   @action
   saveCustomized(customized?: Customized | null) {
-    if (this.customizable) {
+    if (this.customizable && this.customizedLoaded) {
       const { customizedCode } = this.props;
       if (customized) {
         this.customized = customized;
@@ -1588,6 +1598,7 @@ export default class TableStore {
     if (this.customizable && customizedCode) {
       const tableCustomizedLoad = getConfig('tableCustomizedLoad');
       runInAction(() => {
+        delete this.customizedLoaded;
         this.loading = true;
       });
       try {
@@ -1597,6 +1608,7 @@ export default class TableStore {
             this.customized = { columns: {}, ...customized };
           });
         }
+        this.customizedLoaded = true;
       } finally {
         runInAction(() => {
           this.loading = false;
