@@ -7,7 +7,7 @@ import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import TableContext from './TableContext';
 import { ColumnLock } from './enum';
-import { getColumnKey, getHeight, getTableHeaderRows, isStickySupport } from './utils';
+import { getColumnKey, getTableHeaderRows, isStickySupport } from './utils';
 import ColumnGroup from './ColumnGroup';
 import autobind from '../_util/autobind';
 import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow';
@@ -119,10 +119,11 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
           <TableHeaderRow
             key={String(rowIndex)}
             rowIndex={rowIndex}
-            tds={tds}
             rows={headerRows}
             lock={lock}
-          />
+          >
+            {tds}
+          </TableHeaderRow>
         );
       }
       return undefined;
@@ -131,8 +132,9 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
 
   render() {
     const {
-      prefixCls, border, showHeader, tableStore: { overflowX, columnResizable, isHeaderHover, columnResizing, customizable },
+      prefixCls, border, showHeader, tableStore,
     } = this.context;
+    const { columnResizable, isHeaderHover, columnResizing, customizable } = tableStore;
     const hidden = !showHeader && !customizable;
     const trs = this.getTrs(hidden);
     const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
@@ -140,12 +142,11 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
       className: classNames(`${prefixCls}-thead`, {
         [`${prefixCls}-column-resizing`]: columnResizing,
         [`${prefixCls}-column-resizable`]: columnResizable,
-        [`${prefixCls}-column-group`]: trs && trs.length > 1,
         [`${prefixCls}-thead-hover`]: isHeaderHover || columnResizing,
       }),
       hidden,
     };
-    if (!isStickySupport() && overflowX && !border) {
+    if (!isStickySupport() && !border && tableStore.overflowX) {
       theadProps.onMouseEnter = this.handleTheadMouseEnter;
       theadProps.onMouseLeave = this.handleTheadMouseLeave;
     }
@@ -154,14 +155,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
         {trs}
       </thead>
     );
-  }
-
-  getHeight(): number {
-    const { node } = this;
-    if (node) {
-      return getHeight(node);
-    }
-    return 0;
   }
 
   @computed

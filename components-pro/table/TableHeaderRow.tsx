@@ -12,7 +12,7 @@ import { isStickySupport } from './utils';
 export interface TableHeaderRowProps {
   rowIndex: number;
   lock?: ColumnLock | boolean;
-  tds: ReactNode,
+  children: ReactNode,
   rows: ColumnGroup[][],
 }
 
@@ -57,18 +57,17 @@ export default class TableHeaderRow extends Component<TableHeaderRowProps> {
   }
 
   render() {
-    const { rowIndex, lock, tds, rows } = this.props;
+    const { rowIndex, lock, children, rows } = this.props;
     const {
       rowHeight,
     } = this.context;
     const needStoreRowHeight = !isStickySupport() && (rowHeight === 'auto' || rows.length > 1);
+    const style = lock && needStoreRowHeight ? {
+      height: this.getHeaderRowStyle(rows, rowIndex),
+    } : undefined;
     const tr = (
-      <tr
-        style={{
-          height: lock && needStoreRowHeight ? this.getHeaderRowStyle(rows, rowIndex) : undefined,
-        }}
-      >
-        {tds}
+      <tr style={style}>
+        {children}
       </tr>
     );
 

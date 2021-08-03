@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize the interaction of the dynamic filter bar style.
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>DataSet`: Fix the problem of page forwarding when the number of newly created records is greater than the number of pages.
+- 🐞 `<pro>Table`: Fix the problem that the column `tooltip` cannot be closed when the cell is destroyed.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
 - 🐞 `<pro>Table`: Fix `virtualCell` not working.
 - 🐞 `<pro>Table`: Fix the problem that drag and drop rows report error when `virtualCell` is set.

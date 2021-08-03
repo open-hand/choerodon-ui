@@ -57,6 +57,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   nextFrameActionId?: number;
 
+  tooltipShown?: boolean;
+
   @autobind
   handleClick() {
     const { column } = this.props;
@@ -78,14 +80,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         title: this.getHeader(),
         placement: 'right',
       });
+      this.tooltipShown = true;
     }
   }
 
   @autobind
   handleMouseLeave() {
-    const { tableStore } = this.context;
-    if (!tableStore.columnResizing) {
+    if (this.tooltipShown) {
       hide();
+      delete this.tooltipShown;
     }
   }
 
@@ -449,7 +452,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
     }
 
-    if (columnKey === CUSTOMIZED_KEY && tableStore.rightLeafColumns.filter((col) => !col.hidden).length === 1 && tableStore.stickyRight && tableStore.overflowX) {
+    if (columnKey === CUSTOMIZED_KEY && tableStore.stickyRight && tableStore.overflowX && tableStore.rightLeafColumns.filter((col) => !col.hidden).length === 1) {
       classList.push(`${prefixCls}-cell-sticky-shadow`);
     }
 
@@ -500,5 +503,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   componentWillUnmount() {
     this.resizeEvent.clear();
     this.delayResizeStart.cancel();
+    if (this.tooltipShown) {
+      hide();
+      delete this.tooltipShown;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactNode, useContext } from 'react';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
@@ -15,16 +15,42 @@ export interface TableFooterCellProps extends ElementProps {
   right: number;
 }
 
-@observer
-export default class TableFooterCell extends Component<TableFooterCellProps, any> {
-  static displayName = 'TableFooterCell';
+const TableFooterCell: FunctionComponent<TableFooterCellProps> = observer(function TableFooterCell(props) {
+  const { column, style, className, colSpan, right } = props;
+  const { rowHeight, dataSet, prefixCls, tableStore } = useContext(TableContext);
+  const { autoFootHeight } = tableStore;
+  const { footer, footerClassName, footerStyle = {}, align, name, command, lock } = column;
+  const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
+  const classString = classNames(`${prefixCls}-cell`, {
+    [`${prefixCls}-cell-fix-${columnLock}`]: columnLock,
+  }, className, footerClassName);
+  const innerClassNames = [`${prefixCls}-cell-inner`];
+  const innerProps: any = {};
+  if (rowHeight !== 'auto' && !autoFootHeight) {
+    innerProps.style = {
+      height: pxToRem(rowHeight),
+    };
+    innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
+  }
+  const cellStyle: CSSProperties = {
+    textAlign: align || (command ? ColumnAlign.center : getAlignByField(dataSet.getField(name))),
+    ...footerStyle,
+    ...style,
+  };
 
-  static contextType = TableContext;
-
-  getFooter(footer, dataSet): ReactNode {
+  if (columnLock) {
+    const { _group } = column;
+    if (_group) {
+      if (columnLock === ColumnLock.left) {
+        cellStyle.left = pxToRem(_group.left)!;
+      } else if (columnLock === ColumnLock.right) {
+        cellStyle.right = pxToRem(colSpan && colSpan > 1 ? right : _group.right + right)!;
+      }
+    }
+  }
+  const getFooter = (): ReactNode => {
     switch (typeof footer) {
       case 'function': {
-        const { column } = this.props;
         return footer(dataSet, column.name);
       }
       case 'string':
@@ -32,47 +58,14 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
       default:
         return footer;
     }
-  }
+  };
+  return (
+    <th className={classString} style={omit(cellStyle, ['width', 'height'])} colSpan={colSpan}>
+      <div {...innerProps} className={innerClassNames.join(' ')}>{getFooter()}</div>
+    </th>
+  );
+});
 
-  render() {
-    const { column, style, className, colSpan, right } = this.props;
-    const {
-      rowHeight, dataSet, prefixCls, tableStore,
-    } = this.context;
-    const { autoFootHeight } = tableStore;
-    const { footer, footerClassName, footerStyle = {}, align, name, command, lock } = column;
-    const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
-    const classString = classNames(`${prefixCls}-cell`, {
-      [`${prefixCls}-cell-fix-${columnLock}`]: columnLock,
-    }, className, footerClassName);
-    const innerClassNames = [`${prefixCls}-cell-inner`];
-    const innerProps: any = {};
-    if (rowHeight !== 'auto' && !autoFootHeight) {
-      innerProps.style = {
-        height: pxToRem(rowHeight),
-      };
-      innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
-    }
-    const cellStyle: CSSProperties = {
-      textAlign: align || (command ? ColumnAlign.center : getAlignByField(dataSet.getField(name))),
-      ...footerStyle,
-      ...style,
-    };
+TableFooterCell.displayName = 'TableFooterCell';
 
-    if (columnLock) {
-      const { _group } = column;
-      if (_group) {
-        if (columnLock === ColumnLock.left) {
-          cellStyle.left = pxToRem(_group.left)!;
-        } else if (columnLock === ColumnLock.right) {
-          cellStyle.right = pxToRem(colSpan && colSpan > 1 ? right : _group.right + right)!;
-        }
-      }
-    }
-    return (
-      <th className={classString} style={omit(cellStyle, ['width', 'height'])} colSpan={colSpan}>
-        <div {...innerProps} className={innerClassNames.join(' ')}>{this.getFooter(footer, dataSet)}</div>
-      </th>
-    );
-  }
-}
+export default TableFooterCell;

@@ -1,4 +1,16 @@
-import React, { Children, cloneElement, FunctionComponent, isValidElement, ReactElement, ReactNode, useCallback, useContext, useMemo } from 'react';
+import React, {
+  Children,
+  cloneElement,
+  FunctionComponent,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -29,6 +41,7 @@ export interface IItem extends FunctionComponent<ItemProps> {
 
 const Label: FunctionComponent<LabelProps> = (props) => {
   const { children, className, tooltip, width } = props;
+  const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => width ? ({ width }) : undefined, [width]);
   const handleMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
@@ -36,9 +49,21 @@ const Label: FunctionComponent<LabelProps> = (props) => {
       show(currentTarget, {
         title: children,
       });
+      tooltipRef.current = true;
     }
-  }, [children, tooltip]);
-  const handleMouseLeave = useCallback(() => hide(), []);
+  }, [children, tooltip, tooltipRef]);
+  const handleMouseLeave = useCallback(() => {
+    if (tooltipRef.current) {
+      hide();
+      tooltipRef.current = false;
+    }
+  }, [tooltipRef]);
+  useEffect(() => () => {
+    if (tooltipRef.current) {
+      hide();
+      tooltipRef.current = false;
+    }
+  }, [tooltipRef]);
   return (
     <label
       className={className}

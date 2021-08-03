@@ -803,10 +803,6 @@ export default class Table extends DataSetComponent<TableProps> {
 
   fixedColumnsBodyRight: HTMLDivElement | null;
 
-  tableHeader: TableHeader | null;
-
-  tableFooter: TableFooter | null;
-
   lastScrollLeft: number;
 
   refSpin: HTMLDivElement | null;
@@ -846,16 +842,6 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   saveResizeRef(node: HTMLDivElement | null) {
     this.resizeLine = node;
-  }
-
-  @autobind
-  saveTableHeader(tableHeader: TableHeader | null) {
-    this.tableHeader = tableHeader;
-  }
-
-  @autobind
-  saveTableFooter(tableFooter: TableFooter | null) {
-    this.tableFooter = tableFooter;
   }
 
   useFocusedClassName() {
@@ -1708,11 +1694,18 @@ export default class Table extends DataSetComponent<TableProps> {
     hasFooter: boolean,
     lock?: ColumnLock | boolean,
   ): ReactNode {
-    const {
-      tableStore: { virtual },
-    } = this;
+    const { tableStore } = this;
+    const columns = (() => {
+      if (lock === ColumnLock.right) {
+        return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
+      }
+      if (lock) {
+        return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
+      }
+      return tableStore.leafColumns.filter(({ hidden }) => !hidden);
+    })();
 
-    return virtual ? (
+    return tableStore.virtual ? (
       <>
         {
           hasHeader && (
@@ -1737,7 +1730,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 hasHeader={hasHeader}
                 hasFooter={hasFooter}
               >
-                {this.getTableBody(lock)}
+                {this.getTableBody(columns, lock)}
               </TableWrapper>
             </VirtualWrapper>
           )
@@ -1751,7 +1744,7 @@ export default class Table extends DataSetComponent<TableProps> {
               hasHeader={hasFooter}
               hasFooter={hasFooter}
             >
-              {this.getTableFooter(lock)}
+              {this.getTableFooter(columns, lock)}
             </TableWrapper>
           )
         }
@@ -1765,8 +1758,8 @@ export default class Table extends DataSetComponent<TableProps> {
         hasFooter={hasFooter}
       >
         {hasHeader && this.getTableHeader(lock)}
-        {hasBody && this.getTableBody(lock)}
-        {hasFooter && this.getTableFooter(lock)}
+        {hasBody && this.getTableBody(columns, lock)}
+        {hasFooter && this.getTableFooter(columns, lock)}
       </TableWrapper>
     );
   }
@@ -1921,9 +1914,9 @@ export default class Table extends DataSetComponent<TableProps> {
     );
   }
 
-  getTableBody(lock?: ColumnLock | boolean): ReactNode {
+  getTableBody(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode {
     const { tableStore: { rowDraggable } } = this;
-    const body = <TableTBody key="tbody" lock={lock} />;
+    const body = <TableTBody key="tbody" lock={lock} columns={columns} />;
     return rowDraggable ? (
       <DragDropContext onDragEnd={this.handleDragEnd}>
         {body}
@@ -1933,12 +1926,12 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getTableHeader(lock?: ColumnLock | boolean): ReactNode {
     return (
-      <TableHeader key="thead" ref={lock ? undefined : this.saveTableHeader} lock={lock} />
+      <TableHeader key="thead" lock={lock} />
     );
   }
 
-  getTableFooter(lock?: ColumnLock | boolean): ReactNode {
-    return <TableFooter key="tfoot" ref={lock ? undefined : this.saveTableFooter} lock={lock} />;
+  getTableFooter(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode {
+    return <TableFooter key="tfoot" lock={lock} columns={columns} />;
   }
 
   getStyleHeight(): number | undefined {
@@ -2001,18 +1994,12 @@ export default class Table extends DataSetComponent<TableProps> {
           const tableHeader: HTMLTableSectionElement | null = element.querySelector(
             `.${prefixCls}-thead`,
           );
-          const tableFooter: HTMLTableSectionElement | null = element.querySelector(
-            `.${prefixCls}-footer`,
-          );
-          const tableFootWrap: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+          const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
           if (tableHeader) {
             maxBodyHeight -= getHeight(tableHeader);
           }
           if (tableFooter) {
             maxBodyHeight -= getHeight(tableFooter);
-          }
-          if (tableFootWrap) {
-            maxBodyHeight -= getHeight(tableFootWrap);
           }
           tableBodyWrap.style.maxHeight = pxToRem(maxBodyHeight) || '';
         }
@@ -2038,10 +2025,14 @@ export default class Table extends DataSetComponent<TableProps> {
       const computedHeight = this.getComputedHeight();
       const isComputedHeight = isNumber(computedHeight);
       if (isComputedHeight || isNumber(maxHeight) || isNumber(minHeight)) {
+        const { prefixCls } = this;
         const { rowHeight } = tableStore;
-        const { tableHeader, tableFooter } = this;
-        const headerHeight = tableHeader ? tableHeader.getHeight() : 0;
-        const footerHeight = tableFooter ? tableFooter.getHeight() : 0;
+        const tableHeader: HTMLTableSectionElement | null = element.querySelector(
+          `.${prefixCls}-thead`,
+        );
+        const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+        const headerHeight = tableHeader ? getHeight(tableHeader) : 0;
+        const footerHeight = tableFooter ? getHeight(tableFooter) : 0;
         const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + headerHeight + footerHeight;
         const minTotalHeight = minHeight ? Math.max(
           rowMinHeight,

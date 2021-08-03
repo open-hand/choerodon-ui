@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useCallback } from 'react';
+import React, { FunctionComponent, ReactNode, useCallback, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { hide, show } from '../tooltip/singleton';
@@ -20,12 +20,14 @@ export interface MultiLineProps {
 
 const MultiLine: FunctionComponent<MultiLineProps> = (props) => {
   const { prefixCls, label, validationMessage, required, validationHidden, tooltip, labelTooltip, children } = props;
+  const tooltipRef = useRef<boolean>(false);
   const handleLabelMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
     if (labelTooltip === TextTooltip.always || (labelTooltip === TextTooltip.overflow && isOverflow(currentTarget))) {
       show(currentTarget, { title: label, placement: 'right' });
+      tooltipRef.current = true;
     }
-  }, [label, labelTooltip]);
+  }, [label, labelTooltip, tooltipRef]);
   const handleFieldMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
     if (validationMessage) {
@@ -34,11 +36,24 @@ const MultiLine: FunctionComponent<MultiLineProps> = (props) => {
         placement: 'bottomLeft',
         theme: getConfig('validationTooltipTheme') || getConfig('tooltipTheme'),
       });
+      tooltipRef.current = true;
     } else if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(currentTarget))) {
       show(currentTarget, { title: children, placement: 'right' });
+      tooltipRef.current = true;
     }
-  }, [tooltip, validationMessage, children]);
-  const handleMouseLeave = useCallback(() => hide(), []);
+  }, [tooltip, validationMessage, children, tooltipRef]);
+  const handleMouseLeave = useCallback(() => {
+    if (tooltipRef.current) {
+      hide();
+      tooltipRef.current = false;
+    }
+  }, [tooltipRef]);
+  useEffect(() => () => {
+    if (tooltipRef.current) {
+      hide();
+      tooltipRef.current = false;
+    }
+  }, [tooltipRef]);
   return (
     <Row className={`${prefixCls}-multi`}>
       {

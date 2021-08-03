@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useCallback, useMemo } from 'react';
+import React, { FunctionComponent, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 import isString from 'lodash/isString';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import isOverflow from '../overflow-tip/util';
@@ -14,6 +14,7 @@ export interface FormLabelProps {
 
 const FormItemLabel: FunctionComponent<FormLabelProps> = (props) => {
   const { className, rowSpan, paddingLeft, tooltip, children } = props;
+  const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => paddingLeft ? { paddingLeft } : undefined, [paddingLeft]);
   const handleMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
@@ -21,9 +22,21 @@ const FormItemLabel: FunctionComponent<FormLabelProps> = (props) => {
       show(currentTarget, {
         title: children,
       });
+      tooltipRef.current = true;
     }
-  }, [tooltip, children]);
-  const handleMouseLeave = useCallback(() => hide(), []);
+  }, [tooltip, children, tooltipRef]);
+  const handleMouseLeave = useCallback(() => {
+    if (tooltipRef.current) {
+      hide();
+      tooltipRef.current = false;
+    }
+  }, [tooltipRef]);
+  useEffect(() => () => {
+    if (tooltipRef.current) {
+      hide();
+      tooltipRef.current = false;
+    }
+  }, [tooltipRef]);
   return (
     <td
       className={className}

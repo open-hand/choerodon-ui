@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`：优化动态筛选条样式交互。
 - 🐞 修复循环依赖问题。
 - 🐞 `<pro>DataSet`: 修复新建记录数大于分页数时向前翻页问题。
+- 🐞 `<pro>Table`: 修复列 tooltip 在单元格销毁时无法关闭的问题。
 - 🐞 `<pro>Table`: 修复右侧锁定列脚样式问题。
 - 🐞 `<pro>Table`: 修复 virtualCell 不起作用。
 - 🐞 `<pro>Table`: 修复设置了 virtualCell 时拖拽行报错的问题。

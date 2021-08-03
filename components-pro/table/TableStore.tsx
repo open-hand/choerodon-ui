@@ -897,6 +897,7 @@ export default class TableStore {
     return false;
   }
 
+  @computed
   get overflowX(): boolean {
     if (isNumber(this.width)) {
       return this.totalLeafColumnsWidth > this.width;

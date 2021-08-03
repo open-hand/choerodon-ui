@@ -505,6 +505,10 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
         if (currentEditor) {
           currentEditor.hideEditor();
         }
+        if (tooltipShownRef.current) {
+          hide();
+          tooltipShownRef.current = false;
+        }
       };
     }
   }, []);
