@@ -416,6 +416,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   // 多选中出现了校验值的数量大于一那么输入框不需要存在校验信息展示
   multipleValidateMessageLength: number = 0;
 
+  @observable floatLabelOffsetX?: number;
+
   @observable rangeTarget?: 0 | 1;
 
   @observable rangeValue?: [any, any] | undefined;
@@ -755,15 +757,18 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (this.hasFloatLabel) {
       const label = this.getLabel();
       if (label) {
-        const { labelTooltip } = this;
+        const { labelTooltip, floatLabelOffsetX } = this;
         const prefixCls = getProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
         const classString = classNames(`${prefixCls}-label`, {
           [`${prefixCls}-required`]: required,
           [`${prefixCls}-readonly`]: this.readOnly,
         });
+        const style = floatLabelOffsetX ? {
+          marginLeft: floatLabelOffsetX,
+        } : undefined;
         return (
-          <div className={`${prefixCls}-label-wrapper`}>
+          <div className={`${prefixCls}-label-wrapper`} style={style}>
             <div
               className={classString}
               title={isString(label) && ![TextTooltip.always, TextTooltip.overflow].includes(labelTooltip) ? label : undefined}

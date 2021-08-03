@@ -1,6 +1,8 @@
 import React, { ComponentClass, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, autorun, observable } from 'mobx';
+import { findDOMNode } from 'react-dom';
+import classes from 'component-classes';
+import { action, autorun, IReactionDisposer, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { EditorConfiguration } from 'codemirror';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
@@ -8,10 +10,10 @@ import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import ObserverFormField from '../field';
-import { FormFieldProps } from '../field/FormField';
+import { FormField, FormFieldProps } from '../field/FormField';
 import { CodeAreaFormatter } from './CodeAreaFormatter';
 import autobind from '../_util/autobind';
+import { LabelLayout } from '../form/enum';
 
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
@@ -36,7 +38,7 @@ const defaultCodeMirrorOptions: EditorConfiguration = {
 };
 
 @observer
-export default class CodeArea extends ObserverFormField<CodeAreaProps> {
+export default class CodeArea extends FormField<CodeAreaProps> {
   static displayName = 'CodeArea';
 
   static propTypes = {
@@ -45,11 +47,11 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     unFormatHotKey: PropTypes.string,
     formatter: PropTypes.object,
     editorDidMount: PropTypes.func,
-    ...ObserverFormField.propTypes,
+    ...FormField.propTypes,
   };
 
   static defaultProps = {
-    ...ObserverFormField.defaultProps,
+    ...FormField.defaultProps,
     suffixCls: 'code-area',
     formatHotKey: 'Alt-F',
     unFormatHotKey: 'Alt-R',
@@ -61,9 +63,11 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
 
   midText: string;
 
+  disposer: IReactionDisposer;
+
   constructor(props, content) {
     super(props, content);
-    autorun(() => {
+    this.disposer = autorun(() => {
       // 在绑定dataSet的情况下
       // 当手动修改过codeArea里面的值以后 再使用record.set去更新值 组件不会更新
       // 原因在于此时 this.text 不为 undefined 因此 getTextNode 的计算值不会进行改变 导致组件不重新渲染
@@ -80,6 +84,10 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
         this.setText(value);
       }
     });
+  }
+
+  componentWillUnmount(): void {
+    this.disposer();
   }
 
   @autobind
@@ -171,14 +179,20 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
    *
    * @memberof CodeArea
    */
-  handleCodeMirrorBlur = (codeMirrorInstance: IInstance) => {
+  handleCodeMirrorBlur = action((codeMirrorInstance: IInstance) => {
     const { formatter } = this.props;
     // 更新DataSet的值之前，先去拿到原始的raw格式
     const codeMirrorText = codeMirrorInstance.getValue();
     const value = formatter ? formatter.getRaw(codeMirrorText) : codeMirrorText;
     this.midText = value;
     this.setValue(value);
-  };
+    this.isFocused = false;
+    this.isFocus = false;
+    const element = this.wrapper || findDOMNode(this);
+    if (element) {
+      classes(element).remove(`${this.prefixCls}-focused`);
+    }
+  });
 
   /**
    * 在CodeMirror编辑器实例挂载前添加额外配置
@@ -213,6 +227,20 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     editor.setOption('extraKeys', options);
     if (editorDidMount) {
       editorDidMount(editor, value, cb);
+    }
+    if (this.labelLayout === LabelLayout.float) {
+      const { display } = editor as any;
+      if (display) {
+        const { gutters } = display;
+        if (gutters) {
+          const { offsetWidth } = gutters;
+          if (offsetWidth !== this.floatLabelOffsetX) {
+            runInAction(() => {
+              this.floatLabelOffsetX = offsetWidth;
+            });
+          }
+        }
+      }
     }
   };
 }
