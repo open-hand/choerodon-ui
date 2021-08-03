@@ -701,8 +701,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
       multiple,
       range,
-      clearButton,
-      props: { style, isFlat },
+      props: { style, isFlat, suffixCls },
     } = this;
     const otherProps = this.getOtherProps();
     if (multiple) {
@@ -766,7 +765,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     // 筛选条默认宽度处理
     if (isFlat) {
-      const width = !isNil(value) ? measureTextWidth(finalText) + (clearButton ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
+      const width = !isNil(value) ? measureTextWidth(finalText) + (suffixCls !== 'input' ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
       otherProps.style = {
         ...otherProps.style,
         width,
@@ -897,18 +896,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getInnerSpanButton(): ReactNode {
     const {
-      props: { isFlat },
       clearButton,
       prefixCls,
     } = this;
     if (clearButton) {
-      const classString = classNames(`${prefixCls}-clear-button`, {
-        [`${prefixCls}-clear-button-flat`]: isFlat,
-      });
       return this.wrapperInnerSpanButton(
         <Icon type="close" onClick={this.handleClearButtonClick} onMouseDown={this.handleInnerButtonMouseDown} />,
         {
-          className: classString,
+          className: `${prefixCls}-clear-button`,
         },
       );
     }

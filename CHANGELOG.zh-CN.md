@@ -25,6 +25,8 @@ timeline: true
 - 💄 `<pro>SelectBox`: 调整 checkValueOnOptionsChange 默认值为 false。
 - 💄 `<pro>SelectBox`：优化 label 内容溢出提示。
 - 💄 `<pro>Trigger`: 支持穿越同域 iframe。
+- 💄 `<pro>Table`：优化动态筛选条样式交互。
+- 💄 `<pro>PerformanceTable`：优化动态筛选条样式交互。
 - 🐞 修复循环依赖问题。
 - 🐞 `<pro>DataSet`: 修复新建记录数大于分页数时向前翻页问题。
 - 🐞 `<pro>Table`: 修复右侧锁定列脚样式问题。
@@ -40,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复弹窗没有动画的问题。
 - 🐞 `<pro>DataSet.Record`: 修复回写数据遗漏的问题。
 - 🐞 `<pro>PerformanceTable`: 修复设置流体列宽后手动拖拽更改列宽后未触发更新的问题。
+- 🐞 `<pro>PerformanceTable`: 修复动态调整列缺少滚轮监听及固定列失效问题。
 
 ## 1.4.2
 

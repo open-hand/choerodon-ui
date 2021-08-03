@@ -404,7 +404,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, height, virtualized } = prevProps;
+    const { rowHeight, data, height, virtualized, children, columns } = prevProps;
 
     if (data !== this.props.data) {
       this.calculateRowMaxHeight();
@@ -418,6 +418,23 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
     } else {
       this.updatePosition();
+    }
+
+    if (columns !== this.props.columns || children !== this.props.children) {
+      let shouldFixedColumn = false;
+
+      if (this.props.children) {
+        shouldFixedColumn = Array.from(this.props.children as Iterable<any>).some(
+          (child: any) => child && child.props && child.props.fixed,
+        );
+      }
+
+      if (this.props.columns && this.props.columns.length) {
+        shouldFixedColumn = Array.from(this.props.columns as Iterable<any>).some(
+          (child: any) => child && child.fixed,
+        );
+      }
+      this.setState({ shouldFixedColumn: shouldFixedColumn });
     }
 
     if (
@@ -437,6 +454,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.calculateTableContentWidth(prevProps);
     if (virtualized) {
       this.calculateTableWidth();
+    }
+
+    const tableBody = this.tableBodyRef.current;
+
+    if (!this.wheelListener && tableBody) {
+      const options = { passive: false };
+      if (isMobile()) {
+        this.initBScroll(tableBody);
+      }
+      this.wheelListener = on(tableBody, 'wheel', this.wheelHandler.onWheel, options);
     }
   }
 
@@ -541,8 +568,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return tableHeight;
     }
 
-    if(!!autoHeight) {
-      if(!!showScrollArrow) {
+    if(autoHeight) {
+      if(showScrollArrow) {
         return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight + SCROLLBAR_LARGE_WIDTH);
       } else {
         return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight + SCROLLBAR_WIDTH);
@@ -674,15 +701,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       };
       return this._cacheCells;
     }
-
-    // let columns: React.ReactNodeArray;
-    //
-    // const { customizable, originalColumns } = this.tableStore;
-    // if (customizable && originalColumns && originalColumns.length) {
-    //   columns = flatten(originalColumns).filter(col => col && !col.props.hidden);
-    // } else {
-    //   columns = this.getTableColumns();
-    // }
 
     const columns = this.getTableColumns();
 

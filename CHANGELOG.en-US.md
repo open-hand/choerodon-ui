@@ -25,6 +25,8 @@ timeline: true
 - 💄 `<pro>SelectBox`: Adjust the default value of `checkValueOnOptionsChange` to false.
 - 💄 `<pro>SelectBox`: Optimize the label content overflow tooltip.
 - 💄 `<pro>Trigger`: Support traversing iframes in the same domain.
+- 💄 `<pro>Table`: Optimize the interaction of the dynamic filter bar style.
+- 💄 `<pro>PerformanceTable`: Optimize the interaction of the dynamic filter bar style.
 - 🐞 Fix the circular dependency problem.
 - 🐞 `<pro>DataSet`: Fix the problem of page forwarding when the number of newly created records is greater than the number of pages.
 - 🐞 `<pro>Table`: Fix the style problem of locked column footer on the right.
@@ -40,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that there is no animation in the pop-up window.
 - 🐞 `<pro>DataSet.Record`: Fix the problem of missing data in write-back.
 - 🐞 `<pro>PerformanceTable`: Fix an issue that the flexGrow is not updated after the column width changes.
+- 🐞 `<pro>PerformanceTable`: Fixed the problem that the dynamic adjustment column lacks scroll wheel monitoring and the fixed column is invalid.
 
 ## 1.4.2
 

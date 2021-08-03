@@ -5,7 +5,7 @@ import { TableQueryBarType } from '../Table';
 import { TableQueryBarProps, TableQueryBarHookProps } from '../Table.d';
 import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
-import { getEditorByField } from '../../table/utils';
+import { getEditorByField, getPlaceholderByField } from '../../table/utils';
 import TableProfessionalBar from './TableProfessionalBar';
 import TableDynamicFilterBar from './TableDynamicFilterBar';
 
@@ -54,19 +54,21 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
       const { fields } = queryDataSet;
       return [...fields.entries()].reduce((list, [name, field]) => {
         if (!field.get('bind') && !name.includes('__tls')) {
+          const element: ReactNode = queryFields![name];
           let filterBarProps = {};
           if (type === TableQueryBarType.filterBar) {
+            const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field);
             filterBarProps = {
-              placeholder: field.get('label'),
+              placeholder,
             };
           }
           const props: any = {
             key: name,
             name,
             dataSet: queryDataSet,
+            isFlat: type === TableQueryBarType.filterBar,
             ...filterBarProps,
           };
-          const element = queryFields![name];
           list.push(
             isValidElement(element)
               ? cloneElement(element, props)
@@ -99,9 +101,9 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
       const queryFields = this.getQueryFields();
       const { queryDataSet } = dataSet;
       const props: TableQueryBarHookProps = {
+        ...queryBar,
         queryFields,
         queryDataSet,
-        ...queryBar,
       };
 
       if (typeof queryBar.renderer === 'function') {

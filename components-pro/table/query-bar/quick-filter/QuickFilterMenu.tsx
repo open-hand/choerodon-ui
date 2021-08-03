@@ -426,6 +426,9 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
         >
           {text}
         </span>
+        <div className={`${prefixCls}-filter-menu-option-selected`}>
+          <Icon type="check" />
+        </div>
         <div className={`${prefixCls}-filter-menu-option-icons`}>
           <Dropdown overlay={menu}>
             <span style={{ userSelect: 'none' }}><Icon type="more_horiz" /></span>
