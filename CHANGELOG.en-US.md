@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
+
 ## 1.4.3
 
 `2021-08-03`
