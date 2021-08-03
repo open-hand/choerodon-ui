@@ -1,15 +1,44 @@
 @import '~codemirror/lib/codemirror.css';
 @import '~codemirror/theme/neat.css';
 @import '../../../components/style/themes/default';
+@import "../../field/style/mixin";
+@import "../../text-field/style/mixin";
 
 .@{c7n-pro-prefix}-code-area {
+  height: auto !important;
+
+  &-wrapper {
+    position: relative;
+  }
+
   .CodeMirror {
-    display: inline-block;
+    display: block;
     width: 100%;
     border: @codearea-border;
   }
 
   &-invalid .CodeMirror {
     border-color: @error-color;
+  }
+
+  .float-label(@input-prefix-width-base);
+  .float-label-input(@input-prefix-width-base);
+
+  &-float-label {
+    padding: .01rem;
+
+    &::before {
+      z-index: 7;
+      pointer-events: none;
+    }
+
+    .@{c7n-pro-prefix}-field-label-wrapper {
+      z-index: 7;
+      margin-left: 30px;
+    }
+
+    .CodeMirror {
+      border: none;
+    }
   }
 }

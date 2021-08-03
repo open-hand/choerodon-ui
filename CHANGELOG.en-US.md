@@ -44,6 +44,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Record`: Fix the problem of missing data in write-back.
 - 🐞 `<pro>PerformanceTable`: Fix an issue that the flexGrow is not updated after the column width changes.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem that the dynamic adjustment column lacks scroll wheel monitoring and the fixed column is invalid.
+- 🐞 `<pro>CodeArea`: Fix float label style.
 
 ## 1.4.2
 
