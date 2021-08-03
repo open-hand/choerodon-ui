@@ -1,6 +1,6 @@
 import React, { Component, CSSProperties, ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, computed } from 'mobx';
+import { action } from 'mobx';
 import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
@@ -20,6 +20,7 @@ import { isDraggingStyle, isStickySupport } from './utils';
 
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
+  columns: ColumnProps[];
 }
 
 @observer
@@ -27,25 +28,6 @@ export default class TableTBody extends Component<TableTBodyProps> {
   static displayName = 'TableTBody';
 
   static contextType = TableContext;
-
-  @computed
-  get leafColumns(): ColumnProps[] {
-    const { tableStore } = this.context;
-    const { lock } = this.props;
-    if (lock === ColumnLock.right) {
-      return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
-    }
-    if (lock) {
-      return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
-    }
-    return this.leafColumnsBody;
-  }
-
-  @computed
-  get leafColumnsBody(): ColumnProps[] {
-    const { tableStore } = this.context;
-    return tableStore.leafColumns.filter(({ hidden }) => !hidden);
-  }
 
   constructor(props, context) {
     super(props, context);
@@ -115,8 +97,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
   }
 
   render() {
-    const { lock } = this.props;
-    const { leafColumns, leafColumnsBody } = this;
+    const { lock, columns } = this.props;
     const {
       prefixCls, tableStore, rowDragRender, dataSet,
     } = this.context;
@@ -125,8 +106,8 @@ export default class TableTBody extends Component<TableTBodyProps> {
     } = tableStore;
     const virtualData = virtual ? data.slice(tableStore.virtualStartIndex, tableStore.virtualEndIndex) : data;
     const rows = virtualData.length
-      ? this.getRows(virtualData, leafColumns, true, virtual)
-      : this.getEmptyRow(leafColumns);
+      ? this.getRows(virtualData, columns, true, virtual)
+      : this.getEmptyRow(columns);
     const body = rowDraggable ? (
       <Droppable
         droppableId="table"
@@ -145,6 +126,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
           }
           const record = dataSet.get(rubric.source.index);
           if (record) {
+            const leafColumnsBody = lock ? tableStore.leafColumns.filter(({ hidden }) => !hidden) : columns;
             const renderClone = rowDragRender && rowDragRender.renderClone;
             const { id } = record;
             if (renderClone && isFunction(renderClone)) {

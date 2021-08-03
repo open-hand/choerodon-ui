@@ -794,6 +794,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   componentWillUnmount() {
     this.removeFromForm(this.props, this.context);
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
   }
 
   addToForm(props, context) {

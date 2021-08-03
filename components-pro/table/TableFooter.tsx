@@ -1,6 +1,6 @@
-import React, { Component, DetailedHTMLProps, Key, ThHTMLAttributes } from 'react';
-import { observer } from 'mobx-react';
-import { action, computed, get, set } from 'mobx';
+import React, { DetailedHTMLProps, FunctionComponent, Key, ThHTMLAttributes, useCallback, useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+import { action, get, set } from 'mobx';
 import classNames from 'classnames';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -9,59 +9,42 @@ import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import { ColumnLock, DragColumnAlign } from './enum';
 import TableFooterCell, { TableFooterCellProps } from './TableFooterCell';
-import { getColumnKey, getHeight, isStickySupport } from './utils';
-import autobind from '../_util/autobind';
+import { getColumnKey, isStickySupport } from './utils';
 import ResizeObservedRow from './ResizeObservedRow';
 import { CUSTOMIZED_KEY } from './TableStore';
 
 export interface TableFooterProps extends ElementProps {
   lock?: ColumnLock | boolean;
+  columns: ColumnProps[];
 }
 
-@observer
-export default class TableFooter extends Component<TableFooterProps, any> {
-  static displayName = 'TableFooter';
+const TableFooter: FunctionComponent<TableFooterProps> = observer(function TableFooter(props) {
+  const { lock, columns } = props;
+  const { prefixCls, rowHeight, tableStore } = useContext(TableContext);
+  const { overflowX } = tableStore;
 
-  static contextType = TableContext;
-
-  node: HTMLTableSectionElement | null;
-
-  @autobind
-  saveRef(node) {
-    this.node = node;
-  }
-
-  @autobind
-  handleResize(index: Key, height: number) {
-    this.setRowHeight(index, height);
-  }
-
-  @action
-  setRowHeight(index: Key, height: number) {
-    const { tableStore } = this.context;
+  const handleResize = useCallback(action<(index: Key, height: number) => void>((index: Key, height: number) => {
     set(tableStore.lockColumnsFootRowsHeight, index, height);
-  }
+  }), [tableStore]);
 
-  getTds() {
-    const { lock } = this.props;
-    const { prefixCls, tableStore } = this.context;
+  const getTds = () => {
     const { customizable, rowDraggable, dragColumnAlign } = tableStore;
     const hasPlaceholder = tableStore.overflowY && lock !== ColumnLock.left;
     const right = hasPlaceholder ? measureScrollbar() : 0;
-    const tds = this.leafColumns.map((column, index, cols) => {
+    const tds = columns.map((column, index, cols) => {
       const key = getColumnKey(column);
       if (key !== CUSTOMIZED_KEY) {
         const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && index === cols.length - 2 ? 2 : 1;
-        const props: Partial<TableFooterCellProps> = {};
+        const cellProps: Partial<TableFooterCellProps> = {};
         if (colSpan > 1) {
-          props.colSpan = colSpan;
+          cellProps.colSpan = colSpan;
         }
         return (
           <TableFooterCell
             key={key}
             column={column}
             right={right}
-            {...props}
+            {...cellProps}
           />
         );
       }
@@ -73,7 +56,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
         key: 'fixed-column',
       };
       const classList = [`${prefixCls}-cell`];
-      if (isStickySupport() && tableStore.overflowX) {
+      if (isStickySupport() && overflowX) {
         placeHolderProps.style = { right: 0 };
         classList.push(`${prefixCls}-cell-fix-right`);
       }
@@ -85,61 +68,31 @@ export default class TableFooter extends Component<TableFooterProps, any> {
       );
     }
     return tds;
-  }
+  };
+  const style = !isStickySupport() && lock && (rowHeight === 'auto' || tableStore.autoFootHeight) ? {
+    height: pxToRem(get(tableStore.lockColumnsFootRowsHeight, 0)),
+  } : undefined;
+  const tr = (
+    <tr style={style}>
+      {getTds()}
+    </tr>
+  );
+  const classString = classNames(`${prefixCls}-tfoot`, {
+    [`${prefixCls}-tfoot-bordered`]: overflowX,
+  });
+  return (
+    <tfoot className={classString}>
+      {
+        !isStickySupport() && !lock && (rowHeight === 'auto' || tableStore.autoFootHeight) ? (
+          <ResizeObservedRow onResize={handleResize} rowIndex={0}>
+            {tr}
+          </ResizeObservedRow>
+        ) : tr
+      }
+    </tfoot>
+  );
+});
 
-  getHeight(): number {
-    const { node } = this;
-    if (node) {
-      return getHeight(node);
-    }
-    return 0;
-  }
+TableFooter.displayName = 'TableFooter';
 
-  render() {
-    const { lock } = this.props;
-    const {
-      prefixCls,
-      rowHeight,
-      tableStore,
-    } = this.context;
-    const { autoFootHeight, overflowX } = tableStore;
-    const tds = this.getTds();
-    const tr = (
-      <tr
-        style={{
-          height:
-            !isStickySupport() && lock && (rowHeight === 'auto' || autoFootHeight) ? pxToRem(get(tableStore.lockColumnsFootRowsHeight, 0)) : undefined,
-        }}
-      >
-        {tds}
-      </tr>
-    );
-    const classString = classNames(`${prefixCls}-tfoot`, {
-      [`${prefixCls}-tfoot-bordered`]: overflowX,
-    });
-    return (
-      <tfoot ref={this.saveRef} className={classString}>
-        {
-          !isStickySupport() && !lock && (rowHeight === 'auto' || autoFootHeight) ? (
-            <ResizeObservedRow onResize={this.handleResize} rowIndex={0}>
-              {tr}
-            </ResizeObservedRow>
-          ) : tr
-        }
-      </tfoot>
-    );
-  }
-
-  @computed
-  get leafColumns(): ColumnProps[] {
-    const { tableStore } = this.context;
-    const { lock } = this.props;
-    if (lock === ColumnLock.right) {
-      return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
-    }
-    if (lock) {
-      return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
-    }
-    return tableStore.leafColumns.filter(({ hidden }) => !hidden);
-  }
-}
+export default TableFooter;
