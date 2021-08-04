@@ -2,7 +2,7 @@ import { cloneElement, Component, isValidElement, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
-import domAlign from 'dom-align';
+import domAlign from './domAlign';
 import EventManager from '../_util/EventManager';
 import TaskRunner from '../_util/TaskRunner';
 

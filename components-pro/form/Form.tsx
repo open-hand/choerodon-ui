@@ -21,6 +21,7 @@ import { AxiosInstance } from 'axios';
 import Responsive, { hasBreakPointMap } from 'choerodon-ui/lib/responsive/Responsive';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { getTooltip } from 'choerodon-ui/lib/_util/TooltipUtils';
 import isFunction from 'lodash/isFunction';
 import axios from '../axios';
 import autobind from '../_util/autobind';
@@ -487,7 +488,7 @@ export default class Form extends DataSetComponent<FormProps> {
     if (labelTooltip) {
       return labelTooltip;
     }
-    return getConfig('labelTooltip');
+    return getTooltip('label');
   }
 
   @computed

@@ -1,6 +1,7 @@
 import React, { createRef, forwardRef, ForwardRefExoticComponent, RefObject, useCallback, useImperativeHandle, useMemo, useState } from 'react';
 import { render } from 'react-dom';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Tooltip, { TooltipProps } from './Tooltip';
 import { getGlobalPopupContainer } from '../trigger/Popup';
 import TaskRunner from '../_util/TaskRunner';
@@ -26,7 +27,7 @@ const TooltipContainer: ForwardRefExoticComponent<any> = forwardRef<TooltipConta
     task.cancel();
     task.delay(duration, () => {
       setTooltipProps({
-        theme: getConfig('tooltipTheme'),
+        theme: getTooltipTheme(),
         ...args,
         hidden: false,
         getRootDomNode: () => target,
