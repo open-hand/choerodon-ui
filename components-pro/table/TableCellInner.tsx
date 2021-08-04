@@ -24,6 +24,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
+import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
 import Record from '../data-set/Record';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
@@ -478,6 +479,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
         show(element, {
           title: text,
           placement: 'right',
+          theme: getTooltipTheme('table-cell'),
         });
         return true;
       }

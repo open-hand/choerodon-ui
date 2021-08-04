@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 import isString from 'lodash/isString';
+import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import isOverflow from '../overflow-tip/util';
 import { hide, show } from '../tooltip/singleton';
@@ -21,6 +22,7 @@ const FormItemLabel: FunctionComponent<FormLabelProps> = (props) => {
     if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && isOverflow(currentTarget))) {
       show(currentTarget, {
         title: children,
+        theme: getTooltipTheme('label'),
       });
       tooltipRef.current = true;
     }

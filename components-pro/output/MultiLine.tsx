@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode, useCallback, useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { hide, show } from '../tooltip/singleton';
 import Row from '../row';
@@ -19,7 +20,7 @@ export interface MultiLineProps {
 }
 
 const MultiLine: FunctionComponent<MultiLineProps> = (props) => {
-  const { prefixCls, label, validationMessage, required, validationHidden, tooltip, labelTooltip, children } = props;
+  const { prefixCls, label, validationMessage, required, validationHidden, tooltip = getConfig('outputTooltip'), labelTooltip, children } = props;
   const tooltipRef = useRef<boolean>(false);
   const handleLabelMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
@@ -34,7 +35,7 @@ const MultiLine: FunctionComponent<MultiLineProps> = (props) => {
       show(currentTarget, {
         title: validationMessage,
         placement: 'bottomLeft',
-        theme: getConfig('validationTooltipTheme') || getConfig('tooltipTheme'),
+        theme: getTooltipTheme('validation'),
       });
       tooltipRef.current = true;
     } else if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(currentTarget))) {

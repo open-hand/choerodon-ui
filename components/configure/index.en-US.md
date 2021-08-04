@@ -114,6 +114,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnTooltip | Table 是否开启列提示 | Tooltip.always \| Tooltip.overflow | |
 | buttonTooltip | Button 是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | labelTooltip | 表单控件label是否开启提示 | Tooltip.always \| Tooltip.overflow | |
+| outputTooltip | Output是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | selectOptionTooltip | 下拉框菜单是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
 | showInvalidDate | 显示无效日期 | boolean |  |
@@ -121,8 +122,7 @@ const prefixCls = getConfig('prefixCls');
 | highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | performanceEnabled | 开启性能监控 | { Table: boolean } | { Table: false }  |
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
-| tooltipTheme | Tooltip 主题 | dark \| light |  dark |
-| validationTooltipTheme | 校验提示 Tooltip 主题 | dark \| light | light  |
+| tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 type 详见 [TooltipThemeType](#TooltipThemeType) | dark \| light \| (type) => dark \| light |  (type) => type === 'validation' ? 'light' : 'dark' |
 
 ### Formatter
 
@@ -169,5 +169,18 @@ const prefixCls = getConfig('prefixCls');
 | withCredentials   | cors cookie                 | boolean                             |
 | transformRequest  | transform for request data  | (data: any, headers: any) => string |
 | transformResponse | transform for response data | (data: any, headers: any) => any    |
+
+### TooltipThemeType
+
+| 属性              | 说明                | 
+| ----------------- | ------------------- |
+| table-cell         | table cell ( tableColumnTooltip )                |
+| button               | button ( buttonTooltip )                |
+| label               | label ( labelTooltip )                |
+| menu-item               | menu item such as select option ( selectOptionTooltip )                |
+| output               | Output ( outputTooltip )                |
+| validation               | validation message                |
+| help               | help message                |
+| undefined               | default                |
 
 For more configuration, please refer to the official Axios documentation, or typescript: `/node_modules/axios/index.d.ts`

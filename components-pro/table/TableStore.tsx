@@ -1147,27 +1147,22 @@ export default class TableStore {
     return false;
   }
 
-  @computed
   get hasFooter(): boolean {
     return this.leafColumns.some(column => !!column.footer && column.key !== SELECTION_KEY);
   }
 
-  @computed
   get isAnyColumnsResizable(): boolean {
     return this.leafColumns.some(column => column.resizable === true);
   }
 
-  @computed
   get isAnyColumnsLeftLock(): boolean {
     return this.leftColumns.length > 0;
   }
 
-  @computed
   get isAnyColumnsRightLock(): boolean {
     return this.rightColumns.length > 0;
   }
 
-  @computed
   get isAnyColumnsLock(): boolean {
     return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
   }
@@ -1217,17 +1212,16 @@ export default class TableStore {
     return !!expandedRowRenderer && !this.isTree;
   }
 
-  @computed
   get expandIconColumnIndex(): number {
+    const { expandIconAsCell } = this;
+    if (expandIconAsCell) {
+      return 0;
+    }
     const {
-      expandIconAsCell,
       dragColumnAlign,
       rowDraggable,
       props: { expandIconColumnIndex = 0, rowNumber },
     } = this;
-    if (expandIconAsCell) {
-      return 0;
-    }
     return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable].filter(Boolean).length;
   }
 

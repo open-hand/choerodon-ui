@@ -2,7 +2,8 @@ import React, { cloneElement, Component, CSSProperties, isValidElement, ReactEle
 import classNames from 'classnames';
 import getPlacements, { AdjustOverflow, PlacementsConfig } from './placements';
 import RcTooltip from '../rc-components/tooltip';
-import { getConfig, getPrefixCls } from '../configure';
+import { getPrefixCls } from '../configure';
+import getTooltipTheme from '../_util/getTooltipTheme';
 
 export { AdjustOverflow, PlacementsConfig };
 
@@ -226,7 +227,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
       openClassName,
       getPopupContainer,
       getTooltipContainer,
-      theme = getConfig('tooltipTheme'),
+      theme = getTooltipTheme(),
     } = props;
     const prefixCls = getPrefixCls('tooltip', customizePrefixCls);
     const children = props.children as ReactElement<any>;

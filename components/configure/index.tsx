@@ -58,6 +58,10 @@ export type PerformanceEvents = {
 
 export type PerformanceEventHook<T extends keyof PerformanceEvents> = (key: T, event: PerformanceEvents[T]) => void;
 
+export type TooltipThemeType = 'table-cell' | 'output' | 'label' | 'button' | 'menu-item' | 'validation' | 'help';
+
+export type TooltipThemeHook = (type?: TooltipThemeType) => TooltipTheme;
+
 export type Formatter = {
   jsonDate?: string | null;
   date?: string;
@@ -194,6 +198,7 @@ export type Config = {
   currencyFormatter?: FormatNumberFunc;
   currencyFormatterOptions?: FormatNumberFuncOptions;
   labelTooltip?: Tooltip;
+  outputTooltip?: Tooltip;
   /**
    * @deprecated
    */
@@ -231,14 +236,17 @@ export type Config = {
   /**
    * tooltip 主题
    */
-  tooltipTheme?: TooltipTheme;
+  tooltipTheme?: TooltipTheme | TooltipThemeHook;
   /**
+   * @deprecated
    * 校验提示 tooltip 主题
    */
   validationTooltipTheme?: TooltipTheme;
 };
 
 export type ConfigKeys = keyof Config;
+
+const defaultTooltipTheme = type => type === 'validation' ? 'light' : 'dark';
 
 const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNode => {
   switch (componentName) {
@@ -377,8 +385,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['highlightRenderer', defaultFormFieldHighlightRenderer],
   ['onPerformance', noop],
   ['performanceEnabled', { Table: false }],
-  ['tooltipTheme', 'dark'],
-  ['validationTooltipTheme', 'light'],
+  ['tooltipTheme', defaultTooltipTheme],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

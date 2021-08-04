@@ -9,6 +9,7 @@ import { connect } from 'mini-store';
 import noop from 'lodash/noop';
 import Checkbox from '../../checkbox/Checkbox';
 import Ripple from '../../ripple';
+import getTooltipTheme from '../../_util/getTooltipTheme';
 /* eslint react/no-is-mounted:0 */
 
 const MenuItem = createReactClass({
@@ -103,6 +104,7 @@ const MenuItem = createReactClass({
       show(currentTarget, {
         title: children,
         placement: mode === 'horizontal' ? 'top' : 'right',
+        theme: getTooltipTheme('menu-item'),
       });
     }
   },

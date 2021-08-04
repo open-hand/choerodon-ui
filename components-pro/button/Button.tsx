@@ -11,6 +11,7 @@ import { observer } from 'mobx-react';
 import isPromise from 'is-promise';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
 import Icon from '../icon';
 import FormContext from '../form/FormContext';
 import Progress from '../progress';
@@ -253,6 +254,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     if (tooltip === ButtonTooltip.always || (tooltip === ButtonTooltip.overflow && isOverflow(element))) {
       show(element, {
         title: children,
+        theme: getTooltipTheme('button'),
       });
     }
     const { onMouseEnter = noop } = this.props;

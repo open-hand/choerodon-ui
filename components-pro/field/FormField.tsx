@@ -15,6 +15,7 @@ import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
 import { Tooltip as TextTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
@@ -922,6 +923,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       show(currentTarget, {
         title: this.getLabel(),
         placement: 'top',
+        theme: getTooltipTheme('label'),
       });
     }
   }

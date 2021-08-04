@@ -14,6 +14,7 @@ import React, {
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
 import FormContext from './FormContext';
 import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import { LabelLayout } from './enum';
@@ -48,6 +49,7 @@ const Label: FunctionComponent<LabelProps> = (props) => {
     if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && isOverflow(currentTarget))) {
       show(currentTarget, {
         title: children,
+        theme: getTooltipTheme('label'),
       });
       tooltipRef.current = true;
     }

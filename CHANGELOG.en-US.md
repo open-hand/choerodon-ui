@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign` property.
+- 🌟 `configure`: Added `tableColumnAlign`, `outputTooltip` properties, `tooltipTheme` property supports hook type.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
 

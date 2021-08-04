@@ -119,6 +119,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnTooltip | Table 是否开启列提示 | Tooltip.always \| Tooltip.overflow | |
 | buttonTooltip | Button 是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | labelTooltip | 表单控件label是否开启提示 | Tooltip.always \| Tooltip.overflow | |
+| outputTooltip | Output是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | selectOptionTooltip | 下拉框菜单是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
 | showInvalidDate | 显示无效日期 | boolean |  |
@@ -126,8 +127,7 @@ const prefixCls = getConfig('prefixCls');
 | highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | performanceEnabled | 开启性能监控 | { Table: boolean } | { Table: false }  |
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
-| tooltipTheme | Tooltip 主题 | dark \| light |  dark |
-| validationTooltipTheme | 校验提示 Tooltip 主题 | dark \| light | light  |
+| tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 type 详见 [TooltipThemeType](#TooltipThemeType) | dark \| light \| (type) => dark \| light |  (type) => type === 'validation' ? 'light' : 'dark' |
 
 ### Formatter
 
@@ -174,5 +174,18 @@ const prefixCls = getConfig('prefixCls');
 | withCredentials   | 用于跨域传递 cookie | boolean                             |
 | transformRequest  | 转变提交的数据      | (data: any, headers: any) => string |
 | transformResponse | 转变响应的数据      | (data: any, headers: any) => any    |
+
+### TooltipThemeType
+
+| 属性              | 说明                | 
+| ----------------- | ------------------- |
+| table-cell         | 表格单元格( tableColumnTooltip )                |
+| button               | 按钮( buttonTooltip )                |
+| label               | 表单控件标签( labelTooltip )                |
+| menu-item               | 表单控件标签( selectOptionTooltip )                |
+| output               | Output( outputTooltip )                |
+| validation               | 校验信息                |
+| help               | 帮助信息                |
+| undefined               | 默认                |
 
 更多配置请参考 Axios 官方文档，或参考 typescript 文件/node_modules/axios/index.d.ts
