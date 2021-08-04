@@ -1,3 +1,4 @@
+import { getDocument, getMousePosition } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
 import { pxToRem } from '../_util/UnitConvertor';
 
 type overflowType = { adjustX?: boolean; adjustY?: boolean };
@@ -29,7 +30,7 @@ function isCompleteFailY(elFuturePos, elRegion, visibleRect) {
 }
 
 function getVisibleRectForElement() {
-  const body = document.body;
+  const body = getDocument(window).body;
   return {
     top: 0,
     right: body.clientWidth,
@@ -38,11 +39,14 @@ function getVisibleRectForElement() {
   };
 }
 
-function getRegion(node): regionType {
+function getRegion(node: HTMLElement): regionType {
   const rect = node.getBoundingClientRect();
+  const { ownerDocument } = node;
+  const defaultView = ownerDocument ? ownerDocument.defaultView : null;
+  const position = defaultView ? getMousePosition(rect.left, rect.top, defaultView, true) : { x: rect.left, y: rect.top };
   return {
-    top: rect.top,
-    left: rect.left,
+    top: position.y,
+    left: position.x,
     width: rect.width,
     height: rect.height,
   };
@@ -162,22 +166,23 @@ function adjustForViewport(
   return Object.assign(pos, size);
 }
 
-function isFixedPosition(node) {
-  const { offsetParent } = node;
+function isFixedPosition(node: HTMLElement): boolean {
+  const { offsetParent, ownerDocument } = node;
   if (
-    offsetParent === document.body &&
-    document.defaultView &&
-    document.defaultView.getComputedStyle(node).position !== 'fixed'
+    ownerDocument &&
+    offsetParent === ownerDocument.body &&
+    ownerDocument.defaultView &&
+    ownerDocument.defaultView.getComputedStyle(node).position !== 'fixed'
   ) {
     return false;
   }
-  if (offsetParent === null) {
-    return true;
+  if (offsetParent) {
+    return isFixedPosition(offsetParent as HTMLElement);
   }
-  return isFixedPosition(offsetParent);
+  return true;
 }
 
-export default function(el, refNode, align) {
+export default function (el, refNode, align) {
   let points = align.points;
   let offset = (align.offset || [0, 0]).slice();
   let targetOffset = (align.targetOffset || [0, 0]).slice();
@@ -266,14 +271,14 @@ export default function(el, refNode, align) {
   if (newElRegion.height !== elRegion.height) {
     source.style.height = newElRegion.height;
   }
-
+  const doc = getDocument(window);
   const isTargetFixed = isFixedPosition(target);
   const scrollTop = isTargetFixed
     ? 0
-    : document.documentElement.scrollTop || document.body.scrollTop;
+    : doc.documentElement.scrollTop || doc.body.scrollTop;
   const scrollLeft = isTargetFixed
     ? 0
-    : document.documentElement.scrollLeft || document.body.scrollLeft;
+    : doc.documentElement.scrollLeft || doc.body.scrollLeft;
 
   Object.assign(source.style, {
     left: pxToRem(newElRegion.left + scrollLeft),

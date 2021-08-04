@@ -1213,8 +1213,7 @@ export default class TableStore {
   }
 
   get expandIconColumnIndex(): number {
-    const { expandIconAsCell } = this;
-    if (expandIconAsCell) {
+    if (this.expandIconAsCell) {
       return 0;
     }
     const {

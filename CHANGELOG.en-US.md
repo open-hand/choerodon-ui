@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `tableColumnAlign`, `outputTooltip` properties, `tooltipTheme` property supports hook type.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
+- 🐞 `<pro>Trigger`: Fix the problem that the popup is not aligned when crossing iframes in the same domain.
 
 ## 1.4.3
 
