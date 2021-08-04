@@ -1,7 +1,6 @@
 import React, { FunctionComponent, ReactNode, useCallback, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { hide, show } from '../tooltip/singleton';
 import Row from '../row';
 import Col from '../col';
@@ -20,7 +19,7 @@ export interface MultiLineProps {
 }
 
 const MultiLine: FunctionComponent<MultiLineProps> = (props) => {
-  const { prefixCls, label, validationMessage, required, validationHidden, tooltip = getConfig('outputTooltip'), labelTooltip, children } = props;
+  const { prefixCls, label, validationMessage, required, validationHidden, tooltip = getTooltip('output'), labelTooltip, children } = props;
   const tooltipRef = useRef<boolean>(false);
   const handleLabelMouseEnter = useCallback((e) => {
     const { currentTarget } = e;

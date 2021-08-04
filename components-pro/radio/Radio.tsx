@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
-import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
+import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';

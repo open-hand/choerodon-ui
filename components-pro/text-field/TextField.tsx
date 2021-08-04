@@ -27,7 +27,7 @@ import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
+import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { WaitType } from '../core/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';

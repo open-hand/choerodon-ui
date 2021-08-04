@@ -14,7 +14,7 @@ import React, {
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
+import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import FormContext from './FormContext';
 import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import { LabelLayout } from './enum';

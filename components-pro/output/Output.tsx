@@ -4,7 +4,7 @@ import { isArrayLike } from 'mobx';
 import isPlainObject from 'lodash/isPlainObject';
 import isNil from 'lodash/isNil';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
+import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import { Tooltip as TextTooltip } from '../core/enum';
@@ -134,7 +134,7 @@ export default class Output extends FormField<OutputProps> {
     if (super.showTooltip(e)) {
       return true;
     }
-    const { tooltip = getConfig('outputTooltip') } = this.props;
+    const { tooltip = getTooltip('output') } = this.props;
     const { element, field } = this;
     if (element && !(field && field.get('multiLine')) && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
       const title = this.getRenderedValue();

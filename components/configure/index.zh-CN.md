@@ -116,18 +116,14 @@ const prefixCls = getConfig('prefixCls');
 | numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
 | currencyFormatter | Currency格式器   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
 | currencyFormatterOptions | Currency格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
-| tableColumnTooltip | Table 是否开启列提示 | Tooltip.always \| Tooltip.overflow | |
-| buttonTooltip | Button 是否开启提示 | Tooltip.always \| Tooltip.overflow | |
-| labelTooltip | 表单控件label是否开启提示 | Tooltip.always \| Tooltip.overflow | |
-| outputTooltip | Output是否开启提示 | Tooltip.always \| Tooltip.overflow | |
-| selectOptionTooltip | 下拉框菜单是否开启提示 | Tooltip.always \| Tooltip.overflow | |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
 | showInvalidDate | 显示无效日期 | boolean |  |
 | showRequiredColorsOnlyEmpty | 只有在空值时显示必填背景色和边框色 | boolean |  |
 | highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | performanceEnabled | 开启性能监控 | { Table: boolean } | { Table: false }  |
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
-| tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 type 详见 [TooltipThemeType](#TooltipThemeType) | dark \| light \| (type) => dark \| light |  (type) => type === 'validation' ? 'light' : 'dark' |
+| tooltip | 是否开启提示, 参数 target 详见 [TooltipTarget](#TooltipTarget) | Tooltip.always \| Tooltip.overflow \| Tooltip.none \| function(target) | |
+| tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 target 详见 [TooltipTarget](#TooltipTarget) | dark \| light \| function(target) |  (target) => target === 'validation' ? 'light' : 'dark' |
 
 ### Formatter
 
@@ -175,15 +171,15 @@ const prefixCls = getConfig('prefixCls');
 | transformRequest  | 转变提交的数据      | (data: any, headers: any) => string |
 | transformResponse | 转变响应的数据      | (data: any, headers: any) => any    |
 
-### TooltipThemeType
+### TooltipTarget
 
 | 属性              | 说明                | 
 | ----------------- | ------------------- |
-| table-cell         | 表格单元格( tableColumnTooltip )                |
-| button               | 按钮( buttonTooltip )                |
-| label               | 表单控件标签( labelTooltip )                |
-| menu-item               | 表单控件标签( selectOptionTooltip )                |
-| output               | Output( outputTooltip )                |
+| table-cell         | 表格单元格               |
+| button               | 按钮                |
+| label               | 表单控件标签                |
+| select-option               | 表单控件标签                |
+| output               | Output                |
 | validation               | 校验信息                |
 | help               | 帮助信息                |
 | undefined               | 默认                |

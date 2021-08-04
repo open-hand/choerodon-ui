@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import getPlacements, { AdjustOverflow, PlacementsConfig } from './placements';
 import RcTooltip from '../rc-components/tooltip';
 import { getPrefixCls } from '../configure';
-import getTooltipTheme from '../_util/getTooltipTheme';
+import { getTooltipTheme } from '../_util/TooltipUtils';
 
 export { AdjustOverflow, PlacementsConfig };
 

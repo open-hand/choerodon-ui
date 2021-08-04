@@ -12,7 +12,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
+import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';

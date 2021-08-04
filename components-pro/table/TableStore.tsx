@@ -10,6 +10,7 @@ import isNumber from 'lodash/isNumber';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getTooltip } from 'choerodon-ui/lib/_util/TooltipUtils';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
 import Column, { ColumnDefaultProps, ColumnProps, columnWidth } from './Column';
@@ -1282,12 +1283,12 @@ export default class TableStore {
     }
   }
 
-  getColumnTooltip(column: ColumnProps): TableColumnTooltip {
+  getColumnTooltip(column: ColumnProps): TableColumnTooltip | undefined {
     const { tooltip } = column;
     if (tooltip) {
       return tooltip;
     }
-    return getConfig('tableColumnTooltip');
+    return getTooltip('table-cell');
   }
 
   getColumnHeaders(): Promise<HeaderText[]> {

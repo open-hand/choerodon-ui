@@ -8,7 +8,7 @@ import isPlainObject from 'lodash/isPlainObject';
 import { isArrayLike } from 'mobx';
 import classNames from 'classnames';
 import moment, { isMoment } from 'moment';
-import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
+import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { BooleanValue, FieldType, RecordStatus } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';

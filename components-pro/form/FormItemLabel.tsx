@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 import isString from 'lodash/isString';
-import getTooltipTheme from 'choerodon-ui/lib/_util/getTooltipTheme';
+import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import isOverflow from '../overflow-tip/util';
 import { hide, show } from '../tooltip/singleton';
