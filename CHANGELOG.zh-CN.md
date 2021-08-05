@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 tableColumnAlign, tooltip 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
 - 🌟 `<pro>RichText`: 新增图片连续预览功能。
+- 🌟 `<pro>Cascader`: 新增 async 和 loadData 属性，简化异步加载方案。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。

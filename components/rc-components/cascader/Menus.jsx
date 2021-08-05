@@ -69,7 +69,7 @@ export default class Menus extends Component {
     if (selectedValues.findIndex((item) => item === option.value) > -1) {
       menuItemCls += ` ${prefixCls}-menu-item-selected`;
     }
-    if (expandTrigger === 'hover' && hasChildren) {
+    if (expandTrigger === 'hover' && (hasChildren || option.isLeaf === false)) {
       expandProps = {
         onMouseEnter: this.delayOnSelect.bind(this, onSelect),
         onMouseLeave: this.delayOnSelect.bind(this),

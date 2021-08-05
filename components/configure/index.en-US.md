@@ -38,6 +38,7 @@ const prefixCls = getConfig('prefixCls');
 | lookupBatchAxiosConfig | hook for batch lookup query, more info:[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
+| selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
 | axios | Replace the built-in axios instance | AxiosInstance |  |
 | dataKey | default dataKey of DataSet | string | rows |
 | totalKey | default totalKey of DataSet | string | total |

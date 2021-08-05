@@ -13,7 +13,6 @@ import autobind from '../_util/autobind';
 import isIE from '../_util/isIE';
 import { defaultRenderer } from '../tree';
 import { getTreeNodes } from '../tree/util';
-import Icon from '../icon';
 import { preventDefault } from '../_util/EventManager';
 import { CheckedStrategy } from '../data-set/enum';
 
@@ -308,8 +307,8 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       treeData.push({
         key: MORE_KEY,
         eventKey: MORE_KEY,
-        title: <Icon type="more_horiz" />,
-        className: `${this.getMenuPrefixCls()}-item ${menuPrefixCls}-item-more`,
+        title: this.getPagingOptionContent(),
+        className: `${menuPrefixCls}-item ${menuPrefixCls}-item-more`,
         isLeaf: true,
       });
     }
