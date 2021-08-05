@@ -62,8 +62,8 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
   const { modal } = props;
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { prefixCls, tableStore } = useContext(TableContext);
-  const { originalColumns, customized } = tableStore;
-  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(originalColumns);
+  const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized } = tableStore;
+  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
       {
