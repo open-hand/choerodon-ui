@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import LightBox from 'react-image-lightbox';
@@ -15,21 +14,15 @@ export interface RichTextViewerProps {
 class RichTextViewer extends Component<RichTextViewerProps> {
   state = {
     open: false,
-    src: '',
+    images: [],
+    srcIndex: 0,
   };
 
   componentDidMount() {
     const { deltaOps } = this.props;
     const thisNode = findDOMNode(this);
-    if (thisNode) {
-      thisNode.addEventListener('click', (e) => {
-        // @ts-ignore
-        if (e.target?.nodeName === 'IMG' && deltaOps && deltaOps.search(e.target.src) > -1) {
-          e.stopPropagation();
-          // @ts-ignore
-          this.open(e.target.src);
-        }
-      });
+    if (thisNode && deltaOps) {
+      thisNode.addEventListener('click', this.open);
     }
   }
 
@@ -38,12 +31,25 @@ class RichTextViewer extends Component<RichTextViewerProps> {
     if (thisNode) thisNode.removeEventListener('click', this.open);
   }
 
-  open = (src) => {
-    this.setState({
-      open: true,
-      src,
-    });
-  };
+  open = (e) => {
+    if (e.target?.nodeName === 'IMG') {
+      e.stopPropagation();
+      const { deltaOps } = this.props;
+      const imgArr: string[] = [];
+      deltaOps.forEach(item => {
+        const image = item.insert.image;
+        if(image) {
+          imgArr.push(image);
+        }
+      });
+      const index = imgArr.findIndex(img => img === e.target.src);
+      this.setState({
+        open: true,
+        images: imgArr,
+        srcIndex: index,
+      });
+    }
+  }
 
   escape = str => str.replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--');
 
@@ -53,7 +59,7 @@ class RichTextViewer extends Component<RichTextViewerProps> {
 
   render() {
     const { deltaOps } = this.props;
-    const { open, src } = this.state;
+    const { open, images, srcIndex } = this.state;
     const html = delta2Html(toJS(deltaOps));
 
     return (
@@ -62,9 +68,21 @@ class RichTextViewer extends Component<RichTextViewerProps> {
         {
           open ? (
             <LightBox
-              mainSrc={src}
+              mainSrc={images[srcIndex]}
               onCloseRequest={() => this.setState({ open: false })}
               imageTitle="images"
+              prevSrc={images[srcIndex - 1]}
+              nextSrc={images[srcIndex + 1]}
+              onMovePrevRequest={
+                () => {
+                  this.setState({srcIndex: srcIndex - 1});
+                }
+              }
+              onMoveNextRequest={
+                () => {
+                  this.setState({srcIndex: srcIndex + 1});
+                }
+              }
             />
           ) : null
         }

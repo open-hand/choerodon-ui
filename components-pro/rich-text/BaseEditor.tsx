@@ -91,7 +91,8 @@ export default class BaseEditor extends Component<BaseEditorProps> {
 
   state = {
     imgOpen: false,
-    src: '',
+    images: [],
+    srcIndex: 0,
   };
 
   editor: any;
@@ -131,11 +132,21 @@ export default class BaseEditor extends Component<BaseEditorProps> {
   }
 
   handleOpenLightBox = (e) => {
-    if (e.target.nodeName === 'IMG') {
+    if (e.target.nodeName === 'IMG' && this.deltaOps) {
       e.stopPropagation();
+      const src = e.target.src;
+      const imgArr: string[] = [];
+      this.deltaOps.forEach(item => {
+        const image = item.insert.image;
+        if(image) {
+          imgArr.push(image);
+        }
+      });
+      const index = imgArr.findIndex(img => img === src);
       this.setState({
         imgOpen: true,
-        src: e.target.src,
+        images: imgArr,
+        srcIndex: index,
       });
     }
   };
@@ -194,7 +205,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
   }
 
   render() {
-    const { imgOpen, src } = this.state;
+    const { imgOpen, images, srcIndex } = this.state;
     const { className, style } = this.props;
     const content = this.renderContent();
     return (
@@ -205,9 +216,21 @@ export default class BaseEditor extends Component<BaseEditorProps> {
         {
           imgOpen && (
             <LightBox
-              mainSrc={src}
+              mainSrc={images[srcIndex]}
               onCloseRequest={() => this.setState({ imgOpen: false })}
               imageTitle="images"
+              prevSrc={images[srcIndex - 1]}
+              nextSrc={images[srcIndex + 1]}
+              onMovePrevRequest={
+                () => {
+                  this.setState({srcIndex: srcIndex - 1});
+                }
+              }
+              onMoveNextRequest={
+                () => {
+                  this.setState({srcIndex: srcIndex + 1});
+                }
+              }
             />
           )
         }
