@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 tableColumnAlign 属性。
+- 🌟 `<pro>RichText`: 新增图片连续预览功能。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
 

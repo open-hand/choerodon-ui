@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tableColumnAlign` property.
+- 🌟 `<pro>RichText`: Added continuous preview of pictures.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
 
