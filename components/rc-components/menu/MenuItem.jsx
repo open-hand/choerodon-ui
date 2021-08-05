@@ -9,6 +9,7 @@ import { connect } from 'mini-store';
 import noop from 'lodash/noop';
 import Checkbox from '../../checkbox/Checkbox';
 import Ripple from '../../ripple';
+import { getTooltipTheme } from '../../_util/TooltipUtils';
 /* eslint react/no-is-mounted:0 */
 
 const MenuItem = createReactClass({
@@ -97,12 +98,13 @@ const MenuItem = createReactClass({
   },
 
   handleRippleMouseEnter(e) {
-    const { tooltip, children, mode } = this.props;
+    const { tooltip, tooltipTheme, children, mode } = this.props;
     const { currentTarget } = e;
     if (children && (tooltip === 'always' || (tooltip === 'overflow' && isOverflow(currentTarget)))) {
       show(currentTarget, {
         title: children,
         placement: mode === 'horizontal' ? 'top' : 'right',
+        theme: tooltipTheme,
       });
     }
   },

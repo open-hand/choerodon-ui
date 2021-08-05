@@ -10,6 +10,7 @@ import isNumber from 'lodash/isNumber';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getTooltip } from 'choerodon-ui/lib/_util/TooltipUtils';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
 import Column, { ColumnDefaultProps, ColumnProps, columnWidth } from './Column';
@@ -1147,27 +1148,22 @@ export default class TableStore {
     return false;
   }
 
-  @computed
   get hasFooter(): boolean {
     return this.leafColumns.some(column => !!column.footer && column.key !== SELECTION_KEY);
   }
 
-  @computed
   get isAnyColumnsResizable(): boolean {
     return this.leafColumns.some(column => column.resizable === true);
   }
 
-  @computed
   get isAnyColumnsLeftLock(): boolean {
     return this.leftColumns.length > 0;
   }
 
-  @computed
   get isAnyColumnsRightLock(): boolean {
     return this.rightColumns.length > 0;
   }
 
-  @computed
   get isAnyColumnsLock(): boolean {
     return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
   }
@@ -1217,17 +1213,15 @@ export default class TableStore {
     return !!expandedRowRenderer && !this.isTree;
   }
 
-  @computed
   get expandIconColumnIndex(): number {
+    if (this.expandIconAsCell) {
+      return 0;
+    }
     const {
-      expandIconAsCell,
       dragColumnAlign,
       rowDraggable,
       props: { expandIconColumnIndex = 0, rowNumber },
     } = this;
-    if (expandIconAsCell) {
-      return 0;
-    }
     return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable].filter(Boolean).length;
   }
 
@@ -1289,12 +1283,12 @@ export default class TableStore {
     }
   }
 
-  getColumnTooltip(column: ColumnProps): TableColumnTooltip {
+  getColumnTooltip(column: ColumnProps): TableColumnTooltip | undefined {
     const { tooltip } = column;
     if (tooltip) {
       return tooltip;
     }
-    return getConfig('tableColumnTooltip');
+    return getTooltip('table-cell');
   }
 
   getColumnHeaders(): Promise<HeaderText[]> {

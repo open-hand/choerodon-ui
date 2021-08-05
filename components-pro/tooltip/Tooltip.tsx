@@ -1,7 +1,8 @@
 import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import isNil from 'lodash/isNil';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import Trigger, { RenderFunction, TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
@@ -197,7 +198,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   @autobind
   renderPopupContent(...props) {
     const { translate } = this.state;
-    const { theme = getConfig('tooltipTheme') } = this.props;
+    const { theme = getTooltipTheme() } = this.props;
     const content = this.getContent(...props);
     if (content) {
       return (

@@ -746,7 +746,7 @@ export default class DataSet extends EventManager {
   }
 
   @computed
-  get groups() {
+  get groups(): string[] {
     return [...this.fields.entries()]
       .reduce<string[]>((arr, [name, field]) => {
         const group = field.get('group');
@@ -839,6 +839,7 @@ export default class DataSet extends EventManager {
    * @param index 索引
    * @returns {Record}
    */
+  @computed
   get all(): Record[] {
     if (this.isAllPageSelection) {
       return this.records;

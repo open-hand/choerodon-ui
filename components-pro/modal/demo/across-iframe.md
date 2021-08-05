@@ -22,13 +22,16 @@ const App = () => {
   const openModal = React.useCallback(() => {
     Modal.open({
       title: 'Across Iframe',
-      children: <DatePicker />,
+      children: <DatePicker required />,
       okText: '确定'
     });
   }, []);
 
   return (
-    <Button onClick={openModal}>Open</Button>
+    <>
+      <Button onClick={openModal}>Open</Button>
+      <DatePicker required />
+    </>
   );
 }
 

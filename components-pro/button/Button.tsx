@@ -11,6 +11,7 @@ import { observer } from 'mobx-react';
 import isPromise from 'is-promise';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import Icon from '../icon';
 import FormContext from '../form/FormContext';
 import Progress from '../progress';
@@ -248,11 +249,12 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   handleMouseEnter(e) {
-    const { tooltip = getConfig('buttonTooltip'), children } = this.props;
+    const { tooltip = getTooltip('button'), children } = this.props;
     const { element } = this;
     if (tooltip === ButtonTooltip.always || (tooltip === ButtonTooltip.overflow && isOverflow(element))) {
       show(element, {
         title: children,
+        theme: getTooltipTheme('button'),
       });
     }
     const { onMouseEnter = noop } = this.props;
@@ -285,11 +287,11 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   getOtherProps() {
     const otherProps = super.getOtherProps();
-    const { tooltip = getConfig('buttonTooltip') } = this.props;
+    const { tooltip = getTooltip('button') } = this.props;
     if (!this.disabled) {
       otherProps.onClick = this.handleClickIfBubble;
     }
-    if ([ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip)) {
+    if (tooltip && [ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip)) {
       otherProps.onMouseEnter = this.handleMouseEnter;
       otherProps.onMouseLeave = this.handleMouseLeave;
     }

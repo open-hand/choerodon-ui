@@ -58,6 +58,12 @@ export type PerformanceEvents = {
 
 export type PerformanceEventHook<T extends keyof PerformanceEvents> = (key: T, event: PerformanceEvents[T]) => void;
 
+export type TooltipTarget = 'table-cell' | 'output' | 'label' | 'button' | 'select-option' | 'validation' | 'help';
+
+export type TooltipHook = (target?: TooltipTarget) => Tooltip | undefined;
+
+export type TooltipThemeHook = (target?: TooltipTarget) => TooltipTheme;
+
 export type Formatter = {
   jsonDate?: string | null;
   date?: string;
@@ -123,7 +129,6 @@ export type Config = {
   tableParityRow?: boolean;
   tableSelectedHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;
-  tableColumnTooltip?: Tooltip;
   tableColumnResizable?: boolean;
   tableColumnHideable?: boolean;
   performanceTableColumnHideable?: boolean;
@@ -166,7 +171,6 @@ export type Config = {
   modalMaskClosable?: string | boolean;
   buttonFuncType?: FuncType;
   buttonColor?: ButtonColor;
-  buttonTooltip?: Tooltip;
   renderEmpty?: renderEmptyHandler;
   highlightRenderer?: HighlightRenderer;
   defaultValidationMessages?: ValidationMessages;
@@ -181,7 +185,6 @@ export type Config = {
   }) => object;
   formatter?: Formatter;
   dropdownMatchSelectWidth?: boolean;
-  selectOptionTooltip?: Tooltip;
   selectReverse?: boolean;
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
@@ -193,21 +196,6 @@ export type Config = {
   numberFieldFormatterOptions?: FormatNumberFuncOptions;
   currencyFormatter?: FormatNumberFunc;
   currencyFormatterOptions?: FormatNumberFuncOptions;
-  labelTooltip?: Tooltip;
-  /**
-   * @deprecated
-   */
-  excludeUseColonTagList?: string[];
-  /**
-   * @deprecated
-   * 同 tableColumnDraggable
-   */
-  tableDragColumn?: boolean;
-  /**
-   * @deprecated
-   * 同 tableRowDraggable
-   */
-  tableDragRow?: boolean;
   /**
    * 是否显示长度信息
    */
@@ -229,16 +217,52 @@ export type Config = {
    */
   performanceEnabled?: { [key in keyof PerformanceEvents]: boolean };
   /**
+   * tooltip
+   */
+  tooltip?: Tooltip | TooltipHook;
+  /**
    * tooltip 主题
    */
-  tooltipTheme?: TooltipTheme;
+  tooltipTheme?: TooltipTheme | TooltipThemeHook;
   /**
-   * 校验提示 tooltip 主题
+   * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;
+  /**
+   * @deprecated
+   */
+  tableColumnTooltip?: Tooltip;
+  /**
+   * @deprecated
+   */
+  buttonTooltip?: Tooltip;
+  /**
+   * @deprecated
+   */
+  selectOptionTooltip?: Tooltip;
+  /**
+   * @deprecated
+   */
+  labelTooltip?: Tooltip;
+  /**
+   * @deprecated
+   */
+  excludeUseColonTagList?: string[];
+  /**
+   * @deprecated
+   * 同 tableColumnDraggable
+   */
+  tableDragColumn?: boolean;
+  /**
+   * @deprecated
+   * 同 tableRowDraggable
+   */
+  tableDragRow?: boolean;
 };
 
 export type ConfigKeys = keyof Config;
+
+const defaultTooltipTheme: TooltipThemeHook = target => target === 'validation' ? 'light' : 'dark';
 
 const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNode => {
   switch (componentName) {
@@ -377,8 +401,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['highlightRenderer', defaultFormFieldHighlightRenderer],
   ['onPerformance', noop],
   ['performanceEnabled', { Table: false }],
-  ['tooltipTheme', 'dark'],
-  ['validationTooltipTheme', 'light'],
+  ['tooltipTheme', defaultTooltipTheme],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

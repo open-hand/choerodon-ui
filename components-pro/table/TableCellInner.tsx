@@ -24,6 +24,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
+import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import Record from '../data-set/Record';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
@@ -451,7 +452,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
           isValidationMessageHidden,
           processValue,
           tooltip,
-          labelTooltip: getConfig('labelTooltip'),
+          labelTooltip: getTooltip('label'),
         });
         multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
         return lines;
@@ -478,6 +479,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
         show(element, {
           title: text,
           placement: 'right',
+          theme: getTooltipTheme('table-cell'),
         });
         return true;
       }
@@ -578,7 +580,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     </span>
   );
 
-  let output: ReactNode = (
+  const output: ReactNode = (
     <span
       key="output"
       {...innerProps}
@@ -586,14 +588,16 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
       className={innerClassName.join(' ')}
     />
   );
-  if (highlight) {
-    const { highlightRenderer = tableStore.cellHighlightRenderer } = column;
-    output = highlightRenderer(transformHighlightProps(highlight, { dataSet, record, name }), output);
-  }
   return (
     <>
       {prefix}
-      {output}
+      {
+        highlight ? (column.highlightRenderer || tableStore.cellHighlightRenderer)(transformHighlightProps(highlight, {
+          dataSet,
+          record,
+          name,
+        }), output) : output
+      }
     </>
   );
 });

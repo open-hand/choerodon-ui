@@ -378,6 +378,7 @@ export default class Record {
     return [];
   }
 
+  @computed
   get path(): Record[] {
     return [...this.parents, this];
   }

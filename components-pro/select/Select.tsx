@@ -15,6 +15,7 @@ import Tag from 'choerodon-ui/lib/tag';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { Tooltip as OptionTooltip } from '../core/enum';
 import TriggerField, { TriggerFieldPopupContentProps, TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -675,7 +676,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       disabled: menuDisabled,
       textField,
       valueField,
-      props: { dropdownMenuStyle, optionRenderer, onOption, optionTooltip = getConfig('selectOptionTooltip') },
+      props: { dropdownMenuStyle, optionRenderer, onOption, optionTooltip = getTooltip('select-option') },
     } = this;
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
@@ -737,6 +738,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         value: record,
         disabled: menuDisabled,
         tooltip: optionTooltip,
+        tooltipTheme: getTooltipTheme('select-option'),
       };
       const mergedProps = optionProps ? {
         ...optionProps,
