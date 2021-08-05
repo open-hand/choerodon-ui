@@ -1,5 +1,4 @@
 import React, { CSSProperties, FunctionComponent, HTMLProps, useCallback, useContext } from 'react';
-import { get } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
@@ -15,9 +14,10 @@ import { getColumnKey, getColumnLock, getHeader, isStickySupport } from './utils
 import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
 import AggregationButton from './AggregationButton';
+import ColumnGroup from './ColumnGroup';
 
 export interface TableCellProps extends ElementProps {
-  column: ColumnProps;
+  columnGroup: ColumnGroup;
   record: Record;
   colSpan?: number;
   isDragging: boolean;
@@ -27,8 +27,9 @@ export interface TableCellProps extends ElementProps {
 }
 
 const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell(props) {
-  const { column, record, isDragging, provided, colSpan, className, children, disabled } = props;
-  const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation } = useContext(TableContext);
+  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled } = props;
+  const { column, key } = columnGroup;
+  const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = getConfig('tableColumnOnCell');
   const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean) => (
@@ -46,7 +47,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
 
   const getColumnsInnerNode = useCallback((columns: ColumnProps[]) => {
     return columns.map((col) => {
-      const { children: childColumns, hidden, hiddenInAggregation } = col;
+      const { hidden, hiddenInAggregation } = col;
       if (!hidden && !(typeof hiddenInAggregation === 'function' ? hiddenInAggregation(record) : hiddenInAggregation)) {
         const { onCell } = col;
         const isBuiltInColumn = tableStore.isBuiltInColumn(col);
@@ -63,6 +64,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
         const header = getHeader(col, dataSet, tableAggregation);
         // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
         const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
+        const childColumns = col.children;
         if (childColumns && childColumns.length) {
           return (
             <Tree.TreeNode
@@ -93,16 +95,23 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
   }, [tableStore, record, dataSet, cellPrefix, getInnerNode, tableColumnOnCell, tableAggregation]);
   const renderInnerNode = (aggregation, onCellStyle?: CSSProperties) => {
     if (expandIconAsCell && children) {
-      return children;
+      return (
+        <span
+          className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}
+          style={{ textAlign: 'center', ...onCellStyle }}
+        >
+          {children}
+        </span>
+      );
     }
     if (aggregation) {
-      const { children: childColumns } = column;
+      const { column: { children: childColumns } } = columnGroup;
       if (childColumns) {
         const visibleChildren = childColumns.filter(child => !child.hidden);
         const { length } = visibleChildren;
         if (length > 0) {
           const { renderer = defaultAggregationRenderer, aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll } = column;
-          const expanded = tableStore.isAggregationCellExpanded(record, column);
+          const expanded = tableStore.isAggregationCellExpanded(record, key);
           const hasExpand = length > aggregationLimit!;
           const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
 
@@ -119,7 +128,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
               }
               {
                 hasExpand && (
-                  <Tree.TreeNode title={<AggregationButton expanded={expanded} record={record} column={column} />} />
+                  <Tree.TreeNode title={<AggregationButton expanded={expanded} record={record} columnGroup={columnGroup} />} />
                 )
               }
             </Tree>
@@ -134,23 +143,21 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
     }
     return getInnerNode(column, onCellStyle);
   };
-  const { style, lock, _group } = column;
+  const { style, lock } = column;
   const columnLock = isStickySupport() && getColumnLock(lock);
   const baseStyle: CSSProperties | undefined = (() => {
     if (columnLock) {
-      if (_group) {
-        if (columnLock === ColumnLock.left) {
-          return {
-            ...style,
-            left: pxToRem(_group.left)!,
-          };
-        }
-        if (columnLock === ColumnLock.right) {
-          return {
-            ...style,
-            right: pxToRem(colSpan && colSpan > 1 ? 0 : _group.right)!,
-          };
-        }
+      if (columnLock === ColumnLock.left) {
+        return {
+          ...style,
+          left: pxToRem(columnGroup.left)!,
+        };
+      }
+      if (columnLock === ColumnLock.right) {
+        return {
+          ...style,
+          right: pxToRem(colSpan && colSpan > 1 ? 0 : columnGroup.right)!,
+        };
       }
     }
     return style;
@@ -158,11 +165,11 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
   const baseClassName = classNames(cellPrefix, {
     [`${cellPrefix}-fix-${columnLock}`]: columnLock,
   });
-  if (record.getState('__inView') === false || get(column, '_inView') === false) {
+  if (record.getState('__inView') === false || columnGroup.inView === false) {
     return (
       <td
         colSpan={colSpan}
-        data-index={getColumnKey(column)}
+        data-index={key}
         className={baseClassName}
         style={baseStyle}
       />
@@ -196,7 +203,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
   const widthDraggingStyle = (): React.CSSProperties => {
     const draggingStyle: React.CSSProperties = {};
     if (isDragging) {
-      const dom = tableStore.node.element.querySelector(`.${prefixCls}-tbody .${prefixCls}-cell[data-index="${getColumnKey(column)}"]`);
+      const dom = tableStore.node.element.querySelector(`.${prefixCls}-tbody .${prefixCls}-cell[data-index="${key}"]`);
       if (dom) {
         draggingStyle.width = dom.clientWidth;
         draggingStyle.whiteSpace = 'nowrap';
@@ -211,7 +218,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
       colSpan={colSpan}
       {...cellExternalProps}
       className={classString}
-      data-index={getColumnKey(column)}
+      data-index={key}
       {...(provided && provided.dragHandleProps)}
       style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
     >

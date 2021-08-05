@@ -1,4 +1,4 @@
-import React, { Children, isValidElement, ReactNode } from 'react';
+import React, { Children, isValidElement, Key, ReactNode } from 'react';
 import { action, computed, get, observable, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
@@ -13,7 +13,7 @@ import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { getTooltip } from 'choerodon-ui/lib/_util/TooltipUtils';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
-import Column, { ColumnDefaultProps, ColumnProps, columnWidth } from './Column';
+import Column, { ColumnDefaultProps, ColumnProps } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
 import isFragment from '../_util/isFragment';
 import DataSet from '../data-set/DataSet';
@@ -39,7 +39,6 @@ import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
-import ColumnGroup from './ColumnGroup';
 import Table, { Customized, expandIconProps, TablePaginationConfig, TableProps } from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
@@ -216,7 +215,7 @@ export function mergeDefaultProps(
     center: 0,
     right: 0,
   },
-): [any[], boolean] {
+): [any[], any[], any[], boolean] {
   const columns: any[] = [];
   const leftColumns: any[] = [];
   const rightColumns: any[] = [];
@@ -239,7 +238,7 @@ export function mergeDefaultProps(
           newColumn.lock = parent.lock;
         }
         if (children) {
-          const [childrenColumns, childrenHasAffregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, newColumn, defaultKey);
+          const [, childrenColumns, , childrenHasAffregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, newColumn, defaultKey);
           newColumn.children = childrenColumns;
           if (!hasAggregationColumn && childrenHasAffregationColumn) {
             hasAggregationColumn = childrenHasAffregationColumn;
@@ -262,7 +261,7 @@ export function mergeDefaultProps(
           rightColumns.push(newColumn);
         }
       } else if (children) {
-        const [nodes, childrenHasAffregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+        const [, nodes, , childrenHasAffregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
         if (!hasAggregationColumn && childrenHasAffregationColumn) {
           hasAggregationColumn = childrenHasAffregationColumn;
         }
@@ -283,13 +282,14 @@ export function mergeDefaultProps(
     }
   }, []);
   if (parent) {
-    return [sortBy(columns, ({ sort }) => sort), hasAggregationColumn];
+    return [[], sortBy(columns, ({ sort }) => sort), [], hasAggregationColumn];
   }
-  return [[
-    ...sortBy(leftColumns, ({ sort }) => sort),
-    ...sortBy(columns, ({ sort }) => sort),
-    ...sortBy(rightColumns, ({ sort }) => sort),
-  ], hasAggregationColumn];
+  return [
+    sortBy(leftColumns, ({ sort }) => sort),
+    sortBy(columns, ({ sort }) => sort),
+    sortBy(rightColumns, ({ sort }) => sort),
+    hasAggregationColumn,
+  ];
 }
 
 export function normalizeColumns(
@@ -303,7 +303,7 @@ export function normalizeColumns(
     center: 0,
     right: 0,
   },
-): [any[], boolean] {
+): [any[], any[], any[], boolean] {
   const columns: any[] = [];
   const leftColumns: any[] = [];
   const rightColumns: any[] = [];
@@ -336,7 +336,7 @@ export function normalizeColumns(
           if (parent) {
             column.lock = parent.lock;
           }
-          const [childrenColumns, childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
+          const [, childrenColumns, , childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
           column.children = childrenColumns;
           if (!hasAggregationColumn && childrenHasAffregationColumn) {
             hasAggregationColumn = childrenHasAffregationColumn;
@@ -358,7 +358,7 @@ export function normalizeColumns(
             rightColumns.push(column);
           }
         } else {
-          const [nodes, childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+          const [, nodes, , childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
           if (!hasAggregationColumn && childrenHasAffregationColumn) {
             hasAggregationColumn = childrenHasAffregationColumn;
           }
@@ -381,13 +381,14 @@ export function normalizeColumns(
   };
   Children.forEach(elements, normalizeColumn);
   if (parent) {
-    return [sortBy(columns, ({ sort }) => sort), hasAggregationColumn];
+    return [[], sortBy(columns, ({ sort }) => sort), [], hasAggregationColumn];
   }
-  return [[
-    ...sortBy(leftColumns, ({ sort }) => sort),
-    ...sortBy(columns, ({ sort }) => sort),
-    ...sortBy(rightColumns, ({ sort }) => sort),
-  ], hasAggregationColumn];
+  return [
+    sortBy(leftColumns, ({ sort }) => sort),
+    sortBy(columns, ({ sort }) => sort),
+    sortBy(rightColumns, ({ sort }) => sort),
+    hasAggregationColumn,
+  ];
 }
 
 async function getHeaderTexts(
@@ -421,7 +422,11 @@ export default class TableStore {
 
   @observable loading?: boolean;
 
+  @observable leftOriginalColumns: ColumnProps[];
+
   @observable originalColumns: ColumnProps[];
+
+  @observable rightOriginalColumns: ColumnProps[];
 
   @observable hasAggregationColumn?: boolean;
 
@@ -442,8 +447,6 @@ export default class TableStore {
   @observable lockColumnsHeadRowsHeight: any;
 
   @observable expandedRows: (string | number)[];
-
-  @observable isHeaderHover?: boolean;
 
   @observable hoverRow?: Record;
 
@@ -902,8 +905,9 @@ export default class TableStore {
 
   @computed
   get overflowX(): boolean {
-    if (isNumber(this.width)) {
-      return this.totalLeafColumnsWidth > this.width;
+    const { width } = this;
+    if (width !== undefined) {
+      return this.columnGroups.width > width;
     }
     return false;
   }
@@ -1027,112 +1031,60 @@ export default class TableStore {
   }
 
   @computed
-  get columns(): ColumnProps[] {
-    const { dragColumnAlign, originalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn, customizedColumn } = this;
+  get leftColumns(): ColumnProps[] {
+    const { dragColumnAlign, leftOriginalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn } = this;
     return observable.array([
       expandColumn,
       dragColumnAlign === DragColumnAlign.left ? draggableColumn : undefined,
       rowNumberColumn,
       selectionColumn,
-      ...originalColumns,
-      customizedColumn,
-      dragColumnAlign === DragColumnAlign.right ? draggableColumn : undefined,
-    ]).filter<ColumnProps>(columnFilter);
-  }
-
-  @computed
-  get leftColumns(): ColumnProps[] {
-    return this.columns.filter(column => column.lock === ColumnLock.left || column.lock === true);
-  }
-
-  @computed
-  get centerColumns(): ColumnProps[] {
-    return this.columns.filter(column => !column.lock);
+      ...leftOriginalColumns,
+    ].filter<ColumnProps>(columnFilter));
   }
 
   @computed
   get rightColumns(): ColumnProps[] {
-    return this.columns.filter(column => column.lock === ColumnLock.right);
+    const { dragColumnAlign, rightOriginalColumns, draggableColumn, customizedColumn } = this;
+    return observable.array([
+      ...rightOriginalColumns,
+      customizedColumn,
+      dragColumnAlign === DragColumnAlign.right ? draggableColumn : undefined,
+    ].filter<ColumnProps>(columnFilter));
+  }
+
+  @computed
+  get columns(): ColumnProps[] {
+    const { leftColumns, originalColumns, rightColumns } = this;
+    return observable.array([
+      ...leftColumns,
+      ...originalColumns,
+      ...rightColumns,
+    ]);
   }
 
   @computed
   get columnGroups(): ColumnGroups {
-    const { aggregation } = this;
-    return new ColumnGroups(this.columns, aggregation);
+    return new ColumnGroups(this.columns, this.aggregation);
   }
 
   @computed
-  get groupedColumns(): ColumnGroup[] {
-    return this.columnGroups.columns;
+  get leftColumnGroups(): ColumnGroups {
+    return new ColumnGroups(this.leftColumns, this.aggregation);
   }
 
   @computed
-  get leftGroupedColumns(): ColumnGroup[] {
-    return this.groupedColumns.filter(
-      ({ column: { lock } }) => lock === ColumnLock.left || lock === true,
-    );
-  }
-
-  @computed
-  get centerGroupedColumns(): ColumnGroup[] {
-    return this.groupedColumns.filter(
-      ({ column: { lock } }) => !lock,
-    );
-  }
-
-  @computed
-  get rightGroupedColumns(): ColumnGroup[] {
-    return this.groupedColumns.filter(({ column: { lock } }) => lock === ColumnLock.right);
-  }
-
-  @computed
-  get leafColumns(): ColumnProps[] {
-    return this.getLeafColumns(this.columns);
-  }
-
-  @computed
-  get leftLeafColumns(): ColumnProps[] {
-    return this.getLeafColumns(this.leftColumns);
-  }
-
-  @computed
-  get centerLeafColumns(): ColumnProps[] {
-    return this.getLeafColumns(this.centerColumns);
-  }
-
-  @computed
-  get rightLeafColumns(): ColumnProps[] {
-    return this.getLeafColumns(this.rightColumns);
-  }
-
-  @computed
-  get leafAggregationColumns(): ColumnProps[] {
-    return this.leafColumns.filter(({ aggregation }) => aggregation);
+  get rightColumnGroups(): ColumnGroups {
+    return new ColumnGroups(this.rightColumns, this.aggregation);
   }
 
   @computed
   get leafNamedColumns(): ColumnProps[] {
-    return this.leafColumns.filter(column => !!column.name);
-  }
-
-  @computed
-  get totalLeafColumnsWidth(): number {
-    return this.leafColumns.reduce((total, column) => total + columnWidth(column), 0);
-  }
-
-  @computed
-  get leftLeafColumnsWidth(): number {
-    return this.leftLeafColumns.reduce((total, column) => total + columnWidth(column), 0);
-  }
-
-  @computed
-  get rightLeafColumnsWidth(): number {
-    return this.rightLeafColumns.reduce((total, column) => total + columnWidth(column), 0);
+    return this.columnGroups.allLeafs.reduce<ColumnProps[]>((list, { column }) => column.name ? list.concat(column) : list, []);
   }
 
   @computed
   get hasEmptyWidthColumn(): boolean {
-    return this.leafColumns.some(column => !column.hidden && isNil(column.width));
+    return this.columnGroups.leafs.some(({ column }) => isNil(get(column, 'width')));
   }
 
   @computed
@@ -1140,7 +1092,7 @@ export default class TableStore {
     const { checkField } = this.dataSet.props;
     if (checkField) {
       const { aggregation } = this;
-      return this.leafColumns.some((column) => aggregation
+      return this.columnGroups.leafs.some(({ column }) => aggregation
         ? treeSome<ColumnProps>([column], (c) => hasCheckField(c, checkField))
         : hasCheckField(column, checkField),
       );
@@ -1149,11 +1101,7 @@ export default class TableStore {
   }
 
   get hasFooter(): boolean {
-    return this.leafColumns.some(column => !!column.footer && column.key !== SELECTION_KEY);
-  }
-
-  get isAnyColumnsResizable(): boolean {
-    return this.leafColumns.some(column => column.resizable === true);
+    return this.columnGroups.leafs.some(({ column }) => !!column.footer && column.key !== SELECTION_KEY);
   }
 
   get isAnyColumnsLeftLock(): boolean {
@@ -1265,7 +1213,9 @@ export default class TableStore {
       this.expandedRows = [];
       this.lastScrollTop = 0;
       this.customizedActiveKey = ['columns'];
+      this.leftOriginalColumns = [];
       this.originalColumns = [];
+      this.rightOriginalColumns = [];
       this.tempCustomized = { columns: {} };
       this.customized = { columns: {} };
       this.setProps(node.props);
@@ -1354,25 +1304,26 @@ export default class TableStore {
     const { customized, customizable, aggregation } = this;
     const { columns, children } = this.props;
     const customizedColumns = customizable ? customized.columns : undefined;
-    const [originalColumns, hasAggregationColumn] = columns
+    const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] = columns
       ? mergeDefaultProps(columns, aggregation, customizedColumns)
       : normalizeColumns(children, aggregation, customizedColumns);
+    this.leftOriginalColumns = leftOriginalColumns;
     this.originalColumns = originalColumns;
+    this.rightOriginalColumns = rightOriginalColumns;
     this.hasAggregationColumn = hasAggregationColumn;
   }
 
-  isAggregationCellExpanded(record: Record, column: ColumnProps): boolean {
+  isAggregationCellExpanded(record: Record, key: Key): boolean {
     const expandedKeys = record.getState(AGGREGATION_EXPAND_CELL_KEY);
     if (expandedKeys) {
-      return expandedKeys.includes(getColumnKey(column));
+      return expandedKeys.includes(key);
     }
     return false;
   }
 
   @action
-  setAggregationCellExpanded(record: Record, column: ColumnProps, expanded: boolean) {
+  setAggregationCellExpanded(record: Record, key: Key, expanded: boolean) {
     const expandedKeys = record.getState(AGGREGATION_EXPAND_CELL_KEY) || [];
-    const key = getColumnKey(column);
     const index = expandedKeys.indexOf(key);
     if (expanded) {
       if (index === -1) {
@@ -1494,19 +1445,6 @@ export default class TableStore {
     } finally {
       this.setRowPending(record, false);
     }
-  }
-
-  private getLeafColumns(columns: ColumnProps[]): ColumnProps[] {
-    const leafColumns: ColumnProps[] = [];
-    const { aggregation } = this;
-    columns.forEach(column => {
-      if ((aggregation && column.aggregation) || !column.children || column.children.length === 0) {
-        leafColumns.push(column);
-      } else {
-        leafColumns.push(...this.getLeafColumns(column.children));
-      }
-    });
-    return leafColumns;
   }
 
   @autobind

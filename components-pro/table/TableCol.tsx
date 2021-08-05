@@ -1,11 +1,10 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent, useContext, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { get } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import { ColumnProps, minColumnWidth } from './Column';
-import useComputed from '../use-computed';
 
 export interface TableColProps extends ElementProps {
   column: ColumnProps;
@@ -15,10 +14,12 @@ export interface TableColProps extends ElementProps {
 const TableCol: FunctionComponent<TableColProps> = observer(function TableCol(props) {
   const { column, last } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
-  const style = useComputed(() => ({
-    width: pxToRem(last && !tableStore.hasEmptyWidthColumn ? undefined : get(column, 'width')),
-    minWidth: pxToRem(minColumnWidth(column)),
-  }), [last, column, tableStore]);
+  const width = last && !tableStore.hasEmptyWidthColumn ? undefined : get(column, 'width');
+  const minWidth = minColumnWidth(column);
+  const style = useMemo(() => ({
+    width: pxToRem(width),
+    minWidth: pxToRem(minWidth),
+  }), [width, minWidth]);
   return (
     <col
       className={`${prefixCls}-col`}

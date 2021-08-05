@@ -1,12 +1,11 @@
-import React, { Component, Key, ReactNode } from 'react';
+import React, { FunctionComponent, Key, ReactNode, useCallback, useContext } from 'react';
 import { action, get, set } from 'mobx';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ResizeObservedRow from './ResizeObservedRow';
 import { ColumnLock } from './enum';
 import ColumnGroup from './ColumnGroup';
 import TableContext from './TableContext';
-import autobind from '../_util/autobind';
 import { isStickySupport } from './utils';
 
 export interface TableHeaderRowProps {
@@ -16,66 +15,51 @@ export interface TableHeaderRowProps {
   rows: ColumnGroup[][],
 }
 
-@observer
-export default class TableHeaderRow extends Component<TableHeaderRowProps> {
+const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = observer(function TableHeaderRow(props) {
+  const { rowIndex, lock, children, rows } = props;
+  const { rowHeight, tableStore } = useContext(TableContext);
 
-  static contextType = TableContext;
-
-  @autobind
-  handleResize(rowIndex: Key, height: number) {
-    this.setRowHeight(rowIndex, height);
-  }
-
-  @action
-  setRowHeight(index: Key, height: number) {
-    const { tableStore } = this.context;
+  const setRowHeight = useCallback(action((index: Key, height: number) => {
     set(tableStore.lockColumnsHeadRowsHeight, index, height);
-  }
+  }), [tableStore]);
 
-  getRowHeight(index): number {
-    const { tableStore } = this.context;
+  const getRowHeight = (index): number => {
     return get(tableStore.lockColumnsHeadRowsHeight, index) || 0;
-  }
+  };
 
-  getHeaderRowStyle(
-    rows: ColumnGroup[][],
-    rowIndex: number,
-  ): string | number | undefined {
-    const height = this.getRowHeight(rowIndex++);
+  const getHeaderRowStyle = (): string | number | undefined => {
+    const height = getRowHeight(rowIndex);
     return pxToRem(
       rows
-        .slice(rowIndex)
+        .slice(rowIndex + 1)
         .reduce(
           (total, r, index) =>
             r.length
               ? total
               : total +
-              this.getRowHeight(index + rowIndex),
+              getRowHeight(index + rowIndex + 1),
           height,
         ),
     );
-  }
+  };
+  const needStoreRowHeight = !isStickySupport() && (rowHeight === 'auto' || rows.length > 1);
+  const style = lock && needStoreRowHeight ? {
+    height: getHeaderRowStyle(),
+  } : undefined;
+  const tr = (
+    <tr style={style}>
+      {children}
+    </tr>
+  );
 
-  render() {
-    const { rowIndex, lock, children, rows } = this.props;
-    const {
-      rowHeight,
-    } = this.context;
-    const needStoreRowHeight = !isStickySupport() && (rowHeight === 'auto' || rows.length > 1);
-    const style = lock && needStoreRowHeight ? {
-      height: this.getHeaderRowStyle(rows, rowIndex),
-    } : undefined;
-    const tr = (
-      <tr style={style}>
-        {children}
-      </tr>
-    );
+  return !lock && needStoreRowHeight ? (
+    <ResizeObservedRow onResize={setRowHeight} rowIndex={rowIndex}>
+      {tr}
+    </ResizeObservedRow>
+  ) : tr;
+});
 
-    return !lock && needStoreRowHeight ? (
-      <ResizeObservedRow onResize={this.handleResize} rowIndex={rowIndex}>
-        {tr}
-      </ResizeObservedRow>
-    ) : tr;
-  }
-};
+TableHeaderRow.displayName = 'TableHeaderRow';
+
+export default TableHeaderRow;
 

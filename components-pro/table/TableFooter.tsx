@@ -4,22 +4,22 @@ import { action, get, set } from 'mobx';
 import classNames from 'classnames';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import { ColumnLock, DragColumnAlign } from './enum';
 import TableFooterCell, { TableFooterCellProps } from './TableFooterCell';
-import { getColumnKey, isStickySupport } from './utils';
+import { isStickySupport } from './utils';
 import ResizeObservedRow from './ResizeObservedRow';
 import { CUSTOMIZED_KEY } from './TableStore';
+import ColumnGroups from './ColumnGroups';
 
 export interface TableFooterProps extends ElementProps {
-  lock?: ColumnLock | boolean;
-  columns: ColumnProps[];
+  lock?: ColumnLock;
+  columnGroups: ColumnGroups;
 }
 
 const TableFooter: FunctionComponent<TableFooterProps> = observer(function TableFooter(props) {
-  const { lock, columns } = props;
+  const { lock, columnGroups } = props;
   const { prefixCls, rowHeight, tableStore } = useContext(TableContext);
   const { overflowX } = tableStore;
 
@@ -31,8 +31,8 @@ const TableFooter: FunctionComponent<TableFooterProps> = observer(function Table
     const { customizable, rowDraggable, dragColumnAlign } = tableStore;
     const hasPlaceholder = tableStore.overflowY && lock !== ColumnLock.left;
     const right = hasPlaceholder ? measureScrollbar() : 0;
-    const tds = columns.map((column, index, cols) => {
-      const key = getColumnKey(column);
+    const tds = columnGroups.leafs.map((columnGroup, index, cols) => {
+      const { key } = columnGroup;
       if (key !== CUSTOMIZED_KEY) {
         const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && index === cols.length - 2 ? 2 : 1;
         const cellProps: Partial<TableFooterCellProps> = {};
@@ -42,7 +42,7 @@ const TableFooter: FunctionComponent<TableFooterProps> = observer(function Table
         return (
           <TableFooterCell
             key={key}
-            column={column}
+            columnGroup={columnGroup}
             right={right}
             {...cellProps}
           />

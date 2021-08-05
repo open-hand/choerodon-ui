@@ -1,97 +1,70 @@
-import React, { Component, DetailedHTMLProps, ReactElement, ThHTMLAttributes } from 'react';
-import { observer } from 'mobx-react';
+import React, { DetailedHTMLProps, FunctionComponent, ReactElement, ThHTMLAttributes, useCallback, useContext, useRef, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
-import { action, computed } from 'mobx';
-import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import TableContext from './TableContext';
 import { ColumnLock } from './enum';
-import { getColumnKey, getTableHeaderRows, isStickySupport } from './utils';
+import { getTableHeaderRows, isStickySupport } from './utils';
 import ColumnGroup from './ColumnGroup';
-import autobind from '../_util/autobind';
 import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow';
 
 export interface TableHeaderProps extends ElementProps {
-  lock?: ColumnLock | boolean;
+  lock?: ColumnLock;
 }
 
-@observer
-export default class TableHeader extends Component<TableHeaderProps, any> {
-  static displayName = 'TableHeader';
+const TableHeader: FunctionComponent<TableHeaderProps> = observer(function TableHeader(props) {
+  const { lock } = props;
+  const {
+    prefixCls, border, tableStore,
+  } = useContext(TableContext);
+  const { columnResizable, columnResizing, columnGroups } = tableStore;
+  const { columns } = columnGroups;
 
-  static contextType = TableContext;
+  const headerRows: ColumnGroup[][] = getTableHeaderRows(lock ? columns.filter((group) => group.lock === lock) : columns);
+  const [isHeaderHover, setIsHeaderHover] = useState<boolean | undefined>();
+  const nodeRef = useRef<HTMLTableSectionElement | null>(null);
 
-  node: HTMLTableSectionElement | null;
+  const getHeaderNode = useCallback(() => {
+    return nodeRef.current;
+  }, [nodeRef]);
 
-  @autobind
-  saveRef(node) {
-    this.node = node;
-  }
+  const handleTheadMouseEnter = useCallback(() => {
+    setIsHeaderHover(true);
+  }, []);
 
-  @autobind
-  getHeaderNode() {
-    return this.node;
-  }
+  const handleTheadMouseLeave = useCallback(() => {
+    setIsHeaderHover(false);
+  }, []);
 
-  @autobind
-  @action
-  handleTheadMouseEnter() {
-    const {
-      tableStore,
-    } = this.context;
-    tableStore.isHeaderHover = true;
-  }
-
-  @autobind
-  @action
-  handleTheadMouseLeave() {
-    const {
-      tableStore,
-    } = this.context;
-    tableStore.isHeaderHover = false;
-  }
-
-  getTrs(hidden: boolean): (ReactElement<TableHeaderRowProps> | undefined)[] {
-    const { lock } = this.props;
-    const {
-      prefixCls,
-      tableStore,
-    } = this.context;
-    const { headerRows } = this;
+  const getTrs = (): (ReactElement<TableHeaderRowProps> | undefined)[] => {
     return headerRows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
       const { length } = row;
+      const rowKey = String(rowIndex);
       if (length) {
         const notLockLeft = lock !== ColumnLock.left;
         const lastColumnClassName = notLockLeft ? `${prefixCls}-cell-last` : undefined;
         const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && notLockLeft;
-        let prevColumn: ColumnProps | undefined;
         const tds = row.map((col, index) => {
           if (!col.hidden) {
-            const { column, rowSpan, colSpan, lastLeaf, children } = col;
-            const key = String(getColumnKey(column));
-            const props: TableHeaderCellProps = {
+            const { key, rowSpan, colSpan, children } = col;
+            const cellProps: TableHeaderCellProps = {
               key,
-              prevColumn,
-              column,
               columnGroup: col,
-              resizeColumn: lastLeaf,
-              getHeaderNode: this.getHeaderNode,
+              getHeaderNode,
               rowIndex,
-              hidden,
             };
-            if (notLockLeft && !hasPlaceholder && index === length - 1 && tableStore.leafColumns[tableStore.leafColumns.length - 1] === lastLeaf) {
-              props.className = lastColumnClassName;
+            if (notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
+              cellProps.className = lastColumnClassName;
             }
             if (rowSpan > 1 || children) {
-              props.rowSpan = rowSpan;
+              cellProps.rowSpan = rowSpan;
             }
             if (colSpan > 1 || children) {
-              props.colSpan = colSpan;
+              cellProps.colSpan = colSpan;
             }
-            prevColumn = lastLeaf;
             return (
-              <TableHeaderCell {...props} />
+              <TableHeaderCell {...cellProps} />
             );
           }
           return undefined;
@@ -117,7 +90,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
         }
         return (
           <TableHeaderRow
-            key={String(rowIndex)}
+            key={rowKey}
             rowIndex={rowIndex}
             rows={headerRows}
             lock={lock}
@@ -126,49 +99,28 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
           </TableHeaderRow>
         );
       }
-      return undefined;
+      return <tr key={rowKey} />;
     });
+  };
+  const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
+    ref: nodeRef,
+    className: classNames(`${prefixCls}-thead`, {
+      [`${prefixCls}-column-resizing`]: columnResizing,
+      [`${prefixCls}-column-resizable`]: columnResizable,
+      [`${prefixCls}-thead-hover`]: isHeaderHover || columnResizing,
+    }),
+  };
+  if (!isStickySupport() && !border && tableStore.overflowX) {
+    theadProps.onMouseEnter = handleTheadMouseEnter;
+    theadProps.onMouseLeave = handleTheadMouseLeave;
   }
+  return (
+    <thead {...theadProps}>
+      {getTrs()}
+    </thead>
+  );
+});
 
-  render() {
-    const {
-      prefixCls, border, showHeader, tableStore,
-    } = this.context;
-    const { columnResizable, isHeaderHover, columnResizing, customizable } = tableStore;
-    const hidden = !showHeader && !customizable;
-    const trs = this.getTrs(hidden);
-    const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
-      ref: this.saveRef,
-      className: classNames(`${prefixCls}-thead`, {
-        [`${prefixCls}-column-resizing`]: columnResizing,
-        [`${prefixCls}-column-resizable`]: columnResizable,
-        [`${prefixCls}-thead-hover`]: isHeaderHover || columnResizing,
-      }),
-      hidden,
-    };
-    if (!isStickySupport() && !border && tableStore.overflowX) {
-      theadProps.onMouseEnter = this.handleTheadMouseEnter;
-      theadProps.onMouseLeave = this.handleTheadMouseLeave;
-    }
-    return (
-      <thead {...theadProps}>
-        {trs}
-      </thead>
-    );
-  }
+TableHeader.displayName = 'TableHeader';
 
-  @computed
-  get headerRows(): ColumnGroup[][] {
-    const { tableStore } = this.context;
-    const { lock } = this.props;
-    switch (lock) {
-      case ColumnLock.left:
-      case true:
-        return getTableHeaderRows(tableStore.leftGroupedColumns);
-      case ColumnLock.right:
-        return getTableHeaderRows(tableStore.rightGroupedColumns);
-      default:
-        return getTableHeaderRows(tableStore.groupedColumns);
-    }
-  }
-}
+export default TableHeader;

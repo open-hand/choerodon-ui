@@ -7,7 +7,6 @@ import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import { Commands } from './Table';
-import ColumnGroup from './ColumnGroup';
 
 export const defaultMinWidth = 100;
 export const defaultAggregationMinWidth = 250;
@@ -161,8 +160,6 @@ export interface ColumnPropsBase extends ElementProps {
    * 高亮渲染器
    */
   highlightRenderer?: HighlightRenderer;
-  _inView?: boolean;
-  _group?: ColumnGroup;
 }
 
 export interface ColumnProps extends ColumnPropsBase {

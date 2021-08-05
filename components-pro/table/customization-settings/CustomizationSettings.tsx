@@ -2,6 +2,7 @@ import React, { FunctionComponent, MouseEvent, useCallback, useContext, useEffec
 import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
+import flatten from 'lodash/flatten';
 import Collapse from 'choerodon-ui/lib/collapse';
 import CollapsePanel from 'choerodon-ui/lib/collapse/CollapsePanel';
 import { getColumnKey, getColumnLock } from '../utils';
@@ -95,8 +96,9 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
             set(tempCustomized, 'heightType', TableHeightType.flex);
           } else if (name === 'aggregation') {
             setCustomizedColumns(columns
-              ? mergeDefaultProps(columns, value, tempCustomized.columns)[0]
-              : normalizeColumns(children, value, tempCustomized.columns)[0]);
+              ? flatten(mergeDefaultProps(columns, value, tempCustomized.columns).slice(0, 3))
+              : flatten(normalizeColumns(children, value, tempCustomized.columns).slice(0, 3)),
+            );
           }
         }
         record.setState(HEIGHT_CHANGE_KEY, record.getState(HEIGHT_CHANGE_KEY) - 1);

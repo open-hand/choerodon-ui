@@ -22,7 +22,6 @@ import ReactIntersectionObserver from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { ColumnProps } from './Column';
 import TableCell, { TableCellProps } from './TableCell';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
@@ -36,10 +35,12 @@ import { RecordStatus } from '../data-set/enum';
 import ResizeObservedRow from './ResizeObservedRow';
 import Spin from '../spin';
 import useComputed from '../use-computed';
+import ColumnGroups from './ColumnGroups';
+import ColumnGroup from './ColumnGroup';
 
 export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
-  columns: ColumnProps[];
+  columnGroups: ColumnGroups;
   record: Record;
   index: number;
   snapshot?: DraggableStateSnapshot;
@@ -47,7 +48,7 @@ export interface TableRowProps extends ElementProps {
 }
 
 const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(props) {
-  const { record, hidden, index, provided, snapshot, className, lock, columns, children } = props;
+  const { record, hidden, index, provided, snapshot, className, lock, columnGroups, children } = props;
   const context = useContext(TableContext);
   const {
     tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow, aggregation, rowHeight,
@@ -90,14 +91,16 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     return !!expandedRowRenderer || (isTree && (!!record.children || (canTreeLoadData && !isLoaded)));
   })();
 
-  const setRowHeight = useCallback(action((key: Key, height: number) => {
+  const setRowHeight = useCallback(action((key: Key, height: number | undefined) => {
     set(tableStore.lockColumnsBodyRowsHeight, key, height);
   }), [tableStore]);
 
-  const saveRef = useCallback((node: HTMLTableRowElement | null) => {
+  const saveRef = useCallback(action((node: HTMLTableRowElement | null) => {
     rowRef.current = node;
     if (node && needSaveRowHeight) {
       setRowHeight(rowKey, node.offsetHeight);
+    } else if (get(tableStore.lockColumnsBodyRowsHeight, rowKey)) {
+      remove(tableStore.lockColumnsBodyRowsHeight, rowKey);
     }
     if (provided) {
       provided.innerRef(node);
@@ -106,7 +109,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     if (typeof current === 'function') {
       current(node);
     }
-  }, [rowRef, intersectionRef, needSaveRowHeight, rowKey, provided]);
+  }), [rowRef, intersectionRef, needSaveRowHeight, rowKey, provided]);
 
   const handleMouseEnter = useCallback(() => {
     if (highLightRow) {
@@ -291,7 +294,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
             <td
               key={`${EXPAND_KEY}-rest`}
               className={`${prefixCls}-cell`}
-              colSpan={columns.length - (expandIconAsCell ? 1 : 0)}
+              colSpan={columnGroups.leafs.length - (expandIconAsCell ? 1 : 0)}
             >
               <div className={`${prefixCls}-cell-inner`}>
                 {expandedRowRenderer({ dataSet, record })}
@@ -337,13 +340,13 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     return (
       !expandRowByClick &&
       (expandedRowRenderer || isTree) &&
-      (lock === ColumnLock.right ? columnIndex + tableStore.leafColumns.length - tableStore.rightLeafColumns.length : columnIndex) === tableStore.expandIconColumnIndex
+      (lock === ColumnLock.right ? columnIndex + columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : columnIndex) === tableStore.expandIconColumnIndex
     );
   };
 
-  const getCell = (column: ColumnProps, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => (
+  const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => (
     <TableCell
-      column={column}
+      columnGroup={columnGroup}
       record={record}
       isDragging={snapshot ? snapshot.isDragging : false}
       lock={lock}
@@ -356,19 +359,20 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
 
   const getColumns = () => {
     const { customizable } = tableStore;
-    const columnLength = columns.length;
-    return columns.map((column, columnIndex) => {
-      const columnKey = getColumnKey(column);
-      if (columnKey !== CUSTOMIZED_KEY) {
+    const { leafs } = columnGroups;
+    const columnLength = leafs.length;
+    return leafs.map((columnGroup, columnIndex) => {
+      const { key } = columnGroup;
+      if (key !== CUSTOMIZED_KEY) {
         const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && columnIndex === columnLength - 2 ? 2 : 1;
         const rest: Partial<TableCellProps> = {
-          key: columnKey,
+          key,
           disabled,
         };
         if (colSpan > 1) {
           rest.colSpan = colSpan;
         }
-        return getCell(column, columnIndex, rest);
+        return getCell(columnGroup, columnIndex, rest);
       }
       return undefined;
     });
@@ -420,7 +424,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     Object.assign(rowProps, provided.draggableProps);
     rowProps.style = {
       ...provided.draggableProps.style, ...style,
-      width: Math.max(tableStore.totalLeafColumnsWidth, tableStore.width || 0),
+      width: Math.max(tableStore.columnGroups.width, tableStore.width || 0),
     };
     if (!dragColumnAlign) {
       rowProps.style!.cursor = 'move';

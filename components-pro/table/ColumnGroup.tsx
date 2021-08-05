@@ -1,8 +1,9 @@
 import { Key } from 'react';
-import { computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { ColumnProps, columnWidth } from './Column';
 import ColumnGroups from './ColumnGroups';
-import { getColumnKey } from './utils';
+import { getColumnKey, getColumnLock } from './utils';
+import { ColumnLock } from './enum';
 
 export default class ColumnGroup {
   column: ColumnProps;
@@ -15,8 +16,12 @@ export default class ColumnGroup {
 
   next?: ColumnGroup;
 
-  get key(): Key {
-    return getColumnKey(this.column);
+  key: Key;
+
+  @observable inView?: boolean | undefined;
+
+  get lock(): ColumnLock | false {
+    return getColumnLock(this.column.lock);
   }
 
   get rowSpan(): number {
@@ -38,9 +43,10 @@ export default class ColumnGroup {
     return children ? children.hidden : !!this.column.hidden;
   }
 
-  get lastLeaf(): ColumnProps {
-    const { children } = this;
-    return children ? children.lastLeaf : this.column;
+  get lastLeaf(): ColumnGroup | undefined {
+    const { leafs } = this;
+    const { length } = leafs;
+    return length ? leafs[length - 1] : undefined;
   }
 
   get width(): number {
@@ -74,14 +80,37 @@ export default class ColumnGroup {
     return 0;
   }
 
+  @computed
+  get allLeafs(): ColumnGroup[] {
+    const { children } = this;
+    if (children) {
+      return children.leafs;
+    }
+    return [this];
+  }
+
+  @computed
+  get leafs(): ColumnGroup[] {
+    const { hidden } = this;
+    if (!hidden) {
+      return this.allLeafs;
+    }
+    return [];
+  }
+
   constructor(column: ColumnProps, parent: ColumnGroups) {
     this.column = column;
-    column._group = this;
+    this.key = getColumnKey(column);
     this.parent = parent;
     const { children } = column;
     const { aggregation } = parent;
     if ((!column.aggregation || !aggregation) && children && children.length > 0) {
       this.children = new ColumnGroups(children, aggregation, this);
     }
+  }
+
+  @action
+  setInView(inView?: boolean) {
+    this.inView = inView;
   }
 }

@@ -84,6 +84,7 @@ import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
+import ColumnGroups from './ColumnGroups';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
 
@@ -1433,8 +1434,9 @@ export default class Table extends DataSetComponent<TableProps> {
         columnsDragRender,
         mode,
         pristine,
-        showHeader,
         showSelectionCachedButton,
+        autoMaxWidth,
+        summary,
       },
       tableStore,
       prefixCls,
@@ -1460,8 +1462,9 @@ export default class Table extends DataSetComponent<TableProps> {
             rowDragRender={rowDragRender}
             columnsDragRender={columnsDragRender}
             showSelectionCachedButton={showSelectionCachedButton}
+            autoMaxWidth={autoMaxWidth}
             pristine={pristine}
-            showHeader={showHeader}
+            summary={summary}
             isTree={mode === TableMode.tree}
           >
             {this.getHeader()}
@@ -1584,12 +1587,11 @@ export default class Table extends DataSetComponent<TableProps> {
 
   handleBodyScrollTop(e, currentTarget) {
     const { target } = e;
-    const {
-      tableStore: { virtual, heightType, lastScrollTop },
-    } = this;
+    const { tableStore } = this;
     if (
-      (isStickySupport() && !virtual) ||
-      (![TableHeightType.fixed, TableHeightType.flex].includes(heightType)) ||
+      (isStickySupport() && !tableStore.virtual) ||
+      // (![TableHeightType.fixed, TableHeightType.flex].includes(tableStore.heightType)) ||
+      !tableStore.overflowY ||
       currentTarget !== target ||
       target === this.tableFootWrap
     ) {
@@ -1599,7 +1601,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const bodyTable = this.tableBodyWrap;
     const fixedColumnsBodyRight = this.fixedColumnsBodyRight;
     const { scrollTop } = target;
-    if (scrollTop !== lastScrollTop) {
+    if (scrollTop !== tableStore.lastScrollTop) {
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = scrollTop;
       }
@@ -1692,17 +1694,17 @@ export default class Table extends DataSetComponent<TableProps> {
     hasHeader: boolean,
     hasBody: boolean,
     hasFooter: boolean,
-    lock?: ColumnLock | boolean,
+    lock?: ColumnLock,
   ): ReactNode {
     const { tableStore } = this;
-    const columns = (() => {
+    const columnGroups = (() => {
       if (lock === ColumnLock.right) {
-        return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
+        return tableStore.rightColumnGroups;
       }
       if (lock) {
-        return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
+        return tableStore.leftColumnGroups;
       }
-      return tableStore.leafColumns.filter(({ hidden }) => !hidden);
+      return tableStore.columnGroups;
     })();
 
     return tableStore.virtual ? (
@@ -1715,6 +1717,7 @@ export default class Table extends DataSetComponent<TableProps> {
               hasBody={hasBody}
               hasHeader={hasHeader}
               hasFooter={hasFooter}
+              columnGroups={columnGroups}
             >
               {this.getTableHeader(lock)}
             </TableWrapper>
@@ -1729,8 +1732,9 @@ export default class Table extends DataSetComponent<TableProps> {
                 hasBody={hasBody}
                 hasHeader={hasHeader}
                 hasFooter={hasFooter}
+                columnGroups={columnGroups}
               >
-                {this.getTableBody(columns, lock)}
+                {this.getTableBody(columnGroups, lock)}
               </TableWrapper>
             </VirtualWrapper>
           )
@@ -1743,8 +1747,9 @@ export default class Table extends DataSetComponent<TableProps> {
               hasBody={hasBody}
               hasHeader={hasFooter}
               hasFooter={hasFooter}
+              columnGroups={columnGroups}
             >
-              {this.getTableFooter(columns, lock)}
+              {this.getTableFooter(columnGroups, lock)}
             </TableWrapper>
           )
         }
@@ -1756,10 +1761,11 @@ export default class Table extends DataSetComponent<TableProps> {
         hasBody={hasBody}
         hasHeader={hasHeader}
         hasFooter={hasFooter}
+        columnGroups={columnGroups}
       >
         {hasHeader && this.getTableHeader(lock)}
-        {hasBody && this.getTableBody(columns, lock)}
-        {hasFooter && this.getTableFooter(columns, lock)}
+        {hasBody && this.getTableBody(columnGroups, lock)}
+        {hasFooter && this.getTableFooter(columnGroups, lock)}
       </TableWrapper>
     );
   }
@@ -1818,14 +1824,13 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  getTable(lock?: ColumnLock | boolean): ReactNode {
+  getTable(lock?: ColumnLock): ReactNode {
     const { props, tableStore } = this;
     const { overflowX, heightType, hasFooter: footer } = tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
     if ((!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType) || tableStore.height !== undefined) {
-      const { leftLeafColumnsWidth, rightLeafColumnsWidth, overflowY } = tableStore;
       const { prefixCls } = this;
       let tableHeadRef;
       let tableBodyRef;
@@ -1851,8 +1856,8 @@ export default class Table extends DataSetComponent<TableProps> {
       }
       const style: CSSProperties | undefined = lock ? {
         width: pxToRem(lock === ColumnLock.right
-          ? (rightLeafColumnsWidth - 1 + (overflowY ? measureScrollbar() : 0))
-          : leftLeafColumnsWidth),
+          ? (tableStore.rightColumnGroups.width - 1 + (tableStore.overflowY ? measureScrollbar() : 0))
+          : tableStore.leftColumnGroups.width),
         marginLeft: lock === ColumnLock.right ? pxToRem(1) : undefined,
       } : undefined;
 
@@ -1895,28 +1900,24 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getLeftFixedTable(): ReactNode {
-    const { tableStore, prefixCls } = this;
-    const table = this.getTable(ColumnLock.left);
     return (
-      <div className={classNames(`${prefixCls}-fixed-left`, { [`${prefixCls}-sticky-left`]: tableStore.stickyLeft })}>
-        {table}
-      </div>
+      <StickyShadow position="left">
+        {this.getTable(ColumnLock.left)}
+      </StickyShadow>
     );
   }
 
-  getRightFixedTable(): ReactNode | undefined {
-    const { tableStore, prefixCls } = this;
-    const table = this.getTable(ColumnLock.right);
+  getRightFixedTable(): ReactNode {
     return (
-      <div className={classNames(`${prefixCls}-fixed-right`, { [`${prefixCls}-sticky-right`]: tableStore.stickyRight })}>
-        {table}
-      </div>
+      <StickyShadow position="right">
+        {this.getTable(ColumnLock.right)}
+      </StickyShadow>
     );
   }
 
-  getTableBody(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode {
+  getTableBody(columnGroups: ColumnGroups, lock?: ColumnLock): ReactNode {
     const { tableStore: { rowDraggable } } = this;
-    const body = <TableTBody key="tbody" lock={lock} columns={columns} />;
+    const body = <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
     return rowDraggable ? (
       <DragDropContext onDragEnd={this.handleDragEnd}>
         {body}
@@ -1924,14 +1925,15 @@ export default class Table extends DataSetComponent<TableProps> {
     ) : body;
   }
 
-  getTableHeader(lock?: ColumnLock | boolean): ReactNode {
-    return (
+  getTableHeader(lock?: ColumnLock): ReactNode {
+    const { showHeader } = this.props;
+    return showHeader || this.tableStore.customizable ? (
       <TableHeader key="thead" lock={lock} />
-    );
+    ) : undefined;
   }
 
-  getTableFooter(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode {
-    return <TableFooter key="tfoot" lock={lock} columns={columns} />;
+  getTableFooter(columnGroups: ColumnGroups, lock?: ColumnLock): ReactNode {
+    return <TableFooter key="tfoot" lock={lock} columnGroups={columnGroups} />;
   }
 
   getStyleHeight(): number | undefined {

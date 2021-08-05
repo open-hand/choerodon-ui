@@ -11,7 +11,6 @@ export interface TableContextProviderProps {
   code?: string;
   prefixCls?: string;
   pristine?: boolean;
-  showHeader?: boolean;
   tableStore: TableStore;
   dataSet: DataSet;
   indentSize: number;
@@ -24,6 +23,8 @@ export interface TableContextProviderProps {
   columnsDragRender?: DragRender;
   isTree?: boolean;
   showSelectionCachedButton?: boolean;
+  autoMaxWidth?: boolean;
+  summary?: string;
 }
 
 export interface TableContextValue extends TableContextProviderProps {

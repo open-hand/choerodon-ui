@@ -1,6 +1,7 @@
 import { computed } from 'mobx';
-import { ColumnProps } from './Column';
+import { ColumnProps, columnWidth } from './Column';
 import ColumnGroup from './ColumnGroup';
+import { ColumnLock } from './enum';
 
 export default class ColumnGroups {
   columns: ColumnGroup[];
@@ -25,12 +26,6 @@ export default class ColumnGroups {
   }
 
   @computed
-  get lastLeaf(): ColumnProps {
-    const avaliableColumns = this.columns.filter(column => !column.hidden);
-    return avaliableColumns[avaliableColumns.length - 1].lastLeaf;
-  }
-
-  @computed
   get width(): number {
     return this.columns.reduce((sum, { width }) => sum + width, 0);
   }
@@ -49,6 +44,56 @@ export default class ColumnGroups {
       return parent.right;
     }
     return 0;
+  }
+
+  get lastLeaf() {
+    const { leafs } = this;
+    const { length } = leafs;
+    return length ? leafs[length - 1] : undefined;
+  }
+
+  @computed
+  get allLeafs(): ColumnGroup[] {
+    const { aggregation } = this;
+    return this.columns.reduce<ColumnGroup[]>((leafs, group) => leafs.concat(aggregation && group.column.aggregation ? group : group.allLeafs), []);
+  }
+
+  @computed
+  get leafs(): ColumnGroup[] {
+    const { aggregation, hidden } = this;
+    return hidden ? [] : this.columns.reduce<ColumnGroup[]>((leafs, group) => leafs.concat(aggregation && group.column.aggregation ? group : group.leafs), []);
+  }
+
+  @computed
+  get leftLeafs(): ColumnGroup[] {
+    if (!this.parent) {
+      const { aggregation } = this;
+      return this.columns.reduce<ColumnGroup[]>(
+        (leafs, group) => group.lock === ColumnLock.left ? leafs.concat(aggregation && group.column.aggregation ? group : group.leafs) : leafs,
+        [],
+      );
+    }
+    return [];
+  }
+
+  @computed
+  get rightLeafs(): ColumnGroup[] {
+    if (!this.parent) {
+      const { aggregation } = this;
+      return this.columns.reduce<ColumnGroup[]>(
+        (leafs, group) => group.lock === ColumnLock.right ? leafs.concat(aggregation && group.column.aggregation ? group : group.leafs) : leafs,
+        [],
+      );
+    }
+    return [];
+  }
+
+  get leftLeafColumnsWidth(): number {
+    return this.leftLeafs.reduce<number>((total, { column }) => total + columnWidth(column), 0);
+  }
+
+  get rightLeafColumnsWidth(): number {
+    return this.rightLeafs.reduce<number>((total, { column }) => total + columnWidth(column), 0);
   }
 
   constructor(columns: ColumnProps[], aggregation?: boolean | undefined, parent?: ColumnGroup) {

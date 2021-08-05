@@ -97,7 +97,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
      * 可选值：'flat' | 'raised'
      * @default raised
      */
-    funcType: PropTypes.oneOf([FuncType.flat, FuncType.raised]),
+    funcType: PropTypes.oneOf([FuncType.flat, FuncType.raised, FuncType.link]),
     /**
      * 按钮颜色风格
      * 可选值：'default' | 'primary' | 'gray' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'dark'
