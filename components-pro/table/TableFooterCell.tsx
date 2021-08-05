@@ -4,21 +4,22 @@ import omit from 'lodash/omit';
 import classNames from 'classnames';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import { ColumnProps } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import { getColumnLock, isStickySupport } from './utils';
 import { ColumnAlign, ColumnLock } from './enum';
+import ColumnGroup from './ColumnGroup';
 
 export interface TableFooterCellProps extends ElementProps {
-  column: ColumnProps;
+  columnGroup: ColumnGroup;
   colSpan?: number;
   right: number;
 }
 
 const TableFooterCell: FunctionComponent<TableFooterCellProps> = observer(function TableFooterCell(props) {
-  const { column, style, className, colSpan, right } = props;
+  const { columnGroup, style, className, colSpan, right } = props;
   const { rowHeight, dataSet, prefixCls, tableStore } = useContext(TableContext);
+  const { column } = columnGroup;
   const { autoFootHeight } = tableStore;
   const { footer, footerClassName, footerStyle = {}, align, name, command, lock } = column;
   const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
@@ -40,13 +41,10 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = observer(functi
   };
 
   if (columnLock) {
-    const { _group } = column;
-    if (_group) {
-      if (columnLock === ColumnLock.left) {
-        cellStyle.left = pxToRem(_group.left)!;
-      } else if (columnLock === ColumnLock.right) {
-        cellStyle.right = pxToRem(colSpan && colSpan > 1 ? right : _group.right + right)!;
-      }
+    if (columnLock === ColumnLock.left) {
+      cellStyle.left = pxToRem(columnGroup.left)!;
+    } else if (columnLock === ColumnLock.right) {
+      cellStyle.right = pxToRem(colSpan && colSpan > 1 ? right : columnGroup.right + right)!;
     }
   }
   const getFooter = (): ReactNode => {

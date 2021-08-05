@@ -101,7 +101,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
       if (!lock && tableStore.overflowX) {
         const tableBodyWrap = tableStore.virtual ? cell.offsetParent.parentNode.parentNode : cell.offsetParent;
         if (tableBodyWrap) {
-          const { leftLeafColumnsWidth, rightLeafColumnsWidth } = tableStore;
+          const { leftLeafColumnsWidth, rightLeafColumnsWidth } = tableStore.columnGroups;
           const { offsetLeft, offsetWidth } = cell;
           const { scrollLeft } = tableBodyWrap;
           const { width } = tableBodyWrap.getBoundingClientRect();

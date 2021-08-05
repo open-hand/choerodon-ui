@@ -1,7 +1,18 @@
-import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement } from 'react';
-import { action, get, runInAction, set } from 'mobx';
+import React, {
+  cloneElement,
+  CSSProperties,
+  FunctionComponent,
+  isValidElement,
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import { action } from 'mobx';
 import ReactIntersectionObserver from 'react-intersection-observer';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import raf from 'raf';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -13,17 +24,15 @@ import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
-import { ColumnProps, minColumnWidth } from './Column';
+import { minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import Icon from '../icon';
-import Field from '../data-set/Field';
 import EventManager from '../_util/EventManager';
-import { getColumnKey, getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
+import { getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
-import autobind from '../_util/autobind';
 import transform from '../_util/transform';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
@@ -31,222 +40,103 @@ import { CUSTOMIZED_KEY } from './TableStore';
 import ColumnGroup from './ColumnGroup';
 
 export interface TableHeaderCellProps extends ElementProps {
-  prevColumn?: ColumnProps;
-  column: ColumnProps;
   columnGroup: ColumnGroup;
-  resizeColumn?: ColumnProps;
   rowSpan?: number;
   colSpan?: number;
   rowIndex?: number;
   getHeaderNode?: () => HTMLTableSectionElement | null;
 }
 
-@observer
-export default class TableHeaderCell extends Component<TableHeaderCellProps, any> {
-  static displayName = 'TableHeaderCell';
+const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(function TableHeaderCell(props) {
+  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop } = props;
+  const { column, key, prev } = columnGroup;
+  const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
+  const { columnResizable } = tableStore;
+  const {
+    headerClassName,
+    headerStyle = {},
+    name,
+    align,
+    children,
+    command,
+    lock,
+  } = column;
+  const field = dataSet.getField(name);
 
-  static contextType = TableContext;
+  const header = getHeader(column, dataSet, aggregation);
+  const globalRef = useRef<{
+    bodyLeft: number;
+    resizeBoundary: number;
+    resizePosition?: number | undefined;
+    resizeColumnGroup?: ColumnGroup | undefined;
+    tooltipShown?: boolean | undefined;
+  }>({
+    bodyLeft: 0,
+    resizeBoundary: 0,
+  });
+  const resizeEvent: EventManager = useMemo(() => new EventManager(typeof window === 'undefined' ? undefined : document), []);
 
-  bodyLeft: number = 0;
-
-  resizeEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
-
-  resizeBoundary: number = 0;
-
-  resizePosition?: number;
-
-  resizeColumn?: ColumnProps;
-
-  nextFrameActionId?: number;
-
-  tooltipShown?: boolean;
-
-  @autobind
-  handleClick() {
-    const { column } = this.props;
-    const { name } = column;
-    if (name) {
-      const { dataSet } = this.context;
-      dataSet.sort(name);
+  const setSplitLineHidden = useCallback((hidden: boolean) => {
+    const {
+      node: { resizeLine },
+    } = tableStore;
+    if (resizeLine) {
+      resizeLine.style.display = hidden ? 'none' : 'block';
     }
-  }
+  }, [tableStore]);
 
-  @autobind
-  handleMouseEnter(e) {
-    const { column } = this.props;
-    const { tableStore } = this.context;
-    const tooltip = tableStore.getColumnTooltip(column);
-    const { currentTarget } = e;
-    if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget)))) {
-      show(currentTarget, {
-        title: this.getHeader(),
-        placement: 'right',
-        theme: getTooltipTheme('table-cell'),
-      });
-      this.tooltipShown = true;
+  const setSplitLinePosition = useCallback(action<(left: number) => number | undefined>((left) => {
+    const {
+      node: { resizeLine },
+    } = tableStore;
+    const { bodyLeft } = globalRef.current;
+    left -= bodyLeft;
+    if (left < 0) {
+      left = 0;
     }
-  }
-
-  @autobind
-  handleMouseLeave() {
-    if (this.tooltipShown) {
-      hide();
-      delete this.tooltipShown;
+    if (resizeLine) {
+      transform(`translateX(${pxToRem(left) || 0})`, resizeLine.style);
     }
-  }
+    return left + bodyLeft;
+  }), [tableStore, globalRef]);
 
-  getNode(column) {
-    const { getHeaderNode = noop } = this.props;
-    const headerDom: Element | null = getHeaderNode();
-    if (headerDom) {
-      return headerDom.querySelector(`[data-index="${getColumnKey(column)}"]`);
-    }
-  }
-
-  setResizeColumn(column) {
-    this.resizeColumn = column;
-    const node = this.getNode(column);
-    if (node) {
-      this.resizeBoundary = Math.round(node.getBoundingClientRect().left);
-    }
-  }
-
-  @autobind
-  handleLeftResize(e) {
-    const { prevColumn } = this.props;
-    const { tableStore: { props: { autoMaxWidth } } } = this.context;
-    this.setResizeColumn(prevColumn);
-    if (autoMaxWidth) {
-      e.persist();
-      this.delayResizeStart(e);
-    } else {
-      this.resizeStart(e);
-    }
-  }
-
-  @autobind
-  handleStopResize() {
-    if (this.delayResizeStart) {
-      this.delayResizeStart.cancel();
-    }
-  }
-
-  @autobind
-  handleRightResize(e) {
-    const { resizeColumn } = this.props;
-    const { tableStore: { props: { autoMaxWidth } } } = this.context;
-    this.setResizeColumn(resizeColumn);
-    if (autoMaxWidth) {
-      e.persist();
-      this.delayResizeStart(e);
-    } else {
-      this.resizeStart(e);
-    }
-  }
-
-  private delayResizeStart = debounce(
-    (e) => {
-      this.resizeStart(e);
-    },
-    300,
-  );
-
-  @autobind
-  handleLeftDoubleClick(_e) {
-    if (this.delayResizeStart) {
-      this.delayResizeStart.cancel();
-      this.resizeDoubleClick();
-    }
-  }
-
-  @autobind
-  handleRightDoubleClick(_e) {
-    if (this.delayResizeStart) {
-      this.delayResizeStart.cancel();
-      this.resizeDoubleClick();
-    }
-  }
-
-  @autobind
-  @action
-  resizeDoubleClick(): void {
-    const column = this.resizeColumn;
-    const { prefixCls, tableStore } = this.context;
-    const { node: { element } } = tableStore;
-    if (column) {
-      const maxWidth = Math.max(
-        ...[
-          ...element.querySelectorAll(`[data-index="${getColumnKey(column)}"] > .${prefixCls}-cell-inner`),
-        ].map((node) => node.parentNode.offsetWidth + getMaxClientWidth(node) - node.clientWidth + 1),
-        minColumnWidth(column),
-        column.width ? column.width : 0,
-      );
-      if (maxWidth !== column.width) {
-        tableStore.changeCustomizedColumnValue(column, {
-          width: maxWidth,
-        });
-      } else if (column.minWidth) {
-        tableStore.changeCustomizedColumnValue(column, {
-          width: column.minWidth,
-        });
+  const resize = useCallback((e): void => {
+    const { current } = globalRef;
+    const { resizeColumnGroup } = current;
+    if (resizeColumnGroup) {
+      const limit = current.resizeBoundary + minColumnWidth(resizeColumnGroup.column);
+      let left = e.clientX;
+      if (left < limit) {
+        left = limit;
       }
+      current.resizePosition = setSplitLinePosition(left);
     }
-  }
+  }, [globalRef, setSplitLinePosition]);
 
-  @action
-  resizeStart(e): void {
-    const {
-      tableStore,
-    } = this.context;
-    tableStore.columnResizing = true;
-    delete this.resizePosition;
-    this.setSplitLineHidden(false);
-    this.calcBodyLeft();
-    this.setSplitLinePosition(e.clientX);
-    this.resizeEvent
-      .addEventListener('mousemove', this.resize)
-      .addEventListener('mouseup', this.resizeEnd);
-  }
 
-  @autobind
-  resize(e): void {
-    const column = this.resizeColumn;
-    const limit = this.resizeBoundary + minColumnWidth(column);
-    let left = e.clientX;
-    if (left < limit) {
-      left = limit;
-    }
-    this.resizePosition = this.setSplitLinePosition(left);
-  }
-
-  @autobind
-  @action
-  resizeEnd(): void {
-    const {
-      tableStore, prefixCls,
-    } = this.context;
+  const resizeEnd = useCallback(action<() => void>(() => {
     tableStore.columnResizing = false;
-    this.setSplitLineHidden(true);
-    this.resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
-    const { resizeColumn, resizePosition } = this;
-    if (resizePosition && resizeColumn) {
-      const newWidth = Math.round(Math.max(resizePosition - this.resizeBoundary, minColumnWidth(resizeColumn)));
+    setSplitLineHidden(true);
+    resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
+    const { resizePosition, resizeColumnGroup } = globalRef.current;
+    if (resizePosition !== undefined && resizeColumnGroup) {
+      const { column: resizeColumn } = resizeColumnGroup;
+      const newWidth = Math.round(Math.max(resizePosition - globalRef.current.resizeBoundary, minColumnWidth(resizeColumn)));
       if (newWidth !== resizeColumn.width) {
         const { width } = resizeColumn;
-        let { _group } = resizeColumn;
+        let group: ColumnGroup | undefined = resizeColumnGroup;
         const { node: { element } } = tableStore;
-        while (_group) {
-          const { column } = _group;
-          if (column.width === undefined) {
-            const { name } = column;
-            const th = element.querySelector(`.${prefixCls}-thead .${prefixCls}-cell[data-index="${name}"]`);
+        while (group) {
+          const { column: col } = group;
+          if (col.width === undefined) {
+            const th = element.querySelector(`.${prefixCls}-thead .${prefixCls}-cell[data-index="${col.name}"]`);
             if (th) {
-              tableStore.changeCustomizedColumnValue(column, {
+              tableStore.changeCustomizedColumnValue(col, {
                 width: th.offsetWidth,
               });
             }
           }
-          _group = _group.prev;
+          group = group.prev;
         }
         if (width === undefined) {
           raf(() => {
@@ -261,79 +151,151 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         }
       }
     }
-  }
+  }), [globalRef, tableStore, setSplitLineHidden, resizeEvent]);
 
-  calcBodyLeft() {
-    const {
-      tableStore: {
-        border,
-        node: { element },
-      },
-    } = this.context;
+  const resizeStart = useCallback(action<(e) => void>((e) => {
+    tableStore.columnResizing = true;
+    delete globalRef.current.resizePosition;
+    setSplitLineHidden(false);
+    const { node: { element } } = tableStore;
     const { left } = element.getBoundingClientRect();
-    this.bodyLeft = border ? left + 1 : left;
-  }
+    globalRef.current.bodyLeft = border ? left + 1 : left;
+    setSplitLinePosition(e.clientX);
+    resizeEvent
+      .addEventListener('mousemove', resize)
+      .addEventListener('mouseup', resizeEnd);
+  }), [tableStore, globalRef, setSplitLineHidden, setSplitLinePosition, resizeEvent]);
 
-  setSplitLineHidden(hidden: boolean) {
-    const {
-      tableStore: {
-        node: { resizeLine },
-      },
-    } = this.context;
-    resizeLine.style.display = hidden ? 'none' : 'block';
-  }
+  const delayResizeStart = useCallback(debounce(resizeStart, 300), [resizeStart]);
 
-  @action
-  setSplitLinePosition(left: number): number | undefined {
-    const {
-      tableStore: {
-        node: { resizeLine },
-      },
-    } = this.context;
-    const { bodyLeft } = this;
-    left -= bodyLeft;
-    if (left < 0) {
-      left = 0;
+  const prevColumnGroup: ColumnGroup | undefined = columnResizable ? prev && prev.lastLeaf : undefined;
+
+  const currentColumnGroup: ColumnGroup | undefined = columnResizable ? columnGroup.lastLeaf : undefined;
+
+  const handleClick = useCallback(() => {
+    if (name) {
+      dataSet.sort(name);
     }
-    transform(`translateX(${pxToRem(left) || 0})`, resizeLine.style);
-    return left + bodyLeft;
-  }
+  }, [dataSet, name]);
 
-  renderResizer() {
-    const { prevColumn, column } = this.props;
-    const { prefixCls, tableStore: { props: { autoMaxWidth } } } = this.context;
+  const handleMouseEnter = useCallback((e) => {
+    const tooltip = tableStore.getColumnTooltip(column);
+    const { currentTarget } = e;
+    if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget)))) {
+      show(currentTarget, {
+        title: header,
+        placement: 'right',
+        theme: getTooltipTheme('table-cell'),
+      });
+      globalRef.current.tooltipShown = true;
+    }
+  }, [tableStore, column, globalRef]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (globalRef.current.tooltipShown) {
+      hide();
+      delete globalRef.current.tooltipShown;
+    }
+  }, [globalRef]);
+
+  const setResizeGroup = useCallback((group: ColumnGroup) => {
+    globalRef.current.resizeColumnGroup = group;
+    const headerDom: Element | null = getHeaderNode();
+    const node = headerDom && headerDom.querySelector(`[data-index="${group.key}"]`);
+    if (node) {
+      globalRef.current.resizeBoundary = Math.round(node.getBoundingClientRect().left);
+    }
+  }, [globalRef, getHeaderNode]);
+
+  const handleLeftResize = useCallback((e) => {
+    if (prevColumnGroup) {
+      setResizeGroup(prevColumnGroup);
+      if (autoMaxWidth) {
+        e.persist();
+        delayResizeStart(e);
+      } else {
+        resizeStart(e);
+      }
+    }
+  }, [prevColumnGroup, setResizeGroup, autoMaxWidth, delayResizeStart, resizeStart]);
+
+  const handleStopResize = useCallback(() => {
+    delayResizeStart.cancel();
+  }, [delayResizeStart]);
+
+  const handleRightResize = useCallback((e) => {
+    if (currentColumnGroup) {
+      setResizeGroup(currentColumnGroup);
+      if (autoMaxWidth) {
+        e.persist();
+        delayResizeStart(e);
+      } else {
+        resizeStart(e);
+      }
+    }
+  }, [currentColumnGroup, setResizeGroup, autoMaxWidth, delayResizeStart, resizeStart]);
+
+  const resizeDoubleClick = useCallback(action((): void => {
+    const { resizeColumnGroup } = globalRef.current;
+    if (resizeColumnGroup) {
+      const { column: col } = resizeColumnGroup;
+      const { node: { element } } = tableStore;
+      const maxWidth = Math.max(
+        ...[
+          ...element.querySelectorAll(`[data-index="${resizeColumnGroup.key}"] > .${prefixCls}-cell-inner`),
+        ].map((node) => node.parentNode.offsetWidth + getMaxClientWidth(node) - node.clientWidth + 1),
+        minColumnWidth(col),
+        col.width ? col.width : 0,
+      );
+      if (maxWidth !== col.width) {
+        tableStore.changeCustomizedColumnValue(col, {
+          width: maxWidth,
+        });
+      } else if (col.minWidth) {
+        tableStore.changeCustomizedColumnValue(col, {
+          width: col.minWidth,
+        });
+      }
+    }
+  }), [globalRef, prefixCls, tableStore]);
+
+  const handleLeftDoubleClick = useCallback(() => {
+    delayResizeStart.cancel();
+    resizeDoubleClick();
+  }, [delayResizeStart, resizeDoubleClick]);
+
+  const handleRightDoubleClick = useCallback(() => {
+    delayResizeStart.cancel();
+    resizeDoubleClick();
+  }, [delayResizeStart, resizeDoubleClick]);
+
+  const renderResizer = () => {
     const resizerPrefixCls = `${prefixCls}-resizer`;
-    const pre = prevColumn && prevColumn.resizable && (
+    const pre = prevColumnGroup && prevColumnGroup.column.resizable && (
       <div
         key="pre"
         className={`${resizerPrefixCls} ${resizerPrefixCls}-left`}
-        onDoubleClick={autoMaxWidth ? this.handleLeftDoubleClick : undefined}
-        onMouseDown={this.handleLeftResize}
-        onMouseUp={autoMaxWidth ? this.handleStopResize : undefined}
+        onDoubleClick={autoMaxWidth ? handleLeftDoubleClick : undefined}
+        onMouseDown={handleLeftResize}
+        onMouseUp={autoMaxWidth ? handleStopResize : undefined}
       />
     );
-    const next = column.resizable && (
+    const next = currentColumnGroup && currentColumnGroup.column.resizable && (
       <div
         key="next"
         className={`${resizerPrefixCls} ${resizerPrefixCls}-right`}
-        onDoubleClick={autoMaxWidth ? this.handleRightDoubleClick : undefined}
-        onMouseDown={this.handleRightResize}
-        onMouseUp={autoMaxWidth ? this.handleStopResize : undefined}
+        onDoubleClick={autoMaxWidth ? handleRightDoubleClick : undefined}
+        onMouseDown={handleRightResize}
+        onMouseUp={autoMaxWidth ? handleStopResize : undefined}
       />
     );
 
     return [pre, next];
-  }
+  };
 
-  getHelpIcon(field?: Field) {
-    const { column } = this.props;
-    const { prefixCls } = this.context;
-    const {
-      help,
-      showHelp,
-    } = column;
-    if (showHelp !== ShowHelp.none) {
-      const fieldHelp = defaultTo(field && field.get('help'), help);
+  const getHelpIcon = () => {
+    if (column.showHelp !== ShowHelp.none) {
+      const fieldHelp = defaultTo(field && field.get('help'), column.help);
       if (fieldHelp) {
         return (
           <Tooltip title={fieldHelp} placement="bottom" key="help">
@@ -342,173 +304,138 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         );
       }
     }
-  }
+  };
 
-  getSortIcon() {
-    const { column } = this.props;
-    const { prefixCls } = this.context;
-    const {
-      aggregation,
-      sortable,
-      name,
-    } = column;
-    if (!aggregation && sortable && name) {
-      return <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
-    }
-  }
-
-  @autobind
-  getHeader() {
-    const { column } = this.props;
-    const { dataSet, aggregation } = this.context;
-    return getHeader(column, dataSet, aggregation);
-  }
-
-  render() {
-    const { column, columnGroup, rowSpan, colSpan, className, rowIndex, hidden } = this.props;
-    const { prefixCls, tableStore, dataSet } = this.context;
-    const {
-      rowHeight,
-      columnResizable,
-    } = tableStore;
-    const {
-      headerClassName,
-      headerStyle = {},
-      name,
-      align,
-      children,
-      command,
-      lock,
-    } = column;
-    const columnKey = getColumnKey(column);
-    const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
-    const classList: string[] = [`${prefixCls}-cell`];
-    const field = dataSet.getField(name);
-    const cellStyle: CSSProperties = {
-      textAlign: align ||
-        (command || (children && children.length) ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field)),
-      ...headerStyle,
-    };
-    if (columnLock) {
-      classList.push(`${prefixCls}-cell-fix-${columnLock}`);
-      if (columnLock === ColumnLock.left) {
-        cellStyle.left = pxToRem(columnGroup.left)!;
-      } else if (columnLock === ColumnLock.right) {
-        cellStyle.right = pxToRem(columnGroup.right + (rowIndex === 0 && tableStore.overflowY ? measureScrollbar() : 0))!;
-      }
-    }
-    if (className) {
-      classList.push(className);
-    }
-    if (headerClassName) {
-      classList.push(headerClassName);
-    }
-
-    const header = this.getHeader();
-
-    const headerNode = isValidElement(header) ? (
-      cloneElement(header, { key: 'text' })
-    ) : isString(header) ? (
-      <span key="text">{header}</span>
-    ) : (
-      header
-    );
-
-    // 帮助按钮
-    const helpIcon: ReactElement<TooltipProps> | undefined = this.getHelpIcon(field);
-    // 排序按钮
-    const sortIcon: ReactElement<IconProps> | undefined = this.getSortIcon();
-    const childNodes = [
-      headerNode,
-    ];
-    const innerClassNames = [`${prefixCls}-cell-inner`];
-    const innerProps: any = {
-      children: childNodes,
-      onMouseEnter: this.handleMouseEnter,
-      onMouseLeave: this.handleMouseLeave,
-    };
-
-    if (helpIcon) {
-      if (cellStyle.textAlign === ColumnAlign.right) {
-        childNodes.unshift(helpIcon);
-      } else {
-        childNodes.push(helpIcon);
-      }
-    }
-    if (sortIcon) {
-      if (field && field.order) {
-        classList.push(`${prefixCls}-sort-${field.order}`);
-      }
-      innerProps.onClick = this.handleClick;
-      if (cellStyle.textAlign === ColumnAlign.right) {
-        childNodes.unshift(sortIcon);
-      } else {
-        childNodes.push(sortIcon);
-      }
-    }
-    if (rowHeight !== 'auto') {
-      const height: number = Number(cellStyle.height) || (rowHeight * (rowSpan || 1));
-      innerProps.style = {
-        height: pxToRem(height),
-        lineHeight: pxToRem(height - 2),
-      };
-      innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
-    }
-
-    if (columnKey === CUSTOMIZED_KEY && tableStore.stickyRight && tableStore.overflowX && tableStore.rightLeafColumns.filter((col) => !col.hidden).length === 1) {
-      classList.push(`${prefixCls}-cell-sticky-shadow`);
-    }
-
-    const thProps: any = {
-      className: classList.join(' '),
-      rowSpan,
-      colSpan,
-      'data-index': columnKey,
-      style: omit(cellStyle, ['width', 'height']),
-    };
-    const th = (
-      <th {...thProps}>
-        <div
-          {...innerProps}
-          className={innerClassNames.join(' ')}
-        />
-        {columnResizable && this.renderResizer()}
-      </th>
-    );
-
-    if (!hidden && tableStore.virtualCell) {
-      if (tableStore.overflowX) {
-        const { node } = tableStore;
-        return (
-          <ReactIntersectionObserver
-            root={node.wrapper}
-            rootMargin="100px"
-            triggerOnce
-          >
-            {
-              ({ ref, inView }) => {
-                if (get(column, '_inView') !== true) {
-                  runInAction(() => set(column, '_inView', inView));
-                }
-                return cloneElement<any>(th, { ref });
-              }
-            }
-          </ReactIntersectionObserver>
-        );
-      }
-      if (get(column, '_inView') === false) {
-        runInAction(() => set(column, '_inView', undefined));
-      }
-    }
-    return th;
-  }
-
-  componentWillUnmount() {
-    this.resizeEvent.clear();
-    this.delayResizeStart.cancel();
-    if (this.tooltipShown) {
+  useEffect(() => () => {
+    resizeEvent.clear();
+    delayResizeStart.cancel();
+    if (globalRef.current.tooltipShown) {
       hide();
-      delete this.tooltipShown;
+      delete globalRef.current.tooltipShown;
+    }
+  }, []);
+
+  const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
+  const classList: string[] = [`${prefixCls}-cell`];
+  const cellStyle: CSSProperties = {
+    textAlign: align ||
+      (command || (children && children.length) ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field)),
+    ...headerStyle,
+  };
+  if (columnLock) {
+    classList.push(`${prefixCls}-cell-fix-${columnLock}`);
+    if (columnLock === ColumnLock.left) {
+      cellStyle.left = pxToRem(columnGroup.left)!;
+    } else if (columnLock === ColumnLock.right) {
+      cellStyle.right = pxToRem(columnGroup.right + (rowIndex === 0 && tableStore.overflowY ? measureScrollbar() : 0))!;
     }
   }
-}
+  if (className) {
+    classList.push(className);
+  }
+  if (headerClassName) {
+    classList.push(headerClassName);
+  }
+
+  const headerNode = isValidElement(header) ? (
+    cloneElement(header, { key: 'text' })
+  ) : isString(header) ? (
+    <span key="text">{header}</span>
+  ) : (
+    header
+  );
+
+  // 帮助按钮
+  const helpIcon: ReactElement<TooltipProps> | undefined = getHelpIcon();
+  // 排序按钮
+  const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name ? (
+    <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />
+  ) : undefined;
+  const childNodes = [
+    headerNode,
+  ];
+  const innerClassNames = [`${prefixCls}-cell-inner`];
+  const innerProps: any = {
+    children: childNodes,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+  };
+
+  if (helpIcon) {
+    if (cellStyle.textAlign === ColumnAlign.right) {
+      childNodes.unshift(helpIcon);
+    } else {
+      childNodes.push(helpIcon);
+    }
+  }
+  if (sortIcon) {
+    if (field && field.order) {
+      classList.push(`${prefixCls}-sort-${field.order}`);
+    }
+    innerProps.onClick = handleClick;
+    if (cellStyle.textAlign === ColumnAlign.right) {
+      childNodes.unshift(sortIcon);
+    } else {
+      childNodes.push(sortIcon);
+    }
+  }
+  if (rowHeight !== 'auto') {
+    const height: number = Number(cellStyle.height) || (rowHeight * (rowSpan || 1));
+    innerProps.style = {
+      height: pxToRem(height),
+      lineHeight: pxToRem(height - 2),
+    };
+    innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
+  }
+
+  if (key === CUSTOMIZED_KEY && isStickySupport() && tableStore.stickyRight && tableStore.overflowX && tableStore.columnGroups.rightLeafs.length === 1) {
+    classList.push(`${prefixCls}-cell-sticky-shadow`);
+  }
+
+  const thProps: any = {
+    className: classList.join(' '),
+    rowSpan,
+    colSpan,
+    'data-index': key,
+    style: omit(cellStyle, ['width', 'height']),
+  };
+  const th = (
+    <th {...thProps}>
+      <div
+        {...innerProps}
+        className={innerClassNames.join(' ')}
+      />
+      {columnResizable && renderResizer()}
+    </th>
+  );
+
+  if (tableStore.virtualCell) {
+    if (tableStore.overflowX) {
+      const { node } = tableStore;
+      return (
+        <ReactIntersectionObserver
+          root={node.wrapper}
+          rootMargin="100px"
+          triggerOnce
+        >
+          {
+            ({ ref, inView }) => {
+              if (columnGroup.inView !== true) {
+                columnGroup.setInView(inView);
+              }
+              return cloneElement<any>(th, { ref });
+            }
+          }
+        </ReactIntersectionObserver>
+      );
+    }
+    if (columnGroup.inView === false) {
+      columnGroup.setInView(undefined);
+    }
+  }
+  return th;
+});
+
+TableHeaderCell.displayName = 'TableHeaderCell';
+
+export default TableHeaderCell;

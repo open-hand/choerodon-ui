@@ -7,7 +7,7 @@ import Dropdown from '../../dropdown/Dropdown';
 import { Size } from '../../core/enum';
 import { FuncType } from '../../button/enum';
 import TableContext from '../TableContext';
-import { getColumnKey, getHeader } from '../utils';
+import { getHeader } from '../utils';
 import { Placements } from '../../dropdown/enum';
 import { ColumnProps } from '../Column';
 import { stopEvent, stopPropagation } from '../../_util/EventManager';
@@ -114,14 +114,13 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     const { prefixCls } = this.props;
     const selfPrefixCls = this.getPrefixCls();
     const { tableStore, dataSet, aggregation } = this.context;
-    const { leafColumns } = tableStore;
+    const { allLeafs } = tableStore.columnGroups;
     const selectedKeys: Key[] = [];
     const columns: [ColumnProps, ReactNode, Key][] = [];
-    leafColumns.forEach(column => {
+    allLeafs.forEach(({ column, key }) => {
       if (column.hideable) {
         const header = getHeader(column, dataSet, aggregation);
         if (header) {
-          const key: Key = getColumnKey(column);
           if (!column.hidden) {
             selectedKeys.push(key);
           }

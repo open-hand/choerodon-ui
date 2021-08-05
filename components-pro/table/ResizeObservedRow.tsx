@@ -12,7 +12,7 @@ const ResizeObservedRow: FunctionComponent<ResizeObservedRowProps> = memo(functi
     onResize(rowIndex, height);
   }, [onResize, rowIndex]);
   return (
-    <ReactResizeObserver resizeProp="height" onResize={handleResize}>
+    <ReactResizeObserver resizeProp="height" onResize={handleResize} immediately>
       {children}
     </ReactResizeObserver>
   );

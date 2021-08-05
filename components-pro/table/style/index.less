@@ -355,16 +355,24 @@
   &-body {
     position: relative;
     overflow: auto;
+    transition: all .3s;
+
+    &-wrapper {
+      overflow: hidden;
+      transition: all .3s;
+    }
   }
 
   &-head {
     overflow: hidden;
+    transition: all .3s;
   }
 
   &-foot {
     position: relative;
     overflow-x: auto;
     background-color: @component-background;
+    transition: all .3s;
   }
 
   &-export-quantity {
@@ -844,7 +852,7 @@
 
     &:focus-within,
     &:hover {
-      background-color: rgba(0,0,0,.05);
+      background-color: rgba(0, 0, 0, .05);
       border-radius: 0.02rem;
 
       .@{table-prefix-cls}-filter-item-close {
@@ -874,7 +882,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(0,0,0,.05);
+      background-color: rgba(0, 0, 0, .05);
       border-radius: 0.02rem;
     }
   }
@@ -997,23 +1005,23 @@
 
     label {
       input::-webkit-input-placeholder { // 谷歌
-        color: rgba(0,0,0,.25);
+        color: rgba(0, 0, 0, .25);
       }
 
       input:-moz-placeholder { //火狐
-        color: rgba(0,0,0,.25);
+        color: rgba(0, 0, 0, .25);
       }
 
       input::-moz-placeholder {
-        color: rgba(0,0,0,.25);
+        color: rgba(0, 0, 0, .25);
       }
 
       input:-ms-input-placeholder { //微软
-        color: rgba(0,0,0,.25);
+        color: rgba(0, 0, 0, .25);
       }
 
       .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
-        color: rgba(0,0,0,.25);
+        color: rgba(0, 0, 0, .25);
       }
     }
 
@@ -1028,7 +1036,7 @@
       right: -0.07rem;
       z-index: 2;
       display: none;
-      color: rgba(32,45,64,.3);
+      color: rgba(32, 45, 64, .3);
       cursor: pointer;
 
       &:hover {

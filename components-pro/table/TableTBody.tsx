@@ -6,7 +6,6 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import isFunction from 'lodash/isFunction';
-import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import TableRow from './TableRow';
@@ -17,10 +16,11 @@ import { DataSetStatus } from '../data-set/enum';
 import autobind from '../_util/autobind';
 import { DragTableRowProps, instance } from './Table';
 import { isDraggingStyle, isStickySupport } from './utils';
+import ColumnGroups from './ColumnGroups';
 
 export interface TableTBodyProps extends ElementProps {
-  lock?: ColumnLock | boolean;
-  columns: ColumnProps[];
+  lock?: ColumnLock;
+  columnGroups: ColumnGroups;
 }
 
 @observer
@@ -97,7 +97,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
   }
 
   render() {
-    const { lock, columns } = this.props;
+    const { lock, columnGroups } = this.props;
     const {
       prefixCls, tableStore, rowDragRender, dataSet,
     } = this.context;
@@ -106,8 +106,8 @@ export default class TableTBody extends Component<TableTBodyProps> {
     } = tableStore;
     const virtualData = virtual ? data.slice(tableStore.virtualStartIndex, tableStore.virtualEndIndex) : data;
     const rows = virtualData.length
-      ? this.getRows(virtualData, columns, true, virtual)
-      : this.getEmptyRow(columns);
+      ? this.getRows(virtualData, columnGroups, true, virtual)
+      : this.getEmptyRow(columnGroups);
     const body = rowDraggable ? (
       <Droppable
         droppableId="table"
@@ -121,12 +121,12 @@ export default class TableTBody extends Component<TableTBodyProps> {
             const { style } = provided.draggableProps;
             if (isDraggingStyle(style)) {
               const { left, width } = style;
-              style.left = left - Math.max(tableStore.totalLeafColumnsWidth - 50, width);
+              style.left = left - Math.max(tableStore.columnGroups.leafColumnsWidth - 50, width);
             }
           }
           const record = dataSet.get(rubric.source.index);
           if (record) {
-            const leafColumnsBody = lock ? tableStore.leafColumns.filter(({ hidden }) => !hidden) : columns;
+            const leafColumnsBody = lock ? tableStore.columnGroups : columnGroups;
             const renderClone = rowDragRender && rowDragRender.renderClone;
             const { id } = record;
             if (renderClone && isFunction(renderClone)) {
@@ -138,7 +138,8 @@ export default class TableTBody extends Component<TableTBodyProps> {
                 hidden: false,
                 lock: false,
                 prefixCls,
-                columns: leafColumnsBody,
+                columns: leafColumnsBody.leafs.map(({ column }) => column),
+                columnGroups: leafColumnsBody,
                 record,
                 index: id,
               } as DragTableRowProps);
@@ -150,7 +151,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
                 key={id}
                 hidden={false}
                 lock={false}
-                columns={leafColumnsBody}
+                columnGroups={leafColumnsBody}
                 record={record}
                 index={id}
               />
@@ -187,20 +188,20 @@ export default class TableTBody extends Component<TableTBodyProps> {
 
   getRows(
     records: Record[],
-    columns: ColumnProps[],
+    columnGroups: ColumnGroups,
     expanded?: boolean,
     virtual?: boolean,
   ): ReactNode {
-    return records.map((record, index) => this.getRow(columns, record, virtual ? record.index : index, expanded));
+    return records.map((record, index) => this.getRow(columnGroups, record, virtual ? record.index : index, expanded));
   }
 
-  getEmptyRow(columns: ColumnProps[]): ReactNode | undefined {
+  getEmptyRow(columnGroups: ColumnGroups): ReactNode | undefined {
     const {
       prefixCls, dataSet, tableStore: { emptyText, width },
     } = this.context;
     const { lock } = this.props;
     const styles: CSSProperties = width ? {
-      position: isStickySupport() ? 'sticky' : 'absolute',
+      position: isStickySupport() ? 'sticky' : 'relative',
       left: pxToRem(width / 2),
     } : {
       transform: 'none',
@@ -209,7 +210,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
     const tdStyle: CSSProperties | undefined = width ? undefined : { textAlign: 'center' };
     return (
       <tr className={`${prefixCls}-empty-row`}>
-        <td colSpan={columns.length} style={tdStyle}>
+        <td colSpan={columnGroups.leafs.length} style={tdStyle}>
           <div style={styles}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
         </td>
       </tr>
@@ -218,15 +219,15 @@ export default class TableTBody extends Component<TableTBodyProps> {
 
   @autobind
   renderExpandedRows(
-    columns: ColumnProps[],
+    columnGroups: ColumnGroups,
     record: Record,
     isExpanded?: boolean,
   ): ReactNode {
-    return this.getRows(record.children || [], columns, isExpanded);
+    return this.getRows(record.children || [], columnGroups, isExpanded);
   }
 
   getRow(
-    columns: ColumnProps[],
+    columnGroups: ColumnGroups,
     record: Record,
     index: number,
     expanded?: boolean,
@@ -235,7 +236,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
     const { tableStore, rowDragRender } = this.context;
     const { key } = record;
     const children = tableStore.isTree && (
-      <ExpandedRow record={record} columns={columns}>
+      <ExpandedRow record={record} columnGroups={columnGroups}>
         {this.renderExpandedRows}
       </ExpandedRow>
     );
@@ -258,7 +259,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
                 key={record.key}
                 hidden={!expanded}
                 lock={lock}
-                columns={columns}
+                columnGroups={columnGroups}
                 record={record}
                 index={index}
                 {...(rowDragRender && rowDragRender.draggableProps)}
@@ -275,7 +276,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
         key={key}
         hidden={!expanded}
         lock={lock}
-        columns={columns}
+        columnGroups={columnGroups}
         record={record}
         index={index}
       >

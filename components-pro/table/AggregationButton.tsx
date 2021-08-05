@@ -2,39 +2,39 @@ import React, { FunctionComponent, useCallback, useContext } from 'react';
 import { action } from 'mobx';
 import { ClickParam } from 'choerodon-ui/lib/menu';
 import Record from '../data-set/Record';
-import { ColumnProps } from './Column';
 import TableContext from './TableContext';
 import Dropdown from '../dropdown/Dropdown';
 import Menu from '../menu';
 import { $l } from '../locale-context';
+import ColumnGroup from './ColumnGroup';
 
 export interface AggregationButtonProps {
   expanded: boolean;
   record: Record;
-  column: ColumnProps;
+  columnGroup: ColumnGroup;
 }
 
 const AggregationButton: FunctionComponent<AggregationButtonProps> = (props) => {
-  const { expanded, record, column } = props;
+  const { expanded, record, columnGroup } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
   const handleMenuClick = useCallback(action(({ key }: Partial<ClickParam>) => {
     switch (key) {
       case 'cell':
-        tableStore.setAggregationCellExpanded(record, column, !expanded);
+        tableStore.setAggregationCellExpanded(record, columnGroup.key, !expanded);
         break;
       case 'row':
-        tableStore.leafAggregationColumns.forEach(col => tableStore.setAggregationCellExpanded(record, col, !expanded));
+        tableStore.columnGroups.allLeafs.forEach(({ column: col, key: columnKey }) => col.aggregation && tableStore.setAggregationCellExpanded(record, columnKey, !expanded));
         break;
       case 'column': {
         const { dataSet } = record;
         if (dataSet) {
-          dataSet.forEach(r => tableStore.setAggregationCellExpanded(r, column, !expanded));
+          dataSet.forEach(r => tableStore.setAggregationCellExpanded(r, columnGroup.key, !expanded));
         }
         break;
       }
       default:
     }
-  }), [tableStore, record, column, expanded]);
+  }), [tableStore, record, columnGroup, expanded]);
   const handleClick = useCallback(() => {
     handleMenuClick({ key: tableStore.aggregationExpandType });
   }, [handleMenuClick, tableStore]);

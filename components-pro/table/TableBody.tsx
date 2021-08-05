@@ -51,8 +51,8 @@ const TableBody: FunctionComponent<TableBodyProps> = observer(function TableBody
   const fixedLeft = lock === true || lock === ColumnLock.left;
   const scrollbar = measureScrollbar();
   const hasFooterAndNotLock = !lock && hasFooter && overflowX && scrollbar;
-  const hasLockAndNoFooter = lock && !hasFooter && overflowX && overflowY && scrollbar;
   const height = getHeightStyle();
+  const hasLockAndNoFooter = lock && !hasFooter && overflowX && height !== undefined && scrollbar;
   const tableBody = (
     <div
       ref={getRef}
@@ -60,12 +60,12 @@ const TableBody: FunctionComponent<TableBodyProps> = observer(function TableBody
       style={{
         ...(height === undefined ? style : {}),
         height: pxToRem(
-          hasFooterAndNotLock && height !== undefined ? height + scrollbar : height,
+          hasFooterAndNotLock && height !== undefined ? height + scrollbar : hasLockAndNoFooter && height !== undefined ? height - scrollbar : height,
         ),
-        marginBottom: hasFooterAndNotLock || hasLockAndNoFooter ? pxToRem(-scrollbar) : undefined,
-        width: fixedLeft ? pxToRem(tableStore.leftLeafColumnsWidth + (scrollbar || 20)) :
+        marginBottom: hasFooterAndNotLock ? pxToRem(-scrollbar) : undefined,
+        width: fixedLeft ? pxToRem(tableStore.leftColumnGroups.width + (scrollbar || 20)) :
           lock === ColumnLock.right
-            ? pxToRem(tableStore.rightLeafColumnsWidth - 1 + (overflowY ? scrollbar : 0))
+            ? pxToRem(tableStore.rightColumnGroups.width - 1 + (overflowY ? scrollbar : 0))
             : undefined,
         marginLeft: lock === ColumnLock.right ? pxToRem(1) : undefined,
       }}
@@ -76,7 +76,9 @@ const TableBody: FunctionComponent<TableBodyProps> = observer(function TableBody
   );
   if (fixedLeft) {
     return (
-      <div style={{ width: pxToRem(tableStore.leftLeafColumnsWidth), overflow: 'hidden' }}>{tableBody}</div>
+      <div className={`${prefixCls}-body-wrapper`} style={{ width: pxToRem(tableStore.leftColumnGroups.width) }}>
+        {tableBody}
+      </div>
     );
   }
 

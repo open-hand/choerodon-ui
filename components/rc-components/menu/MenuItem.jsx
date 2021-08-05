@@ -9,7 +9,6 @@ import { connect } from 'mini-store';
 import noop from 'lodash/noop';
 import Checkbox from '../../checkbox/Checkbox';
 import Ripple from '../../ripple';
-import { getTooltipTheme } from '../../_util/TooltipUtils';
 /* eslint react/no-is-mounted:0 */
 
 const MenuItem = createReactClass({
