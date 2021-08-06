@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>RichText`: 新增图片连续预览功能。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
+- 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
 - 🐞 `<pro>Trigger`: 修复穿越同域 iframe 时下拉窗口没对齐的问题。
 

@@ -63,6 +63,7 @@ import { Tooltip as TextTooltip } from '../core/enum';
 import isOverflow from '../overflow-tip/util';
 import { hide, show } from '../tooltip/singleton';
 import useComputed from '../use-computed';
+import { ShowHelp } from '../field/enum';
 
 let inTab: boolean = false;
 
@@ -339,6 +340,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
         disabled: disabled || (inlineEdit && !record.editing),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
+        showHelp: ShowHelp.none,
       };
       return cloneElement(cellEditor, newEditorProps as FormFieldProps);
     }
