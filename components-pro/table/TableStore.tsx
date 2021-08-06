@@ -1138,7 +1138,7 @@ export default class TableStore {
     const { dataSet } = this;
     if (dataSet) {
       const selectedLength = dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength !== dataSet.records.filter(record => record.selectable).length;
+      return !!selectedLength && selectedLength !== dataSet.records.length;
     }
     return false;
   }
@@ -1148,7 +1148,7 @@ export default class TableStore {
     const { dataSet } = this;
     if (dataSet) {
       const selectedLength = dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength === dataSet.records.filter(record => record.selectable).length;
+      return !!selectedLength && selectedLength === dataSet.records.length;
     }
     return false;
   }

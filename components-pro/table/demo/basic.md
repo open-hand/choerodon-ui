@@ -42,6 +42,7 @@ function handleUserDSLoad({ dataSet }) {
   const first = dataSet.get(0);
   if (first) {
     first.selectable = false;
+    first.isSelected = true;
   }
 }
 

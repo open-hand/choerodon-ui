@@ -18,11 +18,16 @@ timeline: true
 - 🌟 `configure`: Added `tableColumnAlign`, `tooltip` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
 - 🌟 `<pro>RichText`: Added continuous preview of pictures.
 - 🌟 `<pro>Cascader`: Added `async` and `loadData` attributes to simplify asynchronous loading schemes.
+- 🌟 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
+- 💄 `<pro>Pagination`: Optimize the width style of the pager.
+- 💄 `<pro>Select`: Optimize the style of multi-select read-only options.
+- 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
 - 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
 - 🐞 `<pro>Trigger`: Fix the problem that the popup is not aligned when crossing iframes in the same domain.
+- 🐞 `<pro>Table`: Fix the problem that select all and unselect all are invalid when there are rows that are checked by default and cannot be modified.
 
 ## 1.4.3
 

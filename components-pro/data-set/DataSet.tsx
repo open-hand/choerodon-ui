@@ -2755,7 +2755,10 @@ Then the query method will be auto invoke.`,
     const generatePageQuery = getConfig('generatePageQuery');
     const sortParams: {} = combineSort && order.length ? {
       sort: order,
-    } : order;
+    } : {
+      sortName: order.sortname,
+      sortOrder: order.sortorder,
+    };
     if (typeof generatePageQuery === 'function') {
       return generatePageQuery({
         ...sortParams,
