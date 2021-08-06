@@ -1179,7 +1179,8 @@ export default class TableStore {
 
   private handleSelectAllChange = action(value => {
     const { dataSet, filter } = this.props;
-    if (value) {
+    const isSelectAll = value ? dataSet.currentSelected.length === dataSet.records.filter(record => record.selectable).length : !value;
+    if (!isSelectAll) {
       dataSet.selectAll(filter);
     } else {
       dataSet.unSelectAll();
