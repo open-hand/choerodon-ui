@@ -487,9 +487,12 @@ export default class TableEditor extends Component<TableEditorProps> {
         }
         return <div {...props} ref={this.saveWrap}>{cloneElement(editor, editorProps)}</div>;
       }
-      runInAction(() => {
-        this.rendered = false;
-      });
+      const { tableStore } = this.context;
+      if (!tableStore.inlineEdit) {
+        runInAction(() => {
+          this.rendered = false;
+        });
+      }
     }
     return null;
   }
