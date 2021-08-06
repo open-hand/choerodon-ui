@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
+- 💄 `<pro>Select`: Optimize the style of multi-select read-only options.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
 - 🐞 `<pro>Trigger`: Fix the problem that the popup is not aligned when crossing iframes in the same domain.
 

@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
+- 💄 `<pro>Select`：优化多选只读选项样式。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
 - 🐞 `<pro>Trigger`: 修复穿越同域 iframe 时下拉窗口没对齐的问题。
 
