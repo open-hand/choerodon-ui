@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
 - 💄 `<pro>Select`: Optimize the style of multi-select read-only options.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
+- 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
 - 🐞 `<pro>Trigger`: Fix the problem that the popup is not aligned when crossing iframes in the same domain.
 - 🐞 `<pro>Table`: Fix the problem that select all and unselect all are invalid when there are rows that are checked by default and cannot be modified.

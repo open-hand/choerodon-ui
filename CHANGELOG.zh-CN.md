@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
 - 💄 `<pro>Select`：优化多选只读选项样式。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
+- 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
 - 🐞 `<pro>Trigger`: 修复穿越同域 iframe 时下拉窗口没对齐的问题。
 - 🐞 `<pro>Table`：修复存在默认勾选且不可修改的勾选行时，全选和取消全选无效的问题。
