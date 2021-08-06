@@ -1,5 +1,5 @@
 ---
-order: 11
+order: 2
 title:
   zh-CN: 选项异步加载
   en-US: Asynchronous lazy loading Options
@@ -11,23 +11,11 @@ title:
 
 ## en-US
 
-Asynchronous lazy loading Options. 当有分页时，请使用object类型字段，并且通过接口查询出显示值绑定到该字段上， 因为选项只会加载第一页数据，导致没有匹配的显示值。
+en-US: Asynchronous lazy loading Options
 
 ```jsx
-import { DataSet, TreeSelect, Row, Col } from 'choerodon-ui/pro';
+import { DataSet, Cascader, Row, Col } from 'choerodon-ui/pro';
 import axios from 'axios';
-
-// 这里面可以控制node结点的判断来实现是否展示为叶结点
-function nodeCover({record}){
-  const nodeProps = {
-    title: record.get('text'),
-  }
-  if (record.get('text') === '岗位管理') {
-    nodeProps.isLeaf = true;
-  }
-  return nodeProps
-}
-
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -40,31 +28,49 @@ function handleDataSetChange({ record, name, value, oldValue }) {
   );
 }
 
+// 这里面可以控制node结点的判断来实现是否展示为叶结点
+function nodeCover({ record }) {
+  const nodeProps = {
+    title: record.get('text'),
+  };
+  if (record.get('text') === '岗位管理') {
+    nodeProps.isLeaf = true;
+  } else {
+    nodeProps.isLeaf = false;
+  }
+  return nodeProps;
+}
+
 class App extends React.Component {
   optionDs = new DataSet({
-    selection: 'single',
     transport: {
       read({ data: { parentId } }) {
         return {
           url: `/tree-async${parentId ? `-${parentId}` : ''}.mock`,
-        }
-      }
+        };
+      },
     },
     autoQuery: true,
-    idField: 'id',
+    selection: 'mutiple',
     parentField: 'parentId',
+    idField: 'id',
+    fields: [
+      { name: 'id', type: 'string' },
+      { name: 'expand', type: 'boolean' },
+      { name: 'parentId', type: 'string' },
+    ],
   });
-  
+
   pageOptionDs = new DataSet({
-    selection: 'single',
+    selection: 'mutiple',
     transport: {
       read({ data: { parentId }, params: { page, pagesize } }) {
         return parentId ? {
           url: `/tree-async-${parentId}.mock`,
         } : {
           url: `/tree-async/${pagesize}/${page}.mock`,
-        }
-      }
+        };
+      },
     },
     autoQuery: true,
     paging: 'server',
@@ -74,45 +80,25 @@ class App extends React.Component {
   });
 
   ds = new DataSet({
-    data: [{
-      functionId: 63,
-      functionName: '系统配置',
-    }],
+    autoCreate: true,
     fields: [
       {
-        name: 'function',
-        type: 'object',
+        name: 'id',
+        type: 'string',
         textField: 'text',
+        defaultValue: ['2'],
         valueField: 'id',
-        label: '功能',
+        label: '部门',
         options: this.optionDs,
-        ignore: 'always',
       },
       {
-        name: 'functionId',
-        bind: 'function.id',
-      },
-      {
-        name: 'functionName',
-        bind: 'function.text',
-      },
-      {
-        name: 'function2',
+        name: 'id2',
         type: 'object',
         textField: 'text',
         valueField: 'id',
         label: '功能',
         options: this.pageOptionDs,
         ignore: 'always',
-        multiple: true,
-      },
-      {
-        name: 'functionId2',
-        bind: 'function2.id',
-      },
-      {
-        name: 'functionName2',
-        bind: 'function2.text',
       },
     ],
     events: {
@@ -120,11 +106,12 @@ class App extends React.Component {
     },
   });
 
-  handleLoadData = ({ key, children }) => {
+  handleLoadData = (targetOption) => {
+    const key = targetOption.value.get('id');
     return new Promise(resolve => {
-      if (!children) {
-        axios.get(`/tree-async-${key}.mock`).then((res)=> {
-          this.pageOptionDs.appendData(res.data.rows)
+      if (!targetOption.children) {
+        axios.get(`/tree-async-${key}.mock`).then((res) => {
+          this.pageOptionDs.appendData(res.data.rows);
           resolve();
         }).catch((err) => {
           resolve();
@@ -140,22 +127,25 @@ class App extends React.Component {
     return (
       <Row>
         <Col span={12}>
-          <TreeSelect
-            dataSet={this.ds}
-            name="function"
-            onOption={nodeCover}
+          <Cascader
             async
+            changeOnSelect
+            onOption={nodeCover}
+            dataSet={this.ds}
+            name="id"
           />
         </Col>
         <Col span={12}>
-          <TreeSelect
-            dataSet={this.ds}
-            name="function2"
+          <Cascader
+            changeOnSelect
             onOption={nodeCover}
+            dataSet={this.ds}
+            name="id2"
             loadData={this.handleLoadData}
           />
         </Col>
       </Row>
+
     );
   }
 }

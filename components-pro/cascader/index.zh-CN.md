@@ -30,6 +30,7 @@ subtitle: 级联选择
 | options | 下拉框选项数据源 | DataSet \| Array:[{meaning:``,value:``}] |  |
 | primitiveValue | 是否为原始值（建议以绑定的数据源 Field 的 type 来决定值类型，如 type 设为 object 相当于 primitiveValue 设为 false）`true` - 选项中 valueField 对应的值 `false` - 选项值对象 | boolean |  |
 | notFoundContent | 当下拉列表为空时显示的内容 | ReactNode |  |
+| pagingOptionContent | 渲染分页 option | ReactNode | |
 | onOption | 设置选项属性，如 disabled | ({ dataSet, record })) => object \| ({ options, item })) => object |  |
 | menuMode | 单框弹出形式切换| `single` \| `multiple` | - |
 | onChoose | 选择一个值的时候触发| (value,record) => void | - |
@@ -37,6 +38,8 @@ subtitle: 级联选择
 | changeOnSelect | 所选既所得 | boolean | - |
 | searchable | 是否可搜索 | boolean | false |
 | searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField) && record.get(textField).indexOf(text) !== -1 |
+| loadData |	用于动态加载选项，无法与 showSearch 一起使用 |	(selectedOptions) => void	|
+| async |	用于数据源异步加载选项，无法与 showSearch 一起使用 |	boolean |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
