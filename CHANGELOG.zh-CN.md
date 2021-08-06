@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Cascader`: 新增 async 和 loadData 属性，简化异步加载方案。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
+- 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
 - 🐞 `<pro>Trigger`: 修复穿越同域 iframe 时下拉窗口没对齐的问题。
 
