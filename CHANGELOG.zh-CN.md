@@ -23,6 +23,7 @@ timeline: true
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
 - 💄 `<pro>Select`：优化多选只读选项样式。
+- 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
 - 🐞 `<pro>Trigger`: 修复穿越同域 iframe 时下拉窗口没对齐的问题。
 
