@@ -106,6 +106,8 @@ scrollLeft: (left: number) => void;
 | width         | number                                           | Column width                                                                                                |
 | hidden         | boolean                                           | 隐藏                                                                                  |
 | hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
+| onCell	| ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性	| 
+| render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容	| 
 
 > `sortable` is used to define whether the column is sortable, but depending on what `key` sort needs to set a `dataKey` in `Cell`.
 > The sort here is the service-side sort, so you need to handle the logic in the ' Onsortcolumn ' callback function of `<Table>`, and the callback function returns `sortColumn`, `sortType` values.
@@ -126,6 +128,7 @@ scrollLeft: (left: number) => void;
 | dataKey  | string           | Data binding `key`, but also a sort of `key` |
 | rowData  | object           | Row data                                     |
 | rowIndex | number           | Row number                                   |
+| rowSpan | number          | 行合并,设置为 0 时，不渲染     |
 
 
 ### toolBarProps

@@ -28,16 +28,11 @@
   }
 
   &-row {
-    overflow: hidden;
+    overflow: inherit;
     position: absolute;
     height: 36px;
     width: 100%;
     top: 0;
-    border-bottom: 1px solid @border-color-base;
-  }
-
-  &-hover &-row:hover {
-    background: @performance-table-header-bg;
   }
 
   &-hover &-row-header:hover {
@@ -133,6 +128,7 @@
     position: absolute;
     white-space: normal;
     background: @body-background;
+    border-bottom: 1px solid @border-color-base;
 
     &-letter-highlight {
       color: @highlight-color;
@@ -247,7 +243,7 @@
   }
 
   &-bordered &-cell {
-    border-width: 0 1px 0 0;
+    border-width: 0 1px 1px 0;
   }
 
   &-word-wrap &-cell-content {

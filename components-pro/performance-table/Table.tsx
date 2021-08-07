@@ -749,6 +749,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           height: rowHeight,
           firstColumn: index === 0,
           lastColumn: index === columns.length - 1,
+          onCell: column.props.onCell,
         };
 
         if (showHeader && headerHeight) {

@@ -22,8 +22,9 @@ export interface CellProps extends StandardProps {
 
   rowKey?: string | number;
   rowIndex?: number;
+  rowSpan?: number;
   rowData?: RowDataType;
-  depth?: number; // change `Cell` width and depth prop to optional 
+  depth?: number; // change `Cell` width and depth prop to optional
 
   onTreeToggle?: (
     rowKey?: string | number,
@@ -39,7 +40,7 @@ export interface CellProps extends StandardProps {
   ) => React.ReactNode;
   renderCell?: (contentChildren: any) => React.ReactNode;
   wordWrap?: boolean;
-  removed?: boolean;
+  hidden?: boolean;
   treeCol?: boolean;
   expanded?: boolean;
 }

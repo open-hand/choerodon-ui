@@ -33,7 +33,7 @@ export const propTypes = {
   renderTreeToggle: PropTypes.func,
   renderCell: PropTypes.func,
   wordWrap: PropTypes.bool,
-  removed: PropTypes.bool,
+  hidden: PropTypes.bool,
   treeCol: PropTypes.bool,
   expanded: PropTypes.bool,
   groupHeader: PropTypes.node,
@@ -118,31 +118,55 @@ class Cell extends React.PureComponent<CellProps> {
       dataKey,
       rowIndex,
       renderCell,
-      removed,
+      hidden,
       wordWrap,
       classPrefix,
       depth,
       verticalAlign,
       expanded,
       onClick, // Fix sortColumn not getting fired in Gatsby production build
+      onCell,
+      rowSpan,
       ...rest
     } = this.props;
     const { tableStore } = this.context;
 
-    if (removed) {
+    const cellExternalProps = (
+      typeof onCell === 'function'
+        ? onCell({
+          rowData,
+          dataKey,
+          rowIndex,
+        })
+        : {}
+    ) || {};
+
+    const cellHidden = hidden || cellExternalProps.hidden;
+    const cellRowSpan = rowSpan || cellExternalProps.rowSpan;
+
+    if (cellHidden || cellRowSpan === 0) {
       return null;
     }
 
-    const classes = classNames(classPrefix, className, {
-      [this.addPrefix('expanded')]: expanded && this.isTreeCol(),
-      [this.addPrefix('first')]: firstColumn,
-      [this.addPrefix('last')]: lastColumn,
-    });
+    const classes = classNames(
+      classPrefix,
+      className,
+      cellExternalProps.className,
+      {
+        [this.addPrefix('expanded')]: expanded && this.isTreeCol(),
+        [this.addPrefix('first')]: firstColumn,
+        [this.addPrefix('last')]: lastColumn,
+      },
+    );
     const { rtl } = this.context;
 
-    const nextHeight = isHeaderCell ? headerHeight : this.getHeight();
+    let nextHeight = isHeaderCell ? headerHeight : this.getHeight();
+    if (cellExternalProps.rowSpan) {
+      nextHeight = cellExternalProps.rowSpan * nextHeight;
+    }
     const styles = {
       ...style,
+      ...cellExternalProps.style,
       width,
       height: nextHeight,
       zIndex: depth,
