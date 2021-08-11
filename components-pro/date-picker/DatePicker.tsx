@@ -218,7 +218,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (value && [ViewMode.time, ViewMode.dateTime].includes(mode)) {
       const { timeZone = getConfig('formatter').timeZone } = this.props;
       if (timeZone) {
-        return [renderedText, typeof timeZone === 'function' ? timeZone(value) : value.format(timeZone)];
+        const renderedTimeZone = typeof timeZone === 'function' ? timeZone(value) : value.format(timeZone);
+        if (isString(renderedTimeZone)) {
+          return `${renderedText}${renderedTimeZone}`;
+        }
+        return [renderedText, renderedTimeZone];
       }
     }
     return renderedText;

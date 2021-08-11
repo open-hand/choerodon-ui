@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Trigger`: 修复穿越同域 iframe 时下拉窗口没对齐的问题。
 - 🐞 `<pro>Table`：修复存在默认勾选且不可修改的勾选行时，全选和取消全选无效的问题。
 - 🐞 `<pro>Table`：修复行内编辑模式的动态编辑器隐藏后无法再显示的问题。
+- 🐞 `<pro>DatePicker`：修复 range 模式下自定义 renderer 的问题。
 
 ## 1.4.3
 

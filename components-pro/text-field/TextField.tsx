@@ -6,6 +6,7 @@ import React, {
   DetailedHTMLProps,
   HTMLAttributes,
   isValidElement,
+  Key,
   ReactElement,
   ReactNode,
 } from 'react';
@@ -44,7 +45,7 @@ import { ShowHelp } from '../field/enum';
 import { FieldFormat } from '../data-set/enum';
 import { LabelLayout } from '../form/interface';
 import { getProperty } from '../form/utils';
-import RenderedText from './RenderedText';
+import RenderedText, { RenderedTextProps } from './RenderedText';
 import isReactChildren from '../_util/isReactChildren';
 import TextFieldGroup from './TextFieldGroup';
 import { findFirstFocusableElement } from '../_util/focusable';
@@ -300,9 +301,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   isRenderEmpty() {
     if (!this.range && !this.multiple) {
-      const text = this.getTextNode();
       const value = this.getValue();
-      const unRenderedText = this.getText(value);
+      const text = this.getTextNode(value);
+      const unRenderedText = this.processValue(value);
       const finalText = isString(text) ? text : isString(unRenderedText) ? unRenderedText : (this.renderedTextContent || '');
       return isEmpty(finalText);
     }
@@ -579,6 +580,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls, rangeTarget, isFocused } = this;
     const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
     const [startValue = '', endValue = ''] = this.processRangeValue();
+    const startRenderedValue = this.renderRenderedValue(startValue, {
+      key: 'startRenderedText',
+      className: `${prefixCls}-range-start-rendered-value`,
+    });
+    const endRenderedValue = this.renderRenderedValue(endValue, {
+      key: 'endRenderedText',
+      className: `${prefixCls}-range-end-rendered-value`,
+    });
+    const startText = startRenderedValue ? '' : this.getTextByValue(startValue) as string;
+    const endText = endRenderedValue ? '' : this.getTextByValue(endValue) as string;
     const editorStyle = {} as CSSProperties;
     if (rangeTarget === 1) {
       editorStyle.right = 0;
@@ -587,6 +598,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return (
       <span key="text" className={`${prefixCls}-range-text`}>
+        {startRenderedValue}
+        {endRenderedValue}
         {/* 确保 range-input 为第一个 当点击label的时候出了会让element聚焦以外还会让 label的第一个表单元素聚焦 因此导致意料之外的bug */}
         {
           !this.disabled && wrap(
@@ -599,8 +612,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
                   ? ''
                   : this.text === undefined
                   ? rangeTarget === 0
-                    ? startValue
-                    : endValue
+                    ? startText
+                    : endText
                   : this.text
               }
               placeholder={
@@ -620,7 +633,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           className={`${prefixCls}-range-start`}
           onChange={noop}
           onMouseDown={this.handleRangeStart}
-          value={rangeTarget === 0 && isFocused ? '' : startValue}
+          value={rangeTarget === 0 && isFocused ? '' : startText}
           placeholder={rangeTarget === 0 && isFocused ? '' : startPlaceholder}
           disabled={props.disabled === undefined ? false : props.disabled}
           readOnly
@@ -631,7 +644,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           className={`${prefixCls}-range-end`}
           onChange={noop}
           onMouseDown={this.handleRangeEnd}
-          value={rangeTarget === 1 && isFocused ? '' : endValue}
+          value={rangeTarget === 1 && isFocused ? '' : endText}
           placeholder={rangeTarget === 1 && isFocused ? '' : endPlaceHolder}
           disabled={props.disabled === undefined ? false : props.disabled}
           readOnly
@@ -687,7 +700,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const texts = values.map((v) => {
       const key = this.getValueKey(v);
       const repeat = repeats.get(key) || 0;
-      const text = this.processText(this.getText(v));
+      const text = this.processText(this.processValue(v));
       repeats.set(key, repeat + 1);
       if (!isNil(text)) {
         return text;
@@ -755,8 +768,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         </span>
       );
     }
-    const text = this.getTextNode();
     const value = this.getValue();
+    const text = this.getTextNode(value);
     const finalText = (renderedValue ? this.renderedTextContent : isString(text) ? text : isNumber(text) ? String(text) : isArrayLike(text) && flattenDeep(text).filter(v => !isBoolean(v)).join('')) || '';
     const placeholder = this.hasFloatLabel || renderedValue ? undefined : this.getPlaceholders()[0];
     if ((!this.isFocused || !this.editable) && isValidElement(text)) {
@@ -779,7 +792,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         key="text"
         {...otherProps}
         placeholder={placeholder}
-        value={renderedValue ? '' : finalText}
+        value={renderedValue && !(this.isFocused && this.editable) ? '' : finalText}
         readOnly={!this.editable}
       />,
     );
@@ -867,23 +880,26 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
-  renderRenderedValue(): ReactNode {
+  renderRenderedValue(value?: any, props?: RenderedTextProps & { key?: Key }): ReactNode {
     const { prefixCls, range, multiple } = this;
-    if (!range && !multiple) {
-      const text = this.getTextNode();
-      const isNodeValue = isReactChildren(this.getText(this.getValue()));
+    const noRangeValue = isNil(value);
+    if ((!range && !multiple) || !noRangeValue) {
       const hidden = this.isFocused && this.editable;
-      if ((!hidden || isNodeValue) && isReactChildren(text)) {
-        return (
-          <RenderedText
-            key="renderedText"
-            prefixCls={prefixCls}
-            onContentChange={this.handleRenderedValueChange}
-            hidden={hidden}
-          >
-            {toJS(text)}
-          </RenderedText>
-        );
+      if (!hidden || isReactChildren(this.processValue(noRangeValue ? this.getValue() : value))) {
+        const text = this.processRenderer(noRangeValue ? this.getValue() : value);
+        if (isReactChildren(text)) {
+          return (
+            <RenderedText
+              key="renderedText"
+              prefixCls={prefixCls}
+              onContentChange={noRangeValue ? this.handleRenderedValueChange : undefined}
+              hidden={hidden}
+              {...props}
+            >
+              {toJS(text)}
+            </RenderedText>
+          );
+        }
       }
     }
   }
@@ -1092,8 +1108,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.setText(undefined);
   }
 
-  getTextNode() {
-    return this.text === undefined ? super.getTextNode() : this.text;
+  getTextNode(value?: any) {
+    return this.text === undefined ? super.getTextNode(value) : this.text;
   }
 
   @action

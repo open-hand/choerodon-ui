@@ -146,7 +146,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
           <label>
             <CodeMirror
               {...this.getOtherProps()}
-              value={isString(text) ? text : this.getText(this.getValue())}
+              value={isString(text) ? text : this.processValue(this.getValue())}
               options={this.cmOptions}
               onBeforeChange={this.handleBeforeChange}
               onBlur={this.handleCodeMirrorBlur}
@@ -164,8 +164,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     this.text = text;
   }
 
-  getTextNode(): ReactNode {
-    return this.text === undefined ? (super.getTextNode() as string) || '' : this.text;
+  getTextNode(value?: any): ReactNode {
+    return this.text === undefined ? (super.getTextNode(value) as string) || '' : this.text;
   }
 
   processValue(value: any): ReactNode {

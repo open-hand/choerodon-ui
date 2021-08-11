@@ -35,8 +35,8 @@ const App = () => {
         <Option value>GMT</Option>
         <Option value={false}>UTC</Option>
       </SelectBox>
-      <DateTimePicker value={value} onChange={setValue} />
-      <TimePicker value={value} onChange={setValue} timeZone="ZZ" />
+      <DateTimePicker range value={value} onChange={setValue} />
+      <TimePicker value={value && value[0]} onChange={v => setValue(v ? [v] : [])} timeZone="ZZ" />
     </Form>
   );
 }
