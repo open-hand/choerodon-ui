@@ -1020,12 +1020,16 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     }
   }
 
-  getTextNode(): ReactNode {
+  getTextNode(value: any = this.getValue()): ReactNode {
+    return this.getTextByValue(value);
+  }
+
+  getTextByValue(value: any): ReactNode {
     const { preventRenderer } = this.props;
     const text =
       this.editable && (preventRenderer || this.isFocused)
-        ? this.processValue(this.getValue())
-        : this.processRenderer(this.getValue());
+        ? this.processValue(value)
+        : this.processRenderer(value);
     return text;
   }
 
@@ -1050,7 +1054,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       processedValue = field.getText(value) as string;
     }
     // 值集中不存在 再去取直接返回的值
-    const text = this.processText(isNil(processedValue) ? this.getText(value) : processedValue);
+    const text = this.processText(isNil(processedValue) ? this.processValue(value) : processedValue);
     return renderer
       ? renderer({
         value,
@@ -1071,7 +1075,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (value === undefined && !this.multiple) {
       value = toRangeValue(this.getValue(), this.range);
     }
-    return (value || []).map(item => this.processRenderer(item, repeat)) as [any, any];
+    return value || [];
   }
 
   getOldValue(): any {

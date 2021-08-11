@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Trigger`: Fix the problem that the popup is not aligned when crossing iframes in the same domain.
 - 🐞 `<pro>Table`: Fix the problem that select all and unselect all are invalid when there are rows that are checked by default and cannot be modified.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic editor in inline editing mode cannot be displayed after being hidden.
+- 🐞 `<pro>DatePicker`: Fix the problem of custom `renderer` in `range` mode.
 
 ## 1.4.3
 

@@ -375,13 +375,15 @@
       display: inline-block;
       height: 100%;
       line-height: 0.26rem;
-      text-align: center;
     }
 
+    &-start-rendered-value,
+    &-end-rendered-value,
     &-start,
     &-end,
     &-input {
       width: ~'calc(50% - .1rem)';
+      text-align: center;
       background-color: transparent;
       border: none;
       outline: 0;
@@ -389,6 +391,7 @@
 
     &-split {
       width: 0.2rem;
+      text-align: center;
     }
 
     &-input {
@@ -396,6 +399,14 @@
       color: @primary-color;
       font-weight: bold;
       opacity: 0;
+    }
+
+    &-start-rendered-value {
+      left: 0;
+    }
+
+    &-end-rendered-value {
+      right: 0;
     }
   }
   &-focused &-range-input {
