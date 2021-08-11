@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>RichText`: 新增图片连续预览功能。
 - 🌟 `<pro>Cascader`: 新增 async 和 loadData 属性，简化异步加载方案。
 - 🌟 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
+- 🌟 `<pro>PerformanceTable`: 新增 onCell 属性，单元格 rowSpan 属性，支持行合并。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。

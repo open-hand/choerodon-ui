@@ -105,6 +105,8 @@ scrollLeft: (left: number) => void;
 | hidden         | boolean                                           | 隐藏                                                                                  |
 | hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
 | titleEditable         | boolean`(true)`                                       | 个性化是否可编辑列头                                                                                |
+| onCell	| ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性	| 
+| render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容	| 
 
 > `sortable` 是用来定义该列是否可排序，但是根据什么 `key` 排序需要 在 `Cell` 设置一个 `dataKey`
 > 这里的排序是服务端排序，所以需要在 `<Table>` 的 `onSortColumn` 回调函数中处理逻辑，回调函数会返回 `sortColumn`, `sortType` 这两个值。
@@ -125,6 +127,7 @@ scrollLeft: (left: number) => void;
 | dataKey  | string          | 数据绑定的 `key` ，同时也是排序的 `key` |
 | rowData  | object          | 行数据                                  |
 | rowIndex | number          | 行号                                    |
+| rowSpan | number          | 行合并,设置为 0 时，不渲染     |
 
 > 分页请结合 Pagination 组件。
 

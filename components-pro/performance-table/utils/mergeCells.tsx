@@ -48,7 +48,7 @@ function mergeCells(cells) {
         if (j !== 0) {
           nextWidth += nextCellWidth;
           left += cells[i + j - 1].props.width;
-          cells[i + j] = cloneCell(nextCell, { removed: true });
+          cells[i + j] = cloneCell(nextCell, { hidden: true });
         }
         groupChildren.push(
           <HeaderCell
@@ -109,7 +109,7 @@ function mergeCells(cells) {
           ) {
             nextWidth += colSpanWidth;
             cells[i + j] = cloneCell(nextCell, {
-              removed: true,
+              hidden: true,
             });
           }
         }

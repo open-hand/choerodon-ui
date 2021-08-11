@@ -162,7 +162,7 @@ export default class Tabs extends Component<TabsProps, any> {
       if (!hideAdd) {
         tabBarExtraContent = (
           <span>
-            <Icon type="plus" className={`${prefixCls}-new-tab`} onClick={this.createNewTab} />
+            <Icon type="add" className={`${prefixCls}-new-tab`} onClick={this.createNewTab} />
             {tabBarExtraContent}
           </span>
         );
