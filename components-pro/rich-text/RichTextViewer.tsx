@@ -3,6 +3,8 @@ import { findDOMNode } from 'react-dom';
 import LightBox from 'react-image-lightbox';
 import omit from 'lodash/omit';
 import { toJS } from 'mobx';
+import classNames from 'classnames';
+import 'react-quill/dist/quill.snow.css';
 import { delta2Html } from './utils';
 
 export interface RichTextViewerProps {
@@ -58,34 +60,41 @@ class RichTextViewer extends Component<RichTextViewerProps> {
   }
 
   render() {
-    const { deltaOps } = this.props;
+    const { deltaOps, className } = this.props;
     const { open, images, srcIndex } = this.state;
     const html = delta2Html(toJS(deltaOps));
 
+    const classString = classNames(
+      className,
+      'quill',
+    );
+
     return (
-      <div {...this.getOtherProps()}>
-        <div dangerouslySetInnerHTML={{ __html: `${this.escape(html)}` }} />
-        {
-          open ? (
-            <LightBox
-              mainSrc={images[srcIndex]}
-              onCloseRequest={() => this.setState({ open: false })}
-              imageTitle="images"
-              prevSrc={images[srcIndex - 1]}
-              nextSrc={images[srcIndex + 1]}
-              onMovePrevRequest={
-                () => {
-                  this.setState({srcIndex: srcIndex - 1});
+      <div {...this.getOtherProps()} className={classString}>
+        <div className="ql-container ql-snow">
+          <div dangerouslySetInnerHTML={{ __html: `${this.escape(html)}` }} className="ql-editor" />
+          {
+            open ? (
+              <LightBox
+                mainSrc={images[srcIndex]}
+                onCloseRequest={() => this.setState({ open: false })}
+                imageTitle="images"
+                prevSrc={images[srcIndex - 1]}
+                nextSrc={images[srcIndex + 1]}
+                onMovePrevRequest={
+                  () => {
+                    this.setState({ srcIndex: srcIndex - 1 });
+                  }
                 }
-              }
-              onMoveNextRequest={
-                () => {
-                  this.setState({srcIndex: srcIndex + 1});
+                onMoveNextRequest={
+                  () => {
+                    this.setState({ srcIndex: srcIndex + 1 });
+                  }
                 }
-              }
-            />
-          ) : null
-        }
+              />
+            ) : null
+          }
+        </div>
       </div>
     );
   }
