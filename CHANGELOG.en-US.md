@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that select all and unselect all are invalid when there are rows that are checked by default and cannot be modified.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic editor in inline editing mode cannot be displayed after being hidden.
 - 🐞 `<pro>DatePicker`: Fix the problem of custom `renderer` in `range` mode.
+- 🐞 `<pro>PerformanceTable`: Fix the problem that the first column of the sub-column in the combined column cannot be dragged when `resizable` is set.
 
 ## 1.4.3
 

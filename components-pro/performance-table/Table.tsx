@@ -181,6 +181,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   static Cell = Cell;
 
+  static ColumnGroup = ColumnGroup;
+
   static HeaderCell = HeaderCell;
 
   static propTypes = propTypes;
@@ -663,7 +665,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             if (index === 0) {
               groupCellProps.groupCount = childColumns.length;
               groupCellProps.groupHeader = header;
-              groupCellProps.resizable = false;
             }
 
             return React.cloneElement(childColumn, groupCellProps);
