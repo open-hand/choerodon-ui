@@ -49,20 +49,6 @@ export default class TreeSelect extends Select<TreeSelectProps> {
 
   @observable expandedKeys: string[] | undefined;
 
-  stateForceRenderKeys: Key[] = [];
-
-  @computed
-  get forceRenderKeys() {
-    if (this.expandedKeys) {
-      this.stateForceRenderKeys = [
-        ...new Set<Key>([...this.stateForceRenderKeys, ...this.expandedKeys]),
-      ];
-    } else {
-      this.stateForceRenderKeys = this.props.treeDefaultExpandedKeys || [];
-    }
-    return this.stateForceRenderKeys;
-  }
-
   @computed
   get parentField(): string {
     return this.getProp('parentField') || 'parentValue';
@@ -268,7 +254,6 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       selectedKeys,
       expandedKeys,
       multiple,
-      forceRenderKeys,
       text,
       props: {
         dropdownMenuStyle, optionRenderer = defaultRenderer, optionsFilter,
@@ -283,13 +268,11 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     const treeData = getTreeNodes(
       options,
       this.treeData,
-      [...forceRenderKeys.values()],
       optionRenderer,
       // @ts-ignore
       this.handleTreeNode,
       async || !!loadData,
       textField,
-      treeDefaultExpandAll,
       optionsFilter,
       this.matchRecordBySearch,
       text,

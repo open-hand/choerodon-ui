@@ -164,6 +164,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     onListChangeStart,
     onListChangeEnd,
 
+    selectable,
     ...domProps
   } = props;
 
@@ -283,6 +284,12 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     } = treeNode;
     const mergedKey = getKey(key, pos);
     delete restProps.children;
+
+    // When the tree property selectable is false, the title cannot be selected.
+    // Clicking on the title triggers the onCheck event, and the ds associated record triggers the select event
+    if (selectable === false) {
+      restProps.selectable = selectable;
+    }
 
     const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
 

@@ -20,10 +20,12 @@ timeline: true
 - 🌟 `<pro>Cascader`: Added `async` and `loadData` attributes to simplify asynchronous loading schemes.
 - 🌟 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 - 🌟 `<pro>PerformanceTable`: Added the `onCell` property and the `rowSpan` property of the cell to support row merging.
+- 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
 - 💄 `<pro>Select`: Optimize the style of multi-select read-only options.
+- 💄 `<pro>Tree`: Optimize the handling of DataSet related data and events when the `selectable` attribute is false.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
 - 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
@@ -32,6 +34,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the dynamic editor in inline editing mode cannot be displayed after being hidden.
 - 🐞 `<pro>DatePicker`: Fix the problem of custom `renderer` in `range` mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that the first column of the sub-column in the combined column cannot be dragged when `resizable` is set.
+- 🐞 `<pro>Tree`：Fix the problem that the check box status is wrong in the stowed state.
+- 🐞 `<pro>TreeSelect`：Fix the problem that the check box status is wrong in the stowed state.
 
 ## 1.4.3
 
