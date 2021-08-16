@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>Select`: Optimize the style of multi-select read-only options.
 - 💄 `<pro>Tree`: Optimize the handling of DataSet related data and events when the `selectable` attribute is false.
 - 💄 `<pro>RichText`: Optimize the preview style and `RichTextViewer` style.
+- 💄 `<pro>TextField`: Optimize the display position of `showLengthInfo`.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
 - 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.

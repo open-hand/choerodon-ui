@@ -1474,6 +1474,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: record.get(OTHER_OPTION_PROPS),
     });
   }
+
+  renderLengthInfo(): ReactNode {
+    return undefined;
+  }
 }
 
 @observer

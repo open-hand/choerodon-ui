@@ -477,6 +477,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   getPrefix(): ReactNode {
     return undefined;
   }
+
+  renderLengthInfo(): ReactNode {
+    return undefined;
+  }
 }
 
 @observer

@@ -138,7 +138,7 @@ export default class TransferList extends Select<TransferListProps> {
           onInput={this.handleChange}
           onClear={this.handleClear}
           onKeyDown={this.handleKeyDown}
-          suffix={<Icon type="search" />}
+          prefix={<Icon type="search" />}
           clearButton
         />
       </div>

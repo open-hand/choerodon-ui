@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
 - 💄 `<pro>Select`：优化多选只读选项样式。
 - 💄 `<pro>Tree`：优化 selectable 属性为 false 时 DataSet 相关数据、事件处理。
+- 💄 `<pro>TextField`：优化 showLengthInfo 信息渲染位置。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
 - 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。

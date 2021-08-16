@@ -85,12 +85,22 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return otherProps;
   }
 
+  renderLengthInfo(): ReactNode {
+    const { showLengthInfo, prefixCls } = this;
+    const maxLength = this.getProp('maxLength');
+    const inputLength = this.getValue() ? this.getValue().length : 0;
+    return maxLength && maxLength > 0 && showLengthInfo ? (
+      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+    ) : null;
+  }
+
   renderWrapper(): ReactNode {
     const { onResize, resize = ResizeType.none, style } = this.props;
     const text = this.getTextNode();
     const resizable = resize !== ResizeType.none;
     const wrapperProps = this.getWrapperProps() || {};
     const elementProps = this.getOtherProps() || {};
+    const lengthElement = this.renderLengthInfo();
     if (style && !isNil(style.width) && resizable) {
       const { style: wrapperStyle } = wrapperProps;
       if (wrapperStyle) {
@@ -118,8 +128,9 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
             onResize && resizable ? (
               <ReactResizeObserver onResize={onResize} resizeProp={getResizeProp(resize)}>
                 {element}
+                {lengthElement}
               </ReactResizeObserver>
-            ) : element
+            ) : <>{element}{lengthElement}</>
           }
           {this.renderFloatLabel()}
         </label>

@@ -24,7 +24,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'first-name', type: 'string', defaultValue: 'Huazhen', readOnly: true },
+      { name: 'first-name', type: 'string', defaultValue: 'Huazhen'},
     ],
     events: {
       update: handleDataSetChange,
@@ -32,7 +32,7 @@ class App extends React.Component {
   });
 
   render() {
-    return <TextField dataSet={this.ds} name="first-name" />;
+    return <TextField dataSet={this.ds} name="first-name" clearButton />;
   }
 }
 

@@ -243,6 +243,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @observable renderedTextContent?: string;
 
+  lengthInfoWidth?: number;
+
   get clearButton(): boolean {
     const { clearButton } = this.props;
     return clearButton && !this.readOnly && !this.disabled;
@@ -332,6 +334,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'wait',
       'waitType',
       'groupClassName',
+      'showLengthInfo',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
@@ -404,30 +407,19 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderWrapper(): ReactNode {
-    const maxLength = this.getProp('maxLength');
-    const group = this.renderGroup();
-    if (this.props._inTable || !maxLength || !this.showLengthInfo) {
-      return group;
-    }
-    const lengthInfo = this.renderLengthInfo();
-    return (
-      <div>
-        {group}
-        {lengthInfo}
-      </div>
-    );
+    return this.renderGroup();
   }
 
   renderInputElement(): ReactNode {
     const { addonBefore, addonAfter } = this.props;
+    const renderedValue = this.renderRenderedValue();
+    const input = this.getWrappedEditor(renderedValue);
     const button = this.getInnerSpanButton();
     const suffix = this.getSuffix();
     const prefix = this.getPrefix();
     const otherPrevNode = this.getOtherPrevNode();
     const otherNextNode = this.getOtherNextNode();
-    const renderedValue = this.renderRenderedValue();
     const placeholderDiv = renderedValue ? undefined : this.renderPlaceHolder();
-    const input = this.getWrappedEditor(renderedValue);
     const floatLabel = this.renderFloatLabel();
     const multipleHolder = this.renderMultipleHolder();
     const wrapperProps = this.getWrapperProps();
@@ -520,10 +512,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
-  renderLengthInfo(): ReactNode {
+  renderLengthInfo(maxLength?: number, inputLength?: number): ReactNode {
     const { showLengthInfo, prefixCls } = this;
-    const maxLength = this.getProp('maxLength');
-    const inputLength = this.getValue() ? this.getValue().length : 0;
     return maxLength && maxLength > 0 && showLengthInfo ? (
       <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
     ) : null;
@@ -770,6 +760,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     const value = this.getValue();
     const text = this.getTextNode(value);
+    const maxLength = this.getProp('maxLength');
+    const inputLength = value ? value.length : 0;
+    const lengthElement = this.renderLengthInfo(maxLength, inputLength);
     const finalText = (renderedValue ? this.renderedTextContent : isString(text) ? text : isNumber(text) ? String(text) : isArrayLike(text) && flattenDeep(text).filter(v => !isBoolean(v)).join('')) || '';
     const placeholder = this.hasFloatLabel || renderedValue ? undefined : this.getPlaceholders()[0];
     if ((!this.isFocused || !this.editable) && isValidElement(text)) {
@@ -787,14 +780,27 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       };
     }
 
+    // 存在长度信息，计算paddingRight
+    if (lengthElement) {
+      this.lengthInfoWidth = measureTextWidth(`${inputLength} / ${maxLength}`);
+      const paddingRight = this.lengthInfoWidth + 21;
+      otherProps.style = {
+        ...otherProps.style,
+        paddingRight,
+      };
+    }
+
     return wrap(
-      <input
-        key="text"
-        {...otherProps}
-        placeholder={placeholder}
-        value={renderedValue && !(this.isFocused && this.editable) ? '' : finalText}
-        readOnly={!this.editable}
-      />,
+      <>
+        <input
+          key="text"
+          {...otherProps}
+          placeholder={placeholder}
+          value={renderedValue && !(this.isFocused && this.editable) ? '' : finalText}
+          readOnly={!this.editable}
+        />
+        {lengthElement}
+      </>,
     );
   }
 
@@ -826,7 +832,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       [`${prefixCls}-allow-clear`]: clearButton && !props?.onClick,
     });
     return (
-      <div className={classString} onMouseDown={preventDefault} {...props}>
+      <div className={classString} style={{ right: this.lengthInfoWidth }} onMouseDown={preventDefault} {...props}>
         {children}
       </div>
     );
@@ -919,9 +925,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     } = this;
     if (clearButton) {
       return this.wrapperInnerSpanButton(
-        <Icon type="close" onClick={this.handleClearButtonClick} onMouseDown={this.handleInnerButtonMouseDown} />,
+        <Icon
+          type="close"
+          onClick={this.handleClearButtonClick}
+          onMouseDown={this.handleInnerButtonMouseDown}
+        />,
         {
           className: `${prefixCls}-clear-button`,
+          style: { right: this.lengthInfoWidth },
         },
       );
     }
