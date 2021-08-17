@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 - 🌟 `<pro>PerformanceTable`: Added the `onCell` property and the `rowSpan` property of the cell to support row merging.
 - 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
+- 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.

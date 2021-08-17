@@ -5,6 +5,7 @@
 @skeleton-avatar-prefix-cls: ~'@{skeleton-prefix-cls}-avatar';
 @skeleton-title-prefix-cls: ~'@{skeleton-prefix-cls}-title';
 @skeleton-paragraph-prefix-cls: ~'@{skeleton-prefix-cls}-paragraph';
+@skeleton-grid-prefix-cls: ~'@{skeleton-prefix-cls}-grid';
 @skeleton-button-prefix-cls: ~'@{skeleton-prefix-cls}-button';
 @skeleton-input-prefix-cls: ~'@{skeleton-prefix-cls}-input';
 @skeleton-loading: ~'@{skeleton-prefix-cls}-loading';
@@ -45,7 +46,7 @@
       margin-top: 16px;
       background: @skeleton-color;
 
-      + .@{skeleton-paragraph-prefix-cls} {
+      + .@{skeleton-paragraph-prefix-cls}, .@{skeleton-grid-prefix-cls} {
         margin-top: 24px;
       }
     }
@@ -69,6 +70,15 @@
         }
       }
     }
+
+    // grid
+    .@{skeleton-grid-prefix-cls} {
+      &-content {
+        height: 16px;
+        margin-top: 16px;
+        background: @skeleton-color;
+      }
+    }
   }
 
   &-with-avatar &-content {
@@ -86,6 +96,7 @@
   &.@{skeleton-prefix-cls}-active {
     & .@{skeleton-prefix-cls}-content {
       .@{skeleton-title-prefix-cls},
+      .@{skeleton-grid-prefix-cls}-content,
       .@{skeleton-paragraph-prefix-cls} > li {
         .skeleton-color();
 

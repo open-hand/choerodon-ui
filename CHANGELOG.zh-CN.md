@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
 - 🌟 `<pro>PerformanceTable`: 新增 onCell 属性，单元格 rowSpan 属性，支持行合并。
 - 🌟 `Tree`：onCheck 回调新增 oldCheckedKeys 参数。
+- 🌟 `Skeleton`：新增 grid 属性支持栅格占位配置。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
