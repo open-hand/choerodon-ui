@@ -1,7 +1,7 @@
 import React from 'react';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { LabelAlign, LabelLayout } from './enum';
+import { LabelAlign, LabelLayout, ShowValidation } from './enum';
 import { LabelWidth } from './Form';
 import { Tooltip } from '../core/enum';
 
@@ -12,6 +12,7 @@ export interface FormContextValue {
   labelAlign?: LabelAlign;
   labelWidth?: LabelWidth;
   labelTooltip?: Tooltip;
+  showValidation?: ShowValidation;
   useColon?: boolean;
 }
 

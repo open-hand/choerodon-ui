@@ -18,7 +18,7 @@ import defaultFeedback, { FeedBack } from 'choerodon-ui/pro/lib/data-set/FeedBac
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
-import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
+import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import { HighlightRenderer, Renderer } from 'choerodon-ui/pro/lib/field/FormField';
@@ -258,6 +258,10 @@ export type Config = {
    * 同 tableRowDraggable
    */
   tableDragRow?: boolean;
+  /**
+   * 表单校验提示方式
+   */
+  showValidation?: ShowValidation;
 };
 
 export type ConfigKeys = keyof Config;
@@ -402,6 +406,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['onPerformance', noop],
   ['performanceEnabled', { Table: false }],
   ['tooltipTheme', defaultTooltipTheme],
+  ['showValidation', ShowValidation.tooltip],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

@@ -32,7 +32,7 @@ import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
 import { ValidatorProps } from '../validator/rules';
 import { FIELD_SUFFIX } from '../form/utils';
-import { LabelLayout } from '../form/enum';
+import { LabelLayout, ShowValidation } from '../form/enum';
 import Animate from '../animate';
 import {
   defaultRenderer,
@@ -840,8 +840,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   renderValidationResult(validationResult?: ValidationResult): ReactNode {
     const validationMessage = this.getValidationMessage(validationResult);
+    const { labelLayout, showValidation } = this.context;
     if (validationMessage) {
-      return renderValidationMessage(validationMessage, this.context.labelLayout);
+      const showIcon = !(labelLayout === LabelLayout.float || showValidation === ShowValidation.newLine);
+      return renderValidationMessage(validationMessage, showIcon);
     }
   }
 
@@ -886,7 +888,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   showTooltip(e): boolean {
-    if (!this.hasFloatLabel) {
+    const { showValidation } = this.context;
+    if (!this.hasFloatLabel && showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
         showValidationMessage(e, message);
@@ -1424,7 +1427,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   render() {
     const wrapper = this.renderHighLight();
     const help = this.renderHelpMessage();
-    if (this.hasFloatLabel) {
+    const { showValidation } = this.context;
+    if (this.hasFloatLabel || showValidation === ShowValidation.newLine) {
       const message = this.renderValidationResult();
       return [
         isValidElement(wrapper) ? cloneElement(wrapper, { key: 'wrapper' }) : wrapper,
