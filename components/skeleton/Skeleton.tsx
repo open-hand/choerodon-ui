@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import Title, { SkeletonTitleProps } from './Title';
+import Grid, { SkeletonGridProps } from './Grid';
 import Paragraph, { SkeletonParagraphProps } from './Paragraph';
 import { getPrefixCls } from '../configure';
 import SkeletonButton from './Button';
@@ -20,6 +21,7 @@ export interface SkeletonProps {
   avatar?: SkeletonAvatarProps | boolean;
   title?: SkeletonTitleProps | boolean;
   paragraph?: SkeletonParagraphProps | boolean;
+  grid?: SkeletonGridProps;
 }
 
 function getComponentProps<T>(prop: T | boolean | undefined): T | {} {
@@ -91,6 +93,7 @@ class Skeleton extends React.Component<SkeletonProps, any> {
       title,
       paragraph,
       active,
+      grid,
     } = this.props;
 
     const prefixCls = getPrefixCls('skeleton', customizePrefixCls);
@@ -99,6 +102,7 @@ class Skeleton extends React.Component<SkeletonProps, any> {
       const hasAvatar = !!avatar;
       const hasTitle = !!title;
       const hasParagraph = !!paragraph;
+      const hasGrid = !!grid;
 
       // Avatar
       let avatarNode;
@@ -117,13 +121,13 @@ class Skeleton extends React.Component<SkeletonProps, any> {
       }
 
       let contentNode;
-      if (hasTitle || hasParagraph) {
+      if (hasTitle || hasParagraph || hasGrid) {
         // Title
         let $title;
         if (hasTitle) {
           const titleProps: SkeletonTitleProps = {
             prefixCls: `${prefixCls}-title`,
-            ...getTitleBasicProps(hasAvatar, hasParagraph),
+            ...getTitleBasicProps(hasAvatar, hasParagraph || hasGrid),
             ...getComponentProps(title),
           };
 
@@ -142,10 +146,22 @@ class Skeleton extends React.Component<SkeletonProps, any> {
           paragraphNode = <Paragraph {...paragraphProps} />;
         }
 
+        // Grid
+        let gridNode;
+        if (hasGrid) {
+          const gridProps: SkeletonGridProps = {
+            prefixCls: `${prefixCls}-grid`,
+            ...getComponentProps(grid),
+          };
+
+          gridNode = <Grid {...gridProps} />;
+        }
+
         contentNode = (
           <div className={`${prefixCls}-content`}>
             {$title}
             {paragraphNode}
+            {gridNode}
           </div>
         );
       }

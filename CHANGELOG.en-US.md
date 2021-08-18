@@ -15,13 +15,15 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign`, `tooltip` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
 - 🌟 `<pro>RichText`: Added continuous preview of pictures.
 - 🌟 `<pro>Cascader`: Added `async` and `loadData` attributes to simplify asynchronous loading schemes.
 - 🌟 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 - 🌟 `<pro>PerformanceTable`: Added the `onCell` property and the `rowSpan` property of the cell to support row merging.
 - 🌟 `<pro>Rate`：Pro support Rate Component.
 - 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
+- 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
+- 🌟 `<pro>Form`: Added the `showValidation` attribute to control the prompting method of verification information.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.

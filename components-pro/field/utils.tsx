@@ -20,7 +20,6 @@ import CloseButton from './CloseButton';
 import { hide, show } from '../tooltip/singleton';
 import Validator from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
-import { LabelLayout } from '../form/enum';
 import Icon from '../icon';
 import { $l } from '../locale-context';
 import isReactChildren from '../_util/isReactChildren';
@@ -445,11 +444,11 @@ export function renderMultiLine(options: MultiLineRenderOption): { lines?: React
   return { multipleValidateMessageLength };
 }
 
-export function renderValidationMessage(validationMessage: ReactNode, labelLayout?: LabelLayout): ReactNode {
+export function renderValidationMessage(validationMessage: ReactNode, showIcon?: boolean): ReactNode {
   if (validationMessage) {
     return (
       <div className={getProPrefixCls('validation-message')}>
-        {labelLayout !== LabelLayout.float && <Icon type="error" />}
+        {showIcon && <Icon type="error" />}
         <span>{validationMessage}</span>
       </div>
     );
