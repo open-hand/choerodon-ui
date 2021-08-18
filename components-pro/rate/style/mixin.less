@@ -1,0 +1,41 @@
+@import '../../field/style/mixin';
+
+.rate-basic() {
+  &-wrapper {
+    position      : relative;
+    display       : inline-block;
+    align-items   : center;
+    line-height   : @rate-line-height;
+    white-space   : @label-white-space;
+    vertical-align: middle;
+    outline       : none;
+    cursor        : pointer;
+  }
+
+  &:disabled {
+    cursor        : not-allowed;
+    pointer-events: none;
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+  }
+
+  &-float-label&-required .@{field-label-prefix-cls}::after {
+    width  : 0.08rem;
+    content: "*";
+  }
+
+  &-float-label+.@{c7n-pro-prefix}-validation-message {
+    padding-left: 0;
+  }
+
+  &-float-label .@{field-label-prefix-cls} {
+    padding: 0;
+    display: inline-block;
+
+    &::after {
+      width: 0;
+    }
+  }
+}

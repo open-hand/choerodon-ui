@@ -139,3 +139,5 @@ export { default as useModal } from './use-modal';
 export { default as useComputed } from './use-computed';
 
 export { default as TreeSelect } from './tree-select';
+
+export { default as Rate } from "./rate";
