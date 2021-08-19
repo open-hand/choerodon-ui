@@ -220,12 +220,12 @@ export default class Lov extends Select<LovProps> {
     const modalProps = this.getModalProps();
     const tableProps = this.getTableProps();
     const noCache = this.getProp('noCache');
-    const showCheckedStrategy = this.getProp('showCheckedStrategy');
     if (!this.modal && config && options) {
       const { width, title } = config;
       options.unSelectAll();
       options.clearCachedSelected();
       if (multiple) {
+        const showCheckedStrategy = this.getProp('showCheckedStrategy');
         options.selectionStrategy = showCheckedStrategy || CheckedStrategy.SHOW_ALL;
         options.setCachedSelected(
           this.getValues().map(value => {
