@@ -1,4 +1,4 @@
-import React, { Key, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import Record from '../data-set/Record';
 import DataSet from '../data-set/DataSet';
@@ -76,12 +76,10 @@ function getTreeNode(record, children, idField, text, treeNodeProps, async, filt
 export function getTreeNodes(
   dataSet: DataSet,
   records: Record[] | undefined,
-  forceRenderKeys: Key[],
   renderer: NodeRenderer,
   onTreeNode: TreeNodeRenderer,
   async?: boolean,
   titleField?: string,
-  defaultExpandAll?: boolean,
   optionsFilter?: (record: Record, index: number, array: Record[]) => boolean,
   searchMatcher?: (record: Record, text?: string) => boolean,
   filterText?: string,
@@ -91,8 +89,8 @@ export function getTreeNodes(
     return records.reduce<DataNode[]>((array, record, index) => {
       if (record.status !== 'delete') {
         const children =
-          defaultExpandAll || forceRenderKeys.indexOf(getKey(record, idField)) !== -1 || filterText
-            ? getTreeNodes(dataSet, record.children, forceRenderKeys, renderer, onTreeNode, async, titleField, defaultExpandAll, optionsFilter, searchMatcher, filterText)
+          record.children
+            ? getTreeNodes(dataSet, record.children, renderer, onTreeNode, async, titleField, optionsFilter, searchMatcher, filterText)
             : null;
         if (!searchMatcher || !filterText || (children && children.length) || searchMatcher(record, filterText)) {
           if ((!optionsFilter || optionsFilter(record, index, records))) {

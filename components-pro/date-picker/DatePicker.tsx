@@ -684,4 +684,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       'minLength',
     ]);
   }
+
+  renderLengthInfo(): ReactNode {
+    return undefined;
+  }
 }

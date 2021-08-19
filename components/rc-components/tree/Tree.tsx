@@ -33,7 +33,7 @@ import TreeNode from './TreeNode';
 import { conductCheck } from './utils/conductUtil';
 import DropIndicator from './DropIndicator';
 
-interface CheckInfo {
+export interface CheckInfo {
   event: 'check';
   node: EventDataNode;
   checked: boolean;
@@ -95,7 +95,7 @@ export interface TreeProps {
       nativeEvent: MouseEvent;
     },
   ) => void;
-  onCheck?: (checked: { checked: Key[]; halfChecked: Key[] } | Key[], info: CheckInfo) => void;
+  onCheck?: (checked: { checked: Key[]; halfChecked: Key[] } | Key[], info: CheckInfo, oldChecked: { checked: Key[]; halfChecked: Key[] } | Key[]) => void;
   onSelect?: (
     selectedKeys: Key[],
     info: {
@@ -813,6 +813,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Prepare trigger arguments
     let checkedObj;
+    let oldCheckedObj;
     const eventObj: Partial<CheckInfo> = {
       event: 'check',
       node: treeNode,
@@ -824,6 +825,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       const checkedKeys = checked ? arrAdd(oriCheckedKeys, key) : arrDel(oriCheckedKeys, key);
       const halfCheckedKeys = arrDel(oriHalfCheckedKeys, key);
       checkedObj = { checked: checkedKeys, halfChecked: halfCheckedKeys };
+      oldCheckedObj = { checked: oriCheckedKeys, halfChecked: oriHalfCheckedKeys };
 
       eventObj.checkedNodes = checkedKeys
         .map(checkedKey => keyEntities[checkedKey])
@@ -851,6 +853,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
       }
 
       checkedObj = checkedKeys;
+
+      oldCheckedObj = oriCheckedKeys;
 
       // [Legacy] This is used for `rc-tree-select`
       const checkedNodes: DataNode[] = [];
@@ -881,7 +885,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
 
     if (onCheck) {
-      onCheck(checkedObj, eventObj as CheckInfo);
+      onCheck(checkedObj, eventObj as CheckInfo, oldCheckedObj);
     }
   };
 

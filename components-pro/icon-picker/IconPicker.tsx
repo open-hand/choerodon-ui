@@ -452,4 +452,8 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
       </div>
     );
   }
+
+  renderLengthInfo(): ReactNode {
+    return undefined;
+  }
 }

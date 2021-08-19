@@ -25,3 +25,8 @@ export enum ResponsiveKeys {
   xl = 'xl',
   xxl = 'xxl',
 }
+
+export enum ShowValidation {
+  tooltip = 'tooltip',
+  newLine = 'newLine',
+}

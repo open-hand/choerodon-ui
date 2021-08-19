@@ -31,7 +31,7 @@ import FormContext from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
+import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys, ShowValidation } from './enum';
 import {
   defaultColumns,
   defaultExcludeUseColonTag,
@@ -174,6 +174,7 @@ export interface FormProps extends DataSetComponentProps {
   axios?: AxiosInstance;
   acceptCharset?: string;
   encType?: string;
+  showValidation?: ShowValidation;
 }
 
 const labelWidthPropTypes = PropTypes.oneOfType([
@@ -308,6 +309,10 @@ export default class Form extends DataSetComponent<FormProps> {
      */
     onError: PropTypes.func,
     separateSpacing: PropTypes.object,
+    /**
+     * 校验信息提示方式
+     */
+    showValidation: PropTypes.string,
     ...DataSetComponent.propTypes,
   };
 
@@ -399,6 +404,14 @@ export default class Form extends DataSetComponent<FormProps> {
     }
 
     return false;
+  }
+
+  get showValidation(): ShowValidation {
+    const { showValidation } = this.observableProps;
+    if (showValidation !== undefined) {
+      return showValidation;
+    }
+    return getConfig('showValidation')
   }
 
   @computed
@@ -534,6 +547,7 @@ export default class Form extends DataSetComponent<FormProps> {
       contextDataIndex: context.dataIndex,
       labelLayout: 'labelLayout' in props ? props.labelLayout : context.labelLayout,
       labelAlign: 'labelAlign' in props ? props.labelAlign : context.labelAlign,
+      showValidation: 'showValidation' in props ? props.showValidation : context.showValidation,
       labelTooltip: 'labelTooltip' in props ? props.labelTooltip : context.labelTooltip,
       disabled: 'disabled' in props ? props.disabled : context.disabled,
       readOnly: 'readOnly' in props ? props.readOnly : context.readOnly,
@@ -570,6 +584,7 @@ export default class Form extends DataSetComponent<FormProps> {
       'separateSpacing',
       'fieldHighlightRenderer',
       'layout',
+      'showValidation',
     ]);
   }
 
@@ -906,6 +921,7 @@ export default class Form extends DataSetComponent<FormProps> {
       fieldHighlightRenderer,
       props,
       useColon,
+      showValidation,
     } = this;
     const { formNode } = this.context;
     const value = {
@@ -922,6 +938,7 @@ export default class Form extends DataSetComponent<FormProps> {
       readOnly,
       fieldHighlightRenderer,
       useColon,
+      showValidation,
     };
     const children: ReactNode = [
       this.getHeader(),

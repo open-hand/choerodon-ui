@@ -24,6 +24,7 @@ title: Skeleton
 | loading | 为 `true` 时，显示占位图。反之则直接展示子组件 | boolean | - |
 | paragraph | 是否显示段落占位图 | boolean \| [SkeletonParagraphProps](#SkeletonParagraphProps) | true |
 | title | 是否显示标题占位图 | boolean \| [SkeletonTitleProps](#SkeletonTitleProps) | true |
+| grid | 栅格占位配置 | [SkeletonGridProps](#SkeletonGridProps) | - |
 
 ### SkeletonAvatarProps
 
@@ -60,3 +61,17 @@ title: Skeleton
 | ------ | ---------------- | ------------------------------- | ------ |
 | active | 是否展示动画效果 | boolean                         | false  |
 | size   | 设置按钮的大小   | `large` \| `small` \| `default` | -      |
+
+### SkeletonGridProps
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| rows | 行数 | number | - |
+| column | 列数 | number | - |
+| gutter | 栅格间隔 | number | 0 |
+| xs | `<576px` 展示的列数 | number | - |
+| sm | `≥576px` 展示的列数 | number | - |
+| md | `≥768px` 展示的列数 | number | - |
+| lg | `≥992px` 展示的列数 | number | - |
+| xl | `≥1200px` 展示的列数 | number | - |
+| xxl | `≥1600px` 展示的列数 | number | - |

@@ -15,15 +15,20 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnAlign, tooltip 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
+- 🌟 `configure`: 新增 tableColumnAlign, tooltip, showValidation 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
 - 🌟 `<pro>RichText`: 新增图片连续预览功能。
 - 🌟 `<pro>Cascader`: 新增 async 和 loadData 属性，简化异步加载方案。
 - 🌟 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
 - 🌟 `<pro>PerformanceTable`: 新增 onCell 属性，单元格 rowSpan 属性，支持行合并。
+- 🌟 `<pro>Form`: 新增 showValidation 属性控制校验信息提示方式。
+- 🌟 `Tree`：onCheck 回调新增 oldCheckedKeys 参数。
+- 🌟 `Skeleton`：新增 grid 属性支持栅格占位配置。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
 - 💄 `<pro>Select`：优化多选只读选项样式。
+- 💄 `<pro>Tree`：优化 selectable 属性为 false 时 DataSet 相关数据、事件处理。
+- 💄 `<pro>TextField`：优化 showLengthInfo 信息渲染位置。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
 - 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
@@ -31,6 +36,9 @@ timeline: true
 - 🐞 `<pro>Table`：修复存在默认勾选且不可修改的勾选行时，全选和取消全选无效的问题。
 - 🐞 `<pro>Table`：修复行内编辑模式的动态编辑器隐藏后无法再显示的问题。
 - 🐞 `<pro>DatePicker`：修复 range 模式下自定义 renderer 的问题。
+- 🐞 `<pro>PerformanceTable`： 修复组合列中子列第一列设置 resizable 无法拖拽的问题。
+- 🐞 `<pro>Tree`：修复收起状态下勾选框状态错误的问题。
+- 🐞 `<pro>TreeSelect`：修复收起状态下勾选框状态错误的问题。
 
 ## 1.4.3
 
@@ -125,6 +133,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
 - 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
 - 💄 `<pro>DataSet.Field`: 优化被绑定的字段也会因绑定字段的值变更而触发校验。
+- 💄 `<pro>RichText`：优化预览样式及 RichTextViewer 样式。
 - 🐞 `<pro>DataSet.Field`: 修复递归调用 dynamicProps 时的问题。
 - 🐞 `<pro>TextField`: 修复有 addonBefore， addonAfter 或 help 时， Tooltip无法显示的问题。
 - 🐞 `Menu`: 修复菜单事件报错。

@@ -61,7 +61,9 @@ export default class Password extends TextField<PasswordProps> {
         <Icon
           type={this.reveal ? 'visibility' : 'visibility_off'}
           onClick={this.handleToggleReveal}
-        />,
+        />, {
+          style: { right: this.lengthInfoWidth },
+        },
       );
     }
   }

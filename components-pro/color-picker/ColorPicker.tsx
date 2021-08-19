@@ -421,4 +421,8 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   getTriggerIconFont() {
     return 'palette';
   }
+
+  renderLengthInfo(): ReactNode {
+    return undefined;
+  }
 }

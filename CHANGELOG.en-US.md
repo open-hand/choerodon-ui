@@ -15,15 +15,21 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign`, `tooltip` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
 - 🌟 `<pro>RichText`: Added continuous preview of pictures.
 - 🌟 `<pro>Cascader`: Added `async` and `loadData` attributes to simplify asynchronous loading schemes.
 - 🌟 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 - 🌟 `<pro>PerformanceTable`: Added the `onCell` property and the `rowSpan` property of the cell to support row merging.
+- 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
+- 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
+- 🌟 `<pro>Form`: Added the `showValidation` attribute to control the prompting method of verification information.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
 - 💄 `<pro>Select`: Optimize the style of multi-select read-only options.
+- 💄 `<pro>Tree`: Optimize the handling of DataSet related data and events when the `selectable` attribute is false.
+- 💄 `<pro>RichText`: Optimize the preview style and `RichTextViewer` style.
+- 💄 `<pro>TextField`: Optimize the display position of `showLengthInfo`.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
 - 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
@@ -31,6 +37,9 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that select all and unselect all are invalid when there are rows that are checked by default and cannot be modified.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic editor in inline editing mode cannot be displayed after being hidden.
 - 🐞 `<pro>DatePicker`: Fix the problem of custom `renderer` in `range` mode.
+- 🐞 `<pro>PerformanceTable`: Fix the problem that the first column of the sub-column in the combined column cannot be dragged when `resizable` is set.
+- 🐞 `<pro>Tree`：Fix the problem that the check box status is wrong in the stowed state.
+- 🐞 `<pro>TreeSelect`：Fix the problem that the check box status is wrong in the stowed state.
 
 ## 1.4.3
 

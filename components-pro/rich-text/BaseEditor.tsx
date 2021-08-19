@@ -181,7 +181,6 @@ export default class BaseEditor extends Component<BaseEditorProps> {
     if (mode === 'preview') {
       return (
         <RichTextViewer
-          className={`${className}-preview ql-editor`}
           style={style}
           deltaOps={deltaOps || value}
         />

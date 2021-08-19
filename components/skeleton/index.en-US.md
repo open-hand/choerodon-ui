@@ -24,6 +24,7 @@ Provide a placeholder while you wait for content to load, or to visualise conten
 | loading | Display the skeleton when `true` | boolean | - |
 | paragraph | Show paragraph placeholder | boolean \| [SkeletonParagraphProps](#SkeletonParagraphProps) | true |
 | title | Show title placeholder | boolean \| [SkeletonTitleProps](#SkeletonTitleProps) | true |
+| grid | 栅格占位配置 | [SkeletonGridProps](#SkeletonGridProps) | - |
 
 ### SkeletonAvatarProps
 
@@ -60,3 +61,17 @@ Provide a placeholder while you wait for content to load, or to visualise conten
 | -------- | ---------------------- | ------------------------------- | ------- |
 | active   | Show animation effect  | boolean                         | false   |
 | size     | Set the size of button | `large` \| `small` \| `default` | -       |
+
+### SkeletonGridProps
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| rows | 行数 | number | - |
+| column | 列数 | number | - |
+| gutter | 栅格间隔 | number | 0 |
+| xs | `<576px` 展示的列数 | number | - |
+| sm | `≥576px` 展示的列数 | number | - |
+| md | `≥768px` 展示的列数 | number | - |
+| lg | `≥992px` 展示的列数 | number | - |
+| xl | `≥1200px` 展示的列数 | number | - |
+| xxl | `≥1600px` 展示的列数 | number | - |

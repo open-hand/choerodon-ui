@@ -1,35 +1,37 @@
 ---
 order: 1
 title:
-  zh-CN: 只使用check功能
+  zh-CN: 只使用 check 功能
   en-US: only need check
 ---
 
 ## zh-CN
 
-dataSet selection 为 false  ， Tree checkable 为 true 可以实现整个treenode点击触发check 。注意：优先级高于record 里面的selectable
+Tree selectable 属性设置为 false，checkable 为 true 时可实现点击整个节点触发 onCheck 事件及 DataSet select 相关事件。
 
 ## en-US
-
-dataSet selection is false and Tree checkable is true .when treeNode click , it would be checked and selection is higer priority than Record selectable
+The Tree `selectable` property is set to `false`, and when `checkable` is `true`, the `onCheck` event and DataSet `select` related events can be triggered by clicking the entire node.
 
 DataSet.
 
 ````jsx
-import { DataSet, Tree } from 'choerodon-ui/pro';
+import { DataSet, Tree, Button } from 'choerodon-ui/pro';
 import { Row, Col } from 'choerodon-ui';
 
 function nodeRenderer({ record }) {
   return record.get('text');
 }
 
+const onCheck = (checkedKeys, e, oldCheckedKeys) => {
+  console.log('onCheck', checkedKeys, e, oldCheckedKeys);
+};
+    
 class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'id',
     queryUrl: '/tree-less.mock',
     autoQuery: true,
     expandField: 'expand',
-    selection: false,
     checkField: 'ischecked',
     parentField: 'parentId',
     idField: 'id',
@@ -50,6 +52,8 @@ class App extends React.Component {
         <Row>
           <Col span={12}>
             <Tree
+              selectable={false}
+              onCheck={onCheck}
               dataSet={this.ds}
               checkable
               showLine
@@ -57,6 +61,9 @@ class App extends React.Component {
               showIcon
               renderer={nodeRenderer}
             />
+          </Col>
+          <Col span={12}>
+            <Button onClick={() => console.log('this.ds.selected', this.ds.selected)}>selected</Button>
           </Col>
         </Row>
       </>

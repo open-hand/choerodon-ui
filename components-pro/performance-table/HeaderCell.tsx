@@ -84,16 +84,23 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
   addPrefix = (name: string) => prefix(this.props.classPrefix)(name);
 
   renderResizeSpanner() {
-    const { resizable, left, onColumnResizeMove, fixed, headerHeight, minWidth } = this.props;
+    const { resizable, left, onColumnResizeMove, fixed, headerHeight, minWidth, groupCount, children } = this.props;
     const { columnWidth } = this.state;
 
     if (!resizable) {
       return null;
     }
 
+    let defaultColumnWidth = columnWidth;
+
+    // 处理组合列第一列拖拽柄定位问题
+    if (groupCount) {
+      defaultColumnWidth = (children as React.ReactElement)?.props.children[0].props.width;
+    }
+
     return (
       <ColumnResizeHandler
-        defaultColumnWidth={columnWidth}
+        defaultColumnWidth={defaultColumnWidth}
         key={columnWidth}
         columnLeft={left}
         columnFixed={fixed}

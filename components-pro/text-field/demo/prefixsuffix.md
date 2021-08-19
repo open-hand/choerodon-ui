@@ -22,7 +22,7 @@ ReactDOM.render(
       <TextField placeholder="前缀" prefix={<Icon type="person" />} />
     </Col>
     <Col span={12}>
-      <TextField placeholder="后缀" suffix={<Icon type="person" />} />
+      <TextField placeholder="后缀" suffix={<Icon type="person" clearButton />} />
     </Col>
   </Row>,
   mountNode

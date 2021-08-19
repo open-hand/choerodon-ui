@@ -1545,6 +1545,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       }
     });
   }
+
+  renderLengthInfo(): ReactNode {
+    return undefined;
+  }
 }
 
 @observer

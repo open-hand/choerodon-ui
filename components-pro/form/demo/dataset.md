@@ -87,7 +87,7 @@ class App extends React.Component {
         help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
       },
       { name: 'email', type: 'email', label: '邮箱', required: true, highlight: '生日高亮' },
-      { name: 'homepage', type: 'url', label: '个人主页', required: true },
+      { name: 'homepage', maxLength: 12, type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE', placeholder:"d1" },
       { name: 'frozen', type: 'boolean', label: '是否冻结' },
@@ -126,7 +126,7 @@ class App extends React.Component {
           <Option value="ja-jp">日本語</Option>
         </Select>
         <EmailField name="email" />
-        <UrlField name="homepage" />
+        <UrlField name="homepage" showLengthInfo valueChangeAction="input" />
         <DatePicker name="birth" />
         <Lov name="code" placeholder="d2" />
         <Switch name="frozen" />
