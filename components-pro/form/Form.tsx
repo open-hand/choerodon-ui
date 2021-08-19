@@ -839,7 +839,7 @@ export default class Form extends DataSetComponent<FormProps> {
           && separateSpacingWidth
             ? { paddingRight: pxToRem(separateSpacingWidth + 5) } : undefined}
         >
-          {labelLayout === LabelLayout.vertical && (
+          {labelLayout === LabelLayout.vertical && !!label && (
             <label className={labelClassName}>{label}</label>
           )}
           <div className={wrapperClassName}>{createElement(type, fieldElementProps)}</div>

@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `<pro>Rate`: Added `Rate` component.
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
 - 🌟 `<pro>Modal`: Added `preview` method.

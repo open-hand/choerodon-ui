@@ -143,3 +143,5 @@ export { default as TreeSelect } from './tree-select';
 export { default as Picture } from './picture';
 
 export { default as Attachment } from './attachment';
+
+export { default as Rate } from './rate';

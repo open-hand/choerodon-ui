@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 tableColumnAlign, tooltip, showValidation, attachment 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
+- 🌟 `<pro>Rate`: 新增 Rate 组件。
 - 🌟 `<pro>Attachment`: 新增 Attachment 组件。
 - 🌟 `<pro>Picture`: 新增 Picture 组件。
 - 🌟 `<pro>Modal`: 新增 preview 方法。
