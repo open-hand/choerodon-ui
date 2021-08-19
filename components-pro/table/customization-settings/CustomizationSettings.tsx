@@ -152,8 +152,8 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
     const { props: { columns, children } } = tableStore;
     const aggregation = tableRecord.get('aggregation');
     setCustomizedColumns(columns
-      ? mergeDefaultProps(columns, aggregation)[0]
-      : normalizeColumns(children, aggregation)[0]);
+      ? flatten(mergeDefaultProps(columns, aggregation).slice(0, 3))
+      : flatten(normalizeColumns(children, aggregation).slice(0, 3)));
     tableStore.tempCustomized.columns = {};
   }), [tableRecord, tableStore]);
   const handleOption = useCallback(() => ({

@@ -2,6 +2,7 @@ import { cloneElement, Component, isValidElement, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
+import { getDocument } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
 import domAlign from './domAlign';
 import EventManager from '../_util/EventManager';
 import TaskRunner from '../_util/TaskRunner';
@@ -20,8 +21,8 @@ export interface AlignProps {
   childrenProps?: object;
   childrenRef?: (node) => void;
   align: object;
-  target?: () => Node | Window;
-  onAlign?: (source: Element | Text | null, align: object, target: Node | Window, translate: { x: number, y: number }) => void;
+  target?: () => Element | Text | null;
+  onAlign?: (source: Element | Text | null, align: object, target: HTMLElement, translate: { x: number, y: number }) => void;
   monitorBufferTime?: number;
   monitorWindowResize?: boolean;
   hidden?: boolean;
@@ -64,11 +65,11 @@ export default class Align extends Component<AlignProps, any> {
   };
 
   forceAlign() {
-    const { hidden, onAlign = noop, target = () => window, align } = this.props;
+    const { hidden, onAlign = noop, target = () => getDocument(window).body, align } = this.props;
     if (!hidden) {
       const { source = findDOMNode(this) } = this;
       const ref = target();
-      const result = domAlign(source, ref, align);
+      const result = domAlign(source as HTMLElement, ref as HTMLElement, align);
       const translate = {
         x: 0,
         y: 0,

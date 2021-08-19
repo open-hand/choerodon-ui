@@ -15,7 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnAlign, tooltip, showValidation 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
+- 🌟 `configure`: 新增 tableColumnAlign, tooltip, showValidation, attachment 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
+- 🌟 `<pro>Attachment`: 新增 Attachment 组件。
+- 🌟 `<pro>Picture`: 新增 Picture 组件。
+- 🌟 `<pro>Modal`: 新增 preview 方法。
 - 🌟 `<pro>RichText`: 新增图片连续预览功能。
 - 🌟 `<pro>Cascader`: 新增 async 和 loadData 属性，简化异步加载方案。
 - 🌟 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
@@ -29,6 +32,7 @@ timeline: true
 - 💄 `<pro>Select`：优化多选只读选项样式。
 - 💄 `<pro>Tree`：优化 selectable 属性为 false 时 DataSet 相关数据、事件处理。
 - 💄 `<pro>TextField`：优化 showLengthInfo 信息渲染位置。
+- 💄 `<pro>Trigger`：支持 Fragment 子节点。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
 - 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
@@ -39,6 +43,8 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`： 修复组合列中子列第一列设置 resizable 无法拖拽的问题。
 - 🐞 `<pro>Tree`：修复收起状态下勾选框状态错误的问题。
 - 🐞 `<pro>TreeSelect`：修复收起状态下勾选框状态错误的问题。
+- 🐞 `<pro>Select`：修复多选模式下 trigger 为 hover 无效。
+- 🐞 `<pro>FormField`：修复高亮模式下 valueChangeAction 为 input 时，校验报错会导致输入框失去焦点的问题。
 
 ## 1.4.3
 

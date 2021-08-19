@@ -31,6 +31,8 @@ import Record from '../data-set/Record';
 import Field, { HighlightProps } from '../data-set/Field';
 import { Renderer, RenderProps } from './FormField';
 import { Tooltip } from '../core/enum';
+import Attachment from '../attachment/Attachment';
+import { FuncType } from '../button/enum';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
   if (isArrayLike(range)) {
@@ -467,15 +469,22 @@ export function defaultRenderer(renderOption: RenderProps) {
 
 export function defaultOutputRenderer(renderOption: RenderProps) {
   const { value, name, record } = renderOption;
-  const field = record && record.getField(name);
-  if (field && field.type === FieldType.boolean) {
-    const checkBoxPrefix = getProPrefixCls('checkbox');
-    return (
-      <label className={`${checkBoxPrefix}-wrapper ${checkBoxPrefix}-disabled`}>
-        <input disabled className={checkBoxPrefix} type="checkbox" checked={value === field.get(BooleanValue.trueValue)} />
-        <i className={`${checkBoxPrefix}-inner`} />
-      </label>
-    );
+  if (record) {
+    const field = record.getField(name);
+    if (field) {
+      if (field.type === FieldType.boolean) {
+        const checkBoxPrefix = getProPrefixCls('checkbox');
+        return (
+          <label className={`${checkBoxPrefix}-wrapper ${checkBoxPrefix}-disabled`}>
+            <input disabled className={checkBoxPrefix} type="checkbox" checked={value === field.get(BooleanValue.trueValue)} />
+            <i className={`${checkBoxPrefix}-inner`} />
+          </label>
+        );
+      }
+      if (field.type === FieldType.attachment) {
+        return <Attachment readOnly name={name} viewMode="popup" record={record} funcType={FuncType.link} />;
+      }
+    }
   }
   return defaultRenderer(renderOption);
 }

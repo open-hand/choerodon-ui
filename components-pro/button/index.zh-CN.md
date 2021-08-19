@@ -28,6 +28,7 @@ subtitle: 按钮
 | wait | 设置按钮点击间隔时间 | number | - |
 | waitType | 设置按钮点击间隔类型，可选值： `throttle` `debounce` | string | `throttle` |
 | onClick | 点击按钮时的回调, 当回调返回值为 Promise，则会出现 loading 状态直到 Promise 的状态不为 pending | (e) => void | Promise |
+| block | 块级按钮 | boolean | false |
 
 更多属性请参考 [ViewComponent](/components-pro/core/#ViewComponent)。
 

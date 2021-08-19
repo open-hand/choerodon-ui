@@ -75,7 +75,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={6}>
-          <Select dataSet={this.ds} name="sex" placeholder="请选择" onOption={handleOption} />
+          <Select dataSet={this.ds} name="sex" placeholder="请选择" onOption={handleOption} trigger={['hover']} />
         </Col>
         <Col span={6}>
           <Button onClick={this.changeLookupCode}>修改lookupCode</Button>
@@ -92,6 +92,7 @@ class App extends React.Component {
             maxTagTextLength={3} 
             maxTagPlaceholder={restValues => `+${restValues.length}...`}
             style={{ width: '100%' }}
+            trigger={['hover']}
           />
         </Col>
       </Row>

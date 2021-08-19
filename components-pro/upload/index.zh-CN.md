@@ -14,7 +14,9 @@ cols: 1
 
 ## API
 
-### Upload 属性说明如下：
+### Upload
+ 
+属性说明如下：
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -44,7 +46,9 @@ cols: 1
 
 更多属性请参考 [ViewComponent](/components-pro/core/#ViewComponent)。
 
-### UploadFile 类型接口：
+### UploadFile
+ 
+类型接口：
 
 ```ts
 export interface UploadFile {

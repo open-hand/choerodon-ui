@@ -28,6 +28,7 @@ import Validator, { CustomValidator, ValidationMessages } from '../validator/Val
 import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
+import attachmentStore from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
 import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit, processValue } from './utils';
 import Validity from '../validator/Validity';
@@ -42,6 +43,7 @@ import { getDateFormatByField } from '../field/utils';
 import { getLovPara } from '../stores/utils';
 import { TimeStep } from '../date-picker/DatePicker';
 import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from '../number-field/utils';
+import AttachmentFile from './AttachmentFile';
 
 function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
@@ -114,6 +116,7 @@ export type HighlightProps = {
   name?: string | undefined;
   className?: string;
   style?: CSSProperties
+  hidden?: boolean;
 };
 
 export type FieldProps = {
@@ -398,6 +401,20 @@ export default class Field {
   @observable props: FieldProps & { [key: string]: any; };
 
   @observable dirtyProps?: Partial<FieldProps> | undefined;
+
+  @observable attachments?: AttachmentFile[] | undefined;
+
+  get attachmentCount(): number | undefined {
+    const { attachments } = this;
+    if (attachments) {
+      return attachments.length;
+    }
+    return this.get('__attachmentCount__');
+  }
+
+  set attachmentCount(count: number | undefined) {
+    this.set('__attachmentCount__', count);
+  }
 
   get pristineProps(): FieldProps {
     return {
@@ -955,7 +972,7 @@ export default class Field {
   getValidatorProps(): ValidatorProps | undefined {
     const { record } = this;
     if (record) {
-      const { dataSet, name, type, required } = this;
+      const { dataSet, name, type, required, attachmentCount } = this;
       const baseType = getBaseType(type);
       const customValidator = this.get('validator');
       const max = this.get('max');
@@ -990,6 +1007,7 @@ export default class Field {
         range,
         multiple,
         format,
+        attachmentCount,
         defaultValidationMessages,
       };
       if (!this.validatorPropKeys) {
@@ -1127,6 +1145,25 @@ export default class Field {
     const lovCode = this.get('lovCode');
     if (lovCode) {
       lovCodeStore.fetchConfig(lovCode, this);
+    }
+  }
+
+  fetchAttachments(props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) {
+    const { bucketName, bucketDirectory, attachmentUUID } = props;
+    const { fetchList } = getConfig('attachment');
+    if (fetchList) {
+      fetchList({ bucketName, bucketDirectory, attachmentUUID }).then(action((results) => {
+        this.attachments = results.map(file => new AttachmentFile(file));
+      }));
+    }
+  }
+
+  fetchAttachmentCount(uuid: string) {
+    const { batchFetchCount } = getConfig('attachment');
+    if (batchFetchCount && !this.attachments) {
+      attachmentStore.fetchCountInBatch(uuid).then((count) => {
+        this.attachmentCount = count;
+      });
     }
   }
 

@@ -182,13 +182,13 @@ function isFixedPosition(node: HTMLElement): boolean {
   return true;
 }
 
-export default function (el, refNode, align) {
+export default function (el: HTMLElement, refNode: HTMLElement, align) {
   let points = align.points;
   let offset = (align.offset || [0, 0]).slice();
   let targetOffset = (align.targetOffset || [0, 0]).slice();
   const overflow: overflowType = align.overflow || {};
-  const target = align.target || refNode;
-  const source = align.source || el;
+  const target: HTMLElement = align.target || refNode;
+  const source: HTMLElement = align.source || el;
   const newOverflowCfg: overflowType = {};
   let fail = 0;
   const visibleRect = getVisibleRectForElement();
@@ -263,26 +263,24 @@ export default function (el, refNode, align) {
       newElRegion = adjustForViewport(elFuturePos, elRegion, visibleRect, newOverflowCfg);
     }
   }
-
-  if (newElRegion.width !== elRegion.width) {
-    source.style.width = newElRegion.width;
+  const { width, height } = newElRegion;
+  if (width !== elRegion.width) {
+    source.style.width = width ? pxToRem(width)! : '0';
   }
 
-  if (newElRegion.height !== elRegion.height) {
-    source.style.height = newElRegion.height;
+  if (height !== elRegion.height) {
+    source.style.height = height ? pxToRem(height)! : '0';
   }
-  const doc = getDocument(window);
   const isTargetFixed = isFixedPosition(target);
-  const scrollTop = isTargetFixed
-    ? 0
-    : doc.documentElement.scrollTop || doc.body.scrollTop;
-  const scrollLeft = isTargetFixed
-    ? 0
-    : doc.documentElement.scrollLeft || doc.body.scrollLeft;
-
+  const { offsetParent } = source;
+  if (offsetParent) {
+    const { left, top } = offsetParent.getBoundingClientRect();
+    newElRegion.left -= left;
+    newElRegion.top -= top;
+  }
   Object.assign(source.style, {
-    left: pxToRem(newElRegion.left + scrollLeft),
-    top: pxToRem(newElRegion.top + scrollTop),
+    left: pxToRem(newElRegion.left),
+    top: pxToRem(newElRegion.top),
   });
 
   if (isTargetFixed) {

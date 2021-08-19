@@ -114,9 +114,24 @@ export interface Locale {
     not_acceptable_prompt;
     file_list_max_length;
   };
+  Attachment: {
+    value_missing_no_label;
+    value_missing;
+    upload_attachment;
+    upload_picture;
+    download_all;
+    view_attachment;
+    no_attachments;
+    by_upload_time;
+    by_name;
+    file_max_size;
+    file_list_max_length;
+    file_type_mismatch;
+  },
   Modal: {
     ok;
     cancel;
+    preview_picture;
   };
   DataSet: {
     unsaved_data_confirm;

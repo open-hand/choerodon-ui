@@ -28,15 +28,15 @@ const childrenProps = { hidden: 'hidden' };
 
 export interface PopupProps extends ViewComponentProps {
   align: object;
-  onAlign?: (source: Node, align: object, target: Node | Window, translate: { x: number, y: number }) => void;
-  getRootDomNode?: () => Node;
+  onAlign?: (source: Node, align: object, target: HTMLElement, translate: { x: number, y: number }) => void;
+  getRootDomNode?: () => Element | Text | null;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   transitionName?: string;
   onAnimateAppear?: (key: Key | null) => void;
   onAnimateEnter?: (key: Key | null) => void;
   onAnimateLeave?: (key: Key | null) => void;
   onAnimateEnd?: (key: Key | null, exists: boolean) => void;
-  getStyleFromAlign?: (target: Node | Window, align: object) => object | undefined;
+  getStyleFromAlign?: (target: HTMLElement, align: object) => object | undefined;
   getClassNameFromAlign?: (align: object) => string | undefined;
   getFocusableElements?: (elements: HTMLElement[]) => void;
 }
@@ -82,7 +82,7 @@ export default class Popup extends ViewComponent<PopupProps> {
 
   align: Align | null;
 
-  target?: Node | Window;
+  target?: HTMLElement;
 
   contentRendered: boolean = false;
 

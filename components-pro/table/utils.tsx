@@ -27,12 +27,14 @@ import UrlField from '../url-field/UrlField';
 import EmailField from '../email-field/EmailField';
 import ColorPicker from '../color-picker/ColorPicker';
 import Output from '../output/Output';
+import Attachment from '../attachment/Attachment';
 import DataSet from '../data-set/DataSet';
 import TableStore, { CUSTOMIZED_KEY } from './TableStore';
 import { TablePaginationConfig } from './Table';
 import { $l } from '../locale-context';
 import measureTextWidth from '../_util/measureTextWidth';
 import ColumnGroup from './ColumnGroup';
+import { FuncType } from '../button/enum';
 
 export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
@@ -90,6 +92,8 @@ export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: 
       return <UrlField isFlat={isFlat} />;
     case FieldType.color:
       return <ColorPicker isFlat={isFlat} />;
+    case FieldType.attachment:
+      return <Attachment viewMode="popup" funcType={FuncType.link} />;
     case FieldType.string:
       return <ObserverTextField isFlat={isFlat} />;
     default:

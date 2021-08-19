@@ -15,7 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `<pro>Attachment`: Added Attachment component.
+- 🌟 `<pro>Picture`: Added Picture component.
+- 🌟 `<pro>Modal`: Added preview method.
 - 🌟 `<pro>RichText`: Added continuous preview of pictures.
 - 🌟 `<pro>Cascader`: Added `async` and `loadData` attributes to simplify asynchronous loading schemes.
 - 🌟 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
@@ -30,6 +33,7 @@ timeline: true
 - 💄 `<pro>Tree`: Optimize the handling of DataSet related data and events when the `selectable` attribute is false.
 - 💄 `<pro>RichText`: Optimize the preview style and `RichTextViewer` style.
 - 💄 `<pro>TextField`: Optimize the display position of `showLengthInfo`.
+- 💄 `<pro>Trigger`: Support Fragment child.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
 - 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
@@ -40,6 +44,8 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fix the problem that the first column of the sub-column in the combined column cannot be dragged when `resizable` is set.
 - 🐞 `<pro>Tree`：Fix the problem that the check box status is wrong in the stowed state.
 - 🐞 `<pro>TreeSelect`：Fix the problem that the check box status is wrong in the stowed state.
+- 🐞 `<pro>Select`: Fix that hover trigger has no effect in multi-select mode.
+- 🐞 `<pro>FormField`: Fix the problem that the input box will lose focus when the `valueChangeAction` is `input` in the highlight mode.
 
 ## 1.4.3
 

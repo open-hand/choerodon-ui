@@ -8,10 +8,10 @@ import { ElementProps } from '../core/ViewComponent';
 import { ColumnLock, DragColumnAlign } from './enum';
 import TableEditor, { TableEditorProps } from './TableEditor';
 import TableCol from './TableCol';
-import { isStickySupport } from './utils';
+import { getColumnKey, isStickySupport } from './utils';
 import { treeReduce } from '../_util/treeUtils';
 import ColumnGroups from './ColumnGroups';
-import ColumnGroup from './ColumnGroup';
+import { ColumnProps } from './Column';
 
 export interface TableWrapperProps extends ElementProps {
   lock?: ColumnLock;
@@ -31,11 +31,11 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = observer(function Tab
     lock !== ColumnLock.left && !hasBody && tableStore.overflowY ?
       pxToRem(width + measureScrollbar()) : pxToRem(width) : '100%';
   const editors = useMemo((): ReactElement<TableEditorProps>[] | undefined => hasBody ?
-    treeReduce<ReactElement<TableEditorProps>[], ColumnGroup>(leafs, (nodes, { column, key }) => {
+    treeReduce<ReactElement<TableEditorProps>[], ColumnProps>(leafs.map(({ column }) => column), (nodes, column) => {
       const { editor, name } = column;
       if (editor && name && (lock || isStickySupport() || !column.lock || !overflowX)) {
         nodes.push(
-          <TableEditor key={key} column={column} />,
+          <TableEditor key={getColumnKey(column)} column={column} />,
         );
       }
       return nodes;

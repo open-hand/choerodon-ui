@@ -115,6 +115,15 @@ Modal.open()返回一个对象，该对象具有如下方法：
 | open()         | 打开 |                      |
 | update(props)  | 更新 |                      |
 
+### Modal.preview
+
+Modal.preview(props, modalProps) 图片预览, props参数如下
+
+| 名称           | 说明 | 类型                 |
+| -------------- | ---- | -------------------- |
+| list         | 图片地址组 |  string[]    |
+| defaultIndex | list的index | number |
+
 ### props.modal
 
 Modal 会向内部组件注入 modal 对象，该对象具有如下属性与方法：

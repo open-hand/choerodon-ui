@@ -1,6 +1,7 @@
 import React, { Children, Component, CSSProperties, isValidElement, Key, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
+import { isFragment } from 'react-is';
 import classNames from 'classnames';
 import raf from 'raf';
 import { action as mobxAction, observable, runInAction } from 'mobx';
@@ -64,7 +65,7 @@ function contains(root, n) {
 
 export type RenderFunction = (props?: { trigger?: ReactNode }) => React.ReactNode;
 
-export type ChildrenFunction = (caller: (node: ReactElement) => ReactElement, childrenProps?: any) => ReactElement;
+export type ChildrenFunction = (caller: (node: ReactNode) => ReactNode, childrenProps?: any) => ReactElement;
 
 function isChildrenFunction(fn: ReactNode | ChildrenFunction): fn is ChildrenFunction {
   return typeof fn === 'function';
@@ -209,38 +210,53 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   @autobind
-  renderTriggerChild(child: ReactElement): ReactElement {
-    const newChildProps: any = {
-      key: child.key,
-    };
-    if (this.isContextMenuToShow()) {
-      newChildProps.onContextMenu = this.handleEvent;
+  renderTriggerChild(child: ReactNode): ReactNode {
+    if (child) {
+      if (isFragment(child)) {
+        const { props: { children } } = child;
+        return Children.map<ReactNode, ReactNode>(children, (fragmentChild) => this.renderTriggerChild(fragmentChild));
+      }
+      if (isValidElement(child)) {
+        const newChildProps: any = {
+          key: child.key,
+        };
+        if (this.isContextMenuToShow()) {
+          newChildProps.onContextMenu = this.handleEvent;
+        }
+        if (this.isClickToHide() || this.isClickToShow()) {
+          newChildProps.onClick = this.handleEvent;
+          newChildProps.onMouseDown = this.handleEvent;
+        }
+        if (this.isMouseEnterToShow()) {
+          newChildProps.onMouseEnter = this.handleEvent;
+          const { mouseEnterDelay } = this.props;
+          if (mouseEnterDelay && !this.isMouseLeaveToHide()) {
+            newChildProps.onMouseLeave = this.cancelPopupTask;
+          }
+        }
+        if (this.isMouseLeaveToHide()) {
+          newChildProps.onMouseLeave = this.handleEvent;
+          const { mouseLeaveDelay } = this.props;
+          if (mouseLeaveDelay && !this.isMouseEnterToShow()) {
+            newChildProps.onMouseEnter = this.cancelPopupTask;
+          }
+        }
+        if (this.isFocusToShow() || this.isBlurToHide()) {
+          newChildProps.onFocus = this.handleEvent;
+          newChildProps.onBlur = this.handleEvent;
+        }
+        newChildProps.onKeyDown = this.handleEvent;
+        newChildProps.popupHidden = this.popupHidden;
+        return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
+      }
     }
-    if (this.isClickToHide() || this.isClickToShow()) {
-      newChildProps.onClick = this.handleEvent;
-      newChildProps.onMouseDown = this.handleEvent;
-    }
-    if (this.isMouseEnterToShow()) {
-      newChildProps.onMouseEnter = this.handleEvent;
-    }
-    if (this.isMouseLeaveToHide()) {
-      newChildProps.onMouseLeave = this.handleEvent;
-    }
-    if (this.isFocusToShow() || this.isBlurToHide()) {
-      newChildProps.onFocus = this.handleEvent;
-      newChildProps.onBlur = this.handleEvent;
-    }
-    newChildProps.onKeyDown = this.handleEvent;
-    newChildProps.popupHidden = this.popupHidden;
-    return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
+    return child;
   }
 
   render() {
     const { children, childrenProps } = this.props;
     const popup = this.getPopup();
-    const newChildren = isChildrenFunction(children) ? children(this.renderTriggerChild, childrenProps) : Children.map(children, child => (
-      isValidElement(child) ? this.renderTriggerChild(child) : child
-    ));
+    const newChildren = isChildrenFunction(children) ? children(this.renderTriggerChild, childrenProps) : Children.map<ReactNode, ReactNode>(children, child => this.renderTriggerChild(child));
     return [newChildren, popup];
   }
 
@@ -275,6 +291,11 @@ export default class Trigger extends Component<TriggerProps> {
   componentWillUnmount() {
     this.popupTask.cancel();
     this.documentEvent.clear();
+  }
+
+  @autobind
+  cancelPopupTask() {
+    this.popupTask.cancel();
   }
 
   @autobind
@@ -359,7 +380,7 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   handlePopupBlur(e) {
-    if (this.activeElement) {
+    if (this.activeElement && this.isBlurToHide()) {
       const { activeElement: target } = this;
       e.stopPropagation();
       this.activeElement = null;
