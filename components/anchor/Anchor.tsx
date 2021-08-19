@@ -256,8 +256,8 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
     const prefixCls = this.getPrefixCls();
     const linkNode = (findDOMNode(this as any) as HTMLElement).getElementsByClassName(
       `${prefixCls}-link-title-active`,
-    )[0];
-    if (linkNode) {
+    )[0] as HTMLElement | undefined;
+    if (linkNode && linkNode.offsetParent) {
       this.inkNode.style.top = `${(linkNode as any).offsetTop + linkNode.clientHeight / 2 - 4.5}px`;
     }
   };

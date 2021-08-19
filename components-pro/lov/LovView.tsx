@@ -84,7 +84,7 @@ export default class LovView extends Component<LovViewProps> {
     const { selectionMode } = this;
     const { onSelect, modal, multiple, dataSet } = this.props;
     const records: Record[] = selectionMode === SelectionMode.treebox ?
-      dataSet.treeSelected : selectionMode === SelectionMode.rowbox ?
+      dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     if (record) {
@@ -173,6 +173,10 @@ export default class LovView extends Component<LovViewProps> {
         } else {
           lovTableProps.selectionMode = SelectionMode.rowbox;
         }
+      }
+      if (lovTableProps.selectionMode !== SelectionMode.rowbox && lovTableProps.selectionMode !== SelectionMode.treebox) {
+        lovTableProps.highLightRow = false;
+        lovTableProps.selectedHighLightRow = true;
       }
     } else if (lovTableProps.selectionMode !== SelectionMode.rowbox) {
       lovTableProps.onRow = this.handleRow;

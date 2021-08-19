@@ -216,7 +216,7 @@ export default class Lov extends Select<LovProps> {
     const config = this.getConfig();
     const { options, multiple, primitive, valueField } = this;
     // TODO：lovEvents deprecated
-    const { lovEvents, showCheckedStrategy } = this.props;
+    const { lovEvents } = this.props;
     const modalProps = this.getModalProps();
     const tableProps = this.getTableProps();
     const noCache = this.getProp('noCache');
@@ -225,6 +225,7 @@ export default class Lov extends Select<LovProps> {
       options.unSelectAll();
       options.clearCachedSelected();
       if (multiple) {
+        const showCheckedStrategy = this.getProp('showCheckedStrategy');
         options.selectionStrategy = showCheckedStrategy || CheckedStrategy.SHOW_ALL;
         options.setCachedSelected(
           this.getValues().map(value => {

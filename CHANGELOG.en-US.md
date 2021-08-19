@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
 - 🌟 `<pro>Modal`: Added `preview` method.
-- 🌟 `<pro>DataSet.Field`: Added `bucketName`, `bucketDirectory`, `attachmentCount` properties.
+- 🌟 `<pro>DataSet.Field`: Added `bucketName`, `bucketDirectory`, `attachmentCount`, `showCheckedStrategy` properties.
 - 🌟 `<pro>DataSet.AttachmentFile`: Added `AttachmentFile` class.
 - 🌟 `<pro>RichText`: Added continuous preview of pictures.
 - 🌟 `<pro>Cascader`: Added `async` and `loadData` attributes to simplify asynchronous loading schemes.
@@ -48,6 +48,7 @@ timeline: true
 - 🐞 `<pro>TreeSelect`：Fix the problem that the check box status is wrong in the stowed state.
 - 🐞 `<pro>Select`: Fix that hover trigger has no effect in multi-select mode.
 - 🐞 `<pro>FormField`: Fix the problem that the input box will lose focus when the `valueChangeAction` is `input` in the highlight mode.
+- 🐞 `<pro>Lov`: Fix the problem that multiple selections cannot be made when the `selectionMode` property of Table is `click`.
 
 ## 1.4.3
 
