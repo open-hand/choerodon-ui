@@ -4,7 +4,6 @@ import isFunction from 'lodash/isFunction';
 import { getPrefixCls } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import Modal, { ModalProps } from '../modal';
-import Slider from '../slider';
 import { UploadFile, UploadProps } from '../upload/interface';
 import defaultLocale from '../locale-provider/default';
 import Button from '../button';
@@ -69,14 +68,6 @@ export interface ImageCropLocale {
     imageCrop?: string;
 }
 
-const MIN_RATE = 1;
-const MAX_RATE = 100;
-const RATE_STEP = 1;
-
-const MIN_ROTATE = 0;
-const MAX_ROTATE = 360;
-const ROTATE_STEP = 1;
-
 export enum shapeCroper {
     rect = 'rect',
     round = 'round',
@@ -116,7 +107,6 @@ export interface ImgCropProps {
     zoom?: boolean,
     grid?: boolean,
     src?: string,
-    aspectControl?: boolean,
     rotate?: boolean,
     beforeCrop?: (file: UploadFile, uploadFiles: UploadFile[]) => boolean,
     modalTitle?: string,
@@ -132,6 +122,7 @@ export interface ImgCropProps {
     onCropComplete?: ({ url: string, blob: Blob, area: Area }) => void,
     prefixCls?: string,
     serverCrop: boolean,
+    rotateStep: number,
 }
 
 
@@ -181,53 +172,6 @@ const EasyCrop = forwardRef<unknown, EasyCropProps>((props, ref: Ref<Cropper>) =
     );
 });
 
-
-// 设置初始化的比例值，值更加贴近100 方便查看与拖拉
-const balanceRate = (rate: number): BalanceRate => {
-    let x = 100; let y = 100;
-    if (rate > 100) {
-        x = 100;
-        y = 1;
-    } else if (rate < 0.01) {
-        x = 1;
-        y = 0;
-    } else if (rate === 1) {  // 特殊值快速处理
-        x = 50;
-        y = 50;
-    } else if (rate === 0.5) {  // 特殊值快速处理
-        x = 30;
-        y = 60;
-    } else {
-        const residual = {
-            value: 10000,
-            x: 0,
-            y: 0,
-        }
-        while (x > 0 && y > 0) {
-            if (x / y > rate) {
-                x--;
-            } else if (x / y < rate) {
-                y--;
-            } else {
-                residual.x = x;
-                residual.y = y;
-                break;
-            }
-            if (Math.abs(residual.value) > Math.abs(x / y - rate)) {
-                residual.value = Math.abs(x / y - rate)
-                residual.x = x;
-                residual.y = y;
-            }
-        }
-        x = residual.x
-        y = residual.y
-    }
-    return {
-        x,
-        y,
-    }
-}
-
 // 图片转化为canvas
 const imageToCanvas = (image) => {
     const canvas = document.createElement('canvas');
@@ -251,6 +195,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
         grid,
         zoom,
         rotate,
+        rotateStep,
         beforeCrop,
         modalTitle,
         modalWidth,
@@ -258,7 +203,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
         modalCancel,
         modalVisible,
         children,
-        aspectControl,
         onCancel: onModalCancel,
         onOk: onModalOk,
         src: imageSrc,
@@ -276,18 +220,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     const hasZoom = zoom === true;
     const hasRotate = rotate === true;
 
-    const defaultRateXY = (): BalanceRate => {
-        if (aspect && aspectControl) {
-            return balanceRate(aspect);
-        }
-        return {
-            x: 40,
-            y: 30,
-        }
-    }
-
-    const hasAspectControl = aspectControl === true;
-
     const modalTextProps = { okText: modalOk, cancelText: modalCancel };
     Object.keys(modalTextProps).forEach((key) => {
         if (!modalTextProps[key]) delete modalTextProps[key];
@@ -295,8 +227,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     const [src, setSrc] = useState('');
     const [zoomVal, setZoomVal] = useState(1);
     const [rotateVal, setRotateVal] = useState(0);
-    const [xRate, setXRate] = useState(defaultRateXY().x);
-    const [yRate, setYRate] = useState(defaultRateXY().y);
 
     const beforeUploadRef = React.useRef<(file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<any | Blob>>(); // 返回上传组件的上传之前的钩子函数
     const fileRef = React.useRef<UploadFile>(); // 记录文件的参数
@@ -418,10 +348,14 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     /**
      * Controls
      */
-    const isMinZoom = zoomVal === MIN_ZOOM;
-    const isMaxZoom = zoomVal === MAX_ZOOM;
+    const MIN_ROTATE = 0;
+    const MAX_ROTATE = 360;
+    const ROTATE_STEP = rotateStep || 90;
+
+    const isMinZoom = zoomVal <= MIN_ZOOM;
+    const isMaxZoom = zoomVal >= MAX_ZOOM;
     const isMinRotate = rotateVal === MIN_ROTATE;
-    const isMaxRotate = rotateVal === MAX_ROTATE;
+    const isMaxRotate = rotateVal >= MAX_ROTATE;
 
     const subZoomVal = useCallback(() => {
         if (!isMinZoom) setZoomVal(zoomVal - ZOOM_STEP);
@@ -431,13 +365,20 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
         if (!isMaxZoom) setZoomVal(zoomVal + ZOOM_STEP);
     }, [isMaxZoom, zoomVal]);
 
-    const subRotateVal = useCallback(() => {
-        if (!isMinRotate) setRotateVal(rotateVal - ROTATE_STEP);
-    }, [isMinRotate, rotateVal]);
-
     const addRotateVal = useCallback(() => {
-        if (!isMaxRotate) setRotateVal(rotateVal + ROTATE_STEP);
+        if (!isMaxRotate) {
+            setRotateVal(rotateVal + ROTATE_STEP);
+        } else {
+            setRotateVal(MIN_ROTATE + ROTATE_STEP);
+        }
     }, [isMaxRotate, rotateVal]);
+
+    const initVal = useCallback(() => {
+        if(!isMinZoom || !isMinRotate) {
+            setZoomVal(MIN_ZOOM);
+            setRotateVal(MIN_ROTATE);
+        }
+    }, [zoomVal, rotateVal])
 
     /**
      * Modal
@@ -523,7 +464,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
         <EasyCrop
             ref={ref}
             src={src}
-            aspect={aspectControl ? (xRate / yRate) : aspect}
+            aspect={aspect}
             shape={shape}
             grid={grid}
             hasZoom={hasZoom}
@@ -556,74 +497,16 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                                 {...modalTextProps}
                             >
                                 {cropContent ? cropContent(RenderCrop) : RenderCrop}
-                                {hasZoom && (
-                                    <div className={`${prefixCls}-control zoom`}>
-                                        <Button onClick={subZoomVal} disabled={isMinZoom}>
-                                            －
-                                         </Button>
-                                        <Slider
-                                            min={MIN_ZOOM}
-                                            max={MAX_ZOOM}
-                                            step={ZOOM_STEP}
-                                            value={zoomVal}
-                                            onChange={(sliderValue: number) => (setZoomVal(sliderValue))}
-                                        />
-                                        <Button onClick={addZoomVal} disabled={isMaxZoom}>
-                                            ＋
-                                         </Button>
-                                    </div>
-                                )}
-                                {hasRotate && (
-                                    <div className={`${prefixCls}-control rotate`}>
-                                        <Button onClick={subRotateVal} disabled={isMinRotate}>
-                                            ↺
-                                        </Button>
-                                        <Slider
-                                            min={MIN_ROTATE}
-                                            max={MAX_ROTATE}
-                                            step={ROTATE_STEP}
-                                            value={rotateVal}
-                                            onChange={(sliderValue: number) => (setRotateVal(sliderValue))}
-                                        />
-                                        <Button onClick={addRotateVal} disabled={isMaxRotate}>
-                                            ↻
-                                        </Button>
-                                    </div>
-                                )}
-                                {hasAspectControl && (
-                                    <div className={`${prefixCls}-control yrate`}>
-                                        <Button onClick={subRotateVal} disabled={isMinRotate}>
-                                            y
-                                        </Button>
-                                        <Slider
-                                            min={MIN_RATE}
-                                            max={MAX_RATE}
-                                            step={RATE_STEP}
-                                            value={yRate}
-                                            onChange={(sliderValue: number) => (setYRate(sliderValue))}
-                                        />
-                                        <Button onClick={addRotateVal} disabled={isMaxRotate}>
-                                            100
-                                        </Button>
-                                    </div>
-                                )}
-                                {hasAspectControl && (
-                                    <div className={`${prefixCls}-control xrate`}>
-                                        <Button onClick={subRotateVal} disabled={isMinRotate}>
-                                            x
-                                        </Button>
-                                        <Slider
-                                            min={MIN_RATE}
-                                            max={MAX_RATE}
-                                            step={RATE_STEP}
-                                            value={xRate}
-                                            onChange={(sliderValue: number) => (setXRate(sliderValue))}
-                                        />
-                                        <Button onClick={addRotateVal} disabled={isMaxRotate}>
-                                            100
-                                        </Button>
-                                    </div>
-                                )}
+                                <div className={`${prefixCls}-control`}>
+                                    {hasZoom && (
+                                        <>
+                                            <Button icon="zoom_in" onClick={addZoomVal} disabled={isMaxZoom} />
+                                            <Button icon="zoom_out" onClick={subZoomVal} disabled={isMinZoom} />
+                                        </>
+                                    )}
+                                    {hasRotate && <Button icon="play_90" onClick={addRotateVal} />}
+                                    {hasZoom && <Button onClick={initVal}>1:1</Button>}
+                                </div>
                             </Modal>
                         )}
                     </>

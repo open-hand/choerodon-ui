@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
+import { isString } from 'lodash';
 import PropTypes from 'prop-types';
 import Button from '../button';
 import Icon from '../icon';
@@ -14,7 +15,7 @@ import Crop from './Crop';
 import { getPrefixCls } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
-import { imageCrop } from '../locale-provider'
+import { imageCrop } from '../locale-provider';
 
 const Dragger = Upload.Dragger;
 const { round } = Math;
@@ -309,6 +310,17 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     const { prefixCls: customizePrefixCls, previewList, editorWidth, editorHeight, defaultRectSize, minRectSize, subTitle, previewTitle, reloadTitle } = this.props;
     const { src } = img;
     const prefixCls = getPrefixCls('avatar-crop-edit', customizePrefixCls);
+    const previewTitleFlag = isString(previewTitle) || React.isValidElement(previewTitle);
+    const renderPreviewTitle = () => {
+      if(isString(previewTitle)) {
+        return (
+          <h5 className={`${prefixCls}-preview-title`}>
+              <span >{previewTitle}</span>
+          </h5>
+        )
+      }
+      return previewTitle;
+    };
 
     return (
       <div>
@@ -333,9 +345,11 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
             <Button icon="play_90" shape="circle" onClick={() => this.setState({ rotate: rotate + 90 })} />
           </div>
           <div className={`${prefixCls}-preview`}>
-            <h5 className={`${prefixCls}-preview-title`}>
-              <span >{previewTitle || Avatarlocale.preview}</span>
-            </h5>
+            {
+              previewTitleFlag
+              &&
+              renderPreviewTitle()
+            }
             {this.renderPreviewItem(previewList)}
           </div>
         </div>
