@@ -366,6 +366,18 @@ export type FieldProps = {
    * 高亮
    */
   highlight?: boolean | ReactNode | HighlightProps;
+  /**
+   * 附件上传的桶名
+   */
+  bucketName?: string;
+  /**
+   * 附件上传的桶目录
+   */
+  bucketDirectory?: string;
+  /**
+   * 附件数量
+   */
+  attachmentCount?: number;
 };
 
 export default class Field {
@@ -409,11 +421,11 @@ export default class Field {
     if (attachments) {
       return attachments.length;
     }
-    return this.get('__attachmentCount__');
+    return this.get('attachmentCount');
   }
 
   set attachmentCount(count: number | undefined) {
-    this.set('__attachmentCount__', count);
+    this.set('attachmentCount', count);
   }
 
   get pristineProps(): FieldProps {

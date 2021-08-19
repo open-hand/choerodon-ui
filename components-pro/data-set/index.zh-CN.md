@@ -285,6 +285,9 @@ title: DataSet
 | trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
 | defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/components/configure/#ValidationMessages) | ValidationMessages |  |
 | highlight | 高亮, 如是字符串或 ReactElement, 则会显示 Tooltip | boolean \| ReactNode |  |
+| bucketName | 附件上传的桶名 | string |  |
+| bucketDirectory | 附件上传的桶目录 | string |  |
+| attachmentCount | 附件数量， 一般使用 dynamicProps 来获取 record 中某个字段值作为附件数量， 优先级低于attachments.length | string |  |
 
 ### Field Values
 

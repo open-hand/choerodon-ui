@@ -52,6 +52,9 @@ title: DataSet
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (parent, primaryKey) => object | (parent, primaryKey) => primaryKey ? parent.get(primaryKey) : parent.toData() |
 | combineSort | 是否开启组件列排序传参 | boolean | false |
+| bucketName | 附件上传的桶名 | string |  |
+| bucketDirectory | 附件上传的桶目录 | string |  |
+| attachmentCount | 附件数量， 一般使用 dynamicProps 来获取 record 中某个字段值作为附件数量， 优先级低于attachments.length | string |  |
 
 ### DataSet Values
 
