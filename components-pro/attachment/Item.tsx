@@ -198,7 +198,11 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
 
   return (
     <div {...listProps} hidden={hidden}>
-      <div className={`${prefixCls}-container`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div
+        className={`${prefixCls}-container`}
+        onMouseEnter={isCard ? handleMouseEnter : undefined}
+        onMouseLeave={isCard ? handleMouseLeave : undefined}
+      >
         <div className={`${prefixCls}-content`}>
           {renderImagePreview()}
           {renderPlaceholder()}

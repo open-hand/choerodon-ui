@@ -4,6 +4,7 @@ import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
+import isNil from 'lodash/isNil';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Button, { ButtonProps } from '../button/Button';
@@ -158,7 +159,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   componentDidMount() {
     super.componentDidMount();
     const { viewMode } = this.props;
-    if (viewMode !== 'list') {
+    if (viewMode !== 'list' && isNil(this.count)) {
       this.fetchCount();
     }
   }
@@ -380,7 +381,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     attachment.status = 'error';
     attachment.error = error;
     const { message } = error;
-    handleUploadError(error, attachment);
+    if (handleUploadError) {
+      handleUploadError(error, attachment);
+    }
     attachment.errorMessage = attachment.errorMessage || message;
     if (onUploadError) {
       onUploadError(error, response, attachment);

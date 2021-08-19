@@ -4,14 +4,14 @@ import { AxiosError } from 'axios';
 const extReg = /(.*)\.([^.]*)$/;
 
 export interface FileLike {
-  name: string;
-  size: number;
-  type: string;
+  name?: string;
+  size?: number;
+  type?: string;
   lastModified?: number;
-  uid: string;
+  uid?: string;
   url?: string;
   originFileObj?: File;
-  creationDate: Date;
+  creationDate?: Date;
 
   [key: string]: any;
 }
@@ -56,13 +56,16 @@ export default class AttachmentFile implements FileLike {
   private load(file: FileLike) {
     Object.assign<AttachmentFile, FileLike>(this, file);
     this.uid = String(file.uid);
-    const matches = file.name.match(extReg);
-    if (matches && matches.length > 2) {
-      this.ext = matches[2];
-      this.filename = matches[1];
-    } else {
-      this.ext = '';
-      this.filename = file.name;
+    const { name } = file;
+    if (name) {
+      const matches = name.match(extReg);
+      if (matches && matches.length > 2) {
+        this.ext = matches[2];
+        this.filename = matches[1];
+      } else {
+        this.ext = '';
+        this.filename = name;
+      }
     }
   }
 }
