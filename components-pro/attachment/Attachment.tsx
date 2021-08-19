@@ -413,7 +413,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (onRemove && attachmentUUID) {
       const bucketName = this.getProp('bucketName');
       const bucketDirectory = this.getProp('bucketDirectory');
-      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory }).then(() => this.removeAttachment(attachment));
+      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory });
     }
   }
 
@@ -442,8 +442,11 @@ export default class Attachment extends FormField<AttachmentProps> {
   removeAttachment(attachment: AttachmentFile) {
     const { attachments } = this;
     if (attachments) {
-      attachments.splice(attachments.indexOf(attachment), 1);
-      this.checkValidity();
+      const index = attachments.indexOf(attachment);
+      if (index !== -1) {
+        attachments.splice(index, 1);
+        this.checkValidity();
+      }
     }
   }
 

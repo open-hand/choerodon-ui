@@ -2,6 +2,7 @@ import React, { Fragment, FunctionComponent, ReactNode, useCallback, useEffect }
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
+import isNumber from 'lodash/isNumber';
 import Item from './Item';
 import AttachmentFile from '../data-set/AttachmentFile';
 import { AttachmentListType } from './Attachment';
@@ -68,8 +69,9 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
 
   if (attachments) {
     const { length } = attachments;
-    const list = attachments.slice(0, limit).map((attachment, index) => {
+    const list = attachments.map((attachment, index) => {
       const restCount = index + 1 === limit ? length - limit : undefined;
+      const hidden = isNumber(limit) && index >= limit;
       const itemDraggable = draggable && !restCount;
       return (
         <Draggable
@@ -97,6 +99,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
                 restCount={restCount}
                 draggable={itemDraggable}
                 index={index}
+                hidden={hidden}
               />
             )
           }
