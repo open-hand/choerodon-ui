@@ -120,12 +120,12 @@ const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<
   }, [imgRef, objectFit, objectPosition]);
 
   useEffect(() => {
-    if (preview && context && isNumber(index) && status === 'loaded') {
+    if (preview && context && isNumber(index) && src) {
       ref.current.src = src;
       context.registerPicture(index, ref.current);
       return () => context.unRegisterPicture(index, ref.current);
     }
-  }, [index, context, ref, status, preview, src]);
+  }, [index, context, ref, preview, src]);
 
   const renderSources = () => {
     if (sources) {
