@@ -1,5 +1,5 @@
 import { observable, ObservableMap, runInAction, toJS } from 'mobx';
-import { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import React, { ReactNode } from 'react';
 import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
@@ -26,6 +26,8 @@ import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { TimeZone } from 'choerodon-ui/pro/lib/date-picker/DatePicker';
+import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
+import AttachmentFile, { FileLike } from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
 import { TooltipTheme } from '../tooltip';
 import { SpinProps } from '../spin';
 import { PanelProps } from '../collapse';
@@ -74,6 +76,23 @@ export type Formatter = {
   week?: string;
   timeZone?: TimeZone;
 };
+
+export type AttachmentConfig = {
+  defaultFileKey: string;
+  defaultFileSize: string;
+  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => AxiosRequestConfig);
+  batchFetchCount?: (attachmentUUIDs: string[]) => Promise<{ [key: string]: number }>;
+  fetchList?: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => Promise<FileLike[]>;
+  getPreviewURL?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string;
+  getDownloadUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string;
+  getDownloadAllUrl?: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string;
+  getAttachmentUUID?: () => Promise<string> | string;
+  renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType) => ReactNode;
+  onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
+  onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
+  onOrderChange?: (props: { attachmentUUID: string, attachments: AttachmentFile[], bucketName?: string, bucketDirectory?: string }) => Promise<void>;
+  onRemove?: (props: { attachment: AttachmentFile, attachmentUUID: string, bucketName?: string, bucketDirectory?: string }) => Promise<any>;
+}
 
 export type Config = {
   prefixCls?: string;
@@ -225,6 +244,10 @@ export type Config = {
    */
   tooltipTheme?: TooltipTheme | TooltipThemeHook;
   /**
+   * 附件相关配置
+   */
+  attachment?: AttachmentConfig;
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;
@@ -270,6 +293,8 @@ const defaultTooltipTheme: TooltipThemeHook = target => target === 'validation' 
 
 const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNode => {
   switch (componentName) {
+    case 'Attachment':
+      return $l('Attachment', 'no_attachments');
     case 'Table':
       return $l('Table', 'empty_data');
     case 'Select':
@@ -280,8 +305,8 @@ const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNo
   }
 };
 
-const defaultFormFieldHighlightRenderer: HighlightRenderer = ({ content, ...rest }, element): ReactNode => content ? (
-  <Popover {...rest} content={content}>
+const defaultFormFieldHighlightRenderer: HighlightRenderer = ({ content, hidden, ...rest }, element): ReactNode => content ? (
+  <Popover {...(hidden ? { ...rest, visible: false } : rest)} content={content}>
     {element}
   </Popover>
 ) : element;
@@ -407,6 +432,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['performanceEnabled', { Table: false }],
   ['tooltipTheme', defaultTooltipTheme],
   ['showValidation', ShowValidation.tooltip],
+  ['attachment', {}],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

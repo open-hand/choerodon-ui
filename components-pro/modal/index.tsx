@@ -2,11 +2,13 @@ import ModalManager from '../modal-manager';
 import Modal from './Modal';
 import { open } from '../modal-container/ModalContainer';
 import confirm from './confirm';
+import preview from './preview';
 import { normalizeProps } from './utils';
 
 Modal.key = ModalManager.getKey;
 Modal.open = open;
 Modal.confirm = confirm;
+Modal.preview = preview;
 Modal.info = function (props) {
   return confirm({
     type: 'info',

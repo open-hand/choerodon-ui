@@ -1,10 +1,9 @@
 import { action, IReactionDisposer, toJS } from 'mobx';
-import { AxiosRequestConfig } from 'axios';
 import Cache, { refreshCacheOptions } from './Cache';
 
 const KEY = Symbol('KEY');
 
-export default class PromiseMerger<V> {
+export default class PromiseMerger<V, ARGS> {
   timeout: number;
 
   cache: Cache<string, V>;
@@ -13,11 +12,11 @@ export default class PromiseMerger<V> {
 
   waitID;
 
-  callback: (codes: string[], lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig) => Promise<{ [key: string]: V }>;
+  callback: (codes: string[], args?: ARGS) => Promise<{ [key: string]: V }>;
 
   reaction: IReactionDisposer;
 
-  constructor(callback: (codes: string[], lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig) => Promise<{ [key: string]: V }>, config, timeout: number = 200) {
+  constructor(callback: (codes: string[], args?: ARGS) => Promise<{ [key: string]: V }>, config, timeout: number = 200) {
     this.timeout = timeout;
     this.promiseMap = new Map<string | Symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>();
     this.cache = new Cache<string, V>(toJS(config));
@@ -30,14 +29,13 @@ export default class PromiseMerger<V> {
   }
 
   @action
-  add(code: string, lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig): Promise<V> {
+  add(code: string, getBatchKey?: (defaultKey: Symbol) => string | Symbol, args?: ARGS): Promise<V> {
     const { cache, promiseMap } = this;
     const item = cache.get(code);
     if (item) {
       return Promise.resolve(item);
     }
-    const { url } = lookupBatchAxiosConfig([code]);
-    const batchKey = url ? url.split('?')[0] : KEY;
+    const batchKey = getBatchKey ? getBatchKey(KEY) : KEY;
     return new Promise<V>((resolve, reject) => {
       const promiseList = promiseMap.get(batchKey) || new Map();
       promiseMap.set(batchKey, promiseList);
@@ -64,7 +62,7 @@ export default class PromiseMerger<V> {
             // eslint-disable-next-line no-console
             console.info(`batch request: ${codeList}`);
           }
-          this.callback(codeList, lookupBatchAxiosConfig)
+          this.callback(codeList, args)
             .then(res => {
               codeList.forEach((key) => {
                 const value = promiseList.get(key);

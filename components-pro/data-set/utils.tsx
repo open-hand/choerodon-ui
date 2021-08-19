@@ -114,11 +114,11 @@ export function processToJSON(value, field: Field) {
   return value;
 }
 
-export const arrayMove = (array: Record[], from: number, to: number) => {
+export function arrayMove<T = Record>(array: T[], from: number, to: number): void {
   const startIndex = to < 0 ? array.length + to : to;
   const item = array.splice(from, 1)[0];
   array.splice(startIndex, 0, item);
-};
+}
 
 function processOne(value: any, field: Field, checkRange: boolean = true) {
   if (!isEmpty(value)) {
@@ -188,7 +188,7 @@ export function processValue(value: any, field?: Field, isCreated?: boolean): an
   if (field) {
     const multiple = field.get('multiple');
     const range = field.get('range');
-    if (multiple) {
+    if (multiple && field.type !== FieldType.attachment) {
       if (isEmpty(value)) {
         if (isCreated) {
           // for defaultValue

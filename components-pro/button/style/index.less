@@ -48,7 +48,14 @@
   }
 
   &[href] {
-    line-height: @btn-height-base;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-block[href] {
+    display: flex;
   }
 
   &:not(&-disabled):active {

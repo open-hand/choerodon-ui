@@ -58,4 +58,5 @@ export interface ValidatorProps {
   form?: Form;
   format?: string;
   defaultValidationMessages: ValidationMessages;
+  attachmentCount?: number;
 }

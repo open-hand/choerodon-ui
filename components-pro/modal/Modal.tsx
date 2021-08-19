@@ -149,6 +149,8 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   static open;
 
+  static preview;
+
   static confirm;
 
   static info;

@@ -776,7 +776,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
               onMouseEnter={this.handleFloatLabelMouseEnter}
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
-              {label}
+              {toJS(label)}
             </div>
           </div>
         );
@@ -1415,8 +1415,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   renderHighLight() {
     const wrapper = this.renderWrapper();
     const { highlight, dataSet, record, name } = this;
-    if (highlight && (this.hasFloatLabel || this.isValid)) {
-      const highlightWrapper = this.highlightRenderer(transformHighlightProps(highlight, { dataSet, record, name }), wrapper);
+    if (highlight) {
+      const { showValidation } = this.context;
+      const hidden = !(this.hasFloatLabel || showValidation === ShowValidation.newLine || this.isValid);
+      const highlightWrapper = this.highlightRenderer(transformHighlightProps(highlight, { dataSet, record, name, hidden }), wrapper);
       if (isValidElement(highlightWrapper)) {
         return highlightWrapper;
       }

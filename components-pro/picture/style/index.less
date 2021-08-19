@@ -1,0 +1,42 @@
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import "picture-viewer";
+
+@picture-prefix-cls: ~'@{c7n-pro-prefix}-picture';
+
+.@{picture-prefix-cls} {
+  position: relative;
+  display: inline-block;
+
+  &-block {
+    display: block;
+    box-sizing: content-box;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &-border {
+    border: @border-width-base @border-style-base @border-color-base;
+  }
+
+  &-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: rgba(0, 0, 0, 0.25);
+
+    .@{iconfont-css-prefix} {
+      font-size: .26rem;
+    }
+  }
+
+  &-preview {
+    cursor: pointer;
+  }
+}

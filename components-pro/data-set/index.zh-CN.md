@@ -235,7 +235,7 @@ title: DataSet
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | name | 字段名 | string |  |
-| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` `json` | string | string |
+| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` `attachment` `json` | string | string |
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值：`asc` `desc` | string |  |
 | label | 字段标签 | string \| ReactNode |  |
 | labelWidth | 字段标签宽度 | number |  |
@@ -285,6 +285,9 @@ title: DataSet
 | trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
 | defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/components/configure/#ValidationMessages) | ValidationMessages |  |
 | highlight | 高亮, 如是字符串或 ReactElement, 则会显示 Tooltip | boolean \| ReactNode |  |
+| bucketName | 附件上传的桶名 | string |  |
+| bucketDirectory | 附件上传的桶目录 | string |  |
+| attachmentCount | 附件数量， 一般使用 dynamicProps 来获取 record 中某个字段值作为附件数量， 优先级低于attachments.length | string |  |
 
 ### Field Values
 
@@ -295,6 +298,8 @@ title: DataSet
 | required | 是否必选 | observable&lt;boolean&gt; |
 | readOnly | 是否只读 | observable&lt;boolean&gt; |
 | disabled | 是否禁用 | observable&lt;boolean&gt; |
+| attachments | 附件列表 | observable&lt;[AttachmentFile](#AttachmentFile)[]&gt; |
+| attachmentCount | 附件数量 | observable&lt;number&gt; |
 
 ### Field Methods
 
@@ -349,3 +354,23 @@ title: DataSet
 | selected-self | 同 selected， 但不转换级联数据 |
 | all-self | 同 all， 但不转换级联数据 |
 | normal-self | 同 normal， 但不转换级联数据 |
+
+### AttachmentFile
+
+| 属性                | 说明                                       | 类型     |
+| ------------------- | ------------------------------------------ | -------- |
+| name   | 文件全名    | string |
+| size   | 文件大小    | number |
+| type   | 文件类型    | string |
+| lastModified   | 文件最后修改时间戳    | number |
+| creationDate   | 上传时间    | Date |
+| uid   | 唯一标识    | string |
+| url   | url地址    | string |
+| filename   | 文件名（不包含后缀）    | string |
+| ext   | 文件后缀    | string |
+| status   | 状态 `error` `succes` `uploading` `done`    | string |
+| percent   | 上传进度, 0 至 100   | number |
+| error   | 上传错误对象  | AxiosError |
+| errorMessage   | 错误消息  | string |
+| invalid   | 检验失败，如果为true, 则无法重新上传  | boolean |
+| originFileObj   | 原始文件对象，只有通过上传按钮选择的附件才有该对象  | File |

@@ -1,0 +1,290 @@
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../trigger/style/mixin';
+
+@pro-attachment-prefix-cls: ~'@{c7n-pro-prefix}-attachment';
+
+.@{pro-attachment-prefix-cls} {
+  &-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+
+    &-divider {
+      width: .01rem;
+      height: .09rem;
+      margin-left: .07rem;
+      background-color: @border-color-base;
+    }
+
+    &-buttons {
+      flex: 1;
+      white-space: nowrap;
+
+      .@{c7n-pro-prefix}-btn {
+        height: @btn-height-sm;
+      }
+    }
+  }
+
+  &-list {
+    flex: 1;
+    padding: .01rem 0;
+    overflow: auto;
+
+    &-item {
+      margin: .04rem 0;
+      padding: 0 .1rem;
+      background-color: #f3f3f3;
+
+      &-container {
+        position: relative;
+        padding: .07rem 0;
+      }
+
+      &-content,
+      &-title,
+      &-error-content {
+        display: flex;
+        align-items: center;
+      }
+
+      &-title,
+      &-error-message {
+        flex: 1;
+        padding: 0 .1rem;
+        white-space: nowrap;
+      }
+
+      &-name {
+        flex-basis: auto;
+        flex-grow: 0;
+        flex-shrink: 1;
+      }
+
+      &-name,
+      &-error-message {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &-size {
+        color: @text-color-secondary;
+      }
+
+      &-buttons {
+        display: flex;
+        opacity: 0;
+        transition: opacity .3s;
+
+        .@{c7n-pro-prefix}-btn {
+          width: .18rem;
+          height: .18rem;
+          line-height: .18rem;
+
+          .@{iconfont-css-prefix} {
+            display: block;
+            line-height: 1;
+          }
+        }
+      }
+
+      &-progress {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: auto;
+
+        .@{c7n-prefix}-progress {
+          &-outer,
+          &-inner {
+            display: block;
+          }
+
+          &-inner {
+            background-color: #d8d8d8;
+          }
+
+          &-bg {
+            background-image: linear-gradient(90deg, #f3f3f3 2%, @primary-color 100%);
+          }
+        }
+      }
+
+      &-placeholder {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: @text-color-dark;
+        font-size: .32rem;
+        background-color: rgba(0, 0, 0, .65);
+      }
+
+      &:hover &-buttons {
+        opacity: 1;
+      }
+    }
+
+    &-card {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: .15rem;
+    }
+
+    &-card &-item {
+      display: inline-block;
+      margin-top: 0;
+      margin-right: .08rem;
+      margin-bottom: .08rem;
+      padding: 0;
+      text-align: center;
+      background-color: transparent;
+
+      &-container {
+        padding: 0;
+        overflow: hidden;
+        background-color: #f8f8f8;
+        border-radius: @border-radius-base;
+      }
+
+      &-title {
+        justify-content: center;
+      }
+
+      &-buttons {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        background-color: rgba(0, 0, 0, .65);
+        border-radius: @border-radius-base;
+
+        .@{c7n-pro-prefix}-btn {
+          flex: 1;
+          height: .3rem;
+          color: @text-color-dark;
+
+          .@{iconfont-css-prefix} {
+            font-size: .14rem;
+            line-height: .3rem;
+          }
+
+          & + .@{c7n-pro-prefix}-btn {
+            margin-left: 0;
+            border-left: @border-width-base @border-style-base rgba(255, 255, 255, .65);
+            border-radius: 0;
+          }
+        }
+      }
+
+      &-error-content {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: .1rem .05rem;
+      }
+    }
+
+    &-no-card &-item-error &-item-name,
+    &-no-card &-item-error &-item-ext,
+    &-no-card &-item-error &-item-size,
+    &-item-error-content {
+      color: @error-color;
+    }
+  }
+
+  &-list &-card-button {
+    background-color: #f8f8f8;
+    border: @border-width-base dashed @border-color-base;
+    border-radius: @border-radius-base;
+
+    .@{iconfont-css-prefix} {
+      margin-bottom: .04rem;
+      font-size: .28rem;
+    }
+
+    &.@{c7n-pro-prefix}-btn-disabled,
+    .@{iconfont-css-prefix} {
+      color: rgba(0, 0, 0, .25);
+    }
+  }
+
+  &-order {
+    &-select .@{c7n-pro-prefix}-select {
+      border: none;
+    }
+
+    &-icon {
+      &::before {
+        display: block;
+        width: .16rem;
+        height: .16rem;
+        background-image: linear-gradient(90deg, @text-color 0, @text-color 100%),
+        linear-gradient(90deg, @text-color 0, @text-color 100%),
+        linear-gradient(90deg, @text-color 0, @text-color 100%),
+        linear-gradient(to bottom right, transparent 50%, @primary-color 50%),
+        linear-gradient(to bottom left, transparent 50%, @primary-color 50%),
+        linear-gradient(0deg, @primary-color 0, @primary-color 100%);
+        background-repeat: no-repeat;
+        background-position: .01rem .05rem, .01rem .08rem, .01rem .11rem, .08rem .04rem, .11rem .04rem, .1rem .08rem;
+        background-size: .05rem .02rem, .06rem .02rem, .07rem .02rem, .04rem .04rem, .04rem .04rem, .03rem .05rem;
+        content: '';
+      }
+
+      &.desc::before {
+        transform: scaleY(-1);
+      }
+    }
+  }
+
+  &-validation-message {
+    padding: .04rem 0;
+  }
+
+  &-empty {
+    padding: .04rem 0;
+    text-align: center;
+  }
+
+  .@{c7n-pro-prefix}-field-help {
+    margin-top: .04rem;
+  }
+
+  .trigger;
+
+  &-popup-inner {
+    display: flex;
+    min-width: 3rem;
+    max-width: @dropdown-menu-max-width;
+    max-height: @dropdown-menu-max-height;
+  }
+
+  &-popup-inner &-header {
+    padding: 0 .15rem;
+    border-bottom: @border-width-base @border-style-base @border-color-base;
+
+    &-label {
+      padding: .1rem 0;
+    }
+  }
+
+  &-popup-inner &-list-item {
+    background-color: transparent;
+  }
+}

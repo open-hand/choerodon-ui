@@ -10,41 +10,7 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import Icon from '../icon';
 import TaskRunner from '../_util/TaskRunner';
-
-const BUILT_IN_PLACEMENTS = {
-  bottomLeft: {
-    points: ['tl', 'bl'],
-    offset: [0, 4],
-    overflow: {
-      adjustX: 1,
-      adjustY: 1,
-    },
-  },
-  bottomRight: {
-    points: ['tr', 'br'],
-    offset: [0, 4],
-    overflow: {
-      adjustX: 1,
-      adjustY: 1,
-    },
-  },
-  topLeft: {
-    points: ['bl', 'tl'],
-    offset: [0, -4],
-    overflow: {
-      adjustX: 1,
-      adjustY: 1,
-    },
-  },
-  topRight: {
-    points: ['br', 'tr'],
-    offset: [0, -4],
-    overflow: {
-      adjustX: 1,
-      adjustY: 1,
-    },
-  },
-};
+import BUILT_IN_PLACEMENTS from './placements';
 
 export interface TriggerFieldPopupContentProps {
   setValue: (value) => void;
@@ -64,6 +30,10 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
    * 下拉框的内链样式
    */
   popupStyle?: CSSProperties;
+  /**
+   * 下拉框对齐方式
+   */
+  popupPlacement?: string;
   /**
    * 触发下拉框的方式组
    * 可选值：click | focus | hover | contextMenu
@@ -111,6 +81,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
      */
     popupStyle: PropTypes.object,
     /**
+     * 下拉框对齐方式
+     */
+    popupPlacement: PropTypes.string,
+    /**
      * 触发下拉框的方式
      * 可选值：click | focus | hover | contextMenu
      */
@@ -144,6 +118,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     ...TextField.defaultProps,
     suffixCls: 'trigger',
     clearButton: true,
+    popupPlacement: 'bottomLeft',
     trigger: ['focus', 'click'],
     triggerShowDelay: 150,
     triggerHiddenDelay: 50,
@@ -198,6 +173,8 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     return super.getOmitPropsKeys().concat([
       'popupContent',
       'popupCls',
+      'popupStyle',
+      'popupPlacement',
       'editable',
       'trigger',
       'triggerShowDelay',
@@ -237,6 +214,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
       props: {
         popupCls,
         popupStyle,
+        popupPlacement,
         hidden,
         trigger,
         triggerShowDelay,
@@ -257,7 +235,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         popupCls={popupCls}
         popupStyle={popupStyle}
         popupContent={this.renderPopupContent}
-        popupPlacement="bottomLeft"
+        popupPlacement={popupPlacement}
         popupHidden={hidden || !this.popup}
         builtinPlacements={BUILT_IN_PLACEMENTS}
         onPopupAnimateAppear={this.handlePopupAnimateAppear}

@@ -566,7 +566,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     defer(() => this.isFocused && this.select());
   }
 
-  renderRangeEditor(props, wrap: (node: ReactElement) => ReactElement) {
+  renderRangeEditor(props) {
     const { prefixCls, rangeTarget, isFocused } = this;
     const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
     const [startValue = '', endValue = ''] = this.processRangeValue();
@@ -592,7 +592,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {endRenderedValue}
         {/* 确保 range-input 为第一个 当点击label的时候出了会让element聚焦以外还会让 label的第一个表单元素聚焦 因此导致意料之外的bug */}
         {
-          !this.disabled && wrap(
+          !this.disabled && (
             <input
               {...props}
               className={`${prefixCls}-range-input`}
@@ -615,7 +615,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               }
               readOnly={this.readOnly}
               style={editorStyle}
-            />,
+            />
           )
         }
         <input
@@ -643,7 +643,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
-  renderMultipleEditor(props: T, wrap: (node: ReactElement) => ReactElement) {
+  renderMultipleEditor(props: T) {
     const { style } = this.props;
     const { text } = this;
     const editorStyle = {} as CSSProperties;
@@ -658,7 +658,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return (
       <li key="text">
-        {wrap(<input {...(props as Object)} value={text || ''} style={editorStyle} />)}
+        <input {...(props as Object)} value={text || ''} style={editorStyle} />
       </li>
     );
   }
@@ -701,7 +701,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  getEditor(wrap: (node: ReactElement) => ReactElement, renderedValue?: ReactNode): ReactNode {
+  getEditor(wrap: (node: ReactNode) => ReactNode, renderedValue?: ReactNode): ReactNode {
     const {
       prefixCls,
       multiple,
@@ -731,15 +731,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           {this.renderMultipleValues()}
           {
             range
-              ? this.renderRangeEditor(otherProps, wrap)
+              ? this.renderRangeEditor(otherProps)
               : this.renderMultipleEditor({
                 ...otherProps,
                 className: `${prefixCls}-multiple-input`,
-              } as T, wrap)
+              } as T)
           }
         </Animate>
       );
-      return (
+      return wrap(
         <div key="text" className={otherProps.className}>
           {
             isFlat ? (
@@ -748,14 +748,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               </Tooltip>
             ) : tags
           }
-        </div>
+        </div>,
       );
     }
     if (range) {
-      return (
+      return wrap(
         <span key="text" className={otherProps.className}>
-          {this.renderRangeEditor(otherProps, wrap)}
-        </span>
+          {this.renderRangeEditor(otherProps)}
+        </span>,
       );
     }
     const value = this.getValue();

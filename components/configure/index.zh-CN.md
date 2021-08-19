@@ -126,6 +126,7 @@ const prefixCls = getConfig('prefixCls');
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
 | tooltip | 是否开启提示, 参数 target 详见 [TooltipTarget](#TooltipTarget) | Tooltip.always \| Tooltip.overflow \| Tooltip.none \| function(target) | |
 | tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 target 详见 [TooltipTarget](#TooltipTarget) | dark \| light \| function(target) |  (target) => target === 'validation' ? 'light' : 'dark' |
+| attachment | 附件上传配置 | [AttachmentConfig](#AttachmentConfig) |   |
 
 ### Formatter
 
@@ -158,6 +159,38 @@ const prefixCls = getConfig('prefixCls');
 | uniqueError | 该字段值重复，请重新填写。 | ReactNode |
 | unknown | 未知错误。 | ReactNode |
 
+### TooltipTarget
+
+| 属性              | 说明                | 
+| ----------------- | ------------------- |
+| table-cell         | 表格单元格               |
+| button               | 按钮                |
+| label               | 表单控件标签                |
+| select-option               | 表单控件标签                |
+| output               | Output                |
+| validation               | 校验信息                |
+| help               | 帮助信息                |
+| undefined               | 默认                |
+
+### AttachmentConfig
+
+| 属性              | 说明                | 类型                                |
+| ----------------- | ------------------- | ----------------------------------- |
+| defaultFileKey               | 上传文件的参数名                | string                              |
+| defaultFileSize               | 上传文件的大小限制, 单位 `B`                | number                              |
+| action               | 上传文件的大小限制, 单位 `B`                | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => AxiosRequestConfig                             |
+| batchFetchCount               | 批量获取附件数量                | (attachmentUUIDs: string[]) => Promise<{\[key as string\]: number}>                             |
+| fetchList               | 查询附件列表                | ({ bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => Promise<FileLike[]>                             |
+| getPreviewURL               | 获取预览地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string                             |
+| getDownloadUrl               | 获取下载地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string                             |
+| getDownloadAllUrl               | 获取全部下载地址                | ({ bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string                            |
+| getAttachmentUUID               | 获取附件的UUID                | () => Promise<string> \| string                            |
+| renderIcon               | 附件列表项的前缀图标渲染函数                | (attachment: AttachmentFile, listType: 'text'\| 'picture' \| 'picture-card') => ReactNode                            |
+| onUploadSuccess | 上传成功的回调 | (attachment: AttachmentFile, response: any) => void |
+| onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void |
+| onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[]) => void |
+| onRemove | 删除文件回调，用于发送删除请求 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => void |
+
 ### AxiosRequestConfig
 
 | 属性              | 说明                | 类型                                |
@@ -172,18 +205,5 @@ const prefixCls = getConfig('prefixCls');
 | withCredentials   | 用于跨域传递 cookie | boolean                             |
 | transformRequest  | 转变提交的数据      | (data: any, headers: any) => string |
 | transformResponse | 转变响应的数据      | (data: any, headers: any) => any    |
-
-### TooltipTarget
-
-| 属性              | 说明                | 
-| ----------------- | ------------------- |
-| table-cell         | 表格单元格               |
-| button               | 按钮                |
-| label               | 表单控件标签                |
-| select-option               | 表单控件标签                |
-| output               | Output                |
-| validation               | 校验信息                |
-| help               | 帮助信息                |
-| undefined               | 默认                |
 
 更多配置请参考 Axios 官方文档，或参考 typescript 文件/node_modules/axios/index.d.ts
