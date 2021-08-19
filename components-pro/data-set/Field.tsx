@@ -378,6 +378,10 @@ export type FieldProps = {
    * 附件数量
    */
   attachmentCount?: number;
+  /**
+   * 值变化前，拦截并返回新的值
+   */
+  processValue?: (value: any, range?: 0 | 1) => any;
 };
 
 export default class Field {

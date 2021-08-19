@@ -2,6 +2,7 @@ import React, { Component, ComponentClass, MouseEvent } from 'react';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import isFunction from 'lodash/isFunction';
 import Button from '../button';
 import Icon from '../icon';
 import Input from '../input';
@@ -81,7 +82,8 @@ export default function createPicker(TheCalendar: ComponentClass): any {
 
     handleChange = (_value: Moment | null) => {
       const props = this.props;
-      const value = props.dateToEnd && _value ? _value.endOf("d") :  _value;
+      const { processValue: processV } = props;
+      const value = isFunction(processV) ? processV(_value) : _value;
       if (!('value' in props)) {
         this.setState({
           value,

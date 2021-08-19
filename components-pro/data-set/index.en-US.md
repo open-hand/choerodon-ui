@@ -288,6 +288,7 @@ title: DataSet
 | trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
 | defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/components/configure/#ValidationMessages) | ValidationMessages |  |
 | highlight | 高亮, 如是字符串或 ReactElement, 则会显示 Tooltip | boolean \| ReactNode |  |
+| processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   |
 
 ### Field Values
 

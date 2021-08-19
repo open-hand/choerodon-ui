@@ -544,10 +544,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   syncValueOnBlur(value) {
     if (value) {
-      const { range, rangeTarget } = this;
-      const useEnd = this.getProp("dateToEnd") && (!range || range && rangeTarget !== 0);
-      const newValue = this.checkMoment(value) as Moment;
-      this.prepareSetValue(useEnd ? newValue.endOf("d") : newValue);
+      this.prepareSetValue(this.checkMoment(value));
     } else if (!this.multiple) {
       this.setValue(this.emptyValue);
     }
@@ -584,8 +581,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
    */
   choose(date: Moment, expand?: boolean) {
     date = this.getValidDate(date);
-    const {range, rangeTarget} = this;
-    if(this.getProp("dateToEnd") && (!range || range && rangeTarget !== 0)) date = date.endOf("d");
     this.prepareSetValue(date);
     this.changeSelectedDate(date);
     if (this.range ? this.rangeTarget === 1 : !this.multiple) {

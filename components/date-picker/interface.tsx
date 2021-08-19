@@ -34,7 +34,7 @@ export interface SinglePickerProps {
 export interface DatePickerProps extends PickerProps, SinglePickerProps {
   className?: string;
   showTime?: TimePickerProps | boolean;
-  dateToEnd?: boolean;
+  processValue?: (value: Moment) => Moment;
   showToday?: boolean;
   open?: boolean;
   disabledTime?: (current: Moment) => {
