@@ -28,6 +28,9 @@ timeline: true
 - 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
 - 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
 - 🌟 `<pro>Form`: Added the `showValidation` attribute to control the prompting method of verification information.
+- 🌟 `<pro>FormField`: Add `processValue` property.
+- 🌟 `<pro>DataSet.Field`: Add `processValue` property.
+- 🌟 `DatePicker`: Add `processValue` property.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
