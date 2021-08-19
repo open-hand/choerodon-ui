@@ -42,7 +42,6 @@ import { LabelLayout } from '../form/enum';
 import { findFirstFocusableElement } from '../_util/focusable';
 import SelectionTreeBox from './SelectionTreeBox';
 import {
-  defaultOutputRenderer,
   getDateFormatByField,
   isFieldValueEmpty,
   processFieldValue,
@@ -64,6 +63,7 @@ import isOverflow from '../overflow-tip/util';
 import { hide, show } from '../tooltip/singleton';
 import useComputed from '../use-computed';
 import { ShowHelp } from '../field/enum';
+import { defaultOutputRenderer } from '../output/utils';
 
 let inTab: boolean = false;
 

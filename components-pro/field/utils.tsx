@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import moment, { isMoment } from 'moment';
 import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import { BooleanValue, FieldType, RecordStatus } from '../data-set/enum';
+import { FieldType, RecordStatus } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
@@ -31,8 +31,6 @@ import Record from '../data-set/Record';
 import Field, { HighlightProps } from '../data-set/Field';
 import { Renderer, RenderProps } from './FormField';
 import { Tooltip } from '../core/enum';
-import Attachment from '../attachment/Attachment';
-import { FuncType } from '../button/enum';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
   if (isArrayLike(range)) {
@@ -465,28 +463,6 @@ export function defaultRenderer(renderOption: RenderProps) {
   text.length > maxTagTextLength
     ? `${text.slice(0, maxTagTextLength)}...`
     : text;
-}
-
-export function defaultOutputRenderer(renderOption: RenderProps) {
-  const { value, name, record } = renderOption;
-  if (record) {
-    const field = record.getField(name);
-    if (field) {
-      if (field.type === FieldType.boolean) {
-        const checkBoxPrefix = getProPrefixCls('checkbox');
-        return (
-          <label className={`${checkBoxPrefix}-wrapper ${checkBoxPrefix}-disabled`}>
-            <input disabled className={checkBoxPrefix} type="checkbox" checked={value === field.get(BooleanValue.trueValue)} />
-            <i className={`${checkBoxPrefix}-inner`} />
-          </label>
-        );
-      }
-      if (field.type === FieldType.attachment) {
-        return <Attachment readOnly name={name} viewMode="popup" record={record} funcType={FuncType.link} />;
-      }
-    }
-  }
-  return defaultRenderer(renderOption);
 }
 
 export function showValidationMessage(e, message?: ReactNode): void {

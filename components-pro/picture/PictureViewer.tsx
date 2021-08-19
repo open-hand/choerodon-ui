@@ -54,7 +54,7 @@ const PictureViewer: FunctionComponent<PictureViewerProps> = function PictureVie
           )
         }
         <div className={`${customizedPrefixCls}-picture`}>
-          <Picture src={src} objectFit="scale-down" status="loaded" preview={false} />
+          <Picture src={src} objectFit="scale-down" status="loaded" preview={false} lazy={false} />
         </div>
         {
           length > 1 && (
