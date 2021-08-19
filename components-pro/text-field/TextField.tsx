@@ -780,6 +780,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       };
     }
 
+    const inputElement = <input
+      key="text"
+      {...otherProps}
+      placeholder={placeholder}
+      value={renderedValue && !(this.isFocused && this.editable) ? '' : finalText}
+      readOnly={!this.editable}
+    />;
+
     // 存在长度信息，计算paddingRight
     if (lengthElement) {
       this.lengthInfoWidth = measureTextWidth(`${inputLength} / ${maxLength}`);
@@ -788,20 +796,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         ...otherProps.style,
         paddingRight,
       };
+
+      return wrap(<div>
+        {inputElement}
+        {lengthElement}
+      </div>)
     }
 
-    return wrap(
-      <>
-        <input
-          key="text"
-          {...otherProps}
-          placeholder={placeholder}
-          value={renderedValue && !(this.isFocused && this.editable) ? '' : finalText}
-          readOnly={!this.editable}
-        />
-        {lengthElement}
-      </>,
-    );
+    return wrap(inputElement);
   }
 
   getSuffix(): ReactNode {
