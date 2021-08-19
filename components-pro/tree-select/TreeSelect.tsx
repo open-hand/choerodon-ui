@@ -144,7 +144,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       const { options } = this;
       options.queryMore(options.currentPage + 1);
     } else if (!disabled) {
-      const { multiple, props: { showCheckedStrategy } } = this;
+      const { multiple } = this;
       if (multiple) {
         const records = record.treeReduce((array, r) => this.isSelected(r) ? array : array.concat(r), []);
         const parents: Record[] = [];
@@ -158,6 +158,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
           }
           return false;
         });
+        const showCheckedStrategy = this.getProp('showCheckedStrategy');
         if (showCheckedStrategy === CheckedStrategy.SHOW_ALL) {
           if (this.isSelected(record)) {
             const unChooseRecords = record.treeReduce((array, r) => this.isSelected(r) ? array.concat(r) : array, []);

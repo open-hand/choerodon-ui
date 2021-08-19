@@ -25,7 +25,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
-import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
+import { CheckedStrategy, DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore from '../stores/AttachmentStore';
@@ -366,6 +366,10 @@ export type FieldProps = {
    * 高亮
    */
   highlight?: boolean | ReactNode | HighlightProps;
+  /**
+   * 树形多选时定义选中项回填的方式。
+   */
+  showCheckedStrategy?: CheckedStrategy;
   /**
    * 附件上传的桶名
    */

@@ -216,10 +216,11 @@ export default class Lov extends Select<LovProps> {
     const config = this.getConfig();
     const { options, multiple, primitive, valueField } = this;
     // TODO：lovEvents deprecated
-    const { lovEvents, showCheckedStrategy } = this.props;
+    const { lovEvents } = this.props;
     const modalProps = this.getModalProps();
     const tableProps = this.getTableProps();
     const noCache = this.getProp('noCache');
+    const showCheckedStrategy = this.getProp('showCheckedStrategy');
     if (!this.modal && config && options) {
       const { width, title } = config;
       options.unSelectAll();

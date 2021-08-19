@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
 - 🌟 `<pro>Modal`: Added `preview` method.
-- 🌟 `<pro>DataSet.Field`: Added `bucketName`, `bucketDirectory`, `attachmentCount` properties.
+- 🌟 `<pro>DataSet.Field`: Added `bucketName`, `bucketDirectory`, `attachmentCount`, `showCheckedStrategy` properties.
 - 🌟 `<pro>DataSet.AttachmentFile`: Added `AttachmentFile` class.
 - 🌟 `<pro>RichText`: Added continuous preview of pictures.
 - 🌟 `<pro>Cascader`: Added `async` and `loadData` attributes to simplify asynchronous loading schemes.

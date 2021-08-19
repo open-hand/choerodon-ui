@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 Attachment 组件。
 - 🌟 `<pro>Picture`: 新增 Picture 组件。
 - 🌟 `<pro>Modal`: 新增 preview 方法。
-- 🌟 `<pro>DataSet.Field`: 新增 bucketName, bucketDirectory, attachmentCount 属性。
+- 🌟 `<pro>DataSet.Field`: 新增 bucketName, bucketDirectory, attachmentCount, showCheckedStrategy 属性。
 - 🌟 `<pro>DataSet.AttachmentFile`: 新增 AttachmentFile 类。
 - 🌟 `<pro>RichText`: 新增图片连续预览功能。
 - 🌟 `<pro>Cascader`: 新增 async 和 loadData 属性，简化异步加载方案。
