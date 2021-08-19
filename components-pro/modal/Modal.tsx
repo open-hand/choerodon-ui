@@ -253,6 +253,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'keyboardClosable',
       'fullScreen',
       'title',
+      'header',
       'footer',
       'close',
       'update',
