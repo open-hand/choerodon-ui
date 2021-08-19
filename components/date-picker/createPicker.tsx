@@ -79,8 +79,9 @@ export default function createPicker(TheCalendar: ComponentClass): any {
       this.picker.setOpen(!focused);
     };
 
-    handleChange = (value: Moment | null) => {
+    handleChange = (_value: Moment | null) => {
       const props = this.props;
+      const value = props.dateToEnd && _value ? _value.endOf("d") :  _value;
       if (!('value' in props)) {
         this.setState({
           value,

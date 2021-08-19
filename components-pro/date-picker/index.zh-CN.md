@@ -27,6 +27,7 @@ title: DatePicker
 | cellRenderer | 单元格渲染, view可选值: `date` `dateTime` `time` `week` `month` `year` `decade` | (view) => (props, text, currentDate, selected) => ReactNode |   |
 | renderExtraFooter | 在面板中添加额外的页脚 | () => React.ReactNode |   |
 | extraFooterPlacement | 额外的页脚的位置 可选值: `top` `bottom` | string | `bottom`  |
+| dateToEnd | 日期控件值变更时，自动补全时间为23:59:59 | boolean |   |
 
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。

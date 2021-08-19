@@ -54,6 +54,7 @@ subtitle: 日期选择框
 | onOpenChange | 弹出日历和关闭日历的回调 | function(status) | 无 |
 | onPanelChange | 日期面板变化时的回调 | function(value, mode) | - |
 | mode | 日期面板的状态 | `time|date|month|year` | 'date' |
+| dateToEnd | 日期控件值变更时，自动补全时间为23:59:59 | boolean |   |
 
 ### 共同的方法
 
