@@ -380,7 +380,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     attachment.status = 'error';
     attachment.error = error;
     const { message } = error;
-    handleUploadError(error, attachment);
+    if (handleUploadError) {
+      handleUploadError(error, attachment);
+    }
     attachment.errorMessage = attachment.errorMessage || message;
     if (onUploadError) {
       onUploadError(error, response, attachment);
