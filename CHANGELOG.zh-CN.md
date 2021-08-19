@@ -29,6 +29,9 @@ timeline: true
 - 🌟 `<pro>Form`: 新增 showValidation 属性控制校验信息提示方式。
 - 🌟 `Tree`：onCheck 回调新增 oldCheckedKeys 参数。
 - 🌟 `Skeleton`：新增 grid 属性支持栅格占位配置。
+- 🌟 `<pro>FormField`：FormField支持processValue属性。
+- 🌟 `<pro>DataSet.Field`：Field增加processValue属性。
+- 🌟 `DatePicker`：DatePicker增加processValue属性。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
