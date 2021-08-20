@@ -517,55 +517,50 @@ export default class Attachment extends FormField<AttachmentProps> {
     return false;
   }
 
-  renderUploadBtn(isCardButton?: boolean): ReactElement<ButtonProps> | undefined {
-    if (!this.readOnly) {
-      const {
-        count = 0,
-        multiple,
-        prefixCls,
-      } = this;
-      if (!multiple && count) {
-        return;
-      }
-      const buttonProps = this.getOtherProps();
-      const { children, ref, className, style, accept, name, fileKey, ...rest } = buttonProps;
-      const max = this.getProp('max');
-      const uploadProps = {
-        multiple,
-        accept: accept ? accept.join(',') : undefined,
-        name: name || fileKey || getConfig('attachment').defaultFileKey,
-        type: 'file',
-        ref,
-      };
-      const width = isCardButton ? this.getPictureWidth() : undefined;
-      return isCardButton ? (
-        <Button
-          funcType={FuncType.link}
-          key="upload-btn"
-          icon="add"
-          {...rest}
-          className={classNames(`${prefixCls}-card-button`, className)}
-          style={{ ...style, width, height: width }}
-        >
-          <div>{children || $l('Attachment', 'upload_picture')}</div>
-          {max ? <div>{`${count}/${max}`}</div> : count || undefined}
-          <input key="upload" {...uploadProps} hidden />
-        </Button>
-      ) : (
-        <Button
-          funcType={FuncType.flat}
-          key="upload-btn"
-          icon="file_upload"
-          color={this.isValid ? ButtonColor.primary : ButtonColor.red}
-          {...rest}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-        >
-          {children || $l('Attachment', 'upload_attachment')} {multiple && (max ? `${count}/${max}` : count) || undefined}
-          <input key="upload" {...uploadProps} hidden />
-        </Button>
-      );
-    }
+  renderUploadBtn(isCardButton?: boolean): ReactElement<ButtonProps> {
+    const {
+      count = 0,
+      multiple,
+      prefixCls,
+    } = this;
+    const buttonProps = this.getOtherProps();
+    const { children, ref, className, style, accept, name, fileKey, ...rest } = buttonProps;
+    const max = this.getProp('max');
+    const uploadProps = {
+      multiple,
+      accept: accept ? accept.join(',') : undefined,
+      name: name || fileKey || getConfig('attachment').defaultFileKey,
+      type: 'file',
+      ref,
+    };
+    const width = isCardButton ? this.getPictureWidth() : undefined;
+    return isCardButton ? (
+      <Button
+        funcType={FuncType.link}
+        key="upload-btn"
+        icon="add"
+        {...rest}
+        className={classNames(`${prefixCls}-card-button`, className)}
+        style={{ ...style, width, height: width }}
+      >
+        <div>{children || $l('Attachment', 'upload_picture')}</div>
+        {max ? <div>{`${count}/${max}`}</div> : count || undefined}
+        <input key="upload" {...uploadProps} hidden />
+      </Button>
+    ) : (
+      <Button
+        funcType={FuncType.flat}
+        key="upload-btn"
+        icon="file_upload"
+        color={this.isValid ? ButtonColor.primary : ButtonColor.red}
+        {...rest}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
+        {children || $l('Attachment', 'upload_attachment')} {multiple && (max ? `${count}/${max}` : count) || undefined}
+        <input key="upload" {...uploadProps} hidden />
+      </Button>
+    );
   }
 
   renderViewButton(): ReactElement<ButtonProps> {
@@ -794,6 +789,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   render() {
     const { viewMode, listType } = this.props;
+    const { readOnly } = this;
     if (viewMode === 'popup') {
       return (
         <Trigger
@@ -803,10 +799,10 @@ export default class Attachment extends FormField<AttachmentProps> {
           builtinPlacements={BUILT_IN_PLACEMENTS}
           popupPlacement="bottomLeft"
         >
-          {this.renderUploadBtn() || this.renderViewButton()}
+          {readOnly ? this.renderViewButton() : this.renderUploadBtn()}
         </Trigger>
       );
     }
-    return this.renderWrapperList(this.renderUploadBtn(listType === 'picture-card'));
+    return this.renderWrapperList(readOnly ? undefined : this.renderUploadBtn(listType === 'picture-card'));
   }
 }
