@@ -1151,7 +1151,7 @@ export default class Field {
               );
             }
           }
-          return result;
+          return toJS(result);
         })).catch(e => {
           this.pending = false;
           throw e;

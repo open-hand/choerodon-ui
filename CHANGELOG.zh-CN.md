@@ -40,6 +40,7 @@ timeline: true
 - 💄 `<pro>TextField`：优化 showLengthInfo 信息渲染位置。
 - 💄 `<pro>Trigger`：支持 Fragment 子节点。
 - 💄 `ImageCrop`：优化界面及操作方式。
+- 🐞 `<pro>DataSet.Field`: 优化多次调用 fetchLookup 数据返回类型问题。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
 - 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。

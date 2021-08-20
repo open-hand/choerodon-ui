@@ -10,13 +10,13 @@ import isLdEmpty from 'lodash/isEmpty';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import uniqWith from 'lodash/uniqWith';
+import isFunction from 'lodash/isFunction';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
-import isFunction from 'lodash/isFunction';
 import { Tooltip as TextTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
@@ -1121,7 +1121,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @action
   prepareSetValue(...value: any[]): void {
-    const processV = this.getProp("processValue");
+    const processV = this.getProp('processValue');
     const { range } = this;
     let values = value.filter(item => isNumber(item) || !isEmpty(item));
     if (range) {
