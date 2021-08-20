@@ -42,6 +42,7 @@ const prefixCls = getConfig('prefixCls');
 | selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
+| selectTrigger | 下拉弹出触发方式 | Action[] | \['focus', 'click'] |
 | axios | 替换内置的 axios 实例 | AxiosInstance |  |
 | dataKey | 默认 DataSet 的 dataKey | string | rows |
 | totalKey | 默认 DataSet 的 totalKey | string | total |

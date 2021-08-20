@@ -39,7 +39,7 @@ const prefixCls = getConfig('prefixCls');
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
-| axios | Replace the built-in axios instance | AxiosInstance |  |
+| selectTrigger | 下拉弹出触发方式 | Action[] | \['focus', 'click'] |
 | dataKey | default dataKey of DataSet | string | rows |
 | totalKey | default totalKey of DataSet | string | total |
 | statusKey | The status key in the data submitted by the DataSet by default. | string | \_\_status |

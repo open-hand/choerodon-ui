@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment`, `selectTrigger` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
 - 🌟 `<pro>Rate`: Added `Rate` component.
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
@@ -29,9 +29,9 @@ timeline: true
 - 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
 - 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
 - 🌟 `<pro>Form`: Added the `showValidation` attribute to control the prompting method of verification information.
-- 🌟 `<pro>FormField`: Add `processValue` property.
-- 🌟 `<pro>DataSet.Field`: Add `processValue` property.
-- 🌟 `DatePicker`: Add `processValue` property.
+- 🌟 `<pro>FormField`: Added `processValue` property.
+- 🌟 `<pro>DataSet.Field`: Added `processValue` property.
+- 🌟 `DatePicker`: Added `processValue` property.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fix that hover trigger has no effect in multi-select mode.
 - 🐞 `<pro>FormField`: Fix the problem that the input box will lose focus when the `valueChangeAction` is `input` in the highlight mode.
 - 🐞 `<pro>Lov`: Fix the problem that multiple selections cannot be made when the `selectionMode` property of Table is `click`.
+- 🐞 `<pro>Select`: Fix the problem of rendering errors when using `primitiveValue` and `combo` properties at the same time.
 
 ## 1.4.3
 
