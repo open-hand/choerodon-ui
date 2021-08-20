@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `<pro>Rate`: Added `Rate` component.
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
 - 🌟 `<pro>Modal`: Added `preview` method.
@@ -28,6 +29,9 @@ timeline: true
 - 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
 - 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
 - 🌟 `<pro>Form`: Added the `showValidation` attribute to control the prompting method of verification information.
+- 🌟 `<pro>FormField`: Add `processValue` property.
+- 🌟 `<pro>DataSet.Field`: Add `processValue` property.
+- 🌟 `DatePicker`: Add `processValue` property.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.

@@ -1,0 +1,16 @@
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import 'mixin';
+
+@pro-rate-prefix-cls: ~'@{c7n-pro-prefix}-rate';
+
+.@{pro-rate-prefix-cls} {
+  .rate-basic;
+
+  &-wrapper.@{field-prefix-cls} {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}

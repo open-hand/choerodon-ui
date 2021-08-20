@@ -289,6 +289,7 @@ title: DataSet
 | bucketName | 附件上传的桶名 | string |  |
 | bucketDirectory | 附件上传的桶目录 | string |  |
 | attachmentCount | 附件数量， 一般使用 dynamicProps 来获取 record 中某个字段值作为附件数量， 优先级低于attachments.length | string |  |
+| processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   |
 
 ### Field Values
 
