@@ -94,7 +94,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     let defaultColumnWidth = columnWidth;
 
     // 处理组合列第一列拖拽柄定位问题
-    if (groupCount) {
+    if (groupCount && groupCount > 1) {
       defaultColumnWidth = (children as React.ReactElement)?.props.children[0].props.width;
     }
 

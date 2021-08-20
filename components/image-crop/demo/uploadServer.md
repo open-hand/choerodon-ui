@@ -50,7 +50,7 @@ class PicturesWall extends React.Component {
     );
     return (
       <div className="clearfix">
-      <ImageCrop grid aspect={12/13} serverCrop aspectControl>
+      <ImageCrop grid aspect={12/13} serverCrop>
         <Upload
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           listType="picture-card"

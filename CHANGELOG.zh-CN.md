@@ -39,6 +39,7 @@ timeline: true
 - 💄 `<pro>Tree`：优化 selectable 属性为 false 时 DataSet 相关数据、事件处理。
 - 💄 `<pro>TextField`：优化 showLengthInfo 信息渲染位置。
 - 💄 `<pro>Trigger`：支持 Fragment 子节点。
+- 💄 `ImageCrop`：优化界面及操作方式。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
 - 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
@@ -47,6 +48,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复行内编辑模式的动态编辑器隐藏后无法再显示的问题。
 - 🐞 `<pro>DatePicker`：修复 range 模式下自定义 renderer 的问题。
 - 🐞 `<pro>PerformanceTable`： 修复组合列中子列第一列设置 resizable 无法拖拽的问题。
+- 🐞 `<pro>PerformanceTable`： 修复组合列中只有一个子列时渲染报错问题。
 - 🐞 `<pro>Tree`：修复收起状态下勾选框状态错误的问题。
 - 🐞 `<pro>TreeSelect`：修复收起状态下勾选框状态错误的问题。
 - 🐞 `<pro>Select`：修复多选模式下 trigger 为 hover 无效。
