@@ -262,6 +262,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * 高亮渲染器
    */
   highlightRenderer?: HighlightRenderer;
+  /**
+   * 值变化前，拦截并返回新的值
+   */
+  processValue?: (value: any, range?: 0 | 1) => any;
 }
 
 export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSetComponent<T> {
