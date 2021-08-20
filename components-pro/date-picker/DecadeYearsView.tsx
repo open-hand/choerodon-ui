@@ -10,6 +10,11 @@ import { stopEvent } from '../_util/EventManager';
 export default class DecadeYearsView extends DaysView {
   static displayName = 'DecadeYearView';
 
+  getViewClassName(): string {
+    const { prefixCls } = this;
+    return `${prefixCls}-decade-year`;
+  }
+
   @autobind
   handlePrevYearClick() {
     this.changeSelectedDate(this.getCloneDate().subtract(100, 'y'));

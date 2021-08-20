@@ -14,6 +14,11 @@ export default class WeeksView extends DaysView implements DatePickerKeyboardEve
 
   static type = FieldType.week;
 
+  getViewClassName(): string {
+    const { prefixCls } = this;
+    return `${prefixCls}-week`;
+  }
+
   handleKeyDownLeft(e) {
     stopEvent(e);
     if (e.altKey) {

@@ -12,6 +12,11 @@ export default class MonthsView extends DaysView {
 
   static type = FieldType.month;
 
+  getViewClassName(): string {
+    const { prefixCls } = this;
+    return `${prefixCls}-month`;
+  }
+
   handleKeyDownHome(e) {
     stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().startOf('y'));
