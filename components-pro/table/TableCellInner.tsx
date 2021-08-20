@@ -492,7 +492,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     if (!tableStore.columnResizing && showTooltip(e)) {
       tooltipShownRef.current = true;
     }
-  }, [tooltipShownRef, tableStore]);
+  }, [tooltipShownRef, tableStore, showTooltip]);
   const handleMouseLeave = useCallback(() => {
     if (!tableStore.columnResizing && tooltipShownRef.current) {
       hide();
