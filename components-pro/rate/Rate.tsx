@@ -128,11 +128,12 @@ export class Rate<T extends RateProps> extends FormField<T> {
 
 
   renderWrapper(): ReactNode {
+    const value = this.getValue();
     return (
       <label key="wrapper" {...this.getWrapperProps()}>
         {this.renderFloatLabel()}
         <div onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-          <C7NRate {...this.getOtherProps()} onChange={this.onChange} />
+          <C7NRate {...this.getOtherProps()} onChange={this.onChange} value={value} />
         </div>
       </label>
     );
