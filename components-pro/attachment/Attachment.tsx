@@ -126,7 +126,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     });
   }
 
-  get count(): number {
+  get count(): number | undefined {
     const { attachments, field } = this;
     if (attachments) {
       return attachments.length;
@@ -141,7 +141,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if ($count !== undefined) {
       return $count;
     }
-    const { count = 0 } = this.props;
+    const { count } = this.props;
     return count;
   }
 
@@ -171,7 +171,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   getValidatorProps(): ValidatorProps {
     return {
       ...super.getValidatorProps(),
-      attachmentCount: this.count,
+      attachmentCount: this.count || 0,
     };
   }
 
@@ -185,7 +185,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         const { batchFetchCount } = getConfig('attachment');
         if (batchFetchCount && !this.attachments) {
           attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
-            this.$count = count;
+            this.$count = count || 0;
           }));
         }
       }
@@ -301,7 +301,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   @mobxAction
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
     const max = this.getProp('max');
-    if (max > 0 && this.count + attachments.length > max) {
+    if (max > 0 && (this.count || 0) + attachments.length > max) {
       Modal.error($l('Attachment', 'file_list_max_length', { count: max }));
       return;
     }
@@ -506,31 +506,34 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   isDisabled(): boolean {
+    if (super.isDisabled()) {
+      return true;
+    }
     const max = this.getProp('max');
-    return super.isDisabled() || max && this.count >= max;
+    if (max) {
+      const { count = 0 } = this;
+      return count >= max;
+    }
+    return false;
   }
 
   renderUploadBtn(isCardButton?: boolean): ReactElement<ButtonProps> | undefined {
     if (!this.readOnly) {
       const {
-        count,
+        count = 0,
         multiple,
-        props: {
-          accept,
-          name,
-        },
         prefixCls,
       } = this;
       if (!multiple && count) {
         return;
       }
       const buttonProps = this.getOtherProps();
-      const { children, ref, className, style, ...rest } = buttonProps;
+      const { children, ref, className, style, accept, name, fileKey, ...rest } = buttonProps;
       const max = this.getProp('max');
       const uploadProps = {
         multiple,
         accept: accept ? accept.join(',') : undefined,
-        name,
+        name: name || fileKey || getConfig('attachment').defaultFileKey,
         type: 'file',
         ref,
       };
@@ -610,7 +613,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     const { sortable, viewMode } = this.props;
     if (sortable) {
       const { prefixCls, attachments } = this;
-      if (attachments && attachments.length) {
+      if (attachments && attachments.length > 1) {
         const { type, order } = this.sort || defaultSort;
         return (
           <>

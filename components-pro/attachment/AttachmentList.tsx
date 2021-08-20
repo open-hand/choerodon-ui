@@ -46,7 +46,6 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
     onFetchAttachments,
     limit,
   } = props;
-  const draggable = sortable && !readOnly;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
   const handleDragEnd = useCallback((result: DropResult) => {
@@ -69,6 +68,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
 
   if (attachments) {
     const { length } = attachments;
+    const draggable = sortable && !readOnly && length > 1;
     const list = attachments.map((attachment, index) => {
       const restCount = index + 1 === limit ? length - limit : undefined;
       const hidden = isNumber(limit) && index >= limit;
