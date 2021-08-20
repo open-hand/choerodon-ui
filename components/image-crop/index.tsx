@@ -122,7 +122,7 @@ export interface ImgCropProps {
     onCropComplete?: ({ url: string, blob: Blob, area: Area }) => void,
     prefixCls?: string,
     serverCrop: boolean,
-    rotateStep: number,
+    rotateStep?: number,
 }
 
 
@@ -195,7 +195,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
         grid,
         zoom,
         rotate,
-        rotateStep,
+        rotateStep = 90,
         beforeCrop,
         modalTitle,
         modalWidth,
@@ -350,7 +350,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
      */
     const MIN_ROTATE = 0;
     const MAX_ROTATE = 360;
-    const ROTATE_STEP = rotateStep || 90;
 
     const isMinZoom = zoomVal <= MIN_ZOOM;
     const isMaxZoom = zoomVal >= MAX_ZOOM;
@@ -367,9 +366,9 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
 
     const addRotateVal = useCallback(() => {
         if (!isMaxRotate) {
-            setRotateVal(rotateVal + ROTATE_STEP);
+            setRotateVal(rotateVal + rotateStep);
         } else {
-            setRotateVal(MIN_ROTATE + ROTATE_STEP);
+            setRotateVal(MIN_ROTATE + rotateStep);
         }
     }, [isMaxRotate, rotateVal]);
 
@@ -508,7 +507,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                                         hasRotate
                                         &&
                                         <Button
-                                            icon={ROTATE_STEP === 90 ? "play_90" : "rotate_right"}
+                                            icon={rotateStep === 90 ? "play_90" : "rotate_right"}
                                             onClick={addRotateVal}
                                         />
                                     }

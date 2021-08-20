@@ -64,7 +64,7 @@ export interface AvatarUploadProps {
   prefixCls?: string; // 自定义样式前缀
 }
 
-let Avatarlocale = defaultLocale.imageCrop
+let Avatarlocale = defaultLocale.imageCrop;
 
 export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   static propTypes = {
