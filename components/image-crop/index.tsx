@@ -504,7 +504,14 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                                             <Button icon="zoom_out" onClick={subZoomVal} disabled={isMinZoom} />
                                         </>
                                     )}
-                                    {hasRotate && <Button icon="play_90" onClick={addRotateVal} />}
+                                    {
+                                        hasRotate
+                                        &&
+                                        <Button
+                                            icon={ROTATE_STEP === 90 ? "play_90" : "rotate_right"}
+                                            onClick={addRotateVal}
+                                        />
+                                    }
                                     {hasZoom && <Button onClick={initVal}>1:1</Button>}
                                 </div>
                             </Modal>

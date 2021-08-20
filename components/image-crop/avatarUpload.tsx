@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
-import { isString } from 'lodash';
+import isString from 'lodash/isString';
 import PropTypes from 'prop-types';
 import Button from '../button';
 import Icon from '../icon';
@@ -311,7 +311,8 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     const { src } = img;
     const prefixCls = getPrefixCls('avatar-crop-edit', customizePrefixCls);
     const previewTitleFlag = isString(previewTitle) || React.isValidElement(previewTitle);
-    const renderPreviewTitle = () => {
+    const renderPreviewTitle = (): React.ReactElement | null => {
+      if(!previewTitleFlag || !previewTitle) return null;
       if(isString(previewTitle)) {
         return (
           <h5 className={`${prefixCls}-preview-title`}>
@@ -345,11 +346,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
             <Button icon="play_90" shape="circle" onClick={() => this.setState({ rotate: rotate + 90 })} />
           </div>
           <div className={`${prefixCls}-preview`}>
-            {
-              previewTitleFlag
-              &&
-              renderPreviewTitle()
-            }
+            {renderPreviewTitle()}
             {this.renderPreviewItem(previewList)}
           </div>
         </div>
@@ -435,8 +432,8 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     ];
     return (
       <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
-        {(locale, localeCode) => {
-          Avatarlocale = (localeCode === "en" || localeCode === "zh-cn" ? locale : defaultLocale.imageCrop) as imageCrop
+        {(locale: imageCrop) => {
+          Avatarlocale = locale || defaultLocale.imageCrop;
           return (
             <Modal
               title={title || <span>{Avatarlocale.changeAvatar}</span>}
