@@ -8,12 +8,13 @@ import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import { Tooltip as TextTooltip } from '../core/enum';
-import { defaultOutputRenderer, processFieldValue, renderMultiLine, toRangeValue } from '../field/utils';
+import { processFieldValue, renderMultiLine, toRangeValue } from '../field/utils';
 import isEmpty from '../_util/isEmpty';
 import isOverflow from '../overflow-tip/util';
 import { show } from '../tooltip/singleton';
 import { CurrencyProps } from '../currency/Currency';
 import Field from '../data-set/Field';
+import { defaultOutputRenderer } from './utils';
 
 export interface OutputProps extends FormFieldProps<any>, CurrencyProps<any> {
   renderEmpty?: () => ReactNode;

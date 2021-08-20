@@ -53,6 +53,7 @@ The following APIs are shared by DatePicker, MonthPicker, RangePicker, WeekPicke
 | onOpenChange | a callback function, can be executed whether the popup calendar is popped up or closed | function(status) | - |
 | onPanelChange | callback when picker panel mode is changed | function(value, mode) | - |
 | mode | picker panel mode | `time|date|month|year` | 'date' |
+| processValue | 日期控件值变更时，自动补全时间为23:59:59 | boolean |   |
 
 ### Common Methods
 

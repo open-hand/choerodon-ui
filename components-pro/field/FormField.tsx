@@ -16,6 +16,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import isFunction from 'lodash/isFunction';
 import { Tooltip as TextTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
@@ -261,6 +262,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * 高亮渲染器
    */
   highlightRenderer?: HighlightRenderer;
+  /**
+   * 值变化前，拦截并返回新的值
+   */
+  processValue?: (value: any, range?: 0 | 1) => any;
 }
 
 export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSetComponent<T> {
@@ -1116,13 +1121,17 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @action
   prepareSetValue(...value: any[]): void {
+    const processV = this.getProp("processValue");
     const { range } = this;
-    const values = value.filter(item => isNumber(item) || !isEmpty(item));
+    let values = value.filter(item => isNumber(item) || !isEmpty(item));
     if (range) {
       const { rangeTarget, rangeValue } = this;
       if (rangeTarget !== undefined && rangeValue) {
         const [start, end] = rangeValue;
-        const newValue = values.pop();
+        let newValue = values.pop();
+        if (isFunction(processV)) {
+          newValue = processV(newValue, rangeTarget);
+        }
         rangeValue[rangeTarget] = newValue;
         if (rangeTarget === 0 && (newValue || isNumber(newValue)) && (end || isNumber(end)) && this.isLowerRange(end, newValue)) {
           rangeValue[rangeTarget] = end;
@@ -1134,6 +1143,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         }
       }
     } else {
+      if (isFunction(processV)) {
+        values = values.map(v => processV(v, undefined));
+      }
       this.addValue(...values);
     }
   }

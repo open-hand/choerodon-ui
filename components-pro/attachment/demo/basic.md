@@ -53,6 +53,9 @@ configure({
     getAttachmentUUID() {
       return uuid();
     },
+    getPreviewUrl({ attachment }) {
+      return attachment.url;
+    },
     getDownloadAllUrl({ attachmentUUID }) {
       return `/${attachmentUUID}`;
     },

@@ -4,6 +4,7 @@ import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
+import isNil from 'lodash/isNil';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Button, { ButtonProps } from '../button/Button';
@@ -125,7 +126,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     });
   }
 
-  get count(): number {
+  get count(): number | undefined {
     const { attachments, field } = this;
     if (attachments) {
       return attachments.length;
@@ -140,7 +141,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if ($count !== undefined) {
       return $count;
     }
-    const { count = 0 } = this.props;
+    const { count } = this.props;
     return count;
   }
 
@@ -158,7 +159,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   componentDidMount() {
     super.componentDidMount();
     const { viewMode } = this.props;
-    if (viewMode !== 'list') {
+    if (viewMode !== 'list' && isNil(this.count)) {
       this.fetchCount();
     }
   }
@@ -170,7 +171,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   getValidatorProps(): ValidatorProps {
     return {
       ...super.getValidatorProps(),
-      attachmentCount: this.count,
+      attachmentCount: this.count || 0,
     };
   }
 
@@ -184,7 +185,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         const { batchFetchCount } = getConfig('attachment');
         if (batchFetchCount && !this.attachments) {
           attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
-            this.$count = count;
+            this.$count = count || 0;
           }));
         }
       }
@@ -300,7 +301,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   @mobxAction
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
     const max = this.getProp('max');
-    if (max > 0 && this.count + attachments.length > max) {
+    if (max > 0 && (this.count || 0) + attachments.length > max) {
       Modal.error($l('Attachment', 'file_list_max_length', { count: max }));
       return;
     }
@@ -380,7 +381,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     attachment.status = 'error';
     attachment.error = error;
     const { message } = error;
-    handleUploadError(error, attachment);
+    if (handleUploadError) {
+      handleUploadError(error, attachment);
+    }
     attachment.errorMessage = attachment.errorMessage || message;
     if (onUploadError) {
       onUploadError(error, response, attachment);
@@ -413,7 +416,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (onRemove && attachmentUUID) {
       const bucketName = this.getProp('bucketName');
       const bucketDirectory = this.getProp('bucketDirectory');
-      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory }).then(() => this.removeAttachment(attachment));
+      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory });
     }
   }
 
@@ -442,8 +445,11 @@ export default class Attachment extends FormField<AttachmentProps> {
   removeAttachment(attachment: AttachmentFile) {
     const { attachments } = this;
     if (attachments) {
-      attachments.splice(attachments.indexOf(attachment), 1);
-      this.checkValidity();
+      const index = attachments.indexOf(attachment);
+      if (index !== -1) {
+        attachments.splice(index, 1);
+        this.checkValidity();
+      }
     }
   }
 
@@ -500,63 +506,61 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   isDisabled(): boolean {
+    if (super.isDisabled()) {
+      return true;
+    }
     const max = this.getProp('max');
-    return super.isDisabled() || max && this.count >= max;
+    if (max) {
+      const { count = 0 } = this;
+      return count >= max;
+    }
+    return false;
   }
 
-  renderUploadBtn(isCardButton?: boolean): ReactElement<ButtonProps> | undefined {
-    if (!this.readOnly) {
-      const {
-        count,
-        multiple,
-        props: {
-          accept,
-          name,
-        },
-        prefixCls,
-      } = this;
-      if (!multiple && count) {
-        return;
-      }
-      const buttonProps = this.getOtherProps();
-      const { children, ref, className, style, ...rest } = buttonProps;
-      const max = this.getProp('max');
-      const uploadProps = {
-        multiple,
-        accept: accept ? accept.join(',') : undefined,
-        name,
-        type: 'file',
-        ref,
-      };
-      const width = isCardButton ? this.getPictureWidth() : undefined;
-      return isCardButton ? (
-        <Button
-          funcType={FuncType.link}
-          key="upload-btn"
-          icon="add"
-          {...rest}
-          className={classNames(`${prefixCls}-card-button`, className)}
-          style={{ ...style, width, height: width }}
-        >
-          <div>{children || $l('Attachment', 'upload_picture')}</div>
-          {max ? <div>{`${count}/${max}`}</div> : count || undefined}
-          <input key="upload" {...uploadProps} hidden />
-        </Button>
-      ) : (
-        <Button
-          funcType={FuncType.flat}
-          key="upload-btn"
-          icon="file_upload"
-          color={this.isValid ? ButtonColor.primary : ButtonColor.red}
-          {...rest}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-        >
-          {children || $l('Attachment', 'upload_attachment')} {multiple && (max ? `${count}/${max}` : count) || undefined}
-          <input key="upload" {...uploadProps} hidden />
-        </Button>
-      );
-    }
+  renderUploadBtn(isCardButton?: boolean): ReactElement<ButtonProps> {
+    const {
+      count = 0,
+      multiple,
+      prefixCls,
+    } = this;
+    const buttonProps = this.getOtherProps();
+    const { children, ref, className, style, accept, name, fileKey, ...rest } = buttonProps;
+    const max = this.getProp('max');
+    const uploadProps = {
+      multiple,
+      accept: accept ? accept.join(',') : undefined,
+      name: name || fileKey || getConfig('attachment').defaultFileKey,
+      type: 'file',
+      ref,
+    };
+    const width = isCardButton ? this.getPictureWidth() : undefined;
+    return isCardButton ? (
+      <Button
+        funcType={FuncType.link}
+        key="upload-btn"
+        icon="add"
+        {...rest}
+        className={classNames(`${prefixCls}-card-button`, className)}
+        style={{ ...style, width, height: width }}
+      >
+        <div>{children || $l('Attachment', 'upload_picture')}</div>
+        {max ? <div>{`${count}/${max}`}</div> : count || undefined}
+        <input key="upload" {...uploadProps} hidden />
+      </Button>
+    ) : (
+      <Button
+        funcType={FuncType.flat}
+        key="upload-btn"
+        icon="file_upload"
+        color={this.isValid ? ButtonColor.primary : ButtonColor.red}
+        {...rest}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
+        {children || $l('Attachment', 'upload_attachment')} {multiple && (max ? `${count}/${max}` : count) || undefined}
+        <input key="upload" {...uploadProps} hidden />
+      </Button>
+    );
   }
 
   renderViewButton(): ReactElement<ButtonProps> {
@@ -604,7 +608,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     const { sortable, viewMode } = this.props;
     if (sortable) {
       const { prefixCls, attachments } = this;
-      if (attachments && attachments.length) {
+      if (attachments && attachments.length > 1) {
         const { type, order } = this.sort || defaultSort;
         return (
           <>
@@ -785,6 +789,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   render() {
     const { viewMode, listType } = this.props;
+    const { readOnly } = this;
     if (viewMode === 'popup') {
       return (
         <Trigger
@@ -794,10 +799,10 @@ export default class Attachment extends FormField<AttachmentProps> {
           builtinPlacements={BUILT_IN_PLACEMENTS}
           popupPlacement="bottomLeft"
         >
-          {this.renderUploadBtn() || this.renderViewButton()}
+          {readOnly ? this.renderViewButton() : this.renderUploadBtn()}
         </Trigger>
       );
     }
-    return this.renderWrapperList(this.renderUploadBtn(listType === 'picture-card'));
+    return this.renderWrapperList(readOnly ? undefined : this.renderUploadBtn(listType === 'picture-card'));
   }
 }

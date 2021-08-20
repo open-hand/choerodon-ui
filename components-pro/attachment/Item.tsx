@@ -32,12 +32,13 @@ export interface ItemProps {
   attachmentUUID: string;
   provided: DraggableProvided;
   draggable?: boolean;
+  hidden?: boolean;
 }
 
 const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName,
-    bucketDirectory, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index,
+    bucketDirectory, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
   } = props;
   const { status, name, filename, ext, url, size } = attachment;
   const attachmentConfig = getConfig('attachment');
@@ -51,7 +52,18 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     }
     if (listType === 'picture' || isCard) {
       if ((status === 'success' || status === 'done') && attachment.type.startsWith('image')) {
-        return <Picture width={width} height={width} alt={name} src={url} lazy objectFit="contain" index={index} />;
+        const { getPreviewUrl } = attachmentConfig;
+        return (
+          <Picture
+            width={width}
+            height={width}
+            alt={name}
+            src={getPreviewUrl && getPreviewUrl({ attachment, bucketName, bucketDirectory, attachmentUUID }) || url}
+            lazy
+            objectFit="contain"
+            index={index}
+          />
+        );
       }
       return <Picture width={width} height={width} alt={name} status={status === 'error' ? 'error' : 'empty'} index={index} />;
     }
@@ -107,7 +119,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
         key: 'download',
         icon: isCard ? 'arrow_downward' : 'get_app',
         funcType: FuncType.link,
-        href: getDownloadUrl ? getDownloadUrl({ attachment, bucketName, bucketDirectory, attachmentUUID }) : url,
+        href: getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, attachmentUUID }) || url,
         target: '_blank',
         block: isCard,
       };
@@ -185,8 +197,12 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   };
 
   return (
-    <div {...listProps}>
-      <div className={`${prefixCls}-container`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div {...listProps} hidden={hidden}>
+      <div
+        className={`${prefixCls}-container`}
+        onMouseEnter={isCard ? handleMouseEnter : undefined}
+        onMouseLeave={isCard ? handleMouseLeave : undefined}
+      >
         <div className={`${prefixCls}-content`}>
           {renderImagePreview()}
           {renderPlaceholder()}

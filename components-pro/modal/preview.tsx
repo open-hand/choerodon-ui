@@ -15,7 +15,6 @@ export default function preview(props: PictureViewerProps, modalProps?: ModalPro
     title: $l('Modal', 'preview_picture'),
     footer: null,
     destroyOnClose: true,
-    maskClosable: true,
     movable: false,
     closable: true,
     style: { width: 'auto' },
