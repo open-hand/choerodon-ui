@@ -60,7 +60,7 @@ export interface ModalProps extends ViewComponentProps {
   keyboardClosable?: boolean;
   modalTitle?: ReactNode;
   header?: ((title: ReactNode, closeBtn: ReactNode, okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>) => ReactNode) | ReactNode | boolean;
-  footer?: ((okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>) => ReactNode) | ReactNode | boolean;
+  footer?: ((okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>, modalChildrenProps) => ReactNode) | ReactNode | boolean;
   destroyOnClose?: boolean;
   okText?: ReactNode;
   cancelText?: ReactNode;
@@ -344,13 +344,17 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   render() {
-    const { prefixCls, props: { contentStyle } } = this;
+    const { prefixCls, props: { contentStyle, drawer } } = this;
     const header = this.getHeader();
     const body = this.getBody();
     const footer = this.getFooter();
     return (
       <div {...this.getMergedProps()}>
-        <div ref={this.contentReference} className={`${prefixCls}-content`} style={contentStyle}>
+        <div
+          ref={this.contentReference}
+          className={classNames(`${prefixCls}-content`, { [`${prefixCls}-drawer-content`]: drawer })}
+          style={contentStyle}
+        >
           {header}
           {body}
           {footer}
@@ -550,7 +554,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     }
   };
 
-  getDefaultFooter = (okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>) => {
+  getDefaultFooter = (okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>, _modalChildrenProps: modalChildrenProps) => {
     const { okCancel, okButton, cancelButton, okFirst = getConfig('modalOkFirst'), drawer } = this.props;
     const buttons: ReactNode[] = [];
     if (okButton !== false) {
@@ -586,7 +590,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   renderChildren(children: ReactNode): ReactNode {
     if (children) {
       const { prefixCls, props } = this;
-      const { close = noop, update = noop, bodyStyle } = props;
+      const { close = noop, update = noop, bodyStyle, drawer } = props;
       const modal: modalChildrenProps = {
         close,
         update,
@@ -595,7 +599,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         handleCancel: this.registerCancel,
       };
       return (
-        <div className={`${prefixCls}-body`} style={bodyStyle}>
+        <div className={classNames(`${prefixCls}-body`, { [`${prefixCls}-drawer-body`]: drawer })} style={bodyStyle}>
           {isValidElement(children) ? cloneElement<any>(children, { modal }) : children}
         </div>
       );

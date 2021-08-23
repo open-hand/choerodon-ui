@@ -109,7 +109,7 @@
 
 .select-all() {
   &-select-all-none {
-    padding: 0.08rem 0  0 @control-padding-horizontal;
+    padding: 0.08rem 0 0 @control-padding-horizontal;
     font-size: @font-size-sm;
     border-bottom: @border-width-base @border-style-base @border-color-base;
 
@@ -119,6 +119,24 @@
       margin-bottom: 0.08rem;
       color: @primary-color;
       cursor: pointer;
+    }
+  }
+}
+
+.common-item () {
+  &-common-item {
+    margin-top: 0.04rem;
+    color: @text-color-secondary;
+    background: @component-background;
+
+    &-selected {
+      color: @primary-color;
+    }
+
+    &-label {
+      display: inline-block;
+      margin-top: 0.04rem;
+      margin-right: 0.04rem;
     }
   }
 }

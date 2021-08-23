@@ -410,7 +410,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     rowProps.onMouseLeave = handleMouseLeave;
   }
 
-  if (hidden || (record.status === RecordStatus.delete && !showRemovedRow)) {
+  if (hidden || (!showRemovedRow && record.status === RecordStatus.delete)) {
     rowProps.hidden = true;
   }
 
@@ -469,8 +469,11 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
         {
           ({ ref, inView }) => {
             intersectionRef.current = ref;
-            if (record.getState('__inView') !== true) {
+            const oldInView = record.getState('__inView');
+            if (oldInView !== true && oldInView !== inView) {
               record.setState('__inView', inView);
+            }
+            if (oldInView !== true || !columnGroups.inView) {
               return cloneElement<any>(tr, {
                 style: {
                   ...rowProps.style,
