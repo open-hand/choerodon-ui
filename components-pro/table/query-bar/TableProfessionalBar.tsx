@@ -52,6 +52,16 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     this.processDataSetListener(true);
   }
 
+
+  componentWillReceiveProps(nextProps, _): void {
+    const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = nextProps;
+    if (queryDataSet && queryFields.length && defaultExpanded) {
+      runInAction(() => {
+        this.moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
+      });
+    }
+  }
+
   componentWillUnmount(): void {
     this.processDataSetListener(false);
   }
