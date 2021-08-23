@@ -186,6 +186,7 @@ export type Config = {
   performanceTableCustomizable?: boolean;
   tableCustomizedSave?: (code: string, customized: Customized) => void;
   tableCustomizedLoad?: (code: string) => Promise<Customized | null>;
+  tableShowRemovedRow?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;
@@ -398,6 +399,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableAutoHeightDiff', 80],
   ['tableCustomizedSave', (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized))],
   ['tableCustomizedLoad', (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) || 'null'))],
+  ['tableShowRemovedRow', true],
   ['modalSectionBorder', true],
   ['drawerSectionBorder', true],
   ['drawerTransitionName', 'slide-right'],

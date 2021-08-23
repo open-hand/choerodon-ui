@@ -788,6 +788,13 @@ export default class TableStore {
     return getConfig('tableParityRow') === true;
   }
 
+  get showRemovedRow(): boolean {
+    if ('showRemovedRow' in this.props) {
+      return this.props.showRemovedRow!;
+    }
+    return getConfig('tableShowRemovedRow') === true;
+  }
+
   get autoFocus(): boolean {
     if ('autoFocus' in this.props) {
       return this.props.autoFocus!;

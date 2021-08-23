@@ -70,6 +70,7 @@ const prefixCls = getConfig('prefixCls');
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
 | tableColumnResizable | 默认 Table 列可调整列宽 | boolean | true |
 | tableColumnHideable | 默认 Table 列可调整显示 | boolean | true |
+| tableShowRemovedRow |	默认 Table 是否显示临时移除的行，默认置灰显示 |	boolean |	true |
 | performanceTableColumnHideable | 默认 performanceTable 列可调整显示 | boolean | true |
 | tableColumnTitleEditable | 默认 Table 列可编辑标题 | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |

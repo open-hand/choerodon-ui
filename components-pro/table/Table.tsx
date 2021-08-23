@@ -610,6 +610,10 @@ export interface TableProps extends DataSetComponentProps {
    * 高亮渲染器
    */
   cellHighlightRenderer?: HighlightRenderer;
+  /**
+   * 是否显示临时移除的行
+   */
+  showRemovedRow?: boolean;
 }
 
 @observer
@@ -642,6 +646,10 @@ export default class Table extends DataSetComponent<TableProps> {
      * 是否显示表头
      */
     showHeader: PropTypes.bool,
+    /**
+     * 是否显示表头
+     */
+    showRemovedRow: PropTypes.bool,
     /**
      * 表脚
      */
@@ -1302,6 +1310,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'summary',
       'aggregation',
       'onAggregationChange',
+      'showRemovedRow',
     ]);
   }
 
