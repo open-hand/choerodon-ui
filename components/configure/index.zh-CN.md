@@ -42,6 +42,7 @@ const prefixCls = getConfig('prefixCls');
 | selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
+| selectTrigger | 下拉弹出触发方式 | Action[] | \['focus', 'click'] |
 | axios | 替换内置的 axios 实例 | AxiosInstance |  |
 | dataKey | 默认 DataSet 的 dataKey | string | rows |
 | totalKey | 默认 DataSet 的 totalKey | string | total |
@@ -69,6 +70,7 @@ const prefixCls = getConfig('prefixCls');
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
 | tableColumnResizable | 默认 Table 列可调整列宽 | boolean | true |
 | tableColumnHideable | 默认 Table 列可调整显示 | boolean | true |
+| tableShowRemovedRow |	默认 Table 是否显示临时移除的行，默认置灰显示 |	boolean |	true |
 | performanceTableColumnHideable | 默认 performanceTable 列可调整显示 | boolean | true |
 | tableColumnTitleEditable | 默认 Table 列可编辑标题 | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |

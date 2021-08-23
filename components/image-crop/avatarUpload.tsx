@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
+import isString from 'lodash/isString';
 import PropTypes from 'prop-types';
 import Button from '../button';
 import Icon from '../icon';
@@ -14,7 +15,7 @@ import Crop from './Crop';
 import { getPrefixCls } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
-import { imageCrop } from '../locale-provider'
+import { imageCrop } from '../locale-provider';
 
 const Dragger = Upload.Dragger;
 const { round } = Math;
@@ -63,7 +64,7 @@ export interface AvatarUploadProps {
   prefixCls?: string; // 自定义样式前缀
 }
 
-let Avatarlocale = defaultLocale.imageCrop
+let Avatarlocale = defaultLocale.imageCrop;
 
 export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   static propTypes = {
@@ -309,6 +310,18 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     const { prefixCls: customizePrefixCls, previewList, editorWidth, editorHeight, defaultRectSize, minRectSize, subTitle, previewTitle, reloadTitle } = this.props;
     const { src } = img;
     const prefixCls = getPrefixCls('avatar-crop-edit', customizePrefixCls);
+    const previewTitleFlag = isString(previewTitle) || React.isValidElement(previewTitle);
+    const renderPreviewTitle = (): React.ReactElement | null => {
+      if(!previewTitleFlag || !previewTitle) return null;
+      if(isString(previewTitle)) {
+        return (
+          <h5 className={`${prefixCls}-preview-title`}>
+              <span >{previewTitle}</span>
+          </h5>
+        )
+      }
+      return previewTitle;
+    };
 
     return (
       <div>
@@ -333,9 +346,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
             <Button icon="play_90" shape="circle" onClick={() => this.setState({ rotate: rotate + 90 })} />
           </div>
           <div className={`${prefixCls}-preview`}>
-            <h5 className={`${prefixCls}-preview-title`}>
-              <span >{previewTitle || Avatarlocale.preview}</span>
-            </h5>
+            {renderPreviewTitle()}
             {this.renderPreviewItem(previewList)}
           </div>
         </div>
@@ -421,8 +432,8 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     ];
     return (
       <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
-        {(locale, localeCode) => {
-          Avatarlocale = (localeCode === "en" || localeCode === "zh-cn" ? locale : defaultLocale.imageCrop) as imageCrop
+        {(locale: imageCrop) => {
+          Avatarlocale = locale || defaultLocale.imageCrop;
           return (
             <Modal
               title={title || <span>{Avatarlocale.changeAvatar}</span>}

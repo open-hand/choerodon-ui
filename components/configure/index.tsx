@@ -8,7 +8,14 @@ import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { ExportMode, FieldType, RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import { Customized, expandIconProps, Suffixes, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
+import {
+  Customized,
+  expandIconProps,
+  Suffixes,
+  TablePaginationConfig,
+  TableProps,
+  TableQueryBarHook,
+} from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
@@ -28,6 +35,7 @@ import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { TimeZone } from 'choerodon-ui/pro/lib/date-picker/DatePicker';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile, { FileLike } from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
+import { Action } from 'choerodon-ui/pro/lib/trigger/enum';
 import { TooltipTheme } from '../tooltip';
 import { SpinProps } from '../spin';
 import { PanelProps } from '../collapse';
@@ -178,6 +186,7 @@ export type Config = {
   performanceTableCustomizable?: boolean;
   tableCustomizedSave?: (code: string, customized: Customized) => void;
   tableCustomizedLoad?: (code: string) => Promise<Customized | null>;
+  tableShowRemovedRow?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;
@@ -207,6 +216,7 @@ export type Config = {
   selectReverse?: boolean;
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
+  selectTrigger?: Action[];
   useColon?: boolean;
   textFieldAutoComplete?: string;
   resultStatusRenderer?: object;
@@ -389,6 +399,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableAutoHeightDiff', 80],
   ['tableCustomizedSave', (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized))],
   ['tableCustomizedLoad', (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) || 'null'))],
+  ['tableShowRemovedRow', true],
   ['modalSectionBorder', true],
   ['drawerSectionBorder', true],
   ['drawerTransitionName', 'slide-right'],
@@ -418,6 +429,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['selectReverse', true],
   ['selectPagingOptionContent', '···'],
   ['selectSearchable', false],
+  ['selectTrigger', [Action.focus, Action.click]],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
   ['textFieldAutoComplete', undefined],

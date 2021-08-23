@@ -89,6 +89,7 @@ subtitle: 表格
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | showHeader |	是否显示表头 |	boolean |	true |
+| showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean |	 |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

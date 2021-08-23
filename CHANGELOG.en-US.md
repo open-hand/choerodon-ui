@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment`, `selectTrigger` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
 - 🌟 `<pro>Rate`: Added `Rate` component.
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
@@ -29,9 +29,10 @@ timeline: true
 - 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
 - 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
 - 🌟 `<pro>Form`: Added the `showValidation` attribute to control the prompting method of verification information.
-- 🌟 `<pro>FormField`: Add `processValue` property.
-- 🌟 `<pro>DataSet.Field`: Add `processValue` property.
-- 🌟 `DatePicker`: Add `processValue` property.
+- 🌟 `<pro>FormField`: Added `processValue` property.
+- 🌟 `<pro>DataSet.Field`: Added `processValue` property.
+- 🌟 `DatePicker`: Added `processValue` property.
+- 🌟 `<pro>Table`：Added the `showRemovedRow` property to control the display and hide of temporarily removed rows.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
@@ -40,6 +41,9 @@ timeline: true
 - 💄 `<pro>RichText`: Optimize the preview style and `RichTextViewer` style.
 - 💄 `<pro>TextField`: Optimize the display position of `showLengthInfo`.
 - 💄 `<pro>Trigger`: Support Fragment child.
+- 💄 `ImageCrop`：Optimize the interface and usage.
+- 💄 `<pro>Table`: Optimize the problem that the dynamic query parameters of the professionalQuery bar do not respond in real time.
+- 🐞 `<pro>DataSet.Field`: Optimize the data return type problem of multiple calls to `fetchLookup`.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
 - 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
 - 🐞 `<pro>TextArea`: Fix the required style in float label mode.
@@ -48,11 +52,13 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the dynamic editor in inline editing mode cannot be displayed after being hidden.
 - 🐞 `<pro>DatePicker`: Fix the problem of custom `renderer` in `range` mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that the first column of the sub-column in the combined column cannot be dragged when `resizable` is set.
+- 🐞 `<pro>PerformanceTable`: Fix an issue in rendering when there is only one column in combined column.
 - 🐞 `<pro>Tree`：Fix the problem that the check box status is wrong in the stowed state.
 - 🐞 `<pro>TreeSelect`：Fix the problem that the check box status is wrong in the stowed state.
 - 🐞 `<pro>Select`: Fix that hover trigger has no effect in multi-select mode.
 - 🐞 `<pro>FormField`: Fix the problem that the input box will lose focus when the `valueChangeAction` is `input` in the highlight mode.
 - 🐞 `<pro>Lov`: Fix the problem that multiple selections cannot be made when the `selectionMode` property of Table is `click`.
+- 🐞 `<pro>Select`: Fix the problem of rendering errors when using `primitiveValue` and `combo` properties at the same time.
 
 ## 1.4.3
 

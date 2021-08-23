@@ -91,7 +91,19 @@ const Demo = () => {
     return (
         <>
             <Button onClick={handleClick} funcType="raised">查看头像</Button>
-            <ImageCrop modalWidth={800} cropContent={renderCrop} onCropComplete={handleCropComplete} modalVisible={visable} onOk={handleOk} onCancel={handleCancel} src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' rotate zoom grid aspect={1 / 1} aspectControl />
+            <ImageCrop
+                modalWidth={800}
+                cropContent={renderCrop}
+                onCropComplete={handleCropComplete}
+                modalVisible={visable}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+                rotate
+                zoom
+                grid
+                aspect={1 / 1}
+            />
         </>
     )
 }

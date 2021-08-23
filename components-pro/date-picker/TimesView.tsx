@@ -27,6 +27,11 @@ export default class TimesView extends DaysView {
 
   panel: HTMLDivElement | null;
 
+  getViewClassName(): string {
+    const { prefixCls } = this;
+    return `${prefixCls}-time`;
+  }
+
   @computed
   get showHour(): boolean {
     const { format } = this.observableProps;

@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnAlign, tooltip, showValidation, attachment 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
+- 🌟 `configure`: 新增 tableColumnAlign, tableShowRemovedRow, tooltip, showValidation, attachment, selectTrigger 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
 - 🌟 `<pro>Rate`: 新增 Rate 组件。
 - 🌟 `<pro>Attachment`: 新增 Attachment 组件。
 - 🌟 `<pro>Picture`: 新增 Picture 组件。
@@ -29,9 +29,10 @@ timeline: true
 - 🌟 `<pro>Form`: 新增 showValidation 属性控制校验信息提示方式。
 - 🌟 `Tree`：onCheck 回调新增 oldCheckedKeys 参数。
 - 🌟 `Skeleton`：新增 grid 属性支持栅格占位配置。
-- 🌟 `<pro>FormField`：FormField支持processValue属性。
-- 🌟 `<pro>DataSet.Field`：Field增加processValue属性。
-- 🌟 `DatePicker`：DatePicker增加processValue属性。
+- 🌟 `<pro>FormField`：新增 processValue 属性。
+- 🌟 `<pro>DataSet.Field`：新增 processValue 属性，支持值变更时，拦截并返回一个新的值。
+- 🌟 `<pro>DatePicker`：新增 processValue 属性。
+- 🌟 `<pro>Table`：新增 showRemovedRow 属性，控制临时移除行显隐。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
@@ -39,6 +40,9 @@ timeline: true
 - 💄 `<pro>Tree`：优化 selectable 属性为 false 时 DataSet 相关数据、事件处理。
 - 💄 `<pro>TextField`：优化 showLengthInfo 信息渲染位置。
 - 💄 `<pro>Trigger`：支持 Fragment 子节点。
+- 💄 `ImageCrop`：优化界面及操作方式。
+- 💄 `<pro>Table`：优化专业查询条动态查询参数未实时响应的问题。
+- 🐞 `<pro>DataSet.Field`: 优化多次调用 fetchLookup 数据返回类型问题。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
 - 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
 - 🐞 `<pro>TextArea`：修复浮动标签必输样式问题。
@@ -46,12 +50,14 @@ timeline: true
 - 🐞 `<pro>Table`：修复存在默认勾选且不可修改的勾选行时，全选和取消全选无效的问题。
 - 🐞 `<pro>Table`：修复行内编辑模式的动态编辑器隐藏后无法再显示的问题。
 - 🐞 `<pro>DatePicker`：修复 range 模式下自定义 renderer 的问题。
-- 🐞 `<pro>PerformanceTable`： 修复组合列中子列第一列设置 resizable 无法拖拽的问题。
+- 🐞 `<pro>PerformanceTable`：修复组合列中子列第一列设置 resizable 无法拖拽的问题。
+- 🐞 `<pro>PerformanceTable`：修复组合列中只有一个子列时渲染报错问题。
 - 🐞 `<pro>Tree`：修复收起状态下勾选框状态错误的问题。
 - 🐞 `<pro>TreeSelect`：修复收起状态下勾选框状态错误的问题。
 - 🐞 `<pro>Select`：修复多选模式下 trigger 为 hover 无效。
 - 🐞 `<pro>FormField`：修复高亮模式下 valueChangeAction 为 input 时，校验报错会导致输入框失去焦点的问题。
 - 🐞 `<pro>Lov`: 修复多选模式表格 selectionMode 为 click 时无法多选的问题。
+- 🐞 `<pro>Select`: 修复同时使用 primitiveValue 和 combo 属性时渲染报错的问题。
 
 ## 1.4.3
 

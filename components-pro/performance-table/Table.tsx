@@ -641,7 +641,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (column) {
         const columnChildren: any = column.props.children;
         let cellProps: ColumnProps = {
-          dataIndex: columnChildren[1].props.dataKey,
+          dataIndex: columnChildren.length > 1
+          ?
+          columnChildren[1].props.dataKey
+          :
+          columnChildren[0].props.dataKey,
         };
         cellProps.hidden = column.props.hidden;
         if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
@@ -709,7 +713,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { sortColumn, rowHeight, showHeader } = this.props;
     const { totalFlexGrow, totalWidth } = getTotalByColumns(columns, this.state);
     const headerHeight = this.getTableHeaderHeight();
-
     React.Children.forEach(columns, (column, index) => {
       if (React.isValidElement(column)) {
         const columnChildren = column.props.children;

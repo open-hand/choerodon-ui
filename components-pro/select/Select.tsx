@@ -8,7 +8,17 @@ import noop from 'lodash/noop';
 import defer from 'lodash/defer';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import { action, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
+import {
+  action,
+  computed,
+  IReactionDisposer,
+  isArrayLike,
+  isObservableObject,
+  observable,
+  reaction,
+  runInAction,
+  toJS,
+} from 'mobx';
 import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
@@ -320,6 +330,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     checkValueOnOptionsChange: true,
     onOption: defaultOnOption,
     selectAllButton: true,
+    trigger: getConfig('selectTrigger'),
   };
 
   static Option = Option;
@@ -1108,15 +1119,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   createComboOption(value): void {
     const { textField, valueField, menu } = this;
     const comboOptions = getIf<Select, DataSet>(this, 'comboOptions', () => new DataSet());
-    const record = comboOptions.create(
-      {
-        [textField]: value,
-        [valueField]: value,
-      },
-      0,
-    );
+    const initData = !this.primitive && isObservableObject(value) ? value : {
+      [textField]: value,
+      [valueField]: value,
+    };
+    const record = comboOptions.create(initData, 0);
     if (menu) {
-      updateActiveKey(menu, getItemKey(record, value, value));
+      updateActiveKey(menu, getItemKey(record, initData[valueField], initData[valueField]));
     }
   }
 

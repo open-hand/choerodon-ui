@@ -60,6 +60,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     mouseBatchChooseState,
     dragColumnAlign,
     rowDraggable,
+    showRemovedRow,
   } = tableStore;
   const { id, key: rowKey } = record;
   const disabled = isDisabledRow(record);
@@ -409,9 +410,10 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     rowProps.onMouseLeave = handleMouseLeave;
   }
 
-  if (hidden) {
+  if (hidden || (record.status === RecordStatus.delete && !showRemovedRow)) {
     rowProps.hidden = true;
   }
+
   const Element = hidden && parityRow ? 'div' : 'tr';
   if (selectionMode === SelectionMode.click) {
     rowProps.onClick = handleSelectionByClick;

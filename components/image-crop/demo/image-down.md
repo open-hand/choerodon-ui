@@ -57,7 +57,16 @@ const Demo = () => {
     return (
         <>
             <Button onClick={hanleClick} funcType="raised">裁剪并下载</Button>
-            <ImageCrop modalVisible={visable} onOk={hanleOk} onCancel={hanleCancel} on src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' rotate zoom grid aspect={12 / 13} aspectControl />
+            <ImageCrop
+                modalVisible={visable}
+                onOk={hanleOk}
+                onCancel={hanleCancel}
+                src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+                rotate
+                zoom
+                grid
+                aspect={12 / 13}
+            />
         </>
     )
 }

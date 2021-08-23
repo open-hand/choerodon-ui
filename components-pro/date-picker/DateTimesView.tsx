@@ -16,6 +16,11 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
 
   static type = FieldType.dateTime;
 
+  getViewClassName(): string {
+    const { prefixCls } = this;
+    return `${prefixCls}-datetime`;
+  }
+
   @autobind
   handleTimeSelect() {
     this.changeViewMode(ViewMode.time);

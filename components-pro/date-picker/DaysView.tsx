@@ -54,12 +54,16 @@ export default class DaysView extends ViewComponent<DateViewProps>
 
   static type = FieldType.date;
 
+  getViewClassName(): string {
+    return '';
+  }
+
   render() {
     const {
       prefixCls,
       props: { className, extraFooterPlacement },
     } = this;
-    const classString = classNames(`${prefixCls}-view`, className);
+    const classString = classNames(`${prefixCls}-view`, className, this.getViewClassName());
     return (
       <div className={classString}>
         {this.renderHeader()}
@@ -216,7 +220,7 @@ export default class DaysView extends ViewComponent<DateViewProps>
   renderPanelHead(): ReactNode {
     return (
       <thead>
-        <tr>{this.getDaysOfWeek()}</tr>
+      <tr>{this.getDaysOfWeek()}</tr>
       </thead>
     );
   }
@@ -242,8 +246,8 @@ export default class DaysView extends ViewComponent<DateViewProps>
       className: classNames({
         [`${prefixCls}-now-disabled`]: disabledNow,
       }),
-      onClick : !disabledNow ? this.choose.bind(this, moment(), false) : noop,
-    }
+      onClick: !disabledNow ? this.choose.bind(this, moment(), false) : noop,
+    };
     return (
       <div className={`${prefixCls}-footer`}>
         <a {...footerProps}>{$l('DatePicker', 'today')}</a>
@@ -284,11 +288,11 @@ export default class DaysView extends ViewComponent<DateViewProps>
       const isDisabled = !isValidDate(currentDate, selected);
       const className = classNames(`${prefixCls}-cell`, {
         [`${prefixCls}-old`]:
-          prevMonth.year() < currentYear ||
-          (prevMonth.year() === currentYear && prevMonth.month() < currentMonth),
+        prevMonth.year() < currentYear ||
+        (prevMonth.year() === currentYear && prevMonth.month() < currentMonth),
         [`${prefixCls}-new`]:
-          prevMonth.year() > currentYear ||
-          (prevMonth.year() === currentYear && prevMonth.month() > currentMonth),
+        prevMonth.year() > currentYear ||
+        (prevMonth.year() === currentYear && prevMonth.month() > currentMonth),
         [`${prefixCls}-selected`]: prevMonth.isSame(selected, 'd'),
         [`${prefixCls}-today`]: prevMonth.isSame(moment(), 'd'),
         [`${prefixCls}-disabled`]: isDisabled,

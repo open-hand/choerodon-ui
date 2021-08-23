@@ -38,7 +38,12 @@ const  Demo = () => {
     return (
         <>
             <Avatar onClick={hanleClick} style={{ backgroundColor: '#87d068' }} >我绿了</Avatar>
-            <AvatarUploader onUploadOk={hanleOk} onClose={hanleCancel} uploadUrl='https://www.mocky.io/v2/5cc8019d300000980a055e76'  visible={visable} />
+            <AvatarUploader
+                onUploadOk={hanleOk}
+                onClose={hanleCancel}
+                uploadUrl='https://www.mocky.io/v2/5cc8019d300000980a055e76'
+                visible={visable}
+            />
         </>
     )
 }
