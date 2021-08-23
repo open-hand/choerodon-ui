@@ -59,6 +59,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fix the problem that the input box will lose focus when the `valueChangeAction` is `input` in the highlight mode.
 - 🐞 `<pro>Lov`: Fix the problem that multiple selections cannot be made when the `selectionMode` property of Table is `click`.
 - 🐞 `<pro>Select`: Fix the problem of rendering errors when using `primitiveValue` and `combo` properties at the same time.
+- 🐞 `<pro>Table`: Fix the problem that virtual cells and maximum height may cause an infinite loop.
 
 ## 1.4.3
 

@@ -400,8 +400,11 @@ sans-serif;
 // Form
 // ---
 @label-required-color: @highlight-color;
-@label-color: rgba(0, 0, 0, 60%);
-@label-colon-color: rgba(0, 0, 0, 60%);
+@label-color: inherit;
+@label-color-horizontal: @label-color;
+@label-color-vertical: @label-color;
+@label-font-weight: 400;
+@label-colon-color: @label-color;
 @label-line-height: @input-height-base;
 @label-white-space: nowrap;
 @label-wrapper-padding-vertical: 0.1rem;
@@ -500,7 +503,7 @@ sans-serif;
 
 // Output
 // ---
-@output-line-height: 28 / 13;  // <-- fieldHeight / fontSize
+@output-line-height: 28 / 13; // <-- fieldHeight / fontSize
 @output-word-break: normal;
 
 //step
@@ -561,6 +564,8 @@ sans-serif;
 @modal-confirm-title-line-height: 0.32rem;
 @modal-mask-bg: rgba(0, 0, 0, 0.288);
 @modal-content-shadow: @shadow-2;
+@modal-body-padding: 0.24rem;
+@modal-drawer-body-padding: @modal-body-padding;
 
 // Sidebar
 @sidebar-font-size-lg: 0.18rem;

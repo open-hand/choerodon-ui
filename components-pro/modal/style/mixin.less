@@ -54,17 +54,19 @@
       right: unset;
       left: 0;
     }
-  }
-  &-drawer &-content {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    border-radius: @border-radius-base;
-  }
 
-  &-drawer &-body {
-    flex-grow: 1;
-    max-height: none;
+    &-content {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      border-radius: @border-radius-base;
+    }
+
+    &-body {
+      flex-grow: 1;
+      max-height: none;
+      padding: @modal-drawer-body-padding;
+    }
   }
 }
 

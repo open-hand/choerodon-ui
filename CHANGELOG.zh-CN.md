@@ -58,6 +58,7 @@ timeline: true
 - 🐞 `<pro>FormField`：修复高亮模式下 valueChangeAction 为 input 时，校验报错会导致输入框失去焦点的问题。
 - 🐞 `<pro>Lov`: 修复多选模式表格 selectionMode 为 click 时无法多选的问题。
 - 🐞 `<pro>Select`: 修复同时使用 primitiveValue 和 combo 属性时渲染报错的问题。
+- 🐞 `<pro>Table`: 修复虚拟单元格和最大高度可能导致死循环的问题。
 
 ## 1.4.3
 
