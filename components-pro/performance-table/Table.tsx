@@ -194,7 +194,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table'),
     data: [],
-    defaultSortType: SORT_TYPE.DESC,
+    defaultSortType: SORT_TYPE.ASC,
     height: 200,
     rowHeight: 33,
     headerHeight: 33,
@@ -883,8 +883,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     let sortType = this.getSortType();
 
     if (this.props.sortColumn === dataKey) {
-      sortType =
-        sortType === SORT_TYPE.ASC ? (SORT_TYPE.DESC as SortType) : (SORT_TYPE.ASC as SortType);
+      switch(sortType) {
+        case SORT_TYPE.ASC:
+          sortType = SORT_TYPE.DESC as SortType;
+          break;
+        case SORT_TYPE.DESC:
+          sortType = undefined;
+          break;
+        default:
+          sortType = SORT_TYPE.ASC as SortType;
+      }
       this.setState({ sortType });
     }
     this.props.onSortColumn?.(dataKey, sortType);
