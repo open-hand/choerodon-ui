@@ -36,6 +36,7 @@ timeline: true
 - 🌟 `<pro>Table`：Added the `showRemovedRow` property to control the display and hide of temporarily removed rows.
 - 🌟 `<pro>TriggerField`：Added `viewMode` property.
 - 🌟 `<pro>Select`：Added `searchFieldInPopup`, `searchFieldProps` properties.
+- 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
@@ -48,6 +49,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the problem that the dynamic query parameters of the professionalQuery bar do not respond in real time.
 - 💄 `<pro>PerformanceTable`：Unordering is supported.
 - 💄 `<pro>FormField`: Optimize the null value judgment.
+- 🐞 `configure`: Modify the `tableFilterAdapter` type.
 - 🐞 `<pro>DataSet.Field`: Optimize the data return type problem of multiple calls to `fetchLookup`.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
 - 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
@@ -67,7 +69,6 @@ timeline: true
 - 🐞 `<pro>Select`: Fix the problem of rendering errors when using `primitiveValue` and `combo` properties at the same time.
 - 🐞 `<pro>Table`: Fix the problem that virtual cells and maximum height may cause an infinite loop.
 - 🐞 `<pro>Table`: Fixed editor will focused on disabled cell."
-- 🐞 `configure`: Modify the `tableFilterAdapter` type.
 
 ## 1.4.3
 

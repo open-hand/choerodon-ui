@@ -62,9 +62,22 @@ const Table = () => {
     },
   ];
 
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: rowData => ({
+      disabled: rowData.firstName === 'Libbie', // Column configuration not to be checked
+      name: rowData.firstName,
+    }),
+    columnIndex: 2,
+  };
+
   return (
     <div>
       <PerformanceTable
+        rowKey="id"
+        rowSelection={rowSelection}
         customizable
         customizedCode="pre-customized-p"
         columnDraggable

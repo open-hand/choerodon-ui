@@ -8,7 +8,14 @@ import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { ExportMode, FieldType, RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import { Customized, expandIconProps, Suffixes, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
+import {
+  Customized,
+  expandIconProps,
+  Suffixes,
+  TablePaginationConfig,
+  TableProps,
+  TableQueryBarHook,
+} from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
@@ -67,7 +74,7 @@ export type TooltipHook = (target?: TooltipTarget) => Tooltip | undefined;
 
 export type TooltipThemeHook = (target?: TooltipTarget) => TooltipTheme;
 
-export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet } )=>AxiosRequestConfig;
+export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet }) => AxiosRequestConfig;
 
 export type Formatter = {
   jsonDate?: string | null;
