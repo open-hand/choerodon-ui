@@ -123,6 +123,10 @@ const locale: Locale = {
     no_attachments: '添付ファイルなし',
     by_upload_time: 'アップロード時間別',
     by_name: '名前で',
+    operation_records: '運用記録',
+    view_operation_records: '操作記録の表示',
+    download: 'ダウンロード',
+    delete: '消去',
     file_max_size: 'ファイルサイズは次を超えることはできません：{size}',
     file_list_max_length: 'ファイルの最大数は次のように制限されています：{count}',
     file_type_mismatch: 'ファイルタイプの不一致、正しいタイプ：{types}',
@@ -130,6 +134,7 @@ const locale: Locale = {
   Modal: {
     ok: 'OK',
     cancel: 'キャンセル',
+    close: '閉鎖',
     preview_picture: 'プレビュー画像',
   },
   DataSet: {

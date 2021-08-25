@@ -15,7 +15,7 @@ import { FormField, FormFieldProps } from '../field/FormField';
 import axios from '../axios';
 import autobind from '../_util/autobind';
 import Modal from '../modal';
-import AttachmentFile from '../data-set/AttachmentFile';
+import AttachmentFile, { FileLike } from '../data-set/AttachmentFile';
 import { appendFormData, formatFileSize, sortAttachments } from './utils';
 import ObserverSelect from '../select/Select';
 import Trigger from '../trigger/Trigger';
@@ -26,6 +26,7 @@ import { FieldType } from '../data-set/enum';
 import { ValidatorProps } from '../validator/rules';
 import { ValidationMessages } from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
+import { open } from '../modal-container/ModalContainer';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
@@ -58,6 +59,9 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   count?: number;
   max?: number;
   listLimit?: number;
+  showHistory?: boolean;
+  attachments?: (AttachmentFile | FileLike)[];
+  onAttachmentsChange?: (attachments: AttachmentFile[]) => void;
   beforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[]) => boolean | undefined | PromiseLike<boolean | undefined>;
   onUploadProgress?: (percent: number, attachment: AttachmentFile) => void;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
@@ -101,10 +105,6 @@ export default class Attachment extends FormField<AttachmentProps> {
   // eslint-disable-next-line camelcase
   static __IS_IN_CELL_EDITOR = true;
 
-  @observable $attachments?: AttachmentFile[] | undefined;
-
-  @observable $count?: number | undefined;
-
   @observable sort?: Sort;
 
   get attachments(): AttachmentFile[] | undefined {
@@ -112,7 +112,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (field) {
       return field.attachments;
     }
-    return this.$attachments;
+    return this.observableProps.attachments;
   }
 
   set attachments(attachments: AttachmentFile[] | undefined) {
@@ -121,7 +121,13 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (field) {
         field.attachments = attachments;
       } else {
-        this.$attachments = attachments;
+        this.observableProps.attachments = attachments;
+      }
+      if (attachments) {
+        const { onAttachmentsChange } = this.props;
+        if (onAttachmentsChange) {
+          onAttachmentsChange(attachments);
+        }
       }
     });
   }
@@ -137,11 +143,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         return attachmentCount;
       }
     }
-    const { $count } = this;
-    if ($count !== undefined) {
-      return $count;
-    }
-    const { count } = this.props;
+    const { count } = this.observableProps;
     return count;
   }
 
@@ -168,6 +170,21 @@ export default class Attachment extends FormField<AttachmentProps> {
     return FieldType.attachment;
   }
 
+  getObservableProps(props, context): any {
+    const { count, attachments } = props;
+    const { observableProps = { count, attachments } } = this;
+    return {
+      ...super.getObservableProps(props, context),
+      count: count === undefined ? observableProps.count : count,
+      attachments: attachments ? attachments.map(attachment => {
+        if (attachment instanceof AttachmentFile) {
+          return attachment;
+        }
+        return new AttachmentFile(attachment);
+      }) : observableProps.attachments,
+    };
+  }
+
   getValidatorProps(): ValidatorProps {
     return {
       ...super.getValidatorProps(),
@@ -185,7 +202,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         const { batchFetchCount } = getConfig('attachment');
         if (batchFetchCount && !this.attachments) {
           attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
-            this.$count = count || 0;
+            this.observableProps.count = count || 0;
           }));
         }
       }
@@ -210,7 +227,10 @@ export default class Attachment extends FormField<AttachmentProps> {
       'count',
       'max',
       'listLimit',
+      'showHistory',
       'downloadAll',
+      'attachments',
+      'onAttachmentsChange',
       'beforeUpload',
       'onUploadProgress',
       'onUploadSuccess',
@@ -421,6 +441,27 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
+  handleHistory(attachment: AttachmentFile, attachmentUUID: string) {
+    const { renderHistory } = getConfig('attachment');
+    if (renderHistory) {
+      const bucketName = this.getProp('bucketName');
+      const bucketDirectory = this.getProp('bucketDirectory');
+      open({
+        title: $l('Attachment', 'operation_records'),
+        children: renderHistory({
+          attachment,
+          attachmentUUID,
+          bucketName,
+          bucketDirectory,
+        }),
+        cancelButton: false,
+        okText: $l('Modal', 'close'),
+        drawer: true,
+      });
+    }
+  }
+
+  @autobind
   handleRemove(attachment: AttachmentFile) {
     this.removeAttachment(attachment);
     return this.doRemove(attachment);
@@ -449,6 +490,10 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (index !== -1) {
         attachments.splice(index, 1);
         this.checkValidity();
+        const { onAttachmentsChange } = this.props;
+        if (onAttachmentsChange) {
+          onAttachmentsChange(attachments);
+        }
       }
     }
   }
@@ -638,7 +683,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit,
+      listType, sortable, listLimit, showHistory,
     } = this.props;
     const bucketName = this.getProp('bucketName');
     const bucketDirectory = this.getProp('bucketDirectory');
@@ -660,6 +705,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           sortable={sortable}
           readOnly={readOnly}
           limit={readOnly ? listLimit : undefined}
+          onHistory={showHistory ? this.handleHistory : undefined}
           onRemove={this.handleRemove}
           onUpload={this.upload}
           onOrderChange={this.handleOrderChange}

@@ -26,11 +26,14 @@ title: Picture
 | block | 块级图片 | boolean | true |
 | lazy | 懒加载 | boolean |  |
 | preview | 可预览 | boolean | true |
+| previewUrl | 预览时的路径， 默认为src | string |  |
+| previewTarget | 预览方式，若设置则通过a标签来预览， 默认是弹窗预览 | string |  |
 | index | 序号, 配合[Picture.Provider](#Picture.Provider)进行组预览 | number |  |
 | status | 状态 | 'empty' \| 'loaded' \| 'error' |  |
 | objectFit | 填充方式, [ObjectFit](#ObjectFit) | ObjectFit | 'fill' |
 | objectPosition | 指定图片在容器中的位置。 | 'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| string | 'center' |
 | sources | 根据媒体查询显示不同的图片，IE 不支持，[Source](#Source) | Source[] |   |
+| children | 代替图片渲染 | ReactNode |   |
 
 ### Picture.Provider
  

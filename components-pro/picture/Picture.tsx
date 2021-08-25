@@ -3,7 +3,7 @@ import React, {
   CSSProperties,
   FunctionComponent,
   ImgHTMLAttributes,
-  MouseEventHandler,
+  MouseEventHandler, ReactNode,
   SourceHTMLAttributes,
   useCallback,
   useContext,
@@ -33,11 +33,14 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   block?: boolean;
   border?: boolean;
   preview?: boolean;
+  previewUrl?: string;
+  previewTarget?: string;
   objectFit?: ObjectFitProperty;
   objectPosition?: ObjectPositionProperty<string | 0>;
   sources?: SourceHTMLAttributes<HTMLSourceElement>[];
   status?: ImageStatus;
   onClick?: MouseEventHandler<HTMLPictureElement>;
+  children?: ReactNode;
 }
 
 export interface PictureRef {
@@ -46,27 +49,28 @@ export interface PictureRef {
 
 const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<PictureProviderProps>, Context?: Context<PictureContextValue | undefined> } = function Picture(props: PictureProps) {
   const {
-    src, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true,
-    objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, ...rest
+    src, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true,
+    objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, ...rest
   } = props;
-  const ref = useRef<PictureRef>({ src });
+  const url = previewUrl || src;
+  const ref = useRef<PictureRef>({ src: url });
   const context = useContext<PictureContextValue | undefined>(PictureContext);
   const customPrefixCls = getProPrefixCls('picture', prefixCls);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [status, setStatus] = useState<ImageStatus>(propStatus || 'empty');
   const [inView, setInView] = useState<boolean>(!lazy || !!propStatus);
   const handleClick = useCallback((e) => {
-    if (preview && status === 'loaded' && src) {
+    if (preview && !previewTarget && status === 'loaded' && url) {
       if (context && isNumber(index)) {
         context.preview(index);
       } else {
-        modalPreview({ list: [src] });
+        modalPreview({ list: [url] });
       }
     }
     if (onClick) {
       onClick(e);
     }
-  }, [context, index, preview, status, src, onClick]);
+  }, [context, index, preview, previewTarget, status, url, onClick]);
   const wrapperStyle: CSSProperties = {
     ...style,
   };
@@ -120,12 +124,12 @@ const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<
   }, [imgRef, objectFit, objectPosition]);
 
   useEffect(() => {
-    if (preview && context && isNumber(index) && src) {
-      ref.current.src = src;
+    if (preview && !previewTarget && context && isNumber(index) && url) {
+      ref.current.src = url;
       context.registerPicture(index, ref.current);
       return () => context.unRegisterPicture(index, ref.current);
     }
-  }, [index, context, ref, preview, src]);
+  }, [index, context, ref, preview, previewTarget, url]);
 
   const renderSources = () => {
     if (sources) {
@@ -134,6 +138,9 @@ const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<
   };
 
   const renderImg = () => {
+    if (children) {
+      return children;
+    }
     switch (status) {
       case 'loaded': {
         return (
@@ -170,12 +177,20 @@ const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<
   }, className);
   const isPictureSupport = typeof HTMLPictureElement !== 'undefined';
   const Cmp = isPictureSupport ? 'picture' : 'div';
+  const img = renderImg();
   const picture = (
     <Cmp className={classString} style={wrapperStyle} onClick={handleClick}>
       {isPictureSupport && renderSources()}
-      {renderImg()}
+      {
+        preview && previewTarget ? (
+          <a target={previewTarget} href={url}>
+            {img}
+          </a>
+        ) : img
+      }
     </Cmp>
   );
+
   if (lazy && !propStatus && status !== 'loaded') {
     return (
       <ReactIntersectionObserver onChange={setInView}>
