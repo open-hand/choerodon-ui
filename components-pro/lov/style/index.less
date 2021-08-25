@@ -4,7 +4,7 @@
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
 @select-prefix-cls: ~'@{c7n-pro-prefix}-select';
 @progress-prefix-cls: ~'@{c7n-prefix}-progress';
-
+@lov-prefix-cls: ~'@{select-prefix-cls}-lov';
 
 .@{modal-prefix-cls} {
   &-body {
@@ -22,10 +22,37 @@
   }
 }
 
-.@{select-prefix-cls}-lov-spin {
-  .@{progress-prefix-cls}-inner {
+.@{lov-prefix-cls} {
+  &-spin .@{progress-prefix-cls}-inner {
     width: 0.2rem;
     height: 0.2rem;
     margin-right: 0.03rem;
+  }
+
+  &-popup {
+    max-width: 5rem;
+
+    .@{table-prefix-cls} {
+      border-top: none;
+
+      &-pagination {
+        margin: 0;
+        padding: .07rem .16rem;
+
+        .@{c7n-pro-prefix}-pagination-page-info {
+          float: left;
+          margin: 0;
+          letter-spacing: 0;
+        }
+      }
+    }
+
+    .@{table-prefix-cls}-thead .@{table-prefix-cls}-cell {
+      background-color: transparent;
+    }
+
+    .@{c7n-pro-prefix}-btn + .@{c7n-pro-prefix}-btn:not(.@{c7n-pro-prefix}-btn-block) {
+      margin-left: 0;
+    }
   }
 }

@@ -140,6 +140,11 @@ export interface TextFieldProps<V = any> extends FormFieldProps<V> {
    * 是否显示长度信息
    */
   showLengthInfo?: boolean;
+  /**
+   * 是否显示边框
+   * @default true
+   */
+  border?: boolean;
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -217,6 +222,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     waitType: PropTypes.oneOf([WaitType.throttle, WaitType.debounce]),
     groupClassName: PropTypes.string,
     showLengthInfo: PropTypes.bool,
+    border: PropTypes.bool,
     ...FormField.propTypes,
   };
 
@@ -225,6 +231,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     suffixCls: 'input',
     clearButton: false,
     multiple: false,
+    border: true,
     valueChangeAction: ValueChangeAction.blur,
     waitType: WaitType.debounce,
   };
@@ -335,6 +342,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'waitType',
       'groupClassName',
       'showLengthInfo',
+      'border',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
@@ -392,7 +400,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls, multiple, range } = this;
+    const { prefixCls, multiple, range, props: { border } } = this;
     const suffix = this.getSuffix();
     const prefix = this.getPrefix();
     return super.getWrapperClassNames(
@@ -400,6 +408,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         [`${prefixCls}-suffix-button`]: isValidElement<{ onClick; }>(suffix),
         [`${prefixCls}-multiple`]: multiple,
         [`${prefixCls}-range`]: range,
+        [`${prefixCls}-border`]: border,
         [`${prefixCls}-prefix-button`]: isValidElement<{ onClick; }>(prefix),
       },
       ...args,

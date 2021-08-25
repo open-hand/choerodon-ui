@@ -32,7 +32,10 @@ timeline: true
 - 🌟 `<pro>FormField`：新增 processValue 属性。
 - 🌟 `<pro>DataSet.Field`：新增 processValue 属性，支持值变更时，拦截并返回一个新的值。
 - 🌟 `<pro>DatePicker`：新增 processValue 属性。
+- 🌟 `<pro>Table`：新增 showCachedSelection 属性。
 - 🌟 `<pro>Table`：新增 showRemovedRow 属性，控制临时移除行显隐。
+- 🌟 `<pro>TriggerField`：新增 viewMode 属性。
+- 🌟 `<pro>Select`：新增 searchFieldInPopup, searchFieldProps 属性。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。

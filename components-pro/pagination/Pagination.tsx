@@ -396,19 +396,18 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   renderTotal(pageSize: number, page: number, total: number): ReactNode {
     const { prefixCls, props: { showTotal } } = this;
+    const from = pageSize * (page - 1) + 1;
+    const to = Math.min(pageSize * page, total);
     if (typeof showTotal === 'function') {
       return (
         <span key="total" className={`${prefixCls}-page-info`}>
-          {showTotal(total, [
-            pageSize * (page - 1) + 1,
-            Math.min(pageSize * page, total),
-          ])}
+          {showTotal(total, [from, to])}
         </span>
       );
     }
     return (
       <span key="total" className={`${prefixCls}-page-info`}>
-        {pageSize * (page - 1) + 1} - {Math.min(pageSize * page, total)} / {total}
+        <span className="word">{from}</span>-<span className="word">{to}</span>/<span className="word">{total}</span>
       </span>
     );
   }

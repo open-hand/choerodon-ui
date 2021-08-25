@@ -5,7 +5,7 @@ import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import Tree, { TreeProps } from 'choerodon-ui/lib/tree';
 import TreeNode from './TreeNode';
-import { DISABLED_FIELD, MORE_KEY, Select, SelectProps } from '../select/Select';
+import { DISABLED_FIELD, isSearchTextEmpty, MORE_KEY, Select, SelectProps } from '../select/Select';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import normalizeTreeNodes from './normalizeTreeNodes';
@@ -97,8 +97,8 @@ export default class TreeSelect extends Select<TreeSelectProps> {
   }
 
   @action
-  handleSearch(text) {
-    if (text) {
+  handleSearch(text?: string | string[] | undefined) {
+    if (!isSearchTextEmpty(text)) {
       const { options } = this;
       const { idField } = options.props;
       this.expandedKeys = options.map((r) => String(r.get(idField)));

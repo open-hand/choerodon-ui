@@ -268,7 +268,7 @@ export const instance = (wrapperClassName: string | undefined, prefixCls?: strin
 };
 
 export interface TableProps extends DataSetComponentProps {
-  columns?: ColumnProps[];
+  columns?: ColumnProps[] | undefined;
   children?: ReactNode;
   /**
    * 表头
@@ -317,6 +317,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   showSelectionCachedButton?: boolean;
   /**
+   * 显示缓存选中记录
+   */
+  showCachedSelection?: boolean;
+  /**
    * 显示切换跨页全选按钮
    */
   showAllPageSelectionButton?: boolean;
@@ -356,13 +360,13 @@ export interface TableProps extends DataSetComponentProps {
    * 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口
    * @default 1
    */
-  queryFieldsLimit?: number;
+  queryFieldsLimit?: number | undefined;
   /**
    * 显示查询条
    * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar` `filterBar`
    * @default 'normal'
    */
-  queryBar?: TableQueryBarType | TableQueryBarHook;
+  queryBar?: TableQueryBarType | TableQueryBarHook | undefined;
   /**
    * 查询条自定义参数
    */

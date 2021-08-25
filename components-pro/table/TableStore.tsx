@@ -1286,6 +1286,10 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
+    const { showCachedSelection } = props;
+    if (showCachedSelection !== undefined) {
+      this.showCachedSelection = showCachedSelection;
+    }
   }
 
   @action

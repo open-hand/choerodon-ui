@@ -73,11 +73,16 @@
   line-height: @input-line-height-base;
   background-color: transparent;
   background-image: none;
-  border: @border-width-base @border-style-base @input-border-color;
+  border: @border-width-base none @input-border-color;
   border-radius: @input-border-radius;
   cursor: text;
   transition-duration: 0.3s;
   transition-property: opacity, color, background-color, border;
+
+  &-border &,
+  &-border&-float-label::before {
+    border-style: @border-style-base;
+  }
 
   &-wrapper {
     position: relative;
@@ -328,10 +333,19 @@
 
   &-multiple & {
     height: auto;
+    min-height: @input-height-base;
     margin: 0;
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 0;
+  }
+
+  &-multiple&-lg & {
+    min-height: @input-height-lg;
+  }
+
+  &-multiple&-sm & {
+    min-height: @input-height-sm;
   }
 
   &-multiple&-lov &:not(:last-child) {
@@ -511,7 +525,7 @@
     bottom: 0;
     left: 0;
     display: block;
-    border: @border-width-base @border-style-base @input-float-border-color;
+    border: @border-width-base none @input-float-border-color;
     border-radius: @input-float-border-radius;
     content: ' ';
   }

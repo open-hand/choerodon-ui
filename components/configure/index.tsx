@@ -341,6 +341,7 @@ const defaultTableColumnAlign = (_column: ColumnProps, field?: Field): ColumnAli
 
 const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
   Config[ConfigKeys]>([
+  ['tableVirtualCell', true],
   ['prefixCls', 'c7n'],
   ['proPrefixCls', 'c7n-pro'],
   ['iconfontPrefix', 'icon'],

@@ -127,7 +127,8 @@ export default class Popup extends ViewComponent<PopupProps> {
     const { element } = this;
     const { getFocusableElements } = this.props;
     if (element && getFocusableElements) {
-      getFocusableElements(findFocusableElements(element));
+      const elements = findFocusableElements(element);
+      getFocusableElements(elements && elements.filter(item => item.tabIndex !== -1).sort((e1, e2) => e1.tabIndex - e2.tabIndex));
     }
   }
 

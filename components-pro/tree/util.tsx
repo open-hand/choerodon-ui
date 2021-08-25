@@ -81,7 +81,7 @@ export function getTreeNodes(
   async?: boolean,
   titleField?: string,
   optionsFilter?: (record: Record, index: number, array: Record[]) => boolean,
-  searchMatcher?: (record: Record, text?: string) => boolean,
+  searchMatcher?: (record: Record, text: string | string[]) => boolean,
   filterText?: string,
 ) {
   const { idField } = dataSet.props;

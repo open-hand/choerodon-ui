@@ -615,12 +615,12 @@ export default class Attachment extends FormField<AttachmentProps> {
             <ObserverSelect
               value={type}
               onChange={(newType) => this.handleSort({ type: newType, order, custom: false })}
-              className={`${prefixCls}-order-select`}
               clearButton={false}
               isFlat
               popupPlacement="bottomRight"
               getPopupContainer={viewMode === 'popup' ? this.getSortSelectPopupContainer : undefined}
               size={Size.small}
+              border={false}
             >
               <ObserverSelect.Option value="time">{$l('Attachment', 'by_upload_time')}</ObserverSelect.Option>
               <ObserverSelect.Option value="name">{$l('Attachment', 'by_name')}</ObserverSelect.Option>

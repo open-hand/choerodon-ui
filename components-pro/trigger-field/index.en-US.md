@@ -22,5 +22,6 @@ title: TriggerField
 | onPopupHiddenChange | 下拉框变化的钩子 | (hidden: boolean) => void |  |
 | getPopupContainer | 定义浮层的容器，默认为 body | (triggerNode: HTMLElement) => HTMLElement; |  |
 | tabIntoPopupContent | 按 Tab 键进入下拉框中可获焦的元素 | boolean | false |
+| viewMode | 内容的显示模式,  `Lov` 默认值是 `modal` 且目前只有 `Lov` 实现了 `modal` | 'popup', 'modal' | 'popup' |
 
 更多属性请参考 [TextField](/components-pro/text-field/#TextField)。
