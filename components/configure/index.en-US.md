@@ -77,7 +77,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnOnCell | Custom cell property configuration | (dataSet, record, column) => object | - |
 | tableColumnAlign | 默认表格列对齐方式 | (column, field) => 'left' \| 'center' \| 'right' \| undefined | Function |
 | tableKeyboard | Table 开启或关闭新增的快捷按钮事件 | boolean | false |
-| tableFilterAdapter | Table 筛选条请求适配器 | AxiosRequestConfig | |
+| tableFilterAdapter | Table 筛选条请求适配器 | ({ type, config, searchCode, queryDataSet} )=>AxiosRequestConfig | |
 | tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |
 | tableFilterSearchText | Table 筛选条快速搜索参数名 | string | 'params' |
 | tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
