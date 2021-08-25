@@ -67,6 +67,8 @@ export type TooltipHook = (target?: TooltipTarget) => Tooltip | undefined;
 
 export type TooltipThemeHook = (target?: TooltipTarget) => TooltipTheme;
 
+export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet } )=>AxiosRequestConfig;
+
 export type Formatter = {
   jsonDate?: string | null;
   date?: string;
@@ -172,7 +174,7 @@ export type Config = {
   tableEditorNextKeyEnterDown?: boolean;
   tableAutoFocus?: boolean;
   tableKeyboard?: boolean;
-  tableFilterAdapter?: TransportProps;
+  tableFilterAdapter?: TableFilterAdapterProps;
   tableFilterSuffix?: Suffixes[];
   tableFilterSearchText?: string;
   tableAutoHeightDiff?: number;
@@ -462,7 +464,7 @@ export function getProPrefixCls(suffixCls: string, customizePrefixCls?: string):
   return `${getConfig('proPrefixCls')}-${suffixCls}`;
 }
 
-const mergeProps = ['transport', 'feedback', 'formatter', 'tableFilterAdapter'];
+const mergeProps = ['transport', 'feedback', 'formatter'];
 
 export default function configure(config: Config) {
   runInAction(() => {

@@ -67,6 +67,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fix the problem of rendering errors when using `primitiveValue` and `combo` properties at the same time.
 - 🐞 `<pro>Table`: Fix the problem that virtual cells and maximum height may cause an infinite loop.
 - 🐞 `<pro>Table`: Fixed editor will focused on disabled cell."
+- 🐞 `configure`: Modify the `tableFilterAdapter` type.
 
 ## 1.4.3
 
