@@ -1106,7 +1106,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       }
     };
     value = getSimpleValue(value, valueField);
-    if (this.options) {
+    if (this.options && value) {
       return findTreeItem(toJS(this.options.treeData), toJS(value), 0);
     }
   }

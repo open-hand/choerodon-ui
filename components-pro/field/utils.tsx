@@ -5,7 +5,7 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import isPlainObject from 'lodash/isPlainObject';
-import { isArrayLike } from 'mobx';
+import { get, isArrayLike } from 'mobx';
 import classNames from 'classnames';
 import moment, { isMoment } from 'moment';
 import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
@@ -216,8 +216,7 @@ export function processValue(value, format) {
   return '';
 }
 
-export function isFieldValueEmpty(value: any, range?: boolean | [string, string]) {
-
+export function isFieldValueEmpty(value: any, range?: boolean | [string, string], valueField?: string) {
   if (range === true) {
     if (isArrayLike(value) && value.every(v => isEmpty(v))) {
       return true;
@@ -227,7 +226,18 @@ export function isFieldValueEmpty(value: any, range?: boolean | [string, string]
       return true;
     }
   }
-  return isArrayLike(value) ? !value.length : isEmpty(value);
+  if (isArrayLike(value)) {
+    return value.length ? value.every(v => {
+      if (isObject(v)) {
+        return isEmpty(get(v, valueField!));
+      }
+      return isEmpty(v);
+    }) : true;
+  }
+  if (isObject(value)) {
+    return isEmpty(get(value, valueField!));
+  }
+  return isEmpty(value);
 }
 
 export type MultipleRenderOption = {
