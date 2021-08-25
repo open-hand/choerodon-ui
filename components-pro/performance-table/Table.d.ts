@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { Size } from 'choerodon-ui/lib/_util/enum';
+import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
+import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
 import { StandardProps, SortType, RowDataType } from './common';
 import { ColumnProps } from './Column.d';
 import { ToolBarProps } from './tool-bar';
@@ -7,7 +10,6 @@ import { TransportProps } from '../data-set/Transport';
 import { TableQueryBarType } from './Table';
 import { FormProps } from '../form/Form';
 import { TableHeightType } from '../table/enum';
-import { Size } from 'choerodon-ui/lib/_util/enum';
 
 export interface TableLocale {
   emptyMessage?: string;
@@ -58,9 +60,84 @@ export interface Customized {
   heightDiff?: number;
 }
 
+export type RowSelectionType = 'checkbox' | 'radio';
+export type SelectionSelectFn = (
+  record: object,
+  selected: boolean,
+  selectedRows: Object[],
+  nativeEvent: Event,
+) => void;
+
+export type TableSelectWay = 'onSelect' | 'onSelectMultiple' | 'onSelectAll' | 'onSelectInvert';
+export type SelectionItemSelectFn = (key: string[]) => void;
+
+export interface SelectionItem {
+  key: string;
+  text: React.ReactNode;
+  onSelect?: SelectionItemSelectFn;
+}
+
+export interface TableRowSelection {
+  type?: RowSelectionType;
+  selectedRowKeys?: string[] | number[];
+  onChange?: (selectedRowKeys: string[] | number[], selectedRows: object[]) => void;
+  getCheckboxProps?: (record: object) => Object;
+  onSelect?: SelectionSelectFn;
+  onSelectMultiple?: (selected: boolean, selectedRows: object[], changeRows: object[]) => void;
+  onSelectAll?: (selected: boolean, selectedRows: object[], changeRows: object[]) => void;
+  onSelectInvert?: (selectedRowKeys: string[] | number[]) => void;
+  selections?: SelectionItem[] | boolean;
+  hideDefaultSelections?: boolean;
+  fixed?: boolean;
+  columnWidth?: number;
+  selectWay?: TableSelectWay;
+  columnTitle?: string | React.ReactNode;
+  columnIndex?: number;
+}
+
+export interface SelectionCheckboxAllProps {
+  store: any;
+  disabled: boolean;
+  getCheckboxPropsByItem: (item: object, index: number) => { defaultChecked: boolean };
+  getRecordKey: (record: object, index?: number) => string;
+  data: object[];
+  prefixCls: string | undefined;
+  onSelect: (key: string, index: number, selectFunc: any) => void;
+  hideDefaultSelections?: boolean;
+  selections?: SelectionItem[] | boolean;
+}
+
+export interface SelectionCheckboxAllState {
+  checked?: boolean;
+  indeterminate?: boolean;
+}
+
+export interface SelectionBoxProps {
+  store: any;
+  type?: RowSelectionType;
+  defaultSelection: string[];
+  rowIndex: string;
+  name?: string;
+  disabled?: boolean;
+  onChange: (e: RadioChangeEvent | CheckboxChangeEvent) => void;
+}
+
+export interface SelectionBoxState {
+  checked?: boolean;
+}
+
+export interface SelectionInfo {
+  selectWay: TableSelectWay;
+  record?: object;
+  checked?: boolean;
+  changeRowKeys?: React.Key[];
+  nativeEvent?: Event;
+}
+
 export interface TableProps extends StandardProps {
   /** 左上角的 title */
   headerTitle?: React.ReactNode;
+  rowSelection?: TableRowSelection;
   queryBar?: false | TableQueryBarProps;
   toolbar?: ToolBarProps,
   /** 渲染操作栏 */
@@ -90,7 +167,7 @@ export interface TableProps extends StandardProps {
   loadAnimation?: boolean;
   minHeight: number;
   rowHeight: number | ((rowData: object) => number);
-  rowKey: string | number;
+  rowKey: string;
   isTree?: boolean;
   rowExpandedHeight?: number;
   rowClassName?: string | ((rowData: object) => string);
@@ -108,7 +185,7 @@ export interface TableProps extends StandardProps {
   renderTreeToggle?: (
     expandButton: React.ReactNode,
     rowData?: RowDataType,
-    expanded?: boolean
+    expanded?: boolean,
   ) => React.ReactNode;
   renderRowExpanded?: (rowDate?: object) => React.ReactNode;
   renderEmpty?: (info: React.ReactNode) => React.ReactNode;

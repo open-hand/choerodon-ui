@@ -17,10 +17,14 @@ import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import LocaleReceiver from 'choerodon-ui/lib/locale-provider/LocaleReceiver';
 import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider';
 import defaultLocale from 'choerodon-ui/lib/locale-provider/default';
+import warning from 'choerodon-ui/lib/_util/warning';
+import { stopPropagation } from '../_util/EventManager';
 import ModalProvider from '../modal-provider/ModalProvider';
 import Row from './Row';
 import CellGroup from './CellGroup';
 import Scrollbar from './Scrollbar';
+import SelectionBox from './SelectionBox';
+import SelectionCheckboxAll from './SelectionCheckboxAll';
 import TableContext from './TableContext';
 import { CELL_PADDING_HEIGHT, SCROLLBAR_WIDTH, SCROLLBAR_LARGE_WIDTH } from './constants';
 import {
@@ -42,7 +46,14 @@ import {
 } from './utils';
 
 import isMobile from '../_util/isMobile';
-import { TableProps } from './Table.d';
+import {
+  TableProps,
+  SelectionInfo,
+  TableRowSelection,
+  RowSelectionType,
+  SelectionItemSelectFn,
+  TableSelectWay,
+} from './Table.d';
 import { RowProps } from './Row.d';
 import { SortType } from './common.d';
 import ColumnGroup from './ColumnGroup';
@@ -57,6 +68,8 @@ import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import TableStore from './TableStore';
 import Toolbar from './tool-bar';
 import { TableHeightType } from '../table/enum';
+import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
+import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
 
 interface TableRowProps extends RowProps {
   key?: string | number;
@@ -101,6 +114,8 @@ interface TableState {
   fixedHeader: boolean;
   fixedHorizontalScrollbar?: boolean;
   isTree?: boolean;
+  selectedRowKeys: string[] | number[];
+  selectionDirty?: boolean;
 
   [key: string]: any;
 }
@@ -170,9 +185,14 @@ const propTypes = {
   columnDraggable: PropTypes.bool,
   columnTitleEditable: PropTypes.bool,
   columnsDragRender: PropTypes.object,
+  rowSelection: PropTypes.object,
 };
 
 export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
+
+function getRowSelection(props: TableProps): TableRowSelection {
+  return props.rowSelection || {};
+}
 
 export default class PerformanceTable extends React.Component<TableProps, TableState> {
   static displayName = 'performance';
@@ -317,6 +337,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       isScrolling: false,
       fixedHeader: false,
       searchText: '',
+      pivot: undefined,
+      selectedRowKeys: [],
     };
 
     this.scrollY = 0;
@@ -636,6 +658,20 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return children as React.ReactNodeArray;
     }
 
+    // rowSelection
+    const columnsWithRowSelection = this.renderRowSelection();
+    if (columnsWithRowSelection) {
+      if ('fixed' in this.props.rowSelection!) {
+        children.splice((this.props.rowSelection?.fixed === true || 'left') ? 0 : children.length, 0, columnsWithRowSelection);
+        let shouldFixedColumn = Array.from(children as Iterable<any>).some(
+          (child: any) => child && child.props && child.props.fixed,
+        );
+        this.setState({ shouldFixedColumn: shouldFixedColumn });
+      } else {
+        children.splice(this.props.rowSelection?.columnIndex || 0, 0, columnsWithRowSelection);
+      }
+    }
+
     // Fix that the `ColumnGroup` array cannot be rendered in the Table
     const flattenColumns = flatten(children).map((column: React.ReactElement) => {
       if (column) {
@@ -681,6 +717,273 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
     return flatten(flattenColumns).filter(col => col && col.props && !col.props.hidden);
+  }
+
+  getRecordKey = (record: object, index: number) => {
+    const { rowKey } = this.props;
+    const recordKey = record[rowKey!];
+    warning(
+      recordKey !== undefined,
+      'Each record in dataSource of table should have a unique `key` prop, ' +
+      'or set `rowKey` of Table to an unique primary key.'
+    );
+    return recordKey === undefined ? index : recordKey;
+  };
+
+  getCheckboxPropsByItem = (item: object, index: number) => {
+    const rowSelection = getRowSelection(this.props);
+    if (!rowSelection.getCheckboxProps) {
+      return {};
+    }
+    const key = this.getRecordKey(item, index);
+    // Cache checkboxProps
+    if (!this.tableStore.checkboxPropsCache[key]) {
+      this.tableStore.checkboxPropsCache[key] = rowSelection.getCheckboxProps(item) || {};
+      const checkboxProps = this.tableStore.checkboxPropsCache[key];
+      warning(
+        !('checked' in checkboxProps) && !('defaultChecked' in checkboxProps),
+        'Do not set `checked` or `defaultChecked` in `getCheckboxProps`. Please use `selectedRowKeys` instead.',
+      );
+    }
+    return this.tableStore.checkboxPropsCache[key];
+  };
+
+  getDefaultSelection() {
+    const rowSelection = getRowSelection(this.props);
+    if (!rowSelection.getCheckboxProps) {
+      return [];
+    }
+    return this.state.data
+      .filter((item: any, rowIndex) => this.getCheckboxPropsByItem(item, rowIndex).defaultChecked)
+      .map((record, rowIndex) => this.getRecordKey(record, rowIndex));
+  }
+
+
+  handleSelect = (record: object, rowIndex: number, e: CheckboxChangeEvent) => {
+    const checked = e.target.checked;
+    const nativeEvent = e.nativeEvent;
+    const defaultSelection = this.tableStore.selectionDirty
+      ? []
+      : this.getDefaultSelection();
+    // @ts-ignore
+    let selectedRowKeys = this.tableStore.selectedRowKeys.concat(defaultSelection);
+    const key = this.getRecordKey(record, rowIndex);
+    const { pivot, data } = this.state;
+    const rows = { ...data};
+    let realIndex = rowIndex;
+    if (this.props.expandedRowRender) {
+      realIndex = rows.findIndex(row => this.getRecordKey(row, rowIndex) === key);
+    }
+
+    if (nativeEvent.shiftKey && pivot !== undefined && realIndex !== pivot) {
+      const changeRowKeys: string[] = [];
+      const direction = Math.sign(pivot - realIndex);
+      const dist = Math.abs(pivot - realIndex);
+      let step = 0;
+      while (step <= dist) {
+        const i = realIndex + step * direction;
+        step += 1;
+        const row = rows[i];
+        const rowKey = this.getRecordKey(row, i);
+        const checkboxProps = this.getCheckboxPropsByItem(row, i);
+        if (!checkboxProps.disabled) {
+          if (selectedRowKeys.includes(rowKey)) {
+            if (!checked) {
+              selectedRowKeys = selectedRowKeys.filter((j: string) => rowKey !== j);
+              changeRowKeys.push(rowKey);
+            }
+          } else if (checked) {
+            selectedRowKeys.push(rowKey);
+            changeRowKeys.push(rowKey);
+          }
+        }
+      }
+
+      this.setState({ pivot: realIndex });
+      this.tableStore.selectionDirty = true;
+      this.setSelectedRowKeys(selectedRowKeys, {
+        selectWay: 'onSelectMultiple',
+        record,
+        checked,
+        changeRowKeys,
+        nativeEvent,
+      });
+    } else {
+      if (checked) {
+        selectedRowKeys.push(this.getRecordKey(record, realIndex));
+      } else {
+        selectedRowKeys = selectedRowKeys.filter((i: string) => key !== i);
+      }
+
+      this.setState({ pivot: realIndex });
+      this.setSelectedRowKeys(selectedRowKeys, {
+        selectWay: 'onSelect',
+        record,
+        checked,
+        changeRowKeys: undefined,
+        nativeEvent,
+      });
+    }
+  };
+
+  handleSelectRow = (selectionKey: string, index: number, onSelectFunc: SelectionItemSelectFn) => {
+    const { data } = this.state;
+    const defaultSelection = this.tableStore.selectionDirty
+      ? []
+      : this.getDefaultSelection();
+    //@ts-ignore
+    const selectedRowKeys = this.tableStore.selectedRowKeys.concat(defaultSelection);
+    const changeableRowKeys = data
+      .filter((item, i) => !this.getCheckboxPropsByItem(item, i).disabled)
+      .map((item, i) => this.getRecordKey(item, i));
+
+    const changeRowKeys: string[] = [];
+    let selectWay: TableSelectWay = 'onSelectAll';
+    let checked;
+    // handle default selection
+    switch (selectionKey) {
+      case 'all':
+        changeableRowKeys.forEach(key => {
+          if (selectedRowKeys.indexOf(key) < 0) {
+            selectedRowKeys.push(key);
+            changeRowKeys.push(key);
+          }
+        });
+        selectWay = 'onSelectAll';
+        checked = true;
+        break;
+      case 'removeAll':
+        changeableRowKeys.forEach(key => {
+          if (selectedRowKeys.indexOf(key) >= 0) {
+            selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
+            changeRowKeys.push(key);
+          }
+        });
+        selectWay = 'onSelectAll';
+        checked = false;
+        break;
+      case 'invert':
+        changeableRowKeys.forEach(key => {
+          if (selectedRowKeys.indexOf(key) < 0) {
+            selectedRowKeys.push(key);
+          } else {
+            selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
+          }
+          changeRowKeys.push(key);
+          selectWay = 'onSelectInvert';
+        });
+        break;
+      default:
+        break;
+    }
+
+    this.tableStore.selectionDirty = true;
+    // when select custom selection, callback selections[n].onSelect
+    const { rowSelection } = this.props;
+    let customSelectionStartIndex = 2;
+    if (rowSelection && rowSelection.hideDefaultSelections) {
+      customSelectionStartIndex = 0;
+    }
+    if (index >= customSelectionStartIndex && typeof onSelectFunc === 'function') {
+      return onSelectFunc(changeableRowKeys);
+    }
+    this.setSelectedRowKeys(selectedRowKeys, {
+      selectWay,
+      checked,
+      changeRowKeys,
+    });
+  };
+
+  handleRadioSelect = (record: object, rowIndex: number, e: RadioChangeEvent) => {
+    const checked = e.target.checked;
+    const nativeEvent = e.nativeEvent;
+    const key = this.getRecordKey(record, rowIndex);
+    const selectedRowKeys = [key];
+    this.tableStore.selectionDirty = true;
+    this.setSelectedRowKeys(selectedRowKeys, {
+      selectWay: 'onSelect',
+      record,
+      checked,
+      changeRowKeys: undefined,
+      nativeEvent,
+    });
+  };
+
+  renderSelectionBox = (type: RowSelectionType | undefined, rowData: object, rowIndex: number) => {
+    const rowKey = this.getRecordKey(rowData, rowIndex);
+    const props = this.getCheckboxPropsByItem(rowData, rowIndex);
+    const handleChange = (e: RadioChangeEvent | CheckboxChangeEvent) =>
+      type === 'radio'
+        ? this.handleRadioSelect(rowData, rowIndex, e)
+        : this.handleSelect(rowData, rowIndex, e);
+
+    return (
+      <span onClick={stopPropagation}>
+          <SelectionBox
+            store={this.tableStore}
+            type={type}
+            rowIndex={rowKey}
+            onChange={handleChange}
+            defaultSelection={this.getDefaultSelection()}
+            {...props}
+          />
+        </span>
+    );
+  };
+
+  renderRowSelection() {
+    const { rowSelection, classPrefix, rowKey } = this.props;
+    if (rowSelection) {
+      const flatData = this.state.data.filter((item, index) => {
+        if (rowSelection.getCheckboxProps) {
+          return !this.getCheckboxPropsByItem(item, index).disabled;
+        }
+        return true;
+      });
+      const selectionColumn: any = {
+        key: 'selection-column',
+        fixed: rowSelection.fixed,
+        width: rowSelection.columnWidth || 50,
+        title: rowSelection.columnTitle,
+      };
+
+      let selectionCheckboxAll: any = null;
+
+      if (rowSelection.type !== 'radio') {
+        const checkboxAllDisabled = flatData.every(
+          (item, index) => this.getCheckboxPropsByItem(item, index).disabled,
+        );
+        selectionCheckboxAll = rowSelection.columnTitle || (
+          <SelectionCheckboxAll
+            store={this.tableStore}
+            data={flatData}
+            getCheckboxPropsByItem={this.getCheckboxPropsByItem}
+            getRecordKey={this.getRecordKey}
+            disabled={checkboxAllDisabled}
+            prefixCls={classPrefix}
+            onSelect={this.handleSelectRow}
+            selections={rowSelection.selections}
+            hideDefaultSelections={rowSelection.hideDefaultSelections}
+          />
+        );
+      }
+
+      return (
+        <Column
+          key={selectionColumn.key}
+          width={selectionColumn.width}
+          align="center"
+          fixed={selectionColumn.fixed}
+        >
+          <HeaderCell>
+            {selectionCheckboxAll}
+          </HeaderCell>
+          <Cell dataKey={rowKey}>
+            {(rowData, rowIndex) => this.renderSelectionBox(rowSelection.type, rowData, rowIndex)}
+          </Cell>
+        </Column>
+      )
+    }
   }
 
   getCellDescriptor() {
@@ -961,6 +1264,41 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.setState({ expandedRowKeys: nextExpandedRowKeys });
     this.props.onExpandChange?.(!open, rowData);
   };
+
+  setSelectedRowKeys(selectedRowKeys: string[], selectionInfo: SelectionInfo) {
+    const { selectWay, record, checked, changeRowKeys, nativeEvent } = selectionInfo;
+    const rowSelection = getRowSelection(this.props);
+    if (rowSelection && !('selectedRowKeys' in rowSelection)) {
+      runInAction(() => {
+        this.tableStore.selectedRowKeys = selectedRowKeys;
+      });
+    }
+    const { data } = this.state;
+    if (!rowSelection.onChange && !rowSelection[selectWay]) {
+      return;
+    }
+    const selectedRows = data.filter(
+      (row, i) => selectedRowKeys.indexOf(this.getRecordKey(row, i)) >= 0,
+    );
+    if (rowSelection.onChange) {
+      rowSelection.onChange(selectedRowKeys, selectedRows);
+    }
+    if (selectWay === 'onSelect' && rowSelection.onSelect) {
+      rowSelection.onSelect(record!, checked!, selectedRows, nativeEvent!);
+    } else if (selectWay === 'onSelectMultiple' && rowSelection.onSelectMultiple) {
+      const changeRows = data.filter(
+        (row, i) => changeRowKeys!.indexOf(this.getRecordKey(row, i)) >= 0,
+      );
+      rowSelection.onSelectMultiple(checked!, selectedRows, changeRows);
+    } else if (selectWay === 'onSelectAll' && rowSelection.onSelectAll) {
+      const changeRows = data.filter(
+        (row, i) => changeRowKeys!.indexOf(this.getRecordKey(row, i)) >= 0,
+      );
+      rowSelection.onSelectAll(checked!, selectedRows, changeRows);
+    } else if (selectWay === 'onSelectInvert' && rowSelection.onSelectInvert) {
+      rowSelection.onSelectInvert(selectedRowKeys);
+    }
+  }
 
   handleScrollX = (delta: number) => {
     this.handleWheel(delta, 0);

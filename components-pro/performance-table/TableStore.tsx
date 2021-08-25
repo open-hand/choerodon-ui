@@ -13,7 +13,7 @@ import CustomizationColumnHeader from './customization-settings/CustomizationCol
 import CustomizationSettings from './customization-settings';
 import DataSet from '../data-set';
 import { getColumnKey } from './utils';
-import { Customized, TableQueryBarHookProps } from './Table.d';
+import { Customized, TableQueryBarHookProps, TableProps, TableRowSelection } from './Table.d';
 import { ColumnProps } from './Column.d';
 import Column from './Column';
 import autobind from '../_util/autobind';
@@ -99,6 +99,10 @@ import { ColumnLock, TableHeightType } from '../table/enum';
 //   ];
 // }
 
+export function getRowSelection(props: TableProps): TableRowSelection {
+  return props.rowSelection || {};
+}
+
 export function mergeDefaultProps(
   originalColumns: ColumnProps[],
   customizedColumns?: object,
@@ -159,6 +163,10 @@ export function mergeDefaultProps(
   ];
 }
 
+export interface CheckboxPropsCache {
+  [key: string]: any;
+}
+
 export default class TableStore {
   node: any;
 
@@ -167,6 +175,10 @@ export default class TableStore {
   highlightRowIndexs: number[] = [];
 
   originalChildren: any[];
+
+  checkboxPropsCache: CheckboxPropsCache = {};
+
+  selectionDirty?: boolean;
 
   @observable props: any;
 
@@ -183,6 +195,8 @@ export default class TableStore {
   @observable height?: number;
 
   @observable loading?: boolean;
+
+  @observable selectedRowKeys: string[] | number[];
 
   @computed
   get queryBar(): TableQueryBarHookProps {
@@ -205,6 +219,11 @@ export default class TableStore {
   get dataSet(): DataSet {
     return this.node.props.queryBar?.dataSet;
   }
+
+  // @computed
+  // get selectedRowKeys(): string[] {
+  //   return this.node.props.queryBar?.dataSet;
+  // }
 
   async loadCustomized() {
     const { customizedCode } = this.node.props;
@@ -232,6 +251,7 @@ export default class TableStore {
   updateProps(props, node) {
     this.node = node;
     this.originalColumns = props.columns;
+    this.originalChildren = props.children;
     if (this.customizable && props.columns) {
       this.loadCustomized().then(this.handleLoadCustomized);
     }
@@ -380,6 +400,7 @@ export default class TableStore {
     }
     return getConfig('performanceTableColumnDraggable') === true;
   }
+  setCheckboxPropsCache = (cache: CheckboxPropsCache) => this.checkboxPropsCache = cache;
 
   constructor(node) {
     runInAction(() => {
@@ -387,6 +408,8 @@ export default class TableStore {
       this.customizedActiveKey = ['columns'];
       this.tempCustomized = { columns: {} };
       this.customized = { columns: {} };
+      this.selectedRowKeys = getRowSelection(this.node.props).selectedRowKeys || [];
+      this.selectionDirty = false;
       if (this.customizable) {
         this.loadCustomized().then(this.handleLoadCustomized);
       }

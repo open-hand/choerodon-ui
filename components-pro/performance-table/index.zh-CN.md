@@ -67,6 +67,7 @@ cols: 1
 | columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 |
 | customizable | boolean | 是否显示个性化设置入口按钮  |  |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
+| rowSelection | object | 表格行是否可选择，[配置项](#rowSelection)  | 
 
 
 ### Form methods
@@ -131,6 +132,32 @@ scrollLeft: (left: number) => void;
 
 > 分页请结合 Pagination 组件。
 
+### rowSelection
+
+选择功能的配置，使用请指明 rowKey。
+
+| 参数 | 说明 | 类型 | 默认值 | 
+| --- | --- | --- | --- | 
+| columnWidth | 自定义列表选择框宽度 | string\|number | `60px` | 
+| columnTitle | 自定义列表选择框标题 | string\|React.ReactNode |  | 
+| fixed | 把选择框列固定在左边 | boolean | |  |
+| getCheckboxProps | 选择框的默认属性配置 | Function(record) |  |
+| hideDefaultSelections | 自定义选择项时去掉『全选』『反选』两个默认选项 | boolean | false |
+| selectedRowKeys | 指定选中项的 key 数组，需要和 onChange 进行配合 | string\[]\|number[] | \[] |
+| selections | 自定义选择项 [配置项](#selection), 设为 `true` 时使用默认选择项 | object\[]\|boolean | true |
+| type | 多选/单选，`checkbox` or `radio` | string | `checkbox` |  |
+| onChange | 选中项发生变化时的回调 | Function(selectedRowKeys, selectedRows) |  |  |
+| onSelect | 用户手动选择/取消选择某行的回调 | Function(record, selected, selectedRows, nativeEvent) |  |
+| onSelectAll | 用户手动选择/取消选择所有行的回调 | Function(selected, selectedRows, changeRows) |  |
+| onSelectInvert | 用户手动选择反选的回调 | Function(selectedRows) |  |  |
+
+### selection
+
+| 参数     | 说明                       | 类型                        | 默认值 |
+| -------- | -------------------------- | --------------------------- | ------ |
+| key      | React 需要的 key，建议设置 | string                      |       |
+| text     | 选择项显示的文字           | string\|React.ReactNode     |       |
+| onSelect | 选择项点击回调             | Function(changeableRowKeys) |       |
 
 ### toolBarProps
 

@@ -32,6 +32,7 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
   return new Promise(resolve => {
     open({
       key: ModalManager.getKey(),
+      className: `${prefixCls}-wrapper`,
       border,
       destroyOnClose: true,
       okCancel,
@@ -42,13 +43,13 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
       children: (
         <table className={prefixCls}>
           <tbody>
-            <tr>
-              {iconNode}
-              <td>
-                {titleNode}
-                {contentNode}
-              </td>
-            </tr>
+          <tr>
+            {iconNode}
+            <td>
+              {titleNode}
+              {contentNode}
+            </td>
+          </tr>
           </tbody>
         </table>
       ),
