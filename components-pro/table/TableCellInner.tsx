@@ -87,13 +87,15 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const columnKey = getColumnKey(column);
   const height = record.getState(`__column_resize_height_${name}`);
   const { currentEditRecord } = tableStore;
+  const field = record.getField(name);
+  const fieldDisabled = disabled || (field && field.get('disabled'));
   const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
       return command({ dataSet, record, aggregation });
     }
     return command;
   }, [record, command, dataSet, aggregation]);
-  const canFocus = useMemo(() => !disabled && (!inlineEdit || record === currentEditRecord), [disabled, record, currentEditRecord, inlineEdit]);
+  const canFocus = useMemo(() => !fieldDisabled && (!inlineEdit || record === currentEditRecord), [fieldDisabled, record, currentEditRecord, inlineEdit]);
   const cellEditor = getEditorByColumnAndRecord(column, record);
   const cellEditorInCell = isInCellEditor(cellEditor);
   const hasEditor = !pristine && cellEditor && !cellEditorInCell;
@@ -206,7 +208,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const handleCommandDelete = useCallback(() => {
     dataSet.delete(record);
   }, [dataSet, record]);
-  const field = record.getField(name);
   const multiLine = field && field.get('multiLine');
   const fieldType = !aggregation && rowHeight !== 'auto' && field && field.type;
   const rows = multiLine ? [...record.fields.values()].reduce((count, dsField) => {
@@ -549,7 +550,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
       }
     }
   }
-  if (disabled || (field && field.get('disabled'))) {
+  if (fieldDisabled) {
     innerClassName.push(`${prefixCls}-inner-disabled`);
   }
   if (multiLine) {
