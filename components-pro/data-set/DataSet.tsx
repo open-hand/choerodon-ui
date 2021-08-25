@@ -690,7 +690,7 @@ export default class DataSet extends EventManager {
         return !parent || parent.isSelectionIndeterminate ? !record.isSelectionIndeterminate : false;
       });
     }
-    return selected;
+    return selected.filter(record => !record.isSelectionIndeterminate);
   }
 
   get totalPage(): number {

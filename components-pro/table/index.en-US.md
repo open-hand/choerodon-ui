@@ -78,6 +78,7 @@ subtitle: 表格
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | clientExportQuantity | 导出一次轮询数量 | number | 100 |
 | showSelectionTips | 是否显示选中记录提示  | boolean | |
+| showCachedSelection | 是否显示缓存选中记录  | boolean | |
 | showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | |
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮  | boolean | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |

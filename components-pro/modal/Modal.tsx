@@ -555,12 +555,12 @@ export default class Modal extends ViewComponent<ModalProps> {
   };
 
   getDefaultFooter = (okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>, _modalChildrenProps: modalChildrenProps) => {
-    const { okCancel, okButton, cancelButton, okFirst = getConfig('modalOkFirst'), drawer } = this.props;
+    const { okCancel, okButton, cancelButton = okCancel !== false, okFirst = getConfig('modalOkFirst'), drawer } = this.props;
     const buttons: ReactNode[] = [];
     if (okButton !== false) {
       buttons.push(okBtn);
     }
-    if (okCancel || cancelButton) {
+    if (cancelButton !== false) {
       const drawerOkFirst = getConfig('drawerOkFirst');
       if (drawer && !isNil(drawerOkFirst)) {
         if (drawerOkFirst) {

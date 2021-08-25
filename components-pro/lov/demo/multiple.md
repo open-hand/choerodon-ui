@@ -62,7 +62,11 @@ class App extends React.Component {
   });
 
   render() {
-    return <Lov dataSet={this.ds} searchAction="blur" name="code" placeholder="复选LOV" />;
+    return <Lov dataSet={this.ds} searchAction="blur" name="code" placeholder="复选LOV" tableProps={{
+                                                                                                style: {
+                                                                                                  maxHeight: 'calc(100vh - 400px)',
+                                                                                                },
+                                                                                              }} />;
   }
 }
 

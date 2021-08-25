@@ -63,6 +63,16 @@
         white-space: nowrap;
       }
 
+      & &-icon {
+        width: .14rem;
+        height: .14rem;
+
+        .@{iconfont-css-prefix} {
+          display: block;
+          font-size: .14rem;
+        }
+      }
+
       &-name {
         flex-basis: auto;
         flex-grow: 0;
@@ -228,10 +238,6 @@
   }
 
   &-order {
-    &-select .@{c7n-pro-prefix}-select {
-      border: none;
-    }
-
     &-icon {
       &::before {
         display: block;

@@ -124,6 +124,10 @@ export interface Locale {
     no_attachments;
     by_upload_time;
     by_name;
+    operation_records;
+    view_operation_records;
+    download;
+    delete;
     file_max_size;
     file_list_max_length;
     file_type_mismatch;
@@ -131,6 +135,7 @@ export interface Locale {
   Modal: {
     ok;
     cancel;
+    close;
     preview_picture;
   };
   DataSet: {

@@ -64,6 +64,9 @@ configure({
         name: resp.name,
         // url: resp.url,
       });
+    },
+    renderHistory() {
+      return 'empty';
     }
   }
 });
@@ -77,6 +80,7 @@ const App = () => {
     max: 9,
     value,
     onChange: setValue,
+    showHistory: true,
   };
 
   return (

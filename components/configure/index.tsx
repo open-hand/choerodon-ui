@@ -8,14 +8,7 @@ import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { ExportMode, FieldType, RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import {
-  Customized,
-  expandIconProps,
-  Suffixes,
-  TablePaginationConfig,
-  TableProps,
-  TableQueryBarHook,
-} from 'choerodon-ui/pro/lib/table/Table';
+import { Customized, expandIconProps, Suffixes, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
@@ -95,7 +88,8 @@ export type AttachmentConfig = {
   getDownloadUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string;
   getDownloadAllUrl?: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string;
   getAttachmentUUID?: () => Promise<string> | string;
-  renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType) => ReactNode;
+  renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;
+  renderHistory?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => ReactNode;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
   onOrderChange?: (props: { attachmentUUID: string, attachments: AttachmentFile[], bucketName?: string, bucketDirectory?: string }) => Promise<void>;
@@ -341,6 +335,7 @@ const defaultTableColumnAlign = (_column: ColumnProps, field?: Field): ColumnAli
 
 const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
   Config[ConfigKeys]>([
+  ['tableVirtualCell', true],
   ['prefixCls', 'c7n'],
   ['proPrefixCls', 'c7n-pro'],
   ['iconfontPrefix', 'icon'],

@@ -32,7 +32,10 @@ timeline: true
 - 🌟 `<pro>FormField`: Added `processValue` property.
 - 🌟 `<pro>DataSet.Field`: Added `processValue` property.
 - 🌟 `DatePicker`: Added `processValue` property.
+- 🌟 `<pro>Table`：Added `showCachedSelection` property.
 - 🌟 `<pro>Table`：Added the `showRemovedRow` property to control the display and hide of temporarily removed rows.
+- 🌟 `<pro>TriggerField`：Added `viewMode` property.
+- 🌟 `<pro>Select`：Added `searchFieldInPopup`, `searchFieldProps` properties.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
@@ -60,8 +63,10 @@ timeline: true
 - 🐞 `<pro>Select`: Fix that hover trigger has no effect in multi-select mode.
 - 🐞 `<pro>FormField`: Fix the problem that the input box will lose focus when the `valueChangeAction` is `input` in the highlight mode.
 - 🐞 `<pro>Lov`: Fix the problem that multiple selections cannot be made when the `selectionMode` property of Table is `click`.
+- 🐞 `<pro>Lov`: Fix the logic problem of `showCheckedStrategy` property `SHOW_ALL` value.
 - 🐞 `<pro>Select`: Fix the problem of rendering errors when using `primitiveValue` and `combo` properties at the same time.
 - 🐞 `<pro>Table`: Fix the problem that virtual cells and maximum height may cause an infinite loop.
+- 🐞 `<pro>Table`: Fixed editor will focused on disabled cell."
 
 ## 1.4.3
 

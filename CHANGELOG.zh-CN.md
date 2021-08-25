@@ -32,7 +32,10 @@ timeline: true
 - 🌟 `<pro>FormField`：新增 processValue 属性。
 - 🌟 `<pro>DataSet.Field`：新增 processValue 属性，支持值变更时，拦截并返回一个新的值。
 - 🌟 `<pro>DatePicker`：新增 processValue 属性。
+- 🌟 `<pro>Table`：新增 showCachedSelection 属性。
 - 🌟 `<pro>Table`：新增 showRemovedRow 属性，控制临时移除行显隐。
+- 🌟 `<pro>TriggerField`：新增 viewMode 属性。
+- 🌟 `<pro>Select`：新增 searchFieldInPopup, searchFieldProps 属性。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
@@ -59,8 +62,10 @@ timeline: true
 - 🐞 `<pro>Select`：修复多选模式下 trigger 为 hover 无效。
 - 🐞 `<pro>FormField`：修复高亮模式下 valueChangeAction 为 input 时，校验报错会导致输入框失去焦点的问题。
 - 🐞 `<pro>Lov`: 修复多选模式表格 selectionMode 为 click 时无法多选的问题。
+- 🐞 `<pro>Lov`: 修复 showCheckedStrategy 属性 SHOW_ALL 值的逻辑问题。
 - 🐞 `<pro>Select`: 修复同时使用 primitiveValue 和 combo 属性时渲染报错的问题。
 - 🐞 `<pro>Table`: 修复虚拟单元格和最大高度可能导致死循环的问题。
+- 🐞 `<pro>Table`: 修复编辑器会浮动到禁用单元格上的问题。
 
 ## 1.4.3
 

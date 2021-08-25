@@ -619,7 +619,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   isEmpty() {
     const { field } = this;
     const value = this.getValue();
-    return isFieldValueEmpty(value, this.range, field?.get('valueField'));
+    return isFieldValueEmpty(value, this.range, field ? field.get('valueField') : undefined);
   }
 
   isReadOnly(): boolean {

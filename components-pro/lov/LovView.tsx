@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { action } from 'mobx';
+import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from '../data-set/DataSet';
@@ -9,7 +9,7 @@ import Record from '../data-set/Record';
 import Table, { TableProps } from '../table/Table';
 import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
 import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
-import { DataSetSelection } from '../data-set/enum';
+import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { LovConfig } from './Lov';
 import { ColumnProps } from '../table/Column';
 
@@ -19,18 +19,13 @@ export interface LovViewProps {
   tableProps?: Partial<TableProps>;
   multiple: boolean;
   values: any[];
+  popup?: boolean;
   onSelect: (records: Record | Record[]) => void;
-  modal?: { close: Function, handleOk: Function }
+  modal?: { close: Function, handleOk: Function };
 }
 
+@observer
 export default class LovView extends Component<LovViewProps> {
-  static propTypes = {
-    dataSet: PropTypes.object.isRequired,
-    config: PropTypes.object.isRequired,
-    tableProps: PropTypes.object,
-    onSelect: PropTypes.func.isRequired,
-  };
-
   selection: DataSetSelection | false;
 
   selectionMode: SelectionMode | undefined;
@@ -41,15 +36,24 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       dataSet: { selection },
       multiple,
+      popup,
     } = this.props;
     this.selection = selection;
     dataSet.selection = multiple ? DataSetSelection.multiple : DataSetSelection.single;
+    if (popup && multiple) {
+      dataSet.addEventListener(DataSetEvents.batchSelect, this.handleSelect);
+      dataSet.addEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
+    }
   }
 
   @action
   componentWillUnmount() {
-    const { dataSet } = this.props;
+    const { dataSet, multiple, popup } = this.props;
     dataSet.selection = this.selection;
+    if (popup && multiple) {
+      dataSet.removeEventListener(DataSetEvents.batchSelect, this.handleSelect);
+      dataSet.removeEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
+    }
   }
 
   /* istanbul ignore next */
@@ -57,6 +61,7 @@ export default class LovView extends Component<LovViewProps> {
     const {
       config: { lovItems },
       tableProps,
+      popup,
     } = this.props;
     return lovItems
       ? lovItems
@@ -72,7 +77,7 @@ export default class LovView extends Component<LovViewProps> {
             key: gridFieldName,
             header: display,
             name: gridFieldName,
-            width: gridFieldWidth,
+            width: popup ? undefined : gridFieldWidth,
             align: gridFieldAlign,
             editor: false,
           };
@@ -123,39 +128,34 @@ export default class LovView extends Component<LovViewProps> {
     };
   };
 
-  getQueryBar() {
-    const {
-      config: { queryBar },
-      tableProps,
-    } = this.props;
-    if (queryBar) {
-      return queryBar;
-    }
-    if (tableProps && tableProps.queryBar) {
-      return tableProps.queryBar;
-    }
+  handleSingleRow = () => {
+    return {
+      onClick: this.handleSelect,
+    };
   };
 
   render() {
     const {
       dataSet,
-      config: { height, treeFlag, queryColumns, tableProps: configTableProps },
+      config: { queryBar, height, treeFlag, queryColumns, tableProps: configTableProps },
       multiple,
+      popup,
       tableProps,
       modal,
     } = this.props;
     if (modal) {
       modal.handleOk(this.handleSelect);
     }
+    const columns = this.getColumns();
     const lovTableProps: TableProps = {
       customizable: getConfig('lovTableCustomizable'),
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
       onKeyDown: this.handleKeyDown,
       dataSet,
-      columns: this.getColumns(),
+      columns,
       queryFieldsLimit: queryColumns,
-      queryBar: this.getQueryBar(),
+      queryBar,
       selectionMode: SelectionMode.none,
       ...configTableProps,
       ...tableProps,
@@ -167,7 +167,7 @@ export default class LovView extends Component<LovViewProps> {
       },
     };
     if (multiple) {
-      if (!tableProps || !tableProps.selectionMode) {
+      if (popup || !tableProps || !tableProps.selectionMode) {
         if (lovTableProps.mode === TableMode.tree) {
           lovTableProps.selectionMode = SelectionMode.treebox;
         } else {
@@ -178,15 +178,28 @@ export default class LovView extends Component<LovViewProps> {
         lovTableProps.highLightRow = false;
         lovTableProps.selectedHighLightRow = true;
       }
+    } else if (popup) {
+      lovTableProps.onRow = this.handleSingleRow;
     } else if (lovTableProps.selectionMode !== SelectionMode.rowbox) {
       lovTableProps.onRow = this.handleRow;
     } else {
       lovTableProps.highLightRow = false;
       lovTableProps.selectedHighLightRow = true;
     }
+    if (popup) {
+      const { style } = lovTableProps;
+      if (style) {
+        style.width = 'min-content';
+        style.minWidth = '100%';
+      }
+      if (lovTableProps.showSelectionCachedButton === undefined) {
+        lovTableProps.showSelectionCachedButton = false;
+        lovTableProps.showCachedSelection = true;
+      }
+    }
 
     const isProfessionalBar = getConfig('queryBar') === TableQueryBarType.professionalBar;
-    if (!lovTableProps.queryBar && isProfessionalBar) {
+    if (!popup && !lovTableProps.queryBar && isProfessionalBar) {
       lovTableProps.queryBar = (props) => <TableProfessionalBar {...props} queryBarProps={{ labelWidth: 80 }} />;
     }
 

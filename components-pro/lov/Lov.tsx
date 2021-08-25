@@ -5,9 +5,8 @@ import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
-import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
-import { action, computed, isArrayLike, observable, toJS } from 'mobx';
+import { action, computed, isArrayLike, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -22,7 +21,7 @@ import Spin from '../spin';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
-import { ParamMatcher, SearchMatcher, Select, SelectProps } from '../select/Select';
+import { isSearchTextEmpty, SearchMatcher, Select, SelectProps } from '../select/Select';
 import { ColumnAlign, TableQueryBarType } from '../table/enum';
 import { CheckedStrategy, DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
 import { LovFieldType, SearchAction, ViewMode } from './enum';
@@ -33,6 +32,7 @@ import { getLovPara } from '../stores/utils';
 import { TableProps, TableQueryBarHook } from '../table/Table';
 import { FieldProps } from '../data-set/Field';
 import isIE from '../_util/isIE';
+import { TextFieldProps } from '../text-field/TextField';
 
 export type Events = { [key: string]: Function };
 
@@ -123,13 +123,15 @@ export default class Lov extends Select<LovProps> {
     ...Select.defaultProps,
     clearButton: true,
     checkValueOnOptionsChange: false,
+    dropdownMatchSelectWidth: false,
     searchAction: SearchAction.input,
     fetchSingle: false,
+    viewMode: 'modal',
   };
 
   modal;
 
-  @observable filterText?: string;
+  fetched?: boolean;
 
   @computed
   get searchMatcher(): SearchMatcher {
@@ -138,12 +140,6 @@ export default class Lov extends Select<LovProps> {
       return searchMatcher;
     }
     return this.textField;
-  }
-
-  @computed
-  get paramMatcher(): ParamMatcher {
-    const { paramMatcher } = this.observableProps;
-    return paramMatcher;
   }
 
   @computed
@@ -169,7 +165,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   get popup(): boolean {
-    return !this.filterText || this.modal ? false : this.statePopup;
+    return this.modal || (!this.isSearchFieldInPopup() && !this.searchText) ? false : this.statePopup;
   }
 
   /**
@@ -184,14 +180,6 @@ export default class Lov extends Select<LovProps> {
       return autoSelectSingle;
     }
     return false;
-  }
-
-  @autobind
-  getPopupContent(): ReactNode {
-    if (this.props.searchAction === SearchAction.input) {
-      return super.getPopupContent();
-    }
-    return null;
   }
 
   @computed
@@ -212,21 +200,89 @@ export default class Lov extends Select<LovProps> {
     return new DataSet();
   }
 
-  private openModal = action((fetchSingle?: boolean) => {
+  getSearchFieldProps(): TextFieldProps {
+    const searchFieldProps = super.getSearchFieldProps();
+    const { viewMode } = this.props;
+    if (viewMode === 'popup') {
+      return {
+        multiple: true,
+        ...searchFieldProps,
+      };
+    }
+    return searchFieldProps;
+  }
+
+  isSearchFieldInPopup(): boolean | undefined {
+    const searchFieldInPopup = super.isSearchFieldInPopup();
+    if (searchFieldInPopup === undefined) {
+      const { viewMode } = this.props;
+      return viewMode === 'popup';
+    }
+    return searchFieldInPopup;
+  }
+
+  isEditable(): boolean {
+    const { viewMode } = this.props;
+    return viewMode !== 'popup' && super.isEditable();
+  }
+
+  getPopupLovView() {
     const config = this.getConfig();
-    const { options, multiple, primitive, valueField } = this;
-    // TODO：lovEvents deprecated
-    const { lovEvents } = this.props;
-    const modalProps = this.getModalProps();
-    const tableProps = this.getTableProps();
-    const noCache = this.getProp('noCache');
-    if (!this.modal && config && options) {
-      const { width, title } = config;
+    const { options } = this;
+    if (config && options) {
+      if (this.popup && !this.fetched) {
+        this.beforeOpen(options);
+        this.afterOpen(options);
+        this.fetched = true;
+      }
+      const tableProps = this.getTableProps();
+      const mergedTableProps: TableProps = {
+        ...tableProps,
+        style: {
+          ...tableProps.style,
+          maxHeight: 250,
+        },
+        pagination: { showSizeChanger: false },
+        queryBar: this.renderSearchField,
+        border: false,
+      };
+      return (
+        <LovView
+          popup
+          dataSet={options}
+          config={config}
+          tableProps={mergedTableProps}
+          onSelect={this.handleLovViewSelect}
+          multiple={this.multiple}
+          values={this.getValues()}
+        />
+      );
+    }
+  }
+
+  @autobind
+  getPopupContent(): ReactNode {
+    const { searchAction, viewMode } = this.props;
+    if (viewMode === 'popup') {
+      return this.getPopupLovView();
+    }
+    if (searchAction === SearchAction.input) {
+      return super.getPopupContent();
+    }
+    return null;
+  }
+
+  @action
+  beforeOpen(options: DataSet) {
+    const { multiple, primitive, valueField } = this;
+    if (multiple) {
+      options.selectionStrategy = this.getProp('showCheckedStrategy') || CheckedStrategy.SHOW_ALL;
+    }
+    const { viewMode } = this.props;
+    if (viewMode === 'modal') {
       options.unSelectAll();
       options.clearCachedSelected();
       if (multiple) {
-        const showCheckedStrategy = this.getProp('showCheckedStrategy');
-        options.selectionStrategy = showCheckedStrategy || CheckedStrategy.SHOW_ALL;
         options.setCachedSelected(
           this.getValues().map(value => {
             const selected = new Record(primitive ? { [valueField]: value } : toJS(value), options);
@@ -237,40 +293,60 @@ export default class Lov extends Select<LovProps> {
           }),
         );
       }
+      // TODO：lovEvents deprecated
+      const { lovEvents } = this.props;
       if (lovEvents) {
         Object.keys(lovEvents).forEach(event => options.addEventListener(event, lovEvents[event]));
       }
-      this.modal = open({
-        title,
-        children: (
-          <LovView
-            dataSet={options}
-            config={config}
-            tableProps={tableProps}
-            onSelect={this.handleLovViewSelect}
-            multiple={this.multiple}
-            values={this.getValues()}
-          />
-        ),
-        onClose: this.handleLovViewClose,
-        // onOk: this.handleLovViewOk,
-        destroyOnClose: true,
-        closable: true,
-        autoFocus: false,
-        bodyStyle: {
-          minHeight: isIE() ? pxToRem(Math.min(350, window.innerHeight)) : 'min(3.5rem, 100vh)',
-        },
-        ...modalProps,
-        style: {
-          width: pxToRem(width),
-          ...(modalProps && modalProps.style),
-        },
-        afterClose: this.handleLovViewAfterClose,
-      } as ModalProps & { children; });
-      if (this.resetOptions(noCache) && fetchSingle !== true) {
-        options.query();
-      } else if (multiple) {
-        options.releaseCachedSelected();
+    }
+  }
+
+  afterOpen(options: DataSet, fetchSingle?: boolean) {
+    const noCache = this.getProp('noCache');
+    if (this.resetOptions(noCache) && fetchSingle !== true) {
+      options.query();
+    } else if (this.multiple) {
+      options.releaseCachedSelected();
+    }
+  }
+
+  private openModal = action((fetchSingle?: boolean) => {
+    const { viewMode } = this.props;
+    if (viewMode === 'modal') {
+      const config = this.getConfig();
+      const { options } = this;
+      if (!this.modal && config && options) {
+        const modalProps = this.getModalProps();
+        const tableProps = this.getTableProps();
+        const { width, title } = config;
+        this.beforeOpen(options);
+        this.modal = open({
+          title,
+          children: (
+            <LovView
+              dataSet={options}
+              config={config}
+              tableProps={tableProps}
+              onSelect={this.handleLovViewSelect}
+              multiple={this.multiple}
+              values={this.getValues()}
+            />
+          ),
+          onClose: this.handleLovViewClose,
+          destroyOnClose: true,
+          closable: true,
+          autoFocus: false,
+          bodyStyle: {
+            minHeight: isIE() ? pxToRem(Math.min(350, window.innerHeight)) : 'min(3.5rem, 100vh)',
+          },
+          ...modalProps,
+          style: {
+            width: pxToRem(width),
+            ...(modalProps && modalProps.style),
+          },
+          afterClose: this.handleLovViewAfterClose,
+        } as ModalProps & { children; });
+        this.afterOpen(options, fetchSingle);
       }
     }
   });
@@ -280,23 +356,26 @@ export default class Lov extends Select<LovProps> {
    * @param text
    */
   @action
-  searchRemote(text) {
-    if (this.filterText !== text) {
-      const { options, searchMatcher, paramMatcher, record, textField, valueField } = this;
-      this.filterText = text;
-      if (text && isString(searchMatcher)) {
-        this.resetOptions(true);
-        let textMatcher = text;
-        if (isString(paramMatcher)) {
-          textMatcher = text + paramMatcher;
-        } else if (isFunction(paramMatcher)) {
-          textMatcher = paramMatcher({ record, text, textField, valueField }) || text;
-        }
-        options.setQueryParameter(searchMatcher, textMatcher);
-        if (this.props.searchAction === SearchAction.input) {
-          options.query();
-        }
+  searchRemote(text?: string | string[] | undefined) {
+    const { options, searchMatcher } = this;
+    if (isString(searchMatcher) && !isSearchTextEmpty(text)) {
+      this.resetOptions(true);
+      const searchPara = this.getSearchPara(searchMatcher, text);
+      Object.keys(searchPara).forEach(key => {
+        const value = searchPara[key];
+        options.setQueryParameter(key, value === '' ? undefined : value);
+      });
+      if (this.isSearchFieldInPopup() || this.props.searchAction === SearchAction.input) {
+        options.query();
       }
+    }
+  }
+
+  @autobind
+  handlePopupHiddenChange(hidden: boolean) {
+    super.handlePopupHiddenChange(hidden);
+    if (hidden) {
+      delete this.fetched;
     }
   }
 
@@ -319,6 +398,10 @@ export default class Lov extends Select<LovProps> {
   };
 
   handleLovViewSelect = (records: Record | Record[]) => {
+    const { viewMode } = this.props;
+    if (viewMode === 'popup' && !this.multiple) {
+      this.collapse();
+    }
     if (isArrayLike(records)) {
       this.setValue(records.map(record => this.processRecordToObject(record)));
     } else {
@@ -381,6 +464,11 @@ export default class Lov extends Select<LovProps> {
       // Support ued to distinguish between select and lov
       className: this.getWrapperClassNames(`${this.prefixCls}-lov`),
     });
+  }
+
+  getPopupClassName(defaultClassName: string | undefined): string | undefined {
+    const { viewMode } = this.props;
+    return classNames(defaultClassName, { [`${this.prefixCls}-lov-popup`]: viewMode === 'popup' });
   }
 
   syncValueOnBlur(value) {
@@ -467,6 +555,7 @@ export default class Lov extends Select<LovProps> {
       'searchAction',
       'fetchSingle',
       'autoSelectSingle',
+      'showCheckedStrategy',
     ]);
   }
 
@@ -494,7 +583,10 @@ export default class Lov extends Select<LovProps> {
   }
 
   getSuffix(): ReactNode {
-    const { suffix } = this.props;
+    const { suffix, viewMode } = this.props;
+    if (viewMode === 'popup') {
+      return super.getSuffix();
+    }
     const icon = this.loading ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
     return this.wrapperSuffix(suffix || icon, {
       onClick: (this.disabled || this.readOnly) ? undefined : this.handleOpenModal,

@@ -123,6 +123,10 @@ const locale: Locale = {
     no_attachments: '暂无附件',
     by_upload_time: '按上传时间',
     by_name: '按名称',
+    operation_records: '操作记录',
+    view_operation_records: '查看操作记录',
+    download: '下载',
+    delete: '删除',
     file_max_size: '文件大小不能超过：{size}',
     file_list_max_length: '文件数量最大限制为：{count}',
     file_type_mismatch: '文件类型不匹配，正确的类型：{types}',
@@ -130,6 +134,7 @@ const locale: Locale = {
   Modal: {
     ok: '确定',
     cancel: '取消',
+    close: '关闭',
     preview_picture: '图片预览',
   },
   DataSet: {

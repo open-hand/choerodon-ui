@@ -272,7 +272,7 @@ const lovDefineTemple = {
   objectVersionNumber: 1,
   code: 'LOV_CODE',
   description: '快码',
-  height: 300,
+  height: null,
   lovId: 10015,
   lovItems: [
     {
@@ -353,7 +353,7 @@ const lovMockDefineTemple = {
   objectVersionNumber: 1,
   code: 'LOV_MOCK_CODE',
   description: '快码',
-  height: 300,
+  height: null,
   lovId: 10015,
   lovItems: [
     {

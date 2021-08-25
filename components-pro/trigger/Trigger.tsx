@@ -16,8 +16,8 @@ import { ElementProps } from '../core/ViewComponent';
 import EventManager from '../_util/EventManager';
 import { Action, HideAction, ShowAction } from './enum';
 import TriggerChild from './TriggerChild';
-import isEmpty from '../_util/isEmpty';
 import focusable, { findFocusableParent } from '../_util/focusable';
+import { getIf } from '../data-set/utils';
 import isIE from '../_util/isIE';
 
 function isPointsEq(a1: string[], a2: string[]): boolean {
@@ -163,9 +163,11 @@ export default class Trigger extends Component<TriggerProps> {
 
   popup: Popup | null;
 
-  popupTask: TaskRunner = new TaskRunner();
+  popupTask?: TaskRunner;
 
-  documentEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
+  documentEvent?: EventManager;
+
+  targetEvent?: EventManager;
 
   focusTime: number = 0;
 
@@ -177,9 +179,13 @@ export default class Trigger extends Component<TriggerProps> {
 
   @observable mounted?: boolean;
 
-  activeElement?: HTMLElement | null | true;
+  activeElement?: HTMLElement | null;
+
+  currentTriggerChild?: ReactElement | null;
 
   focusElements?: HTMLElement[];
+
+  target?: HTMLElement | null;
 
   focusTarget?: HTMLElement | null;
 
@@ -200,12 +206,12 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   getFocusableElements(elements) {
-    const focusElements = elements && elements.sort((e1, e2) => e1.tabIndex - e2.tabIndex);
-    this.focusElements = focusElements;
-    const { activeElement, focusTarget } = this;
-    if (focusTarget && activeElement && activeElement !== true && (!focusElements || !focusElements.includes(activeElement))) {
-      this.activeElement = null;
-      focusTarget.focus();
+    this.focusElements = elements;
+    const { target, targetEvent } = this;
+    if (target && targetEvent && (!elements || !elements.includes(targetEvent.el))) {
+      targetEvent.clear();
+      delete this.targetEvent;
+      target.focus();
     }
   }
 
@@ -279,41 +285,75 @@ export default class Trigger extends Component<TriggerProps> {
 
   componentDidUpdate() {
     const { popupHidden } = this;
-    this.documentEvent.clear();
+    if (this.documentEvent) {
+      this.documentEvent.clear();
+    }
     if (!popupHidden) {
-      this.documentEvent.addEventListener('scroll', this.handleDocumentScroll, true);
+      const documentEvent = getIf<Trigger, EventManager>(this, 'documentEvent', () => new EventManager(typeof window === 'undefined' ? undefined : document));
+      documentEvent.addEventListener('scroll', this.handleDocumentScroll, true);
       if ((this.isClickToHide() || this.isContextMenuToShow()) && !this.isBlurToHide()) {
-        this.documentEvent.addEventListener('mousedown', this.handleDocumentMouseDown);
+        documentEvent.addEventListener('mousedown', this.handleDocumentMouseDown);
       }
     }
   }
 
   componentWillUnmount() {
-    this.popupTask.cancel();
-    this.documentEvent.clear();
+    this.cancelPopupTask();
+    if (this.documentEvent) {
+      this.documentEvent.clear();
+    }
+    if (this.targetEvent) {
+      this.targetEvent.clear();
+    }
   }
 
   @autobind
   cancelPopupTask() {
-    this.popupTask.cancel();
+    if (this.popupTask) {
+      this.popupTask.cancel();
+    }
   }
 
   @autobind
-  handleEvent(eventName, child, e) {
-    const { activeElement } = this;
-    if (activeElement && this.isBlurToHide() && eventName === 'Blur') {
-      e.stopPropagation();
-      const { target } = e;
-      if (!this.focusTarget) {
-        this.focusTarget = target;
+  handlePopupKeyDown(e) {
+    const { focusTarget, activeElement } = this;
+    if (activeElement && focusTarget && e.keyCode === KeyCode.TAB) {
+      const { focusElements } = this;
+      const { shiftKey } = e;
+      if (focusElements && focusElements.indexOf(activeElement) === (shiftKey ? 0 : focusElements.length - 1)) {
+        if (shiftKey) {
+          e.preventDefault();
+        }
+        focusTarget.focus();
       }
-      if (activeElement === true) {
-        e.preventDefault();
-        target.focus();
-        this.activeElement = null;
-      }
-      return;
     }
+  }
+
+  @autobind
+  handleTargetBlur(e, child: ReactElement): boolean {
+    const { popup, focusTarget } = this;
+    const relatedTarget = isIE() ? document.activeElement : e.relatedTarget;
+    if (popup && popup.element.contains(relatedTarget)) {
+      e.stopPropagation();
+      this.activeElement = relatedTarget;
+      this.currentTriggerChild = child;
+      if (!focusTarget) {
+        this.focusTarget = e.target;
+      }
+      return false;
+    }
+    if (focusTarget) {
+      this.focusTarget = null;
+      this.activeElement = null;
+      this.currentTriggerChild = null;
+      if (focusTarget !== relatedTarget) {
+        this.handleTriggerEvent('Blur', child, e);
+      }
+    }
+    return true;
+  }
+
+  handleTriggerEvent(eventName, child, e) {
     const { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
     const { [`on${eventName}`]: childHandle } = child.props;
     if (childHandle) {
@@ -330,6 +370,17 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   @autobind
+  handleEvent(eventName: string, child: ReactElement, e) {
+    if (this.isBlurToHide() && eventName === 'Blur' && !this.handleTargetBlur(e, child)) {
+      if (!this.target) {
+        this.target = e.target;
+      }
+    } else {
+      this.handleTriggerEvent(eventName, child, e);
+    }
+  }
+
+  @autobind
   handlePopupMouseDown(e) {
     let fix = false;
     if (!e.isDefaultPrevented()) {
@@ -337,7 +388,6 @@ export default class Trigger extends Component<TriggerProps> {
       const { popup } = this;
       const element = focusable(target) ? target : findFocusableParent(target, popup && popup.element);
       if (element) {
-        this.activeElement = element;
         e.stopPropagation();
       } else {
         fix = true;
@@ -347,56 +397,16 @@ export default class Trigger extends Component<TriggerProps> {
     }
     if (fix && this.isBlurToHide()) {
       e.preventDefault();
-      if (isIE()) {
-        this.activeElement = true;
-      }
-    }
-  }
-
-  @autobind
-  handlePopupMouseUp() {
-    if (this.activeElement === true) {
-      this.activeElement = null;
-    }
-  }
-
-  @autobind
-  handlePopupKeyDown(e) {
-    const { activeElement } = this;
-    if (activeElement && activeElement !== true && e.keyCode === KeyCode.TAB) {
-      const { focusElements, focusTarget } = this;
-      if (focusElements && focusElements.indexOf(activeElement) === (e.shiftKey ? 0 : focusElements.length - 1)) {
-        if (e.shiftKey) {
-          e.preventDefault();
-        } else {
-          this.setPopupHidden(true);
-        }
-        if (focusTarget) {
-          focusTarget.focus();
-        }
-      }
     }
   }
 
   @autobind
   handlePopupBlur(e) {
-    if (this.activeElement && this.isBlurToHide()) {
-      const { activeElement: target } = this;
-      e.stopPropagation();
-      this.activeElement = null;
-      raf(() => {
-        const { activeElement } = document;
-        const { popup } = this;
-        if (activeElement && popup && popup.element.contains(activeElement)) {
-          this.activeElement = activeElement as HTMLElement;
-        } else {
-          this.setPopupHidden(true);
-          if (target && target !== true) {
-            target.focus();
-            target.blur();
-          }
-        }
-      });
+    if (this.isBlurToHide()) {
+      const { activeElement, currentTriggerChild } = this;
+      if (activeElement && currentTriggerChild) {
+        this.handleTargetBlur(e, currentTriggerChild);
+      }
     }
   }
 
@@ -411,7 +421,6 @@ export default class Trigger extends Component<TriggerProps> {
       const [firstFocusElement] = this.focusElements;
       if (firstFocusElement) {
         e.preventDefault();
-        this.activeElement = firstFocusElement;
         firstFocusElement.focus();
       }
     }
@@ -483,7 +492,7 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   handlePopupMouseEnter(e) {
-    this.popupTask.cancel();
+    this.cancelPopupTask();
     const { onPopupMouseEnter } = this.props;
     if (onPopupMouseEnter) {
       onPopupMouseEnter(e);
@@ -536,7 +545,6 @@ export default class Trigger extends Component<TriggerProps> {
             align={this.align}
             onAlign={onPopupAlign}
             onMouseDown={this.handlePopupMouseDown}
-            onMouseUp={this.handlePopupMouseUp}
             onKeyDown={this.handlePopupKeyDown}
             onBlur={this.handlePopupBlur}
             getFocusableElements={this.getFocusableElements}
@@ -600,15 +608,15 @@ export default class Trigger extends Component<TriggerProps> {
     if (onPopupHiddenBeforeChange(hidden) === false) {
       return false;
     }
-    if (hidden === false) {
-      return !isEmpty(this.getPopupContent());
-    }
+    // if (hidden === false) {
+    //   return !isEmpty(this.getPopupContent());
+    // }
     return true;
   }
 
   @mobxAction
   setPopupHidden(hidden: boolean) {
-    this.popupTask.cancel();
+    this.cancelPopupTask();
     if (this.popupHidden !== hidden) {
       const { popupHidden, onPopupHiddenChange = noop } = this.props;
       if (this.popupHiddenBeforeChange(hidden) !== false) {
@@ -621,9 +629,9 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   delaySetPopupHidden(popupHidden, delay) {
-    this.popupTask.cancel();
+    this.cancelPopupTask();
     if (delay) {
-      this.popupTask.delay(delay, () => {
+      getIf<Trigger, TaskRunner>(this, 'popupTask', () => new TaskRunner()).delay(delay, () => {
         this.setPopupHidden(popupHidden);
       });
     } else {

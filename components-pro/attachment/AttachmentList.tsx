@@ -17,6 +17,7 @@ export interface AttachmentListProps {
   pictureWidth: number;
   limit?: number;
   onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
+  onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onRemove: (attachment: AttachmentFile) => void;
   onOrderChange: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string, attachments: AttachmentFile[] }) => void;
   onFetchAttachments: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => void;
@@ -26,6 +27,7 @@ export interface AttachmentListProps {
   uploadButton?: ReactNode;
   sortable?: boolean;
   readOnly?: boolean;
+  showHistory?: boolean;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function AttachmentList(props) {
@@ -45,6 +47,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
     readOnly,
     onFetchAttachments,
     limit,
+    onHistory,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -100,6 +103,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
                 draggable={itemDraggable}
                 index={index}
                 hidden={hidden}
+                onHistory={onHistory}
               />
             )
           }

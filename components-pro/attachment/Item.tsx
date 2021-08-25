@@ -1,7 +1,8 @@
-import React, { FunctionComponent, ReactNode, useCallback, useEffect, useRef } from 'react';
+import React, { FunctionComponent, isValidElement, ReactNode, useCallback, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import classnames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
+import isString from 'lodash/isString';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -15,10 +16,13 @@ import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import { hide, show } from '../tooltip/singleton';
 import { formatFileSize } from './utils';
+import Tooltip from '../tooltip/Tooltip';
+import { $l } from '../locale-context';
 
 export interface ItemProps {
   attachment: AttachmentFile;
   onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
+  onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onRemove: (attachment: AttachmentFile) => void;
   readOnly?: boolean;
   isCard?: boolean;
@@ -37,28 +41,61 @@ export interface ItemProps {
 
 const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const {
-    attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName,
+    attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory,
     bucketDirectory, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
   } = props;
   const { status, name, filename, ext, url, size } = attachment;
   const attachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const renderImagePreview = (): ReactNode => {
+    const preview = (status === 'success' || status === 'done');
+    const isPicture = attachment.type.startsWith('image');
+    const { getPreviewUrl } = attachmentConfig;
+    const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, attachmentUUID }) : url;
     if (listType === 'text') {
       const { renderIcon } = attachmentConfig;
-      return (
-        renderIcon ? renderIcon(attachment, listType) : <Icon type="insert_drive_file" />
+      const defaultIcon = <Icon type="insert_drive_file" />;
+      const icon = renderIcon ? renderIcon(attachment, listType, defaultIcon) : defaultIcon;
+      const isSrcIcon = isString(icon);
+      return isPicture || isSrcIcon ? (
+        <Picture
+          width={14}
+          height={14}
+          alt={name}
+          previewUrl={src}
+          src={isSrcIcon ? icon : undefined}
+          objectFit="contain"
+          status="loaded"
+          index={index}
+          className={`${prefixCls}-icon`}
+          previewTarget={isSrcIcon && !isPicture ? '_blank' : undefined}
+          preview={preview}
+        >
+          {isValidElement(icon) ? icon : undefined}
+        </Picture>
+      ) : preview ? (
+        <Button
+          href={src}
+          target="_blank"
+          funcType={FuncType.link}
+          className={`${prefixCls}-icon`}
+        >
+          {icon}
+        </Button>
+      ) : (
+        <div className={`${prefixCls}-icon`}>
+          {icon}
+        </div>
       );
     }
-    if (listType === 'picture' || isCard) {
-      if ((status === 'success' || status === 'done') && attachment.type.startsWith('image')) {
-        const { getPreviewUrl } = attachmentConfig;
+    if (isCard || listType === 'picture') {
+      if (preview && isPicture) {
         return (
           <Picture
             width={width}
             height={width}
             alt={name}
-            src={getPreviewUrl && getPreviewUrl({ attachment, bucketName, bucketDirectory, attachmentUUID }) || url}
+            src={src}
             lazy
             objectFit="contain"
             index={index}
@@ -114,6 +151,21 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
       buttons.push(<Button {...upProps} />);
     }
     if (!status || status === 'success' || status === 'done') {
+      if (onHistory) {
+        const historyProps = {
+          key: 'history',
+          className: classnames(`${prefixCls}-icon`),
+          icon: 'library_books',
+          onClick: () => onHistory(attachment, attachmentUUID),
+          funcType: FuncType.link,
+          block: isCard,
+        };
+        buttons.push(
+          <Tooltip title={$l('Attachment', 'view_operation_records')}>
+            <Button {...historyProps} />
+          </Tooltip>,
+        );
+      }
       const { getDownloadUrl } = attachmentConfig;
       const downProps = {
         key: 'download',
@@ -123,7 +175,11 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
         target: '_blank',
         block: isCard,
       };
-      buttons.push(<Button {...downProps} />);
+      buttons.push(
+        <Tooltip title={$l('Attachment', 'download')}>
+          <Button {...downProps} />
+        </Tooltip>,
+      );
     }
     if (!readOnly && status !== 'uploading') {
       const rmProps = {
@@ -133,7 +189,11 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
         funcType: FuncType.link,
         block: isCard,
       };
-      buttons.push(<Button {...rmProps} />);
+      buttons.push(
+        <Tooltip title={$l('Attachment', 'delete')}>
+          <Button {...rmProps} />
+        </Tooltip>,
+      );
     }
     if (buttons.length) {
       return (

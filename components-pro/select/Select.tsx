@@ -4,21 +4,12 @@ import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
+import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 import defer from 'lodash/defer';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import {
-  action,
-  computed,
-  IReactionDisposer,
-  isArrayLike,
-  isObservableObject,
-  observable,
-  reaction,
-  runInAction,
-  toJS,
-} from 'mobx';
+import { action, computed, IReactionDisposer, isArrayLike, isObservableObject, observable, reaction, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
@@ -48,6 +39,10 @@ import isIE from '../_util/isIE';
 import Field from '../data-set/Field';
 import { ButtonProps } from '../button/Button';
 import { getIf } from '../data-set/utils';
+import ObserverTextField, { TextFieldProps } from '../text-field/TextField';
+import Icon from '../icon';
+import { ValueChangeAction } from '../text-field/enum';
+import { LabelLayout } from '../form/enum';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -65,6 +60,10 @@ function defaultSearchMatcher({ record, text, textField }) {
   if (record.get(textField) && isString(record.get(textField))) {
     return record.get(textField).indexOf(text) !== -1;
   }
+}
+
+export function isSearchTextEmpty(text: string | string[] | undefined): text is undefined {
+  return isArrayLike(text) ? !text.length : !text;
 }
 
 export const DISABLED_FIELD = '__disabled';
@@ -94,18 +93,19 @@ export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
 
 export interface SearchMatcherProps {
   record: Record;
-  text: string;
+  text: string | string[];
   value: any;
   props: any;
   textField: string;
   valueField: string;
 }
 
-export type ParamMatcher = string | ((props: ParamMatcherProps) => string);
+export type ParamMatcher = string | ((props: ParamMatcherProps) => string | object);
 
 export interface ParamMatcherProps {
   record: Record | undefined;
-  text: string;
+  key: string;
+  text: string | string[] | undefined;
   textField: string;
   valueField: string;
 }
@@ -146,6 +146,15 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * @default false
    */
   searchable?: boolean;
+  /**
+   * 搜索框在 Popup 中显示
+   * @default false
+   */
+  searchFieldInPopup?: boolean;
+  /**
+   * 搜索框的属性
+   */
+  searchFieldProps?: TextFieldProps;
   /**
    * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
    */
@@ -343,6 +352,19 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   menu?: Menu | null;
 
+  @observable $searchText?: string | string[] | undefined;
+
+  get searchText(): string | string[] | undefined {
+    if (this.isSearchFieldInPopup()) {
+      return this.$searchText;
+    }
+    return this.text;
+  }
+
+  set searchText(searchText: string | string[] | undefined) {
+    this.$searchText = searchText;
+  }
+
   @computed
   get searchMatcher(): SearchMatcher {
     const { searchMatcher = defaultSearchMatcher } = this.observableProps;
@@ -457,8 +479,18 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     this.menu = node;
   }
 
+  getSearchFieldProps(): TextFieldProps {
+    const { searchFieldProps = {} } = this.props;
+    return searchFieldProps;
+  }
+
+  isSearchFieldInPopup(): boolean | undefined {
+    const { searchFieldInPopup } = this.props;
+    return searchFieldInPopup;
+  }
+
   isEditable(): boolean {
-    return super.isEditable() && (!!this.searchable || !!this.observableProps.combo);
+    return super.isEditable() && ((this.searchable && !this.isSearchFieldInPopup()) || !!this.observableProps.combo);
   }
 
   checkValue() {
@@ -537,6 +569,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return super.getOmitPropsKeys().concat([
       'searchable',
       'searchMatcher',
+      'searchFieldInPopup',
+      'searchFieldProps',
       'paramMatcher',
       'combo',
       'commonItem',
@@ -644,14 +678,16 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           }
           return null;
         });
-        return (<Tag
-          key={item}
-          className={values.includes(item) ? `${this.prefixCls}-common-item ${this.prefixCls}-common-item-selected` : `${this.prefixCls}-common-item`}
-          // @ts-ignore
-          onClick={() => this.handleCommonItemClick(textRecord)}
-        >
-          {text}
-        </Tag>);
+        return (
+          <Tag
+            key={item}
+            className={values.includes(item) ? `${this.prefixCls}-common-item ${this.prefixCls}-common-item-selected` : `${this.prefixCls}-common-item`}
+            // @ts-ignore
+            onClick={() => this.handleCommonItemClick(textRecord)}
+          >
+            {text}
+          </Tag>
+        );
       });
       if (valueLength > maxCommonTagCount) {
         let content: ReactNode = `+ ${valueLength - Number(maxCommonTagCount)} ...`;
@@ -668,10 +704,12 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           </Tag>,
         );
       }
-      return (<div className={`${this.prefixCls}-common-item-wrapper`}>
-        <span className={`${this.prefixCls}-common-item-label`}>{$l('Select', 'common_item')}</span>
-        {tags}
-      </div>);
+      return (
+        <div className={`${this.prefixCls}-common-item-wrapper`}>
+          <span className={`${this.prefixCls}-common-item-label`}>{$l('Select', 'common_item')}</span>
+          {tags}
+        </div>
+      );
     }
   }
 
@@ -842,6 +880,32 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return options.status === DataSetStatus.loading || !!(field && field.pending);
   }
 
+  @autobind
+  @action
+  handlePopupSearch(value) {
+    this.searchText = value;
+    this.doSearch(value);
+  }
+
+  @autobind
+  renderSearchField(): ReactNode {
+    const { searchText, prefixCls } = this;
+    const searchFieldProps = this.getSearchFieldProps();
+    const { multiple, className } = searchFieldProps;
+    return (
+      <ObserverTextField
+        value={searchText}
+        onChange={this.handlePopupSearch}
+        prefix={<Icon type="search" />}
+        valueChangeAction={multiple ? ValueChangeAction.blur : ValueChangeAction.input}
+        labelLayout={LabelLayout.none}
+        border={false}
+        {...searchFieldProps}
+        className={classNames(`${prefixCls}-search-bar`, className)}
+      />
+    );
+  }
+
   renderSelectAll(): ReactNode | void {
     const { selectAllButton } = this.props;
     if (this.multiple && selectAllButton) {
@@ -876,6 +940,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       </Spin>
     );
     return [
+      this.searchable && this.isSearchFieldInPopup() && this.renderSearchField(),
       this.renderSelectAll(),
       menu,
     ];
@@ -883,11 +948,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   @autobind
   getPopupStyleFromAlign(target): CSSProperties | undefined {
-    const { isFlat } = this.props;
     if (target) {
       const width = pxToRem(target.getBoundingClientRect().width);
       if (width !== undefined) {
-        if (this.dropdownMatchSelectWidth && !isFlat) {
+        const { isFlat } = this.props;
+        if (!isFlat && this.dropdownMatchSelectWidth) {
           return {
             width,
           };
@@ -900,7 +965,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   getTriggerIconFont(): string {
-    return this.searchable && this.isFocused && !this.readOnly ? 'search' : 'baseline-arrow_drop_down';
+    return this.searchable && !this.isSearchFieldInPopup() && this.isFocused && !this.readOnly ? 'search' : 'baseline-arrow_drop_down';
   }
 
   @autobind
@@ -1200,28 +1265,53 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     this.removeValues(newValues, -1);
   }
 
-  handleSearch(_text?: string) {
+  handleSearch(_text?: string | string[] | undefined) {
   }
 
   @action
   setText(text?: string): void {
     super.setText(text);
-    if (this.searchable) {
+    if (this.searchable && !this.isSearchFieldInPopup()) {
       this.doSearch(text);
     }
   }
 
-  doSearch = debounce(value => {
+  doSearch = debounce((value?: string | string[] | undefined) => {
     if (isString(this.searchMatcher)) {
       this.searchRemote(value);
     }
     this.handleSearch(value);
   }, 500);
 
-  searchRemote(value) {
+  getSearchPara(searchMatcher: string, value?: string | string[] | undefined): object {
+    const { paramMatcher } = this;
+    if (isString(paramMatcher)) {
+      if (isArrayLike(value)) {
+        return { [searchMatcher]: value.map(v => `${v || ''}${paramMatcher}`) };
+      }
+      return { [searchMatcher]: `${value || ''}${paramMatcher}` };
+    }
+    if (isFunction(paramMatcher)) {
+      const { record, textField, valueField } = this;
+      const searchPara = paramMatcher({ record, text: value, textField, valueField, key: searchMatcher });
+      if (searchPara) {
+        if (isString(searchPara)) {
+          return { [searchMatcher]: value };
+        }
+        return searchPara;
+      }
+    }
+    return { [searchMatcher]: value };
+  }
+
+  searchRemote(text?: string | string[] | undefined) {
     const { field, searchMatcher } = this;
     if (field && isString(searchMatcher)) {
-      field.setLovPara(searchMatcher, value === '' ? undefined : value);
+      const searchPara = this.getSearchPara(searchMatcher, text);
+      Object.keys(searchPara).forEach(key => {
+        const value = searchPara[key];
+        field.setLovPara(key, value === '' ? undefined : value);
+      });
     }
   }
 
@@ -1323,7 +1413,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   // 当触发清空操作时候会导致两次触发onchange可搜索不需要设置值
   setRangeTarget(target) {
     if (this.text !== undefined) {
-      if (!this.searchable) {
+      if (!this.searchable || this.isSearchFieldInPopup()) {
         this.prepareSetValue(this.text);
       }
       this.setText();
@@ -1461,20 +1551,20 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const {
       searchable,
       searchMatcher,
-      text,
+      searchText,
     } = this;
-    return searchable && text && typeof searchMatcher === 'function' ? data.filter((r) => this.matchRecordBySearch(r, text)) : data;
+    return searchable && typeof searchMatcher === 'function' && !isSearchTextEmpty(searchText) ? data.filter((r) => this.matchRecordBySearch(r, searchText)) : data;
   }
 
   @autobind
-  matchRecordBySearch(record: Record, text?: string): boolean {
+  matchRecordBySearch(record: Record, text: string | string[]): boolean {
     const {
       textField,
       valueField,
       searchable,
       searchMatcher,
     } = this;
-    return !searchable || !text || typeof searchMatcher !== 'function' || searchMatcher({
+    return !searchable || typeof searchMatcher !== 'function' || searchMatcher({
       record,
       text,
       textField,

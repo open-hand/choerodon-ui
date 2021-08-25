@@ -123,6 +123,10 @@ const locale: Locale = {
     no_attachments: 'No attachments',
     by_upload_time: 'By upload time',
     by_name: 'By name',
+    operation_records: 'Operation records',
+    view_operation_records: 'View operation records',
+    download: 'Download',
+    delete: 'Delete',
     file_max_size: 'File size cannot exceed: {size}',
     file_list_max_length: 'The maximum number of files is limited to: {count}',
     file_type_mismatch: 'File type mismatch, correct type: {types}',
@@ -130,6 +134,7 @@ const locale: Locale = {
   Modal: {
     ok: 'OK',
     cancel: 'Cancel',
+    close: 'Close',
     preview_picture: 'Preview picture',
   },
   DataSet: {

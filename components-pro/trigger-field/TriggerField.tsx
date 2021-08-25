@@ -62,6 +62,8 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
    * 当popup中有可获取焦点对象时，是否按tab键时获取焦点
    */
   tabIntoPopupContent?: boolean;
+
+  viewMode?: 'popup' | 'modal';
 }
 
 export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<T & TriggerFieldProps> {
@@ -111,6 +113,8 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
      * 当popup中有可获取焦点对象时，是否按tab键时获取焦点
      */
     tabIntoPopupContent: PropTypes.bool,
+
+    viewMode: PropTypes.oneOf(['none', 'popup', 'modal', 'list']),
     ...TextField.propTypes,
   };
 
@@ -122,6 +126,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     trigger: ['focus', 'click'],
     triggerShowDelay: 150,
     triggerHiddenDelay: 50,
+    viewMode: 'popup',
   };
 
   popupTask: TaskRunner = new TaskRunner();
@@ -186,6 +191,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
       'treeDefaultExpandedKeys',
       'treeDefaultExpandAll',
       'tabIntoPopupContent',
+      'viewMode',
     ]);
   }
 
@@ -194,6 +200,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
       setValue: this.setValue.bind(this),
       setPopup: this.setPopup.bind(this),
     };
+  }
+
+  getPopupClassName(defaultClassName: string | undefined): string | undefined {
+    return defaultClassName;
   }
 
   @autobind
@@ -232,7 +242,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         mouseEnterDelay={triggerShowDelay}
         mouseLeaveDelay={triggerHiddenDelay}
         prefixCls={prefixCls}
-        popupCls={popupCls}
+        popupCls={this.getPopupClassName(popupCls)}
         popupStyle={popupStyle}
         popupContent={this.renderPopupContent}
         popupPlacement={popupPlacement}

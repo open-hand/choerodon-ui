@@ -5,7 +5,7 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import isPlainObject from 'lodash/isPlainObject';
-import { get, isArrayLike } from 'mobx';
+import { get, isArrayLike, isObservableObject } from 'mobx';
 import classNames from 'classnames';
 import moment, { isMoment } from 'moment';
 import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
@@ -228,14 +228,24 @@ export function isFieldValueEmpty(value: any, range?: boolean | [string, string]
   }
   if (isArrayLike(value)) {
     return value.length ? value.every(v => {
-      if (isObject(v)) {
-        return isEmpty(get(v, valueField!));
+      if (valueField) {
+        if (isObservableObject(v)) {
+          return isEmpty(get(v, valueField));
+        }
+        if (isObject(v)) {
+          return isEmpty(v[valueField]);
+        }
       }
       return isEmpty(v);
     }) : true;
   }
-  if (isObject(value)) {
-    return isEmpty(get(value, valueField!));
+  if (valueField) {
+    if (isObservableObject(value)) {
+      return isEmpty(get(value, valueField));
+    }
+    if (isObject(value)) {
+      return isEmpty(value[valueField]);
+    }
   }
   return isEmpty(value);
 }

@@ -418,7 +418,7 @@ export default class Field {
 
   computedProps?: Map<string | symbol, IComputedValue<any>> | undefined;
 
-  @observable props: FieldProps & { [key: string]: any; };
+  @observable props: ObservableMap<string, any>;
 
   @observable dirtyProps?: Partial<FieldProps> | undefined;
 
@@ -438,7 +438,7 @@ export default class Field {
 
   get pristineProps(): FieldProps {
     return {
-      ...this.props,
+      ...this.props.toPOJO(),
       ...this.dirtyProps,
     };
   }
@@ -451,7 +451,7 @@ export default class Field {
         const dirtyKeys = Object.keys(dirtyProps);
         if (dirtyKeys.length) {
           dirtyKeys.forEach((key) => {
-            const item = this.props[key];
+            const item = this.props.get(key);
             newProps[key] = item;
             if (isSame(item, props[key])) {
               delete dirtyProps[key];
@@ -460,12 +460,12 @@ export default class Field {
             }
           });
         }
-        this.props = {
+        this.props.replace({
           ...props,
           ...newProps,
-        };
+        });
       } else {
-        this.props = props;
+        this.props.replace(props);
       }
     });
   }
@@ -548,7 +548,7 @@ export default class Field {
   }
 
   get name(): string {
-    return this.props.name!;
+    return this.props.get('name');
   }
 
   get order(): string | undefined {
@@ -572,7 +572,7 @@ export default class Field {
     runInAction(() => {
       this.dataSet = dataSet;
       this.record = record;
-      this.props = props;
+      this.props = observable.map(props);
 
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
       if (
@@ -617,8 +617,8 @@ export default class Field {
       { lookupUrl: getConfig('lookupUrl') },
       Field.defaultProps,
       getPropsFromLovConfig(lovCode, ['textField', 'valueField']),
-      dsField && dsField.props,
-      this.props,
+      dsField && dsField.props.toPOJO(),
+      this.props.toPOJO(),
     );
   }
 
@@ -708,7 +708,7 @@ export default class Field {
         this.checkDynamicProp(propsName, undefined);
       }
     }
-    const value = get(this.props, propsName);
+    const value = this.props.get(propsName);
     if (value !== undefined) {
       return value;
     }
@@ -766,7 +766,7 @@ export default class Field {
       } else if (isSame(toJS(dirtyProps[propsName]), value)) {
         remove(dirtyProps, propsName);
       }
-      set(this.props, propsName, value);
+      this.props.set(propsName, value);
       const { record, dataSet, name } = this;
       if (record && propsName === 'type') {
         record.set(name, processValue(record.get(name), this));
@@ -896,7 +896,7 @@ export default class Field {
   reset(): void {
     const { dirtyProps } = this;
     if (dirtyProps) {
-      Object.assign(this.props, dirtyProps);
+      this.props.merge(dirtyProps)
       this.dirtyProps = undefined;
     }
   }
