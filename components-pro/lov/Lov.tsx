@@ -98,6 +98,7 @@ export interface LovProps extends SelectProps, ButtonProps {
    */
   autoSelectSingle?: boolean;
   showCheckedStrategy?: CheckedStrategy;
+  onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
 }
 
 @observer
@@ -444,16 +445,20 @@ export default class Lov extends Select<LovProps> {
     }
   };
 
-  handleLovViewSelect = (records: Record | Record[]) => {
-    const { viewMode } = this.props;
-    if (viewMode === 'popup' && !this.multiple) {
-      this.collapse();
+  handleLovViewSelect = (records: Record | Record[]): boolean | undefined => {
+    const { viewMode, onBeforeSelect = noop } = this.props;
+    const result = onBeforeSelect(records);
+    if (result !== false) {
+      if (viewMode === 'popup' && !this.multiple) {
+        this.collapse();
+      }
+      if (isArrayLike(records)) {
+        this.setValue(records.map(record => this.processRecordToObject(record)));
+      } else {
+        this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
+      }
     }
-    if (isArrayLike(records)) {
-      this.setValue(records.map(record => this.processRecordToObject(record)));
-    } else {
-      this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
-    }
+    return result;
   };
 
   resetOptions(noCache: boolean = false): boolean {
