@@ -55,6 +55,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   fileSize?: number;
   bucketName?: string;
   bucketDirectory?: string;
+  storageCode?: string;
   pictureWidth?: number;
   count?: number;
   max?: number;
@@ -224,6 +225,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'fileSize',
       'bucketName',
       'bucketDirectory',
+      'storageCode',
       'count',
       'max',
       'listLimit',
@@ -271,10 +273,12 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (actionHook) {
         const bucketName = this.getProp('bucketName');
         const bucketDirectory = this.getProp('bucketDirectory');
+        const storageCode = this.getProp('storageCode');
         const newConfig = typeof actionHook === 'function' ? actionHook({
           attachment,
           bucketName,
           bucketDirectory,
+          storageCode,
           attachmentUUID,
         }) : actionHook;
         const { data: customData, onUploadProgress: customUploadProgress } = newConfig;
@@ -436,7 +440,8 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (onRemove && attachmentUUID) {
       const bucketName = this.getProp('bucketName');
       const bucketDirectory = this.getProp('bucketDirectory');
-      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory });
+      const storageCode = this.getProp('storageCode');
+      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode }).then(() => this.removeAttachment(attachment));
     }
   }
 
@@ -446,6 +451,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (renderHistory) {
       const bucketName = this.getProp('bucketName');
       const bucketDirectory = this.getProp('bucketDirectory');
+      const storageCode = this.getProp('storageCode');
       open({
         title: $l('Attachment', 'operation_records'),
         children: renderHistory({
@@ -453,6 +459,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           attachmentUUID,
           bucketName,
           bucketDirectory,
+          storageCode,
         }),
         cancelButton: false,
         okText: $l('Modal', 'close'),
@@ -463,12 +470,11 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @autobind
   handleRemove(attachment: AttachmentFile) {
-    this.removeAttachment(attachment);
     return this.doRemove(attachment);
   }
 
   @autobind
-  handleFetchAttachment(fetchProps: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) {
+  handleFetchAttachment(fetchProps: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) {
     const { field } = this;
     if (field) {
       field.fetchAttachments(fetchProps);
@@ -507,7 +513,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       attachment.errorMessage = $l('Attachment', 'file_type_mismatch', { types: accept.join(',') }) as string;
       return;
     }
-    if (fileSize && attachment.size > fileSize) {
+    if (fileSize && fileSize > 0 && attachment.size > fileSize) {
       attachment.status = 'error';
       attachment.invalid = true;
       attachment.errorMessage = $l('Attachment', 'file_max_size', { size: formatFileSize(fileSize) }) as string;
@@ -687,6 +693,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     } = this.props;
     const bucketName = this.getProp('bucketName');
     const bucketDirectory = this.getProp('bucketDirectory');
+    const storageCode = this.getProp('storageCode');
     const { attachments } = this;
     const attachmentUUID = this.getValue();
     if (attachmentUUID) {
@@ -700,6 +707,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           attachments={sortAttachments(attachments, this.sort || defaultSort)}
           bucketName={bucketName}
           bucketDirectory={bucketDirectory}
+          storageCode={storageCode}
           attachmentUUID={attachmentUUID}
           uploadButton={uploadButton}
           sortable={sortable}
@@ -731,13 +739,14 @@ export default class Attachment extends FormField<AttachmentProps> {
           if (getDownloadAllUrl) {
             const bucketName = this.getProp('bucketName');
             const bucketDirectory = this.getProp('bucketDirectory');
+            const storageCode = this.getProp('storageCode');
             const attachmentUUID = this.getValue();
-            getDownloadAllUrl({ bucketName, bucketDirectory, attachmentUUID });
+            getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID });
             const downProps: ButtonProps = {
               key: 'download',
               icon: 'get_app',
               funcType: FuncType.flat,
-              href: getDownloadAllUrl({ bucketName, bucketDirectory, attachmentUUID }),
+              href: getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID }),
               target: '_blank',
               color: ButtonColor.primary,
               children: $l('Attachment', 'download_all'),

@@ -89,20 +89,20 @@ export type Formatter = {
 
 export type AttachmentConfig = {
   defaultFileKey: string;
-  defaultFileSize: string;
-  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => AxiosRequestConfig);
+  defaultFileSize: number;
+  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => AxiosRequestConfig);
   batchFetchCount?: (attachmentUUIDs: string[]) => Promise<{ [key: string]: number }>;
-  fetchList?: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => Promise<FileLike[]>;
-  getPreviewUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string;
-  getDownloadUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string;
-  getDownloadAllUrl?: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => string;
+  fetchList?: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => Promise<FileLike[]>;
+  getPreviewUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => string;
+  getDownloadUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => string;
+  getDownloadAllUrl?: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => string;
   getAttachmentUUID?: () => Promise<string> | string;
   renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;
-  renderHistory?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => ReactNode;
+  renderHistory?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => ReactNode;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
-  onOrderChange?: (props: { attachmentUUID: string, attachments: AttachmentFile[], bucketName?: string, bucketDirectory?: string }) => Promise<void>;
-  onRemove?: (props: { attachment: AttachmentFile, attachmentUUID: string, bucketName?: string, bucketDirectory?: string }) => Promise<any>;
+  onOrderChange?: (props: { attachmentUUID: string, attachments: AttachmentFile[], bucketName?: string, bucketDirectory?: string, storageCode?: string }) => Promise<void>;
+  onRemove?: (props: { attachment: AttachmentFile, attachmentUUID: string, bucketName?: string, bucketDirectory?: string, storageCode?: string }) => Promise<any>;
 }
 
 export type Config = {

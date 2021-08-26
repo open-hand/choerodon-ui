@@ -29,6 +29,7 @@ const App = () => {
     onChange: setValue,
     help: '图片支持PNG、JPG、JPEG格式，且不能大于1M',
     fileSize: 1024 * 1024,
+    showHistory: true,
   };
 
   return (
