@@ -31,7 +31,7 @@ class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'code',
     data: [
-      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS' , 'code_description': '性别,员工状态' }
+      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, c7n' , 'code_description': '性别,员工状态,c7n' }
     ],
     fields: [
       {
@@ -62,11 +62,12 @@ class App extends React.Component {
   });
 
   render() {
-    return <Lov dataSet={this.ds} searchAction="blur" name="code" placeholder="复选LOV" tableProps={{
-                                                                                                style: {
-                                                                                                  maxHeight: 'calc(100vh - 400px)',
-                                                                                                },
-                                                                                              }} />;
+    const tableProps = {
+      style: {
+        maxHeight: 'calc(100vh - 400px)',
+      },
+    }
+    return <Lov dataSet={this.ds} searchAction="blur" name="code" placeholder="复选LOV" tableProps={tableProps} />;
   }
 }
 

@@ -321,6 +321,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   showCachedSelection?: boolean;
   /**
+   * 显示缓存选中记录变化
+   */
+  onShowCachedSelectionChange?: (showCachedSelection: boolean) => void;
+  /**
    * 显示切换跨页全选按钮
    */
   showAllPageSelectionButton?: boolean;
@@ -724,6 +728,8 @@ export default class Table extends DataSetComponent<TableProps> {
     alwaysShowRowBox: PropTypes.bool,
     showSelectionTips: PropTypes.bool,
     showSelectionCachedButton: PropTypes.bool,
+    showCachedSelection: PropTypes.bool,
+    onShowCachedSelectionChange: PropTypes.func,
     showAllPageSelectionButton: PropTypes.bool,
     defaultRowExpanded: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
@@ -1254,6 +1260,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'alwaysShowRowBox',
       'showSelectionTips',
       'showSelectionCachedButton',
+      'showCachedSelection',
+      'onShowCachedSelectionChange',
       'showAllPageSelectionButton',
       'onRow',
       'rowRenderer',
@@ -1448,6 +1456,7 @@ export default class Table extends DataSetComponent<TableProps> {
         mode,
         pristine,
         showSelectionCachedButton,
+        onShowCachedSelectionChange,
         autoMaxWidth,
         summary,
       },
@@ -1475,6 +1484,7 @@ export default class Table extends DataSetComponent<TableProps> {
             rowDragRender={rowDragRender}
             columnsDragRender={columnsDragRender}
             showSelectionCachedButton={showSelectionCachedButton}
+            onShowCachedSelectionChange={onShowCachedSelectionChange}
             autoMaxWidth={autoMaxWidth}
             pristine={pristine}
             summary={summary}

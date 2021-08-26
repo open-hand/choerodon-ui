@@ -137,6 +137,7 @@ export type Config = {
     lovConfig: LovConfig | undefined,
     props: TransportHookProps,
   ) => AxiosRequestConfig);
+  lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>
   lovTableProps?: TableProps;
   lovModalProps?: ModalProps;
   lovTableCustomizable?: boolean;

@@ -79,6 +79,7 @@ subtitle: 表格
 | clientExportQuantity | 导出一次轮询数量 | number | 100 |
 | showSelectionTips | 是否显示选中记录提示  | boolean | |
 | showCachedSelection | 是否显示缓存选中记录  | boolean | |
+| onShowCachedSelectionChange | 缓存选中记录显示回调  | (boolean) => void | |
 | showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | |
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮  | boolean | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
