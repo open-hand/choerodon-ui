@@ -865,8 +865,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   getPopupClassName(defaultClassName: string | undefined): string | undefined {
     const { multiple, prefixCls } = this;
     return classNames(defaultClassName, {
-      [`${prefixCls}-lov-multiple`]: multiple,
-      [`${prefixCls}-lov-single`]: !multiple,
+      [`${prefixCls}-popup-multiple`]: multiple,
+      [`${prefixCls}-popup-single`]: !multiple,
     });
   }
 
