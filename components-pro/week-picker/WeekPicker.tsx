@@ -8,4 +8,9 @@ export default class WeekPicker extends DatePicker {
     ...DatePicker.defaultProps,
     mode: ViewMode.week,
   };
+
+  getWrapperClassNames() {
+    const { prefixCls } = this;
+    return super.getWrapperClassNames(`${prefixCls}-week-picker-wrapper`);
+  }
 }

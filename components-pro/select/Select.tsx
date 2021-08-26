@@ -862,6 +862,14 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     };
   }
 
+  getPopupClassName(defaultClassName: string | undefined): string | undefined {
+    const { multiple, prefixCls } = this;
+    return classNames(defaultClassName, {
+      [`${prefixCls}-lov-multiple`]: multiple,
+      [`${prefixCls}-lov-single`]: !multiple,
+    });
+  }
+
   @computed
   get dropdownMatchSelectWidth(): boolean | undefined {
     const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') } = this.observableProps;

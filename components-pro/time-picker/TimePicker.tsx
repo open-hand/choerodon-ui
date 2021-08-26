@@ -10,6 +10,11 @@ export default class TimePicker extends DatePicker {
     mode: ViewMode.time,
   };
 
+  getWrapperClassNames() {
+    const { prefixCls } = this;
+    return super.getWrapperClassNames(`${prefixCls}-time-picker-wrapper`);
+  }
+
   getLimitWithType(limit: Moment, _minOrMax: 'min' | 'max') {
     return limit;
   }
