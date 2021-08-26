@@ -216,24 +216,23 @@ export function processValue(value, format) {
   return '';
 }
 
-export function isFieldValueEmpty(value: any, range?: boolean | [string, string], valueField?: string) {
+export function isFieldValueEmpty(value: any, range?: boolean | [string, string], field?: Field) {
   if (range === true) {
-    if (isArrayLike(value) && value.every(v => isEmpty(v))) {
-      return true;
-    }
-  } else if (isArrayLike(range)) {
-    if (value && Object.values(value).every(v => isEmpty(v))) {
-      return true;
-    }
+    return isArrayLike(value) && value.every(v => isEmpty(v));
   }
+  if (isArrayLike(range)) {
+    return value && Object.values(value).every(v => isEmpty(v));
+  }
+  const valueField = field?.get('valueField');
+  const textField = field?.get('textField');
   if (isArrayLike(value)) {
     return value.length ? value.every(v => {
       if (valueField) {
         if (isObservableObject(v)) {
-          return isEmpty(get(v, valueField));
+          return isEmpty(get(v, valueField)) && isEmpty(get(v, textField));
         }
         if (isObject(v)) {
-          return isEmpty(v[valueField]);
+          return isEmpty(v[valueField]) && isEmpty(v[textField]);
         }
       }
       return isEmpty(v);
