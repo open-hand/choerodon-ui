@@ -53,6 +53,7 @@ sans-serif;
 @font-size-base: 0.13rem;
 @font-size-lg: 0.16rem;
 @font-size-sm: 0.12rem;
+@font-weight-base: 400;
 @line-height-base: 1.5;
 @border-radius-lg: 0.1rem;
 @border-radius-base: 0.02rem;
@@ -146,7 +147,7 @@ sans-serif;
 0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
 
 // Buttons
-@btn-font-weight: 400;
+@btn-font-weight: @font-weight-base;
 @btn-border-radius-base: @border-radius-base;
 @btn-border-radius-sm: @border-radius-base;
 
@@ -403,7 +404,7 @@ sans-serif;
 @label-color: inherit;
 @label-color-horizontal: @label-color;
 @label-color-vertical: @label-color;
-@label-font-weight: 400;
+@label-font-weight: @font-weight-base;
 @label-colon-color: @label-color;
 @label-line-height: @input-height-base;
 @label-white-space: nowrap;
@@ -504,6 +505,7 @@ sans-serif;
 // Output
 // ---
 @output-line-height: 28 / 13; // <-- fieldHeight / fontSize
+@output-font-weight: @font-weight-base;
 @output-word-break: normal;
 
 //step
