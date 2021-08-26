@@ -8,4 +8,9 @@ export default class MonthPicker extends DatePicker {
     ...DatePicker.defaultProps,
     mode: ViewMode.month,
   };
+
+  getWrapperClassNames() {
+    const { prefixCls } = this;
+    return super.getWrapperClassNames(`${prefixCls}-month-picker-wrapper`);
+  }
 }

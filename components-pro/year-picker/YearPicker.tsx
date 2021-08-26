@@ -8,4 +8,9 @@ export default class YearPicker extends DatePicker {
     ...DatePicker.defaultProps,
     mode: ViewMode.year,
   };
+
+  getWrapperClassNames() {
+    const { prefixCls } = this;
+    return super.getWrapperClassNames(`${prefixCls}-year-picker-wrapper`);
+  }
 }

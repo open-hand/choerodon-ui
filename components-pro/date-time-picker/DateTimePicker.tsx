@@ -12,7 +12,7 @@ export default class DateTimePicker extends DatePicker {
 
   getWrapperClassNames() {
     const { prefixCls } = this;
-    return super.getWrapperClassNames(`${prefixCls}-time-picker`);
+    return super.getWrapperClassNames(`${prefixCls}-date-time-picker-wrapper`);
   }
 
   getLimitWithType(limit: Moment, _minOrMax: 'min' | 'max') {
