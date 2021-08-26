@@ -19,10 +19,11 @@ export interface AttachmentListProps {
   onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onRemove: (attachment: AttachmentFile) => void;
-  onOrderChange: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string, attachments: AttachmentFile[] }) => void;
-  onFetchAttachments: (props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) => void;
+  onOrderChange: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string, attachments: AttachmentFile[] }) => void;
+  onFetchAttachments: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => void;
   bucketName?: string;
   bucketDirectory?: string;
+  storageCode?: string;
   attachmentUUID: string;
   uploadButton?: ReactNode;
   sortable?: boolean;
@@ -41,6 +42,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
     pictureWidth,
     bucketName,
     bucketDirectory,
+    storageCode,
     attachmentUUID,
     uploadButton,
     sortable,
@@ -60,33 +62,35 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
         source.index,
         destination.index,
       );
-      onOrderChange({ attachments: newAttachments, bucketName, bucketDirectory, attachmentUUID });
+      onOrderChange({ attachments: newAttachments, bucketName, bucketDirectory, storageCode, attachmentUUID });
     }
-  }, [attachments, bucketName, bucketDirectory, attachmentUUID, onOrderChange]);
+  }, [attachments, bucketName, bucketDirectory, storageCode, attachmentUUID, onOrderChange]);
   useEffect(() => {
     if (!attachments) {
-      onFetchAttachments({ bucketName, bucketDirectory, attachmentUUID });
+      onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID });
     }
   }, [onFetchAttachments, attachments]);
 
   if (attachments) {
     const { length } = attachments;
     const draggable = sortable && !readOnly && length > 1;
+    let previewIndex = 0;
     const list = attachments.map((attachment, index) => {
+      const { type, uid } = attachment;
       const restCount = index + 1 === limit ? length - limit : undefined;
       const hidden = isNumber(limit) && index >= limit;
       const itemDraggable = draggable && !restCount;
       return (
         <Draggable
-          draggableId={attachment.uid}
+          draggableId={uid}
           index={index}
-          key={attachment.uid}
+          key={uid}
           isDragDisabled={!itemDraggable}
         >
           {
             (provided: DraggableProvided) => (
               <Item
-                key={attachment.uid}
+                key={uid}
                 provided={provided}
                 prefixCls={`${prefixCls}-item`}
                 attachment={attachment}
@@ -94,6 +98,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
                 listType={listType}
                 bucketName={bucketName}
                 bucketDirectory={bucketDirectory}
+                storageCode={storageCode}
                 attachmentUUID={attachmentUUID}
                 onRemove={onRemove}
                 onUpload={onUpload}
@@ -101,7 +106,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
                 readOnly={readOnly}
                 restCount={restCount}
                 draggable={itemDraggable}
-                index={index}
+                index={type.startsWith('image') ? previewIndex++ : undefined}
                 hidden={hidden}
                 onHistory={onHistory}
               />

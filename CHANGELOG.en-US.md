@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment`, `selectTrigger` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment`, `selectTrigger`, `lovQueryCachedSelected` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
 - 🌟 `<pro>Rate`: Added `Rate` component.
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
@@ -32,10 +32,11 @@ timeline: true
 - 🌟 `<pro>FormField`: Added `processValue` property.
 - 🌟 `<pro>DataSet.Field`: Added `processValue` property.
 - 🌟 `DatePicker`: Added `processValue` property.
-- 🌟 `<pro>Table`：Added `showCachedSelection` property.
-- 🌟 `<pro>Table`：Added the `showRemovedRow` property to control the display and hide of temporarily removed rows.
-- 🌟 `<pro>TriggerField`：Added `viewMode` property.
-- 🌟 `<pro>Select`：Added `searchFieldInPopup`, `searchFieldProps` properties.
+- 🌟 `<pro>Table`: Added `showCachedSelection`, `onShowCachedSelectionChange` properties.
+- 🌟 `<pro>Table`: Added the `showRemovedRow` property to control the display and hide of temporarily removed rows.
+- 🌟 `<pro>TriggerField`: Added `viewMode` property.
+- 🌟 `<pro>Select`: Added `searchFieldInPopup`, `searchFieldProps` properties.
+- 🌟 `<pro>Lov`: Added `onBeforeSelect` property.
 - 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.

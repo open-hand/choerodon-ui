@@ -6,14 +6,14 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
-import { action, computed, isArrayLike, toJS } from 'mobx';
+import { action, computed, isArrayLike, runInAction, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
-import LovView from './LovView';
+import LovView, { LovViewProps } from './LovView';
 import { ModalProps } from '../modal/Modal';
 import DataSet, { DataSetProps } from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -98,6 +98,7 @@ export interface LovProps extends SelectProps, ButtonProps {
    */
   autoSelectSingle?: boolean;
   showCheckedStrategy?: CheckedStrategy;
+  onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
 }
 
 @observer
@@ -230,13 +231,17 @@ export default class Lov extends Select<LovProps> {
     const config = this.getConfig();
     const { options } = this;
     if (config && options) {
+      let lovViewProps;
       if (this.popup && !this.fetched) {
-        this.beforeOpen(options);
-        this.afterOpen(options);
-        this.fetched = true;
+        runInAction(() => {
+          lovViewProps = this.beforeOpen(options);
+          this.afterOpen(options);
+          this.fetched = true;
+        });
       }
       const tableProps = this.getTableProps();
       const mergedTableProps: TableProps = {
+        ...(lovViewProps && lovViewProps.tableProps),
         ...tableProps,
         style: {
           ...tableProps.style,
@@ -248,6 +253,7 @@ export default class Lov extends Select<LovProps> {
       };
       return (
         <LovView
+          {...lovViewProps}
           popup
           dataSet={options}
           config={config}
@@ -273,34 +279,75 @@ export default class Lov extends Select<LovProps> {
   }
 
   @action
-  beforeOpen(options: DataSet) {
+  beforeOpen(options: DataSet): Partial<LovViewProps> | undefined {
     const { multiple, primitive, valueField } = this;
     if (multiple) {
       options.selectionStrategy = this.getProp('showCheckedStrategy') || CheckedStrategy.SHOW_ALL;
     }
     const { viewMode } = this.props;
+    const { selected } = options;
     if (viewMode === 'modal') {
       options.unSelectAll();
-      options.clearCachedSelected();
-      if (multiple) {
-        options.setCachedSelected(
-          this.getValues().map(value => {
-            const selected = new Record(primitive ? { [valueField]: value } : toJS(value), options);
-            selected.isSelected = true;
-            selected.isCached = true;
-            selected.status = RecordStatus.sync;
-            return selected;
-          }),
-        );
-      }
       // TODO：lovEvents deprecated
       const { lovEvents } = this.props;
       if (lovEvents) {
         Object.keys(lovEvents).forEach(event => options.addEventListener(event, lovEvents[event]));
       }
     }
+    if (multiple) {
+      const needToFetch = new Map();
+      options.clearCachedSelected();
+      options.setCachedSelected(
+        this.getValues().map(value => {
+          const primitiveValue = primitive ? value : value[valueField];
+          const oldSelected = selected.find(r => r.get(valueField) === primitiveValue);
+          if (oldSelected) {
+            oldSelected.isSelected = true;
+            return oldSelected;
+          }
+          const newSelected = new Record(primitive ? { [valueField]: value } : toJS(value), options, RecordStatus.sync);
+          newSelected.isSelected = true;
+          newSelected.isCached = true;
+          needToFetch.set(primitiveValue, newSelected);
+          return newSelected;
+        }),
+      );
+      const { lovCode } = this;
+      if (lovCode) {
+        const lovQueryCachedSelected = getConfig('lovQueryCachedSelected');
+        if (lovQueryCachedSelected) {
+          const fetchCachedSelected = () => {
+            if (needToFetch.size) {
+              lovQueryCachedSelected(lovCode, needToFetch).then(action((results) => {
+                results.forEach((data) => {
+                  const record = needToFetch.get(data[valueField]);
+                  if (record) {
+                    record.init(data);
+                  }
+                });
+                needToFetch.clear();
+              }));
+            }
+          };
+          if (viewMode === 'popup') {
+            fetchCachedSelected();
+          } else {
+            return {
+              tableProps: {
+                onShowCachedSelectionChange: (visible: boolean) => {
+                  if (visible) {
+                    fetchCachedSelected();
+                  }
+                },
+              },
+            };
+          }
+        }
+      }
+    }
   }
 
+  @action
   afterOpen(options: DataSet, fetchSingle?: boolean) {
     const noCache = this.getProp('noCache');
     if (this.resetOptions(noCache) && fetchSingle !== true) {
@@ -319,14 +366,15 @@ export default class Lov extends Select<LovProps> {
         const modalProps = this.getModalProps();
         const tableProps = this.getTableProps();
         const { width, title } = config;
-        this.beforeOpen(options);
+        const lovViewProps = this.beforeOpen(options);
         this.modal = open({
           title,
           children: (
             <LovView
+              {...lovViewProps}
               dataSet={options}
               config={config}
-              tableProps={tableProps}
+              tableProps={{ ...(lovViewProps && lovViewProps.tableProps), ...tableProps }}
               onSelect={this.handleLovViewSelect}
               multiple={this.multiple}
               values={this.getValues()}
@@ -397,16 +445,20 @@ export default class Lov extends Select<LovProps> {
     }
   };
 
-  handleLovViewSelect = (records: Record | Record[]) => {
-    const { viewMode } = this.props;
-    if (viewMode === 'popup' && !this.multiple) {
-      this.collapse();
+  handleLovViewSelect = (records: Record | Record[]): boolean | undefined => {
+    const { viewMode, onBeforeSelect = noop } = this.props;
+    const result = onBeforeSelect(records);
+    if (result !== false) {
+      if (viewMode === 'popup' && !this.multiple) {
+        this.collapse();
+      }
+      if (isArrayLike(records)) {
+        this.setValue(records.map(record => this.processRecordToObject(record)));
+      } else {
+        this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
+      }
     }
-    if (isArrayLike(records)) {
-      this.setValue(records.map(record => this.processRecordToObject(record)));
-    } else {
-      this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
-    }
+    return result;
   };
 
   resetOptions(noCache: boolean = false): boolean {

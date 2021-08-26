@@ -32,6 +32,7 @@ const App = () => {
         type: 'object',
         lovCode: 'LOV_CODE',
         multiple: true,
+        defaultValue: [{ value: 'c7n', code: 'c7n' }],
       },
     ],
   }), []);

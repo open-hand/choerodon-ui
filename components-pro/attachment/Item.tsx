@@ -33,6 +33,7 @@ export interface ItemProps {
   listType?: AttachmentListType;
   bucketName?: string;
   bucketDirectory?: string;
+  storageCode?: string;
   attachmentUUID: string;
   provided: DraggableProvided;
   draggable?: boolean;
@@ -42,7 +43,7 @@ export interface ItemProps {
 const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory,
-    bucketDirectory, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
+    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
   } = props;
   const { status, name, filename, ext, url, size } = attachment;
   const attachmentConfig = getConfig('attachment');
@@ -51,7 +52,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     const preview = (status === 'success' || status === 'done');
     const isPicture = attachment.type.startsWith('image');
     const { getPreviewUrl } = attachmentConfig;
-    const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, attachmentUUID }) : url;
+    const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) : url;
     if (listType === 'text') {
       const { renderIcon } = attachmentConfig;
       const defaultIcon = <Icon type="insert_drive_file" />;
@@ -153,7 +154,6 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     if (!status || status === 'success' || status === 'done') {
       if (onHistory) {
         const historyProps = {
-          key: 'history',
           className: classnames(`${prefixCls}-icon`),
           icon: 'library_books',
           onClick: () => onHistory(attachment, attachmentUUID),
@@ -161,36 +161,34 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
           block: isCard,
         };
         buttons.push(
-          <Tooltip title={$l('Attachment', 'view_operation_records')}>
+          <Tooltip key="history" title={$l('Attachment', 'view_operation_records')}>
             <Button {...historyProps} />
           </Tooltip>,
         );
       }
       const { getDownloadUrl } = attachmentConfig;
       const downProps = {
-        key: 'download',
         icon: isCard ? 'arrow_downward' : 'get_app',
         funcType: FuncType.link,
-        href: getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, attachmentUUID }) || url,
+        href: getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) || url,
         target: '_blank',
         block: isCard,
       };
       buttons.push(
-        <Tooltip title={$l('Attachment', 'download')}>
+        <Tooltip key="download" title={$l('Attachment', 'download')}>
           <Button {...downProps} />
         </Tooltip>,
       );
     }
     if (!readOnly && status !== 'uploading') {
       const rmProps = {
-        key: 'remove',
         icon: isCard ? 'delete_forever-o' : 'close',
         onClick: () => onRemove(attachment),
         funcType: FuncType.link,
         block: isCard,
       };
       buttons.push(
-        <Tooltip title={$l('Attachment', 'delete')}>
+        <Tooltip key="remove" title={$l('Attachment', 'delete')}>
           <Button {...rmProps} />
         </Tooltip>,
       );

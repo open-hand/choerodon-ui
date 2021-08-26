@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnAlign, tableShowRemovedRow, tooltip, showValidation, attachment, selectTrigger 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
+- 🌟 `configure`: 新增 tableColumnAlign, tableShowRemovedRow, tooltip, showValidation, attachment, selectTrigger, lovQueryCachedSelected 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
 - 🌟 `<pro>Rate`: 新增 Rate 组件。
 - 🌟 `<pro>Attachment`: 新增 Attachment 组件。
 - 🌟 `<pro>Picture`: 新增 Picture 组件。
@@ -32,10 +32,11 @@ timeline: true
 - 🌟 `<pro>FormField`：新增 processValue 属性。
 - 🌟 `<pro>DataSet.Field`：新增 processValue 属性，支持值变更时，拦截并返回一个新的值。
 - 🌟 `<pro>DatePicker`：新增 processValue 属性。
-- 🌟 `<pro>Table`：新增 showCachedSelection 属性。
+- 🌟 `<pro>Table`：新增 showCachedSelection, onShowCachedSelectionChange 属性。
 - 🌟 `<pro>Table`：新增 showRemovedRow 属性，控制临时移除行显隐。
 - 🌟 `<pro>TriggerField`：新增 viewMode 属性。
 - 🌟 `<pro>Select`：新增 searchFieldInPopup, searchFieldProps 属性。
+- 🌟 `<pro>Lov`：新增 onBeforeSelect 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 rowSelection 属性, 内置勾选列。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。

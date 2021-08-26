@@ -20,7 +20,7 @@ export interface LovViewProps {
   multiple: boolean;
   values: any[];
   popup?: boolean;
-  onSelect: (records: Record | Record[]) => void;
+  onSelect: (records: Record | Record[]) => boolean | undefined;
   modal?: { close: Function, handleOk: Function };
 }
 
@@ -92,11 +92,8 @@ export default class LovView extends Component<LovViewProps> {
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     const record: Record | Record[] | undefined = multiple ? records : records[0];
-    if (record) {
-      onSelect(record);
-      if (modal) {
-        modal.close();
-      }
+    if (record && onSelect(record) !== false && modal) {
+      modal.close();
     }
     return false;
   };

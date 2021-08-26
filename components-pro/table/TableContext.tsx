@@ -23,6 +23,7 @@ export interface TableContextProviderProps {
   columnsDragRender?: DragRender;
   isTree?: boolean;
   showSelectionCachedButton?: boolean;
+  onShowCachedSelectionChange?: (showCachedSelection: boolean) => void;
   autoMaxWidth?: boolean;
   summary?: string;
 }

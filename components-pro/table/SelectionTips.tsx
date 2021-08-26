@@ -8,11 +8,15 @@ import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 
 const SelectionTips: FunctionComponent<any> = observer(function SelectionTips() {
-  const { prefixCls, dataSet, tableStore, showSelectionCachedButton } = useContext(TableContext);
+  const { prefixCls, dataSet, tableStore, showSelectionCachedButton, onShowCachedSelectionChange } = useContext(TableContext);
   const { showCachedSelection } = tableStore;
   const handleSwitch = useCallback(action(() => {
-    tableStore.showCachedSelection = !showCachedSelection;
-  }), [showCachedSelection]);
+    const newShowCachedSelection = !showCachedSelection;
+    tableStore.showCachedSelection = newShowCachedSelection;
+    if (onShowCachedSelectionChange) {
+      onShowCachedSelectionChange(newShowCachedSelection);
+    }
+  }), [showCachedSelection, onShowCachedSelectionChange]);
   const cachedButton = showSelectionCachedButton && dataSet.cacheSelectionKeys && dataSet.cachedSelected.length > 0 ? (
     <Tooltip
       title={$l('Table', showCachedSelection ? 'hide_cached_seletion' : 'show_cached_seletion')}

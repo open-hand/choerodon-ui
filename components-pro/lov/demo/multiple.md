@@ -14,7 +14,15 @@ title:
 Multiple values via property `multiple`.
 
 ```jsx
-import { DataSet, Lov } from 'choerodon-ui/pro';
+import { configure } from 'choerodon-ui';
+import { DataSet, Lov, message } from 'choerodon-ui/pro';
+
+
+configure({
+  lovQueryCachedSelected() {
+    return Promise.resolve([{ code: 'c7n', description: 'Choerodon UI' }]);
+  }
+});
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -31,7 +39,7 @@ class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'code',
     data: [
-      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS' , 'code_description': '性别,员工状态' }
+      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, c7n' , 'code_description': '性别,员工状态,c7n' }
     ],
     fields: [
       {
@@ -61,12 +69,29 @@ class App extends React.Component {
     },
   });
 
+  handleBeforeSelect = (records) => {
+    if (!records.length) {
+      message('请选择至少一条记录');
+      return false;
+    }
+  }
+
   render() {
-    return <Lov dataSet={this.ds} searchAction="blur" name="code" placeholder="复选LOV" tableProps={{
-                                                                                                style: {
-                                                                                                  maxHeight: 'calc(100vh - 400px)',
-                                                                                                },
-                                                                                              }} />;
+    const tableProps = {
+      style: {
+        maxHeight: 'calc(100vh - 400px)',
+      },
+    }
+    return (
+      <Lov
+        dataSet={this.ds}
+        searchAction="blur"
+        name="code"
+        placeholder="复选LOV"
+        tableProps={tableProps}
+        onBeforeSelect={this.handleBeforeSelect}
+      />
+    );
   }
 }
 

@@ -379,6 +379,10 @@ export type FieldProps = {
    */
   bucketDirectory?: string;
   /**
+   * 附件存储编码
+   */
+  storageCode?: string;
+  /**
    * 附件数量
    */
   attachmentCount?: number;
