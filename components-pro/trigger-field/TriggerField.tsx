@@ -59,6 +59,10 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
    */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   /**
+   * 定义浮层对齐的目标，默认为组件最外层元素
+   */
+  getPopupAlignTarget?: () => HTMLElement;
+  /**
    * 当popup中有可获取焦点对象时，是否按tab键时获取焦点
    */
   tabIntoPopupContent?: boolean;
@@ -109,6 +113,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
      * 定义浮层的容器，默认为 body
      */
     getPopupContainer: PropTypes.func,
+    /**
+     * 定义浮层对齐的目标，默认为组件最外层元素
+     */
+    getPopupAlignTarget: PropTypes.func,
     /**
      * 当popup中有可获取焦点对象时，是否按tab键时获取焦点
      */
@@ -186,6 +194,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
       'triggerHiddenDelay',
       'onPopupHiddenChange',
       'getPopupContainer',
+      'getPopupAlignTarget',
       'extraFooterPlacement',
       'renderExtraFooter',
       'treeDefaultExpandedKeys',
@@ -231,6 +240,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         triggerHiddenDelay,
         getPopupContainer,
         tabIntoPopupContent,
+        getPopupAlignTarget = this.getRootDomNode,
       },
     } = this;
     return (
@@ -252,7 +262,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         onPopupAnimateEnd={this.handlePopupAnimateEnd}
         onPopupHiddenChange={this.handlePopupHiddenChange}
         getPopupStyleFromAlign={this.getPopupStyleFromAlign}
-        getRootDomNode={this.getRootDomNode}
+        getRootDomNode={getPopupAlignTarget}
         getPopupContainer={getPopupContainer}
         tabIntoPopupContent={tabIntoPopupContent}
         childrenProps={renderedValue}

@@ -34,7 +34,7 @@ timeline: true
 - 🌟 `DatePicker`: Added `processValue` property.
 - 🌟 `<pro>Table`: Added `showCachedSelection`, `onShowCachedSelectionChange` properties.
 - 🌟 `<pro>Table`: Added the `showRemovedRow` property to control the display and hide of temporarily removed rows.
-- 🌟 `<pro>TriggerField`: Added `viewMode` property.
+- 🌟 `<pro>TriggerField`: Added `viewMode`, `getPopupAlignTarget` properties.
 - 🌟 `<pro>Select`: Added `searchFieldInPopup`, `searchFieldProps` properties.
 - 🌟 `<pro>Lov`: Added `onBeforeSelect` property.
 - 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
