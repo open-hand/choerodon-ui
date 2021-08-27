@@ -298,12 +298,13 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     }
   }
 
-  getWrapperClassNames() {
+  getWrapperClassNames(...args): string {
     const { prefixCls } = this;
     const suffix = this.getSuffix();
     const step = defaultTo(this.getProp('step'), 1);
     return super.getWrapperClassNames({
       [`${prefixCls}-step-suffix`]: step && isValidElement<{ onClick; }>(suffix),
+      ...args,
     });
   }
 

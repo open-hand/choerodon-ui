@@ -34,7 +34,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`：新增 processValue 属性。
 - 🌟 `<pro>Table`：新增 showCachedSelection, onShowCachedSelectionChange 属性。
 - 🌟 `<pro>Table`：新增 showRemovedRow 属性，控制临时移除行显隐。
-- 🌟 `<pro>TriggerField`：新增 viewMode 属性。
+- 🌟 `<pro>TriggerField`：新增 viewMode, getPopupAlignTarget 属性。
 - 🌟 `<pro>Select`：新增 searchFieldInPopup, searchFieldProps 属性。
 - 🌟 `<pro>Lov`：新增 onBeforeSelect 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 rowSelection 属性, 内置勾选列。

@@ -256,7 +256,13 @@
       }
 
       &.desc::before {
-        transform: scaleY(-1);
+        background-image: linear-gradient(90deg, @text-color 0, @text-color 100%),
+        linear-gradient(90deg, @text-color 0, @text-color 100%),
+        linear-gradient(90deg, @text-color 0, @text-color 100%),
+        linear-gradient(to top right, transparent 50%, @primary-color 50%),
+        linear-gradient(to top left, transparent 50%, @primary-color 50%),
+        linear-gradient(0deg, @primary-color 0, @primary-color 100%);
+        background-position: .01rem .05rem, .01rem .08rem, .01rem .11rem, .08rem .09rem, .11rem .09rem, .1rem .05rem;
       }
     }
   }

@@ -24,7 +24,7 @@ title: DataSet
 | validateBeforeQuery | 查询时是否校验查询字段或查询数据集 | boolean | true |
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | boolean \| string | 'multiple' |
 | selectionStrategy | 树形选择记录策略， `SHOW_ALL` `SHOW_CHILD` `SHOW_PARENT` | string | 'SHOW_ALL' |
-| modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | false |
+| modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | true |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
 | paging | 是否分页 | boolean | true |
