@@ -69,7 +69,8 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the logic problem of `showCheckedStrategy` property `SHOW_ALL` value.
 - 🐞 `<pro>Select`: Fix the problem of rendering errors when using `primitiveValue` and `combo` properties at the same time.
 - 🐞 `<pro>Table`: Fix the problem that virtual cells and maximum height may cause an infinite loop.
-- 🐞 `<pro>Table`: Fixed editor will focused on disabled cell."
+- 🐞 `<pro>Table`: Fixed editor will focused on disabled cell.
+- 🐞 `<pro>NumberField`: Fix `suffix`, `prefix` attribute support, style.
 
 ## 1.4.3
 

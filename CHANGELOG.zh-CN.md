@@ -69,6 +69,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复同时使用 primitiveValue 和 combo 属性时渲染报错的问题。
 - 🐞 `<pro>Table`: 修复虚拟单元格和最大高度可能导致死循环的问题。
 - 🐞 `<pro>Table`: 修复编辑器会浮动到禁用单元格上的问题。
+- 🐞 `<pro>NumberField`：修复 suffix，prefix 属性支持，样式。
 
 ## 1.4.3
 

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { isValidElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -298,6 +298,15 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     }
   }
 
+  getWrapperClassNames() {
+    const { prefixCls } = this;
+    const suffix = this.getSuffix();
+    const step = defaultTo(this.getProp('step'), 1);
+    return super.getWrapperClassNames({
+      [`${prefixCls}-step-suffix`]: step && isValidElement<{ onClick; }>(suffix),
+    });
+  }
+
   @action
   handleEnterDown(e) {
     if (this.multiple && this.range && this.text) {
@@ -468,14 +477,6 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   processText(value: ReactNode): ReactNode {
     const formatOptions = this.getFormatOptions(Number(value));
     return this.getFormatter()(value, formatOptions.lang, formatOptions.options);
-  }
-
-  getSuffix(): ReactNode {
-    return undefined;
-  }
-
-  getPrefix(): ReactNode {
-    return undefined;
   }
 
   renderLengthInfo(): ReactNode {
