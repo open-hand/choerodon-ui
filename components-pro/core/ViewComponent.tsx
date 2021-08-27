@@ -1,4 +1,14 @@
-import { AriaAttributes, Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
+import {
+  AriaAttributes,
+  ClipboardEventHandler,
+  Component, CompositionEventHandler,
+  CSSProperties,
+  FocusEventHandler,
+  Key,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
+} from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -189,10 +199,32 @@ export interface FocusEventComponentProps {
   onBlurCapture?: FocusEventHandler<any>;
 }
 
+/** 粘贴板事件组件 */
+export interface ClipboardEventComponentProps {
+  onCopy?: ClipboardEventHandler<any>;
+  onCopyCapture?: ClipboardEventHandler<any>;
+  onCut?: ClipboardEventHandler<any>;
+  onCutCapture?: ClipboardEventHandler<any>;
+  onPaste?: ClipboardEventHandler<any>;
+  onPasteCapture?: ClipboardEventHandler<any>;
+}
+
+/** Composition事件组件 */
+export interface CompositionEventComponentProps {
+  onCompositionEnd?: CompositionEventHandler<any>;
+  onCompositionEndCapture?: CompositionEventHandler<any>;
+  onCompositionStart?: CompositionEventHandler<any>;
+  onCompositionStartCapture?: CompositionEventHandler<any>;
+  onCompositionUpdate?: CompositionEventHandler<any>;
+  onCompositionUpdateCapture?: CompositionEventHandler<any>;
+}
+
 export interface ViewComponentProps
   extends MouseEventComponentProps,
     KeyboardEventComponentProps,
     FocusEventComponentProps,
+    ClipboardEventComponentProps,
+    CompositionEventComponentProps,
     AriaAttributes,
     ElementProps {
   /**

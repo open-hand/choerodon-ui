@@ -470,6 +470,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         className: classNames(`${prefixCls}-header`, {
           [`${prefixCls}-movable`]: movable && !fullScreen && !drawer,
           [`${prefixCls}-title-none`]: !title,
+          [`${prefixCls}-drawer-header`]: drawer,
         }),
       };
       if (movable && !fullScreen && !drawer) {
@@ -535,7 +536,8 @@ export default class Modal extends ViewComponent<ModalProps> {
     const { drawer } = this.props;
 
     const className = classNames(`${prefixCls}-footer`, {
-      [`${prefixCls}-footer-drawer`]: !!drawer,
+      [`${prefixCls}-footer-drawer`]: drawer, // deprecate
+      [`${prefixCls}-drawer-footer`]: drawer,
     });
     return <div className={className}>{footer}</div>;
   }

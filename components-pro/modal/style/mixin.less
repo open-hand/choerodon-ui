@@ -62,10 +62,20 @@
       border-radius: @border-radius-base;
     }
 
+    &-header {
+      padding: @modal-drawer-header-padding;
+    }
+
     &-body {
       flex-grow: 1;
       max-height: none;
       padding: @modal-drawer-body-padding;
+    }
+
+    &-footer {
+      flex-shrink: 0;
+      padding: @modal-drawer-footer-padding;
+      text-align: left;
     }
   }
 }

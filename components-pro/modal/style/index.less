@@ -37,7 +37,7 @@
 
   &-header {
     position: relative;
-    padding: 0.15rem 0.24rem;
+    padding: @modal-header-padding;
     color: @text-color;
     background: @component-background;
     border-radius: @border-radius-base @border-radius-base 0 0;
@@ -52,18 +52,13 @@
   }
 
   &-footer {
-    padding: 0.12rem 0.24rem;
+    padding: @modal-footer-padding;
     text-align: right;
     border-radius: 0 0 @border-radius-base @border-radius-base;
 
     button + button {
       margin-bottom: 0;
       margin-left: 0.08rem;
-    }
-
-    &-drawer {
-      flex-shrink: 0;
-      text-align: left;
     }
 
     &-without-border {
