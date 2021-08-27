@@ -70,7 +70,7 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
   viewMode?: 'popup' | 'modal';
 }
 
-export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<T & TriggerFieldProps> {
+export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<T> {
   static displayName = 'TriggerField';
 
   static propTypes = {
