@@ -271,7 +271,7 @@ export interface DataSetProps {
   /**
    * 查询和提交数据的反馈配置
    */
-  feedback?: TransportProps;
+  feedback?: FeedBack;
   /**
    * 级联行数据集, 当为数组时，数组成员必须是有name属性的DataSet
    * @example
