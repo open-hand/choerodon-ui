@@ -592,8 +592,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return tableHeight;
     }
 
-    if(autoHeight) {
-      if(showScrollArrow) {
+    if (autoHeight) {
+      if (showScrollArrow) {
         return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight + SCROLLBAR_LARGE_WIDTH);
       } else {
         return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight + SCROLLBAR_WIDTH);
@@ -716,7 +716,26 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     });
 
     // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
-    return flatten(flattenColumns).filter(col => col && col.props && !col.props.hidden);
+    const flat_columns = flatten(flattenColumns).filter(col => col && col.props && !col.props.hidden);
+    /**
+     * 将左固定列、右固定列和其他列提取出来
+     * 排列成正常显示列的顺序
+     * 提供给后面bodyCell使用
+     */
+     const leftFixedCol:any=[]
+     const rightFixedCol:any=[]
+     const otherCol:any =[]
+     for (let i = 0; i < flat_columns.length; i++) {
+       const fc = flat_columns[i];
+       if((fc.props.fixed && fc.props.fixed !== 'right') || fc.props.fixed === 'left'){
+        leftFixedCol.push(fc)
+       }else if(fc.props.fixed === 'right'){
+        rightFixedCol.push(fc)
+       }else{
+        otherCol.push(fc)
+       }
+     }
+    return [...leftFixedCol,...otherCol,...rightFixedCol]
   }
 
   getRecordKey = (record: object, index: number) => {
@@ -1328,6 +1347,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.setState({
         isScrolling: true,
         scrollY: this.scrollY,
+        scrollX: this.scrollX,
       });
 
       if (this.disableEventsTimeoutId) {
@@ -1649,7 +1669,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     if (!autoHeight) {
       // 这里 -SCROLLBAR_WIDTH 和 -SCROLLBAR_LARGE_WIDTH 是为了让滚动条不挡住内容部分
-      if(!showScrollArrow) {
+      if (!showScrollArrow) {
         this.minScrollY = -(contentHeight - height) - SCROLLBAR_WIDTH;
       } else {
         this.minScrollY = -(contentHeight - height) - SCROLLBAR_LARGE_WIDTH;
@@ -1736,7 +1756,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
   };
 
-  bindRowClick = (rowIndex: number| string, index: number| string, rowData: object) => {
+  bindRowClick = (rowIndex: number | string, index: number | string, rowData: object) => {
     return (event: React.MouseEvent) => {
       this.onRowClick(rowData, event, rowIndex, index);
     };
@@ -1752,7 +1772,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         const ref = this.tableRows[index][0];
         if (this._lastRowIndex !== index) {
           if (this._lastRowIndex || this._lastRowIndex === 0) {
-            this.tableRows[this._lastRowIndex][0].className = ref.className.replace(` ${this.addPrefix('row-highLight')}`,'')
+            this.tableRows[this._lastRowIndex][0].className = ref.className.replace(` ${this.addPrefix('row-highLight')}`, '')
           }
           ref.className = `${ref.className} ${this.addPrefix('row-highLight')}`;
         }
@@ -2002,9 +2022,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     } = this.props;
 
     const headerHeight = this.getTableHeaderHeight();
-    const { tableRowsMaxHeight, isScrolling, data } = this.state;
+    const { tableRowsMaxHeight, isScrolling, data, width } = this.state;
     const height = this.getTableHeight();
     const bodyHeight = height - headerHeight;
+    const minLeft = Math.abs(this.scrollX);
     const bodyStyles = {
       top: headerHeight,
       height: bodyHeight,
@@ -2018,11 +2039,69 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     if (data) {
       let top = 0; // Row position
+      let renderCols: any[] = bodyCells; // Render Col 
       const minTop = Math.abs(this.scrollY);
       // @ts-ignore
       const maxTop = minTop + height + rowExpandedHeight!;
       const isCustomRowHeight = isFunction(rowHeight);
       const isUncertainHeight = !!(renderRowExpanded || isCustomRowHeight || isTree);
+
+      /**
+       * 如果开启了虚拟滚动 则计算列显示
+       */
+      if (virtualized) {
+        // 计算渲染列数量
+        let colIndex = 0 // 列索引
+        let displayColWidth = 0 // 显示列的宽度
+        // let fixedCol: any = [] // 固定列
+        let renderLeftFixedCol: any = [] // 需要渲染的固定左边列
+        let renderRightFixedCol: any = [] // 需要渲染的固定右边列
+        let showNum = 0 // 显示列数
+
+        // 找到左右固定列
+        for (let i = 0; i < bodyCells.length; i++) {
+          const bc = bodyCells[i];
+          if((bc.props.fixed && bc.props.fixed !== 'right') || bc.props.fixed === 'left'){
+            renderLeftFixedCol.push(bc)
+          }else if(bc.props.fixed === 'right'){
+            renderRightFixedCol.push(bc)
+          }
+        }
+        
+        // 计算需要减去左右固定列的宽度和
+        const divideLeftFixedCol = renderLeftFixedCol.reduce((val, item) => val + item.props.width, 0)
+        const divideRightFixedCol = renderRightFixedCol.reduce((val, item) => val + item.props.width, 0)
+        
+        // 遍历显示列的总宽度与x滚动条关系
+        for (let i = 0; i < bodyCells.length; i++) {
+          const elem: any = bodyCells[i];
+          displayColWidth += elem.props.width
+          if ((displayColWidth - divideLeftFixedCol) > minLeft) {
+            colIndex = i 
+            break;
+          }
+        }
+        // 计算显示列开始下标
+        const colStartIndex = colIndex > renderLeftFixedCol.length ? colIndex - 1  : colIndex; // 
+        // 判断当前容器宽度能容纳列数
+        let currentDisplayColWidth = 0
+        
+        // 总宽度减去左右固定列的宽度
+        const divideWidth = width - divideLeftFixedCol - divideRightFixedCol
+        // 遍历列宽度 与 容器宽度 得出该容器下显示的列数
+        for (let i = colIndex + 1 + renderRightFixedCol.length; i < bodyCells.length; i++) {
+          const elem: any = bodyCells[i];
+          currentDisplayColWidth += elem.props.width
+          if (currentDisplayColWidth > divideWidth) { // (width - renderLeftFixedCol.reduce((val, item) => val + item.props.width, 0))
+            showNum = i - colIndex; // 
+            break;
+          }
+        }
+        // 计算列显示的结束下标
+        const colEndIndex = (showNum ? (colIndex + showNum) + 1 : bodyCells.length) - renderRightFixedCol.length //
+        // 最后slice 需要渲染的部分列
+        renderCols = [...renderLeftFixedCol, ...bodyCells.slice(colStartIndex, colEndIndex), ...renderRightFixedCol]
+      }
 
       /**
        如果开启了 virtualized  同时 Table 中的的行高是可变的，
@@ -2088,7 +2167,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
           this._visibleRows.push(
             // @ts-ignore
-            this.renderRowData(bodyCells, rowData, rowProps, shouldRenderExpandedRow),
+            this.renderRowData(renderCols, rowData, rowProps, shouldRenderExpandedRow),
           );
           keyIndex++;
         }
@@ -2117,7 +2196,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             height: nextRowHeight,
           };
           // @ts-ignore
-          this._visibleRows.push(this.renderRowData(bodyCells, rowData, rowProps, false));
+          this._visibleRows.push(this.renderRowData(renderCols, rowData, rowProps, false));
           keyIndex++;
         }
       }

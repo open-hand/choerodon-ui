@@ -38,7 +38,8 @@ timeline: true
 - 🌟 `<pro>Select`: Added `searchFieldInPopup`, `searchFieldProps` properties.
 - 🌟 `<pro>Lov`: Added `onBeforeSelect` property.
 - 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
-- 🌟 `<pro>Table`: 新增 onResize 事件.
+- 🌟 `<pro>PerformanceTable`: Added `horizontal virtual scroll`.
+- 🌟 `<pro>Table`: Added `onResize` callback.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
