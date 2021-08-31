@@ -484,6 +484,7 @@ class App extends React.Component {
           pageSizeEditable: true,
           pageSizeOptions: ['10', '20', '100', '200', '500', '1000'],
         }}
+        onResize={(column,width)=>console.log(column,width)}
       >
         <Column
           name="userid"

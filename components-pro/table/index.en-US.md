@@ -92,6 +92,7 @@ subtitle: 表格
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | showHeader |	是否显示表头 |	boolean |	true |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean |	 |
+| onResize | 列宽改变的回调事件  | function | (column, width) => void |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
