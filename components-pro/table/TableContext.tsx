@@ -4,6 +4,7 @@ import TableStore from './TableStore';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { DragRender, expandedRowRendererProps, onRowProps } from './Table';
+import  { ColumnProps } from './Column';
 import { SelectionMode } from './enum';
 import ModalProvider from '../modal-provider';
 
@@ -16,6 +17,7 @@ export interface TableContextProviderProps {
   indentSize: number;
   selectionMode?: SelectionMode;
   onRow?: (props: onRowProps) => object;
+  onResize?: (column: ColumnProps, width: number) => void;
   rowRenderer?: (record: Record, index: number) => object;
   expandedRowRenderer?: (props: expandedRowRendererProps) => ReactNode;
   expandRowByClick?: boolean;

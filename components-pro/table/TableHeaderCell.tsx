@@ -50,7 +50,7 @@ export interface TableHeaderCellProps extends ElementProps {
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(function TableHeaderCell(props) {
   const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop } = props;
   const { column, key, prev } = columnGroup;
-  const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
+  const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onResize = noop } = useContext(TableContext);
   const { columnResizable } = tableStore;
   const {
     headerClassName,
@@ -115,10 +115,12 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
 
 
   const resizeEnd = useCallback(action<() => void>(() => {
+    
     tableStore.columnResizing = false;
     setSplitLineHidden(true);
     resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
     const { resizePosition, resizeColumnGroup } = globalRef.current;
+    
     if (resizePosition !== undefined && resizeColumnGroup) {
       const { column: resizeColumn } = resizeColumnGroup;
       const newWidth = Math.round(Math.max(resizePosition - globalRef.current.resizeBoundary, minColumnWidth(resizeColumn)));
@@ -150,6 +152,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
           });
         }
       }
+      /**
+       * onResize事件回调
+       * 回调参数：
+       * @param column
+       * @param width
+       */
+       onResize(resizeColumn,newWidth)
     }
   }), [globalRef, tableStore, setSplitLineHidden, resizeEvent]);
 
