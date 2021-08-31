@@ -716,7 +716,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     });
 
     // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
-    const flat_columns = flatten(flattenColumns).filter(col => col && col.props && !col.props.hidden);
+    const calcFlatColumns = flatten(flattenColumns).filter(col => col && col.props && !col.props.hidden);
     /**
      * 将左固定列、右固定列和其他列提取出来
      * 排列成正常显示列的顺序
@@ -725,8 +725,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
      const leftFixedCol:any=[]
      const rightFixedCol:any=[]
      const otherCol:any =[]
-     for (let i = 0; i < flat_columns.length; i++) {
-       const fc = flat_columns[i];
+     for (let i = 0; i < calcFlatColumns.length; i++) {
+       const fc = calcFlatColumns[i];
        if((fc.props.fixed && fc.props.fixed !== 'right') || fc.props.fixed === 'left'){
         leftFixedCol.push(fc)
        }else if(fc.props.fixed === 'right'){
@@ -935,7 +935,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       type === 'radio'
         ? this.handleRadioSelect(rowData, rowIndex, e)
         : this.handleSelect(rowData, rowIndex, e);
-
+        
     return (
       <span onClick={stopPropagation}>
           <SelectionBox
@@ -1287,7 +1287,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   setSelectedRowKeys(selectedRowKeys: string[], selectionInfo: SelectionInfo) {
     const { selectWay, record, checked, changeRowKeys, nativeEvent } = selectionInfo;
     const rowSelection = getRowSelection(this.props);
-    if (rowSelection && !('selectedRowKeys' in rowSelection)) {
+    if (rowSelection) {
       runInAction(() => {
         this.tableStore.selectedRowKeys = selectedRowKeys;
       });
@@ -2053,7 +2053,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         // 计算渲染列数量
         let colIndex = 0 // 列索引
         let displayColWidth = 0 // 显示列的宽度
-        // let fixedCol: any = [] // 固定列
         let renderLeftFixedCol: any = [] // 需要渲染的固定左边列
         let renderRightFixedCol: any = [] // 需要渲染的固定右边列
         let showNum = 0 // 显示列数
