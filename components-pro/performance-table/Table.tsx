@@ -84,7 +84,7 @@ import Toolbar from './tool-bar';
 import { TableHeightType } from '../table/enum';
 import { isDropresult } from '../table/utils';
 import { arrayMove } from '../data-set/utils';
-import { $l } from 'choerodon-ui/pro/lib/locale-context';
+import { $l } from '../locale-context';
 
 interface TableRowProps extends RowProps {
   key?: string | number;
@@ -403,8 +403,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           const columnsWithRowSelection = this.renderRowSelection(rowSelectionFixed);
 
           if (columnsWithRowSelection) {
-            if ('fixed' in rowSelection) {
-              (children as any[]).splice((rowSelection.fixed === true || 'left') ? (rowSelection.columnIndex || 0) : (rowSelection.columnIndex || (children as any[]).length), 0, columnsWithRowSelection);
+            if (rowSelectionFixed) {
+              (children as any[]).splice((rowSelectionFixed === true || 'left') ? (rowSelection.columnIndex || 0) : (rowSelection.columnIndex || (children as any[]).length), 0, columnsWithRowSelection);
               this.setState({ shouldFixedColumn: true });
             } else {
               (children as any[]).splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelection);
@@ -492,6 +492,23 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     if (columns !== this.props.columns || children !== this.props.children || this.tableStore.customizable) {
       let shouldFixedColumn = false;
+
+      if ((!columns || columns.length === 0) && this.props.rowSelection && this.props.columns && this.props.columns.length) {
+        let rowSelectionFixed: any = 'left';
+        if ('fixed' in this.props.rowSelection) {
+          rowSelectionFixed = this.props.rowSelection.fixed;
+        }
+          const columnsWithRowSelectionProps: ColumnProps = {
+            title: $l('Table', 'select_current_page'),
+            key: 'rowSelection',
+            width: 50,
+            align: 'center',
+            fixed: rowSelectionFixed,
+          };
+        runInAction(() => {
+          this.tableStore.originalColumns = this.props.columns!.splice(this.props.rowSelection?.columnIndex || 0, 0, columnsWithRowSelectionProps);
+        });
+      }
 
       if (this.props.children) {
         shouldFixedColumn = Array.from(this.props.children as Iterable<any>).some(
@@ -751,7 +768,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     });
 
     // 把 Columns 中的数组，展平为一维数组，计算 lastColumn 与 firstColumn。
-    const flat_columns = flatten(flattenColumns).filter(col => col && col.props && !col.props.hidden);
+    const flatColumns = flatten(flattenColumns).filter(col => col && col.props && !col.props.hidden);
     /**
      * 将左固定列、右固定列和其他列提取出来
      * 排列成正常显示列的顺序
@@ -760,8 +777,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const leftFixedCol: any = [];
     const rightFixedCol: any = [];
     const otherCol: any = [];
-    for (let i = 0; i < flat_columns.length; i++) {
-      const fc = flat_columns[i];
+    for (let i = 0; i < flatColumns.length; i++) {
+      const fc = flatColumns[i];
       if ((fc.props.fixed && fc.props.fixed !== 'right') || fc.props.fixed === 'left') {
         leftFixedCol.push(fc);
       } else if (fc.props.fixed === 'right') {
@@ -1869,7 +1886,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       key: nextRowKey,
       'aria-rowindex': (props.key as number) + 2,
       rowRef: this.bindTableRowsRef(props.key!, rowData),
-      onClick: this.bindRowClick(props.rowIndex, props.key!, rowData),
+      onClick: this.bindRowClick(props.rowIndex, nextRowKey, rowData),
       onContextMenu: this.bindRowContextMenu(rowData),
     };
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { StandardProps, RowDataType } from './common';
-import PropTypes from 'prop-types';
 
 export interface CellProps extends StandardProps {
   align?: 'left' | 'center' | 'right';
