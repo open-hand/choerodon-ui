@@ -13,7 +13,10 @@ const propTypes = {
   left: PropTypes.number,
   style: PropTypes.object,
   className: PropTypes.string,
-  classPrefix: PropTypes.string
+  classPrefix: PropTypes.string,
+  rowDraggable: PropTypes.bool,
+  snapshot: PropTypes.object,
+  provided: PropTypes.object,
 };
 
 class CellGroup extends React.PureComponent<CellGroupProps> {
@@ -35,6 +38,9 @@ class CellGroup extends React.PureComponent<CellGroupProps> {
       classPrefix,
       className,
       children,
+      rowDraggable,
+      provided,
+      snapshot,
       ...rest
     } = this.props;
     const classes = classNames(classPrefix, className, {
@@ -48,13 +54,25 @@ class CellGroup extends React.PureComponent<CellGroupProps> {
     };
     const unhandledProps = getUnhandledProps(propTypes, rest);
 
+    let childArr = [];
+    if (rowDraggable) {
+      React.Children.forEach(children, child => {
+        childArr.push(React.cloneElement(child, {
+          provided,
+          isDragging: snapshot ? snapshot.isDragging : false,
+        }));
+      });
+    }
+
+    const cloneChildren = rowDraggable ? childArr : children;
+
     return (
       <TableContext.Consumer>
         {({ translateDOMPositionXY }) => {
           translateDOMPositionXY?.(styles, left, 0);
           return (
             <div {...unhandledProps} className={classes} style={styles}>
-              {children}
+              {cloneChildren}
             </div>
           );
         }}

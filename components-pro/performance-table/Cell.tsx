@@ -38,6 +38,7 @@ export const propTypes = {
   expanded: PropTypes.bool,
   groupHeader: PropTypes.node,
   groupCount: PropTypes.number,
+  isDragging: PropTypes.bool,
 };
 
 class Cell extends React.PureComponent<CellProps> {

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StandardProps, RowDataType } from './common';
+import PropTypes from 'prop-types';
 
 export interface CellProps extends StandardProps {
   align?: 'left' | 'center' | 'right';
@@ -43,6 +44,7 @@ export interface CellProps extends StandardProps {
   hidden?: boolean;
   treeCol?: boolean;
   expanded?: boolean;
+  isDragging?: boolean;
 }
 
 declare const Cell: React.ComponentType<CellProps>;

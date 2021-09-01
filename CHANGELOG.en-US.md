@@ -24,7 +24,6 @@ timeline: true
 - 🌟 `<pro>DataSet.AttachmentFile`: Added `AttachmentFile` class.
 - 🌟 `<pro>RichText`: Added continuous preview of pictures.
 - 🌟 `<pro>Cascader`: Added `async` and `loadData` attributes to simplify asynchronous loading schemes.
-- 🌟 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 - 🌟 `<pro>PerformanceTable`: Added the `onCell` property and the `rowSpan` property of the cell to support row merging.
 - 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
 - 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
@@ -38,7 +37,8 @@ timeline: true
 - 🌟 `<pro>Select`: Added `searchFieldInPopup`, `searchFieldProps` properties.
 - 🌟 `<pro>Lov`: Added `onBeforeSelect` property.
 - 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
-- 🌟 `<pro>PerformanceTable`: Added `horizontal virtual scroll`.
+- 🌟 `<pro>PerformanceTable`: Added `rowDraggable` property to support row drag.
+- 🌟 `<pro>PerformanceTable`: Added horizontal virtual scroll.
 - 🌟 `<pro>Table`: Added `onResize` callback.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
@@ -63,6 +63,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem of custom `renderer` in `range` mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that the first column of the sub-column in the combined column cannot be dragged when `resizable` is set.
 - 🐞 `<pro>PerformanceTable`: Fix an issue in rendering when there is only one column in combined column.
+- 🐞 `<pro>PerformanceTable`: Fix the problem that the height of the personalized configuration table is invalid.
 - 🐞 `<pro>Tree`：Fix the problem that the check box status is wrong in the stowed state.
 - 🐞 `<pro>TreeSelect`：Fix the problem that the check box status is wrong in the stowed state.
 - 🐞 `<pro>Select`: Fix that hover trigger has no effect in multi-select mode.
@@ -73,6 +74,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that virtual cells and maximum height may cause an infinite loop.
 - 🐞 `<pro>Table`: Fixed editor will focused on disabled cell.
 - 🐞 `<pro>NumberField`: Fix `suffix`, `prefix` attribute support, style.
+- 🐞 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 
 ## 1.4.3
 

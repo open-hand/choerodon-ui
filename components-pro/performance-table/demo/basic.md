@@ -28,6 +28,7 @@ const Table = () => {
       dataIndex: 'id',
       key: 'id',
       width: 70,
+      resizable: true,
       fixed: true,
     },
     {
@@ -40,7 +41,7 @@ const Table = () => {
       title: '名',
       dataIndex: 'firstName',
       key: 'firstName',
-      width: 150,
+      width: 350,
     },
     {
       title: '城市',
@@ -58,7 +59,7 @@ const Table = () => {
       title: '公司',
       dataIndex: 'companyName',
       key: 'companyName',
-      width: 300,
+      width: 500,
     },
   ];
 
@@ -70,12 +71,15 @@ const Table = () => {
       disabled: rowData.firstName === 'Libbie', // Column configuration not to be checked
       name: rowData.firstName,
     }),
-    columnIndex: 2,
+    columnIndex: 99,
+    fixed: false,
   };
 
   return (
     <div>
       <PerformanceTable
+        virtualized
+        rowDraggable
         rowKey="id"
         rowSelection={rowSelection}
         customizable
@@ -84,7 +88,8 @@ const Table = () => {
         columnTitleEditable
         columns={columns}
         height={400}
-        data={fakeLargeData.slice(0, 20)}
+        data={fakeLargeData.slice(0, 50)}
+        onDragEnd={(props) => console.log('onDragEnd', props)}
         ref={tableRef}
         onRowClick={(data) => {
           console.log(data);

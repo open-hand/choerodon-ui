@@ -88,7 +88,7 @@ export interface TableRowSelection {
   onSelectInvert?: (selectedRowKeys: string[] | number[]) => void;
   selections?: SelectionItem[] | boolean;
   hideDefaultSelections?: boolean;
-  fixed?: boolean;
+  fixed?: boolean | string;
   columnWidth?: number;
   selectWay?: TableSelectWay;
   columnTitle?: string | React.ReactNode;
@@ -203,6 +203,7 @@ export interface TableProps extends StandardProps {
   columnDraggable?: boolean;
   columnTitleEditable?: boolean;
   columnsDragRender?: object;
+  rowDraggable?: boolean;
 }
 
 // Fix the type definition error of typescript
