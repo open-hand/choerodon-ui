@@ -43,6 +43,7 @@ export interface CellProps extends StandardProps {
   hidden?: boolean;
   treeCol?: boolean;
   expanded?: boolean;
+  isDragging?: boolean;
 }
 
 declare const Cell: React.ComponentType<CellProps>;

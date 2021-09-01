@@ -146,6 +146,12 @@ export interface onRowProps {
   expandedRow: boolean;
 }
 
+// onResize
+export interface onResizeProps {
+  column: ColumnProps;
+  width: number;
+}
+
 export type TableQueryBarHookCustomProps = object;
 export type TableQueryBarHook = (props: TableQueryBarHookCustomProps & TableQueryBarHookProps) => ReactNode;
 export type Commands =
@@ -492,6 +498,10 @@ export interface TableProps extends DataSetComponentProps {
    * 点击展开图标时触发
    */
   onExpand?: (expanded: boolean, record: Record) => void;
+  /**
+   * 列宽改变时触发
+   */
+   onResize?: (column: ColumnProps, width: number) => void;
   /**
    * 加载条属性
    */
@@ -1264,6 +1274,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'onShowCachedSelectionChange',
       'showAllPageSelectionButton',
       'onRow',
+      'onResize',
       'rowRenderer',
       'buttons',
       'rowHeight',
@@ -1449,6 +1460,7 @@ export default class Table extends DataSetComponent<TableProps> {
         selectionMode,
         rowRenderer,
         onRow,
+        onResize,
         expandedRowRenderer,
         expandRowByClick,
         rowDragRender,
@@ -1478,6 +1490,7 @@ export default class Table extends DataSetComponent<TableProps> {
             indentSize={indentSize!}
             selectionMode={selectionMode}
             onRow={onRow}
+            onResize={onResize}
             rowRenderer={rowRenderer}
             expandedRowRenderer={expandedRowRenderer}
             expandRowByClick={expandRowByClick}

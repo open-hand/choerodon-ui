@@ -12,10 +12,13 @@ const propTypes = {
   headerHeight: PropTypes.number,
   top: PropTypes.number,
   isHeaderRow: PropTypes.bool,
+  rowDraggable: PropTypes.bool,
   rowRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   className: PropTypes.string,
   classPrefix: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  provided: PropTypes.object,
+  snapshot: PropTypes.object,
 };
 
 class Row extends React.PureComponent<RowProps> {
@@ -29,6 +32,8 @@ class Row extends React.PureComponent<RowProps> {
 
   render() {
     const {
+      // todo
+      // dragColumnAlign,
       className,
       width,
       height,
@@ -39,6 +44,9 @@ class Row extends React.PureComponent<RowProps> {
       rowRef,
       classPrefix,
       children,
+      rowDraggable,
+      provided,
+      snapshot,
       ...rest
     } = this.props;
 
@@ -47,7 +55,7 @@ class Row extends React.PureComponent<RowProps> {
       [addPrefix('header')]: isHeaderRow,
     });
 
-    const styles = {
+    let styles = {
       minWidth: width,
       height: isHeaderRow ? headerHeight : height,
       ...style,
@@ -59,7 +67,38 @@ class Row extends React.PureComponent<RowProps> {
       <TableContext.Consumer>
         {({ translateDOMPositionXY }) => {
           translateDOMPositionXY?.(styles, 0, top);
-          return <div role="row" {...unhandledProps} ref={rowRef} className={classes} style={styles}>
+          const providedProps = {};
+          let transform = styles.transform;
+          if (rowDraggable && provided) {
+            let regex = new RegExp('translate\\((.*?)px, (.*?)px\\)');
+            let regex3d = new RegExp('translate3d\\((.*?)px,(.*?)px,(.*?)\\)');
+
+            // the transform property of parent style gotten through reference and passed in as a prop
+            let parentValues = regex3d.exec(styles.transform || '');
+            let childValues = regex.exec(provided.draggableProps.style.transform || '');
+
+            // if both the parent (the nested list) and the child (item beeing dragged) has transform values, recalculate the child items transform to account for position fixed not working
+            if (childValues != null && parentValues != null) {
+              let x = (parseFloat(childValues[1], 10));
+              let y = (parseFloat(childValues[2], 10));
+              let p_x = (parseFloat(parentValues[1], 10));
+              let p_y = (parseFloat(parentValues[2], 10));
+              let p_z = (parseFloat(parentValues[3], 10));
+              transform = `translate3d(${x + p_x}px, ${y + p_y}px, ${p_z}px)`;
+            }
+            Object.assign(providedProps, provided.draggableProps, provided.dragHandleProps);
+            styles = {
+              ...styles,
+              top: 'auto !important',
+              left: 'auto !important',
+              cursor: 'move',
+              transform,
+              zIndex: snapshot.isDragging ? 999 : 1,
+            };
+            // if (!dragColumnAlign) {
+            // }
+          }
+          return <div {...providedProps} role="row" {...unhandledProps} ref={rowRef} className={classes} style={styles}>
             {children}
           </div>;
         }}

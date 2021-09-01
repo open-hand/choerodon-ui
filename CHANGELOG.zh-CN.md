@@ -24,7 +24,6 @@ timeline: true
 - 🌟 `<pro>DataSet.AttachmentFile`: 新增 AttachmentFile 类。
 - 🌟 `<pro>RichText`: 新增图片连续预览功能。
 - 🌟 `<pro>Cascader`: 新增 async 和 loadData 属性，简化异步加载方案。
-- 🌟 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
 - 🌟 `<pro>PerformanceTable`: 新增 onCell 属性，单元格 rowSpan 属性，支持行合并。
 - 🌟 `<pro>Form`: 新增 showValidation 属性控制校验信息提示方式。
 - 🌟 `Tree`：onCheck 回调新增 oldCheckedKeys 参数。
@@ -38,6 +37,9 @@ timeline: true
 - 🌟 `<pro>Select`：新增 searchFieldInPopup, searchFieldProps 属性。
 - 🌟 `<pro>Lov`：新增 onBeforeSelect 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 rowSelection 属性, 内置勾选列。
+- 🌟 `<pro>PerformanceTable`: 新增 rowDraggable 属性，支持行拖拽。
+- 🌟 `<pro>PerformanceTable`: 开启虚拟滚动，新增横行虚拟滚动。
+- 🌟 `<pro>Table`: 新增 onResize 事件.
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
@@ -60,6 +62,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`：修复 range 模式下自定义 renderer 的问题。
 - 🐞 `<pro>PerformanceTable`：修复组合列中子列第一列设置 resizable 无法拖拽的问题。
 - 🐞 `<pro>PerformanceTable`：修复组合列中只有一个子列时渲染报错问题。
+- 🐞 `<pro>PerformanceTable`: 修复个性化配置表格高度无效问题。
 - 🐞 `<pro>Tree`：修复收起状态下勾选框状态错误的问题。
 - 🐞 `<pro>TreeSelect`：修复收起状态下勾选框状态错误的问题。
 - 🐞 `<pro>Select`：修复多选模式下 trigger 为 hover 无效。
@@ -70,6 +73,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复虚拟单元格和最大高度可能导致死循环的问题。
 - 🐞 `<pro>Table`: 修复编辑器会浮动到禁用单元格上的问题。
 - 🐞 `<pro>NumberField`：修复 suffix，prefix 属性支持，样式。
+- 🐞 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
 
 ## 1.4.3
 

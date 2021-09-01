@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
 import isNil from 'lodash/isNil';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Button, { ButtonProps } from '../button/Button';
 import { $l } from '../locale-context';
@@ -27,6 +27,12 @@ import { ValidatorProps } from '../validator/rules';
 import { ValidationMessages } from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
 import { open } from '../modal-container/ModalContainer';
+import Icon from '../icon';
+import Tooltip from '../tooltip';
+import { ShowHelp } from '../field/enum';
+import { FIELD_SUFFIX } from '../form/utils';
+import { showValidationMessage } from '../field/utils';
+import { ShowValidation } from '../form/enum';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
@@ -61,6 +67,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   max?: number;
   listLimit?: number;
   showHistory?: boolean;
+  showValidation?: ShowValidation;
   attachments?: (AttachmentFile | FileLike)[];
   onAttachmentsChange?: (attachments: AttachmentFile[]) => void;
   beforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[]) => boolean | undefined | PromiseLike<boolean | undefined>;
@@ -107,6 +114,10 @@ export default class Attachment extends FormField<AttachmentProps> {
   static __IS_IN_CELL_EDITOR = true;
 
   @observable sort?: Sort;
+
+  get help() {
+    return this.getProp('help');
+  }
 
   get attachments(): AttachmentFile[] | undefined {
     const { field } = this;
@@ -324,6 +335,11 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @mobxAction
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
+    const oldAttachmentUUID = this.getValue();
+    const attachmentUUID = oldAttachmentUUID || (await this.getAttachmentUUID());
+    if (attachmentUUID !== oldAttachmentUUID) {
+      this.setValue(attachmentUUID);
+    }
     const max = this.getProp('max');
     if (max > 0 && (this.count || 0) + attachments.length > max) {
       Modal.error($l('Attachment', 'file_list_max_length', { count: max }));
@@ -336,12 +352,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       oldAttachments.forEach(attachment => this.doRemove(attachment));
       this.attachments = [...attachments];
     }
-    const oldAttachmentUUID = this.getValue();
-    const attachmentUUID = oldAttachmentUUID || (await this.getAttachmentUUID());
     if (attachmentUUID) {
-      if (attachmentUUID !== oldAttachmentUUID) {
-        this.setValue(attachmentUUID);
-      }
       attachments.forEach((attachment) => this.upload(attachment, attachmentUUID));
     }
   }
@@ -614,13 +625,25 @@ export default class Attachment extends FormField<AttachmentProps> {
     );
   }
 
+  showTooltip(e): boolean {
+    if (this.showValidation === ShowValidation.tooltip) {
+      const message = this.getTooltipValidationMessage();
+      if (message) {
+        showValidationMessage(e, message);
+        return true;
+      }
+    }
+    return false;
+  }
+  
   renderViewButton(): ReactElement<ButtonProps> {
     const { multiple } = this.props;
     const { children, ...rest } = this.getOtherProps();
     return (
       <Button
-        funcType={FuncType.link}
+        funcType={FuncType.flat}
         key="view-btn"
+        icon="attach_file"
         color={ButtonColor.primary}
         {...rest}
       >
@@ -792,12 +815,9 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @autobind
   getTooltipValidationMessage(): ReactNode {
-    const { _inTable } = this.props;
-    if (!_inTable) {
-      const validationMessage = this.renderValidationResult();
-      if (!this.isValidationMessageHidden(validationMessage)) {
-        return validationMessage;
-      }
+    const validationMessage = this.renderValidationResult();
+    if (!this.isValidationMessageHidden(validationMessage)) {
+      return validationMessage;
     }
   }
 
@@ -829,8 +849,8 @@ export default class Attachment extends FormField<AttachmentProps> {
     return (
       <div className={`${prefixCls}-wrapper`}>
         {this.renderHeader(!isCard && uploadBtn)}
-        {this.renderHelpMessage()}
-        {viewMode !== 'popup' && isCard && this.renderValidationResult()}
+        {viewMode !== 'popup' && this.renderHelp(ShowHelp.newLine)}
+        {this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
         {this.renderEmpty()}
         {viewMode !== 'none' && this.renderUploadList(isCard && uploadBtn)}
       </div>
@@ -842,20 +862,50 @@ export default class Attachment extends FormField<AttachmentProps> {
     return pictureWidth || (listType === 'picture-card' ? 100 : 48);
   }
 
+  renderHelp(forceHelpMode?: ShowHelp): ReactNode {
+    const { showHelp } = this.props;
+    const help = this.getProp('help');
+    if(help === undefined || showHelp === ShowHelp.none) return;
+    switch(forceHelpMode){
+      case ShowHelp.tooltip:
+        return (
+          <Tooltip title={help} openClassName={`${getConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
+            <Icon type="help" style={{ fontSize: '14px', color: "#8c8c8c" }} />
+          </Tooltip>
+        );
+      default:
+        return (
+          <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>
+            {help}
+          </div>
+        );
+    }
+  }
+
+  get showValidation(){
+    const { viewMode, showValidation = viewMode === "popup" ? ShowValidation.tooltip : ShowValidation.newLine } = this.props;
+    const { context: { showValidation: ctxShowValidation = showValidation } } = this;
+    return ctxShowValidation;
+  }
+
   render() {
     const { viewMode, listType } = this.props;
-    const { readOnly } = this;
+    const { readOnly, prefixCls } = this;
     if (viewMode === 'popup') {
-      return (
-        <Trigger
-          prefixCls={this.prefixCls}
-          popupContent={this.renderWrapper}
-          action={[Action.hover]}
-          builtinPlacements={BUILT_IN_PLACEMENTS}
-          popupPlacement="bottomLeft"
-        >
-          {readOnly ? this.renderViewButton() : this.renderUploadBtn()}
-        </Trigger>
+      return(
+        <div className={`${prefixCls}-popup-wrapper`}>
+          <Trigger
+            prefixCls={this.prefixCls}
+            popupContent={this.renderWrapper}
+            action={[Action.hover]}
+            builtinPlacements={BUILT_IN_PLACEMENTS}
+            popupPlacement="bottomLeft"
+          >
+            {readOnly ? this.renderViewButton() : this.renderUploadBtn()}
+          </Trigger>
+          {this.renderHelp(ShowHelp.tooltip)}
+          {this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
+        </div>
       );
     }
     return this.renderWrapperList(readOnly ? undefined : this.renderUploadBtn(listType === 'picture-card'));
