@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnAlign, tableShowRemovedRow, tooltip, showValidation, attachment, selectTrigger, lovQueryCachedSelected 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
+- 🌟 `configure`: 新增 tableColumnAlign, tableShowRemovedRow, tooltip, showValidation, attachment, selectTrigger, lovQueryCachedSelected, queryBarProps, lovQueryBar, lovQueryBarProps 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
 - 🌟 `<pro>Rate`: 新增 Rate 组件。
 - 🌟 `<pro>Attachment`: 新增 Attachment 组件。
 - 🌟 `<pro>Picture`: 新增 Picture 组件。
@@ -42,6 +42,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 onResize 事件。
 - 🌟 `Tabs`: 新增 TabGroup 组件。
 - 🌟 `Icon`: 新增大量图标。
+- 🌟 `Table`: 新增 autoQueryAfterReset 属性支持 ProfessionalBar & DynamicFilterBar 重置是否自动查询。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
@@ -78,6 +79,8 @@ timeline: true
 - 🐞 `<pro>NumberField`：修复 suffix，prefix 属性支持，样式。
 - 🐞 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
 - 🐞 `<pro>Table`：修复过滤条过滤条件为数值0时渲染错误问题。
+- 🐞 `<pro>Table`：修复 footer dom 位置。
+- 🐞 `<pro>Table`：修复 queryBarProps onReset & onQuery 事件无效问题。
 
 ## 1.4.3
 

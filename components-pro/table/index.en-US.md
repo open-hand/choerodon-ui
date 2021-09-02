@@ -92,7 +92,7 @@ subtitle: 表格
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | showHeader |	是否显示表头 |	boolean |	true |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean |	 |
-| onResize | 列宽改变的回调事件  | function | (column, width) => void |
+| onResize | 列宽改变的回调事件  | ({ column, width }) => void | |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -142,7 +142,7 @@ subtitle: 表格
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 
-### Table.AdvancedQueryBar & Table.ProfessionalBar
+### Table.AdvancedQueryBar
 
 | 参数             | 说明                                                     | 类型   | 默认值 |
 | ---------------- | -------------------------------------------------------- | ------ | ------ |
@@ -163,7 +163,21 @@ subtitle: 表格
 
 | 参数        | 说明                   | 类型   | 默认值   |
 | ----------- | ---------------------- | ------ | -------- |
-| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 2 |
+| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3 |
+| autoQueryAfterReset | 重置后自动查询 | boolean | true |
+
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+
+### Table.ProfessionalBar
+
+| 参数             | 说明                                                     | 类型   | 默认值 |
+| ---------------- | -------------------------------------------------------- | ------ | ------ |
+| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3      |
+| autoQueryAfterReset | 重置后自动查询 | boolean | true |
+| defaultExpanded | 默认展开 | boolean | false |
+| formProps | 查询条表单属性 | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } |
+| onQuery | 查询回调 | () => void |  |
+| onReset | 重置回调 | () => void |  |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 

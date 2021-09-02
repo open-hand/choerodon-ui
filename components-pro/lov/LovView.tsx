@@ -152,7 +152,7 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       columns,
       queryFieldsLimit: queryColumns,
-      queryBar,
+      queryBar: queryBar || getConfig('lovQueryBar'),
       selectionMode: SelectionMode.none,
       ...configTableProps,
       ...tableProps,
@@ -161,6 +161,10 @@ export default class LovView extends Component<LovViewProps> {
         ...(configTableProps && configTableProps.style),
         height,
         ...(tableProps && tableProps.style),
+      },
+      queryBarProps: {
+        ...(tableProps && tableProps.queryBarProps),
+        ...getConfig('lovQueryBarProps'),
       },
     };
     if (multiple) {
@@ -195,9 +199,9 @@ export default class LovView extends Component<LovViewProps> {
       }
     }
 
-    const isProfessionalBar = getConfig('queryBar') === TableQueryBarType.professionalBar;
+    const isProfessionalBar = lovTableProps.queryBar === TableQueryBarType.professionalBar;
     if (!popup && !lovTableProps.queryBar && isProfessionalBar) {
-      lovTableProps.queryBar = (props) => <TableProfessionalBar {...props} queryBarProps={{ labelWidth: 80 }} />;
+      lovTableProps.queryBar = (props) => <TableProfessionalBar {...props} />;
     }
 
     this.selectionMode = lovTableProps.selectionMode;

@@ -123,6 +123,7 @@ export interface TableQueryBarHookProps {
   summaryBar?: ReactElement<any>;
   onQuery?: () => void;
   onReset?: () => void;
+  autoQueryAfterReset?: boolean;
 }
 
 export interface expandedRowRendererProps {
@@ -501,7 +502,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 列宽改变时触发
    */
-   onResize?: (column: ColumnProps, width: number) => void;
+   onResize?: (props: onResizeProps) => void;
   /**
    * 加载条属性
    */
@@ -1552,9 +1553,9 @@ export default class Table extends DataSetComponent<TableProps> {
                 {isStickySupport() && overflowX && <StickyShadow position="left" />}
                 {isStickySupport() && overflowX && <StickyShadow position="right" />}
                 <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
-                {this.getFooter()}
               </div>
             </Spin>
+            {this.getFooter()}
             {this.getPagination(TablePaginationPosition.bottom)}
           </TableContextProvider>
         </div>

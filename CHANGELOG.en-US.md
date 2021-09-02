@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment`, `selectTrigger`, `lovQueryCachedSelected` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment`, `selectTrigger`, `lovQueryCachedSelected`, `queryBarProps`, `lovQueryBar`, `lovQueryBarProps` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
 - 🌟 `<pro>Rate`: Added `Rate` component.
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
@@ -39,9 +39,10 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
 - 🌟 `<pro>PerformanceTable`: Added `rowDraggable` property to support row drag.
 - 🌟 `<pro>PerformanceTable`: Added horizontal virtual scroll.
-- 🌟 `<pro>Table`: Added `onResize` callback.
+- 🌟 `<pro>Table`: Added `onResize` callback. 
 - 🌟 `Tabs`: Added TabGroup component.
 - 🌟 `Icon`: Added a lot of icons.
+- 🌟 `Table`: Added `autoQueryAfterReset` property to support ProfessionalBar & DynamicFilterBar to reset whether to automatically query.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
@@ -79,6 +80,8 @@ timeline: true
 - 🐞 `<pro>NumberField`: Fix `suffix`, `prefix` attribute support, style.
 - 🐞 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 - 🐞 `<pro>Table`: Fixed an error rendering when the filter bar condition is a number of 0.
+- 🐞 `<pro>Table`: Fix the `footer` dom position.
+- 🐞 `<pro>Table`: Fix the invalid problem of `queryBarProps` `onReset` & `onQuery` event.
 
 ## 1.4.3
 

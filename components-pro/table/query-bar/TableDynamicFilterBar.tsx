@@ -78,6 +78,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   dynamicFilterBar?: DynamicFilterBarConfig;
   onQuery?: () => void;
   onReset?: () => void;
+  autoQueryAfterReset?: boolean;
 }
 
 @observer
@@ -85,6 +86,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   static defaultProps = {
     prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 3,
+    autoQueryAfterReset: true,
   };
 
 
@@ -378,7 +380,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 获取筛选下拉
    */
   getFilterMenu(): ReactNode {
-    const { prefixCls, queryFields, queryDataSet, dataSet, dynamicFilterBar, onReset = noop } = this.props;
+    const { prefixCls, queryFields, queryDataSet, dataSet, dynamicFilterBar, autoQueryAfterReset, onReset = noop } = this.props;
     const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
     const tableFilterAdapter = dynamicFilterBar?.tableFilterAdapter || getConfig('tableFilterAdapter');
     if (queryDataSet && queryFields.length) {
@@ -398,8 +400,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   this.searchText = '';
                 });
                 onReset();
-                dataSet.setQueryParameter(searchText, undefined);
-                this.handleQuery(true);
+                if (autoQueryAfterReset) {
+                  dataSet.setQueryParameter(searchText, undefined);
+                  this.handleQuery(true);
+                }
               }}
               onInput={(e) => {
                 // @ts-ignore
@@ -432,8 +436,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     }
                     this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.current });
                     this.setConditionStatus(RecordStatus.sync);
-                    dataSet.query();
                     onReset();
+                    if (autoQueryAfterReset) {
+                      dataSet.query();
+                    }
                   }}
                 >
                   {$l('Table', 'reset_button')}

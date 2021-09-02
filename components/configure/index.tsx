@@ -142,6 +142,8 @@ export type Config = {
   lovModalProps?: ModalProps;
   lovTableCustomizable?: boolean;
   lovAutoSelectSingle?: boolean;
+  lovQueryBar?: TableQueryBarType | TableQueryBarHook;
+  lovQueryBarProps?: object;
   axios?: AxiosInstance;
   feedback?: FeedBack;
   dataKey?: string;
@@ -152,6 +154,7 @@ export type Config = {
   exportMode?: ExportMode;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
+  queryBarProps?: object;
   tableVirtual?: boolean;
   tableVirtualCell?: boolean;
   tableBorder?: boolean;
@@ -299,6 +302,7 @@ export type Config = {
    * 表单校验提示方式
    */
   showValidation?: ShowValidation;
+
 };
 
 export type ConfigKeys = keyof Config;
@@ -380,6 +384,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ],
   ['labelLayout', LabelLayout.horizontal],
   ['queryBar', TableQueryBarType.normal],
+  ['lovQueryBar', TableQueryBarType.professionalBar],
   ['tableBorder', true],
   ['tableHighLightRow', true],
   ['tableSelectedHighLightRow', false],

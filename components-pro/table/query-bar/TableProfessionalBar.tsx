@@ -5,6 +5,7 @@ import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
+import TableButtons from './TableButtons';
 import DataSet from '../../data-set';
 import Button from '../../button';
 import TableContext from '../TableContext';
@@ -15,8 +16,8 @@ import Form from '../../form';
 import { FormProps } from '../../form/Form';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
-import TableButtons from './TableButtons';
 import { LabelLayout } from '../../form/enum';
+import { Tooltip as LabelTooltip } from '../../core/enum';
 
 export interface TableProfessionalBarProps extends ElementProps {
   dataSet: DataSet;
@@ -24,9 +25,10 @@ export interface TableProfessionalBarProps extends ElementProps {
   queryFields: ReactElement<any>[];
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
-  queryBarProps?: FormProps;
+  formProps?: FormProps;
   summaryBar?: ReactElement<any>;
   defaultExpanded?: Boolean;
+  autoQueryAfterReset?: Boolean;
   onQuery?: () => void;
   onReset?: () => void;
 }
@@ -38,6 +40,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   static defaultProps = {
     prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 3,
+    autoQueryAfterReset: true,
   };
 
   @observable moreFields: ReactElement[];
@@ -163,14 +166,16 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit, queryFields, queryDataSet, queryBarProps } = this.props;
+    const { prefixCls, queryFieldsLimit, queryFields, queryDataSet, formProps } = this.props;
     if (queryDataSet && queryFields.length) {
       const currentFields = (
         <Form
           dataSet={queryDataSet}
           columns={queryFieldsLimit}
           labelLayout={LabelLayout.horizontal}
-          {...queryBarProps}
+          labelTooltip={LabelTooltip.overflow}
+          labelWidth={80}
+          {...formProps}
         >
           {this.createFields(queryFields.slice(0, queryFieldsLimit))}
           {this.moreFields}
@@ -198,14 +203,16 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet, onReset = noop } = this.props;
+    const { queryDataSet, autoQueryAfterReset, onReset = noop } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         current.reset();
         onReset();
+        if (autoQueryAfterReset) {
+          this.handleQuery(true);
+        }
       }
-      this.handleQuery(true);
     }
   }
 
