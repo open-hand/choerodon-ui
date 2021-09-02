@@ -57,6 +57,7 @@ title: Form
 | name | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string |  |
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number |  |
 | useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |
+| hidden | 是否隐藏字段（依然会校验字段）|	boolean	| |
 
 #### Form.Item
 
@@ -66,6 +67,7 @@ title: Form
 | name | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string |  |
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number |  |
 | useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |
+| hidden | 是否隐藏字段（依然会校验字段）|	boolean	| |
 
 ### Form Responsive
 
