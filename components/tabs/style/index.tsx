@@ -3,3 +3,4 @@ import './index.less';
 
 // style dependencies
 import '../../ripple/style';
+import '../../badge/style';
