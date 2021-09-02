@@ -45,3 +45,15 @@ Choerodon UI has 3 types of Tabs for different situations.
 | forceRender | Forced render of content in tabs, not lazy render after clicking on tabs | boolean | false |
 | key | TabPane's key | string | - |
 | tab | Show text in TabPane's head | string\|ReactNode | - |
+| disabled         | 是否禁用          | boolean | 无     |
+| count         | 选项卡头内显示数字          | number | 无     |
+| overflowCount         | 展示封顶的数字值         | number | 99     |
+
+### Tabs.TabGroup
+
+| 参数        | 说明                      | 类型              | 默认值 |
+| ----------- | ------------------------- | ----------------- | ------ |
+| tab         | 选项组显示文字          | string\|ReactNode | 无     |
+| disabled         | 是否禁用          | boolean | 无     |
+| dot         | 是否显示小红点          | boolean | 无     |
+| defaultActiveKey         | 初始化组时默认展示的 TabPane 对应的 key          | string | 无     |

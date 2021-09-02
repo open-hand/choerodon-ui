@@ -17,6 +17,7 @@
     bottom: 0.01rem;
     left: 0;
     z-index: 1;
+    display: @tabs-ink-bar-display;
     box-sizing: border-box;
     height: 0.02rem;
     background-color: @tabs-ink-bar-bg-color;
@@ -25,13 +26,72 @@
 
   &-bar {
     margin: @tab-bar-margin;
+    padding: @tab-bar-padding;
     border-bottom: @border-width-base @border-style-base @border-color-split;
     outline: none;
     transition: padding 0.3s @ease-in-out;
+
+    &-inner {
+      display: flex;
+      align-items: center;
+    }
+
+    &-divider {
+      width: .01rem;
+      height: .12rem;
+      margin: auto .15rem;
+      background-color: rgba(0, 0, 0, .25);
+    }
+  }
+
+  &-bar-with-groups {
+    padding: @tab-groups-bar-padding;
+
+    .@{tab-prefix-cls}-ink-bar {
+      display: @tabs-groups-ink-bar-display;
+    }
+
+    .@{tab-prefix-cls}-nav .@{tab-prefix-cls}-tab {
+      padding: @tab-groups-horizontal-padding;
+    }
+  }
+
+  &-group {
+    padding: .02rem;
+    background-color: rgba(0, 0, 0, 0.05);
+
+    &-item {
+      display: inline-block;
+      padding: 0.03rem .08rem;
+      color: rgba(0, 0, 0, 0.45);
+      font-weight: @font-weight-base;
+      font-size: .14rem;
+      white-space: nowrap;
+      cursor: pointer;
+
+      &-selected {
+        color: rgba(0, 0, 0, 0.8);
+        font-weight: 600;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
+      }
+
+      &-disabled {
+        color: @disabled-color;
+        cursor: not-allowed;
+      }
+
+      .@{c7n-prefix}-badge {
+        vertical-align: baseline;
+      }
+    }
   }
 
   &-nav-container {
     position: relative;
+    flex: 1;
+    align-self: stretch;
     box-sizing: border-box;
     margin-bottom: -0.01rem;
     overflow: hidden;
@@ -46,6 +106,7 @@
       padding-left: @tab-scrolling-size;
     }
   }
+
   &-bottom &-bar {
     border-top: @border-width-base @border-style-base @border-color-split;
     border-bottom: none;
@@ -107,6 +168,7 @@
 
   &-tab-btn-disabled {
     cursor: not-allowed;
+
     &,
     &:hover {
       color: @disabled-color;
@@ -123,9 +185,11 @@
 
   &-tab-prev {
     left: 0;
+
     &-icon::before {
       content: '\e408';
     }
+
     :root & {
       filter: none;
     }
@@ -164,10 +228,11 @@
       & .@{ripple-prefix-cls} {
         background-color: fade(#000, 20%);
       }
+
       position: relative;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       box-sizing: border-box;
-      height: 100%;
       margin: @tab-horizontal-margin;
       padding: @tab-horizontal-padding;
       color: @tab-normal-color;
@@ -189,6 +254,10 @@
 
       .@{iconfont-css-prefix} {
         margin-right: 0.08rem;
+      }
+
+      &-count {
+        margin-left: .05rem;
       }
     }
 
@@ -238,6 +307,7 @@
         pointer-events: none;
       }
     }
+
     > .@{tab-prefix-cls}-content-animated {
       display: flex;
       flex-direction: row;
@@ -246,20 +316,38 @@
     }
   }
 
+  &-horizontal {
+    > .@{tab-prefix-cls}-bar {
+      .@{tab-prefix-cls}-tab,
+      .@{tab-prefix-cls}-nav-wrap,
+      .@{tab-prefix-cls}-nav-scroll,
+      .@{tab-prefix-cls}-nav {
+        height: 100%;
+      }
+    }
+  }
+
   &-vertical {
     > .@{tab-prefix-cls}-bar {
+      flex-direction: column;
       height: 100%;
       border-bottom: 0;
+
       &-tab-prev,
       &-tab-next {
         width: @tab-scrolling-size;
         height: 0;
         transition: height 0.3s @ease-in-out, opacity 0.3s @ease-in-out, color 0.3s @ease-in-out;
       }
+
       &-tab-prev.@{tab-prefix-cls}-tab-arrow-show,
       &-tab-next.@{tab-prefix-cls}-tab-arrow-show {
         width: 100%;
         height: @tab-scrolling-size;
+      }
+
+      .@{tab-prefix-cls}-bar-inner {
+        height: 100%;
       }
 
       .@{tab-prefix-cls}-tab {
@@ -313,6 +401,7 @@
         bottom: 0;
         width: 100%;
         height: @tab-scrolling-size;
+
         &-icon::before {
           content: '\e5cf';
         }
@@ -322,6 +411,7 @@
         top: 0;
         width: 100%;
         height: @tab-scrolling-size;
+
         &-icon::before {
           content: '\e5ce';
         }
@@ -333,6 +423,22 @@
       margin-top: 0 !important;
       overflow: hidden;
     }
+
+    > .@{tab-prefix-cls}-bar-with-groups .@{tab-prefix-cls}-tab {
+      padding: @tab-groups-vertical-padding;
+    }
+  }
+
+  &-vertical &-group-item {
+    display: block;
+  }
+
+  &-vertical &-bar-inner {
+    flex-direction: column;
+  }
+
+  &-vertical &-bar-divider {
+    width: 0;
   }
 
   &-vertical&-left {
@@ -341,19 +447,24 @@
       margin-right: -0.01rem;
       margin-bottom: 0;
       border-right: @border-width-base @border-style-base @border-color-split;
+
       .@{tab-prefix-cls}-tab {
         text-align: right;
       }
+
       .@{tab-prefix-cls}-nav-container {
         margin-right: -0.01rem;
       }
+
       .@{tab-prefix-cls}-nav-wrap {
         margin-right: -0.01rem;
       }
+
       .@{tab-prefix-cls}-ink-bar {
         right: 0.01rem;
       }
     }
+
     > .@{tab-prefix-cls}-content {
       padding-left: 0.24rem;
       border-left: @border-width-base @border-style-base @border-color-split;
@@ -366,16 +477,20 @@
       margin-bottom: 0;
       margin-left: -0.01rem;
       border-left: @border-width-base @border-style-base @border-color-split;
+
       .@{tab-prefix-cls}-nav-container {
         margin-left: -0.01rem;
       }
+
       .@{tab-prefix-cls}-nav-wrap {
         margin-left: -0.01rem;
       }
+
       .@{tab-prefix-cls}-ink-bar {
         left: 0.01rem;
       }
     }
+
     > .@{tab-prefix-cls}-content {
       padding-right: 0.24rem;
       border-right: @border-width-base @border-style-base @border-color-split;
@@ -406,6 +521,7 @@
       margin-left: 0 !important;
       transform: none !important;
     }
+
     > .@{tab-prefix-cls}-tabpane-inactive {
       display: none;
     }

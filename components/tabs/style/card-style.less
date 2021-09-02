@@ -6,10 +6,11 @@
 // card style
 .@{tab-prefix-cls} {
   &&-card > &-bar &-nav-container {
+    align-self: flex-end;
     height: @tabs-card-height;
   }
   &&-card > &-bar &-ink-bar {
-    visibility: hidden;
+    display: none;
   }
   &&-card > &-bar &-tab {
     margin: 0;
@@ -23,7 +24,6 @@
     transition: all 0.3s @ease-in-out;
   }
   &&-card > &-bar &-tab-active {
-    padding-bottom: 0.01rem;
     color: @tabs-card-active-color;
     background: @component-background;
     border-color: @border-color-split;
@@ -36,7 +36,6 @@
   }
   &&-card > &-bar &-tab .@{iconfont-css-prefix}-close {
     width: 0.16rem;
-    height: 0.16rem;
     height: @font-size-base;
     margin-right: -0.05rem;
     margin-left: 0.03rem;
@@ -130,6 +129,11 @@
       }
     }
   }
+
+  &&-card&-bottom > &-bar &-nav-container {
+    align-self: flex-start;
+  }
+
   &&-card&-bottom > &-bar &-tab {
     border-top: 0;
     border-bottom: @border-width-base @border-style-base @border-color-split;
@@ -137,8 +141,6 @@
   }
 
   &&-card&-bottom > &-bar &-tab-active {
-    padding-top: 0.01rem;
-    padding-bottom: 0;
     color: @primary-color;
   }
 }

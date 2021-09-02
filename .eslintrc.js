@@ -45,7 +45,7 @@ const eslintrc = {
     'jsx-a11y/anchor-has-content': 0,
     'jsx-a11y/anchor-is-valid': 0,
     'jsx-a11y/click-events-have-key-events': 0,
-    'jsx-a11y/control-has-associated-label': "off",
+    'jsx-a11y/control-has-associated-label': 'off',
     'jsx-a11y/label-has-associated-control': 0,
     'jsx-a11y/no-noninteractive-tabindex': 0,
     'jsx-a11y/no-noninteractive-element-interact': 0,
@@ -60,6 +60,21 @@ const eslintrc = {
     'no-plusplus': 0,
     'no-redeclare': 0,
     'no-restricted-globals': 0,
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'ForInStatement',
+        message: 'for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array.',
+      },
+      {
+        selector: 'LabeledStatement',
+        message: 'Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand.',
+      },
+      {
+        selector: 'WithStatement',
+        message: '`with` is disallowed in strict mode because it makes code impossible to predict and optimize.',
+      },
+    ],
     'no-return-assign': 0,
     'no-underscore-dangle': 0,
     'object-curly-newline': 0,
