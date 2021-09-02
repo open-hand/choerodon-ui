@@ -41,6 +41,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added horizontal virtual scroll.
 - 🌟 `<pro>Table`: Added `onResize` callback.
 - 🌟 `Tabs`: Added TabGroup component.
+- 🌟 `Icon`: Added a lot of icons.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.

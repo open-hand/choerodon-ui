@@ -41,6 +41,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 开启虚拟滚动，新增横行虚拟滚动。
 - 🌟 `<pro>Table`: 新增 onResize 事件。
 - 🌟 `Tabs`: 新增 TabGroup 组件。
+- 🌟 `Icon`: 新增大量图标。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
