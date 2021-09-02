@@ -75,6 +75,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复编辑器会浮动到禁用单元格上的问题。
 - 🐞 `<pro>NumberField`：修复 suffix，prefix 属性支持，样式。
 - 🐞 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
+- 🐞 `<pro>Table`：修复过滤条过滤条件为数值0时渲染错误问题。
 
 ## 1.4.3
 

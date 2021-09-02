@@ -76,6 +76,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed editor will focused on disabled cell.
 - 🐞 `<pro>NumberField`: Fix `suffix`, `prefix` attribute support, style.
 - 🐞 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
+- 🐞 `<pro>Table`: Fixed an error rendering when the filter bar condition is a number of 0.
 
 ## 1.4.3
 
