@@ -52,6 +52,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the problem that the dynamic query parameters of the professionalQuery bar do not respond in real time.
 - 💄 `<pro>PerformanceTable`：Unordering is supported.
 - 💄 `<pro>FormField`: Optimize the null value judgment.
+- 💄 `<pro>Form`: Optimize the `hidden` attribute to support hidden fields.
 - 🐞 `configure`: Modify the `tableFilterAdapter` type.
 - 🐞 `<pro>DataSet.Field`: Optimize the data return type problem of multiple calls to `fetchLookup`.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
@@ -75,6 +76,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed editor will focused on disabled cell.
 - 🐞 `<pro>NumberField`: Fix `suffix`, `prefix` attribute support, style.
 - 🐞 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
+- 🐞 `<pro>Table`: Fixed an error rendering when the filter bar condition is a number of 0.
 
 ## 1.4.3
 

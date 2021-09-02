@@ -702,6 +702,7 @@ export default class Form extends DataSetComponent<FormProps> {
       if (isValidElement(child)) {
         const setChild = (arr: ReactElement<any>[], outChild: ReactElement<any>, groupProps = {}) => {
           const { type, props: outChildProps } = outChild;
+          if (outChildProps.hidden) return null;
           if (type) {
             if (
               noLabel === true &&

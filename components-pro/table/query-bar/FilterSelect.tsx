@@ -192,7 +192,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (field.get('multiple')) {
             fieldValue = (fieldValue || [])[repeat];
           }
-          if (field.get('bind') || !fieldValue) return;
+          if (field.get('bind') || isNil(fieldValue)) return;
           return `${this.getFieldLabel(field)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : super.processValue(fieldValue),
             field,

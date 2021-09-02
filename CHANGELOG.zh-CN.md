@@ -51,6 +51,7 @@ timeline: true
 - 💄 `<pro>Table`：优化专业查询条动态查询参数未实时响应的问题。
 - 💄 `<pro>PerformanceTable`：支持取消排序。
 - 💄 `<pro>FormField`：优化空值判断。
+- 💄 `<pro>Form`：优化 hidden 属性，支持隐藏字段。
 - 🐞 `configure`: 修复 tableFilterAdapter 类型。
 - 🐞 `<pro>DataSet.Field`: 优化多次调用 fetchLookup 数据返回类型问题。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
@@ -74,6 +75,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复编辑器会浮动到禁用单元格上的问题。
 - 🐞 `<pro>NumberField`：修复 suffix，prefix 属性支持，样式。
 - 🐞 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
+- 🐞 `<pro>Table`：修复过滤条过滤条件为数值0时渲染错误问题。
 
 ## 1.4.3
 
