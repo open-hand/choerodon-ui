@@ -196,6 +196,8 @@ export default class TableStore {
 
   @observable loading?: boolean;
 
+  @observable rowZIndex?: number[];
+
   @observable selectedRowKeys: string[] | number[];
 
   @computed
@@ -405,6 +407,7 @@ export default class TableStore {
   constructor(node) {
     runInAction(() => {
       this.node = node;
+      this.rowZIndex = [];
       this.customizedActiveKey = ['columns'];
       this.tempCustomized = { columns: {} };
       this.customized = { columns: {} };

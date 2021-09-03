@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { runInAction } from 'mobx';
 import PropTypes from 'prop-types';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
@@ -128,6 +129,7 @@ class Cell extends React.PureComponent<CellProps> {
       onClick, // Fix sortColumn not getting fired in Gatsby production build
       onCell,
       rowSpan,
+      fixed,
       ...rest
     } = this.props;
     const { tableStore } = this.context;
@@ -146,6 +148,11 @@ class Cell extends React.PureComponent<CellProps> {
     const cellRowSpan = rowSpan || cellExternalProps.rowSpan;
 
     if (cellHidden || cellRowSpan === 0) {
+      if (!isHeaderCell && rowData && cellRowSpan === 0 && fixed) {
+        runInAction(() => {
+          tableStore.rowZIndex.push(rowIndex);
+        })
+      }
       return null;
     }
 
