@@ -402,6 +402,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
      * 是否使用冒号
      */
     useColon: PropTypes.bool,
+    /**
+     * 校验信息提示方式
+     */
+    showValidation: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -589,6 +593,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   @computed
+  get showValidation(): ShowValidation {
+    const { showValidation = getConfig('showValidation') } = this.observableProps;
+    return showValidation;
+  }
+
+  @computed
   get highlightRenderer(): HighlightRenderer {
     const { highlightRenderer = getConfig('highlightRenderer') } = this.observableProps;
     return highlightRenderer;
@@ -655,6 +665,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       pristine: context.pristine || props.pristine,
       highlight: props.highlight,
       highlightRenderer: 'highlightRenderer' in props ? props.highlightRenderer : context.fieldHighlightRenderer,
+      showValidation: 'showValidation' in props ? props.showValidation : context.showValidation,
     };
     if ('record' in props) {
       observableProps.record = props.record;
@@ -695,6 +706,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       'labelTooltip',
       'isFlat',
       'useColon',
+      'showValidation',
     ]);
   }
 
@@ -845,9 +857,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   renderValidationResult(validationResult?: ValidationResult): ReactNode {
     const validationMessage = this.getValidationMessage(validationResult);
-    const { labelLayout, showValidation } = this.context;
+    const { labelLayout } = this.context;
     if (validationMessage) {
-      const showIcon = !(labelLayout === LabelLayout.float || showValidation === ShowValidation.newLine);
+      const showIcon = !(labelLayout === LabelLayout.float || this.showValidation === ShowValidation.newLine);
       return renderValidationMessage(validationMessage, showIcon);
     }
   }
@@ -893,8 +905,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   showTooltip(e): boolean {
-    const { showValidation } = this.context;
-    if (!this.hasFloatLabel && showValidation === ShowValidation.tooltip) {
+    if (!this.hasFloatLabel && this.showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
         showValidationMessage(e, message);
@@ -1428,8 +1439,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     const wrapper = this.renderWrapper();
     const { highlight, dataSet, record, name } = this;
     if (highlight) {
-      const { showValidation } = this.context;
-      const hidden = !(this.hasFloatLabel || showValidation === ShowValidation.newLine || this.isValid);
+      const hidden = !(this.hasFloatLabel || this.showValidation === ShowValidation.newLine || this.isValid);
       const highlightWrapper = this.highlightRenderer(transformHighlightProps(highlight, { dataSet, record, name, hidden }), wrapper);
       if (isValidElement(highlightWrapper)) {
         return highlightWrapper;
@@ -1441,8 +1451,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   render() {
     const wrapper = this.renderHighLight();
     const help = this.renderHelpMessage();
-    const { showValidation } = this.context;
-    if (this.hasFloatLabel || showValidation === ShowValidation.newLine) {
+    if (this.hasFloatLabel || this.showValidation === ShowValidation.newLine) {
       const message = this.renderValidationResult();
       return [
         isValidElement(wrapper) ? cloneElement(wrapper, { key: 'wrapper' }) : wrapper,
