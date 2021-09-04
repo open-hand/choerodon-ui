@@ -413,6 +413,16 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     trim: FieldTrim.both,
   };
 
+  constructor(props, context) {
+    super(props, context);
+
+    const contextProps = Object.keys(this.context)
+    const fieldContext = contextProps.length ? this.context : this.props;
+    this.fieldContext = { showValidation: getConfig('showValidation'), ...fieldContext }
+  }
+
+  fieldContext: any = {}
+
   emptyValue?: any = null;
 
   lock?: boolean;
@@ -453,11 +463,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   get labelLayout() {
-    return this.props.labelLayout || this.context.labelLayout;
+    return this.props.labelLayout || this.fieldContext.labelLayout;
   }
 
   get labelTooltip() {
-    return this.props.labelTooltip || this.context.labelTooltip || getTooltip('label');
+    return this.props.labelTooltip || this.fieldContext.labelTooltip || getTooltip('label');
   }
 
   get hasFloatLabel(): boolean {
@@ -791,12 +801,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   componentDidMount() {
     super.componentDidMount();
-    this.addToForm(this.props, this.context);
+    this.addToForm(this.props, this.fieldContext);
   }
 
   componentWillReceiveProps(nextProps: T, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
-    this.removeFromForm(this.props, this.context);
+    this.removeFromForm(this.props, this.fieldContext);
     this.addToForm(nextProps, nextContext);
     if (!this.record && this.props.value !== nextProps.value) {
       this.validate(nextProps.value);
@@ -804,7 +814,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   componentWillUnmount() {
-    this.removeFromForm(this.props, this.context);
+    this.removeFromForm(this.props, this.fieldContext);
     if (this.tooltipShown) {
       hide();
       this.tooltipShown = false;
@@ -845,7 +855,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   renderValidationResult(validationResult?: ValidationResult): ReactNode {
     const validationMessage = this.getValidationMessage(validationResult);
-    const { labelLayout, showValidation } = this.context;
+    const { labelLayout, showValidation } = this.fieldContext;
     if (validationMessage) {
       const showIcon = !(labelLayout === LabelLayout.float || showValidation === ShowValidation.newLine);
       return renderValidationMessage(validationMessage, showIcon);
@@ -867,7 +877,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       range,
       multiple,
       defaultValidationMessages,
-      form: this.context.formNode as Form,
+      form: this.fieldContext.formNode as Form,
     };
   }
 
@@ -893,7 +903,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   showTooltip(e): boolean {
-    const { showValidation } = this.context;
+    const { showValidation } = this.fieldContext;
     if (!this.hasFloatLabel && showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
@@ -1244,7 +1254,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       };
       // 转成实际的数据再进行判断
       if (!this.compare(old, toJS(value))) {
-        const { formNode } = this.context;
+        const { formNode } = this.fieldContext;
         const storedValue = this.value;
         const beforeChange = onBeforeChange(value, old, formNode);
         const resolveCallback = action(() => {
@@ -1355,7 +1365,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       }
       return validator.checkValidity(value).then((valid) => {
         if (report) {
-          const { formNode } = this.context;
+          const { formNode } = this.fieldContext;
           if (formNode && !formNode.validating) {
             formNode.reportValidity(valid);
           }
@@ -1428,7 +1438,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     const wrapper = this.renderWrapper();
     const { highlight, dataSet, record, name } = this;
     if (highlight) {
-      const { showValidation } = this.context;
+      const { showValidation } = this.fieldContext;
       const hidden = !(this.hasFloatLabel || showValidation === ShowValidation.newLine || this.isValid);
       const highlightWrapper = this.highlightRenderer(transformHighlightProps(highlight, { dataSet, record, name, hidden }), wrapper);
       if (isValidElement(highlightWrapper)) {
@@ -1441,7 +1451,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   render() {
     const wrapper = this.renderHighLight();
     const help = this.renderHelpMessage();
-    const { showValidation } = this.context;
+
+    const { showValidation } = this.fieldContext;
+
     if (this.hasFloatLabel || showValidation === ShowValidation.newLine) {
       const message = this.renderValidationResult();
       return [
