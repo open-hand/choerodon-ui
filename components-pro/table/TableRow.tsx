@@ -83,7 +83,6 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   const isLoaded = tableStore.isRowLoaded(record);
   const isExpanded = tableStore.isRowExpanded(record);
   const isHover = tableStore.isRowHover(record);
-  const isHighLightRow = highLightRow === HighLightRowType.click ? tableStore.rowClicked : highLightRow === HighLightRowType.focus ? tableStore.node.isFocused : highLightRow;
   const expandable = ((): boolean | undefined => {
     const { isLeaf } = rowExternalProps;
     if (isLeaf === true) {
@@ -382,7 +381,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   const classString = classNames(
     rowPrefixCls,
     {
-      [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent && isHighLightRow, // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
+      [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent && (highLightRow === HighLightRowType.click ? tableStore.rowClicked : highLightRow === HighLightRowType.focus ? tableStore.node.isFocused : highLightRow), // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
       [`${rowPrefixCls}-hover`]: !isStickySupport() && highLightRow && isHover,
       [`${rowPrefixCls}-selected`]: selectedHighLightRow && isSelectedRow(record),
       [`${rowPrefixCls}-disabled`]: disabled,

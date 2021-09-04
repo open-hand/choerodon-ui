@@ -9,6 +9,7 @@ import isEqual from 'lodash/isEqual';
 import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
+import uniq from 'lodash/uniq';
 import BScroll from '@better-scroll/core';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
@@ -1942,6 +1943,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {
+      if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
+        rowStyles.zIndex = 0;
+      }
       const fixedLeftCells = [];
       const fixedRightCells = [];
       const scrollCells = [];
@@ -2046,7 +2050,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
 
       return (
-        <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles}>
+        <Row {...restRowProps} data-zindex={rowData ? rowData.__rowZIndex : ''} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles}>
           {fixedLeftCellGroupWidth ? (
             <CellGroup
               fixed="left"

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { CellProps } from './Cell.d';
 
 export interface HeaderCellProps extends CellProps {
@@ -6,6 +7,7 @@ export interface HeaderCellProps extends CellProps {
   sortColumn?: string;
   sortType?: 'desc' | 'asc';
   sortable?: boolean;
+  style?: React.CSSProperties;
   resizable?: boolean;
   onColumnResizeStart?: (columnWidth?: number, left?: number, fixed?: boolean) => void;
   onColumnResizeEnd?: (
