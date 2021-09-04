@@ -384,7 +384,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ],
   ['labelLayout', LabelLayout.horizontal],
   ['queryBar', TableQueryBarType.normal],
-  ['lovQueryBar', TableQueryBarType.professionalBar],
+  ['lovQueryBar', TableQueryBarType.normal],
   ['tableBorder', true],
   ['tableHighLightRow', true],
   ['tableSelectedHighLightRow', false],

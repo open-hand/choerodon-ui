@@ -58,7 +58,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
   componentWillReceiveProps(nextProps, _): void {
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = nextProps;
-    if (queryDataSet && queryFields.length && defaultExpanded) {
+    if (queryDataSet && queryFields.length && (defaultExpanded || this.moreFields)) {
       runInAction(() => {
         this.moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
       });
@@ -221,7 +221,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     const queryBar = this.getQueryBar();
     const tableButtons = buttons.length ? (
       <div key="professional_toolbar" className={`${prefixCls}-professional-toolbar`}>
-        <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} >
+        <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons}>
           {summaryBar}
         </TableButtons>
       </div>
