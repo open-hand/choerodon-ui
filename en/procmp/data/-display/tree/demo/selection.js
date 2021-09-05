@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DataSet, Tree } from 'choerodon-ui/pro';
+import { DataSet, Tree, Button } from 'choerodon-ui/pro';
 import { Row, Col } from 'choerodon-ui';
 
 function nodeRenderer({ record }) {
   return record.get('text');
 }
+
+const onCheck = (checkedKeys, e, oldCheckedKeys) => {
+  console.log('onCheck', checkedKeys, e, oldCheckedKeys);
+};
 
 class App extends React.Component {
   ds = new DataSet({
@@ -13,7 +17,6 @@ class App extends React.Component {
     queryUrl: '/tree-less.mock',
     autoQuery: true,
     expandField: 'expand',
-    selection: false,
     checkField: 'ischecked',
     parentField: 'parentId',
     idField: 'id',
@@ -35,12 +38,21 @@ class App extends React.Component {
         <Row>
           <Col span={12}>
             <Tree
+              selectable={false}
+              onCheck={onCheck}
               dataSet={this.ds}
               checkable
               draggable
               showIcon
               renderer={nodeRenderer}
             />
+          </Col>
+          <Col span={12}>
+            <Button
+              onClick={() => console.log('this.ds.selected', this.ds.selected)}
+            >
+              selected
+            </Button>
           </Col>
         </Row>
       </>

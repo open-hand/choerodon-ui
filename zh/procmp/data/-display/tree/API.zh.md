@@ -13,6 +13,7 @@ title: API
 | defaultCheckedKeys  | 默认选中复选框的树节点当 dataSet 绑定 checkField 时候忽略 | string[]                                                                                  | []       |
 | defaultSelectKeys   | 默认选择节点当，默认绑定 dataSet 的 idField               | string[]                                                                                  | []       |
 | treeNodeRenderer    | 对于 Treenode 结点的渲染覆盖                              | (({ record, dataSet }) => TreeNodeRendererProps ) | () => {} |
+| selectable | 是否可选中 | boolean | true | 1.4.4 |
 
 ### TreeNodeRenderer Props
 
@@ -22,7 +23,7 @@ title: API
 | disableCheckbox | 禁掉 checkbox                                      | boolean                             | false                                       |
 | disabled        | 禁掉响应                                           | boolean                             | false                                       |
 | icon            | 自定义图标。可接收组件，props 为当前节点 props     | ReactNode/Function(props):ReactNode |                                            |
-| isLeaf          | 设置为叶子节点(设置了`loadData`时有效)             | boolean                             | false                                       |
+| isLeaf          | 设置为叶子节点(设置了loadData时有效)             | boolean                             | false                                       |
 | title           | 标题                                               | string\|ReactNode                   |                                        |
 | switcherIcon    | 自定义树节点的展开/折叠图标                        | React.ReactNode                     | ((props: TreeNodeProps) => React.ReactNode) |  |
 | className       | 子节点类名                                         | string                              |                                             |
@@ -30,9 +31,9 @@ title: API
 
 ### DataSet 相关
 
-| 参数       | 说明                                                                           | 类型                | 默认值 |
-| ---------- | ------------------------------------------------------------------------------ | ------------------- | ------ |
-| titleField | 节点文字对应数据源的字段，只在绑定数据源时起效                                 | string              |        |
-| selection  | selection 为 false Tree checkable 为 true 可以实现整个 treenode 点击触发 check | string \| boolean |       |
+| 参数       | 说明                                                                           | 类型                |
+| ---------- | ------------------------------------------------------------------------------ | ------------------- | 
+| titleField | 节点文字对应数据源的字段，只在绑定数据源时起效                                 | string              |   
+| selection  | selection 为 false Tree checkable 为 true 可以实现整个 treenode 点击触发 check | string \| boolean |  
 
 更多案例和属性请参考 [Tree](/zh/cmp/data-display/tree/)。

@@ -14,6 +14,7 @@ title: API
 | defaultCheckedKeys  | defalut check these node when dataSet bind checkField ignore it                                        | string[]                                                                                  | []       |
 | defaultSelectKeys   | defalut select these node when dataSet bind idField ignore it                                          | string[]                                                                                  | []       |
 | treeNodeRenderer    | customize cover Tree node props                                                                        | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps ) | () => {} |
+| selectable | 是否可选中 | boolean | true | 1.4.4 |
 
 ### TreeNodeRenderer props
 
@@ -23,7 +24,7 @@ title: API
 | disableCheckbox | Disables the checkbox of the treeNode                                                                     | boolean                             | false                                       |  |
 | disabled        | Disables the treeNode                                                                                     | boolean                             | false                                       |  |
 | icon            | customize icon. When you pass component, whose render will receive full TreeNode props as component props | ReactNode/Function(props):ReactNode | -                                           |  |
-| isLeaf          | Determines if this is a leaf node(effective when `loadData` is specified)                                 | boolean                             | false                                       |  |
+| isLeaf          | Determines if this is a leaf node(effective when loadData is specified)                                 | boolean                             | false                                       |  |
 | title           | Title                                                                                                     | string\|ReactNode                   | '---'                                       |  |
 | switcherIcon    | customize node expand icon                                                                                | React.ReactNode                     | ((props: TreeNodeProps) => React.ReactNode) |  |
 | className       | child node classname                                                                                      | string                              |                                             |
@@ -31,10 +32,10 @@ title: API
 
 ### DataSet related
 
-| 参数       | 说明                                                                                                   | 类型              | 默认值 |
-| ---------- | ------------------------------------------------------------------------------------------------------ | ----------------- | ------ |
-| titleField | when there have dataSet ,the node text would bing titleField                                           | string            |        |
-| selection  | selection is false Tree checkable is true ,You can implement the whole treenode click to trigger check | string\|\|boolean | -      |
+| 参数       | 说明                                                                                                   | 类型              | 
+| ---------- | ------------------------------------------------------------------------------------------------------ | ----------------- |  
+| titleField | when there have dataSet ,the node text would bing titleField                                           | string            |        
+| selection  | selection is false Tree checkable is true ,You can implement the whole treenode click to trigger check | string\|\|boolean |       
 
 dataSet The data format adopts a flat structure, and there is a structure of Id and parentId
 

@@ -57,46 +57,6 @@ function DraggableHeaderCell({ children, onDrag, id, ...rest }) {
   );
 }
 
-function DraggableCell({ children, onDrag, _id, rowData, ...rest }) {
-  const ref = React.useRef(null);
-
-  const [{ canDrop, isOver }, drop] = useDrop({
-    accept: ItemTypes.ROW,
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-    drop(item, _monitor) {
-      onDrag && onDrag(item.id, rowData.id);
-    },
-  });
-
-  const [{ isDragging }, drag] = useDrag({
-    item: { id: rowData.id, type: ItemTypes.ROW },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-  const opacity = isDragging ? 0 : 1;
-  const isActive = canDrop && isOver;
-
-  drag(drop(ref));
-
-  const styles = {
-    ...style,
-    opacity,
-    background: isActive ? '#ddd' : null,
-  };
-
-  return (
-    <Cell {...rest} style={{ padding: 0, textAlign: 'center' }}>
-      <div ref={ref} style={styles}>
-        {children}
-      </div>
-    </Cell>
-  );
-}
-
 function sort(source, sourceId, targetId) {
   const colSource = source.slice();
   const sourceIdIndex = colSource.findIndex((item) => item.id === sourceId);
@@ -107,42 +67,31 @@ function sort(source, sourceId, targetId) {
 }
 
 function DraggableTable() {
-  const [data, setData] = React.useState(
-    fakeData.filter((item, index) => index < 7),
-  );
   const [columns, setColumns] = React.useState([
     { id: 'id', name: 'Id', width: 250 },
     { id: 'firstName', name: 'First Name', width: 260 },
     { id: 'lastName', name: 'Last Name', width: 300 },
     { id: 'email', name: 'Email', width: 300 },
-    { id: 'action', name: 'Action', width: 300 },
   ]);
 
   const handleDragColumn = (sourceId, targetId) => {
     setColumns(sort(columns, sourceId, targetId));
   };
 
-  const handleDragRow = (sourceId, targetId) => {
-    setData(sort(data, sourceId, targetId));
-  };
-
   return (
     <DndProvider backend={HTML5Backend}>
       <div>
-        <PerformanceTable height={400} data={data}>
+        <PerformanceTable
+          rowDraggable
+          height={400}
+          data={fakeData.filter((item, index) => index < 7)}
+        >
           {columns.map((column) => (
             <Column width={column.width} key={column.id}>
               <DraggableHeaderCell onDrag={handleDragColumn} id={column.id}>
                 {column.name} <Icon type="add" />
               </DraggableHeaderCell>
-
-              {column.id === 'action' ? (
-                <DraggableCell id={column.id} onDrag={handleDragRow}>
-                  <Icon type="add" />
-                </DraggableCell>
-              ) : (
-                <Cell dataKey={column.id} />
-              )}
+              <Cell dataKey={column.id} />
             </Column>
           ))}
         </PerformanceTable>

@@ -17,7 +17,8 @@
       "order": 0,
       "screenshot": "",
       "height": 152,
-      "category": "pro"
+      "category": "pro",
+      "iframe": "/iframe/codeare"
     },
     {
       "filename": "controlled.js",

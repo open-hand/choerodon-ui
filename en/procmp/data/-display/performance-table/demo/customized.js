@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { PerformanceTable, Button, CheckBox } from 'choerodon-ui/pro';
+import { PerformanceTable, Button } from 'choerodon-ui/pro';
 
 class App extends React.Component {
   constructor(props) {
@@ -65,51 +65,8 @@ class App extends React.Component {
     });
   };
 
-  handleCheckAllChange = (value, oldValue) => {
-    console.log('[controlled]', value, '[oldValues]', oldValue);
-    const { data } = this.state;
-    if (value) {
-      this.setState({
-        checkValues: data.map((i) => i.id),
-      });
-    } else {
-      this.setState({
-        checkValues: [],
-      });
-    }
-  };
-
-  CheckCell = ({ rowData, rowIndex }) => {
-    const { checkValues } = this.state;
-    return (
-      <CheckBox
-        key={rowIndex}
-        name="controlled"
-        value={rowData.id}
-        checked={checkValues.indexOf(rowData.id) !== -1}
-        onChange={this.handleChange}
-      />
-    );
-  };
-
   render() {
-    const { data, checkValues } = this.state;
     const columns = [
-      {
-        title: () => (
-          <CheckBox
-            name="controlled"
-            checked={checkValues.length === data.length}
-            onChange={this.handleCheckAllChange}
-          />
-        ),
-        key: 'checkbox',
-        width: 50,
-        align: 'center',
-        fixed: true,
-        render: ({ rowData, dataIndex, rowIndex }) =>
-          this.CheckCell({ rowData, dataIndex, rowIndex }),
-      },
       {
         title: () => 'Id1',
         dataIndex: 'id',
@@ -162,9 +119,26 @@ class App extends React.Component {
         width: 300,
       },
     ];
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(
+          `selectedRowKeys: ${selectedRowKeys}`,
+          'selectedRows: ',
+          selectedRows,
+        );
+      },
+      getCheckboxProps: (rowData) => ({
+        disabled: rowData.firstName === 'Libbie', // Column configuration not to be checked
+        name: rowData.firstName,
+      }),
+      columnIndex: 99,
+      fixed: false,
+    };
     return (
       <>
         <PerformanceTable
+          rowKey="id"
+          rowSelection={rowSelection}
           customizable
           customizedCode="pre-customized-p"
           columnDraggable

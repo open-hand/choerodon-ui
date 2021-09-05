@@ -35,6 +35,7 @@ class App extends React.Component {
   });
 
   handleChange = (value) => {
+    this.ds2.current.set('code', []);
     this.setState({ showCheckedStrategy: value });
   };
 

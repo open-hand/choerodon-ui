@@ -45,7 +45,7 @@ class App extends React.Component {
   render() {
     return (
       <Row>
-        <Col span={8}>
+        <Col span={12}>
           <Select
             dataSet={this.ds}
             name="last-name"
@@ -68,7 +68,7 @@ class App extends React.Component {
             </Option>
           </Select>
         </Col>
-        <Col span={8}>
+        <Col span={12}>
           <Select
             dataSet={this.ds}
             name="first-name"
@@ -81,7 +81,46 @@ class App extends React.Component {
             <Option value="aaa">Zhangsan</Option>
           </Select>
         </Col>
-        <Col span={8}>
+        <Col span={12}>
+          <Select
+            dataSet={this.ds}
+            name="last-name"
+            searchable
+            searchFieldInPopup
+            searchMatcher={this.searchMatcher}
+          >
+            <Option value="jack" text="Jack">
+              <p>Jack</p>
+            </Option>
+            <Option value="lucy" text="Lucy">
+              <p>
+                <em>lucy</em>
+              </p>
+            </Option>
+            <Option value="zhangsan" text="Zhangsan">
+              Zhangsan
+            </Option>
+            <Option value="aaa" text="Zhangsan">
+              Zhangsan
+            </Option>
+          </Select>
+        </Col>
+        <Col span={12}>
+          <Select
+            dataSet={this.ds}
+            name="first-name"
+            searchable
+            searchFieldInPopup
+            searchFieldProps={{ multiple: true }}
+            searchMatcher={searchMatcher}
+          >
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+            <Option value="zhangsan">Zhangsan</Option>
+            <Option value="aaa">Zhangsan</Option>
+          </Select>
+        </Col>
+        <Col span={12}>
           <Select dataSet={this.ds} name="sex" searchable searchMatcher="key" />
         </Col>
       </Row>

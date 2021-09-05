@@ -9,14 +9,14 @@ title: API
 | options        | 编辑器配置，详见[CodeMirror Options](https://codemirror.net/doc/manual.html#config) | object            |                       |
 | formatHotKey   | 格式化快捷键                                                                        | string            | Alt+F               |
 | unFormatHotKey | 清除格式化快捷键                                                                    | string            | Alt+R               |
-| formatter      | `CodeAreaFormatter`类的实例，用于格式化                                             | CodeAreaFormatter | new JSONFormatter() |
+| formatter      | CodeAreaFormatter类的实例，用于格式化                                             | CodeAreaFormatter | new JSONFormatter() |
 | editorDidMount | 在实例挂载前回调函数 | (editor: IInstance, value: string, cb: () => void) => void; |  |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。
 
 ### 自定义主题
 
-组件内置`'neat'`和`'monokai'`两个主题，使用更多主题需要引入对应的样式文件，如下：
+组件内置'neat'和'monokai'两个主题，使用更多主题需要引入对应的样式文件，如下：
 
 ```less
 // style.less

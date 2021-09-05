@@ -239,6 +239,14 @@ class App extends React.Component {
     </Button>
   );
 
+  toData = () => {
+    console.log('toData', this.userDs.toData());
+  };
+
+  toJSONData = () => {
+    console.log('toJSONData', this.userDs.toJSONData());
+  };
+
   toDataButton = (
     <Button onClick={this.toData} key="toData">
       toData
@@ -250,14 +258,6 @@ class App extends React.Component {
       toJSONData
     </Button>
   );
-
-  toData = () => {
-    console.log('toData', this.userDs.toData());
-  };
-
-  toJSONData = () => {
-    console.log('toJSONData', this.userDs.toJSONData());
-  };
 
   renderEdit = () => {
     return (

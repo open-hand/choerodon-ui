@@ -159,6 +159,20 @@
       "order": 11,
       "height": 165,
       "screenshot": ""
+    },
+    {
+      "filename": "group.js",
+      "title": {
+        "zh": "分组",
+        "en": "Group"
+      },
+      "description": {
+        "zh": "分组展示不同类 Tabs。\n",
+        "en": "Group.\n"
+      },
+      "order": 12,
+      "height": 265,
+      "screenshot": ""
     }
   ]
 }

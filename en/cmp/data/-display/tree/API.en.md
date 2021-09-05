@@ -28,7 +28,7 @@ title: API
 | showIcon | Shows the icon before a TreeNode's title. There is no default style; you must set a custom style for it if set to `true` | boolean | false |
 | switcherIcon | customize collapse/expand icon of tree node | React.ReactElement | - |
 | showLine | Shows a connecting line | boolean \| {showLeafIcon: boolean} | false |
-| onCheck | Callback function for when the onCheck event occurs | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, halfCheckedKeys}) | - |
+| onCheck | 点击复选框触发 | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, halfCheckedKeys}, oldCheckedKeys) | - |
 | onDragEnd | Callback function for when the onDragEnd event occurs | function({event, node}) | - |
 | onDragEnter | Callback function for when the onDragEnter event occurs | function({event, node, expandedKeys}) | - |
 | onDragLeave | Callback function for when the onDragLeave event occurs | function({event, node}) | - |

@@ -16,8 +16,8 @@ title: API
 
 ### Static method
 
-| 名称                         | 说明       | 参数                                                                                                                                                                       |
-| ---------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| format(value, lang, options) | 数字格式化 | `value` - 数值 `lang` - 语言代码 `options` - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
-| precision | 转换小数点位数 | number |  |
-| numberGrouping | 千分位分组显示 | boolean | true |
+| 名称                         | 说明       | 参数    | 版本 |
+| ---------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| format(value, lang, options) | 数字格式化 | value - 数值 lang - 语言代码 options - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |  |
+| precision | 转换小数点位数 | number | 1.3.0 |
+| numberGrouping | 千分位分组显示 | boolean |  1.3.0   |

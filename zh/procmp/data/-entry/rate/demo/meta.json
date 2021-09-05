@@ -1,0 +1,36 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "最简单的用法。\n",
+        "en": "Basic Usage。\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "DataSet Binding"
+      },
+      "description": {
+        "zh": "绑定数据源\n",
+        "en": "DataSet Binding\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}

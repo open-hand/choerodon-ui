@@ -7,17 +7,17 @@ title: API
 | Property | Description | Type | Default Value |
 | ----- | -------- | -------- | ------------------ |
 | options | Editor configuration, see [Quill Options](https://github.com/zenoamaro/react-quill#props)| object | |
-| mode | Editor mode, optional value editor preview | string | `editor` |
-| toolbar | Toolbar, optional value is hook or built-in type: normal none | string | ({ dataSet, id }) => ReactNode | `normal` |
+| mode | Editor mode, optional value editor preview | string | editor |
+| toolbar | Toolbar, optional value is hook or built-in type: normal none | string | ({ dataSet, id }) => ReactNode | normal |
 
 For more attributes, please refer to [FormField](/zh/procmp/abstract/field/#FormField).
 
 
 ### RichText.RichTextViewer
 
-| Parameters | Description | Type | Default Value |
-| --- | --- | --- | --- |
-| deltaOps | Editor rendering value | Delta.ops | None |
+| Parameters | Description | Type |
+| --- | --- | --- | 
+| deltaOps | Editor rendering value | Delta.ops | 
 
 ### toolbar
 

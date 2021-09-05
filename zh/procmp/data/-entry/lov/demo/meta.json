@@ -90,6 +90,21 @@
       "screenshot": "",
       "height": 200,
       "category": "pro"
+    },
+    {
+      "filename": "popup-mode.js",
+      "title": {
+        "zh": "下拉框模式",
+        "en": "Popup mode"
+      },
+      "description": {
+        "zh": "下拉框模式。\n",
+        "en": "Popup mode.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 300,
+      "category": "pro"
     }
   ]
 }

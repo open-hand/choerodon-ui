@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { PerformanceTable, CheckBox } from 'choerodon-ui/pro';
 import { Popover } from 'choerodon-ui';
+import { PerformanceTable } from 'choerodon-ui/pro';
 
 const NameCell = ({ rowData, dataIndex }) => {
   return (
@@ -65,51 +65,22 @@ class CustomColumnTable extends React.Component {
     });
   };
 
-  handleCheckAllChange = (value, oldValue) => {
-    console.log('[controlled]', value, '[oldValues]', oldValue);
-    const { data } = this.state;
-    if (value) {
-      this.setState({
-        checkValues: data.map((i) => i.id),
-      });
-    } else {
-      this.setState({
-        checkValues: [],
-      });
-    }
-  };
-
-  CheckCell = ({ rowData, rowIndex }) => {
-    const { checkValues } = this.state;
-    return (
-      <CheckBox
-        key={rowIndex}
-        name="controlled"
-        value={rowData.id}
-        checked={checkValues.indexOf(rowData.id) !== -1}
-        onChange={this.handleChange}
-      />
-    );
-  };
-
   render() {
-    const { data, checkValues } = this.state;
-    const columns = [
-      {
-        title: (
-          <CheckBox
-            name="controlled"
-            checked={checkValues.length === data.length}
-            onChange={this.handleCheckAllChange}
-          />
-        ),
-        dataIndex: 'id',
-        key: 'id',
-        width: 80,
-        fixed: true,
-        render: ({ rowData, dataIndex, rowIndex }) =>
-          this.CheckCell({ rowData, dataIndex, rowIndex }),
+    const { data } = this.state;
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(
+          `selectedRowKeys: ${selectedRowKeys}`,
+          'selectedRows: ',
+          selectedRows,
+        );
       },
+      getCheckboxProps: (rowData) => ({
+        disabled: rowData.firstName === 'Libbie', // Column configuration not to be checked
+        name: rowData.firstName,
+      }),
+    };
+    const columns = [
       {
         title: 'firstName',
         dataIndex: 'firstName',
@@ -147,7 +118,15 @@ class CustomColumnTable extends React.Component {
         render: ({ rowData, dataIndex }) => ActionCell({ rowData, dataIndex }),
       },
     ];
-    return <PerformanceTable height={400} data={data} columns={columns} />;
+    return (
+      <PerformanceTable
+        rowKey="id"
+        rowSelection={rowSelection}
+        height={400}
+        data={data}
+        columns={columns}
+      />
+    );
   }
 }
 

@@ -2,6 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { PerformanceTable } from 'choerodon-ui/pro';
 
+const transformData = (data) => {
+  const rowCombineArr = [];
+  let currentName = null;
+  let repeatNum = 0;
+  let repeatStart = 0;
+  for (let i = 0; i < data.length; i++) {
+    const record = data[i];
+    // 根据name进行合并
+    const { companyName } = record;
+    if (currentName === null) {
+      currentName = companyName;
+      repeatNum = 1;
+      repeatStart = i;
+      rowCombineArr[repeatStart] = 1;
+    } else if (currentName === companyName) {
+      rowCombineArr[i] = 0;
+      repeatNum += 1;
+    } else {
+      currentName = null;
+      rowCombineArr[repeatStart] = repeatNum;
+      repeatNum = 0;
+      i -= 1;
+    }
+    if (i === data.length - 1) {
+      rowCombineArr[repeatStart] = repeatNum;
+    }
+  }
+  return rowCombineArr;
+};
+const rowCombineArr = transformData(fakeDataForColSpan);
+
 class FixedColumnTable extends React.Component {
   constructor(props) {
     super(props);
@@ -17,31 +48,60 @@ class FixedColumnTable extends React.Component {
         dataIndex: 'id',
         key: 'id',
         width: 70,
+        verticalAlign: 'middle',
         fixed: true,
       },
       {
-        title: '姓',
-        dataIndex: 'lastName',
-        key: 'lastName',
-        width: 130,
+        header: '基本信息',
+        type: 'ColumnGroup',
+        align: 'center',
+        verticalAlign: 'middle',
         fixed: true,
-        colSpan: 2,
-        resizable: true,
+        children: [
+          {
+            title: '名',
+            dataIndex: 'firstName',
+            key: 'firstName',
+            width: 150,
+            colSpan: 2,
+            resizable: true,
+          },
+          {
+            title: '姓',
+            dataIndex: 'lastName',
+            key: 'lastName',
+            width: 150,
+            resizable: true,
+          },
+          {
+            title: '邮箱',
+            dataIndex: 'email',
+            key: 'email',
+            width: 200,
+            resizable: true,
+          },
+        ],
       },
       {
-        title: '名',
-        dataIndex: 'firstName',
-        key: 'firstName',
-        width: 130,
-        resizable: true,
-        fixed: true,
+        title: '公司',
+        dataIndex: 'companyName',
+        key: 'companyName',
+        width: 300,
+        verticalAlign: 'middle',
+        onCell: ({ rowData, dataIndex, rowIndex }) => {
+          const rowSpan = rowCombineArr[rowIndex];
+          return {
+            rowSpan,
+          };
+        },
       },
       {
         title: '城市',
         dataIndex: 'city',
         key: 'city',
-        width: 200,
+        width: 300,
         colSpan: 2,
+        verticalAlign: 'middle',
         resizable: true,
       },
       {
@@ -49,21 +109,11 @@ class FixedColumnTable extends React.Component {
         dataIndex: 'street',
         key: 'street',
         width: 300,
+        verticalAlign: 'middle',
         resizable: true,
       },
-      {
-        title: '公司',
-        dataIndex: 'companyName',
-        key: 'companyName',
-        width: 300,
-      },
-      {
-        title: '邮箱',
-        dataIndex: 'email',
-        key: 'email',
-        width: 300,
-      },
     ];
+
     return (
       <PerformanceTable
         bordered

@@ -62,6 +62,39 @@ class App extends React.Component {
     selectionMode: 'rowbox',
   };
 
+  handleCreateChild = () => {
+    this.ds.create({ parentId: this.ds.current.get('id') });
+  };
+
+  handleChangeExpandRender = () =>
+    this.setState({ expandedRender: !this.state.expandedRender });
+
+  handleChangeExpandIconIndex = () =>
+    this.setState((prevState) => ({
+      expandIconColumnIndex:
+        prevState.expandIconColumnIndex > 2
+          ? 0
+          : prevState.expandIconColumnIndex + 1,
+    }));
+
+  handleChangeBorder = () => this.setState({ border: !this.state.border });
+
+  handleChangeMode = () =>
+    this.setState((prevState) => ({
+      mode: prevState.mode === 'tree' ? 'list' : 'tree',
+    }));
+
+  handleChangeCheckFieldAsColumn = () =>
+    this.setState((prevState) => ({
+      checkFieldAsColumn: !prevState.checkFieldAsColumn,
+    }));
+
+  handleChangeSelectionMode = () =>
+    this.setState((prevState) => ({
+      selectionMode:
+        prevState.selectionMode === 'rowbox' ? 'treebox' : 'rowbox',
+    }));
+
   buttons = [
     'add',
     'save',
@@ -102,39 +135,6 @@ class App extends React.Component {
       切换选择模式
     </Button>,
   ];
-
-  handleCreateChild = () => {
-    this.ds.create({ parentId: this.ds.current.get('id') });
-  };
-
-  handleChangeExpandRender = () =>
-    this.setState({ expandedRender: !this.state.expandedRender });
-
-  handleChangeExpandIconIndex = () =>
-    this.setState((prevState) => ({
-      expandIconColumnIndex:
-        prevState.expandIconColumnIndex > 2
-          ? 0
-          : prevState.expandIconColumnIndex + 1,
-    }));
-
-  handleChangeBorder = () => this.setState({ border: !this.state.border });
-
-  handleChangeMode = () =>
-    this.setState((prevState) => ({
-      mode: prevState.mode === 'tree' ? 'list' : 'tree',
-    }));
-
-  handleChangeCheckFieldAsColumn = () =>
-    this.setState((prevState) => ({
-      checkFieldAsColumn: !prevState.checkFieldAsColumn,
-    }));
-
-  handleChangeSelectionMode = () =>
-    this.setState((prevState) => ({
-      selectionMode:
-        prevState.selectionMode === 'rowbox' ? 'treebox' : 'rowbox',
-    }));
 
   render() {
     const {

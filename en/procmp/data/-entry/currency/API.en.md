@@ -14,5 +14,5 @@ title: API
 
 | 名称                         | 说明       | 参数                                                                                                                                                                       |
 | ---------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| format(value, lang, options) | 货币格式化 | `value` - 数值 `lang` - 语言代码 `options` - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
+| format(value, lang, options) | 货币格式化 | value - 数值 lang - 语言代码 options - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
 

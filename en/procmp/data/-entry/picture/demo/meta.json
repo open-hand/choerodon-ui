@@ -1,0 +1,68 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 0,
+      "height": 500,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "group.js",
+      "title": {
+        "zh": "图片组",
+        "en": "Picture Group"
+      },
+      "description": {
+        "zh": "图片组\n",
+        "en": "Picture Group\n"
+      },
+      "order": 1,
+      "height": 300,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "lazy.js",
+      "title": {
+        "zh": "懒加载",
+        "en": "lazy load"
+      },
+      "description": {
+        "zh": "懒加载。\n",
+        "en": "Lazy load.\n"
+      },
+      "order": 2,
+      "height": 500,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "status.js",
+      "title": {
+        "zh": "状态",
+        "en": "status"
+      },
+      "description": {
+        "zh": "状态。\n",
+        "en": "status.\n"
+      },
+      "order": 3,
+      "height": 300,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}

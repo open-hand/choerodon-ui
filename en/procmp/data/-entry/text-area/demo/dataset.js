@@ -29,8 +29,19 @@ class App extends React.Component {
     },
   });
 
+  state = { width: 200 };
+
   render() {
-    return <TextArea dataSet={this.ds} name="content" resize="both" />;
+    return (
+      <TextArea
+        dataSet={this.ds}
+        name="content"
+        onChange={() => this.setState({ width: 300 })}
+        onResize={(width) => this.setState({ width })}
+        resize="both"
+        style={{ width: this.state.width, height: 200 }}
+      />
+    );
   }
 }
 

@@ -115,6 +115,20 @@
       "order": 7,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "changeOnSelect.js",
+      "title": {
+        "zh": "选项异步加载",
+        "en": "Asynchronous lazy loading Options"
+      },
+      "description": {
+        "zh": "选项异步加载。当是异步或者有分页时，请使用object类型字段，并且通过接口查询出显示值绑定到该字段上， 因为选项只会加载部分数据，导致没有匹配的显示值。\n",
+        "en": "Asynchronous lazy loading Options\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

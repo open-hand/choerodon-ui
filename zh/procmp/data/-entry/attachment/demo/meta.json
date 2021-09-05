@@ -1,0 +1,98 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
+    },
+    {
+      "filename": "dataSet.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "绑定数据源\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
+    },
+    {
+      "filename": "picture-card.js",
+      "title": {
+        "zh": "照片墙",
+        "en": "Pictures Wall"
+      },
+      "description": {
+        "zh": "照片墙。\n",
+        "en": "Pictures Wall.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 600,
+      "category": "pro"
+    },
+    {
+      "filename": "picture.js",
+      "title": {
+        "zh": "图片附件",
+        "en": "picture attachment"
+      },
+      "description": {
+        "zh": "图片附件。\n",
+        "en": "picture attachment.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 300,
+      "category": "pro"
+    },
+    {
+      "filename": "popup.js",
+      "title": {
+        "zh": "气泡显示",
+        "en": "popup attachment"
+      },
+      "description": {
+        "zh": "气泡显示。\n",
+        "en": "popup attachment.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 123,
+      "category": "pro"
+    },
+    {
+      "filename": "table.js",
+      "title": {
+        "zh": "在表格中显示",
+        "en": "Display in Table"
+      },
+      "description": {
+        "zh": "在表格中显示。\n",
+        "en": "Display in Table.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 230,
+      "category": "pro"
+    }
+  ]
+}

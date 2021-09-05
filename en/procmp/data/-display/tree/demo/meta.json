@@ -37,12 +37,12 @@
     {
       "filename": "selection.js",
       "title": {
-        "zh": "只使用check功能",
+        "zh": "只使用 check 功能",
         "en": "only need check"
       },
       "description": {
-        "zh": "dataSet selection 为 false  ， Tree checkable 为 true 可以实现整个treenode点击触发check 。注意：优先级高于record 里面的selectable\n",
-        "en": "dataSet selection is false and Tree checkable is true .when treeNode click , it would be checked and selection is higer priority than Record selectable\n\nDataSet.\n"
+        "zh": "Tree selectable 属性设置为 false，checkable 为 true 时可实现点击整个节点触发 onCheck 事件及 DataSet select 相关事件。\n",
+        "en": "The Tree `selectable` property is set to `false`, and when `checkable` is `true`, the `onCheck` event and DataSet `select` related events can be triggered by clicking the entire node."
       },
       "order": 2,
       "screenshot": "",

@@ -161,7 +161,6 @@ class App extends React.Component {
       <Table
         dragColumnAlign={dragColumnAlign}
         rowDraggable
-        columnDraggable
         key="user"
         buttons={buttons}
         dataSet={this.userDs}
