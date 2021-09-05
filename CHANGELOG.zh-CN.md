@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.4
+
+`2021-09-04`
+
 - 🌟 `configure`: 新增 tableColumnAlign, tableShowRemovedRow, tooltip, showValidation, attachment, selectTrigger, lovQueryCachedSelected, queryBarProps, lovQueryBar, lovQueryBarProps 属性, tooltipTheme 属性支持钩子类型, 废弃 buttonTooltip, labelTooltip, selectOptionTooltip, tableColumnTooltip。
 - 🌟 `<pro>Rate`: 新增 Rate 组件。
 - 🌟 `<pro>Attachment`: 新增 Attachment 组件。
@@ -26,6 +30,7 @@ timeline: true
 - 🌟 `<pro>Cascader`: 新增 async 和 loadData 属性，简化异步加载方案。
 - 🌟 `<pro>PerformanceTable`: 新增 onCell 属性，单元格 rowSpan 属性，支持行合并。
 - 🌟 `<pro>Form`: 新增 showValidation 属性控制校验信息提示方式。
+- 🌟 `<pro>FormField`: 新增 showValidation 属性控制校验信息提示方式。
 - 🌟 `Tree`：onCheck 回调新增 oldCheckedKeys 参数。
 - 🌟 `Skeleton`：新增 grid 属性支持栅格占位配置。
 - 🌟 `<pro>FormField`：新增 processValue 属性。
@@ -51,11 +56,11 @@ timeline: true
 - 💄 `<pro>TextField`：优化 showLengthInfo 信息渲染位置。
 - 💄 `<pro>Trigger`：支持 Fragment 子节点。
 - 💄 `ImageCrop`：优化界面及操作方式。
-- 💄 `<pro>Table`：优化专业查询条动态查询参数未实时响应的问题。
 - 💄 `<pro>PerformanceTable`：支持取消排序。
 - 💄 `<pro>FormField`：优化空值判断。
 - 💄 `<pro>Form`：优化 hidden 属性，支持隐藏字段。
 - 🐞 `configure`: 修复 tableFilterAdapter 类型。
+- 🐞 `<pro>Table`：修复专业查询条动态查询参数未实时响应的问题。
 - 🐞 `<pro>DataSet.Field`: 优化多次调用 fetchLookup 数据返回类型问题。
 - 🐞 `<pro>DataSet`：修复分页全局配置参数传参问题。
 - 🐞 `<pro>Table`：修复 CheckBox 编辑器所在单元格会显示 help 的问题。
@@ -86,7 +91,7 @@ timeline: true
 
 `2021-08-03`
 
-- 🌟 `configure`: 新增 performanceTableColumnHideable, performanceTableColumnTitleEditable, performanceTableColumnDraggable, tableVirtual 属性。
+- 🌟 `configure`: 新增 performanceTableColumnHideable, performanceTableColumnTitleEditable, performanceTableColumnDraggable, performanceTableCustomizable, tableVirtual 属性。
 - 🌟 `<pro>Table.Column`: 新增 hiddenInAggregation 属性, command 钩子新增 aggregation 参数。
 - 🌟 `<pro>PerformanceTable`: 新增 customizedCode, customizable, columnDraggable, columnTitleEditable, columnsDragRender 属性，支持个性化。
 - 💄 `<pro>DataSet`：内存优化。

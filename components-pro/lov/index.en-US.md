@@ -29,6 +29,7 @@ title: Lov
 | fetchSingle | searchAction 为 blur 时生效，获取记录有重复时弹出选择窗口 | boolean | false |
 | autoSelectSingle | 点击查询仅存在一条数据时自动选中 | boolean | false |
 | showCheckedStrategy | 定义选中项回填的方式。`SHOW_CHILD`: 只显示子节点. `SHOW_PARENT`: 只显示父节点(当父节点下所有子节点都选中时). 默认显示所有选中节点(包括父节点). | string | SHOW_ALL |
+| onBeforeSelect | 确认勾选前回调，返回 false 弹窗不关闭 | (records: Record | Record[]) => boolean \| undefined |  |
 
 更多属性请参考 [TextField](/components-pro/text-field/#TextField), [Button](/components-pro/button/#Button)。
 

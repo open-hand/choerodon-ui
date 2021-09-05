@@ -2050,7 +2050,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
 
       return (
-        <Row {...restRowProps} data-zindex={rowData ? rowData.__rowZIndex : ''} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles}>
+        <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles}>
           {fixedLeftCellGroupWidth ? (
             <CellGroup
               fixed="left"
