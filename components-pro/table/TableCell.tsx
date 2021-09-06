@@ -40,6 +40,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
       disabled={disabled}
       inAggregation={inAggregation}
       prefixCls={cellPrefix}
+      colSpan={colSpan}
     >
       {children}
     </TableCellInner>
