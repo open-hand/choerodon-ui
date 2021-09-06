@@ -17,6 +17,12 @@
       width: @date-picker-width;
       line-height: 1.5;
       background-clip: padding-box;
+
+      &-editor {
+        width: 100%;
+        padding: .04rem;
+        border-bottom: @border-width-base @border-style-base @border-color-base;
+      }
     }
 
     &-suffix {
@@ -80,9 +86,11 @@
       }
     }
   }
+
   &-now-disabled {
     color: #bcbcbc;
-    &:hover{
+
+    &:hover {
       color: #bcbcbc;
     }
   }
@@ -197,7 +205,7 @@
     line-height: 0.34rem;
   }
 
-  &-footer-extra,&-footer {
+  &-footer-extra, &-footer {
     position: relative;
     height: 0.39rem;
     line-height: 0.39rem;

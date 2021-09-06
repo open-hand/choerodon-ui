@@ -217,6 +217,9 @@ export function processValue(value, format) {
 }
 
 export function isFieldValueEmpty(value: any, range?: boolean | [string, string], field?: Field) {
+  if (isEmpty(value)) {
+    return true;
+  }
   if (range === true) {
     return isArrayLike(value) && value.every(v => isEmpty(v));
   }
@@ -246,7 +249,7 @@ export function isFieldValueEmpty(value: any, range?: boolean | [string, string]
       return isEmpty(value[valueField]);
     }
   }
-  return isEmpty(value);
+  return false;
 }
 
 export type MultipleRenderOption = {
@@ -288,14 +291,8 @@ export type MultiLineRenderOption = {
 
 export function renderRangeValue(value, option: RangeRenderOption) {
   const { repeat, processRenderer } = option;
-  const rangeValue = (value || []).reduce((values, item) => {
-    const v = processRenderer(item, repeat);
-    if (!isEmpty(v)) {
-      values.push(v);
-    }
-    return values;
-  }, []) as [any, any];
-  if (rangeValue.length) {
+  const rangeValue = (value || []).map((item) => processRenderer(item, repeat), []) as [any, any];
+  if (rangeValue.some(v => !isEmpty(v))) {
     return (
       <>
         {rangeValue[0]}~{rangeValue[1]}

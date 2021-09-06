@@ -309,6 +309,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
      */
     multiple: PropTypes.bool,
     /**
+     * 是否是范围值
+     * @default false
+     */
+    range: PropTypes.oneOfType([PropTypes.bool, PropTypes.arrayOf(PropTypes.string)]),
+    /**
      * 表单下控件跨越的行数
      */
     rowSpan: PropTypes.number,
@@ -644,6 +649,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return !this.disabled && !this.readOnly;
   }
 
+  isEditableLike(): boolean {
+    return false;
+  }
+
   getObservablePropsExcludeOutput(props, context): object | undefined {
     return {
       readOnly: context.readOnly || props.readOnly || (this.getControlled(props) && !props.onChange && !props.onInput),
@@ -962,7 +971,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   handleBlur(e) {
     super.handleBlur(e);
-    if (this.range && this.isEditable()) {
+    if (this.range && (this.editable || this.isEditableLike())) {
       this.endRange();
     }
   }
@@ -1087,10 +1096,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       : text;
   }
 
-  processRangeValue(value?: any, repeat?: number): [any, any] {
-    if (repeat === undefined) {
-      value = this.rangeValue;
-    }
+  processRangeValue(value?: any): [any, any] {
     if (value === undefined && !this.multiple) {
       value = toRangeValue(this.getValue(), this.range);
     }
