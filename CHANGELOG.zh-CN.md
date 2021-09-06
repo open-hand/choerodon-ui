@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
+- 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
+
 ## 1.4.4
 
 `2021-09-04`

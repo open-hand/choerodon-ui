@@ -216,37 +216,36 @@ export function processValue(value, format) {
   return '';
 }
 
-export function isFieldValueEmpty(value: any, range?: boolean | [string, string], field?: Field) {
+export function isFieldValueEmpty(value: any, range?: boolean | [string, string], valueField?: string, textField?: string) {
+  if (isEmpty(value)) {
+    return true;
+  }
   if (range === true) {
     return isArrayLike(value) && value.every(v => isEmpty(v));
   }
   if (isArrayLike(range)) {
     return value && Object.values(value).every(v => isEmpty(v));
   }
-  const valueField = field?.get('valueField');
-  const textField = field?.get('textField');
+  const isObjectEmpty = (v): boolean => {
+    if (valueField && textField) {
+      if (isObservableObject(v)) {
+        return isEmpty(get(v, valueField)) && isEmpty(get(v, textField));
+      }
+      if (isObject(v)) {
+        return isEmpty(v[valueField]) && isEmpty(v[textField]);
+      }
+    }
+    return false;
+  };
   if (isArrayLike(value)) {
     return value.length ? value.every(v => {
-      if (valueField) {
-        if (isObservableObject(v)) {
-          return isEmpty(get(v, valueField)) && isEmpty(get(v, textField));
-        }
-        if (isObject(v)) {
-          return isEmpty(v[valueField]) && isEmpty(v[textField]);
-        }
+      if (isEmpty(v)) {
+        return true;
       }
-      return isEmpty(v);
+      return isObjectEmpty(v);
     }) : true;
   }
-  if (valueField) {
-    if (isObservableObject(value)) {
-      return isEmpty(get(value, valueField));
-    }
-    if (isObject(value)) {
-      return isEmpty(value[valueField]);
-    }
-  }
-  return isEmpty(value);
+  return isObjectEmpty(value);
 }
 
 export type MultipleRenderOption = {
@@ -288,14 +287,8 @@ export type MultiLineRenderOption = {
 
 export function renderRangeValue(value, option: RangeRenderOption) {
   const { repeat, processRenderer } = option;
-  const rangeValue = (value || []).reduce((values, item) => {
-    const v = processRenderer(item, repeat);
-    if (!isEmpty(v)) {
-      values.push(v);
-    }
-    return values;
-  }, []) as [any, any];
-  if (rangeValue.length) {
+  const rangeValue = (value || []).map((item) => processRenderer(item, repeat), []) as [any, any];
+  if (rangeValue.some(v => !isEmpty(v))) {
     return (
       <>
         {rangeValue[0]}~{rangeValue[1]}

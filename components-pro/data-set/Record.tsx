@@ -672,13 +672,9 @@ export default class Record {
         }
       }
       const { fields } = this;
-      [field, ...findBindFields(field, fields, true), ...findBindTargetFields(field, fields, true)].forEach((oneField) => {
-        const { validator } = oneField;
-        if (validator) {
-          validator.reset();
-        }
-        oneField.checkValidity(false);
-      });
+      [field, ...findBindFields(field, fields, true), ...findBindTargetFields(field, fields, true)].forEach((oneField) => (
+        oneField.checkValidity(false)
+      ));
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.set(key, item[key]));
     }

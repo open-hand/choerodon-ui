@@ -342,7 +342,7 @@ export default class TimesView extends DaysView {
       const isDisabled = !isValidDate(current, selected);
       const text = unit === TimeUnit.a ?
         current.format(isUpperCase ? 'A' : 'a') :
-        String(pre.get(unit) - (use12Hours && pre.get(unit) > 11 ? 12 : 0) || (use12Hours && finalUnit === TimeUnit.hour ? 12 : 0));
+        String(pre.get(unit) - (use12Hours && finalUnit === TimeUnit.hour && pre.get(unit) > 11 ? 12 : 0) || (use12Hours && finalUnit === TimeUnit.hour ? 12 : 0));
       const className = classNames(`${prefixCls}-cell`, {
         [`${prefixCls}-selected`]: unit === TimeUnit.a ? current.get(TimeUnit.hour) === selectedValue : current.isSame(selected, finalUnit),
         [`${prefixCls}-disabled`]: isDisabled,

@@ -43,6 +43,7 @@ import ObserverTextField, { TextFieldProps } from '../text-field/TextField';
 import Icon from '../icon';
 import { ValueChangeAction } from '../text-field/enum';
 import { LabelLayout } from '../form/enum';
+import { isFieldValueEmpty } from '../field/utils';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -489,6 +490,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return searchFieldInPopup;
   }
 
+  isEmpty() {
+    const value = this.getValue();
+    return isFieldValueEmpty(value, this.range, this.valueField, this.textField);
+  }
+
   isEditable(): boolean {
     return super.isEditable() && ((this.searchable && !this.isSearchFieldInPopup()) || !!this.observableProps.combo);
   }
@@ -507,14 +513,14 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   clearCheckValue() {
     if (this.checkValueReaction) {
       this.checkValueReaction();
-      this.checkValueReaction = undefined;
+      delete this.checkValueReaction;
     }
   }
 
   clearCheckCombo() {
     if (this.checkComboReaction) {
       this.checkComboReaction();
-      this.checkComboReaction = undefined;
+      delete this.checkComboReaction;
     }
   }
 

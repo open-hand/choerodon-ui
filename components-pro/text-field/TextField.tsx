@@ -320,7 +320,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   isEmpty() {
-    return isEmpty(this.text) && super.isEmpty() && this.isRenderEmpty();
+    return (this.isEditableLike() || isEmpty(this.text)) && super.isEmpty() && this.isRenderEmpty();
   }
 
   getOtherProps() {
@@ -576,13 +576,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderRangeEditor(props) {
-    const { prefixCls, rangeTarget, isFocused } = this;
-    const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
-    const [startValue = '', endValue = ''] = this.processRangeValue();
+    const { isFlat } = this.props;
+    const { prefixCls, rangeTarget, isFocused, editable } = this;
+    const [startPlaceholder, endPlaceholder = startPlaceholder] = this.getPlaceholders();
+    const [startValue = '', endValue = ''] = this.processRangeValue(this.isEditableLike() ? undefined : this.rangeValue);
     const startRenderedValue = this.renderRenderedValue(startValue, {
       key: 'startRenderedText',
       className: `${prefixCls}-range-start-rendered-value`,
     });
+    let startStyle: CSSProperties | undefined;
+    let endStyle: CSSProperties | undefined;
     const endRenderedValue = this.renderRenderedValue(endValue, {
       key: 'endRenderedText',
       className: `${prefixCls}-range-end-rendered-value`,
@@ -594,6 +597,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.right = 0;
     } else {
       editorStyle.left = 0;
+    }
+    // 筛选条默认宽度处理
+    if (isFlat) {
+      startStyle = { width: measureTextWidth(isEmpty(startValue) ? startPlaceholder || '' : startText) };
+      endStyle = { width: measureTextWidth(isEmpty(endValue) ? endPlaceholder || '' : endText) };
     }
     return (
       <span key="text" className={`${prefixCls}-range-text`}>
@@ -607,7 +615,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               className={`${prefixCls}-range-input`}
               key="text"
               value={
-                rangeTarget === undefined || !this.isFocused
+                !editable || rangeTarget === undefined || !this.isFocused
                   ? ''
                   : this.text === undefined
                   ? rangeTarget === 0
@@ -616,13 +624,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
                   : this.text
               }
               placeholder={
-                rangeTarget === undefined || !this.isFocused
+                !editable || rangeTarget === undefined || !this.isFocused
                   ? ''
                   : rangeTarget === 0
                   ? startPlaceholder
-                  : endPlaceHolder
+                  : endPlaceholder
               }
-              readOnly={this.readOnly}
+              readOnly={!editable}
               style={editorStyle}
             />
           )
@@ -632,20 +640,22 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           className={`${prefixCls}-range-start`}
           onChange={noop}
           onMouseDown={this.handleRangeStart}
-          value={rangeTarget === 0 && isFocused ? '' : startText}
-          placeholder={rangeTarget === 0 && isFocused ? '' : startPlaceholder}
+          value={editable && rangeTarget === 0 && isFocused ? '' : startText}
+          placeholder={editable && rangeTarget === 0 && isFocused ? '' : startPlaceholder}
           disabled={props.disabled === undefined ? false : props.disabled}
+          style={startStyle}
           readOnly
         />
-        <span className={`${prefixCls}-range-split`}>~</span>
+        <span className={`${prefixCls}-range-split`}>{(!isFlat || startPlaceholder || endPlaceholder || !this.isEmpty()) && '~'}</span>
         <input
           tabIndex={-1}
           className={`${prefixCls}-range-end`}
           onChange={noop}
           onMouseDown={this.handleRangeEnd}
-          value={rangeTarget === 1 && isFocused ? '' : endText}
-          placeholder={rangeTarget === 1 && isFocused ? '' : endPlaceHolder}
+          value={editable && rangeTarget === 1 && isFocused ? '' : endText}
+          placeholder={editable && rangeTarget === 1 && isFocused ? '' : endPlaceholder}
           disabled={props.disabled === undefined ? false : props.disabled}
+          style={endStyle}
           readOnly
         />
       </span>
@@ -717,9 +727,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       range,
       props: { style, isFlat, suffixCls },
     } = this;
-    const otherProps = this.getOtherProps();
+    const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
     if (multiple) {
-      const { onMouseEnter, onMouseLeave } = otherProps;
       const { height } = (style || {}) as CSSProperties;
       const tags = (
         <Animate
@@ -727,8 +736,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           componentProps={{
             ref: this.saveTagContainer,
             onScroll: stopPropagation,
-            onMouseEnter,
-            onMouseLeave,
             style:
               height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
           }}
@@ -749,7 +756,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         </Animate>
       );
       return wrap(
-        <div key="text" className={otherProps.className}>
+        <div key="text" className={otherProps.className} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
           {
             isFlat ? (
               <Tooltip title={this.getMultipleText()}>
@@ -762,7 +769,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     if (range) {
       return wrap(
-        <span key="text" className={otherProps.className}>
+        <span key="text" className={otherProps.className} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
           {this.renderRangeEditor(otherProps)}
         </span>,
       );
@@ -782,7 +789,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     // 筛选条默认宽度处理
     if (isFlat) {
-      const width = !isNil(value) ? measureTextWidth(finalText) + (suffixCls !== 'input' ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
+      const width = isEmpty(value) ? measureTextWidth(placeholder || '') + 24 : measureTextWidth(finalText) + (suffixCls !== 'input' ? 37 : 21);
       otherProps.style = {
         ...otherProps.style,
         width,
@@ -804,6 +811,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         <input
           key="text"
           {...otherProps}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
           placeholder={placeholder}
           value={renderedValue && !(this.isFocused && this.editable) ? '' : finalText}
           readOnly={!this.editable}
@@ -986,7 +997,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  handleRangeStart(event: React.MouseEvent<HTMLInputElement, MouseEvent>) {
+  handleRangeStart(event) {
     // 进行切换的时候默认不会收起 popup 因为点击start的时候也会触发 trigger 的 handleClick
     // 导致在设置了 isClickToHide 的情况下回收起
     // handleRangeEnd 同理
@@ -997,7 +1008,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  handleRangeEnd(event: React.MouseEvent<HTMLInputElement, MouseEvent>) {
+  handleRangeEnd(event) {
     if (this.rangeTarget === 0 && this.isFocused) {
       event.preventDefault();
     }
@@ -1106,7 +1117,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
-      if (this.editable) {
+      if (this.editable || this.isEditableLike()) {
         this.syncValueOnBlur(e.target.value);
       } else if (!this.getValues().length) {
         this.setValue(null);
@@ -1129,7 +1140,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getTextNode(value?: any) {
-    return this.text === undefined ? super.getTextNode(value) : this.text;
+    return this.text === undefined || this.isEditableLike() ? super.getTextNode(value) : this.text;
   }
 
   @action

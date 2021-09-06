@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
+import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from '../data-set/DataSet';
@@ -20,7 +21,8 @@ export interface LovViewProps {
   multiple: boolean;
   values: any[];
   popup?: boolean;
-  onSelect: (records: Record | Record[]) => boolean | undefined;
+  onSelect: (records: Record | Record[]) => void;
+  onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   modal?: { close: Function, handleOk: Function };
 }
 
@@ -87,13 +89,14 @@ export default class LovView extends Component<LovViewProps> {
 
   handleSelect = () => {
     const { selectionMode } = this;
-    const { onSelect, modal, multiple, dataSet } = this.props;
+    const { onSelect, onBeforeSelect = noop, modal, multiple, dataSet } = this.props;
     const records: Record[] = selectionMode === SelectionMode.treebox ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     const record: Record | Record[] | undefined = multiple ? records : records[0];
-    if (record && onSelect(record) !== false && modal) {
+    if (record && modal && onBeforeSelect(record) !== false) {
       modal.close();
+      onSelect(record);
     }
     return false;
   };

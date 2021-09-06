@@ -522,7 +522,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     onFocus: handleFocus,
     children: text,
   };
-  const empty = field ? isFieldValueEmpty(value, field.get('range')) : false;
+  const empty = field ? isFieldValueEmpty(
+    value,
+    field.get('range'),
+    field.type === FieldType.object ? field.get('valueField') : undefined,
+    field.type === FieldType.object ? field.get('textField') : undefined,
+  ) : false;
   const innerClassName: string[] = [innerPrefixCls];
   if (columnEditorBorder) {
     innerClassName.push(`${prefixCls}-inner-bordered`);
