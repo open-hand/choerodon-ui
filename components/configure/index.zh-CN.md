@@ -38,6 +38,9 @@ const prefixCls = getConfig('prefixCls');
 | lovModalProps | Lov 弹窗属性，详见[ModalProps](/components/modal/#Modal) | ModalProps |  |
 | lovTableCustomizable | Lov 弹窗中 Table 是否显示个性化设置入口按钮 | boolean | false |
 | lovAutoSelectSingle | Lov 点击查询仅存在一条数据时自动选中且不弹窗 | boolean | false |
+| lovQueryBar | 默认 Lov Table 的 queryBar | string | normal |
+| lovQueryBarProps | 默认 Lov Table queryBar 的 queryBarProps | object | |
+| lovQueryCachedSelected | lov 查询缓存已勾选记录 | (code: string, cachedSelected: Map<string, Record>) => Promise<object[]> | |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
@@ -51,6 +54,7 @@ const prefixCls = getConfig('prefixCls');
 | status | 默认 DataSet 提交的数据的状态映射 | { add: string, update: string, delete: string } | { add: 'add', update: 'update', delete: 'delete' } |
 | labelLayout | 默认 Form 的 labelLayout | string | horizontal |
 | queryBar | 默认 Table 的 queryBar | string | normal |
+| queryBarProps | 默认 Table queryBar 的 queryBarProps | object | |
 | tableVirtual | 默认 Table 的 virtual | boolean | |
 | tableVirtualCell | 默认 Table 的 virtualCell | boolean | |
 | tableBorder | 默认 Table 的 border | boolean | true |

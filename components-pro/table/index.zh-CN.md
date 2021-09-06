@@ -31,7 +31,7 @@ subtitle: 表格
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number |  |
 | queryBar | 查询条, 可选值为钩子或者内置类型：`filterBar` `professionalBar` `advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | 'normal' |
-| queryBarProps | 查询条自定义参数。 当查询条是全局配置的自定义查询条，需要传递自定义参数时可以用此属性 | object |  |
+| queryBarProps | 查询条参数，不同查询条参数配置应对应。 当查询条是全局配置的自定义查询条，需要传递自定义参数时可以用此属性 | object |  |
 | summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |
 | useMouseBatchChoose | 是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
@@ -92,7 +92,7 @@ subtitle: 表格
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | showHeader |	是否显示表头 |	boolean |	true |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean |	 |
-| onResize | 列宽改变的回调事件  | function | (column, width) => void |
+| onResize | 列宽改变的回调事件  | ({ column, width }) => void | |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -142,7 +142,7 @@ subtitle: 表格
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 
-### Table.AdvancedQueryBar & Table.ProfessionalBar
+### Table.AdvancedQueryBar
 
 | 参数             | 说明                                                     | 类型   | 默认值 |
 | ---------------- | -------------------------------------------------------- | ------ | ------ |
@@ -163,7 +163,23 @@ subtitle: 表格
 
 | 参数        | 说明                   | 类型   | 默认值   |
 | ----------- | ---------------------- | ------ | -------- |
-| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 2 |
+| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3 |
+| autoQueryAfterReset | 重置后自动查询 | boolean | true |
+| onQuery | 查询回调 | () => void |  |
+| onReset | 重置回调 | () => void |  |
+
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+
+### Table.ProfessionalBar
+
+| 参数             | 说明                                                     | 类型   | 默认值 |
+| ---------------- | -------------------------------------------------------- | ------ | ------ |
+| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3      |
+| autoQueryAfterReset | 重置后自动查询 | boolean | true |
+| defaultExpanded | 默认展开 | boolean | false |
+| formProps | 查询条表单属性 | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } |
+| onQuery | 查询回调 | () => void |  |
+| onReset | 重置回调 | () => void |  |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 

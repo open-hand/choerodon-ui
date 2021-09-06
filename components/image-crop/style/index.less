@@ -41,36 +41,14 @@
     height: 0.28rem;
 
     .@{c7n-prefix}-btn {
-      width: 0.28rem;
-      height: 0.28rem;
-      margin: 0 0.06rem 0 0.06rem;
-      padding: 0;
-      line-height: 0.28rem;
-      border: 0.01rem solid #D5DAE0;
-      border-radius: 0.02rem;
-
-      &:nth-of-type(1) {
-        margin: 0;
-        border-radius: 0;
-        border-top-left-radius: 0.02rem;
-        border-bottom-left-radius: 0.02rem;
+      min-width: 0.28rem;
+      > .icon {
+        margin-right: 0;
       }
+    }
 
-      &:nth-of-type(2) {
-        margin-left: 0;
-        border-left: 0;
-        border-radius: 0;
-        border-top-right-radius: 0.02rem;
-        border-bottom-right-radius: 0.02rem;
-      }
-
-      .icon {
-        width: 100%;
-        height: 100%;
-        font-size: 0.16rem;
-        line-height: 0.28rem;
-        text-align: center;
-      }
+    > .@{c7n-prefix}-btn {
+      margin-left: 0.06rem;
     }
   }
 }

@@ -93,6 +93,7 @@ const App = () => {
         name="phone"
         required
         clearButton
+        showValidation="newLine"
         addonBefore="+86"
         addonAfter="中国大陆"
       />

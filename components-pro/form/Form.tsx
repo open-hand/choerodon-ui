@@ -406,14 +406,6 @@ export default class Form extends DataSetComponent<FormProps> {
     return false;
   }
 
-  get showValidation(): ShowValidation {
-    const { showValidation } = this.observableProps;
-    if (showValidation !== undefined) {
-      return showValidation;
-    }
-    return getConfig('showValidation')
-  }
-
   @computed
   get excludeUseColonTagList(): string[] {
     const { excludeUseColonTagList } = this.observableProps;
@@ -517,6 +509,11 @@ export default class Form extends DataSetComponent<FormProps> {
   @computed
   get fieldHighlightRenderer(): boolean {
     return this.observableProps.fieldHighlightRenderer;
+  }
+
+  @computed
+  get showValidation(): ShowValidation {
+    return this.observableProps.showValidation;
   }
 
   @computed

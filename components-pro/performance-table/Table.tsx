@@ -9,6 +9,7 @@ import isEqual from 'lodash/isEqual';
 import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
+import uniq from 'lodash/uniq';
 import BScroll from '@better-scroll/core';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
@@ -990,15 +991,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     return (
       <span onClick={stopPropagation}>
-          <SelectionBox
-            store={this.tableStore}
-            type={type}
-            rowIndex={rowKey}
-            onChange={handleChange}
-            defaultSelection={this.getDefaultSelection()}
-            {...props}
-          />
-        </span>
+        <SelectionBox
+          store={this.tableStore}
+          type={type}
+          rowIndex={rowKey}
+          onChange={handleChange}
+          defaultSelection={this.getDefaultSelection()}
+          {...props}
+        />
+      </span>
     );
   };
 
@@ -1942,6 +1943,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {
+      if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
+        rowStyles.zIndex = 0;
+      }
       const fixedLeftCells = [];
       const fixedRightCells = [];
       const scrollCells = [];
@@ -2251,10 +2255,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         // 找到左右固定列
         for (let i = 0; i < bodyCells.length; i++) {
           const bc = bodyCells[i];
-          if ((bc.props.fixed && bc.props.fixed !== 'right') || bc.props.fixed === 'left') {
-            renderLeftFixedCol.push(bc);
-          } else if (bc.props.fixed === 'right') {
-            renderRightFixedCol.push(bc);
+          const { fixed } = bc.props;
+          if ((fixed && fixed !== 'right') || fixed === 'left') {
+            renderLeftFixedCol.push(bc)
+          } else if (fixed === 'right') {
+            renderRightFixedCol.push(bc)
           }
         }
 
@@ -2290,7 +2295,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         // 计算列显示的结束下标
         const colEndIndex = (showNum ? (colIndex + showNum) + 1 : bodyCells.length) - renderRightFixedCol.length; //
         // 最后slice 需要渲染的部分列
-        renderCols = [...renderLeftFixedCol, ...bodyCells.slice(colStartIndex, colEndIndex), ...renderRightFixedCol];
+        if (renderLeftFixedCol.length + renderRightFixedCol.length === bodyCells.length) {
+          renderCols = [...renderLeftFixedCol, ...renderRightFixedCol]
+        } else {
+          renderCols = [...renderLeftFixedCol, ...bodyCells.slice(colStartIndex, colEndIndex), ...renderRightFixedCol]
+        }
       }
 
       /**

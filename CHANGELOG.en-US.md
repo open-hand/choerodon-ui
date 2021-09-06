@@ -15,7 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment`, `selectTrigger`, `lovQueryCachedSelected` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
+## 1.4.4
+
+`2021-09-04`
+
+- 🌟 `configure`: Added `tableColumnAlign`, `tooltip`, `showValidation`, `attachment`, `selectTrigger`, `lovQueryCachedSelected`, `queryBarProps`, `lovQueryBar`, `lovQueryBarProps` properties, `tooltipTheme` property supports hook type, deprecated `buttonTooltip`, `labelTooltip`, `selectOptionTooltip`, `tableColumnTooltip` properties.
 - 🌟 `<pro>Rate`: Added `Rate` component.
 - 🌟 `<pro>Attachment`: Added `Attachment` component.
 - 🌟 `<pro>Picture`: Added `Picture` component.
@@ -28,6 +32,7 @@ timeline: true
 - 🌟 `Tree`: Added the `oldCheckedKeys` parameter to the `onCheck` callback.
 - 🌟 `Skeleton`: Added `grid` property to support grid space configuration.
 - 🌟 `<pro>Form`: Added the `showValidation` attribute to control the prompting method of verification information.
+- 🌟 `<pro>FormField`: Added the `showValidation` attribute to control the prompting method of verification information.
 - 🌟 `<pro>FormField`: Added `processValue` property.
 - 🌟 `<pro>DataSet.Field`: Added `processValue` property.
 - 🌟 `DatePicker`: Added `processValue` property.
@@ -39,8 +44,10 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
 - 🌟 `<pro>PerformanceTable`: Added `rowDraggable` property to support row drag.
 - 🌟 `<pro>PerformanceTable`: Added horizontal virtual scroll.
-- 🌟 `<pro>Table`: Added `onResize` callback.
+- 🌟 `<pro>Table`: Added `onResize` callback. 
 - 🌟 `Tabs`: Added TabGroup component.
+- 🌟 `Icon`: Added a lot of icons.
+- 🌟 `Table`: Added `autoQueryAfterReset` property to support ProfessionalBar & DynamicFilterBar to reset whether to automatically query.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
@@ -50,11 +57,11 @@ timeline: true
 - 💄 `<pro>TextField`: Optimize the display position of `showLengthInfo`.
 - 💄 `<pro>Trigger`: Support Fragment child.
 - 💄 `ImageCrop`：Optimize the interface and usage.
-- 💄 `<pro>Table`: Optimize the problem that the dynamic query parameters of the professionalQuery bar do not respond in real time.
 - 💄 `<pro>PerformanceTable`：Unordering is supported.
 - 💄 `<pro>FormField`: Optimize the null value judgment.
 - 💄 `<pro>Form`: Optimize the `hidden` attribute to support hidden fields.
 - 🐞 `configure`: Modify the `tableFilterAdapter` type.
+- 🐞 `<pro>Table`: Fix the problem that the dynamic query parameters of the professionalQuery bar do not respond in real time.
 - 🐞 `<pro>DataSet.Field`: Optimize the data return type problem of multiple calls to `fetchLookup`.
 - 🐞 `<pro>DataSet`: Fix the issue of global parameter passing in paging.
 - 🐞 `<pro>Table`: Fix the problem that help message is displayed in the cell which editor is CheckBox.
@@ -78,12 +85,14 @@ timeline: true
 - 🐞 `<pro>NumberField`: Fix `suffix`, `prefix` attribute support, style.
 - 🐞 `<pro>Output`: Fix the problem of invalid colon when using `useColon`.
 - 🐞 `<pro>Table`: Fixed an error rendering when the filter bar condition is a number of 0.
+- 🐞 `<pro>Table`: Fix the `footer` dom position.
+- 🐞 `<pro>Table`: Fix the invalid problem of `queryBarProps` `onReset` & `onQuery` event.
 
 ## 1.4.3
 
 `2021-08-03`
 
-- 🌟 `configure`: Added `performanceTableColumnHideable`, `performanceTableColumnTitleEditable`, `performanceTableColumnDraggable`, `tableVirtual` properties.
+- 🌟 `configure`: Added `performanceTableColumnHideable`, `performanceTableColumnTitleEditable`, `performanceTableColumnDraggable`, `performanceTableCustomizable`, `tableVirtual` properties.
 - 🌟 `<pro>Table.Column`: Added `hiddenInAggregation` property, added `aggregation` parameter to the `command` hook.
 - 🌟 `<pro>PerformanceTable`: Added personalization features, including `customizedCode`, `customizable`, `columnDraggable`, `columnTitleEditable`, `columnsDragRender` properties.
 - 💄 `<pro>DataSet`: Memory optimization.

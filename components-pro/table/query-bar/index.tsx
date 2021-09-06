@@ -794,8 +794,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
       const queryFields = this.getQueryFields();
+      const tableQueryBarProps = { ...queryBarProps, ...getConfig('queryBarProps')};
+      const onReset = tableQueryBarProps && typeof tableQueryBarProps.onReset === 'function' ? tableQueryBarProps.onReset : noop;
+      const onQuery = tableQueryBarProps && typeof tableQueryBarProps.onQuery === 'function' ? tableQueryBarProps.onQuery : noop;
       const props: TableQueryBarHookCustomProps & TableQueryBarHookProps = {
-        ...queryBarProps,
+        ...tableQueryBarProps,
         dataSet,
         queryDataSet,
         buttons,
@@ -804,8 +807,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         queryFieldsLimit: queryFieldsLimit!,
         summaryFieldsLimit: summaryFieldsLimit!,
         summaryBar,
-        onQuery: treeQueryExpanded && isTree ? this.expandTree : noop,
-        onReset: treeQueryExpanded && isTree ? this.collapseTree : noop,
+        onQuery: treeQueryExpanded && isTree ? this.expandTree : onQuery,
+        onReset: treeQueryExpanded && isTree ? this.collapseTree : onReset,
       };
       if (typeof queryBar === 'function') {
         return (queryBar as TableQueryBarHook)(props);

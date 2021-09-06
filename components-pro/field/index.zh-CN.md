@@ -46,6 +46,7 @@ title: FormField
 | onEnterDown | 键盘回车回调 | Function |  |
 | onClear | 值清空回调 | Function |  |
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   |
+| showValidation | 校验信息提示方式 | `tooltip` \| `newLine` | |
 
 注意，当绑定 DataSet 时，以 DataSet 的校验为主，校验规则应设置在 DataSet 的 Field 上。
 

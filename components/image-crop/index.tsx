@@ -7,9 +7,10 @@ import Modal, { ModalProps } from '../modal';
 import { UploadFile, UploadProps } from '../upload/interface';
 import defaultLocale from '../locale-provider/default';
 import Button from '../button';
+import ButtonGroup from '../button/ButtonGroup';
 import Upload from '../upload';
 import AvatarUploader from './avatarUpload';
-import { imageCrop } from '../locale-provider'
+import { imageCrop } from '../locale-provider';
 
 // ssr
 if (typeof window !== 'undefined') {
@@ -498,20 +499,21 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                                 {cropContent ? cropContent(RenderCrop) : RenderCrop}
                                 <div className={`${prefixCls}-control`}>
                                     {hasZoom && (
-                                        <>
-                                            <Button icon="zoom_in" onClick={addZoomVal} disabled={isMaxZoom} />
-                                            <Button icon="zoom_out" onClick={subZoomVal} disabled={isMinZoom} />
-                                        </>
+                                        <ButtonGroup>
+                                            <Button funcType="raised" icon="zoom_in" onClick={addZoomVal} disabled={isMaxZoom} />
+                                            <Button funcType="raised" icon="zoom_out" onClick={subZoomVal} disabled={isMinZoom} />
+                                        </ButtonGroup>
                                     )}
                                     {
                                         hasRotate
                                         &&
                                         <Button
+                                            funcType="raised"
                                             icon={rotateStep === 90 ? "play_90" : "rotate_right"}
                                             onClick={addRotateVal}
                                         />
                                     }
-                                    {hasZoom && <Button onClick={initVal}>1:1</Button>}
+                                    {hasZoom && <Button funcType="raised" onClick={initVal}>1:1</Button>}
                                 </div>
                             </Modal>
                         )}
