@@ -296,6 +296,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   touchMoveListener: any;
 
   _cacheCells: any = null;
+  _cacheScrollX: number = 0;
+  _cacheRenderCols: any = [];
   _cacheChildrenSize = 0;
   _visibleRows = [];
   _lastRowIndex: string | number;
@@ -360,6 +362,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     this.scrollY = 0;
     this.scrollX = 0;
+    this._cacheScrollX = 0;
+    this._cacheRenderCols = [];
     this.wheelHandler = new WheelHandler(
       this.listenWheel,
       this.shouldHandleWheelX,
@@ -499,13 +503,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         if ('fixed' in this.props.rowSelection) {
           rowSelectionFixed = this.props.rowSelection.fixed;
         }
-          const columnsWithRowSelectionProps: ColumnProps = {
-            title: $l('Table', 'select_current_page'),
-            key: 'rowSelection',
-            width: 50,
-            align: 'center',
-            fixed: rowSelectionFixed,
-          };
+        const columnsWithRowSelectionProps: ColumnProps = {
+          title: $l('Table', 'select_current_page'),
+          key: 'rowSelection',
+          width: 50,
+          align: 'center',
+          fixed: rowSelectionFixed,
+        };
         runInAction(() => {
           this.tableStore.originalColumns = this.props.columns!.splice(this.props.rowSelection?.columnIndex || 0, 0, columnsWithRowSelectionProps);
         });
@@ -1081,6 +1085,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       };
       return this._cacheCells;
     }
+    console.log(111)
 
     const columns = this.getTableColumns();
 
@@ -1678,10 +1683,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (width !== nextWidth) {
         this.scrollX = 0;
         this.scrollbarXRef?.current?.resetScrollBarPosition();
+        this._cacheCells = null;
       }
-
-      this._cacheCells = null;
+      
       if (nextWidth !== 0) {
+        
         this.setState({ width: nextWidth });
       }
     }
@@ -2105,7 +2111,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-              // {...(rowDragRender && rowDragRender.draggableProps)} todo
+            // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}
@@ -2239,11 +2245,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const maxTop = minTop + height + rowExpandedHeight!;
       const isCustomRowHeight = isFunction(rowHeight);
       const isUncertainHeight = !!(renderRowExpanded || isCustomRowHeight || isTree);
-
+      
       /**
        * 如果开启了虚拟滚动 则计算列显示
+       * 判断是否有缓存，如果minLeft 没有变化，就取缓存的值，有变化就重新计算
        */
-      if (virtualized) {
+      if (virtualized && width && (this._cacheScrollX !== minLeft || !this._cacheRenderCols.length)) {
         // 计算渲染列数量
         let colIndex = 0; // 列索引
         let displayColWidth = 0; // 显示列的宽度
@@ -2258,8 +2265,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           const { fixed } = bc.props;
           if ((fixed && fixed !== 'right') || fixed === 'left') {
             renderLeftFixedCol.push(bc)
-          } else if (fixed === 'right') {
+          } else {
+            break
+          }
+        }
+        // 找到右固定列
+        for (let i = bodyCells.length - 1; i >= 0; i--) {
+          const bc = bodyCells[i];
+          const { fixed } = bc.props;
+          if (fixed === 'right') {
             renderRightFixedCol.push(bc)
+          } else {
+            break
           }
         }
 
@@ -2300,6 +2317,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         } else {
           renderCols = [...renderLeftFixedCol, ...bodyCells.slice(colStartIndex, colEndIndex), ...renderRightFixedCol]
         }
+        this._cacheScrollX = minLeft;
+        this._cacheRenderCols = renderCols;
+      } else {
+        renderCols = this._cacheRenderCols.length ? this._cacheRenderCols : bodyCells
       }
 
       /**
