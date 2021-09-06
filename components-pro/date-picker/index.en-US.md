@@ -27,6 +27,8 @@ title: DatePicker
 | cellRenderer | 单元格渲染, view可选值: `date` `dateTime` `time` `week` `month` `year` `decade` | (view) => (props, text, currentDate, selected) => ReactNode |   |
 | renderExtraFooter | 在面板中添加额外的页脚 | () => React.ReactNode |   |
 | extraFooterPlacement | 额外的页脚的位置 可选值: `top` `bottom` | string | `bottom`  |
+| editorInPopup | 编辑器在下拉框中  | boolean |  |
+| defaultTime | 设置用户选择日期时默认的时分秒  | moment | moment('00:00:00', 'HH:mm:ss') |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

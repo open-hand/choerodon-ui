@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
+- 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
+
 ## 1.4.4
 
 `2021-09-04`

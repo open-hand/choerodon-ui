@@ -250,7 +250,9 @@ export default class Lov extends Select<LovProps> {
         pagination: { showSizeChanger: false },
         queryBar: this.renderSearchField,
         border: false,
+        size: Size.small,
       };
+      const { onBeforeSelect } = this.props;
       return (
         <LovView
           {...lovViewProps}
@@ -259,6 +261,7 @@ export default class Lov extends Select<LovProps> {
           config={config}
           tableProps={mergedTableProps}
           onSelect={this.handleLovViewSelect}
+          onBeforeSelect={onBeforeSelect}
           multiple={this.multiple}
           values={this.getValues()}
         />
@@ -358,7 +361,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   private openModal = action((fetchSingle?: boolean) => {
-    const { viewMode } = this.props;
+    const { viewMode, onBeforeSelect } = this.props;
     if (viewMode === 'modal') {
       const config = this.getConfig();
       const { options } = this;
@@ -376,6 +379,7 @@ export default class Lov extends Select<LovProps> {
               config={config}
               tableProps={{ ...(lovViewProps && lovViewProps.tableProps), ...tableProps }}
               onSelect={this.handleLovViewSelect}
+              onBeforeSelect={onBeforeSelect}
               multiple={this.multiple}
               values={this.getValues()}
             />
@@ -445,20 +449,16 @@ export default class Lov extends Select<LovProps> {
     }
   };
 
-  handleLovViewSelect = (records: Record | Record[]): boolean | undefined => {
-    const { viewMode, onBeforeSelect = noop } = this.props;
-    const result = onBeforeSelect(records);
-    if (result !== false) {
-      if (viewMode === 'popup' && !this.multiple) {
-        this.collapse();
-      }
-      if (isArrayLike(records)) {
-        this.setValue(records.map(record => this.processRecordToObject(record)));
-      } else {
-        this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
-      }
+  handleLovViewSelect = (records: Record | Record[]) => {
+    const { viewMode } = this.props;
+    if (viewMode === 'popup' && !this.multiple) {
+      this.collapse();
     }
-    return result;
+    if (isArrayLike(records)) {
+      this.setValue(records.map(record => this.processRecordToObject(record)));
+    } else {
+      this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
+    }
   };
 
   resetOptions(noCache: boolean = false): boolean {
@@ -608,6 +608,7 @@ export default class Lov extends Select<LovProps> {
       'fetchSingle',
       'autoSelectSingle',
       'showCheckedStrategy',
+      'onBeforeSelect',
     ]);
   }
 

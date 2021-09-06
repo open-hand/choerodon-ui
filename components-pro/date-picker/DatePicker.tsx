@@ -1,6 +1,7 @@
-import { createElement, CSSProperties, KeyboardEventHandler, ReactNode } from 'react';
+import React, { createElement, CSSProperties, KeyboardEventHandler, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import moment, { isMoment, Moment, MomentInput } from 'moment';
+import classNames from 'classnames';
 import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
@@ -29,6 +30,7 @@ import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
 import Field from '../data-set/Field';
 import { RenderProps } from '../field/FormField';
+import ObserverTextField from '../text-field/TextField';
 
 export type RenderFunction = (
   props: object,
@@ -74,6 +76,14 @@ export interface DatePickerProps extends TriggerFieldProps {
    * 时区显示
    */
   timeZone?: TimeZone;
+  /**
+   * 编辑器在下拉框中显示
+   */
+  editorInPopup?: boolean;
+  /**
+   * 默认显示
+   */
+  defaultTime?: Moment;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -130,6 +140,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
      * 时区显示
      */
     timeZone: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    /**
+     * 编辑器在下拉框中显示
+     */
+    editorInPopup: PropTypes.bool,
     ...TriggerField.propTypes,
   };
 
@@ -195,9 +209,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @observable mode?: ViewMode;
 
   isEditable(): boolean {
-    const mode = this.getViewMode();
-    return super.isEditable() && mode !== ViewMode.week;
+    return super.isEditable() && !this.observableProps.editorInPopup && this.getViewMode() !== ViewMode.week;
   }
+
+  isEditableLike(): boolean {
+    return this.observableProps.editorInPopup;
+  }
+
 
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
@@ -207,7 +225,15 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       'maxLength',
       'minLength',
       'timeZone',
+      'editorInPopup',
     ]);
+  }
+
+  getObservableProps(props, context): any {
+    return {
+      ...super.getObservableProps(props, context),
+      editorInPopup: props.editorInPopup,
+    };
   }
 
   @autobind
@@ -228,6 +254,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return renderedText;
   }
 
+  getDefaultTime(): Moment {
+    const { defaultTime = moment('00:00:00', 'HH:mm:ss') } = this.props;
+    return defaultTime;
+  }
+
   getDefaultViewMode() {
     const { mode } = this.props;
     if (mode === ViewMode.decade || mode === undefined) {
@@ -236,23 +267,77 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return mode;
   }
 
+  getPopupEditor() {
+    const { editorInPopup } = this.observableProps;
+    if (editorInPopup) {
+      const { prefixCls, range, text } = this;
+      const className = `${prefixCls}-popup-editor`;
+      const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
+      if (range) {
+        const { rangeTarget } = this;
+        const [startValue = '', endValue = ''] = this.processRangeValue(this.rangeValue);
+        const startText = this.getTextByValue(startValue) as string;
+        const endText = this.getTextByValue(endValue) as string;
+        return (
+          <span key="popup-editor" className={classNames(className, `${prefixCls}-range-text`)}>
+            <input
+              className={`${prefixCls}-range-start`}
+              onChange={this.handleChange}
+              onFocus={this.handleRangeStart}
+              value={rangeTarget === 0 && text !== undefined ? text : startText}
+              placeholder={startPlaceholder}
+            />
+            <span className={`${prefixCls}-range-split`}>~</span>
+            <input
+              className={`${prefixCls}-range-end`}
+              onChange={this.handleChange}
+              onFocus={this.handleRangeEnd}
+              value={rangeTarget === 1 && text !== undefined ? text : endText}
+              placeholder={endPlaceHolder}
+            />
+          </span>
+        );
+      }
+      return (
+        <ObserverTextField
+          key="popup-editor"
+          value={this.getTextNode()}
+          onInput={this.handleChange}
+          border={false}
+          className={className}
+          placeholder={startPlaceholder}
+        />
+      );
+    }
+  }
+
   getPopupContent() {
     const mode = this.getViewMode();
-    return createElement(viewComponents[mode], {
-      ref: node => (this.view = node),
-      date: this.getSelectedDate(),
-      mode: this.getDefaultViewMode(),
-      disabledNow: !this.isValidNowDate(this.getSelectedDate()),
-      renderer: this.getCellRenderer(mode),
-      onSelect: this.handleSelect,
-      onSelectedDateChange: this.handleSelectedDateChange,
-      onViewModeChange: this.handelViewModeChange,
-      isValidDate: this.isValidDate,
-      format: this.getDateFormat(),
-      step: this.getProp('step') || {},
-      renderExtraFooter: this.getProp('renderExtraFooter'),
-      extraFooterPlacement: this.getProp('extraFooterPlacement') || 'bottom',
-    } as DateViewProps);
+    const date = this.getSelectedDate();
+    return (
+      <>
+        {
+          this.getPopupEditor()
+        }
+        {
+          createElement(viewComponents[mode], {
+            ref: node => (this.view = node),
+            date,
+            mode: this.getDefaultViewMode(),
+            disabledNow: !this.isValidNowDate(date),
+            renderer: this.getCellRenderer(mode),
+            onSelect: this.handleSelect,
+            onSelectedDateChange: this.handleSelectedDateChange,
+            onViewModeChange: this.handelViewModeChange,
+            isValidDate: this.isValidDate,
+            format: this.getDateFormat(),
+            step: this.getProp('step') || {},
+            renderExtraFooter: this.getProp('renderExtraFooter'),
+            extraFooterPlacement: this.getProp('extraFooterPlacement') || 'bottom',
+          } as DateViewProps)
+        }
+      </>
+    );
   }
 
   getCellRenderer(mode: ViewMode): RenderFunction | undefined {
@@ -332,7 +417,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (isMoment(selectedDate) && selectedDate.isValid()) {
       return selectedDate.clone();
     }
-    return this.getValidDate(moment().startOf('d'));
+    return this.getValidDate(this.getDefaultTime());
   }
 
   getLimit(minOrMax: 'min' | 'max'): Moment | undefined {
@@ -546,7 +631,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (value) {
       this.prepareSetValue(this.checkMoment(value));
     } else if (!this.multiple) {
-      this.setValue(this.emptyValue);
+      this.prepareSetValue(this.emptyValue);
     }
   }
 
