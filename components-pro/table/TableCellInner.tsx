@@ -74,10 +74,11 @@ export interface TableCellInnerProps {
   disabled?: boolean;
   inAggregation?: boolean;
   prefixCls?: string;
+  colSpan?: number;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function TableCellInner(props) {
-  const { column, record, children, style, disabled, inAggregation, prefixCls } = props;
+  const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { pristine, aggregation, inlineEdit, rowHeight, tableStore, dataSet, columnEditorBorder, indentSize, checkField, selectionMode } = useContext(TableContext);
@@ -384,7 +385,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     }
     return style;
   }, [fieldType, key, rows, rowHeight, height, style, aggregation, hasEditor]);
-  const innerStyle = useMemo(() => inAggregation ? prefixStyle : ({ textAlign: align || (columnCommand ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field)), ...prefixStyle }), [inAggregation, align, column, field, columnCommand, prefixStyle]);
+  const textAlign = useMemo(() => (align || (columnCommand ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field))), [columnCommand, align, column, field]);
+  const colSpanStyle = useMemo(() => (colSpan && colSpan > 1 && (textAlign === ColumnAlign.right || textAlign === ColumnAlign.center)) ? { width: `calc(100% - ${pxToRem(30)})` } : {}, [colSpan, textAlign]);
+  const innerStyle = useMemo(() => {
+    if (inAggregation) {
+      return { ...prefixStyle, ...colSpanStyle };
+    }
+    return { textAlign, ...prefixStyle, ...colSpanStyle };
+  }, [inAggregation, textAlign, prefixStyle, colSpanStyle]);
   const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
   const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
     if (validationResult && validationResult.validationMessage) {

@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
+- 💄 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。s
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 
 ## 1.4.4

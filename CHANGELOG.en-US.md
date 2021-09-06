@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
+- 💄 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 
 ## 1.4.4
