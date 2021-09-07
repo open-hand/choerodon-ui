@@ -11,13 +11,15 @@ import Progress from '../progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
 import { AttachmentListType } from './Attachment';
-import Picture from '../picture/Picture';
+import Picture, { PictureForwardRef } from '../picture/Picture';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import { hide, show } from '../tooltip/singleton';
 import { formatFileSize } from './utils';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
+
+const ATTACHMENT_TARGET = 'attachment-preview';
 
 export interface ItemProps {
   attachment: AttachmentFile;
@@ -48,11 +50,26 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const { status, name, filename, ext, url, size } = attachment;
   const attachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
+  const pictureRef = useRef<PictureForwardRef | null>(null);
+  const { getPreviewUrl } = attachmentConfig;
+  const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) : url;
+  const dragProps = { ...provided.dragHandleProps, style: { cursor: 'move' } };
+  const isPicture = attachment.type.startsWith('image');
+  const preview = (status === 'success' || status === 'done');
+  const handlePreview = useCallback(() => {
+    const { current } = pictureRef;
+    if (current) {
+      current.preview();
+    }
+  }, [pictureRef]);
+  const renderDragger = (): ReactNode => {
+    if (draggable && !isCard) {
+      return (
+        <Icon type="baseline-drag_indicator" {...dragProps} />
+      );
+    }
+  };
   const renderImagePreview = (): ReactNode => {
-    const preview = (status === 'success' || status === 'done');
-    const isPicture = attachment.type.startsWith('image');
-    const { getPreviewUrl } = attachmentConfig;
-    const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) : url;
     if (listType === 'text') {
       const { renderIcon } = attachmentConfig;
       const defaultIcon = <Icon type="insert_drive_file" />;
@@ -69,15 +86,16 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
           status="loaded"
           index={index}
           className={`${prefixCls}-icon`}
-          previewTarget={isSrcIcon && !isPicture ? '_blank' : undefined}
+          previewTarget={isSrcIcon && !isPicture ? ATTACHMENT_TARGET : undefined}
           preview={preview}
+          ref={pictureRef}
         >
           {isValidElement(icon) ? icon : undefined}
         </Picture>
       ) : preview ? (
         <Button
           href={src}
-          target="_blank"
+          target={ATTACHMENT_TARGET}
           funcType={FuncType.link}
           className={`${prefixCls}-icon`}
         >
@@ -116,9 +134,12 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     }
   };
   const renderTitle = (isCardTitle?: boolean): ReactNode => {
+    const nameNode = preview && src && listType === 'text' ? (
+      <a {...isPicture ? { onClick: handlePreview } : { href: src, target: ATTACHMENT_TARGET }} className={`${prefixCls}-name ${prefixCls}-link`}>{filename}</a>
+    ) : <span className={`${prefixCls}-name`}>{filename}</span>;
     return (
       <span className={`${prefixCls}-title`} style={isCardTitle ? { width } : undefined}>
-        <span className={`${prefixCls}-name`}>{filename}</span>
+        {nameNode}
         {ext && <span className={`${prefixCls}-ext`}>.{ext}</span>}
         {!isCardTitle && <span className={`${prefixCls}-size`}> ({formatFileSize(size)})</span>}
       </span>
@@ -171,7 +192,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
         icon: isCard ? 'arrow_downward' : 'get_app',
         funcType: FuncType.link,
         href: getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) || url,
-        target: '_blank',
+        target: ATTACHMENT_TARGET,
         block: isCard,
       };
       buttons.push(
@@ -238,22 +259,26 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     }
   }, []);
 
-  const { dragHandleProps } = provided;
-
   const listProps = {
     ref: provided.innerRef,
     className: classnames(prefixCls, {
       [`${prefixCls}-error`]: status === 'error',
       [`${prefixCls}-success`]: status === 'success',
     }),
-    ...dragHandleProps,
     ...provided.draggableProps,
     style: {
       ...provided.draggableProps.style,
-      ...(draggable ? { cursor: 'move' } : undefined),
     },
   };
-
+  if (draggable && isCard) {
+    Object.assign(listProps, {
+      ...dragProps,
+      style: {
+        ...listProps.style,
+        ...dragProps.style,
+      },
+    });
+  }
   return (
     <div {...listProps} hidden={hidden}>
       <div
@@ -262,6 +287,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
         onMouseLeave={isCard ? handleMouseLeave : undefined}
       >
         <div className={`${prefixCls}-content`}>
+          {renderDragger()}
           {renderImagePreview()}
           {renderPlaceholder()}
           {!restCount && !isCard && renderTitle()}
