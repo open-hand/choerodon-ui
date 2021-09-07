@@ -1,13 +1,18 @@
 import React, {
-  Context,
   CSSProperties,
-  FunctionComponent,
+  forwardRef,
+  ForwardRefExoticComponent,
   ImgHTMLAttributes,
-  MouseEventHandler, ReactNode,
+  MouseEventHandler,
+  PropsWithoutRef,
+  ReactNode,
+  Ref,
+  RefAttributes,
   SourceHTMLAttributes,
   useCallback,
   useContext,
   useEffect,
+  useImperativeHandle,
   useRef,
   useState,
 } from 'react';
@@ -19,7 +24,7 @@ import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from '../icon';
 import objectFitPolyfill, { isObjectFitSupport } from '../_util/objectFitPolyfill';
-import PictureContext, { PictureContextValue, PictureProvider, PictureProviderProps } from './PictureContext';
+import PictureContext, { PictureContextValue, PictureProvider } from './PictureContext';
 import modalPreview from '../modal/preview';
 
 export type ImageStatus = 'loaded' | 'error' | 'empty';
@@ -47,19 +52,23 @@ export interface PictureRef {
   src?: string | undefined;
 }
 
-const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<PictureProviderProps>, Context?: Context<PictureContextValue | undefined> } = function Picture(props: PictureProps) {
+export interface PictureForwardRef {
+  preview();
+}
+
+function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const {
     src, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true,
     objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, ...rest
   } = props;
   const url = previewUrl || src;
-  const ref = useRef<PictureRef>({ src: url });
+  const pictureRef = useRef<PictureRef>({ src: url });
   const context = useContext<PictureContextValue | undefined>(PictureContext);
   const customPrefixCls = getProPrefixCls('picture', prefixCls);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [status, setStatus] = useState<ImageStatus>(propStatus || 'empty');
   const [inView, setInView] = useState<boolean>(!lazy || !!propStatus);
-  const handleClick = useCallback((e) => {
+  const handlePreview = useCallback(() => {
     if (preview && !previewTarget && status === 'loaded' && url) {
       if (context && isNumber(index)) {
         context.preview(index);
@@ -67,10 +76,14 @@ const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<
         modalPreview({ list: [url] });
       }
     }
+
+  }, [context, index, preview, previewTarget, status, url]);
+  const handleClick = useCallback((e) => {
+    handlePreview();
     if (onClick) {
       onClick(e);
     }
-  }, [context, index, preview, previewTarget, status, url, onClick]);
+  }, [handlePreview, onClick]);
   const wrapperStyle: CSSProperties = {
     ...style,
   };
@@ -125,11 +138,15 @@ const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<
 
   useEffect(() => {
     if (preview && !previewTarget && context && isNumber(index) && url) {
-      ref.current.src = url;
-      context.registerPicture(index, ref.current);
-      return () => context.unRegisterPicture(index, ref.current);
+      pictureRef.current.src = url;
+      context.registerPicture(index, pictureRef.current);
+      return () => context.unRegisterPicture(index, pictureRef.current);
     }
-  }, [index, context, ref, preview, previewTarget, url]);
+  }, [index, context, pictureRef, preview, previewTarget, url]);
+
+  useImperativeHandle(ref, () => ({
+    preview: handlePreview,
+  }), [handlePreview]);
 
   const renderSources = () => {
     if (sources) {
@@ -200,9 +217,10 @@ const Picture: FunctionComponent<PictureProps> & { Provider?: FunctionComponent<
   }
   return picture;
 };
+const ForwardPicture: ForwardRefExoticComponent<PropsWithoutRef<PictureProps> & RefAttributes<PictureForwardRef>> = forwardRef<PictureForwardRef, PictureProps>(Picture);
+export type ForwardPictureType = typeof ForwardPicture & { Provider: typeof PictureProvider, Context: typeof PictureContext };
+(ForwardPicture as ForwardPictureType).Provider = PictureProvider;
+(ForwardPicture as ForwardPictureType).Context = PictureContext;
+ForwardPicture.displayName = 'Picture';
 
-Picture.Provider = PictureProvider;
-Picture.Context = PictureContext;
-Picture.displayName = 'Picture';
-
-export default Picture;
+export default ForwardPicture as ForwardPictureType;

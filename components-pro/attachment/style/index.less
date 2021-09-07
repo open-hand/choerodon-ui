@@ -79,6 +79,14 @@
         flex-shrink: 1;
       }
 
+      &-link {
+        color: inherit;
+
+        &:hover {
+          color: @primary-color;
+        }
+      }
+
       &-name,
       &-error-message {
         overflow: hidden;
@@ -101,6 +109,7 @@
 
           .@{iconfont-css-prefix} {
             display: block;
+            font-size: .14rem;
             line-height: 1;
           }
         }

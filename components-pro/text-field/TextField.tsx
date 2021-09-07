@@ -13,17 +13,14 @@ import React, {
 import { Cancelable, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
-import flattenDeep from 'lodash/flattenDeep';
 import isArray from 'lodash/isArray';
-import isBoolean from 'lodash/isBoolean';
 import isString from 'lodash/isString';
-import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, computed, isArrayLike, observable, toJS } from 'mobx';
+import { action, computed, observable, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -248,7 +245,20 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   addonBeforeRef?: HTMLDivElement | null;
 
-  @observable renderedTextContent?: string;
+  @observable renderedText?: {
+    text: string;
+    width: number;
+  } | undefined;
+
+  @observable renderedStartText?: {
+    text: string;
+    width: number;
+  } | undefined;
+
+  @observable renderedEndText?: {
+    text: string;
+    width: number;
+  } | undefined;
 
   lengthInfoWidth?: number;
 
@@ -275,8 +285,57 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   @action
-  handleRenderedValueChange(text) {
-    this.renderedTextContent = text;
+  handleRenderedValueChange(text: string, width: number, rangeTarget?: 0 | 1) {
+    switch (rangeTarget) {
+      case 0: {
+        this.renderedStartText = {
+          text,
+          width,
+        };
+        break;
+      }
+      case 1: {
+        this.renderedEndText = {
+          text,
+          width,
+        };
+        break;
+      }
+      default: {
+        this.renderedText = {
+          text,
+          width,
+        };
+      }
+    }
+  }
+
+  clearRenderedText(rangeTarget?: 0 | 1) {
+    switch (rangeTarget) {
+      case 0: {
+        if (this.renderedStartText) {
+          runInAction(() => {
+            this.renderedStartText = undefined;
+          });
+        }
+        break;
+      }
+      case 1: {
+        if (this.renderedEndText) {
+          runInAction(() => {
+            this.renderedEndText = undefined;
+          });
+        }
+        break;
+      }
+      default: {
+        if (this.renderedText) {
+          runInAction(() => {
+            this.renderedText = undefined;
+          });
+        }
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -308,13 +367,99 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.addonBeforeRef = node;
   }
 
+  getEditorTextInfo(rangeTarget?: 0 | 1): { text: string, width: number, placeholder?: string } {
+    const { isFlat } = this.props;
+    const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = this.hasFloatLabel ? [] : this.getPlaceholders();
+    if (rangeTarget === undefined) {
+      const { text } = this;
+      if (text !== undefined) {
+        return {
+          text,
+          width: isFlat ? measureTextWidth(text) : 0,
+        }
+      }
+      const { renderedText } = this;
+      if (renderedText) {
+        if (renderedText.text) {
+          return renderedText;
+        }
+      } else {
+        const unRenderedText = this.processValue(this.getValue());
+        if (isString(unRenderedText) && unRenderedText.length) {
+          return {
+            text: unRenderedText,
+            width: isFlat ? measureTextWidth(unRenderedText) : 0,
+          };
+        }
+      }
+      if (startPlaceHolder) {
+        return {
+          text: '',
+          width: isFlat ? measureTextWidth(startPlaceHolder) : 0,
+          placeholder: startPlaceHolder,
+        };
+      }
+      return {
+        text: '',
+        width: 0,
+      };
+    }
+    const [startValue, endValue] = this.processRangeValue();
+    if (rangeTarget === 0) {
+      const { renderedStartText } = this;
+      if (renderedStartText) {
+        if (renderedStartText.text) {
+          return renderedStartText;
+        }
+      } else {
+        const unRenderedStartText = this.processValue(startValue);
+        if (isString(unRenderedStartText) && unRenderedStartText.length) {
+          return {
+            text: unRenderedStartText,
+            width: isFlat ? measureTextWidth(unRenderedStartText) : 0,
+          };
+        }
+      }
+      if (startPlaceHolder) {
+        return {
+          text: '',
+          width: isFlat ? measureTextWidth(startPlaceHolder) : 0,
+          placeholder: startPlaceHolder,
+        };
+      }
+    }
+    if (rangeTarget === 1) {
+      const { renderedEndText } = this;
+      if (renderedEndText) {
+        if (renderedEndText.text) {
+          return renderedEndText;
+        }
+      } else {
+        const unRenderedEndText = this.processValue(endValue);
+        if (isString(unRenderedEndText) && unRenderedEndText.length) {
+          return {
+            text: unRenderedEndText,
+            width: isFlat ? measureTextWidth(unRenderedEndText) : 0,
+          };
+        }
+      }
+      if (endPlaceHolder) {
+        return {
+          text: '',
+          width: isFlat ? measureTextWidth(endPlaceHolder) : 0,
+          placeholder: endPlaceHolder,
+        };
+      }
+    }
+    return {
+      text: '',
+      width: 0,
+    };
+  }
+
   isRenderEmpty() {
-    if (!this.range && !this.multiple) {
-      const value = this.getValue();
-      const text = this.getTextNode(value);
-      const unRenderedText = this.processValue(value);
-      const finalText = isString(text) ? text : isString(unRenderedText) ? unRenderedText : (this.renderedTextContent || '');
-      return isEmpty(finalText);
+    if (!this.multiple) {
+      return this.range ? isEmpty(this.getEditorTextInfo(0).text) && isEmpty(this.getEditorTextInfo(1).text) : isEmpty(this.getEditorTextInfo().text);
     }
     return true;
   }
@@ -420,8 +565,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderInputElement(): ReactNode {
-    const { addonBefore, addonAfter } = this.props;
-    const renderedValue = this.renderRenderedValue();
+    const { addonBefore, addonAfter, isFlat } = this.props;
+    const renderedValue = this.renderRenderedValue(undefined, { isFlat });
     const input = this.getWrappedEditor(renderedValue);
     const button = this.getInnerSpanButton();
     const suffix = this.getSuffix();
@@ -522,9 +667,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderLengthInfo(maxLength?: number, inputLength?: number): ReactNode {
-    const { showLengthInfo, prefixCls } = this;
-    return maxLength && maxLength > 0 && showLengthInfo ? (
-      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+    const { prefixCls } = this;
+    return maxLength && maxLength > 0 ? (
+      <div key="length-info" className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
     ) : null;
   }
 
@@ -538,15 +683,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       placeholder = label && !this.isFocused ? label : placeholderOrigin || label;
     }
     const holders: string[] = [];
-    return placeholder ? holders.concat(placeholder!) : holders;
+    return placeholder ? holders.concat(toJS(placeholder)) : holders;
   }
 
   getLabel() {
     const [placeholder, endPlaceHolder] = this.getPlaceholders();
-    if (this.isEmpty() && !this.isFocused && this.rangeTarget === 1 && !isNil(endPlaceHolder)) {
+    if (this.rangeTarget === 1 && !isNil(endPlaceHolder) && !this.isFocused && this.isEmpty()) {
       return endPlaceHolder;
     }
-    if (this.isEmpty() && !this.isFocused && placeholder && (this.rangeTarget === 0 || !this.range)) {
+    if (placeholder && (this.rangeTarget === 0 || !this.range) && !this.isFocused && this.isEmpty()) {
       return placeholder;
     }
     return this.getProp('label');
@@ -578,36 +723,52 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderRangeEditor(props) {
     const { isFlat } = this.props;
     const { prefixCls, rangeTarget, isFocused, editable } = this;
-    const [startPlaceholder, endPlaceholder = startPlaceholder] = this.getPlaceholders();
     const [startValue = '', endValue = ''] = this.processRangeValue(this.isEditableLike() ? undefined : this.rangeValue);
     const startRenderedValue = this.renderRenderedValue(startValue, {
       key: 'startRenderedText',
       className: `${prefixCls}-range-start-rendered-value`,
+      rangeTarget: 0,
+      isFlat,
     });
-    let startStyle: CSSProperties | undefined;
-    let endStyle: CSSProperties | undefined;
+    const startStyle: CSSProperties = {};
+    const endStyle: CSSProperties = {};
     const endRenderedValue = this.renderRenderedValue(endValue, {
       key: 'endRenderedText',
       className: `${prefixCls}-range-end-rendered-value`,
+      rangeTarget: 1,
+      isFlat,
     });
-    const startText = startRenderedValue ? '' : this.getTextByValue(startValue) as string;
-    const endText = endRenderedValue ? '' : this.getTextByValue(endValue) as string;
+    const { text: startText, placeholder: startPlaceholder, width: startWidth } = this.getEditorTextInfo(0);
+    const { text: endText, placeholder: endPlaceholder, width: endWidth } = this.getEditorTextInfo(1);
     const editorStyle = {} as CSSProperties;
     if (rangeTarget === 1) {
       editorStyle.right = 0;
     } else {
       editorStyle.left = 0;
     }
+    if (!editable) {
+      editorStyle.textIndent = -1000;
+      editorStyle.color = 'transparent';
+    }
     // 筛选条默认宽度处理
     if (isFlat) {
-      startStyle = { width: measureTextWidth(isEmpty(startValue) ? startPlaceholder || '' : startText) };
-      endStyle = { width: measureTextWidth(isEmpty(endValue) ? endPlaceholder || '' : endText) };
+      startStyle.width = startWidth;
+      startStyle.boxSizing = 'content-box';
+      endStyle.width = endWidth;
+      endStyle.boxSizing = 'content-box';
+    }
+    if (startRenderedValue && (!editable || !isFocused)) {
+      startStyle.textIndent = -1000;
+      startStyle.color = 'transparent';
+    }
+    if (endRenderedValue && (!editable || !isFocused)) {
+      endStyle.textIndent = -1000;
+      endStyle.color = 'transparent';
     }
     return (
       <span key="text" className={`${prefixCls}-range-text`}>
         {startRenderedValue}
         {endRenderedValue}
-        {/* 确保 range-input 为第一个 当点击label的时候出了会让element聚焦以外还会让 label的第一个表单元素聚焦 因此导致意料之外的bug */}
         {
           !this.disabled && (
             <input
@@ -615,7 +776,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               className={`${prefixCls}-range-input`}
               key="text"
               value={
-                !editable || rangeTarget === undefined || !this.isFocused
+                rangeTarget === undefined || !this.isFocused
                   ? ''
                   : this.text === undefined
                   ? rangeTarget === 0
@@ -725,7 +886,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
       multiple,
       range,
-      props: { style, isFlat, suffixCls },
+      props: { style, isFlat },
     } = this;
     const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
     if (multiple) {
@@ -774,52 +935,56 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         </span>,
       );
     }
-    const value = this.getValue();
-    const text = this.getTextNode(value);
-    const maxLength = this.getProp('maxLength');
-    const inputLength = value ? value.length : 0;
-    const lengthElement = this.renderLengthInfo(maxLength, inputLength);
-    const finalText = (renderedValue ? this.renderedTextContent : isString(text) ? text : isNumber(text) ? String(text) : isArrayLike(text) && flattenDeep(text).filter(v => !isBoolean(v)).join('')) || '';
-    const placeholder = this.hasFloatLabel || renderedValue ? undefined : this.getPlaceholders()[0];
-    if ((!this.isFocused || !this.editable) && isValidElement(text)) {
+    const editorTextInfo = this.getEditorTextInfo();
+    if (renderedValue && (!this.editable || !this.isFocused)) {
       otherProps.style = {
         ...otherProps.style,
         textIndent: -1000,
+        color: 'transparent',
       };
     }
     // 筛选条默认宽度处理
     if (isFlat) {
-      const width = isEmpty(value) ? measureTextWidth(placeholder || '') + 24 : measureTextWidth(finalText) + (suffixCls !== 'input' ? 37 : 21);
       otherProps.style = {
         ...otherProps.style,
-        width,
+        width: editorTextInfo.width,
+        boxSizing: 'content-box',
       };
     }
+    const childNodes: ReactNode[] = [
+      <input
+        key="text"
+        {...otherProps}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        placeholder={editorTextInfo.placeholder}
+        value={editorTextInfo.text}
+        readOnly={!this.editable}
+      />,
+    ];
 
-    // 存在长度信息，计算paddingRight
-    if (lengthElement) {
-      this.lengthInfoWidth = measureTextWidth(`${inputLength} / ${maxLength}`);
-      const paddingRight = this.lengthInfoWidth + 21;
-      otherProps.style = {
-        ...otherProps.style,
-        paddingRight,
-      };
+    if (this.showLengthInfo) {
+      const inputLength = editorTextInfo.text.length;
+      const maxLength = this.getProp('maxLength');
+      const lengthElement = this.renderLengthInfo(maxLength, inputLength);
+
+      // 存在长度信息，计算paddingRight
+      if (lengthElement) {
+        this.lengthInfoWidth = measureTextWidth(`${inputLength} / ${maxLength}`);
+        const paddingRight = this.lengthInfoWidth + 21;
+        otherProps.style = {
+          ...otherProps.style,
+          paddingRight,
+        };
+      }
+      childNodes.push(lengthElement);
     }
 
     return wrap(
       <>
-        <input
-          key="text"
-          {...otherProps}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-          placeholder={placeholder}
-          value={renderedValue && !(this.isFocused && this.editable) ? '' : finalText}
-          readOnly={!this.editable}
-        />
-        {lengthElement}
+        {childNodes}
       </>,
     );
   }
@@ -906,11 +1071,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
-  renderRenderedValue(value?: any, props?: RenderedTextProps & { key?: Key }): ReactNode {
+  renderRenderedValue(value: any | undefined, props: RenderedTextProps & { key?: Key }): ReactNode {
     const { prefixCls, range, multiple } = this;
-    const noRangeValue = isNil(value);
+    const { rangeTarget } = props;
+    const noRangeValue = rangeTarget === undefined;
     if ((!range && !multiple) || !noRangeValue) {
-      const hidden = this.isFocused && this.editable;
+      const hidden = this.editable && this.isFocused;
       if (!hidden || isReactChildren(this.processValue(noRangeValue ? this.getValue() : value))) {
         const text = this.processRenderer(noRangeValue ? this.getValue() : value);
         if (isReactChildren(text)) {
@@ -918,7 +1084,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
             <RenderedText
               key="renderedText"
               prefixCls={prefixCls}
-              onContentChange={noRangeValue ? this.handleRenderedValueChange : undefined}
+              onContentChange={this.handleRenderedValueChange}
               hidden={hidden}
               {...props}
             >
@@ -928,6 +1094,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         }
       }
     }
+    this.clearRenderedText(rangeTarget);
   }
 
   getPlaceHolderNode(): ReactNode {

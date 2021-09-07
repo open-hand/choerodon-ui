@@ -553,7 +553,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     return `${prefixCls}-${Date.now()}-${index}`;
   }
 
-  renderFloatLabel() {
+  renderHeaderLabel() {
     const { viewMode } = this.props;
     if (this.hasFloatLabel || viewMode === 'popup') {
       const label = this.getLabel();
@@ -579,7 +579,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     return false;
   }
 
-  renderUploadBtn(isCardButton?: boolean): ReactElement<ButtonProps> {
+  renderUploadBtn(isCardButton: boolean, label?: ReactNode): ReactElement<ButtonProps> {
     const {
       count = 0,
       multiple,
@@ -619,7 +619,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {children || $l('Attachment', 'upload_attachment')} {multiple && (max ? `${count}/${max}` : count) || undefined}
+        {children || $l('Attachment', 'upload_attachment')}{label && <>({label})</>} {multiple && (max ? `${count}/${max}` : count) || undefined}
         <input key="upload" {...uploadProps} hidden />
       </Button>
     );
@@ -635,8 +635,8 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
     return false;
   }
-  
-  renderViewButton(): ReactElement<ButtonProps> {
+
+  renderViewButton(label?: ReactNode): ReactElement<ButtonProps> {
     const { multiple } = this.props;
     const { children, ...rest } = this.getOtherProps();
     return (
@@ -647,7 +647,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         color={ButtonColor.primary}
         {...rest}
       >
-        {children || $l('Attachment', 'view_attachment')} {multiple && this.count || undefined}
+        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple && this.count || undefined}
       </Button>
     );
   }
@@ -748,7 +748,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderHeader(uploadBtn?: ReactNode) {
     const { prefixCls, props: { downloadAll } } = this;
-    const label = this.renderFloatLabel();
+    const label = this.renderHeaderLabel();
     const buttons: ReactNode[] = [];
     if (uploadBtn) {
       buttons.push(
@@ -865,12 +865,12 @@ export default class Attachment extends FormField<AttachmentProps> {
   renderHelp(forceHelpMode?: ShowHelp): ReactNode {
     const { showHelp } = this.props;
     const help = this.getProp('help');
-    if(help === undefined || showHelp === ShowHelp.none) return;
-    switch(forceHelpMode){
+    if (help === undefined || showHelp === ShowHelp.none) return;
+    switch (forceHelpMode) {
       case ShowHelp.tooltip:
         return (
           <Tooltip title={help} openClassName={`${getConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
-            <Icon type="help" style={{ fontSize: '14px', color: "#8c8c8c" }} />
+            <Icon type="help" style={{ fontSize: '14px', color: '#8c8c8c' }} />
           </Tooltip>
         );
       default:
@@ -882,17 +882,18 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
-  get showValidation(){
-    const { viewMode, showValidation = viewMode === "popup" ? ShowValidation.tooltip : ShowValidation.newLine } = this.props;
+  get showValidation() {
+    const { viewMode, showValidation = viewMode === 'popup' ? ShowValidation.tooltip : ShowValidation.newLine } = this.props;
     const { context: { showValidation: ctxShowValidation = showValidation } } = this;
     return ctxShowValidation;
   }
 
   render() {
-    const { viewMode, listType } = this.props;
+    const { viewMode, listType, _inTable } = this.props;
     const { readOnly, prefixCls } = this;
     if (viewMode === 'popup') {
-      return(
+      const label = !_inTable && this.hasFloatLabel && this.getLabel();
+      return (
         <div className={`${prefixCls}-popup-wrapper`}>
           <Trigger
             prefixCls={this.prefixCls}
@@ -901,7 +902,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             builtinPlacements={BUILT_IN_PLACEMENTS}
             popupPlacement="bottomLeft"
           >
-            {readOnly ? this.renderViewButton() : this.renderUploadBtn()}
+            {readOnly ? this.renderViewButton(label) : this.renderUploadBtn(false, label)}
           </Trigger>
           {this.renderHelp(ShowHelp.tooltip)}
           {this.showValidation === ShowValidation.newLine && this.renderValidationResult()}

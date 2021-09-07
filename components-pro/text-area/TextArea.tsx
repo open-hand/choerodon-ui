@@ -85,15 +85,6 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return otherProps;
   }
 
-  renderLengthInfo(): ReactNode {
-    const { showLengthInfo, prefixCls } = this;
-    const maxLength = this.getProp('maxLength');
-    const inputLength = this.getValue() ? this.getValue().length : 0;
-    return maxLength && maxLength > 0 && showLengthInfo ? (
-      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
-    ) : null;
-  }
-
   renderWrapper(): ReactNode {
     const { onResize, resize = ResizeType.none, style } = this.props;
     const text = this.getTextNode();

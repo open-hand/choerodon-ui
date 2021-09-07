@@ -53,9 +53,8 @@ class App extends React.Component {
       },
       {
         name: 'date2',
-        type: 'date',
+        type: 'dateTime',
         range: true,
-        defaultValue: ['1985-11-22', new Date()],
         required: true,
         validator: rangeValidator,
       },
@@ -81,10 +80,10 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={24}>
-          <DateTimePicker dataSet={this.ds} name="date" editorInPopup isFlat defaultTime={moment('23:59:59', 'HH:mm:ss')} />
+          <DateTimePicker dataSet={this.ds} name="date" editorInPopup isFlat defaultTime={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]} />
         </Col>
         <Col span={24}>
-          <DatePicker dataSet={this.ds} name="date2" placeholder={['Start Date', 'End Date']} />
+          <DateTimePicker dataSet={this.ds} name="date2" placeholder={['Start Date', 'End Date']} editorInPopup />
         </Col>
         <Col span={24}>
           <DatePicker

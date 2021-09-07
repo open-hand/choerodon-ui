@@ -1588,7 +1588,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     });
   }
 
-  renderLengthInfo(): ReactNode {
+  renderLengthInfo(_maxLength?: number): ReactNode {
     return undefined;
   }
 }

@@ -83,7 +83,7 @@ export interface DatePickerProps extends TriggerFieldProps {
   /**
    * 默认显示
    */
-  defaultTime?: Moment;
+  defaultTime?: Moment | [Moment, Moment];
 }
 
 export interface DatePickerKeyboardEvent {
@@ -208,6 +208,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @observable mode?: ViewMode;
 
+  popupRangeEditor?: HTMLInputElement | null;
+
+  @autobind
+  savePopupRangeEditor(node: HTMLInputElement | null) {
+    this.popupRangeEditor = node;
+  }
+
   isEditable(): boolean {
     return super.isEditable() && !this.observableProps.editorInPopup && this.getViewMode() !== ViewMode.week;
   }
@@ -254,9 +261,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return renderedText;
   }
 
-  getDefaultTime(): Moment {
-    const { defaultTime = moment('00:00:00', 'HH:mm:ss') } = this.props;
-    return defaultTime;
+  getDefaultTime(): [Moment, Moment] {
+    const createDefaultTime = () => moment('00:00:00', 'HH:mm:ss');
+    const { defaultTime = createDefaultTime() } = this.props;
+    if (isArrayLike(defaultTime)) {
+      return [defaultTime[0] || createDefaultTime(), defaultTime[1] || createDefaultTime()];
+    }
+    return [defaultTime, defaultTime];
   }
 
   getDefaultViewMode() {
@@ -276,8 +287,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       if (range) {
         const { rangeTarget } = this;
         const [startValue = '', endValue = ''] = this.processRangeValue(this.rangeValue);
-        const startText = this.getTextByValue(startValue) as string;
-        const endText = this.getTextByValue(endValue) as string;
+        const startText = this.getText(startValue) as string;
+        const endText = this.getText(endValue) as string;
         return (
           <span key="popup-editor" className={classNames(className, `${prefixCls}-range-text`)}>
             <input
@@ -286,6 +297,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               onFocus={this.handleRangeStart}
               value={rangeTarget === 0 && text !== undefined ? text : startText}
               placeholder={startPlaceholder}
+              ref={rangeTarget === 0 ? this.savePopupRangeEditor : undefined}
             />
             <span className={`${prefixCls}-range-split`}>~</span>
             <input
@@ -294,6 +306,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               onFocus={this.handleRangeEnd}
               value={rangeTarget === 1 && text !== undefined ? text : endText}
               placeholder={endPlaceHolder}
+              ref={rangeTarget === 1 ? this.savePopupRangeEditor : undefined}
             />
           </span>
         );
@@ -417,7 +430,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (isMoment(selectedDate) && selectedDate.isValid()) {
       return selectedDate.clone();
     }
-    return this.getValidDate(this.getDefaultTime());
+    return this.getValidDate(this.getDefaultTime()[range && rangeTarget !== undefined ? rangeTarget : 0]);
   }
 
   getLimit(minOrMax: 'min' | 'max'): Moment | undefined {
@@ -668,13 +681,21 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     date = this.getValidDate(date);
     this.prepareSetValue(date);
     this.changeSelectedDate(date);
-    if (this.range ? this.rangeTarget === 1 : !this.multiple) {
+    const { range, rangeTarget } = this;
+    if (range ? rangeTarget === 1 : !this.multiple) {
       if (!expand) {
         this.collapse();
       }
     }
-    if (this.range && this.rangeTarget === 0 && this.popup && !expand) {
-      this.setRangeTarget(1);
+    if (range && this.popup) {
+      if (expand) {
+        const { popupRangeEditor } = this;
+        if (popupRangeEditor && popupRangeEditor !== document.activeElement) {
+          popupRangeEditor.focus();
+        }
+      } else if (rangeTarget === 0) {
+        this.setRangeTarget(1);
+      }
     }
   }
 

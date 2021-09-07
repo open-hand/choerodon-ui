@@ -4,6 +4,7 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -194,7 +195,7 @@ export default class LovView extends Component<LovViewProps> {
       const { style } = lovTableProps;
       if (style) {
         style.width = 'min-content';
-        style.minWidth = '100%';
+        style.minWidth = pxToRem(350)!;
       }
       if (lovTableProps.showSelectionCachedButton === undefined) {
         lovTableProps.showSelectionCachedButton = false;
