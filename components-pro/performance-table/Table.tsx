@@ -296,6 +296,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   touchMoveListener: any;
 
   _cacheCells: any = null;
+  _cacheScrollX: number = 0;
+  _cacheRenderCols: any = [];
   _cacheChildrenSize = 0;
   _visibleRows = [];
   _lastRowIndex: string | number;
@@ -360,6 +362,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     this.scrollY = 0;
     this.scrollX = 0;
+    this._cacheScrollX = 0;
+    this._cacheRenderCols = [];
     this.wheelHandler = new WheelHandler(
       this.listenWheel,
       this.shouldHandleWheelX,
@@ -499,13 +503,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         if ('fixed' in this.props.rowSelection) {
           rowSelectionFixed = this.props.rowSelection.fixed;
         }
-          const columnsWithRowSelectionProps: ColumnProps = {
-            title: $l('Table', 'select_current_page'),
-            key: 'rowSelection',
-            width: 50,
-            align: 'center',
-            fixed: rowSelectionFixed,
-          };
+        const columnsWithRowSelectionProps: ColumnProps = {
+          title: $l('Table', 'select_current_page'),
+          key: 'rowSelection',
+          width: 50,
+          align: 'center',
+          fixed: rowSelectionFixed,
+        };
         runInAction(() => {
           this.tableStore.originalColumns = this.props.columns!.splice(this.props.rowSelection?.columnIndex || 0, 0, columnsWithRowSelectionProps);
         });
@@ -775,20 +779,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
      * 排列成正常显示列的顺序
      * 提供给后面bodyCell使用
      */
-    const leftFixedCol: any = [];
-    const rightFixedCol: any = [];
-    const otherCol: any = [];
-    for (let i = 0; i < flatColumns.length; i++) {
-      const fc = flatColumns[i];
-      if ((fc.props.fixed && fc.props.fixed !== 'right') || fc.props.fixed === 'left') {
-        leftFixedCol.push(fc);
-      } else if (fc.props.fixed === 'right') {
-        rightFixedCol.push(fc);
-      } else {
-        otherCol.push(fc);
-      }
-    }
-    return [...leftFixedCol, ...otherCol, ...rightFixedCol];
+    const { fixedLeftCells, fixedRightCells, scrollCells } = this.calculateFixedAndScrollColumn(flatColumns)
+    return [...fixedLeftCells, ...scrollCells, ...fixedRightCells];
   }
 
   getRecordKey = (record: object, index: number) => {
@@ -1184,7 +1176,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       // @ts-ignore
       headerCells.push(<HeaderCell {...customizationHeaderProps}>{customizedColumnHeader()}</HeaderCell>);
     }
-
+    
     return (this._cacheCells = {
       headerCells,
       bodyCells,
@@ -1678,9 +1670,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (width !== nextWidth) {
         this.scrollX = 0;
         this.scrollbarXRef?.current?.resetScrollBarPosition();
+        this._cacheCells = null;
       }
 
-      this._cacheCells = null;
       if (nextWidth !== 0) {
         this.setState({ width: nextWidth });
       }
@@ -1917,6 +1909,43 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return this.renderRow(rowProps, cells, shouldRenderExpandedRow, rowData);
   }
 
+  calculateFixedAndScrollColumn(cells: any[]) {
+    const fixedLeftCells: any[] = [];
+    const fixedRightCells: any[] = [];
+    const scrollCells: any[] = [];
+    let fixedLeftCellGroupWidth: number = 0;
+    let fixedRightCellGroupWidth: number = 0;
+
+    for (let i = 0; i < cells.length; i++) {
+      const cell = cells[i];
+      const { fixed, width } = cell.props;
+
+      let isFixedStart = fixed === 'left' || fixed === true;
+      let isFixedEnd = fixed === 'right';
+
+      if (this.isRTL()) {
+        isFixedStart = fixed === 'right';
+        isFixedEnd = fixed === 'left' || fixed === true;
+      }
+
+      if (isFixedStart) {
+        // @ts-ignore
+        fixedLeftCells.push(cell);
+        fixedLeftCellGroupWidth += width;
+      } else if (isFixedEnd) {
+        // @ts-ignore
+        fixedRightCells.push(cell);
+        if (cell.key !== CUSTOMIZED_KEY) {
+          fixedRightCellGroupWidth += width;
+        }
+      } else {
+        // @ts-ignore
+        scrollCells.push(cell);
+      }
+    }
+    return { fixedLeftCells, fixedRightCells, scrollCells, fixedLeftCellGroupWidth, fixedRightCellGroupWidth }
+  }
+
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
     const { rowClassName, highLightRow, virtualized, rowDraggable } = this.props;
     const { shouldFixedColumn, width, contentWidth } = this.state;
@@ -1946,39 +1975,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
         rowStyles.zIndex = 0;
       }
-      const fixedLeftCells = [];
-      const fixedRightCells = [];
-      const scrollCells = [];
-      let fixedLeftCellGroupWidth = 0;
-      let fixedRightCellGroupWidth = 0;
-
-      for (let i = 0; i < cells.length; i++) {
-        const cell = cells[i];
-        const { fixed, width } = cell.props;
-
-        let isFixedStart = fixed === 'left' || fixed === true;
-        let isFixedEnd = fixed === 'right';
-
-        if (this.isRTL()) {
-          isFixedStart = fixed === 'right';
-          isFixedEnd = fixed === 'left' || fixed === true;
-        }
-
-        if (isFixedStart) {
-          // @ts-ignore
-          fixedLeftCells.push(cell);
-          fixedLeftCellGroupWidth += width;
-        } else if (isFixedEnd) {
-          // @ts-ignore
-          fixedRightCells.push(cell);
-          if (cell.key !== CUSTOMIZED_KEY) {
-            fixedRightCellGroupWidth += width;
-          }
-        } else {
-          // @ts-ignore
-          scrollCells.push(cell);
-        }
-      }
+      const {
+        fixedLeftCells = [],
+        fixedRightCells = [],
+        scrollCells = [],
+        fixedLeftCellGroupWidth = 0,
+        fixedRightCellGroupWidth = 0
+      } = this.calculateFixedAndScrollColumn(cells);
 
       if (rowDraggable && !isHeaderRow) {
         return (
@@ -2105,7 +2108,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-              // {...(rowDragRender && rowDragRender.draggableProps)} todo
+            // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}
@@ -2216,7 +2219,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     } = this.props;
 
     const headerHeight = this.getTableHeaderHeight();
-    const { tableRowsMaxHeight, isScrolling, data, width } = this.state;
+    const { tableRowsMaxHeight, isScrolling, data, contentWidth, shouldFixedColumn, width } = this.state;
     const height = this.getTableHeight();
     const bodyHeight = height - headerHeight;
     const minLeft = Math.abs(this.scrollX);
@@ -2242,31 +2245,44 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
       /**
        * 如果开启了虚拟滚动 则计算列显示
+       * 判断是否有缓存，如果minLeft 没有变化，就取缓存的值，有变化就重新计算
        */
-      if (virtualized) {
+      if (virtualized && contentWidth > width && (this._cacheScrollX !== minLeft || !this._cacheRenderCols.length)) {
         // 计算渲染列数量
-        let colIndex = 0; // 列索引
-        let displayColWidth = 0; // 显示列的宽度
-        // let fixedCol: any = [] // 固定列
-        let renderLeftFixedCol: any = []; // 需要渲染的固定左边列
-        let renderRightFixedCol: any = []; // 需要渲染的固定右边列
-        let showNum = 0; // 显示列数
+        let colIndex: number = 0; // 列索引
+        let displayColWidth: number = 0; // 显示列的宽度
+        let renderLeftFixedCol: any[] = []; // 需要渲染的固定左边列
+        let renderRightFixedCol: any[] = []; // 需要渲染的固定右边列
+        let showNum: number = 0; // 显示列数
 
-        // 找到左右固定列
-        for (let i = 0; i < bodyCells.length; i++) {
-          const bc = bodyCells[i];
-          const { fixed } = bc.props;
-          if ((fixed && fixed !== 'right') || fixed === 'left') {
-            renderLeftFixedCol.push(bc)
-          } else if (fixed === 'right') {
-            renderRightFixedCol.push(bc)
+        let divideLeftFixedCol: number = 0;
+        let divideRightFixedCol: number = 0;
+        // 找到左固定列
+        if (shouldFixedColumn) {
+          for (let i = 0; i < bodyCells.length; i++) {
+            const bc = bodyCells[i];
+            const { fixed } = bc.props;
+            if ((fixed && fixed !== 'right') || fixed === 'left') {
+              renderLeftFixedCol.push(bc)
+            } else {
+              break
+            }
           }
+          // 找到右固定列
+          for (let i = bodyCells.length - 1; i >= 0; i--) {
+            const bc = bodyCells[i];
+            const { fixed } = bc.props;
+            if (fixed === 'right') {
+              renderRightFixedCol.push(bc)
+            } else {
+              break
+            }
+          }
+
+          // 计算需要减去左右固定列的宽度和
+          divideLeftFixedCol = renderLeftFixedCol.reduce((val, item) => val + item.props.width, 0);
+          divideRightFixedCol = renderRightFixedCol.reduce((val, item) => val + item.props.width, 0);
         }
-
-        // 计算需要减去左右固定列的宽度和
-        const divideLeftFixedCol = renderLeftFixedCol.reduce((val, item) => val + item.props.width, 0);
-        const divideRightFixedCol = renderRightFixedCol.reduce((val, item) => val + item.props.width, 0);
-
         // 遍历显示列的总宽度与x滚动条关系
         for (let i = 0; i < bodyCells.length; i++) {
           const elem: any = bodyCells[i];
@@ -2277,9 +2293,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           }
         }
         // 计算显示列开始下标
-        const colStartIndex = colIndex > renderLeftFixedCol.length ? colIndex - 1 : colIndex; //
+        const colStartIndex: number = colIndex > renderLeftFixedCol.length ? colIndex - 1 : colIndex; //
         // 判断当前容器宽度能容纳列数
-        let currentDisplayColWidth = 0;
+        let currentDisplayColWidth: number = 0;
 
         // 总宽度减去左右固定列的宽度
         const divideWidth = width - divideLeftFixedCol - divideRightFixedCol;
@@ -2287,19 +2303,23 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         for (let i = colIndex + 1 + renderRightFixedCol.length; i < bodyCells.length; i++) {
           const elem: any = bodyCells[i];
           currentDisplayColWidth += elem.props.width;
-          if (currentDisplayColWidth > divideWidth) { // (width - renderLeftFixedCol.reduce((val, item) => val + item.props.width, 0))
-            showNum = i - colIndex; //
+          if (currentDisplayColWidth > divideWidth) {
+            showNum = i - colIndex;
             break;
           }
         }
         // 计算列显示的结束下标
-        const colEndIndex = (showNum ? (colIndex + showNum) + 1 : bodyCells.length) - renderRightFixedCol.length; //
+        const colEndIndex: number = (showNum ? (colIndex + showNum) + 1 : bodyCells.length) - renderRightFixedCol.length; //
         // 最后slice 需要渲染的部分列
         if (renderLeftFixedCol.length + renderRightFixedCol.length === bodyCells.length) {
           renderCols = [...renderLeftFixedCol, ...renderRightFixedCol]
         } else {
           renderCols = [...renderLeftFixedCol, ...bodyCells.slice(colStartIndex, colEndIndex), ...renderRightFixedCol]
         }
+        this._cacheScrollX = minLeft;
+        this._cacheRenderCols = renderCols;
+      } else {
+        renderCols = this._cacheRenderCols.length ? this._cacheRenderCols : bodyCells
       }
 
       /**
