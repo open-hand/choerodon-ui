@@ -40,10 +40,11 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
       disabled={disabled}
       inAggregation={inAggregation}
       prefixCls={cellPrefix}
+      colSpan={colSpan}
     >
       {children}
     </TableCellInner>
-  ), [record, disabled, children, cellPrefix]);
+  ), [record, disabled, children, cellPrefix, colSpan]);
 
   const getColumnsInnerNode = useCallback((columns: ColumnProps[]) => {
     return columns.map((col) => {
