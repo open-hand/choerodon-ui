@@ -1442,11 +1442,7 @@ export default class TableStore {
     const promises: Promise<any>[] = [];
     this.setRowPending(record, true);
     if (treeAsync && dataSet) {
-      const { idField, parentField } = dataSet.props;
-      if (idField && parentField && record && !record.children) {
-        const id = record.get(idField);
-        promises.push(dataSet.queryMore(-1, { [parentField]: id }));
-      }
+      promises.push(dataSet.queryMoreChild(record));
     }
     if (treeLoadData) {
       promises.push(treeLoadData({ record, dataSet }));

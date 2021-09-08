@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 12
 title:
   zh-CN: 组合列
   en-US: Grouped Columns

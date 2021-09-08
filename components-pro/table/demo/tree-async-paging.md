@@ -1,5 +1,5 @@
 ---
-order: 16
+order: 7
 title:
   zh-CN: 树形数据异步分页
   en-US: Asynchronous lazy loading Tree Data with paging

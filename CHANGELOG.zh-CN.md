@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: 新增 childrenField 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 💄 `<pro>Attachment`：优化拖拽、预览和标签显示。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。

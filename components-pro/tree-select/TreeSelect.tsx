@@ -227,12 +227,8 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     const dataSet = this.options;
     const promises: Promise<any>[] = [];
     if (dataSet) {
-      const { idField, parentField } = dataSet.props;
       const { record } = event.props;
-      if (idField && parentField && record && !record.children) {
-        const id = record.get(idField);
-        promises.push(dataSet.queryMore(-1, { [parentField]: id }));
-      }
+      promises.push(dataSet.queryMoreChild(record));
     }
     if (loadData) {
       promises.push(loadData(event));

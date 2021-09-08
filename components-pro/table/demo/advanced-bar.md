@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 16
 title:
   zh-CN: 专业搜索条
   en-US: professionalBar

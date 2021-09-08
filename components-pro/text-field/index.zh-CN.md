@@ -35,6 +35,7 @@ title: TextField
 | waitType | 设置值变更间隔类型，可选值： `throttle` `debounce` | string | `debounce` |
 | showLengthInfo | 是否显示长度信息 | boolean | |
 | border | 是否显示边框 | boolean | true |
+| isFlat | 自动宽度模式 | boolean | false |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 
