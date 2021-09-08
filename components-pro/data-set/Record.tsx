@@ -160,6 +160,10 @@ export default class Record {
 
   @observable state?: ObservableMap<string, any> | undefined;
 
+  private $children: Record[] | undefined;
+
+  private $parent: Record | undefined;
+
   @computed
   get key(): string | number {
     if (!this.isNew) {
@@ -340,7 +344,10 @@ export default class Record {
   get children(): Record[] | undefined {
     const { dataSet } = this;
     if (dataSet) {
-      const { parentField, idField } = dataSet.props;
+      const { parentField, idField, childrenField } = dataSet.props;
+      if (childrenField) {
+        return this.$children;
+      }
       if (parentField && idField) {
         const children = this.records.filter(record => {
           const childParentId = record.get(parentField);
@@ -353,11 +360,26 @@ export default class Record {
     return undefined;
   }
 
+  set children(children: Record[] | undefined) {
+    const { dataSet } = this;
+    if (dataSet) {
+      const { childrenField } = dataSet.props;
+      if (childrenField) {
+        this.$children = children;
+      } else {
+        throw new Error('Setter of record.children only support in `childrenField` mode.');
+      }
+    }
+  }
+
   @computed
   get parent(): Record | undefined {
     const { dataSet } = this;
     if (dataSet) {
-      const { parentField, idField } = dataSet.props;
+      const { parentField, idField, childrenField } = dataSet.props;
+      if (childrenField) {
+        return this.$parent;
+      }
       if (parentField && idField) {
         return this.records.find(record => {
           const parentId = this.get(parentField);
@@ -367,6 +389,18 @@ export default class Record {
       }
     }
     return undefined;
+  }
+
+  set parent(parent: Record | undefined) {
+    const { dataSet } = this;
+    if (dataSet) {
+      const { childrenField } = dataSet.props;
+      if (childrenField) {
+        this.$parent = parent;
+      } else {
+        throw new Error('Setter of record.parent only support in `childrenField` mode.');
+      }
+    }
   }
 
   @computed
@@ -457,7 +491,8 @@ export default class Record {
     const { status, dataSet, fields } = this;
     const dataToJSON = dataSet && dataSet.dataToJSON;
     const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
-    const normal = all || (dataToJSON && useNormal(dataToJSON));
+    const childrenField = dataSet && dataSet.props.childrenField;
+    const normal = !!childrenField || all || (dataToJSON && useNormal(dataToJSON));
     let dirty = status !== RecordStatus.sync;
     const childrenKeys: string[] | undefined = cascade && dataSet ? Object.keys(dataSet.children) : undefined;
     const jsonFieldKeys: string[] | undefined = childrenKeys && [...fields.entries()].reduce<string[]>((fieldKeys, [key, field]) => {
@@ -467,6 +502,12 @@ export default class Record {
       return fieldKeys;
     }, []);
     const json = this.normalizeData(needIgnore, jsonFieldKeys);
+    if (childrenField) {
+      const { children } = this;
+      if (children) {
+        json[childrenField] = children.map(r => r.toData());
+      }
+    }
     if (cascade && this.normalizeCascadeData(json, normal, isCascadeSelect)) {
       dirty = true;
     }

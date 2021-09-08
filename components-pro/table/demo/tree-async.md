@@ -1,5 +1,5 @@
 ---
-order: 12
+order: 6
 title:
   zh-CN: 树形数据异步懒加载
   en-US: Asynchronous lazy loading Tree Data
@@ -71,11 +71,12 @@ class App extends React.Component {
     this.ds.create({ parentId: this.ds.current.get('id') });
   };
 
-  handleLoadData = ({ record: { key, children }, dataSet }) => {
+  handleLoadData = ({ record, dataSet }) => {
+    const { key, children } = record;
     return new Promise(resolve => {
       if (!children) {
         axios.get(`/tree-async-${key}.mock`).then((res)=> {
-          dataSet.appendData(res.data.rows)
+          dataSet.appendData(res.data.rows, record)
           resolve();
         }).catch((err) => {
           resolve();

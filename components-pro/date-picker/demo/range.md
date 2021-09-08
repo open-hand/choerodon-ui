@@ -53,7 +53,7 @@ class App extends React.Component {
       },
       {
         name: 'date2',
-        type: 'dateTime',
+        type: 'date',
         range: true,
         required: true,
         validator: rangeValidator,
@@ -83,7 +83,7 @@ class App extends React.Component {
           <DateTimePicker dataSet={this.ds} name="date" editorInPopup isFlat defaultTime={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]} />
         </Col>
         <Col span={24}>
-          <DateTimePicker dataSet={this.ds} name="date2" placeholder={['Start Date', 'End Date']} editorInPopup />
+          <DatePicker dataSet={this.ds} name="date2" placeholder={['Start Date', 'End Date']} editorInPopup />
         </Col>
         <Col span={24}>
           <DatePicker

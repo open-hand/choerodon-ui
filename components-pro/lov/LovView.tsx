@@ -95,8 +95,10 @@ export default class LovView extends Component<LovViewProps> {
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     const record: Record | Record[] | undefined = multiple ? records : records[0];
-    if (record && modal && onBeforeSelect(record) !== false) {
-      modal.close();
+    if (record && onBeforeSelect(record) !== false) {
+      if (modal) {
+        modal.close();
+      }
       onSelect(record);
     }
     return false;

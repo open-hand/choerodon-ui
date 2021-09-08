@@ -502,7 +502,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 列宽改变时触发
    */
-   onResize?: (props: onResizeProps) => void;
+  onResize?: (props: onResizeProps) => void;
   /**
    * 加载条属性
    */
@@ -925,9 +925,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (tableStore.performanceEnabled) {
       tableStore.performanceOn = true;
     }
-    if (tableStore.isTree) {
-      this.initDefaultExpandedRows();
-    }
+    this.initDefaultExpandedRows();
   }
 
   @autobind

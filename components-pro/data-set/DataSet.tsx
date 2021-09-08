@@ -281,13 +281,20 @@ export interface DataSetProps {
    */
   children?: { [key: string]: string | DataSet; } | DataSet[];
   /**
-   * 树形数据当前节点id字段名
+   * 树形数据当前节点 id 字段名，与 parentField 组合使用。
+   * 适用于平铺数据；渲染性能相对 childrenField 比较差；可增量提交数据；变更节点层级可直接修改 idField 和 parentField 对应的值
    */
   idField?: string;
   /**
-   * 树形数据当前父节点id字段名
+   * 树形数据当前父节点 id 字段名，与 idField 组合使用。
+   * 适用于平铺数据；渲染性能相对 childrenField 比较差；可增量提交数据；变更节点层级可直接修改 idField 和 parentField 对应的值
    */
   parentField?: string;
+  /**
+   * 树形数据子数据集字段名， 如果要异步加载子节点需设置 idField 和 parentField 或者使用 appendData 方法。
+   * 适用于树形数据；渲染性能优于 idField 和 parentField 组合；只能全量提交数据；变更节点层级需要操作 record.parent 和 record.children
+   */
+  childrenField?: string;
   /**
    * 树形数据标记节点是否展开的字段名
    */
@@ -737,12 +744,13 @@ export default class DataSet extends EventManager {
 
   @computed
   get treeData(): Record[] {
-    return sortTree(this.filter(record => !record.parent), getOrderFields(this.fields)[0]);
+    const { childrenField } = this.props;
+    return sortTree(childrenField ? this.data : this.filter(record => !record.parent), getOrderFields(this.fields)[0]);
   }
 
   get paging(): boolean | 'server' {
-    const { idField, parentField, paging } = this.props;
-    return (paging === `server`) && parentField && idField ? paging : (parentField === undefined || idField === undefined) && !!paging!;
+    const { idField, parentField, childrenField, paging } = this.props;
+    return (paging === `server`) && ((parentField && idField) || childrenField) ? paging : (parentField === undefined || idField === undefined) && childrenField === undefined && !!paging!;
   }
 
   @computed
@@ -1037,6 +1045,20 @@ export default class DataSet extends EventManager {
     return this.pending.add(this.doQueryMore(page, params));
   }
 
+  queryMoreChild(parent: Record, page?: number, params: object = {}): Promise<any> {
+    const { idField, parentField } = this.props;
+    if (idField && parentField && !parent.children) {
+      const id = parent.get(idField);
+      if (!isEmpty(id)) {
+        if (parentField) {
+          params[parentField] = id;
+        }
+        return this.pending.add(this.doQueryMoreChild(parent, page, { ...params, [parentField]: id }));
+      }
+    }
+    return Promise.resolve();
+  }
+
   async doQuery(page, params?: object): Promise<any> {
     const data = await this.read(page, params);
     this.loadDataFromResponse(data);
@@ -1046,6 +1068,12 @@ export default class DataSet extends EventManager {
   async doQueryMore(page, params?: object): Promise<any> {
     const data = await this.read(page, params);
     this.appendDataFromResponse(data);
+    return data;
+  }
+
+  async doQueryMoreChild(parent: Record, page, params?: object): Promise<any> {
+    const data = await this.read(page, params);
+    this.appendDataFromResponse(data, parent);
     return data;
   }
 
@@ -2223,16 +2251,16 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  appendData(allData: (object | Record)[] = []): DataSet {
-    // const {
-    //   paging,
-    //   pageSize,
-    // } = this;
-    // allData = paging ? allData.slice(0, pageSize) : allData;
+  appendData(allData: (object | Record)[] = [], parent?: Record): DataSet {
+    const { childrenField } = this.props;
     this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: allData });
-    const appendData = this.processData(allData);
-    this.originalData = unionBy(this.originalData, appendData, 'key');
-    this.records = unionBy(this.records, appendData, 'key');
+    const appendData = this.processData(allData, undefined, childrenField ? parent : undefined);
+    if (childrenField && parent) {
+      parent.children = unionBy(parent.children, appendData, 'key');
+    } else {
+      this.originalData = unionBy(this.originalData, appendData, 'key');
+      this.records = unionBy(this.records, appendData, 'key');
+    }
     this.fireEvent(DataSetEvents.append, { dataSet: this });
     return this;
   }
@@ -2281,18 +2309,37 @@ Then the query method will be auto invoke.`,
     return this;
   }
 
-  @action
-  processData(allData: any[], status: RecordStatus = RecordStatus.sync): Record[] {
-    return allData.map(data => {
-      if (data instanceof Record) {
-        if (data.dataSet !== this) {
-          data.dataSet = this;
-          data.status = status;
-        }
-        return data;
+  private processOneData(data: object | Record = {}, status: RecordStatus, childrenField: string | undefined, parent?: Record): Record {
+    if (data instanceof Record) {
+      if (data.dataSet !== this) {
+        data.dataSet = this;
+        data.status = status;
       }
-      return new Record(data, this, status);
-    });
+      if (childrenField) {
+        const { children } = data;
+        if (children) {
+          children.forEach(r => this.processOneData(r, status, childrenField));
+        }
+      }
+      return data;
+    }
+    const self = new Record(data, this, status);
+    if (parent) {
+      self.parent = parent;
+    }
+    if (childrenField) {
+      const children = data[childrenField];
+      if (children) {
+        self.children = this.processData(children, status, self);
+      }
+    }
+    return self;
+  }
+
+  @action
+  processData(allData: (object | Record)[], status: RecordStatus = RecordStatus.sync, parent?: Record): Record[] {
+    const { childrenField } = this.props;
+    return allData.map(data => this.processOneData(data, status, childrenField, parent));
   }
 
   private deleteRecord(record?: Record): Record | undefined {
@@ -2405,11 +2452,11 @@ Then the query method will be auto invoke.`,
     return this;
   }
 
-  private appendDataFromResponse(resp: any): DataSet {
+  private appendDataFromResponse(resp: any, parent?: Record): DataSet {
     if (resp) {
       const { dataKey } = this;
       const data: object[] = generateResponseData(resp, dataKey);
-      this.appendData(data);
+      this.appendData(data, parent);
     }
     return this;
   }

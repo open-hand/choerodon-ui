@@ -41,8 +41,9 @@ title: DataSet
 | feedback | 查询和提交数据的反馈配置, 详见[Feedback](#Feedback) | Feedback |  |
 | children | 级联行数据集, 例： { name_1: dataSet1, name_2: dataSet2 } | { name: DataSet } |  |
 | primaryKey | 主键字段名，一般用作级联行表的查询字段 | string |  |
-| idField | 树形数据当前节点 id 字段名 | string |  |
-| parentField | 树形数据当前父节点 id 字段名 | string |  |
+| idField | 树形数据当前节点 id 字段名，与 parentField 组合使用。 适用于平铺数据；渲染性能相对 childrenField 比较差；可增量提交数据；变更节点层级可直接修改 idField 和 parentField 对应的值 | string |  |
+| parentField | 树形数据当前父节点 id 字段名，与 idField 组合使用。适用于平铺数据；渲染性能相对 childrenField 比较差；可增量提交数据；变更节点层级可直接修改 idField 和 parentField 对应的值| string |  |
+| childrenField | 树形数据子数据集字段名， 如果要异步加载子节点需设置 idField 和 parentField 或者使用 appendData 方法。适用于树形数据；渲染性能优于 idField 和 parentField 组合；只能全量提交数据；变更节点层级需要操作 record.parent 和 record.children | string |  |
 | expandField | 树形数据标记节点是否展开的字段名 | string |  |
 | checkField | 树形数据标记节点是否为选中的字段名，在展开按钮后面会显示 checkbox | string |  |
 | fields | 字段属性数组，详见[Field Props](#Field Props) | object\[\] |  |
@@ -152,7 +153,7 @@ title: DataSet
 | setQueryParameter(para, value) | 设置查询参数 | `para` - 参数名 `value` - 参数值 |  |
 | getQueryParameter(para) | 获取查询参数 | `para` - 参数名 |  |
 | loadData(data, total) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
-| appendData(data, total) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
+| appendData(data, total, parentRecord) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 |  |
 | setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | modifiedCheck(message) | 变更检查。 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage |  |

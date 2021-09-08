@@ -59,11 +59,12 @@ const TreeDs = () => ({
 const App = () => {
   const dataSet = useMemo(() => new DataSet(TreeDs()), [])
 
-  const onLoadData = useCallback(({ key, children }) => {
+  const onLoadData = useCallback((record) => {
+    const { key, children } = record;
     return new Promise(resolve => {
       if (!children) {
         axios.get(`/tree-async-${key}.mock`).then((res)=> {
-          dataSet.appendData(res.data.rows)
+          dataSet.appendData(res.data.rows, record);
           resolve();
         }).catch((err) => {
           resolve();
