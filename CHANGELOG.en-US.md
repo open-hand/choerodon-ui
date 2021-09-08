@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 - 🐞 `<pro>DatePicker`: Fix display problems in `isFlat` and `range` mode.
 - 🐞 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.
+- 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
 
 ## 1.4.4
 

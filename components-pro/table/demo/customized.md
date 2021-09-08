@@ -117,13 +117,24 @@ class App extends React.Component {
     return new Array(3).fill(text).join(' ');
   };
 
+  state = { customizedCode: 'customized' };
+
+  style = { height: 'calc(100vh - 100px)' };
+
+  handleChangeCustomized = () => {
+    const { customizedCode } = this.state;
+    this.setState({ customizedCode: customizedCode === 'customized' ? 'other' : 'customized' });
+  };
 
   render() {
+    const { customizedCode } = this.state;
     return (
+      <>
+      <Button onClick={this.handleChangeCustomized}>当前customizedCode： {customizedCode}</Button>
       <Table
         customizable
         border={false}
-        customizedCode="customized"
+        customizedCode={customizedCode}
         rowHeight={40}
         key="user"
         dataSet={this.userDs}
@@ -132,7 +143,7 @@ class App extends React.Component {
         columnTitleEditable
         dragColumnAlign="left"
         columnsDragRender={this.columnsDragRender}
-        style={{ height: 'calc(100vh - 100px)' }}
+        style={this.style}
       >
         <Column header="组合">
           <Column header="子组合">
@@ -146,6 +157,7 @@ class App extends React.Component {
           <Column name="enable" tooltip="overflow" hideable={false} />
         </Column>
       </Table>
+      </>
     );
   }
 }

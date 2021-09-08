@@ -1547,11 +1547,9 @@ export default class TableStore {
       });
       try {
         const customized = await tableCustomizedLoad(customizedCode);
-        if (customized) {
-          runInAction(() => {
-            this.customized = { columns: {}, ...customized };
-          });
-        }
+        runInAction(() => {
+          this.customized = { columns: {}, ...customized };
+        });
         this.customizedLoaded = true;
       } finally {
         runInAction(() => {
