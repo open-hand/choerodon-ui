@@ -283,17 +283,17 @@ export interface DataSetProps {
   children?: { [key: string]: string | DataSet; } | DataSet[];
   /**
    * 树形数据当前节点 id 字段名，与 parentField 组合使用。
-   * 适用于平铺数据；渲染性能相对 childrenField 比较差；可增量提交数据；变更节点层级可直接修改 idField 和 parentField 对应的值
+   * 适用于平铺数据；渲染性能相对 childrenField 比较差；变更节点层级可直接修改 idField 和 parentField 对应的值
    */
   idField?: string;
   /**
    * 树形数据当前父节点 id 字段名，与 idField 组合使用。
-   * 适用于平铺数据；渲染性能相对 childrenField 比较差；可增量提交数据；变更节点层级可直接修改 idField 和 parentField 对应的值
+   * 适用于平铺数据；渲染性能相对 childrenField 比较差；变更节点层级可直接修改 idField 和 parentField 对应的值
    */
   parentField?: string;
   /**
    * 树形数据子数据集字段名， 如果要异步加载子节点需设置 idField 和 parentField 或者使用 appendData 方法。
-   * 适用于树形数据；渲染性能优于 idField 和 parentField 组合；只能全量提交数据；变更节点层级需要操作 record.parent 和 record.children
+   * 适用于树形数据；渲染性能优于 idField 和 parentField 组合；变更节点层级需要操作 record.parent 和 record.children
    */
   childrenField?: string;
   /**

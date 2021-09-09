@@ -423,20 +423,17 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
         <ReactIntersectionObserver
           root={node.wrapper}
           rootMargin="100px"
-          triggerOnce
         >
           {
             ({ ref, inView }) => {
-              if (columnGroup.inView !== true) {
-                columnGroup.setInView(inView);
-              }
+              columnGroup.setInView(inView);
               return cloneElement<any>(th, { ref });
             }
           }
         </ReactIntersectionObserver>
       );
     }
-    if (columnGroup.inView === false) {
+    if (columnGroup.inView !== undefined) {
       columnGroup.setInView(undefined);
     }
   }
