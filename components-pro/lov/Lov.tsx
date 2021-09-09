@@ -229,6 +229,7 @@ export default class Lov extends Select<LovProps> {
 
   getPopupLovView() {
     const config = this.getConfig();
+    this.autoCreate();
     const { options } = this;
     if (config && options) {
       let lovViewProps;
@@ -364,6 +365,7 @@ export default class Lov extends Select<LovProps> {
     const { viewMode, onBeforeSelect } = this.props;
     if (viewMode === 'modal') {
       const config = this.getConfig();
+      this.autoCreate();
       const { options } = this;
       if (!this.modal && config && options) {
         const modalProps = this.getModalProps();

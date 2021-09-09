@@ -337,9 +337,6 @@ export default class Attachment extends FormField<AttachmentProps> {
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
     const oldAttachmentUUID = this.getValue();
     const attachmentUUID = oldAttachmentUUID || (await this.getAttachmentUUID());
-    if (attachmentUUID !== oldAttachmentUUID) {
-      this.setValue(attachmentUUID);
-    }
     const max = this.getProp('max');
     if (max > 0 && (this.count || 0) + attachments.length > max) {
       Modal.error($l('Attachment', 'file_list_max_length', { count: max }));
@@ -353,7 +350,10 @@ export default class Attachment extends FormField<AttachmentProps> {
       this.attachments = [...attachments];
     }
     if (attachmentUUID) {
-      attachments.forEach((attachment) => this.upload(attachment, attachmentUUID));
+      await Promise.all(attachments.map((attachment) => this.upload(attachment, attachmentUUID)));
+    }
+    if (attachmentUUID !== oldAttachmentUUID) {
+      this.setValue(attachmentUUID);
     }
   }
 
@@ -432,6 +432,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (target.value) {
       const files: File[] = [...target.files];
       target.value = '';
+      this.autoCreate();
       this.uploadAttachments(files.map((file, index: number) => new AttachmentFile({
         uid: this.getUid(index),
         url: URL.createObjectURL(file),

@@ -76,6 +76,7 @@ class App extends React.Component {
       name="code"
       noCache
       tableProps={{ selectionMode: 'rowbox' }}
+      renderer={() => 'xxx'}
      />
     </Col>
     <Col span={12}>

@@ -20,7 +20,7 @@ export function treeForEach<T>(
   fn: (node: T, index: number, parentNode?: T) => void,
   childName: string = 'children',
   parentNode?: T,
-) {
+): void {
   nodes.forEach((node, index) => {
     fn(node, index, parentNode);
     const children = node[childName];
@@ -35,14 +35,40 @@ export function treeSome<T>(
   fn: (node: T, index: number, parentNode?: T) => boolean,
   childName: string = 'children',
   parentNode?: T,
-) {
+): boolean {
   return nodes.some((node, index) => {
     if (!fn(node, index, parentNode)) {
       const children = node[childName];
       if (children && children.length) {
-        return treeSome(children, fn, childName, node);
+        return treeSome<T>(children, fn, childName, node);
       }
     }
     return true;
   });
+}
+
+export function treeFind<T>(
+  nodes: T[],
+  fn: (node: T, index: number, parentNode?: T) => unknown,
+  childName: string = 'children',
+  parentNode?: T,
+): T | undefined {
+  let result: T | undefined;
+  nodes.some((node, index) => {
+    const found = fn(node, index, parentNode);
+    if (found) {
+      result = node;
+      return true;
+    }
+    const children = node[childName];
+    if (children && children.length) {
+      const foundChild = treeFind<T>(children, fn, childName, node);
+      if (foundChild) {
+        result = foundChild;
+        return true;
+      }
+    }
+    return false;
+  });
+  return result;
 }

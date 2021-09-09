@@ -384,7 +384,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           return renderedText;
         }
       } else {
-        const unRenderedText = this.processValue(this.getValue());
+        const unRenderedText = this.getTextNode(this.getValue());
         if (isString(unRenderedText) && unRenderedText.length) {
           return {
             text: unRenderedText,
@@ -412,7 +412,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           return renderedStartText;
         }
       } else {
-        const unRenderedStartText = this.processValue(startValue);
+        const unRenderedStartText = this.getTextByValue(startValue);
         if (isString(unRenderedStartText) && unRenderedStartText.length) {
           return {
             text: unRenderedStartText,
@@ -435,7 +435,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           return renderedEndText;
         }
       } else {
-        const unRenderedEndText = this.processValue(endValue);
+        const unRenderedEndText = this.getTextByValue(endValue);
         if (isString(unRenderedEndText) && unRenderedEndText.length) {
           return {
             text: unRenderedEndText,
@@ -752,9 +752,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     // 筛选条默认宽度处理
     if (isFlat) {
-      startStyle.width = startWidth;
+      startStyle.width = startWidth + 4;
       startStyle.boxSizing = 'content-box';
-      endStyle.width = endWidth;
+      endStyle.width = endWidth + 4;
       endStyle.boxSizing = 'content-box';
     }
     if (startRenderedValue && (!editable || !isFocused)) {
@@ -947,7 +947,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (isFlat) {
       otherProps.style = {
         ...otherProps.style,
-        width: editorTextInfo.width,
+        width: editorTextInfo.width + 4,
         boxSizing: 'content-box',
       };
     }

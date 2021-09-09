@@ -53,7 +53,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const { getPreviewUrl } = attachmentConfig;
   const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) : url;
-  const dragProps = { ...provided.dragHandleProps, style: { cursor: 'move' } };
+  const dragProps = { ...provided.dragHandleProps };
   const isPicture = attachment.type.startsWith('image');
   const preview = (status === 'success' || status === 'done');
   const handlePreview = useCallback(() => {
@@ -65,7 +65,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const renderDragger = (): ReactNode => {
     if (draggable && !isCard) {
       return (
-        <Icon type="baseline-drag_indicator" {...dragProps} />
+        <Icon className={`${prefixCls}-drag-icon`} type="baseline-drag_indicator" {...dragProps} />
       );
     }
   };
@@ -271,13 +271,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     },
   };
   if (draggable && isCard) {
-    Object.assign(listProps, {
-      ...dragProps,
-      style: {
-        ...listProps.style,
-        ...dragProps.style,
-      },
-    });
+    Object.assign(listProps, dragProps);
   }
   return (
     <div {...listProps} hidden={hidden}>

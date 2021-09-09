@@ -585,6 +585,19 @@ export function getFieldSorter(field: Field) {
   }
 }
 
+// export function generateRecordChildrenData(dataSet: DataSet, record: Record): { dirty: boolean; data: object[]; } | undefined {
+//   const { props: { childrenField }, dataToJSON } = dataSet;
+//   if (childrenField && !useSelected(dataToJSON)) {
+//     const { children } = record;
+//     if (children) {
+//       const normal = useNormal(dataToJSON);
+//       return normal
+//         ? generateData(children)
+//         : generateJSONData(dataSet, children);
+//     }
+//   }
+// }
+
 export function generateRecordJSONData(array: object[], record: Record, dataToJSON: DataToJSON) {
   const normal = useNormal(dataToJSON);
   const json = normal
@@ -852,6 +865,29 @@ export function generateJSONData(
   };
 }
 
+
+export function getUniqueFieldNames(dataSet: DataSet): string[] {
+  const keys: string[] = [];
+  [...dataSet.fields.entries()].forEach(([key, field]) => {
+    if (field.get('unique')) {
+      keys.push(key);
+    }
+  });
+  return keys;
+}
+
+export function getUniqueKeysAndPrimaryKey(dataSet?: DataSet): string[] {
+  if (dataSet) {
+    const keys: string[] = getUniqueFieldNames(dataSet);
+    const { primaryKey } = dataSet.props;
+    if (primaryKey) {
+      keys.push(primaryKey);
+    }
+    return keys;
+  }
+  return [];
+}
+
 export function isDirtyRecord(record) {
   return record.status !== RecordStatus.sync || record.dirty;
 }
@@ -1000,28 +1036,6 @@ export function getSortedFields(fields: Fields): [string, Field][] {
     ...dynamicObjectBindFields,
     ...dynamicBindFields,
   ];
-}
-
-export function getUniqueFieldNames(dataSet: DataSet): string[] {
-  const keys: string[] = [];
-  [...dataSet.fields.entries()].forEach(([key, field]) => {
-    if (field.get('unique')) {
-      keys.push(key);
-    }
-  });
-  return keys;
-}
-
-export function getUniqueKeysAndPrimaryKey(dataSet?: DataSet): string[] {
-  if (dataSet) {
-    const keys: string[] = getUniqueFieldNames(dataSet);
-    const { primaryKey } = dataSet.props;
-    if (primaryKey) {
-      keys.push(primaryKey);
-    }
-    return keys;
-  }
-  return [];
 }
 
 

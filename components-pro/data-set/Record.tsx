@@ -491,8 +491,7 @@ export default class Record {
     const { status, dataSet, fields } = this;
     const dataToJSON = dataSet && dataSet.dataToJSON;
     const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
-    const childrenField = dataSet && dataSet.props.childrenField;
-    const normal = !!childrenField || all || (dataToJSON && useNormal(dataToJSON));
+    const normal = all || (dataToJSON && useNormal(dataToJSON));
     let dirty = status !== RecordStatus.sync;
     const childrenKeys: string[] | undefined = cascade && dataSet ? Object.keys(dataSet.children) : undefined;
     const jsonFieldKeys: string[] | undefined = childrenKeys && [...fields.entries()].reduce<string[]>((fieldKeys, [key, field]) => {
@@ -502,12 +501,6 @@ export default class Record {
       return fieldKeys;
     }, []);
     const json = this.normalizeData(needIgnore, jsonFieldKeys);
-    if (childrenField) {
-      const { children } = this;
-      if (children) {
-        json[childrenField] = children.map(r => r.toData());
-      }
-    }
     if (cascade && this.normalizeCascadeData(json, normal, isCascadeSelect)) {
       dirty = true;
     }
