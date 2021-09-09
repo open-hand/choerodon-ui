@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。
 - 🐞 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。
 - 🐞 `<pro>Table`：修复 customizedCode 变更时且表格列不会刷新的问题。
+- 🐞 `Tabs`：修墨条可能对不齐的问题。
 
 ## 1.4.4
 
