@@ -3,6 +3,7 @@ order: 5
 title:
   zh-CN: 高性能树形数据
   en-US: Performance Tree Data
+only: true
 ---
 
 ## zh-CN
@@ -14,7 +15,7 @@ title:
 Performance Tree Data.
 
 ```jsx
-import { DataSet, Table } from 'choerodon-ui/pro';
+import { DataSet, Table, Button } from 'choerodon-ui/pro';
 
 const template = {
   creationDate: '2021-09-03 15:57:39',
@@ -59,7 +60,7 @@ const fieldTemplate = {
 };
 
 const App = () => {
-
+  const [editable, setEditable] = React.useState(false);
   const data = React.useMemo(() => {
     // 创建模型
     const list = [];
@@ -138,20 +139,24 @@ const App = () => {
         width: 100,
         name: 'componentType',
         tooltip: 'overflow',
+        editor: true,
       },
     ],
     [],
   );
 
   return (
+    <>
+    <Button onClick={() => console.log(rightFieldInformationDs.toJSONData())}>toJSONData</Button>
     <Table
       mode="tree"
-      border={false}
+      selectionMode="treebox"
       dataSet={rightFieldInformationDs}
       columns={columns}
       style={{ height: 200 }}
       defaultRowExpanded
     />
+    </>
   );
 };
 

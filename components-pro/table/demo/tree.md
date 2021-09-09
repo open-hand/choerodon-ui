@@ -3,6 +3,7 @@ order: 4
 title:
   zh-CN: 树形数据
   en-US: Tree Data
+only: true
 ---
 
 ## zh-CN

@@ -1222,6 +1222,17 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return isSame(toJS(oldValue), toJS(newValue));
   }
 
+  autoCreate(): Record | undefined {
+    const { record } = this;
+    if (record) {
+      return record;
+    }
+    const { dataSet, name, dataIndex } = this;
+    if (dataSet && name) {
+      return dataSet.create({}, dataIndex);
+    }
+  }
+
   @action
   setValue(value: any): void {
     if (!this.readOnly) {
@@ -1237,7 +1248,6 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         dataSet,
         trim,
         format,
-        dataIndex,
       } = this;
       const { onChange = noop, onBeforeChange = noop } = this.props;
       const old = toJS(this.getOldValue());
@@ -1249,12 +1259,14 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       }
       const updateAndValidate = () => {
         if (dataSet && name) {
-          const { record = dataSet.create({}, dataIndex) } = this;
-          const { field } = this;
-          if (field && !field.get('defaultValidationMessages')) {
-            field.set('defaultValidationMessages', this.defaultValidationMessages);
+          const record = this.autoCreate();
+          if (record) {
+            const { field } = this;
+            if (field && !field.get('defaultValidationMessages')) {
+              field.set('defaultValidationMessages', this.defaultValidationMessages);
+            }
+            record.set(name, value);
           }
-          record.set(name, value);
         } else {
           this.validate(value, false);
         }

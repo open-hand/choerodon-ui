@@ -79,6 +79,7 @@ import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 import ValidationResult from '../validator/ValidationResult';
+import { treeReduce } from '../_util/treeUtils';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
@@ -744,8 +745,7 @@ export default class DataSet extends EventManager {
 
   @computed
   get treeData(): Record[] {
-    const { childrenField } = this.props;
-    return sortTree(childrenField ? this.data : this.filter(record => !record.parent), getOrderFields(this.fields)[0]);
+    return sortTree(this.filter(record => !record.parent), getOrderFields(this.fields)[0]);
   }
 
   get paging(): boolean | 'server' {
@@ -792,10 +792,7 @@ export default class DataSet extends EventManager {
    */
   @computed
   get current(): Record | undefined {
-    return (
-      this.data.find(record => record.isCurrent) ||
-      this.cachedSelected.find(record => record.isCurrent)
-    );
+    return this.data.find(record => record.isCurrent) || this.cachedSelected.find(record => record.isCurrent);
   }
 
   /**
@@ -2257,10 +2254,9 @@ Then the query method will be auto invoke.`,
     const appendData = this.processData(allData, undefined, childrenField ? parent : undefined);
     if (childrenField && parent) {
       parent.children = unionBy(parent.children, appendData, 'key');
-    } else {
-      this.originalData = unionBy(this.originalData, appendData, 'key');
-      this.records = unionBy(this.records, appendData, 'key');
     }
+    this.originalData = unionBy(this.originalData, appendData, 'key');
+    this.records = unionBy(this.records, appendData, 'key');
     this.fireEvent(DataSetEvents.append, { dataSet: this });
     return this;
   }
@@ -2272,7 +2268,7 @@ Then the query method will be auto invoke.`,
     const {
       paging,
       pageSize,
-      props: { autoLocateFirst, idField, parentField },
+      props: { autoLocateFirst, idField, parentField, childrenField },
     } = this;
     switch (paging) {
       case true:
@@ -2285,7 +2281,8 @@ Then the query method will be auto invoke.`,
         break;
     }
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
-    this.originalData = this.processData(allData);
+    const originalData = this.processData(allData);
+    this.originalData = childrenField ? treeReduce<Record[], Record>(originalData, (list, node) => list.concat(node), []) : originalData;
     this.records = this.originalData;
     if (total !== undefined && (paging === true || paging === 'server')) {
       this.totalCount = total;
