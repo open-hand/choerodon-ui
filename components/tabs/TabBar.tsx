@@ -449,7 +449,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
       inkBarNodeStyle.visibility = activeTab ? 'visible' : 'hidden';
     }
-  }, [rootRef, navRef, inkBarRef, activeTabRef, tabBarPosition, styles, activeKey]);
+  });
 
   useEffect(() => {
     setOffset(0, setNextPrev);

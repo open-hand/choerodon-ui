@@ -585,19 +585,6 @@ export function getFieldSorter(field: Field) {
   }
 }
 
-// export function generateRecordChildrenData(dataSet: DataSet, record: Record): { dirty: boolean; data: object[]; } | undefined {
-//   const { props: { childrenField }, dataToJSON } = dataSet;
-//   if (childrenField && !useSelected(dataToJSON)) {
-//     const { children } = record;
-//     if (children) {
-//       const normal = useNormal(dataToJSON);
-//       return normal
-//         ? generateData(children)
-//         : generateJSONData(dataSet, children);
-//     }
-//   }
-// }
-
 export function generateRecordJSONData(array: object[], record: Record, dataToJSON: DataToJSON) {
   const normal = useNormal(dataToJSON);
   const json = normal
