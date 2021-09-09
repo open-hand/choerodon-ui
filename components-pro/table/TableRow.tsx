@@ -463,28 +463,35 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
         root={tableStore.overflowY ? node.tableBodyWrap || node.element : undefined}
         rootMargin="100px"
         initialInView={index <= 10}
-        triggerOnce
       >
         {
-          ({ ref, inView }) => {
+          action((renderProps: { ref, inView: boolean, entry: IntersectionObserverEntry | undefined }) => {
+            const { ref, inView, entry } = renderProps;
             intersectionRef.current = ref;
-            const oldInView = record.getState('__inView');
-            if (oldInView !== true && oldInView !== inView) {
-              record.setState('__inView', inView);
-            }
-            if (oldInView !== true || !columnGroups.inView) {
+            record.setState('__inView', inView);
+            if (inView !== true || !columnGroups.inView) {
+              let oldHeight = record.getState('__row_height__');
+              if (entry && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn))) {
+                const { boundingClientRect: { height } } = entry;
+                if (oldHeight !== height) {
+                  record.setState('__row_height__', height);
+                  oldHeight = height;
+                }
+              }
               return cloneElement<any>(tr, {
                 style: {
                   ...rowProps.style,
-                  height: pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)),
+                  height: oldHeight === undefined ? pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)) : oldHeight,
                 },
               });
             }
             return tr;
-          }
+          })
         }
       </ReactIntersectionObserver>
     );
+  } else if (record.getState('__inView') !== undefined) {
+    record.setState('__inView', undefined);
   }
   return (
     <>

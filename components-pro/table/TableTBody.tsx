@@ -92,7 +92,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
   handleResize(_width: number, height: number) {
     const { tableStore } = this.context;
     if (!tableStore.hidden) {
-      tableStore.bodyHeight = height;
+      tableStore.calcBodyHeight = height;
     }
   }
 
@@ -177,7 +177,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
         {rows}
       </tbody>
     );
-    return lock ? (
+    return lock|| virtual ? (
       body
     ) : (
       <ReactResizeObserver onResize={this.handleResize} resizeProp="height" immediately>

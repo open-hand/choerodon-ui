@@ -13,8 +13,8 @@
   font-size: @tag-font-size;
   line-height: 0.2rem;
   white-space: nowrap;
-  background: @tag-default-bg;
-  border: @border-width-base @border-style-base @border-color-base;
+  background-color: @tag-default-bg;
+  border: @border-width-base @border-style-base @tag-default-bg;
   border-radius: @border-radius-base;
   cursor: pointer;
   opacity: 1;
@@ -46,6 +46,7 @@
 
   &-has-color {
     border-color: transparent;
+
     &,
     a,
     a:hover,
@@ -58,21 +59,26 @@
   &-checkable {
     background-color: transparent;
     border-color: transparent;
+
     &:not(&-checked):hover {
       color: @primary-color;
     }
+
     &,
     a,
     a:hover {
       color: #000;
     }
+
     &:active,
     &-checked {
       color: #fff;
     }
+
     &-checked {
       background-color: @primary-6;
     }
+
     &:active {
       background-color: @primary-7;
     }
@@ -96,7 +102,7 @@
   }
 
   @colors: pink, magenta, red, volcano, orange, yellow, gold, cyan, lime, green, blue, geekblue,
-    purple;
+  purple;
 
   // mixin to iterate over colors and create CSS class for each one
   .make-color-classes(@i: length(@colors)) when (@i > 0) {
@@ -107,12 +113,12 @@
     @darkColor: '@{color}-6';
     &-@{color} {
       color: @@darkColor;
-      background: @@lightColor;
+      background-color: @@lightColor;
       border-color: @@lightBorderColor;
     }
     &-@{color}-inverse {
       color: #fff;
-      background: @@darkColor;
+      background-color: @@darkColor;
       border-color: @@darkColor;
     }
   }

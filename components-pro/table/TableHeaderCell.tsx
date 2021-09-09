@@ -115,12 +115,12 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
 
 
   const resizeEnd = useCallback(action<() => void>(() => {
-    
+
     tableStore.columnResizing = false;
     setSplitLineHidden(true);
     resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
     const { resizePosition, resizeColumnGroup } = globalRef.current;
-    
+
     if (resizePosition !== undefined && resizeColumnGroup) {
       const { column: resizeColumn } = resizeColumnGroup;
       const newWidth = Math.round(Math.max(resizePosition - globalRef.current.resizeBoundary, minColumnWidth(resizeColumn)));
@@ -158,7 +158,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
        * @param column
        * @param width
        */
-       onResize(resizeColumn,newWidth)
+      onResize(resizeColumn, newWidth);
     }
   }), [globalRef, tableStore, setSplitLineHidden, resizeEvent]);
 
@@ -425,20 +425,17 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
         <ReactIntersectionObserver
           root={node.wrapper}
           rootMargin="100px"
-          triggerOnce
         >
           {
             ({ ref, inView }) => {
-              if (columnGroup.inView !== true) {
-                columnGroup.setInView(inView);
-              }
+              columnGroup.setInView(inView);
               return cloneElement<any>(th, { ref });
             }
           }
         </ReactIntersectionObserver>
       );
     }
-    if (columnGroup.inView === false) {
+    if (columnGroup.inView !== undefined) {
       columnGroup.setInView(undefined);
     }
   }

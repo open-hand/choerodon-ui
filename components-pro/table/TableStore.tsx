@@ -430,7 +430,7 @@ export default class TableStore {
 
   @observable hasAggregationColumn?: boolean;
 
-  @observable bodyHeight: number;
+  @observable calcBodyHeight: number;
 
   @observable width?: number;
 
@@ -478,6 +478,10 @@ export default class TableStore {
     renderStart: number;
     renderEnd: number;
   } = { renderStart: 0, renderEnd: 0 };
+
+  get bodyHeight(): number {
+    return this.virtual ? this.virtualHeight : this.calcBodyHeight;
+  }
 
   get stickyLeft(): boolean {
     return [ScrollPosition.right, ScrollPosition.middle].includes(this.scrollPosition);
