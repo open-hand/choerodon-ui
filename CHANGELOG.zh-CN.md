@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 childrenField 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 💄 `<pro>Attachment`：优化拖拽、预览和标签显示。
+- 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。
 - 🐞 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。
