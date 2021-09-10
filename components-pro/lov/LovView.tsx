@@ -158,7 +158,7 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       columns,
       queryFieldsLimit: queryColumns,
-      queryBar: queryBar || getConfig('lovQueryBar'),
+      queryBar: queryBar || getConfig('lovQueryBar') || getConfig('queryBar'),
       selectionMode: SelectionMode.none,
       ...configTableProps,
       ...tableProps,
