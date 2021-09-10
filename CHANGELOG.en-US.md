@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
 - 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
+- 🐞 `<pro>PerformanceTable`: Fix the problem of line highlighting error.
 
 ## 1.4.4
 
@@ -57,7 +58,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `onResize` callback. 
 - 🌟 `Tabs`: Added TabGroup component.
 - 🌟 `Icon`: Added a lot of icons.
-- 🌟 `Table`: Added `autoQueryAfterReset` property to support ProfessionalBar & DynamicFilterBar to reset whether to automatically query.
+- 🌟 `<pro>Table`: Added `autoQueryAfterReset` property to support ProfessionalBar & DynamicFilterBar to reset whether to automatically query.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
@@ -69,7 +70,7 @@ timeline: true
 - 💄 `ImageCrop`：Optimize the interface and usage.
 - 💄 `<pro>PerformanceTable`：Unordering is supported.
 - 💄 `<pro>FormField`: Optimize the null value judgment.
-- 💄 `<pro>Form`: Optimize the `hidden` attribute to support hidden fields.
+- 💄 `<pro>FormField`: Optimize the `hidden` attribute to support hidden fields.
 - 🐞 `configure`: Modify the `tableFilterAdapter` type.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic query parameters of the professionalQuery bar do not respond in real time.
 - 🐞 `<pro>DataSet.Field`: Optimize the data return type problem of multiple calls to `fetchLookup`.
