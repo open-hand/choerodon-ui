@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>DataSet`: Added `childrenField` property.
+- 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 💄 `<pro>Attachment`: Optimize dnd, preview and label display.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles.

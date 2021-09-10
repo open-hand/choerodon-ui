@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>DataSet`: 新增 childrenField 属性。
+- 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 💄 `<pro>Attachment`：优化拖拽、预览和标签显示。
 - 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角。

@@ -53,6 +53,7 @@ title: DataSet
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |
 | combineSort | 是否开启组件列排序传参 | boolean | false |
+| forceValidate | 始终校验全部数据 | boolean | false |
 
 ### DataSet Values
 

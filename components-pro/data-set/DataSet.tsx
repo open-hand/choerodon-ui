@@ -200,6 +200,11 @@ export interface DataSetProps {
    */
   validateBeforeQuery?: boolean;
   /**
+   * 始终校验全部数据
+   * @default false;
+   */
+  forceValidate?: boolean;
+  /**
    * 选择的模式
    * @default "multiple"
    */
@@ -2031,7 +2036,7 @@ export default class DataSet extends EventManager {
         noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
       const validateResult = Promise.all(
         (useSelected(dataToJSON) ? this.selected : this.data).map(record =>
-          record.validate(useAll(dataToJSON), !cascade),
+          record.validate(this.props.forceValidate || useAll(dataToJSON), !cascade),
         ),
       ).then(results => results.every(result => result));
       this.reportValidityImmediately(validateResult);
