@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: Added `childrenField` property.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
+- 🌟 `<pro>Table`: Add `searchCode` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
 - 💄 `<pro>Attachment`: Optimize dnd, preview and label display.
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 - 🐞 `<pro>DatePicker`: Fix display problems in `isFlat` and `range` mode.

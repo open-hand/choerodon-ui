@@ -2,7 +2,7 @@ import React, { createContext, useMemo } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from '../../../data-set';
-import { DataSetSelection, FieldType } from '../../../data-set/enum';
+import { DataSetProps, DataSetSelection, DataToJSON, FieldIgnore, FieldType } from '../../../data-set/interface';
 
 function processAxiosConfig(
   axiosConfig: AxiosRequestConfig | ((...args: any[]) => AxiosRequestConfig) = {},
@@ -19,16 +19,16 @@ function getTransportConfig(props) {
   return processAxiosConfig(tableFilterAdapter, { type, config, searchCode, queryDataSet });
 }
 
-const ConditionDataSet = () => ({
+const ConditionDataSet: () => DataSetProps = () => ({
   paging: false,
   fields: [
     {
       name: 'fieldName',
-      type: 'string',
+      type: FieldType.string,
     },
     {
       name: 'comparator',
-      type: 'string',
+      type: FieldType.string,
       defaultValue: 'EQUAL',
     },
     {
@@ -36,12 +36,13 @@ const ConditionDataSet = () => ({
     },
     {
       name: 'searchConditionId',
-      type: 'number',
+      type: FieldType.number,
     },
   ],
-  dataToJSON: 'all',
+  dataToJSON: DataToJSON.all,
   events: {
-    update: () => {},
+    update: () => {
+    },
   },
 });
 
@@ -60,7 +61,7 @@ const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) =>
   },
   fields: [
     { name: 'searchName', type: 'string', maxLength: 10, required: true },
-    { name: 'searchId', type: 'number' },
+    { name: 'searchId', type: 'string' },
     { name: 'defaultFlag', type: 'boolean', falseValue: 0, trueValue: 1 },
     { name: 'searchCode', type: 'string', defaultValue: searchCode },
     { name: 'conditionList', type: 'object' },
@@ -73,8 +74,8 @@ const Store = createContext({} as any);
 export default Store;
 
 export const StoreProvider = props => {
-  const { children, dynamicFilterBar, queryDataSet } = props;
-  const searchCode = dynamicFilterBar?.searchCode;
+  const { children, dynamicFilterBar, queryDataSet, searchCode } = props;
+  const searchCodes = dynamicFilterBar?.searchCode || searchCode;
   const tableFilterAdapter = dynamicFilterBar?.tableFilterAdapter || getConfig('tableFilterAdapter');
 
   const filterMenuDS = useMemo(() => new DataSet({
@@ -82,26 +83,25 @@ export const StoreProvider = props => {
     fields: [
       {
         name: 'filterName',
-        type: FieldType.number,
+        type: FieldType.string,
         textField: 'searchName',
         valueField: 'searchId',
         options: new DataSet({
           selection: DataSetSelection.single,
         }),
+        ignore: FieldIgnore.always,
       },
     ],
   }), []);
 
 
-  // @ts-ignore
-  const conditionDataSet = useMemo(() =>  new DataSet(ConditionDataSet()), []);
+  const conditionDataSet = useMemo(() => new DataSet(ConditionDataSet()), []);
 
-  // @ts-ignore
   const menuDataSet = useMemo(() => new DataSet(QuickFilterDataSet({
-    searchCode,
+    searchCode: searchCodes,
     queryDataSet,
     tableFilterAdapter,
-  })), []);
+  }) as DataSetProps), []);
 
   const value = {
     ...props,

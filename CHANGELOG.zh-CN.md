@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: 新增 childrenField 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
+- 🌟 `<pro>Table`：新增 searchCode 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件。
 - 💄 `<pro>Attachment`：优化拖拽、预览和标签显示。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。

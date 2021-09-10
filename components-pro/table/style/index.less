@@ -617,10 +617,15 @@
     }
   }
 
+  &-summary-group-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0.08rem 0;
+  }
+
   &-summary-group {
     display: inline-flex;
     flex-wrap: wrap;
-    float: left;
     vertical-align: middle;
     background: #FFF6EA;
     border-radius: 0.02rem;
@@ -641,6 +646,7 @@
     line-height: 0.3rem;
     letter-spacing: 0;
     text-align: center;
+    background: #FFF6EA;
 
     a {
       color: #5A6677;
@@ -756,11 +762,13 @@
   }
 
   &-dynamic-filter-bar {
-    input::-webkit-input-placeholder { // 谷歌
+    margin-bottom: 0.08rem;
+
+    input::-webkit-input-placeholder {
       color: #6A6A6A;
     }
 
-    input:-moz-placeholder { //火狐
+    input:-moz-placeholder {
       color: #6A6A6A;
     }
 
@@ -768,7 +776,7 @@
       color: #6A6A6A;
     }
 
-    input:-ms-input-placeholder { //微软
+    input:-ms-input-placeholder {
       color: #6A6A6A;
     }
 
@@ -777,9 +785,27 @@
     }
   }
 
+  &--dynamic-filter-single-wrapper {
+    display: flex;
+  }
+
+  &-dynamic-filter-bar-single-action {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.08rem;
+    justify-content: flex-end;
+    width: 1rem;
+    margin: 0.08rem 0;
+    background: rgba(232, 232, 232, 0.20);
+
+    .@{table-prefix-cls}-filter-menu-expand i {
+      font-size: 0.3rem;
+    }
+  }
+
   &-dynamic-filter-bar-suffix {
     gap: 0.08rem;
-    margin-left: auto;
+    margin-left: 0.1rem;
 
     .@{table-prefix-cls}-columns-chooser {
       width: unset;
@@ -805,16 +831,7 @@
   }
 
   &-dynamic-filter-toolbar {
-    padding-top: 0.1rem;
-    text-align: right;
-
-    .@{table-prefix-cls}-toolbar {
-      text-align: right;
-
-      .@{table-prefix-cls}-dynamic-filter-bar-suffix {
-        margin-left: 0.16rem;
-      }
-    }
+    margin-left: auto;
   }
 
   &-filter-menu {
@@ -865,6 +882,7 @@
   &-filter-wrapper {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
     margin: 0.08rem 0 0;
     padding: 0.01rem 0.06rem;
     background: rgba(232, 232, 232, 0.20);
@@ -929,10 +947,16 @@
     }
   }
 
+  &-filterName-select {
+    width: 0.9rem;
+    margin-left: 0.12rem;
+    border: none;
+  }
+
   &-filter-menu-option {
     &-content {
       display: inline-block;
-      width: 1.6rem;
+      width: 1.2rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -1000,7 +1024,7 @@
 
     &:focus-within {
       input {
-        width: 1.5rem !important;
+        width: 1.34rem !important;
       }
     }
 
@@ -1068,9 +1092,12 @@
     .@{c7n-pro-prefix}-select, .@{c7n-pro-prefix}-input, .@{c7n-pro-prefix}-input-number, .@{c7n-pro-prefix}-calendar-picker {
       width: auto;
       min-width: unset;
-      //max-width: 2rem;
+      max-width: 4rem;
       margin: 0;
       padding: 0.02rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       border: none;
 
       &-required {
@@ -1166,8 +1193,22 @@
   }
 
   &-professional-toolbar {
-    padding-top: 0.1rem;
-    text-align: right;
+    .@{table-prefix-cls}-toolbar {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      padding-bottom: 0.1rem;
+      overflow: hidden;
+
+      &-button-group {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .@{table-prefix-cls}-summary-group-wrapper {
+        margin: 0;
+      }
+    }
   }
 
   &-pagination {

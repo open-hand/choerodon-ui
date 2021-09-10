@@ -1,5 +1,5 @@
 import React, { FunctionComponent, memo, useContext, useEffect } from 'react';
-import { isArrayLike, runInAction } from 'mobx';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import map from 'lodash/map';
 import isObject from 'lodash/isObject';
@@ -16,6 +16,7 @@ import Select from '../../../select';
 import Modal from '../../../modal';
 import CheckBox from '../../../check-box';
 import TextField from '../../../text-field';
+import { ValueChangeAction } from '../../../text-field/enum';
 import Dropdown from '../../../dropdown';
 import Menu from '../../../menu';
 import Record from '../../../data-set/Record';
@@ -78,7 +79,7 @@ function isSelect(data) {
  * @param onLocateData
  * @constructor
  */
-const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type }) {
+const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type, selectFields }) {
   modal.handleOk(async () => {
     const putData: any[] = [];
     const statusKey = getConfig('statusKey');
@@ -98,6 +99,19 @@ const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefix
               ...status,
             });
           }
+        }
+      });
+      // 加入空值勾选字段
+      const hasValueFields = putData.map(pt => pt.fieldName);
+      map(selectFields, fieldName => {
+        if (!hasValueFields.includes(fieldName)) {
+          const value = queryDataSet.current.get(fieldName);
+          putData.push({
+            comparator: 'EQUAL',
+            fieldName,
+            value,
+            ...status,
+          });
         }
       });
     }
@@ -135,6 +149,8 @@ const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefix
           style={{ width: '100%' }}
           name="searchName"
           placeholder={$l('Table', 'please_enter')}
+          showLengthInfo
+          valueChangeAction={ValueChangeAction.input}
           dataSet={menuDataSet}
         />
       </div>
@@ -158,6 +174,7 @@ const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefix
  */
 const QuickFilterMenu = observer(function QuickFilterMenu() {
   const {
+    autoQuery,
     dataSet,
     menuDataSet,
     prefixCls,
@@ -168,14 +185,17 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     // expand,
     conditionStatus,
     onStatusChange,
+    selectFields,
+    onOriginalChange,
   } = useContext(Store);
 
   const optionDs = filterMenuDS.getField('filterName').get('options');
 
   /**
-   * queryDS 筛选赋值
+   * queryDS 筛选赋值并更新初始勾选项
    */
   const conditionAssign = () => {
+    onOriginalChange();
     const { conditionList } = menuDataSet.current.toData();
     const emptyRecord = new Record({}, queryDataSet);
     runInAction(() => {
@@ -187,17 +207,37 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
         if (condition.comparator === 'EQUAL') {
           const { fieldName, value } = condition;
           queryDataSet.current.set(fieldName, value);
-          if (isArrayLike(value) ? value.length : !isEmpty(value)) {
-            onChange(fieldName);
-          }
+          onChange(fieldName);
+          onOriginalChange(fieldName);
         }
       });
       onStatusChange(RecordStatus.sync, queryDataSet.current.toData());
     } else {
       onStatusChange(RecordStatus.sync);
-      dataSet.query();
+      if (autoQuery) {
+        dataSet.query();
+      }
     }
   };
+
+  function handleQueryReset() {
+    if (filterMenuDS.current?.get('filterName')) {
+      // 筛选项重置重新赋值
+      conditionAssign();
+    } else {
+      /**
+       * 未选择或清除筛选项
+       * 重置初始勾选项及初始赋值
+       */
+      onOriginalChange();
+      queryDataSet.removeAll();
+      queryDataSet.create({});
+      if (autoQuery) {
+        dataSet.query();
+      }
+    }
+    onStatusChange(RecordStatus.sync);
+  }
 
   /**
    * 定位数据源
@@ -205,15 +245,12 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
    */
   const locateData = (searchId?: number) => {
     if (searchId) {
-      menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId') === searchId));
+      menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
       if (filterMenuDS.current) filterMenuDS.current.set('filterName', searchId);
       conditionAssign();
     } else if (searchId === null) {
-      queryDataSet.reset();
-      queryDataSet.create({});
-      onStatusChange(RecordStatus.sync);
-      dataSet.query();
+      handleQueryReset();
     } else {
       const defaultMenu = menuDataSet.findIndex((menu) => menu.get('defaultFlag'));
       if (defaultMenu !== -1) {
@@ -268,24 +305,6 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     loadData(searchId);
   }
 
-  function handleQueryReset() {
-    const { current } = queryDataSet;
-    if (filterMenuDS.current?.get('filterName')) {
-      conditionAssign();
-    } else {
-      current.reset();
-      const conditionData = Object.entries(current.toData());
-      map(conditionData, data => {
-        const fieldObj = findFieldObj(queryDataSet, data);
-        if (fieldObj?.name && isSelect(data)) {
-          onChange(fieldObj.name);
-        }
-      });
-      dataSet.query();
-    }
-    onStatusChange(RecordStatus.sync);
-  }
-
   function getTitle(type) {
     switch (type) {
       case 'create':
@@ -306,8 +325,17 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
       key: modalKey,
       closable: true,
       title: getTitle(type),
-      children: <ModalContent prefixCls={prefixCls} type={type} menuDataSet={menuDataSet} conditionDataSet={conditionDataSet} onLoadData={loadData}
-                              queryDataSet={queryDataSet} />,
+      children: (
+        <ModalContent
+          prefixCls={prefixCls}
+          type={type}
+          menuDataSet={menuDataSet}
+          conditionDataSet={conditionDataSet}
+          onLoadData={loadData}
+          queryDataSet={queryDataSet}
+          selectFields={selectFields}
+        />
+      ),
       okFirst: false,
       destroyOnClose: true,
     });
@@ -338,7 +366,24 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
           }
         }
       });
-      menuDataSet.current.set('conditionList', conditionDataSet.toJSONData());
+      const putData: any = [];
+      map(selectFields, fieldName => {
+        const value = queryDataSet.current.get(fieldName);
+        const statusKey = getConfig('statusKey');
+        const statusAdd = getConfig('status').add;
+        const status = {};
+        const toJSONFields = conditionDataSet.toJSONData().map(condition => condition.fieldName);
+        status[statusKey] = statusAdd;
+        if (!toJSONFields.includes(fieldName)) {
+          putData.push({
+            comparator: 'EQUAL',
+            fieldName,
+            value,
+            ...status,
+          });
+        }
+      });
+      menuDataSet.current.set('conditionList', { ...conditionDataSet.toJSONData(), ...putData });
       const res = await menuDataSet.submit();
       if (res && res.success) {
         loadData(res.content ? res.content[0].searchId : undefined);
@@ -441,13 +486,12 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
   return (
     <>
       <Select
-        isFlat
         placeholder={$l('Table', 'fast_filter')}
-        style={{ border: 'none', minWidth: '0.9rem', marginLeft: '0.12rem' }}
+        className={`${prefixCls}-filterName-select`}
         dataSet={filterMenuDS}
         name="filterName"
         dropdownMatchSelectWidth={false}
-        dropdownMenuStyle={{ width: '2rem' }}
+        dropdownMenuStyle={{ width: '1.6rem' }}
         optionRenderer={optionRenderer}
         onChange={handleChange}
         notFoundContent={$l('Table', 'no_save_filter')}
