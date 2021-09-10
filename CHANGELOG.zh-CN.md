@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复 virtual 在切换分页大小时行错位的问题。
 - 🐞 `Tabs`：修墨条可能对不齐的问题。
 - 🐞 `<pro>PerformanceTable`：修复行高亮点击报错问题。
+- 🐞 `<pro>Lov`：修复单选模式表格 alwaysShowRowBox 为 true 时选值错误的问题。
 
 ## 1.4.4
 
