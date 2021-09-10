@@ -546,7 +546,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   let highlight;
   let inValid;
   if (field) {
-    if (cellEditor && !pristine && field.dirty) {
+    if (!pristine && field.dirty) {
       innerClassName.push(`${prefixCls}-inner-dirty`);
     }
     if (!inlineEdit && editorBorder) {
