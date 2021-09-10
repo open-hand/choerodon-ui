@@ -147,8 +147,8 @@ export interface onRowProps {
   expandedRow: boolean;
 }
 
-// onResize
-export interface onResizeProps {
+// onColumnResize
+export interface onColumnResizeProps {
   column: ColumnProps;
   width: number;
 }
@@ -502,7 +502,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 列宽改变时触发
    */
-  onResize?: (props: onResizeProps) => void;
+  onColumnResize?: (props: onColumnResizeProps) => void;
   /**
    * 加载条属性
    */
@@ -1278,7 +1278,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'onShowCachedSelectionChange',
       'showAllPageSelectionButton',
       'onRow',
-      'onResize',
+      'onColumnResize',
       'rowRenderer',
       'buttons',
       'rowHeight',
@@ -1465,7 +1465,7 @@ export default class Table extends DataSetComponent<TableProps> {
         selectionMode,
         rowRenderer,
         onRow,
-        onResize,
+        onColumnResize,
         expandedRowRenderer,
         expandRowByClick,
         rowDragRender,
@@ -1496,7 +1496,7 @@ export default class Table extends DataSetComponent<TableProps> {
             indentSize={indentSize!}
             selectionMode={selectionMode}
             onRow={onRow}
-            onResize={onResize}
+            onColumnResize={onColumnResize}
             rowRenderer={rowRenderer}
             expandedRowRenderer={expandedRowRenderer}
             expandRowByClick={expandRowByClick}
