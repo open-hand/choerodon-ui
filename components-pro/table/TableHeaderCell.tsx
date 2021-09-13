@@ -11,7 +11,7 @@ import React, {
   useRef,
 } from 'react';
 import { action } from 'mobx';
-import ReactIntersectionObserver from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import { observer } from 'mobx-react-lite';
 import raf from 'raf';
 import omit from 'lodash/omit';
@@ -62,7 +62,11 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
     lock,
   } = column;
   const field = dataSet.getField(name);
-
+  const needIntersection = tableStore.virtualCell && tableStore.overflowX;
+  const { ref, inView } = useInView({
+    root: needIntersection ? tableStore.node.wrapper : undefined,
+    rootMargin: '100px',
+  });
   const header = getHeader(column, dataSet, aggregation);
   const globalRef = useRef<{
     bodyLeft: number;
@@ -156,7 +160,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
        * @param column
        * @param width
        */
-      onColumnResize({ column: resizeColumn, width: newWidth })
+      onColumnResize({ column: resizeColumn, width: newWidth });
     }
   }), [globalRef, tableStore, setSplitLineHidden, resizeEvent]);
 
@@ -322,6 +326,14 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
     }
   }, []);
 
+  useEffect(() => {
+    if (needIntersection) {
+      columnGroup.setInView(inView);
+    } else if (columnGroup.inView !== undefined) {
+      columnGroup.setInView(undefined);
+    }
+  }, [needIntersection, columnGroup, inView]);
+
   const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
   const classList: string[] = [`${prefixCls}-cell`];
   const cellStyle: CSSProperties = {
@@ -406,7 +418,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
     'data-index': key,
     style: omit(cellStyle, ['width', 'height']),
   };
-  const th = (
+  if (needIntersection) {
+    thProps.ref = ref;
+  }
+  return (
     <th {...thProps}>
       <div
         {...innerProps}
@@ -415,29 +430,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
       {columnResizable && renderResizer()}
     </th>
   );
-
-  if (tableStore.virtualCell) {
-    if (tableStore.overflowX) {
-      const { node } = tableStore;
-      return (
-        <ReactIntersectionObserver
-          root={node.wrapper}
-          rootMargin="100px"
-        >
-          {
-            ({ ref, inView }) => {
-              columnGroup.setInView(inView);
-              return cloneElement<any>(th, { ref });
-            }
-          }
-        </ReactIntersectionObserver>
-      );
-    }
-    if (columnGroup.inView !== undefined) {
-      columnGroup.setInView(undefined);
-    }
-  }
-  return th;
 });
 
 TableHeaderCell.displayName = 'TableHeaderCell';

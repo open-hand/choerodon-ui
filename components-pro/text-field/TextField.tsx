@@ -369,7 +369,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string, width: number, placeholder?: string } {
     const { isFlat } = this.props;
-    const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = this.hasFloatLabel ? [] : this.getPlaceholders();
+    const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = this.getPlaceholders();
     if (rangeTarget === undefined) {
       const { text } = this;
       if (text !== undefined) {

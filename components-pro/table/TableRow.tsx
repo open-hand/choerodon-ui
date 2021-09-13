@@ -7,7 +7,6 @@ import React, {
   Key,
   ReactElement,
   ReactNode,
-  RefObject,
   useCallback,
   useContext,
   useEffect,
@@ -18,7 +17,7 @@ import { action, get, reaction, remove, set } from 'mobx';
 import classNames from 'classnames';
 import defer from 'lodash/defer';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
-import ReactIntersectionObserver from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -61,11 +60,17 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     dragColumnAlign,
     rowDraggable,
     showRemovedRow,
+    node,
   } = tableStore;
   const { id, key: rowKey } = record;
+  const needIntersection = !hidden && tableStore.virtualCell;
+  const { ref: intersectionRef, inView, entry } = useInView({
+    root: needIntersection && tableStore.overflowY ? node.tableBodyWrap || node.element : undefined,
+    rootMargin: '100px',
+    initialInView: index <= 10,
+  });
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
-  const intersectionRef = useRef<RefObject<HTMLTableRowElement> | ((element?: HTMLTableRowElement | null) => void) | undefined>();
   const childrenRenderedRef = useRef<boolean | undefined>();
   const needSaveRowHeight = isStickySupport() ? false : (!lock && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn) || [...record.fields.values()].some(field => field.get('multiLine'))));
   const rowExternalProps: any = useComputed(() => ({
@@ -95,21 +100,20 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     set(tableStore.lockColumnsBodyRowsHeight, key, height);
   }), [tableStore]);
 
-  const saveRef = useCallback(action((node: HTMLTableRowElement | null) => {
-    rowRef.current = node;
-    if (node && needSaveRowHeight) {
-      setRowHeight(rowKey, node.offsetHeight);
+  const saveRef = useCallback(action((row: HTMLTableRowElement | null) => {
+    rowRef.current = row;
+    if (row && needSaveRowHeight) {
+      setRowHeight(rowKey, row.offsetHeight);
     } else if (get(tableStore.lockColumnsBodyRowsHeight, rowKey)) {
       remove(tableStore.lockColumnsBodyRowsHeight, rowKey);
     }
     if (provided) {
-      provided.innerRef(node);
+      provided.innerRef(row);
     }
-    const { current } = intersectionRef;
-    if (typeof current === 'function') {
-      current(node);
+    if (needIntersection && typeof intersectionRef === 'function') {
+      intersectionRef(row);
     }
-  }), [rowRef, intersectionRef, needSaveRowHeight, rowKey, provided]);
+  }), [rowRef, intersectionRef, needIntersection, needSaveRowHeight, rowKey, provided]);
 
   const handleMouseEnter = useCallback(() => {
     if (highLightRow) {
@@ -178,7 +182,6 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   const focusRow = useCallback(() => {
     const { current } = rowRef;
     if (current) {
-      const { node } = tableStore;
       if (!lock && !tableStore.editing) {
         const { element } = node;
         const { activeElement } = document;
@@ -221,7 +224,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
         }
       }
     }
-  }, [rowRef, tableStore, lock]);
+  }, [rowRef, tableStore, lock, node]);
 
   // componentDidMount
   useEffect(() => {
@@ -257,6 +260,14 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   useEffect(() => {
     return reaction(() => record.isCurrent, isCurrent => isCurrent && focusRow());
   }, [record, focusRow]);
+
+  useEffect(() => {
+    if (needIntersection) {
+      record.setState('__inView', inView);
+    } else if (record.getState('__inView') !== undefined) {
+      record.setState('__inView', undefined);
+    }
+  }, [needIntersection, inView, record]);
 
   const renderExpandRow = (): ReactElement<ExpandedRowProps>[] => {
     if (expandable && (isExpanded || childrenRenderedRef.current)) {
@@ -381,7 +392,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   const classString = classNames(
     rowPrefixCls,
     {
-      [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent && (highLightRow === HighLightRowType.click ? tableStore.rowClicked : highLightRow === HighLightRowType.focus ? tableStore.node.isFocused : highLightRow), // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
+      [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent && (highLightRow === HighLightRowType.click ? tableStore.rowClicked : highLightRow === HighLightRowType.focus ? node.isFocused : highLightRow), // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
       [`${rowPrefixCls}-hover`]: !isStickySupport() && highLightRow && isHover,
       [`${rowPrefixCls}-selected`]: selectedHighLightRow && isSelectedRow(record),
       [`${rowPrefixCls}-disabled`]: disabled,
@@ -455,43 +466,23 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     </Element>
   );
   let row = tr;
-  if (!hidden && tableStore.virtualCell) {
-    const { node } = tableStore;
-    row = (
-      <ReactIntersectionObserver
-        key={rowKey}
-        root={tableStore.overflowY ? node.tableBodyWrap || node.element : undefined}
-        rootMargin="100px"
-        initialInView={index <= 10}
-      >
-        {
-          action((renderProps: { ref, inView: boolean, entry: IntersectionObserverEntry | undefined }) => {
-            const { ref, inView, entry } = renderProps;
-            intersectionRef.current = ref;
-            record.setState('__inView', inView);
-            if (inView !== true || !columnGroups.inView) {
-              let oldHeight = record.getState('__row_height__');
-              if (entry && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn))) {
-                const { boundingClientRect: { height } } = entry;
-                if (oldHeight !== height) {
-                  record.setState('__row_height__', height);
-                  oldHeight = height;
-                }
-              }
-              return cloneElement<any>(tr, {
-                style: {
-                  ...rowProps.style,
-                  height: oldHeight === undefined ? pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)) : oldHeight,
-                },
-              });
-            }
-            return tr;
-          })
+  if (needIntersection) {
+    if (inView !== true || !columnGroups.inView) {
+      let oldHeight = record.getState('__row_height__');
+      if (entry && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn))) {
+        const { boundingClientRect: { height } } = entry;
+        if (oldHeight !== height) {
+          record.setState('__row_height__', height);
+          oldHeight = height;
         }
-      </ReactIntersectionObserver>
-    );
-  } else if (record.getState('__inView') !== undefined) {
-    record.setState('__inView', undefined);
+      }
+      row = cloneElement<any>(tr, {
+        style: {
+          ...rowProps.style,
+          height: oldHeight === undefined ? pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)) : oldHeight,
+        },
+      });
+    }
   }
   return (
     <>
