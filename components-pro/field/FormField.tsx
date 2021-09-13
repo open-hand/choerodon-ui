@@ -963,7 +963,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   handleFocus(e) {
     super.handleFocus(e);
-    if (this.range) {
+    if (this.range && !this.rangeValue) {
       this.beginRange();
     }
   }
@@ -1210,6 +1210,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         this.addValue(fromRangeValue(values, this.range));
       }
     }
+    this.setRangeTarget(undefined);
   }
 
   @action
