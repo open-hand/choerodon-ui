@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>DataSet`: Added `childrenField` property.
+- 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Table`: Add `searchCode` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
 - 💄 `<pro>Attachment`: Optimize dnd, preview and label display.

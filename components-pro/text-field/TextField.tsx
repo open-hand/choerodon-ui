@@ -404,7 +404,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         width: 0,
       };
     }
-    const [startValue, endValue] = this.processRangeValue();
+    const [startValue, endValue] = this.processRangeValue(this.isEditableLike() ? undefined : this.rangeValue);
     if (rangeTarget === 0) {
       const { renderedStartText } = this;
       if (renderedStartText) {

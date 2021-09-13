@@ -198,9 +198,11 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   getValidatorProps(): ValidatorProps {
+    const { attachments } = this;
+    const count = attachments ? attachments.filter(({ status }) => !status || ['success', 'done'].includes(status)).length : this.count;
     return {
       ...super.getValidatorProps(),
-      attachmentCount: this.count || 0,
+      attachmentCount: count || 0,
     };
   }
 
