@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 🌟 `<pro>Table`：新增 searchCode 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件。
 - 💄 `<pro>Attachment`：优化拖拽、预览和标签显示。
-- 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角。
+- 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角和校验信息。
 - 💄 `<pro>Table`： 重命名 onResize 为 onColumnResize 事件。
 - 💄 `<pro>Lov`： 优化 lovQueryBar 优先级，去除 lovQueryBar 全局默认值。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。

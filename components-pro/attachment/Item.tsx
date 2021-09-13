@@ -189,6 +189,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
       }
       const { getDownloadUrl } = attachmentConfig;
       const downProps = {
+        className: classnames(`${prefixCls}-icon`),
         icon: isCard ? 'arrow_downward' : 'get_app',
         funcType: FuncType.link,
         href: getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) || url,
@@ -203,6 +204,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     }
     if (!readOnly && status !== 'uploading') {
       const rmProps = {
+        className: classnames(`${prefixCls}-icon`),
         icon: isCard ? 'delete_forever-o' : 'close',
         onClick: () => onRemove(attachment),
         funcType: FuncType.link,
