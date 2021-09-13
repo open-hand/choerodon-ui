@@ -127,6 +127,8 @@ export default class Tree extends Component<TreeProps> {
 
   @observable stateExpandedKeys: string[];
 
+  @observable stateLoadedKeys: string[];
+
   componentWillMount() {
     this.handleDataSetLoad();
     this.processDataSetListener(true);
@@ -162,6 +164,7 @@ export default class Tree extends Component<TreeProps> {
     this.initDefaultExpandedRows();
     this.initDefaultCheckRows();
     this.initDefaultSelectRows();
+    this.initDefaultLoadedRows();
   }
 
   @action
@@ -185,6 +188,11 @@ export default class Tree extends Component<TreeProps> {
       },
     } = this;
     this.stateCheckedKeys = this.dealDefaultCheckExpand(dataSet, defaultCheckedKeys);
+  }
+
+  @action
+  initDefaultLoadedRows() {
+    this.stateLoadedKeys = [];
   }
 
   @action
@@ -297,6 +305,7 @@ export default class Tree extends Component<TreeProps> {
     runInAction(() => {
       this.stateCheckedKeys = [];
       this.stateExpandedKeys = [];
+      this.stateLoadedKeys = [];
     });
   }
 
@@ -408,16 +417,16 @@ export default class Tree extends Component<TreeProps> {
 
   @autobind
   handleLoadData(event): Promise<any> {
-    const { dataSet, loadData } = this.props;
+    const { dataSet, loadData, async } = this.props;
     const promises: Promise<any>[] = [];
-    if (dataSet) {
+    if (async && dataSet) {
       const { record } = event.props;
       promises.push(dataSet.queryMoreChild(record));
     }
     if (loadData) {
       promises.push(loadData(event));
     }
-    return Promise.all(promises);
+    return Promise.all(promises).then(action(() => this.stateLoadedKeys.push(event.key)));
   }
 
   render() {
@@ -440,11 +449,7 @@ export default class Tree extends Component<TreeProps> {
       // @ts-ignore
       props.onSelect = this.handleSelect;
       props.selectable = selectable;
-      if (async) {
-        props.loadData = this.handleLoadData;
-      } else {
-        props.loadData = loadData;
-      }
+      props.loadData = this.handleLoadData;
       props.expandedKeys = this.expandedKeys.slice();
       if (!('checkedKeys' in otherProps)) {
         props.checkedKeys = this.checkedKeys.slice();
@@ -454,6 +459,9 @@ export default class Tree extends Component<TreeProps> {
       }
       if (!('selectedKeys' in otherProps)) {
         props.selectedKeys = this.selectedKeys.slice();
+      }
+      if (!('loadedKeys' in otherProps)) {
+        props.loadedKeys = this.stateLoadedKeys.slice();
       }
       return (
         <Spin dataSet={dataSet}>

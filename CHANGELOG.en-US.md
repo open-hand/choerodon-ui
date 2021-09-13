@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.
 - 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
 - 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode.
+- 🐞 `<pro>Tree`: Fix the problem that asynchronously loaded nodes cannot be displayed when the dataSet is reloaded.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of line highlighting error.
 - 🐞 `<pro>Lov`: Fix the problem that the value of `alwaysShowRowBox` in the single-select mode table is incorrectly selected.
