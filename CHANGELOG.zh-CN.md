@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
+- 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。
 - 🌟 `<pro>Table`：新增 searchCode 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件。
 - 💄 `<pro>Attachment`：优化拖拽、预览和标签显示。
 - 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角和校验信息。
