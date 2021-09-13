@@ -54,6 +54,7 @@ const locale: Locale = {
     no_save_filter: 'No save filter',
     modified: 'Modified',
     fast_filter: 'Fast filter',
+    default_flag: 'Default',
     rename: 'Rename',
     set_default: 'Set as Default',
     cancel_default: 'Cancel default',

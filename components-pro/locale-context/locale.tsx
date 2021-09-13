@@ -55,6 +55,7 @@ export interface Locale {
     save_as;
     modified;
     fast_filter;
+    default_flag;
     rename;
     set_default;
     cancel_default;

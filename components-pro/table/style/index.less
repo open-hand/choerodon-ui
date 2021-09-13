@@ -843,12 +843,7 @@
 
     .@{c7n-pro-prefix}-select {
       display: inline-block;
-      min-width: 0.9rem;
-      max-width: 2rem;
       margin: 0;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
       border: none;
     }
 
@@ -951,7 +946,6 @@
   }
 
   &-filterName-select {
-    width: 0.9rem;
     margin-left: 0.12rem;
     border: none;
   }
@@ -959,15 +953,26 @@
   &-filter-menu-option {
     &-content {
       display: inline-block;
-      width: 1.2rem;
+      width: 1.6rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+
+      .@{c7n-prefix}-tag {
+        height: 0.2rem;
+        margin: 0 0 0 0.08rem;
+      }
     }
 
-    &:hover {
+    &:hover &-icons {
       i {
         display: inline-block;
+      }
+    }
+
+    &:hover &-selected {
+      i {
+        display: none;
       }
     }
 
@@ -984,7 +989,9 @@
     }
 
     &-selected {
-      display: none;
+      position: absolute;
+      right: 0.08rem;
+      display: inline-block;
     }
   }
 
