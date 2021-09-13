@@ -56,6 +56,7 @@ export interface TableQueryBarProps {
   dynamicFilterBar?: DynamicFilterBarConfig;
   filterBarFieldName?: string;
   filterBarPlaceholder?: string;
+  searchCode?: string;
   clientExportQuantity?: number;
   onQuery?: () => void;
   onReset?: () => void;
@@ -531,12 +532,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   getSummaryBar(): ReactElement<any> | undefined {
     const {
       props: {
-        buttons,
         summaryBar,
         summaryFieldsLimit,
       },
       context: {
-        tableStore: { prefixCls, queryBar },
+        tableStore: { prefixCls },
       },
     } = this;
 
@@ -545,12 +545,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const moreSummary = summaryBar.slice(summaryFieldsLimit);
       const moreSummaryButton: ReactElement | undefined = this.getMoreSummaryButton(moreSummary);
       const width = 170 * Math.min(summaryBar.length, summaryFieldsLimit!) + Math.min(summaryBar.length, summaryFieldsLimit!);
-      const position = queryBar === TableQueryBarType.professionalBar && buttons ? 'left' : 'right';
       return (
-        <div
-          className={`${prefixCls}-summary-group`}
-          style={{ float: position }}
-        >
+        <div className={`${prefixCls}-summary-group-wrapper`}>
           <div className={`${prefixCls}-summary-group`} style={{ width }}>
             {currentSummaryBar}
             {this.moreSummary}
@@ -756,9 +752,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
-    const { dynamicFilterBar } = this.props;
+    const { dynamicFilterBar, searchCode } = this.props;
     const { tableStore: { prefixCls } } = this.context;
-    return <TableDynamicFilterBar key="toolbar" dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
+    return <TableDynamicFilterBar key="toolbar" searchCode={searchCode} dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
   }
 
   @autobind

@@ -75,7 +75,7 @@ class App extends React.Component {
       dataSet={this.ds}
       name="code"
       noCache
-      tableProps={{ selectionMode: 'rowbox' }}
+      tableProps={{ alwaysShowRowBox: true }}
      />
     </Col>
     <Col span={12}>

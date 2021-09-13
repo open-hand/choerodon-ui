@@ -72,7 +72,6 @@ subtitle: 表格
 | rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender) |  |
 | onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   | - |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |
-| dynamicFilterBar | `queryBar`为`filterBar`时筛选条属性配置 | DynamicFilterBarConfig | |
 | treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | |
 | treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | boolean |  |
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
@@ -92,7 +91,8 @@ subtitle: 表格
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | showHeader |	是否显示表头 |	boolean |	true |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean |	 |
-| onResize | 列宽改变的回调事件  | ({ column, width }) => void | |
+| onColumnResize | 列宽改变的回调事件  | ({ column, width }) => void | |
+| searchCode | 动态筛选条后端接口唯一编码  | string | |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -164,7 +164,22 @@ subtitle: 表格
 | 参数        | 说明                   | 类型   | 默认值   |
 | ----------- | ---------------------- | ------ | -------- |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3 |
+| dynamicFilterBar | 筛选条属性配置 | DynamicFilterBarConfig | |
 | autoQueryAfterReset | 重置后自动查询 | boolean | true |
+| fuzzyQuery | 是否开启模糊查询 | boolean | true |
+| fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  |
+| autoQuery | 条件变更是否自动查询  | boolean | true |
+| onQuery | 查询回调 | () => void |  |
+| onReset | 重置回调 | () => void |  |
+
+#### DynamicFilterBarConfig
+
+| 参数        | 说明                   | 类型   | 默认值   |
+| ----------- | ---------------------- | ------ | -------- |
+| searchText | 模糊查询参数名 | string | params |
+| suffixes | 过滤条后缀渲染区 | | filter \| ReactElement |  |
+| prefixes | 过滤条前缀渲染区 | React.ReactElement<any>[] |  |
+| tableFilterAdapter | 过滤条请求适配器 | TransportProps |  |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 

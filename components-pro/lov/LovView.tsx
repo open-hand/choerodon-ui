@@ -88,12 +88,16 @@ export default class LovView extends Component<LovViewProps> {
       : undefined;
   }
 
-  handleSelect = () => {
+  handleSelect = (event?: React.MouseEvent) => {
     const { selectionMode } = this;
-    const { onSelect, onBeforeSelect = noop, modal, multiple, dataSet } = this.props;
-    const records: Record[] = selectionMode === SelectionMode.treebox ?
+    const { onSelect, onBeforeSelect = noop, modal, multiple, dataSet, tableProps } = this.props;
+    let records: Record[] = selectionMode === SelectionMode.treebox ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
+    // 满足单选模式下，双击和勾选框选中均支持
+    if (tableProps && tableProps.alwaysShowRowBox && !event) {
+      records = dataSet.selected;
+    }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     if (record && onBeforeSelect(record) !== false) {
       if (modal) {
@@ -158,7 +162,7 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       columns,
       queryFieldsLimit: queryColumns,
-      queryBar: queryBar || getConfig('lovQueryBar'),
+      queryBar: queryBar || getConfig('lovQueryBar') || getConfig('queryBar'),
       selectionMode: SelectionMode.none,
       ...configTableProps,
       ...tableProps,

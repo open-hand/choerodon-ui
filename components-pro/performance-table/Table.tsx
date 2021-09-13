@@ -1176,7 +1176,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       // @ts-ignore
       headerCells.push(<HeaderCell {...customizationHeaderProps}>{customizedColumnHeader()}</HeaderCell>);
     }
-    
+
     return (this._cacheCells = {
       headerCells,
       bodyCells,
@@ -1879,7 +1879,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       key: nextRowKey,
       'aria-rowindex': (props.key as number) + 2,
       rowRef: this.bindTableRowsRef(props.key!, rowData),
-      onClick: this.bindRowClick(props.rowIndex, nextRowKey, rowData),
+      onClick: this.bindRowClick(props.rowIndex, props.key!, rowData),
       onContextMenu: this.bindRowContextMenu(rowData),
     };
 

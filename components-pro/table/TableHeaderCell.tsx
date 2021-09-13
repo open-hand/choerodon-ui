@@ -50,7 +50,7 @@ export interface TableHeaderCellProps extends ElementProps {
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(function TableHeaderCell(props) {
   const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop } = props;
   const { column, key, prev } = columnGroup;
-  const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onResize = noop } = useContext(TableContext);
+  const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onColumnResize = noop } = useContext(TableContext);
   const { columnResizable } = tableStore;
   const {
     headerClassName,
@@ -151,12 +151,12 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
         }
       }
       /**
-       * onResize事件回调
+       * onColumnResize 事件回调
        * 回调参数：
        * @param column
        * @param width
        */
-      onResize({ column: resizeColumn, width: newWidth })
+      onColumnResize({ column: resizeColumn, width: newWidth })
     }
   }), [globalRef, tableStore, setSplitLineHidden, resizeEvent]);
 

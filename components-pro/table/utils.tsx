@@ -42,7 +42,7 @@ export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: 
   const lovCode = field.get('lovCode');
   const multiLine = field.get('multiLine');
   const { type, name } = field;
-  const flatProps = isFlat ? { isFlat, maxTagCount: 2, maxTagTextLength: 4 } : {};
+  const flatProps = isFlat ? { isFlat, maxTagCount: 4, maxTagTextLength: 4 } : {};
 
   if (
     lookupCode ||

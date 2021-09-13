@@ -17,14 +17,19 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
+- 🌟 `<pro>Table`：新增 searchCode 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件。
 - 💄 `<pro>Attachment`：优化拖拽、预览和标签显示。
 - 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角。
+- 💄 `<pro>Table`： 重命名 onResize 为 onColumnResize 事件。
+- 💄 `<pro>Lov`： 优化 lovQueryBar 优先级，去除 lovQueryBar 全局默认值。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。
 - 🐞 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。
 - 🐞 `<pro>Table`：修复 customizedCode 变更时且表格列不会刷新的问题。
 - 🐞 `<pro>Table`：修复 virtual 在切换分页大小时行错位的问题。
 - 🐞 `Tabs`：修墨条可能对不齐的问题。
+- 🐞 `<pro>PerformanceTable`：修复行高亮点击报错问题。
+- 🐞 `<pro>Lov`：修复单选模式表格 alwaysShowRowBox 为 true 时选值错误的问题。
 
 ## 1.4.4
 
@@ -58,7 +63,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 onResize 事件。
 - 🌟 `Tabs`: 新增 TabGroup 组件。
 - 🌟 `Icon`: 新增大量图标。
-- 🌟 `Table`: 新增 autoQueryAfterReset 属性支持 ProfessionalBar & DynamicFilterBar 重置是否自动查询。
+- 🌟 `<pro>Table`: 新增 autoQueryAfterReset 属性支持 ProfessionalBar & DynamicFilterBar 重置是否自动查询。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。
 - 💄 `<pro>Table`：性能和内存优化。
 - 💄 `<pro>Pagination`：优化分页器宽度样式。
@@ -69,7 +74,7 @@ timeline: true
 - 💄 `ImageCrop`：优化界面及操作方式。
 - 💄 `<pro>PerformanceTable`：支持取消排序。
 - 💄 `<pro>FormField`：优化空值判断。
-- 💄 `<pro>Form`：优化 hidden 属性，支持隐藏字段。
+- 💄 `<pro>FormField`：优化 hidden 属性，支持隐藏字段。
 - 🐞 `configure`: 修复 tableFilterAdapter 类型。
 - 🐞 `<pro>Table`：修复专业查询条动态查询参数未实时响应的问题。
 - 🐞 `<pro>DataSet.Field`: 优化多次调用 fetchLookup 数据返回类型问题。

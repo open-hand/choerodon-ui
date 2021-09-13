@@ -147,8 +147,8 @@ export interface onRowProps {
   expandedRow: boolean;
 }
 
-// onResize
-export interface onResizeProps {
+// onColumnResize
+export interface onColumnResizeProps {
   column: ColumnProps;
   width: number;
 }
@@ -184,7 +184,7 @@ export interface TableSpinConfig extends SpinProps {
 }
 
 export interface DynamicFilterBarConfig {
-  searchCode: string;
+  searchCode?: string; // 由 table props  searchCode 替换，后期废弃
   searchText?: string;
   suffixes?: Suffixes[];
   prefixes?: React.ReactElement<any>[];
@@ -502,7 +502,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 列宽改变时触发
    */
-  onResize?: (props: onResizeProps) => void;
+  onColumnResize?: (props: onColumnResizeProps) => void;
   /**
    * 加载条属性
    */
@@ -568,7 +568,8 @@ export interface TableProps extends DataSetComponentProps {
    */
   keyboard?: boolean,
   /**
-   * 筛选条属性配置
+   * @deprecated
+   * 筛选条属性配置 使用 queryBarProps.dynamicFilterBar
    */
   dynamicFilterBar?: DynamicFilterBarConfig,
   /**
@@ -633,6 +634,10 @@ export interface TableProps extends DataSetComponentProps {
    * 是否显示临时移除的行
    */
   showRemovedRow?: boolean;
+  /**
+   * 动态筛选条编码
+   */
+  searchCode?: string;
 }
 
 @observer
@@ -1273,7 +1278,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'onShowCachedSelectionChange',
       'showAllPageSelectionButton',
       'onRow',
-      'onResize',
+      'onColumnResize',
       'rowRenderer',
       'buttons',
       'rowHeight',
@@ -1333,6 +1338,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'aggregation',
       'onAggregationChange',
       'showRemovedRow',
+      'searchCode',
     ]);
   }
 
@@ -1459,7 +1465,7 @@ export default class Table extends DataSetComponent<TableProps> {
         selectionMode,
         rowRenderer,
         onRow,
-        onResize,
+        onColumnResize,
         expandedRowRenderer,
         expandRowByClick,
         rowDragRender,
@@ -1470,6 +1476,7 @@ export default class Table extends DataSetComponent<TableProps> {
         onShowCachedSelectionChange,
         autoMaxWidth,
         summary,
+        searchCode,
       },
       tableStore,
       prefixCls,
@@ -1489,7 +1496,7 @@ export default class Table extends DataSetComponent<TableProps> {
             indentSize={indentSize!}
             selectionMode={selectionMode}
             onRow={onRow}
-            onResize={onResize}
+            onColumnResize={onColumnResize}
             rowRenderer={rowRenderer}
             expandedRowRenderer={expandedRowRenderer}
             expandRowByClick={expandRowByClick}
@@ -1515,6 +1522,7 @@ export default class Table extends DataSetComponent<TableProps> {
               filterBarFieldName={filterBarFieldName}
               filterBarPlaceholder={filterBarPlaceholder}
               treeQueryExpanded={treeQueryExpanded}
+              searchCode={searchCode}
             />
             <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
               {

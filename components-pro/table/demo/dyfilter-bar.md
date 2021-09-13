@@ -145,6 +145,7 @@ class App extends React.Component {
         defaultValue: 'F',
       },
       { name: 'date.startDate', type: 'date', label: '开始日期' },
+      { name: 'status', type: 'string', label: 'status' },
       {
         name: 'sexMultiple',
         type: 'string',
@@ -179,11 +180,48 @@ class App extends React.Component {
   render() {
     return (
       <Table
-        buttons={['add', 'query']}
+        searchCode='xxx'
+        buttons={['add', 'query', 'remove', 'collapseAll', 'reset']}
         dataSet={this.ds}
         queryBar="filterBar"
         queryBarProps={{
-          dynamicFilterBar: { suffixes: ['filter'], prefixes: ['filter'] }
+          dynamicFilterBar: { 
+            // suffixes: ['filter'], 
+            // prefixes: ['filter'], 
+            tableFilterAdapter: (props) => {
+              const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
+              console.log('defaultTableFilterAdapter config', config);
+              const userId = 1;
+              const tenantId = 0;
+              switch (type) {
+                case 'read':
+                  return {
+                    // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
+                    url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+                    method: 'get',
+                  };
+                case 'create':
+                  return {
+                    url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+                    method: 'put',
+                    data: data[0],
+                  };
+                case 'update':
+                  return {
+                    // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+                    method: 'put',
+                    data: data[0],
+                  };
+                case 'destroy':
+                  return {
+                    // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
+                    url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+                    data: data[0],
+                    method: 'delete',
+                  };
+              }
+            },
+          }
         }}
         border={false}
         columns={this.columns}

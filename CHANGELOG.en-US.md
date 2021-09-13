@@ -17,14 +17,19 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
+- 🌟 `<pro>Table`: Add `searchCode` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
 - 💄 `<pro>Attachment`: Optimize dnd, preview and label display.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles.
+- 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
+- 💄 `<pro>Lov`: Optimize the priority of `lovQueryBar` and remove the global default value of `lovQueryBar`.
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 - 🐞 `<pro>DatePicker`: Fix display problems in `isFlat` and `range` mode.
 - 🐞 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.
 - 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
 - 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
+- 🐞 `<pro>PerformanceTable`: Fix the problem of line highlighting error.
+- 🐞 `<pro>Lov`: Fix the problem that the value of `alwaysShowRowBox` in the single-select mode table is incorrectly selected.
 
 ## 1.4.4
 
@@ -58,7 +63,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `onResize` callback. 
 - 🌟 `Tabs`: Added TabGroup component.
 - 🌟 `Icon`: Added a lot of icons.
-- 🌟 `Table`: Added `autoQueryAfterReset` property to support ProfessionalBar & DynamicFilterBar to reset whether to automatically query.
+- 🌟 `<pro>Table`: Added `autoQueryAfterReset` property to support ProfessionalBar & DynamicFilterBar to reset whether to automatically query.
 - 💄 `<pro>Table`: The storage of the customization aggregation view is controlled by the external `aggregation` property.
 - 💄 `<pro>Table`: Performance and memory optimization.
 - 💄 `<pro>Pagination`: Optimize the width style of the pager.
@@ -70,7 +75,7 @@ timeline: true
 - 💄 `ImageCrop`：Optimize the interface and usage.
 - 💄 `<pro>PerformanceTable`：Unordering is supported.
 - 💄 `<pro>FormField`: Optimize the null value judgment.
-- 💄 `<pro>Form`: Optimize the `hidden` attribute to support hidden fields.
+- 💄 `<pro>FormField`: Optimize the `hidden` attribute to support hidden fields.
 - 🐞 `configure`: Modify the `tableFilterAdapter` type.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic query parameters of the professionalQuery bar do not respond in real time.
 - 🐞 `<pro>DataSet.Field`: Optimize the data return type problem of multiple calls to `fetchLookup`.
