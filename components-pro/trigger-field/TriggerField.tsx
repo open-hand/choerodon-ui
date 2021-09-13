@@ -322,7 +322,15 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   collapse() {
     this.popupTask.cancel();
     if (!this.readOnly && this.popup) {
-      this.popupTask.delay(this.props.triggerHiddenDelay as number, () => {
+      const { element } = this;
+      // 如果当前焦点在popup中，将焦点换给输入框
+      let triggerHiddenDelay: number = this.props.triggerHiddenDelay!;
+      if (this.isFocused && element !== document.activeElement) {
+        element.focus();
+        const { triggerShowDelay } = this.props;
+        triggerHiddenDelay += triggerShowDelay as number;
+      }
+      this.popupTask.delay(triggerHiddenDelay as number, () => {
         this.setPopup(false);
       });
     }

@@ -2,6 +2,7 @@ import React, { createElement, CSSProperties, KeyboardEventHandler, ReactNode } 
 import PropTypes from 'prop-types';
 import moment, { isMoment, Moment, MomentInput } from 'moment';
 import classNames from 'classnames';
+import raf from 'raf';
 import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
@@ -213,16 +214,20 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @autobind
   savePopupRangeEditor(node: HTMLInputElement | null) {
     this.popupRangeEditor = node;
+    if (node && this.popup) {
+      raf(() => {
+        node.focus();
+      });
+    }
   }
 
   isEditable(): boolean {
-    return super.isEditable() && !this.observableProps.editorInPopup && this.getViewMode() !== ViewMode.week;
+    return super.isEditable() && !this.isEditableLike() && this.getViewMode() !== ViewMode.week;
   }
 
   isEditableLike(): boolean {
-    return this.observableProps.editorInPopup;
+    return this.popup && this.observableProps.editorInPopup;
   }
-
 
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
@@ -484,11 +489,20 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handlePopupAnimateEnd(key, exists) {
-    if (!exists && key === 'align') {
-      runInAction(() => {
-        this.selectedDate = undefined;
-        this.mode = undefined;
-      });
+    if (key === 'align') {
+      if (exists) {
+        const { popupRangeEditor } = this;
+        if (popupRangeEditor) {
+          raf(() => {
+            popupRangeEditor.focus();
+          });
+        }
+      } else {
+        runInAction(() => {
+          this.selectedDate = undefined;
+          this.mode = undefined;
+        });
+      }
     }
   }
 
@@ -687,15 +701,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         this.collapse();
       }
     }
-    if (range && this.popup) {
-      if (expand) {
-        const { popupRangeEditor } = this;
-        if (popupRangeEditor && popupRangeEditor !== document.activeElement) {
-          popupRangeEditor.focus();
-        }
-      } else if (rangeTarget === 0) {
-        this.setRangeTarget(1);
-      }
+    if (range && rangeTarget === 0 && this.popup && !expand) {
+      this.setRangeTarget(1);
     }
   }
 
