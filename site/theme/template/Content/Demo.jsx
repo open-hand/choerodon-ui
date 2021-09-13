@@ -262,6 +262,9 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
             />
           </div>
           {introChildren}
+          <Tooltip title="open single Demo">
+            <a href={`/iframe/${id}/${pathname}`} target="single-demo"><Icon type="open_in_new" className="code-open-icon" /></a>
+          </Tooltip>
           <Tooltip title="Refresh Demo">
             <Icon type="refresh" onClick={this.refresh} className="code-refresh-icon" />
           </Tooltip>

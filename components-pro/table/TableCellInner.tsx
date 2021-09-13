@@ -396,7 +396,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
   const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
     if (validationResult && validationResult.validationMessage) {
-      return utilRenderValidationMessage(validationResult.validationMessage);
+      return utilRenderValidationMessage(validationResult.validationMessage, true);
     }
   }, []);
   const isValidationMessageHidden = useCallback((message?: ReactNode): boolean | undefined => {
@@ -549,13 +549,15 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     if (!pristine && field.dirty) {
       innerClassName.push(`${prefixCls}-inner-dirty`);
     }
-    if (!inlineEdit && editorBorder) {
-      if (field.required && (empty || !getConfig('showRequiredColorsOnlyEmpty'))) {
-        innerClassName.push(`${prefixCls}-inner-required`);
-      }
+    if (!inlineEdit && !cellEditorInCell) {
       inValid = !field.valid;
       if (inValid) {
         innerClassName.push(`${prefixCls}-inner-invalid`);
+      }
+    }
+    if (editorBorder) {
+      if (field.required && (empty || !getConfig('showRequiredColorsOnlyEmpty'))) {
+        innerClassName.push(`${prefixCls}-inner-required`);
       }
       highlight = field.get('highlight');
       if (highlight) {

@@ -23,6 +23,10 @@
     cursor: pointer;
   }
 
+  &-invalid &-inner {
+    border-color: @error-color;
+  }
+
   &:disabled {
     cursor: not-allowed;
     pointer-events: none;
@@ -35,4 +39,5 @@
   &-float-label {
     padding-top: 0.07rem;
   }
+
 }
