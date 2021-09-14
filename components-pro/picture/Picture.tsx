@@ -45,6 +45,7 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   sources?: SourceHTMLAttributes<HTMLSourceElement>[];
   status?: ImageStatus;
   onClick?: MouseEventHandler<HTMLPictureElement>;
+  onPreview?: () => void;
   children?: ReactNode;
 }
 
@@ -59,7 +60,7 @@ export interface PictureForwardRef {
 function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const {
     src, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true,
-    objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, ...rest
+    objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, onPreview, ...rest
   } = props;
   const url = previewUrl || src;
   const pictureRef = useRef<PictureRef>({ src: url });
@@ -75,9 +76,11 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
       } else {
         modalPreview({ list: [url] });
       }
+      if (onPreview) {
+        onPreview();
+      }
     }
-
-  }, [context, index, preview, previewTarget, status, url]);
+  }, [context, index, preview, previewTarget, status, url, onPreview]);
   const handleClick = useCallback((e) => {
     handlePreview();
     if (onClick) {

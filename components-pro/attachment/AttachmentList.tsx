@@ -21,6 +21,7 @@ export interface AttachmentListProps {
   onRemove: (attachment: AttachmentFile) => void;
   onOrderChange: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string, attachments: AttachmentFile[] }) => void;
   onFetchAttachments: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => void;
+  onPreview: () => void;
   bucketName?: string;
   bucketDirectory?: string;
   storageCode?: string;
@@ -50,6 +51,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
     onFetchAttachments,
     limit,
     onHistory,
+    onPreview,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -109,6 +111,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
                 index={type.startsWith('image') ? previewIndex++ : undefined}
                 hidden={hidden}
                 onHistory={onHistory}
+                onPreview={onPreview}
               />
             )
           }

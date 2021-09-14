@@ -25,6 +25,7 @@ export interface ItemProps {
   attachment: AttachmentFile;
   onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
+  onPreview?: () => void;
   onRemove: (attachment: AttachmentFile) => void;
   readOnly?: boolean;
   isCard?: boolean;
@@ -44,7 +45,7 @@ export interface ItemProps {
 
 const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const {
-    attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory,
+    attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
   } = props;
   const { status, name, filename, ext, url, size } = attachment;
@@ -88,6 +89,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
           className={`${prefixCls}-icon`}
           previewTarget={isSrcIcon && !isPicture ? ATTACHMENT_TARGET : undefined}
           preview={preview}
+          onPreview={onPreview}
           ref={pictureRef}
         >
           {isValidElement(icon) ? icon : undefined}
@@ -135,7 +137,8 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   };
   const renderTitle = (isCardTitle?: boolean): ReactNode => {
     const nameNode = preview && src && listType === 'text' ? (
-      <a {...isPicture ? { onClick: handlePreview } : { href: src, target: ATTACHMENT_TARGET }} className={`${prefixCls}-name ${prefixCls}-link`}>{filename}</a>
+      <a {...isPicture ? { onClick: handlePreview } : { href: src, target: ATTACHMENT_TARGET }}
+         className={`${prefixCls}-name ${prefixCls}-link`}>{filename}</a>
     ) : <span className={`${prefixCls}-name`}>{filename}</span>;
     return (
       <span className={`${prefixCls}-title`} style={isCardTitle ? { width } : undefined}>

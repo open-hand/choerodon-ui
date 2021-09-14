@@ -115,6 +115,8 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @observable sort?: Sort;
 
+  @observable popup?: boolean;
+
   get help() {
     return this.getProp('help');
   }
@@ -502,6 +504,11 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
+  @autobind
+  handlePreview() {
+    this.setPopup(false);
+  }
+
   @mobxAction
   removeAttachment(attachment: AttachmentFile) {
     const { attachments } = this;
@@ -744,6 +751,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onUpload={this.upload}
           onOrderChange={this.handleOrderChange}
           onFetchAttachments={this.handleFetchAttachment}
+          onPreview={this.handlePreview}
         />
       );
     }
@@ -891,8 +899,18 @@ export default class Attachment extends FormField<AttachmentProps> {
     return ctxShowValidation;
   }
 
+  @autobind
+  handlePopupHiddenChange(hidden) {
+    this.setPopup(!hidden);
+  }
+
+  @mobxAction
+  setPopup(popup) {
+    this.popup = popup;
+  }
+
   render() {
-    const { viewMode, listType, _inTable } = this.props;
+    const { viewMode, listType, _inTable, hidden } = this.props;
     const { readOnly, prefixCls } = this;
     if (viewMode === 'popup') {
       const label = !_inTable && this.hasFloatLabel && this.getLabel();
@@ -901,9 +919,11 @@ export default class Attachment extends FormField<AttachmentProps> {
           <Trigger
             prefixCls={this.prefixCls}
             popupContent={this.renderWrapper}
-            action={[Action.hover]}
+            action={[Action.hover, Action.focus]}
             builtinPlacements={BUILT_IN_PLACEMENTS}
             popupPlacement="bottomLeft"
+            popupHidden={hidden || !this.popup}
+            onPopupHiddenChange={this.handlePopupHiddenChange}
           >
             {readOnly ? this.renderViewButton(label) : this.renderUploadBtn(false, label)}
           </Trigger>
