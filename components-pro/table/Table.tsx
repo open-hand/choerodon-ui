@@ -153,8 +153,8 @@ export interface onColumnResizeProps {
   width: number;
 }
 
-export type TableQueryBarHookCustomProps = object;
-export type TableQueryBarHook = (props: TableQueryBarHookCustomProps & TableQueryBarHookProps) => ReactNode;
+export type TableQueryBarHookCustomProps = Omit<object, keyof TableQueryBarHookProps>;
+export type TableQueryBarHook = (props: TableQueryBarHookProps & TableQueryBarHookCustomProps) => ReactNode;
 export type Commands =
   | TableCommandType
   | [TableCommandType, TableButtonProps]
