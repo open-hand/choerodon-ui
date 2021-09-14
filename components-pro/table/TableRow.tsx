@@ -261,14 +261,6 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     return reaction(() => record.isCurrent, isCurrent => isCurrent && focusRow());
   }, [record, focusRow]);
 
-  useEffect(() => {
-    if (needIntersection) {
-      record.setState('__inView', inView);
-    } else if (record.getState('__inView') !== undefined) {
-      record.setState('__inView', undefined);
-    }
-  }, [needIntersection, inView, record]);
-
   const renderExpandRow = (): ReactElement<ExpandedRowProps>[] => {
     if (expandable && (isExpanded || childrenRenderedRef.current)) {
       const expandRows: ReactElement<ExpandedRowProps>[] = [];
@@ -362,6 +354,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
       isDragging={snapshot ? snapshot.isDragging : false}
       lock={lock}
       provided={rest.key === DRAG_KEY ? provided : undefined}
+      inView={needIntersection ? inView : undefined}
       {...rest}
     >
       {hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined}

@@ -24,10 +24,11 @@ export interface TableCellProps extends ElementProps {
   lock?: ColumnLock | boolean;
   provided?: DraggableProvided;
   disabled?: boolean;
+  inView?: boolean | undefined;
 }
 
 const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell(props) {
-  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled } = props;
+  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView } = props;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
@@ -166,7 +167,7 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
   const baseClassName = classNames(cellPrefix, {
     [`${cellPrefix}-fix-${columnLock}`]: columnLock,
   });
-  if (record.getState('__inView') === false || columnGroup.inView === false) {
+  if (inView === false || columnGroup.inView === false) {
     return (
       <td
         colSpan={colSpan}
