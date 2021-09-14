@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of line highlighting error.
 - 🐞 `<pro>Lov`: Fix the problem that the value of `alwaysShowRowBox` in the single-select mode table is incorrectly selected.
+- 🐞 `<pro>TriggerField`: Fix the problem that `onPopupHiddenChange` sometimes does not trigger.
 
 ## 1.4.4
 

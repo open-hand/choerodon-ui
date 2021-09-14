@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { PropTypes as MobxPropTypes } from 'mobx-react';
 import Trigger from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
@@ -149,7 +149,9 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   constructor(props, context) {
     super(props, context);
-    this.setPopup(false);
+    runInAction(() => {
+      this.statePopup = false;
+    });
   }
 
   @autobind
@@ -165,6 +167,8 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   @action
   setPopup(statePopup: boolean) {
     this.statePopup = statePopup;
+    const { onPopupHiddenChange = noop } = this.props;
+    onPopupHiddenChange(!statePopup);
   }
 
   abstract getTriggerIconFont(): string;
@@ -300,8 +304,6 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   @autobind
   handlePopupHiddenChange(hidden: boolean) {
     this.setPopup(!hidden);
-    const { onPopupHiddenChange = noop } = this.props;
-    onPopupHiddenChange(hidden);
   }
 
   forcePopupAlign() {

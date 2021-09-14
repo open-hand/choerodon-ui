@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `Tabs`：修墨条可能对不齐的问题。
 - 🐞 `<pro>PerformanceTable`：修复行高亮点击报错问题。
 - 🐞 `<pro>Lov`：修复单选模式表格 alwaysShowRowBox 为 true 时选值错误的问题。
+- 🐞 `<pro>TriggerField`：修复 onPopupHiddenChange 有时不触发的问题。
 
 ## 1.4.4
 
