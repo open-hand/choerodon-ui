@@ -656,8 +656,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   render() {
-    const { summaryBar } = this.props;
+    const { summaryBar, buttons, prefixCls } = this.props;
     const queryBar = this.getQueryBar();
-    return [queryBar, summaryBar];
+    if (queryBar) {
+      return [queryBar, summaryBar];
+    }
+    return <TableButtons key="toolbar" prefixCls={`${prefixCls}-dynamic-filter-buttons`} buttons={buttons}>
+      {summaryBar}
+    </TableButtons>;
   }
 }

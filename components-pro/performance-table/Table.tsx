@@ -1980,18 +1980,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           rowData,
         }) || {};
         if (cellExternalProps.rowSpan > 1) {
-          let setNextRow = rowIndex + cellExternalProps.rowSpan - 1
+          let setNextRow = rowIndex + cellExternalProps.rowSpan - 1;
           if (!this.setRowBottomBorderList.includes(setNextRow)) {
-            this.setRowBottomBorderList.push(setNextRow)
+            this.setRowBottomBorderList.push(setNextRow);
           }
           if (!this.nextRowZIndex.includes(setNextRow) && cellUnit.props.fixed) {
-            this.nextRowZIndex.push(setNextRow)
+            this.nextRowZIndex.push(setNextRow);
           }
         }
       }
     }
     if (this.setRowBottomBorderList.includes(rowIndex)) {
-      restRowProps.className = `${restRowProps.className} ${this.addPrefix('row-spanEnd')}`;
+      restRowProps.className = `${restRowProps.className} ${this.addPrefix('row-span-end')}`;
     }
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {
