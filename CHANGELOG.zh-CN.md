@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 tabsInkBarStyle 属性。
+- 🌟 `Tabs`: 新增 inkBarStyle 属性，支持墨条样式修改。
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。

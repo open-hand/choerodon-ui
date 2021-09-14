@@ -44,7 +44,8 @@ export interface TabBarProps {
   onPrevClick?: MouseEventHandler<HTMLSpanElement> | undefined;
   onNextClick?: MouseEventHandler<HTMLSpanElement> | undefined;
   style?: CSSProperties | undefined;
-  styles?: { inkBar?: CSSProperties } | undefined;
+  inkBarStyle?: CSSProperties | undefined;
+  // styles?: { inkBar?: CSSProperties } | undefined;
   tabBarGutter?: number | undefined;
   tabBarPosition?: TabsPosition | undefined;
   groupsMap: Map<string, GroupPanelMap>;
@@ -59,7 +60,7 @@ export interface TabBarProps {
 
 const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const {
-    prefixCls, scrollAnimated, panelsMap, groupsMap, activeKey, activeGroupKey, className, style, styles, extraContent,
+    prefixCls, scrollAnimated, panelsMap, groupsMap, activeKey, activeGroupKey, className, style, inkBarStyle, extraContent,
     tabBarGutter, tabBarPosition, onKeyDown, onTabClick = noop, onPrevClick = noop, onNextClick = noop, onGroupSelect = noop,
     inkBarAnimated, type, onRemoveTab, ...restProps
   } = props;
@@ -168,7 +169,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       `${inkBarClassName}-no-animated`);
     return (
       <div
-        style={styles && styles.inkBar}
+        style={inkBarStyle}
         className={classes}
         key="inkBar"
         ref={inkBarRef}
@@ -400,7 +401,6 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       if (activeTab && rootNode) {
         const wrapNode = navRef.current || rootNode;
         const transformSupported = isTransformSupported(inkBarNodeStyle);
-        const { inkBar } = styles || {};
         if (!isVertical(tabBarPosition)) {
           let left = getLeft(activeTab, wrapNode);
           let width = activeTab.offsetWidth;
@@ -409,8 +409,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
           // It means no css working, then ink bar should not have width until css is loaded
           if (width === rootNode.offsetWidth) {
             width = 0;
-          } else if (inkBar && inkBar.width !== undefined) {
-            width = parseFloat(inkBar.width as string);
+          } else if (inkBarStyle && inkBarStyle.width !== undefined) {
+            width = parseFloat(inkBarStyle.width as string);
             if (width) {
               left += (activeTab.offsetWidth - width) / 2;
             }
@@ -429,8 +429,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         } else {
           let top = getTop(activeTab, wrapNode);
           let height = activeTab.offsetHeight;
-          if (inkBar && inkBar.height !== undefined) {
-            height = parseFloat(inkBar.height as string);
+          if (inkBarStyle && inkBarStyle.height !== undefined) {
+            height = parseFloat(inkBarStyle.height as string);
             if (height) {
               top += (activeTab.offsetHeight - height) / 2;
             }

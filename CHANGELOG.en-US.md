@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tabsInkBarStyle` property.
+- 🌟 `Tabs`: Add `inkBarStyle` property, support ink bar style modification.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.

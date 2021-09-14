@@ -25,7 +25,7 @@ import TabPane, { TabPaneProps } from './TabPane';
 import TabGroup, { TabGroupProps } from './TabGroup';
 import { generateKey, getActiveKeyByGroupKey, getDataAttr, getDefaultActiveKey, getDefaultGroupKey, isVertical, toArray, toGroups } from './utils';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import { getPrefixCls, getConfig } from '../configure';
 import warning from '../_util/warning';
 import TabBar, { TabBarProps } from './TabBar';
 import Icon from '../icon';
@@ -45,6 +45,7 @@ export interface TabsProps {
   onNextClick?: MouseEventHandler<any>;
   tabBarExtraContent?: ReactNode | null;
   tabBarStyle?: CSSProperties;
+  inkBarStyle?: CSSProperties;
   tabBarGutter?: number;
   type?: TabsType;
   tabPosition?: TabsPosition;
@@ -85,6 +86,7 @@ function Tabs(props: TabsProps, ref: Ref<TabsRef>) {
     size,
     type,
     tabBarStyle,
+    inkBarStyle = getConfig('tabsInkBarStyle'),
     hideAdd,
     onTabClick,
     onPrevClick,
@@ -315,6 +317,7 @@ function Tabs(props: TabsProps, ref: Ref<TabsRef>) {
     activeKey,
     type,
     onRemoveTab: removeTab,
+    inkBarStyle,
   };
   const tabContentProps: TabContentProps = {
     animatedWithMargin: true,

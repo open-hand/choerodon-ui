@@ -128,6 +128,7 @@ const prefixCls = getConfig('prefixCls');
 | tooltip | 是否开启提示, 参数 target 详见 [TooltipTarget](#TooltipTarget) | Tooltip.always \| Tooltip.overflow \| Tooltip.none \| function(target) | |
 | tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 target 详见 [TooltipTarget](#TooltipTarget) | dark \| light \| function(target) |  (target) => target === 'validation' ? 'light' : 'dark' |
 | attachment | 附件上传配置 | [AttachmentConfig](#AttachmentConfig) |   |
+| tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 
 ### Formatter
 
