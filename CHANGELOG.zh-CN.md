@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `<pro>Lov`：修复单选模式表格 alwaysShowRowBox 为 true 时选值错误的问题。
 - 🐞 `<pro>TriggerField`：修复 onPopupHiddenChange 有时不触发的问题。
 - 🐞 `<pro>Button`：修复 tooltip 为 overflow 时内容没溢出也会显示 Tooltip 的问题。
+- 🐞 `<pro>Lov`：修复 button 模式的 onClick 属性没效果的问题。
 
 ## 1.4.4
 

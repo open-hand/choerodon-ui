@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that the value of `alwaysShowRowBox` in the single-select mode table is incorrectly selected.
 - 🐞 `<pro>TriggerField`: Fix the problem that `onPopupHiddenChange` sometimes does not trigger.
 - 🐞 `<pro>Button`: Fix the problem that Tooltip will be displayed even if the content is overflow when the tooltip is overflow.
+- 🐞 `<pro>Lov`: Fix the problem that the `onClick` property of `button` mode has no effect.
 
 ## 1.4.4
 

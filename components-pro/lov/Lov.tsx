@@ -662,6 +662,13 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
+  @autobind
+  handleButtonClick(e) {
+    this.handleOpenModal();
+    const { onClick = noop } = this.props;
+    onClick(e);
+  }
+
   renderWrapper(): ReactNode {
     const { mode, children, clearButton } = this.props;
     if (mode === ViewMode.button) {
@@ -670,7 +677,7 @@ export default class Lov extends Select<LovProps> {
           key="lov_button"
           {...this.getButtonProps()}
           disabled={this.disabled}
-          onClick={this.handleOpenModal}
+          onClick={this.handleButtonClick}
         >
           {children || this.getTextNode() || this.getPlaceholders()[0] || $l('Lov', 'choose')}
         </Button>,

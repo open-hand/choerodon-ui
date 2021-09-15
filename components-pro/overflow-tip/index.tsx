@@ -15,7 +15,7 @@ function renderTitle(props) {
 
 export interface OverflowTipProps extends TooltipProps {
   strict?: boolean;
-  getOverflowContainer?: () => Element | null | undefined;
+  getOverflowContainer?: () => HTMLElement | null | undefined;
 }
 
 const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
@@ -23,7 +23,7 @@ const OverflowTip: FunctionComponent<OverflowTipProps> = (props) => {
   const defaultGetOverflowContainer = useCallback(() => {
     const { current } = ref;
     if (current) {
-      return findDOMNode(current) as Element;
+      return findDOMNode(current) as HTMLElement;
     }
   }, [ref]);
   const { children, strict, getOverflowContainer = defaultGetOverflowContainer, onHiddenBeforeChange = noop, title = renderTitle, ...rest } = props;

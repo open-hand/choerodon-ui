@@ -1,6 +1,20 @@
 import measureTextWidth from '../_util/measureTextWidth';
 
-export default function isOverflow(element: Element) {
+function getContentWidth(element: HTMLElement, computedStyle: CSSStyleDeclaration): number {
+  const { width, boxSizing } = computedStyle;
+  if (boxSizing === 'content-box' && width && width !== 'auto') {
+    return parseFloat(width);
+  }
+  const contentWidth = width && width !== 'auto' ? parseFloat(width) : element.offsetWidth;
+  const { paddingLeft, paddingRight, borderLeftWidth, borderRightWidth } = computedStyle;
+  const pl = paddingLeft ? parseFloat(paddingLeft) : 0;
+  const pr = paddingRight ? parseFloat(paddingRight) : 0;
+  const bl = borderLeftWidth ? parseFloat(borderLeftWidth) : 0;
+  const br = borderRightWidth ? parseFloat(borderRightWidth) : 0;
+  return contentWidth - pl - pr - bl - br;
+}
+
+export default function isOverflow(element: HTMLElement) {
   const { textContent, ownerDocument } = element;
   if (textContent && ownerDocument) {
     const { clientWidth, scrollWidth } = element;
@@ -10,16 +24,9 @@ export default function isOverflow(element: Element) {
     const { defaultView } = ownerDocument;
     if (defaultView) {
       const computedStyle = defaultView.getComputedStyle(element);
-      const { paddingLeft, paddingRight, borderLeft, borderRight } = computedStyle;
-      const pl = paddingLeft ? parseFloat(paddingLeft) : 0;
-      const pr = paddingRight ? parseFloat(paddingRight) : 0;
-      const bl = borderLeft ? parseFloat(borderLeft) : 0;
-      const br = borderRight ? parseFloat(borderRight) : 0;
-      if (pl || pr || bl || br) {
-        const textWidth = measureTextWidth(textContent, computedStyle);
-        const contentWidth = clientWidth - pl - pr - bl - br;
-        return textWidth > contentWidth;
-      }
+      const contentWidth = getContentWidth(element, computedStyle);
+      const textWidth = measureTextWidth(textContent, computedStyle);
+      return textWidth > contentWidth;
     }
   }
   return false;
