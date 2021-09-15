@@ -54,6 +54,7 @@ const locale: Locale = {
     modified: '変更',
     no_save_filter: '保存フィルターなし',
     fast_filter: '高速フィルタリング',
+    default_flag: 'ディフォルト',
     rename: '名前を変更',
     set_default: 'デフォルトとして設定',
     cancel_default: 'デフォルトをキャンセル',

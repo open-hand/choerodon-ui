@@ -54,6 +54,7 @@ const locale: Locale = {
     no_save_filter: '暂无保存筛选',
     modified: '已修改',
     fast_filter: '默认筛选',
+    default_flag: '默认',
     rename: '重新命名',
     set_default: '设为默认',
     cancel_default: '取消默认',

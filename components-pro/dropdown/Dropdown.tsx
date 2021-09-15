@@ -13,6 +13,7 @@ export interface DropDownProps {
   trigger?: Action[];
   overlay: ReactNode | RenderFunction;
   onHiddenChange?: (hidden?: boolean) => void;
+  onHiddenBeforeChange?: (hidden: boolean) => boolean;
   onVisibleChange?: (visible?: boolean) => void;
   onOverlayClick?: (e) => void;
   hidden?: boolean;
@@ -54,6 +55,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     hidden: PropTypes.bool,
     visible: PropTypes.bool,
     onHiddenChange: PropTypes.func,
+    onHiddenBeforeChange: PropTypes.func,
     onVisibleChange: PropTypes.func,
     onOverlayClick: PropTypes.func,
     suffixCls: PropTypes.string,
@@ -192,7 +194,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     const {
       prefixCls,
       state: { hidden },
-      props: { children, placement, popupClassName, getPopupContainer },
+      props: { children, placement, popupClassName, getPopupContainer, onHiddenBeforeChange },
     } = this;
 
     return (
@@ -205,6 +207,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
         popupStyle={popupStyle}
         popupClassName={popupClassName}
         onPopupHiddenChange={this.handlePopupHiddenChange}
+        onPopupHiddenBeforeChange={onHiddenBeforeChange}
         popupHidden={hidden}
         getPopupContainer={getPopupContainer}
       >

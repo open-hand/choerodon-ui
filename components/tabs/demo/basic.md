@@ -23,7 +23,7 @@ function callback(key) {
 }
 
 ReactDOM.render(
-  <Tabs keyboard={false} defaultActiveKey="1" onChange={callback}>
+  <Tabs keyboard={false} defaultActiveKey="1" onChange={callback} inkBarStyle={{ width: 20 }}>
     <TabPane tab="Tab 1" key="1">
       Content of Tab Pane 1
     </TabPane>

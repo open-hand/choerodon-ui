@@ -31,6 +31,7 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | size | 大小，提供 `large` `default` 和 `small` 三种大小 | string | 'default' |
 | tabBarExtraContent | tab bar 上额外的元素 | React.ReactNode | 无 |
 | tabBarStyle | tab bar 的样式对象 | object | - |
+| inkBarStyle | ink bar 的样式对象 | object | - |
 | tabPosition | 页签位置，可选值有 `top` `right` `bottom` `left` | string | 'top' |
 | type | 页签的基本样式，可选 `line`、`card` `editable-card` 类型 | string | 'line' |
 | onChange | 切换面板的回调 | (newActiveKey, oldActiveKey) => void | 无 |

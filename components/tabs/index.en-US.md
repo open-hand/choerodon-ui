@@ -28,6 +28,7 @@ Choerodon UI has 3 types of Tabs for different situations.
 | size | preset tab bar size | `large` \| `default` \| `small` | `default` |
 | tabBarExtraContent | Extra content in tab bar | React.ReactNode | - |
 | tabBarStyle | Tab bar style object | object | - |
+| inkBarStyle | Ink bar style object | object | - |
 | tabPosition | Position of tabs | `top` \| `right` \| `bottom` \| `left` | `top` |
 | type | Basic style of tabs | `line` \| `card` \| `editable-card` | `line` |
 | onChange | Callback executed when active tab is changed | (newActiveKey, oldActiveKey) => void | - |

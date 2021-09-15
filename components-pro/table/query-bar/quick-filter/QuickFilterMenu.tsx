@@ -297,10 +297,10 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
   async function handleDelete(record) {
     let searchId = record.get('searchId');
     if (menuDataSet.current) {
-      const currentId = menuDataSet.current.get('searchId');
-      searchId = record.get('searchId') === currentId ? undefined : currentId;
+      const currentId = menuDataSet.current.get('searchId').toString();
+      searchId = record.get('searchId').toString() === currentId ? undefined : currentId;
     }
-    const delRecord = menuDataSet.find((menu) => menu.get('searchId') === record.get('searchId'));
+    const delRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === record.get('searchId').toString());
     await menuDataSet.delete(delRecord, `${$l('Table', 'whether_delete_filter')}：${record.get('searchName')}？`);
     loadData(searchId);
   }
@@ -318,7 +318,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
 
   function openModal(type, searchId?: String) {
     if (searchId) {
-      menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId') === searchId));
+      menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
     }
     Modal.open({
@@ -412,7 +412,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
    */
   const setDefaultFlag = async (defaultFlag, record) => {
     record.set('defaultFlag', defaultFlag);
-    const currentRecord = menuDataSet.find((menu) => menu.get('searchId') === record.get('searchId'));
+    const currentRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === record.get('searchId').toString());
     currentRecord.set('defaultFlag', defaultFlag);
     const res = await menuDataSet.submit();
     const result = await menuDataSet.query();
@@ -429,6 +429,8 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
    * @param text
    */
   const optionRenderer = ({ record, text }) => {
+    const isSelected = filterMenuDS.current.get('filterName')?.toString() === record.get('searchId')?.toString();
+    const isDefault = record.get('defaultFlag') === 1;
     const menu = (
       <Menu onClick={({ key, domEvent }) => {
         domEvent.preventDefault();
@@ -470,10 +472,11 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
           onMouseLeave={hide}
         >
           {text}
+          {isDefault && <Tag>{$l('Table', 'default_flag')}</Tag>}
         </span>
-        <div className={`${prefixCls}-filter-menu-option-selected`}>
+        {isSelected && <div className={`${prefixCls}-filter-menu-option-selected`}>
           <Icon type="check" />
-        </div>
+        </div>}
         <div className={`${prefixCls}-filter-menu-option-icons`}>
           <Dropdown overlay={menu}>
             <span style={{ userSelect: 'none' }}><Icon type="more_horiz" /></span>
@@ -486,12 +489,13 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
   return (
     <>
       <Select
+        isFlat
         placeholder={$l('Table', 'fast_filter')}
         className={`${prefixCls}-filterName-select`}
         dataSet={filterMenuDS}
         name="filterName"
         dropdownMatchSelectWidth={false}
-        dropdownMenuStyle={{ width: '1.6rem' }}
+        dropdownMenuStyle={{ width: '1.72rem' }}
         optionRenderer={optionRenderer}
         onChange={handleChange}
         notFoundContent={$l('Table', 'no_save_filter')}

@@ -1,6 +1,6 @@
 import { observable, ObservableMap, runInAction, toJS } from 'mobx';
 import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
 import { categories } from 'choerodon-ui-font';
@@ -302,7 +302,10 @@ export type Config = {
    * 表单校验提示方式
    */
   showValidation?: ShowValidation;
-
+  /**
+   * Tabs 墨条样式
+   */
+  tabsInkBarStyle?: CSSProperties;
 };
 
 export type ConfigKeys = keyof Config;
