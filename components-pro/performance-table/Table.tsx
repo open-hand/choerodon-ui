@@ -782,6 +782,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
      * 提供给后面bodyCell使用
      */
     const { fixedLeftCells, fixedRightCells, scrollCells } = this.calculateFixedAndScrollColumn(flatColumns)
+    // 重新计算列的时候需清除在虚拟滚动时候的渲染列缓存
+    this._cacheRenderCols = []
     return [...fixedLeftCells, ...scrollCells, ...fixedRightCells];
   }
 
