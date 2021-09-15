@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
 - 🌟 `<pro>Table`: Add `searchCode` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
+- 🌟 `<pro>Pagination`: Added `quickJumperPosition` properties.
 - 💄 `<pro>Attachment`: Optimize dnd, preview and label display.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
