@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tabsInkBarStyle 属性。
-- 🌟 `Tabs`: 新增 inkBarStyle 属性，支持墨条样式修改。
+- 🌟 `configure`: 新增 tabsInkBarStyle, customizable, customizedSave, customizedLoad 属性, 废弃 tableCustomizedSave, tableCustomizedSave, tableCustomizable, performanceTableCustomizable 属性。
+- 🌟 `Tabs`: 新增 inkBarStyle, customizable, customizedCode 属性，支持墨条样式修改。
+- 🌟 `Tabs.TabPane`: 新增 title, showCount 属性。
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。
@@ -70,6 +71,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 开启虚拟滚动，新增横行虚拟滚动。
 - 🌟 `<pro>Table`: 新增 onResize 事件。
 - 🌟 `Tabs`: 新增 TabGroup 组件。
+- 🌟 `Tabs.TabPane`: 新增 count, overflowCount 属性。
 - 🌟 `Icon`: 新增大量图标。
 - 🌟 `<pro>Table`: 新增 autoQueryAfterReset 属性支持 ProfessionalBar & DynamicFilterBar 重置是否自动查询。
 - 💄 `<pro>Table`：个性化聚合视图的保存受外部属性 aggregation 属性的控制。

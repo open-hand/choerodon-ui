@@ -32,7 +32,7 @@ const App = () => {
         <Radio.Button value="top">Horizontal</Radio.Button>
         <Radio.Button value="left">Vertical</Radio.Button>
       </Radio.Group>
-      <Tabs keyboard={false} defaultActiveKey="1" onChange={callback} tabPosition={mode}>
+      <Tabs keyboard={false} defaultActiveKey="1" onChange={callback} tabPosition={mode} customizable customizedCode="customized-group">
         <TabGroup tab="Group 1" key="group-1" defaultActiveKey="2">
           <TabPane tab="Tab A" key="1" count={117}>
             Content of Tab Pane 1

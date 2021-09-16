@@ -41,6 +41,8 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | onTabClick | tab 被点击的回调 | (tabKey) => void | 无 |
 | tabBarGutter | tabs 之间的间隙 | number | 无 |
 | keyboard| tabs的快捷键盘| boolean | true |
+| customizable | 是否显示个性化设置入口按钮  | boolean | |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
 
 ### Tabs.TabPane
 
@@ -48,10 +50,12 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | ----------- | ------------------------- | ----------------- | ------ |
 | forceRender | 被隐藏时是否渲染 DOM 结构 | boolean           | false  |
 | key         | 对应 activeKey            | string            | 无     |
-| tab         | 选项卡头显示文字          | string\|ReactNode | 无     |
+| tab         | 选项卡头显示文字或钩子          | string\|ReactNode \| (title) => ReactNode | 无     |
+| title         | 选项卡头显示文字          | string | 无     |
 | disabled         | 是否禁用          | boolean | 无     |
 | count         | 选项卡头内显示数字          | number | 无     |
 | overflowCount         | 展示封顶的数字值         | number | 99     |
+| showCount         | 显示数字        | boolean | true     |
 
 ### Tabs.TabGroup
 

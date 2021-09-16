@@ -87,7 +87,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuf
       default:
     }
   }), [record, index, changeLock, changeIndex]);
-  const getTreeNodesMenus = useCallback(() => {
+  const getTreeNodesMenus = () => {
     const lock = record.get('lock');
     const menus: ReactElement<any>[] = [];
     if (columnTitleEditable && record.get('titleEditable') !== false) {
@@ -121,7 +121,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuf
         </Menu>
       );
     }
-  }, [record, index, records, columnTitleEditable, columnDraggable, handleMenuClick]);
+  };
   const menu = getTreeNodesMenus();
   return (
     <>

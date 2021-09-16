@@ -8,17 +8,17 @@ import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import noop from 'lodash/noop';
 import isEqual from 'lodash/isEqual';
-import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import Popup from './Popup';
-import autobind from '../_util/autobind';
+import autobind from 'choerodon-ui/pro/lib/_util/autobind';
+import { ElementProps } from 'choerodon-ui/pro/lib/core/ViewComponent';
+import focusable, { findFocusableParent } from 'choerodon-ui/pro/lib/_util/focusable';
+import { getIf } from 'choerodon-ui/pro/lib/data-set/utils';
+import isIE from 'choerodon-ui/pro/lib/_util/isIE';
+import KeyCode from '../_util/KeyCode';
 import TaskRunner from '../_util/TaskRunner';
-import { ElementProps } from '../core/ViewComponent';
+import Popup from './Popup';
 import EventManager from '../_util/EventManager';
 import { Action, HideAction, ShowAction } from './enum';
 import TriggerChild from './TriggerChild';
-import focusable, { findFocusableParent } from '../_util/focusable';
-import { getIf } from '../data-set/utils';
-import isIE from '../_util/isIE';
 
 function isPointsEq(a1: string[], a2: string[]): boolean {
   return a1[0] === a2[0] && a1[1] === a2[1];

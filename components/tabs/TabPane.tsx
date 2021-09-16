@@ -4,7 +4,8 @@ import { getDataAttr } from './utils';
 
 export interface TabPaneProps {
   /** 选项卡头显示文字 */
-  tab?: ReactNode | string;
+  tab?: ReactNode | ((title?: string) => ReactNode);
+  title?: string;
   style?: CSSProperties;
   active?: boolean;
   closable?: boolean;
@@ -15,7 +16,9 @@ export interface TabPaneProps {
   destroyInactiveTabPane?: boolean;
   count?: number;
   overflowCount?: number;
+  showCount?: boolean;
   placeholder?: ReactNode;
+  sort?: number;
 }
 
 const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
@@ -55,6 +58,7 @@ TabPane.displayName = 'TabPane';
 
 TabPane.defaultProps = {
   overflowCount: 99,
+  showCount: true,
 };
 
 export default TabPane;

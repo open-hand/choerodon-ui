@@ -1,8 +1,8 @@
 import React, { cloneElement, CSSProperties, isValidElement, PureComponent, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Trigger, { RenderFunction } from '../trigger/Trigger';
-import { Action } from '../trigger/enum';
+import Trigger, { RenderFunction } from 'choerodon-ui/lib/trigger/Trigger';
+import { Action } from 'choerodon-ui/lib/trigger/enum';
 import { Placements } from './enum';
 import builtinPlacements from './placements';
 import autobind from '../_util/autobind';

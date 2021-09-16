@@ -3,7 +3,7 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import Icon from 'choerodon-ui/lib/icon';
 import Menu, { Item } from 'choerodon-ui/lib/rc-components/menu/index';
-import { Action } from '../../trigger/enum';
+import { Action } from 'choerodon-ui/lib/trigger/enum';
 import Dropdown from '../../dropdown/Dropdown';
 import TableContext from '../TableContext';
 import { Placements } from '../../dropdown/enum';

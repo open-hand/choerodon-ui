@@ -1,6 +1,8 @@
+import { AxiosPromise } from 'axios';
 import { IReactionDisposer, reaction } from 'mobx';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import Yallist from './Yallist'; // 双向链表 -> 缓存更新性能优化
+import Yallist from './Yallist';
+// 双向链表 -> 缓存更新性能优化
 
 const MAX = Symbol('max'); // 最大值
 const LENGTH = Symbol('length'); // 长度
@@ -70,7 +72,7 @@ function get(self, key, doUse) {
  */
 function trim(self) {
   if (self[LENGTH] > self[MAX]) {
-    for (let walker = self[LIST].tail; self[LENGTH] > self[MAX] && walker !== null; ) {
+    for (let walker = self[LIST].tail; self[LENGTH] > self[MAX] && walker !== null;) {
       // We know that we're about to delete this one, and also
       // what the next least recently used key will be, so just
       // go ahead and set it now.
@@ -218,7 +220,7 @@ export default class Cache<K, V> {
 
   rforEach(fn, thisp) {
     thisp = thisp || this;
-    for (let walker = this[LIST].tail; walker !== null; ) {
+    for (let walker = this[LIST].tail; walker !== null;) {
       const prev = walker.prev;
       forEachStep(this, fn, walker, thisp);
       walker = prev;
@@ -227,7 +229,7 @@ export default class Cache<K, V> {
 
   forEach(fn, thisp) {
     thisp = thisp || this;
-    for (let walker = this[LIST].head; walker !== null; ) {
+    for (let walker = this[LIST].head; walker !== null;) {
       const next = walker.next;
       forEachStep(this, fn, walker, thisp);
       walker = next;
@@ -257,10 +259,10 @@ export default class Cache<K, V> {
       isStale(this, hit)
         ? false
         : {
-            k: hit.key,
-            v: hit.value,
-            e: hit.now + (hit.maxAge || 0),
-          },
+          k: hit.key,
+          v: hit.value,
+          e: hit.now + (hit.maxAge || 0),
+        },
     )
       .toArray()
       .filter(h => h);
@@ -351,7 +353,7 @@ export default class Cache<K, V> {
       const hit = arr[l];
       const expiresAt = hit.e || 0;
       if (expiresAt === 0)
-        // the item was created without expiration in a non aged cache
+      // the item was created without expiration in a non aged cache
         this.set(hit.k, hit.v);
       else {
         const maxAge = expiresAt - now;
@@ -369,9 +371,9 @@ export default class Cache<K, V> {
 }
 
 export function refreshCacheOptions(cache: Cache<any, any>): IReactionDisposer {
-  return reaction(
-    () => getConfig('lookupCache'),
-    (lookupCache = {}) => {
+  return reaction<CacheOptions<string, AxiosPromise>>(
+    () => getConfig('lookupCache') || {},
+    (lookupCache) => {
       if ('max' in lookupCache) {
         cache.max = lookupCache.max;
       }

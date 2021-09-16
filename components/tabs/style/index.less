@@ -1,7 +1,9 @@
 @import '../../style/themes/default';
 @import '../../style/mixins/index';
 @import '../../button/style/ripple';
+@import '../../select/style/mixin';
 @import './card-style';
+@import './customization';
 
 @tab-prefix-cls: ~'@{c7n-prefix}-tabs';
 @ripple-prefix-cls: ~'@{c7n-prefix}-ripple';
@@ -42,6 +44,14 @@
       margin: auto .15rem;
       background-color: rgba(0, 0, 0, .25);
     }
+
+    &:hover .@{tab-prefix-cls}-hover-button {
+      opacity: 1;
+    }
+  }
+
+  &-hover-button {
+    opacity: 0;
   }
 
   &-bar-with-groups {
@@ -500,6 +510,23 @@
   &-bottom > &-bar {
     margin-top: 0.16rem;
     margin-bottom: 0;
+  }
+
+  &-dropdown-menu {
+    .dropdown-menu;
+    .dropdown-menu-submenu;
+    min-width: .8rem;
+
+    &-root {
+      min-width: 1.6rem;
+    }
+  }
+
+  &-tip {
+    margin: 0 .05rem;
+    color: rgba(0, 0, 0, 0.25);
+    font-size: @font-size-sm;
+    vertical-align: baseline;
   }
 }
 

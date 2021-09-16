@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { ElementProps } from '../core/ViewComponent';
+import { ElementProps } from 'choerodon-ui/pro/lib/core/ViewComponent';
 
 export interface PopupInnerProps extends ElementProps {
   innerRef: (node) => void;

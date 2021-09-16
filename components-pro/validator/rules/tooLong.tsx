@@ -2,7 +2,7 @@ import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { methodReturn, ValidatorProps } from '.';
-import formatReactTemplate from '../../formatter/formatReactTemplate';
+import { formatReactTemplate } from '../../formatter/formatReactTemplate';
 
 export default function tooLong(value: any, props: ValidatorProps): methodReturn {
   const { maxLength, defaultValidationMessages } = props;

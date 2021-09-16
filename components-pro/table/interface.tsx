@@ -56,7 +56,7 @@ export {
   TableSpinConfig,
   DynamicFilterBarConfig,
   Suffixes,
-  Customized,
+  TableCustomized,
 } from './Table';
 
 export {

@@ -66,7 +66,7 @@ export function toMultipleValue(value: any, range?: boolean | [string, string]) 
   return [];
 }
 
-export function getDateFormatByFieldType(type: FieldType) {
+export function getDateFormatByFieldType(type: FieldType): string {
   const formatter = getConfig('formatter');
   switch (type) {
     case FieldType.date:
@@ -131,7 +131,7 @@ export function getNumberFormatter() {
 export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: string): FormatNumberFuncOptions {
   const precision = getProp('precision');
   const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
-  const currencyFormatterOptions: FormatNumberFuncOptions = getConfig('currencyFormatterOptions') || {};
+  const currencyFormatterOptions: FormatNumberFuncOptions = getConfig('currencyFormatterOptions') || { options: {} };
   const lang = formatterOptions.lang || currencyFormatterOptions.lang || controlLang;
   const options: Intl.NumberFormatOptions = {};
   if (isNumber(precision)) {
@@ -158,7 +158,7 @@ export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => 
   const precision = getProp('precision');
   const precisionInValue = isNumber(precision) ? precision : getPrecision(isNil(value) ? getValue ? getValue() || 0 : 0 : value);
   const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
-  const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
+  const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || { options: {} };
   const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || controlLang;
   const options: Intl.NumberFormatOptions = {
     maximumFractionDigits: precisionInValue,

@@ -14,6 +14,7 @@ import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { LovConfig } from './Lov';
 import { ColumnProps } from '../table/Column';
+import { modalChildrenProps } from '../modal/interface';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -24,7 +25,7 @@ export interface LovViewProps {
   popup?: boolean;
   onSelect: (records: Record | Record[]) => void;
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
-  modal?: { close: Function, handleOk: Function };
+  modal?: modalChildrenProps;
 }
 
 @observer
@@ -155,7 +156,6 @@ export default class LovView extends Component<LovViewProps> {
     }
     const columns = this.getColumns();
     const lovTableProps: TableProps = {
-      customizable: getConfig('lovTableCustomizable'),
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
       onKeyDown: this.handleKeyDown,

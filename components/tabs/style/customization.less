@@ -1,0 +1,131 @@
+@import '../../style/themes/default';
+
+@tabs-customization-prefix-cls: ~'@{c7n-prefix}-tabs-customization';
+
+.@{tabs-customization-prefix-cls} {
+
+  &-group {
+    min-height: .01rem;
+    margin-bottom: .06rem;
+
+    &-item {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      padding: .03rem 0 .03rem;
+      outline: none;
+
+      &-hover-button {
+        visibility: hidden;
+        transition: none;
+
+        .@{iconfont-css-prefix} {
+          transition: none;
+        }
+      }
+
+      &-hover &-hover-button {
+        visibility: visible;
+      }
+
+      &-hover {
+        &::before {
+          position: absolute;
+          top: 0;
+          right: -100%;
+          bottom: 0;
+          left: -100%;
+          display: block;
+          background-color: @item-hover-bg;
+          content: "";
+        }
+      }
+
+      &-content {
+        position: relative;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        width: 100%;
+        height: .32rem;
+        min-height: .24rem;
+        margin: 0;
+        padding: .04rem 0;
+        color: inherit;
+        line-height: .24rem;
+        background: transparent;
+        border-radius: .02rem 0 0 .02rem;
+      }
+
+      &-title {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        user-select: none;
+
+        &-text {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        &-default {
+          display: inline-block;
+          margin-left: .16rem;
+          padding: 0 .04rem;
+          line-height: 1.5;
+          border: @border-width-base @border-style-base @border-color-base;
+          border-radius: @border-radius-base;
+        }
+      }
+
+      &-switcher {
+        flex: none;
+        width: .22rem;
+        height: .32rem;
+        margin: 0;
+        padding: .05rem 0;
+        line-height: 1;
+        text-align: center;
+        vertical-align: top;
+        cursor: pointer;
+
+        &-icon {
+          font-size: .18rem;
+          line-height: .22rem;
+
+          &-close {
+            transform: rotate(-90deg);
+          }
+        }
+
+        &-noop {
+          cursor: default;
+        }
+      }
+
+      &-drag-icon {
+        color: @text-color-secondary;
+      }
+
+      &-dragging {
+        background-color: @component-background;
+        box-shadow: @shadow-4;
+      }
+    }
+
+    &-header {
+      display: inline-block;
+      margin-bottom: .1rem;
+      color: @text-color-secondary;
+      font-size: @font-size-sm;
+    }
+  }
+
+  &-panel-content {
+    padding: .16rem .2rem;
+  }
+}

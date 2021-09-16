@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tabsInkBarStyle` property.
-- 🌟 `Tabs`: Add `inkBarStyle` property, support ink bar style modification.
+- 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable` properties.
+- 🌟 `Tabs`: Add `inkBarStyle`, `customizable`, `customizedCode` properties, support ink bar style modification.
+- 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
@@ -33,6 +34,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode.
 - 🐞 `<pro>Tree`: Fix the problem that asynchronously loaded nodes cannot be displayed when the dataSet is reloaded.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
+- 🌟 `Tabs.TabPane`: Added `count`, `overflowCount` properties.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of line highlighting error.
 - 🐞 `<pro>Lov`: Fix the problem that the value of `alwaysShowRowBox` in the single-select mode table is incorrectly selected.
 - 🐞 `<pro>TriggerField`: Fix the problem that `onPopupHiddenChange` sometimes does not trigger.

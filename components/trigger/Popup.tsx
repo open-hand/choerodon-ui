@@ -6,14 +6,14 @@ import omit from 'lodash/omit';
 import shallowEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import isElement from 'lodash/isElement';
-import Align from 'choerodon-ui/lib/align';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ViewComponent, { ViewComponentProps } from 'choerodon-ui/pro/lib/core/ViewComponent';
+import autobind from 'choerodon-ui/pro/lib/_util/autobind';
+import { findFocusableElements } from 'choerodon-ui/pro/lib/_util/focusable';
+import { getDocument } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
+import Align from '../align';
+import { getProPrefixCls } from '../configure';
 import Animate from '../animate';
-import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import PopupInner from './PopupInner';
-import autobind from '../_util/autobind';
-import { findFocusableElements } from '../_util/focusable';
-import { getDocument } from '../_util/DocumentUtils';
 
 /**
  * 记录ID生成器

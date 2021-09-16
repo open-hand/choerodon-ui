@@ -32,7 +32,7 @@ const isNotDate = (value, range) => {
 };
 
 const types: {
-  [key: string]: [((value: any, range?: boolean | [string, string]) => boolean), string];
+  [key: string]: [((value: any, range?: boolean | [string, string]) => boolean), 'EmailField' | 'UrlField' | 'DatePicker' | 'ColorPicker'];
 } = {
   [FieldType.email]: [value => !emailReg.test(value), 'EmailField'],
   [FieldType.url]: [value => !urlReg.test(value), 'UrlField'],

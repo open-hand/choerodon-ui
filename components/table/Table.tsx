@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import noop from 'lodash/noop';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed';
-import Pagination from '../pagination';
+import Pagination, { PaginationProps } from '../pagination';
 import Icon from '../icon';
 import Spin, { SpinProps } from '../spin';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -17,7 +17,7 @@ import SelectionBox from './SelectionBox';
 import SelectionCheckboxAll from './SelectionCheckboxAll';
 import Column from './Column';
 import ColumnGroup from './ColumnGroup';
-import {getConfig, getPrefixCls } from '../configure'
+import { getConfig, getPrefixCls } from '../configure';
 import createBodyRow from './createBodyRow';
 import {
   findColumnByFilterValue,
@@ -953,10 +953,10 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const prefixCls = this.getPrefixCls();
     const position = pagination.position || 'bottom';
     const total = pagination.total || this.getLocalData().length;
-    const pagnationProps = getConfig('pagination');
+    const paginationProps = getConfig('pagination') as PaginationProps;
     return total > 0 && (position === paginationPosition || position === 'both') ? (
       <Pagination
-        {...pagnationProps}
+        {...paginationProps}
         key={`pagination-${paginationPosition}`}
         {...pagination}
         className={classNames(pagination.className, `${prefixCls}-pagination`)}

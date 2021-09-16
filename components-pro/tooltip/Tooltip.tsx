@@ -4,8 +4,8 @@ import isNil from 'lodash/isNil';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
-import Trigger, { RenderFunction, TriggerProps } from '../trigger/Trigger';
-import { Action } from '../trigger/enum';
+import Trigger, { RenderFunction, TriggerProps } from 'choerodon-ui/lib/trigger/Trigger';
+import { Action } from 'choerodon-ui/lib/trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
 import autobind from '../_util/autobind';
 

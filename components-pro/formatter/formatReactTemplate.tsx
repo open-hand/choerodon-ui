@@ -1,26 +1,27 @@
-import { createElement, Fragment, isValidElement, ReactNode } from 'react';
+import React, { isValidElement, ReactNode } from 'react';
 import format from 'string-template';
 import isString from 'lodash/isString';
-import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import flatMap from 'lodash/flatMap';
 
-export default function formatReactTemplate(
-  template: string,
+export function formatReactTemplate<P extends object>(
+  template: ReactNode,
+  map: P,
+): P extends { [key: string]: infer V } ? V : string;
+
+export function formatReactTemplate(
+  template: ReactNode,
   map: { [key: string]: ReactNode },
 ): ReactNode {
   let result: ReactNode[] = [template];
   Object.keys(map).forEach(key => {
     const node = map[key];
     if (!isNil(node)) {
-      result = flatMap(result, text => {
+      result = flatMap<ReactNode, ReactNode>(result, (text) => {
         if (isString(text)) {
-          let stringText = text;
+          let stringText: string = text;
           if (isValidElement(node)) {
-            let placeholder = `{${key}}`;
-            if (isObject(node) && stringText.indexOf('[object Object]') > -1) {
-              placeholder = '[object Object]';
-            }
+            const placeholder: string = `{${key}}`;
             const { length } = placeholder;
             const textArr: ReactNode[] = [];
             let index = stringText.indexOf(placeholder);
@@ -37,7 +38,7 @@ export default function formatReactTemplate(
             }
             return textArr;
           }
-          return format(text, map);
+          return format(text, { [key]: node });
         }
         return text;
       });
@@ -46,5 +47,11 @@ export default function formatReactTemplate(
   if (result.every(isString)) {
     return result.join('');
   }
-  return createElement(Fragment, {}, ...result);
+  return (
+    <>
+      {result}
+    </>
+  );
 }
+
+export default formatReactTemplate;
