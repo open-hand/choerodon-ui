@@ -14,7 +14,7 @@ title: API
 | autoComplete | 自动完成，可选值：on \| off              | string              | off    |      |
 | addonBefore  | 设置前置标签                              | string \| ReactNode |        |     |
 | addonAfter   | 设置后置标签                              | string \| ReactNode |        |     |
-| addonBeforeStyle | 设置后置标签样式 | CSSProperties |  |      |
+| addonBeforeStyle | 设置前置标签样式 | CSSProperties |  |      |
 | addonAfterStyle | 设置后置标签样式 | CSSProperties |  |       |
 | restrict | 限制可输入的字符 | string \| RegExp |  |       |
 | valueChangeAction | 触发值变更的动作, 可选值：blur \| input | blur |  | 1.1.0      |

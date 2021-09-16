@@ -164,9 +164,9 @@ class App extends React.Component {
         buttons={['add', 'query']}
         dataSet={this.ds}
         queryBar="filterBar"
-        queryBarProps={{
-          dynamicFilterBar: { suffixes: ['filter'], prefixes: ['filter'] },
-        }}
+        // queryBarProps={{
+        //   dynamicFilterBar: { suffixes: ['filter'], prefixes: ['filter'] },
+        // }}
         border={false}
         columns={this.columns}
         queryFieldsLimit={2}

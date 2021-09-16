@@ -364,7 +364,7 @@ abstract: true
 > 详细介绍：[DataToJSON](/zh/tutorials/dataSet-more#datatojson)
 
 | 枚举值 | 说明 | 版本  |
-| --- | --- |   |
+| --- | --- | --- |
 | dirty | 只转换变更的数据，包括本身无变更但级联有变更的数据 |  |
 | dirty-field | 只转数据中变更了的字段（包括主键和unique以及ignore为never的字段），包括本身无变更但级联有变更的数据 | 1.4.2  |
 | selected | 只转换选中的数据，无关数据的变更状态 | |
@@ -391,7 +391,7 @@ abstract: true
 | url   | url地址    | string |
 | filename   | 文件名（不包含后缀）    | string |
 | ext   | 文件后缀    | string |
-| status   | 状态 `error` `succes` `uploading` `done`    | string |
+| status   | 状态 error \| succes \| uploading \| done    | string |
 | percent   | 上传进度, 0 至 100   | number |
 | error   | 上传错误对象  | AxiosError |
 | errorMessage   | 错误消息  | string |

@@ -31,7 +31,7 @@ class Demo extends React.Component {
           renderer={() => <Upload ref={this.saveUpload} {...props} />}
         />
         <Button
-          style={{ marginBottom: 10 }}
+          style={{ marginBottom: 10, width: '100px' }}
           color="primary"
           onClick={this.handleBtnClick}
         >

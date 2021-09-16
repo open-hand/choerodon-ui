@@ -118,6 +118,7 @@ class FixedColumnTable extends React.Component {
       <PerformanceTable
         bordered
         height={400}
+        headerHeight={80}
         data={this.state.data}
         columns={columns}
         onRowClick={(data) => {

@@ -34,11 +34,22 @@ const avatarRender = (src) => {
             type="flex"
             justify="center"
             align="top"
+            style={{ marginTop: '0.6rem' }}
           >
-            <Col key="image" span={24} className={`${prefix}-avatar-col`}>
+            <Col
+              key="image"
+              span={24}
+              className={`${prefix}-avatar-col`}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
               <Avatar {...itemProps} />
             </Col>
-            <Col key="text" span={24} className={`${prefix}-avatar-col`}>
+            <Col
+              key="text"
+              span={24}
+              className={`${prefix}-avatar-col`}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
               <span>{itemProps.text}</span>
             </Col>
           </Row>
@@ -76,7 +87,7 @@ const Demo = () => {
           {Crop}
         </Col>
         <Col className="c7n-image-crop-avatar-content" key="avatar" span={6}>
-          <h5>预览头像</h5>
+          <h5 style={{ textAlign: 'center', fontSize: 18 }}>预览头像</h5>
           {avatarRender(srcCrop)}
         </Col>
       </Row>
