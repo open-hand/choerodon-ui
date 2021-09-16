@@ -1,5 +1,6 @@
 export {
     SizeChangerPosition,
+    QuickJumperPosition,
 } from './enum';
 export {
     PagerProps,

@@ -35,5 +35,6 @@ title: Pagination
 | itemRender | 按钮渲染。`type` - 按钮类型，可选值：`first` `last` `prev` `next` `jump-prev` `jump-next` | (page, type) => ReactNode |  |
 | sizeChangerPosition | 分页大小选择器的位置，可选值: `left` `right` | string | left |
 | sizeChangerOptionRenderer | 分页大小选择器的选项渲染器 | ({ dataSet, record, text, value}) => ReactNode | ({ text }) => text |
+| quickJumperPosition | 快速跳转至某页的位置，可选值: `left` `right` | string | right |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。

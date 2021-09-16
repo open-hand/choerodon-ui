@@ -45,6 +45,7 @@ ReactDOM.render(
     showPager
     showQuickJumper
     sizeChangerPosition="right"
+    quickJumperPosition="left"
     sizeChangerOptionRenderer={sizeChangerRenderer}
     itemRender={pagerRenderer}
     total={50}

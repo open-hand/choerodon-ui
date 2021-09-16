@@ -18,7 +18,7 @@ import autobind from '../_util/autobind';
 import { $l } from '../locale-context';
 import Pager from './Pager';
 import Icon from '../icon';
-import { SizeChangerPosition } from './enum';
+import { SizeChangerPosition, QuickJumperPosition } from './enum';
 import { Renderer } from '../field/FormField';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
@@ -41,6 +41,7 @@ export interface PaginationProps extends DataSetComponentProps {
   showPager?: boolean;
   hideOnSinglePage?: boolean;
   simple?: boolean;
+  quickJumperPosition?: QuickJumperPosition;
 }
 
 function defaultItemRender(page: number, type: PagerType) {
@@ -79,12 +80,14 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     showTotal: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     showPager: PropTypes.bool,
     simple: PropTypes.bool,
+    quickJumperPosition: PropTypes.oneOf([QuickJumperPosition.left, QuickJumperPosition.right]),
     ...DataSetComponent.propTypes,
   };
 
   static defaultProps = {
     suffixCls: 'pagination',
     sizeChangerPosition: SizeChangerPosition.left,
+    quickJumperPosition: QuickJumperPosition.right,
     sizeChangerOptionRenderer: ({ text }) => text,
     hideOnSinglePage: false,
     showSizeChanger: true,
@@ -287,6 +290,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       'sizeChangerOptionRenderer',
       'hideOnSinglePage',
       'simple',
+      'quickJumperPosition',
     ]);
   }
 
@@ -470,7 +474,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
     const {
       totalPage,
-      props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper },
+      props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper, quickJumperPosition },
     } = this;
 
     const sizeChanger = this.renderSizeChange(pageSize);
@@ -495,6 +499,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       <nav {...this.getMergedProps()}>
         {children}
         {sizeChangerPosition === SizeChangerPosition.left && sizeChanger}
+        {showQuickJumper && quickJumperPosition === QuickJumperPosition.left && this.renderQuickGo()}
         {showTotal && this.renderTotal(pageSize, page, total)}
         {this.getPager(1, 'first', false, page === 1)}
         {this.getPager(page - 1, 'prev', false, page === 1)}
@@ -502,7 +507,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         {this.getPager(page + 1, 'next', false, !this.next)}
         {this.getPager(totalPage, 'last', false, !this.next)}
         {sizeChangerPosition === SizeChangerPosition.right && sizeChanger}
-        {showQuickJumper && this.renderQuickGo()}
+        {showQuickJumper && quickJumperPosition === QuickJumperPosition.right && this.renderQuickGo()}
       </nav>
     );
   }
