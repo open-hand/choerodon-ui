@@ -34,6 +34,7 @@ ReactDOM.render(
       <Tag color="blue">blue</Tag>
       <Tag color="geekblue">geekblue</Tag>
       <Tag color="purple">purple</Tag>
+      <Tag color="gray">gray</Tag>
     </div>
     <h4 style={{ marginBottom: 16 }}>Presets inverse:</h4>
     <div>
@@ -50,6 +51,7 @@ ReactDOM.render(
       <Tag color="blue-inverse">blue-inverse</Tag>
       <Tag color="geekblue-inverse">geekblue-inverse</Tag>
       <Tag color="purple-inverse">purple-inverse</Tag>
+      <Tag color="gray-inverse">gray-inverse</Tag>
     </div>
     <h4 style={{ margin: '16px 0' }}>Custom:</h4>
     <div>
