@@ -23,7 +23,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
 - 🌟 `<pro>Table`: Add `searchCode` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
-- 🌟 `<pro>Pagination`: Added `quickJumperPosition` properties.
+- 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
 - 💄 `<pro>Attachment`: Optimize dnd, preview and label display.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>TriggerField`: Fix the problem that `onPopupHiddenChange` sometimes does not trigger.
 - 🐞 `<pro>Button`: Fix the problem that Tooltip will be displayed even if the content is overflow when the tooltip is overflow.
 - 🐞 `<pro>Lov`: Fix the problem that the `onClick` property of `button` mode has no effect.
+- 🐞 `<pro>Lov`: Fix the problem that the `noCache` option is repeated in `multiple` mode.
 
 ## 1.4.4
 
