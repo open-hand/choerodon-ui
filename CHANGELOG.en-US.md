@@ -16,8 +16,9 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
-- 🌟 `Tabs`: Add `inkBarStyle`, `customizable`, `customizedCode` properties, support ink bar style modification.
+- 🌟 `Tabs`: Added `inkBarStyle`, `customizable`, `customizedCode` properties, support ink bar style modification.
 - 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties.
+- 🌟 `Tag`: Added `gray` color.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.

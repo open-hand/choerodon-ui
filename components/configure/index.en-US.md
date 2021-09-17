@@ -132,7 +132,6 @@ const prefixCls = getConfig('prefixCls');
 | 属性     | 默认值              | 类型   |
 | -------- | ------------------- | ------ |
 | Table | false | boolean |
-| LovTable | false | boolean |
 | PerformanceTable | false | boolean |
 | Tabs | false | boolean |
 
