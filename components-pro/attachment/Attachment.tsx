@@ -117,6 +117,8 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @observable popup?: boolean;
 
+  tempAttachmentUUID?: string;
+
   get help() {
     return this.getProp('help');
   }
@@ -341,6 +343,9 @@ export default class Attachment extends FormField<AttachmentProps> {
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
     const oldAttachmentUUID = this.getValue();
     const attachmentUUID = oldAttachmentUUID || (await this.getAttachmentUUID());
+    if (attachmentUUID !== oldAttachmentUUID) {
+      this.tempAttachmentUUID = attachmentUUID;
+    }
     const max = this.getProp('max');
     if (max > 0 && (this.count || 0) + attachments.length > max) {
       Modal.error($l('Attachment', 'file_list_max_length', { count: max }));
@@ -354,10 +359,14 @@ export default class Attachment extends FormField<AttachmentProps> {
       this.attachments = [...attachments];
     }
     if (attachmentUUID) {
-      await Promise.all(attachments.map((attachment) => this.upload(attachment, attachmentUUID)));
-    }
-    if (attachmentUUID !== oldAttachmentUUID) {
-      this.setValue(attachmentUUID);
+      try {
+        await Promise.all(attachments.map((attachment) => this.upload(attachment, attachmentUUID)));
+      } finally {
+        if (this.tempAttachmentUUID) {
+          delete this.tempAttachmentUUID;
+          this.setValue(attachmentUUID);
+        }
+      }
     }
   }
 
@@ -594,6 +603,9 @@ export default class Attachment extends FormField<AttachmentProps> {
       count = 0,
       multiple,
       prefixCls,
+      props: {
+        viewMode,
+      },
     } = this;
     const buttonProps = this.getOtherProps();
     const { children, ref, className, style, accept, name, fileKey, ...rest } = buttonProps;
@@ -621,7 +633,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       </Button>
     ) : (
       <Button
-        funcType={FuncType.flat}
+        funcType={viewMode === 'popup' ? FuncType.flat : FuncType.link}
         key="upload-btn"
         icon="file_upload"
         color={this.isValid ? ButtonColor.primary : ButtonColor.red}
@@ -647,11 +659,11 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderViewButton(label?: ReactNode): ReactElement<ButtonProps> {
-    const { multiple } = this.props;
+    const { multiple, viewMode } = this.props;
     const { children, ...rest } = this.getOtherProps();
     return (
       <Button
-        funcType={FuncType.flat}
+        funcType={viewMode === 'popup' ? FuncType.flat : FuncType.link}
         key="view-btn"
         icon="attach_file"
         color={ButtonColor.primary}
@@ -728,7 +740,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     const bucketDirectory = this.getProp('bucketDirectory');
     const storageCode = this.getProp('storageCode');
     const { attachments } = this;
-    const attachmentUUID = this.getValue();
+    const attachmentUUID = this.tempAttachmentUUID || this.getValue();
     if (attachmentUUID) {
       const width = this.getPictureWidth();
       const { readOnly } = this;
@@ -779,7 +791,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             const downProps: ButtonProps = {
               key: 'download',
               icon: 'get_app',
-              funcType: FuncType.flat,
+              funcType: FuncType.link,
               href: getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID }),
               target: '_blank',
               color: ButtonColor.primary,

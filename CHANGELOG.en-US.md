@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable` properties.
+- 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
 - 🌟 `Tabs`: Add `inkBarStyle`, `customizable`, `customizedCode` properties, support ink bar style modification.
 - 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.

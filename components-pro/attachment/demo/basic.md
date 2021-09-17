@@ -81,6 +81,7 @@ const App = () => {
     value,
     onChange: setValue,
     showHistory: true,
+    help: '支持文件类型： .deb .txt .pdf image/*',
   };
 
   return (
