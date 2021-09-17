@@ -4,7 +4,7 @@ import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { methodReturn, ValidatorProps } from '.';
-import formatReactTemplate from '../../formatter/formatReactTemplate';
+import { formatReactTemplate } from '../../formatter/formatReactTemplate';
 import { toRangeValue } from '../../field/utils';
 
 const isUnderflow = (value, min, range) => {

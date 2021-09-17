@@ -16,6 +16,7 @@ import isString from 'lodash/isString';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
+import { Action } from 'choerodon-ui/lib/trigger/enum';
 
 import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
@@ -29,8 +30,7 @@ import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
-import { Action } from '../../trigger/enum';
-import { DynamicFilterBarConfig } from '../Table';
+import { DynamicFilterBarConfig, Suffixes } from '../Table';
 import FieldList from './FieldList';
 import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';
@@ -258,7 +258,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   renderSuffix() {
     const { prefixCls, dynamicFilterBar, queryDataSet, dataSet, buttons } = this.props;
-    const suffixes = dynamicFilterBar?.suffixes || getConfig('tableFilterSuffix') || undefined;
+    const suffixes: Suffixes[] | undefined = dynamicFilterBar?.suffixes || getConfig('tableFilterSuffix');
     const children: ReactElement[] = [];
     let suffixesDom: ReactElement | null = null;
     const tableButtons = buttons.length ? (
@@ -266,7 +266,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     ) : null;
     if (suffixes && suffixes.length) {
       suffixes.forEach(suffix => {
-        if (isString(suffix) && suffix === 'filter') {
+        if (suffix === 'filter') {
           children.push(<ColumnFilter prefixCls={prefixCls} />);
         } else if (isValidElement(suffix)) {
           children.push(suffix);
@@ -274,9 +274,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           children.push(suffix({ queryDataSet, dataSet }));
         }
       });
-      suffixesDom = <div className={`${prefixCls}-dynamic-filter-bar-suffix`}>
-        {children}
-      </div>;
+      suffixesDom = (
+        <div className={`${prefixCls}-dynamic-filter-bar-suffix`}>
+          {children}
+        </div>
+      );
     }
     return [
       tableButtons,

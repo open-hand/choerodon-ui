@@ -174,6 +174,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
     });
   }
 
+  isTooltipShown?: boolean;
+
   handleClickWait: Function & Cancelable;
 
   constructor(props, context) {
@@ -201,6 +203,10 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   componentWillUnmount() {
     this.handleClickWait.cancel();
+    if (this.isTooltipShown) {
+      hide();
+      delete this.isTooltipShown;
+    }
   }
 
   getHandleClick(props): Function & Cancelable {
@@ -256,6 +262,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
         title: children,
         theme: getTooltipTheme('button'),
       });
+      this.isTooltipShown = true;
     }
     const { onMouseEnter = noop } = this.props;
     onMouseEnter(e);

@@ -9,7 +9,7 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getConfig, getCustomizable, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { getTooltip } from 'choerodon-ui/lib/_util/TooltipUtils';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
@@ -39,7 +39,7 @@ import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
-import Table, { Customized, expandIconProps, TablePaginationConfig, TableProps } from './Table';
+import Table, { expandIconProps, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
@@ -207,7 +207,7 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
 export function mergeDefaultProps(
   originalColumns: ColumnProps[],
   tableAggregation?: boolean,
-  customizedColumns?: object,
+  customizedColumns?: { [key: string]: ColumnProps },
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
   columnSort = {
@@ -295,7 +295,7 @@ export function mergeDefaultProps(
 export function normalizeColumns(
   elements: ReactNode,
   tableAggregation?: boolean,
-  customizedColumns?: object,
+  customizedColumns?: { [key: string]: ColumnProps },
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
   columnSort = {
@@ -416,9 +416,9 @@ export default class TableStore {
 
   @observable props: TableProps;
 
-  @observable customized: Customized;
+  @observable customized: TableCustomized;
 
-  @observable tempCustomized: Customized;
+  @observable tempCustomized: TableCustomized;
 
   @observable loading?: boolean;
 
@@ -511,7 +511,7 @@ export default class TableStore {
       if ('customizable' in this.props) {
         return this.props.customizable;
       }
-      return getConfig('tableCustomizable');
+      return getConfig('tableCustomizable') || getCustomizable('Table');
     }
     return false;
   }
@@ -838,11 +838,11 @@ export default class TableStore {
     return this.border;
   }
 
-  get queryBar(): TableQueryBarType {
+  get queryBar(): TableQueryBarType | TableQueryBarHook | undefined {
     return this.props.queryBar || getConfig('queryBar');
   }
 
-  get expandIcon(): (props: expandIconProps) => ReactNode {
+  get expandIcon(): ((props: expandIconProps) => ReactNode) | undefined {
     return this.props.expandIcon || getConfig('tableExpandIcon');
   }
 
@@ -897,10 +897,7 @@ export default class TableStore {
     if (useMouseBatchChoose !== undefined) {
       return useMouseBatchChoose;
     }
-    if (getConfig('tableUseMouseBatchChoose') !== undefined) {
-      return getConfig('tableUseMouseBatchChoose');
-    }
-    return false;
+    return getConfig('tableUseMouseBatchChoose');
   }
 
   get showSelectionTips(): boolean {
@@ -908,8 +905,9 @@ export default class TableStore {
     if (showSelectionTips !== undefined) {
       return showSelectionTips;
     }
-    if (getConfig('tableShowSelectionTips') !== undefined) {
-      return getConfig('tableShowSelectionTips');
+    const tableShowSelectionTips = getConfig('tableShowSelectionTips');
+    if (tableShowSelectionTips !== undefined) {
+      return tableShowSelectionTips;
     }
     return false;
   }
@@ -1498,15 +1496,15 @@ export default class TableStore {
   }
 
   @action
-  saveCustomized(customized?: Customized | null) {
+  saveCustomized(customized?: TableCustomized | null) {
     if (this.customizable && this.customizedLoaded) {
       const { customizedCode } = this.props;
       if (customized) {
         this.customized = customized;
       }
       if (customizedCode) {
-        const tableCustomizedSave = getConfig('tableCustomizedSave');
-        tableCustomizedSave(customizedCode, this.customized);
+        const tableCustomizedSave = getConfig('tableCustomizedSave') || getConfig('customizedSave');
+        tableCustomizedSave(customizedCode, this.customized, 'Table');
       }
     }
   };
@@ -1540,13 +1538,13 @@ export default class TableStore {
   async loadCustomized() {
     const { customizedCode } = this.props;
     if (this.customizable && customizedCode) {
-      const tableCustomizedLoad = getConfig('tableCustomizedLoad');
+      const tableCustomizedLoad = getConfig('tableCustomizedLoad') || getConfig('customizedLoad');
       runInAction(() => {
         delete this.customizedLoaded;
         this.loading = true;
       });
       try {
-        const customized = await tableCustomizedLoad(customizedCode);
+        const customized: TableCustomized | undefined | null = await tableCustomizedLoad(customizedCode, 'Table');
         runInAction(() => {
           this.customized = { columns: {}, ...customized };
         });

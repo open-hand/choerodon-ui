@@ -4,7 +4,7 @@ import isNil from 'lodash/isNil';
 import { TabsPosition } from './enum';
 import { isTabGroup, TabGroupProps } from './TabGroup';
 import { TabPaneProps } from './TabPane';
-import { GroupPanelMap } from './Tabs';
+import { GroupPanelMap, TabsCustomized } from './Tabs';
 
 export function toGroups(children: ReactNode): ReactElement<TabGroupProps>[] {
   const c: ReactElement<TabGroupProps>[] = [];
@@ -34,18 +34,36 @@ export function toArray(children: ReactNode): ReactElement<TabPaneProps>[] {
   return c;
 }
 
-export function getDefaultActiveKey(panelMap: Map<string, ReactElement<TabPaneProps>>): string | undefined {
+export function getDefaultActiveKeyInGroup(panelMap: Map<string, TabPaneProps>): string | undefined {
   for (const [key, panel] of panelMap) {
-    if (!panel.props.disabled) {
+    if (!panel.disabled) {
       return key;
     }
   }
 }
 
+export function getDefaultActiveKey(totalPanelsMap: Map<string, TabPaneProps>, groupedPanelsMap: Map<string, GroupPanelMap>, option: { activeKey?: string | undefined, defaultActiveKey?: string | undefined }): string | undefined {
+  const { activeKey, defaultActiveKey } = option;
+  if (activeKey !== undefined) {
+    return activeKey;
+  }
+  if (defaultActiveKey !== undefined) {
+    return defaultActiveKey;
+  }
+  const { value } = groupedPanelsMap.values().next();
+  if (value) {
+    const { group: { defaultActiveKey: groupDefaultActiveKey } } = value;
+    if (groupDefaultActiveKey !== undefined) {
+      return groupDefaultActiveKey;
+    }
+  }
+  return getDefaultActiveKeyInGroup(totalPanelsMap);
+}
+
 export function getDefaultGroupKey(groupedPanelsMap: Map<string, GroupPanelMap>): string | undefined {
   for (const [key, { panelsMap }] of groupedPanelsMap) {
     for (const [, panel] of panelsMap) {
-      if (!panel.props.disabled) {
+      if (!panel.disabled) {
         return key;
       }
     }
@@ -59,10 +77,10 @@ export function getActiveKeyByGroupKey(groupedPanelsMap: Map<string, GroupPanelM
     if (lastActiveKey) {
       return lastActiveKey;
     }
-    if ('defaultActiveKey' in group.props) {
-      return group.props.defaultActiveKey;
+    if ('defaultActiveKey' in group) {
+      return group.defaultActiveKey;
     }
-    return getDefaultActiveKey(panelsMap);
+    return getDefaultActiveKeyInGroup(panelsMap);
   }
 }
 
@@ -70,7 +88,7 @@ export function generateKey(key: Key | undefined | null, index: number): string 
   return String(isNil(key) ? index : key);
 }
 
-export function getActiveIndex(map: Map<string, ReactElement<TabPaneProps>>, activeKey: string | undefined): number {
+export function getActiveIndex(map: Map<string, TabPaneProps>, activeKey: string | undefined): number {
   return activeKey === undefined ? -1 : [...map.keys()].findIndex(key => key === activeKey);
 }
 
@@ -169,4 +187,62 @@ export function getLeft(tabNode: HTMLElement, wrapperNode: HTMLElement): number 
 
 export function getTop(tabNode: HTMLElement, wrapperNode: HTMLElement): number {
   return getTypeValue('top', 'height', 'bottom', tabNode, wrapperNode);
+}
+
+export function getHeader(props: TabPaneProps): ReactNode {
+  const { tab, title } = props;
+  if (typeof tab === 'function') {
+    return tab(title);
+  }
+  if (title !== undefined) {
+    return title;
+  }
+  if (tab !== undefined) {
+    return tab;
+  }
+}
+
+export function normalizePanes(children: ReactNode, customized?: TabsCustomized | undefined | null): [
+  Map<string, TabPaneProps>,
+  Map<string, GroupPanelMap>
+] {
+  const groups = toGroups(children);
+  const groupedPanels = new Map<string, GroupPanelMap>();
+  const panelList: [string, TabPaneProps][] = [];
+  const panes = customized && customized.panes;
+  const getCustomizedPane = (key: string) => {
+    if (panes) {
+      return panes[key];
+    }
+  };
+  const sorter = (item1: [string, TabPaneProps], item2: [string, TabPaneProps]) => {
+    const { sort = 0 } = item1[1];
+    const { sort: sort2 = 0 } = item2[1];
+    return sort - sort2;
+  };
+  if (groups.length) {
+    let index = 0;
+    groups.forEach((group, i) => {
+      const groupPanelList: [string, TabPaneProps][] = [];
+      toArray(group.props.children).forEach((child, j) => {
+        const panelKey = generateKey(child.key, index);
+        index += 1;
+        groupPanelList.push([panelKey, { sort: j, ...child.props, ...getCustomizedPane(panelKey) }]);
+      });
+      groupPanelList.sort(sorter);
+      panelList.push(...groupPanelList);
+      const groupKey = generateKey(group.key, i);
+      groupedPanels.set(groupKey, {
+        group: { ...group.props },
+        panelsMap: new Map<string, TabPaneProps>(groupPanelList),
+      });
+    });
+  } else {
+    toArray(children).sort().forEach((child, index) => {
+      const key = generateKey(child.key, index);
+      panelList.push([key, { sort: index, ...child.props, ...getCustomizedPane(key) }]);
+    });
+    panelList.sort(sorter);
+  }
+  return [new Map<string, TabPaneProps>(panelList), groupedPanels];
 }

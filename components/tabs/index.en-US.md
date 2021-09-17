@@ -38,6 +38,8 @@ Choerodon UI has 3 types of Tabs for different situations.
 | onTabClick | Callback executed when tab is clicked | (tabKey) => void | - |
 | tabBarGutter | The gap between tabs | number | - |
 | keyboard|  keyboard events| boolean | true |
+| customizable | 是否显示个性化设置入口按钮  | boolean | |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
 
 ### Tabs.TabPane
 
@@ -45,10 +47,12 @@ Choerodon UI has 3 types of Tabs for different situations.
 | --- | --- | --- | --- |
 | forceRender | Forced render of content in tabs, not lazy render after clicking on tabs | boolean | false |
 | key | TabPane's key | string | - |
-| tab | Show text in TabPane's head | string\|ReactNode | - |
+| tab         | 选项卡头显示文字或钩子          | string\|ReactNode \| (title) => ReactNode | 无     |
+| title         | 选项卡头显示文字          | string | 无     |
 | disabled         | 是否禁用          | boolean | 无     |
 | count         | 选项卡头内显示数字          | number | 无     |
 | overflowCount         | 展示封顶的数字值         | number | 99     |
+| showCount         | 显示数字        | boolean | true     |
 
 ### Tabs.TabGroup
 

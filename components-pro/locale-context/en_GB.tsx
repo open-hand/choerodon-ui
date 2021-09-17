@@ -3,6 +3,18 @@ import { Locale } from './locale';
 
 const locale: Locale = {
   lang: Lang.en_GB,
+  Tabs: {
+    rename: 'Rename',
+    default: 'Default',
+    restore_default: 'Restore default',
+    set_default: 'Set as default',
+    set_default_tip: 'The tab set as the default will be displayed by default in the next time.',
+    show_count: 'Display number',
+    yes: 'Yes',
+    no: 'No',
+    save: 'Save',
+    customization_settings: 'Tab page display settings',
+  },
   Table: {
     show_cached_seletion: 'Show all selected records',
     hide_cached_seletion: 'Hide all selected records',

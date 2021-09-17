@@ -1,4 +1,8 @@
 export {
+  RenderFunction,
+} from 'choerodon-ui/lib/trigger/interface';
+
+export {
   AdjustOverflow,
   PlacementsConfig,
 } from './placements';
@@ -8,7 +12,3 @@ export {
   TooltipTheme,
   TooltipProps,
 } from './Tooltip';
-
-export {
-  RenderFunction,
-} from '../trigger/interface';

@@ -3,14 +3,13 @@ import React, {
   FunctionComponent,
   HTMLAttributes,
   Key,
-  KeyboardEventHandler,
   MouseEvent,
-  MouseEventHandler,
   PropsWithoutRef,
   ReactElement,
   ReactNode,
   RefAttributes,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -21,49 +20,118 @@ import classnames from 'classnames';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
-import { getDataAttr, getLeft, getTop, isTransformSupported, isVertical, setTransform } from './utils';
+import Button from 'choerodon-ui/pro/lib/button';
+import { FuncType } from 'choerodon-ui/pro/lib/button/enum';
+import { useModal } from 'choerodon-ui/pro/lib/modal-provider/ModalProvider';
+import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
+import { $l } from 'choerodon-ui/pro/lib/locale-context';
+import { getActiveKeyByGroupKey, getDataAttr, getHeader, getLeft, getTop, isTransformSupported, isVertical, setTransform } from './utils';
 import warning from '../_util/warning';
 import Ripple, { RippleProps } from '../ripple';
 import TabBarInner, { TabBarInnerProps } from './TabBarInner';
 import EventManager from '../_util/EventManager';
-import { TabsPosition, TabsType } from './enum';
+import { TabsType } from './enum';
 import Icon from '../icon';
-import { TabPaneProps } from './TabPane';
-import { GroupPanelMap } from './Tabs';
 import Menu, { MenuProps, SelectParam } from '../menu';
 import MenuItem from '../menu/MenuItem';
 import Badge from '../badge';
+import TabsContext from './TabsContext';
+import KeyCode from '../_util/KeyCode';
+import { Size } from '../_util/enum';
+import CustomizationSettings from './customization-settings';
 
 export interface TabBarProps {
   inkBarAnimated?: boolean | undefined;
   scrollAnimated?: boolean | undefined;
   extraContent?: ReactNode;
-  onKeyDown?: KeyboardEventHandler<HTMLDivElement> | undefined;
-  onTabClick?: ((key: string) => void) | undefined;
-  onGroupSelect?: (param: SelectParam) => void;
-  onPrevClick?: MouseEventHandler<HTMLSpanElement> | undefined;
-  onNextClick?: MouseEventHandler<HTMLSpanElement> | undefined;
   style?: CSSProperties | undefined;
   inkBarStyle?: CSSProperties | undefined;
   // styles?: { inkBar?: CSSProperties } | undefined;
   tabBarGutter?: number | undefined;
-  tabBarPosition?: TabsPosition | undefined;
-  groupsMap: Map<string, GroupPanelMap>;
-  panelsMap: Map<string, ReactElement<TabPaneProps>>;
-  activeKey?: string | undefined;
-  activeGroupKey?: string | undefined;
   className?: string | undefined;
-  prefixCls?: string | undefined;
   type?: TabsType | undefined;
   onRemoveTab: (targetKey: Key | null, e: MouseEvent<HTMLElement>) => void;
 }
 
 const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const {
-    prefixCls, scrollAnimated, panelsMap, groupsMap, activeKey, activeGroupKey, className, style, inkBarStyle, extraContent,
-    tabBarGutter, tabBarPosition, onKeyDown, onTabClick = noop, onPrevClick = noop, onNextClick = noop, onGroupSelect = noop,
-    inkBarAnimated, type, onRemoveTab, ...restProps
+    scrollAnimated, className, style, inkBarStyle, extraContent,
+    tabBarGutter, inkBarAnimated, type, onRemoveTab, ...restProps
   } = props;
+  const {
+    keyboard, customizable, prefixCls, activeKey, activeGroupKey, tabBarPosition,
+    groupedPanelsMap, currentPanelMap, onTabClick, onPrevClick = noop, onNextClick = noop, changeActiveKey,
+  } = useContext(TabsContext);
+  const modal = useModal();
+  const openCustomizationModal = useCallback(() => {
+    if (customizable) {
+      const modalProps: ModalProps = {
+        drawer: true,
+        size: Size.small,
+        title: $l('Tabs', 'customization_settings'),
+        children: <CustomizationSettings />,
+        bodyStyle: {
+          overflow: 'hidden auto',
+          padding: 0,
+        },
+      };
+      modalProps.okText = $l('Tabs', 'save');
+      modal.open(modalProps);
+    }
+  }, [customizable, modal]);
+  const getNextActiveKey = useCallback((next): string | undefined => {
+    const list: string[] = [];
+    currentPanelMap.forEach((c, key) => {
+      if (!c.disabled) {
+        if (next) {
+          list.push(key);
+        } else {
+          list.unshift(key);
+        }
+      }
+    });
+    const { length } = list;
+    if (activeKey && length) {
+      const i = list.indexOf(activeKey);
+      const itemIndex = i === length - 1 ? 0 : i + 1;
+      return list[itemIndex] || list[0];
+    }
+    return undefined;
+  }, [activeKey, currentPanelMap]);
+  const handleKeyDown = useCallback(e => {
+    if (keyboard === false) {
+      return noop;
+    }
+    const { keyCode } = e;
+    if (keyCode === KeyCode.RIGHT || keyCode === KeyCode.DOWN) {
+      e.preventDefault();
+      const nextKey = getNextActiveKey(true);
+      if (nextKey) {
+        changeActiveKey(nextKey);
+      }
+    } else if (keyCode === KeyCode.LEFT || keyCode === KeyCode.UP) {
+      e.preventDefault();
+      const previousKey = getNextActiveKey(false);
+      if (previousKey) {
+        changeActiveKey(previousKey);
+      }
+    }
+  }, [keyboard, changeActiveKey, getNextActiveKey]);
+  const handleTabClick = useCallback((key: string) => {
+    if (onTabClick) {
+      onTabClick(key);
+    }
+    changeActiveKey(key);
+  }, [changeActiveKey, onTabClick]);
+  const handleGroupSelect = useCallback((param: SelectParam) => {
+    const { key } = param;
+    if (activeGroupKey !== key) {
+      const newActiveKey = getActiveKeyByGroupKey(groupedPanelsMap, key);
+      if (newActiveKey) {
+        changeActiveKey(newActiveKey, true);
+      }
+    }
+  }, [changeActiveKey, activeGroupKey, groupedPanelsMap]);
   const resizeEvent = useMemo(() => new EventManager(typeof window === 'undefined' ? undefined : window), []);
   const lastNextPrevShownRef = useRef<boolean | undefined>();
   const offsetRef = useRef<number>(0);
@@ -77,8 +145,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const [prev, setPrev] = useState<boolean>(false);
   const [prevActiveKey, setActiveKey] = useState<string | undefined>(activeKey);
   const getTabs = (): ReactElement<RippleProps>[] => {
-    return [...panelsMap.entries()].reduce<ReactElement<RippleProps>[]>((rst, [key, child], index, list) => {
-      const { disabled, tab, closable = true, count, overflowCount } = child.props;
+    return [...currentPanelMap.entries()].reduce<ReactElement<RippleProps>[]>((rst, [key, child], index, list) => {
+      const { disabled, closable = true, count, overflowCount, showCount } = child;
       const classes = [`${prefixCls}-tab`];
       const tabProps: PropsWithoutRef<TabBarInnerProps> & RefAttributes<HTMLDivElement> = {
         tabKey: key,
@@ -93,7 +161,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         classes.push(`${prefixCls}-tab-disabled`);
         tabProps['aria-disabled'] = 'true';
       } else {
-        tabProps.onTabClick = onTabClick;
+        tabProps.onTabClick = handleTabClick;
       }
       if (activeKey === key) {
         classes.push(`${prefixCls}-tab-active`);
@@ -101,12 +169,12 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         tabProps['aria-selected'] = 'true';
       }
       tabProps.className = classes.join(' ');
-      warning('tab' in child.props, 'There must be `tab` property on children of Tabs.');
+      warning('tab' in child || 'title' in child, 'There must be `tab` or `title` property on children of Tabs.');
       const displayCount = (count as number) > (overflowCount as number) ? `${overflowCount}+` : count;
       const title = (
         <>
-          {tab}
-          {!isNil(displayCount) && <span className={`${prefixCls}-tab-count`}>{displayCount}</span>}
+          {getHeader(child)}
+          {showCount && !isNil(displayCount) && <span className={`${prefixCls}-tab-count`}>{displayCount}</span>}
         </>
       );
       rst.push(
@@ -127,10 +195,21 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }, []);
   };
   const getContent = (contents: ReactElement<HTMLAttributes<HTMLDivElement>>): ReactElement<HTMLAttributes<HTMLDivElement>>[] => {
-    if (extraContent) {
+    if (extraContent || customizable) {
       return [
         contents,
         <div key="extra" className={`${prefixCls}-extra-content`}>
+          {
+            customizable && (
+              <Button
+                className={`${prefixCls}-hover-button`}
+                funcType={FuncType.flat}
+                icon="predefine"
+                size={Size.small}
+                onClick={openCustomizationModal}
+              />
+            )
+          }
           {extraContent}
         </div>,
       ];
@@ -139,16 +218,16 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   };
 
   const getGroupNode = (): ReactElement<MenuProps> | undefined => {
-    if (groupsMap.size) {
+    if (groupedPanelsMap.size) {
       return (
         <Menu
           prefixCls={`${prefixCls}-group`}
           selectedKeys={activeGroupKey ? [activeGroupKey] : []}
-          onSelect={onGroupSelect}
+          onSelect={handleGroupSelect}
           mode={isVertical(tabBarPosition) ? 'vertical' : 'horizontal'}
         >
           {
-            [...groupsMap.entries()].map(([key, { group: { props: { tab, disabled, dot } } }]) => (
+            [...groupedPanelsMap.entries()].map(([key, { group: { tab, disabled, dot } }]) => (
               <MenuItem key={key} disabled={disabled}>
                 <Badge dot={dot}>
                   {tab}
@@ -493,7 +572,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       className={classnames(`${prefixCls}-bar`, { [`${prefixCls}-bar-with-groups`]: groupNode }, className)}
       tabIndex={0}
       ref={rootRef}
-      onKeyDown={onKeyDown}
+      onKeyDown={handleKeyDown}
       style={style}
       {...getDataAttr(restProps)}
     >

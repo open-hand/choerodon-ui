@@ -100,7 +100,8 @@ export type Buttons =
 
 export type Suffixes =
   | 'filter'
-  | ReactElement;
+  | ReactElement
+  | ((props: { queryDataSet?: DataSet, dataSet: DataSet }) => ReactElement);
 
 
 export type SummaryBar =
@@ -226,8 +227,8 @@ export interface DragRender {
   renderIcon?: ((rowRenderIcon: RowRenderIcon | ColumnRenderIcon) => ReactElement<any>);
 }
 
-export interface Customized {
-  columns: object;
+export interface TableCustomized {
+  columns: { [key: string]: ColumnProps };
   heightType?: TableHeightType;
   height?: number;
   heightDiff?: number;
@@ -595,7 +596,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否显示个性化设置入口按钮
    */
-  customizable?: boolean;
+  customizable?: boolean | undefined;
   /**
    * @deprecated
    * 同 columnDraggable

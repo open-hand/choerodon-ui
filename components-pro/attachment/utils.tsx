@@ -1,5 +1,5 @@
-import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
-import { Sort } from 'choerodon-ui/pro/lib/attachment/Attachment';
+import AttachmentFile from '../data-set/AttachmentFile';
+import { Sort } from './Attachment';
 
 export function appendFormData(formData: FormData, data: object) {
   Object.keys(data).forEach(key => formData.append(key, data[key]));

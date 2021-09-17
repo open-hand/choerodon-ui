@@ -569,12 +569,12 @@ export default class Lov extends Select<LovProps> {
     return [];
   }
 
-  getModalProps() {
+  getModalProps(): Partial<ModalProps> {
     const { modalProps } = this.props;
     return { ...getConfig('lovModalProps'), ...modalProps };
   }
 
-  getTableProps() {
+  getTableProps(): Partial<TableProps> {
     const { tableProps } = this.props;
     return { ...getConfig('lovTableProps'), ...tableProps };
   }

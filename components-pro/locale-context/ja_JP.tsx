@@ -3,6 +3,18 @@ import { Locale } from './locale';
 
 const locale: Locale = {
   lang: Lang.ja_JP,
+  Tabs: {
+    rename: '名前の変更',
+    default: 'ディフォルト',
+    restore_default: 'デフォルトに戻す',
+    set_default: 'デフォルトとして設定',
+    set_default_tip: 'デフォルトとして設定されたタブは、次に関数を開いたときにデフォルトで表示されます',
+    show_count: '表示番号',
+    yes: 'はい',
+    no: 'いいえ',
+    save: '保存する',
+    customization_settings: 'タブページの表示設定',
+  },
   Table: {
     show_cached_seletion: '選択したすべてのレコードを表示',
     hide_cached_seletion: '選択したすべてのレコードを非表示にする',
@@ -13,7 +25,7 @@ const locale: Locale = {
     unselect_all_page: 'すべてのページの選択を解除します',
     edit_button: '編集',
     create_button: '追加',
-    save_button: 'セーブ',
+    save_button: '保存する',
     cancel_button: 'キャンセル',
     delete_button: '削除',
     remove_button: '削除',

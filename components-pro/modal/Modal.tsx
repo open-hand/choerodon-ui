@@ -1,5 +1,6 @@
 import React, { cloneElement, CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
@@ -223,6 +224,32 @@ export default class Modal extends ViewComponent<ModalProps> {
   };
 
   contentNode: HTMLElement;
+
+  childrenProps: modalChildrenProps;
+
+  constructor(props, context) {
+    super(props, context);
+    const { close = noop, update = noop } = props;
+    this.childrenProps = {
+      close,
+      update,
+      props,
+      handleOk: this.registerOk,
+      handleCancel: this.registerCancel,
+    };
+  }
+
+  componentWillReceiveProps(nextProps: ModalProps, nextContext) {
+    super.componentWillReceiveProps(nextProps, nextContext);
+    if (!isEqual(this.props, nextProps)) {
+      const { close = noop, update = noop } = nextProps;
+      Object.assign(this.childrenProps, {
+        close,
+        update,
+        props: nextProps,
+      });
+    }
+  }
 
   @autobind
   saveCancelRef(node) {
@@ -513,16 +540,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     } = this.props;
 
     if (typeof footer === 'function') {
-      const { props } = this;
-      const { close = noop, update = noop } = props;
-      const modal: modalChildrenProps = {
-        close,
-        update,
-        props,
-        handleOk: this.registerOk,
-        handleCancel: this.registerCancel,
-      };
-      return this.getWrappedFooter(footer(this.okBtn, this.cancelBtn, modal));
+      return this.getWrappedFooter(footer(this.okBtn, this.cancelBtn, this.childrenProps));
     }
 
     if (!isEmpty(footer, true)) {
@@ -592,17 +610,10 @@ export default class Modal extends ViewComponent<ModalProps> {
   renderChildren(children: ReactNode): ReactNode {
     if (children) {
       const { prefixCls, props } = this;
-      const { close = noop, update = noop, bodyStyle, drawer } = props;
-      const modal: modalChildrenProps = {
-        close,
-        update,
-        props,
-        handleOk: this.registerOk,
-        handleCancel: this.registerCancel,
-      };
+      const { bodyStyle, drawer } = props;
       return (
         <div className={classNames(`${prefixCls}-body`, { [`${prefixCls}-drawer-body`]: drawer })} style={bodyStyle}>
-          {isValidElement(children) ? cloneElement<any>(children, { modal }) : children}
+          {isValidElement(children) ? cloneElement<any>(children, { modal: this.childrenProps }) : children}
         </div>
       );
     }

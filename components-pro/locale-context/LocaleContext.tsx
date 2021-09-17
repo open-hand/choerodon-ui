@@ -40,9 +40,9 @@ export class LocaleContext {
     this.supports = supports;
   }
 
-  get(component: string, key: string) {
-    const cmp = get(this.locale, component);
-    return (cmp && get(cmp, key)) || `${component}.${key}`;
+  get<T extends keyof Omit<Locale, 'lang'>>(component: T, key: keyof Locale[T]): string {
+    const cmp: Locale[T] = get(this.locale, component);
+    return (cmp && get(cmp, key as string)) || `${component}.${key}`;
   }
 }
 

@@ -3,6 +3,18 @@ import { Locale } from './locale';
 
 const locale: Locale = {
   lang: Lang.zh_CN,
+  Tabs: {
+    rename: '重新命名',
+    default: '默认',
+    restore_default: '恢复默认',
+    set_default: '设为默认',
+    set_default_tip: '设置为默认的标签页会在下次打开该功能时默认显示',
+    show_count: '显示数量',
+    yes: '是',
+    no: '否',
+    save: '保存',
+    customization_settings: '标签页显示设置',
+  },
   Table: {
     show_cached_seletion: '显示所有已选记录',
     hide_cached_seletion: '隐藏所有已选记录',

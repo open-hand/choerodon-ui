@@ -5,7 +5,7 @@ import noop from 'lodash/noop';
 import Collapse from 'choerodon-ui/lib/collapse';
 import CollapsePanel from 'choerodon-ui/lib/collapse/CollapsePanel';
 import ColumnGroups from './column-groups';
-import { getColumnKey, getColumnFixed } from '../utils';
+import { getColumnFixed, getColumnKey } from '../utils';
 import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import { ColumnProps } from '../Column.d';
@@ -14,7 +14,6 @@ import { $l } from '../../locale-context';
 import Button from '../../button/Button';
 import { ButtonColor, FuncType } from '../../button/enum';
 import { Size } from '../../core/enum';
-import { ModalProps } from '../../modal/Modal';
 import Form from '../../form/Form';
 import ObserverNumberField from '../../number-field/NumberField';
 import SelectBox from '../../select-box/SelectBox';
@@ -24,6 +23,7 @@ import { LabelLayout } from '../../form/enum';
 import { ShowHelp } from '../../field/enum';
 import Icon from '../../icon';
 import { treeReduce } from '../../_util/treeUtils';
+import { modalChildrenProps } from '../../modal/interface';
 
 function normalizeColumnsToTreeData(columns: ColumnProps[]) {
   return treeReduce<object[], ColumnProps>(columns, (list, column, _sort, parentColumn) => list.concat({
@@ -50,7 +50,7 @@ function diff(height: number = 0): number {
 const HEIGHT_CHANGE_KEY = '__heightChange__';
 
 export interface CustomizationSettingsProps {
-  modal?: { handleOk: Function, handleCancel: Function, update: (props: ModalProps) => void };
+  modal?: modalChildrenProps;
 }
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = observer((props) => {
@@ -144,7 +144,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
     setCustomizedColumns(columns.map((column) => {
       const fixed = getColumnFixed(column.fixed);
       const hidden = column.hidden || false;
-      return {...column, fixed, hidden};
+      return { ...column, fixed, hidden };
     }));
     tableStore.tempCustomized.columns = {};
   }), [tableRecord, tableStore]);

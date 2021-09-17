@@ -53,7 +53,7 @@ export interface DynamicFilterBarConfig {
   tableFilterAdapter?: TransportProps;
 }
 
-export interface Customized {
+export interface PerformanceTableCustomized {
   columns: object;
   heightType?: TableHeightType;
   height?: number;

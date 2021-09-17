@@ -12,6 +12,7 @@ import { $l } from '../locale-context';
 import IconCategory from './IconCategory';
 import autobind from '../_util/autobind';
 import { preventDefault, stopEvent } from '../_util/EventManager';
+import { Locale } from '../locale-context/interface';
 
 const COLUMNS = 5;
 
@@ -20,6 +21,7 @@ export interface IconPickerProps extends TriggerFieldProps {
   customFontName?: string;
   icons?: { [key: string]: string[]; } | string[];
 }
+type CategoryType = keyof Locale['Icon'];
 
 @observer
 export default class IconPicker extends TriggerField<IconPickerProps> {
@@ -40,7 +42,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     pageSize: 100,
   };
 
-  @observable activeCategory: string;
+  @observable activeCategory: CategoryType;
 
   @observable selected?: string;
 
@@ -54,8 +56,8 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   @computed
-  get categoryKeys(): string[] {
-    return Object.keys(this.categories);
+  get categoryKeys(): CategoryType[] {
+    return Object.keys(this.categories) as CategoryType[];
   }
 
   @computed
@@ -99,7 +101,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   @action
-  setActiveCategory(category: string) {
+  setActiveCategory(category: CategoryType) {
     this.activeCategory = category;
     const page = this.categoryPages[category];
     this.changeSelected(this.categories[category][(page - 1) * this.props.pageSize!]);
@@ -112,7 +114,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   @autobind
-  handleTabsChange(category: string) {
+  handleTabsChange(category: CategoryType) {
     this.setActiveCategory(category);
   }
 

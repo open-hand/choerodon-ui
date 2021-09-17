@@ -1,6 +1,42 @@
-@import '../../../components/style/themes/default';
+@import '../../style/themes/default';
+@import '../../trigger/style/mixin';
 
 @checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox';
+.dropdown-menu-item-properties() {
+  position: relative;
+  display: block;
+  height: auto;
+  padding: 0.04rem @control-padding-horizontal;
+  overflow: hidden;
+  color: @text-color;
+  font-weight: normal;
+  line-height: 0.2rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &-disabled {
+    color: @input-disabled-color;
+    cursor: not-allowed;
+
+    &:hover {
+      color: @input-disabled-color;
+      background-color: @component-background;
+      cursor: not-allowed;
+    }
+  }
+
+  &-selected {
+    background-color: @item-focus-bg;
+  }
+
+  &-active {
+    background-color: @item-active-bg;
+  }
+
+}
 
 .dropdown-menu-item () {
   &-item-group {
@@ -32,19 +68,7 @@
   }
 
   &-item {
-    position: relative;
-    display: block;
-    height: auto;
-    padding: 0.04rem @control-padding-horizontal;
-    overflow: hidden;
-    color: @text-color;
-    font-weight: normal;
-    line-height: 0.2rem;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    .dropdown-menu-item-properties;
 
     &:hover {
       background-color: @item-active-bg;
@@ -56,25 +80,6 @@
 
     &:last-child {
       border-radius: 0 0 @border-radius-base @border-radius-base;
-    }
-
-    &-disabled {
-      color: @input-disabled-color;
-      cursor: not-allowed;
-
-      &:hover {
-        color: @input-disabled-color;
-        background-color: @component-background;
-        cursor: not-allowed;
-      }
-    }
-
-    &-selected {
-      background-color: @item-focus-bg;
-    }
-
-    &-active {
-      background-color: @item-active-bg;
     }
 
     &-divider {
@@ -92,6 +97,35 @@
 
     &-more {
       text-align: center;
+    }
+  }
+}
+
+.dropdown-menu-submenu() {
+  &-submenu {
+    .dropdown-menu-item-properties;
+    .trigger;
+
+    &-popup {
+      position: absolute;
+      z-index: @zindex-dropdown;
+      padding: 0;
+      background-color: @popover-bg;
+      box-shadow: @box-shadow-base;
+    }
+
+    &-arrow {
+      .iconfont-mixin(@font-size-sm);
+      float: right;
+      line-height: 1.5;
+
+      &::before {
+        content: '\E409';
+      }
+    }
+
+    &-hidden {
+      display: none;
     }
   }
 }
@@ -127,7 +161,7 @@
   &-common-item {
     margin-top: 0.04rem;
     color: @text-color-secondary;
-    background: @component-background;
+    background-color: @component-background;
 
     &-selected {
       color: @primary-color;

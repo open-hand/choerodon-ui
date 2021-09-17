@@ -82,7 +82,7 @@ subtitle: 表格
 | showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | |
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮  | boolean | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
-| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad` | string | |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
 | clientExportQuantity | 客户端查询导出，查询数目设置  | number | |
 | virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | |
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | |

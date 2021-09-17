@@ -1,21 +1,16 @@
 import { observable, ObservableMap, runInAction, toJS } from 'mobx';
-import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, Method } from 'axios';
 import React, { CSSProperties, ReactNode } from 'react';
 import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
+import isBoolean from 'lodash/isBoolean';
 import { categories } from 'choerodon-ui-font';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { ExportMode, FieldType, RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import {
-  Customized,
-  expandIconProps,
-  Suffixes,
-  TablePaginationConfig,
-  TableProps,
-  TableQueryBarHook,
-} from 'choerodon-ui/pro/lib/table/Table';
+import { expandIconProps, Suffixes, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
+import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table.d.ts';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
@@ -28,19 +23,20 @@ import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
 import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
-import { HighlightRenderer, Renderer } from 'choerodon-ui/pro/lib/field/FormField';
+import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { TimeZone } from 'choerodon-ui/pro/lib/date-picker/DatePicker';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile, { FileLike } from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
-import { Action } from 'choerodon-ui/pro/lib/trigger/enum';
+import { Action } from '../trigger/enum';
 import { TooltipTheme } from '../tooltip';
 import { SpinProps } from '../spin';
 import { PanelProps } from '../collapse';
 import { Size } from '../_util/enum';
 import Popover from '../popover';
+import { TabsCustomized } from '../tabs/Tabs';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -76,14 +72,33 @@ export type TooltipThemeHook = (target?: TooltipTarget) => TooltipTheme;
 
 export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet }) => AxiosRequestConfig;
 
+export type Customizable = {
+  Table?: boolean;
+  PerformanceTable?: boolean;
+  Tabs?: boolean;
+}
+
+function isCustomizable(target: boolean | Customizable | undefined): target is Customizable {
+  return isObject(target);
+}
+
+export interface Customized {
+  Table?: TableCustomized;
+  PerformanceTable?: PerformanceTableCustomized;
+  Tabs?: TabsCustomized;
+}
+
+export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component: T) => void;
+export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T) => Promise<Customized[T] | null>;
+
 export type Formatter = {
-  jsonDate?: string | null;
-  date?: string;
-  dateTime?: string;
-  time?: string;
-  year?: string;
-  month?: string;
-  week?: string;
+  jsonDate: string | null;
+  date: string;
+  dateTime: string;
+  time: string;
+  year: string;
+  month: string;
+  week: string;
   timeZone?: TimeZone;
 };
 
@@ -91,7 +106,7 @@ export type AttachmentConfig = {
   defaultFileKey: string;
   defaultFileSize: number;
   action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => AxiosRequestConfig);
-  batchFetchCount?: (attachmentUUIDs: string[]) => Promise<{ [key: string]: number }>;
+  batchFetchCount?: <T extends string | number | symbol>(attachmentUUIDs: T[]) => Promise<{ [key in T]: number }>;
   fetchList?: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => Promise<FileLike[]>;
   getPreviewUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => string;
   getDownloadUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => string;
@@ -115,7 +130,7 @@ export type Config = {
   collapseTrigger?: string;
   lookupCache?: CacheOptions<string, AxiosPromise>;
   lookupUrl?: string | ((code: string) => string);
-  lookupAxiosMethod?: string;
+  lookupAxiosMethod?: Method;
   lookupAxiosConfig?:
     | AxiosRequestConfig
     | ((props: {
@@ -138,9 +153,8 @@ export type Config = {
     props: TransportHookProps,
   ) => AxiosRequestConfig);
   lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>
-  lovTableProps?: TableProps;
-  lovModalProps?: ModalProps;
-  lovTableCustomizable?: boolean;
+  lovTableProps?: Partial<TableProps>;
+  lovModalProps?: Partial<ModalProps>;
   lovAutoSelectSingle?: boolean;
   lovQueryBar?: TableQueryBarType | TableQueryBarHook;
   lovQueryBarProps?: object;
@@ -176,7 +190,6 @@ export type Config = {
   tableSpinProps?: SpinProps;
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;
-  tableDefaultRenderer?: Renderer;
   tableColumnOnCell?: (props: onCellProps) => object;
   tableColumnAlign?: (column: ColumnProps, field?: Field) => ColumnAlign | undefined;
   tableShowSelectionTips?: boolean;
@@ -189,10 +202,6 @@ export type Config = {
   tableFilterSuffix?: Suffixes[];
   tableFilterSearchText?: string;
   tableAutoHeightDiff?: number;
-  tableCustomizable?: boolean;
-  performanceTableCustomizable?: boolean;
-  tableCustomizedSave?: (code: string, customized: Customized) => void;
-  tableCustomizedLoad?: (code: string) => Promise<Customized | null>;
   tableShowRemovedRow?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
@@ -265,6 +274,20 @@ export type Config = {
    */
   attachment?: AttachmentConfig;
   /**
+   * 表单校验提示方式
+   */
+  showValidation?: ShowValidation;
+  /**
+   * Tabs 墨条样式
+   */
+  tabsInkBarStyle?: CSSProperties;
+  /**
+   * 个性化开关
+   */
+  customizable?: boolean | Customizable;
+  customizedSave?: CustomizedSave;
+  customizedLoad?: CustomizedLoad;
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;
@@ -290,6 +313,10 @@ export type Config = {
   excludeUseColonTagList?: string[];
   /**
    * @deprecated
+   */
+  tableDefaultRenderer?: ReactNode;
+  /**
+   * @deprecated
    * 同 tableColumnDraggable
    */
   tableDragColumn?: boolean;
@@ -299,13 +326,25 @@ export type Config = {
    */
   tableDragRow?: boolean;
   /**
-   * 表单校验提示方式
+   * @deprecated
    */
-  showValidation?: ShowValidation;
+  lovTableCustomizable?: boolean;
   /**
-   * Tabs 墨条样式
+   * @deprecated
    */
-  tabsInkBarStyle?: CSSProperties;
+  tableCustomizable?: boolean;
+  /**
+   * @deprecated
+   */
+  performanceTableCustomizable?: boolean;
+  /**
+   * @deprecated
+   */
+  tableCustomizedSave?: CustomizedSave;
+  /**
+   * @deprecated
+   */
+  tableCustomizedLoad?: CustomizedLoad;
 };
 
 export type ConfigKeys = keyof Config;
@@ -332,7 +371,7 @@ const defaultFormFieldHighlightRenderer: HighlightRenderer = ({ content, hidden,
   </Popover>
 ) : element;
 
-const defaultButtonProps = { color: ButtonColor.primary, funcType: FuncType.flat };
+const defaultButtonProps: ButtonProps = { color: ButtonColor.primary, funcType: FuncType.flat };
 
 const defaultSpinProps = { size: Size.default, wrapperClassName: '' };
 
@@ -350,20 +389,43 @@ const defaultTableColumnAlign = (_column: ColumnProps, field?: Field): ColumnAli
   }
 };
 
-const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
-  Config[ConfigKeys]>([
-  ['tableVirtualCell', true],
-  ['prefixCls', 'c7n'],
-  ['proPrefixCls', 'c7n-pro'],
-  ['iconfontPrefix', 'icon'],
-  ['ripple', true],
-  ['collapseExpandIconPosition', 'left'],
-  ['collapseTrigger', 'header'],
-  ['lookupCache', { maxAge: 1000 * 60 * 10, max: 100 }],
-  ['lookupUrl', code => `/common/code/${code}/`],
-  ['lookupAxiosMethod', 'post'],
-  // [
-  //   'lookupBatchAxiosConfig',
+function getComponentKey(component) {
+  switch (component) {
+    case 'Tabs':
+      return 'tabs';
+    default:
+      return 'table';
+  }
+}
+
+const defaultLookupCache: CacheOptions<string, AxiosPromise> = { maxAge: 1000 * 60 * 10, max: 100 };
+const defaultStatus: Status = { [RecordStatus.add]: 'add', [RecordStatus.update]: 'update', [RecordStatus.delete]: 'delete' };
+const defaultCustomizedSave: CustomizedSave = (code, customized, component) => localStorage.setItem(`${getComponentKey(component)}.customized.${code}`, JSON.stringify(customized));
+const defaultCustomizedLoad: CustomizedLoad = (code, component) => Promise.resolve(JSON.parse(localStorage.getItem(`${getComponentKey(component)}.customized.${code}`) || 'null'));
+const defaultFormatter: Formatter = {
+  jsonDate: 'YYYY-MM-DD HH:mm:ss',
+  date: 'YYYY-MM-DD',
+  dateTime: 'YYYY-MM-DD HH:mm:ss',
+  time: 'HH:mm:ss',
+  year: 'YYYY',
+  month: 'YYYY-MM',
+  week: 'GGGG-Wo',
+};
+const defaultAttachment: AttachmentConfig = {
+  defaultFileKey: 'file',
+  defaultFileSize: 0,
+};
+const defaultConfig = {
+  prefixCls: 'c7n',
+  proPrefixCls: 'c7n-pro',
+  iconfontPrefix: 'icon',
+  ripple: true,
+  collapseExpandIconPosition: 'left',
+  collapseTrigger: 'header',
+  lookupCache: defaultLookupCache,
+  lookupUrl: code => `/common/code/${code}/`,
+  lookupAxiosMethod: 'post' as Method,
+  // lookupBatchAxiosConfig:
   //   codes => ({
   //     url: '/common/batch',
   //     params: codes.reduce((obj, code) => {
@@ -371,98 +433,81 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   //       return obj;
   //     }, {}),
   //   }),
-  // ],
-  ['lovDefineUrl', code => `/sys/lov/lov_define?code=${code}`],
-  ['lovQueryUrl', code => `/common/lov/dataset/${code}`],
-  ['lovTableProps', {}],
-  ['lovModalProps', {}],
-  ['lovAutoSelectSingle', false],
-  ['dataKey', 'rows'],
-  ['totalKey', 'total'],
-  ['statusKey', '__status'],
-  ['tlsKey', '__tls'],
-  [
-    'status',
-    { [RecordStatus.add]: 'add', [RecordStatus.update]: 'update', [RecordStatus.delete]: 'delete' },
-  ],
-  ['labelLayout', LabelLayout.horizontal],
-  ['queryBar', TableQueryBarType.normal],
-  ['tableBorder', true],
-  ['tableHighLightRow', true],
-  ['tableSelectedHighLightRow', false],
-  ['tableRowHeight', 30],
-  ['tableDefaultRenderer', ''],
-  ['tableColumnResizable', true],
-  ['tableColumnHideable', true],
-  ['performanceTableColumnHideable', true],
-  ['tableRowDraggable', false],
-  ['tableColumnDraggable', false],
-  ['performanceTableColumnDraggable', false],
-  ['tableColumnAlign', defaultTableColumnAlign],
-  ['tableSpinProps', defaultSpinProps],
-  ['tableButtonProps', defaultButtonProps],
-  ['tableCommandProps', defaultButtonProps],
-  ['tableAlwaysShowRowBox', false],
-  ['tableUseMouseBatchChoose', false],
-  ['tableEditorNextKeyEnterDown', true],
-  ['tableAutoFocus', false],
-  ['tableKeyboard', false],
-  ['tableFilterSearchText', 'params'],
-  ['tableAutoHeightDiff', 80],
-  ['tableCustomizedSave', (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized))],
-  ['tableCustomizedLoad', (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) || 'null'))],
-  ['tableShowRemovedRow', true],
-  ['modalSectionBorder', true],
-  ['drawerSectionBorder', true],
-  ['drawerTransitionName', 'slide-right'],
-  ['modalOkFirst', true],
-  ['modalAutoCenter', false],
-  ['drawerOkFirst', undefined],
-  ['modalKeyboard', true],
-  ['modalMaskClosable', false],
-  ['buttonColor', ButtonColor.default],
-  ['buttonFuncType', FuncType.raised],
-  ['feedback', defaultFeedback],
-  ['renderEmpty', defaultRenderEmpty],
-  ['icons', categories],
-  [
-    'formatter',
-    {
-      jsonDate: 'YYYY-MM-DD HH:mm:ss',
-      date: 'YYYY-MM-DD',
-      dateTime: 'YYYY-MM-DD HH:mm:ss',
-      time: 'HH:mm:ss',
-      year: 'YYYY',
-      month: 'YYYY-MM',
-      week: 'GGGG-Wo',
-    },
-  ],
-  ['dropdownMatchSelectWidth', true],
-  ['selectReverse', true],
-  ['selectPagingOptionContent', '···'],
-  ['selectSearchable', false],
-  ['selectTrigger', [Action.focus, Action.click]],
-  ['useColon', false],
-  ['excludeUseColonTagList', defaultExcludeUseColonTag],
-  ['textFieldAutoComplete', undefined],
-  ['numberFieldNonStrictStep', false],
-  ['numberFieldFormatter', undefined],
-  ['numberFieldFormatterOptions', undefined],
-  ['currencyFormatter', undefined],
-  ['currencyFormatterOptions', undefined],
-  ['showInvalidDate', true],
-  ['highlightRenderer', defaultFormFieldHighlightRenderer],
-  ['onPerformance', noop],
-  ['performanceEnabled', { Table: false }],
-  ['tooltipTheme', defaultTooltipTheme],
-  ['showValidation', ShowValidation.tooltip],
-  ['attachment', {}],
-]);
+  lovDefineUrl: code => `/sys/lov/lov_define?code=${code}`,
+  lovQueryUrl: code => `/common/lov/dataset/${code}`,
+  lovTableProps: {},
+  lovModalProps: {},
+  lovAutoSelectSingle: false,
+  dataKey: 'rows',
+  totalKey: 'total',
+  statusKey: '__status',
+  tlsKey: '__tls',
+  status: defaultStatus,
+  labelLayout: LabelLayout.horizontal,
+  queryBar: TableQueryBarType.normal,
+  tableVirtualCell: true,
+  tableBorder: true,
+  tableHighLightRow: true,
+  tableSelectedHighLightRow: false,
+  tableRowHeight: 30,
+  tableDefaultRenderer: '',
+  tableColumnResizable: true,
+  tableColumnHideable: true,
+  performanceTableColumnHideable: true,
+  tableRowDraggable: false,
+  tableColumnDraggable: false,
+  performanceTableColumnDraggable: false,
+  tableColumnAlign: defaultTableColumnAlign,
+  tableSpinProps: defaultSpinProps,
+  tableButtonProps: defaultButtonProps,
+  tableCommandProps: defaultButtonProps,
+  tableAlwaysShowRowBox: false,
+  tableUseMouseBatchChoose: false,
+  tableEditorNextKeyEnterDown: true,
+  tableAutoFocus: false,
+  tableKeyboard: false,
+  tableFilterSearchText: 'params',
+  tableAutoHeightDiff: 80,
+  customizedSave: defaultCustomizedSave,
+  customizedLoad: defaultCustomizedLoad,
+  tableShowRemovedRow: true,
+  modalSectionBorder: true,
+  drawerSectionBorder: true,
+  drawerTransitionName: 'slide-right',
+  modalOkFirst: true,
+  modalAutoCenter: false,
+  modalKeyboard: true,
+  modalMaskClosable: false,
+  buttonColor: ButtonColor.default,
+  buttonFuncType: FuncType.raised,
+  feedback: defaultFeedback,
+  renderEmpty: defaultRenderEmpty,
+  icons: categories,
+  formatter: defaultFormatter,
+  dropdownMatchSelectWidth: true,
+  selectReverse: true,
+  selectPagingOptionContent: '···',
+  selectSearchable: false,
+  selectTrigger: [Action.focus, Action.click],
+  useColon: false,
+  excludeUseColonTagList: defaultExcludeUseColonTag,
+  numberFieldNonStrictStep: false,
+  showInvalidDate: true,
+  highlightRenderer: defaultFormFieldHighlightRenderer,
+  onPerformance: noop,
+  performanceEnabled: { Table: false },
+  tooltipTheme: defaultTooltipTheme,
+  showValidation: ShowValidation.tooltip,
+  attachment: defaultAttachment,
+};
 
-export function getConfig(key: ConfigKeys): any {
-  // FIXME: observable.map把构建map时传入的key类型和value类型分别做了union，
-  // 丢失了一一对应的映射关系，导致函数调用者无法使用union后的返回值类型，因此需要指定本函数返回值为any
-  return globalConfig.get(key);
+export type DefaultConfig = typeof defaultConfig;
+
+const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
+  Config[ConfigKeys]>(defaultConfig);
+
+export function getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {
+  return globalConfig.get(key) as T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
 }
 
 export function getPrefixCls(suffixCls: string, customizePrefixCls?: string): string {
@@ -479,13 +524,23 @@ export function getProPrefixCls(suffixCls: string, customizePrefixCls?: string):
   return `${getConfig('proPrefixCls')}-${suffixCls}`;
 }
 
-const mergeProps = ['transport', 'feedback', 'formatter'];
+export function getCustomizable<T extends keyof Customizable>(component: T): boolean | undefined {
+  const customizable = getConfig('customizable');
+  if (isBoolean(customizable)) {
+    return customizable;
+  }
+  if (isCustomizable(customizable)) {
+    return customizable[component];
+  }
+}
 
-export default function configure(config: Config) {
+const mergeProps: ConfigKeys[] = ['transport', 'feedback', 'formatter', 'attachment', 'pagination'];
+
+export default function configure(config: Config, merge: boolean = true) {
   runInAction(() => {
     Object.keys(config).forEach((key: ConfigKeys) => {
       const value = config[key];
-      if (mergeProps.includes(key) && isObject(value)) {
+      if (merge && mergeProps.includes(key) && isObject(value)) {
         globalConfig.set(key, {
           ...toJS<any>(globalConfig.get(key)),
           ...value,

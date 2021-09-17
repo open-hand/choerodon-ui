@@ -2,8 +2,8 @@ import React, { createRef, forwardRef, ForwardRefExoticComponent, RefObject, use
 import { render } from 'react-dom';
 import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getGlobalPopupContainer } from 'choerodon-ui/lib/trigger/Popup';
 import Tooltip, { TooltipProps } from './Tooltip';
-import { getGlobalPopupContainer } from '../trigger/Popup';
 import TaskRunner from '../_util/TaskRunner';
 
 export const suffixCls = 'singleton-tooltip';

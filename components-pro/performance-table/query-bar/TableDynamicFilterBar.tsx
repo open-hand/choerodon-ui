@@ -18,6 +18,7 @@ import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { Action } from 'choerodon-ui/lib/trigger/enum';
 
 import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
@@ -30,11 +31,11 @@ import { ElementProps } from '../../core/ViewComponent';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
-import { Action } from '../../trigger/enum';
 import FieldList from '../../table/query-bar/FieldList';
 import QuickFilterMenu from '../../table/query-bar/quick-filter';
 import ColumnFilter from '../tool-bar/ColumnFilter';
 import { DynamicFilterBarConfig } from '../Table.d';
+import { Suffixes } from '../../table/Table';
 
 /**
  * 当前数据是否有值并需要选中
@@ -443,11 +444,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   renderSuffix() {
     const { queryDataSet, dataSet, dynamicFilterBar } = this.props;
     const { tableStore: { proPrefixCls } } = this.context;
-    const suffixes = dynamicFilterBar?.suffixes || getConfig('tableFilterSuffix') || undefined;
+    const suffixes: Suffixes[] | undefined = dynamicFilterBar?.suffixes || getConfig('tableFilterSuffix');
     const children: ReactElement[] = [];
     if (suffixes && suffixes.length) {
       suffixes.forEach(suffix => {
-        if (isString(suffix) && suffix === 'filter') {
+        if (suffix === 'filter') {
           children.push(<ColumnFilter prefixCls={proPrefixCls} />);
         } else if (isValidElement(suffix)) {
           children.push(suffix);
@@ -455,9 +456,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           children.push(suffix({ queryDataSet, dataSet }));
         }
       });
-      return (<div className={`${proPrefixCls}-dynamic-filter-bar-suffix`}>
-        {children}
-      </div>);
+      return (
+        <div className={`${proPrefixCls}-dynamic-filter-bar-suffix`}>
+          {children}
+        </div>
+      );
     }
     return null;
   }

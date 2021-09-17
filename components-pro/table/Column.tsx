@@ -64,7 +64,7 @@ export interface ColumnPropsBase extends ElementProps {
    * 可选值： false | true | 'left' | 'right'
    * @default false
    */
-  lock?: ColumnLock | boolean;
+  lock?: ColumnLock | boolean | undefined;
   /**
    * 文字对齐方式
    * 可选值： 'left' | 'center' | 'right'

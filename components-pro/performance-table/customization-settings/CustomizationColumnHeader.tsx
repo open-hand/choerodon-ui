@@ -13,7 +13,7 @@ const CustomizationColumnHeader: FunctionComponent<CustomizationColumnHeaderProp
   const modal = useModal();
   const openCustomizationModal = useCallback(() => onHeaderClick(modal), [modal, onHeaderClick]);
   return (
-    <Button funcType={FuncType.flat} size={Size.small} icon="settings" onClick={openCustomizationModal} />
+    <Button funcType={FuncType.flat} size={Size.small} icon="predefine" onClick={openCustomizationModal} />
   );
 };
 

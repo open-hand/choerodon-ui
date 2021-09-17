@@ -4,7 +4,7 @@ import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { getNearStepValues } from '../../number-field/utils';
 import { methodReturn, ValidatorProps } from '.';
-import formatReactTemplate from '../../formatter/formatReactTemplate';
+import { formatReactTemplate } from '../../formatter/formatReactTemplate';
 import { toRangeValue } from '../../field/utils';
 
 function isStepMismatch(value, step, min, max, range) {

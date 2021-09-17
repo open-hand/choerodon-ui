@@ -10,21 +10,11 @@ declare module 'react-lazy-load';
 
 declare module 'dom-closest';
 
-declare module 'insert-css';
-
 declare module 'rc-motion';
-
-declare module 'raf';
 
 declare module 'dom-lib';
 
 declare module 'dom-lib/lib/transition/translateDOMPositionXY';
-
-declare module 'element-resize-event';
-
-declare module 'is-promise' {
-  export default function<T = unknown> (p: any): p is PromiseLike<T>;
-}
 
 declare module 'lodash/noop' {
   export default function (...args: any[]): any;

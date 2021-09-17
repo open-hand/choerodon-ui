@@ -68,7 +68,7 @@ cols: 1
 | columnTitleEditable | boolean | 可编辑列标题, customizable 为 true 才起作用 |
 | columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 |
 | customizable | boolean | 是否显示个性化设置入口按钮  |  |
-| customizedCode | string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `tableCustomizedSave` `tableCustomizedLoad`  |
+| customizedCode | string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `customizedSave` `customizedLoad`  |
 | rowSelection | object | 表格行是否可选择，[配置项](#rowSelection)  | 
 | rowDraggable | boolean `(false)` | 行拖拽，实现行的拖拽  |
 | onDragEnd |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
