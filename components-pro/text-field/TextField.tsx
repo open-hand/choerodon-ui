@@ -14,6 +14,7 @@ import { Cancelable, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import isArray from 'lodash/isArray';
+import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
@@ -376,7 +377,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         return {
           text,
           width: isFlat ? measureTextWidth(text) : 0,
-        }
+        };
       }
       const { renderedText } = this;
       if (renderedText) {
@@ -385,10 +386,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         }
       } else {
         const unRenderedText = this.getTextNode(this.getValue());
-        if (isString(unRenderedText) && unRenderedText.length) {
+        const processedText = isNumber(unRenderedText) ? String(unRenderedText) : unRenderedText;
+        if (isString(processedText) && processedText.length) {
           return {
-            text: unRenderedText,
-            width: isFlat ? measureTextWidth(unRenderedText) : 0,
+            text: processedText,
+            width: isFlat ? measureTextWidth(processedText) : 0,
           };
         }
       }
@@ -413,10 +415,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         }
       } else {
         const unRenderedStartText = this.getTextByValue(startValue);
-        if (isString(unRenderedStartText) && unRenderedStartText.length) {
+        const startText = isNumber(unRenderedStartText) ? String(unRenderedStartText) : unRenderedStartText;
+        if (isString(startText) && startText.length) {
           return {
-            text: unRenderedStartText,
-            width: isFlat ? measureTextWidth(unRenderedStartText) : 0,
+            text: startText,
+            width: isFlat ? measureTextWidth(startText) : 0,
           };
         }
       }
@@ -436,10 +439,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         }
       } else {
         const unRenderedEndText = this.getTextByValue(endValue);
-        if (isString(unRenderedEndText) && unRenderedEndText.length) {
+        const endText = isNumber(unRenderedEndText) ? String(unRenderedEndText) : unRenderedEndText;
+        if (isString(endText) && endText.length) {
           return {
-            text: unRenderedEndText,
-            width: isFlat ? measureTextWidth(unRenderedEndText) : 0,
+            text: endText,
+            width: isFlat ? measureTextWidth(endText) : 0,
           };
         }
       }
