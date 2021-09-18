@@ -20,6 +20,7 @@ import Icon from '../icon';
 import { QuickJumperPosition, SizeChangerPosition } from './enum';
 import { Renderer } from '../field/FormField';
 import { ValueChangeAction } from '../text-field/enum';
+import QuickJumper from './QuickJumper';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 
@@ -433,22 +434,13 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
 
     return (
-      <>
-        <span className={`${prefixCls}-quick-jumper`}>
-          {$l('Pagination', 'jump_to')}
-        </span>
-        <ObserverNumberField
-          className={`${prefixCls}-quick-jumper-input`}
-          value={this.pageInput || page}
-          disabled={disabled}
-          min={1}
-          onChange={this.handleJumpChange}
-          suffix={$l('Pagination', 'page')}
-          size={Size.small}
-          isFlat
-        />
-        {gotoButton}
-      </>
+      <QuickJumper
+        prefixCls={prefixCls}
+        value={this.pageInput || page}
+        onChange={this.handleJumpChange}
+        disabled={disabled}
+        gotoButton={gotoButton}
+      />
     );
   }
 

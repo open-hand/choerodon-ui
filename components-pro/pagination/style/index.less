@@ -25,14 +25,23 @@
     margin-left: .2rem;
 
     &-input {
-      .@{c7n-pro-prefix}-input-number {
-        &:not(:hover):not(:focus) {
-          border-color: transparent;
-        }
+      display: inline-block;
+      padding-right: .05rem;
+      line-height: 1;
+      border: @border-width-base @border-style-base transparent;
+      border-radius: @input-border-radius;
+      transition: border .3s;
 
-        &-suffix {
-          line-height: 1.5;
-        }
+      &-focused {
+        border-color: @input-focus-border-color;
+      }
+
+      &:hover {
+        border-color: @input-hover-border-color;
+      }
+
+      .@{c7n-pro-prefix}-input-number-wrapper {
+        vertical-align: baseline;
       }
     }
   }
