@@ -438,17 +438,17 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   } else if (style) {
     rowProps.style = { ...style };
   }
-  if (lock) {
-    const height = pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number);
-    if (height) {
-      if (rowProps.style) {
-        rowProps.style.height = height;
-      } else {
-        rowProps.style = { height };
-      }
+
+  const height = needIntersection && (inView !== true || !columnGroups.inView) ? entry ? entry.boundingClientRect.height :
+    pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)) : lock ?
+    pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number) : undefined;
+  if (height) {
+    if (rowProps.style) {
+      rowProps.style.height = height;
+    } else {
+      rowProps.style = { height };
     }
   }
-
   const tr = (
     <Element
       key={rowKey}
@@ -458,33 +458,14 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
       {getColumns()}
     </Element>
   );
-  let row = tr;
-  if (needIntersection) {
-    if (inView !== true || !columnGroups.inView) {
-      let oldHeight = record.getState('__row_height__');
-      if (entry && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn))) {
-        const { boundingClientRect: { height } } = entry;
-        if (oldHeight !== height) {
-          record.setState('__row_height__', height);
-          oldHeight = height;
-        }
-      }
-      row = cloneElement<any>(tr, {
-        style: {
-          ...rowProps.style,
-          height: oldHeight === undefined ? pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)) : oldHeight,
-        },
-      });
-    }
-  }
   return (
     <>
       {
         needSaveRowHeight ? (
           <ResizeObservedRow onResize={setRowHeight} rowIndex={rowKey} key={rowKey}>
-            {row}
+            {tr}
           </ResizeObservedRow>
-        ) : row
+        ) : tr
       }
       {renderExpandRow()}
     </>

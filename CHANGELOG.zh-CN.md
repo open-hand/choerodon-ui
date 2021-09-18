@@ -34,6 +34,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。
 - 🐞 `<pro>Table`：修复 customizedCode 变更时且表格列不会刷新的问题。
 - 🐞 `<pro>Table`：修复 virtual 在切换分页大小时行错位的问题。
+- 🐞 `<pro>Table`：修复 virtualCell 导致编辑器错位的问题。
 - 🐞 `<pro>Tree`：修复异步加载的节点在 dataSet 重新加载时无法显示的问题。
 - 🐞 `Tabs`：修墨条可能对不齐的问题。
 - 🐞 `<pro>PerformanceTable`：修复行高亮点击报错问题。
