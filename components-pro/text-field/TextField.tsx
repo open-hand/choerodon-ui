@@ -698,7 +698,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (placeholder && (this.rangeTarget === 0 || !this.range) && !this.isFocused && this.isEmpty()) {
       return placeholder;
     }
-    return this.getProp('label');
+    return toJS(this.getProp('label'));
   }
 
   wrapGroupItem(node: ReactNode, category: GroupItemCategory, props?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, childrenProps?: any): ReactNode {

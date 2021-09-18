@@ -16,12 +16,13 @@ import { Attachment, DataSet } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(() => new DataSet({
-    fields: [{ name: 'attachment', type: 'attachment', label: '技术附件', max: 9, required: true }],
+    fields: [{ name: 'attachment', type: 'attachment', label: <span>技术附件</span>, max: 9, required: true }],
   }), []);
   const props = {
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
     name: 'attachment',
     dataSet: ds,
+    labelLayout: 'float',
   };
 
   return <Attachment {...props} />;

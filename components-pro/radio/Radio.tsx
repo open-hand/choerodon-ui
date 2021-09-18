@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, toJS } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
@@ -189,7 +189,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     const { prefixCls } = this;
     const text = this.getLabelText();
     if (text) {
-      return <span ref={this.saveLabelRef} className={`${prefixCls}-label`}>{toJS(text)}</span>;
+      return <span ref={this.saveLabelRef} className={`${prefixCls}-label`}>{text}</span>;
     }
   }
 
