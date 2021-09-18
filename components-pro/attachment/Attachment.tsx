@@ -770,7 +770,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderHeader(uploadBtn?: ReactNode) {
-    const { prefixCls, props: { downloadAll } } = this;
+    const { prefixCls, props: { downloadAll, viewMode } } = this;
     const label = this.renderHeaderLabel();
     const buttons: ReactNode[] = [];
     if (uploadBtn) {
@@ -801,7 +801,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             buttons.push(<Button {...downProps} />);
           }
         }
-      } else {
+      } else if (viewMode !== 'popup') {
         const viewProps: ButtonProps = {
           key: 'view',
           funcType: FuncType.link,
