@@ -48,6 +48,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabBarGutter,
     onEdit,
     tabBarExtraContent,
+    hideOnlyGroup,
     customizedCode, customizable, children, defaultActiveKey, setCustomized, customized,
     prefixCls: customizePrefixCls, activeKey: propActiveKey, onChange, onTabClick, onPrevClick, onNextClick, keyboard,
     ...restProps
@@ -114,6 +115,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     prefixCls,
     keyboard,
     tabBarPosition: tabPosition,
+    hideOnlyGroup,
     customizable,
     customized,
     saveCustomized,

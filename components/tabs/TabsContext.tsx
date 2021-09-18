@@ -10,6 +10,7 @@ export interface TabsContextValue {
   actuallyDefaultActiveKey?: string | undefined;
   propActiveKey?: string | undefined;
   keyboard?: boolean | undefined;
+  hideOnlyGroup?: boolean | undefined;
   tabBarPosition?: TabsPosition | undefined;
   customizable?: boolean | undefined;
   customized?: TabsCustomized | undefined | null;

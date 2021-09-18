@@ -31,6 +31,7 @@ export interface TabsProps<T = string> {
   activeKey?: string;
   defaultActiveKey?: string;
   hideAdd?: boolean;
+  hideOnlyGroup?: boolean;
   onChange?: (activeKey: T) => void;
   onTabClick?: (key: string) => void;
   onPrevClick?: MouseEventHandler<any>;

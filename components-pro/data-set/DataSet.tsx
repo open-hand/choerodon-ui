@@ -2561,8 +2561,7 @@ Then the query method will be auto invoke.`,
           cacheSelectionKeys.every(key => record.get(key) === cached.get(key)),
         );
         if (index !== -1) {
-          const selected = cachedSelected[index];
-          cachedSelected.splice(index, 1);
+          const selected = cachedSelected.splice(index, 1)[0];
           selected.isCached = false;
           return selected;
         }
