@@ -17,7 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 tabsInkBarStyle, customizable, customizedSave, customizedLoad 属性, 废弃 tableCustomizedSave, tableCustomizedSave, tableCustomizable, performanceTableCustomizable, lovTableCustomizable 属性。
 - 🌟 `Tabs`: 新增 inkBarStyle, customizable, customizedCode 属性，支持墨条样式修改。
-- 🌟 `Tabs.TabPane`: 新增 title, showCount 属性。
+- 🌟 `Tabs.TabPane`: 新增 title, showCount 属性, count 属性支持钩子。
 - 🌟 `Tag`: 新增 gray 颜色。
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角和校验信息。
 - 💄 `<pro>Table`： 重命名 onResize 为 onColumnResize 事件。
 - 💄 `<pro>Lov`： 优化 lovQueryBar 优先级，去除 lovQueryBar 全局默认值。
+- 🐞 `<pro>DataSet`： 修复 cacheSelection 属性缓存的选中记录重新显示时变更的值被还原的问题。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。
 - 🐞 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。

@@ -53,7 +53,7 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | tab         | 选项卡头显示文字或钩子          | string\|ReactNode \| (title) => ReactNode | 无     |
 | title         | 选项卡头显示文字          | string | 无     |
 | disabled         | 是否禁用          | boolean | 无     |
-| count         | 选项卡头内显示数字          | number | 无     |
+| count         | 选项卡头内显示数字          | number \| () => number | 无     |
 | overflowCount         | 展示封顶的数字值         | number | 99     |
 | showCount         | 显示数字        | boolean | true     |
 
