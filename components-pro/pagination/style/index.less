@@ -15,11 +15,6 @@
 
   &-page-info {
     margin: 0 0.2rem;
-    letter-spacing: 0.05rem;
-
-    .word {
-      letter-spacing: 0;
-    }
   }
 
   &-pager {
@@ -27,21 +22,18 @@
   }
 
   &-quick-jumper {
-    display: inline-block;
-    height: 0.3rem;
-    line-height: 0.3rem;
+    margin-left: .2rem;
 
-    input {
-      position: relative;
-      display: inline-block;
-      width: 0.5rem;
-      height: 0.3rem;
-      margin: 0 0.08rem;
-      padding: 0.04rem 0.11rem;
-      color: rgba(0, 0, 0, 0.65);
-      line-height: 1.5;
-      -webkit-transition: all 0.3s;
-      transition: all 0.3s;
+    &-input {
+      .@{c7n-pro-prefix}-input-number {
+        &:not(:hover):not(:focus) {
+          border-color: transparent;
+        }
+
+        &-suffix {
+          line-height: 1.5;
+        }
+      }
     }
   }
 

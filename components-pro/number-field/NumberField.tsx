@@ -301,9 +301,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   getWrapperClassNames(...args): string {
     const { prefixCls } = this;
     const suffix = this.getSuffix();
-    const step = defaultTo(this.getProp('step'), 1);
+    const button = this.getInnerSpanButton();
     return super.getWrapperClassNames({
-      [`${prefixCls}-step-suffix`]: step && isValidElement<{ onClick; }>(suffix),
+      [`${prefixCls}-step-suffix`]: button && isValidElement<{ onClick; }>(suffix),
       ...args,
     });
   }
