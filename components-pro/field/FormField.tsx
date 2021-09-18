@@ -777,7 +777,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   getLabel() {
-    return this.getProp('label');
+    return toJS(this.getProp('label'));
   }
 
   renderFloatLabel(): ReactNode {
@@ -802,7 +802,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
               onMouseEnter={this.handleFloatLabelMouseEnter}
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
-              {toJS(label)}
+              {label}
             </div>
           </div>
         );
