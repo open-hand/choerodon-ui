@@ -59,7 +59,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     tabBarGutter, inkBarAnimated, type, onRemoveTab, ...restProps
   } = props;
   const {
-    keyboard, customizable, prefixCls, activeKey, activeGroupKey, tabBarPosition,
+    keyboard, customizable, prefixCls, activeKey, activeGroupKey, tabBarPosition, hideOnlyGroup = false,
     groupedPanelsMap, currentPanelMap, onTabClick, onPrevClick = noop, onNextClick = noop, changeActiveKey,
   } = useContext(TabsContext);
   const modal = useModal();
@@ -217,7 +217,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   };
 
   const getGroupNode = (): ReactElement<MenuProps> | undefined => {
-    if (groupedPanelsMap.size) {
+    if (groupedPanelsMap.size > Number(hideOnlyGroup)) {
       return (
         <Menu
           prefixCls={`${prefixCls}-group`}

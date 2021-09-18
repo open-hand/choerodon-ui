@@ -111,9 +111,9 @@ const locale: Locale = {
   },
   Pagination: {
     page: 'Page',
-    jump_to: 'Jump to',
+    jump_to: 'Jump to:',
     jump_to_confirm: 'Confirm',
-    records_per_page: 'Number of items per page：',
+    records_per_page: 'Number of items per page:',
   },
   Upload: {
     file_selection: 'Select File',

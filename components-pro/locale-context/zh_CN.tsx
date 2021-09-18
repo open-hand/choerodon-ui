@@ -111,9 +111,9 @@ const locale: Locale = {
   },
   Pagination: {
     page: '页',
-    jump_to: '跳转至：',
+    jump_to: '跳转至:',
     jump_to_confirm: '确定',
-    records_per_page: '每页行数：',
+    records_per_page: '每页行数:',
   },
   Upload: {
     file_selection: '选择文件',

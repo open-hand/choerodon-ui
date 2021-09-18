@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 tabsInkBarStyle, customizable, customizedSave, customizedLoad 属性, 废弃 tableCustomizedSave, tableCustomizedSave, tableCustomizable, performanceTableCustomizable, lovTableCustomizable 属性。
-- 🌟 `Tabs`: 新增 inkBarStyle, customizable, customizedCode 属性，支持墨条样式修改。
+- 🌟 `Tabs`: 新增 inkBarStyle, customizable, customizedCode, hideOnlyGroup 属性，支持墨条样式修改。
 - 🌟 `Tabs.TabPane`: 新增 title, showCount 属性, count 属性支持钩子。
 - 🌟 `Tag`: 新增 gray 颜色。
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
