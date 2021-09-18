@@ -354,9 +354,12 @@ export default class Lov extends Select<LovProps> {
   @action
   afterOpen(options: DataSet, fetchSingle?: boolean) {
     const noCache = this.getProp('noCache');
-    if (this.resetOptions(noCache) && fetchSingle !== true) {
+    if (this.resetOptions(noCache) && fetchSingle !== true && !this.multiple) {
       options.query();
     } else if (this.multiple) {
+      if (this.resetOptions(noCache)) {
+        options.query();
+      }
       options.releaseCachedSelected();
     }
   }
