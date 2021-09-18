@@ -17,7 +17,6 @@ import React, {
   useState,
 } from 'react';
 import classnames from 'classnames';
-import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import Button from 'choerodon-ui/pro/lib/button';
@@ -39,6 +38,7 @@ import TabsContext from './TabsContext';
 import KeyCode from '../_util/KeyCode';
 import { Size } from '../_util/enum';
 import CustomizationSettings from './customization-settings';
+import Count from './Count';
 
 export interface TabBarProps {
   inkBarAnimated?: boolean | undefined;
@@ -170,11 +170,10 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
       tabProps.className = classes.join(' ');
       warning('tab' in child || 'title' in child, 'There must be `tab` or `title` property on children of Tabs.');
-      const displayCount = (count as number) > (overflowCount as number) ? `${overflowCount}+` : count;
       const title = (
         <>
           {getHeader(child)}
-          {showCount && !isNil(displayCount) && <span className={`${prefixCls}-tab-count`}>{displayCount}</span>}
+          {showCount && <Count count={count} overflowCount={overflowCount} />}
         </>
       );
       rst.push(

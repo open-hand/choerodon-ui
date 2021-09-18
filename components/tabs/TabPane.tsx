@@ -14,7 +14,7 @@ export interface TabPaneProps {
   disabled?: boolean;
   forceRender?: boolean;
   destroyInactiveTabPane?: boolean;
-  count?: number;
+  count?: number | (() => number | undefined);
   overflowCount?: number;
   showCount?: boolean;
   placeholder?: ReactNode;

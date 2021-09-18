@@ -17,7 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
 - 🌟 `Tabs`: Added `inkBarStyle`, `customizable`, `customizedCode` properties, support ink bar style modification.
-- 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties.
+- 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties, `count` property support hooks.
 - 🌟 `Tag`: Added `gray` color.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
 - 💄 `<pro>Lov`: Optimize the priority of `lovQueryBar` and remove the global default value of `lovQueryBar`.
+- 🐞 `<pro>DataSet`: Fix the `cacheSelection` problem that the changed value is restored when the cached selected record is redisplayed.
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 - 🐞 `<pro>DatePicker`: Fix display problems in `isFlat` and `range` mode.
 - 🐞 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.

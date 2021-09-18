@@ -2554,16 +2554,19 @@ Then the query method will be auto invoke.`,
 
   @action
   releaseCachedSelected() {
-    const { cacheSelectionKeys, cachedSelected, isAllPageSelection } = this;
+    const { cacheSelectionKeys, cachedSelected } = this;
     if (cacheSelectionKeys) {
-      this.data.forEach(record => {
+      this.records = this.records.map(record => {
         const index = cachedSelected.findIndex(cached =>
           cacheSelectionKeys.every(key => record.get(key) === cached.get(key)),
         );
         if (index !== -1) {
-          record.isSelected = !isAllPageSelection;
+          const selected = cachedSelected[index];
           cachedSelected.splice(index, 1);
+          selected.isCached = false;
+          return selected;
         }
+        return record;
       });
     }
   }
