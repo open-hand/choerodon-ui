@@ -478,10 +478,12 @@ class App extends React.Component {
         style={{ height: 300 }}
         rowNumber
         showAllPageSelectionButton
+        showSelectionTips
         parityRow
         summary="BASIC DEMO"
         pagination={{ 
           pageSizeEditable: true,
+          showQuickJumper: true,
           pageSizeOptions: ['10', '20', '100', '200', '500', '1000'],
         }}
         onColumnResize={({ column, width }) => console.log(column, width)}
