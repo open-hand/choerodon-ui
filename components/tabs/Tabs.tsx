@@ -1,4 +1,15 @@
-import React, { CSSProperties, FunctionComponent, Key, MouseEvent, MouseEventHandler, ReactNode, useCallback, useEffect, useState } from 'react';
+import React, {
+  CSSProperties,
+  FunctionComponent,
+  JSXElementConstructor,
+  Key,
+  MouseEvent,
+  MouseEventHandler,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import { getConfig, getCustomizable } from '../configure';
@@ -44,7 +55,7 @@ export interface TabsProps<T = string> {
   customizedCode?: string;
 }
 
-export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps>; lastActiveKey?: string; }
+export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string; }
 
 const Tabs: FunctionComponent<TabsProps> = function Tabs(props) {
   const {

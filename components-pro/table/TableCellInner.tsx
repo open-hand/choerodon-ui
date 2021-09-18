@@ -518,13 +518,15 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
         if (currentEditor) {
           currentEditor.hideEditor();
         }
-        if (tooltipShownRef.current) {
-          hide();
-          tooltipShownRef.current = false;
-        }
       };
     }
   }, []);
+  useEffect(() => () => {
+    if (tooltipShownRef.current) {
+      hide();
+      tooltipShownRef.current = false;
+    }
+  }, [tooltipShownRef]);
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,

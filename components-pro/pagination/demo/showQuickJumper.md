@@ -14,23 +14,34 @@ title:
 Quickly jump to a page.
 
 ````jsx
-import { DataSet, Pagination, Button } from 'choerodon-ui/pro';
+import { DataSet, Pagination, Button, Form, Switch } from 'choerodon-ui/pro';
+import { observer } from 'mobx-react-lite';
 
 function handleChange(page, pageSize) {
   console.log('[pagination]', page, pageSize);
 }
 
-class App extends React.Component {
-
-  render() {
-    return (
+const App = observer(() => {
+  const ds = React.useMemo(() => new DataSet({
+    autoCreate: true,
+    fields: [
+      { name: 'goButton', type: 'boolean', label: 'goButton', defaultValue: false },
+    ],
+  }), []);
+  return (
+    <div>
+      <Form columns={4} dataSet={ds} labelWidth={150}>
+        <Switch name="goButton" />
+      </Form>
       <Pagination
-        showQuickJumper={{goButton: <Button type="button">跳转</Button>}}
+        showQuickJumper={{ goButton: ds.current.get('goButton') }}
         total={90}
         onChange={handleChange}
-      />)
-  }
-}
+        pageSizeEditable
+      />
+    </div>
+  );
+});
 
 ReactDOM.render(
   <App />,

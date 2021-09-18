@@ -31,6 +31,7 @@ class App extends React.Component {
       { name: 'showPager', type: 'boolean', label: 'showPager', defaultValue: false },
       { name: 'showQuickJumper', type: 'boolean', label: 'showQuickJumper', defaultValue: false },
       { name: 'hideOnSinglePage', type: 'boolean', label: 'hideOnSinglePage', defaultValue: false },
+      { name: 'simple', type: 'boolean', label: 'simple', defaultValue: false },
       { name: 'total', type: 'number', label: 'total', defaultValue: 90 },
     ],
   });
@@ -48,6 +49,7 @@ class App extends React.Component {
           <Switch name="showPager" />
           <Switch name="showQuickJumper" />
           <Switch name="hideOnSinglePage" />
+          <Switch name="simple" />
           <NumberField name="total" />
         </Form>
         <Pagination
@@ -55,6 +57,7 @@ class App extends React.Component {
           showTotal={current.get('showTotal')}
           showPager={current.get('showPager')}
           showQuickJumper={current.get('showQuickJumper')}
+          simple={current.get('simple')}
           total={current.get('total')}
           hideOnSinglePage={current.get('hideOnSinglePage')}
           onChange={handleChange}

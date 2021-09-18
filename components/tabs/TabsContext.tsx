@@ -1,4 +1,4 @@
-import { createContext, MouseEventHandler, ReactNode } from 'react';
+import { createContext, JSXElementConstructor, MouseEventHandler, ReactNode } from 'react';
 import noop from 'lodash/noop';
 import { GroupPanelMap, TabsCustomized } from './Tabs';
 import { TabPaneProps } from './TabPane';
@@ -18,8 +18,8 @@ export interface TabsContextValue {
   activeGroupKey?: string | undefined;
   changeActiveKey: (activeKey: string, byGroup?: boolean) => void;
   groupedPanelsMap: Map<string, GroupPanelMap>;
-  currentPanelMap: Map<string, TabPaneProps>;
-  totalPanelsMap: Map<string, TabPaneProps>;
+  currentPanelMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>;
+  totalPanelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>;
   onTabClick?: ((key: string) => void) | undefined;
   onPrevClick?: MouseEventHandler<HTMLSpanElement> | undefined;
   onNextClick?: MouseEventHandler<HTMLSpanElement> | undefined;
@@ -30,8 +30,8 @@ const TabsContext = createContext<TabsContextValue>({
   changeActiveKey: noop,
   saveCustomized: noop,
   groupedPanelsMap: new Map<string, GroupPanelMap>(),
-  currentPanelMap: new Map<string, TabPaneProps>(),
-  totalPanelsMap: new Map<string, TabPaneProps>(),
+  currentPanelMap: new Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>(),
+  totalPanelsMap: new Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>(),
 });
 
 export default TabsContext;

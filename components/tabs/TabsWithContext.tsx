@@ -1,4 +1,14 @@
-import React, { FunctionComponent, Key, MouseEvent, MouseEventHandler, useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  FunctionComponent,
+  JSXElementConstructor,
+  Key,
+  MouseEvent,
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import classnames from 'classnames';
 import ModalProvider from 'choerodon-ui/pro/lib/modal-provider';
 import { TabsPosition, TabsType } from './enum';
@@ -54,7 +64,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     }
   }, [customizable, customizedCode]);
   const [totalPanelsMap, groupedPanelsMap]: [
-    Map<string, TabPaneProps>,
+    Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>,
     Map<string, GroupPanelMap>
   ] = useMemo(() => normalizePanes(children, customized), [children, customized]);
   const actuallyDefaultActiveKey = useMemo((): string | undefined => {

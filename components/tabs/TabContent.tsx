@@ -1,4 +1,5 @@
 import React, {
+  createElement,
   CSSProperties,
   forwardRef,
   ForwardRefExoticComponent,
@@ -11,7 +12,7 @@ import React, {
 } from 'react';
 import classnames from 'classnames';
 import { getActiveIndex, getMarginStyle, getTransformByIndex, getTransformPropValue } from './utils';
-import TabPane, { TabPaneProps } from './TabPane';
+import { TabPaneProps } from './TabPane';
 import TabsContext from './TabsContext';
 
 export interface TabContentProps {
@@ -51,14 +52,15 @@ const TabContent: ForwardRefExoticComponent<PropsWithoutRef<TabContentProps> & R
     }
   }, [animated, totalPanelsMap, activeKey, tabBarPosition, style]);
   const getTabPanes = (): ReactElement<TabPaneProps>[] => {
-    return [...totalPanelsMap.entries()].map(([key, child]) => (
-      <TabPane
-        {...child}
-        key={key}
-        active={activeKey === key}
-        destroyInactiveTabPane={destroyInactiveTabPane}
-        rootPrefixCls={prefixCls}
-      />
+    return [...totalPanelsMap.entries()].map(([key, { type, ...child }]) => createElement<TabPaneProps>(
+      type,
+      {
+        ...child,
+        key,
+        active: activeKey === key,
+        destroyInactiveTabPane,
+        rootPrefixCls: prefixCls,
+      },
     ));
   };
   return (

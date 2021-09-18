@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import debounce from 'lodash/debounce';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
-import isNil from 'lodash/isNil';
+import isString from 'lodash/isString';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import isString from 'lodash/isString';
+import { Size } from 'choerodon-ui/lib/_util/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import ObserverSelect from '../select/Select';
 import ObserverNumberField from '../number-field/NumberField';
@@ -18,8 +17,9 @@ import autobind from '../_util/autobind';
 import { $l } from '../locale-context';
 import Pager from './Pager';
 import Icon from '../icon';
-import { SizeChangerPosition, QuickJumperPosition } from './enum';
+import { QuickJumperPosition, SizeChangerPosition } from './enum';
 import { Renderer } from '../field/FormField';
+import { ValueChangeAction } from '../text-field/enum';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 
@@ -96,8 +96,6 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     showTotal: true,
     simple: false,
   };
-
-  goInputText: number;
 
   @observable pageInput?: number | '';
 
@@ -198,13 +196,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
   }
 
-  handlePagerClick = page => {
-    const { dataSet } = this.props;
-    if (dataSet) {
-      dataSet.page(page);
-    }
-    this.handleChange(page, this.pageSize);
-  };
+  @autobind
+  handlePagerClick(page) {
+    this.jumpPage(page);
+  }
 
   getValidValue(value) {
     const { page, totalPage } = this;
@@ -218,38 +213,17 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     return value;
   }
 
-  jumpPage = debounce(value => {
-    if (!isNil(value)) {
-      this.handlePagerClick(value);
+  jumpPage(page) {
+    const { dataSet } = this.props;
+    if (dataSet) {
+      dataSet.page(page);
     }
-  }, 200);
-
-  /**
-   * 快速跳至 input 事件
-   * @param e
-   */
-  @autobind
-  @action
-  handleJump(e) {
-    let { value } = e.target;
-    const { page, totalPage, props: { showQuickJumper } } = this;
-    value = Number(value);
-    if (isNaN(value)) {
-      value = page;
-    }
-    if (value > totalPage) {
-      value = totalPage;
-    }
-    this.goInputText = value;
-    if (showQuickJumper) {
-      return;
-    }
-    this.jumpPage(value);
+    this.handleChange(page, this.pageSize);
   }
 
   @autobind
   handleJumpChange(value) {
-    const { page, totalPage, props: { showQuickJumper } } = this;
+    const { page, totalPage, props: { showQuickJumper, simple } } = this;
     value = Number(value);
     if (isNaN(value)) {
       value = page;
@@ -257,17 +231,26 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (value > totalPage) {
       value = totalPage;
     }
-
-    if (showQuickJumper && value !== '') {
+    if (simple) {
       this.jumpPage(value);
-      this.pageInput = '';
+    } else if (showQuickJumper) {
+      if (isObject(showQuickJumper) && showQuickJumper.goButton) {
+        this.pageInput = value;
+      } else {
+        this.jumpPage(value);
+      }
     }
   }
 
   @autobind
+  @action
   handleJumpGo(e) {
     if (e.keyCode === KeyCode.ENTER || e.type === 'click') {
-      this.jumpPage(this.goInputText);
+      const { pageInput } = this;
+      if (pageInput) {
+        this.jumpPage(pageInput);
+        this.pageInput = '';
+      }
     }
   }
 
@@ -388,6 +371,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
           optionRenderer={sizeChangerOptionRenderer}
           combo={pageSizeEditable}
           restrict="0-9"
+          size={Size.small}
         >
           {this.getOptions()}
         </ObserverSelect>
@@ -411,7 +395,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
     return (
       <span key="total" className={`${prefixCls}-page-info`}>
-        <span className="word">{from}</span>-<span className="word">{to}</span>/<span className="word">{total}</span>
+        {from} - {to} / {total}
       </span>
     );
   }
@@ -420,11 +404,11 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
    * 渲染快速跳至
    */
   renderQuickGo(): ReactNode {
-    const { prefixCls } = this;
+    const { prefixCls, page } = this;
     const { disabled, showQuickJumper } = this.props;
     let gotoButton: any = null;
 
-    if (isObject(showQuickJumper) && 'goButton' in showQuickJumper) {
+    if (isObject(showQuickJumper) && showQuickJumper.goButton) {
       const { goButton } = showQuickJumper;
       gotoButton =
         typeof goButton === 'boolean' ? (
@@ -433,6 +417,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
             onClick={this.handleJumpGo}
             onKeyUp={this.handleJumpGo}
             disabled={disabled}
+            size={Size.small}
           >
             {$l('Pagination', 'jump_to_confirm')}
           </Button>
@@ -448,12 +433,22 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
 
     return (
-      <div className={`${prefixCls}-quick-jumper`}>
-        {$l('Pagination', 'jump_to')}
-        <ObserverNumberField value={this.pageInput} disabled={disabled} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
-        {$l('Pagination', 'page')}
+      <>
+        <span className={`${prefixCls}-quick-jumper`}>
+          {$l('Pagination', 'jump_to')}
+        </span>
+        <ObserverNumberField
+          className={`${prefixCls}-quick-jumper-input`}
+          value={this.pageInput || page}
+          disabled={disabled}
+          min={1}
+          onChange={this.handleJumpChange}
+          suffix={$l('Pagination', 'page')}
+          size={Size.small}
+          isFlat
+        />
         {gotoButton}
-      </div>
+      </>
     );
   }
 
@@ -486,7 +481,12 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
           <li
             className={`${prefixCls}-simple-pager`}
           >
-            <ObserverNumberField value={page} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
+            <ObserverNumberField
+              value={page}
+              min={1}
+              onChange={this.handleJumpChange}
+              valueChangeAction={ValueChangeAction.input} wait={200}
+            />
             <span>／</span>
             {totalPage}
           </li>
