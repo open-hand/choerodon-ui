@@ -24,7 +24,7 @@ import ObserverSelect, { SelectProps } from '../../select/Select';
 import Option, { OptionProps } from '../../option/Option';
 import isSameLike from '../../_util/isSameLike';
 import { DataSetEvents } from '../../data-set/enum';
-import { processFieldValue } from '../../field/utils';
+import { processFieldValue, toRangeValue } from '../../field/utils';
 
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;
@@ -189,8 +189,21 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         }
         const field = queryDataSet.getField(value);
         if (field) {
+          const range = field.get('range');
           if (field.get('multiple')) {
             fieldValue = (fieldValue || [])[repeat];
+          }
+          if(range) {
+            return `${this.getFieldLabel(field)}: ${toRangeValue(fieldValue, range).map(v => {
+              return processFieldValue(
+                isPlainObject(v) ? v : super.processValue(v),
+                field,
+                {
+                  getProp: (name) => this.getProp(name),
+                  getValue: () => this.getValue(),
+                  lang: this.lang,
+                });
+            }).join("~")}`;
           }
           if (field.get('bind') || isNil(fieldValue)) return;
           return `${this.getFieldLabel(field)}: ${processFieldValue(
