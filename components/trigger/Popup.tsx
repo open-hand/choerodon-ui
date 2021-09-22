@@ -134,9 +134,11 @@ export default class Popup extends ViewComponent<PopupProps> {
 
   @autobind
   renderInner(innerRef) {
-    const { children } = this.props;
+    const { children, getClassNameFromAlign = noop, align } = this.props;
+    const className = this.getMergedClassNames(this.currentAlignClassName ||
+      getClassNameFromAlign(align));
     return (
-      <PopupInner {...omit(this.getMergedProps(), ['ref'])} innerRef={innerRef}>{children}</PopupInner>
+      <PopupInner {...omit(this.getMergedProps(), ['ref', 'className'])} className={className} innerRef={innerRef}>{children}</PopupInner>
     );
   }
 
