@@ -27,15 +27,18 @@ const App = () => {
 
   React.useEffect(() => {
     ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+setTimeout(() => {
+    ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+}, 0);
+setTimeout(() => {
+    ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+}, 0);
   }, []);
 
   return (
     <Row gutter={10}>
       <Col span={12}>
         <Attachment {...props} />
-      </Col>
-      <Col span={12}>
-        <Attachment readOnly {...props} viewMode="popup" />
       </Col>
     </Row>
   );

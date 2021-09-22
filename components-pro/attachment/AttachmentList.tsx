@@ -71,7 +71,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
     if (!attachments) {
       onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID });
     }
-  }, [onFetchAttachments, attachments]);
+  }, [onFetchAttachments, attachments, bucketName, bucketDirectory, storageCode, attachmentUUID]);
 
   if (attachments) {
     const { length } = attachments;

@@ -166,21 +166,21 @@ function adjustForViewport(
   return Object.assign(pos, size);
 }
 
-function isFixedPosition(node: HTMLElement): boolean {
-  const { offsetParent, ownerDocument } = node;
-  if (
-    ownerDocument &&
-    offsetParent === ownerDocument.body &&
-    ownerDocument.defaultView &&
-    ownerDocument.defaultView.getComputedStyle(node).position !== 'fixed'
-  ) {
-    return false;
-  }
-  if (offsetParent) {
-    return isFixedPosition(offsetParent as HTMLElement);
-  }
-  return true;
-}
+// function isFixedPosition(node: HTMLElement): boolean {
+//   const { offsetParent, ownerDocument } = node;
+//   if (
+//     ownerDocument &&
+//     offsetParent === ownerDocument.body &&
+//     ownerDocument.defaultView &&
+//     ownerDocument.defaultView.getComputedStyle(node).position !== 'fixed'
+//   ) {
+//     return false;
+//   }
+//   if (offsetParent) {
+//     return isFixedPosition(offsetParent as HTMLElement);
+//   }
+//   return true;
+// }
 
 export default function (el: HTMLElement, refNode: HTMLElement, align) {
   let points = align.points;
@@ -271,7 +271,7 @@ export default function (el: HTMLElement, refNode: HTMLElement, align) {
   if (height !== elRegion.height) {
     source.style.height = height ? pxToRem(height)! : '0';
   }
-  const isTargetFixed = isFixedPosition(target);
+  // const isTargetFixed = isFixedPosition(target);
   const { offsetParent } = source;
   if (offsetParent) {
     const { left, top } = offsetParent.getBoundingClientRect();
@@ -283,11 +283,11 @@ export default function (el: HTMLElement, refNode: HTMLElement, align) {
     top: pxToRem(newElRegion.top),
   });
 
-  if (isTargetFixed) {
-    source.style.position = 'fixed';
-  } else {
-    source.style.position = '';
-  }
+  // if (isTargetFixed) {
+  //   source.style.position = 'fixed';
+  // } else {
+  //   source.style.position = '';
+  // }
 
   return {
     points,

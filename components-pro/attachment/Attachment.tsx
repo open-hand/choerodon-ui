@@ -177,7 +177,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   processDataSetEventListener(on: boolean) {
     const { dataSet } = this;
     if (dataSet) {
-      dataSet[on ? 'addEventListener' : 'removeEventListener'](DataSetEvents.load, this.fetchCount);
+      dataSet[on ? 'addEventListener' : 'removeEventListener'](DataSetEvents.load, this.handleDataSetLoad);
     }
   }
 
@@ -227,7 +227,6 @@ export default class Attachment extends FormField<AttachmentProps> {
     };
   }
 
-  @autobind
   fetchCount() {
     const { field } = this;
     const { viewMode } = this.props;
@@ -244,6 +243,27 @@ export default class Attachment extends FormField<AttachmentProps> {
             }));
           }
         }
+      }
+    }
+  }
+
+  @autobind
+  handleDataSetLoad() {
+    this.fetchCount();
+    const { viewMode } = this.props;
+    const { field } = this;
+    if (viewMode !== 'popup' && field) {
+      const value = this.getValue();
+      if (value) {
+        const bucketName = this.getProp('bucketName');
+        const bucketDirectory = this.getProp('bucketDirectory');
+        const storageCode = this.getProp('storageCode');
+        field.fetchAttachments({
+          bucketName,
+          bucketDirectory,
+          storageCode,
+          attachmentUUID: value,
+        });
       }
     }
   }

@@ -900,7 +900,7 @@ export default class Field {
   reset(): void {
     const { dirtyProps } = this;
     if (dirtyProps) {
-      this.props.merge(dirtyProps)
+      this.props.merge(dirtyProps);
       this.dirtyProps = undefined;
     }
   }
@@ -1172,11 +1172,11 @@ export default class Field {
     }
   }
 
-  fetchAttachments(props: { bucketName?: string, bucketDirectory?: string, attachmentUUID: string }) {
-    const { bucketName, bucketDirectory, attachmentUUID } = props;
+  fetchAttachments(props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) {
+    const { bucketName, bucketDirectory, attachmentUUID, storageCode } = props;
     const { fetchList } = getConfig('attachment');
     if (fetchList) {
-      fetchList({ bucketName, bucketDirectory, attachmentUUID }).then(action((results) => {
+      fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode }).then(action((results) => {
         this.attachments = results.map(file => new AttachmentFile(file));
       }));
     }
