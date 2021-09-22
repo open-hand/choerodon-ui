@@ -49,7 +49,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     onEdit,
     tabBarExtraContent,
     hideOnlyGroup,
-    customizedCode, customizable, children, defaultActiveKey, setCustomized, customized,
+    customizedCode, customizable, children, defaultActiveKey: propDefaultActiveKey, setCustomized, customized,
     prefixCls: customizePrefixCls, activeKey: propActiveKey, onChange, onTabClick, onPrevClick, onNextClick, keyboard,
     ...restProps
   } = props;
@@ -68,16 +68,25 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>,
     Map<string, GroupPanelMap>
   ] = useMemo(() => normalizePanes(children, customized), [children, customized]);
-  const actuallyDefaultActiveKey = useMemo((): string | undefined => {
-    if (customized && customized.defaultActiveKey !== undefined) {
-      return customized.defaultActiveKey;
-    }
+  const defaultActiveKey = useMemo((): string | undefined => {
     const option: { activeKey?: string | undefined, defaultActiveKey?: string | undefined } = {
       activeKey: propActiveKey,
-      defaultActiveKey,
+      defaultActiveKey: propDefaultActiveKey,
     };
     return getDefaultActiveKey(totalPanelsMap, groupedPanelsMap, option);
   }, []);
+  const actuallyDefaultActiveKey = useMemo((): string | undefined => {
+    if (customized) {
+      const $defaultActiveKey = customized.defaultActiveKey;
+      if ($defaultActiveKey !== undefined) {
+        if (onChange && $defaultActiveKey !== defaultActiveKey) {
+          onChange($defaultActiveKey);
+        }
+        return $defaultActiveKey;
+      }
+    }
+    return defaultActiveKey;
+  }, [defaultActiveKey]);
   const [activeKey, setActiveKey] = useState<string | undefined>(actuallyDefaultActiveKey);
   const activeGroupKey = useMemo((): string | undefined => {
     if (groupedPanelsMap.size) {
@@ -109,7 +118,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     }
   }, [hasPropActiveKey, activeKey, onChange, currentGroup]);
   const value: TabsContextValue = {
-    defaultActiveKey,
+    defaultActiveKey: propDefaultActiveKey,
     actuallyDefaultActiveKey,
     propActiveKey,
     prefixCls,

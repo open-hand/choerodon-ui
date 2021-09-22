@@ -466,6 +466,9 @@ export default class Attachment extends FormField<AttachmentProps> {
       const bucketName = this.getProp('bucketName');
       const bucketDirectory = this.getProp('bucketDirectory');
       const storageCode = this.getProp('storageCode');
+      if (attachment.status === 'error') {
+        return this.removeAttachment(attachment);
+      }
       return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode }).then(() => this.removeAttachment(attachment));
     }
   }

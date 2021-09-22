@@ -173,7 +173,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const title = (
         <>
           {getHeader(child)}
-          {showCount && <Count count={count} overflowCount={overflowCount} />}
+          {showCount && <Count prefixCls={prefixCls} count={count} overflowCount={overflowCount} />}
         </>
       );
       rst.push(
