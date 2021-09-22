@@ -24,8 +24,13 @@ function callback(key) {
 
 const App = () => {
   const tabARender = React.useCallback((title) => <span style={{ color: 'red' }}>{title}</span>, []);
+  const [activeKey, setActiveKey] = React.useState('1');
+  const handleChange = React.useCallback((key) => {
+    setActiveKey(key);
+    callback(key);
+  }, []);
   return (
-    <Tabs keyboard={false} defaultActiveKey="1" onChange={callback} customizable customizedCode="customized">
+    <Tabs keyboard={false} activeKey={activeKey} onChange={handleChange} customizable customizedCode="customized">
       <TabPane tab={tabARender} title="Tab A" key="1" count={117}>
         Content of Tab Pane 1
       </TabPane>
