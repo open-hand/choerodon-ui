@@ -12,7 +12,7 @@ title:
 ## en-US
 
 ````jsx
-import { Attachment, DataSet } from 'choerodon-ui/pro';
+import { Attachment, DataSet, Row, Col } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(() => new DataSet({
@@ -25,7 +25,23 @@ const App = () => {
     labelLayout: 'float',
   };
 
-  return <Attachment {...props} />;
+  React.useEffect(() => {
+    ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+setTimeout(() => {
+    ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+}, 0);
+setTimeout(() => {
+    ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+}, 0);
+  }, []);
+
+  return (
+    <Row gutter={10}>
+      <Col span={12}>
+        <Attachment {...props} />
+      </Col>
+    </Row>
+  );
 }
 
 ReactDOM.render(

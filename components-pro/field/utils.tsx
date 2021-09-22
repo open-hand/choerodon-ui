@@ -33,10 +33,12 @@ import { Renderer, RenderProps } from './FormField';
 import { Tooltip } from '../core/enum';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
-  if (isObservableObject(value)) {
-    if (isArrayLike(range)) {
-      const [start, end] = range;
-      return [value[start], value[end]];
+  if (isArrayLike(range)) {
+    if (isObservableObject(value)) {
+      return [get(value, range[0]), get(value, range[1])];
+    }
+    if (isObject(value)) {
+      return [value[range[0]], value[range[1]]];
     }
   } else if (isArrayLike(value)) {
     return value.slice(0, 2) as [any, any];
@@ -216,9 +218,12 @@ export function processValue(value, format) {
   return '';
 }
 
-export function isFieldValueEmpty(value: any, range?: boolean | [string, string], valueField?: string, textField?: string) {
+export function isFieldValueEmpty(value: any, range?: boolean | [string, string], multiple?: boolean, valueField?: string, textField?: string) {
   if (isEmpty(value)) {
     return true;
+  }
+  if (multiple) {
+    return !isArrayLike(value) || value.length === 0;
   }
   if (range === true) {
     return isArrayLike(value) && value.every(v => isEmpty(v));

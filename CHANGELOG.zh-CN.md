@@ -31,8 +31,10 @@ timeline: true
 - 💄 `<pro>Lov`： 优化 lovQueryBar 优先级，去除 lovQueryBar 全局默认值。
 - 💄 `<pro>Tooltip`：优化样式对齐。
 - 🐞 `<pro>DataSet`： 修复 cacheSelection 属性缓存的选中记录重新显示时变更的值被还原的问题。
+- 🐞 `<pro>Attachment`： 修复数量不显示的问题。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。
+- 🐞 `<pro>DatePicker`: 修复 range 为 object 且 multiple 时设置的问题。
 - 🐞 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。
 - 🐞 `<pro>Table`：修复 customizedCode 变更时且表格列不会刷新的问题。
 - 🐞 `<pro>Table`：修复 virtual 在切换分页大小时行错位的问题。

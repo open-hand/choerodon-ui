@@ -1,5 +1,5 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
-import React from 'react';
+import React, { cloneElement } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -261,14 +261,15 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
               filename={meta.filename}
             />
           </div>
-          {introChildren}
-          <Tooltip title="open single Demo">
-            <a href={`/iframe/${id}/${pathname}`} target="single-demo"><Icon type="open_in_new" className="code-open-icon" /></a>
-          </Tooltip>
-          <Tooltip title="Refresh Demo">
-            <Icon type="refresh" onClick={this.refresh} className="code-refresh-icon" />
-          </Tooltip>
-          <Tooltip title={codeExpand ? 'Hide Code' : 'Show Code'}>
+          {cloneElement(introChildren, { className: 'code-box-intro' })}
+          <div className="code-box-icons">
+            <Tooltip title="open single Demo">
+              <a className="code-open-icon" href={`/iframe/${id}/${pathname}`} target="single-demo"><Icon type="open_in_new" /></a>
+            </Tooltip>
+            <Tooltip title="Refresh Demo">
+              <Icon type="refresh" onClick={this.refresh} className="code-refresh-icon" />
+            </Tooltip>
+            <Tooltip title={codeExpand ? 'Hide Code' : 'Show Code'}>
             <span className="code-expand-icon">
               <img
                 alt="expand code"
@@ -283,7 +284,8 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
                 onClick={this.handleCodeExpand}
               />
             </span>
-          </Tooltip>
+            </Tooltip>
+          </div>
         </section>
         <section className={highlightClass} key="code">
           <div className="highlight">

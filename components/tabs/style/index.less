@@ -270,10 +270,12 @@
 
       &-count {
         margin-left: .05rem;
+        color: rgba(0, 0, 0, .65);
       }
     }
 
-    .@{tab-prefix-cls}-tab-active {
+    .@{tab-prefix-cls}-tab-active,
+    .@{tab-prefix-cls}-tab-active .@{tab-prefix-cls}-tab-count {
       color: @tab-highlight-color;
       font-weight: 500;
     }

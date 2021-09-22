@@ -633,7 +633,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   isEmpty() {
     const value = this.getValue();
-    return isFieldValueEmpty(value, this.range);
+    return isFieldValueEmpty(value, this.range, this.multiple);
   }
 
   isReadOnly(): boolean {
@@ -1121,7 +1121,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   addValue(...values) {
     if (this.multiple) {
-      const oldValues = this.getValues();
+      const oldValues = toMultipleValue(this.getValue(), false);
       if (values.length) {
         this.setValue(uniqWith([...oldValues, ...values], this.compare));
       } else if (!oldValues.length) {

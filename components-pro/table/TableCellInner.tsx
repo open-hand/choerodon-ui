@@ -535,6 +535,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const empty = field ? isFieldValueEmpty(
     value,
     field.get('range'),
+    field.get('multiple'),
     field.type === FieldType.object ? field.get('valueField') : undefined,
     field.type === FieldType.object ? field.get('textField') : undefined,
   ) : false;

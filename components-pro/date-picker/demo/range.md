@@ -61,7 +61,7 @@ class App extends React.Component {
       {
         name: 'multipleDate',
         type: 'date',
-        range: true,
+        range: ['start', 'end'],
         multiple: true,
         required: true,
       },

@@ -491,7 +491,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   isEmpty() {
-    return (this.isEditableLike() || isEmpty(this.text)) && isFieldValueEmpty(this.getValue(), this.range, this.valueField, this.textField) && this.isRenderEmpty();
+    return (this.isEditableLike() || isEmpty(this.text)) && isFieldValueEmpty(this.getValue(), this.range, this.multiple, this.valueField, this.textField) && this.isRenderEmpty();
   }
 
   isEditable(): boolean {
