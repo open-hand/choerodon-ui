@@ -46,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fix the problem that Tooltip will be displayed even if the content is overflow when the tooltip is overflow.
 - 🐞 `<pro>Lov`: Fix the problem that the `onClick` property of `button` mode has no effect.
 - 🐞 `<pro>Lov`: Fix the problem that the `noCache` option is repeated in `multiple` mode.
+- 🐞 `<pro>Lov`: Fix the problem that the search drop-down did not collapse after clicking the pop-up Modal.
 
 ## 1.4.4
 
