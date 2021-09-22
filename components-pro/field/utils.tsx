@@ -33,8 +33,8 @@ import { Renderer, RenderProps } from './FormField';
 import { Tooltip } from '../core/enum';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
-  if (isArrayLike(range)) {
-    if (isObject(value)) {
+  if (isObservableObject(value)) {
+    if (isArrayLike(range)) {
       const [start, end] = range;
       return [value[start], value[end]];
     }
