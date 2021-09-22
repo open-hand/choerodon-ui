@@ -22,7 +22,7 @@ import { appendFormData, formatFileSize, sortAttachments } from './utils';
 import ObserverSelect from '../select/Select';
 import BUILT_IN_PLACEMENTS from '../trigger-field/placements';
 import attachmentStore from '../stores/AttachmentStore';
-import { FieldType } from '../data-set/enum';
+import { DataSetEvents, FieldType } from '../data-set/enum';
 import { ValidatorProps } from '../validator/rules';
 import { ValidationMessages } from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
@@ -174,12 +174,29 @@ export default class Attachment extends FormField<AttachmentProps> {
     };
   }
 
+  processDataSetEventListener(on: boolean) {
+    const { dataSet } = this;
+    if (dataSet) {
+      dataSet[on ? 'addEventListener' : 'removeEventListener'](DataSetEvents.load, this.fetchCount);
+    }
+  }
+
   componentDidMount() {
     super.componentDidMount();
-    const { viewMode } = this.props;
-    if (viewMode !== 'list' && isNil(this.count)) {
+    this.fetchCount();
+    this.processDataSetEventListener(true);
+  }
+
+  componentDidUpdate(prevProps: AttachmentProps) {
+    const { value, viewMode } = this.props;
+    if (prevProps.value !== value || prevProps.viewMode !== viewMode) {
       this.fetchCount();
     }
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    this.processDataSetEventListener(false);
   }
 
   getFieldType(): FieldType {
@@ -210,18 +227,22 @@ export default class Attachment extends FormField<AttachmentProps> {
     };
   }
 
+  @autobind
   fetchCount() {
     const { field } = this;
-    const value = this.getValue();
-    if (value) {
-      if (field) {
-        field.fetchAttachmentCount(value);
-      } else {
-        const { batchFetchCount } = getConfig('attachment');
-        if (batchFetchCount && !this.attachments) {
-          attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
-            this.observableProps.count = count || 0;
-          }));
+    const { viewMode } = this.props;
+    if (viewMode !== 'list' && isNil(this.count)) {
+      const value = this.getValue();
+      if (value) {
+        if (field) {
+          field.fetchAttachmentCount(value);
+        } else {
+          const { batchFetchCount } = getConfig('attachment');
+          if (batchFetchCount && !this.attachments) {
+            attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
+              this.observableProps.count = count || 0;
+            }));
+          }
         }
       }
     }

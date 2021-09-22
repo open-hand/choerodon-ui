@@ -71,7 +71,7 @@ const Tabs: FunctionComponent<TabsProps> = function Tabs(props) {
       const customizedLoad = getConfig('customizedLoad');
       try {
         const remoteCustomized: TabsCustomized | undefined | null = await customizedLoad(customizedCode, 'Tabs');
-        setCustomized(remoteCustomized);
+        setCustomized({ panes: {}, ...remoteCustomized });
       } finally {
         setLoaded(true);
       }
