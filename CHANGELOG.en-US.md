@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
 - 💄 `<pro>Lov`: Optimize the priority of `lovQueryBar` and remove the global default value of `lovQueryBar`.
+- 💄 `<pro>Tooltip`: Optimize style alignment.
 - 🐞 `<pro>DataSet`: Fix the `cacheSelection` problem that the changed value is restored when the cached selected record is redisplayed.
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 - 🐞 `<pro>DatePicker`: Fix display problems in `isFlat` and `range` mode.
@@ -36,6 +37,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
 - 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode. 
 - 🐞 `<pro>Table`: Fix the problem of editor dislocation caused by `virtualCell`.
+- 🐞 `<pro>Table`: Fix an error rendering filter bar when the query field range property value is an array.
 - 🐞 `<pro>Tree`: Fix the problem that asynchronously loaded nodes cannot be displayed when the dataSet is reloaded.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
 - 🌟 `Tabs.TabPane`: Added `count`, `overflowCount` properties.
