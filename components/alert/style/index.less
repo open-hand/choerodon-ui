@@ -18,8 +18,8 @@
 
   &-icon {
     position: absolute;
-    top: 0.05rem + @font-size-base * @line-height-base / 2 - @font-size-base / 2;
-    left: 0.16rem;
+    top: @alert-icon-top;
+    left: @alert-icon-left;
   }
 
   &-description {
@@ -31,6 +31,7 @@
   &-success {
     background-color: ~`colorPalette('@{success-color}', 1) `;
     border: @border-width-base @border-style-base ~`colorPalette('@{success-color}', 3) `;
+
     .@{alert-prefix-cls}-icon {
       color: @success-color;
     }
@@ -39,6 +40,7 @@
   &-info {
     background-color: ~`colorPalette('@{info-color}', 1) `;
     border: @border-width-base @border-style-base ~`colorPalette('@{info-color}', 3) `;
+
     .@{alert-prefix-cls}-icon {
       color: @info-color;
     }
@@ -47,6 +49,7 @@
   &-warning {
     background-color: ~`colorPalette('@{warning-color}', 1) `;
     border: @border-width-base @border-style-base ~`colorPalette('@{warning-color}', 3) `;
+
     .@{alert-prefix-cls}-icon {
       color: @warning-color;
     }
@@ -55,6 +58,7 @@
   &-error {
     background-color: ~`colorPalette('@{error-color}', 1) `;
     border: @border-width-base @border-style-base ~`colorPalette('@{error-color}', 3) `;
+
     .@{alert-prefix-cls}-icon {
       color: @error-color;
     }
@@ -72,6 +76,7 @@
     .@{iconfont-css-prefix}-cross {
       color: @text-color-secondary;
       transition: color 0.3s;
+
       &:hover {
         color: #404040;
       }
