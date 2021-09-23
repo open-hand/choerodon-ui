@@ -250,22 +250,6 @@ export default class Attachment extends FormField<AttachmentProps> {
   @autobind
   handleDataSetLoad() {
     this.fetchCount();
-    const { viewMode } = this.props;
-    const { field } = this;
-    if (viewMode !== 'popup' && field) {
-      const value = this.getValue();
-      if (value) {
-        const bucketName = this.getProp('bucketName');
-        const bucketDirectory = this.getProp('bucketDirectory');
-        const storageCode = this.getProp('storageCode');
-        field.fetchAttachments({
-          bucketName,
-          bucketDirectory,
-          storageCode,
-          attachmentUUID: value,
-        });
-      }
-    }
   }
 
   getOmitPropsKeys(): string[] {

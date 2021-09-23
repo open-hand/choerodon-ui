@@ -80,6 +80,7 @@ import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 import ValidationResult from '../validator/ValidationResult';
 import { treeReduce } from '../_util/treeUtils';
+import AttachmentFile from './AttachmentFile';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
@@ -409,6 +410,8 @@ export default class DataSet extends EventManager {
   validating: boolean = false;
 
   @observable lookupCaches?: ObservableMap<string, object[] | Promise<object[]>>;
+
+  @observable attachmentCaches?: ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>;
 
   @observable selectionStrategy?: CheckedStrategy;
 
