@@ -48,6 +48,7 @@ timeline: true
 - 🐞 `<pro>Button`：修复 tooltip 为 overflow 时内容没溢出也会显示 Tooltip 的问题。
 - 🐞 `<pro>Lov`：修复 button 模式的 onClick 属性没效果的问题。
 - 🐞 `<pro>Lov`：修复 multiple 模式下开启 noCache 选项重复的问题。
+- 🐞 `<pro>Lov`：修复点击弹出 Modal 后搜索下拉未收起的问题。
 
 ## 1.4.4
 

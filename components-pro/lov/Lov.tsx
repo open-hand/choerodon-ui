@@ -365,6 +365,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   private openModal = action((fetchSingle?: boolean) => {
+    this.collapse();
     const { viewMode, onBeforeSelect } = this.props;
     if (viewMode === 'modal') {
       const config = this.getConfig();
