@@ -137,18 +137,21 @@ export function mergeDefaultProps(
       }
       if (parent || !newColumn.fixed) {
         if (newColumn.sort === undefined) {
-          newColumn.sort = columnSort.center++;
+          newColumn.sort = columnSort.center;
         }
+        columnSort.center++;
         columns.push(newColumn);
       } else if (newColumn.fixed === true || newColumn.fixed === ColumnLock.left) {
         if (newColumn.sort === undefined) {
-          newColumn.sort = columnSort.left++;
+          newColumn.sort = columnSort.left;
         }
+        columnSort.left++;
         leftColumns.push(newColumn);
       } else {
         if (newColumn.sort === undefined) {
-          newColumn.sort = columnSort.right++;
+          newColumn.sort = columnSort.right;
         }
+        columnSort.right++;
         rightColumns.push(newColumn);
       }
     }
