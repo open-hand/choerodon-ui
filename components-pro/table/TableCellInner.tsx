@@ -431,25 +431,27 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
       });
     };
     if (field) {
-      const multiple = field.get('multiple');
-      const range = field.get('range');
-      if (multiple) {
-        const { tags, multipleValidateMessageLength } = renderMultipleValues(value, {
-          disabled,
-          readOnly: true,
-          range,
-          prefixCls,
-          processRenderer,
-          renderValidationResult,
-          isValidationMessageHidden,
-          showValidationMessage,
-          validator: field.validator,
-        });
-        multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
-        return tags;
-      }
-      if (range) {
-        return renderRangeValue(toRangeValue(value, range), { processRenderer });
+      if (!cellEditorInCell) {
+        const multiple = field.get('multiple');
+        const range = field.get('range');
+        if (multiple) {
+          const { tags, multipleValidateMessageLength } = renderMultipleValues(value, {
+            disabled,
+            readOnly: true,
+            range,
+            prefixCls,
+            processRenderer,
+            renderValidationResult,
+            isValidationMessageHidden,
+            showValidationMessage,
+            validator: field.validator,
+          });
+          multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
+          return tags;
+        }
+        if (range) {
+          return renderRangeValue(toRangeValue(value, range), { processRenderer });
+        }
       }
       if (field.get('multiLine')) {
         const { lines, multipleValidateMessageLength } = renderMultiLine({

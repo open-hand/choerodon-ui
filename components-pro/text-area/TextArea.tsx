@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import { action, observable } from 'mobx';
 import isString from 'lodash/isString';
-import isNil from 'lodash/isNil';
 import PropTypes from 'prop-types';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import { AutoSizeType, ResizeType } from './enum';
 import calculateNodeHeight from './calculateNodeHeight';
+import autobind from '../_util/autobind';
 
 function getResizeProp(resize: ResizeType) {
   switch (resize) {
@@ -57,6 +58,8 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   // eslint-disable-next-line camelcase
   static __PRO_TEXTAREA = true;
 
+  @observable resized?: boolean;
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'resize',
@@ -85,22 +88,33 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return otherProps;
   }
 
+  @autobind
+  @action
+  handleResize(width: number, height: number, target: Element | null) {
+    const { onResize } = this.props;
+    if (!this.resized) {
+      const { element } = this;
+      if (element && element.style.width) {
+        this.resized = true;
+      }
+    }
+    if (onResize) {
+      onResize(width, height, target);
+    }
+  }
+
   renderWrapper(): ReactNode {
-    const { onResize, resize = ResizeType.none, style } = this.props;
+    const { resize = ResizeType.none } = this.props;
     const text = this.getTextNode();
     const resizable = resize !== ResizeType.none;
     const wrapperProps = this.getWrapperProps() || {};
     const elementProps = this.getOtherProps() || {};
     const lengthElement = this.renderLengthInfo();
-    if (style && !isNil(style.width) && resizable) {
+    if (this.resized) {
       const { style: wrapperStyle } = wrapperProps;
-      if (wrapperStyle) {
-        delete wrapperStyle.width;
-      }
-      const { style: elementStyle } = elementProps;
-      elementProps.style = {
-        ...elementStyle,
-        width: style.width,
+      wrapperProps.style = {
+        ...wrapperStyle,
+        width: 'auto',
       };
     }
     const element = (
@@ -116,8 +130,8 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
         {this.renderPlaceHolder()}
         <label>
           {
-            onResize && resizable ? (
-              <ReactResizeObserver onResize={onResize} resizeProp={getResizeProp(resize)}>
+            resizable ? (
+              <ReactResizeObserver onResize={this.handleResize} resizeProp={getResizeProp(resize)}>
                 {element}
                 {lengthElement}
               </ReactResizeObserver>
