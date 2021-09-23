@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action } from 'mobx';
+import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
@@ -178,7 +178,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   }
 
   getChildrenText() {
-    return this.props.children;
+    return toJS(this.props.children);
   }
 
   getLabelText() {

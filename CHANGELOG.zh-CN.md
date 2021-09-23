@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复 virtualCell 导致编辑器错位的问题。
 - 🐞 `<pro>Table`：修复查询字段 range 属性值为 [string, stirng] 时过滤条渲染错误的问题。
 - 🐞 `<pro>Table`：修复编辑器为多选 SelectBox 时的显示问题。
+- 🐞 `<pro>Table`：修复个性化调整列顺序不准确的问题。
 - 🐞 `<pro>Tree`：修复异步加载的节点在 dataSet 重新加载时无法显示的问题。
 - 🐞 `Tabs`：修墨条可能对不齐的问题。
 - 🐞 `<pro>PerformanceTable`：修复行高亮点击报错问题。

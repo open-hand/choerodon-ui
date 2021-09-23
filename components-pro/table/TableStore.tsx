@@ -246,18 +246,21 @@ export function mergeDefaultProps(
         }
         if (parent || !newColumn.lock) {
           if (newColumn.sort === undefined) {
-            newColumn.sort = columnSort.center++;
+            newColumn.sort = columnSort.center;
           }
+          columnSort.center++;
           columns.push(newColumn);
         } else if (newColumn.lock === true || newColumn.lock === ColumnLock.left) {
           if (newColumn.sort === undefined) {
-            newColumn.sort = columnSort.left++;
+            newColumn.sort = columnSort.left;
           }
+          columnSort.left++;
           leftColumns.push(newColumn);
         } else {
           if (newColumn.sort === undefined) {
-            newColumn.sort = columnSort.right++;
+            newColumn.sort = columnSort.right;
           }
+          columnSort.right++;
           rightColumns.push(newColumn);
         }
       } else if (children) {
@@ -343,18 +346,21 @@ export function normalizeColumns(
           }
           if (parent || !column.lock) {
             if (column.sort === undefined) {
-              column.sort = columnSort.center++;
+              column.sort = columnSort.center;
             }
+            columnSort.center++;
             columns.push(column);
           } else if (column.lock === true || column.lock === ColumnLock.left) {
             if (column.sort === undefined) {
-              column.sort = columnSort.left++;
+              column.sort = columnSort.left;
             }
+            columnSort.left++;
             leftColumns.push(column);
           } else {
             if (column.sort === undefined) {
-              column.sort = columnSort.right++;
+              column.sort = columnSort.right;
             }
+            columnSort.right++;
             rightColumns.push(column);
           }
         } else {

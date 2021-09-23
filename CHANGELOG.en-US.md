@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of editor dislocation caused by `virtualCell`.
 - 🐞 `<pro>Table`: Fix an error rendering filter bar when the query field range property value is an array.
 - 🐞 `<pro>Table`: Fix the display problem when the editor is SelectBox in `multiple` mode.
+- 🐞 `<pro>Table`: Fix the problem of inaccurate column order in personalized adjustment.
 - 🐞 `<pro>Tree`: Fix the problem that asynchronously loaded nodes cannot be displayed when the dataSet is reloaded.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
 - 🌟 `Tabs.TabPane`: Added `count`, `overflowCount` properties.
