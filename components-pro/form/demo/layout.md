@@ -41,7 +41,7 @@ ReactDOM.render(
       <Option value="ja-jp">日本語</Option>
     </Select>
     <EmailField label="邮箱" name="email" />
-    <TextArea rowSpan={2} colSpan={2} label="简介" name="description" required style={{ height: 80 }} help="请输入100~300个字符请输入100~300个字符请输入100~300个字符" />
+    <TextArea resize="both" rowSpan={2} colSpan={2} label="简介" name="description" required style={{ height: 80 }} help="请输入100~300个字符请输入100~300个字符请输入100~300个字符" />
     <UrlField label={<span>个人主页</span>} name="homepage" required help="请输入你的个人主页，如Github Pages个人博客" showHelp="tooltip" />
     <DatePicker label="生日" name="birth" required />
     <div newLine colSpan={3}>

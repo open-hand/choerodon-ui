@@ -307,6 +307,7 @@ class App extends React.Component {
         label: '性别',
         lookupCode: 'HR.EMPLOYEE_GENDER',
         required: true,
+        multiple: ',',
       },
       {
         name: 'sexMultiple',

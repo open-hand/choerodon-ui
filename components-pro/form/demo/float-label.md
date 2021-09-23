@@ -82,6 +82,7 @@ ReactDOM.render(
       required
       style={{ height: 80 }}
       placeholder="请输入简介"
+      resize="both" 
     />
     <UrlField
       label="个人主页"
