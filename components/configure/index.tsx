@@ -117,7 +117,7 @@ export type AttachmentConfig = {
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
   onOrderChange?: (props: { attachmentUUID: string, attachments: AttachmentFile[], bucketName?: string, bucketDirectory?: string, storageCode?: string }) => Promise<void>;
-  onRemove?: (props: { attachment: AttachmentFile, attachmentUUID: string, bucketName?: string, bucketDirectory?: string, storageCode?: string }) => Promise<any>;
+  onRemove?: (props: { attachment: AttachmentFile, attachmentUUID: string, bucketName?: string, bucketDirectory?: string, storageCode?: string }) => Promise<boolean>;
 }
 
 export type Config = {

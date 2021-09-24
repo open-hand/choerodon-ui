@@ -94,6 +94,7 @@
       }
 
       &-size {
+        margin-left: .02rem;
         color: @text-color-secondary;
       }
 
@@ -112,6 +113,10 @@
             font-size: .14rem;
             line-height: 1;
           }
+        }
+
+        .@{c7n-prefix}-progress-loading {
+          display: block;
         }
       }
 
@@ -159,6 +164,7 @@
         cursor: move;
       }
 
+      &-buttons-visible,
       &:hover &-buttons {
         opacity: 1;
       }
@@ -216,6 +222,10 @@
             border-left: @border-width-base @border-style-base rgba(255, 255, 255, .65);
             border-radius: 0;
           }
+        }
+
+        .@{c7n-prefix}-progress-loading circle {
+          stroke: @text-color-dark;
         }
       }
 

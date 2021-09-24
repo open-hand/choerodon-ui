@@ -18,7 +18,7 @@ export interface AttachmentListProps {
   limit?: number;
   onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
-  onRemove: (attachment: AttachmentFile) => void;
+  onRemove: (attachment: AttachmentFile) => Promise<any> | undefined;
   onOrderChange: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string, attachments: AttachmentFile[] }) => void;
   onFetchAttachments: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => void;
   onPreview: () => void;

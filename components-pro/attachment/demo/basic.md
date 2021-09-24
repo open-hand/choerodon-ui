@@ -45,7 +45,7 @@ configure({
       return Axios.get(`/attachment-count/${uuids.sort().join(',')}`);
     },
     onRemove() {
-      return Promise.resolve();
+      return new Promise((resolve) => setTimeout(() => resolve(Math.random() >= 0.3), 1000));
     },
     onOrderChange() {
       return Promise.resolve();

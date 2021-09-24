@@ -373,7 +373,7 @@ title: DataSet
 | url   | url地址    | string |
 | filename   | 文件名（不包含后缀）    | string |
 | ext   | 文件后缀    | string |
-| status   | 状态 `error` `succes` `uploading` `done`    | string |
+| status   | 状态 `error` `succes` `uploading` `deleting` `done`    | string |
 | percent   | 上传进度, 0 至 100   | number |
 | error   | 上传错误对象  | AxiosError |
 | errorMessage   | 错误消息  | string |

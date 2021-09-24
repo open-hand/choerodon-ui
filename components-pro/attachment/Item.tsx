@@ -26,7 +26,7 @@ export interface ItemProps {
   onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onPreview?: () => void;
-  onRemove: (attachment: AttachmentFile) => void;
+  onRemove: (attachment: AttachmentFile) => Promise<any> | undefined;
   readOnly?: boolean;
   isCard?: boolean;
   prefixCls?: string;
@@ -65,8 +65,15 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   }, [pictureRef]);
   const renderDragger = (): ReactNode => {
     if (draggable && !isCard) {
+      const iconProps = {
+        className: `${prefixCls}-drag-icon`,
+        type: 'baseline-drag_indicator',
+      };
+      if (status !== 'deleting') {
+        Object.assign(iconProps, dragProps);
+      }
       return (
-        <Icon className={`${prefixCls}-drag-icon`} type="baseline-drag_indicator" {...dragProps} />
+        <Icon {...iconProps} />
       );
     }
   };
@@ -110,7 +117,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
       );
     }
     if (isCard || listType === 'picture') {
-      if (preview && isPicture) {
+      if ((preview || status === 'deleting') && isPicture) {
         return (
           <Picture
             width={width}
@@ -120,6 +127,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
             lazy
             objectFit="contain"
             index={index}
+            preview={preview}
           />
         );
       }
@@ -136,14 +144,23 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     }
   };
   const renderTitle = (isCardTitle?: boolean): ReactNode => {
+    const fileName = (
+      <>
+        <span className={`${prefixCls}-name`}>{filename}</span>
+        {ext && <span className={`${prefixCls}-ext`}>.{ext}</span>}
+      </>
+    );
     const nameNode = preview && src && listType === 'text' ? (
-      <a {...isPicture ? { onClick: handlePreview } : { href: src, target: ATTACHMENT_TARGET }}
-         className={`${prefixCls}-name ${prefixCls}-link`}>{filename}</a>
-    ) : <span className={`${prefixCls}-name`}>{filename}</span>;
+      <a
+        {...isPicture ? { onClick: handlePreview } : { href: src, target: ATTACHMENT_TARGET }}
+        className={`${prefixCls}-link`}
+      >
+        {fileName}
+      </a>
+    ) : fileName;
     return (
       <span className={`${prefixCls}-title`} style={isCardTitle ? { width } : undefined}>
         {nameNode}
-        {ext && <span className={`${prefixCls}-ext`}>.{ext}</span>}
         {!isCardTitle && <span className={`${prefixCls}-size`}> ({formatFileSize(size)})</span>}
       </span>
     );
@@ -214,14 +231,14 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
         block: isCard,
       };
       buttons.push(
-        <Tooltip key="remove" title={$l('Attachment', 'delete')}>
+        <Tooltip key="remove" title={status === 'deleting' ? undefined : $l('Attachment', 'delete')}>
           <Button {...rmProps} />
         </Tooltip>,
       );
     }
     if (buttons.length) {
       return (
-        <div className={`${prefixCls}-buttons`}>
+        <div className={classnames(`${prefixCls}-buttons`, { [`${prefixCls}-buttons-visible`]: status === 'deleting' })}>
           {buttons}
         </div>
       );

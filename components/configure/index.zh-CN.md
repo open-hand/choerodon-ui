@@ -190,7 +190,7 @@ const prefixCls = getConfig('prefixCls');
 | ----------------- | ------------------- | ----------------------------------- |
 | defaultFileKey               | 上传文件的参数名                | string                              |
 | defaultFileSize               | 上传文件的大小限制, 单位 `B`                | number                              |
-| action               | 上传文件的大小限制, 单位 `B`                | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => AxiosRequestConfig                             |
+| action               | 上传的 axios 请求配置或返回 axios 请求配置的钩子               | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => AxiosRequestConfig                             |
 | batchFetchCount               | 批量获取附件数量                | (attachmentUUIDs: string[]) => Promise<{\[key as string\]: number}>                             |
 | fetchList               | 查询附件列表                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => Promise<FileLike[]>                             |
 | getPreviewUrl               | 获取预览地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => string                             |
@@ -202,7 +202,7 @@ const prefixCls = getConfig('prefixCls');
 | onUploadSuccess | 上传成功的回调 | (attachment: AttachmentFile, response: any) => void |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void |
 | onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[]) => void |
-| onRemove | 删除文件回调，用于发送删除请求 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => void |
+| onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => boolean |
 
 ### AxiosRequestConfig
 

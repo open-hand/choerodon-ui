@@ -484,7 +484,8 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
-  doRemove(attachment: AttachmentFile) {
+  @mobxAction
+  doRemove(attachment: AttachmentFile): Promise<any> | undefined {
     const { onRemove } = getConfig('attachment');
     const attachmentUUID = this.getValue();
     if (onRemove && attachmentUUID) {
@@ -494,7 +495,17 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (attachment.status === 'error') {
         return this.removeAttachment(attachment);
       }
-      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode }).then(() => this.removeAttachment(attachment));
+      attachment.status = 'deleting';
+      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode })
+        .then(mobxAction((result) => {
+          if (result !== false) {
+            this.removeAttachment(attachment);
+          }
+          attachment.status = 'done';
+        }))
+        .catch(mobxAction(() => {
+          attachment.status = 'done';
+        }));
     }
   }
 
@@ -522,7 +533,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
-  handleRemove(attachment: AttachmentFile) {
+  handleRemove(attachment: AttachmentFile): Promise<any> | undefined {
     return this.doRemove(attachment);
   }
 
@@ -547,7 +558,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @mobxAction
-  removeAttachment(attachment: AttachmentFile) {
+  removeAttachment(attachment: AttachmentFile): undefined {
     const { attachments } = this;
     if (attachments) {
       const index = attachments.indexOf(attachment);
@@ -560,6 +571,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         }
       }
     }
+    return undefined;
   }
 
   @mobxAction
