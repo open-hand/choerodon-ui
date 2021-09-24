@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
 - 🌟 `<pro>Table`: Add `searchCode`, `autoWidth` properties, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions, deprecated `autoMaxWidth` property.
 - 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
+- 💄 `Tabs`: Optimized to not display when `count` is zero.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
 - 💄 `<pro>Attachment`: Optimize the display of deleting, dnd, preview and label. Optimized to delete the attachments in the wrong state as direct deletion.
 - 💄 `<pro>Table`: Supports multiple selections by pressing shift.
