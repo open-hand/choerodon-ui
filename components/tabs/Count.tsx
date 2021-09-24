@@ -18,7 +18,10 @@ function getCount(count: number | (() => number | undefined) | undefined): numbe
 const Count: FunctionComponent<CountProps> = observer(function Count(props) {
   const { count, overflowCount, prefixCls } = props;
   const number = getCount(count);
-  const displayCount = (number as number) > (overflowCount as number) ? `${overflowCount}+` : number;
+  if (!number) {
+    return null;
+  }
+  const displayCount = number > (overflowCount as number) ? `${overflowCount}+` : number;
   if (isNil(displayCount)) {
     return null;
   }
