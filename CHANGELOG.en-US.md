@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
 - 💄 `<pro>Attachment`: Optimize dnd, preview and label display. Optimized to delete the attachments in the wrong state as direct deletion.
+- 💄 `<pro>Table`: Supports multiple selections by pressing shift.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
 - 💄 `<pro>Lov`: Optimize the priority of `lovQueryBar` and remove the global default value of `lovQueryBar`.
