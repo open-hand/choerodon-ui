@@ -66,7 +66,6 @@ subtitle: 表格
 | autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
-| autoMaxWidth | 是否开启双击侧边栏宽度最大自适应,初次双击为最大值再次双击为`minWidth` | boolean | false |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
 | onDragEnd | 完成拖拽后的触发事件 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
 | columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender)  |  |

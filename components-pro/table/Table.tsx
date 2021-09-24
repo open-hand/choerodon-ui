@@ -529,7 +529,7 @@ export interface TableProps extends DataSetComponentProps {
    */
   autoWidth?: boolean;
   /**
-   * 是否开启宽度双击最大值
+   * @deprecated
    */
   autoMaxWidth?: boolean;
   /**
@@ -1354,9 +1354,9 @@ export default class Table extends DataSetComponent<TableProps> {
       ...props,
     };
     if (autoWidth) {
-      const { columnGroups } = this.tableStore;
+      const { columnGroups, overflowY, border } = this.tableStore;
       wrapperProps.style = {
-        width: columnGroups.width,
+        width: columnGroups.width + (overflowY ? measureScrollbar() : 0) + (border ? 2 : 0),
       };
     }
     return super.getWrapperProps(wrapperProps);

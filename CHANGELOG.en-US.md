@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
-- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
+- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth` properties, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions, deprecated `autoMaxWidth` property.
 - 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
 - 💄 `<pro>Attachment`: Optimize the display of deleting, dnd, preview and label. Optimized to delete the attachments in the wrong state as direct deletion.

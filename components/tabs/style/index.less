@@ -256,14 +256,6 @@
         margin-right: 0;
       }
 
-      &:hover {
-        color: @tab-hover-color;
-      }
-
-      &:active {
-        color: @tab-active-color;
-      }
-
       .@{iconfont-css-prefix} {
         margin-right: 0.08rem;
       }
@@ -280,10 +272,21 @@
       font-weight: 500;
     }
 
-    .@{tab-prefix-cls}-tab-disabled {
+    .@{tab-prefix-cls}-tab-disabled,
+    .@{tab-prefix-cls}-tab-disabled .@{tab-prefix-cls}-tab-count {
       color: @disabled-color;
       cursor: default;
       pointer-events: none;
+    }
+
+    .@{tab-prefix-cls}-tab:hover,
+    .@{tab-prefix-cls}-tab:hover .@{tab-prefix-cls}-tab-count {
+      color: @tab-hover-color;
+    }
+
+    .@{tab-prefix-cls}-tab:active,
+    .@{tab-prefix-cls}-tab:active .@{tab-prefix-cls}-tab-count {
+      color: @tab-active-color;
     }
   }
 
