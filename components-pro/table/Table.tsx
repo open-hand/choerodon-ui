@@ -525,6 +525,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   autoHeight?: boolean | { type: TableAutoHeightType, diff: number };
   /**
+   * 是否开启自适应宽度
+   */
+  autoWidth?: boolean;
+  /**
    * 是否开启宽度双击最大值
    */
   autoMaxWidth?: boolean;
@@ -1311,6 +1315,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'virtual',
       'virtualCell',
       'virtualSpin',
+      'autoWidth',
       'autoHeight',
       'autoFootHeight',
       'useMouseBatchChoose',
@@ -1341,6 +1346,20 @@ export default class Table extends DataSetComponent<TableProps> {
       'showRemovedRow',
       'searchCode',
     ]);
+  }
+
+  getWrapperProps(props: any = {}): any {
+    const { autoWidth } = this.props;
+    const wrapperProps = {
+      ...props,
+    };
+    if (autoWidth) {
+      const { columnGroups } = this.tableStore;
+      wrapperProps.style = {
+        width: columnGroups.width,
+      };
+    }
+    return super.getWrapperProps(wrapperProps);
   }
 
   getOtherProps() {

@@ -63,6 +63,7 @@ subtitle: 表格
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | false |
 | virtualCell | 虚拟单元格 | boolean | false |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
+| autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | autoMaxWidth | 是否开启双击侧边栏宽度最大自适应,初次双击为最大值再次双击为`minWidth` | boolean | false |

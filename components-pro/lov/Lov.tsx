@@ -265,6 +265,7 @@ export default class Lov extends Select<LovProps> {
           onBeforeSelect={onBeforeSelect}
           multiple={this.multiple}
           values={this.getValues()}
+          popupHidden={!this.popup}
         />
       );
     }
