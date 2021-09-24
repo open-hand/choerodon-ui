@@ -410,7 +410,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     /**
      * 校验信息提示方式
      */
-    showValidation: PropTypes.bool,
+    showValidation: PropTypes.string,
     ...DataSetComponent.propTypes,
   };
 

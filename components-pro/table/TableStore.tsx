@@ -128,7 +128,50 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
 
     const handleClick = e => {
       stopPropagation(e);
-      if (record.isSelected) {
+      if (selection === DataSetSelection.multiple) {
+        const { lastSelected } = store;
+        const nativeEvent = e.nativeEvent;
+        let startIndex = -1;
+        let endIndex = -1;
+        if (nativeEvent.shiftKey) {
+          const pointKeys = new Set([lastSelected.key, record.key]);
+          dataSet.some((pointRecord, index) => {
+            if (pointKeys.has(pointRecord.key)) {
+              if (startIndex === -1) {
+                startIndex = index;
+              } else {
+                endIndex = index;
+                return true;
+              }
+            }
+            return false;
+          });
+        }
+        if (endIndex !== -1 && startIndex !== endIndex) {
+          // Batch update selections
+          const rangeRecords = dataSet.slice(startIndex, endIndex + 1);
+          const changedRecords = [];
+          const selectedKeys = new Set(dataSet.selected.map(selected => selected.key));
+          if (record.isSelected) {
+            rangeRecords.forEach(rangeRecord => {
+              if (selectedKeys.has(rangeRecord.key)) {
+                changedRecords.push(rangeRecord);
+              }
+            });
+            dataSet.batchUnSelect(changedRecords);
+          } else {
+            rangeRecords.forEach(rangeRecord => {
+              if (!selectedKeys.has(rangeRecord.key)) {
+                changedRecords.push(rangeRecord);
+              }
+            });
+            dataSet.batchSelect(changedRecords);
+          }
+
+        }
+        store.lastSelected = record;
+
+      } else if (record.isSelected) {
         dataSet.unSelect(record);
       }
     };
@@ -182,7 +225,7 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
           {...batchSelectProps}
           checked={record.isSelected}
           onChange={handleChange}
-          onClick={stopPropagation}
+          onClick={handleClick}
           disabled={!record.selectable}
           data-selection-key={SELECTION_KEY}
           value
@@ -479,6 +522,8 @@ export default class TableStore {
   inBatchExpansion: boolean = false;
 
   performanceOn: boolean = false;
+
+  lastSelected?: Record;
 
   timing: {
     renderStart: number;
