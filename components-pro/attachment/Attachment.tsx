@@ -427,7 +427,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       } else if (attachment.status !== 'error' && !attachment.invalid) {
         const config = this.getUploadAxiosConfig(attachment, attachmentUUID);
         if (config) {
-          this.handleSuccess(await this.axios(config), attachment);
+          await this.handleSuccess(await this.axios(config), attachment);
         }
       }
     } catch (e) {
@@ -455,18 +455,21 @@ export default class Attachment extends FormField<AttachmentProps> {
   @mobxAction
   handleSuccess(response: any, attachment: AttachmentFile) {
     attachment.percent = 100;
-    setTimeout(mobxAction(() => {
-      attachment.status = 'success';
-      const { onUploadSuccess: handleUploadSuccess } = getConfig('attachment');
-      if (handleUploadSuccess) {
-        handleUploadSuccess(response, attachment);
-      }
-      const { onUploadSuccess } = this.props;
-      if (onUploadSuccess) {
-        onUploadSuccess(response, attachment);
-      }
-      this.checkValidity();
-    }), 0);
+    return new Promise((resolve) => {
+      setTimeout(mobxAction(() => {
+        attachment.status = 'success';
+        const { onUploadSuccess: handleUploadSuccess } = getConfig('attachment');
+        if (handleUploadSuccess) {
+          handleUploadSuccess(response, attachment);
+        }
+        const { onUploadSuccess } = this.props;
+        if (onUploadSuccess) {
+          onUploadSuccess(response, attachment);
+        }
+        this.checkValidity();
+        resolve();
+      }), 0);
+    });
   }
 
   @mobxAction
