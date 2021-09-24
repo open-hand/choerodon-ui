@@ -3,7 +3,7 @@ import Mock from 'mockjs';
 const dataSetAttachmentTemple = [
   {
     fileId: 1,
-    fileName: 'demo1',
+    fileName: 'demo1.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -11,7 +11,7 @@ const dataSetAttachmentTemple = [
   },
   {
     fileId: 2,
-    fileName: 'demo2',
+    fileName: 'demo2.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -23,7 +23,7 @@ const dataSetAttachmentTemple2 = [
   ...dataSetAttachmentTemple,
   {
     fileId: 3,
-    fileName: 'demo3',
+    fileName: 'demo3.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -31,7 +31,7 @@ const dataSetAttachmentTemple2 = [
   },
   {
     fileId: 4,
-    fileName: 'demo4',
+    fileName: 'demo4.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -39,7 +39,7 @@ const dataSetAttachmentTemple2 = [
   },
   {
     fileId: 5,
-    fileName: 'demo5',
+    fileName: 'demo5.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -47,7 +47,7 @@ const dataSetAttachmentTemple2 = [
   },
   {
     fileId: 6,
-    fileName: 'demo6',
+    fileName: 'demo6.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -55,7 +55,7 @@ const dataSetAttachmentTemple2 = [
   },
   {
     fileId: 7,
-    fileName: 'demo7',
+    fileName: 'demo7.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -63,7 +63,7 @@ const dataSetAttachmentTemple2 = [
   },
   {
     fileId: 8,
-    fileName: 'demo8',
+    fileName: 'demo8.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -71,7 +71,7 @@ const dataSetAttachmentTemple2 = [
   },
   {
     fileId: 9,
-    fileName: 'demo9',
+    fileName: 'demo9.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',

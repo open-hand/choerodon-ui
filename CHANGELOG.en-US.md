@@ -25,7 +25,7 @@ timeline: true
 - 🌟 `<pro>Table`: Add `searchCode` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
 - 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
-- 💄 `<pro>Attachment`: Optimize dnd, preview and label display. Optimized to delete the attachments in the wrong state as direct deletion.
+- 💄 `<pro>Attachment`: Optimize the display of deleting, dnd, preview and label. Optimized to delete the attachments in the wrong state as direct deletion.
 - 💄 `<pro>Table`: Supports multiple selections by pressing shift.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.

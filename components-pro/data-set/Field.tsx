@@ -442,24 +442,26 @@ export default class Field {
   }
 
   set attachments(attachments: AttachmentFile[] | undefined) {
-    const { record } = this;
-    if (record) {
-      const uuid = record.get(this.name);
-      const { dataSet } = this;
-      if (dataSet && uuid) {
-        const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
-        if (attachmentCaches) {
-          const cache = attachmentCaches.get(uuid);
-          if (cache) {
-            cache.attachments = attachments;
-          } else {
-            attachmentCaches.set(uuid, { attachments });
+    runInAction(() => {
+      const { record } = this;
+      if (record) {
+        const uuid = record.get(this.name);
+        const { dataSet } = this;
+        if (dataSet && uuid) {
+          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
+          if (attachmentCaches) {
+            const cache = attachmentCaches.get(uuid);
+            if (cache) {
+              cache.attachments = attachments;
+            } else {
+              attachmentCaches.set(uuid, { attachments });
+            }
+            return;
           }
-          return;
         }
       }
-    }
-    this.set('attachments', attachments);
+      this.set('attachments', attachments);
+    });
   }
 
   get attachmentCount(): number | undefined {
@@ -482,24 +484,26 @@ export default class Field {
   }
 
   set attachmentCount(count: number | undefined) {
-    const { record } = this;
-    if (record) {
-      const uuid = record.get(this.name);
-      const { dataSet } = this;
-      if (dataSet && uuid) {
-        const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
-        if (attachmentCaches) {
-          const cache = attachmentCaches.get(uuid);
-          if (cache) {
-            cache.count = count;
-          } else {
-            attachmentCaches.set(uuid, { count });
+    runInAction(() => {
+      const { record } = this;
+      if (record) {
+        const uuid = record.get(this.name);
+        const { dataSet } = this;
+        if (dataSet && uuid) {
+          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
+          if (attachmentCaches) {
+            const cache = attachmentCaches.get(uuid);
+            if (cache) {
+              cache.count = count;
+            } else {
+              attachmentCaches.set(uuid, { count });
+            }
+            return;
           }
-          return;
         }
       }
-    }
-    this.set('attachmentCount', count);
+      this.set('attachmentCount', count);
+    });
   }
 
   get pristineProps(): FieldProps {

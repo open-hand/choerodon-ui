@@ -25,7 +25,7 @@ timeline: true
 - 🌟 `<pro>Table`：新增 searchCode 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件。
 - 🌟 `<pro>Pagination`: 新增 quickJumperPosition 属性。
 - 💄 `<pro>Pagination`: 优化 quickJumper 显示。
-- 💄 `<pro>Attachment`：优化拖拽、预览和标签显示， 优化删除错误状态的附件为直接删除。
+- 💄 `<pro>Attachment`：优化删除、拖拽、预览和标签显示, 优化删除错误状态的附件为直接删除。
 - 💄 `<pro>Table`： 支持按住 shift 进行多选。
 - 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角和校验信息。
 - 💄 `<pro>Table`： 重命名 onResize 为 onColumnResize 事件。
