@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, Key } from 'react';
 import classNames from 'classnames';
 import { action } from 'mobx';
-import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import Table, { TableProps } from '../table/Table';
+import Table, { onColumnResizeProps, TableProps } from '../table/Table';
 import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
 import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { LovConfig } from './Lov';
 import { ColumnProps } from '../table/Column';
 import { modalChildrenProps } from '../modal/interface';
+import autobind from '../_util/autobind';
+import { getColumnKey } from '../table/utils';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -26,13 +26,15 @@ export interface LovViewProps {
   onSelect: (records: Record | Record[]) => void;
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   modal?: modalChildrenProps;
+  popupHidden?: boolean;
 }
 
-@observer
 export default class LovView extends Component<LovViewProps> {
   selection: DataSetSelection | false;
 
   selectionMode: SelectionMode | undefined;
+
+  resizedColumns: Map<Key, number> = new Map<Key, number>();
 
   @action
   componentWillMount() {
@@ -60,6 +62,14 @@ export default class LovView extends Component<LovViewProps> {
     }
   }
 
+  shouldComponentUpdate(nextProps: Readonly<LovViewProps>): boolean {
+    const { popup } = this.props;
+    if (popup && nextProps.popupHidden) {
+      return false;
+    }
+    return true;
+  }
+
   /* istanbul ignore next */
   getColumns(): ColumnProps[] | undefined {
     const {
@@ -81,7 +91,7 @@ export default class LovView extends Component<LovViewProps> {
             key: gridFieldName,
             header: display,
             name: gridFieldName,
-            width: popup ? undefined : gridFieldWidth,
+            width: popup ? gridFieldName ? this.resizedColumns.get(gridFieldName) : undefined : gridFieldWidth,
             align: gridFieldAlign,
             editor: false,
           };
@@ -89,7 +99,8 @@ export default class LovView extends Component<LovViewProps> {
       : undefined;
   }
 
-  handleSelect = (event?: React.MouseEvent) => {
+  @autobind
+  handleSelect(event?: React.MouseEvent) {
     const { selectionMode } = this;
     const { onSelect, onBeforeSelect = noop, modal, multiple, dataSet, tableProps } = this.props;
     let records: Record[] = selectionMode === SelectionMode.treebox ?
@@ -107,20 +118,22 @@ export default class LovView extends Component<LovViewProps> {
       onSelect(record);
     }
     return false;
-  };
+  }
 
   /* istanbul ignore next */
-  handleKeyDown = e => {
+  @autobind
+  handleKeyDown(e) {
     if (e.keyCode === KeyCode.ENTER) {
       this.handleSelect();
     }
-  };
+  }
 
   /**
    * 单选 onRow 处理
    * @param props
    */
-  handleRow = (props) => {
+  @autobind
+  handleRow(props) {
     const { tableProps } = this.props;
     if (tableProps) {
       const { onRow } = tableProps;
@@ -134,13 +147,20 @@ export default class LovView extends Component<LovViewProps> {
     return {
       onDoubleClick: this.handleSelect,
     };
-  };
+  }
 
-  handleSingleRow = () => {
+  @autobind
+  handleSingleRow() {
     return {
       onClick: this.handleSelect,
     };
   };
+
+  @autobind
+  handleColumnResize(props: onColumnResizeProps) {
+    const { width, column } = props;
+    this.resizedColumns.set(getColumnKey(column), width);
+  }
 
   render() {
     const {
@@ -198,15 +218,12 @@ export default class LovView extends Component<LovViewProps> {
       lovTableProps.selectedHighLightRow = true;
     }
     if (popup) {
-      const { style } = lovTableProps;
-      if (style) {
-        style.width = 'min-content';
-        style.minWidth = pxToRem(350)!;
-      }
       if (lovTableProps.showSelectionCachedButton === undefined) {
         lovTableProps.showSelectionCachedButton = false;
         lovTableProps.showCachedSelection = true;
       }
+      lovTableProps.autoWidth = true;
+      lovTableProps.onColumnResize = this.handleColumnResize;
     }
 
     const isProfessionalBar = lovTableProps.queryBar === TableQueryBarType.professionalBar;

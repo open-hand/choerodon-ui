@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
-- 🌟 `<pro>Table`: Add `searchCode` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
+- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth` property, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions.
 - 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
 - 💄 `<pro>Attachment`: Optimize the display of deleting, dnd, preview and label. Optimized to delete the attachments in the wrong state as direct deletion.
@@ -53,6 +53,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that the `onClick` property of `button` mode has no effect.
 - 🐞 `<pro>Lov`: Fix the problem that the `noCache` option is repeated in `multiple` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the search drop-down did not collapse after clicking the pop-up Modal.
+- 🐞 `<pro>Lov`: Fix the problem of shaking table in `popup` mode.
 - 🐞 `<pro>TextArea`: Fix the style problem when dragging the width.
 
 ## 1.4.4

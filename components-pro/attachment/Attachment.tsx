@@ -123,6 +123,18 @@ export default class Attachment extends FormField<AttachmentProps> {
     return this.getProp('help');
   }
 
+  get bucketName() {
+    return this.getProp('bucketName');
+  }
+
+  get bucketDirectory() {
+    return this.getProp('bucketDirectory');
+  }
+
+  get storageCode() {
+    return this.getProp('storageCode');
+  }
+
   get attachments(): AttachmentFile[] | undefined {
     const { field } = this;
     if (field) {
@@ -218,9 +230,16 @@ export default class Attachment extends FormField<AttachmentProps> {
     };
   }
 
-  getValidatorProps(): ValidatorProps {
+  getValidAttachments(): AttachmentFile[] | undefined {
     const { attachments } = this;
-    const count = attachments ? attachments.filter(({ status }) => !status || ['success', 'done'].includes(status)).length : this.count;
+    if (attachments) {
+      return attachments.filter(({ status }) => !status || ['success', 'done'].includes(status));
+    }
+  }
+
+  getValidatorProps(): ValidatorProps {
+    const attachments = this.getValidAttachments();
+    const count = attachments ? attachments.length : this.count;
     return {
       ...super.getValidatorProps(),
       attachmentCount: count || 0,
@@ -313,9 +332,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       }
       const actionHook = globalConfig.action;
       if (actionHook) {
-        const bucketName = this.getProp('bucketName');
-        const bucketDirectory = this.getProp('bucketDirectory');
-        const storageCode = this.getProp('storageCode');
+        const { bucketName, bucketDirectory, storageCode } = this;
         const newConfig = typeof actionHook === 'function' ? actionHook({
           attachment,
           bucketName,
@@ -387,6 +404,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       try {
         await Promise.all(attachments.map((attachment) => this.upload(attachment, attachmentUUID)));
       } finally {
+        this.changeOrder();
         if (this.tempAttachmentUUID) {
           delete this.tempAttachmentUUID;
           this.setValue(attachmentUUID);
@@ -396,6 +414,11 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
+  async uploadAttachment(attachment: AttachmentFile, attachmentUUID: string) {
+    await this.upload(attachment, attachmentUUID);
+    this.changeOrder();
+  }
+
   async upload(attachment: AttachmentFile, attachmentUUID: string) {
     try {
       const result = await this.beforeUpload(attachment, this.attachments!);
@@ -489,12 +512,10 @@ export default class Attachment extends FormField<AttachmentProps> {
     const { onRemove } = getConfig('attachment');
     const attachmentUUID = this.getValue();
     if (onRemove && attachmentUUID) {
-      const bucketName = this.getProp('bucketName');
-      const bucketDirectory = this.getProp('bucketDirectory');
-      const storageCode = this.getProp('storageCode');
       if (attachment.status === 'error') {
         return this.removeAttachment(attachment);
       }
+      const { bucketName, bucketDirectory, storageCode } = this;
       attachment.status = 'deleting';
       return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode })
         .then(mobxAction((result) => {
@@ -513,9 +534,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   handleHistory(attachment: AttachmentFile, attachmentUUID: string) {
     const { renderHistory } = getConfig('attachment');
     if (renderHistory) {
-      const bucketName = this.getProp('bucketName');
-      const bucketDirectory = this.getProp('bucketDirectory');
-      const storageCode = this.getProp('storageCode');
+      const { bucketName, bucketDirectory, storageCode } = this;
       open({
         title: $l('Attachment', 'operation_records'),
         children: renderHistory({
@@ -724,14 +743,30 @@ export default class Attachment extends FormField<AttachmentProps> {
   handleOrderChange(props) {
     const { attachments } = props;
     this.attachments = attachments;
+    this.changeOrder();
+  }
+
+  @mobxAction
+  changeOrder() {
     this.sort = {
       ...defaultSort,
       ...this.sort,
       custom: true,
     };
-    const { onOrderChange } = getConfig('attachment');
-    if (onOrderChange) {
-      onOrderChange(props);
+    const attachmentUUID = this.getValue();
+    if (attachmentUUID) {
+      const attachments = this.getValidAttachments();
+      const { onOrderChange } = getConfig('attachment');
+      if (onOrderChange && attachments) {
+        const { bucketName, bucketDirectory, storageCode } = this;
+        onOrderChange({
+          bucketName,
+          bucketDirectory,
+          storageCode,
+          attachments,
+          attachmentUUID,
+        });
+      }
     }
   }
 
@@ -776,12 +811,10 @@ export default class Attachment extends FormField<AttachmentProps> {
     const {
       listType, sortable, listLimit, showHistory,
     } = this.props;
-    const bucketName = this.getProp('bucketName');
-    const bucketDirectory = this.getProp('bucketDirectory');
-    const storageCode = this.getProp('storageCode');
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
     if (attachmentUUID) {
+      const { bucketName, bucketDirectory, storageCode } = this;
       const width = this.getPictureWidth();
       const { readOnly } = this;
       return (
@@ -800,7 +833,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           limit={readOnly ? listLimit : undefined}
           onHistory={showHistory ? this.handleHistory : undefined}
           onRemove={this.handleRemove}
-          onUpload={this.upload}
+          onUpload={this.uploadAttachment}
           onOrderChange={this.handleOrderChange}
           onFetchAttachments={this.handleFetchAttachment}
           onPreview={this.handlePreview}
@@ -823,9 +856,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         if (downloadAll) {
           const { getDownloadAllUrl } = getConfig('attachment');
           if (getDownloadAllUrl) {
-            const bucketName = this.getProp('bucketName');
-            const bucketDirectory = this.getProp('bucketDirectory');
-            const storageCode = this.getProp('storageCode');
+            const { bucketName, bucketDirectory, storageCode } = this;
             const attachmentUUID = this.getValue();
             getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID });
             const downProps: ButtonProps = {

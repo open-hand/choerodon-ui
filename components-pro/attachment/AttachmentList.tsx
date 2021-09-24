@@ -19,7 +19,7 @@ export interface AttachmentListProps {
   onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onRemove: (attachment: AttachmentFile) => Promise<any> | undefined;
-  onOrderChange: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string, attachments: AttachmentFile[] }) => void;
+  onOrderChange: (props: { attachments: AttachmentFile[] }) => void;
   onFetchAttachments: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => void;
   onPreview: () => void;
   bucketName?: string;
@@ -64,9 +64,9 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
         source.index,
         destination.index,
       );
-      onOrderChange({ attachments: newAttachments, bucketName, bucketDirectory, storageCode, attachmentUUID });
+      onOrderChange({ attachments: newAttachments });
     }
-  }, [attachments, bucketName, bucketDirectory, storageCode, attachmentUUID, onOrderChange]);
+  }, [attachments, onOrderChange]);
   useEffect(() => {
     if (!attachments) {
       onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID });

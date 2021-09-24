@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。
-- 🌟 `<pro>Table`：新增 searchCode 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件。
+- 🌟 `<pro>Table`：新增 searchCode, autoWidth 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件。
 - 🌟 `<pro>Pagination`: 新增 quickJumperPosition 属性。
 - 💄 `<pro>Pagination`: 优化 quickJumper 显示。
 - 💄 `<pro>Attachment`：优化删除、拖拽、预览和标签显示, 优化删除错误状态的附件为直接删除。
@@ -52,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Lov`：修复 button 模式的 onClick 属性没效果的问题。
 - 🐞 `<pro>Lov`：修复 multiple 模式下开启 noCache 选项重复的问题。
 - 🐞 `<pro>Lov`：修复点击弹出 Modal 后搜索下拉未收起的问题。
+- 🐞 `<pro>Lov`：修复 popup 模式表格颤抖的问题。
 - 🐞 `<pro>TextArea`：修复拖拽宽度时的样式问题。
 
 ## 1.4.4
