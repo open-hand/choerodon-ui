@@ -10,7 +10,7 @@
   position: relative;
   background: @component-background;
   border-radius: @border-radius-sm;
-  transition: all 0.3s;
+  transition: all @animation-duration-slow;
 
   &-hoverable {
     cursor: pointer;
@@ -86,7 +86,7 @@
     box-shadow: 0.01rem 0 0 0 @border-color-split, 0 0.01rem 0 0 @border-color-split,
       0.01rem 0.01rem 0 0 @border-color-split, 0.01rem 0 0 0 @border-color-split inset,
       0 0.01rem 0 0 @border-color-split inset;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
     &:hover {
       position: relative;
       z-index: 1;
@@ -132,7 +132,7 @@
 
         &:hover {
           color: @primary-color;
-          transition: color 0.3s;
+          transition: color @animation-duration-slow;
         }
 
         & > .anticon {
@@ -164,11 +164,11 @@
 
   &-padding-transition &-head,
   &-padding-transition &-body {
-    transition: padding 0.3s;
+    transition: padding @animation-duration-slow;
   }
 
   &-padding-transition &-extra {
-    transition: right 0.3s;
+    transition: right @animation-duration-slow;
   }
 
   &-type-inner &-head {

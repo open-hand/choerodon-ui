@@ -72,7 +72,7 @@
       background: @component-background;
       cursor: pointer;
       opacity: 0;
-      transition: color 0.3s ease, opacity 0.15s ease;
+      transition: color @animation-duration-slow ease, opacity 0.15s ease;
     }
 
     &:hover &-clear {
@@ -90,7 +90,7 @@
       margin-top: -0.08rem;
       color: @input-color;
       &::before {
-        transition: transform 0.2s;
+        transition: transform @animation-duration-base;
       }
       &&-expand {
         &::before {
@@ -235,7 +235,7 @@
     line-height: 0.22rem;
     white-space: nowrap;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
     &:hover {
       background: @item-hover-bg;
     }

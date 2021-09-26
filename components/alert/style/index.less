@@ -75,7 +75,7 @@
 
     .@{iconfont-css-prefix}-cross {
       color: @text-color-secondary;
-      transition: color 0.3s;
+      transition: color @animation-duration-slow;
 
       &:hover {
         color: #404040;
@@ -132,11 +132,11 @@
     padding-top: 0;
     padding-bottom: 0;
     transform-origin: 50% 0;
-    transition: all 0.3s @ease-in-out-circ;
+    transition: all @animation-duration-slow @ease-in-out-circ;
   }
 
   &-slide-up-leave {
-    animation: c7nAlertSlideUpOut 0.3s @ease-in-out-circ;
+    animation: c7nAlertSlideUpOut @animation-duration-slow @ease-in-out-circ;
     animation-fill-mode: both;
   }
 

@@ -35,7 +35,7 @@
         text-align: center;
         .@{iconfont-css-prefix} {
           color: @disabled-color;
-          transition: all 0.3s;
+          transition: all @animation-duration-slow;
           &:hover {
             color: @text-color-secondary;
           }
@@ -98,7 +98,7 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        transition: all 0.3s;
+        transition: all @animation-duration-slow;
         > span {
           padding-right: 0;
         }

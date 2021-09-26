@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { observer } from 'mobx-react-lite';
-import isNil from 'lodash/isNil';
 
 export interface CountProps {
   prefixCls?: string;
@@ -18,14 +17,16 @@ function getCount(count: number | (() => number | undefined) | undefined): numbe
 const Count: FunctionComponent<CountProps> = observer(function Count(props) {
   const { count, overflowCount, prefixCls } = props;
   const number = getCount(count);
-  if (!number) {
-    return null;
+  if (number) {
+    return (
+      <span className={`${prefixCls}-tab-count`}>
+      {
+        overflowCount && number > overflowCount ? `${overflowCount}+` : number
+      }
+      </span>
+    );
   }
-  const displayCount = number > (overflowCount as number) ? `${overflowCount}+` : number;
-  if (isNil(displayCount)) {
-    return null;
-  }
-  return <span className={`${prefixCls}-tab-count`}>{displayCount}</span>;
+  return null;
 });
 
 Count.displayName = 'Count';

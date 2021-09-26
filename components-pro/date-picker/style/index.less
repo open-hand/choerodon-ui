@@ -74,7 +74,7 @@
       border: @border-width-base @border-style-base transparent;
       border-radius: @border-radius-sm;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background @animation-duration-slow ease;
 
       &:hover {
         background-color: @item-hover-bg;
@@ -213,7 +213,7 @@
     border-top: @border-width-base @border-style-base @border-color-split;
 
     button {
-      transition: all 0.3s ease-out, visibility 0s;
+      transition: all @animation-duration-slow ease-out, visibility 0s;
     }
   }
 
@@ -302,7 +302,7 @@
       margin: 0;
       padding: 0;
       list-style: none;
-      transition: top 0.3s ease;
+      transition: top @animation-duration-slow ease;
     }
 
     li {
@@ -326,7 +326,7 @@
       height: 100%;
       .active();
       border-radius: @border-radius-base;
-      transition: left 0.3s ease;
+      transition: left @animation-duration-slow ease;
     }
   }
 }

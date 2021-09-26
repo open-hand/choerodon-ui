@@ -55,7 +55,7 @@
         border-top: 0;
         border-left: 0;
         transform: rotate(45deg) scale(0);
-        transition: all 0.1s @ease-in-back;
+        transition: all @animation-duration-fast @ease-in-back;
         content: ' ';
       }
     }
@@ -82,7 +82,7 @@
     border-top: 0;
     border-left: 0;
     transform: rotate(45deg) scale(1);
-    transition: all 0.2s @ease-out-back 0.1s;
+    transition: all @animation-duration-base @ease-out-back @animation-duration-fast;
     content: ' ';
   }
 

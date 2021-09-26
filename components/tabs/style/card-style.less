@@ -21,7 +21,7 @@
     border: @border-width-base @border-style-base @border-color-split;
     border-bottom: 0;
     border-radius: @border-radius-base @border-radius-base 0 0;
-    transition: all 0.3s @ease-in-out;
+    transition: all @animation-duration-slow @ease-in-out;
   }
   &&-card > &-bar &-tab-active {
     color: @tabs-card-active-color;
@@ -43,7 +43,7 @@
     color: @text-color-secondary;
     font-size: @font-size-sm;
     vertical-align: middle;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
     &:hover {
       color: @heading-color;
     }
@@ -74,7 +74,7 @@
       border: @border-width-base @border-style-base @border-color-split;
       border-radius: @border-radius-sm;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
       &:hover {
         color: @tabs-card-active-color;
         border-color: @tabs-card-active-color;

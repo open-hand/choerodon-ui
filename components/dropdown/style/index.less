@@ -15,7 +15,7 @@
     position: relative;
 
     .@{iconfont-css-prefix}-arrow_drop_down::before {
-      transition: transform 0.2s;
+      transition: transform @animation-duration-base;
     }
   }
 
@@ -45,7 +45,7 @@
     &-item-group-title {
       padding: 0.05rem @control-padding-horizontal;
       color: @text-color-secondary;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
     }
 
     &-submenu-popup {
@@ -64,14 +64,14 @@
       line-height: 0.22rem;
       white-space: nowrap;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
 
       > a {
         display: block;
         margin: -0.05rem -@control-padding-horizontal;
         padding: 0.05rem @control-padding-horizontal;
         color: @text-color;
-        transition: all 0.3s;
+        transition: all @animation-duration-slow;
         &:focus {
           text-decoration: none;
         }
@@ -133,8 +133,8 @@
           background: #fff;
           background-image: linear-gradient(to right, @menu-item-color, @menu-item-color);
           border-radius: 0.02rem;
-          transition: background 0.3s @ease-in-out, transform 0.3s @ease-in-out,
-            top 0.3s @ease-in-out;
+          transition: background @animation-duration-slow @ease-in-out, transform @animation-duration-slow @ease-in-out,
+            top @animation-duration-slow @ease-in-out;
           content: '';
         }
         &::before {

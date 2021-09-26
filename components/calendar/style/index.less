@@ -84,7 +84,7 @@
   &-month,
   &-date {
     text-align: center;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
   }
 
   &-value {
@@ -97,7 +97,7 @@
     line-height: 0.24rem;
     background: transparent;
     border-radius: @border-radius-sm;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
 
     &:hover {
       background: @item-hover-bg;
@@ -180,7 +180,7 @@
     color: @text-color;
     text-align: left;
     border-top: 0.02rem solid @border-color-split;
-    transition: background 0.3s;
+    transition: background @animation-duration-slow;
 
     &:hover {
       background: @item-hover-bg;

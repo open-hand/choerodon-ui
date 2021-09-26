@@ -39,7 +39,7 @@
       border: 0.02rem solid @primary-color;
       border-radius: 0.08rem;
       transform: translateX(-50%);
-      transition: top 0.3s ease-in-out;
+      transition: top @animation-duration-slow ease-in-out;
       &.visible {
         display: inline-block;
       }
@@ -62,7 +62,7 @@
       color: @text-color;
       white-space: nowrap;
       text-overflow: ellipsis;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
 
       &:only-child {
         margin-bottom: 0;

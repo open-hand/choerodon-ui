@@ -40,7 +40,7 @@
     border: @border-width-base dashed @border-color-base;
     border-radius: @border-radius-base;
     cursor: pointer;
-    transition: border-color 0.3s ease;
+    transition: border-color @animation-duration-slow ease;
 
     > .@{upload-prefix-cls} {
       display: table-cell;
@@ -76,7 +76,7 @@
     border: @border-width-base dashed @border-color-base;
     border-radius: @border-radius-base;
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: border-color @animation-duration-slow;
 
     &.@{upload-prefix-cls}-drag-hover:not(.@{upload-prefix-cls}-disabled) {
       border: 0.02rem dashed @primary-5;
@@ -119,7 +119,7 @@
     .@{iconfont-css-prefix}-plus {
       color: @disabled-color;
       font-size: 0.3rem;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
       &:hover {
         color: @text-color-secondary;
       }
@@ -156,7 +156,7 @@
     &-info {
       height: 100%;
       padding: 0 0.12rem 0 0.04rem;
-      transition: background-color 0.3s;
+      transition: background-color @animation-duration-slow;
 
       > span {
         display: block;
@@ -180,7 +180,7 @@
       line-height: 0.22rem;
       cursor: pointer;
       opacity: 0;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
       &:hover {
         color: @text-color;
       }
@@ -276,7 +276,7 @@
       line-height: 0.44rem;
       white-space: nowrap;
       text-overflow: ellipsis;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
     }
 
     .@{upload-item}-uploading .@{upload-item}-name {
@@ -324,7 +324,7 @@
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
         opacity: 0;
-        transition: all 0.3s;
+        transition: all @animation-duration-slow;
         content: ' ';
       }
     }
@@ -341,7 +341,7 @@
       white-space: nowrap;
       transform: translate(-50%, -50%);
       opacity: 0;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
 
       .@{iconfont-css-prefix}-visibility,
       .@{iconfont-css-prefix}-delete {
@@ -351,7 +351,7 @@
         color: @text-color-dark;
         font-size: 0.16rem;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: all @animation-duration-slow;
         &:hover {
           color: #fff;
         }
@@ -418,7 +418,7 @@
   .@{upload-prefix-cls}-animate-leave,
   .@{upload-prefix-cls}-animate-inline-enter,
   .@{upload-prefix-cls}-animate-inline-leave {
-    animation-duration: 0.3s;
+    animation-duration: @animation-duration-slow;
     animation-fill-mode: @ease-in-out-circ;
   }
 
