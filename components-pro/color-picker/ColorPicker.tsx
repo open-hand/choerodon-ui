@@ -144,9 +144,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       ref: this.saveSelectPointerRef,
       className: `${prefixCls}-popup-body-selector`,
     };
+    this.setColor(this.getValue());
     return (
       <div className={`${prefixCls}-popup-view`}>
-        <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: this.getValue() }}>
+        <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: this.hueColor }}>
           <div {...gradientProps} />
           <div {...gradientPointerProps} />
         </div>
@@ -188,13 +189,15 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       const { r: hr, g: hg, b: hb, a: ha } = this.hsvToRGB(h, 1, 1, 1);
       const hueColor = this.rgbToHEX(hr, hg, hb, ha);
       this.setHueColor(hueColor);
-      const { height, width } = getNodeRect(gradient);
-      const left = s * width;
-      const top = height - v * height;
-      const { width: hueWidth } = getNodeRect(hue);
-      const hueLeft = (h / 360) * hueWidth;
-      this.setHuePointer(hueLeft, huePointer, hue, false);
-      this.setGradientPointer(left, top, selectPointer, gradient, false);
+      if (gradient && selectPointer && hue && huePointer) {
+        const { height, width } = getNodeRect(gradient);
+        const left = s * width;
+        const top = height - v * height;
+        const { width: hueWidth } = getNodeRect(hue);
+        const hueLeft = (h / 360) * hueWidth;
+        this.setHuePointer(hueLeft, huePointer, hue, false);
+        this.setGradientPointer(left, top, selectPointer, gradient, false);
+      }
     }
   }
 
@@ -406,9 +409,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       .removeEventListener('mouseup', this.onHPMouseUp);
   }
 
-  @autobind
   handlePopupAnimateAppear() {
-    this.setColor(this.getValue());
   }
 
   handlePopupAnimateEnd() {
