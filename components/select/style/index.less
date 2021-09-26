@@ -134,7 +134,7 @@
     border-top-width: @border-width-base + 0.0002rem;
     outline: none;
     cursor: pointer;
-    transition: all 0.3s @ease-in-out;
+    transition: all @animation-duration-slow @ease-in-out;
     user-select: none;
 
     &--single {
@@ -391,7 +391,7 @@
         overflow: hidden;
         border-radius: @border-radius-lg;
         cursor: default;
-        transition: padding 0.3s @ease-in-out;
+        transition: padding @animation-duration-slow @ease-in-out;
         &__disabled {
           padding: 0 0.1rem;
         }
@@ -401,7 +401,7 @@
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          transition: margin 0.3s @ease-in-out;
+          transition: margin @animation-duration-slow @ease-in-out;
           &::after {
             content: none;
           }
@@ -507,7 +507,7 @@
       width: 100%;
       height: 100%;
       box-shadow: none;
-      transition: all 0.3s @ease-in-out;
+      transition: all @animation-duration-slow @ease-in-out;
     }
 
     .@{select-prefix-cls}-selection__placeholder,
@@ -634,7 +634,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background @animation-duration-slow ease;
 
       &:hover {
         background-color: @item-hover-bg;

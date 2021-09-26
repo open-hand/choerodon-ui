@@ -23,7 +23,7 @@
     height: 0.04rem;
     background-color: @slider-rail-background-color;
     border-radius: 0.02rem;
-    transition: background-color 0.3s;
+    transition: background-color @animation-duration-slow;
   }
 
   &-track {
@@ -31,7 +31,7 @@
     height: 0.04rem;
     background-color: @slider-track-background-color;
     border-radius: @border-radius-base;
-    transition: background-color 0.3s ease;
+    transition: background-color @animation-duration-slow ease;
   }
 
   &-handle {
@@ -44,7 +44,7 @@
     border: 0.02rem @border-style-base @slider-handle-color;
     border-radius: 50%;
     cursor: pointer;
-    transition: border-color 0.3s, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    transition: border-color @animation-duration-slow, transform @animation-duration-slow cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
     &:focus {
       border-color: @slider-handle-color-focus;

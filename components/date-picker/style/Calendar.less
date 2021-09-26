@@ -182,7 +182,7 @@
     background: transparent;
     border: @border-width-base @border-style-base transparent;
     border-radius: @border-radius-sm;
-    transition: background 0.3s ease;
+    transition: background @animation-duration-slow ease;
 
     &-panel {
       position: relative;
@@ -313,7 +313,7 @@
     font-size: @font-size-base;
     line-height: 1;
     text-indent: 0.43rem;
-    transition: color 0.3s ease;
+    transition: color @animation-duration-slow ease;
   }
 
   .@{calendar-prefix-cls}-clear-btn:hover::after {

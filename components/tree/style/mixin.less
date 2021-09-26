@@ -13,7 +13,7 @@
     display: inline-block;
     .iconfont-font(@type);
     font-weight: bold;
-    transition: transform 0.3s;
+    transition: transform @animation-duration-slow;
   }
 }
 
@@ -23,7 +23,7 @@
     display: inline-block;
     font-weight: normal;
     vertical-align: baseline;
-    transition: transform 0.3s;
+    transition: transform @animation-duration-slow;
     .iconfont-font(@type);
   }
 }

@@ -31,7 +31,7 @@
     padding: @tab-bar-padding;
     border-bottom: @border-width-base @border-style-base @border-color-split;
     outline: none;
-    transition: padding 0.3s @ease-in-out;
+    transition: padding @animation-duration-slow @ease-in-out;
 
     &-inner {
       display: flex;
@@ -110,7 +110,7 @@
     font-size: @tabs-title-font-size;
     line-height: @line-height-base;
     white-space: nowrap;
-    transition: padding 0.3s @ease-in-out;
+    transition: padding @animation-duration-slow @ease-in-out;
     .clearfix;
 
     &-scrolling {
@@ -146,7 +146,7 @@
     border: 0;
     cursor: pointer;
     opacity: 0;
-    transition: width 0.3s @ease-in-out, opacity 0.3s @ease-in-out, color 0.3s @ease-in-out;
+    transition: width @animation-duration-slow @ease-in-out, opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
     user-select: none;
     pointer-events: none;
 
@@ -224,7 +224,7 @@
     margin: 0;
     padding-left: 0;
     list-style: none;
-    transition: transform 0.3s @ease-in-out;
+    transition: transform @animation-duration-slow @ease-in-out;
 
     &::before,
     &::after {
@@ -250,7 +250,7 @@
       color: @tab-normal-color;
       text-decoration: none;
       cursor: pointer;
-      transition: color 0.3s @ease-in-out;
+      transition: color @animation-duration-slow @ease-in-out;
 
       &:last-child {
         margin-right: 0;
@@ -263,6 +263,7 @@
       &-count {
         margin-left: .05rem;
         color: rgba(0, 0, 0, .65);
+        transition: inherit;
       }
     }
 
@@ -314,7 +315,7 @@
         flex-shrink: 0;
         width: 100%;
         opacity: 1;
-        transition: opacity 0.45s;
+        transition: opacity @animation-duration-slower;
       }
 
       > .@{tab-prefix-cls}-tabpane-inactive {
@@ -328,7 +329,7 @@
     > .@{tab-prefix-cls}-content-animated {
       display: flex;
       flex-direction: row;
-      transition: margin-left 0.3s @ease-in-out;
+      transition: margin-left @animation-duration-slow @ease-in-out;
       will-change: margin-left;
     }
   }
@@ -354,7 +355,7 @@
       &-tab-next {
         width: @tab-scrolling-size;
         height: 0;
-        transition: height 0.3s @ease-in-out, opacity 0.3s @ease-in-out, color 0.3s @ease-in-out;
+        transition: height @animation-duration-slow @ease-in-out, opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
       }
 
       &-tab-prev.@{tab-prefix-cls}-tab-arrow-show,
@@ -539,12 +540,12 @@
 
 .@{tab-prefix-cls}-top .@{tab-prefix-cls}-ink-bar-animated,
 .@{tab-prefix-cls}-bottom .@{tab-prefix-cls}-ink-bar-animated {
-  transition: transform 0.3s @ease-in-out, width 0.3s @ease-in-out;
+  transition: transform @animation-duration-slow @ease-in-out, width @animation-duration-slow @ease-in-out;
 }
 
 .@{tab-prefix-cls}-left .@{tab-prefix-cls}-ink-bar-animated,
 .@{tab-prefix-cls}-right .@{tab-prefix-cls}-ink-bar-animated {
-  transition: transform 0.3s @ease-in-out, height 0.3s @ease-in-out;
+  transition: transform @animation-duration-slow @ease-in-out, height @animation-duration-slow @ease-in-out;
 }
 
 .no-flex,

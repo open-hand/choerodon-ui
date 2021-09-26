@@ -4,7 +4,7 @@
 @radio-prefix-cls: ~'@{c7n-prefix}-radio';
 @radio-group-prefix-cls: ~'@{radio-prefix-cls}-group';
 @radio-inner-prefix-cls: ~'@{radio-prefix-cls}-inner';
-@radio-duration: 0.3s;
+@radio-duration: @animation-duration-slow;
 
 .@{radio-group-prefix-cls} {
   display: inline-block;
@@ -137,7 +137,7 @@ span.@{radio-prefix-cls} + * {
   border-top-width: @border-width-base + 0.0002rem;
   border-left: 0;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all @animation-duration-slow ease;
 
   a {
     color: @radio-button-color;

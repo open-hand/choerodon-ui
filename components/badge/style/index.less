@@ -100,12 +100,12 @@
 
   &-zoom-appear,
   &-zoom-enter {
-    animation: c7nZoomBadgeIn 0.3s @ease-out-back;
+    animation: c7nZoomBadgeIn @animation-duration-slow @ease-out-back;
     animation-fill-mode: both;
   }
 
   &-zoom-leave {
-    animation: c7nZoomBadgeOut 0.3s @ease-in-back;
+    animation: c7nZoomBadgeOut @animation-duration-slow @ease-in-back;
     animation-fill-mode: both;
   }
 
@@ -136,7 +136,7 @@
   &-only {
     display: inline-block;
     height: @badge-height;
-    transition: all 0.3s @ease-in-out;
+    transition: all @animation-duration-slow @ease-in-out;
     > p {
       height: @badge-height;
       margin: 0;

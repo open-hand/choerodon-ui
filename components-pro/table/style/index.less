@@ -56,7 +56,7 @@
   &-cell {
     margin: 0;
     padding: @table-cell-padding-vertical-base @table-cell-padding-horizontal-base;
-    transition: all .3s;
+    transition: all @animation-duration-slow;
 
     &-inner {
       position: relative;
@@ -355,24 +355,24 @@
   &-body {
     position: relative;
     overflow: auto;
-    transition: all .3s;
+    transition: all @animation-duration-slow;
 
     &-wrapper {
       overflow: hidden;
-      transition: all .3s;
+      transition: all @animation-duration-slow;
     }
   }
 
   &-head {
     overflow: hidden;
-    transition: all .3s;
+    transition: all @animation-duration-slow;
   }
 
   &-foot {
     position: relative;
     overflow-x: auto;
     background-color: @component-background;
-    transition: all .3s;
+    transition: all @animation-duration-slow;
   }
 
   &-export-quantity {
@@ -411,7 +411,7 @@
 
     table {
       background-color: #fff;
-      transition: width 0.3s;
+      transition: width @animation-duration-slow;
     }
   }
 
@@ -437,7 +437,7 @@
     top: 0;
     bottom: 0;
     width: .1rem;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
     pointer-events: none;
   }
 
@@ -1266,7 +1266,7 @@
   }
 
   &-col {
-    transition: width 0.3s;
+    transition: width @animation-duration-slow;
   }
 
   &-sort-icon,
@@ -1308,7 +1308,7 @@
   &-expand-icon {
     border: @border-width-base @border-style-base transparent;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: transform @animation-duration-slow;
 
     &:focus {
       color: @primary-color;

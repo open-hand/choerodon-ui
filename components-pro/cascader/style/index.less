@@ -18,7 +18,7 @@
   margin: 0;
 
   &-trigger {
-    transition: transform 0.3s;
+    transition: transform @animation-duration-slow;
   }
 
   &-expand &-trigger {
@@ -178,7 +178,7 @@
     line-height: 0.22rem;
     white-space: nowrap;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
     &:hover {
       background: @item-hover-bg;
     }

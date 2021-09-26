@@ -67,7 +67,7 @@
     color: @disabled-color;
     font-size: @font-size-base - 0.02rem;
     line-height: 1;
-    transition: color 0.3s ease;
+    transition: color @animation-duration-slow ease;
     .iconfont-font('\e62e');
   }
 
@@ -124,7 +124,7 @@
       text-align: left;
       list-style: none;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background @animation-duration-slow;
       user-select: none;
     }
 
@@ -189,7 +189,7 @@
   display: inline-block;
   width: 1.28rem;
   outline: none;
-  transition: opacity 0.3s;
+  transition: opacity @animation-duration-slow;
 
   &-input {
     .input;

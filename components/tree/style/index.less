@@ -15,7 +15,7 @@
     .reset-component;
     background: @tree-bg;
     border-radius: @border-radius-base;
-    transition: background-color 0.3s;
+    transition: background-color @animation-duration-slow;
 
     &-focused:not(:hover):not(&-active-focused) {
       background: @primary-1;
@@ -150,7 +150,7 @@
       background: transparent;
       border-radius: @border-radius-base;
       cursor: pointer;
-      transition: all 0.3s, border 0s, line-height 0s;
+      transition: all @animation-duration-slow, border 0s, line-height 0s;
 
       &:hover {
         background-color: @tree-node-hover-bg;

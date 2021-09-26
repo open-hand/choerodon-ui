@@ -17,7 +17,7 @@
   clear: both;
 
   &-body {
-    transition: opacity 0.3s;
+    transition: opacity @animation-duration-slow;
   }
 
   table {
@@ -34,7 +34,7 @@
     text-align: left;
     background: @table-header-bg;
     border-bottom: @border-width-base @border-style-base @border-color-split;
-    transition: background 0.3s ease;
+    transition: background @animation-duration-slow ease;
 
     &[colspan] {
       text-align: center;
@@ -57,7 +57,7 @@
       vertical-align: text-bottom;
       cursor: pointer;
       opacity: 0;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
     }
 
     &.@{table-prefix-cls}-sort-ascend,
@@ -89,12 +89,12 @@
 
   &-tbody > tr > td {
     border-bottom: @border-width-base @border-style-base @border-color-split;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
   }
 
   &-thead > tr,
   &-tbody > tr {
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
     &.@{table-prefix-cls}-row-hover,
     &:hover {
       & > td {
@@ -277,7 +277,7 @@
       .iconfont-size-under-12px(0.08rem);
       height: 0.04rem;
       line-height: 0.04rem;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
     }
   }
 
@@ -491,7 +491,7 @@
 
     .@{iconfont-css-prefix}-down {
       color: @table-header-icon-color;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
     }
 
     &-menu {
@@ -589,7 +589,7 @@
     top: 0;
     overflow: hidden;
     border-radius: 0;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow @animation-duration-slow ease;
     table {
       width: auto;
       background: @component-background;

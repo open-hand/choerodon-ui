@@ -42,7 +42,7 @@
       padding: @collapse-header-padding;
       color: @heading-color;
       line-height: 0.22rem;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
 
       .@{collapse-prefix-cls}-extra {
         float: right;
@@ -105,7 +105,7 @@
   }
 
   &-anim-active {
-    transition: height 0.2s @ease-out;
+    transition: height @animation-duration-base @ease-out;
   }
 
   &-content {

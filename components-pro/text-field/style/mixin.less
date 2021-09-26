@@ -76,7 +76,7 @@
   border: @border-width-base none @input-border-color;
   border-radius: @input-border-radius;
   cursor: text;
-  transition-duration: 0.3s;
+  transition-duration: @animation-duration-slow;
   transition-property: opacity, color, background-color, border;
 
   &-border &,
@@ -166,7 +166,7 @@
     line-height: @input-height-base;
     white-space: pre;
     border: @border-width-base @border-style-base transparent;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
 
     &-inner {
       display: inline-block;
@@ -250,7 +250,7 @@
     width: @input-button-width;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity @animation-duration-slow;
   }
 
   &-wrapper:hover &-inner-button,

@@ -82,7 +82,7 @@
     line-height: @steps-icon-size;
     text-align: center;
     border-radius: @steps-icon-size;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color @animation-duration-slow, border-color @animation-duration-slow;
 
     > .@{steps-prefix-cls}-icon {
       position: relative;
@@ -108,7 +108,7 @@
       height: 0.01rem;
       background: @step-border-color;
       border-radius: 0.01rem;
-      transition: background 0.3s;
+      transition: background @animation-duration-slow;
       content: '';
     }
   }

@@ -58,7 +58,7 @@
     &:focus,
     &:hover {
       border-color: @primary-color;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
       a {
         color: @primary-color;
       }
@@ -109,7 +109,7 @@
     list-style: none;
     border-radius: @border-radius-base;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
   }
 
   &-first,
@@ -132,7 +132,7 @@
       display: block;
       background-color: @component-background;
       outline: none;
-      transition: all 0.3s;
+      transition: all @animation-duration-slow;
 
       &::before {
         display: block;
@@ -293,7 +293,7 @@
       border: @border-width-base @border-style-base @border-color-base;
       border-radius: @border-radius-base;
       outline: none;
-      transition: border-color 0.3s;
+      transition: border-color @animation-duration-slow;
 
       &:hover {
         border-color: @primary-color;
@@ -367,7 +367,7 @@
       }
     }
   }
-  
+
   &-large {
     font-size: @font-size-base;
     i.icon {

@@ -14,7 +14,7 @@
   background: @menu-bg;
   outline: none;
   box-shadow: @box-shadow-base;
-  transition: background 0.3s, width 0.2s;
+  transition: background @animation-duration-slow, width @animation-duration-base;
   .clearfix;
 
   ul,
@@ -33,12 +33,12 @@
     color: @menu-item-group-title-color;
     font-size: @font-size-base;
     line-height: @line-height-base;
-    transition: all 0.3s;
+    transition: all @animation-duration-slow;
   }
 
   &-submenu,
   &-submenu-inline {
-    transition: border-color 0.3s @ease-in-out, background 0.3s @ease-in-out,
+    transition: border-color @animation-duration-slow @ease-in-out, background @animation-duration-slow @ease-in-out,
       padding 0.15s @ease-in-out;
   }
 
@@ -49,7 +49,7 @@
 
   &-submenu &-sub {
     cursor: initial;
-    transition: background 0.3s @ease-in-out, padding 0.3s @ease-in-out;
+    transition: background @animation-duration-slow @ease-in-out, padding @animation-duration-slow @ease-in-out;
   }
 
   &-item > a {
@@ -157,18 +157,18 @@
     padding: 0 0.2rem;
     white-space: nowrap;
     cursor: pointer;
-    transition: color 0.3s @ease-in-out, border-color 0.3s @ease-in-out,
-      background 0.3s @ease-in-out, padding 0.15s @ease-in-out;
+    transition: color @animation-duration-slow @ease-in-out, border-color @animation-duration-slow @ease-in-out,
+      background @animation-duration-slow @ease-in-out, padding 0.15s @ease-in-out;
     .@{iconfont-css-prefix} {
       min-width: 0.14rem;
       margin-right: 0.1rem;
       line-height: inherit;
       vertical-align: top;
-      transition: font-size 0.15s @ease-out, margin 0.3s @ease-in-out;
+      transition: font-size 0.15s @ease-out, margin @animation-duration-slow @ease-in-out;
       + span {
         display: inline-block;
         opacity: 1;
-        transition: opacity 0.3s @ease-in-out, width 0.3s @ease-in-out;
+        transition: opacity @animation-duration-slow @ease-in-out, width @animation-duration-slow @ease-in-out;
       }
     }
   }
@@ -193,7 +193,7 @@
       background-color: @menu-bg;
       border-radius: @border-radius-base;
       &-submenu-title::after {
-        transition: transform 0.3s @ease-in-out;
+        transition: transform @animation-duration-slow @ease-in-out;
       }
     }
 
@@ -206,7 +206,7 @@
         top: 50%;
         right: 0.16rem;
         width: 0.1rem;
-        transition: transform 0.3s @ease-in-out;
+        transition: transform @animation-duration-slow @ease-in-out;
         &::before,
         &::after {
           position: absolute;
@@ -216,8 +216,8 @@
           background: #fff;
           background-image: linear-gradient(to right, @menu-item-color, @menu-item-color);
           border-radius: 0.02rem;
-          transition: background 0.3s @ease-in-out, transform 0.3s @ease-in-out,
-            top 0.3s @ease-in-out;
+          transition: background @animation-duration-slow @ease-in-out, transform @animation-duration-slow @ease-in-out,
+            top @animation-duration-slow @ease-in-out;
           content: '';
         }
         &::before {

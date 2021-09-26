@@ -199,13 +199,13 @@
     background: #fff;
     border-radius: inherit;
     opacity: 0.35;
-    transition: opacity 0.2s;
+    transition: opacity @animation-duration-base;
     content: '';
     pointer-events: none;
   }
 
   .@{iconfont-css-prefix} {
-    transition: margin-left 0.3s @ease-in-out;
+    transition: margin-left @animation-duration-slow @ease-in-out;
   }
 
   &&-loading:not(&-circle):not(&-circle-outline):not(&-icon-only) {
