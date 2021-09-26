@@ -2,6 +2,8 @@ const eslintrc = {
   extends: [
     'airbnb',
     'prettier',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:jest/recommended',
     'plugin:react/recommended',
     'plugin:import/typescript',
