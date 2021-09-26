@@ -25,6 +25,7 @@ import {
   ColumnAlign,
   ColumnLock,
   DragColumnAlign,
+  RowBoxPlacement,
   ScrollPosition,
   SelectionMode,
   TableAutoHeightType,
@@ -1044,7 +1045,18 @@ export default class TableStore {
   get selectionColumn(): ColumnProps | undefined {
     if (this.hasRowBox) {
       const { dataSet, prefixCls } = this;
+      const { rowBoxPlacement } = this.props;
       const className = `${prefixCls}-selection-column`;
+
+      let lock: ColumnLock | boolean = ColumnLock.left;
+      if (rowBoxPlacement === RowBoxPlacement.start) {
+        lock = ColumnLock.left;
+      } else if (rowBoxPlacement === RowBoxPlacement.end) {
+        lock = ColumnLock.right;
+      } else {
+        lock = false;
+      }
+
       const selectionColumn: ColumnProps = {
         key: SELECTION_KEY,
         resizable: false,
@@ -1055,7 +1067,7 @@ export default class TableStore {
         renderer: this.renderSelectionBox,
         align: ColumnAlign.center,
         width: 50,
-        lock: true,
+        lock,
       };
       if (dataSet && dataSet.selection === DataSetSelection.multiple) {
         selectionColumn.header = this.multipleSelectionRenderer;
@@ -1099,18 +1111,19 @@ export default class TableStore {
       expandColumn,
       dragColumnAlign === DragColumnAlign.left ? draggableColumn : undefined,
       rowNumberColumn,
-      selectionColumn,
+      selectionColumn && selectionColumn.lock === ColumnLock.left ? selectionColumn : undefined,
       ...leftOriginalColumns,
     ].filter<ColumnProps>(columnFilter));
   }
 
   @computed
   get rightColumns(): ColumnProps[] {
-    const { dragColumnAlign, rightOriginalColumns, draggableColumn, customizedColumn } = this;
+    const { dragColumnAlign, rightOriginalColumns, draggableColumn, customizedColumn, selectionColumn } = this;
     return observable.array([
       ...rightOriginalColumns,
-      customizedColumn,
       dragColumnAlign === DragColumnAlign.right ? draggableColumn : undefined,
+      selectionColumn && selectionColumn.lock === ColumnLock.right ? selectionColumn : undefined,
+      customizedColumn,
     ].filter<ColumnProps>(columnFilter));
   }
 
@@ -1368,12 +1381,15 @@ export default class TableStore {
 
   @action
   initColumns() {
-    const { customized, customizable, aggregation } = this;
-    const { columns, children } = this.props;
+    const { customized, customizable, aggregation, selectionColumn } = this;
+    const { columns, children, rowBoxPlacement } = this.props;
     const customizedColumns = customizable ? customized.columns : undefined;
     const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] = columns
       ? mergeDefaultProps(columns, aggregation, customizedColumns)
       : normalizeColumns(children, aggregation, customizedColumns);
+    if (isNumber(rowBoxPlacement) && this.hasRowBox) {
+      originalColumns.splice(rowBoxPlacement as number, 0, selectionColumn);
+    }
     this.leftOriginalColumns = leftOriginalColumns;
     this.originalColumns = originalColumns;
     this.rightOriginalColumns = rightOriginalColumns;

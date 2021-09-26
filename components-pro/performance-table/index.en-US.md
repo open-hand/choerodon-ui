@@ -140,6 +140,7 @@ scrollLeft: (left: number) => void;
 | --- | --- | --- | --- | 
 | columnWidth | 自定义列表选择框宽度 | string\|number | `60px` | 
 | columnTitle | 自定义列表选择框标题 | string\|React.ReactNode |  | 
+| columnIndex | 自定义列表选择框列顺序 | number |  | 
 | fixed | 把选择框列固定在左边 | boolean | 'left' |  
 | getCheckboxProps | 选择框的默认属性配置 | Function(record) |  |
 | hideDefaultSelections | 自定义选择项时去掉『全选』『反选』两个默认选项 | boolean | false |

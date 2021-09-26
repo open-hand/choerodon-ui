@@ -16,7 +16,7 @@ import { $l } from '../../locale-context';
 import Button from '../../button/Button';
 import { ButtonColor, FuncType } from '../../button/enum';
 import { Size } from '../../core/enum';
-import { mergeDefaultProps, normalizeColumns } from '../TableStore';
+import { mergeDefaultProps, normalizeColumns, SELECTION_KEY } from '../TableStore';
 import Form from '../../form/Form';
 import ObserverNumberField from '../../number-field/NumberField';
 import SelectBox from '../../select-box/SelectBox';
@@ -63,7 +63,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { prefixCls, tableStore } = useContext(TableContext);
   const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized } = tableStore;
-  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
+  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns].filter(column => column.key !== SELECTION_KEY));
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
       {

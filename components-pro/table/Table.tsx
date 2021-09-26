@@ -59,6 +59,7 @@ import {
   TableMode,
   TablePaginationPosition,
   TableQueryBarType,
+  RowBoxPlacement,
 } from './enum';
 import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
@@ -312,6 +313,10 @@ export interface TableProps extends DataSetComponentProps {
    * 选择记录的模式
    */
   selectionMode?: SelectionMode;
+  /**
+   * 行选择框位置
+   */
+  rowBoxPlacement?: RowBoxPlacement | number;
   /**
    * 在其他模式下是不是要是要rowbox
    */
@@ -809,6 +814,7 @@ export default class Table extends DataSetComponent<TableProps> {
     suffixCls: 'table',
     tabIndex: 0,
     selectionMode: SelectionMode.rowbox,
+    rowBoxPlacement: RowBoxPlacement.start,
     queryFields: {},
     defaultRowExpanded: false,
     expandRowByClick: false,
@@ -1276,6 +1282,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'border',
       'columnEditorBorder',
       'selectionMode',
+      'rowBoxPlacement',
       'alwaysShowRowBox',
       'showSelectionTips',
       'showSelectionCachedButton',

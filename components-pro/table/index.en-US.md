@@ -93,6 +93,7 @@ subtitle: 表格
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean |	 |
 | onColumnResize | 列宽改变的回调事件  | ({ column, width }) => void | |
 | searchCode | 动态筛选条后端接口唯一编码  | string | |
+| rowBoxPlacement | 行选择框位置  | `start` \| `end` \| number | start |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

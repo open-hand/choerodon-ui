@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。
-- 🌟 `<pro>Table`：新增 searchCode, autoWidth 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件, 废弃 autoMaxWidth 属性。
+- 🌟 `<pro>Table`：新增 searchCode, autoWidth, rowBoxPlacement 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件, 废弃 autoMaxWidth 属性。
 - 🌟 `<pro>Pagination`: 新增 quickJumperPosition 属性。
 - 💄 `Tabs`：优化 count 为零时不显示。
 - 💄 `<pro>Pagination`: 优化 quickJumper 显示。
