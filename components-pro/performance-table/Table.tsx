@@ -1601,7 +1601,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const leftShadowClassName = this.addPrefix('cell-group-left-shadow');
     const rightShadowClassName = this.addPrefix('cell-group-right-shadow');
     const showLeftShadow = this.scrollX < 0;
-    const showRightShadow = width - contentWidth - SCROLLBAR_WIDTH !== this.scrollX;
+    const showRightShadow = width - contentWidth !== this.scrollX;
 
     toggleClass(fixedLeftGroups, leftShadowClassName, showLeftShadow);
     toggleClass(fixedRightGroups, rightShadowClassName, showRightShadow);
@@ -2306,7 +2306,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               break
             }
           }
-
+          renderRightFixedCol = renderRightFixedCol.reverse()
           // 计算需要减去左右固定列的宽度和
           divideLeftFixedCol = renderLeftFixedCol.reduce((val, item) => val + item.props.width, 0);
           divideRightFixedCol = renderRightFixedCol.reduce((val, item) => val + item.props.width, 0);
