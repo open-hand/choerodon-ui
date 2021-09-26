@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`：修复点击弹出 Modal 后搜索下拉未收起的问题。
 - 🐞 `<pro>Lov`：修复 popup 模式表格颤抖的问题。
 - 🐞 `<pro>TextArea`：修复拖拽宽度时的样式问题。
+- 🐞 `<pro>ColorPicker`：修复选择颜色时面板颜色变化的问题。
 
 ## 1.4.4
 

@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that the search drop-down did not collapse after clicking the pop-up Modal.
 - 🐞 `<pro>Lov`: Fix the problem of shaking table in `popup` mode.
 - 🐞 `<pro>TextArea`: Fix the style problem when dragging the width.
+- 🐞 `<pro>ColorPicker`：Fix the problem that the color of the panel changes when the color is selected.
 
 ## 1.4.4
 
