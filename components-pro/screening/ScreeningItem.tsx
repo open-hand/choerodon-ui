@@ -31,7 +31,6 @@ import { $l } from '../locale-context';
 
 const disabledField = '__disabled';
 
-
 const expandedButton = (iconExpanded) => {
   if (iconExpanded === true) {
     return (
@@ -74,7 +73,6 @@ export interface Confirm {
   value: string;
   fieldName: string | undefined;
 }
-
 
 export interface ScreeningItemProps extends DataSetComponentProps {
   multiple?: boolean;
@@ -445,7 +443,6 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
     this.addValue(...values);
   }
 
-
   handleSelect = (info) => {
     const record = info.value;
     this.choose(record);
@@ -510,7 +507,6 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
     return text;
   }
 
-
   processRecordToObject(record: Record) {
     const { primitive, valueField } = this;
     return primitive ? record.get(valueField) : record.toData();
@@ -549,7 +545,6 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
       })
       : text;
   }
-
 
   getScreeningOption = () => {
     const { colProps, optionRenderer } = this.props;

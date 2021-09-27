@@ -9,8 +9,6 @@ export interface SkeletonButtonProps extends Omit<C7nSkeletonBUttonProps,'size'>
 export default class SkeletonButton extends DataSetComponent<SkeletonButtonProps>{
     static dispalyName = 'SkeletonButton';
 
-   
-
     render(){
         const {...otherProps} = this.props;
 
@@ -19,6 +17,3 @@ export default class SkeletonButton extends DataSetComponent<SkeletonButtonProps
         return <C7nSkeletonButton {...otherProps} {...props} />
     }
 }
-
-
-

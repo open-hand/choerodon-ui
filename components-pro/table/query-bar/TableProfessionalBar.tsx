@@ -55,7 +55,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     this.processDataSetListener(true);
   }
 
-
   componentWillReceiveProps(nextProps, _): void {
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = nextProps;
     if (queryDataSet && queryFields.length && (defaultExpanded || this.moreFields)) {
@@ -199,7 +198,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       );
     }
   }
-
 
   @autobind
   handleQueryReset() {

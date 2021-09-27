@@ -21,7 +21,6 @@ import TabsWithContext from './TabsWithContext';
 
 export type Animated = { inkBar: boolean; tabPane: boolean };
 
-
 export interface TabsCustomized {
   defaultActiveKey?: string;
   panes: { [key: string]: TabPaneProps };

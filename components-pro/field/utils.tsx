@@ -274,7 +274,6 @@ export type RangeRenderOption = {
   processRenderer(v: any, repeat?: number): ReactNode;
 }
 
-
 export type MultiLineRenderOption = {
   prefixCls?: string | undefined;
   field: Field;

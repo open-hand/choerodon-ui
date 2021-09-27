@@ -110,7 +110,6 @@ export default function normalizeOptions({
   });
 }
 
-
 export function expandTreeRecords(records: Record[], isAllleaf = true): Record[] {
   const mapRecords = new Map();
   const expandRecords: Record[] = [];
@@ -144,4 +143,3 @@ export function expandTreeRecords(records: Record[], isAllleaf = true): Record[]
   }
   return expandRecords
 }
-

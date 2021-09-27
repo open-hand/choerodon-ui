@@ -15,7 +15,6 @@ export default class Avatar extends DataSetComponent<AvatarProps>{
 
         const props: C7nAvatarProps = {}
 
-
         return <C7nAvatar {...otherProps} {...props} />
     }
 }

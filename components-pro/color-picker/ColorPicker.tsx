@@ -98,7 +98,6 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     return FieldType.color;
   }
 
-
   getPrefix(): ReactNode {
     const { prefixCls } = this;
     return (

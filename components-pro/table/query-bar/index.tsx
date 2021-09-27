@@ -44,7 +44,6 @@ import Dropdown from '../../dropdown/Dropdown';
 import Menu from '../../menu';
 import TextField from '../../text-field';
 
-
 export interface TableQueryBarProps {
   buttons?: Buttons[];
   queryFields?: { [key: string]: ReactElement<any> };
@@ -166,7 +165,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   exportModal;
 
   exportDataSet: DataSet;
-
 
   exportData: any;
 

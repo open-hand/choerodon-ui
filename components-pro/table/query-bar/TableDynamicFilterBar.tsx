@@ -96,7 +96,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     autoQuery: true,
   };
 
-
   @observable moreFields: Field[];
 
   /**
@@ -536,7 +535,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       );
     }
   }
-
 
   /**
    * 渲染查询条

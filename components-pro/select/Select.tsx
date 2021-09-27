@@ -87,7 +87,6 @@ function getSimpleValue(value, valueField) {
   return value;
 }
 
-
 export type onOptionProps = { dataSet: DataSet; record: Record };
 
 export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
@@ -1359,7 +1358,6 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       this.expand();
     }
   }
-
 
   processRecordToObject(record: Record) {
     const { primitive, valueField } = this;

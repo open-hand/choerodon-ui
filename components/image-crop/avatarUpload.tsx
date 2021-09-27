@@ -38,7 +38,6 @@ export interface AvatarArea {
   file?: File;
 }
 
-
 export interface AvatarUploadProps {
   visible: boolean; // 上传图片模态框的显示状态
   onClose?: (visible: boolean) => void; // 模态框关闭时的回调
@@ -302,8 +301,6 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     )
     return dataList
   }
-
-
 
   renderEditor(props) {
     const { img, file, rotate } = this.state;

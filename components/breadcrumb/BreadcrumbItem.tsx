@@ -7,7 +7,6 @@ import Icon from '../icon';
 import List, { ListProps } from '../list';
 import buildPlacements from './placements';
 
-
 export interface MenuListItemProps {
   href?: string;
   listItemName?: string;
@@ -131,7 +130,6 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
   };
 
   let link: string | React.ReactNode = renderLink(children, restProps, `link`, 'href');
-
 
   // wrap to dropDown
   link = renderBreadcrumbMenu(link);

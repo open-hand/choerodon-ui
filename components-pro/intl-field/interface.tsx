@@ -4,4 +4,3 @@ export {
 export {
     IntlListProps,
 } from './IntlList';
-

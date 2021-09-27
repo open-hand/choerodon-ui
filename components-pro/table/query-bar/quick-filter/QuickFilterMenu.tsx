@@ -28,7 +28,6 @@ import Store from './QuickFilterDataSet';
 
 const modalKey = Modal.key();
 
-
 /**
  * 判断查询值是否为空
  * @param value
@@ -57,7 +56,6 @@ function findFieldObj(queryDataSet, data) {
     return { name, value };
   }
 }
-
 
 /**
  * 当前数据是否有值并需要选中
@@ -284,7 +282,6 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
       }
     }
   };
-
 
   const handleChange = (value?: number) => {
     locateData(value);

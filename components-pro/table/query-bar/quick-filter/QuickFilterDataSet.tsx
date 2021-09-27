@@ -67,7 +67,6 @@ const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) =>
   ],
 });
 
-
 const Store = createContext({} as any);
 
 export default Store;
@@ -93,7 +92,6 @@ export const StoreProvider = props => {
     ],
   }), []);
 
-
   const conditionDataSet = useMemo(() => new DataSet(ConditionDataSet()), []);
 
   const menuDataSet = useMemo(() => new DataSet(QuickFilterDataSet({
@@ -110,5 +108,3 @@ export const StoreProvider = props => {
   };
   return <Store.Provider value={value}>{children}</Store.Provider>;
 };
-
-

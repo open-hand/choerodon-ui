@@ -134,7 +134,6 @@ export default class Tree extends Component<TreeProps> {
     this.processDataSetListener(true);
   }
 
-
   componentWillReceiveProps(nextProps) {
     const { defaultExpandAll, defaultSelectedKeys, defaultExpandedKeys, defaultCheckedKeys } = this.props;
     if (defaultExpandAll !== nextProps.defaultExpandAll ||
@@ -325,7 +324,6 @@ export default class Tree extends Component<TreeProps> {
     }
     return true;
   }
-
 
   setCheck(eventObj: C7nTreeNodeProps) {
     const { dataSet } = this.props;

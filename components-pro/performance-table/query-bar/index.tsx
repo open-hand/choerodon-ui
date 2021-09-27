@@ -94,7 +94,6 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
     return <TableDynamicFilterBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
-
   render() {
     const { tableStore: { queryBar, dataSet } } = this.context;
     if (dataSet) {

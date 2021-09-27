@@ -62,4 +62,3 @@ const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = observer(function
 TableHeaderRow.displayName = 'TableHeaderRow';
 
 export default TableHeaderRow;
-

@@ -138,5 +138,3 @@ export { default as Result } from './result';
 export { default as ImageCrop } from './image-crop';
 
 export { default as Statistic } from './statistic';
-
-

@@ -852,7 +852,6 @@ export function generateJSONData(
   };
 }
 
-
 export function getUniqueFieldNames(dataSet: DataSet): string[] {
   const keys: string[] = [];
   [...dataSet.fields.entries()].forEach(([key, field]) => {
@@ -1024,7 +1023,6 @@ export function getSortedFields(fields: Fields): [string, Field][] {
     ...dynamicBindFields,
   ];
 }
-
 
 export async function concurrentPromise(
   promiseLoaders: { getPromise: () => Promise<any> }[],

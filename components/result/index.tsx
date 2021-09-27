@@ -74,7 +74,6 @@ const renderStatus = (prefixCls: string, { status, icon,statusRenderer }: Result
 const renderExtra = (prefixCls: string, { extra }: ResultProps) =>
   extra && <div className={`${prefixCls}-extra`}>{extra}</div>;
 
-
 const Result = (props: ResultProps) => {
   const {
     prefixCls: customizePrefixCls,
@@ -103,4 +102,3 @@ Result.defaultProps = {
 };
 
 export default Result;
-

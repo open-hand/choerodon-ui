@@ -36,7 +36,6 @@ export interface ImageCrop extends HTMLImageElement {
     src: string;
 }
 
-
 export interface CropProps {
     crossOrigin?: "anonymous" | "use-credentials"; //   如果使用这个值的话就会在请求中的header中的带上Origin属性，但请求不会带上cookie和其他的一些认证信息 | 这个就同时会在跨域请求中带上cookie和其他的一些认证信息
     src?: string; // 图片
@@ -72,8 +71,6 @@ export default class Crop extends Component<CropProps, any> {
         minRectSize: 80,
         defaultRectSize: 200,
     };
-
-
 
     constructor(props: CropProps) {
         super(props);
@@ -260,7 +257,6 @@ export default class Crop extends Component<CropProps, any> {
 
         return { width: maxX - minX, height: maxY - minY }
     }
-
 
     initImageSize(img, rotate = 0) {
         const { editorWidth, editorHeight, defaultRectSize, minRectSize } = this.props;

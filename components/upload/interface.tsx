@@ -26,7 +26,6 @@ export interface UploadFile {
   imageCropArea?: Area;
 }
 
-
 export interface UploadChangeParam {
   file: UploadFile;
   fileList: Array<UploadFile>;

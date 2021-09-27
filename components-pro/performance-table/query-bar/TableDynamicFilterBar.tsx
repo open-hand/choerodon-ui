@@ -341,7 +341,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     );
   }
 
-
   /**
    * 获取筛选下拉
    */
@@ -490,7 +489,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     return null;
   }
-
 
   /**
    * 渲染查询条

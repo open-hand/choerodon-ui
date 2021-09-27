@@ -147,7 +147,6 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     return undefined;
   }
 
-
   renderInner(): ReactNode {
     return <span className={`${this.prefixCls}-inner`} />;
   }

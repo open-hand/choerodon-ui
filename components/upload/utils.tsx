@@ -100,4 +100,3 @@ export function previewImage(file: File | Blob): Promise<string> {
     img.src = window.URL.createObjectURL(file);
   });
 }
-

@@ -246,7 +246,6 @@ export default class Popup extends ViewComponent<PopupProps> {
   }
 }
 
-
 export function getGlobalPopupContainer() {
   if (Popup.popupContainer) {
     return Popup.popupContainer;

@@ -87,7 +87,6 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
     return this.observableProps.dataSet;
   }
 
-
   handleChange = (value, oldValue) => {
     const { onChange } = this.props;
     if (onChange) {

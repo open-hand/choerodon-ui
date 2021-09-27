@@ -190,7 +190,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     }
   }
 
-
   @autobind
   handleQueryReset() {
     const { queryDataSet, onReset = noop } = this.props;

@@ -3,7 +3,6 @@ import localeContext from './LocaleContext';
 import { formatReactTemplate } from '../formatter/formatReactTemplate';
 import { Locale } from './locale';
 
-
 export function $l<T extends keyof Omit<Locale, 'lang'>>(
   component: T,
   key: keyof Locale[T],

@@ -15,7 +15,6 @@ export class AttachmentStore {
     { maxAge: 60000, max: 100 },
   );
 
-
   fetchCountInBatch(uuid: string): Promise<number | undefined> {
     return this.merger.add(uuid);
   }

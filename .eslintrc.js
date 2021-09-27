@@ -58,6 +58,7 @@ const eslintrc = {
     'max-len': 0,
     'no-console': [2, { allow: ['warn', 'error'] }],
     'no-continue': 0,
+    'no-multiple-empty-lines': 1,
     'no-nested-ternary': 0,
     'no-param-reassign': 0,
     'no-plusplus': 0,

@@ -1133,7 +1133,6 @@ export default class DataSet extends EventManager {
     }
   }
 
-
   /**
    * 可以把json数组通过ds配置转化成可以直接浏览的数据信息
    * @param result 需要转化内容

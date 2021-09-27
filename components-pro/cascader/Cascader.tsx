@@ -64,7 +64,6 @@ export interface SearchMatcherProps {
 
 export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
 
-
 const disabledField = 'disabled';
 
 function defaultOnOption({ record }) {
@@ -104,7 +103,6 @@ function defaultSearchMatcher({ record, text, textField }) {
 }
 
 export type onOptionProps = { dataSet: DataSet; record: Record };
-
 
 export interface CascaderProps extends TriggerFieldProps {
   /**
@@ -246,7 +244,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     expandTrigger: ExpandTrigger.click,
     onOption: defaultOnOption,
   };
-
 
   @observable activeValues;
 
@@ -433,7 +430,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   checkValueReaction?: IReactionDisposer;
 
   checkComboReaction?: IReactionDisposer;
-
 
   checkValue() {
     this.checkValueReaction = reaction(() => this.cascadeOptions, () => this.processSelectedData());
@@ -980,7 +976,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     return activeValue;
   }
 
-
   handleKeyLeftRightNext(e, direction: number) {
     if (!this.editable) {
       if (isEmpty(toJS(this.activeValue))) {
@@ -1088,7 +1083,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
   }
 
-
   findByValue(value): Record | undefined {
     const { valueField, props: { changeOnSelect } } = this;
     const findTreeItem = (options, valueItem, index) => {
@@ -1110,7 +1104,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       return findTreeItem(toJS(this.options.treeData), toJS(value), 0);
     }
   }
-
 
   isSelected(record: Record) {
     const { valueField } = this;
@@ -1142,7 +1135,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       }
     }
   }
-
 
   handlePopupAnimateAppear() {
     // noop
@@ -1313,7 +1305,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       valueField,
     });
   }
-
 
   @autobind
   @action

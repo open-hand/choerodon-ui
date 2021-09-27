@@ -53,8 +53,6 @@ if (typeof window !== 'undefined') {
   })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 }
 
-
-
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
 const ZOOM_STEP = 0.1;
@@ -125,7 +123,6 @@ export interface ImgCropProps {
   rotateStep?: number;
 }
 
-
 const EasyCrop = forwardRef<unknown, EasyCropProps>((props, ref: Ref<Cropper>) => {
   const {
     src,
@@ -185,9 +182,6 @@ const imageToCanvas = (image) => {
   return undefined
 }
 
-
-
-
 const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
   const {
     aspect,
@@ -232,7 +226,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
   const fileRef = React.useRef<UploadFile>(); // 记录文件的参数
   const resolveRef = useRef<(value?: any | PromiseLike<any>) => void>(); // 返回文件上传的成功数据的方法
   const rejectRef = useRef<(reason?: any) => void>(); // 返回失败数据的方法
-
 
   const cropPixelsRef = React.useRef<HTMLImageElement>();
 
@@ -321,9 +314,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
       }
     }
   }, [beforeCrop, children]);
-
-
-
 
   /**
    * EasyCrop
@@ -458,7 +448,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
 
   }, [hasRotate, onClose, rotateVal]);
 
-
   const RenderCrop = (
     <EasyCrop
       ref={ref}
@@ -523,7 +512,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
   );
 }) as CompoundedComponent
 
-
 ImgCrop.defaultProps = {
   shape: shapeCroper.rect,
   grid: false,
@@ -537,4 +525,3 @@ ImgCrop.defaultProps = {
 ImgCrop.AvatarUploader = AvatarUploader
 
 export default ImgCrop;
-

@@ -5,7 +5,6 @@ import StatisticNumber from './Number';
 import Countdown from './Countdown';
 import { valueType, FormatConfig } from './utils';
 
-
 export interface StatisticProps extends FormatConfig {
   prefixCls?: string;
   className?: string;
@@ -60,6 +59,5 @@ Statistic.defaultProps = {
 };
 
 Statistic.Countdown = Countdown
-
 
 export default Statistic;

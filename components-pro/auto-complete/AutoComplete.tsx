@@ -10,7 +10,6 @@ import { FieldType } from '../data-set/enum';
 import Icon from '../icon';
 import { preventDefault } from '../_util/EventManager';
 
-
 const defaultMatcher = (value: string, inputText: string) => value.indexOf(inputText) !== -1;
 
 export interface AutoCompleteProps extends SelectProps {

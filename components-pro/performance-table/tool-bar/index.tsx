@@ -102,7 +102,6 @@ const ToolBar: React.FC<ToolBarProps> = ({
     );
   }, [buttons]);
 
-
   const headerNode = useMemo(() =>
     (
       <div className={`${toolbarPrefixCls}-header`}>

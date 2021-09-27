@@ -4,4 +4,3 @@ import './index.less';
 import '../../select/style';
 import '../../ripple/style';
 import 'choerodon-ui/lib/tree/style';
-

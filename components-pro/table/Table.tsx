@@ -104,7 +104,6 @@ export type Suffixes =
   | ReactElement
   | ((props: { queryDataSet?: DataSet; dataSet: DataSet }) => ReactElement);
 
-
 export type SummaryBar =
   | Field
   | SummaryBarHook;
@@ -1139,7 +1138,6 @@ export default class Table extends DataSetComponent<TableProps> {
       }
     }
   }
-
 
   async handleKeyDownCTRLDELETE(e) {
     e.preventDefault();

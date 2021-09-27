@@ -353,7 +353,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.handleChangeWait.cancel();
   }
 
-
   @autobind
   saveTagContainer(node) {
     this.tagContainer = node;
@@ -1342,7 +1341,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return debounce(this.prepareSetValue, 0);
   }
-
 
   @autobind
   handleChange(e) {

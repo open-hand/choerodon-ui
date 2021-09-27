@@ -46,6 +46,3 @@ export default class Skeleton extends DataSetComponent<SkeletonProps> {
     return <C7nSkeleton {...omitProps} {...props} />;
   }
 }
-
-
-

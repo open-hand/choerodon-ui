@@ -11,7 +11,6 @@ export type ExpandIconPosition = 'left' | 'right' | 'text-right';
 
 export type TriggerMode = 'icon' | 'header';
 
-
 export interface PanelProps {
   isActive?: boolean;
   header?: React.ReactNode;

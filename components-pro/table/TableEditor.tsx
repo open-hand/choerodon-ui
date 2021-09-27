@@ -337,7 +337,6 @@ export default class TableEditor extends Component<TableEditorProps> {
     }
   }
 
-
   @autobind
   hideEditor() {
     this.inTab = false;

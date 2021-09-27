@@ -18,7 +18,6 @@ export { EventDataNode, DataNode, TreeNodeProps };
 
 export { ExpandAction as DirectoryTreeExpandAction, DirectoryTreeProps } from './DirectoryTree';
 
-
 export interface C7ndTreeNodeAttribute {
   eventKey: string;
   prefixCls: string;
