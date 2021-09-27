@@ -33,7 +33,9 @@ timeline: true
 - 💄 `<pro>Lov`： 优化 lovQueryBar 优先级，去除 lovQueryBar 全局默认值。
 - 💄 `<pro>Tooltip`：优化样式对齐。
 - 🐞 `<pro>DataSet`： 修复 cacheSelection 属性缓存的选中记录重新显示时变更的值被还原的问题。
+- 🐞 `<pro>DataSet`： 修复当字段列表中没有 primaryKey 对应的字段时 dirty-field 模式会忽略主键值。
 - 🐞 `<pro>Attachment`： 修复数量和附件列表不显示的问题。
+- 🐞 `<pro>Attachment`: 修复当没有附件时 picture-card 模式下上传按钮不显示的问题。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。
 - 🐞 `<pro>DatePicker`: 修复 range 为 object 且 multiple 时设置的问题。

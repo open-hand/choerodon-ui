@@ -33,7 +33,9 @@ timeline: true
 - 💄 `<pro>Lov`: Optimize the priority of `lovQueryBar` and remove the global default value of `lovQueryBar`.
 - 💄 `<pro>Tooltip`: Optimize style alignment.
 - 🐞 `<pro>DataSet`: Fix the `cacheSelection` problem that the changed value is restored when the cached selected record is redisplayed.
+- 🐞 `<pro>DataSet`: Fix the `dirty-field` mode will ignore the primary key value when there is no field corresponding to the `primaryKey` in the field list.
 - 🐞 `<pro>Attachment`: Fix the problem that the number and attachment list are not displayed.
+- 🐞 `<pro>Attachment`: Fixed the problem that upload button will not shown in picture card mode with no attachments.
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 - 🐞 `<pro>DatePicker`: Fix display problems in `isFlat` and `range` mode.
 - 🐞 `<pro>DatePicker`: Fix the problem of value setting when the `range` is object and `multiple`.
