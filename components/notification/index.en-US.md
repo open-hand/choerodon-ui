@@ -61,3 +61,4 @@ notification.config({
 | getContainer | Return the mount node for Notification | () => HTMLNode | () => document.body |
 | placement | Position of Notification, can be one of `topLeft` `topRight` `bottomLeft` `bottomRight` | string | `topRight` |
 | top | Distance from the top of the viewport, when `placement` is `topRight` or `topLeft` (unit: pixels). | number | 24 |
+| maxCount | Max message show, drop oldest if exceed limit | number |  |
