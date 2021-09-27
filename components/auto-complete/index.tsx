@@ -120,18 +120,18 @@ export default class AutoComplete extends Component<AutoCompleteProps, {}> {
             return item;
           }
           switch (typeof item) {
-          case 'string':
-            return <Option key={item as string}>{item}</Option>;
-          case 'object':
-            return (
-              <Option key={(item as DataSourceItemObject).value}>
-                {(item as DataSourceItemObject).text}
-              </Option>
-            );
-          default:
-            throw new Error(
-              'AutoComplete[dataSource] only supports type `string[] | Object[]`.',
-            );
+            case 'string':
+              return <Option key={item as string}>{item}</Option>;
+            case 'object':
+              return (
+                <Option key={(item as DataSourceItemObject).value}>
+                  {(item as DataSourceItemObject).text}
+                </Option>
+              );
+            default:
+              throw new Error(
+                'AutoComplete[dataSource] only supports type `string[] | Object[]`.',
+              );
           }
         })
         : [];

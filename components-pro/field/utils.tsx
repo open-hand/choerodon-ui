@@ -71,20 +71,20 @@ export function toMultipleValue(value: any, range?: boolean | [string, string]) 
 export function getDateFormatByFieldType(type: FieldType): string {
   const formatter = getConfig('formatter');
   switch (type) {
-  case FieldType.date:
-    return formatter.date;
-  case FieldType.dateTime:
-    return formatter.dateTime;
-  case FieldType.week:
-    return formatter.week;
-  case FieldType.month:
-    return formatter.month;
-  case FieldType.year:
-    return formatter.year;
-  case FieldType.time:
-    return formatter.time;
-  default:
-    return formatter.date;
+    case FieldType.date:
+      return formatter.date;
+    case FieldType.dateTime:
+      return formatter.dateTime;
+    case FieldType.week:
+      return formatter.week;
+    case FieldType.month:
+      return formatter.month;
+    case FieldType.year:
+      return formatter.year;
+    case FieldType.time:
+      return formatter.time;
+    default:
+      return formatter.date;
   }
 }
 

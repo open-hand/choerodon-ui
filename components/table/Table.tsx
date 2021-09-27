@@ -617,39 +617,39 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     let checked;
     // handle default selection
     switch (selectionKey) {
-    case 'all':
-      changeableRowKeys.forEach(key => {
-        if (selectedRowKeys.indexOf(key) < 0) {
-          selectedRowKeys.push(key);
+      case 'all':
+        changeableRowKeys.forEach(key => {
+          if (selectedRowKeys.indexOf(key) < 0) {
+            selectedRowKeys.push(key);
+            changeRowKeys.push(key);
+          }
+        });
+        selectWay = 'onSelectAll';
+        checked = true;
+        break;
+      case 'removeAll':
+        changeableRowKeys.forEach(key => {
+          if (selectedRowKeys.indexOf(key) >= 0) {
+            selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
+            changeRowKeys.push(key);
+          }
+        });
+        selectWay = 'onSelectAll';
+        checked = false;
+        break;
+      case 'invert':
+        changeableRowKeys.forEach(key => {
+          if (selectedRowKeys.indexOf(key) < 0) {
+            selectedRowKeys.push(key);
+          } else {
+            selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
+          }
           changeRowKeys.push(key);
-        }
-      });
-      selectWay = 'onSelectAll';
-      checked = true;
-      break;
-    case 'removeAll':
-      changeableRowKeys.forEach(key => {
-        if (selectedRowKeys.indexOf(key) >= 0) {
-          selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
-          changeRowKeys.push(key);
-        }
-      });
-      selectWay = 'onSelectAll';
-      checked = false;
-      break;
-    case 'invert':
-      changeableRowKeys.forEach(key => {
-        if (selectedRowKeys.indexOf(key) < 0) {
-          selectedRowKeys.push(key);
-        } else {
-          selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
-        }
-        changeRowKeys.push(key);
-        selectWay = 'onSelectInvert';
-      });
-      break;
-    default:
-      break;
+          selectWay = 'onSelectInvert';
+        });
+        break;
+      default:
+        break;
     }
 
     this.store.setState({

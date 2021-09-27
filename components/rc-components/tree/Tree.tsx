@@ -1132,17 +1132,17 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // >>>>>>>>>> Direction
     switch (event.which) {
-    case KeyCode.UP: {
-      this.offsetActiveKey(-1);
-      event.preventDefault();
-      break;
-    }
-    case KeyCode.DOWN: {
-      this.offsetActiveKey(1);
-      event.preventDefault();
-      break;
-    }
-    default:
+      case KeyCode.UP: {
+        this.offsetActiveKey(-1);
+        event.preventDefault();
+        break;
+      }
+      case KeyCode.DOWN: {
+        this.offsetActiveKey(1);
+        event.preventDefault();
+        break;
+      }
+      default:
     }
 
     // >>>>>>>>>> Expand & Selection
@@ -1159,54 +1159,54 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
       switch (event.which) {
       // >>> Expand
-      case KeyCode.LEFT: {
-        // Collapse if possible
-        if (expandable && expandedKeys.includes(activeKey!)) {
-          this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
-        } else if (activeItem.parent) {
-          this.onActiveChange(activeItem.parent.data.key!);
+        case KeyCode.LEFT: {
+          // Collapse if possible
+          if (expandable && expandedKeys.includes(activeKey!)) {
+            this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          } else if (activeItem.parent) {
+            this.onActiveChange(activeItem.parent.data.key!);
+          }
+          event.preventDefault();
+          break;
         }
-        event.preventDefault();
-        break;
-      }
-      case KeyCode.RIGHT: {
-        // Expand if possible
-        if (expandable && !expandedKeys.includes(activeKey!)) {
-          this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
-        } else if (activeItem.children && activeItem.children.length) {
-          this.onActiveChange(activeItem.children[0].data.key!);
+        case KeyCode.RIGHT: {
+          // Expand if possible
+          if (expandable && !expandedKeys.includes(activeKey!)) {
+            this.onNodeExpand({} as React.MouseEvent<HTMLDivElement>, eventNode);
+          } else if (activeItem.children && activeItem.children.length) {
+            this.onActiveChange(activeItem.children[0].data.key!);
+          }
+          event.preventDefault();
+          break;
         }
-        event.preventDefault();
-        break;
-      }
 
-      // Selection
-      case KeyCode.ENTER:
-      case KeyCode.SPACE: {
-        if (
-          checkable &&
+        // Selection
+        case KeyCode.ENTER:
+        case KeyCode.SPACE: {
+          if (
+            checkable &&
             !eventNode.disabled &&
             eventNode.checkable !== false &&
             !eventNode.disableCheckbox
-        ) {
-          this.onNodeCheck(
+          ) {
+            this.onNodeCheck(
               {} as React.MouseEvent<HTMLDivElement>,
               eventNode,
               !checkedKeys.includes(activeKey!),
-          );
-          event.preventDefault();
-        } else if (
-          !checkable &&
+            );
+            event.preventDefault();
+          } else if (
+            !checkable &&
             selectable &&
             !eventNode.disabled &&
             eventNode.selectable !== false
-        ) {
-          this.onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
-          event.preventDefault();
+          ) {
+            this.onNodeSelect({} as React.MouseEvent<HTMLDivElement>, eventNode);
+            event.preventDefault();
+          }
+          break;
         }
-        break;
-      }
-      default:
+        default:
       }
     }
 

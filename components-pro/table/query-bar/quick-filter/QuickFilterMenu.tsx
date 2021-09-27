@@ -304,12 +304,12 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
 
   function getTitle(type) {
     switch (type) {
-    case 'create':
-      return $l('Table', 'save_filter');
-    case 'edit':
-      return $l('Table', 'filter_rename');
-    default :
-      return $l('Table', 'save_filter_as');
+      case 'create':
+        return $l('Table', 'save_filter');
+      case 'edit':
+        return $l('Table', 'filter_rename');
+      default :
+        return $l('Table', 'save_filter_as');
     }
   }
 

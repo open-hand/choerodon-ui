@@ -964,18 +964,18 @@ export default class Attachment extends FormField<AttachmentProps> {
     const help = this.getProp('help');
     if (help === undefined || showHelp === ShowHelp.none) return;
     switch (forceHelpMode) {
-    case ShowHelp.tooltip:
-      return (
-        <Tooltip title={help} openClassName={`${getConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
-          <Icon type="help" style={{ fontSize: '14px', color: '#8c8c8c' }} />
-        </Tooltip>
-      );
-    default:
-      return (
-        <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>
-          {help}
-        </div>
-      );
+      case ShowHelp.tooltip:
+        return (
+          <Tooltip title={help} openClassName={`${getConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
+            <Icon type="help" style={{ fontSize: '14px', color: '#8c8c8c' }} />
+          </Tooltip>
+        );
+      default:
+        return (
+          <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>
+            {help}
+          </div>
+        );
     }
   }
 

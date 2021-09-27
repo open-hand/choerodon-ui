@@ -47,19 +47,19 @@ export interface PaginationProps extends DataSetComponentProps {
 
 function defaultItemRender(page: number, type: PagerType) {
   switch (type) {
-  case 'first':
-    return <Icon type="first_page" />;
-  case 'last':
-    return <Icon type="last_page" />;
-  case 'prev':
-    return <Icon type="navigate_before" />;
-  case 'next':
-    return <Icon type="navigate_next" />;
-  case 'jump-prev':
-  case 'jump-next':
-    return '•••';
-  default:
-    return page;
+    case 'first':
+      return <Icon type="first_page" />;
+    case 'last':
+      return <Icon type="last_page" />;
+    case 'prev':
+      return <Icon type="navigate_before" />;
+    case 'next':
+      return <Icon type="navigate_next" />;
+    case 'jump-prev':
+    case 'jump-next':
+      return '•••';
+    default:
+      return page;
   }
 }
 

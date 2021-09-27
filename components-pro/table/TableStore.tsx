@@ -807,11 +807,11 @@ export default class TableStore {
     }
     if (isNumber(rowHeight)) {
       switch (this.size) {
-      case Size.large:
-        return rowHeight + 2;
-      case Size.small:
-        return rowHeight - 2;
-      default:
+        case Size.large:
+          return rowHeight + 2;
+        case Size.small:
+          return rowHeight - 2;
+        default:
       }
     }
     return rowHeight;
@@ -1632,19 +1632,19 @@ export default class TableStore {
     const { dataSet } = this;
     const { isAllPageSelection } = dataSet;
     switch (key) {
-    case 'current': {
-      if (this.allChecked) {
-        dataSet.unSelectAll();
-      } else {
-        const { filter } = this.props;
-        dataSet.selectAll(filter);
+      case 'current': {
+        if (this.allChecked) {
+          dataSet.unSelectAll();
+        } else {
+          const { filter } = this.props;
+          dataSet.selectAll(filter);
+        }
+        break;
       }
-      break;
-    }
-    case 'all':
-      dataSet.setAllPageSelection(!isAllPageSelection);
-      break;
-    default:
+      case 'all':
+        dataSet.setAllPageSelection(!isAllPageSelection);
+        break;
+      default:
     }
   }
 

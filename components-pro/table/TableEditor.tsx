@@ -208,29 +208,29 @@ export default class TableEditor extends Component<TableEditorProps> {
       const { tableStore } = this.context;
       const { keyboard } = tableStore;
       switch (e.keyCode) {
-      case KeyCode.ESC:
-        this.blur();
-        break;
-      case KeyCode.TAB: {
-        this.inTab = true;
-        const { column } = this.props;
-        const cellNode = !isStickySupport() && column.lock ? findCell(tableStore, getColumnKey(column)) : this.cellNode;
-        if (cellNode) {
-          cellNode.focus();
+        case KeyCode.ESC:
+          this.blur();
+          break;
+        case KeyCode.TAB: {
+          this.inTab = true;
+          const { column } = this.props;
+          const cellNode = !isStickySupport() && column.lock ? findCell(tableStore, getColumnKey(column)) : this.cellNode;
+          if (cellNode) {
+            cellNode.focus();
+          }
+          break;
         }
-        break;
-      }
-      case KeyCode.PAGE_UP:
-      case KeyCode.PAGE_DOWN:
-        stopEvent(e);
-        break;
-      case KeyCode.D:
-        if (ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
-        break;
-      case KeyCode.S:
-        if (ctrlKey === true && keyboard) this.handleKeyDownCTRLS(e);
-        break;
-      default:
+        case KeyCode.PAGE_UP:
+        case KeyCode.PAGE_DOWN:
+          stopEvent(e);
+          break;
+        case KeyCode.D:
+          if (ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
+          break;
+        case KeyCode.S:
+          if (ctrlKey === true && keyboard) this.handleKeyDownCTRLS(e);
+          break;
+        default:
       }
     }
     const { editorProps } = this;

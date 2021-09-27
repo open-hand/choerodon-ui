@@ -12,26 +12,26 @@ import { getPrefixCls } from '../configure';
 
 function getSelect(size?: Size) {
   switch (size) {
-  case Size.small:
-    return MiniSelect;
-  case Size.large:
-    return LargeSelect;
-  default:
-    return Select;
+    case Size.small:
+      return MiniSelect;
+    case Size.large:
+      return LargeSelect;
+    default:
+      return Select;
   }
 }
 
 function getIcon(type: string) {
   switch (type) {
-  case 'first':
-    return 'first_page';
-  case 'last':
-    return 'last_page';
-  case 'prev':
-    return 'navigate_before';
-  case 'next':
-    return 'navigate_next';
-  default:
+    case 'first':
+      return 'first_page';
+    case 'last':
+      return 'last_page';
+    case 'prev':
+      return 'navigate_before';
+    case 'next':
+      return 'navigate_next';
+    default:
   }
 }
 

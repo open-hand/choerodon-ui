@@ -289,54 +289,54 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @action
   handleRenderedValueChange(text: string, width: number, rangeTarget?: 0 | 1) {
     switch (rangeTarget) {
-    case 0: {
-      this.renderedStartText = {
-        text,
-        width,
-      };
-      break;
-    }
-    case 1: {
-      this.renderedEndText = {
-        text,
-        width,
-      };
-      break;
-    }
-    default: {
-      this.renderedText = {
-        text,
-        width,
-      };
-    }
+      case 0: {
+        this.renderedStartText = {
+          text,
+          width,
+        };
+        break;
+      }
+      case 1: {
+        this.renderedEndText = {
+          text,
+          width,
+        };
+        break;
+      }
+      default: {
+        this.renderedText = {
+          text,
+          width,
+        };
+      }
     }
   }
 
   clearRenderedText(rangeTarget?: 0 | 1) {
     switch (rangeTarget) {
-    case 0: {
-      if (this.renderedStartText) {
-        runInAction(() => {
-          this.renderedStartText = undefined;
-        });
+      case 0: {
+        if (this.renderedStartText) {
+          runInAction(() => {
+            this.renderedStartText = undefined;
+          });
+        }
+        break;
       }
-      break;
-    }
-    case 1: {
-      if (this.renderedEndText) {
-        runInAction(() => {
-          this.renderedEndText = undefined;
-        });
+      case 1: {
+        if (this.renderedEndText) {
+          runInAction(() => {
+            this.renderedEndText = undefined;
+          });
+        }
+        break;
       }
-      break;
-    }
-    default: {
-      if (this.renderedText) {
-        runInAction(() => {
-          this.renderedText = undefined;
-        });
+      default: {
+        if (this.renderedText) {
+          runInAction(() => {
+            this.renderedText = undefined;
+          });
+        }
       }
-    }
     }
   }
 
@@ -1229,24 +1229,24 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       if (this.multiple) {
         if (!this.text) {
           switch (e.keyCode) {
-          case KeyCode.DELETE:
-            this.clear();
-            break;
-          case KeyCode.BACKSPACE:
-            this.removeLastValue();
-            break;
-          default:
+            case KeyCode.DELETE:
+              this.clear();
+              break;
+            case KeyCode.BACKSPACE:
+              this.removeLastValue();
+              break;
+            default:
           }
         }
       } else {
         const { clearButton } = this.props;
         if (clearButton && !this.editable) {
           switch (e.keyCode) {
-          case KeyCode.DELETE:
-          case KeyCode.BACKSPACE:
-            this.clear();
-            break;
-          default:
+            case KeyCode.DELETE:
+            case KeyCode.BACKSPACE:
+              this.clear();
+              break;
+            default:
           }
         }
       }

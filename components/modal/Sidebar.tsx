@@ -16,15 +16,15 @@ export interface SidebarProps extends ModalFuncProps {
 
 function isFixedWidth(width: ModalFuncProps['width']) {
   switch (typeof width) {
-  case 'undefined':
-    return false;
-  case 'number':
-    return true;
-  case 'string':
-    // width: 100%不是固定宽度
-    return width.indexOf('%') === -1;
-  default:
-    return false;
+    case 'undefined':
+      return false;
+    case 'number':
+      return true;
+    case 'string':
+      // width: 100%不是固定宽度
+      return width.indexOf('%') === -1;
+    default:
+      return false;
   }
 }
 

@@ -31,19 +31,19 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuf
   const showCount = record.get('showCount');
   const handleMenuClick = useCallback((arg: ClickParam) => {
     switch (arg.key) {
-    case 'set_default':
-      onDefaultKeyChange(itemKey);
-      break;
-    case 'rename':
-      record.setState('editing', true);
-      break;
-    case 'show_count_yes':
-      record.set('showCount', true);
-      break;
-    case 'show_count_no':
-      record.set('showCount', false);
-      break;
-    default:
+      case 'set_default':
+        onDefaultKeyChange(itemKey);
+        break;
+      case 'rename':
+        record.setState('editing', true);
+        break;
+      case 'show_count_yes':
+        record.set('showCount', true);
+        break;
+      case 'show_count_no':
+        record.set('showCount', false);
+        break;
+      default:
     }
   }, [record, onDefaultKeyChange, itemKey]);
   const renderCheckOption = (bool: boolean) => {

@@ -138,13 +138,13 @@ export default class Button extends Component<ButtonProps, any> {
     // small => sm
     let sizeCls = '';
     switch (size) {
-    case Size.large:
-      sizeCls = 'lg';
-      break;
-    case Size.small:
-      sizeCls = 'sm';
-      break;
-    default:
+      case Size.large:
+        sizeCls = 'lg';
+        break;
+      case Size.small:
+        sizeCls = 'sm';
+        break;
+      default:
     }
 
     const ComponentProp = others.href ? 'a' : 'button';

@@ -63,28 +63,28 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuf
   const handleMenuClick = useCallback(action((arg: ClickParam) => {
     const { key } = arg;
     switch (key) {
-    case 'rename':
-      record.setState('editing', true);
-      break;
-    case 'unlock':
-      changeLock(false);
-      break;
-    case 'left':
-      changeLock(ColumnLock.left);
-      break;
-    case 'right':
-      changeLock(ColumnLock.right);
-      break;
-    case 'top':
-      changeIndex(0);
-      break;
-    case 'up':
-      changeIndex(index - 1);
-      break;
-    case 'down':
-      changeIndex(index + 1);
-      break;
-    default:
+      case 'rename':
+        record.setState('editing', true);
+        break;
+      case 'unlock':
+        changeLock(false);
+        break;
+      case 'left':
+        changeLock(ColumnLock.left);
+        break;
+      case 'right':
+        changeLock(ColumnLock.right);
+        break;
+      case 'top':
+        changeIndex(0);
+        break;
+      case 'up':
+        changeIndex(index - 1);
+        break;
+      case 'down':
+        changeIndex(index + 1);
+        break;
+      default:
     }
   }), [record, index, changeLock, changeIndex]);
   const getTreeNodesMenus = () => {

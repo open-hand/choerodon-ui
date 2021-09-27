@@ -99,13 +99,13 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   handleCodeMirrorKeyDown(cm, e) {
     const { onKeyDown = noop, onEnterDown = noop } = this.props;
     switch (e.keyCode) {
-    case KeyCode.ENTER:
-      onEnterDown(e);
-      break;
-    case KeyCode.ESC:
-      cm.getInputField().blur();
-      break;
-    default:
+      case KeyCode.ENTER:
+        onEnterDown(e);
+        break;
+      case KeyCode.ESC:
+        cm.getInputField().blur();
+        break;
+      default:
     }
     onKeyDown(e);
   }

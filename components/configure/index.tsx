@@ -353,15 +353,15 @@ const defaultTooltipTheme: TooltipThemeHook = target => target === 'validation' 
 
 const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNode => {
   switch (componentName) {
-  case 'Attachment':
-    return $l('Attachment', 'no_attachments');
-  case 'Table':
-    return $l('Table', 'empty_data');
-  case 'Select':
-    return $l('Select', 'no_matching_results');
-  case 'Output':
-    return '';
-  default:
+    case 'Attachment':
+      return $l('Attachment', 'no_attachments');
+    case 'Table':
+      return $l('Table', 'empty_data');
+    case 'Select':
+      return $l('Select', 'no_matching_results');
+    case 'Output':
+      return '';
+    default:
   }
 };
 
@@ -379,22 +379,22 @@ const defaultTableColumnAlign = (_column: ColumnProps, field?: Field): ColumnAli
   if (field) {
     const { type } = field;
     switch (type) {
-    case FieldType.number:
-    case FieldType.currency:
-      return ColumnAlign.right;
-    case FieldType.boolean:
-      return ColumnAlign.center;
-    default:
+      case FieldType.number:
+      case FieldType.currency:
+        return ColumnAlign.right;
+      case FieldType.boolean:
+        return ColumnAlign.center;
+      default:
     }
   }
 };
 
 function getComponentKey(component) {
   switch (component) {
-  case 'Tabs':
-    return 'tabs';
-  default:
-    return 'table';
+    case 'Tabs':
+      return 'tabs';
+    default:
+      return 'table';
   }
 }
 

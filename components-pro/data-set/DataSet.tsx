@@ -623,20 +623,20 @@ export default class DataSet extends EventManager {
     const destroyed: Record[] = [];
     this.all.forEach(record => {
       switch (record.status) {
-      case RecordStatus.add:
-        created.push(record);
-        break;
-      case RecordStatus.update:
-        updated.push(record);
-        break;
-      case RecordStatus.delete:
-        destroyed.push(record);
-        break;
-      default: {
-        if (record.dirty) {
+        case RecordStatus.add:
+          created.push(record);
+          break;
+        case RecordStatus.update:
           updated.push(record);
+          break;
+        case RecordStatus.delete:
+          destroyed.push(record);
+          break;
+        default: {
+          if (record.dirty) {
+            updated.push(record);
+          }
         }
-      }
       }
     });
     return [created, updated, destroyed];
@@ -1731,14 +1731,14 @@ export default class DataSet extends EventManager {
         });
       }
       switch (field.order) {
-      case SortOrder.asc:
-        field.order = SortOrder.desc;
-        break;
-      case SortOrder.desc:
-        field.order = undefined;
-        break;
-      default:
-        field.order = SortOrder.asc;
+        case SortOrder.asc:
+          field.order = SortOrder.desc;
+          break;
+        case SortOrder.desc:
+          field.order = undefined;
+          break;
+        default:
+          field.order = SortOrder.asc;
       }
       if (this.paging || !field.order) {
         this.query();
@@ -2278,14 +2278,14 @@ Then the query method will be auto invoke.`,
       props: { autoLocateFirst, idField, parentField, childrenField },
     } = this;
     switch (paging) {
-    case true:
-      allData = allData.slice(0, pageSize);
-      break;
-    case 'server':
-      allData = idField && parentField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
-      break;
-    default:
-      break;
+      case true:
+        allData = allData.slice(0, pageSize);
+        break;
+      case 'server':
+        allData = idField && parentField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
+        break;
+      default:
+        break;
     }
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
     const originalData = this.processData(allData);

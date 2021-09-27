@@ -19,19 +19,19 @@ export default function DropIndicator({
     height: 2,
   };
   switch (dropPosition) {
-  case -1:
-    style.top = 0;
-    style.left = -dropLevelOffset * indent;
-    break;
-  case 1:
-    style.bottom = 0;
-    style.left = -dropLevelOffset * indent;
-    break;
-  case 0:
-    style.bottom = 0;
-    style.left = indent;
-    break;
-  default:
+    case -1:
+      style.top = 0;
+      style.left = -dropLevelOffset * indent;
+      break;
+    case 1:
+      style.bottom = 0;
+      style.left = -dropLevelOffset * indent;
+      break;
+    case 0:
+      style.bottom = 0;
+      style.left = indent;
+      break;
+    default:
   }
   return <div className={`${prefixCls}-drop-indicator`} style={style} />;
 }

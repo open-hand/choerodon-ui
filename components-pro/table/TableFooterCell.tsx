@@ -49,13 +49,13 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = observer(functi
   }
   const getFooter = (): ReactNode => {
     switch (typeof footer) {
-    case 'function': {
-      return footer(dataSet, column.name);
-    }
-    case 'string':
-      return <span>{footer}</span>;
-    default:
-      return footer;
+      case 'function': {
+        return footer(dataSet, column.name);
+      }
+      case 'string':
+        return <span>{footer}</span>;
+      default:
+        return footer;
     }
   };
   return (

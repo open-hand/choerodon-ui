@@ -996,32 +996,32 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         stopEvent(e);
       } else {
         switch (e.keyCode) {
-        case KeyCode.RIGHT:
-        case KeyCode.DOWN:
-          this.handleKeyDownPrevNext(e, menu, 1);
-          break;
-        case KeyCode.LEFT:
-        case KeyCode.UP:
-          this.handleKeyDownPrevNext(e, menu, -1);
-          break;
-        case KeyCode.END:
-        case KeyCode.PAGE_DOWN:
-          this.handleKeyDownFirstLast(e, menu, 1);
-          break;
-        case KeyCode.HOME:
-        case KeyCode.PAGE_UP:
-          this.handleKeyDownFirstLast(e, menu, -1);
-          break;
-          // case KeyCode.ENTER:
-          //   this.handleKeyDownEnter(e);
-          //   break;
-        case KeyCode.ESC:
-          this.handleKeyDownEsc(e);
-          break;
-        case KeyCode.SPACE:
-          this.handleKeyDownSpace(e);
-          break;
-        default:
+          case KeyCode.RIGHT:
+          case KeyCode.DOWN:
+            this.handleKeyDownPrevNext(e, menu, 1);
+            break;
+          case KeyCode.LEFT:
+          case KeyCode.UP:
+            this.handleKeyDownPrevNext(e, menu, -1);
+            break;
+          case KeyCode.END:
+          case KeyCode.PAGE_DOWN:
+            this.handleKeyDownFirstLast(e, menu, 1);
+            break;
+          case KeyCode.HOME:
+          case KeyCode.PAGE_UP:
+            this.handleKeyDownFirstLast(e, menu, -1);
+            break;
+            // case KeyCode.ENTER:
+            //   this.handleKeyDownEnter(e);
+            //   break;
+          case KeyCode.ESC:
+            this.handleKeyDownEsc(e);
+            break;
+          case KeyCode.SPACE:
+            this.handleKeyDownSpace(e);
+            break;
+          default:
         }
       }
     }

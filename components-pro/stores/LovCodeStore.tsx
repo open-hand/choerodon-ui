@@ -14,18 +14,18 @@ import { TransportHookProps } from '../data-set/Transport';
 
 function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType {
   switch (conditionFieldType) {
-  case LovFieldType.INT:
-    return FieldType.number;
-  case LovFieldType.TEXT:
-    return FieldType.string;
-  case LovFieldType.DATE:
-    return FieldType.date;
-  case LovFieldType.DATETIME:
-    return FieldType.dateTime;
-  case LovFieldType.POPUP:
-    return FieldType.object;
-  default:
-    return (conditionFieldType as FieldType) || FieldType.string;
+    case LovFieldType.INT:
+      return FieldType.number;
+    case LovFieldType.TEXT:
+      return FieldType.string;
+    case LovFieldType.DATE:
+      return FieldType.date;
+    case LovFieldType.DATETIME:
+      return FieldType.dateTime;
+    case LovFieldType.POPUP:
+      return FieldType.object;
+    default:
+      return (conditionFieldType as FieldType) || FieldType.string;
   }
 }
 

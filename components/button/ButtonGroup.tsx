@@ -18,13 +18,13 @@ const ButtonGroup: FunctionComponent<ButtonGroupProps> = props => {
   // small => sm
   let sizeCls = '';
   switch (size) {
-  case Size.large:
-    sizeCls = 'lg';
-    break;
-  case Size.small:
-    sizeCls = 'sm';
-    break;
-  default:
+    case Size.large:
+      sizeCls = 'lg';
+      break;
+    case Size.small:
+      sizeCls = 'sm';
+      break;
+    default:
   }
 
   const classes = classNames(

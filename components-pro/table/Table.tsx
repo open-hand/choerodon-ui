@@ -980,53 +980,53 @@ export default class Table extends DataSetComponent<TableProps> {
         const altKey = e.altKey;
         const shiftKey = e.shiftKey;
         switch (e.keyCode) {
-        case KeyCode.UP:
-          if (shiftKey && keyboard) {
-            this.handleKeyDownUpShift(e);
-          } else {
-            this.handleKeyDownUp(e);
-          }
-          break;
-        case KeyCode.DOWN:
-          if (shiftKey && keyboard) {
-            this.handleKeyDownDownShift(e);
-          } else {
-            this.handleKeyDownDown(e);
-          }
-          break;
-        case KeyCode.RIGHT:
-          this.handleKeyDownRight(e);
-          break;
-        case KeyCode.LEFT:
-          this.handleKeyDownLeft(e);
-          break;
-        case KeyCode.PAGE_UP:
-          e.preventDefault();
-          dataSet.prePage();
-          break;
-        case KeyCode.PAGE_DOWN:
-          e.preventDefault();
-          dataSet.nextPage();
-          break;
-        case KeyCode.HOME:
-          this.handleKeyDownHome(e);
-          break;
-        case KeyCode.END:
-          this.handleKeyDownEnd(e);
-          break;
-        case KeyCode.S:
-          if (ctrlKey === true && keyboard) this.handleKeyDownCTRLS(e);
-          break;
-        case KeyCode.N:
-          if (altKey === true && keyboard) this.handleKeyDownCTRLN(e);
-          break;
-        case KeyCode.D:
-          if (ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
-          break;
-        case KeyCode.DELETE:
-          if (altKey === true && keyboard) this.handleKeyDownCTRLDELETE(e);
-          break;
-        default:
+          case KeyCode.UP:
+            if (shiftKey && keyboard) {
+              this.handleKeyDownUpShift(e);
+            } else {
+              this.handleKeyDownUp(e);
+            }
+            break;
+          case KeyCode.DOWN:
+            if (shiftKey && keyboard) {
+              this.handleKeyDownDownShift(e);
+            } else {
+              this.handleKeyDownDown(e);
+            }
+            break;
+          case KeyCode.RIGHT:
+            this.handleKeyDownRight(e);
+            break;
+          case KeyCode.LEFT:
+            this.handleKeyDownLeft(e);
+            break;
+          case KeyCode.PAGE_UP:
+            e.preventDefault();
+            dataSet.prePage();
+            break;
+          case KeyCode.PAGE_DOWN:
+            e.preventDefault();
+            dataSet.nextPage();
+            break;
+          case KeyCode.HOME:
+            this.handleKeyDownHome(e);
+            break;
+          case KeyCode.END:
+            this.handleKeyDownEnd(e);
+            break;
+          case KeyCode.S:
+            if (ctrlKey === true && keyboard) this.handleKeyDownCTRLS(e);
+            break;
+          case KeyCode.N:
+            if (altKey === true && keyboard) this.handleKeyDownCTRLN(e);
+            break;
+          case KeyCode.D:
+            if (ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
+            break;
+          case KeyCode.DELETE:
+            if (altKey === true && keyboard) this.handleKeyDownCTRLDELETE(e);
+            break;
+          default:
         }
       } catch (error) {
         warning(false, error.message);

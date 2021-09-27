@@ -323,13 +323,13 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   handleKeyDown(e) {
     if (!this.disabled && !this.readOnly) {
       switch (e.keyCode) {
-      case KeyCode.UP:
-        this.handleKeyDownUp(e);
-        break;
-      case KeyCode.DOWN:
-        this.handleKeyDownDown(e);
-        break;
-      default:
+        case KeyCode.UP:
+          this.handleKeyDownUp(e);
+          break;
+        case KeyCode.DOWN:
+          this.handleKeyDownDown(e);
+          break;
+        default:
       }
     }
     super.handleKeyDown(e);
@@ -409,13 +409,13 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const nearStep = getNearStepValues(currentValue, step as number, min, max);
     if (nonStrictStep === false && nearStep) {
       switch (nearStep.length) {
-      case 1:
-        newValue = nearStep[0];
-        break;
-      case 2:
-        newValue = nearStep[isPlus ? 1 : 0];
-        break;
-      default:
+        case 1:
+          newValue = nearStep[0];
+          break;
+        case 2:
+          newValue = nearStep[isPlus ? 1 : 0];
+          break;
+        default:
       }
     } else {
       const nextValue = plus(currentValue, (isPlus ? step : -step) as number);

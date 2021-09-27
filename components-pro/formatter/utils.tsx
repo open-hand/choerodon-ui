@@ -44,13 +44,13 @@ export function toLocaleStringPolyfill(
 export function trimString(value: string, fieldTrim?: FieldTrim): string {
   if (fieldTrim) {
     switch (fieldTrim) {
-    case FieldTrim.both:
-      return value.trim();
-    case FieldTrim.left:
-      return value.trimLeft();
-    case FieldTrim.right:
-      return value.trimRight();
-    default:
+      case FieldTrim.both:
+        return value.trim();
+      case FieldTrim.left:
+        return value.trimLeft();
+      case FieldTrim.right:
+        return value.trimRight();
+      default:
     }
   }
   return value;
@@ -59,13 +59,13 @@ export function trimString(value: string, fieldTrim?: FieldTrim): string {
 export function transformString(value: string, format?: FieldFormat | string): string {
   if (format) {
     switch (format) {
-    case FieldFormat.uppercase:
-      return value.toUpperCase();
-    case FieldFormat.lowercase:
-      return value.toLowerCase();
-    case FieldFormat.capitalize:
-      return capitalize(value);
-    default:
+      case FieldFormat.uppercase:
+        return value.toUpperCase();
+      case FieldFormat.lowercase:
+        return value.toLowerCase();
+      case FieldFormat.capitalize:
+        return capitalize(value);
+      default:
     }
   }
   return value;

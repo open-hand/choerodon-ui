@@ -71,40 +71,40 @@ const ExportBody = observer((props) => {
   };
 
   switch (dataSet.exportStatus) {
-  case DataSetExportStatus.start:
-    exportProgress = {
-      percent: 1,
-      status: ProgressStatus.active,
-    };
-    break;
-  case DataSetExportStatus.exporting:
-    exportProgress = {
-      percent: dataSet.exportProgress,
-      status: ProgressStatus.active,
-    };
-    break;
-  case DataSetExportStatus.progressing:
-    exportProgress = {
-      percent: dataSet.exportProgress,
-      status: ProgressStatus.active,
-    };
-    break;
-  case DataSetExportStatus.failed:
-    exportMessage = $l('Table', 'export_failed');
-    exportProgress = {
-      percent: 50,
-      status: ProgressStatus.exception,
-    };
-    break;
-  case DataSetExportStatus.success:
-    exportMessage = $l('Table', 'export_success');
-    exportProgress = {
-      percent: 100,
-      status: ProgressStatus.success,
-    };
-    break;
-  default:
-    break;
+    case DataSetExportStatus.start:
+      exportProgress = {
+        percent: 1,
+        status: ProgressStatus.active,
+      };
+      break;
+    case DataSetExportStatus.exporting:
+      exportProgress = {
+        percent: dataSet.exportProgress,
+        status: ProgressStatus.active,
+      };
+      break;
+    case DataSetExportStatus.progressing:
+      exportProgress = {
+        percent: dataSet.exportProgress,
+        status: ProgressStatus.active,
+      };
+      break;
+    case DataSetExportStatus.failed:
+      exportMessage = $l('Table', 'export_failed');
+      exportProgress = {
+        percent: 50,
+        status: ProgressStatus.exception,
+      };
+      break;
+    case DataSetExportStatus.success:
+      exportMessage = $l('Table', 'export_success');
+      exportProgress = {
+        percent: 100,
+        status: ProgressStatus.success,
+      };
+      break;
+    default:
+      break;
   }
 
   return (
@@ -366,67 +366,67 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     } = this.context;
     const disabled = dataSet.status !== DataSetStatus.ready;
     switch (type) {
-    case TableButtonType.add:
-      return {
-        icon: 'playlist_add',
-        onClick: this.handleButtonCreate,
-        children: $l('Table', 'create_button'),
-        disabled: disabled || (dataSet.parent ? !dataSet.parent.current : false),
-      };
-    case TableButtonType.save:
-      return {
-        icon: 'save',
-        onClick: this.handleButtonSubmit,
-        children: $l('Table', 'save_button'),
-        type: ButtonType.submit,
-        disabled,
-      };
-    case TableButtonType.delete:
-      return {
-        icon: 'delete',
-        onClick: this.handleButtonDelete,
-        children: $l('Table', 'delete_button'),
-        disabled: disabled || dataSet.selected.length === 0,
-      };
-    case TableButtonType.remove:
-      return {
-        icon: 'remove_circle',
-        onClick: this.handleButtonRemove,
-        children: $l('Table', 'remove_button'),
-        disabled: disabled || dataSet.selected.length === 0,
-      };
-    case TableButtonType.reset:
-      return {
-        icon: 'undo',
-        onClick: this.handleButtonReset,
-        children: $l('Table', 'reset_button'),
-        type: ButtonType.reset,
-      };
-    case TableButtonType.query:
-      return { icon: 'search', onClick: this.handleQuery, children: $l('Table', 'query_button') };
-    case TableButtonType.export:
-      return {
-        icon: 'export',
-        onClick: this.handleButtonExport,
-        children: $l('Table', 'export_button'),
-      };
-    case TableButtonType.expandAll:
-      return isTree
-        ? {
-          icon: 'add_box',
-          onClick: this.handleExpandAll,
-          children: $l('Table', 'expand_button'),
-        }
-        : undefined;
-    case TableButtonType.collapseAll:
-      return isTree
-        ? {
-          icon: 'short_text',
-          onClick: this.handleCollapseAll,
-          children: $l('Table', 'collapse_button'),
-        }
-        : undefined;
-    default:
+      case TableButtonType.add:
+        return {
+          icon: 'playlist_add',
+          onClick: this.handleButtonCreate,
+          children: $l('Table', 'create_button'),
+          disabled: disabled || (dataSet.parent ? !dataSet.parent.current : false),
+        };
+      case TableButtonType.save:
+        return {
+          icon: 'save',
+          onClick: this.handleButtonSubmit,
+          children: $l('Table', 'save_button'),
+          type: ButtonType.submit,
+          disabled,
+        };
+      case TableButtonType.delete:
+        return {
+          icon: 'delete',
+          onClick: this.handleButtonDelete,
+          children: $l('Table', 'delete_button'),
+          disabled: disabled || dataSet.selected.length === 0,
+        };
+      case TableButtonType.remove:
+        return {
+          icon: 'remove_circle',
+          onClick: this.handleButtonRemove,
+          children: $l('Table', 'remove_button'),
+          disabled: disabled || dataSet.selected.length === 0,
+        };
+      case TableButtonType.reset:
+        return {
+          icon: 'undo',
+          onClick: this.handleButtonReset,
+          children: $l('Table', 'reset_button'),
+          type: ButtonType.reset,
+        };
+      case TableButtonType.query:
+        return { icon: 'search', onClick: this.handleQuery, children: $l('Table', 'query_button') };
+      case TableButtonType.export:
+        return {
+          icon: 'export',
+          onClick: this.handleButtonExport,
+          children: $l('Table', 'export_button'),
+        };
+      case TableButtonType.expandAll:
+        return isTree
+          ? {
+            icon: 'add_box',
+            onClick: this.handleExpandAll,
+            children: $l('Table', 'expand_button'),
+          }
+          : undefined;
+      case TableButtonType.collapseAll:
+        return isTree
+          ? {
+            icon: 'short_text',
+            onClick: this.handleCollapseAll,
+            children: $l('Table', 'collapse_button'),
+          }
+          : undefined;
+      default:
     }
   }
 
@@ -808,17 +808,17 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         return (queryBar as TableQueryBarHook)(props);
       }
       switch (queryBar) {
-      case TableQueryBarType.normal:
-        return this.renderToolBar(props);
-      case TableQueryBarType.bar:
-        return this.renderFilterBar(props);
-      case TableQueryBarType.advancedBar:
-        return this.renderAdvancedQueryBar(props);
-      case TableQueryBarType.professionalBar:
-        return this.renderProfessionalBar(props);
-      case TableQueryBarType.filterBar:
-        return this.renderDynamicFilterBar(props);
-      default:
+        case TableQueryBarType.normal:
+          return this.renderToolBar(props);
+        case TableQueryBarType.bar:
+          return this.renderFilterBar(props);
+        case TableQueryBarType.advancedBar:
+          return this.renderAdvancedQueryBar(props);
+        case TableQueryBarType.professionalBar:
+          return this.renderProfessionalBar(props);
+        case TableQueryBarType.filterBar:
+          return this.renderDynamicFilterBar(props);
+        default:
       }
     }
     return [

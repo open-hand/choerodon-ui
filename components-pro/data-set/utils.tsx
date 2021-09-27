@@ -142,42 +142,42 @@ function processOne(value: any, field: Field, checkRange = true) {
         format: field.get('format'),
       });
       switch (field.type) {
-      case FieldType.boolean: {
-        const trueValue = field.get(BooleanValue.trueValue);
-        const falseValue = field.get(BooleanValue.falseValue);
-        if (value !== trueValue) {
-          value = falseValue;
+        case FieldType.boolean: {
+          const trueValue = field.get(BooleanValue.trueValue);
+          const falseValue = field.get(BooleanValue.falseValue);
+          if (value !== trueValue) {
+            value = falseValue;
+          }
+          break;
         }
-        break;
-      }
-      case FieldType.number:
-      case FieldType.currency:
-        if (!isNaN(value)) {
-          value = parseNumber(value, field.get('precision'));
-        } else {
-          value = undefined;
+        case FieldType.number:
+        case FieldType.currency:
+          if (!isNaN(value)) {
+            value = parseNumber(value, field.get('precision'));
+          } else {
+            value = undefined;
+          }
+          break;
+        case FieldType.string:
+        case FieldType.intl:
+        case FieldType.email:
+        case FieldType.url:
+          value = String(value);
+          break;
+        case FieldType.date:
+        case FieldType.dateTime:
+        case FieldType.time:
+        case FieldType.week:
+        case FieldType.month:
+        case FieldType.year: {
+          const { jsonDate } = getConfig('formatter');
+          value = jsonDate ? moment(value, jsonDate) : moment(value);
+          break;
         }
-        break;
-      case FieldType.string:
-      case FieldType.intl:
-      case FieldType.email:
-      case FieldType.url:
-        value = String(value);
-        break;
-      case FieldType.date:
-      case FieldType.dateTime:
-      case FieldType.time:
-      case FieldType.week:
-      case FieldType.month:
-      case FieldType.year: {
-        const { jsonDate } = getConfig('formatter');
-        value = jsonDate ? moment(value, jsonDate) : moment(value);
-        break;
-      }
-      case FieldType.json:
-        value = JSON.parse(value);
-        break;
-      default:
+        case FieldType.json:
+          value = JSON.parse(value);
+          break;
+        default:
       }
     }
   }
@@ -386,21 +386,21 @@ function getValueType(value: any): FieldType {
 
 export function getBaseType(type: FieldType): FieldType {
   switch (type) {
-  case FieldType.number:
-  case FieldType.currency:
-    return FieldType.number;
-  case FieldType.dateTime:
-  case FieldType.time:
-  case FieldType.week:
-  case FieldType.month:
-  case FieldType.year:
-    return FieldType.date;
-  case FieldType.intl:
-  case FieldType.url:
-  case FieldType.email:
-    return FieldType.string;
-  default:
-    return type;
+    case FieldType.number:
+    case FieldType.currency:
+      return FieldType.number;
+    case FieldType.dateTime:
+    case FieldType.time:
+    case FieldType.week:
+    case FieldType.month:
+    case FieldType.year:
+      return FieldType.date;
+    case FieldType.intl:
+    case FieldType.url:
+    case FieldType.email:
+      return FieldType.string;
+    default:
+      return type;
   }
 }
 
@@ -567,21 +567,21 @@ export function getFieldSorter(field: Field) {
   const { name } = field;
 
   switch (field.type) {
-  case FieldType.number:
-  case FieldType.currency:
-  case FieldType.date:
-  case FieldType.dateTime:
-  case FieldType.week:
-  case FieldType.month:
-  case FieldType.year:
-  case FieldType.time:
-    return field.order === SortOrder.asc
-      ? (a, b) => numberSorter(a.get(name), b.get(name))
-      : (a, b) => numberSorter(b.get(name), a.get(name));
-  default:
-    return field.order === SortOrder.asc
-      ? (a, b) => stringSorter(a.get(name), b.get(name))
-      : (a, b) => stringSorter(b.get(name), a.get(name));
+    case FieldType.number:
+    case FieldType.currency:
+    case FieldType.date:
+    case FieldType.dateTime:
+    case FieldType.week:
+    case FieldType.month:
+    case FieldType.year:
+    case FieldType.time:
+      return field.order === SortOrder.asc
+        ? (a, b) => numberSorter(a.get(name), b.get(name))
+        : (a, b) => numberSorter(b.get(name), a.get(name));
+    default:
+      return field.order === SortOrder.asc
+        ? (a, b) => stringSorter(a.get(name), b.get(name))
+        : (a, b) => stringSorter(b.get(name), a.get(name));
   }
 }
 
@@ -606,12 +606,12 @@ export function prepareSubmitData(
 
   function storeWith(status) {
     switch (status) {
-    case RecordStatus.add:
-      return created;
-    case RecordStatus.delete:
-      return destroyed;
-    default:
-      return updated;
+      case RecordStatus.add:
+        return created;
+      case RecordStatus.delete:
+        return destroyed;
+      default:
+        return updated;
     }
   }
 

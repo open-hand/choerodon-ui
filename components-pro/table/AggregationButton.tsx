@@ -19,20 +19,20 @@ const AggregationButton: FunctionComponent<AggregationButtonProps> = (props) => 
   const { tableStore, prefixCls } = useContext(TableContext);
   const handleMenuClick = useCallback(action(({ key }: Partial<ClickParam>) => {
     switch (key) {
-    case 'cell':
-      tableStore.setAggregationCellExpanded(record, columnGroup.key, !expanded);
-      break;
-    case 'row':
-      tableStore.columnGroups.allLeafs.forEach(({ column: col, key: columnKey }) => col.aggregation && tableStore.setAggregationCellExpanded(record, columnKey, !expanded));
-      break;
-    case 'column': {
-      const { dataSet } = record;
-      if (dataSet) {
-        dataSet.forEach(r => tableStore.setAggregationCellExpanded(r, columnGroup.key, !expanded));
+      case 'cell':
+        tableStore.setAggregationCellExpanded(record, columnGroup.key, !expanded);
+        break;
+      case 'row':
+        tableStore.columnGroups.allLeafs.forEach(({ column: col, key: columnKey }) => col.aggregation && tableStore.setAggregationCellExpanded(record, columnKey, !expanded));
+        break;
+      case 'column': {
+        const { dataSet } = record;
+        if (dataSet) {
+          dataSet.forEach(r => tableStore.setAggregationCellExpanded(r, columnGroup.key, !expanded));
+        }
+        break;
       }
-      break;
-    }
-    default:
+      default:
     }
   }), [tableStore, record, columnGroup, expanded]);
   const handleClick = useCallback(() => {

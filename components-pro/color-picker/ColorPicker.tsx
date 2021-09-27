@@ -287,24 +287,24 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     const t = v * (1 - (1 - f) * s);
     let rgb;
     switch (h1) {
-    case 0:
-      rgb = { r: v, g: t, b: p, a };
-      break;
-    case 1:
-      rgb = { r: q, g: v, b: p, a };
-      break;
-    case 2:
-      rgb = { r: p, g: v, b: t, a };
-      break;
-    case 3:
-      rgb = { r: p, g: q, b: v, a };
-      break;
-    case 4:
-      rgb = { r: t, g: p, b: v, a };
-      break;
-    default:
-      rgb = { r: v, g: p, b: q, a };
-      break;
+      case 0:
+        rgb = { r: v, g: t, b: p, a };
+        break;
+      case 1:
+        rgb = { r: q, g: v, b: p, a };
+        break;
+      case 2:
+        rgb = { r: p, g: v, b: t, a };
+        break;
+      case 3:
+        rgb = { r: p, g: q, b: v, a };
+        break;
+      case 4:
+        rgb = { r: t, g: p, b: v, a };
+        break;
+      default:
+        rgb = { r: v, g: p, b: q, a };
+        break;
     }
     rgb.r = Math.floor(rgb.r * 255);
     rgb.g = Math.floor(rgb.g * 255);
