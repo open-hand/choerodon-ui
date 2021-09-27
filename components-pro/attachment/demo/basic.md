@@ -62,6 +62,7 @@ configure({
     onUploadSuccess(resp, attachment) {
       attachment.load({
         name: resp.name,
+        uid: uuid(),
         // url: resp.url,
       });
     },
