@@ -101,13 +101,9 @@ const eslintrc = {
     'react/default-props-match-prop-types': 0, // No idea about this
     '@typescript-eslint/no-non-null-assertion': 0,
     // TODO: bad naming, but BC if fixed
-    '@typescript-eslint/camelcase': 0,
-    '@typescript-eslint/class-name-casing': 0,
-    '@typescript-eslint/interface-name-prefix': 0,
-    // TODO: too many of them, reenable later
-    '@typescript-eslint/explicit-function-return-type': 0,
-    '@typescript-eslint/explicit-boundary-type': 0,
-    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/camelcase': 1,
+    '@typescript-eslint/class-name-casing': 1,
+    '@typescript-eslint/interface-name-prefix': 1,
   },
 };
 
