@@ -34,7 +34,9 @@ export default class ScrollNumber extends Component<ScrollNumberProps, ScrollNum
 
   static defaultProps = {
     count: null,
-    onAnimated() {},
+    onAnimated(): void {
+      // noop
+    },
   };
 
   lastCount: any;

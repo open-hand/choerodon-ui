@@ -137,7 +137,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   originalConditionKeys: string[] = [];
 
-  enterNum: number = 0;
+  enterNum = 0;
 
   constructor(props, context) {
     super(props, context);
@@ -387,7 +387,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 this.handleQuery(true);
               }}
               onInput={(e) => {
-                // @ts-ignore
+                // @ts-expect-error: value exists
                 const { value } = e.target;
                 runInAction(() => {
                   this.searchText = value || '';

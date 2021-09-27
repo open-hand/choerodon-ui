@@ -106,7 +106,7 @@ const LOV_SIDE_EFFECT_KEYS = ['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl',
 const LOOKUP_TOKEN = '__lookup_token__';
 
 export type Fields = ObservableMap<string, Field>;
-export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string; };
+export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
 export type DynamicProps = { [P in keyof FieldProps]?: (DynamicPropsArguments) => FieldProps[P]; }
 export type HighlightProps = {
   title?: ReactNode;
@@ -115,7 +115,7 @@ export type HighlightProps = {
   record?: Record | undefined;
   name?: string | undefined;
   className?: string;
-  style?: CSSProperties
+  style?: CSSProperties;
   hidden?: boolean;
 };
 
@@ -448,7 +448,7 @@ export default class Field {
         const uuid = record.get(this.name);
         const { dataSet } = this;
         if (dataSet && uuid) {
-          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
+          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined; attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
           if (attachmentCaches) {
             const cache = attachmentCaches.get(uuid);
             if (cache) {
@@ -490,7 +490,7 @@ export default class Field {
         const uuid = record.get(this.name);
         const { dataSet } = this;
         if (dataSet && uuid) {
-          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
+          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined; attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
           if (attachmentCaches) {
             const cache = attachmentCaches.get(uuid);
             if (cache) {
@@ -680,7 +680,7 @@ export default class Field {
    * 获取所有属性
    * @return 属性对象
    */
-  getProps(): FieldProps & { [key: string]: any; } {
+  getProps(): FieldProps & { [key: string]: any } {
     const dsField = this.findDataSetField();
     const lovCode = this.get('lovCode');
     return merge(
@@ -1004,6 +1004,14 @@ export default class Field {
   }
 
   /**
+   * 设置是否只读
+   * @param readOnly 是否只读
+   */
+   set readOnly(readOnly: boolean) {
+    this.set('readOnly', readOnly);
+  }
+
+  /**
    * 是否禁用
    * @return true | false
    */
@@ -1012,18 +1020,10 @@ export default class Field {
   }
 
   /**
-   * 设置是否只读
-   * @param readOnly 是否只读
-   */
-  set readOnly(readOnly: boolean) {
-    this.set('readOnly', readOnly);
-  }
-
-  /**
    * 设置是否禁用
    * @param disabled 是否禁用
    */
-  set disabled(disabled: boolean) {
+   set disabled(disabled: boolean) {
     this.set('disabled', disabled);
   }
 
@@ -1113,7 +1113,7 @@ export default class Field {
    * @return true | false
    */
   @action
-  async checkValidity(report: boolean = true): Promise<boolean> {
+  async checkValidity(report = true): Promise<boolean> {
     let valid = true;
     const { record } = this;
     if (record) {
@@ -1238,7 +1238,7 @@ export default class Field {
     }
   }
 
-  fetchAttachments(props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) {
+  fetchAttachments(props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) {
     const { bucketName, bucketDirectory, attachmentUUID, storageCode } = props;
     const { fetchList } = getConfig('attachment');
     if (fetchList) {

@@ -14,7 +14,7 @@ const VALUE_SPLIT = '、';
 const OPTION_OR = 'option-or';
 export const VALUE_OR = 'OR';
 
-function pairValue<T>(column: ColumnProps<T>, value: string = '') {
+function pairValue<T>(column: ColumnProps<T>, value = '') {
   const { filters } = column;
   const found = filters && filters.find(filter => String(filter.value) === value);
   return {

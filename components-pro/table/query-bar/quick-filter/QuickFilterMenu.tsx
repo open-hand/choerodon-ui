@@ -220,7 +220,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     }
   };
 
-  function handleQueryReset() {
+  const handleQueryReset = () => {
     if (filterMenuDS.current?.get('filterName')) {
       // 筛选项重置重新赋值
       conditionAssign();
@@ -286,7 +286,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
   };
 
 
-  function handleChange(value?: number) {
+  const handleChange = (value?: number) => {
     locateData(value);
   }
 
@@ -316,7 +316,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     }
   }
 
-  function openModal(type, searchId?: String) {
+  function openModal(type, searchId?: string) {
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
@@ -341,14 +341,14 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     });
   }
 
-  async function handleSave() {
+  const handleSave = async () => {
     if (!filterMenuDS.current?.get('filterName')) {
       menuDataSet.create({});
       openModal('create');
     } else {
       const conditionData = Object.entries(queryDataSet.current.toData());
       conditionDataSet.reset();
-      map(conditionData, data => {
+      map(conditionData, (data) => {
         const fieldObj = findFieldObj(queryDataSet, data);
         if (fieldObj?.name) {
           const currentRecord = conditionDataSet.find(record => record.get('fieldName') === fieldObj.name);
@@ -391,11 +391,11 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     }
   }
 
-  function handleEdit(record) {
+  const handleEdit = (record) => {
     openModal('edit', record.get('searchId'));
   }
 
-  function handleSaveOther() {
+  const handleSaveOther = () => {
     menuDataSet.current.set('searchName', '');
     menuDataSet.current.getField('searchName').validator.reset();
     openModal('save');
@@ -468,7 +468,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
               });
             }
           }}
-          // @ts-ignore
+          // @ts-expect-error: bad code here
           onMouseLeave={hide}
         >
           {text}

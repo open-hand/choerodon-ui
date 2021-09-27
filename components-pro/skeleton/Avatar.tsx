@@ -13,7 +13,7 @@ export default class Avatar extends DataSetComponent<AvatarProps>{
     render(){
         const {...otherProps} = this.props
 
-        const props:C7nAvatarProps = {}
+        const props: C7nAvatarProps = {}
 
 
         return <C7nAvatar {...otherProps} {...props} />

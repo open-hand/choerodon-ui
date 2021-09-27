@@ -36,14 +36,14 @@ import { ExpandTrigger } from './enum';
 export const MORE_KEY = '__more__';
 
 export interface OptionObject {
-  value: any,
-  meaning: string,
+  value: any;
+  meaning: string;
 }
 
 export interface ProcessOption extends OptionObject {
-  parent: any,
-  children?: any,
-  disabled?: boolean,
+  parent: any;
+  children?: any;
+  disabled?: boolean;
 }
 
 export interface CascaderOptionType {
@@ -110,7 +110,7 @@ export interface CascaderProps extends TriggerFieldProps {
   /**
    * 次级菜单的展开方式，可选 'click' 和 'hover'
    */
-  expandTrigger?: ExpandTrigger
+  expandTrigger?: ExpandTrigger;
   /**
    * 下拉框匹配输入框宽度
    * @default true
@@ -149,23 +149,23 @@ export interface CascaderProps extends TriggerFieldProps {
   /** 单框弹出形式切换 */
   menuMode?: MenuMode;
   /** 由于渲染在body下可以方便按照业务配置弹出框的大小 */
-  singleMenuStyle?: CSSProperties,
+  singleMenuStyle?: CSSProperties;
   /** 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 */
-  singleMenuItemStyle?: CSSProperties,
+  singleMenuItemStyle?: CSSProperties;
   /** 设置需要的提示问题配置 */
-  singlePleaseRender?: ({ key, className, text }: { key: string, className: string, text: string }) => ReactElement<any>,
+  singlePleaseRender?: ({ key, className, text }: { key: string; className: string; text: string }) => ReactElement<any>;
   /** 头部可以渲染出想要的tab样子 */
-  singleMenuItemRender?: (title: string) => ReactElement<any>,
+  singleMenuItemRender?: (title: string) => ReactElement<any>;
   /** 选择及改变 */
-  changeOnSelect?: boolean,
-  searchable?: boolean,
-  searchMatcher?: SearchMatcher,
-  async?: boolean,
-  loadData?: (node) => Promise<any>,
+  changeOnSelect?: boolean;
+  searchable?: boolean;
+  searchMatcher?: SearchMatcher;
+  async?: boolean;
+  loadData?: (node) => Promise<any>;
   /**
    * 渲染分页 Item 内容
    */
-  pagingOptionContent?: string | ReactNode,
+  pagingOptionContent?: string | ReactNode;
 }
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
@@ -643,7 +643,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     let selectedValues: any[] = [];
 
     // 过滤后的数据不用进行子集遍历
-    const treePropsChange = (treeRecord: Record[], isFilterSearch: boolean = false) => {
+    const treePropsChange = (treeRecord: Record[], isFilterSearch = false) => {
       let treeRecords: any = [];
       if (treeRecord.length > 0) {
         treeRecords = treeRecord.map((recordItem) => {
@@ -1145,6 +1145,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
 
   handlePopupAnimateAppear() {
+    // noop
   }
 
   @autobind
@@ -1159,6 +1160,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   @autobind
   handlePopupAnimateEnd(_key, _exists) {
+    // noop
   }
 
   // 触发下拉框事件,增加了触发方式判断优化trigger类型
@@ -1245,7 +1247,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   // 移除所选值
-  removeValues(values: any[], index: number = 0) {
+  removeValues(values: any[], index = 0) {
     if (!this.multiple) {
       const oldValues = this.getValues();
       if (this.getValueKey(oldValues) === this.getValueKey(values[0])) {
@@ -1261,6 +1263,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   handleSearch(_text?: string) {
+    // noop
   }
 
   @action
@@ -1492,13 +1495,11 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
   }
 
-
   @autobind
   chooseAll() {
-    const chooseAll = [];
+    const chooseAll: any[] = [];
     this.options.forEach(item => {
       if (isEmpty(item.children) && !item.get(disabledField)) {
-        // @ts-ignore
         chooseAll.push(this.processRecordToObject(item));
       }
     }, this);

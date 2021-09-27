@@ -26,7 +26,7 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
 
   isChoose?: boolean = false;
 
-  inputText: string = '';
+  inputText = '';
 
   static propTypes = {
     ...Select.propTypes,

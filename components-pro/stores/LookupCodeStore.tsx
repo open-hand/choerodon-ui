@@ -110,9 +110,10 @@ export class LookupCodeStore {
     }
   }
 
-  // @deprecate
+  /** @deprecated */
   @action
   clearCache() {
+    // noop
   }
 }
 

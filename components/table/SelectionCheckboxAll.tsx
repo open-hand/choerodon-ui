@@ -23,12 +23,12 @@ export default class SelectionCheckboxAll<T> extends Component<
           {
             key: 'all',
             text: props.locale.selectAll,
-            onSelect: () => {},
+            onSelect: () => {/* noop */},
           },
           {
             key: 'invert',
             text: props.locale.selectInvert,
-            onSelect: () => {},
+            onSelect: () => {/* noop */},
           },
         ];
 

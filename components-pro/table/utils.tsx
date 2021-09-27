@@ -287,7 +287,7 @@ export function getHeight(el: HTMLElement): number {
 
 export function getTableHeaderRows(
   columns: ColumnGroup[],
-  currentRow: number = 0,
+  currentRow = 0,
   rows: ColumnGroup[][] = [],
 ): ColumnGroup[][] {
   rows[currentRow] = rows[currentRow] || [];

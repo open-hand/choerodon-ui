@@ -27,8 +27,8 @@ export interface TableProfessionalBarProps extends ElementProps {
   buttons: ReactElement<ButtonProps>[];
   formProps?: FormProps;
   summaryBar?: ReactElement<any>;
-  defaultExpanded?: Boolean;
-  autoQueryAfterReset?: Boolean;
+  defaultExpanded?: boolean;
+  autoQueryAfterReset?: boolean;
   onQuery?: () => void;
   onReset?: () => void;
 }

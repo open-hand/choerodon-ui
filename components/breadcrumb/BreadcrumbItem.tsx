@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useCallback } from 'react';
+import React, { ReactNode, useState, useCallback, ReactNode } from 'react';
 import classNames from 'classnames';
 import DropDown, { DropDownProps } from '../dropdown';
 import { Placements } from '../dropdown/enum';
@@ -8,10 +8,10 @@ import List, { ListProps } from '../list';
 import buildPlacements from './placements';
 
 
-export interface menuListItemProps {
+export interface MenuListItemProps {
   href?: string;
   listItemName?: string;
-  listChildren?: ({ listItemName, href }: { listItemName: string, href: string }) => React.ReactNode;
+  listChildren?: ({ listItemName, href }: { listItemName: string; href: string }) => React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
 }
 
@@ -22,9 +22,9 @@ export interface BreadcrumbItemProps {
   overlay?: DropDownProps['overlay'];
   dropdownProps?: DropDownProps;
   listProps?: ListProps;
-  menuList?: menuListItemProps[];
+  menuList?: MenuListItemProps[];
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
-  children?;
+  children?: ReactNode;
 }
 
 interface BreadcrumbItemInterface extends React.FC<BreadcrumbItemProps> {

@@ -6,8 +6,8 @@ import Field from '../../data-set/Field';
 import { $l } from '../../locale-context';
 
 interface Group {
-  title: string,
-  fields: Field[],
+  title: string;
+  fields: Field[];
 }
 
 /**
@@ -16,12 +16,12 @@ interface Group {
  * groups.fields 弹窗内字段
  */
 type FieldListProps = {
-  closeMenu: () => void,
-  value: string[]
-  prefixCls: string
-  onSelect: (code: string | string[]) => void
-  onUnSelect: (code: string | string[]) => void
-  groups: Group[]
+  closeMenu: () => void;
+  value: string[];
+  prefixCls: string;
+  onSelect: (code: string | string[]) => void;
+  onUnSelect: (code: string | string[]) => void;
+  groups: Group[];
 }
 
 const FieldList: FunctionComponent<FieldListProps> = memo(function FieldList({ value, onSelect, onUnSelect, groups, prefixCls }) {
@@ -82,7 +82,7 @@ const FieldList: FunctionComponent<FieldListProps> = memo(function FieldList({ v
             setSearchText(v);
           }}
           onInput={(e) => {
-            // @ts-ignore
+            // @ts-expect-error: value exists
             setSearchText(e.target.value);
           }}
           prefix={<Icon type="search" />}

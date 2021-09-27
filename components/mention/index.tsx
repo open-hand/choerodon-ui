@@ -19,12 +19,12 @@ export interface MentionProps {
   onSearchChange?: Function;
   onChange?: Function;
   notFoundContent?: any;
-  loading?: Boolean;
+  loading?: boolean;
   style?: CSSProperties;
   defaultValue?: any;
   value?: any;
   className?: string;
-  multiLines?: Boolean;
+  multiLines?: boolean;
   prefix?: string;
   placeholder?: string;
   getSuggestionContainer?: (triggerNode: Element) => HTMLElement;
@@ -37,7 +37,7 @@ export interface MentionProps {
 
 export interface MentionState {
   suggestions?: Array<any>;
-  focus?: Boolean;
+  focus?: boolean;
 }
 
 export default class Mention extends Component<MentionProps, MentionState> {
@@ -86,7 +86,7 @@ export default class Mention extends Component<MentionProps, MentionState> {
     return this.defaultSearchChange(value);
   };
 
-  defaultSearchChange(value: String): void {
+  defaultSearchChange(value: string): void {
     const searchValue = value.toLowerCase();
     const { suggestions } = this.props;
     const filteredSuggestions = (suggestions || []).filter(suggestion => {

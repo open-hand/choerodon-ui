@@ -24,7 +24,7 @@ export interface TagProps {
 export interface ScreeningProps extends DataSetComponentProps {
   dataSet: DataSet;
   children: ReactElement<ScreeningItemProps>[];
-  tagRender?: ({ labelTitle, tagsProps }: { labelTitle: string, tagsProps: TagProps[] }) => ReactElement<any>;
+  tagRender?: ({ labelTitle, tagsProps }: { labelTitle: string; tagsProps: TagProps[] }) => ReactElement<any>;
   onChange?: (value: any, oldValue: any) => void;
 }
 
@@ -196,9 +196,6 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
     return null
   }
 
-
-
-
   render() {
     const dataSet = this.dataSet;
     const { children } = this.props;
@@ -208,7 +205,7 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
     return (
       <div className={`${this.prefixCls}`}>
         {this.renderTag(mergeValue)}
-        {Children.map(filteredChildren, (child, _index) => {
+        {Children.map(filteredChildren, (child: ReactElement, _index) => {
           const name = child.props.name
           if (this.mergeValue && name && isNil(this.mergeValue[name])) {
             const screenProps = {
@@ -218,7 +215,7 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
               onRef: (ref) => { this.onRef(ref, name) },
             }
             if (!isString(name)) {
-              // @ts-ignore
+              // @ts-expect-error
               delete screenProps.onRef
               warning(false, `ScreeningItem need binding DataSet with property name.`);
             }

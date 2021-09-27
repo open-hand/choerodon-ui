@@ -64,7 +64,7 @@ export function getOrderFields(fields: Fields): Field[] {
   return [...fields.values()].filter(({ order }) => order);
 }
 
-function processOneToJSON(value, field: Field, checkRange: boolean = true) {
+function processOneToJSON(value, field: Field, checkRange = true) {
   if (!isEmpty(value)) {
     const range = field.get('range');
     if (range && checkRange) {
@@ -120,7 +120,7 @@ export function arrayMove<T = Record>(array: T[], from: number, to: number): voi
   array.splice(startIndex, 0, item);
 }
 
-function processOne(value: any, field: Field, checkRange: boolean = true) {
+function processOne(value: any, field: Field, checkRange = true) {
   if (!isEmpty(value)) {
     const range = field.get('range');
     if (range && checkRange) {
@@ -283,7 +283,7 @@ export function processExportValue(value: any, field?: Field): any {
  * @param name 对应的fieldname
  * @param isBind 是否是从绑定获取值
  */
-export function getSplitValue(dataItem: any, name: string, isBind: boolean = true): any {
+export function getSplitValue(dataItem: any, name: string, isBind = true): any {
   const nameArray = name.split('.');
   if (nameArray.length > 1) {
     let levelValue = dataItem;
@@ -303,7 +303,7 @@ export function getSplitValue(dataItem: any, name: string, isBind: boolean = tru
   return dataItem;
 }
 
-export function childrenInfoForDelete(json: {}, children: { [key: string]: DataSet; }): {} {
+export function childrenInfoForDelete(json: {}, children: { [key: string]: DataSet }): {} {
   return Object.keys(children).reduce((data, name) => {
     const child = children[name];
     if (child) {
@@ -469,7 +469,7 @@ function throwCycleBindingFields(map: Map<string, Field> = new Map()) {
   throw new Error(`DataSet: Cycle binding fields[${[...keys].join(' -> ')} -> ${keys[0]}].`);
 }
 
-function getChainFieldNamePrivate(record: Record, fieldName: string, linkedMap: Map<string, Field> = new Map(), init: boolean = true): string {
+function getChainFieldNamePrivate(record: Record, fieldName: string, linkedMap: Map<string, Field> = new Map(), init = true): string {
   const field = record.getField(fieldName);
   if (field) {
     const bind = field.get('bind');
@@ -818,7 +818,7 @@ export function adapterDataToJSON(
   return undefined;
 }
 
-export function generateData(records: Record[]): { dirty: boolean; data: object[]; } {
+export function generateData(records: Record[]): { dirty: boolean; data: object[] } {
   let dirty = false;
   const data: object[] = records.reduce<object[]>((list, record) => {
     if (record.isRemoved) {
@@ -842,7 +842,7 @@ export function generateData(records: Record[]): { dirty: boolean; data: object[
 export function generateJSONData(
   ds: DataSet,
   records: Record[],
-): { dirty: boolean; data: object[]; } {
+): { dirty: boolean; data: object[] } {
   const { dataToJSON } = ds;
   const data: object[] = [];
   records.forEach(record => generateRecordJSONData(data, record, dataToJSON));
@@ -1027,7 +1027,7 @@ export function getSortedFields(fields: Fields): [string, Field][] {
 
 
 export async function concurrentPromise(
-  promiseLoaders: { getPromise: () => Promise<any>; }[],
+  promiseLoaders: { getPromise: () => Promise<any> }[],
   cancelFnc: (readyPromiseNumber: number) => boolean,
 ) {
   const promiseLoadersLength = promiseLoaders.length;

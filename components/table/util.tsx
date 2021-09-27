@@ -64,7 +64,7 @@ export function normalizeColumns(elements: ReactChildren) {
       return;
     }
     const column: any = {
-      ...(element.props as Object),
+      ...(element.props as Record<string, any>),
     };
     if (element.key) {
       column.key = element.key;

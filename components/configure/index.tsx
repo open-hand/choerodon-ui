@@ -58,8 +58,8 @@ export type PerformanceEvents = {
       loadEnd: number;
       renderStart: number;
       renderEnd: number;
-    }
-  }
+    };
+  };
 }
 
 export type PerformanceEventHook<T extends keyof PerformanceEvents> = (key: T, event: PerformanceEvents[T]) => void;
@@ -105,19 +105,19 @@ export type Formatter = {
 export type AttachmentConfig = {
   defaultFileKey: string;
   defaultFileSize: number;
-  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => AxiosRequestConfig);
+  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => AxiosRequestConfig);
   batchFetchCount?: <T extends string | number | symbol>(attachmentUUIDs: T[]) => Promise<{ [key in T]: number }>;
-  fetchList?: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => Promise<FileLike[]>;
-  getPreviewUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => string;
-  getDownloadUrl?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => string;
-  getDownloadAllUrl?: (props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => string;
+  fetchList?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => Promise<FileLike[]>;
+  getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string;
+  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string;
+  getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string;
   getAttachmentUUID?: () => Promise<string> | string;
   renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;
-  renderHistory?: (props: { attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) => ReactNode;
+  renderHistory?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => ReactNode;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
-  onOrderChange?: (props: { attachmentUUID: string, attachments: AttachmentFile[], bucketName?: string, bucketDirectory?: string, storageCode?: string }) => Promise<void>;
-  onRemove?: (props: { attachment: AttachmentFile, attachmentUUID: string, bucketName?: string, bucketDirectory?: string, storageCode?: string }) => Promise<boolean>;
+  onOrderChange?: (props: { attachmentUUID: string; attachments: AttachmentFile[]; bucketName?: string; bucketDirectory?: string; storageCode?: string }) => Promise<void>;
+  onRemove?: (props: { attachment: AttachmentFile; attachmentUUID: string; bucketName?: string; bucketDirectory?: string; storageCode?: string }) => Promise<boolean>;
 }
 
 export type Config = {
@@ -152,7 +152,7 @@ export type Config = {
     lovConfig: LovConfig | undefined,
     props: TransportHookProps,
   ) => AxiosRequestConfig);
-  lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>
+  lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>;
   lovTableProps?: Partial<TableProps>;
   lovModalProps?: Partial<ModalProps>;
   lovAutoSelectSingle?: boolean;
@@ -219,7 +219,7 @@ export type Config = {
   highlightRenderer?: HighlightRenderer;
   defaultValidationMessages?: ValidationMessages;
   transport?: TransportProps;
-  icons?: { [key: string]: string[]; } | string[];
+  icons?: { [key: string]: string[] } | string[];
   generatePageQuery?: (pageParams: {
     page?: number;
     pageSize?: number;
@@ -536,7 +536,7 @@ export function getCustomizable<T extends keyof Customizable>(component: T): boo
 
 const mergeProps: ConfigKeys[] = ['transport', 'feedback', 'formatter', 'attachment', 'pagination'];
 
-export default function configure(config: Config, merge: boolean = true) {
+export default function configure(config: Config, merge = true) {
   runInAction(() => {
     Object.keys(config).forEach((key: ConfigKeys) => {
       const value = config[key];

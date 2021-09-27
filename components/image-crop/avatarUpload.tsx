@@ -145,7 +145,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
       }
       axios.post(`${uploadUrl}?${qs}`, data, config)
         .then((res) => {
-          // @ts-ignore
+          // @ts-expect-error: this field may exist?
           if (res.success) {
             this.uploadOk(res);
           } else {

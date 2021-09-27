@@ -38,8 +38,8 @@ export interface BaseEditorProps {
   dataSet?: DataSet;
   record?: Record;
   value: DeltaStatic;
-  saveRef?: Function,
-  onChange?: Function,
+  saveRef?: Function;
+  onChange?: Function;
   bounds?: string | HTMLElement;
   children?: React.ReactElement<any>;
   className?: string;

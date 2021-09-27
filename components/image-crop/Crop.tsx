@@ -28,8 +28,8 @@ export interface CropValue {
 }
 
 export type Size = {
-    width: number
-    height: number
+    width: number;
+    height: number;
 }
 
 export interface ImageCrop extends HTMLImageElement {
@@ -48,7 +48,7 @@ export interface CropProps {
     onRotationChange?: (rate: number) => void; // 裁剪度数的变化触发
     onComplete?: (value: any) => void; // 裁剪完成触发
     onCropChange?: (crop: any) => void; // 裁剪区域变化时候触发
-    prefixCls?: string, // 自定义样式前缀
+    prefixCls?: string; // 自定义样式前缀
 }
 
 export default class Crop extends Component<CropProps, any> {

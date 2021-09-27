@@ -60,7 +60,7 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   @observable rendered?: boolean;
 
-  inTab: boolean = false;
+  inTab = false;
 
   editor: FormField<FormFieldProps> | null;
 

@@ -4,11 +4,11 @@ import Record from '../data-set/Record';
 import { LabelLayout } from './enum';
 import { LabelWidth } from './Form';
 
-export const defaultLabelWidth: number = 100;
+export const defaultLabelWidth = 100;
 
 export const defaultLabelLayout: LabelLayout = LabelLayout.horizontal;
 
-export const defaultColumns: number = 1;
+export const defaultColumns = 1;
 
 export const FIELD_SUFFIX = 'field';
 

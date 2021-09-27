@@ -288,7 +288,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     ));
   }
 
-  getPager(page: number, type: PagerType, active: boolean = false, disabledSender?: boolean) {
+  getPager(page: number, type: PagerType, active = false, disabledSender?: boolean) {
     const {
       prefixCls,
       props: { itemRender = defaultItemRender, disabled = false },

@@ -21,7 +21,7 @@ export interface TreeSelectProps extends SelectProps {
   treeDefaultExpandAll?: boolean;
   treeDefaultExpandedKeys?: Key[];
   async?: boolean;
-  loadData?: (node) => Promise<any>
+  loadData?: (node) => Promise<any>;
   showCheckedStrategy?: CheckedStrategy;
 }
 
@@ -237,6 +237,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
   }
 
   renderSelectAll() {
+    // noop
   }
 
   @autobind
@@ -266,7 +267,6 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       options,
       this.treeData,
       optionRenderer,
-      // @ts-ignore
       this.handleTreeNode,
       async || !!loadData,
       textField,

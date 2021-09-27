@@ -38,9 +38,9 @@ export interface DatePickerProps extends PickerProps, SinglePickerProps {
   showToday?: boolean;
   open?: boolean;
   disabledTime?: (current: Moment) => {
-    disabledHours?: () => number[],
-    disabledMinutes?: () => number[],
-    disabledSeconds?: () => number[],
+    disabledHours?: () => number[];
+    disabledMinutes?: () => number[];
+    disabledSeconds?: () => number[];
   };
   onOpenChange?: (status: boolean) => void;
   onOk?: (selectedTime: Moment) => void;
@@ -69,14 +69,14 @@ export interface RangePickerProps extends PickerProps {
   onOk?: (selectedTime: Moment) => void;
   showTime?: TimePickerProps | boolean;
   ranges?: {
-    [range: string]: RangePickerPresetRange,
+    [range: string]: RangePickerPresetRange;
   };
   placeholder?: [string, string];
   mode?: string | string[];
   disabledTime?: (current: Moment, type: string) => {
-    disabledHours?: () => number[],
-    disabledMinutes?: () => number[],
-    disabledSeconds?: () => number[],
+    disabledHours?: () => number[];
+    disabledMinutes?: () => number[];
+    disabledSeconds?: () => number[];
   };
   onPanelChange?: (value?: RangePickerValue, mode?: string | string[]) => void;
 }

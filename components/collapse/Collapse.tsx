@@ -48,7 +48,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     bordered: true,
     openAnimation: {
       ...animation,
-      appear() {},
+      appear() {/* noop */},
     },
   };
 
@@ -99,7 +99,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     const collapseClassName = classNames(
       {
         [`${prefixCls}-borderless`]: !bordered,
-        // @ts-ignore
+        // @ts-expect-error: some useless check, probably signals deeper errors
         [`${prefixCls}-text-action`]: expandIconCof === 'text' && expandIconPositionCof === 'left',
         [`${prefixCls}-trigger`]: triggerCof === 'header',
         [`${prefixCls}-ghost`]: ghost,

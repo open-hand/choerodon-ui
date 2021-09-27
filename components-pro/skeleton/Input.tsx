@@ -12,7 +12,7 @@ export default class SkeletonInput extends DataSetComponent<SkeletonInputProps> 
    render(){
        const {...otherProps} = this.props
 
-       const props:SkeletonInputProps = {}
+       const props: SkeletonInputProps = {}
 
        return <C7nSkeletonInput {...otherProps} {...props}/>
    }

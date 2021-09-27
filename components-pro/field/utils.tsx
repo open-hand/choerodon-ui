@@ -177,7 +177,7 @@ export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => 
   };
 }
 
-export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any, getValue?(): any, lang?: string }, showValueIfNotFound?: boolean) {
+export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any; getValue?(): any; lang?: string }, showValueIfNotFound?: boolean) {
   const { getProp, getValue, lang } = options;
   const type = field && field.type;
   const currency = getProp('currency');
@@ -210,7 +210,6 @@ export function processValue(value, format) {
     }
     if (isReactChildren(value)) {
       // For Select's Option and TreeSelect's TreeNode which type may be ReactElement
-      // @ts-ignore
       return value;
     }
     return value.toString();
@@ -309,7 +308,7 @@ export function getValueKey(v: any) {
   return v;
 }
 
-export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode, multipleValidateMessageLength: number } {
+export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode; multipleValidateMessageLength: number } {
   const {
     range, maxTagPlaceholder, prefixCls, validator, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
     renderValidationResult, handleMutipleValueRemove, getKey = getValueKey, isValidationMessageHidden, showValidationMessage: selfShowValidationMessage,
@@ -388,7 +387,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
   return { tags, multipleValidateMessageLength };
 }
 
-export function renderMultiLine(options: MultiLineRenderOption): { lines?: ReactNode, multipleValidateMessageLength: number } {
+export function renderMultiLine(options: MultiLineRenderOption): { lines?: ReactNode; multipleValidateMessageLength: number } {
   const {
     field, record, dataSet, name, prefixCls, renderer, renderValidationResult, isValidationMessageHidden,
     processValue: selfProcessValue, labelTooltip, tooltip,

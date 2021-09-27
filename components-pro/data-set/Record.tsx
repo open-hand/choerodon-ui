@@ -61,7 +61,7 @@ export default class Record {
 
   memo?: object;
 
-  prepareForReport?: { result?: boolean, timeout?: number } | undefined;
+  prepareForReport?: { result?: boolean; timeout?: number } | undefined;
 
   dataSetSnapshot?: { [key: string]: DataSetSnapshot } | undefined;
 
@@ -486,7 +486,7 @@ export default class Record {
     needIgnore?: boolean,
     noCascade?: boolean,
     isCascadeSelect?: boolean,
-    all: boolean = true,
+    all = true,
   ): any {
     const { status, dataSet, fields } = this;
     const dataToJSON = dataSet && dataSet.dataToJSON;
@@ -570,7 +570,7 @@ export default class Record {
   reportValidity(result: boolean) {
     const { dataSet } = this;
     if (dataSet && !dataSet.validating) {
-      const prepareForReport = getIf<Record, { result?: boolean, timeout?: number }>(this, 'prepareForReport', {});
+      const prepareForReport = getIf<Record, { result?: boolean; timeout?: number }>(this, 'prepareForReport', {});
       if (!result) {
         prepareForReport.result = result;
       }

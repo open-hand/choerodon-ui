@@ -40,7 +40,7 @@ export default class Range extends NumberField<RangeProps> {
 
   track: HTMLDivElement;
 
-  type: string = 'range';
+  type = 'range';
 
   getFieldType(): FieldType {
     return FieldType.number;

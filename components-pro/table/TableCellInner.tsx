@@ -65,7 +65,7 @@ import useComputed from '../use-computed';
 import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
 
-let inTab: boolean = false;
+let inTab = false;
 
 export interface TableCellInnerProps {
   column: ColumnProps;

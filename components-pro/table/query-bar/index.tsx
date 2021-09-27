@@ -47,7 +47,7 @@ import TextField from '../../text-field';
 
 export interface TableQueryBarProps {
   buttons?: Buttons[];
-  queryFields?: { [key: string]: ReactElement<any>; };
+  queryFields?: { [key: string]: ReactElement<any> };
   queryFieldsLimit?: number;
   summaryFieldsLimit?: number;
   showQueryBar?: boolean;
@@ -362,7 +362,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   getButtonProps(
     type: TableButtonType,
-  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode; } | undefined {
+  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined {
     const {
       isTree, tableStore: { dataSet },
     } = this.context;

@@ -20,7 +20,7 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
   const { groupedTreeRecords } = dataSet;
   const { tableStore: { columnDraggable, proPrefixCls: prefixCls } } = useContext(TableContext);
   const groups = useMemo(() => {
-    const array: { value: false | 'left' | 'right', records: Record[] }[] = [
+    const array: { value: false | 'left' | 'right'; records: Record[] }[] = [
       { value: 'left', records: [] },
       { value: 'right', records: [] },
       { value: false, records: [] },

@@ -197,8 +197,8 @@ export default class Input extends Component<InputProps, any> {
     const { rendered, suffix, prefix } = this;
     let suffixWidth: string;
     let prefixWidth: string;
-    let margin: string = '0';
-    let width: string = '100%';
+    let margin = '0';
+    let width = '100%';
     if (suffix && prefix) {
       suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
       prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;

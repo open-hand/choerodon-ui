@@ -11,8 +11,8 @@ import { isStickySupport } from './utils';
 export interface TableHeaderRowProps {
   rowIndex: number;
   lock?: ColumnLock | boolean;
-  children: ReactNode,
-  rows: ColumnGroup[][],
+  children: ReactNode;
+  rows: ColumnGroup[][];
 }
 
 const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = observer(function TableHeaderRow(props) {

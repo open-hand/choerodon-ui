@@ -24,7 +24,7 @@ function isValidCustomScriptUrl(scriptUrl: string): boolean {
   );
 }
 
-function createScriptUrlElements(scriptUrls: string[], index: number = 0): void {
+function createScriptUrlElements(scriptUrls: string[], index = 0): void {
   const currentScriptUrl = scriptUrls[index];
   if (isValidCustomScriptUrl(currentScriptUrl)) {
     const script = document.createElement('script');

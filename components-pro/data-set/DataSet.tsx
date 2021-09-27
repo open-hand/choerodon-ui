@@ -86,11 +86,11 @@ const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
 const QUERY_PARAMETER = '__QUERY_PARAMETER__';  // TODO:Symbol
 
-export type DataSetChildren = { [key: string]: DataSet; };
+export type DataSetChildren = { [key: string]: DataSet };
 
-export type Events = { [key: string]: Function; };
+export type Events = { [key: string]: Function };
 
-export type Group = { name: string, value: any, records: Record[], subGroups: Group[]; };
+export type Group = { name: string; value: any; records: Record[]; subGroups: Group[] };
 
 export function addDataSetField(dataSet: DataSet, name: string, fieldProps: FieldProps = {}): Field {
   return processIntlField(
@@ -219,7 +219,7 @@ export interface DataSetProps {
    * 查询前，当有记录更改过时， 提示信息或弹窗的属性 modifiedCheckMessage
    * @default
    */
-  modifiedCheckMessage?: ReactNode | ModalProps & confirmProps,
+  modifiedCheckMessage?: ReactNode | ModalProps & confirmProps;
   /**
    * 分页大小
    * @default 10
@@ -286,7 +286,7 @@ export interface DataSetProps {
    * { name_1: ds1, name_2: ds2 }
    * [ds1, ds2]
    */
-  children?: { [key: string]: string | DataSet; } | DataSet[];
+  children?: { [key: string]: string | DataSet } | DataSet[];
   /**
    * 树形数据当前节点 id 字段名，与 parentField 组合使用。
    * 适用于平铺数据；渲染性能相对 childrenField 比较差；变更节点层级可直接修改 idField 和 parentField 对应的值
@@ -376,7 +376,7 @@ export default class DataSet extends EventManager {
 
   children: DataSetChildren = {};
 
-  prepareForReport: { result?: boolean, timeout?: number; } = {};
+  prepareForReport: { result?: boolean; timeout?: number } = {};
 
   @computed
   get queryParameter(): object {
@@ -405,13 +405,13 @@ export default class DataSet extends EventManager {
 
   originalData: Record[] = [];
 
-  resetInBatch: boolean = false;
+  resetInBatch = false;
 
-  validating: boolean = false;
+  validating = false;
 
   @observable lookupCaches?: ObservableMap<string, object[] | Promise<object[]>>;
 
-  @observable attachmentCaches?: ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>;
+  @observable attachmentCaches?: ObservableMap<string, { count?: number | undefined; attachments?: AttachmentFile[] | undefined }>;
 
   @observable selectionStrategy?: CheckedStrategy;
 
@@ -761,6 +761,12 @@ export default class DataSet extends EventManager {
     return (paging === `server`) && ((parentField && idField) || childrenField) ? paging : (parentField === undefined || idField === undefined) && childrenField === undefined && !!paging!;
   }
 
+  set paging(paging) {
+    runInAction(() => {
+      this.props.paging = paging;
+    });
+  }
+
   @computed
   get groups(): string[] {
     return [...this.fields.entries()]
@@ -786,12 +792,6 @@ export default class DataSet extends EventManager {
   get groupedTreeRecords(): Group[] {
     const { groups, treeRecords } = this;
     return normalizeGroups(groups, treeRecords);
-  }
-
-  set paging(paging) {
-    runInAction(() => {
-      this.props.paging = paging;
-    });
   }
 
   /**
@@ -864,7 +864,7 @@ export default class DataSet extends EventManager {
     return this.records.some(isDirtyRecord);
   }
 
-  private inBatchSelection: boolean = false;
+  private inBatchSelection = false;
 
   private syncChildrenRemote = debounce((remoteKeys: string[], current: Record) => {
     const { children } = this;
@@ -1105,7 +1105,7 @@ export default class DataSet extends EventManager {
    * @param object columns 导出的列
    * @param number exportQuantity 导出数量
    */
-  async export(columns: any = {}, exportQuantity: number = 0): Promise<void | any[]> {
+  async export(columns: any = {}, exportQuantity = 0): Promise<void | any[]> {
     if (this.checkReadable(this.parent) && (await this.ready())) {
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
@@ -1175,7 +1175,7 @@ export default class DataSet extends EventManager {
    * @param isFile 是否导出为文件
    */
   @action
-  private async doClientExport(data: any, quantity: number, isFile: boolean = true): Promise<any[] | void> {
+  private async doClientExport(data: any, quantity: number, isFile = true): Promise<any[] | void> {
     const columnsExport = data._HAP_EXCEL_EXPORT_COLUMNS;
     delete data._HAP_EXCEL_EXPORT_COLUMNS;
     const { totalCount } = this;
@@ -1187,7 +1187,7 @@ export default class DataSet extends EventManager {
     if (totalCount > 0) {
       const queryTime = Math.ceil(totalCount / quantity);
       // 处理超并发问题 在超大数据量下一口气发出了几千个请求造成数据丢失
-      const queryExportList: { getPromise: () => AxiosPromise<any>; }[] = [];
+      const queryExportList: { getPromise: () => AxiosPromise<any> }[] = [];
       runInAction(() => {
         this.exportStatus = DataSetExportStatus.exporting;
       });
@@ -1463,7 +1463,7 @@ export default class DataSet extends EventManager {
    * @param locate 是否需要进行定位操作
    */
   @action
-  remove(records?: Record | Record[], locate?: Boolean): void {
+  remove(records?: Record | Record[], locate?: boolean): void {
     if (records) {
       const data = isArrayLike(records) ? records.slice() : [records];
       if (data.length && this.fireEventSync(DataSetEvents.beforeRemove, { dataSet: this, records: data }) !== false) {
@@ -1598,7 +1598,7 @@ export default class DataSet extends EventManager {
    * @default 记录堆栈长度
    * @return 被删除的记录集
    */
-  slice(start: number = 0, end: number = this.length): Record[] {
+  slice(start = 0, end: number = this.length): Record[] {
     return this.data.slice(start, end);
   }
 
@@ -2408,7 +2408,7 @@ Then the query method will be auto invoke.`,
     });
   }
 
-  private initChildren(children: { [key: string]: string | DataSet; } | DataSet[]): void {
+  private initChildren(children: { [key: string]: string | DataSet } | DataSet[]): void {
     if (isArray(children)) {
       children.forEach(childDs => {
         if (childDs instanceof DataSet) {
@@ -2506,7 +2506,7 @@ Then the query method will be auto invoke.`,
     }
   }
 
-  private async read(page: number = 1, params?: object): Promise<any> {
+  private async read(page = 1, params?: object): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
         this.changeStatus(DataSetStatus.loading);
@@ -2755,7 +2755,7 @@ Then the query method will be auto invoke.`,
    * @param page 在那个页面, 小于0时不分页
    * @param pageSizeInner 页面大小
    */
-  private generatePageQueryString(page: number, pageSizeInner?: number): { page?: number, pagesize?: number | undefined; } {
+  private generatePageQueryString(page: number, pageSizeInner?: number): { page?: number; pagesize?: number | undefined } {
     if (page >= 0) {
       const { paging, pageSize } = this;
       if (isNumber(pageSizeInner)) {
@@ -2768,7 +2768,7 @@ Then the query method will be auto invoke.`,
     return {};
   }
 
-  private generateOrderQueryString(): { sortname?: string; sortorder?: string; } | string[] {
+  private generateOrderQueryString(): { sortname?: string; sortorder?: string } | string[] {
     const { fields, props: { combineSort } } = this;
     const orderFields = getOrderFields(fields);
     if (combineSort) {

@@ -684,9 +684,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         if (this.refTable && this.refTable.clientHeight > document.body.clientHeight) {
           scrollIntoViewSmoothly(this.refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
         } else if (this.refTable) {
-          // @ts-ignore
+          // @ts-expect-error: probably API inconsistency?
           if (this.refTable.scrollIntoViewIfNeeded) {
-            // @ts-ignore
+            // @ts-expect-error
             this.refTable.scrollIntoViewIfNeeded({
               block: 'start',
             });
@@ -970,7 +970,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   // Get pagination, filters, sorter
-  prepareParamsArguments(state: any): [TablePaginationConfig | boolean, string[], Object, any[]] {
+  prepareParamsArguments(state: any): [TablePaginationConfig | boolean, string[], Record<string, any>, any[]] {
     const pagination = { ...state.pagination };
     // remove useless handle function in Table.onChange
     delete pagination.onChange;

@@ -14,7 +14,7 @@ export default class SkeletonButton extends DataSetComponent<SkeletonButtonProps
     render(){
         const {...otherProps} = this.props;
 
-        const props:SkeletonButtonProps = {}
+        const props: SkeletonButtonProps = {}
 
         return <C7nSkeletonButton {...otherProps} {...props} />
     }

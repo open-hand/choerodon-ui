@@ -273,7 +273,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const target = Math.min(0, offset);
       if (offsetRef.current !== target) {
         offsetRef.current = target;
-        const navOffset: { name?: string, value?: string } = {};
+        const navOffset: { name?: string; value?: string } = {};
         const navStyle = nav.style;
         const transformSupported = isTransformSupported(navStyle);
         if (isVertical(tabBarPosition)) {
@@ -349,7 +349,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }
   }, [next, prev, navRef, containerRef, navWrapRef, offsetRef, getScrollWH, getOffsetWH, setOffset]);
 
-  const isNextPrevShown = useCallback((state?: { prev: boolean, next: boolean }): boolean => {
+  const isNextPrevShown = useCallback((state?: { prev: boolean; next: boolean }): boolean => {
     if (state) {
       return state.next || state.prev;
     }
@@ -375,7 +375,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }
   }, [getOffsetWH, setOffset, navWrapRef, onNextClick, setNextPrev]);
 
-  const scrollToActiveTab = useCallback((e?: { target?: HTMLElement, currentTarget?: HTMLElement }) => {
+  const scrollToActiveTab = useCallback((e?: { target?: HTMLElement; currentTarget?: HTMLElement }) => {
     const activeTab = activeTabRef.current;
     const navWrap = navWrapRef.current;
     if (e && e.target !== e.currentTarget || !activeTab || !navWrap) {

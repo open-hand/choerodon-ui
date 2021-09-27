@@ -43,7 +43,7 @@ function isBreakPointMap(item: any): item is BreakpointMap {
 }
 
 export function hasBreakPointMap(items: any[]): boolean {
-  // eslint-disable-next-line no-use-before-define
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   return items.some(isOrHasBreakPointMap);
 }
 
@@ -131,8 +131,7 @@ export default class Responsive extends PureComponent<ResponsiveProps, Responsiv
             }), this.fireUpdate);
           },
           // Keep a empty destory to avoid triggering unmatch when unregister
-          destroy() {
-          },
+          destroy() {/* noop */},
         };
         enquire.register(query, handler);
         handlers.set(query, handler);

@@ -59,8 +59,7 @@ export interface C7nTreeNodeProps {
   [customProp: string]: any;
 }
 
-export interface C7nTreeNode extends Component<C7nTreeNodeProps, {}> {
-}
+export type C7nTreeNode = Component<C7nTreeNodeProps, {}>
 
 export interface C7nTreeNodeBaseEvent {
   node: C7nTreeNode;

@@ -182,6 +182,7 @@ export default class TransferList extends Select<TransferListProps> {
   }
 
   removeLastValue() {
+    // noop
   }
 
   @autobind

@@ -41,8 +41,7 @@ const ConditionDataSet: () => DataSetProps = () => ({
   ],
   dataToJSON: DataToJSON.all,
   events: {
-    update: () => {
-    },
+    update: () => {/* noop */},
   },
 });
 
