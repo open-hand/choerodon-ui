@@ -1,6 +1,9 @@
 import { Key, FlattenNode } from '../interface';
 
-export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
+export function findExpandedKeys(prev: Key[] = [], next: Key[] = []): {
+  add: boolean;
+  key: Key | null;
+} {
   const prevLen = prev.length;
   const nextLen = next.length;
 
@@ -8,7 +11,7 @@ export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
     return { add: false, key: null };
   }
 
-  function find(shorter: Key[], longer: Key[]) {
+  function find(shorter: Key[], longer: Key[]): Key | null {
     const cache: Map<Key, boolean> = new Map();
     shorter.forEach(key => {
       cache.set(key, true);
@@ -32,7 +35,7 @@ export function findExpandedKeys(prev: Key[] = [], next: Key[] = []) {
   };
 }
 
-export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], key: Key) {
+export function getExpandRange(shorter: FlattenNode[], longer: FlattenNode[], key: Key): FlattenNode[] {
   const shorterStartIndex = shorter.findIndex(({ data }) => data.key === key);
   const shorterEndNode = shorter[shorterStartIndex + 1];
   const longerStartIndex = longer.findIndex(({ data }) => data.key === key);

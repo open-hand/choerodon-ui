@@ -1,4 +1,5 @@
 const eslintrc = {
+  root: true,
   extends: [
     'airbnb',
     'prettier',
@@ -97,6 +98,7 @@ const eslintrc = {
     'react/sort-comp': 0,
     'react/state-in-constructor': 0,
     'react/static-property-placement': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
   },
 };
 
