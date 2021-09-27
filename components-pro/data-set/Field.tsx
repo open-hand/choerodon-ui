@@ -434,7 +434,7 @@ export default class Field {
       if (uuid && attachmentCaches) {
         const cache = attachmentCaches.get(uuid);
         if (cache) {
-          return cache.attachments;
+          return get(cache, 'attachments');
         }
       }
     }
@@ -452,7 +452,7 @@ export default class Field {
           if (attachmentCaches) {
             const cache = attachmentCaches.get(uuid);
             if (cache) {
-              cache.attachments = attachments;
+              set(cache, 'attachments', attachments);
             } else {
               attachmentCaches.set(uuid, { attachments });
             }
@@ -476,7 +476,7 @@ export default class Field {
       if (uuid && attachmentCaches) {
         const cache = attachmentCaches.get(uuid);
         if (cache) {
-          return cache.count;
+          return get(cache, 'count');
         }
       }
     }
@@ -494,7 +494,7 @@ export default class Field {
           if (attachmentCaches) {
             const cache = attachmentCaches.get(uuid);
             if (cache) {
-              cache.count = count;
+              set(cache, 'count', count);
             } else {
               attachmentCaches.set(uuid, { count });
             }
