@@ -5,6 +5,11 @@ export enum ColumnLock {
   right = 'right',
 }
 
+export enum RowBoxPlacement {
+  start = 'start',
+  end = 'end',
+}
+
 export enum ColumnAlign {
   left = 'left',
   center = 'center',

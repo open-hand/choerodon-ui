@@ -20,6 +20,7 @@ export {
   TableColumnTooltip,
   TableAutoHeightType,
   HighLightRowType,
+  RowBoxPlacement,
 } from './enum';
 
 export {

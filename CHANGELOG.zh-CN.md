@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。
-- 🌟 `<pro>Table`：新增 searchCode, autoWidth 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件, 废弃 autoMaxWidth 属性。
+- 🌟 `<pro>Table`：新增 searchCode, autoWidth, rowBoxPlacement 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件, 废弃 autoMaxWidth 属性。
 - 🌟 `<pro>Pagination`: 新增 quickJumperPosition 属性。
 - 💄 `Tabs`：优化 count 为零时不显示。
 - 💄 `<pro>Pagination`: 优化 quickJumper 显示。
@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`：修复点击弹出 Modal 后搜索下拉未收起的问题。
 - 🐞 `<pro>Lov`：修复 popup 模式表格颤抖的问题。
 - 🐞 `<pro>TextArea`：修复拖拽宽度时的样式问题。
+- 🐞 `<pro>ColorPicker`：修复选择颜色时面板颜色变化的问题。
 
 ## 1.4.4
 

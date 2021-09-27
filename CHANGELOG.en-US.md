@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
-- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth` properties, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions, deprecated `autoMaxWidth` property.
+- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth`, `rowBoxPlacement` properties, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions, deprecated `autoMaxWidth` property.
 - 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
 - 💄 `Tabs`: Optimized to not display when `count` is zero.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that the search drop-down did not collapse after clicking the pop-up Modal.
 - 🐞 `<pro>Lov`: Fix the problem of shaking table in `popup` mode.
 - 🐞 `<pro>TextArea`: Fix the style problem when dragging the width.
+- 🐞 `<pro>ColorPicker`：Fix the problem that the color of the panel changes when the color is selected.
 
 ## 1.4.4
 
