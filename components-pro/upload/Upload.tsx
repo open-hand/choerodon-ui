@@ -510,13 +510,15 @@ export default class Upload extends FormField<UploadProps> {
         .slice(0)
         .filter(item => !item.status || item.status !== 'success')
       : Array.from(fileList).slice(0);
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const that = this;
     if (!files.length) {
       message.info($l('Upload', 'been_uploaded'));
     }
     files.forEach((file: UploadFile, index: number) => {
       file.uid = this.getUid(index);
       setTimeout(() => {
-        this.upload(file);
+        that.upload(file);
       }, 0);
     });
   }

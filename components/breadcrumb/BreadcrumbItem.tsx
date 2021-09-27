@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useCallback, ReactNode } from 'react';
+import React, { ReactNode, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import DropDown, { DropDownProps } from '../dropdown';
 import { Placements } from '../dropdown/enum';
@@ -7,7 +7,7 @@ import Icon from '../icon';
 import List, { ListProps } from '../list';
 import buildPlacements from './placements';
 
-export interface MenuListItemProps {
+export interface menuListItemProps {
   href?: string;
   listItemName?: string;
   listChildren?: ({ listItemName, href }: { listItemName: string; href: string }) => React.ReactNode;
@@ -21,7 +21,7 @@ export interface BreadcrumbItemProps {
   overlay?: DropDownProps['overlay'];
   dropdownProps?: DropDownProps;
   listProps?: ListProps;
-  menuList?: MenuListItemProps[];
+  menuList?: menuListItemProps[];
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
   children?: ReactNode;
 }
