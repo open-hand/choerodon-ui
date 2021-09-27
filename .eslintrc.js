@@ -45,6 +45,7 @@ const eslintrc = {
     'import/no-cycle': 0,
     'import/no-extraneous-dependencies': 0,
     'import/no-unresolved': 0,
+    'indent': [2, 2],
     'jsx-a11y/anchor-has-content': 0,
     'jsx-a11y/anchor-is-valid': 0,
     'jsx-a11y/click-events-have-key-events': 0,

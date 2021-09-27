@@ -1,13 +1,13 @@
 export {
-    AvatarProps,
+  AvatarProps,
 } from './Avatar';
 
 export {
-    SkeletonButtonProps,
+  SkeletonButtonProps,
 } from './Button';
 
 export {
-    SkeletonInputProps,
+  SkeletonInputProps,
 } from './Input';
 
 export { SkeletonProps } from './Skeleton'; 

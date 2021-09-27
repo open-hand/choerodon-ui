@@ -300,11 +300,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         }
       });
       return (<>
-          <div className={`${prefixCls}-dynamic-filter-bar-prefix`}>
-            {children}
-          </div>
-          <span className={`${prefixCls}-filter-search-divide`} />
-        </>
+        <div className={`${prefixCls}-dynamic-filter-bar-prefix`}>
+          {children}
+        </div>
+        <span className={`${prefixCls}-filter-search-divide`} />
+      </>
       );
     }
     return null;
@@ -416,12 +416,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           }
         }}
       >
-          {this.expand ? (<Tooltip title={$l('Table', 'collapse')}>
-            <Icon type="baseline-arrow_drop_up" />
-          </Tooltip>) : (<Tooltip title={$l('Table', 'expand_button')}>
-            <Icon type="baseline-arrow_drop_down" />
-          </Tooltip>)}
-       </span>
+        {this.expand ? (<Tooltip title={$l('Table', 'collapse')}>
+          <Icon type="baseline-arrow_drop_up" />
+        </Tooltip>) : (<Tooltip title={$l('Table', 'expand_button')}>
+          <Icon type="baseline-arrow_drop_down" />
+        </Tooltip>)}
+      </span>
     );
   }
 
@@ -588,8 +588,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       />
                       <span className={`${prefixCls}-filter-label`}>{queryField?.get('label')}</span>
                       <span className={`${prefixCls}-filter-item`}>
-                      {this.createFields(element, name)}
-                    </span>
+                        {this.createFields(element, name)}
+                      </span>
                     </div>
                   );
                 }
@@ -621,18 +621,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   )}
                   trigger={[Action.click]}
                 >
-                <span
-                  className={`${prefixCls}-add-fields`}
-                  onClick={(e: any) => {
-                    e.nativeEvent.stopImmediatePropagation();
-                    runInAction(() => {
-                      this.fieldSelectHidden = false;
-                    });
-                  }}
-                >
-                  <Icon type="add" />
-                  {$l('Table', 'add_filter')}
-                </span>
+                  <span
+                    className={`${prefixCls}-add-fields`}
+                    onClick={(e: any) => {
+                      e.nativeEvent.stopImmediatePropagation();
+                      runInAction(() => {
+                        this.fieldSelectHidden = false;
+                      });
+                    }}
+                  >
+                    <Icon type="add" />
+                    {$l('Table', 'add_filter')}
+                  </span>
                 </Dropdown>
               </div>)}
             </div>

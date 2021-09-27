@@ -113,11 +113,11 @@ function highlightKeyword(str: string, keyword: string, prefixCls: string | unde
     index === 0
       ? node
       : [
-          <span className={`${prefixCls}-menu-item-keyword`} key="seperator">
-            {keyword}
-          </span>,
-          node,
-        ],
+        <span className={`${prefixCls}-menu-item-keyword`} key="seperator">
+          {keyword}
+        </span>,
+        node,
+      ],
   );
 }
 
@@ -483,9 +483,9 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
     }
 
     return (
-     <LocaleReceiver componentName="Cascader" defaultLocale={enUS}>
-       {renderCascader}
-     </LocaleReceiver>
+      <LocaleReceiver componentName="Cascader" defaultLocale={enUS}>
+        {renderCascader}
+      </LocaleReceiver>
     );
   }
 }

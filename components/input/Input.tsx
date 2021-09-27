@@ -391,8 +391,8 @@ export default class Input extends Component<InputProps, any> {
     const inputLength = value ? value.length : 0;
     return (maxLength && showLengthInfo) ||
       (maxLength && maxLength > 0 && inputLength === maxLength) ? (
-      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
-    ) : null;
+        <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+      ) : null;
   }
 
   getLabel() {

@@ -480,11 +480,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         }
       });
       return (<>
-          <div className={`${proPrefixCls}-dynamic-filter-bar-prefix`}>
-            {children}
-          </div>
-          <span className={`${proPrefixCls}-filter-search-divide`} />
-        </>
+        <div className={`${proPrefixCls}-dynamic-filter-bar-prefix`}>
+          {children}
+        </div>
+        <span className={`${proPrefixCls}-filter-search-divide`} />
+      </>
       );
     }
     return null;

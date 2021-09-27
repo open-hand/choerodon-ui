@@ -107,12 +107,12 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
 
   function getGroupHeader(lock: ColumnLock | boolean) {
     switch (lock) {
-      case ColumnLock.left:
-        return $l('Table', 'left_lock');
-      case ColumnLock.right:
-        return $l('Table', 'right_lock');
-      default:
-        return $l('Table', 'unlocked');
+    case ColumnLock.left:
+      return $l('Table', 'left_lock');
+    case ColumnLock.right:
+      return $l('Table', 'right_lock');
+    default:
+      return $l('Table', 'unlocked');
     }
   }
 

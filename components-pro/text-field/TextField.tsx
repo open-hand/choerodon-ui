@@ -289,54 +289,54 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @action
   handleRenderedValueChange(text: string, width: number, rangeTarget?: 0 | 1) {
     switch (rangeTarget) {
-      case 0: {
-        this.renderedStartText = {
-          text,
-          width,
-        };
-        break;
-      }
-      case 1: {
-        this.renderedEndText = {
-          text,
-          width,
-        };
-        break;
-      }
-      default: {
-        this.renderedText = {
-          text,
-          width,
-        };
-      }
+    case 0: {
+      this.renderedStartText = {
+        text,
+        width,
+      };
+      break;
+    }
+    case 1: {
+      this.renderedEndText = {
+        text,
+        width,
+      };
+      break;
+    }
+    default: {
+      this.renderedText = {
+        text,
+        width,
+      };
+    }
     }
   }
 
   clearRenderedText(rangeTarget?: 0 | 1) {
     switch (rangeTarget) {
-      case 0: {
-        if (this.renderedStartText) {
-          runInAction(() => {
-            this.renderedStartText = undefined;
-          });
-        }
-        break;
+    case 0: {
+      if (this.renderedStartText) {
+        runInAction(() => {
+          this.renderedStartText = undefined;
+        });
       }
-      case 1: {
-        if (this.renderedEndText) {
-          runInAction(() => {
-            this.renderedEndText = undefined;
-          });
-        }
-        break;
+      break;
+    }
+    case 1: {
+      if (this.renderedEndText) {
+        runInAction(() => {
+          this.renderedEndText = undefined;
+        });
       }
-      default: {
-        if (this.renderedText) {
-          runInAction(() => {
-            this.renderedText = undefined;
-          });
-        }
+      break;
+    }
+    default: {
+      if (this.renderedText) {
+        runInAction(() => {
+          this.renderedText = undefined;
+        });
       }
+    }
     }
   }
 
@@ -783,17 +783,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
                 rangeTarget === undefined || !this.isFocused
                   ? ''
                   : this.text === undefined
-                  ? rangeTarget === 0
-                    ? startText
-                    : endText
-                  : this.text
+                    ? rangeTarget === 0
+                      ? startText
+                      : endText
+                    : this.text
               }
               placeholder={
                 !editable || rangeTarget === undefined || !this.isFocused
                   ? ''
                   : rangeTarget === 0
-                  ? startPlaceholder
-                  : endPlaceholder
+                    ? startPlaceholder
+                    : endPlaceholder
               }
               readOnly={!editable}
               style={editorStyle}
@@ -1229,24 +1229,24 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       if (this.multiple) {
         if (!this.text) {
           switch (e.keyCode) {
-            case KeyCode.DELETE:
-              this.clear();
-              break;
-            case KeyCode.BACKSPACE:
-              this.removeLastValue();
-              break;
-            default:
+          case KeyCode.DELETE:
+            this.clear();
+            break;
+          case KeyCode.BACKSPACE:
+            this.removeLastValue();
+            break;
+          default:
           }
         }
       } else {
         const { clearButton } = this.props;
         if (clearButton && !this.editable) {
           switch (e.keyCode) {
-            case KeyCode.DELETE:
-            case KeyCode.BACKSPACE:
-              this.clear();
-              break;
-            default:
+          case KeyCode.DELETE:
+          case KeyCode.BACKSPACE:
+            this.clear();
+            break;
+          default:
           }
         }
       }

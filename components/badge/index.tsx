@@ -67,10 +67,10 @@ export default function Badge(props: BadgeProps & { children }) {
   });
   const styleWithOffset = offset
     ? {
-        marginTop: offset[0],
-        marginLeft: offset[1],
-        ...style,
-      }
+      marginTop: offset[0],
+      marginLeft: offset[1],
+      ...style,
+    }
     : style;
   // <Badge status="success" />
   if (!children && status) {

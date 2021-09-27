@@ -172,24 +172,24 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
           labelTitle,
           tagsProps,
         }) : (
-            <div className={`${prefixCls}-choosed`}>
-              <div className={`${prefixCls}-choosed-title`}>{labelNode}</div>
-              <div className={`${prefixCls}-choosed-content`}>
-                {tagsProps.map(tagItemProps => (
-                  <Tag
-                    onClose={(e) => {
-                      e.preventDefault();
-                      tagItemProps.handleClose(tagItemProps.key)
-                    }}
-                    key={tagItemProps.key}
-                    closable
-                  >
-                    {`${tagItemProps.label}:${tagItemProps.text}`}
-                  </Tag>
-                ))}
-              </div>
+          <div className={`${prefixCls}-choosed`}>
+            <div className={`${prefixCls}-choosed-title`}>{labelNode}</div>
+            <div className={`${prefixCls}-choosed-content`}>
+              {tagsProps.map(tagItemProps => (
+                <Tag
+                  onClose={(e) => {
+                    e.preventDefault();
+                    tagItemProps.handleClose(tagItemProps.key)
+                  }}
+                  key={tagItemProps.key}
+                  closable
+                >
+                  {`${tagItemProps.label}:${tagItemProps.text}`}
+                </Tag>
+              ))}
             </div>
-          )
+          </div>
+        )
       }
     }
     return null

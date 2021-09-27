@@ -11,14 +11,14 @@ import autobind from '../_util/autobind';
 
 function getResizeProp(resize: ResizeType) {
   switch (resize) {
-    case ResizeType.both:
-      return 'both';
-    case ResizeType.vertical:
-      return 'height';
-    case ResizeType.horizontal:
-      return 'width';
-    default:
-      return undefined;
+  case ResizeType.both:
+    return 'both';
+  case ResizeType.vertical:
+    return 'height';
+  case ResizeType.horizontal:
+    return 'width';
+  default:
+    return undefined;
   }
 }
 

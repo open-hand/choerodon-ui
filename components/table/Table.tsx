@@ -210,12 +210,12 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const pagination: TablePaginationConfig = props.pagination || {};
     return this.hasPagination(props)
       ? {
-          ...defaultPagination,
-          size: props.size,
-          ...pagination,
-          current: pagination.defaultCurrent || pagination.current || 1,
-          pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
-        }
+        ...defaultPagination,
+        size: props.size,
+        ...pagination,
+        current: pagination.defaultCurrent || pagination.current || 1,
+        pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
+      }
       : {};
   }
 
@@ -617,39 +617,39 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     let checked;
     // handle default selection
     switch (selectionKey) {
-      case 'all':
-        changeableRowKeys.forEach(key => {
-          if (selectedRowKeys.indexOf(key) < 0) {
-            selectedRowKeys.push(key);
-            changeRowKeys.push(key);
-          }
-        });
-        selectWay = 'onSelectAll';
-        checked = true;
-        break;
-      case 'removeAll':
-        changeableRowKeys.forEach(key => {
-          if (selectedRowKeys.indexOf(key) >= 0) {
-            selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
-            changeRowKeys.push(key);
-          }
-        });
-        selectWay = 'onSelectAll';
-        checked = false;
-        break;
-      case 'invert':
-        changeableRowKeys.forEach(key => {
-          if (selectedRowKeys.indexOf(key) < 0) {
-            selectedRowKeys.push(key);
-          } else {
-            selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
-          }
+    case 'all':
+      changeableRowKeys.forEach(key => {
+        if (selectedRowKeys.indexOf(key) < 0) {
+          selectedRowKeys.push(key);
           changeRowKeys.push(key);
-          selectWay = 'onSelectInvert';
-        });
-        break;
-      default:
-        break;
+        }
+      });
+      selectWay = 'onSelectAll';
+      checked = true;
+      break;
+    case 'removeAll':
+      changeableRowKeys.forEach(key => {
+        if (selectedRowKeys.indexOf(key) >= 0) {
+          selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
+          changeRowKeys.push(key);
+        }
+      });
+      selectWay = 'onSelectAll';
+      checked = false;
+      break;
+    case 'invert':
+      changeableRowKeys.forEach(key => {
+        if (selectedRowKeys.indexOf(key) < 0) {
+          selectedRowKeys.push(key);
+        } else {
+          selectedRowKeys.splice(selectedRowKeys.indexOf(key), 1);
+        }
+        changeRowKeys.push(key);
+        selectWay = 'onSelectInvert';
+      });
+      break;
+    default:
+      break;
     }
 
     this.store.setState({
@@ -1040,9 +1040,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     return data.sort(sorterFn).map((item: any) =>
       item[childrenColumnName]
         ? {
-            ...item,
-            [childrenColumnName]: this.recursiveSort(item[childrenColumnName], sorterFn),
-          }
+          ...item,
+          [childrenColumnName]: this.recursiveSort(item[childrenColumnName], sorterFn),
+        }
         : item,
     );
   }
@@ -1074,8 +1074,8 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
           const { onFilter, filters: columnFilters } = col;
           filteredData = onFilter
             ? filteredData.filter(record => {
-                return values.some(v => onFilter(v, record, columnFilters));
-              })
+              return values.some(v => onFilter(v, record, columnFilters));
+            })
             : filteredData;
         });
       }

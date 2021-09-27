@@ -3,15 +3,15 @@ import { getConfig, TooltipTarget } from '../configure';
 
 function getTooltipPolyfill(target?: TooltipTarget): Tooltip | undefined {
   switch (target) {
-    case 'table-cell':
-      return getConfig('tableColumnTooltip');
-    case 'button':
-      return getConfig('buttonTooltip');
-    case 'select-option':
-      return getConfig('selectOptionTooltip');
-    case 'label':
-      return getConfig('labelTooltip');
-    default:
+  case 'table-cell':
+    return getConfig('tableColumnTooltip');
+  case 'button':
+    return getConfig('buttonTooltip');
+  case 'select-option':
+    return getConfig('selectOptionTooltip');
+  case 'label':
+    return getConfig('labelTooltip');
+  default:
   }
 }
 

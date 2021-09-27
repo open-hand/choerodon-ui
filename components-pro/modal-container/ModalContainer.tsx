@@ -341,17 +341,17 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         const offset = getArrayIndex(drawerOffsets[drawerTransitionName], i) + baseOffsets[drawerTransitionName];
         if (offset) {
           switch (drawerTransitionName) {
-            case 'slide-up':
-              style.marginTop = offset;
-              break;
-            case 'slide-down':
-              style.marginBottom = offset;
-              break;
-            case 'slide-left':
-              style.marginLeft = offset;
-              break;
-            default:
-              style.marginRight = offset;
+          case 'slide-up':
+            style.marginTop = offset;
+            break;
+          case 'slide-down':
+            style.marginBottom = offset;
+            break;
+          case 'slide-left':
+            style.marginLeft = offset;
+            break;
+          default:
+            style.marginRight = offset;
           }
         }
       }

@@ -1,3 +1,3 @@
 export {
-    RadioProps,
+  RadioProps,
 } from './Radio';

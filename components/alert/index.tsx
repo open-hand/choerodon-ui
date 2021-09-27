@@ -89,20 +89,20 @@ export default class Alert extends Component<AlertProps, any> {
 
     if (!iconType) {
       switch (type) {
-        case 'success':
-          iconType = 'check_circle';
-          break;
-        case 'info':
-          iconType = 'info';
-          break;
-        case 'error':
-          iconType = 'error';
-          break;
-        case 'warning':
-          iconType = 'warning';
-          break;
-        default:
-          iconType = 'default';
+      case 'success':
+        iconType = 'check_circle';
+        break;
+      case 'info':
+        iconType = 'info';
+        break;
+      case 'error':
+        iconType = 'error';
+        break;
+      case 'warning':
+        iconType = 'warning';
+        break;
+      default:
+        iconType = 'default';
       }
     }
 

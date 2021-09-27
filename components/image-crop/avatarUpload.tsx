@@ -313,7 +313,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
       if(isString(previewTitle)) {
         return (
           <h5 className={`${prefixCls}-preview-title`}>
-              <span >{previewTitle}</span>
+            <span >{previewTitle}</span>
           </h5>
         )
       }

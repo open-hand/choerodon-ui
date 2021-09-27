@@ -56,10 +56,10 @@ export default class Row extends Component<RowProps> {
     const rowStyle =
       (gutter as number) > 0
         ? {
-            marginLeft: (gutter as number) / -2,
-            marginRight: (gutter as number) / -2,
-            ...style,
-          }
+          marginLeft: (gutter as number) / -2,
+          marginRight: (gutter as number) / -2,
+          ...style,
+        }
         : style;
     const cols = Children.map(children, (col: ReactElement<HTMLDivElement>) => {
       if (!col) {

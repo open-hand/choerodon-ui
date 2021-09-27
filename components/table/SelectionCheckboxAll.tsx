@@ -20,17 +20,17 @@ export default class SelectionCheckboxAll<T> extends Component<
     this.defaultSelections = props.hideDefaultSelections
       ? []
       : [
-          {
-            key: 'all',
-            text: props.locale.selectAll,
-            onSelect: () => {/* noop */},
-          },
-          {
-            key: 'invert',
-            text: props.locale.selectInvert,
-            onSelect: () => {/* noop */},
-          },
-        ];
+        {
+          key: 'all',
+          text: props.locale.selectAll,
+          onSelect: () => {/* noop */},
+        },
+        {
+          key: 'invert',
+          text: props.locale.selectInvert,
+          onSelect: () => {/* noop */},
+        },
+      ];
 
     this.state = {
       checked: this.getCheckState(props),
@@ -66,8 +66,8 @@ export default class SelectionCheckboxAll<T> extends Component<
       return byDefaultChecked
         ? data[type]((item, i) => getCheckboxPropsByItem(item, i).defaultChecked)
         : data[type](
-            (item, i) => store.getState().selectedRowKeys.indexOf(getRecordKey(item, i)) >= 0,
-          );
+          (item, i) => store.getState().selectedRowKeys.indexOf(getRecordKey(item, i)) >= 0,
+        );
     }
     return false;
   }

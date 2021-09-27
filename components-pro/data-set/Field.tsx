@@ -1006,7 +1006,7 @@ export default class Field {
    * 设置是否只读
    * @param readOnly 是否只读
    */
-   set readOnly(readOnly: boolean) {
+  set readOnly(readOnly: boolean) {
     this.set('readOnly', readOnly);
   }
 
@@ -1022,7 +1022,7 @@ export default class Field {
    * 设置是否禁用
    * @param disabled 是否禁用
    */
-   set disabled(disabled: boolean) {
+  set disabled(disabled: boolean) {
     this.set('disabled', disabled);
   }
 

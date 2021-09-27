@@ -48,10 +48,10 @@ export default class RichTextToolbar extends Component<RichTextToolbarProps> {
       return (toolbar as RichTextToolbarHook)(props);
     }
     switch (toolbar) {
-      case RichTextToolbarType.normal:
-        return this.renderToolBar(props);
-      default:
-        return null;
+    case RichTextToolbarType.normal:
+      return this.renderToolBar(props);
+    default:
+      return null;
     }
   }
 }

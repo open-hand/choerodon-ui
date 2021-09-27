@@ -521,43 +521,43 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (!this.disabled && !this.readOnly) {
       const el = this.popup ? this.view || this : this;
       switch (e.keyCode) {
-        case KeyCode.RIGHT:
-          el.handleKeyDownRight(e);
-          break;
-        case KeyCode.LEFT:
-          el.handleKeyDownLeft(e);
-          break;
-        case KeyCode.DOWN:
-          el.handleKeyDownDown(e);
-          break;
-        case KeyCode.UP:
-          el.handleKeyDownUp(e);
-          break;
-        case KeyCode.END:
-          el.handleKeyDownEnd(e);
-          break;
-        case KeyCode.HOME:
-          el.handleKeyDownHome(e);
-          break;
-        case KeyCode.PAGE_UP:
-          el.handleKeyDownPageUp(e);
-          break;
-        case KeyCode.PAGE_DOWN:
-          el.handleKeyDownPageDown(e);
-          break;
-        case KeyCode.ENTER:
-          el.handleKeyDownEnter(e);
-          break;
-        case KeyCode.TAB:
-          this.handleKeyDownTab();
-          break;
-        case KeyCode.ESC:
-          this.handleKeyDownEsc(e);
-          break;
-        case KeyCode.SPACE:
-          this.handleKeyDownSpace(e);
-          break;
-        default:
+      case KeyCode.RIGHT:
+        el.handleKeyDownRight(e);
+        break;
+      case KeyCode.LEFT:
+        el.handleKeyDownLeft(e);
+        break;
+      case KeyCode.DOWN:
+        el.handleKeyDownDown(e);
+        break;
+      case KeyCode.UP:
+        el.handleKeyDownUp(e);
+        break;
+      case KeyCode.END:
+        el.handleKeyDownEnd(e);
+        break;
+      case KeyCode.HOME:
+        el.handleKeyDownHome(e);
+        break;
+      case KeyCode.PAGE_UP:
+        el.handleKeyDownPageUp(e);
+        break;
+      case KeyCode.PAGE_DOWN:
+        el.handleKeyDownPageDown(e);
+        break;
+      case KeyCode.ENTER:
+        el.handleKeyDownEnter(e);
+        break;
+      case KeyCode.TAB:
+        this.handleKeyDownTab();
+        break;
+      case KeyCode.ESC:
+        this.handleKeyDownEsc(e);
+        break;
+      case KeyCode.SPACE:
+        this.handleKeyDownSpace(e);
+        break;
+      default:
       }
     }
     super.handleKeyDown(e);
@@ -737,29 +737,29 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       let start = (min || date).clone();
       let end = (max || date).clone();
       switch (mode || this.getViewMode()) {
-        case ViewMode.month:
-          start = start.startOf('M');
-          end = end.endOf('M');
-          break;
-        case ViewMode.year:
-          start = start.startOf('y');
-          end = end.endOf('y');
-          break;
-        case ViewMode.decade:
-          start = start
-            .startOf('y')
-            .subtract(start.year() % 10, 'y')
-            .startOf('d');
-          end = end
-            .endOf('y')
-            .add(9 - (end.year() % 10), 'y')
-            .endOf('d');
-          break;
-        case ViewMode.dateTime:
-          start = start.startOf('d');
-          end = end.endOf('d');
-          break;
-        default:
+      case ViewMode.month:
+        start = start.startOf('M');
+        end = end.endOf('M');
+        break;
+      case ViewMode.year:
+        start = start.startOf('y');
+        end = end.endOf('y');
+        break;
+      case ViewMode.decade:
+        start = start
+          .startOf('y')
+          .subtract(start.year() % 10, 'y')
+          .startOf('d');
+        end = end
+          .endOf('y')
+          .add(9 - (end.year() % 10), 'y')
+          .endOf('d');
+        break;
+      case ViewMode.dateTime:
+        start = start.startOf('d');
+        end = end.endOf('d');
+        break;
+      default:
       }
       return date.isBetween(start, end, undefined, '[]');
     }

@@ -109,11 +109,11 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
         return (queryBar.renderer as TableQueryBarHook)(props);
       }
       switch (queryBar.type) {
-        case TableQueryBarType.professionalBar:
-          return this.renderProfessionalBar(props);
-        case TableQueryBarType.filterBar:
-          return this.renderDynamicFilterBar(props);
-        default:
+      case TableQueryBarType.professionalBar:
+        return this.renderProfessionalBar(props);
+      case TableQueryBarType.filterBar:
+        return this.renderDynamicFilterBar(props);
+      default:
       }
     }
     return null;

@@ -205,39 +205,39 @@ export default class Menu extends Component<MenuProps, MenuState> {
     let menuOpenAnimation = openAnimation || openTransitionName;
     if (openAnimation === undefined && openTransitionName === undefined) {
       switch (menuMode) {
-        case 'horizontal':
-          menuOpenAnimation = 'slide-up';
-          break;
-        case 'vertical':
-        case 'vertical-left':
-        case 'vertical-right':
-          // When mode switch from inline
-          // submenu should hide without animation
-          if (this.switchModeFromInline) {
-            menuOpenAnimation = '';
-            this.switchModeFromInline = false;
-          } else {
-            menuOpenAnimation = 'zoom-big';
-          }
-          break;
-        case 'inline':
-          menuOpenAnimation = {
-            ...animation,
-            leave: (node: HTMLElement, done: () => void) =>
-              animation.leave(node, () => {
-                // Make sure inline menu leave animation finished before mode is switched
-                this.switchModeFromInline = false;
-                this.setState({});
-                // when inlineCollapsed change false to true, all submenu will be unmounted,
-                // so that we don't need handle animation leaving.
-                if (this.getRealMenuMode() === 'vertical') {
-                  return;
-                }
-                done();
-              }),
-          };
-          break;
-        default:
+      case 'horizontal':
+        menuOpenAnimation = 'slide-up';
+        break;
+      case 'vertical':
+      case 'vertical-left':
+      case 'vertical-right':
+        // When mode switch from inline
+        // submenu should hide without animation
+        if (this.switchModeFromInline) {
+          menuOpenAnimation = '';
+          this.switchModeFromInline = false;
+        } else {
+          menuOpenAnimation = 'zoom-big';
+        }
+        break;
+      case 'inline':
+        menuOpenAnimation = {
+          ...animation,
+          leave: (node: HTMLElement, done: () => void) =>
+            animation.leave(node, () => {
+              // Make sure inline menu leave animation finished before mode is switched
+              this.switchModeFromInline = false;
+              this.setState({});
+              // when inlineCollapsed change false to true, all submenu will be unmounted,
+              // so that we don't need handle animation leaving.
+              if (this.getRealMenuMode() === 'vertical') {
+                return;
+              }
+              done();
+            }),
+        };
+        break;
+      default:
       }
     }
     return menuOpenAnimation;

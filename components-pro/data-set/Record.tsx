@@ -287,8 +287,8 @@ export default class Record {
           expandField,
           field
             ? expand
-            ? field.get(BooleanValue.trueValue)
-            : field.get(BooleanValue.falseValue)
+              ? field.get(BooleanValue.trueValue)
+              : field.get(BooleanValue.falseValue)
             : expand,
         );
       } else {
@@ -523,7 +523,7 @@ export default class Record {
       __id: this.id,
       [getConfig('statusKey')]: getConfig('status')[
         status === RecordStatus.sync ? RecordStatus.update : status
-        ],
+      ],
     };
   }
 

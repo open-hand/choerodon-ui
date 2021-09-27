@@ -1,3 +1,3 @@
 export {
-    TriggerFieldProps,
+  TriggerFieldProps,
 } from './TriggerField'

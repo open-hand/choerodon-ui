@@ -1,6 +1,6 @@
 export { 
-    OptGroupProps,
+  OptGroupProps,
 } from './OptGroup';
 export {
-    OptionProps,
+  OptionProps,
 } from './Option';

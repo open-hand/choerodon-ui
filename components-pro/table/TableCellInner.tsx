@@ -168,22 +168,22 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   }, [tableStore, dataSet, record, lock, columnKey, canFocus, hasEditor, showEditor]);
   const handleEditorKeyDown = useCallback((e) => {
     switch (e.keyCode) {
-      case KeyCode.TAB: {
-        const cell = findCell(tableStore, columnKey);
-        if (cell) {
-          if (cell.contains(document.activeElement)) {
+    case KeyCode.TAB: {
+      const cell = findCell(tableStore, columnKey);
+      if (cell) {
+        if (cell.contains(document.activeElement)) {
+          inTab = true;
+        } else {
+          const node = findFirstFocusableElement(cell);
+          if (node) {
             inTab = true;
-          } else {
-            const node = findFirstFocusableElement(cell);
-            if (node) {
-              inTab = true;
-              node.focus();
-            }
+            node.focus();
           }
         }
-        break;
       }
-      default:
+      break;
+    }
+    default:
     }
   }, [tableStore, columnKey]);
   const handleCommandSave = useCallback(() => {
@@ -264,21 +264,21 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
             type: TableCommandType,
           ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined => {
             switch (type) {
-              case TableCommandType.edit:
-                return {
-                  icon: 'mode_edit',
-                  onClick: handleCommandEdit,
-                  disabled,
-                  title: $l('Table', 'edit_button'),
-                };
-              case TableCommandType.delete:
-                return {
-                  icon: 'delete',
-                  onClick: handleCommandDelete,
-                  disabled,
-                  title: $l('Table', 'delete_button'),
-                };
-              default:
+            case TableCommandType.edit:
+              return {
+                icon: 'mode_edit',
+                onClick: handleCommandEdit,
+                disabled,
+                title: $l('Table', 'edit_button'),
+              };
+            case TableCommandType.delete:
+              return {
+                icon: 'delete',
+                onClick: handleCommandDelete,
+                disabled,
+                title: $l('Table', 'delete_button'),
+              };
+            default:
             }
           };
           const defaultButtonProps = getButtonProps(button);

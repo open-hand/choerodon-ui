@@ -1,17 +1,17 @@
 export {
-    BaseEditorProps,
+  BaseEditorProps,
 } from './BaseEditor';
 
 export {
-    RichTextToolbarType,
-    RichTextMode,
+  RichTextToolbarType,
+  RichTextMode,
 } from './enum';
 
 export {
-    RichTextToolbarHookProps,
-    RichTextProps,
+  RichTextToolbarHookProps,
+  RichTextProps,
 } from './RichText';
 
 export {
-    RichTextViewerProps,
+  RichTextViewerProps,
 } from './RichTextViewer'; 

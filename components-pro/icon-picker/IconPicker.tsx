@@ -133,50 +133,50 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     if (!this.disabled && !this.readOnly) {
       if (this.popup) {
         switch (e.keyCode) {
-          case KeyCode.RIGHT:
-            stopEvent(e);
-            this.handleKeyDownRight();
-            break;
-          case KeyCode.LEFT:
-            stopEvent(e);
-            this.handleKeyDownLeft();
-            break;
-          case KeyCode.DOWN:
-            stopEvent(e);
-            this.handleKeyDownDown();
-            break;
-          case KeyCode.UP:
-            stopEvent(e);
-            this.handleKeyDownUp();
-            break;
-          case KeyCode.END:
-            stopEvent(e);
-            this.handleKeyDownEnd();
-            break;
-          case KeyCode.HOME:
-            stopEvent(e);
-            this.handleKeyDownHome();
-            break;
-          case KeyCode.PAGE_UP:
-            stopEvent(e);
-            this.handleKeyDownPageUp();
-            break;
-          case KeyCode.PAGE_DOWN:
-            stopEvent(e);
-            this.handleKeyDownPageDown();
-            break;
-          case KeyCode.ENTER:
-            e.preventDefault();
-            this.handleKeyDownEnter();
-            break;
-          case KeyCode.TAB:
-            this.handleKeyDownTab();
-            break;
-          case KeyCode.ESC:
-            e.preventDefault();
-            this.handleKeyDownEsc();
-            break;
-          default:
+        case KeyCode.RIGHT:
+          stopEvent(e);
+          this.handleKeyDownRight();
+          break;
+        case KeyCode.LEFT:
+          stopEvent(e);
+          this.handleKeyDownLeft();
+          break;
+        case KeyCode.DOWN:
+          stopEvent(e);
+          this.handleKeyDownDown();
+          break;
+        case KeyCode.UP:
+          stopEvent(e);
+          this.handleKeyDownUp();
+          break;
+        case KeyCode.END:
+          stopEvent(e);
+          this.handleKeyDownEnd();
+          break;
+        case KeyCode.HOME:
+          stopEvent(e);
+          this.handleKeyDownHome();
+          break;
+        case KeyCode.PAGE_UP:
+          stopEvent(e);
+          this.handleKeyDownPageUp();
+          break;
+        case KeyCode.PAGE_DOWN:
+          stopEvent(e);
+          this.handleKeyDownPageDown();
+          break;
+        case KeyCode.ENTER:
+          e.preventDefault();
+          this.handleKeyDownEnter();
+          break;
+        case KeyCode.TAB:
+          this.handleKeyDownTab();
+          break;
+        case KeyCode.ESC:
+          e.preventDefault();
+          this.handleKeyDownEsc();
+          break;
+        default:
         }
       } else if (e.keyCode === KeyCode.SPACE) {
         e.preventDefault();

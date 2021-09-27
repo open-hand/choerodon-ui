@@ -114,8 +114,8 @@ export default class Collapse extends Component<CollapseProps, any> {
       expandIconContent = (panelProps: PanelProps) => {
         return (
           <LocaleReceiver componentName="Collapse" defaultLocale={defaultLocale.Collapse}>
-           {(locale, localeCode) => this.renderExpandTextContent(panelProps, locale, localeCode, expandIconPositionCof)}
-         </LocaleReceiver>)
+            {(locale, localeCode) => this.renderExpandTextContent(panelProps, locale, localeCode, expandIconPositionCof)}
+          </LocaleReceiver>)
       };
     }
 

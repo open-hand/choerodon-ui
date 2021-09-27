@@ -44,34 +44,34 @@ function setNotificationConfig(options: ConfigProps) {
 function getPlacementStyle(placement: NotificationPlacement) {
   let style;
   switch (placement) {
-    case 'topLeft':
-      style = {
-        left: 0,
-        top: defaultTop,
-        bottom: 'auto',
-      };
-      break;
-    case 'topRight':
-      style = {
-        right: 0,
-        top: defaultTop,
-        bottom: 'auto',
-      };
-      break;
-    case 'bottomLeft':
-      style = {
-        left: 0,
-        top: 'auto',
-        bottom: defaultBottom,
-      };
-      break;
-    default:
-      style = {
-        right: 0,
-        top: 'auto',
-        bottom: defaultBottom,
-      };
-      break;
+  case 'topLeft':
+    style = {
+      left: 0,
+      top: defaultTop,
+      bottom: 'auto',
+    };
+    break;
+  case 'topRight':
+    style = {
+      right: 0,
+      top: defaultTop,
+      bottom: 'auto',
+    };
+    break;
+  case 'bottomLeft':
+    style = {
+      left: 0,
+      top: 'auto',
+      bottom: defaultBottom,
+    };
+    break;
+  default:
+    style = {
+      right: 0,
+      top: 'auto',
+      bottom: defaultBottom,
+    };
+    break;
   }
   return style;
 }

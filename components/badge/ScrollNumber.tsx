@@ -6,10 +6,10 @@ import { getPrefixCls } from '../configure';
 function getNumberArray(num: string | number | undefined) {
   return num
     ? num
-        .toString()
-        .split('')
-        .reverse()
-        .map(i => Number(i))
+      .toString()
+      .split('')
+      .reverse()
+      .map(i => Number(i))
     : [];
 }
 

@@ -64,28 +64,28 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer((props) => {
   const handleMenuClick = useCallback(action((arg: ClickParam) => {
     const { key } = arg;
     switch (key) {
-      case 'rename':
-        record.setState('editing', true);
-        break;
-      case 'unfixed':
-        changeFixed(false);
-        break;
-      case 'left':
-        changeFixed('left');
-        break;
-      case 'right':
-        changeFixed('right');
-        break;
-      case 'top':
-        changeIndex(0);
-        break;
-      case 'up':
-        changeIndex(index - 1);
-        break;
-      case 'down':
-        changeIndex(index + 1);
-        break;
-      default:
+    case 'rename':
+      record.setState('editing', true);
+      break;
+    case 'unfixed':
+      changeFixed(false);
+      break;
+    case 'left':
+      changeFixed('left');
+      break;
+    case 'right':
+      changeFixed('right');
+      break;
+    case 'top':
+      changeIndex(0);
+      break;
+    case 'up':
+      changeIndex(index - 1);
+      break;
+    case 'down':
+      changeIndex(index + 1);
+      break;
+    default:
     }
   }), [record, index, changeFixed, changeIndex]);
 

@@ -865,36 +865,36 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   handleKeyDown(e) {
     if (!this.disabled && !this.readOnly) {
       switch (e.keyCode) {
-        case KeyCode.RIGHT:
-          this.handleKeyLeftRightNext(e, 1);
-          break;
-        case KeyCode.DOWN:
-          this.handleKeyDownPrevNext(e, 1);
-          break;
-        case KeyCode.LEFT:
-          this.handleKeyLeftRightNext(e, -1);
-          break;
-        case KeyCode.UP:
-          this.handleKeyDownPrevNext(e, -1);
-          break;
-        case KeyCode.END:
-        case KeyCode.PAGE_DOWN:
-          this.handleKeyDownFirstLast(e, 1);
-          break;
-        case KeyCode.HOME:
-        case KeyCode.PAGE_UP:
-          this.handleKeyDownFirstLast(e, -1);
-          break;
-        case KeyCode.ENTER:
-          this.handleKeyDownEnter(e);
-          break;
-        case KeyCode.ESC:
-          this.handleKeyDownEsc(e);
-          break;
-        case KeyCode.SPACE:
-          this.handleKeyDownSpace(e);
-          break;
-        default:
+      case KeyCode.RIGHT:
+        this.handleKeyLeftRightNext(e, 1);
+        break;
+      case KeyCode.DOWN:
+        this.handleKeyDownPrevNext(e, 1);
+        break;
+      case KeyCode.LEFT:
+        this.handleKeyLeftRightNext(e, -1);
+        break;
+      case KeyCode.UP:
+        this.handleKeyDownPrevNext(e, -1);
+        break;
+      case KeyCode.END:
+      case KeyCode.PAGE_DOWN:
+        this.handleKeyDownFirstLast(e, 1);
+        break;
+      case KeyCode.HOME:
+      case KeyCode.PAGE_UP:
+        this.handleKeyDownFirstLast(e, -1);
+        break;
+      case KeyCode.ENTER:
+        this.handleKeyDownEnter(e);
+        break;
+      case KeyCode.ESC:
+        this.handleKeyDownEsc(e);
+        break;
+      case KeyCode.SPACE:
+        this.handleKeyDownSpace(e);
+        break;
+      default:
       }
     }
     super.handleKeyDown(e);

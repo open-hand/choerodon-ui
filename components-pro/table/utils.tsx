@@ -61,47 +61,47 @@ export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: 
     return <Output />;
   }
   switch (type) {
-    case FieldType.boolean:
-      return isQueryField ? (
-        <ObserverSelect clearButton {...flatProps}>
-          <Option value>{$l('Table', 'query_option_yes')}</Option>
-          <Option value={false}>{$l('Table', 'query_option_no')}</Option>
-        </ObserverSelect>
-      ) : <ObserverCheckBox />;
-    case FieldType.number:
-      return <ObserverNumberField {...flatProps} />;
-    case FieldType.currency:
-      return <Currency isFlat={isFlat} />;
-    case FieldType.date:
-      return <DatePicker isFlat={isFlat} />;
-    case FieldType.dateTime:
-      return <DateTimePicker isFlat={isFlat} />;
-    case FieldType.time:
-      return <TimePicker isFlat={isFlat} />;
-    case FieldType.week:
-      return <WeekPicker isFlat={isFlat} />;
-    case FieldType.month:
-      return <MonthPicker isFlat={isFlat} />;
-    case FieldType.year:
-      return <YearPicker isFlat={isFlat} />;
-    case FieldType.intl:
-      return <IntlField isFlat={isFlat} />;
-    case FieldType.email:
-      return <EmailField isFlat={isFlat} />;
-    case FieldType.url:
-      return <UrlField isFlat={isFlat} />;
-    case FieldType.color:
-      return <ColorPicker isFlat={isFlat} />;
-    case FieldType.attachment:
-      return <Attachment viewMode="popup" funcType={FuncType.link} />;
-    case FieldType.string:
-      return <ObserverTextField isFlat={isFlat} />;
-    default:
-      warning(
-        false,
-        `Table auto editor: No editor exists on the field<${name}>'s type<${type}>, so use the TextField as default editor`,
-      );
-      return <ObserverTextField isFlat={isFlat} />;
+  case FieldType.boolean:
+    return isQueryField ? (
+      <ObserverSelect clearButton {...flatProps}>
+        <Option value>{$l('Table', 'query_option_yes')}</Option>
+        <Option value={false}>{$l('Table', 'query_option_no')}</Option>
+      </ObserverSelect>
+    ) : <ObserverCheckBox />;
+  case FieldType.number:
+    return <ObserverNumberField {...flatProps} />;
+  case FieldType.currency:
+    return <Currency isFlat={isFlat} />;
+  case FieldType.date:
+    return <DatePicker isFlat={isFlat} />;
+  case FieldType.dateTime:
+    return <DateTimePicker isFlat={isFlat} />;
+  case FieldType.time:
+    return <TimePicker isFlat={isFlat} />;
+  case FieldType.week:
+    return <WeekPicker isFlat={isFlat} />;
+  case FieldType.month:
+    return <MonthPicker isFlat={isFlat} />;
+  case FieldType.year:
+    return <YearPicker isFlat={isFlat} />;
+  case FieldType.intl:
+    return <IntlField isFlat={isFlat} />;
+  case FieldType.email:
+    return <EmailField isFlat={isFlat} />;
+  case FieldType.url:
+    return <UrlField isFlat={isFlat} />;
+  case FieldType.color:
+    return <ColorPicker isFlat={isFlat} />;
+  case FieldType.attachment:
+    return <Attachment viewMode="popup" funcType={FuncType.link} />;
+  case FieldType.string:
+    return <ObserverTextField isFlat={isFlat} />;
+  default:
+    warning(
+      false,
+      `Table auto editor: No editor exists on the field<${name}>'s type<${type}>, so use the TextField as default editor`,
+    );
+    return <ObserverTextField isFlat={isFlat} />;
   }
 }
 
@@ -119,14 +119,14 @@ export function getPlaceholderByField(field?: Field): string | undefined {
       return undefined;
     }
     switch (type) {
-      case FieldType.number:
-      case FieldType.currency:
-      case FieldType.string:
-      case FieldType.intl:
-      case FieldType.email:
-      case FieldType.url:
-        return $l('Table', 'please_enter') as string;
-      default:
+    case FieldType.number:
+    case FieldType.currency:
+    case FieldType.string:
+    case FieldType.intl:
+    case FieldType.email:
+    case FieldType.url:
+      return $l('Table', 'please_enter') as string;
+    default:
     }
   }
 }

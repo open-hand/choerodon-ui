@@ -994,14 +994,14 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     onKeyDown(e);
     if (!e.isDefaultPrevented()) {
       switch (e.keyCode) {
-        case KeyCode.ENTER:
-          this.handleEnterDown(e);
-          onEnterDown(e);
-          break;
-        case KeyCode.ESC:
-          this.blur();
-          break;
-        default:
+      case KeyCode.ENTER:
+        this.handleEnterDown(e);
+        onEnterDown(e);
+        break;
+      case KeyCode.ESC:
+        this.blur();
+        break;
+      default:
       }
     }
   }

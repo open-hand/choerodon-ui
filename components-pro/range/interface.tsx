@@ -1,3 +1,3 @@
 export {
-    RangeProps,
+  RangeProps,
 } from './Range';

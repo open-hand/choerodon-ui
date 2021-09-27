@@ -162,32 +162,32 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
       return children;
     }
     switch (status) {
-      case 'loaded': {
-        return (
-          <img
-            ref={imgRef}
-            style={elementStyle}
-            className={`${customPrefixCls}-img`}
-            src={src}
-            alt={alt || title}
-            title={title}
-            {...rest}
-          />
-        );
-      }
-      case 'error':
-        return (
-          <div className={`${customPrefixCls}-icon`}>
-            <Icon type="sentiment_dissatisfied" />
-          </div>
-        );
-      case 'empty':
-      default:
-        return (
-          <div className={`${customPrefixCls}-icon`}>
-            <Icon type="photo_size_select_actual" />
-          </div>
-        );
+    case 'loaded': {
+      return (
+        <img
+          ref={imgRef}
+          style={elementStyle}
+          className={`${customPrefixCls}-img`}
+          src={src}
+          alt={alt || title}
+          title={title}
+          {...rest}
+        />
+      );
+    }
+    case 'error':
+      return (
+        <div className={`${customPrefixCls}-icon`}>
+          <Icon type="sentiment_dissatisfied" />
+        </div>
+      );
+    case 'empty':
+    default:
+      return (
+        <div className={`${customPrefixCls}-icon`}>
+          <Icon type="photo_size_select_actual" />
+        </div>
+      );
     }
   };
   const classString = classNames(customPrefixCls, {
