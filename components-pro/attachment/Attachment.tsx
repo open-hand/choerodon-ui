@@ -816,7 +816,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     } = this.props;
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
-    if (attachmentUUID) {
+    if (attachmentUUID || uploadButton) {
       const { bucketName, bucketDirectory, storageCode } = this;
       const width = this.getPictureWidth();
       const { readOnly } = this;
