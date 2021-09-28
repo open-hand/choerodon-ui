@@ -39,6 +39,8 @@ timeline: true
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 - 🐞 `<pro>DatePicker`: Fix display problems in `isFlat` and `range` mode.
 - 🐞 `<pro>DatePicker`: Fix the problem of value setting when the `range` is object and `multiple`.
+- 🐞 `<pro>DatePicker`: Fix the problem that the `defaultTime` does not work when entering a value.
+- 🐞 `<pro>DatePicker`: Fix the problem that spaces cannot be entered.
 - 🐞 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.
 - 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
 - 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode. 
@@ -57,6 +59,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that the `noCache` option is repeated in `multiple` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the search drop-down did not collapse after clicking the pop-up Modal.
 - 🐞 `<pro>Lov`: Fix the problem of shaking table in `popup` mode.
+- 🐞 `<pro>Lov`: Fix the problem that the drop-down box cannot pop up after closing the Modal in `searchFieldInPopup` mode.
 - 🐞 `<pro>TextArea`: Fix the style problem when dragging the width.
 - 🐞 `<pro>ColorPicker`：Fix the problem that the color of the panel changes when the color is selected.
 

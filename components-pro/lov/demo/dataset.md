@@ -79,7 +79,7 @@ class App extends React.Component {
      />
     </Col>
     <Col span={12}>
-     <Lov dataSet={this.ds} name="code_string" />
+     <Lov dataSet={this.ds} name="code_string" searchFieldInPopup />
     </Col>
    </Row>
   );
