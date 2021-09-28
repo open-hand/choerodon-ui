@@ -134,6 +134,8 @@ export default class Lov extends Select<LovProps> {
 
   fetched?: boolean;
 
+  searching?: boolean;
+
   @computed
   get searchMatcher(): SearchMatcher {
     const { searchMatcher } = this.observableProps;
@@ -410,6 +412,12 @@ export default class Lov extends Select<LovProps> {
     }
   });
 
+  @action
+  setText(text?: string): void {
+    this.searching = true;
+    super.setText(text);
+  }
+
   /**
    * 处理 Lov input 查询参数
    * @param text
@@ -425,7 +433,7 @@ export default class Lov extends Select<LovProps> {
         options.setQueryParameter(key, value === '' ? undefined : value);
       });
       if (this.isSearchFieldInPopup() || this.props.searchAction === SearchAction.input) {
-        options.query();
+        options.query().then(() => delete this.searching);
       }
     }
   }
@@ -506,7 +514,9 @@ export default class Lov extends Select<LovProps> {
       stopEvent(e);
       this.blur();
     }
-    super.handleKeyDown(e);
+    if (!(e.keyCode === KeyCode.ENTER && this.searching)) {
+      super.handleKeyDown(e);
+    }
   }
 
   @autobind
