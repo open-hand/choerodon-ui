@@ -15,6 +15,7 @@ DataSet binding.
 
 ```jsx
 import { DataSet, DatePicker, DateTimePicker, Row, Col } from 'choerodon-ui/pro';
+import moment from 'moment';
 
 function handleDataSetChange({ value, oldValue }) {
   console.log(
@@ -48,7 +49,7 @@ class App extends React.Component {
           <DatePicker dataSet={this.ds} name="birth" />
         </Col>
         <Col span={12}>
-          <DateTimePicker dataSet={this.ds} name="creationTime" />
+          <DateTimePicker dataSet={this.ds} name="creationTime" defaultTime={moment('01:00:00', 'HH:mm:ss')} />
         </Col>
       </Row>
     );
