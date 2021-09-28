@@ -567,7 +567,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const { tableStore: { prefixCls } } = this.context;
     const tableButtonProps = getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
-    if (buttons && buttons.length) {
+    if (buttons && buttons.length && buttonsLimits) {
       buttons.slice(buttonsLimits).forEach(button => {
         let props: TableButtonProps = {};
         if (isArrayLike(button)) {
@@ -673,7 +673,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           children.push(<Button {...tableButtonProps} {...button} />);
         }
       });
-      if (buttons.length > buttonsLimits) {
+      if (buttonsLimits && buttons.length > buttonsLimits) {
         const moreButton: ReactElement = this.getMoreButton(buttonsLimits);
         children.push(moreButton);
       }
