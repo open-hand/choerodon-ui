@@ -7,6 +7,7 @@ import defaultTo from 'lodash/defaultTo';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
+import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
@@ -120,6 +121,7 @@ export interface TableQueryBarHookProps {
   buttons: ReactElement<ButtonProps>[];
   queryFields: ReactElement<any>[];
   queryFieldsLimit: number;
+  buttonsLimit?: number;
   summaryFieldsLimit: number;
   pagination?: ReactElement<PaginationProps>;
   summaryBar?: ReactElement<any>;
@@ -358,6 +360,10 @@ export interface TableProps extends DataSetComponentProps {
    * 给内置按钮加属性：buttons={[['add', { color: 'red' }], ...]}
    */
   buttons?: Buttons[];
+  /**
+   * 头部显示的功能按钮数量，超出限制的查询字段放入更多
+   */
+  buttonsLimit?: number;
   /**
    * 自定义查询字段组件
    * @example
@@ -708,6 +714,7 @@ export default class Table extends DataSetComponent<TableProps> {
         PropTypes.node,
       ]),
     ),
+    buttonsLimit: PropTypes.number,
     /**
      * 自定义查询字段组件
      * 默认会根据queryDataSet中定义的field类型自动匹配组件， 匹配类型如下
@@ -1293,6 +1300,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'onColumnResize',
       'rowRenderer',
       'buttons',
+      'buttonsLimit',
       'rowHeight',
       'queryFields',
       'queryFieldsLimit',
@@ -1480,6 +1488,7 @@ export default class Table extends DataSetComponent<TableProps> {
         spin,
         virtualSpin,
         buttons,
+        buttonsLimit,
         queryFields,
         queryFieldsLimit,
         summaryFieldsLimit,
@@ -1511,6 +1520,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const content = this.getTable();
     const pagination = this.getPagination(TablePaginationPosition.top);
     const tableSpinProps = getConfig('tableSpinProps');
+    const tableButtonsLimit = isNil(buttonsLimit) ? getConfig('tableButtonsLimit') : buttonsLimit;
     const styleHeight = style ? toPx(style.height) : 0;
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
@@ -1539,6 +1549,7 @@ export default class Table extends DataSetComponent<TableProps> {
             {this.getHeader()}
             <TableQueryBar
               buttons={buttons}
+              buttonsLimit={tableButtonsLimit}
               pagination={pagination}
               queryFields={queryFields}
               clientExportQuantity={clientExportQuantity}

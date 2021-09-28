@@ -15,14 +15,14 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
+- 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad`, `tableButtonsLimit` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
 - 🌟 `Tabs`: Added `inkBarStyle`, `customizable`, `customizedCode`, `hideOnlyGroup` properties, support ink bar style modification.
 - 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties, `count` property support hooks.
 - 🌟 `Tag`: Added `gray` color.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
-- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth`, `rowBoxPlacement` properties, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions, deprecated `autoMaxWidth` property.
+- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth`, `rowBoxPlacement`, `buttonsLimit` properties, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions, deprecated `autoMaxWidth` property.
 - 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
 - 💄 `Tabs`: Optimized to not display when `count` is zero.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
