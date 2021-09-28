@@ -62,6 +62,7 @@ const prefixCls = getConfig('prefixCls');
 | tableExpandIcon | Default Table custom expansion icon | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | tableSpinProps | Default Table spin props | SpinProps | { size: Size.default, wrapperClassName: '' } |
 | tableButtonProps | Default Table button props | ButtonProps | { color: 'primary', funcType: 'flat' } |
+| tableButtonsLimit | 默认 Table 头部显示功能按钮的数量，超出限制放入更多下拉 | number | |
 | tableCommandProps | Default Table command props | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableShowSelectionTips | Table默认显示选中记录提示 | boolean | false |
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |

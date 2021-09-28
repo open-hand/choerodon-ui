@@ -36,7 +36,6 @@ export interface Locale {
     collapse_button: string;
     export_button: string;
     defalut_export: string;
-    more_button: string;
     advanced_search: string;
     dirty_info: string;
     restore: string;

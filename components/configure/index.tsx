@@ -203,6 +203,7 @@ export type Config = {
   tableFilterSearchText?: string;
   tableAutoHeightDiff?: number;
   tableShowRemovedRow?: boolean;
+  tableButtonsLimit?: number;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;

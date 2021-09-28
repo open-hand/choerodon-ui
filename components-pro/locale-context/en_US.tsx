@@ -35,7 +35,6 @@ const locale: Locale = {
     collapse_button: 'Collapse',
     export_button: 'Export',
     export_waiting: 'The amount of data is relatively large, wait patiently',
-    more_button: 'Others',
     advanced_search: 'Advanced Search',
     dirty_info: 'Display condition has changed.',
     restore: 'Restore',
