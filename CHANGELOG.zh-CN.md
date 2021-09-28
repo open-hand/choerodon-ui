@@ -40,6 +40,8 @@ timeline: true
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。
 - 🐞 `<pro>DatePicker`: 修复 range 为 object 且 multiple 时设置的问题。
+- 🐞 `<pro>DatePicker`：修复输入值时 defaultTime 不起作用的问题。
+- 🐞 `<pro>DatePicker`：修复无法输入空格的问题。
 - 🐞 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。
 - 🐞 `<pro>Table`：修复 customizedCode 变更时且表格列不会刷新的问题。
 - 🐞 `<pro>Table`：修复 virtual 在切换分页大小时行错位的问题。
@@ -57,6 +59,7 @@ timeline: true
 - 🐞 `<pro>Lov`：修复 multiple 模式下开启 noCache 选项重复的问题。
 - 🐞 `<pro>Lov`：修复点击弹出 Modal 后搜索下拉未收起的问题。
 - 🐞 `<pro>Lov`：修复 popup 模式表格颤抖的问题。
+- 🐞 `<pro>Lov`：修复 searchFieldInPopup 模式下关闭弹出的 Modal 后下拉框无法弹出的问题。
 - 🐞 `<pro>TextArea`：修复拖拽宽度时的样式问题。
 - 🐞 `<pro>ColorPicker`：修复选择颜色时面板颜色变化的问题。
 
