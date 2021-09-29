@@ -40,6 +40,8 @@ export interface FilterSelectProps extends TextFieldProps {
 
 @observer
 export default class FilterSelect extends TextField<FilterSelectProps> {
+  static displayName = 'FilterSelect';
+
   static defaultProps = {
     ...TextField.defaultProps,
     multiple: true,
@@ -193,7 +195,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (field.get('multiple')) {
             fieldValue = (fieldValue || [])[repeat];
           }
-          if(range) {
+          if (range) {
             return `${this.getFieldLabel(field)}: ${toRangeValue(fieldValue, range).map(v => {
               return processFieldValue(
                 isPlainObject(v) ? v : super.processValue(v),
@@ -203,7 +205,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
                   getValue: () => this.getValue(),
                   lang: this.lang,
                 });
-            }).join("~")}`;
+            }).join('~')}`;
           }
           if (field.get('bind') || isNil(fieldValue)) return;
           return `${this.getFieldLabel(field)}: ${processFieldValue(
@@ -309,7 +311,9 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   @autobind
   handleBlur(e) {
     super.handleBlur(e);
-    this.setSelectField(undefined);
+    if (!e.isDefaultPrevented()) {
+      this.setSelectField(undefined);
+    }
   }
 
   isEditorReadOnly(): boolean {

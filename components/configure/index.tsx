@@ -203,6 +203,7 @@ export type Config = {
   tableFilterSearchText?: string;
   tableAutoHeightDiff?: number;
   tableShowRemovedRow?: boolean;
+  tableButtonsLimit?: number;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;
@@ -445,7 +446,6 @@ const defaultConfig = {
   status: defaultStatus,
   labelLayout: LabelLayout.horizontal,
   queryBar: TableQueryBarType.normal,
-  tableVirtualCell: true,
   tableBorder: true,
   tableHighLightRow: true,
   tableSelectedHighLightRow: false,

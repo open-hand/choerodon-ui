@@ -49,6 +49,7 @@ export interface TableQueryBarProps {
   buttons?: Buttons[];
   queryFields?: { [key: string]: ReactElement<any>; };
   queryFieldsLimit?: number;
+  buttonsLimit?: number;
   summaryFieldsLimit?: number;
   showQueryBar?: boolean;
   pagination?: ReactElement<PaginationProps>;
@@ -558,15 +559,16 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   /**
-   * 汇总条存在下 buttons 大于4个放入下拉
+   * buttons 大于 buttonsLimits 放入下拉
+   * @param buttonsLimits
    */
-  getMoreButton() {
+  getMoreButton(buttonsLimits: number): ReactElement {
     const { buttons } = this.props;
     const { tableStore: { prefixCls } } = this.context;
     const tableButtonProps = getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
-    if (buttons && buttons.length) {
-      buttons.slice(3).forEach(button => {
+    if (buttons && buttons.length && buttonsLimits) {
+      buttons.slice(buttonsLimits).forEach(button => {
         let props: TableButtonProps = {};
         if (isArrayLike(button)) {
           props = button[1] || {};
@@ -588,7 +590,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               };
             }
             children.push(
-              <Menu.Item key={button} className={`${prefixCls}-summary-menu-item`}>
+              <Menu.Item key={button} className={`${prefixCls}-button-menu-item`}>
                 <Button
                   key={`${button}-btn`}
                   {...tableButtonProps}
@@ -600,13 +602,13 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           }
         } else if (isValidElement<ButtonProps>(button)) {
           children.push(
-            <Menu.Item className={`${prefixCls}-summary-menu-item`}>
+            <Menu.Item className={`${prefixCls}-button-menu-item`}>
               {cloneElement(button, { ...tableButtonProps, ...button.props })}
             </Menu.Item>,
           );
         } else if (isObject(button)) {
           children.push(
-            <Menu.Item className={`${prefixCls}-summary-menu-item`}>
+            <Menu.Item className={`${prefixCls}-button-menu-item`}>
               <Button {...tableButtonProps} {...button} />
             </Menu.Item>,
           );
@@ -621,18 +623,20 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return (
       <Dropdown overlay={menu} key="dropdown_button">
         <Button {...tableButtonProps} key="more_button">
-          {$l('Table', 'more_button')} <Icon type='expand_more' />
+          {$l('Table', 'more')} <Icon type='expand_more' />
         </Button>
       </Dropdown>
     );
   }
 
   getButtons(): ReactElement<ButtonProps>[] {
-    const { buttons, summaryBar } = this.props;
+    const { buttons, summaryBar, buttonsLimit } = this.props;
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     if (buttons) {
+      // 汇总条存在下 buttons 大于 3 个放入下拉
+      const buttonsLimits = summaryBar ? (buttonsLimit || 3) : buttonsLimit;
       const tableButtonProps = getConfig('tableButtonProps');
-      const buttonsArr = summaryBar && buttons.length > 4 ? buttons.slice(0, 3) : buttons;
+      const buttonsArr = buttons.slice(0, buttonsLimits);
       buttonsArr.forEach(button => {
         let props: TableButtonProps = {};
         if (isArrayLike(button)) {
@@ -669,8 +673,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           children.push(<Button {...tableButtonProps} {...button} />);
         }
       });
-      if (summaryBar && buttons.length > 4) {
-        const moreButton: ReactElement = this.getMoreButton();
+      if (buttonsLimits && buttons.length > buttonsLimits) {
+        const moreButton: ReactElement = this.getMoreButton(buttonsLimits);
         children.push(moreButton);
       }
     }

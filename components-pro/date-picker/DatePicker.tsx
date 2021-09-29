@@ -1,6 +1,6 @@
 import React, { createElement, CSSProperties, KeyboardEventHandler, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import moment, { isMoment, Moment, MomentInput } from 'moment';
+import moment, { isMoment, Moment, MomentInput, MomentParsingFlags } from 'moment';
 import classNames from 'classnames';
 import raf from 'raf';
 import isPlainObject from 'lodash/isPlainObject';
@@ -388,7 +388,18 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (item instanceof Date) {
       item = moment(item).format(format);
     }
-    return moment(item, format);
+    const { range, rangeTarget } = this;
+    const date = moment(item, format);
+    if (date.isValid()) {
+      const { unusedTokens }: MomentParsingFlags = date.parsingFlags();
+      if (unusedTokens.includes('HH') && unusedTokens.includes('mm') && unusedTokens.includes('ss')) {
+        const defaultTime: Moment = this.getDefaultTime()[range && rangeTarget !== undefined ? rangeTarget : 0];
+        date.hour(defaultTime.hour());
+        date.minute(defaultTime.minute());
+        date.second(defaultTime.second());
+      }
+    }
+    return date;
   }
 
   checkMoment(item) {
@@ -638,7 +649,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   handleKeyDownSpace(e) {
-    e.preventDefault();
+    if (!this.isEditable()) {
+      e.preventDefault();
+    }
     if (!this.popup) {
       this.expand();
     }

@@ -1,6 +1,7 @@
 import { action, computed, isArrayLike, isObservableArray, isObservableObject, observable, ObservableMap, runInAction, toJS } from 'mobx';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
+import pick from 'lodash/pick';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
@@ -998,7 +999,7 @@ export default class Record {
     const dataToJSON = dataSet && dataSet.dataToJSON;
     const onlyDirtyField = needIgnore && dataToJSON ? useDirtyField(dataToJSON) : false;
     const neverKeys = onlyDirtyField ? getUniqueKeysAndPrimaryKey(dataSet) : [];
-    const json: any = onlyDirtyField ? {} : toJS(this.data);
+    const json: any = onlyDirtyField ? pick(this.data, neverKeys) : toJS(this.data);
     const fieldIgnore = onlyDirtyField ? FieldIgnore.clean : undefined;
     const objectFieldsList: Field[][] = [];
     const normalFields: Field[] = [];
