@@ -440,9 +440,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @observable $validator?: Validator | undefined;
 
   get validator(): Validator | undefined {
-    const { field } = this;
-    if (field) {
-      return field.validator;
+    const { record, name } = this;
+    if (record && name) {
+      const recordField = record.ownerFields.get(name);
+      if (recordField) {
+        return recordField.validator;
+      }
     }
     return this.$validator;
   }
@@ -534,17 +537,17 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @computed
   get field(): Field | undefined {
-    const { record, dataSet, name, observableProps } = this;
+    const { dataSet, name, observableProps } = this;
     const { displayName } = this.constructor as any;
     if (displayName !== 'Output' && !name) {
       warning(!observableProps.dataSet, `${displayName} with binding DataSet need property name.`);
       warning(!observableProps.record, `${displayName} with binding Record need property name.`);
     }
     if (name) {
-      const recordField = record ? record.getField(name) : undefined;
-      if (recordField) {
-        return recordField;
-      }
+      // const recordField = record ? record.getField(name) : undefined;
+      // if (recordField) {
+      //   return recordField;
+      // }
       if (dataSet) {
         return dataSet.getField(name);
       }
@@ -559,7 +562,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     }
     const { field } = this;
     if (field) {
-      return field.valid;
+      return field.isValid(this.record);
     }
     const { validator } = this;
     return validator ? validator.validity.valid : true;
@@ -642,7 +645,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       return true;
     }
     const { field } = this;
-    return field ? field.get('readOnly') : false;
+    return field ? field.get('readOnly', this.record) : false;
   }
 
   isEditable() {
@@ -1034,7 +1037,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   getDateFormat(field: Field | undefined = this.field): string {
-    return getDateFormatByField(field, this.getFieldType(field));
+    return getDateFormatByField(field, this.getFieldType(field), this.record);
   }
 
   processValue(value: any): ReactNode {
@@ -1078,8 +1081,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       props: { renderer = this.defaultRenderer, name, maxTagTextLength },
     } = this;
     let processedValue;
-    if (field && (field.lookup || field.get('options') || field.get('lovCode'))) {
-      processedValue = field.getText(value) as string;
+    if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
+      processedValue = field.getText(value, undefined, record) as string;
     }
     // 值集中不存在 再去取直接返回的值
     const text = this.processText(isNil(processedValue) ? this.processValue(value) : processedValue);
@@ -1264,7 +1267,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
           const record = this.autoCreate();
           if (record) {
             const { field } = this;
-            if (field && !field.get('defaultValidationMessages')) {
+            if (field && !field.get('defaultValidationMessages', record)) {
               field.set('defaultValidationMessages', this.defaultValidationMessages);
             }
             record.set(name, value);
@@ -1331,7 +1334,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       prefixCls,
       disabled,
       readOnly: this.readOnly || readOnly,
-      validator,
+      validationResults: validator && validator.validationResults,
       isMultipleBlockDisabled: this.isMultipleBlockDisabled,
       processRenderer: this.processRenderer,
       renderValidationResult: this.renderValidationResult,
@@ -1376,8 +1379,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       if (validator) {
         validator.reset();
       } else {
-        const { field } = this;
-        if (field) {
+        const { record, name } = this;
+        if (record && name) {
+          const field = record.getField(name)!;
           validator = new Validator(field);
           field.validator = validator;
         } else {
@@ -1402,14 +1406,13 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (super.isDisabled()) {
       return true;
     }
-    const { field } = this;
+    const { field, record } = this;
     if (field) {
-      const disabled = field.get('disabled');
+      const disabled = field.get('disabled', record);
       if (disabled) {
         return true;
       }
-      const cascadeMap = field.get('cascadeMap');
-      const { record } = this;
+      const cascadeMap = field.get('cascadeMap', record);
       if (
         cascadeMap &&
         (!record || Object.keys(cascadeMap).some(cascade => {
@@ -1437,12 +1440,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   getFieldType(field: Field | undefined = this.field): FieldType {
-    return (field && field.get('type')) || FieldType.string;
+    return (field && field.get('type', this.record)) || FieldType.string;
   }
 
   getProp(propName: string) {
-    const { field, observableProps } = this;
-    return defaultTo(field && field.get(propName), propName in observableProps ? observableProps[propName] : this.props[propName]);
+    const { field, observableProps, record } = this;
+    return defaultTo(field && field.get(propName, record), propName in observableProps ? observableProps[propName] : this.props[propName]);
   }
 
   @autobind
@@ -1490,6 +1493,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         {help}
       </>
     );
+  }
+
+  forcePositionChanged() {
   }
 }
 

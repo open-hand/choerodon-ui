@@ -15,35 +15,46 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tabsInkBarStyle, customizable, customizedSave, customizedLoad 属性, 废弃 tableCustomizedSave, tableCustomizedSave, tableCustomizable, performanceTableCustomizable, lovTableCustomizable 属性。
+## 1.4.5
+
+`2021-09-29`
+
+- 🌟 `configure`: 新增 tabsInkBarStyle, customizable, customizedSave, customizedLoad, tableButtonsLimit 属性, 废弃 tableCustomizedSave, tableCustomizedSave, tableCustomizable, performanceTableCustomizable, lovTableCustomizable 属性。
 - 🌟 `Tabs`: 新增 inkBarStyle, customizable, customizedCode, hideOnlyGroup 属性，支持墨条样式修改。
 - 🌟 `Tabs.TabPane`: 新增 title, showCount 属性, count 属性支持钩子。
 - 🌟 `Tag`: 新增 gray 颜色。
 - 🌟 `<pro>DataSet`: 新增 childrenField, forceValidate 属性。
 - 🌟 `<pro>DatePicker`: 新增 editorInPopup, defaultTime 属性。
 - 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。
-- 🌟 `<pro>Table`：新增 searchCode, autoWidth, rowBoxPlacement 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件, 废弃 autoMaxWidth 属性。
+- 🌟 `<pro>Table`：新增 searchCode, autoWidth, rowBoxPlacement, buttonsLimit 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件, 废弃 autoMaxWidth 属性。
 - 🌟 `<pro>Pagination`: 新增 quickJumperPosition 属性。
 - 💄 `Tabs`：优化 count 为零时不显示。
 - 💄 `<pro>Pagination`: 优化 quickJumper 显示。
 - 💄 `<pro>Attachment`：优化删除、拖拽、预览和标签显示, 优化删除错误状态的附件为直接删除。
+- 💄 `<pro>TextField`： 优化多值模式下切换记录时关闭动画效果。
 - 💄 `<pro>Table`： 支持按住 shift 进行多选。
 - 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角和校验信息。
 - 💄 `<pro>Table`： 重命名 onResize 为 onColumnResize 事件。
 - 💄 `<pro>Lov`： 优化 lovQueryBar 优先级，去除 lovQueryBar 全局默认值。
+- 💄 `<pro>Lov`： 搜索查询周期内，下拉禁用回车选中，保证选中正确的查询返回数据。
 - 💄 `<pro>Tooltip`：优化样式对齐。
 - 🐞 `<pro>DataSet`： 修复 cacheSelection 属性缓存的选中记录重新显示时变更的值被还原的问题。
+- 🐞 `<pro>DataSet`： 修复当字段列表中没有 primaryKey 对应的字段时 dirty-field 模式会忽略主键值。
 - 🐞 `<pro>Attachment`： 修复数量和附件列表不显示的问题。
+- 🐞 `<pro>Attachment`: 修复当没有附件时 picture-card 模式下上传按钮不显示的问题。
 - 🐞 `<pro>TimePicker`: 修复 12 小时格式分和秒选择框显示问题。
 - 🐞 `<pro>DatePicker`: 修复 isFlat 和 range 模式下显示问题。
 - 🐞 `<pro>DatePicker`: 修复 range 为 object 且 multiple 时设置的问题。
+- 🐞 `<pro>DatePicker`：修复输入值时 defaultTime 不起作用的问题。
+- 🐞 `<pro>DatePicker`：修复无法输入空格的问题。
 - 🐞 `<pro>Table`：修复个性化表格最后一列单元格，非左对齐时的样式异常。
 - 🐞 `<pro>Table`：修复 customizedCode 变更时且表格列不会刷新的问题。
 - 🐞 `<pro>Table`：修复 virtual 在切换分页大小时行错位的问题。
 - 🐞 `<pro>Table`：修复 virtualCell 导致编辑器错位的问题。
-- 🐞 `<pro>Table`：修复查询字段 range 属性值为 [string, stirng] 时过滤条渲染错误的问题。
+- 🐞 `<pro>Table`：修复查询字段 range 属性时过滤条渲染错误的问题。
 - 🐞 `<pro>Table`：修复编辑器为多选 SelectBox 时的显示问题。
 - 🐞 `<pro>Table`：修复个性化调整列顺序不准确的问题。
+- 🐞 `<pro>Table`：修复使用 autoHeight 属性下 professionalBar 多次点击更多才会收起的问题。
 - 🐞 `<pro>Tree`：修复异步加载的节点在 dataSet 重新加载时无法显示的问题。
 - 🐞 `Tabs`：修墨条可能对不齐的问题。
 - 🐞 `<pro>PerformanceTable`：修复行高亮点击报错问题。
@@ -54,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Lov`：修复 multiple 模式下开启 noCache 选项重复的问题。
 - 🐞 `<pro>Lov`：修复点击弹出 Modal 后搜索下拉未收起的问题。
 - 🐞 `<pro>Lov`：修复 popup 模式表格颤抖的问题。
+- 🐞 `<pro>Lov`：修复 searchFieldInPopup 模式下关闭弹出的 Modal 后下拉框无法弹出的问题。
 - 🐞 `<pro>TextArea`：修复拖拽宽度时的样式问题。
 - 🐞 `<pro>ColorPicker`：修复选择颜色时面板颜色变化的问题。
 

@@ -92,30 +92,17 @@ export type Events = { [key: string]: Function };
 
 export type Group = { name: string; value: any; records: Record[]; subGroups: Group[] };
 
-export function addDataSetField(dataSet: DataSet, name: string, fieldProps: FieldProps = {}): Field {
-  return processIntlField(
-    name,
-    fieldProps,
-    (langName, langProps) => {
-      const field = new Field(langProps, dataSet);
-      dataSet.fields.set(langName, field);
-      return field;
-    },
-    dataSet,
-  );
+export function addDataSetField(dataSet: DataSet, name: string) {
+  const field = new Field({ name }, dataSet);
+  dataSet.fields.set(name, field);
+  return field;
 }
 
-export function addRecordField(record: Record, name: string, fieldProps: FieldProps = {}): Field {
-  const { dataSet } = record;
-  fieldProps.name = name;
+export function initDataSetField(dataSet: DataSet, name: string, fieldProps?: FieldProps): [Field, Map<string, Field> | undefined] {
   return processIntlField(
     name,
+    (langProps) => new Field(langProps, dataSet),
     fieldProps,
-    (langName, langProps) => {
-      const field = new Field(langProps, dataSet, record);
-      record.fields.set(langName, field);
-      return field;
-    },
     dataSet,
   );
 }
@@ -898,7 +885,7 @@ export default class DataSet extends EventManager {
       this.dataToJSON = dataToJSON!;
       this.records = [];
       this.state = observable.map<string, any>();
-      this.fields = observable.map<string, Field>();
+      this.fields = observable.map<string, Field>(fields ? this.initFields(fields) : undefined);
       this.totalCount = 0;
       this.status = DataSetStatus.ready;
       this.currentPage = 1;
@@ -915,9 +902,6 @@ export default class DataSet extends EventManager {
       }
       if (events) {
         this.initEvents(events);
-      }
-      if (fields) {
-        this.initFields(fields);
       }
       this.initQueryDataSet(queryDataSet, queryFields);
       if (data) {
@@ -1009,7 +993,7 @@ export default class DataSet extends EventManager {
    * @param isSelected
    * @param noCascade
    */
-  toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
+  toJSONData(isSelected?: boolean, noCascade?: boolean): unknown[] {
     const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
     const records = useSelected(dataToJSON) ? this.selected : this.records;
     return generateJSONData(this, records).data;
@@ -1148,13 +1132,13 @@ export default class DataSet extends EventManager {
         const dataItem = {};
         const columnsExportkeys = Object.keys(columnsExport);
         for (let i = 0; i < columnsExportkeys.length; i += 1) {
-          const firstRecord = this.records[0] || this;
-          const exportField = firstRecord.getField(columnsExportkeys[i]);
+          const firstRecord: Record | undefined = this.records[0];
+          const exportField = this.getField(columnsExportkeys[i]);
           let processItemValue = getSplitValue(toJS(itemValue), columnsExportkeys[i]);
           // 处理bind 情况 没有需要链式bind 没有处理反向bind 后面可能根据需求增加
-          if (exportField && isNil(processItemValue) && exportField.get('bind')) {
+          if (exportField && isNil(processItemValue) && exportField.get('bind', firstRecord)) {
             processItemValue = getSplitValue(
-              getSplitValue(toJS(itemValue), exportField.get('bind')),
+              getSplitValue(toJS(itemValue), exportField.get('bind', firstRecord)),
               columnsExportkeys[i],
               false,
             );
@@ -1385,12 +1369,12 @@ export default class DataSet extends EventManager {
     const record = new Record(data, this);
     const objectFieldsList: [string, any][][] = [];
     const normalFields: [string, any][] = [];
-    [...record.fields.entries()].forEach(([name, field]) => {
-      const fieldDefaultValue = field.get('defaultValue');
-      const multiple = field.get('multiple');
+    [...this.fields.entries()].forEach(([name, field]) => {
+      const fieldDefaultValue = field.get('defaultValue', record);
+      const multiple = field.get('multiple', record);
       const defaultValue = multiple && isNil(fieldDefaultValue) ? [] : fieldDefaultValue;
       if (!isNil(defaultValue) && isNil(record.get(name))) {
-        const type = field.get('type');
+        const type = field.get('type', record);
         if (type === FieldType.object) {
           const level = name.split('.').length - 1;
           objectFieldsList[level] = (objectFieldsList[level] || []).concat([[name, defaultValue]]);
@@ -1730,7 +1714,8 @@ export default class DataSet extends EventManager {
           }
         });
       }
-      switch (field.order) {
+      const { order } = field;
+      switch (order) {
         case SortOrder.asc:
           field.order = SortOrder.desc;
           break;
@@ -1740,7 +1725,7 @@ export default class DataSet extends EventManager {
         default:
           field.order = SortOrder.asc;
       }
-      if (this.paging || !field.order) {
+      if (this.paging || !order) {
         this.query();
       } else {
         this.records = this.records.sort(getFieldSorter(field));
@@ -2099,11 +2084,55 @@ export default class DataSet extends EventManager {
     return this.groups;
   }
 
-  initFields(fields: FieldProps[]): void {
-    fields.forEach(field => {
-      const { name } = field;
+  initFields(fieldProps: FieldProps[]): [string, Field][] {
+    const normalFields: [string, Field][] = [];
+    const objectBindFields: [string, Field][] = [];
+    const bindFields: [string, Field][] = [];
+    const transformResponseField: [string, Field][] = [];
+    const dynamicFields: [string, Field][] = [];
+    const dynamicObjectBindFields: [string, Field][] = [];
+    const dynamicBindFields: [string, Field][] = [];
+    fieldProps.forEach((props) => {
+      const { name } = props;
       if (name) {
-        addDataSetField(this, name, field);
+        const [field, intlFields] = initDataSetField(this, name, props);
+        const entry: [string, Field] = [name, field];
+        const { computedProps, dynamicProps = computedProps, type, bind, transformResponse } = props;
+        if (dynamicProps) {
+          if (dynamicProps.bind) {
+            if (type === FieldType.object) {
+              dynamicObjectBindFields.push(entry);
+            } else {
+              dynamicBindFields.push(entry);
+            }
+          } else {
+            dynamicFields.push(entry);
+          }
+        } else if (bind) {
+          const targetNames = bind.split('.');
+          targetNames.pop();
+          if (targetNames.some((targetName) => {
+            const target = fieldProps.find((fieldProp) => fieldProp.name === targetName);
+            return target && (target.computedProps || target.dynamicProps);
+          })) {
+            if (type === FieldType.object) {
+              dynamicObjectBindFields.push(entry);
+            } else {
+              dynamicBindFields.push(entry);
+            }
+          } else if (transformResponse) {
+            transformResponseField.push(entry);
+          } else if (type === FieldType.object) {
+            objectBindFields.push(entry);
+          } else {
+            bindFields.push(entry);
+          }
+        } else {
+          normalFields.push(entry);
+        }
+        if (intlFields) {
+          dynamicBindFields.push(...intlFields.entries());
+        }
       } else {
         warning(
           false,
@@ -2111,6 +2140,15 @@ export default class DataSet extends EventManager {
         );
       }
     });
+    return [
+      ...normalFields,
+      ...objectBindFields,
+      ...bindFields,
+      ...transformResponseField,
+      ...dynamicFields,
+      ...dynamicObjectBindFields,
+      ...dynamicBindFields,
+    ];
   }
 
   /*
@@ -2121,8 +2159,23 @@ export default class DataSet extends EventManager {
    */
   @action
   addField(name: string, fieldProps?: FieldProps): Field {
-    const field = addDataSetField(this, name, fieldProps);
-    this.records.forEach(record => record.addField(name));
+    const { fields } = this;
+    const oldField = fields.get(name);
+    if (oldField) {
+      return oldField.replace(fieldProps);
+    }
+    const [field, intlFields] = initDataSetField(this, name, fieldProps);
+    fields.set(name, field);
+    if (intlFields) {
+      fields.merge(intlFields);
+    }
+    this.records.forEach((r) => {
+      if (!r.ownerFields.has(name)) {
+        const data = toJS(r.data);
+        const newData = { ...data };
+        r.processFieldValue(name, field, fields, newData, data);
+      }
+    });
     return field;
   }
 
@@ -2397,11 +2450,8 @@ Then the query method will be auto invoke.`,
         }
         return record;
       }
-      if (dataSet) {
-        dataSet.remove(record);
-        record = new Record(record.data, this);
-      }
-      record.dataSet = this;
+      dataSet.remove(record);
+      record = new Record(record.toData(), this);
       record.status = RecordStatus.add;
       return record;
     });

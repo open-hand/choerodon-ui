@@ -77,7 +77,7 @@ export default class Output extends FormField<OutputProps> {
         getProp: (name) => this.getProp(name),
         getValue: () => this.getValue(),
         lang: this.lang,
-      }, true);
+      }, true, this.record);
     }
     return '';
   }
@@ -126,7 +126,7 @@ export default class Output extends FormField<OutputProps> {
      * 多行单元格渲染
      */
     const { field } = this;
-    if (field && field.get('multiLine')) {
+    if (field && field.get('multiLine', this.record)) {
       return this.renderMultiLine(field);
     }
     return this.processRenderer(this.getValue());
@@ -138,7 +138,7 @@ export default class Output extends FormField<OutputProps> {
     }
     const { tooltip = getTooltip('output') } = this.props;
     const { element, field } = this;
-    if (element && !(field && field.get('multiLine')) && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
+    if (element && !(field && field.get('multiLine', this.record)) && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
       const title = this.getRenderedValue();
       if (title) {
         show(element, {

@@ -191,7 +191,7 @@ export type Config = {
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;
   tableColumnOnCell?: (props: onCellProps) => object;
-  tableColumnAlign?: (column: ColumnProps, field?: Field) => ColumnAlign | undefined;
+  tableColumnAlign?: (column: ColumnProps, field?: Field, record?: Record) => ColumnAlign | undefined;
   tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
@@ -203,6 +203,7 @@ export type Config = {
   tableFilterSearchText?: string;
   tableAutoHeightDiff?: number;
   tableShowRemovedRow?: boolean;
+  tableButtonsLimit?: number;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;
@@ -375,10 +376,9 @@ const defaultButtonProps: ButtonProps = { color: ButtonColor.primary, funcType: 
 
 const defaultSpinProps = { size: Size.default, wrapperClassName: '' };
 
-const defaultTableColumnAlign = (_column: ColumnProps, field?: Field): ColumnAlign | undefined => {
+const defaultTableColumnAlign = (_column: ColumnProps, field?: Field, record?: Record): ColumnAlign | undefined => {
   if (field) {
-    const { type } = field;
-    switch (type) {
+    switch (field.get('type', record)) {
       case FieldType.number:
       case FieldType.currency:
         return ColumnAlign.right;
@@ -445,7 +445,6 @@ const defaultConfig = {
   status: defaultStatus,
   labelLayout: LabelLayout.horizontal,
   queryBar: TableQueryBarType.normal,
-  tableVirtualCell: true,
   tableBorder: true,
   tableHighLightRow: true,
   tableSelectedHighLightRow: false,

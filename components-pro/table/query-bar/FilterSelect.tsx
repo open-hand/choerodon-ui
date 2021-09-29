@@ -40,6 +40,8 @@ export interface FilterSelectProps extends TextFieldProps {
 
 @observer
 export default class FilterSelect extends TextField<FilterSelectProps> {
+  static displayName = 'FilterSelect';
+
   static defaultProps = {
     ...TextField.defaultProps,
     multiple: true,
@@ -189,12 +191,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         }
         const field = queryDataSet.getField(value);
         if (field) {
-          const range = field.get('range');
-          if (field.get('multiple')) {
+          const range = field.get('range', current);
+          if (field.get('multiple', current)) {
             fieldValue = (fieldValue || [])[repeat];
           }
-          if(range) {
-            return `${this.getFieldLabel(field)}: ${toRangeValue(fieldValue, range).map(v => {
+          if (range) {
+            return `${this.getFieldLabel(field, current)}: ${toRangeValue(fieldValue, range).map(v => {
               return processFieldValue(
                 isPlainObject(v) ? v : super.processValue(v),
                 field,
@@ -202,18 +204,18 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
                   getProp: (name) => this.getProp(name),
                   getValue: () => this.getValue(),
                   lang: this.lang,
-                });
-            }).join("~")}`;
+                }, undefined, current);
+            }).join('~')}`;
           }
-          if (field.get('bind') || isNil(fieldValue)) return;
-          return `${this.getFieldLabel(field)}: ${processFieldValue(
+          if (field.get('bind', current) || isNil(fieldValue)) return;
+          return `${this.getFieldLabel(field, current)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : super.processValue(fieldValue),
             field,
             {
               getProp: (name) => this.getProp(name),
               getValue: () => this.getValue(),
               lang: this.lang,
-            },
+            }, undefined, current,
           )}`;
         }
         return value;
@@ -257,7 +259,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     const { paramName } = this.props;
     if (paramName !== value) {
       const field = this.getQueryField(value);
-      if (field && field.get('multiple')) {
+      if (field && field.get('multiple', this.getQueryRecord())) {
         return true;
       }
     }
@@ -309,7 +311,9 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   @autobind
   handleBlur(e) {
     super.handleBlur(e);
-    this.setSelectField(undefined);
+    if (!e.isDefaultPrevented()) {
+      this.setSelectField(undefined);
+    }
   }
 
   isEditorReadOnly(): boolean {
@@ -386,16 +390,16 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     this.setSelectField(undefined);
   }
 
-  getFieldLabel(field: Field): ReactNode {
-    return field.get('label') || field.name;
+  getFieldLabel(field: Field, record?: Record): ReactNode {
+    return field.get('label', record) || field.name;
   }
 
   multipleFieldExistsValue(field: Field, current?: Record): boolean {
-    if (field.get('multiple')) {
-      const { options } = field;
+    if (field.get('multiple', current)) {
+      const options = field.getOptions(current);
       if (options && current) {
         const values = current.get(field.name);
-        const valueField = field.get('valueField');
+        const valueField = field.get('valueField', current);
         return options.some(r => !values.some(value => isSameLike(r.get(valueField), value)));
       }
     }
@@ -428,16 +432,17 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     const { queryDataSet } = this.observableProps;
     const data: ReactElement<OptionProps>[] = [];
     if (queryDataSet) {
+      const { current } = queryDataSet;
       [...queryDataSet.fields.entries()].forEach(([key, field]) => {
         if (
           key !== paramName &&
           (this.getValues().indexOf(key) === -1 ||
-            this.multipleFieldExistsValue(field, this.getQueryRecord())) &&
-          !field.get('bind')
+            this.multipleFieldExistsValue(field, current)) &&
+          !field.get('bind', current)
         ) {
           data.push(
             <Option key={key} value={field}>
-              {this.getFieldLabel(field)}
+              {this.getFieldLabel(field, current)}
             </Option>,
           );
         }
@@ -447,7 +452,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   getFieldEditor(props, selectField: Field): ReactElement<FormFieldProps> {
-    const editor: ReactElement<FormFieldProps> = getEditorByField(selectField, true);
+    const editor: ReactElement<FormFieldProps> = getEditorByField(selectField, this.record, true);
     const editorProps: FormFieldProps = {
       ...props,
       key: 'value',
@@ -529,7 +534,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     return (
       <li key="text">
         {selectField ? (
-          <span className={`${prefixCls}-select-field`}>{this.getFieldLabel(selectField)}:</span>
+          <span className={`${prefixCls}-select-field`}>{this.getFieldLabel(selectField, this.getQueryRecord())}:</span>
         ) : null}
         {selectField
           ? this.getFieldEditor(editorProps, selectField)

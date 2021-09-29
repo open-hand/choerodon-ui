@@ -27,10 +27,10 @@ export function getProperty(props: any, key: string, dataSet?: DataSet, record?:
   }
   const { name } = props;
 
-  const field = record ? record.getField(name) : dataSet && dataSet.getField(name);
+  const field = dataSet && dataSet.getField(name);
 
   if (field) {
-    const fieldProperty = field.get(key);
+    const fieldProperty = field.get(key, record);
     if (fieldProperty) {
       return fieldProperty;
     }

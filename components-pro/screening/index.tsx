@@ -21,6 +21,7 @@ export interface TagProps {
   handleClose: (key) => void;
   key: string;
 }
+
 export interface ScreeningProps extends DataSetComponentProps {
   dataSet: DataSet;
   children: ReactElement<ScreeningItemProps>[];
@@ -32,9 +33,9 @@ export interface ScreeningProps extends DataSetComponentProps {
 export default class Screening extends DataSetComponent<ScreeningProps> {
   static displayName = 'Screening';
 
-  static ScreeningItem = ScreeningItem
+  static ScreeningItem = ScreeningItem;
 
-  @observable mergeValue: any
+  @observable mergeValue: any;
 
   emptyValue?: any = null;
 
@@ -47,22 +48,22 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
 
   constructor(props, context) {
     super(props, context);
-    const dataSet = this.dataSet
+    const dataSet = this.dataSet;
     const record = this.record;
     runInAction(() => {
       if (dataSet && record) {
-        this.mergeValue = record.toData()
+        this.mergeValue = record.toData();
       }
     });
   }
 
   onRef = (ref, name) => {
-    this.child[name] = ref
-  }
+    this.child[name] = ref;
+  };
 
   /**
- * return the record: dataIndex record, current, undefined
- */
+   * return the record: dataIndex record, current, undefined
+   */
   @computed
   get record(): Record | undefined {
     const { record, dataSet, dataIndex } = this.observableProps;
@@ -90,23 +91,23 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
   handleChange = (value, oldValue) => {
     const { onChange } = this.props;
     if (onChange) {
-      onChange(value, oldValue)
+      onChange(value, oldValue);
     }
-  }
+  };
 
   @action
   handleConfirm = ({ value, fieldName }) => {
-    const oldValue = omit(toJS(this.mergeValue),'__dirty')
+    const oldValue = omit(toJS(this.mergeValue), '__dirty');
     if (fieldName) {
       this.mergeValue = {
         ...this.mergeValue, [fieldName]: value,
-      }
+      };
     }
-    const valueNow = omit(toJS(this.mergeValue),'__dirty')
-    if(!isSame(oldValue,valueNow)){
-      this.handleChange(valueNow, oldValue)
+    const valueNow = omit(toJS(this.mergeValue), '__dirty');
+    if (!isSame(oldValue, valueNow)) {
+      this.handleChange(valueNow, oldValue);
     }
-  }
+  };
 
   @action
   handleCloseItem = (filedName) => {
@@ -116,22 +117,22 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
     }
     this.mergeValue[filedName] = this.emptyValue;
     if (this.child && this.child[filedName]) {
-      this.child[filedName].handleClear()
+      this.child[filedName].handleClear();
     }
-  }
+  };
 
   findByValue = (value, name) => {
     if (value && this.child && this.child[name]) {
-      return this.child[name].processValue(value)
+      return this.child[name].processValue(value);
     }
-    return value
-  }
+    return value;
+  };
 
   renderTag = (mergeValue) => {
     const { dataSet } = this;
     const prefixCls = this.prefixCls;
     const { tagRender } = this.props;
-    const tagsProps: TagProps[] = []
+    const tagsProps: TagProps[] = [];
     if (dataSet) {
       Object.keys(mergeValue).forEach(key => {
         const value = mergeValue[key];
@@ -139,17 +140,18 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
         let label = key;
         let text = value;
         if (field) {
-          label = field.get('label')
+          const { record } = this;
+          label = field.get('label', record);
           if (isArray(value)) {
             text = value.map(v => {
-              let itemText = field.getText(v)
+              let itemText = field.getText(v, undefined, record);
               if (isNil(itemText)) {
                 itemText = this.findByValue(v, key);
               }
-              return itemText
-            })
+              return itemText;
+            });
           } else {
-            text = field.getText(value)
+            text = field.getText(value, undefined, record);
             if (isNil(text)) {
               text = this.findByValue(value, key);
             }
@@ -159,14 +161,16 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
           const tagProps = {
             text,
             label,
-            handleClose: (filedName: string) => { this.handleCloseItem(filedName) },
+            handleClose: (filedName: string) => {
+              this.handleCloseItem(filedName);
+            },
             key,
-          }
-          tagsProps.push(tagProps)
+          };
+          tagsProps.push(tagProps);
         }
-      })
-      const labelTitle = `${$l('Screening', 'selected')}:`
-      const labelNode = (<span className={`${prefixCls}-choosed-label`}>{labelTitle}</span>)
+      });
+      const labelTitle = `${$l('Screening', 'selected')}:`;
+      const labelNode = (<span className={`${prefixCls}-choosed-label`}>{labelTitle}</span>);
       if (tagsProps.length > 0) {
         return tagRender ? tagRender({
           labelTitle,
@@ -179,7 +183,7 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
                 <Tag
                   onClose={(e) => {
                     e.preventDefault();
-                    tagItemProps.handleClose(tagItemProps.key)
+                    tagItemProps.handleClose(tagItemProps.key);
                   }}
                   key={tagItemProps.key}
                   closable
@@ -189,36 +193,39 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
               ))}
             </div>
           </div>
-        )
+        );
       }
     }
-    return null
-  }
+    return null;
+  };
+
 
   render() {
     const dataSet = this.dataSet;
     const { children } = this.props;
-    let mergeValue = toJS(this.mergeValue)
-    mergeValue = omit(mergeValue, ['__dirty'])
+    let mergeValue = toJS(this.mergeValue);
+    mergeValue = omit(mergeValue, ['__dirty']);
     const filteredChildren = Children.toArray(children).filter(c => !!c);
     return (
       <div className={`${this.prefixCls}`}>
         {this.renderTag(mergeValue)}
-        {Children.map(filteredChildren, (child: ReactElement, _index) => {
-          const name = child.props.name
+        {Children.map(filteredChildren, (child, _index) => {
+          const name = child.props.name;
           if (this.mergeValue && name && isNil(this.mergeValue[name])) {
             const screenProps = {
               onConfirm: this.handleConfirm,
               onChange: this.handleChange,
               dataSet,
-              onRef: (ref) => { this.onRef(ref, name) },
-            }
+              onRef: (ref) => {
+                this.onRef(ref, name);
+              },
+            };
             if (!isString(name)) {
-              // @ts-expect-error
-              delete screenProps.onRef
+              // @ts-ignore
+              delete screenProps.onRef;
               warning(false, `ScreeningItem need binding DataSet with property name.`);
             }
-            return cloneElement(child, screenProps)
+            return cloneElement(child, screenProps);
           }
         })}
       </div>

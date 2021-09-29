@@ -19,8 +19,9 @@ import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
 
 import Field from '../../data-set/Field';
-import DataSet from '../../data-set';
-import { RecordStatus } from '../../data-set/enum';
+import DataSet from '../../data-set/DataSet';
+import Record from '../../data-set/Record';
+import { DataSetEvents, RecordStatus } from '../../data-set/enum';
 import Button from '../../button';
 import Dropdown from '../../dropdown';
 import TextField from '../../text-field';
@@ -156,9 +157,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { queryDataSet } = this.props;
     if (queryDataSet) {
       const handler = flag ? queryDataSet.addEventListener : queryDataSet.removeEventListener;
-      handler.call(queryDataSet, 'validate', this.handleDataSetValidate);
-      handler.call(queryDataSet, 'update', this.handleDataSetUpdate);
-      handler.call(queryDataSet, 'create', this.handleDataSetCreate);
+      handler.call(queryDataSet, DataSetEvents.validate, this.handleDataSetValidate);
+      handler.call(queryDataSet, DataSetEvents.update, this.handleDataSetUpdate);
+      handler.call(queryDataSet, DataSetEvents.create, this.handleDataSetCreate);
     }
   }
 
@@ -177,17 +178,20 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   async handleDataSetValidate({ dataSet, result }) {
     if (!await result) {
-      const fields = [...dataSet.fields.keys()];
-      map(fields, field => {
-        if (!dataSet.current.getField(field).isValid()) {
-          this.handleSelect(field);
-        }
-      });
       runInAction(() => {
+        const { current } = dataSet;
+        dataSet.fields.forEach((field, key) => {
+          if (!field.isValid(current)) {
+            this.handleSelect(key);
+          }
+        });
         this.expand = true;
       });
-      this.refSingleWrapper!.style.height = '';
-      this.refSingleWrapper!.style.overflow = '';
+      const { refSingleWrapper } = this;
+      if (refSingleWrapper) {
+        refSingleWrapper.style.height = '';
+        refSingleWrapper.style.overflow = '';
+      }
     }
   }
 
@@ -231,7 +235,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * queryDS 新建，初始勾选值
    */
   @autobind
-  handleDataSetCreate({ dataSet, record }) {
+  handleDataSetCreate(props: { dataSet: DataSet, record: Record }) {
+    const { dataSet, record } = props;
     const conditionData = Object.entries(record.toData());
     this.originalValue = record.toData();
     const keys = [...dataSet.fields.keys()];
@@ -243,8 +248,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         !isArray(data[1])) {
         name = `${data[0]}.${Object.keys(data[1])[0]}`;
       }
-      if (isSelect(data) && !dataSet.getField(name).get('bind')) {
-        if (!this.selectFields.includes(name)) {
+      if (isSelect(data) && !this.selectFields.includes(name)) {
+        const field = dataSet.getField(name);
+        if (!field || !field.get('bind', record)) {
           this.originalConditionFields.push(name);
           this.handleSelect(name);
         }
@@ -257,7 +263,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   renderSuffix() {
     const { prefixCls, dynamicFilterBar, queryDataSet, dataSet, buttons } = this.props;
-    const suffixes: Suffixes[] | undefined = dynamicFilterBar?.suffixes || getConfig('tableFilterSuffix');
+    const suffixes: Suffixes[] | undefined = dynamicFilterBar && dynamicFilterBar.suffixes || getConfig('tableFilterSuffix');
     const children: ReactElement[] = [];
     let suffixesDom: ReactElement | null = null;
     const tableButtons = buttons.length ? (
@@ -287,7 +293,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   getPrefix(): ReactNode {
     const { prefixCls, dynamicFilterBar, queryDataSet, dataSet } = this.props;
-    const prefixes = dynamicFilterBar?.prefixes;
+    const prefixes = dynamicFilterBar && dynamicFilterBar.prefixes;
     const children: ReactElement[] = [];
     if (prefixes && prefixes.length) {
       prefixes.forEach((prefix: any) => {
@@ -339,7 +345,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   get tableFilterAdapter() {
     const { dynamicFilterBar } = this.props;
-    return dynamicFilterBar?.tableFilterAdapter || getConfig('tableFilterAdapter');
+    return dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || getConfig('tableFilterAdapter');
   }
 
   /**
@@ -371,12 +377,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { queryDataSet } = this.props;
     const codes = Array.isArray(code) ? code : [code];
     if (queryDataSet) {
-      codes.map((name) => {
-        if (queryDataSet.current) {
-          queryDataSet.current.set(name, undefined);
-        }
-        return null;
-      });
+      const { current } = queryDataSet;
+      if (current) {
+        codes.forEach((name) => current.set(name, undefined));
+      }
     }
     this.selectFields = pull([...this.selectFields], ...codes);
     const shouldUpdate = !isEqual(toJS(this.selectFields), toJS(this.originalConditionFields));
@@ -393,26 +397,29 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       <span
         className={`${prefixCls}-filter-menu-expand`}
         onClick={() => {
-          const { height } = this.refSingleWrapper!.getBoundingClientRect();
-          const { height: childHeight } = this.refSingleWrapper!.children[0].children[0].getBoundingClientRect();
-          runInAction(() => {
-            this.expand = hidden ? height <= 0 : height <= (childHeight + 18);
-          });
-          if (hidden && height) {
-            // 收起全部
-            this.refSingleWrapper!.style.display = 'none';
-          } else {
-            this.refSingleWrapper!.style.display = 'flex';
-            this.refSingleWrapper!.style.height = '';
-            this.refSingleWrapper!.style.overflow = '';
-          }
-          if (height > (childHeight + 18) && !hidden) {
-            // 收起留一行高度
-            this.refSingleWrapper!.style.height = pxToRem(childHeight + 18) || '';
-            this.refSingleWrapper!.style.overflow = 'hidden';
-          } else {
-            this.refSingleWrapper!.style.height = '';
-            this.refSingleWrapper!.style.overflow = '';
+          const { refSingleWrapper } = this;
+          if (refSingleWrapper) {
+            const { height } = refSingleWrapper.getBoundingClientRect();
+            const { height: childHeight } = refSingleWrapper.children[0].children[0].getBoundingClientRect();
+            runInAction(() => {
+              this.expand = hidden ? height <= 0 : height <= (childHeight + 18);
+            });
+            if (hidden && height) {
+              // 收起全部
+              refSingleWrapper.style.display = 'none';
+            } else {
+              refSingleWrapper.style.display = 'flex';
+              refSingleWrapper.style.height = '';
+              refSingleWrapper.style.overflow = '';
+            }
+            if (height > (childHeight + 18) && !hidden) {
+              // 收起留一行高度
+              refSingleWrapper.style.height = pxToRem(childHeight + 18) || '';
+              refSingleWrapper.style.overflow = 'hidden';
+            } else {
+              refSingleWrapper.style.height = '';
+              refSingleWrapper.style.overflow = '';
+            }
           }
         }}
       >
@@ -471,21 +478,28 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { prefixCls, queryDataSet, autoQueryAfterReset, onReset = noop } = this.props;
     return (
       <div className={`${prefixCls}-filter-buttons`}>
-        {this.conditionStatus === RecordStatus.update && <Button
-          onClick={() => {
-            if (queryDataSet && queryDataSet.current) {
-              queryDataSet.current.reset();
-            }
-            this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet?.current });
-            this.setConditionStatus(RecordStatus.sync);
-            onReset();
-            if (autoQueryAfterReset) {
-              this.handleQuery();
-            }
-          }}
-        >
-          {$l('Table', 'reset_button')}
-        </Button>}
+        {
+          this.conditionStatus === RecordStatus.update && (
+            <Button
+              onClick={() => {
+                if (queryDataSet) {
+                  const { current } = queryDataSet;
+                  if (current) {
+                    current.reset();
+                    this.handleDataSetCreate({ dataSet: queryDataSet, record: current });
+                  }
+                }
+                this.setConditionStatus(RecordStatus.sync);
+                onReset();
+                if (autoQueryAfterReset) {
+                  this.handleQuery();
+                }
+              }}
+            >
+              {$l('Table', 'reset_button')}
+            </Button>
+          )
+        }
       </div>
     );
   }

@@ -166,9 +166,11 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   @action
   setPopup(statePopup: boolean) {
-    this.statePopup = statePopup;
-    const { onPopupHiddenChange = noop } = this.props;
-    onPopupHiddenChange(!statePopup);
+    if (statePopup !== this.statePopup) {
+      this.statePopup = statePopup;
+      const { onPopupHiddenChange = noop } = this.props;
+      onPopupHiddenChange(!statePopup);
+    }
   }
 
   abstract getTriggerIconFont(): string;
@@ -304,6 +306,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   @autobind
   handlePopupHiddenChange(hidden: boolean) {
     this.setPopup(!hidden);
+  }
+
+  forcePositionChanged() {
+    this.forcePopupAlign();
   }
 
   forcePopupAlign() {

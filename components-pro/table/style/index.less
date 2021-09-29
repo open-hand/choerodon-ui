@@ -634,12 +634,21 @@
     border-radius: 0.02rem;
   }
 
-  &-summary-menu-item {
+  &-button-menu-item {
     padding: 0 !important;
 
-    button {
+    .@{c7n-pro-prefix}-btn {
       height: 0.4rem;
       padding: 0 0.26rem;
+      background-color: transparent;
+
+      .@{c7n-prefix}-ripple {
+        background-color: transparent;
+      }
+
+      &:hover, &:focus, &:active {
+        background-color: transparent;
+      }
     }
   }
 

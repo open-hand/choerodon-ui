@@ -12,35 +12,35 @@ export default async function uniqueError(
 ): Promise<methodReturn> {
   const { dataSet, record, unique, name, multiple, range, defaultValidationMessages } = props;
   if (!isEmpty(value) && dataSet && record && unique && name && !multiple && !range) {
-    const myField = record.getField(name);
-    if (myField && myField.get('type') === FieldType.object) {
-      value = value[myField.get('valueField')];
+    const myField = dataSet.getField(name);
+    if (myField && myField.get('type', record) === FieldType.object) {
+      value = value[myField.get('valueField', record)];
       if (isEmpty(value)) {
         return true;
       }
     }
     if (myField) {
-      let { dirty } = myField;
+      let dirty = myField.isDirty(record);
       const fields = { [name]: value };
       if (
         isString(unique) &&
-        [...record.fields.entries()].some(([fieldName, field]) => {
+        [...dataSet.fields.entries()].some(([fieldName, field]) => {
           if (
             fieldName !== name &&
             field &&
-            field.get('unique') === unique &&
-            !field.get('multiple') &&
-            !field.get('range')
+            field.get('unique', record) === unique &&
+            !field.get('multiple', record) &&
+            !field.get('range', record)
           ) {
             const otherValue = record.get(fieldName);
             if (isEmpty(otherValue)) {
               return true;
             }
-            if (!dirty && field.dirty) {
+            if (!dirty && field.isDirty(record)) {
               dirty = true;
             }
-            if (field && field.get('type') === FieldType.object) {
-              const otherObjectValue = otherValue[field.get('valueField')];
+            if (field && field.get('type', record) === FieldType.object) {
+              const otherObjectValue = otherValue[field.get('valueField', record)];
               if (isEmpty(otherObjectValue)) {
                 return true;
               }
@@ -57,13 +57,13 @@ export default async function uniqueError(
       if (!dirty) {
         return true;
       }
-      let invalid = dataSet.data.some(
+      let invalid = dataSet.some(
         item =>
           item !== record &&
           Object.keys(fields).every(field => {
-            const dataSetField = record.getField(name);
-            if (dataSetField && dataSetField.get('type') === FieldType.object) {
-              const valueField = dataSetField.get('valueField');
+            const dataSetField = dataSet.getField(name);
+            if (dataSetField && dataSetField.get('type', record) === FieldType.object) {
+              const valueField = dataSetField.get('valueField', record);
               return fields[field] === item.get(field)[valueField];
             }
             return fields[field] === item.get(field);

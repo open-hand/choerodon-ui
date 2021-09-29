@@ -41,6 +41,7 @@ import Animate from '../animate';
 import Tooltip from '../tooltip/Tooltip';
 import { GroupItemCategory, ValueChangeAction } from './enum';
 import { ShowHelp } from '../field/enum';
+import Record from '../data-set/Record';
 import { FieldFormat } from '../data-set/enum';
 import { LabelLayout } from '../form/interface';
 import { getProperty } from '../form/utils';
@@ -263,6 +264,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   } | undefined;
 
   lengthInfoWidth?: number;
+
+  lastAnimationRecord?: Record;
 
   get clearButton(): boolean {
     const { clearButton } = this.props;
@@ -895,6 +898,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
     if (multiple) {
       const { height } = (style || {}) as CSSProperties;
+      const { record } = this;
       const tags = (
         <Animate
           component="ul"
@@ -904,7 +908,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
             style:
               height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
           }}
-          transitionName="zoom"
+          transitionName={!record || record === this.lastAnimationRecord ? 'zoom' : ''}
           exclusive
           onEnd={this.handleTagAnimateEnd}
           onEnter={this.handleTagAnimateEnter}
@@ -920,6 +924,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           }
         </Animate>
       );
+      this.lastAnimationRecord = record;
       return wrap(
         <div key="text" className={otherProps.className} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
           {

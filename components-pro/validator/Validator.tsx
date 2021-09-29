@@ -65,25 +65,17 @@ export default class Validator {
   private get uniqueRefFields(): Field[] {
     const { name, unique, record } = this.props;
     if (record && isString(unique)) {
-      return [...record.fields.values()].filter(
+      return [...record.dataSet.fields.values()].filter(
         field =>
           field.name !== name &&
-          field.get('unique') === unique &&
-          !field.get('multiple') &&
-          !field.get('range'),
+          field.get('unique', record) === unique &&
+          !field.get('multiple', record) &&
+          !field.get('range', record),
       );
     }
     return [];
   }
 
-  // @computed
-  // private get bindingFieldWithValidationResult(): Field | undefined {
-  //   const { name, record, type } = this.props;
-  //   if (record && name && type === FieldType.object) {
-  //     return findBindField(name, record.fields, field => !field.isValid());
-  //   }
-  //   return undefined;
-  // }
   @computed
   private get uniqueRefValidationResult(): ValidationResult | undefined {
     let validationResult: ValidationResult | undefined;
@@ -202,7 +194,7 @@ export default class Validator {
         reportMessage.push(
           `
 [field<${name}>]:`,
-          record.getField(name),
+          this.field,
         );
       } else {
         reportMessage.push('[field]:', name);

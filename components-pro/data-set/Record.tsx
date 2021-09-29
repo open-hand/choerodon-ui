@@ -1,13 +1,25 @@
-import { action, computed, isArrayLike, isObservableArray, isObservableObject, observable, ObservableMap, runInAction, toJS } from 'mobx';
+import {
+  action,
+  computed,
+  IComputedValue,
+  isArrayLike,
+  isObservableArray,
+  isObservableObject,
+  observable,
+  ObservableMap,
+  runInAction,
+  toJS,
+} from 'mobx';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
+import pick from 'lodash/pick';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import DataSet, { addRecordField, RecordValidationErrors } from './DataSet';
+import DataSet, { addDataSetField, RecordValidationErrors } from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
   axiosConfigAdapter,
@@ -22,9 +34,9 @@ import {
   getChainFieldName,
   getIf,
   getRecordValue,
-  getSortedFields,
   getUniqueKeysAndPrimaryKey,
   isDirtyRecord,
+  processIntlField,
   processToJSON,
   processValue,
   useCascade,
@@ -52,12 +64,34 @@ const SELECTABLE_KEY = '__SELECTABLE_KEY__';  // TODO:Symbol
 const SELECT_KEY = '__SELECT_KEY__';  // TODO:Symbol
 const UNSELECT_KEY = '__UNSELECT_KEY__';  // TODO:Symbol
 
+function initRecordField(record: Record, name: string, fieldProps?: FieldProps): [Field, Map<string, Field> | undefined] {
+  const { dataSet } = record;
+  return processIntlField(
+    name,
+    (langProps: FieldProps) => new Field(langProps, dataSet, record),
+    fieldProps,
+    dataSet,
+  );
+}
+
 export default class Record {
   id: number;
 
-  dataSet?: DataSet;
+  dataSet: DataSet;
 
-  @observable fields: Fields;
+  @computed
+  get fields(): Fields {
+    return observable.map(
+      {
+        ...this.dataSet.fields.toPOJO(),
+        ...this.ownerFields.toPOJO(),
+      },
+    );
+  }
+
+  @observable ownerFields: Fields;
+
+  tempFields?: Map<string, Field>;
 
   memo?: object;
 
@@ -74,6 +108,8 @@ export default class Record {
   @observable data: object;
 
   @observable dirtyData?: ObservableMap<string, any> | undefined;
+
+  computedFieldProps?: Map<string | symbol, IComputedValue<any>>;
 
   @computed
   get pristineData(): object {
@@ -126,11 +162,7 @@ export default class Record {
   }
 
   get isDataSetInAllPageSelection(): boolean {
-    const { dataSet } = this;
-    if (dataSet) {
-      return dataSet.isAllPageSelection;
-    }
-    return false;
+    return this.dataSet.isAllPageSelection;
   }
 
   get isSelected(): boolean {
@@ -167,14 +199,11 @@ export default class Record {
   @computed
   get key(): string | number {
     if (!this.isNew) {
-      const { dataSet } = this;
-      if (dataSet) {
-        const { primaryKey } = dataSet.props;
-        if (primaryKey) {
-          const key = this.get(primaryKey);
-          if (isString(key) || isNumber(key)) {
-            return key;
-          }
+      const { primaryKey } = this.dataSet.props;
+      if (primaryKey) {
+        const key = this.get(primaryKey);
+        if (isString(key) || isNumber(key)) {
+          return key;
         }
       }
     }
@@ -183,23 +212,16 @@ export default class Record {
 
   @computed
   get index(): number {
-    const { dataSet } = this;
-    if (dataSet) {
-      return dataSet.indexOf(this);
-    }
-    return -1;
+    return this.dataSet.indexOf(this);
   }
 
   @computed
   get indexInParent(): number {
-    const { parent, dataSet } = this;
+    const { parent } = this;
     if (parent && parent.children) {
       return parent.children.indexOf(this);
     }
-    if (dataSet) {
-      return dataSet.treeRecords.indexOf(this);
-    }
-    return -1;
+    return this.dataSet.treeRecords.indexOf(this);
   }
 
   get isRemoved(): boolean {
@@ -212,8 +234,7 @@ export default class Record {
 
   @computed
   get isSelectionIndeterminate(): boolean {
-    const { dataSet } = this;
-    if (dataSet && dataSet.selection === DataSetSelection.multiple) {
+    if (this.dataSet.selection === DataSetSelection.multiple) {
       const { children } = this;
       if (children) {
         let checkedLength = 0;
@@ -237,27 +258,25 @@ export default class Record {
   @computed
   get isIndeterminate(): boolean {
     const { dataSet } = this;
-    if (dataSet) {
-      const { checkField } = dataSet.props;
-      if (checkField) {
-        const field = this.getField(checkField);
-        const trueValue = field ? field.get(BooleanValue.trueValue) : true;
-        const { children } = this;
-        if (children) {
-          let checkedLength = 0;
-          return (
-            children.some(record => {
-              if (record.isIndeterminate) {
-                return true;
-              }
-              if (record.get(checkField) === trueValue) {
-                checkedLength += 1;
-              }
-              return false;
-            }) ||
-            (checkedLength > 0 && checkedLength !== children.length)
-          );
-        }
+    const { checkField } = dataSet.props;
+    if (checkField) {
+      const field = dataSet.getField(checkField);
+      const trueValue = field ? field.get(BooleanValue.trueValue, this) : true;
+      const { children } = this;
+      if (children) {
+        let checkedLength = 0;
+        return (
+          children.some(record => {
+            if (record.isIndeterminate) {
+              return true;
+            }
+            if (record.get(checkField) === trueValue) {
+              checkedLength += 1;
+            }
+            return false;
+          }) ||
+          (checkedLength > 0 && checkedLength !== children.length)
+        );
       }
     }
     return false;
@@ -266,46 +285,37 @@ export default class Record {
   @computed
   get isExpanded(): boolean {
     const { dataSet } = this;
-    if (dataSet) {
-      const { expandField } = dataSet.props;
-      if (expandField) {
-        const expanded = this.get(expandField);
-        const field = this.getField(expandField);
-        return expanded === (field ? field.get(BooleanValue.trueValue) : true);
-      }
+    const { expandField } = dataSet.props;
+    if (expandField) {
+      const expanded = this.get(expandField);
+      const field = dataSet.getField(expandField);
+      return expanded === (field ? field.get(BooleanValue.trueValue, this) : true);
     }
     return this.getState(EXPANDED_KEY);
   }
 
   set isExpanded(expand: boolean) {
     const { dataSet } = this;
-    if (dataSet) {
-      const { expandField } = dataSet.props;
-      if (expandField) {
-        const field = this.getField(expandField);
-        this.set(
-          expandField,
-          field
-            ? expand
-              ? field.get(BooleanValue.trueValue)
-              : field.get(BooleanValue.falseValue)
-            : expand,
-        );
-      } else {
-        this.setState(EXPANDED_KEY, expand);
-      }
+    const { expandField } = dataSet.props;
+    if (expandField) {
+      const field = dataSet.getField(expandField);
+      this.set(
+        expandField,
+        field
+          ? expand
+          ? field.get(BooleanValue.trueValue, this)
+          : field.get(BooleanValue.falseValue, this)
+          : expand,
+      );
+    } else {
+      this.setState(EXPANDED_KEY, expand);
     }
   }
 
   @computed
   get previousRecord(): Record | undefined {
-    const { parent, dataSet } = this;
-    let children: Record[] | undefined;
-    if (parent) {
-      children = parent.children;
-    } else if (dataSet) {
-      children = dataSet.treeData;
-    }
+    const { parent } = this;
+    const children = parent ? parent.children : this.dataSet.treeData;
     if (children) {
       return children[children.indexOf(this) - 1];
     }
@@ -314,13 +324,8 @@ export default class Record {
 
   @computed
   get nextRecord(): Record | undefined {
-    const { parent, dataSet } = this;
-    let children: Record[] | undefined;
-    if (parent) {
-      children = parent.children;
-    } else if (dataSet) {
-      children = dataSet.treeData;
-    }
+    const { parent } = this;
+    const children = parent ? parent.children : this.dataSet.treeData;
     if (children) {
       return children[children.indexOf(this) + 1];
     }
@@ -330,76 +335,61 @@ export default class Record {
   @computed
   get records(): Record[] {
     const { dataSet } = this;
-    if (dataSet) {
-      const { cascadeParent } = this;
-      if (cascadeParent && !cascadeParent.isCurrent) {
-        return cascadeParent.getCascadeRecordsIncludeDelete(dataSet.parentName) || [];
-      }
-      return dataSet.records;
+    const { cascadeParent } = this;
+    if (cascadeParent && !cascadeParent.isCurrent) {
+      return cascadeParent.getCascadeRecordsIncludeDelete(dataSet.parentName) || [];
     }
-    return [];
+    return dataSet.records;
   }
 
   @computed
   get children(): Record[] | undefined {
-    const { dataSet } = this;
-    if (dataSet) {
-      const { parentField, idField, childrenField } = dataSet.props;
-      if (childrenField) {
-        return this.$children;
-      }
-      if (parentField && idField) {
-        const children = this.records.filter(record => {
-          const childParentId = record.get(parentField);
-          const id = this.get(idField);
-          return !isNil(childParentId) && !isNil(id) && childParentId === id;
-        });
-        return children.length > 0 ? children : undefined;
-      }
+    const { parentField, idField, childrenField } = this.dataSet.props;
+    if (childrenField) {
+      return this.$children;
+    }
+    if (parentField && idField) {
+      const children = this.records.filter(record => {
+        const childParentId = record.get(parentField);
+        const id = this.get(idField);
+        return !isNil(childParentId) && !isNil(id) && childParentId === id;
+      });
+      return children.length > 0 ? children : undefined;
     }
     return undefined;
   }
 
   set children(children: Record[] | undefined) {
-    const { dataSet } = this;
-    if (dataSet) {
-      const { childrenField } = dataSet.props;
-      if (childrenField) {
-        this.$children = children;
-      } else {
-        throw new Error('Setter of record.children only support in `childrenField` mode.');
-      }
+    const { childrenField } = this.dataSet.props;
+    if (childrenField) {
+      this.$children = children;
+    } else {
+      throw new Error('Setter of record.children only support in `childrenField` mode.');
     }
   }
 
   @computed
   get parent(): Record | undefined {
-    const { dataSet } = this;
-    if (dataSet) {
-      const { parentField, idField, childrenField } = dataSet.props;
-      if (childrenField) {
-        return this.$parent;
-      }
-      if (parentField && idField) {
-        return this.records.find(record => {
-          const parentId = this.get(parentField);
-          const id = record.get(idField);
-          return !isNil(parentId) && !isNil(id) && parentId === id;
-        });
-      }
+    const { parentField, idField, childrenField } = this.dataSet.props;
+    if (childrenField) {
+      return this.$parent;
+    }
+    if (parentField && idField) {
+      return this.records.find(record => {
+        const parentId = this.get(parentField);
+        const id = record.get(idField);
+        return !isNil(parentId) && !isNil(id) && parentId === id;
+      });
     }
     return undefined;
   }
 
   set parent(parent: Record | undefined) {
-    const { dataSet } = this;
-    if (dataSet) {
-      const { childrenField } = dataSet.props;
-      if (childrenField) {
-        this.$parent = parent;
-      } else {
-        throw new Error('Setter of record.parent only support in `childrenField` mode.');
-      }
+    const { childrenField } = this.dataSet.props;
+    if (childrenField) {
+      this.$parent = parent;
+    } else {
+      throw new Error('Setter of record.parent only support in `childrenField` mode.');
     }
   }
 
@@ -435,44 +425,30 @@ export default class Record {
     if (dirtyData && dirtyData.size > 0) {
       return true;
     }
-    const { dataSet } = this;
-    if (dataSet) {
-      const { children } = dataSet;
-      return Object.keys(children).some(key => (this.getCascadeRecordsIncludeDelete(key) || []).some(isDirtyRecord));
-    }
-    return false;
+    return Object.keys(this.dataSet.children).some(key => (this.getCascadeRecordsIncludeDelete(key) || []).some(isDirtyRecord));
   }
 
   @computed
   get cascadeParent(): Record | undefined {
-    const { dataSet } = this;
-    if (dataSet) {
-      const { parent, parentName } = dataSet;
-      if (parent && parentName) {
-        return parent.cascadeRecords.find(
-          record => (record.getCascadeRecordsIncludeDelete(parentName) || []).indexOf(this) !== -1,
-        );
-      }
+    const { parent, parentName } = this.dataSet;
+    if (parent && parentName) {
+      return parent.cascadeRecords.find(
+        record => (record.getCascadeRecordsIncludeDelete(parentName) || []).indexOf(this) !== -1,
+      );
     }
     return undefined;
   }
 
-  constructor(data: object = {}, dataSet?: DataSet, status: RecordStatus = RecordStatus.add) {
+  constructor(data: object = {}, dataSet: DataSet = new DataSet(), status: RecordStatus = RecordStatus.add) {
     runInAction(() => {
-      const initData = isObservableObject(data) ? toJS(data) : data;
-      this.fields = observable.map<string, Field>();
+      this.dataSet = dataSet;
+      this.ownerFields = observable.map();
       this.status = status;
       this.selectable = true;
       this.isSelected = false;
       this.id = IDGen.next().value;
+      const initData = isObservableObject(data) ? toJS(data) : data;
       this.data = initData;
-      if (dataSet) {
-        this.dataSet = dataSet;
-        const { fields } = dataSet;
-        if (fields) {
-          this.initFields(fields);
-        }
-      }
       this.processData(initData);
     });
   }
@@ -488,14 +464,14 @@ export default class Record {
     isCascadeSelect?: boolean,
     all = true,
   ): any {
-    const { status, dataSet, fields } = this;
-    const dataToJSON = dataSet && dataSet.dataToJSON;
+    const { status, dataSet } = this;
+    const { dataToJSON, fields } = dataSet;
     const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
     const normal = all || (dataToJSON && useNormal(dataToJSON));
     let dirty = status !== RecordStatus.sync;
-    const childrenKeys: string[] | undefined = cascade && dataSet ? Object.keys(dataSet.children) : undefined;
+    const childrenKeys: string[] | undefined = cascade ? Object.keys(dataSet.children) : undefined;
     const jsonFieldKeys: string[] | undefined = childrenKeys && [...fields.entries()].reduce<string[]>((fieldKeys, [key, field]) => {
-      if (field.type === FieldType.json && childrenKeys.some(childKey => key === childKey || childKey.startsWith(`${key}.`))) {
+      if (field.get('type') === FieldType.json && childrenKeys.some(childKey => key === childKey || childKey.startsWith(`${key}.`))) {
         fieldKeys.push(key);
       }
       return fieldKeys;
@@ -505,7 +481,7 @@ export default class Record {
       dirty = true;
     }
     if (jsonFieldKeys) {
-      jsonFieldKeys.forEach(key => ObjectChainValue.set(json, key, JSON.stringify(ObjectChainValue.get(json, key)), fields));
+      jsonFieldKeys.forEach(key => ObjectChainValue.set(json, key, JSON.stringify(ObjectChainValue.get(json, key)), fields, this));
     }
     return {
       ...json,
@@ -532,14 +508,14 @@ export default class Record {
     this.validating = true;
     const promises: Promise<boolean>[] = [];
     if (all || this.status !== RecordStatus.sync) {
-      [...this.fields.values()].forEach(field => promises.push(field.checkValidity(false)));
+      [...dataSet.fields.values()].forEach(field => promises.push(field.checkValidity(false, this)));
     }
-    if (!noCascade && dataSet) {
-      const childrenKeys = Object.keys(dataSet.children);
+    if (!noCascade) {
+      const { children } = dataSet;
+      const childrenKeys = Object.keys(children);
       if (childrenKeys.length) {
         const { dataSetSnapshot, isCurrent } = this;
         childrenKeys.forEach((key) => {
-          const { children } = dataSet;
           const snapshot = dataSetSnapshot && dataSetSnapshot[key];
           const ds = children[key];
           const child = isCurrent ? ds : snapshot && new DataSet().restore(snapshot);
@@ -569,8 +545,8 @@ export default class Record {
 
   reportValidity(result: boolean) {
     const { dataSet } = this;
-    if (dataSet && !dataSet.validating) {
-      const prepareForReport = getIf<Record, { result?: boolean; timeout?: number }>(this, 'prepareForReport', {});
+    if (!dataSet.validating) {
+      const prepareForReport = getIf<Record, { result?: boolean, timeout?: number }>(this, 'prepareForReport', {});
       if (!result) {
         prepareForReport.result = result;
       }
@@ -585,7 +561,7 @@ export default class Record {
   };
 
   getValidationErrors(): RecordValidationErrors[] {
-    return [...this.fields.values()].reduce<RecordValidationErrors[]>((results, field) => {
+    return [...this.ownerFields.values()].reduce<RecordValidationErrors[]>((results, field) => {
       if (!field.valid) {
         results.push({
           field,
@@ -596,16 +572,48 @@ export default class Record {
     }, []);
   }
 
+  @action
+  addField(name: string, fieldProps?: FieldProps): Field {
+    const { dataSet, ownerFields } = this;
+    if (!dataSet.getField(name)) {
+      dataSet.addField(name, fieldProps);
+    }
+    const oldField = ownerFields.get(name);
+    if (oldField) {
+      return oldField.replace(fieldProps);
+    }
+    const [field, intlFields] = initRecordField(this, name, fieldProps);
+    ownerFields.set(name, field);
+    if (intlFields) {
+      ownerFields.merge(intlFields);
+    }
+    return field;
+  }
+
   getField(fieldName?: string): Field | undefined {
     if (fieldName) {
-      return this.fields.get(fieldName);
+      {
+        const field = this.ownerFields.get(fieldName);
+        if (field) {
+          return field;
+        }
+      }
+      const tempFields = getIf<Record, Map<string, Field>>(this, 'tempFields', () => new Map());
+      {
+        const field = tempFields.get(fieldName);
+        if (field) {
+          return field;
+        }
+      }
+      const field = new Field({ name: fieldName }, this.dataSet, this);
+      tempFields.set(fieldName, field);
+      return field;
     }
   }
 
   getCascadeRecordsIncludeDelete(fieldName?: string): Record[] | undefined {
-    const { dataSet } = this;
-    if (fieldName && dataSet) {
-      const childDataSet = dataSet.children[fieldName];
+    if (fieldName) {
+      const childDataSet = this.dataSet.children[fieldName];
       if (childDataSet) {
         if (this.isCurrent) {
           return childDataSet.records.slice();
@@ -665,49 +673,46 @@ export default class Record {
   @action
   set(item: string | object, value?: any): Record {
     if (isString(item)) {
+      const { dataSet } = this;
       const oldName: string = item;
       const fieldName: string = getChainFieldName(this, oldName);
-      const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || addRecordField(this, oldName);
-      checkFieldType(value, field);
+      const field = dataSet.getField(oldName) || dataSet.getField(fieldName) || findBindField(oldName, fieldName, this) || addDataSetField(dataSet, oldName);
+      checkFieldType(value, field, this);
       const oldValue = toJS(this.get(fieldName));
-      const newValue = processValue(value, field);
-      const newValueForCompare = processToJSON(newValue, field);
-      if (!isSame(processToJSON(oldValue, field), newValueForCompare)) {
-        const { fields } = this;
-        ObjectChainValue.set(this.data, fieldName, newValue, fields);
+      const newValue = processValue(value, field, this);
+      const newValueForCompare = processToJSON(newValue, field, this);
+      const { fields } = dataSet;
+      if (!isSame(processToJSON(oldValue, field, this), newValueForCompare)) {
+        ObjectChainValue.set(this.data, fieldName, newValue, fields, this);
         const dirtyData = getIf<Record, ObservableMap<string, any>>(this, 'dirtyData', () => observable.map<string, any>());
         if (!(dirtyData.has(fieldName))) {
           dirtyData.set(fieldName, oldValue);
           if (this.status === RecordStatus.sync) {
             this.status = RecordStatus.update;
           }
-        } else if (isSame(processToJSON(dirtyData.get(fieldName), field), newValueForCompare)) {
+        } else if (isSame(processToJSON(dirtyData.get(fieldName), field, this), newValueForCompare)) {
           dirtyData.delete(fieldName);
-          if (this.status === RecordStatus.update && dirtyData.size === 0 && [...fields.values()].every(f => !f.dirty)) {
+          if (this.status === RecordStatus.update && dirtyData.size === 0 && [...fields.values()].every(f => !f.isDirty(this))) {
             this.status = RecordStatus.sync;
           }
         }
-        const { dataSet } = this;
-        if (dataSet) {
-          dataSet.fireEvent(DataSetEvents.update, {
-            dataSet,
-            record: this,
-            name: oldName,
-            value: newValue,
-            oldValue,
-          });
-          const { checkField } = dataSet.props;
-          if (checkField && fieldName === getChainFieldName(this, checkField)) {
-            const { children } = this;
-            if (children) {
-              children.forEach(record => record.set(fieldName, value));
-            }
+        dataSet.fireEvent(DataSetEvents.update, {
+          dataSet,
+          record: this,
+          name: oldName,
+          value: newValue,
+          oldValue,
+        });
+        const { checkField } = dataSet.props;
+        if (checkField && fieldName === getChainFieldName(this, checkField)) {
+          const { children } = this;
+          if (children) {
+            children.forEach(record => record.set(fieldName, value));
           }
         }
       }
-      const { fields } = this;
-      [field, ...findBindFields(field, fields, true), ...findBindTargetFields(field, fields, true)].forEach((oneField) => (
-        oneField.checkValidity(false)
+      [field, ...findBindFields(field, fields, true, this), ...findBindTargetFields(field, fields, true, this)].forEach((oneField) => (
+        oneField.checkValidity(false, this)
       ));
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.set(key, item[key]));
@@ -728,17 +733,18 @@ export default class Record {
 
   @action
   init(item: string | object, value?: any): Record {
-    const { fields, data, dirtyData } = this;
+    const { data, dirtyData } = this;
     if (isString(item)) {
+      const { dataSet } = this;
       const oldName: string = item;
       const fieldName: string = getChainFieldName(this, oldName);
-      const field = this.getField(oldName) || this.getField(fieldName) || findBindField(oldName, fieldName, this) || addRecordField(this, fieldName);
-      const newValue = processValue(value, field);
+      const field = dataSet.getField(oldName) || dataSet.getField(fieldName) || findBindField(oldName, fieldName, this) || addDataSetField(dataSet, fieldName);
+      const newValue = processValue(value, field, this);
       if (dirtyData) {
         dirtyData.delete(fieldName);
       }
-      ObjectChainValue.set(data, fieldName, newValue, fields);
-      field.commit();
+      ObjectChainValue.set(data, fieldName, newValue, dataSet.fields, this);
+      field.commit(this);
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.init(key, item[key]));
     }
@@ -748,14 +754,11 @@ export default class Record {
   clone(): Record {
     const { dataSet } = this;
     const cloneData = this.toData();
-    if (dataSet) {
-      const { primaryKey } = dataSet.props;
-      if (primaryKey) {
-        delete cloneData[primaryKey];
-      }
-      return new Record(cloneData, dataSet);
+    const { primaryKey } = dataSet.props;
+    if (primaryKey) {
+      delete cloneData[primaryKey];
     }
-    return new Record(cloneData);
+    return new Record(cloneData, dataSet);
   }
 
   ready(): Promise<any> {
@@ -766,10 +769,10 @@ export default class Record {
   @action
   async tls(name?: string): Promise<void> {
     const tlsKey = getConfig('tlsKey');
-    const { dataSet } = this;
-    if (dataSet && name) {
+    if (name) {
       const tlsData = this.get(tlsKey) || {};
       if (!(name in tlsData)) {
+        const { dataSet } = this;
         const { axios, lang } = dataSet;
         const { primaryKey } = dataSet.props;
         const newConfig = axiosConfigAdapter(
@@ -787,7 +790,7 @@ export default class Record {
           }
         } else {
           this.commitTls(
-            [...this.fields.entries()].reduce((data, [key, field]) => {
+            [...dataSet.fields.entries()].reduce((data, [key, field]) => {
               if (field.type === FieldType.intl) {
                 data[key] = {
                   [lang]: this.get(key),
@@ -804,8 +807,8 @@ export default class Record {
 
   @action
   reset(): Record {
-    const { status, fields, dataSet, dirty, isRemoved } = this;
-    [...fields.values()].forEach(field => field.commit());
+    const { status, dataSet, dirty, isRemoved } = this;
+    [...dataSet.fields.values()].forEach(field => field.commit(this));
     if (status === RecordStatus.update || isRemoved) {
       this.status = RecordStatus.sync;
     }
@@ -813,7 +816,7 @@ export default class Record {
       this.data = toJS(this.pristineData);
       this.dirtyData = undefined;
       this.memo = undefined;
-      if (dataSet && !dataSet.resetInBatch) {
+      if (!dataSet.resetInBatch) {
         dataSet.fireEvent(DataSetEvents.reset, { records: [this], dataSet });
       }
     }
@@ -838,12 +841,8 @@ export default class Record {
 
   @action
   clear(): Record {
-    return this.set(
-      [...this.fields.keys()].reduce((obj, key) => {
-        obj[key] = null;
-        return obj;
-      }, {}),
-    );
+    [...this.dataSet.fields.keys()].forEach((key) => this.set(key, null));
+    return this;
   }
 
   @action
@@ -892,9 +891,9 @@ export default class Record {
           });
         }
       }
+      [...dataSet.fields.values()].forEach(field => field.commit(this));
     }
     this.dirtyData = undefined;
-    [...this.fields.values()].forEach(field => field.commit());
     this.status = RecordStatus.sync;
     return this;
   }
@@ -928,11 +927,12 @@ export default class Record {
     if (!(name in data)) {
       data[name] = {};
     }
+    const { dataSet } = this;
     Object.keys(data).forEach((key) => {
       const value = data[key];
-      const field = this.getField(key);
+      const field = dataSet.getField(key);
       if (field) {
-        const transformResponse = field.get('transformResponse');
+        const transformResponse = field.get('transformResponse', this);
         if (transformResponse) {
           const originValue = { ...value };
           Object.keys(value).forEach((language) => {
@@ -944,26 +944,10 @@ export default class Record {
     });
   }
 
-  private initFields(fields: Fields) {
-    [...fields.keys()].forEach((key) => addRecordField(this, key));
-  }
-
-  @action
-  addField(name: string, fieldProps: FieldProps = {}): Field {
-    const old = this.fields.get(name);
-    const field = addRecordField(this, name, fieldProps);
-    if (!old) {
-      const data = toJS(this.data);
-      const newData = { ...data };
-      this.processFieldValue(name, field, this.fields, newData, data);
-    }
-    return field;
-  }
-
-  private processFieldValue(fieldName: string, field: Field, fields: Fields, newData: object, data: object, needMerge?: boolean) {
+  processFieldValue(fieldName: string, field: Field, fields: Fields, newData: object, data: object, needMerge?: boolean) {
     let value = ObjectChainValue.get(newData, fieldName);
     const chainFieldName = getChainFieldName(this, fieldName);
-    const transformResponse = field.get('transformResponse');
+    const transformResponse = field.get('transformResponse', this);
     if (chainFieldName !== fieldName) {
       const bindValue = ObjectChainValue.get(newData, chainFieldName);
       if (isNil(value) && !isNil(bindValue)) {
@@ -973,7 +957,7 @@ export default class Record {
     if (transformResponse) {
       value = transformResponse(value, data);
     }
-    value = processValue(value, field, !needMerge && this.isNew);
+    value = processValue(value, field, this, !needMerge && this.isNew);
     if (value === null) {
       value = undefined;
     }
@@ -983,37 +967,37 @@ export default class Record {
         value = merge(oldValue, value);
       }
     }
-    ObjectChainValue.set(newData, chainFieldName, value, fields);
-    ObjectChainValue.set(this.data, chainFieldName, value, fields);
+    ObjectChainValue.set(newData, chainFieldName, value, fields, this);
+    ObjectChainValue.set(this.data, chainFieldName, value, fields, this);
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {
     const newData = { ...data };
-    const { fields } = this;
-    getSortedFields(fields).forEach(([fieldName, field]) => this.processFieldValue(fieldName, field, fields, newData, data, needMerge));
+    const { fields } = this.dataSet;
+    [...fields.entries()].forEach(([fieldName, field]) => this.processFieldValue(fieldName, field, fields, newData, data, needMerge));
   }
 
   private normalizeData(needIgnore?: boolean, jsonFields?: string[]) {
-    const { fields, dataSet } = this;
-    const dataToJSON = dataSet && dataSet.dataToJSON;
+    const { dataSet } = this;
+    const { fields, dataToJSON } = dataSet;
     const onlyDirtyField = needIgnore && dataToJSON ? useDirtyField(dataToJSON) : false;
     const neverKeys = onlyDirtyField ? getUniqueKeysAndPrimaryKey(dataSet) : [];
-    const json: any = onlyDirtyField ? {} : toJS(this.data);
+    const json: any = onlyDirtyField ? pick(this.data, neverKeys) : toJS(this.data);
     const fieldIgnore = onlyDirtyField ? FieldIgnore.clean : undefined;
     const objectFieldsList: Field[][] = [];
     const normalFields: Field[] = [];
     const ignoreFieldNames: Set<string> = new Set();
     [...fields.entries()].forEach(([key, field]) => {
       if (field && (!jsonFields || !jsonFields.includes(key))) {
-        const ignore = field.get('ignore') || fieldIgnore;
+        const ignore = field.get('ignore', this) || fieldIgnore;
         if (
           needIgnore &&
           !neverKeys.includes(key) &&
-          (ignore === FieldIgnore.always || (ignore === FieldIgnore.clean && !field.dirty))
+          (ignore === FieldIgnore.always || (ignore === FieldIgnore.clean && !field.isDirty(this)))
         ) {
           ignoreFieldNames.add(key);
         } else {
-          const type = field.get('type');
+          const type = field.get('type', this);
           if (type === FieldType.object) {
             const level = key.split('.').length - 1;
             objectFieldsList[level] = (objectFieldsList[level] || []).concat(field);
@@ -1028,21 +1012,21 @@ export default class Record {
         items.forEach(field => {
           const { name } = field;
           let value = ObjectChainValue.get(onlyDirtyField ? { ...this.data, ...json } : json, name);
-          const bind = field.get('bind');
-          const transformRequest = field.get('transformRequest');
+          const bind = field.get('bind', this);
+          const transformRequest = field.get('transformRequest', this);
           if (bind) {
             value = this.get(getChainFieldName(this, name));
           }
           const old = value;
-          value = processToJSON(value, field);
+          value = processToJSON(value, field, this);
           if (transformRequest) {
             // compatible old logic
-            value = isString(field.get('multiple')) && isArrayLike(old) ?
+            value = isString(field.get('multiple', this)) && isArrayLike(old) ?
               transformRequest(value, this) :
-              processToJSON(transformRequest(old, this), field);
+              processToJSON(transformRequest(old, this), field, this);
           }
           if (value !== undefined) {
-            ObjectChainValue.set(json, name, value, fields);
+            ObjectChainValue.set(json, name, value, fields, this);
           } else {
             ignoreFieldNames.add(name);
           }
@@ -1058,37 +1042,35 @@ export default class Record {
     normal?: boolean,
     isSelect?: boolean,
   ): boolean | undefined {
-    const { dataSetSnapshot, dataSet, fields, isRemoved } = this;
-    if (dataSet) {
-      let dirty = false;
-      const { children } = dataSet;
-      if (isRemoved) {
-        childrenInfoForDelete(json, children);
-      } else {
-        const keys = Object.keys(children);
-        if (keys.length) {
-          const { isCurrent } = this;
-          keys.forEach(name => {
-            const snapshot = dataSetSnapshot && dataSetSnapshot[name];
-            const child = (!isCurrent && snapshot && new DataSet().restore(snapshot)) || children[name];
-            if (child) {
-              const { dataToJSON } = child;
-              const records = this.getCascadeRecordsIncludeDelete(name);
-              const selected = isSelect || useSelected(dataToJSON) ? this.getCascadeSelectedRecordsIncludeDelete(name) : records;
-              const jsonArray = normal || useNormal(dataToJSON)
-                ? records && generateData(records)
-                : selected && generateJSONData(child, selected);
-              if (jsonArray) {
-                if (jsonArray.dirty) {
-                  dirty = true;
-                }
-                ObjectChainValue.set(json, name, jsonArray.data, fields);
+    const { dataSetSnapshot, dataSet, isRemoved } = this;
+    let dirty = false;
+    const { children, fields } = dataSet;
+    if (isRemoved) {
+      childrenInfoForDelete(json, children);
+    } else {
+      const keys = Object.keys(children);
+      if (keys.length) {
+        const { isCurrent } = this;
+        keys.forEach(name => {
+          const snapshot = dataSetSnapshot && dataSetSnapshot[name];
+          const child = (!isCurrent && snapshot && new DataSet().restore(snapshot)) || children[name];
+          if (child) {
+            const { dataToJSON } = child;
+            const records = this.getCascadeRecordsIncludeDelete(name);
+            const selected = isSelect || useSelected(dataToJSON) ? this.getCascadeSelectedRecordsIncludeDelete(name) : records;
+            const jsonArray = normal || useNormal(dataToJSON)
+              ? records && generateData(records)
+              : selected && generateJSONData(child, selected);
+            if (jsonArray) {
+              if (jsonArray.dirty) {
+                dirty = true;
               }
+              ObjectChainValue.set(json, name, jsonArray.data, fields, this);
             }
-          });
-        }
+          }
+        });
       }
-      return dirty;
     }
+    return dirty;
   }
 }

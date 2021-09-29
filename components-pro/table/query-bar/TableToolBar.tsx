@@ -4,11 +4,9 @@ import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import DataSet from '../../data-set/DataSet';
-import Record from '../../data-set/Record';
 import { ElementProps } from '../../core/ViewComponent';
 import Button, { ButtonProps } from '../../button/Button';
 import { PaginationProps } from '../../pagination/Pagination';
-import Field, { Fields } from '../../data-set/Field';
 import { ButtonColor, FuncType } from '../../button/enum';
 import Modal from '../../modal';
 import Form from '../../form/Form';
@@ -16,25 +14,6 @@ import Icon from '../../icon';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import TableButtons from './TableButtons';
-
-/**
- * 去除级联字段
- *
- * @export
- * @param {Fields} fields 待筛选的字段数组
- * @returns {{ [key: string]: Field }} 不含级联字段的字段数组
- */
-export function filterBindField(fields: Fields): { [key: string]: Field } {
-  return [...fields.entries()].reduce(
-    (newFields, [key, field]) => {
-      if (!field.get('bind')) {
-        newFields[key] = field;
-      }
-      return newFields;
-    },
-    {} as { [key: string]: Field },
-  );
-}
 
 export interface TableToolBarProps extends ElementProps {
   dataSet: DataSet;
@@ -110,7 +89,7 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
       let dirtyInfo;
       if (moreFields.length) {
         more = this.getMoreButton(moreFields);
-        dirtyInfo = this.getDirtyInfo(queryDataSet.current, moreFields);
+        dirtyInfo = this.getDirtyInfo(queryDataSet, moreFields);
       }
       return (
         <span className={`${prefixCls}-query-bar`}>
@@ -125,13 +104,13 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
     }
   }
 
-  getDirtyInfo(current: Record | undefined, moreFields: ReactElement<any>[]) {
+  getDirtyInfo(dataSet: DataSet | undefined, moreFields: ReactElement<any>[]) {
     if (
-      current &&
+      dataSet &&
       moreFields.some(element => {
         const { name } = element.props;
-        const field = current.getField(name);
-        return field ? field.dirty : false;
+        const field = dataSet.getField(name);
+        return field ? field.isDirty(dataSet.current) : false;
       })
     ) {
       const { prefixCls } = this.props;

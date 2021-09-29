@@ -75,10 +75,15 @@ function delegate(fn: EventListenerOrEventListenerObject): Function {
 export default class EventManager {
   events: { [eventName: string]: Handler[] } = {};
 
-  el?: EventTarget | undefined;
+  el?: EventTarget | undefined | null;
 
-  constructor(el?: EventTarget | undefined) {
+  constructor(el?: EventTarget | undefined | null) {
+    this.setTarget(el);
+  }
+
+  setTarget(el?: EventTarget | undefined | null): EventManager {
     this.el = el;
+    return this;
   }
 
   addEventListener(eventName: string, fn: EventListenerOrEventListenerObject, options: AddEventListenerOptions | boolean = false): EventManager {

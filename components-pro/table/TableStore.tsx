@@ -631,7 +631,7 @@ export default class TableStore {
     return TableHeightType.auto;
   }
 
-  get virtualCell(): boolean {
+  get virtualCell(): boolean | undefined {
     if ('virtualCell' in this.props) {
       return this.props.virtualCell!;
     }

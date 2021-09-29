@@ -15,28 +15,42 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
+- 💄 `<pro>DataSet`: Optimize memory.
+- 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
+- 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
+
+## 1.4.5
+
+`2021-09-29`
+
+- 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad`, `tableButtonsLimit` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
 - 🌟 `Tabs`: Added `inkBarStyle`, `customizable`, `customizedCode`, `hideOnlyGroup` properties, support ink bar style modification.
-- 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties, `count` property support hooks.
+- 🌟 `Tabs.TabPane`: Added `title`, `showCount`, `count`, `overflowCount` properties, `count` property support hooks.
 - 🌟 `Tag`: Added `gray` color.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
 - 🌟 `<pro>Dropdown`: Added `onHiddenBeforeChange` callback.
-- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth`, `rowBoxPlacement` properties, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions, deprecated `autoMaxWidth` property.
+- 🌟 `<pro>Table`: Add `searchCode`, `autoWidth`, `rowBoxPlacement`, `buttonsLimit` properties, optimize `TableQueryBarType.filterBar` dynamic filter bar, support saving filter conditions, deprecated `autoMaxWidth` property.
 - 🌟 `<pro>Pagination`: Added `quickJumperPosition` property.
 - 💄 `Tabs`: Optimized to not display when `count` is zero.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
 - 💄 `<pro>Attachment`: Optimize the display of deleting, dnd, preview and label. Optimized to delete the attachments in the wrong state as direct deletion.
+- 💄 `<pro>TextField`: Optimized to close the animation effect when switching record in multiple mode.
 - 💄 `<pro>Table`: Supports multiple selections by pressing shift.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
 - 💄 `<pro>Lov`: Optimize the priority of `lovQueryBar` and remove the global default value of `lovQueryBar`.
+- 💄 `<pro>Lov`: During the search query cycle, the KeyDownEnter event is disabled.
 - 💄 `<pro>Tooltip`: Optimize style alignment.
 - 🐞 `<pro>DataSet`: Fix the `cacheSelection` problem that the changed value is restored when the cached selected record is redisplayed.
+- 🐞 `<pro>DataSet`: Fix the `dirty-field` mode will ignore the primary key value when there is no field corresponding to the `primaryKey` in the field list.
 - 🐞 `<pro>Attachment`: Fix the problem that the number and attachment list are not displayed.
+- 🐞 `<pro>Attachment`: Fixed the problem that upload button will not shown in picture card mode with no attachments.
 - 🐞 `<pro>TimePicker`: Fix the display problem of the minute and second selection box in the 12-hour format.
 - 🐞 `<pro>DatePicker`: Fix display problems in `isFlat` and `range` mode.
 - 🐞 `<pro>DatePicker`: Fix the problem of value setting when the `range` is object and `multiple`.
+- 🐞 `<pro>DatePicker`: Fix the problem that the `defaultTime` does not work when entering a value.
+- 🐞 `<pro>DatePicker`: Fix the problem that spaces cannot be entered.
 - 🐞 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.
 - 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
 - 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode. 
@@ -45,8 +59,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the display problem when the editor is SelectBox in `multiple` mode.
 - 🐞 `<pro>Table`: Fix the problem of inaccurate column order in personalized adjustment.
 - 🐞 `<pro>Tree`: Fix the problem that asynchronously loaded nodes cannot be displayed when the dataSet is reloaded.
+- 🐞 `<pro>Table`: Fix the problem that professionalBar under `autoHeight` property will only be collapsed after clicking More multiple times.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
-- 🌟 `Tabs.TabPane`: Added `count`, `overflowCount` properties.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of line highlighting error.
 - 🐞 `<pro>Lov`: Fix the problem that the value of `alwaysShowRowBox` in the single-select mode table is incorrectly selected.
 - 🐞 `<pro>TriggerField`: Fix the problem that `onPopupHiddenChange` sometimes does not trigger.
@@ -55,6 +69,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that the `noCache` option is repeated in `multiple` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the search drop-down did not collapse after clicking the pop-up Modal.
 - 🐞 `<pro>Lov`: Fix the problem of shaking table in `popup` mode.
+- 🐞 `<pro>Lov`: Fix the problem that the drop-down box cannot pop up after closing the Modal in `searchFieldInPopup` mode.
 - 🐞 `<pro>TextArea`: Fix the style problem when dragging the width.
 - 🐞 `<pro>ColorPicker`：Fix the problem that the color of the panel changes when the color is selected.
 

@@ -2,6 +2,7 @@ import isObject from 'lodash/isObject';
 import { isArrayLike, observable } from 'mobx';
 import { mobxGet, mobxRemove, mobxSet } from './MobxUtils';
 import Field, { Fields } from '../data-set/Field';
+import Record from '../data-set/Record';
 
 export function get(obj: object | undefined | null, prop: string): any {
   if (obj === null) {
@@ -33,13 +34,14 @@ export function set(
   prop: string,
   value: any,
   fields: Fields = observable.map<string, Field>(),
+  record?: Record,
 ): any {
   const index = prop.indexOf('.');
   if (index !== -1) {
     const key = prop.slice(0, index);
     if (!data[key] && value !== undefined) {
       const field = fields.get(key);
-      if (field && field.get('multiple')) {
+      if (field && field.get('multiple', record)) {
         mobxSet(data, key, []);
       } else {
         mobxSet(data, key, {});

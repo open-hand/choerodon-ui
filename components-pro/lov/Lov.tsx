@@ -6,7 +6,7 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
-import { action, computed, isArrayLike, runInAction, toJS } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -130,9 +130,11 @@ export default class Lov extends Select<LovProps> {
     viewMode: 'modal',
   };
 
-  modal;
+  @observable modal;
 
   fetched?: boolean;
+
+  searching?: boolean;
 
   @computed
   get searchMatcher(): SearchMatcher {
@@ -160,7 +162,7 @@ export default class Lov extends Select<LovProps> {
   get lovCode(): string | undefined {
     const { field } = this;
     if (field) {
-      return field.get('lovCode');
+      return field.get('lovCode', this.record);
     }
     return undefined;
   }
@@ -185,7 +187,7 @@ export default class Lov extends Select<LovProps> {
 
   @computed
   get options(): DataSet {
-    const { field, lovCode } = this;
+    const { field, lovCode, record } = this;
     if (field) {
       const { options } = field;
       if (options) {
@@ -193,7 +195,7 @@ export default class Lov extends Select<LovProps> {
       }
     }
     if (lovCode) {
-      const lovDataSet = lovStore.getLovDataSet(lovCode, field, field && field.get('optionsProps'));
+      const lovDataSet = lovStore.getLovDataSet(lovCode, field, field && field.get('optionsProps', record), record);
       if (lovDataSet) {
         return lovDataSet;
       }
@@ -365,7 +367,8 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
-  private openModal = action((fetchSingle?: boolean) => {
+  @action
+  private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode, onBeforeSelect } = this.props;
     if (viewMode === 'modal') {
@@ -408,7 +411,13 @@ export default class Lov extends Select<LovProps> {
         this.afterOpen(options, fetchSingle);
       }
     }
-  });
+  }
+
+  @action
+  setText(text?: string): void {
+    this.searching = true;
+    super.setText(text);
+  }
 
   /**
    * 处理 Lov input 查询参数
@@ -425,7 +434,7 @@ export default class Lov extends Select<LovProps> {
         options.setQueryParameter(key, value === '' ? undefined : value);
       });
       if (this.isSearchFieldInPopup() || this.props.searchAction === SearchAction.input) {
-        options.query();
+        options.query().then(() => delete this.searching);
       }
     }
   }
@@ -438,15 +447,17 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
-  handleLovViewClose = async () => {
-    delete this.modal;
+  @autobind
+  handleLovViewClose() {
     this.focus();
-  };
+  }
 
   /**
    * 关闭弹窗移除时间监听 后续废弃
    */
-  handleLovViewAfterClose = () => {
+  @autobind
+  @action
+  handleLovViewAfterClose() {
     // TODO：lovEvents deprecated
     const { options, props: { lovEvents } } = this;
     const { afterClose = noop } = this.getModalProps();
@@ -454,9 +465,12 @@ export default class Lov extends Select<LovProps> {
     if (lovEvents) {
       Object.keys(lovEvents).forEach(event => options.removeEventListener(event, lovEvents[event]));
     }
-  };
+    this.setPopup(false);
+    this.modal = undefined;
+  }
 
-  handleLovViewSelect = (records: Record | Record[]) => {
+  @autobind
+  handleLovViewSelect(records: Record | Record[]) {
     const { viewMode } = this.props;
     if (viewMode === 'popup' && !this.multiple) {
       this.collapse();
@@ -466,7 +480,7 @@ export default class Lov extends Select<LovProps> {
     } else {
       this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
     }
-  };
+  }
 
   resetOptions(noCache = false): boolean {
     const { field, record, options } = this;
@@ -506,7 +520,9 @@ export default class Lov extends Select<LovProps> {
       stopEvent(e);
       this.blur();
     }
-    super.handleKeyDown(e);
+    if (!(e.keyCode === KeyCode.ENTER && this.searching)) {
+      super.handleKeyDown(e);
+    }
   }
 
   @autobind
@@ -539,11 +555,12 @@ export default class Lov extends Select<LovProps> {
         hasRecord = this.getValue()[textField] === value;
       }
       if (searchAction === SearchAction.blur && value && !hasRecord) {
-        this.options.query().then(() => {
-          const length = this.options.length;
+        const { options } = this;
+        options.query().then(() => {
+          const { length } = options;
           if ((length > 1 && !fetchSingle) || length === 1) {
-            this.choose(this.options.get(0));
-          } else if (this.options.length && fetchSingle) {
+            this.choose(options.get(0));
+          } else if (length && fetchSingle) {
             this.openModal(fetchSingle);
           }
         });

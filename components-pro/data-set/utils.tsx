@@ -64,22 +64,22 @@ export function getOrderFields(fields: Fields): Field[] {
   return [...fields.values()].filter(({ order }) => order);
 }
 
-function processOneToJSON(value, field: Field, checkRange = true) {
+function processOneToJSON(value, field: Field, record?: Record, checkRange: boolean = true) {
   if (!isEmpty(value)) {
-    const range = field.get('range');
+    const range = field.get('range', record);
     if (range && checkRange) {
       if (isArrayLike(range)) {
         if (isObject(value)) {
           const [start, end] = range;
           value = {
-            [start]: processOneToJSON(value[start], field, false),
-            [end]: processOneToJSON(value[end], field, false),
+            [start]: processOneToJSON(value[start], field, record, false),
+            [end]: processOneToJSON(value[end], field, record, false),
           };
         }
       } else if (isArrayLike(value)) {
         value = [
-          processOneToJSON(value[0], field, false),
-          processOneToJSON(value[1], field, false),
+          processOneToJSON(value[0], field, record, false),
+          processOneToJSON(value[1], field, record, false),
         ];
       }
     } else {
@@ -90,7 +90,7 @@ function processOneToJSON(value, field: Field, checkRange = true) {
         const { jsonDate } = getConfig('formatter');
         value = jsonDate ? value.format(jsonDate) : +value;
       }
-      if (field.type === FieldType.json) {
+      if (field.get('type', record) === FieldType.json) {
         value = JSON.stringify(value);
       }
     }
@@ -98,18 +98,18 @@ function processOneToJSON(value, field: Field, checkRange = true) {
   return value;
 }
 
-export function processToJSON(value, field: Field) {
+export function processToJSON(value, field: Field, record?: Record) {
   if (!isEmpty(value)) {
-    const multiple = field.get('multiple');
-    const range = field.get('range');
+    const multiple = field.get('multiple', record);
+    const range = field.get('range', record);
     if (isArrayLike(value) && (multiple || !range)) {
-      value = value.map(v => processOneToJSON(v, field));
+      value = value.map(v => processOneToJSON(v, field, record));
       if (isString(multiple)) {
         return value.join(multiple);
       }
       return value;
     }
-    return processOneToJSON(value, field);
+    return processOneToJSON(value, field, record);
   }
   return value;
 }
@@ -120,31 +120,31 @@ export function arrayMove<T = Record>(array: T[], from: number, to: number): voi
   array.splice(startIndex, 0, item);
 }
 
-function processOne(value: any, field: Field, checkRange = true) {
+function processOne(value: any, field: Field, record?: Record, checkRange: boolean = true) {
   if (!isEmpty(value)) {
-    const range = field.get('range');
+    const range = field.get('range', record);
     if (range && checkRange) {
       if (isArrayLike(range)) {
         if (isObject(value)) {
           const [start, end] = range;
-          value[start] = processOne(value[start], field, false);
-          value[end] = processOne(value[end], field, false);
+          value[start] = processOne(value[start], field, record, false);
+          value[end] = processOne(value[end], field, record, false);
         }
       } else if (isArrayLike(value)) {
-        value[0] = processOne(value[0], field, false);
-        value[1] = processOne(value[1], field, false);
+        value[0] = processOne(value[0], field, record, false);
+        value[1] = processOne(value[1], field, record, false);
       }
     } else if (value instanceof Date) {
       value = moment(value);
     } else if (!isObject(value)) {
       value = formatString(value, {
-        trim: field.get('trim'),
-        format: field.get('format'),
+        trim: field.get('trim', record),
+        format: field.get('format', record),
       });
-      switch (field.type) {
+      switch (field.get('type', record)) {
         case FieldType.boolean: {
-          const trueValue = field.get(BooleanValue.trueValue);
-          const falseValue = field.get(BooleanValue.falseValue);
+          const trueValue = field.get(BooleanValue.trueValue, record);
+          const falseValue = field.get(BooleanValue.falseValue, record);
           if (value !== trueValue) {
             value = falseValue;
           }
@@ -153,7 +153,7 @@ function processOne(value: any, field: Field, checkRange = true) {
         case FieldType.number:
         case FieldType.currency:
           if (!isNaN(value)) {
-            value = parseNumber(value, field.get('precision'));
+            value = parseNumber(value, field.get('precision', record));
           } else {
             value = undefined;
           }
@@ -184,11 +184,11 @@ function processOne(value: any, field: Field, checkRange = true) {
   return value;
 }
 
-export function processValue(value: any, field?: Field, isCreated?: boolean): any {
+export function processValue(value: any, field?: Field, record?: Record, isCreated?: boolean): any {
   if (field) {
-    const multiple = field.get('multiple');
-    const range = field.get('range');
-    if (multiple && field.type !== FieldType.attachment) {
+    const multiple = field.get('multiple', record);
+    const range = field.get('range', record);
+    if (multiple && field.get('type', record) !== FieldType.attachment) {
       if (isEmpty(value)) {
         if (isCreated) {
           // for defaultValue
@@ -205,29 +205,30 @@ export function processValue(value: any, field?: Field, isCreated?: boolean): an
       }
     }
     if (isArray(value) && (multiple || !range)) {
-      return value.map(item => processOne(item, field));
+      return value.map(item => processOne(item, field, record));
     }
-    return processOne(value, field);
+    return processOne(value, field, record);
   }
   return value;
 }
 
 // 处理单个range
-const processRangeToText = (resultValue, field): string => {
+const processRangeToText = (resultValue: any[], field: Field, record?: Record | undefined): string => {
   return resultValue.map((item) => {
     const valueRange = isMoment(item)
       ? item.format()
       : isObject(item)
-        ? item[field.get('textField')]
+        ? item[field.get('textField', record)]
         : item.toString();
     return valueRange;
   }).join(`~`);
 };
 
-export function processExportValue(value: any, field?: Field): any {
+export function processExportValue(value: any, field?: Field, record?: Record | undefined): any {
   if (field) {
-    const multiple = field.get('multiple');
-    const range = field.get('range');
+    const multiple = field.get('multiple', record);
+    const range = field.get('range', record);
+    const textField = field.get('textField', record);
     if (multiple) {
       if (isEmpty(value)) {
         value = [];
@@ -240,37 +241,37 @@ export function processExportValue(value: any, field?: Field): any {
       }
     }
     if (isArray(value) && (multiple || !range)) {
-      if (field && !_isEmpty(field.lookup)) {
-        return value.map(item => field.getText(processOne(item, field))).join(',');
+      if (!_isEmpty(field.getLookup(record))) {
+        return value.map(item => field.getText(processOne(item, field, record), undefined, record)).join(',');
       }
       return value.map(item => {
-        const itemValue = processOne(item, field);
-        if (field && field.get('textField') && itemValue && isObject(itemValue)) {
-          return itemValue[field.get('textField')];
+        const itemValue = processOne(item, field, record);
+        if (textField && itemValue && isObject(itemValue)) {
+          return itemValue[textField];
         }
         return itemValue;
       }).join(',');
     }
     if (isArray(value) && multiple && range) {
-      if (field && !_isEmpty(field.lookup)) {
-        return value.map(item => field.getText(processRangeToText(processOne(item, field), field))).join(',');
+      if (!_isEmpty(field.getLookup(record))) {
+        return value.map(item => field.getText(processRangeToText(processOne(item, field, record), field, record))).join(',');
       }
       return value.map(item => {
-        return processRangeToText(processOne(item, field), field);
+        return processRangeToText(processOne(item, field, record), field, record);
       }).join(',');
     }
-    if (field && !_isEmpty(field.lookup)) {
-      return field.getText(processOne(value, field));
+    if (!_isEmpty(field.getLookup(record))) {
+      return field.getText(processOne(value, field, record), undefined, record);
     }
-    const resultValue = processOne(value, field);
+    const resultValue = processOne(value, field, record);
     if (isMoment(resultValue)) {
       return resultValue.format();
     }
-    if (field && field.get('textField') && resultValue && isObject(resultValue)) {
+    if (textField && resultValue && isObject(resultValue)) {
       if (range && isArrayLike(resultValue)) {
-        return processRangeToText(resultValue, field);
+        return processRangeToText(resultValue, field, record);
       }
-      return resultValue[field.get('textField')];
+      return resultValue[textField];
     }
     return resultValue;
   }
@@ -404,16 +405,16 @@ export function getBaseType(type: FieldType): FieldType {
   }
 }
 
-export function checkFieldType(value: any, field: Field): boolean {
+export function checkFieldType(value: any, field: Field, record?: Record): boolean {
   if (process.env.NODE_ENV !== 'production' && !isEmpty(value)) {
     const fieldType = getBaseType(field.type);
     if (fieldType !== FieldType.auto) {
       if (isArrayLike(value)) {
-        return value.every(item => checkFieldType(item, field));
+        return value.every(item => checkFieldType(item, field, record));
       }
       const valueType =
-        field.type === FieldType.boolean &&
-        [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
+        field.get('type', record) === FieldType.boolean &&
+        [field.get(BooleanValue.trueValue, record), field.get(BooleanValue.falseValue, record)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -469,10 +470,10 @@ function throwCycleBindingFields(map: Map<string, Field> = new Map()) {
   throw new Error(`DataSet: Cycle binding fields[${[...keys].join(' -> ')} -> ${keys[0]}].`);
 }
 
-function getChainFieldNamePrivate(record: Record, fieldName: string, linkedMap: Map<string, Field> = new Map(), init = true): string {
-  const field = record.getField(fieldName);
+function getChainFieldNamePrivate(record: Record, fieldName: string, linkedMap: Map<string, Field> = new Map(), init: boolean = true): string {
+  const field = record.dataSet.getField(fieldName);
   if (field) {
-    const bind = field.get('bind');
+    const bind = field.get('bind', record);
     if (bind) {
       if (linkedMap.has(fieldName)) {
         throwCycleBindingFields(linkedMap);
@@ -497,8 +498,8 @@ export function getChainFieldName(record: Record, fieldName: string): string {
   return getChainFieldNamePrivate(record, fieldName);
 }
 
-export function findBindTargetFields(myField: Field, fields: Fields, deep?: boolean, bindFields: Map<string, Field> = new Map()): Field[] {
-  const bind = myField.get('bind');
+export function findBindTargetFields(myField: Field, fields: Fields, deep?: boolean, record?: Record, bindFields: Map<string, Field> = new Map()): Field[] {
+  const bind = myField.get('bind', record);
   if (bind) {
     [...fields.entries()].some(([fieldName, field]) => {
       if (field !== myField) {
@@ -508,7 +509,7 @@ export function findBindTargetFields(myField: Field, fields: Fields, deep?: bool
           }
           bindFields.set(fieldName, field);
           if (deep) {
-            findBindTargetFields(field, fields, deep, bindFields);
+            findBindTargetFields(field, fields, deep, record, bindFields);
           }
           return true;
         }
@@ -519,18 +520,18 @@ export function findBindTargetFields(myField: Field, fields: Fields, deep?: bool
   return [...bindFields.values()];
 }
 
-export function findBindFields(myField: Field, fields: Fields, deep?: boolean, bindFields: Map<string, Field> = new Map()): Field[] {
+export function findBindFields(myField: Field, fields: Fields, deep?: boolean, record?: Record | undefined, bindFields: Map<string, Field> = new Map()): Field[] {
   const { name } = myField;
   [...fields.entries()].forEach(([fieldName, field]) => {
     if (field !== myField) {
-      const bind = field.get('bind');
+      const bind = field.get('bind', record);
       if (bind && (bind === name || bind.startsWith(`${name}.`))) {
         if (bindFields.has(fieldName)) {
           throwCycleBindingFields(bindFields);
         }
         bindFields.set(fieldName, field);
         if (deep) {
-          findBindFields(field, fields, deep, bindFields);
+          findBindFields(field, fields, deep, record, bindFields);
         }
       }
     }
@@ -543,10 +544,10 @@ export function findBindField(
   chainFieldName: string,
   record: Record,
 ): Field | undefined {
-  return [...record.fields.values()].find((field) => {
+  return [...record.dataSet.fields.values()].find((field) => {
     const fieldName = field.name;
     if (fieldName !== myField) {
-      const bind = field.get('bind');
+      const bind = field.get('bind', record);
       if (bind) {
         return chainFieldName === getChainFieldName(record, fieldName);
       }
@@ -734,20 +735,18 @@ export function getRecordValue(
         return value;
       }, {});
     }
-    const chainFieldName = getChainFieldName(record, fieldName);
     const { dataSet } = record;
-    if (dataSet) {
-      const { checkField } = dataSet.props;
-      if (checkField && chainFieldName === getChainFieldName(record, checkField)) {
-        const field = record.getField(checkField);
-        const trueValue = field ? field.get(BooleanValue.trueValue) : true;
-        const falseValue = field ? field.get(BooleanValue.falseValue) : false;
-        const { children } = record;
-        if (children) {
-          return children.every(child => cb(child, checkField) === trueValue)
-            ? trueValue
-            : falseValue;
-        }
+    const chainFieldName = getChainFieldName(record, fieldName);
+    const { checkField } = dataSet.props;
+    if (checkField && chainFieldName === getChainFieldName(record, checkField)) {
+      const field = dataSet.getField(checkField);
+      const trueValue = field ? field.get(BooleanValue.trueValue, record) : true;
+      const falseValue = field ? field.get(BooleanValue.falseValue, record) : false;
+      const { children } = record;
+      if (children) {
+        return children.every(child => cb(child, checkField) === trueValue)
+          ? trueValue
+          : falseValue;
       }
     }
     return ObjectChainValue.get(record.data, chainFieldName as string);
@@ -756,21 +755,24 @@ export function getRecordValue(
 
 export function processIntlField(
   name: string,
-  fieldProps: FieldProps,
-  callback: (name: string, props: FieldProps) => Field,
+  callback: (props: FieldProps) => Field,
+  fieldProps?: FieldProps,
   dataSet?: DataSet,
-): Field {
-  if (fieldProps.type === FieldType.intl) {
+): [Field, Map<string, Field> | undefined] {
+  const field = callback({ ...fieldProps, name });
+  if (fieldProps && fieldProps.type === FieldType.intl) {
     const { transformRequest } = fieldProps;
     const tlsKey = getConfig('tlsKey');
     const { supports } = localeContext;
     const languages = Object.keys(supports);
+    const intlFields = new Map<string, Field>();
     languages.forEach(language =>
-      callback(`${tlsKey}.${name}.${language}`, {
+      intlFields.set(`${tlsKey}.${name}.${language}`, callback({
+        name: `${tlsKey}.${name}.${language}`,
         type: FieldType.string,
         label: `${supports[language]}`,
         transformRequest,
-        computedProps: {
+        dynamicProps: {
           bind: ({ record }) => {
             if (record) {
               const tls = record.get(tlsKey) || {};
@@ -780,23 +782,24 @@ export function processIntlField(
             }
           },
         },
-      }),
+      })),
     );
+    return [field, intlFields];
   }
-  return callback(name, fieldProps);
+  return [field, undefined];
 }
 
-export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {
-  const value = myField.get(prop);
+export function findBindFieldBy(myField: Field, fields: Fields, prop: string, record?: Record): Field | undefined {
+  const value = myField.get(prop, record);
   const myName = myField.name;
   return [...fields.values()].find(field => {
-    const bind = field.get('bind');
+    const bind = field.get('bind', record);
     return bind && bind === `${myName}.${value}`;
   });
 }
 
 export function getLimit(limit: any, record: Record) {
-  if (isString(limit) && record.getField(limit)) {
+  if (isString(limit) && record.dataSet.getField(limit)) {
     return record.get(limit);
   }
   return limit;
@@ -862,16 +865,13 @@ export function getUniqueFieldNames(dataSet: DataSet): string[] {
   return keys;
 }
 
-export function getUniqueKeysAndPrimaryKey(dataSet?: DataSet): string[] {
-  if (dataSet) {
-    const keys: string[] = getUniqueFieldNames(dataSet);
-    const { primaryKey } = dataSet.props;
-    if (primaryKey) {
-      keys.push(primaryKey);
-    }
-    return keys;
+export function getUniqueKeysAndPrimaryKey(dataSet: DataSet): string[] {
+  const keys: string[] = getUniqueFieldNames(dataSet);
+  const { primaryKey } = dataSet.props;
+  if (primaryKey) {
+    keys.push(primaryKey);
   }
-  return [];
+  return keys;
 }
 
 export function isDirtyRecord(record) {
@@ -966,63 +966,63 @@ export function exportExcel(data, excelName) {
   });
 }
 
-export function getSortedFields(fields: Fields): [string, Field][] {
-  const normalFields: [string, Field][] = [];
-  const objectBindFields: [string, Field][] = [];
-  const bindFields: [string, Field][] = [];
-  const transformResponseField: [string, Field][] = [];
-  const dynamicFields: [string, Field][] = [];
-  const dynamicObjectBindFields: [string, Field][] = [];
-  const dynamicBindFields: [string, Field][] = [];
-  [...fields.entries()].forEach((entry) => {
-    const [, field] = entry;
-    const dynamicProps = field.get('computedProps') || field.get('dynamicProps');
-    if (dynamicProps) {
-      if (dynamicProps.bind) {
-        if (field.type === FieldType.object) {
-          dynamicObjectBindFields.push(entry);
-        } else {
-          dynamicBindFields.push(entry);
-        }
-      } else {
-        dynamicFields.push(entry);
-      }
-    } else {
-      const bind = field.get('bind');
-      if (bind) {
-        const targetNames = bind.split('.');
-        targetNames.pop();
-        if (targetNames.some((targetName) => {
-          const target = fields.get(targetName);
-          return target && (target.get('computedProps') || target.get('dynamicProps'));
-        })) {
-          if (field.type === FieldType.object) {
-            dynamicObjectBindFields.push(entry);
-          } else {
-            dynamicBindFields.push(entry);
-          }
-        } else if (field.get('transformResponse')) {
-          transformResponseField.push(entry);
-        } else if (field.type === FieldType.object) {
-          objectBindFields.push(entry);
-        } else {
-          bindFields.push(entry);
-        }
-      } else {
-        normalFields.push(entry);
-      }
-    }
-  });
-  return [
-    ...normalFields,
-    ...objectBindFields,
-    ...bindFields,
-    ...transformResponseField,
-    ...dynamicFields,
-    ...dynamicObjectBindFields,
-    ...dynamicBindFields,
-  ];
-}
+// export function getSortedFields(fields: Fields): [string, Field][] {
+//   const normalFields: [string, Field][] = [];
+//   const objectBindFields: [string, Field][] = [];
+//   const bindFields: [string, Field][] = [];
+//   const transformResponseField: [string, Field][] = [];
+//   const dynamicFields: [string, Field][] = [];
+//   const dynamicObjectBindFields: [string, Field][] = [];
+//   const dynamicBindFields: [string, Field][] = [];
+//   [...fields.entries()].forEach((entry) => {
+//     const [, field] = entry;
+//     const dynamicProps = field.get('computedProps') || field.get('dynamicProps');
+//     if (dynamicProps) {
+//       if (dynamicProps.bind) {
+//         if (field.type === FieldType.object) {
+//           dynamicObjectBindFields.push(entry);
+//         } else {
+//           dynamicBindFields.push(entry);
+//         }
+//       } else {
+//         dynamicFields.push(entry);
+//       }
+//     } else {
+//       const bind = field.get('bind');
+//       if (bind) {
+//         const targetNames = bind.split('.');
+//         targetNames.pop();
+//         if (targetNames.some((targetName) => {
+//           const target = fields.get(targetName);
+//           return target && (target.get('computedProps') || target.get('dynamicProps'));
+//         })) {
+//           if (field.type === FieldType.object) {
+//             dynamicObjectBindFields.push(entry);
+//           } else {
+//             dynamicBindFields.push(entry);
+//           }
+//         } else if (field.get('transformResponse')) {
+//           transformResponseField.push(entry);
+//         } else if (field.type === FieldType.object) {
+//           objectBindFields.push(entry);
+//         } else {
+//           bindFields.push(entry);
+//         }
+//       } else {
+//         normalFields.push(entry);
+//       }
+//     }
+//   });
+//   return [
+//     ...normalFields,
+//     ...objectBindFields,
+//     ...bindFields,
+//     ...transformResponseField,
+//     ...dynamicFields,
+//     ...dynamicObjectBindFields,
+//     ...dynamicBindFields,
+//   ];
+// }
 
 export async function concurrentPromise(
   promiseLoaders: { getPromise: () => Promise<any> }[],

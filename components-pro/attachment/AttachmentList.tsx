@@ -25,7 +25,7 @@ export interface AttachmentListProps {
   bucketName?: string;
   bucketDirectory?: string;
   storageCode?: string;
-  attachmentUUID: string;
+  attachmentUUID?: string;
   uploadButton?: ReactNode;
   sortable?: boolean;
   readOnly?: boolean;
@@ -68,12 +68,12 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
     }
   }, [attachments, onOrderChange]);
   useEffect(() => {
-    if (!attachments) {
+    if (!attachments && attachmentUUID) {
       onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID });
     }
   }, [onFetchAttachments, attachments, bucketName, bucketDirectory, storageCode, attachmentUUID]);
 
-  if (attachments) {
+  if (attachments && attachmentUUID) {
     const { length } = attachments;
     const draggable = sortable && !readOnly && length > 1;
     let previewIndex = 0;

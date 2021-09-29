@@ -104,8 +104,8 @@ export default class TableEditor extends Component<TableEditorProps> {
     const { name } = column;
     const { dataSet, currentEditRecord, editors, inlineEdit, virtual } = tableStore;
     const record = currentEditRecord || dataSet.current;
-    const field = record?.getField(name) || dataSet.getField(name);
-    if (field?.get('multiLine')) {
+    const field = dataSet.getField(name);
+    if (field && field.get('multiLine', record)) {
       window.addEventListener('click', this.handleWindowClick);
     }
     window.addEventListener('resize', this.handleWindowResize);
@@ -333,6 +333,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           this.width = width;
         }
         wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left)}, ${pxToRem(top)})`)}`;
+        editor.forcePositionChanged();
       }
     }
   }
@@ -376,18 +377,20 @@ export default class TableEditor extends Component<TableEditorProps> {
       tableStore: { currentEditRecord },
     } = this.context;
     const record = currentEditRecord || dataSet.current;
-    const multiLineFields = dataSet.props.fields.map(field => {
-      if (field.bind && field.bind.split('.')[0] === name) {
-        return record.getField(field.name) || dataSet.getField(field.name);
+    const multiLineFields = [...dataSet.fields.entries()].map(([key, field]) => {
+      const bind = field.get('bind', record);
+      if (bind && bind.split('.')[0] === name) {
+        return record.fields.get(key) || field;
       }
       return null;
     }).filter(f => f);
     if (multiLineFields && multiLineFields.length) {
       return (
         <div>
-          {multiLineFields.map((fields, index) => {
-            if (fields) {
-              const editor = getEditorByField(fields);
+          {multiLineFields.map((field, index) => {
+            if (field) {
+              const { name: fieldName } = field;
+              const editor = getEditorByField(field, record);
               this.editorProps = editor.props;
               const { style = {}, ...otherProps } = this.editorProps;
               if (rowHeight !== 'auto') {
@@ -398,7 +401,7 @@ export default class TableEditor extends Component<TableEditorProps> {
                 style,
                 ref: index === 0 ? this.saveRef : undefined,
                 record,
-                name: fields.get('name'),
+                name: fieldName,
                 onKeyDown: this.handleEditorKeyDown,
                 onEnterDown: this.handleEditorKeyEnterDown,
                 onClick: this.handleEditorClick,
@@ -407,9 +410,9 @@ export default class TableEditor extends Component<TableEditorProps> {
                 // 目前测试inline时候需要放开限制
                 _inTable: !inlineEdit,
               };
-              const label = fields.get('label');
+              const label = field.get('label', record);
               return (
-                <Row key={`${record?.index}-multi-${fields.get('name')}`} className={`${prefixCls}-multi`}>
+                <Row key={`${record?.index}-multi-${fieldName}`} className={`${prefixCls}-multi`}>
                   {label && <Col span={8} className={`${prefixCls}-multi-label`}>{label}</Col>}
                   <Col span={label ? 16 : 24} className={`${prefixCls}-multi-value`}>{cloneElement<FormFieldProps>(editor, newEditorProps)}</Col>
                 </Row>
@@ -432,12 +435,12 @@ export default class TableEditor extends Component<TableEditorProps> {
     } = this.context;
     const { name } = column;
     const record = currentEditRecord || dataSet.current;
-    const field = record?.getField(name);
+    const field = dataSet.getField(name);
     // 多行编辑拦截返回渲染器
-    if (!pristine && field && field.get('multiLine')) {
+    if (!pristine && field && field.get('multiLine', record)) {
       return this.renderMultiLineEditor();
     }
-    const cellEditor = getEditorByColumnAndRecord(column, record);
+    const cellEditor = getEditorByColumnAndRecord(column, dataSet, record);
     if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
       this.editorProps = cellEditor.props;
       const { height } = this;

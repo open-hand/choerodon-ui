@@ -36,20 +36,21 @@ import measureTextWidth from '../_util/measureTextWidth';
 import ColumnGroup from './ColumnGroup';
 import { FuncType } from '../button/enum';
 
-export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
-  const lookupCode = field.get('lookupCode');
-  const lookupUrl = field.get('lookupUrl');
-  const lovCode = field.get('lovCode');
-  const multiLine = field.get('multiLine');
-  const { type, name } = field;
+export function getEditorByField(field: Field, record?: Record, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
+  const lookupCode = field.get('lookupCode', record);
+  const lookupUrl = field.get('lookupUrl', record);
+  const lovCode = field.get('lovCode', record);
+  const multiLine = field.get('multiLine', record);
+  const type = field.get('type', record);
+  const { name } = field;
   const flatProps = isFlat ? { isFlat, maxTagCount: 4, maxTagTextLength: 4 } : {};
 
   if (
     lookupCode ||
     isString(lookupUrl) ||
-    (type !== FieldType.object && (lovCode || field.lookup || field.get('options')))
+    (type !== FieldType.object && (lovCode || field.getLookup(record) || field.get('options', record)))
   ) {
-    if (field.get('parentField')) {
+    if (field.get('parentField', record)) {
       return <TreeSelect {...flatProps} />;
     }
     return <ObserverSelect {...flatProps} />;
@@ -105,16 +106,16 @@ export function getEditorByField(field: Field, isQueryField?: boolean, isFlat?: 
   }
 }
 
-export function getPlaceholderByField(field?: Field): string | undefined {
+export function getPlaceholderByField(field?: Field, record?: Record): string | undefined {
   if (field) {
-    const { type } = field;
-    const lookupCode = field.get('lookupCode');
-    const lookupUrl = field.get('lookupUrl');
-    const lovCode = field.get('lovCode');
+    const type = field.get('type', record);
+    const lookupCode = field.get('lookupCode', record);
+    const lookupUrl = field.get('lookupUrl', record);
+    const lovCode = field.get('lovCode', record);
     if (
       lookupCode ||
       isString(lookupUrl) ||
-      (type !== FieldType.object && (lovCode || field.lookup || field.get('options')))
+      (type !== FieldType.object && (lovCode || field.getLookup(record) || field.get('options', record)))
     ) {
       return undefined;
     }
@@ -133,6 +134,7 @@ export function getPlaceholderByField(field?: Field): string | undefined {
 
 export function getEditorByColumnAndRecord(
   column: ColumnProps,
+  dataSet: DataSet,
   record?: Record,
 ): ReactElement<FormFieldProps> | undefined {
   const { name, editor } = column;
@@ -142,16 +144,18 @@ export function getEditorByColumnAndRecord(
       cellEditor = editor(record, name);
     }
     if (cellEditor === true) {
-      const field = record.getField(name);
+      const field = dataSet.getField(name);
       if (field) {
         if (
-          !field.get('unique') ||
-          field.get('multiple') ||
-          field.get('range') ||
+          !field.get('unique', record) ||
+          field.get('multiple', record) ||
+          field.get('range', record) ||
           record.status === RecordStatus.add
         ) {
-          return getEditorByField(field);
+          return getEditorByField(field, record);
         }
+      } else {
+        return <ObserverTextField />;
       }
     }
     if (isValidElement(cellEditor)) {

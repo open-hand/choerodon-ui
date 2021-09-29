@@ -384,12 +384,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     };
   }
 
-  @computed
   get textField(): string {
     return this.getProp('textField') || 'meaning';
   }
 
-  @computed
   get valueField(): string {
     return this.getProp('valueField') || 'value';
   }
@@ -416,7 +414,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const { record, field, options, searchMatcher } = this;
     const { data } = options;
     if (field && !isString(searchMatcher)) {
-      const cascadeMap = field.get('cascadeMap');
+      const cascadeMap = field.get('cascadeMap', this.record);
       if (cascadeMap) {
         if (record) {
           const cascades = Object.keys(cascadeMap);
@@ -432,18 +430,15 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return data;
   }
 
-  @computed
   get searchable(): boolean {
     const { searchable = getConfig('selectSearchable') } = this.observableProps;
     return !!searchable;
   }
 
-  @computed
   get multiple(): boolean {
     return !!this.getProp('multiple');
   }
 
-  @computed
   get menuMultiple(): boolean {
     return this.multiple;
   }
@@ -459,15 +454,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     } = this;
     return (
       options ||
-      (field && field.options) ||
+      (field && field.getOptions(this.record)) ||
       normalizeOptions({ textField, valueField, disabledField: DISABLED_FIELD, multiple, children })
     );
   }
 
-  @computed
   get primitive(): boolean {
-    const type = this.getProp('type');
-    return this.observableProps.primitiveValue !== false && type !== FieldType.object;
+    return this.observableProps.primitiveValue !== false && this.getProp('type') !== FieldType.object;
   }
 
   checkValueReaction?: IReactionDisposer;
@@ -1379,9 +1372,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   processLookupValue(value) {
-    const { field, textField, primitive } = this;
-    if (primitive && field && field.lookup) {
-      return super.processValue(field.getText(value));
+    const { field, textField, primitive, record } = this;
+    if (primitive && field && field.getLookup(record)) {
+      return super.processValue(field.getText(value, undefined, record));
     }
     return super.processValue(this.processObjectValue(value, textField));
   }
@@ -1514,7 +1507,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     if (!hidden) {
       const { field } = this;
       if (field) {
-        field.fetchLookup(noCache);
+        field.fetchLookup(noCache, this.record);
       }
       this.forcePopupAlign();
     }
@@ -1552,7 +1545,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       }
       if (
         field &&
-        field.get('cascadeMap') &&
+        field.get('cascadeMap', this.record) &&
         filteredOptions.length &&
         !isEqual(newValues, values)
       ) {

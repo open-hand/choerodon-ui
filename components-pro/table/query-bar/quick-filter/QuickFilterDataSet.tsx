@@ -1,8 +1,9 @@
-import React, { createContext, useMemo } from 'react';
+import React, { Context, createContext, FunctionComponent, useMemo } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from '../../../data-set';
 import { DataSetProps, DataSetSelection, DataToJSON, FieldIgnore, FieldType } from '../../../data-set/interface';
+import { QuickFilterProps } from '.';
 
 function processAxiosConfig(
   axiosConfig: AxiosRequestConfig | ((...args: any[]) => AxiosRequestConfig) = {},
@@ -67,14 +68,27 @@ const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) =>
   ],
 });
 
-const Store = createContext({} as any);
+export interface QuickFilterContextValue extends QuickFilterProps {
+  menuDataSet: DataSet,
+  filterMenuDS: DataSet,
+  conditionDataSet: DataSet,
+}
+
+const ds = {} as DataSet;
+const Store: Context<QuickFilterContextValue> = createContext({
+  dataSet: ds,
+  queryDataSet: ds,
+  menuDataSet: ds,
+  filterMenuDS: ds,
+  conditionDataSet: ds,
+});
 
 export default Store;
 
-export const StoreProvider = props => {
+export const StoreProvider: FunctionComponent<QuickFilterProps> = props => {
   const { children, dynamicFilterBar, queryDataSet, searchCode } = props;
-  const searchCodes = dynamicFilterBar?.searchCode || searchCode;
-  const tableFilterAdapter = dynamicFilterBar?.tableFilterAdapter || getConfig('tableFilterAdapter');
+  const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
+  const tableFilterAdapter = dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || getConfig('tableFilterAdapter');
 
   const filterMenuDS = useMemo(() => new DataSet({
     autoCreate: true,

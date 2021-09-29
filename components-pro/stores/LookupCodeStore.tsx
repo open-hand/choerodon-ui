@@ -4,6 +4,7 @@ import isString from 'lodash/isString';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import axios from '../axios';
 import Field from '../data-set/Field';
+import Record from '../data-set/Record';
 import lovCodeStore from './LovCodeStore';
 import { FieldType } from '../data-set/enum';
 import { generateResponseData } from '../data-set/utils';
@@ -75,15 +76,14 @@ export class LookupCodeStore {
     return this.merger.add(code, getBatchKey, [lookupBatchAxiosConfig]);
   }
 
-  getAxiosConfig(field: Field, noCache?: boolean): AxiosRequestConfig {
-    const lookupAxiosConfig = field.get('lookupAxiosConfig') || getConfig('lookupAxiosConfig');
-    const { record } = field;
+  getAxiosConfig(field: Field, record?: Record| undefined, noCache?: boolean): AxiosRequestConfig {
+    const lookupAxiosConfig = field.get('lookupAxiosConfig', record) || getConfig('lookupAxiosConfig');
     const params = getLovPara(field, record);
     const config = processAxiosConfig(lookupAxiosConfig, {
       dataSet: field.dataSet,
       record,
       params,
-      lookupCode: field.get('lookupCode'),
+      lookupCode: field.get('lookupCode', record),
     });
     return {
       ...config,
@@ -94,11 +94,11 @@ export class LookupCodeStore {
     };
   }
 
-  getUrl(field: Field): string | undefined {
-    const type = field.get('type');
-    const lovCode = field.get('lovCode');
-    const lookupUrl = field.get('lookupUrl');
-    const lookupCode = field.get('lookupCode');
+  getUrl(field: Field, record?: Record | undefined): string | undefined {
+    const type = field.get('type', record);
+    const lovCode = field.get('lovCode', record);
+    const lookupUrl = field.get('lookupUrl', record);
+    const lookupCode = field.get('lookupCode', record);
     if (typeof lookupUrl === 'function' && lookupCode) {
       return lookupUrl(lookupCode);
     }
@@ -106,7 +106,7 @@ export class LookupCodeStore {
       return lookupUrl;
     }
     if (lovCode && type !== FieldType.object) {
-      return lovCodeStore.getQueryAxiosConfig(lovCode, field)({ dataSet: field.dataSet }).url;
+      return lovCodeStore.getQueryAxiosConfig(lovCode, field, undefined, record)({ dataSet: field.dataSet }).url;
     }
   }
 
