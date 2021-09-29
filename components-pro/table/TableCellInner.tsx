@@ -88,8 +88,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const columnKey = getColumnKey(column);
   const height = record.getState(`__column_resize_height_${name}`);
   const { currentEditRecord } = tableStore;
-  const field = record.getField(name);
-  const fieldDisabled = disabled || (field && field.get('disabled'));
+  const field = dataSet.getField(name);
+  const fieldDisabled = disabled || (field && field.get('disabled', record));
   const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
       return command({ dataSet, record, aggregation });
@@ -97,7 +97,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     return command;
   }, [record, command, dataSet, aggregation]);
   const canFocus = useMemo(() => !fieldDisabled && (!inlineEdit || record === currentEditRecord), [fieldDisabled, record, currentEditRecord, inlineEdit]);
-  const cellEditor = getEditorByColumnAndRecord(column, record);
+  const cellEditor = getEditorByColumnAndRecord(column, dataSet, record);
   const cellEditorInCell = isInCellEditor(cellEditor);
   const hasEditor = !pristine && cellEditor && !cellEditorInCell;
   const showEditor = useCallback((cell) => {
@@ -209,10 +209,10 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const handleCommandDelete = useCallback(() => {
     dataSet.delete(record);
   }, [dataSet, record]);
-  const multiLine = field && field.get('multiLine');
-  const fieldType = !aggregation && rowHeight !== 'auto' && field && field.type;
-  const rows = multiLine ? [...record.fields.values()].reduce((count, dsField) => {
-    const bind = dsField.get('bind');
+  const multiLine = field && field.get('multiLine', record);
+  const fieldType = !aggregation && rowHeight !== 'auto' && field && field.get('type', record);
+  const rows = multiLine ? [...dataSet.fields.values()].reduce((count, dsField) => {
+    const bind = dsField.get('bind', record);
     if (bind && bind.startsWith(`${name}.`)) {
       return count + 1;
     }
@@ -385,7 +385,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     }
     return style;
   }, [fieldType, key, rows, rowHeight, height, style, aggregation, hasEditor]);
-  const textAlign = useMemo(() => (align || (columnCommand ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field))), [columnCommand, align, column, field]);
+  const textAlign = useMemo(() => (align || (columnCommand ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field, record))), [columnCommand, align, column, field, record]);
   const colSpanStyle = useMemo(() => (colSpan && colSpan > 1 && (textAlign === ColumnAlign.right || textAlign === ColumnAlign.center)) ? { width: `calc(100% - ${pxToRem(30)})` } : {}, [colSpan, textAlign]);
   const innerStyle = useMemo(() => {
     if (inAggregation) {
@@ -406,18 +406,18 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const getRenderedValue = () => {
     const processValue = (v) => {
       if (!isNil(v)) {
-        const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field));
+        const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field, undefined, record));
         return processFieldValue(text, field, {
-          getProp: (propName) => field && field.get(propName),
+          getProp: (propName) => field && field.get(propName, record),
           lang: dataSet && dataSet.lang || localeContext.locale.lang,
-        }, true);
+        }, true, record);
       }
       return '';
     };
     const processRenderer = (v, repeat?: number) => {
       let processedValue;
-      if (field && (field.lookup || field.get('options') || field.get('lovCode'))) {
-        processedValue = field.getText(v) as string;
+      if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
+        processedValue = field.getText(v, undefined, record) as string;
       }
       // 值集中不存在 再去取直接返回的值
       const text = isNil(processedValue) ? processValue(v) : processedValue;
@@ -432,8 +432,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     };
     if (field) {
       if (!cellEditorInCell) {
-        const multiple = field.get('multiple');
-        const range = field.get('range');
+        const multiple = field.get('multiple', record);
+        const range = field.get('range', record);
         if (multiple) {
           const { tags, multipleValidateMessageLength } = renderMultipleValues(value, {
             disabled,
@@ -444,7 +444,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
             renderValidationResult,
             isValidationMessageHidden,
             showValidationMessage,
-            validator: field.validator,
+            validationResults: field.getValidationErrorValues(record),
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
           return tags;
@@ -453,7 +453,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
           return renderRangeValue(toRangeValue(value, range), { processRenderer });
         }
       }
-      if (field.get('multiLine')) {
+      if (field.get('multiLine', record)) {
         const { lines, multipleValidateMessageLength } = renderMultiLine({
           name,
           field,
@@ -478,9 +478,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : getConfig('renderEmpty')('Output') : result;
 
   const showTooltip = useCallback((e) => {
-    if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator') && field.get('multiple') && toMultipleValue(value, field.get('range')).length))) {
-      const { validator } = field;
-      const message = validator && renderValidationResult(validator.currentValidationResult);
+    if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator', record) && field.get('multiple', record) && toMultipleValue(value, field.get('range', record)).length))) {
+      const validationResults = field.getValidationErrorValues(record);
+      const message = validationResults && renderValidationResult(validationResults[0]);
       if (!isValidationMessageHidden(message)) {
         showValidationMessage(e, message);
         return true;
@@ -498,7 +498,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
       }
     }
     return false;
-  }, [renderValidationResult, isValidationMessageHidden, field, tooltip, multiLine, text]);
+  }, [renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text]);
   const handleMouseEnter = useCallback((e) => {
     if (!tableStore.columnResizing && showTooltip(e)) {
       tooltipShownRef.current = true;
@@ -536,10 +536,10 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   };
   const empty = field ? isFieldValueEmpty(
     value,
-    field.get('range'),
-    field.get('multiple'),
-    field.type === FieldType.object ? field.get('valueField') : undefined,
-    field.type === FieldType.object ? field.get('textField') : undefined,
+    field.get('range', record),
+    field.get('multiple', record),
+    field.get('type', record) === FieldType.object ? field.get('valueField', record) : undefined,
+    field.get('type', record) === FieldType.object ? field.get('textField', record) : undefined,
   ) : false;
   const innerClassName: string[] = [innerPrefixCls];
   if (columnEditorBorder) {
@@ -551,20 +551,20 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   let highlight;
   let inValid;
   if (field) {
-    if (!pristine && field.dirty) {
+    if (!pristine && field.isDirty(record)) {
       innerClassName.push(`${prefixCls}-inner-dirty`);
     }
     if (!inlineEdit && !cellEditorInCell) {
-      inValid = !field.valid;
+      inValid = !field.isValid(record);
       if (inValid) {
         innerClassName.push(`${prefixCls}-inner-invalid`);
       }
     }
     if (editorBorder) {
-      if (field.required && (empty || !getConfig('showRequiredColorsOnlyEmpty'))) {
+      if (field.get('required', record) && (empty || !getConfig('showRequiredColorsOnlyEmpty'))) {
         innerClassName.push(`${prefixCls}-inner-required`);
       }
-      highlight = field.get('highlight');
+      highlight = field.get('highlight', record);
       if (highlight) {
         innerClassName.push(`${prefixCls}-inner-highlight`);
       }

@@ -51,13 +51,13 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
     const { queryDataSet } = dataSet;
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
-      const { fields } = queryDataSet;
+      const { fields, current } = queryDataSet;
       return [...fields.entries()].reduce((list, [name, field]) => {
-        if (!field.get('bind') && !name.includes('__tls')) {
+        if (!field.get('bind', current) && !name.includes('__tls')) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
           if (type === TableQueryBarType.filterBar) {
-            const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field);
+            const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
             filterBarProps = {
               placeholder,
             };
@@ -72,7 +72,7 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
           list.push(
             isValidElement(element)
               ? cloneElement(element, props)
-              : cloneElement(getEditorByField(field, type !== TableQueryBarType.professionalBar, type === TableQueryBarType.filterBar), {
+              : cloneElement(getEditorByField(field, current, type !== TableQueryBarType.professionalBar, type === TableQueryBarType.filterBar), {
                 ...props,
                 ...(isObject(element) ? element : {}),
               }),

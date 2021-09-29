@@ -335,7 +335,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     const { record, field, options } = this;
     const { data } = options;
     if (field) {
-      const cascadeMap = field.get('cascadeMap');
+      const cascadeMap = field.get('cascadeMap', record);
       if (cascadeMap) {
         if (record) {
           const cascades = Object.keys(cascadeMap);
@@ -1417,7 +1417,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       return processvalue.join('/');
     }
     if (primitive && field) {
-      return super.processValue(field.getText(value));
+      return super.processValue(field.getText(value, undefined, this.record));
     }
   }
 

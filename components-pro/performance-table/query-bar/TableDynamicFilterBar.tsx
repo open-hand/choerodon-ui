@@ -131,6 +131,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   refFilterWrapper: HTMLDivElement | null = null;
 
+  refSingleWrapper: HTMLDivElement | null = null;
+
   refEditors: Map<string, any> = new Map();
 
   originalValue: object;
@@ -183,17 +185,20 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   async handleDataSetValidate({ dataSet, result }) {
     if (!await result) {
-      const fields = [...dataSet.fields.keys()];
-      map(fields, field => {
-        if (!dataSet.current.getField(field).isValid()) {
-          this.handleSelect(field);
-        }
-      });
       runInAction(() => {
+        const { current } = dataSet;
+        dataSet.fields.forEach((field, key) => {
+          if (!field.isValid(current)) {
+            this.handleSelect(key);
+          }
+        });
         this.expand = true;
       });
-      this.refFilterWrapper!.style.height = '';
-      this.refFilterWrapper!.style.overflow = '';
+      const { refSingleWrapper } = this;
+      if (refSingleWrapper) {
+        refSingleWrapper.style.height = '';
+        refSingleWrapper.style.overflow = '';
+      }
     }
   }
 
@@ -309,26 +314,29 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       <span
         className={`${proPrefixCls}-filter-menu-expand`}
         onClick={() => {
-          const { height } = this.refFilterWrapper!.getBoundingClientRect();
-          const { height: childHeight } = this.refFilterWrapper!.children[0].getBoundingClientRect();
-          runInAction(() => {
-            this.expand = hidden ? height <= 0 : height <= (childHeight + 2);
-          });
-          if (hidden && height) {
-            // 收起全部
-            this.refFilterWrapper!.style.display = 'none';
-          } else {
-            this.refFilterWrapper!.style.display = 'flex';
-            this.refFilterWrapper!.style.height = '';
-            this.refFilterWrapper!.style.overflow = '';
-          }
-          if (height > childHeight && !hidden) {
-            // 收起留一行高度
-            this.refFilterWrapper!.style.height = pxToRem(childHeight) || '';
-            this.refFilterWrapper!.style.overflow = 'hidden';
-          } else {
-            this.refFilterWrapper!.style.height = '';
-            this.refFilterWrapper!.style.overflow = '';
+          const { refFilterWrapper } = this;
+          if (refFilterWrapper) {
+            const { height } = refFilterWrapper.getBoundingClientRect();
+            const { height: childHeight } = refFilterWrapper.children[0].getBoundingClientRect();
+            runInAction(() => {
+              this.expand = hidden ? height <= 0 : height <= (childHeight + 2);
+            });
+            if (hidden && height) {
+              // 收起全部
+              refFilterWrapper.style.display = 'none';
+            } else {
+              refFilterWrapper.style.display = 'flex';
+              refFilterWrapper.style.height = '';
+              refFilterWrapper.style.overflow = '';
+            }
+            if (height > childHeight && !hidden) {
+              // 收起留一行高度
+              refFilterWrapper.style.height = pxToRem(childHeight) || '';
+              refFilterWrapper.style.overflow = 'hidden';
+            } else {
+              refFilterWrapper.style.height = '';
+              refFilterWrapper.style.overflow = '';
+            }
           }
         }}
       >

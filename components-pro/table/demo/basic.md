@@ -481,6 +481,8 @@ class App extends React.Component {
         showSelectionTips
         parityRow
         summary="BASIC DEMO"
+        virtual
+        virtualCell
         pagination={{ 
           pageSizeEditable: true,
           showQuickJumper: true,
