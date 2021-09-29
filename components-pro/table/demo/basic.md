@@ -33,9 +33,11 @@ import moment from 'moment';
 const { Column } = Table;
 const { Option } = Select;
 
-function sexIdRenderer({ record }) {
+function sexIdRenderer({ dataSet, record }) {
   // 获取性别codeValueId
-  return record.getField('sex').getLookupData().codeValueId;
+  const value = record.get('sex') || [];
+  const field = dataSet.getField('sex');
+  return value.map(v => field.getLookupData(v, record).codeValueId).join(',');
 }
 
 function handleUserDSLoad({ dataSet }) {
