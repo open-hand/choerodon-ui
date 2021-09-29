@@ -333,6 +333,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           this.width = width;
         }
         wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left)}, ${pxToRem(top)})`)}`;
+        editor.forcePositionChanged();
       }
     }
   }

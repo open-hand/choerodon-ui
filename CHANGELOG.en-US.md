@@ -27,6 +27,7 @@ timeline: true
 - 💄 `Tabs`: Optimized to not display when `count` is zero.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
 - 💄 `<pro>Attachment`: Optimize the display of deleting, dnd, preview and label. Optimized to delete the attachments in the wrong state as direct deletion.
+- 💄 `<pro>TextField`: Optimized to close the animation effect when switching record in multiple mode.
 - 💄 `<pro>Table`: Supports multiple selections by pressing shift.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
