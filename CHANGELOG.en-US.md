@@ -17,7 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad`, `tableButtonsLimit` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
 - 🌟 `Tabs`: Added `inkBarStyle`, `customizable`, `customizedCode`, `hideOnlyGroup` properties, support ink bar style modification.
-- 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties, `count` property support hooks.
+- 🌟 `Tabs.TabPane`: Added `title`, `showCount`, `count`, `overflowCount` properties, `count` property support hooks.
 - 🌟 `Tag`: Added `gray` color.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
@@ -50,8 +50,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the display problem when the editor is SelectBox in `multiple` mode.
 - 🐞 `<pro>Table`: Fix the problem of inaccurate column order in personalized adjustment.
 - 🐞 `<pro>Tree`: Fix the problem that asynchronously loaded nodes cannot be displayed when the dataSet is reloaded.
+- 🐞 `<pro>Table`: Fix the problem that professionalBar under `autoHeight` property will only be collapsed after clicking More multiple times.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
-- 🌟 `Tabs.TabPane`: Added `count`, `overflowCount` properties.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of line highlighting error.
 - 🐞 `<pro>Lov`: Fix the problem that the value of `alwaysShowRowBox` in the single-select mode table is incorrectly selected.
 - 🐞 `<pro>TriggerField`: Fix the problem that `onPopupHiddenChange` sometimes does not trigger.
