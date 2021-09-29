@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.5
+
+`2021-09-29`
+
 - 🌟 `configure`: 新增 tabsInkBarStyle, customizable, customizedSave, customizedLoad, tableButtonsLimit 属性, 废弃 tableCustomizedSave, tableCustomizedSave, tableCustomizable, performanceTableCustomizable, lovTableCustomizable 属性。
 - 🌟 `Tabs`: 新增 inkBarStyle, customizable, customizedCode, hideOnlyGroup 属性，支持墨条样式修改。
 - 🌟 `Tabs.TabPane`: 新增 title, showCount 属性, count 属性支持钩子。

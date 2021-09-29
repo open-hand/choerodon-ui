@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.5
+
+`2021-09-29`
+
 - 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad`, `tableButtonsLimit` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
 - 🌟 `Tabs`: Added `inkBarStyle`, `customizable`, `customizedCode`, `hideOnlyGroup` properties, support ink bar style modification.
 - 🌟 `Tabs.TabPane`: Added `title`, `showCount`, `count`, `overflowCount` properties, `count` property support hooks.
