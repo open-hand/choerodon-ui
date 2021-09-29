@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Attachment, DataSet } from 'choerodon-ui/pro';
+import { Attachment, DataSet, Row, Col } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(
@@ -10,14 +10,9 @@ const App = () => {
           {
             name: 'attachment',
             type: 'attachment',
-            label: '技术附件',
+            label: <span>技术附件</span>,
             max: 9,
             required: true,
-          },
-        ],
-        data: [
-          {
-            attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472',
           },
         ],
       }),
@@ -27,8 +22,26 @@ const App = () => {
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
     name: 'attachment',
     dataSet: ds,
+    labelLayout: 'float',
   };
-  return <Attachment {...props} />;
+
+  React.useEffect(() => {
+    ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+    setTimeout(() => {
+      ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+    }, 0);
+    setTimeout(() => {
+      ds.loadData([{ attachment: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' }]);
+    }, 0);
+  }, []);
+
+  return (
+    <Row gutter={10}>
+      <Col span={12}>
+        <Attachment {...props} />
+      </Col>
+    </Row>
+  );
 };
 
 ReactDOM.render(<App />, document.getElementById('container'));

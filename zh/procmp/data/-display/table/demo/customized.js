@@ -31,6 +31,10 @@ const EditButton = (props) => {
 };
 
 class App extends React.Component {
+  state = { customizedCode: 'customized' };
+
+  style = { height: 'calc(100vh - 100px)' };
+
   userDs = new DataSet({
     primaryKey: 'userid',
     transport: {
@@ -110,44 +114,61 @@ class App extends React.Component {
     return new Array(3).fill(text).join(' ');
   };
 
+  handleChangeCustomized = () => {
+    const { customizedCode } = this.state;
+    this.setState({
+      customizedCode: customizedCode === 'customized' ? 'other' : 'customized',
+    });
+  };
+
   render() {
+    const { customizedCode } = this.state;
     return (
-      <Table
-        customizable
-        border={false}
-        customizedCode="customized"
-        rowHeight={40}
-        key="user"
-        dataSet={this.userDs}
-        rowDraggable
-        columnDraggable
-        columnTitleEditable
-        dragColumnAlign="left"
-        columnsDragRender={this.columnsDragRender}
-        style={{ height: 'calc(100vh - 100px)' }}
-      >
-        <Column header="组合">
-          <Column header="子组合">
-            <Column
-              name="userid"
-              title="ID"
-              header={(ds, name, title) => <i>{title}</i>}
-              tooltip="always"
-            />
-            <Column name="name" tooltip="overflow" renderer={this.renderName} />
+      <>
+        <Button onClick={this.handleChangeCustomized}>
+          当前customizedCode： {customizedCode}
+        </Button>
+        <Table
+          customizable
+          border={false}
+          customizedCode={customizedCode}
+          rowHeight={40}
+          key="user"
+          dataSet={this.userDs}
+          rowDraggable
+          columnDraggable
+          columnTitleEditable
+          dragColumnAlign="left"
+          columnsDragRender={this.columnsDragRender}
+          style={this.style}
+        >
+          <Column header="组合">
+            <Column header="子组合">
+              <Column
+                name="userid"
+                title="ID"
+                header={(ds, name, title) => <i>{title}</i>}
+                tooltip="always"
+              />
+              <Column
+                name="name"
+                tooltip="overflow"
+                renderer={this.renderName}
+              />
+            </Column>
           </Column>
-        </Column>
-        <Column
-          header="操作"
-          align="center"
-          renderer={this.renderEdit}
-          footer="---"
-        />
-        <Column header="组合" titleEditable={false}>
-          <Column name="age" help="help" sortable tooltip="always" />
-          <Column name="enable" tooltip="overflow" hideable={false} />
-        </Column>
-      </Table>
+          <Column
+            header="操作"
+            align="center"
+            renderer={this.renderEdit}
+            footer="---"
+          />
+          <Column header="组合" titleEditable={false}>
+            <Column name="age" help="help" sortable tooltip="always" />
+            <Column name="enable" tooltip="overflow" hideable={false} />
+          </Column>
+        </Table>
+      </>
     );
   }
 }

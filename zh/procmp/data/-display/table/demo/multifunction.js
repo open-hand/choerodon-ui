@@ -517,15 +517,16 @@ class App extends React.Component {
         queryFieldsLimit={2}
         buttons={buttons}
         dataSet={this.userDs}
-        autoMaxWidth
         style={{ height: 300 }}
         header="User"
         rowNumber
         showAllPageSelectionButton
+        showSelectionTips
         parityRow
         summary="BASIC DEMO"
         pagination={{
           pageSizeEditable: true,
+          showQuickJumper: true,
           pageSizeOptions: ['10', '50', '100', '200'],
         }}
       >

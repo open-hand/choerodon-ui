@@ -54,7 +54,7 @@ title: API
 | columnTitleEditable | boolean | 可编辑列标题, customizable 为 true 才起作用 | 1.4.3    |
 | columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 | 1.4.3    |
 | customizable | boolean | 是否显示个性化设置入口按钮  |  | 1.4.3    |
-| customizedCode |string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： tableCustomizedSave tableCustomizedLoad | 1.4.3      |
+| customizedCode |string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： customizedSave customizedLoad | 1.4.3      |
 | rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowSelection)  | 
 | rowDraggable`(1.4.4)` | boolean `(false)` | 行拖拽，实现行的拖拽  |
 | onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
@@ -153,6 +153,7 @@ scrollLeft: (left: number) => void;
 | --- | --- | --- | --- | 
 | columnWidth | 自定义列表选择框宽度 | string\|number | `60px` | 
 | columnTitle | 自定义列表选择框标题 | string\|React.ReactNode |  | 
+| columnIndex | 自定义列表选择框列顺序 | number | |
 | fixed | 把选择框列固定在左边 | boolean | left |  
 | getCheckboxProps | 选择框的默认属性配置 | Function(record) |  |
 | hideDefaultSelections | 自定义选择项时去掉『全选』『反选』两个默认选项 | boolean | false |

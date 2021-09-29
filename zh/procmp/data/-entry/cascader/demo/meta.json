@@ -42,7 +42,7 @@
         "zh": "多选\n",
         "en": "mutiple\n"
       },
-      "order": 2,
+      "order": 3,
       "screenshot": "",
       "category": "pro"
     },
@@ -56,7 +56,7 @@
         "zh": "鼠标移动上去触发选择\n",
         "en": "hover \n"
       },
-      "order": 3,
+      "order": 4,
       "screenshot": "",
       "category": "pro"
     },
@@ -70,7 +70,7 @@
         "zh": "选择框禁用\n",
         "en": "menu item disabled\n"
       },
-      "order": 4,
+      "order": 5,
       "screenshot": "",
       "category": "pro"
     },
@@ -84,7 +84,7 @@
         "zh": "单列表模式\n",
         "en": "Single Menu mode\n"
       },
-      "order": 5,
+      "order": 6,
       "screenshot": "",
       "category": "pro"
     },
@@ -98,7 +98,7 @@
         "zh": "可搜索\n",
         "en": "Searchable\n"
       },
-      "order": 6,
+      "order": 7,
       "screenshot": "",
       "category": "pro"
     },
@@ -112,7 +112,7 @@
         "zh": "所选既所得\n",
         "en": "ChangeOnSelect\n"
       },
-      "order": 7,
+      "order": 8,
       "screenshot": "",
       "category": "pro"
     },
@@ -126,7 +126,7 @@
         "zh": "选项异步加载。当是异步或者有分页时，请使用object类型字段，并且通过接口查询出显示值绑定到该字段上， 因为选项只会加载部分数据，导致没有匹配的显示值。\n",
         "en": "Asynchronous lazy loading Options\n"
       },
-      "order": 8,
+      "order": 9,
       "screenshot": "",
       "category": "pro"
     }

@@ -39,7 +39,7 @@ class App extends React.Component {
         onChange={() => this.setState({ width: 300 })}
         onResize={(width) => this.setState({ width })}
         resize="both"
-        style={{ width: this.state.width, height: 200 }}
+        style={{ width: 200, height: 100 }}
       />
     );
   }

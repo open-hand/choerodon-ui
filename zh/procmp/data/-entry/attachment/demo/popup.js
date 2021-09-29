@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import { Attachment, Row, Col } from 'choerodon-ui/pro';
 
 const App = () => {
-  const [value, setValue] = React.useState(
-    '4c74a34a-fa37-4e92-be9d-5cf726fb1472',
-  );
+  const [value, setValue] = React.useState();
   const props = {
     label: '技术附件',
     labelLayout: 'float',
@@ -15,6 +13,11 @@ const App = () => {
     onChange: setValue,
     viewMode: 'popup',
   };
+
+  React.useEffect(() => {
+    setValue('4c74a34a-fa37-4e92-be9d-5cf726fb1472');
+  }, []);
+
   return (
     <Row gutter={10}>
       <Col span={12}>

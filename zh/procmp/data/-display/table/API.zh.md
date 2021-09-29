@@ -14,6 +14,7 @@ title: API
 | alwaysShowRowBox      | 是否一直显示 rowbox,开启后在其他模式下也会显示 rowbox                                                                                                                                                                          | boolean                                                                                                | false    |    |
 | onRow                 | 设置行属性                                                                                                                                                                                                                     | ({ dataSet, record, index, expandedRow }) => object                                                    |          |    |
 | buttons               | 功能按钮，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，可选值：add \| delete \| remove \| save \| query \| reset \| expandAll \| collapseAll \| export 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \| ReactNode \| object                                                    |          |    |
+| buttonsLimit | 头部显示功能按钮的数量，超出限制放入更多下拉 | number |  | 1.4.5-beta.0 |
 | queryFields           | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件                                                                                                                                      | ReactNode[] \| object                                                                                  |          |    |
 | queryFieldsLimit      | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口                                                                                                                                                                       | number                                                                                                 |          |    |
 | queryBar              | 查询条, 可选值为钩子或者内置类型：filterBar \| professionalBar \| advancedBar \| normal \| bar \| none                                                                                                                                                          | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | normal |   |
@@ -49,17 +50,16 @@ title: API
 | virtualCell | 虚拟单元格 | boolean | false | 1.3.0  |
 | virtualSpin           | 是否开启虚拟滚动 Spin                                                                                                                                                                                                          | boolean                                                                                                | false    |    |
 | virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | | 1.3.0   |
+| autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false | 1.4.5-beta.0 |
 | autoHeight            | 是否开启高度自适应                                                                                                                                                                                                             | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) }                                      | false    |    |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |   |
 | autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |    |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |    |
-| autoMaxWidth          | 是否开启双击侧边栏宽度最大自适应, 初次双击为最大值再次双击为 minWidth                                                                                                                                                          | boolean                                                                                                | true    |   |
 | onDragEnd | 完成拖拽后的触发事件 | (dataSet, columns, resultDrag, provided) => void |  |    |
 | columnsDragRender | 控制列的拖拽渲染 | 请查看DragRender[配置项](#dragRender)  |  |    |
-| rowDragRender | 控制列的拖拽渲染| 请查看DragRender[配置项](#dragRender) |  |    |
+| rowDragRender | 控制行的拖拽渲染| 请查看DragRender[配置项](#dragRender) |  |    |
 | onDragEndBefore |完成拖拽后,切换位置之前的触发事件 | (dataSet, columns, resultDrag, provided) => false \| void \|resultDrag   |  |    |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |   |
-| dynamicFilterBar | queryBar 为 filterBar 时筛选条属性配置 | DynamicFilterBarConfig | |    |
 | treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | | 1.1.0   |
 | treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} | 1.1.0  |
 | parityRow | 奇偶行 | boolean |  | 1.1.0  |
@@ -71,7 +71,7 @@ title: API
 | showSelectionCachedButton | 是否显示缓存选中记录按钮 | boolean | | 1.4.1   |
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮 | boolean | | 1.4.0  |
 | customizable | 是否显示个性化设置入口按钮  | boolean | | 1.3.0   |
-| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： tableCustomizedSave \| tableCustomizedLoad | string | | 1.2.0   |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/zh/procmp/configure)中的表格个性化钩子： customizedSave \| customizedLoad | string | | 1.2.0   |
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | | 1.3.1   |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | | 1.4.0   |
 | aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |   |
@@ -81,7 +81,9 @@ title: API
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | | 1.4.0  |
 | showHeader |	是否显示表头 |	boolean | true | 1.4.2 |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean | true | 1.4.4 |
-| onResize | 列宽改变的回调事件  | ({ column, width }) => void | | 1.4.4 |
+| onColumnResize | 列宽改变的回调事件  | ({ column, width }) => void | | 1.4.4 |
+| searchCode | 动态筛选条后端接口唯一编码 | string | | 1.4.5-beta.0 |
+| rowBoxPlacement | 行选择框位置  | 可选值: start, end \| number | start | 1.4.5-beta.0 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
 
@@ -114,7 +116,7 @@ title: API
 | onCell          | 设置单元格属性                                                                                                                                                                                    | ({ dataSet, record, column }) => object                                                                                            |           |  |
 | command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，数组可选值：edit \| delete 或 \[edit\| delete , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] | | |
 | hidden          | 隐藏                                                                                                                                                                                              | boolean                                                                                                                            |           |  |
-| tooltip         | 用 Tooltip 显示单元格内容。可选值 none \| always \| overflow                                                                                                                                      | string                                                                                                                             | none    |  |
+| tooltip         | 用 Tooltip 显示单元格内容。可选值 none \| always \| overflow                                                                                                                                      | string                                                                                                                             | [globalConfig.tooltip](/zh/procmp/configure) |  |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |  |
 | aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 | |
 | aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |  |
@@ -154,6 +156,21 @@ title: API
 | ----------- | ---------------------- | ------ | -------- | --- |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3 | |
 | autoQueryAfterReset | 重置后自动查询 | boolean | true | 1.4.4 |
+| dynamicFilterBar | 筛选条属性配置 | DynamicFilterBarConfig | | 1.4.5-beta.0 |
+| fuzzyQuery | 是否开启模糊查询 | boolean | true | 1.4.5-beta.0 |
+| fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  | 1.4.5-beta.0 |
+| autoQuery | 条件变更是否自动查询  | boolean | true |1.4.5-beta.0 |
+| onQuery | 查询回调 | () => void |  | 1.4.5-beta.0 |
+| onReset | 重置回调 | () => void |  | 1.4.5-beta.0 |
+
+#### DynamicFilterBarConfig
+
+| 参数        | 说明                   | 类型   | 默认值   |
+| ----------- | ---------------------- | ------ | -------- |
+| searchText | 模糊查询参数名 | string | params |
+| suffixes | 过滤条后缀渲染区 | | filter \| ReactElement |  |
+| prefixes | 过滤条前缀渲染区 | React.ReactElement<any>[] |  |
+| tableFilterAdapter | 过滤条请求适配器 | TransportProps |  |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 

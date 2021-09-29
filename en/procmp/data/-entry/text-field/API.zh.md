@@ -22,5 +22,6 @@ title: API
 | waitType | 设置值变更间隔类型，可选值：throttle \| debounce | string | debounce | 1.1.0    |
 | showLengthInfo | 是否显示长度信息 | boolean | | 1.4.0      |
 | border | 是否显示边框 | boolean | true | 1.4.4 |
+| isFlat | 自动宽度模式 | boolean | false | 1.4.5-beta.0 |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。

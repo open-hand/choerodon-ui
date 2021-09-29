@@ -6,6 +6,8 @@ order: 0
 
 A table displays rows of data.
 
+## Basic Table is not under maintenance, it is recommended to use Pro Table
+
 ## When To Use
 
 - To display a collection of structured data.
