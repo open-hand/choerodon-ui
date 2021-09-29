@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
 - 💄 `<pro>Lov`: Optimize the priority of `lovQueryBar` and remove the global default value of `lovQueryBar`.
+- 💄 `<pro>Lov`: During the search query cycle, the KeyDownEnter event is disabled.
 - 💄 `<pro>Tooltip`: Optimize style alignment.
 - 🐞 `<pro>DataSet`: Fix the `cacheSelection` problem that the changed value is restored when the cached selected record is redisplayed.
 - 🐞 `<pro>DataSet`: Fix the `dirty-field` mode will ignore the primary key value when there is no field corresponding to the `primaryKey` in the field list.

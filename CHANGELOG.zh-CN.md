@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角和校验信息。
 - 💄 `<pro>Table`： 重命名 onResize 为 onColumnResize 事件。
 - 💄 `<pro>Lov`： 优化 lovQueryBar 优先级，去除 lovQueryBar 全局默认值。
+- 💄 `<pro>Lov`： 搜索查询周期内，下拉禁用回车选中，保证选中正确的查询返回数据。
 - 💄 `<pro>Tooltip`：优化样式对齐。
 - 🐞 `<pro>DataSet`： 修复 cacheSelection 属性缓存的选中记录重新显示时变更的值被还原的问题。
 - 🐞 `<pro>DataSet`： 修复当字段列表中没有 primaryKey 对应的字段时 dirty-field 模式会忽略主键值。

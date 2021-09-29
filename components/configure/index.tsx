@@ -446,7 +446,6 @@ const defaultConfig = {
   status: defaultStatus,
   labelLayout: LabelLayout.horizontal,
   queryBar: TableQueryBarType.normal,
-  tableVirtualCell: true,
   tableBorder: true,
   tableHighLightRow: true,
   tableSelectedHighLightRow: false,
