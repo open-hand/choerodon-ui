@@ -90,8 +90,8 @@ export default class IntlField extends TextField<IntlFieldProps> {
       const tlsKey = getConfig('tlsKey');
       return (await Promise.all(
         languages.map(language => {
-          const intlField = record.getField(`${tlsKey}.${name}.${language}`);
-          return intlField ? intlField.checkValidity(false) : true;
+          const intlField = record.dataSet.getField(`${tlsKey}.${name}.${language}`);
+          return intlField ? intlField.checkValidity(false, record) : true;
         }),
       )).every(Boolean);
     }

@@ -30,7 +30,7 @@ import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
-import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit, processValue } from './utils';
+import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -344,7 +344,7 @@ export type FieldProps = {
   /**
    * 在发送请求之前对数据进行处理
    */
-  transformRequest?: (value: any, record: Record) => any;
+  transformRequest?: ((value: any, record: Record) => any) | undefined;
   /**
    * 在获得响应之后对数据进行处理
    */
@@ -392,23 +392,25 @@ export type FieldProps = {
   processValue?: (value: any, range?: 0 | 1) => any;
 };
 
+const defaultProps: FieldProps = {
+  type: FieldType.auto,
+  required: false,
+  readOnly: false,
+  disabled: false,
+  group: false,
+  textField: defaultTextField,
+  valueField: defaultValueField,
+  trueValue: true,
+  falseValue: false,
+  trim: FieldTrim.both,
+};
+
 export default class Field {
-  static defaultProps: FieldProps = {
-    type: FieldType.auto,
-    required: false,
-    readOnly: false,
-    disabled: false,
-    group: false,
-    textField: defaultTextField,
-    valueField: defaultValueField,
-    trueValue: true,
-    falseValue: false,
-    trim: FieldTrim.both,
-  };
+  static defaultProps = defaultProps;
 
-  dataSet?: DataSet;
+  dataSet: DataSet;
 
-  record?: Record;
+  record?: Record | undefined;
 
   @observable validator?: Validator;
 
@@ -422,14 +424,16 @@ export default class Field {
 
   computedProps?: Map<string | symbol, IComputedValue<any>> | undefined;
 
+  computedOptions?: IComputedValue<DataSet | undefined> | undefined;
+
   @observable props: ObservableMap<string, any>;
 
   @observable dirtyProps?: Partial<FieldProps> | undefined;
 
   get attachments(): AttachmentFile[] | undefined {
-    const { dataSet, record } = this;
-    if (dataSet && record) {
-      const { attachmentCaches } = dataSet;
+    const { record } = this;
+    if (record) {
+      const { attachmentCaches } = this.dataSet;
       const uuid = record.get(this.name);
       if (uuid && attachmentCaches) {
         const cache = attachmentCaches.get(uuid);
@@ -446,9 +450,8 @@ export default class Field {
       const { record } = this;
       if (record) {
         const uuid = record.get(this.name);
-        const { dataSet } = this;
-        if (dataSet && uuid) {
-          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
+        if (uuid) {
+          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(this.dataSet, 'attachmentCaches', () => observable.map());
           if (attachmentCaches) {
             const cache = attachmentCaches.get(uuid);
             if (cache) {
@@ -469,9 +472,9 @@ export default class Field {
     if (attachments) {
       return attachments.length;
     }
-    const { dataSet, record } = this;
-    if (dataSet && record) {
-      const { attachmentCaches } = dataSet;
+    const { record } = this;
+    if (record) {
+      const { attachmentCaches } = this.dataSet;
       const uuid = record.get(this.name);
       if (uuid && attachmentCaches) {
         const cache = attachmentCaches.get(uuid);
@@ -489,7 +492,7 @@ export default class Field {
       if (record) {
         const uuid = record.get(this.name);
         const { dataSet } = this;
-        if (dataSet && uuid) {
+        if (uuid) {
           const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
           if (attachmentCaches) {
             const cache = attachmentCaches.get(uuid);
@@ -541,80 +544,15 @@ export default class Field {
   }
 
   get lookup(): object[] | undefined {
-    const { dataSet } = this;
-    if (dataSet) {
-      const lookupToken = this.get(LOOKUP_TOKEN);
-      const { lookupCaches } = dataSet;
-      if (lookupToken && lookupCaches) {
-        const lookup = lookupCaches.get(lookupToken);
-        if (isArrayLike(lookup)) {
-          const valueField = this.get('valueField');
-          const lookupData = this.get('lookupData');
-          if (lookupData) {
-            const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
-            if (others.length) {
-              return others.concat(lookup.slice());
-            }
-          }
-          return lookup;
-        }
-      }
-    }
-    return undefined;
+    return this.getLookup();
   }
 
-  @computed
   get options(): DataSet | undefined {
-    const options = this.get('options');
-    if (options) {
-      return options;
-    }
-    // 确保 lookup 相关配置介入观察
-    lookupStore.getAxiosConfig(this);
-    const optionsProps = this.get('optionsProps');
-    const { lookup, type } = this;
-    if (lookup) {
-      const parentField = this.get('parentField');
-      const idField = this.get('idField') || this.get('valueField');
-      const selection = this.get('multiple') ? DataSetSelection.multiple : DataSetSelection.single;
-      return new DataSet({
-        data: lookup,
-        paging: false,
-        selection,
-        idField,
-        parentField,
-        ...optionsProps,
-      });
-    }
-    const lovCode = this.get('lovCode');
-    if (lovCode) {
-      if (type === FieldType.object || type === FieldType.auto) {
-        return lovCodeStore.getLovDataSet(lovCode, this, optionsProps);
-      }
-    }
-    return undefined;
+    return this.getOptions();
   }
 
   get dirty(): boolean {
-    const { record, name } = this;
-    if (record) {
-      const { dirtyData } = record;
-      if (dirtyData) {
-        const dirtyNames = [...dirtyData.keys()];
-        if (dirtyNames.length) {
-          if (dirtyNames.includes(getChainFieldName(record, name))) {
-            return true;
-          }
-          if (this.type === FieldType.intl) {
-            const tlsKey = getConfig('tlsKey');
-            if (record.get(tlsKey) && Object.keys(localeContext.supports).some(lang => dirtyNames.includes(getChainFieldName(record, `${tlsKey}.${name}.${lang}`)))) {
-              return true;
-            }
-          }
-        }
-      }
-    }
-    return false;
+    return this.isDirty(this.record);
   }
 
   get name(): string {
@@ -630,24 +568,20 @@ export default class Field {
   }
 
   get valid(): boolean {
-    const { validator } = this;
-    return validator ? validator.validity.valid : true;
+    return this.isValid();
   }
 
   get validationMessage() {
     return this.getValidationMessage();
   }
 
-  constructor(props: FieldProps = {}, dataSet?: DataSet, record?: Record) {
+  constructor(props: FieldProps = {}, dataSet: DataSet, record?: Record | undefined) {
     runInAction(() => {
       this.dataSet = dataSet;
       this.record = record;
       this.props = observable.map(props);
-
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
-      if (
-        !this.getProp('options')
-      ) {
+      if (!props.options) {
         const dynamicProps = this.getProp('dynamicProps');
         if (!record || typeof dynamicProps === 'function') {
           raf(() => {
@@ -676,16 +610,35 @@ export default class Field {
     });
   }
 
+  isDirty(record: Record | undefined = this.record): boolean {
+    if (record) {
+      const { name } = this;
+      const { dirtyData } = record;
+      if (dirtyData && dirtyData.size) {
+        if (dirtyData.has(getChainFieldName(record, name))) {
+          return true;
+        }
+        if (this.type === FieldType.intl) {
+          const tlsKey = getConfig('tlsKey');
+          if (record.get(tlsKey) && Object.keys(localeContext.supports).some(lang => dirtyData.has(getChainFieldName(record, `${tlsKey}.${name}.${lang}`)))) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   /**
    * 获取所有属性
    * @return 属性对象
    */
-  getProps(): FieldProps & { [key: string]: any; } {
+  getProps(record: Record | undefined = this.record): FieldProps & { [key: string]: any; } {
     const dsField = this.findDataSetField();
-    const lovCode = this.get('lovCode');
+    const lovCode = this.get('lovCode', record);
     return merge(
       { lookupUrl: getConfig('lookupUrl') },
-      Field.defaultProps,
+      defaultProps,
       getPropsFromLovConfig(lovCode, ['textField', 'valueField']),
       dsField && dsField.props.toPOJO(),
       this.props.toPOJO(),
@@ -698,44 +651,56 @@ export default class Field {
    * @param propsName 属性名
    * @return {any}
    */
-  get(propsName: string): any {
-    const prop = this.getProp(propsName);
+  get(propsName: string, record: Record | undefined = this.record): any {
+    const prop = this.getProp(propsName, record);
     if (prop !== undefined) {
       return prop;
     }
-    return Field.defaultProps[propsName];
+    return defaultProps[propsName];
   }
 
-  private getProp(propsName: string): any {
+  private getProp(propsName: string, record: Record | undefined = this.record): any {
+    if (record && !this.record) {
+      const recordField = record.ownerFields.get(this.name);
+      if (recordField) {
+        const recordProp = recordField.getProp(propsName);
+        if (recordProp !== undefined) {
+          return recordProp;
+        }
+      }
+    }
     if (!['computedProps', 'dynamicProps'].includes(propsName)) {
-      const computedPropsMap = getIf<Field, Map<string | symbol, IComputedValue<any>>>(this, 'computedProps', () => new Map());
-      const computedProp = computedPropsMap.get(propsName);
+      const computedPropsMap = record ?
+        getIf<Record, Map<string | symbol, IComputedValue<any>>>(record, 'computedFieldProps', () => new Map()) :
+        getIf<Field, Map<string | symbol, IComputedValue<any>>>(this, 'computedProps', () => new Map());
+      const computedKey = `__${this.name}$${propsName}__`;
+      const computedProp = computedPropsMap.get(computedKey);
       if (computedProp) {
         const computedValue = computedProp.get();
         if (computedValue !== undefined) {
           return computedValue;
         }
       } else {
-        const computedProps = this.get('computedProps');
+        const computedProps = this.get('computedProps', record);
         if (computedProps) {
           const newComputedProp = computed(() => {
             const computProp = computedProps[propsName];
             if (typeof computProp === 'function') {
-              const prop = this.executeDynamicProps(computProp, propsName);
+              const prop = this.executeDynamicProps(computProp, propsName, record);
               if (prop !== undefined) {
-                this.checkDynamicProp(propsName, prop);
+                this.checkDynamicProp(propsName, prop, record);
                 return prop;
               }
             }
-          }, { name: propsName, context: this });
-          computedPropsMap.set(propsName, newComputedProp);
+          }, { name: computedKey, context: record || this });
+          computedPropsMap.set(computedKey, newComputedProp);
           const computedValue = newComputedProp.get();
           if (computedValue !== undefined) {
             return computedValue;
           }
         }
       }
-      const dynamicProps = this.get('dynamicProps');
+      const dynamicProps = this.get('dynamicProps', record);
       if (dynamicProps) {
         if (typeof dynamicProps === 'function') {
           warning(
@@ -759,23 +724,23 @@ export default class Field {
                 }
               }`,
           );
-          const props = this.executeDynamicProps(dynamicProps, propsName);
+          const props = this.executeDynamicProps(dynamicProps, propsName, record);
           if (props && propsName in props) {
             const prop = props[propsName];
-            this.checkDynamicProp(propsName, prop);
+            this.checkDynamicProp(propsName, prop, record);
             return prop;
           }
         } else {
           const dynamicProp = dynamicProps[propsName];
           if (typeof dynamicProp === 'function') {
-            const prop = this.executeDynamicProps(dynamicProp, propsName);
+            const prop = this.executeDynamicProps(dynamicProp, propsName, record);
             if (prop !== undefined) {
-              this.checkDynamicProp(propsName, prop);
+              this.checkDynamicProp(propsName, prop, record);
               return prop;
             }
           }
         }
-        this.checkDynamicProp(propsName, undefined);
+        this.checkDynamicProp(propsName, undefined, record);
       }
     }
     const value = this.props.get(propsName);
@@ -791,16 +756,14 @@ export default class Field {
     }
     if (propsName === 'lookup') {
       const { dataSet } = this;
-      if (dataSet) {
-        const lookupToken = this.get(LOOKUP_TOKEN);
-        const { lookupCaches } = dataSet;
-        if (lookupToken && lookupCaches) {
-          return lookupCaches.get(lookupToken);
-        }
+      const lookupToken = this.get(LOOKUP_TOKEN, record);
+      const { lookupCaches } = dataSet;
+      if (lookupToken && lookupCaches) {
+        return lookupCaches.get(lookupToken);
       }
     }
     if (propsName === 'textField' || propsName === 'valueField') {
-      const lovCode = this.get('lovCode');
+      const lovCode = this.get('lovCode', record);
       const lovProp = getPropsFromLovConfig(lovCode, [propsName])[propsName];
       if (lovProp) {
         return lovProp;
@@ -810,7 +773,7 @@ export default class Field {
       return getConfig(propsName);
     }
     if (['min', 'max'].includes(propsName)) {
-      if (this.type === FieldType.number) {
+      if (this.get('type', record) === FieldType.number) {
         if (propsName === 'max') {
           return MAX_SAFE_INTEGER;
         }
@@ -827,7 +790,19 @@ export default class Field {
    * @return {any}
    */
   @action
-  set(propsName: string, value: any): void {
+  set(propsName: string, value: any): Field {
+    const { record, name } = this;
+    if (record) {
+      const recordField = record.ownerFields.get(name);
+      if (recordField) {
+        if (recordField !== this) {
+          recordField.set(propsName, value);
+          return recordField;
+        }
+      } else {
+        record.ownerFields.set(name, this);
+      }
+    }
     const oldValue = this.get(propsName);
     if (!isEqualDynamicProps(toJS(oldValue), value)) {
       const dirtyProps = getIf<Field, Partial<FieldProps>>(this, 'dirtyProps', {});
@@ -837,22 +812,69 @@ export default class Field {
         remove(dirtyProps, propsName);
       }
       this.props.set(propsName, value);
-      const { record, dataSet, name } = this;
-      if (record && propsName === 'type') {
-        record.set(name, processValue(record.get(name), this));
-      }
-      if (dataSet) {
-        dataSet.fireEvent(DataSetEvents.fieldChange, {
-          dataSet,
-          record,
-          name,
-          field: this,
-          propsName,
-          value,
-          oldValue,
+      const { dataSet } = this;
+      dataSet.fireEvent(DataSetEvents.fieldChange, {
+        dataSet,
+        record,
+        name,
+        field: this,
+        propsName,
+        value,
+        oldValue,
+      });
+      if (record) {
+        this.handlePropChange(propsName, value, oldValue, record);
+      } else {
+        dataSet.forEach((r) => {
+          const recordField = r.ownerFields.get(name);
+          if (!recordField || !recordField.props.has(propsName)) {
+            this.handlePropChange(propsName, value, oldValue, r);
+          }
         });
       }
-      this.handlePropChange(propsName, value, oldValue);
+    }
+
+    return this;
+  }
+
+  @action
+  replace(props: Partial<FieldProps> = {}): Field {
+    const p = { ...props };
+    this.props.forEach((_v, key) => {
+      if (key !== 'name') {
+        this.set(key, props[key]);
+      }
+      delete p[key];
+    });
+    return this.merge(p);
+  }
+
+  @action
+  merge(props: Partial<FieldProps>): Field {
+    Object.keys(props).forEach((key) => {
+      if (key !== 'name') {
+        this.set(key, props[key]);
+      }
+    });
+    return this;
+  }
+
+  getLookup(record: Record | undefined = this.record): object[] | undefined {
+    const lookupToken = this.get(LOOKUP_TOKEN, record);
+    const { lookupCaches } = this.dataSet;
+    if (lookupToken && lookupCaches) {
+      const lookup = lookupCaches.get(lookupToken);
+      if (isArrayLike(lookup)) {
+        const valueField = this.get('valueField', record);
+        const lookupData = this.get('lookupData', record);
+        if (lookupData) {
+          const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
+          if (others.length) {
+            return others.concat(lookup.slice());
+          }
+        }
+        return lookup;
+      }
     }
   }
 
@@ -861,20 +883,21 @@ export default class Field {
    * @param value lookup值
    * @return {object}
    */
-  getLookupData(value: any = this.getValue()): object {
-    const valueField = this.get('valueField');
+  getLookupData(value?: any, record: Record | undefined = this.record): object {
+    value = value === undefined ? this.getValue(record) : value;
+    const valueField = this.get('valueField', record);
     const data = {};
-    if (this.lookup) {
-      return this.lookup.find(obj => isSameLike(get(obj, valueField), value)) || data;
+    const lookup = this.getLookup(record);
+    if (lookup) {
+      return lookup.find(obj => isSameLike(get(obj, valueField), value)) || data;
     }
     return data;
   }
 
-  getValue(): any {
-    const { dataSet, name } = this;
-    const record = this.record || (dataSet && dataSet.current);
-    if (record) {
-      return record.get(name);
+  getValue(record: Record | undefined = this.record): any {
+    const r = record || this.dataSet.current;
+    if (r) {
+      return r.get(this.name);
     }
   }
 
@@ -884,10 +907,11 @@ export default class Field {
    * @param boolean showValueIfNotFound
    * @return {string}
    */
-  getLookupText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
-    const textField = this.get('textField');
-    const valueField = this.get('valueField');
-    const { lookup } = this;
+  getLookupText(value?: any, showValueIfNotFound?: boolean, record: Record | undefined = this.record): string | undefined {
+    value = value === undefined ? this.getValue(record) : value;
+    const textField = this.get('textField', record);
+    const valueField = this.get('valueField', record);
+    const lookup = this.getLookup(record);
     if (lookup) {
       const found = lookup.find(obj => isSameLike(get(obj, valueField), value));
       if (found) {
@@ -906,12 +930,13 @@ export default class Field {
    * @param boolean showValueIfNotFound
    * @return {string}
    */
-  getOptionsText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
-    const textField = this.get('textField');
-    const valueField = this.get('valueField');
+  getOptionsText(value?: any, showValueIfNotFound?: boolean, record: Record | undefined = this.record): string | undefined {
+    value = value === undefined ? this.getValue(record) : value;
+    const textField = this.get('textField', record);
+    const valueField = this.get('valueField', record);
     const { options } = this;
     if (options) {
-      const found = options.find(record => isSameLike(record.get(valueField), value));
+      const found = options.find(item => isSameLike(item.get(valueField), value));
       if (found) {
         return found.get(textField);
       }
@@ -928,18 +953,19 @@ export default class Field {
    * @param boolean showValueIfNotFound
    * @return {string}
    */
-  getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
-    const { lookup } = this;
+  getText(value?: any, showValueIfNotFound?: boolean, record: Record | undefined = this.record): string | undefined {
+    value = value === undefined ? this.getValue(record) : value;
+    const lookup = this.getLookup(record);
     if (lookup && !isObject(value)) {
-      return this.getLookupText(value, showValueIfNotFound);
+      return this.getLookupText(value, showValueIfNotFound, record);
     }
-    const options = this.get('options');
-    const textField = this.get('textField');
+    const options = this.get('options', record);
+    const textField = this.get('textField', record);
     if (options) {
-      const valueField = this.get('valueField');
-      const found = options.find(record => isSameLike(record.get(valueField), value));
+      const valueField = this.get('valueField', record);
+      const found = options.find(item => isSameLike(item.get(valueField), value));
       if (found) {
-        return found.get(textField);
+        return found.get(textField, record);
       }
     }
     if (textField && isObject(value)) {
@@ -955,8 +981,51 @@ export default class Field {
     this.set('options', options);
   }
 
-  getOptions(): DataSet | undefined {
-    return this.options;
+  getOptions(record: Record | undefined = this.record): DataSet | undefined {
+    const options = this.get('options', record);
+    if (options) {
+      return options;
+    }
+    const { name } = this;
+    const computedOptionsMap: Map<string, IComputedValue<DataSet | undefined>> | undefined = record ? getIf<Record, Map<string, IComputedValue<DataSet | undefined>>>(record, 'computedFieldOptions', () => new Map()) : undefined;
+    const computedOptions: IComputedValue<DataSet | undefined> | undefined = computedOptionsMap ? computedOptionsMap.get(name) :
+      this.computedOptions;
+    if (computedOptions) {
+      return computedOptions.get();
+    }
+    const newComputedOptions = computed<DataSet | undefined>(() => {
+      // 确保 lookup 相关配置介入观察
+      lookupStore.getAxiosConfig(this, record);
+      const optionsProps = this.get('optionsProps', record);
+      const lookup = this.getLookup(record);
+      const type = this.get('type', record);
+      if (lookup) {
+        const parentField = this.get('parentField', record);
+        const idField = this.get('idField', record) || this.get('valueField', record);
+        const selection = this.get('multiple', record) ? DataSetSelection.multiple : DataSetSelection.single;
+        return new DataSet({
+          data: lookup,
+          paging: false,
+          selection,
+          idField,
+          parentField,
+          ...optionsProps,
+        });
+      }
+      const lovCode = this.get('lovCode', record);
+      if (lovCode) {
+        if (type === FieldType.object || type === FieldType.auto) {
+          return lovCodeStore.getLovDataSet(lovCode, this, optionsProps, record);
+        }
+      }
+      return undefined;
+    });
+    if (computedOptionsMap) {
+      computedOptionsMap.set(name, newComputedOptions);
+    } else {
+      this.computedOptions = newComputedOptions;
+    }
+    return newComputedOptions.get();
   }
 
   /**
@@ -972,10 +1041,17 @@ export default class Field {
   }
 
   @action
-  commit(): void {
-    const { validator } = this;
-    if (validator) {
-      validator.reset();
+  commit(record?: Record | undefined): void {
+    if (record) {
+      const recordField = record.ownerFields.get(this.name);
+      if (recordField) {
+        recordField.commit();
+      }
+    } else {
+      const { validator } = this;
+      if (validator) {
+        validator.reset();
+      }
     }
   }
 
@@ -1049,8 +1125,8 @@ export default class Field {
    * @param {Object} value
    */
   @action
-  setLovPara(name, value) {
-    const p = toJS(this.get('lovPara')) || {};
+  setLovPara(name: string, value: any, record: Record | undefined = this.record) {
+    const p = toJS(this.get('lovPara', record)) || {};
     if (value === null) {
       delete p[name];
     } else {
@@ -1059,25 +1135,24 @@ export default class Field {
     this.set('lovPara', p);
   }
 
-  getValidatorProps(): ValidatorProps | undefined {
-    const { record } = this;
+  getValidatorProps(record: Record | undefined = this.record): ValidatorProps | undefined {
     if (record) {
       const { dataSet, name, type, required, attachmentCount } = this;
       const baseType = getBaseType(type);
-      const customValidator = this.get('validator');
-      const max = this.get('max');
-      const min = this.get('min');
-      const format = this.get('format') || getDateFormatByField(this, this.type);
-      const pattern = this.get('pattern');
-      const step = this.get('step');
-      const nonStrictStep = this.get('nonStrictStep') === undefined ? getConfig('numberFieldNonStrictStep') : this.get('nonStrictStep');
-      const minLength = baseType !== FieldType.string ? undefined : this.get('minLength');
-      const maxLength = baseType !== FieldType.string ? undefined : this.get('maxLength');
-      const label = this.get('label');
-      const range = this.get('range');
-      const multiple = this.get('multiple');
-      const unique = this.get('unique');
-      const defaultValidationMessages = this.get('defaultValidationMessages');
+      const customValidator = this.get('validator', record);
+      const max = this.get('max', record);
+      const min = this.get('min', record);
+      const format = this.get('format', record) || getDateFormatByField(this, this.get('type', record), record);
+      const pattern = this.get('pattern', record);
+      const step = this.get('step', record);
+      const nonStrictStep = this.get('nonStrictStep', record) === undefined ? getConfig('numberFieldNonStrictStep') : this.get('nonStrictStep', record);
+      const minLength = baseType !== FieldType.string ? undefined : this.get('minLength', record);
+      const maxLength = baseType !== FieldType.string ? undefined : this.get('maxLength', record);
+      const label = this.get('label', record);
+      const range = this.get('range', record);
+      const multiple = this.get('multiple', record);
+      const unique = this.get('unique', record);
+      const defaultValidationMessages = this.get('defaultValidationMessages', record);
       const validatorProps = {
         type,
         required,
@@ -1113,24 +1188,29 @@ export default class Field {
    * @return true | false
    */
   @action
-  async checkValidity(report: boolean = true): Promise<boolean> {
-    let valid = true;
-    const { record } = this;
+  async checkValidity(report?: boolean, record: Record | undefined = this.record): Promise<boolean> {
     if (record) {
+      const { name } = this;
+      let recordField = record.ownerFields.get(name);
+      if (!recordField) {
+        recordField = this.record ? this : record.addField(name);
+        record.ownerFields.set(name, recordField);
+      }
       let { validator } = this;
       if (validator) {
         validator.reset();
       } else {
-        validator = new Validator(this);
-        this.validator = validator;
+        validator = new Validator(recordField);
+        recordField.validator = validator;
       }
-      const value = record.get(this.name);
-      valid = await validator.checkValidity(value);
+      const value = record.get(name);
+      const valid = await validator!.checkValidity(value);
       if (report && !record.validating) {
         record.reportValidity(valid);
       }
+      return valid;
     }
-    return valid;
+    return true;
   }
 
   /**
@@ -1139,102 +1219,99 @@ export default class Field {
    * @return Promise<object[]>
    */
   @action
-  fetchLookup(noCache = false): Promise<object[] | undefined> {
-    const { dataSet } = this;
-    if (dataSet) {
-      const { lookup } = this;
-      const lookupCaches = getIf<DataSet, ObservableMap<string, object[] | Promise<object[]>>>(dataSet, 'lookupCaches', () => observable.map());
-      const oldToken = this.get(LOOKUP_TOKEN);
-      const batch = this.get('lookupBatchAxiosConfig') || getConfig('lookupBatchAxiosConfig');
-      const lookupCode = this.get('lookupCode');
-      let promise;
-      if (batch && lookupCode && Object.keys(getLovPara(this, this.record)).length === 0) {
-        const cachedLookup = lookupCaches.get(lookupCode);
-        if (lookupCode !== oldToken) {
-          this.set(LOOKUP_TOKEN, lookupCode);
+  fetchLookup(noCache: boolean = false, record: Record | undefined = this.record): Promise<object[] | undefined> {
+    const lookup = this.getLookup(record);
+    const lookupCaches = getIf<DataSet, ObservableMap<string, object[] | Promise<object[]>>>(this.dataSet, 'lookupCaches', () => observable.map());
+    const oldToken = this.get(LOOKUP_TOKEN, record);
+    const batch = this.get('lookupBatchAxiosConfig', record) || getConfig('lookupBatchAxiosConfig');
+    const lookupCode = this.get('lookupCode', record);
+    let promise;
+    if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0) {
+      const cachedLookup = lookupCaches.get(lookupCode);
+      if (lookupCode !== oldToken) {
+        this.set(LOOKUP_TOKEN, lookupCode);
+      }
+      if (cachedLookup) {
+        if (isArrayLike(cachedLookup)) {
+          promise = Promise.resolve<object[] | undefined>(cachedLookup);
+        } else {
+          this.pending = true;
+          promise = cachedLookup;
         }
-        if (cachedLookup) {
-          if (isArrayLike(cachedLookup)) {
-            promise = Promise.resolve<object[] | undefined>(cachedLookup);
-          } else {
-            this.pending = true;
-            promise = cachedLookup;
+      }
+      if (!promise) {
+        this.pending = true;
+        promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch).then(action((result) => {
+          if (result) {
+            lookupCaches.set(lookupCode, result);
+          }
+          return result;
+        }));
+        lookupCaches.set(lookupCode, promise);
+      }
+    } else {
+      const axiosConfig = lookupStore.getAxiosConfig(this, record, noCache);
+      if (axiosConfig.url) {
+        const lookupToken = buildURLWithAxiosConfig(axiosConfig);
+        if (lookupToken !== oldToken) {
+          this.set(LOOKUP_TOKEN, lookupToken);
+        }
+        if (!noCache) {
+          const cachedLookup = lookupCaches.get(lookupToken);
+          if (cachedLookup) {
+            if (isArrayLike(cachedLookup)) {
+              promise = Promise.resolve<object[] | undefined>(cachedLookup);
+            } else {
+              this.pending = true;
+              promise = cachedLookup;
+            }
           }
         }
         if (!promise) {
           this.pending = true;
-          promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch).then(action((result) => {
+          promise = lookupStore.fetchLookupData(axiosConfig).then(action((result) => {
             if (result) {
-              lookupCaches.set(lookupCode, result);
+              lookupCaches.set(lookupToken, result);
             }
             return result;
           }));
-          lookupCaches.set(lookupCode, promise);
-        }
-      } else {
-        const axiosConfig = lookupStore.getAxiosConfig(this, noCache);
-        if (axiosConfig.url) {
-          const lookupToken = buildURLWithAxiosConfig(axiosConfig);
-          if (lookupToken !== oldToken) {
-            this.set(LOOKUP_TOKEN, lookupToken);
-          }
-          if (!noCache) {
-            const cachedLookup = lookupCaches.get(lookupToken);
-            if (cachedLookup) {
-              if (isArrayLike(cachedLookup)) {
-                promise = Promise.resolve<object[] | undefined>(cachedLookup);
-              } else {
-                this.pending = true;
-                promise = cachedLookup;
-              }
-            }
-          }
-          if (!promise) {
-            this.pending = true;
-            promise = lookupStore.fetchLookupData(axiosConfig).then(action((result) => {
-              if (result) {
-                lookupCaches.set(lookupToken, result);
-              }
-              return result;
-            }));
-            lookupCaches.set(lookupToken, promise);
-          }
+          lookupCaches.set(lookupToken, promise);
         }
       }
-      if (promise) {
-        return promise.then(action((result) => {
-          this.pending = false;
-          if (lookup && oldToken !== this.get(LOOKUP_TOKEN)) {
-            const value = this.getValue();
-            const valueField = this.get('valueField');
-            if (value && valueField) {
-              const values = this.get('multiple') ? [].concat(...value) : [].concat(value);
-              this.set(
-                'lookupData',
-                values.reduce<object[]>((lookupData, v) => {
-                  const found = lookup.find(item => isSameLike(item[valueField], v));
-                  if (found) {
-                    lookupData.push(found);
-                  }
-                  return lookupData;
-                }, []),
-              );
-            }
+    }
+    if (promise) {
+      return promise.then(action((result) => {
+        this.pending = false;
+        if (lookup && oldToken !== this.get(LOOKUP_TOKEN, record)) {
+          const value = this.getValue(record);
+          const valueField = this.get('valueField', record);
+          if (value && valueField) {
+            const values = this.get('multiple', record) ? [].concat(...value) : [].concat(value);
+            this.set(
+              'lookupData',
+              values.reduce<object[]>((lookupData, v) => {
+                const found = lookup.find(item => isSameLike(item[valueField], v));
+                if (found) {
+                  lookupData.push(found);
+                }
+                return lookupData;
+              }, []),
+            );
           }
-          return toJS(result);
-        })).catch(e => {
-          this.pending = false;
-          throw e;
-        });
-      }
+        }
+        return toJS(result);
+      })).catch(e => {
+        this.pending = false;
+        throw e;
+      });
     }
     return Promise.resolve(undefined);
   }
 
-  fetchLovConfig() {
-    const lovCode = this.get('lovCode');
+  fetchLovConfig(record: Record | undefined = this.record) {
+    const lovCode = this.get('lovCode', record);
     if (lovCode) {
-      lovCodeStore.fetchConfig(lovCode, this);
+      lovCodeStore.fetchConfig(lovCode, this, record);
     }
   }
 
@@ -1257,55 +1334,83 @@ export default class Field {
     }
   }
 
-  isValid() {
-    return this.valid;
+  isValid(record: Record | undefined = this.record): boolean {
+    if (record) {
+      const recordField = record.ownerFields.get(this.name);
+      if (recordField) {
+        const { validator } = recordField;
+        if (validator) {
+          return validator.validity.valid;
+        }
+      }
+    }
+    return true;
   }
 
-  getValidationMessage() {
-    const { validator } = this;
-    return validator ? validator.validationMessage : undefined;
+  getValidationMessage(record: Record | undefined = this.record): ReactNode {
+    if (record) {
+      const recordField = record.ownerFields.get(this.name);
+      if (recordField) {
+        const { validator } = recordField;
+        if (validator) {
+          return validator.validationMessage;
+        }
+      }
+    }
+    return undefined;
   }
 
-  getValidityState(): Validity | undefined {
-    const { validator } = this;
-    return validator ? validator.validity : undefined;
+  getValidityState(record: Record | undefined = this.record): Validity | undefined {
+    if (record) {
+      const recordField = record.ownerFields.get(this.name);
+      if (recordField) {
+        const { validator } = recordField;
+        return validator ? validator.validity : undefined;
+      }
+    }
+    return undefined;
   }
 
-  getValidationErrorValues(): ValidationResult[] {
-    const { validator } = this;
-    return validator ? validator.validationResults : [];
+  getValidationErrorValues(record: Record | undefined = this.record): ValidationResult[] {
+    if (record) {
+      const recordField = record.ownerFields.get(this.name);
+      if (recordField) {
+        const { validator } = recordField;
+        if (validator) {
+          return validator.validationResults;
+        }
+      }
+    }
+    return [];
   }
 
   ready(): Promise<any> {
     return Promise.resolve(true);
   }
 
-  private findDataSetField(): Field | undefined {
-    const { dataSet, name, record } = this;
-    if (record && dataSet && name) {
-      return dataSet.getField(name);
-    }
-  }
-
-  private checkDynamicProp(propsName, newProp) {
+  private checkDynamicProp(propsName: string, newProp, record: Record | undefined = this.record) {
     const lastDynamicProps = getIf<Field, { [key: string]: any }>(this, 'lastDynamicProps', {});
     const oldProp = lastDynamicProps[propsName];
     if (!isEqualDynamicProps(oldProp, newProp)) {
       raf(action(() => {
-        const { validator, validatorPropKeys } = this;
-        if (validator && (propsName === 'validator' || (validatorPropKeys && validatorPropKeys.includes(propsName)))) {
-          validator.reset();
+        if (record) {
+          const recordField = record.ownerFields.get(this.name);
+          if (recordField) {
+            const { validator, validatorPropKeys } = recordField;
+            if (validator && (propsName === 'validator' || (validatorPropKeys && validatorPropKeys.includes(propsName)))) {
+              validator.reset();
+            }
+          }
         }
-        this.handlePropChange(propsName, newProp, oldProp);
+        this.handlePropChange(propsName, newProp, oldProp, record);
       }));
     }
     lastDynamicProps[propsName] = newProp;
   }
 
-  private handlePropChange(propsName, newProp, oldProp) {
-    if (propsName === 'bind' && this.type !== FieldType.intl) {
-      const { record } = this;
-      if (record && !this.dirty) {
+  private handlePropChange(propsName, newProp, oldProp, record: Record | undefined = this.record) {
+    if (propsName === 'bind' && this.get('type', record) !== FieldType.intl) {
+      if (record && !this.isDirty(record)) {
         if (newProp && oldProp) {
           record.init(newProp, record.get(oldProp));
         }
@@ -1319,19 +1424,19 @@ export default class Field {
       LOOKUP_SIDE_EFFECT_KEYS.includes(propsName)
     ) {
       this.set('lookupData', undefined);
-      this.fetchLookup();
+      this.fetchLookup(undefined, record);
     }
     if (LOV_SIDE_EFFECT_KEYS.includes(propsName)) {
-      this.fetchLovConfig();
+      this.fetchLovConfig(record);
     }
   }
 
-  private executeDynamicProps(dynamicProps: (DynamicPropsArguments) => any, propsName: string) {
-    const { dataSet, name, record } = this;
+  private executeDynamicProps(dynamicProps: (DynamicPropsArguments) => any, propsName: string, record: Record | undefined = this.record) {
+    const { dataSet, name } = this;
     const dynamicPropsComputingChains = getIf<Field, string[]>(this, 'dynamicPropsComputingChains', []);
     if (dynamicPropsComputingChains.includes(propsName)) {
       warning(false, `Cycle dynamicProps execution of field<${name}>. [${dynamicPropsComputingChains.join(' -> ')} -> ${propsName}]`);
-    } else if (dataSet) {
+    } else {
       dynamicPropsComputingChains.push(propsName);
       try {
         return dynamicProps({ dataSet, record, name });
@@ -1342,6 +1447,13 @@ export default class Field {
       } finally {
         dynamicPropsComputingChains.pop();
       }
+    }
+  }
+
+  private findDataSetField(): Field | undefined {
+    const { dataSet, name, record } = this;
+    if (record && dataSet && name) {
+      return dataSet.getField(name);
     }
   }
 }

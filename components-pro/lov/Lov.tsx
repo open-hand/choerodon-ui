@@ -162,7 +162,7 @@ export default class Lov extends Select<LovProps> {
   get lovCode(): string | undefined {
     const { field } = this;
     if (field) {
-      return field.get('lovCode');
+      return field.get('lovCode', this.record);
     }
     return undefined;
   }
@@ -187,7 +187,7 @@ export default class Lov extends Select<LovProps> {
 
   @computed
   get options(): DataSet {
-    const { field, lovCode } = this;
+    const { field, lovCode, record } = this;
     if (field) {
       const { options } = field;
       if (options) {
@@ -195,7 +195,7 @@ export default class Lov extends Select<LovProps> {
       }
     }
     if (lovCode) {
-      const lovDataSet = lovStore.getLovDataSet(lovCode, field, field && field.get('optionsProps'));
+      const lovDataSet = lovStore.getLovDataSet(lovCode, field, field && field.get('optionsProps', record), record);
       if (lovDataSet) {
         return lovDataSet;
       }
@@ -367,7 +367,8 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
-  private openModal = action((fetchSingle?: boolean) => {
+  @action
+  private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode, onBeforeSelect } = this.props;
     if (viewMode === 'modal') {
@@ -410,7 +411,7 @@ export default class Lov extends Select<LovProps> {
         this.afterOpen(options, fetchSingle);
       }
     }
-  });
+  }
 
   @action
   setText(text?: string): void {

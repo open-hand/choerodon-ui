@@ -5,10 +5,10 @@ import map from 'lodash/map';
 import isObject from 'lodash/isObject';
 import isEnumEmpty from 'lodash/isEmpty';
 import isArray from 'lodash/isArray';
+import noop from 'lodash/noop';
 import Icon from 'choerodon-ui/lib/icon';
 import Tag from 'choerodon-ui/lib/tag';
 import { getConfig } from 'choerodon-ui/lib/configure';
-
 import isSampleEmpty from '../../../_util/isEmpty';
 import { $l } from '../../../locale-context';
 import Button from '../../../button';
@@ -19,6 +19,7 @@ import TextField from '../../../text-field';
 import { ValueChangeAction } from '../../../text-field/enum';
 import Dropdown from '../../../dropdown';
 import Menu from '../../../menu';
+import DataSet from '../../../data-set/DataSet';
 import Record from '../../../data-set/Record';
 import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
@@ -181,47 +182,51 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     queryDataSet,
     filterMenuDS,
     conditionDataSet,
-    onChange,
+    onChange = noop,
     // expand,
     conditionStatus,
-    onStatusChange,
+    onStatusChange = noop,
     selectFields,
-    onOriginalChange,
+    onOriginalChange = noop,
   } = useContext(Store);
-
-  const optionDs = filterMenuDS.getField('filterName').get('options');
+  const filterNameField = filterMenuDS.getField('filterName');
+  const optionDs: DataSet | undefined = filterNameField ? filterNameField.get('options') as DataSet : undefined;
 
   /**
    * queryDS 筛选赋值并更新初始勾选项
    */
   const conditionAssign = () => {
     onOriginalChange();
-    const { conditionList } = menuDataSet.current.toData();
-    const emptyRecord = new Record({}, queryDataSet);
-    runInAction(() => {
-      queryDataSet.records.push(emptyRecord);
-      queryDataSet.current = emptyRecord;
-    });
-    if (conditionList && conditionList.length) {
-      map(conditionList, condition => {
-        if (condition.comparator === 'EQUAL') {
-          const { fieldName, value } = condition;
-          queryDataSet.current.set(fieldName, value);
-          onChange(fieldName);
-          onOriginalChange(fieldName);
-        }
+    const { current } = menuDataSet;
+    if (current) {
+      const { conditionList } = current.toData();
+      const emptyRecord = new Record({}, queryDataSet);
+      runInAction(() => {
+        queryDataSet.records.push(emptyRecord);
+        queryDataSet.current = emptyRecord;
       });
-      onStatusChange(RecordStatus.sync, queryDataSet.current.toData());
-    } else {
-      onStatusChange(RecordStatus.sync);
-      if (autoQuery) {
-        dataSet.query();
+      if (conditionList && conditionList.length) {
+        map(conditionList, condition => {
+          if (condition.comparator === 'EQUAL') {
+            const { fieldName, value } = condition;
+            emptyRecord.set(fieldName, value);
+            onChange(fieldName);
+            onOriginalChange(fieldName);
+          }
+        });
+        onStatusChange(RecordStatus.sync, emptyRecord.toData());
+      } else {
+        onStatusChange(RecordStatus.sync);
+        if (autoQuery) {
+          dataSet.query();
+        }
       }
     }
   };
 
   function handleQueryReset() {
-    if (filterMenuDS.current?.get('filterName')) {
+    const { current } = filterMenuDS;
+    if (current && current.get('filterName')) {
       // 筛选项重置重新赋值
       conditionAssign();
     } else {
@@ -243,11 +248,15 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
    * 定位数据源
    * @param searchId
    */
-  const locateData = (searchId?: number) => {
+  const locateData = (searchId?: number | null) => {
+    const { current } = filterMenuDS;
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
-      conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
-      if (filterMenuDS.current) filterMenuDS.current.set('filterName', searchId);
+      const menuRecord = menuDataSet.current;
+      if (menuRecord) {
+        conditionDataSet.loadData(menuRecord.get('conditionList'));
+      }
+      if (current) current.set('filterName', searchId);
       conditionAssign();
     } else if (searchId === null) {
       handleQueryReset();
@@ -255,11 +264,14 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
       const defaultMenu = menuDataSet.findIndex((menu) => menu.get('defaultFlag'));
       if (defaultMenu !== -1) {
         menuDataSet.locate(defaultMenu);
-        conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
-        if (filterMenuDS.current) filterMenuDS.current.set('filterName', menuDataSet.current.get('searchId'));
+        const menuRecord = menuDataSet.current;
+        if (menuRecord) {
+          conditionDataSet.loadData(menuRecord.get('conditionList'));
+          if (current) current.set('filterName', menuRecord.get('searchId'));
+        }
         conditionAssign();
       } else {
-        if (filterMenuDS.current) filterMenuDS.current.set('filterName', undefined);
+        if (current) current.set('filterName', undefined);
         queryDataSet.reset();
         queryDataSet.create({});
       }
@@ -272,12 +284,18 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
    */
   const loadData = async (searchId?: number) => {
     const result = await menuDataSet.query();
-    optionDs.loadData(result);
-    conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
+    if (optionDs) {
+      optionDs.loadData(result);
+    }
+    const menuRecord = menuDataSet.current;
+    if (menuRecord) {
+      conditionDataSet.loadData(menuRecord.get('conditionList'));
+    }
     if (result && result.length) {
       locateData(searchId);
     } else {
-      if (filterMenuDS.current) filterMenuDS.current.set('filterName', undefined);
+      const { current } = filterMenuDS;
+      if (current) current.set('filterName', undefined);
       locateData();
       if (dataSet.props.autoQuery) {
         dataSet.query();
@@ -296,8 +314,9 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
    */
   async function handleDelete(record) {
     let searchId = record.get('searchId');
-    if (menuDataSet.current) {
-      const currentId = menuDataSet.current.get('searchId').toString();
+    const menuRecord = menuDataSet.current;
+    if (menuRecord) {
+      const currentId = menuRecord.get('searchId').toString();
       searchId = record.get('searchId').toString() === currentId ? undefined : currentId;
     }
     const delRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === record.get('searchId').toString());
@@ -319,7 +338,10 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
   function openModal(type, searchId?: String) {
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
-      conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
+      const menuRecord = menuDataSet.current;
+      if (menuRecord) {
+        conditionDataSet.loadData(menuRecord.get('conditionList'));
+      }
     }
     Modal.open({
       key: modalKey,
@@ -342,51 +364,58 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
   }
 
   async function handleSave() {
-    if (!filterMenuDS.current?.get('filterName')) {
+    const filterMenuRecord = filterMenuDS.current;
+    if (!filterMenuRecord || !filterMenuRecord.get('filterName')) {
       menuDataSet.create({});
       openModal('create');
     } else {
-      const conditionData = Object.entries(queryDataSet.current.toData());
-      conditionDataSet.reset();
-      map(conditionData, data => {
-        const fieldObj = findFieldObj(queryDataSet, data);
-        if (fieldObj?.name) {
-          const currentRecord = conditionDataSet.find(record => record.get('fieldName') === fieldObj.name);
-          if (currentRecord) {
-            if (isEmpty(fieldObj.value) || (isObject(fieldObj.value) && isEnumEmpty(fieldObj.value))) {
-              conditionDataSet.remove(currentRecord);
-            } else {
-              currentRecord.set('value', fieldObj.value);
+      const { current } = queryDataSet;
+      if (current) {
+        const conditionData = Object.entries(current.toData());
+        conditionDataSet.reset();
+        map(conditionData, data => {
+          const fieldObj = findFieldObj(queryDataSet, data);
+          if (fieldObj?.name) {
+            const currentRecord = conditionDataSet.find(record => record.get('fieldName') === fieldObj.name);
+            if (currentRecord) {
+              if (isEmpty(fieldObj.value) || (isObject(fieldObj.value) && isEnumEmpty(fieldObj.value))) {
+                conditionDataSet.remove(currentRecord);
+              } else {
+                currentRecord.set('value', fieldObj.value);
+              }
+            } else if (isSelect(data)) {
+              conditionDataSet.create({
+                fieldName: fieldObj.name,
+                value: fieldObj.value,
+              });
             }
-          } else if (isSelect(data)) {
-            conditionDataSet.create({
-              fieldName: fieldObj.name,
-              value: fieldObj.value,
+          }
+        });
+        const putData: any = [];
+        map(selectFields, fieldName => {
+          const value = current.get(fieldName);
+          const statusKey = getConfig('statusKey');
+          const statusAdd = getConfig('status').add;
+          const status = {};
+          const toJSONFields = conditionDataSet.toJSONData().map((condition) => condition.fieldName);
+          status[statusKey] = statusAdd;
+          if (!toJSONFields.includes(fieldName)) {
+            putData.push({
+              comparator: 'EQUAL',
+              fieldName,
+              value,
+              ...status,
             });
           }
+        });
+        const menuRecord = menuDataSet.current;
+        if (menuRecord) {
+          menuRecord.set('conditionList', { ...conditionDataSet.toJSONData(), ...putData });
         }
-      });
-      const putData: any = [];
-      map(selectFields, fieldName => {
-        const value = queryDataSet.current.get(fieldName);
-        const statusKey = getConfig('statusKey');
-        const statusAdd = getConfig('status').add;
-        const status = {};
-        const toJSONFields = conditionDataSet.toJSONData().map(condition => condition.fieldName);
-        status[statusKey] = statusAdd;
-        if (!toJSONFields.includes(fieldName)) {
-          putData.push({
-            comparator: 'EQUAL',
-            fieldName,
-            value,
-            ...status,
-          });
+        const res = await menuDataSet.submit();
+        if (res && res.success) {
+          loadData(res.content ? res.content[0].searchId : undefined);
         }
-      });
-      menuDataSet.current.set('conditionList', { ...conditionDataSet.toJSONData(), ...putData });
-      const res = await menuDataSet.submit();
-      if (res && res.success) {
-        loadData(res.content ? res.content[0].searchId : undefined);
       }
     }
   }
@@ -396,8 +425,17 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
   }
 
   function handleSaveOther() {
-    menuDataSet.current.set('searchName', '');
-    menuDataSet.current.getField('searchName').validator.reset();
+    const { current } = menuDataSet;
+    if (current) {
+      current.set('searchName', '');
+      const recordField = current.ownerFields.get('searchName');
+      if (recordField) {
+        const { validator } = recordField;
+        if (validator) {
+          validator.reset();
+        }
+      }
+    }
     openModal('save');
   }
 
@@ -413,13 +451,19 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
   const setDefaultFlag = async (defaultFlag, record) => {
     record.set('defaultFlag', defaultFlag);
     const currentRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === record.get('searchId').toString());
-    currentRecord.set('defaultFlag', defaultFlag);
+    if (currentRecord) {
+      currentRecord.set('defaultFlag', defaultFlag);
+    }
     const res = await menuDataSet.submit();
     const result = await menuDataSet.query();
-    optionDs.loadData(result);
+    if (optionDs) {
+      optionDs.loadData(result);
+    }
     if ((res && res.failed) || !res) {
       record.reset();
-      currentRecord.reset();
+      if (currentRecord) {
+        currentRecord.reset();
+      }
     }
   };
 
@@ -429,7 +473,8 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
    * @param text
    */
   const optionRenderer = ({ record, text }) => {
-    const isSelected = filterMenuDS.current.get('filterName')?.toString() === record.get('searchId')?.toString();
+    const filterMenuRecord = filterMenuDS.current;
+    const isSelected = String(filterMenuRecord && filterMenuRecord.get('filterName')) === String(record.get('searchId'));
     const isDefault = record.get('defaultFlag') === 1;
     const menu = (
       <Menu onClick={({ key, domEvent }) => {

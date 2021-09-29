@@ -150,9 +150,9 @@ const ExportFooter = observer((props) => {
         }} /></div>
         <Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
       {dataSet.exportStatus !== DataSetExportStatus.success &&
-        dataSet.exportStatus !== DataSetExportStatus.failed &&
-        <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray}
-          onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
+      dataSet.exportStatus !== DataSetExportStatus.failed &&
+      <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray}
+                                                                                onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
       }
     </div>
   );
@@ -199,7 +199,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @autobind
   handleButtonCreate() {
     const {
-      tableStore: { dataSet },
+      dataSet,
     } = this.context;
     dataSet.create({}, 0);
   }
@@ -207,7 +207,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @autobind
   handleButtonSubmit() {
     const {
-      tableStore: { dataSet },
+      dataSet,
     } = this.context;
     return dataSet.submit();
   }
@@ -215,7 +215,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @autobind
   handleButtonDelete() {
     const {
-      tableStore: { dataSet },
+      dataSet,
     } = this.context;
     return dataSet.delete(dataSet.selected);
   }
@@ -223,7 +223,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @autobind
   handleButtonRemove() {
     const {
-      tableStore: { dataSet },
+      dataSet,
     } = this.context;
     dataSet.remove(dataSet.selected);
   }
@@ -231,7 +231,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @autobind
   handleButtonReset() {
     const {
-      tableStore: { dataSet },
+      dataSet,
     } = this.context;
     dataSet.reset();
   }
@@ -239,9 +239,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @autobind
   handleQueryReset() {
     const {
-      tableStore: {
-        dataSet: { queryDataSet },
-      },
+      dataSet: { queryDataSet },
     } = this.context;
     if (queryDataSet) {
       const { current } = queryDataSet;
@@ -291,7 +289,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @autobind
   handleQuery() {
     const {
-      tableStore: { dataSet },
+      dataSet,
     } = this.context;
     return dataSet.query();
   }
@@ -302,7 +300,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const {
       props: { clientExportQuantity },
       context: {
-        tableStore: { prefixCls, dataSet },
+        prefixCls, dataSet,
       },
     } = this;
     if (selected.length) {
@@ -331,7 +329,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             children: (
               <ExportBody prefixCls={prefixCls} dataSet={dataSet} />
             ),
-            onCancel:this.handleExportButton,
+            onCancel: this.handleExportButton,
             footer: <ExportFooter prefixCls={prefixCls} exportButton={this.handleExportButton} exportModal={exportModal} dataSet={dataSet} />,
           });
       }
@@ -343,7 +341,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @action
   handleExportButton(data: DataSetExportStatus, filename?: string) {
     const {
-      tableStore: { dataSet },
+      dataSet,
     } = this.context;
     if (data === DataSetExportStatus.success) {
       if (this.exportData) {
@@ -365,7 +363,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     type: TableButtonType,
   ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode; } | undefined {
     const {
-      isTree, tableStore: { dataSet },
+      isTree, dataSet,
     } = this.context;
     const disabled = dataSet.status !== DataSetStatus.ready;
     switch (type) {
@@ -441,7 +439,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const {
       props: { summaryBar, summaryFieldsLimit = 3 },
       context: {
-        tableStore: { prefixCls, dataSet },
+        dataSet,
+        prefixCls,
       },
     } = this;
     const fieldTypeArr = [FieldType.currency, FieldType.number];
@@ -450,7 +449,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         const field = dataSet.getField(summaryCol);
         const hasSeparate = summaryBar.length > summaryFieldsLimit! || index !== (summaryBar.length - 1);
         if (isString(summaryCol) && field && fieldTypeArr.includes(field.type)) {
-          const summaryValue = reduce(dataSet.data.map((record) => isNumber(record.get(summaryCol)) ? record.get(summaryCol) : 0), (sum, n) => sum + n);
+          const summaryValue = reduce(dataSet.map((record) => isNumber(record.get(summaryCol)) ? record.get(summaryCol) : 0), (sum, n) => sum + n);
           return (
             <div key={field.get('name')}>
               <div className={`${prefixCls}-summary-col`}>
@@ -511,7 +510,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    * @param summary
    */
   getMoreSummaryButton(summary) {
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
 
     if (summary.length) {
       return (
@@ -537,7 +536,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         summaryFieldsLimit,
       },
       context: {
-        tableStore: { prefixCls },
+        prefixCls,
       },
     } = this;
 
@@ -564,7 +563,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    */
   getMoreButton(buttonsLimits: number): ReactElement {
     const { buttons } = this.props;
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     const tableButtonProps = getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     if (buttons && buttons.length && buttonsLimits) {
@@ -684,20 +683,21 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   getQueryFields(): ReactElement<any>[] {
     const {
       context: {
-        tableStore: { dataSet, queryBar },
+        dataSet,
+        tableStore: { queryBar },
       },
       props: { queryFields },
     } = this;
     const { queryDataSet } = dataSet;
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
-      const { fields } = queryDataSet;
+      const { fields, current } = queryDataSet;
       return [...fields.entries()].reduce((list, [name, field]) => {
-        if (!field.get('bind') && !name.includes('__tls')) {
+        if (!field.get('bind', current) && !name.includes('__tls')) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
           if (queryBar === TableQueryBarType.filterBar) {
-            const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field);
+            const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
             filterBarProps = {
               placeholder,
             };
@@ -712,7 +712,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           list.push(
             isValidElement(element)
               ? cloneElement(element, props)
-              : cloneElement(getEditorByField(field, queryBar !== TableQueryBarType.professionalBar, queryBar === TableQueryBarType.filterBar), {
+              : cloneElement(getEditorByField(field, current, queryBar !== TableQueryBarType.professionalBar, queryBar === TableQueryBarType.filterBar), {
                 ...props,
                 ...(isObject(element) ? element : {}),
               }),
@@ -725,12 +725,12 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   renderToolBar(props: TableQueryBarHookProps) {
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     return <TableToolBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
   renderFilterBar(props: TableQueryBarHookProps) {
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     const {
       props: { filterBarFieldName, filterBarPlaceholder },
     } = this;
@@ -746,18 +746,18 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   renderAdvancedQueryBar(props: TableQueryBarHookProps) {
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     return <TableAdvancedQueryBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
   renderProfessionalBar(props: TableQueryBarHookProps) {
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     return <TableProfessionalBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
     const { dynamicFilterBar, searchCode } = this.props;
-    const { tableStore: { prefixCls } } = this.context;
+    const { prefixCls } = this.context;
     return <TableDynamicFilterBar key="toolbar" searchCode={searchCode} dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
   }
 
@@ -786,7 +786,10 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const summaryBar = this.getSummaryBar();
     const {
       context: {
-        tableStore: { dataSet, queryBar, prefixCls, isTree, props: { queryBarProps } },
+        prefixCls,
+        dataSet,
+        isTree,
+        tableStore: { queryBar, props: { queryBarProps } },
       },
       props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded },
       showQueryBar,
@@ -794,7 +797,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
       const queryFields = this.getQueryFields();
-      const tableQueryBarProps = { ...queryBarProps, ...getConfig('queryBarProps')};
+      const tableQueryBarProps = { ...queryBarProps, ...getConfig('queryBarProps') };
       const onReset = tableQueryBarProps && typeof tableQueryBarProps.onReset === 'function' ? tableQueryBarProps.onReset : noop;
       const onQuery = tableQueryBarProps && typeof tableQueryBarProps.onQuery === 'function' ? tableQueryBarProps.onQuery : noop;
       const props: TableQueryBarHookCustomProps & TableQueryBarHookProps = {

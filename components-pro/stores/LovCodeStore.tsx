@@ -6,6 +6,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { DataSetProps } from '../data-set/DataSet';
 import axios from '../axios';
 import Field, { FieldProps } from '../data-set/Field';
+import Record from '../data-set/Record';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType } from '../lov/enum';
 import { LovConfig, LovConfigItem } from '../lov/Lov';
@@ -103,13 +104,13 @@ export class LovCodeStore {
     this.lovCodes = observable.map<string, LovConfig>();
   }
 
-  getDefineAxiosConfig(code: string, field?: Field): AxiosRequestConfig | undefined {
+  getDefineAxiosConfig(code: string, field?: Field, record?: Record): AxiosRequestConfig | undefined {
     const lovDefineAxiosConfig =
-      (field && field.get('lovDefineAxiosConfig')) || getConfig('lovDefineAxiosConfig');
+      (field && field.get('lovDefineAxiosConfig', record)) || getConfig('lovDefineAxiosConfig');
     const config = processAxiosConfig(lovDefineAxiosConfig, code, field);
     return {
       ...config,
-      url: config.url || this.getConfigUrl(code, field),
+      url: config.url || this.getConfigUrl(code, field, record),
       method: config.method || 'post',
     };
   }
@@ -118,11 +119,11 @@ export class LovCodeStore {
     return this.lovCodes.get(code);
   }
 
-  async fetchConfig(code: string, field?: Field): Promise<LovConfig | undefined> {
+  async fetchConfig(code: string, field?: Field, record?: Record): Promise<LovConfig | undefined> {
     let config = this.getConfig(code);
     // SSR do not fetch the lookup
     if (!config && typeof window !== 'undefined') {
-      const axiosConfig = this.getDefineAxiosConfig(code, field);
+      const axiosConfig = this.getDefineAxiosConfig(code, field, record);
       if (axiosConfig) {
         try {
           const pending = this.pendings[code] || this.axios(axiosConfig);
@@ -142,14 +143,14 @@ export class LovCodeStore {
   }
 
   // lovCode 作为key 缓存了 ds
-  getLovDataSet(code: string, field?: Field, dataSetProps?: DataSetProps): DataSet | undefined {
+  getLovDataSet(code: string, field?: Field, dataSetProps?: DataSetProps, record?: Record): DataSet | undefined {
     const config = this.getConfig(code);
     if (config) {
       const { lovPageSize, lovItems, parentIdField, idField, treeFlag, dataSetProps: configDataSetProps } = config;
-      const valueField = field ? field.get('valueField') : config.valueField;
+      const valueField = field ? field.get('valueField', record) : config.valueField;
       const dsProps: DataSetProps = {
         transport: {
-          read: this.getQueryAxiosConfig(code, field, config),
+          read: this.getQueryAxiosConfig(code, field, config, record),
         },
         primaryKey: valueField,
         cacheSelection: true,
@@ -191,19 +192,19 @@ export class LovCodeStore {
     return undefined;
   }
 
-  getConfigUrl(code: string, field?: Field): string {
-    const lovDefineUrl = (field && field.get('lovDefineUrl')) || getConfig('lovDefineUrl');
+  getConfigUrl(code: string, field?: Field, record?: Record | undefined): string {
+    const lovDefineUrl = (field && field.get('lovDefineUrl', record)) || getConfig('lovDefineUrl');
     if (typeof lovDefineUrl === 'function') {
       return lovDefineUrl(code);
     }
     return lovDefineUrl as string;
   }
 
-  getQueryAxiosConfig(code: string, field?: Field, config?: LovConfig) {
+  getQueryAxiosConfig(code: string, field?: Field, config?: LovConfig, record?: Record | undefined) {
     return (props: TransportHookProps) => {
       const lovQueryAxiosConfig =
-        (field && field.get('lovQueryAxiosConfig')) || getConfig('lovQueryAxiosConfig');
-      const lovQueryUrl = this.getQueryUrl(code, field, props);
+        (field && field.get('lovQueryAxiosConfig', record)) || getConfig('lovQueryAxiosConfig');
+      const lovQueryUrl = this.getQueryUrl(code, field, props, record);
       const axiosConfig = processAxiosConfig(lovQueryAxiosConfig, code, config, props, lovQueryUrl);
       return {
         ...axiosConfig,
@@ -213,7 +214,7 @@ export class LovCodeStore {
     };
   }
 
-  getQueryUrl(code: string, field: Field | undefined, props: TransportHookProps): string {
+  getQueryUrl(code: string, field: Field | undefined, props: TransportHookProps, record?: Record | undefined): string {
     const config = this.getConfig(code);
     if (config) {
       const { customUrl } = config;
@@ -222,7 +223,7 @@ export class LovCodeStore {
       }
     }
 
-    const lovQueryUrl = (field && field.get('lovQueryUrl')) || getConfig('lovQueryUrl');
+    const lovQueryUrl = (field && field.get('lovQueryUrl', record)) || getConfig('lovQueryUrl');
 
     if (typeof lovQueryUrl === 'function') {
       return lovQueryUrl(code, config, props);

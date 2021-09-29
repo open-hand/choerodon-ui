@@ -18,7 +18,6 @@ import { getPrecision } from '../number-field/utils';
 import isEmpty from '../_util/isEmpty';
 import CloseButton from './CloseButton';
 import { hide, show } from '../tooltip/singleton';
-import Validator from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
 import Icon from '../icon';
 import { $l } from '../locale-context';
@@ -88,9 +87,9 @@ export function getDateFormatByFieldType(type: FieldType): string {
   }
 }
 
-export function getDateFormatByField(field?: Field, type?: FieldType): string {
+export function getDateFormatByField(field?: Field, type?: FieldType, record?: Record): string {
   if (field) {
-    return field.get('format') || getDateFormatByFieldType(type || field.type);
+    return field.get('format', record) || getDateFormatByFieldType(type || field.get('type', record));
   }
   if (type) {
     return getDateFormatByFieldType(type);
@@ -177,9 +176,9 @@ export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => 
   };
 }
 
-export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any, getValue?(): any, lang?: string }, showValueIfNotFound?: boolean) {
+export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any, getValue?(): any, lang?: string }, showValueIfNotFound?: boolean, record?: Record) {
   const { getProp, getValue, lang } = options;
-  const type = field && field.type;
+  const type = getProp('type');
   const currency = getProp('currency');
   if (currency || type === FieldType.currency) {
     const formatOptions = getCurrencyFormatOptions(getProp, lang);
@@ -192,7 +191,7 @@ export function processFieldValue(value, field: Field | undefined, options: { ge
     return (formatter || getNumberFormatter())(value, formatOptions.lang, formatOptions.options);
   }
   if (field) {
-    return field.getText(value, showValueIfNotFound);
+    return field.getText(value, showValueIfNotFound, record);
   }
   return value;
 }
@@ -260,7 +259,7 @@ export type MultipleRenderOption = {
   prefixCls?: string | undefined;
   disabled?: boolean | undefined;
   readOnly?: boolean | undefined;
-  validator?: Validator | undefined;
+  validationResults?: ValidationResult[] | undefined;
   isMultipleBlockDisabled?(v: any): boolean;
   processRenderer(v: any, repeat?: number): ReactNode;
   renderValidationResult(result: ValidationResult): ReactNode;
@@ -311,7 +310,7 @@ export function getValueKey(v: any) {
 
 export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode, multipleValidateMessageLength: number } {
   const {
-    range, maxTagPlaceholder, prefixCls, validator, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
+    range, maxTagPlaceholder, prefixCls, validationResults, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
     renderValidationResult, handleMutipleValueRemove, getKey = getValueKey, isValidationMessageHidden, showValidationMessage: selfShowValidationMessage,
   } = option;
   const values = toMultipleValue(value, range);
@@ -325,7 +324,6 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     `${prefixCls}-multiple-block`,
   );
   let multipleValidateMessageLength = 0;
-  const validationResults: ValidationResult[] | undefined = validator && validator.validationResults;
   const tags = values.slice(0, maxTagCount).map((v, index) => {
     const key = getKey(v);
     const repeat = repeats.get(key) || 0;
@@ -395,7 +393,7 @@ export function renderMultiLine(options: MultiLineRenderOption): { lines?: React
   } = options;
   let multipleValidateMessageLength = 0;
   if (record) {
-    const multiLineFields = findBindFields(field, record.fields);
+    const multiLineFields = findBindFields(field, record.dataSet.fields, false, record);
     if (renderer) {
       return {
         lines: renderer({
@@ -412,18 +410,18 @@ export function renderMultiLine(options: MultiLineRenderOption): { lines?: React
         multiLineFields.map(fieldItem => {
           if (fieldItem) {
             const { validator } = fieldItem;
-            const required = defaultTo(fieldItem.get('required'), field.get('required'));
-            const fieldName = fieldItem.get('name');
+            const required = defaultTo(fieldItem.get('required', record), field.get('required', record));
+            const fieldName = fieldItem.name;
             const value = record.get(fieldName);
             const validationResult = validator && validator.validationResults.find(error => error.value === value);
             const validationMessage =
               validationResult && renderValidationResult(validationResult);
             const validationHidden = isValidationMessageHidden(validationMessage);
             let processedValue = '';
-            if (fieldItem.get('lovCode')) {
-              const fieldValue = fieldItem.getValue();
+            if (fieldItem.get('lovCode', record)) {
+              const fieldValue = fieldItem.getValue(record);
               if (isPlainObject(fieldValue)) {
-                processedValue = ObjectChainValue.get(fieldValue, fieldItem.get('textField') || defaultTextField);
+                processedValue = ObjectChainValue.get(fieldValue, fieldItem.get('textField', record) || defaultTextField);
               }
             }
             const notEmpty = !isEmpty(value);
@@ -433,7 +431,7 @@ export function renderMultiLine(options: MultiLineRenderOption): { lines?: React
             const validationInner = notEmpty ? text :
               validationHidden ? record.status === RecordStatus.add ? '' :
                 <span className={`${prefixCls}-multi-value-invalid`}>{text}</span> : validationMessage;
-            const label = fieldItem.get('label');
+            const label = fieldItem.get('label', record);
             return (
               <MultiLine
                 key={`${record!.index}-multi-${fieldName}`}

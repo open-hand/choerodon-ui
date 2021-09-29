@@ -274,10 +274,10 @@ export default class Tree extends Component<TreeProps> {
       const { checkField, idField } = dataSet.props;
       if (checkField) {
         const keys: string[] = [];
+        const field = dataSet.getField(checkField);
         dataSet.forEach(record => {
-          const field = record.getField(checkField);
           const key = getKey(record, idField);
-          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue) : true)) {
+          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
             keys.push(key);
             if (checkable && record.selectable && !record.isSelected && selectable === false) {
               record.isSelected = true;
@@ -338,13 +338,13 @@ export default class Tree extends Component<TreeProps> {
           record => eventKey === String(idField ? record.get(idField) : record.id),
         );
         if (found) {
-          const field = found.getField(checkField);
+          const field = dataSet.getField(checkField);
           found.set(
             checkField,
             field
               ? checked
-              ? field.get(BooleanValue.trueValue)
-              : field.get(BooleanValue.falseValue)
+              ? field.get(BooleanValue.trueValue, found)
+              : field.get(BooleanValue.falseValue, found)
               : checked,
           );
           return false;

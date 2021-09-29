@@ -203,26 +203,21 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
    */
   @computed
   get field(): Field | undefined {
-    const { record, dataSet, name, observableProps } = this;
+    const { dataSet, name, observableProps } = this;
     const { displayName } = this.constructor as any;
     if (displayName !== 'Output' && !name) {
       warning(!observableProps.dataSet, `${displayName} with binding DataSet need property name.`);
       warning(!observableProps.record, `${displayName} with binding Record need property name.`);
     }
-    if (name) {
-      const recordField = record ? record.getField(name) : undefined;
-      const dsField = dataSet ? dataSet.getField(name) : undefined;
-      if (recordField) {
-        return recordField;
-      }
-      return dsField;
+    if (name && dataSet) {
+      return dataSet.getField(name);
     }
     return undefined;
   }
 
   getProp(propName: string) {
     const { field } = this;
-    return defaultTo(field && field.get(propName), this.props[propName]);
+    return defaultTo(field && field.get(propName, this.record), this.props[propName]);
   }
 
   @autobind
@@ -235,6 +230,7 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
   get options(): DataSet {
     const {
       field,
+      record,
       textField,
       valueField,
       multiple,
@@ -242,7 +238,7 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
     } = this;
     return (
       options ||
-      (field && field.options) ||
+      (field && field.getOptions(record)) ||
       normalizeOptions({ textField, valueField, disabledField, multiple, children })
     );
   }
@@ -264,11 +260,11 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
 
   getFieldType(): FieldType {
     const { field } = this;
-    return (field && field.get('type')) || FieldType.string;
+    return (field && field.get('type', this.record)) || FieldType.string;
   }
 
   getDateFormat(): string {
-    return getDateFormatByField(this.field, this.getFieldType());
+    return getDateFormatByField(this.field, this.getFieldType(), this.record);
   }
 
   @action
@@ -492,9 +488,9 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
   }
 
   processLookupValue(value) {
-    const { field, textField, primitive } = this;
-    if (primitive && field && field.lookup) {
-      return this.processValueNormal(field.getText(value));
+    const { field, textField, primitive, record } = this;
+    if (primitive && field && field.getLookup(record)) {
+      return this.processValueNormal(field.getText(value, undefined, record));
     }
     return this.processValueNormal(this.processObjectValue(value, textField));
   }

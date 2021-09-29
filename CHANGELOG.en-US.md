@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 💄 `<pro>DataSet`: Optimize memory.
+- 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
+- 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
+
 ## 1.4.5
 
 `2021-09-29`
