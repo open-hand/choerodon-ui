@@ -451,7 +451,7 @@ export default class Field {
       if (record) {
         const uuid = record.get(this.name);
         if (uuid) {
-          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(this.dataSet, 'attachmentCaches', () => observable.map());
+          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined; attachments?: AttachmentFile[] | undefined }>>(this.dataSet, 'attachmentCaches', () => observable.map());
           if (attachmentCaches) {
             const cache = attachmentCaches.get(uuid);
             if (cache) {
@@ -493,7 +493,7 @@ export default class Field {
         const uuid = record.get(this.name);
         const { dataSet } = this;
         if (uuid) {
-          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
+          const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined; attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
           if (attachmentCaches) {
             const cache = attachmentCaches.get(uuid);
             if (cache) {
@@ -633,7 +633,7 @@ export default class Field {
    * 获取所有属性
    * @return 属性对象
    */
-  getProps(record: Record | undefined = this.record): FieldProps & { [key: string]: any; } {
+  getProps(record: Record | undefined = this.record): FieldProps & { [key: string]: any } {
     const dsField = this.findDataSetField();
     const lovCode = this.get('lovCode', record);
     return merge(
@@ -1218,7 +1218,7 @@ export default class Field {
    * @return Promise<object[]>
    */
   @action
-  fetchLookup(noCache: boolean = false, record: Record | undefined = this.record): Promise<object[] | undefined> {
+  fetchLookup(noCache = false, record: Record | undefined = this.record): Promise<object[] | undefined> {
     const lookup = this.getLookup(record);
     const lookupCaches = getIf<DataSet, ObservableMap<string, object[] | Promise<object[]>>>(this.dataSet, 'lookupCaches', () => observable.map());
     const oldToken = this.get(LOOKUP_TOKEN, record);

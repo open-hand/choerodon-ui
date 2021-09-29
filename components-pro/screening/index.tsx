@@ -199,7 +199,6 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
     return null;
   };
 
-
   render() {
     const dataSet = this.dataSet;
     const { children } = this.props;
@@ -209,7 +208,7 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
     return (
       <div className={`${this.prefixCls}`}>
         {this.renderTag(mergeValue)}
-        {Children.map(filteredChildren, (child, _index) => {
+        {Children.map(filteredChildren, (child: ReactElement, _index) => {
           const name = child.props.name;
           if (this.mergeValue && name && isNil(this.mergeValue[name])) {
             const screenProps = {
@@ -221,7 +220,7 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
               },
             };
             if (!isString(name)) {
-              // @ts-ignore
+              // @ts-expect-error: this should be optional
               delete screenProps.onRef;
               warning(false, `ScreeningItem need binding DataSet with property name.`);
             }

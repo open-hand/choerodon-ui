@@ -235,7 +235,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * queryDS 新建，初始勾选值
    */
   @autobind
-  handleDataSetCreate(props: { dataSet: DataSet, record: Record }) {
+  handleDataSetCreate(props: { dataSet: DataSet; record: Record }) {
     const { dataSet, record } = props;
     const conditionData = Object.entries(record.toData());
     this.originalValue = record.toData();

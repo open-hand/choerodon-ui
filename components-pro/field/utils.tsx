@@ -176,7 +176,7 @@ export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => 
   };
 }
 
-export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any, getValue?(): any, lang?: string }, showValueIfNotFound?: boolean, record?: Record) {
+export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any; getValue?(): any; lang?: string }, showValueIfNotFound?: boolean, record?: Record) {
   const { getProp, getValue, lang } = options;
   const type = getProp('type');
   const currency = getProp('currency');

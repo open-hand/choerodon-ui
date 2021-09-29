@@ -303,8 +303,8 @@ export default class Record {
         expandField,
         field
           ? expand
-          ? field.get(BooleanValue.trueValue, this)
-          : field.get(BooleanValue.falseValue, this)
+            ? field.get(BooleanValue.trueValue, this)
+            : field.get(BooleanValue.falseValue, this)
           : expand,
       );
     } else {
@@ -546,7 +546,7 @@ export default class Record {
   reportValidity(result: boolean) {
     const { dataSet } = this;
     if (!dataSet.validating) {
-      const prepareForReport = getIf<Record, { result?: boolean, timeout?: number }>(this, 'prepareForReport', {});
+      const prepareForReport = getIf<Record, { result?: boolean; timeout?: number }>(this, 'prepareForReport', {});
       if (!result) {
         prepareForReport.result = result;
       }

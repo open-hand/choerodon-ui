@@ -64,7 +64,7 @@ export function getOrderFields(fields: Fields): Field[] {
   return [...fields.values()].filter(({ order }) => order);
 }
 
-function processOneToJSON(value, field: Field, record?: Record, checkRange: boolean = true) {
+function processOneToJSON(value, field: Field, record?: Record, checkRange = true) {
   if (!isEmpty(value)) {
     const range = field.get('range', record);
     if (range && checkRange) {
@@ -120,7 +120,7 @@ export function arrayMove<T = Record>(array: T[], from: number, to: number): voi
   array.splice(startIndex, 0, item);
 }
 
-function processOne(value: any, field: Field, record?: Record, checkRange: boolean = true) {
+function processOne(value: any, field: Field, record?: Record, checkRange = true) {
   if (!isEmpty(value)) {
     const range = field.get('range', record);
     if (range && checkRange) {
@@ -470,7 +470,7 @@ function throwCycleBindingFields(map: Map<string, Field> = new Map()) {
   throw new Error(`DataSet: Cycle binding fields[${[...keys].join(' -> ')} -> ${keys[0]}].`);
 }
 
-function getChainFieldNamePrivate(record: Record, fieldName: string, linkedMap: Map<string, Field> = new Map(), init: boolean = true): string {
+function getChainFieldNamePrivate(record: Record, fieldName: string, linkedMap: Map<string, Field> = new Map(), init = true): string {
   const field = record.dataSet.getField(fieldName);
   if (field) {
     const bind = field.get('bind', record);

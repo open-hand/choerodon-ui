@@ -1496,6 +1496,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   forcePositionChanged() {
+    // noop
   }
 }
 

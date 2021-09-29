@@ -341,8 +341,8 @@ export default class Tree extends Component<TreeProps> {
             checkField,
             field
               ? checked
-              ? field.get(BooleanValue.trueValue, found)
-              : field.get(BooleanValue.falseValue, found)
+                ? field.get(BooleanValue.trueValue, found)
+                : field.get(BooleanValue.falseValue, found)
               : checked,
           );
           return false;

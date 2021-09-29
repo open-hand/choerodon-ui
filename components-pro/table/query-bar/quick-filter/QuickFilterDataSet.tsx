@@ -69,9 +69,9 @@ const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) =>
 });
 
 export interface QuickFilterContextValue extends QuickFilterProps {
-  menuDataSet: DataSet,
-  filterMenuDS: DataSet,
-  conditionDataSet: DataSet,
+  menuDataSet: DataSet;
+  filterMenuDS: DataSet;
+  conditionDataSet: DataSet;
 }
 
 const ds = {} as DataSet;

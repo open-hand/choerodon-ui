@@ -151,7 +151,7 @@ const ExportFooter = observer((props) => {
       {dataSet.exportStatus !== DataSetExportStatus.success &&
       dataSet.exportStatus !== DataSetExportStatus.failed &&
       <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray}
-                                                                                onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
+        onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
       }
     </div>
   );

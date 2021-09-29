@@ -222,7 +222,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     }
   };
 
-  function handleQueryReset() {
+  const handleQueryReset = () => {
     const { current } = filterMenuDS;
     if (current && current.get('filterName')) {
       // 筛选项重置重新赋值
@@ -360,7 +360,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     });
   }
 
-  async function handleSave() {
+  const handleSave = async () => {
     const filterMenuRecord = filterMenuDS.current;
     if (!filterMenuRecord || !filterMenuRecord.get('filterName')) {
       menuDataSet.create({});
@@ -421,7 +421,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     openModal('edit', record.get('searchId'));
   }
 
-  function handleSaveOther() {
+  const handleSaveOther = () => {
     const { current } = menuDataSet;
     if (current) {
       current.set('searchName', '');
