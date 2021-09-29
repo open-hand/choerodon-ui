@@ -464,7 +464,7 @@ export default class Lov extends Select<LovProps> {
     if (lovEvents) {
       Object.keys(lovEvents).forEach(event => options.removeEventListener(event, lovEvents[event]));
     }
-    this.statePopup = false;
+    this.setPopup(false);
     this.modal = undefined;
   }
 
