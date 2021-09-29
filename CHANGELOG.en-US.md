@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
+
 ## 1.4.5
 
 `2021-09-29`

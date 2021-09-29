@@ -78,7 +78,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
     bodyLeft: 0,
     resizeBoundary: 0,
   });
-  const resizeEvent: EventManager = useMemo(() => new EventManager(typeof window === 'undefined' ? undefined : document), []);
+  const resizeEvent: EventManager = useMemo(() => new EventManager(), []);
 
   const setSplitLineHidden = useCallback((hidden: boolean) => {
     const {
@@ -173,6 +173,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
     globalRef.current.bodyLeft = border ? left + 1 : left;
     setSplitLinePosition(e.clientX);
     resizeEvent
+      .setTarget(element.ownerDocument)
       .addEventListener('mousemove', resize)
       .addEventListener('mouseup', resizeEnd);
   }), [tableStore, globalRef, setSplitLineHidden, setSplitLinePosition, resizeEvent]);
