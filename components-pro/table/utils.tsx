@@ -154,6 +154,8 @@ export function getEditorByColumnAndRecord(
         ) {
           return getEditorByField(field, record);
         }
+      } else {
+        return <ObserverTextField />;
       }
     }
     if (isValidElement(cellEditor)) {
