@@ -33,31 +33,31 @@ const data = [
     name: 'name1',
     number: 30,
     date_multiple_range: [['1984-11-22', '1985-07-01'], ['2020-11-22', '2021-07-01']],
+    "model": [
+      { "id": "id1-1", "code": "code1-1", name: "model1-1" },
+      { "id": "id1-2", "code": "code1-2", name: "model1-2" },
+    ],
     jsonData: JSON.stringify({ 
       "view": [
         { "id": "id1-1", "code": "code1-1", name: "view1-1" },
-        { "id": "id1-2", "code": "code1-2", name: "view1-2" }
-      ],
-      "model": [
-        { "id": "id1-1", "code": "code1-1", name: "model1-1" },
-        { "id": "id1-2", "code": "code1-2", name: "model1-2" }
+        { "id": "id1-2", "code": "code1-2", name: "view1-2" },
       ]
-    })
+    }),
   },
   {
     id: '2',
     code: 'code2',
     name: 'name2',
     number: 30,
+    "model": [
+      { "id": "id2-1", "code": "code2-1", name: "model2-1" },
+      { "id": "id2-2", "code": "code2-2", name: "model2-2" },
+    ],
     jsonData: JSON.stringify({ 
       "view": [
         { "id": "id2-1", "code": "code2-1", name: "view2-1" },
-        { "id": "id2-2", "code": "code2-2", name: "view2-2" }
+        { "id": "id2-2", "code": "code2-2", name: "view2-2" },
       ],
-      "model": [
-        { "id": "id2-1", "code": "code2-1", name: "model2-1" },
-        { "id": "id2-2", "code": "code2-2", name: "model2-2" }
-      ]
     })
   }
 ];
@@ -88,7 +88,6 @@ const App = () => {
   }), []);
   const modelDs = React.useMemo(() => new DataSet({
     primaryKey: 'id',
-    dataToJSON: 'normal',
   }), []);
   const ds = React.useMemo(() => new DataSet({
     primaryKey: 'id',
@@ -102,7 +101,7 @@ const App = () => {
     ],
     children: {
       'jsonData.view': viewDs,
-      'jsonData.model': modelDs,
+      'model': modelDs,
     },
   }), [viewDs, modelDs]);
   const buttons = React.useMemo(() => ['add'], []);

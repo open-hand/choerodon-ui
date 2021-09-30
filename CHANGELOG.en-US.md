@@ -15,9 +15,17 @@ timeline: true
 
 ---
 
+- 💄 `<pro>DataSet`: Optimize memory.
+- 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
+- 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
+
+## 1.4.5
+
+`2021-09-29`
+
 - 🌟 `configure`: Added `tabsInkBarStyle`, `customizable`, `customizedSave`, `customizedLoad`, `tableButtonsLimit` properties, deprecated `tableCustomizedSave`, `tableCustomizedSave`, `tableCustomizable`, `performanceTableCustomizable`, `lovTableCustomizable` properties.
 - 🌟 `Tabs`: Added `inkBarStyle`, `customizable`, `customizedCode`, `hideOnlyGroup` properties, support ink bar style modification.
-- 🌟 `Tabs.TabPane`: Added `title`, `showCount` properties, `count` property support hooks.
+- 🌟 `Tabs.TabPane`: Added `title`, `showCount`, `count`, `overflowCount` properties, `count` property support hooks.
 - 🌟 `Tag`: Added `gray` color.
 - 🌟 `<pro>DataSet`: Added `childrenField`, `forceValidate` properties.
 - 🌟 `<pro>DatePicker`: Added `editorInPopup`, `defaultTime` properties.
@@ -27,6 +35,7 @@ timeline: true
 - 💄 `Tabs`: Optimized to not display when `count` is zero.
 - 💄 `<pro>Pagination`: Optimize the display of quick jumper.
 - 💄 `<pro>Attachment`: Optimize the display of deleting, dnd, preview and label. Optimized to delete the attachments in the wrong state as direct deletion.
+- 💄 `<pro>TextField`: Optimized to close the animation effect when switching record in multiple mode.
 - 💄 `<pro>Table`: Supports multiple selections by pressing shift.
 - 💄 `<pro>Table`: Optimized that cells without editor can also display small triangles validation message.
 - 💄 `<pro>Table`: Rename `onResize` to `onColumnResize` event.
@@ -50,8 +59,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the display problem when the editor is SelectBox in `multiple` mode.
 - 🐞 `<pro>Table`: Fix the problem of inaccurate column order in personalized adjustment.
 - 🐞 `<pro>Tree`: Fix the problem that asynchronously loaded nodes cannot be displayed when the dataSet is reloaded.
+- 🐞 `<pro>Table`: Fix the problem that professionalBar under `autoHeight` property will only be collapsed after clicking More multiple times.
 - 🐞 `Tabs`: Fix the problem of possible misalignment of ink bar.
-- 🌟 `Tabs.TabPane`: Added `count`, `overflowCount` properties.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of line highlighting error.
 - 🐞 `<pro>Lov`: Fix the problem that the value of `alwaysShowRowBox` in the single-select mode table is incorrectly selected.
 - 🐞 `<pro>TriggerField`: Fix the problem that `onPopupHiddenChange` sometimes does not trigger.

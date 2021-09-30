@@ -9,18 +9,19 @@ import { defaultRenderer } from '../field/utils';
 export function defaultOutputRenderer(renderOption: RenderProps) {
   const { value, name, record } = renderOption;
   if (record) {
-    const field = record.getField(name);
+    const field = record.dataSet.getField(name);
     if (field) {
-      if (field.type === FieldType.boolean) {
+      if (field.get('type', record) === FieldType.boolean) {
         const checkBoxPrefix = getProPrefixCls('checkbox');
+        const checked = value === field.get(BooleanValue.trueValue, record);
         return (
           <label className={`${checkBoxPrefix}-wrapper ${checkBoxPrefix}-disabled`}>
-            <input disabled className={checkBoxPrefix} type="checkbox" checked={value === field.get(BooleanValue.trueValue)} />
+            <input disabled className={checkBoxPrefix} type="checkbox" checked={checked} />
             <i className={`${checkBoxPrefix}-inner`} />
           </label>
         );
       }
-      if (field.type === FieldType.attachment) {
+      if (field.get('type', record) === FieldType.attachment) {
         return <Attachment readOnly name={name} viewMode="popup" record={record} funcType={FuncType.link} />;
       }
     }

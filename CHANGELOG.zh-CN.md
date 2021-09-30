@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.4.5
+
+`2021-09-29`
+
 - 🌟 `configure`: 新增 tabsInkBarStyle, customizable, customizedSave, customizedLoad, tableButtonsLimit 属性, 废弃 tableCustomizedSave, tableCustomizedSave, tableCustomizable, performanceTableCustomizable, lovTableCustomizable 属性。
 - 🌟 `Tabs`: 新增 inkBarStyle, customizable, customizedCode, hideOnlyGroup 属性，支持墨条样式修改。
 - 🌟 `Tabs.TabPane`: 新增 title, showCount 属性, count 属性支持钩子。
@@ -27,6 +31,7 @@ timeline: true
 - 💄 `Tabs`：优化 count 为零时不显示。
 - 💄 `<pro>Pagination`: 优化 quickJumper 显示。
 - 💄 `<pro>Attachment`：优化删除、拖拽、预览和标签显示, 优化删除错误状态的附件为直接删除。
+- 💄 `<pro>TextField`： 优化多值模式下切换记录时关闭动画效果。
 - 💄 `<pro>Table`： 支持按住 shift 进行多选。
 - 💄 `<pro>Table`： 优化没有编辑器的单元格也能显示小三角和校验信息。
 - 💄 `<pro>Table`： 重命名 onResize 为 onColumnResize 事件。
@@ -46,9 +51,10 @@ timeline: true
 - 🐞 `<pro>Table`：修复 customizedCode 变更时且表格列不会刷新的问题。
 - 🐞 `<pro>Table`：修复 virtual 在切换分页大小时行错位的问题。
 - 🐞 `<pro>Table`：修复 virtualCell 导致编辑器错位的问题。
-- 🐞 `<pro>Table`：修复查询字段 range 属性值为 [string, stirng] 时过滤条渲染错误的问题。
+- 🐞 `<pro>Table`：修复查询字段 range 属性时过滤条渲染错误的问题。
 - 🐞 `<pro>Table`：修复编辑器为多选 SelectBox 时的显示问题。
 - 🐞 `<pro>Table`：修复个性化调整列顺序不准确的问题。
+- 🐞 `<pro>Table`：修复使用 autoHeight 属性下 professionalBar 多次点击更多才会收起的问题。
 - 🐞 `<pro>Tree`：修复异步加载的节点在 dataSet 重新加载时无法显示的问题。
 - 🐞 `Tabs`：修墨条可能对不齐的问题。
 - 🐞 `<pro>PerformanceTable`：修复行高亮点击报错问题。

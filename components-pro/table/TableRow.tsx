@@ -72,7 +72,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
-  const needSaveRowHeight = isStickySupport() ? false : (!lock && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn) || [...record.fields.values()].some(field => field.get('multiLine'))));
+  const needSaveRowHeight = isStickySupport() ? false : (!lock && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn) || [...dataSet.fields.values()].some(field => field.get('multiLine', record))));
   const rowExternalProps: any = useComputed(() => ({
     ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
     ...(typeof onRow === 'function'

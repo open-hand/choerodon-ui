@@ -454,7 +454,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (!isNil(limit)) {
       const { record } = this;
       if (record && isString(limit)) {
-        const field = record.getField(limit);
+        const field = record.dataSet.getField(limit);
         if (field) {
           const value = record.get(limit);
           if (value) {
