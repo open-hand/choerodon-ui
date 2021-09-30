@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `Message`: 新增 maxCount 属性。
+- 🌟 `Notification`: 新增 maxCount 属性。
+
 ## 1.4.5
 
 `2021-09-29`
