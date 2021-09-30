@@ -13,6 +13,7 @@ let defaultTop = 24;
 let defaultBottom = 24;
 let defaultPlacement: NotificationPlacement = 'topRight';
 let defaultGetContainer: () => HTMLElement;
+let defaultMaxCount;
 
 export interface ConfigProps {
   top?: number;
@@ -20,10 +21,11 @@ export interface ConfigProps {
   duration?: number;
   placement?: NotificationPlacement;
   getContainer?: () => HTMLElement;
+  maxCount?: number;
 }
 
 function setNotificationConfig(options: ConfigProps) {
-  const { duration, placement, bottom, top, getContainer } = options;
+  const { duration, placement, bottom, top, getContainer, maxCount } = options;
   if (duration !== undefined) {
     defaultDuration = duration;
   }
@@ -38,6 +40,9 @@ function setNotificationConfig(options: ConfigProps) {
   }
   if (getContainer !== undefined) {
     defaultGetContainer = getContainer;
+  }
+  if (maxCount !== undefined) {
+    defaultMaxCount = maxCount;
   }
 }
 
@@ -93,6 +98,7 @@ function getNotificationInstance(
       style: getPlacementStyle(placement),
       getContainer: defaultGetContainer,
       closeIcon: <Icon className={`${prefixCls}-close-icon`} type="close" />,
+      defaultMaxCount,
     },
     (notification: any) => {
       notificationInstance[cacheKey] = notification;

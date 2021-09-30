@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `Message`: 新增 message.config 方法参数 maxCount。
+- 🌟 `Notification`: 新增 notification.config 方法参数 maxCount。
+
 ## 1.4.5
 
 `2021-09-29`
