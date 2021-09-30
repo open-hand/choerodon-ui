@@ -8,6 +8,7 @@ import Notice from './Notice';
 
 let seed = 0;
 const now = Date.now();
+let maxCount;
 
 function getUuid() {
   return `rcNotification_${now}_${seed++}`;
@@ -33,13 +34,16 @@ export default class Notification extends Component {
   };
 
   static newInstance = function newNotificationInstance(properties, callback) {
-    const { getContainer, ...props } = properties || {};
+    const { getContainer, defaultMaxCount, ...props } = properties || {};
     const div = document.createElement('div');
     if (getContainer) {
       const root = getContainer();
       root.appendChild(div);
     } else {
       document.body.appendChild(div);
+    }
+    if (defaultMaxCount) {
+      maxCount = defaultMaxCount;
     }
     let called = false;
 
@@ -84,6 +88,9 @@ export default class Notification extends Component {
     this.setState(previousState => {
       const notices = previousState.notices;
       if (!notices.filter(v => v.key === key).length) {
+        if (maxCount && notices && notices.length > 0 && notices.length >= maxCount) {
+          notices.shift();
+        }
         return {
           notices: notices.concat(notice),
         };
