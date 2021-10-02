@@ -934,7 +934,7 @@ export default class Field {
     value = value === undefined ? this.getValue(record) : value;
     const textField = this.get('textField', record);
     const valueField = this.get('valueField', record);
-    const { options } = this;
+    const options = this.getOptions(record);
     if (options) {
       const found = options.find(item => isSameLike(item.get(valueField), value));
       if (found) {

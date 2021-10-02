@@ -189,7 +189,7 @@ export default class Lov extends Select<LovProps> {
   get options(): DataSet {
     const { field, lovCode, record } = this;
     if (field) {
-      const { options } = field;
+      const options = field.getOptions(record);
       if (options) {
         return options;
       }
