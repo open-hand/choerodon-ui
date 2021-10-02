@@ -17,6 +17,10 @@ timeline: true
 
 - 🌟 `Message`: 新增 message.config 方法参数 maxCount。
 - 🌟 `Notification`: 新增 notification.config 方法参数 maxCount。
+- 💄 `<pro>DataSet`: 优化内存。
+- 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
+- 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。
+- 🐞 `<pro>Attachment`： 修复点击查看附件按钮报错的问题。
 
 ## 1.4.5
 

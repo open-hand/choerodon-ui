@@ -993,7 +993,7 @@ export default class DataSet extends EventManager {
    * @param isSelected
    * @param noCascade
    */
-  toJSONData(isSelected?: boolean, noCascade?: boolean): unknown[] {
+  toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
     const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
     const records = useSelected(dataToJSON) ? this.selected : this.records;
     return generateJSONData(this, records).data;

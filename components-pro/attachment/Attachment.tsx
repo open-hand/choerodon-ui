@@ -4,6 +4,7 @@ import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
+import omit from 'lodash/omit';
 import isNil from 'lodash/isNil';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -729,7 +730,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         key="view-btn"
         icon="attach_file"
         color={ButtonColor.primary}
-        {...rest}
+        {...omit(rest, ['ref'])}
       >
         {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple && this.count || undefined}
       </Button>

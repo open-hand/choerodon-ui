@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize memory.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
+- 🐞 `<pro>Attachment`: Fix the problem that an error is reported when clicking the View Attachment button.
 
 ## 1.4.5
 
