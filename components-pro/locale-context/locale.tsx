@@ -19,6 +19,8 @@ export interface Locale {
   Table: {
     show_cached_seletion: string;
     hide_cached_seletion: string;
+    show_cached_modified: string;
+    hide_cached_modified: string;
     selection_tips: string;
     select_current_page: string;
     unselect_current_page: string;
@@ -109,6 +111,8 @@ export interface Locale {
     collapse_cell: string;
     collapse_row: string;
     collapse_column: string;
+    current_page_records: string;
+    cached_records: string;
   };
   Pagination: {
     page: string;

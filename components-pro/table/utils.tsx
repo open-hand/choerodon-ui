@@ -232,7 +232,7 @@ export function findIndexedSibling(element, direction): HTMLTableRowElement | nu
 }
 
 export function isDisabledRow(record: Record) {
-  return record.isCached || record.status === RecordStatus.delete;
+  return record.status === RecordStatus.delete;
 }
 
 export function isSelectedRow(record: Record) {

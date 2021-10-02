@@ -49,6 +49,7 @@ title: DataSet
 | fields | 字段属性数组，详见[Field Props](#Field Props) | object\[\] |  |
 | queryFields | 查询字段属性数组，在内部生成 queryDataSet，优先级低于 queryDataSet 属性，详见[Field Props](#Field Props) | object\[\] |  |
 | cacheSelection | 缓存选中记录，使切换分页时仍保留选中状态。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |
+| cacheModified | 缓存变更记录，使切换分页时仍保留变更的记录。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |
 | axios | 覆盖默认 axios | AxiosInstance |  |
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (parent, primaryKey) => object | (parent, primaryKey) => primaryKey ? parent.get(primaryKey) : parent.toData() |
@@ -70,7 +71,7 @@ title: DataSet
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | observable&lt;string\|boolean&gt; |
 | selectionStrategy | 树形选择记录策略， `SHOW_ALL` `SHOW_CHILD` `SHOW_PARENT` | observable&lt;string[]&gt; |
 | records | 所有记录 | observable&lt;Record[]&gt; |
-| all | 所有记录, 包括缓存的选择记录 | observable&lt;Record[]&gt; |
+| all | 所有记录, 包括缓存的记录 | observable&lt;Record[]&gt; |
 | data | 数据, 不包括删除状态的 Record | observable&lt;Record[]&gt; |
 | created | 新建的数据 | readonly observable&lt;Record[]&gt; |
 | updated | 更新的数据 | readonly observable&lt;Record[]&gt; |
@@ -80,6 +81,8 @@ title: DataSet
 | currentSelected | 当前页选中记录 | readonly observable&lt;Record[]&gt; |
 | currentUnSelected | 当前页未选中记录 | readonly observable&lt;Record[]&gt; |
 | cachedSelected | isAllPageSelection 为 false 时缓存的选中记录 或 isAllPageSelection 为 true 时缓存的未选中记录 | readonly observable&lt;Record[]&gt; |
+| cachedModified | 缓存的变更记录 | observable&lt;Record[]&gt; |
+| cachedRecords | 缓存的记录, 包括 cachedSelected 和 cachedModified | observable&lt;Record[]&gt; |
 | treeSelected | 树形选中记录， 受 selectionStrategy 影响 | readonly observable&lt;Record[]&gt; |
 | length | 数据量 | readonly observable&lt;number&gt; |
 | queryDataSet | 查询数据源 | observable&lt;DataSet&gt; |
@@ -138,6 +141,8 @@ title: DataSet
 | treeSelect(record) | 选择记录和其子记录 | `record` - 记录对象 |  |
 | treeUnSelect(record) | 取消选择记录和其子记录 | `record` - 记录对象 |  |
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |
+| clearCachedModified() | 清除缓存的变更记录 |  |  |
+| clearCachedRecords() | 清除所有缓存的记录 |  |  |
 | get(index) | 获取指定索引的记录 | `index` - 记录索引 | Record |
 | getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | `index` - 记录索引 | Record |
 | validate() | 校验数据记录是否有效 |  | Promise&lt;boolean&gt; |

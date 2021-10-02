@@ -17,10 +17,14 @@ const SelectionTips: FunctionComponent<any> = observer(function SelectionTips() 
       onShowCachedSelectionChange(newShowCachedSelection);
     }
   }), [showCachedSelection, onShowCachedSelectionChange]);
-  const cachedButton = showSelectionCachedButton && dataSet.cacheSelectionKeys && dataSet.cachedSelected.length > 0 ? (
-    <Tooltip
-      title={$l('Table', showCachedSelection ? 'hide_cached_seletion' : 'show_cached_seletion')}
-    >
+  const getTitle = () => {
+    if (!dataSet.cacheModifiedKeys) {
+      return $l('Table', showCachedSelection ? 'hide_cached_seletion' : 'show_cached_seletion');
+    }
+    return $l('Table', showCachedSelection ? 'hide_cached_modified' : 'show_cached_modified');
+  };
+  const cachedButton = showSelectionCachedButton && (dataSet.cacheSelectionKeys || dataSet.cacheModifiedKeys) && dataSet.cachedRecords.length > 0 ? (
+    <Tooltip title={getTitle}>
       <Button
         className={`${prefixCls}-switch`}
         funcType={FuncType.flat}

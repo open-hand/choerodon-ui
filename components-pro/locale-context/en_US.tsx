@@ -18,6 +18,8 @@ const locale: Locale = {
   Table: {
     show_cached_seletion: 'Show all selected records',
     hide_cached_seletion: 'Hide all selected records',
+    show_cached_modified: 'Show all changed records',
+    hide_cached_modified: 'Hide all changed records',
     selection_tips: '{count} data selected',
     select_current_page: 'Select the current page',
     unselect_current_page: 'Unselect the current page',
@@ -108,6 +110,8 @@ const locale: Locale = {
     collapse_cell: 'Collapse the cell',
     collapse_row: 'Collapse the entire row',
     collapse_column: 'Collapse the entire column',
+    current_page_records: 'Current page records',
+    cached_records: 'Cached records',
   },
   Pagination: {
     page: 'Page',

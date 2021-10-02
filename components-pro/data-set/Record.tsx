@@ -685,6 +685,17 @@ export default class Record {
           dirtyData.delete(fieldName);
           if (this.status === RecordStatus.update && dirtyData.size === 0 && [...fields.values()].every(f => !f.dirty)) {
             this.status = RecordStatus.sync;
+            if (this.isCached) {
+              this.isCached = false;
+              const { dataSet } = this;
+              if (dataSet) {
+                const { cachedModified } = dataSet;
+                const cachedIndex = cachedModified.indexOf(this);
+                if (cachedIndex > -1) {
+                  cachedModified.splice(cachedIndex, 1);
+                }
+              }
+            }
           }
         }
         const { dataSet } = this;

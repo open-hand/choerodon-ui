@@ -17,6 +17,11 @@ import autobind from '../_util/autobind';
 import { DragTableRowProps, instance } from './Table';
 import { isDraggingStyle, isStickySupport } from './utils';
 import ColumnGroups from './ColumnGroups';
+import TableGroupTitle from './TableGroupTitle';
+import { $l } from '../locale-context';
+import Button from '../button/Button';
+import { Size } from '../core/enum';
+import { ButtonColor, FuncType } from '../button/enum';
 
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock;
@@ -96,15 +101,24 @@ export default class TableTBody extends Component<TableTBodyProps> {
     }
   }
 
+  @autobind
+  @action
+  handleClearCache() {
+    const { dataSet, tableStore } = this.context;
+    dataSet.clearCachedRecords();
+    tableStore.showCachedSelection = false;
+  }
+
   render() {
     const { lock, columnGroups } = this.props;
     const {
       prefixCls, tableStore, rowDragRender, dataSet,
     } = this.context;
     const {
-      data, virtual, rowDraggable,
+      cachedData, currentData, virtual, rowDraggable,
     } = tableStore;
-    const virtualData = virtual ? data.slice(tableStore.virtualStartIndex, tableStore.virtualEndIndex) : data;
+    const virtualData = virtual ? currentData.slice(tableStore.virtualStartIndex, tableStore.virtualEndIndex) : currentData;
+    const cachedRows = cachedData.length ? this.getRows(cachedData, columnGroups, true, virtual) : undefined;
     const rows = virtualData.length
       ? this.getRows(virtualData, columnGroups, true, virtual)
       : this.getEmptyRow(columnGroups);
@@ -174,10 +188,32 @@ export default class TableTBody extends Component<TableTBodyProps> {
       </Droppable>
     ) : (
       <tbody className={`${prefixCls}-tbody`}>
+        {
+          cachedRows && (
+            <TableGroupTitle columnGroups={columnGroups} lock={lock}>
+              <span>{$l('Table', 'cached_records')}</span>
+              <Button
+                funcType={FuncType.link}
+                color={ButtonColor.primary}
+                icon="delete"
+                size={Size.small}
+                onClick={this.handleClearCache}
+              />
+            </TableGroupTitle>
+          )
+        }
+        {cachedRows}
+        {
+          cachedRows && (
+            <TableGroupTitle columnGroups={columnGroups} lock={lock}>
+              {$l('Table', 'current_page_records')}
+            </TableGroupTitle>
+          )
+        }
         {rows}
       </tbody>
     );
-    return lock|| virtual ? (
+    return lock || virtual ? (
       body
     ) : (
       <ReactResizeObserver onResize={this.handleResize} resizeProp="height" immediately>
