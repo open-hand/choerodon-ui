@@ -300,9 +300,13 @@ export interface DataSetProps {
   /**
    * 缓存选中记录，使切换分页时仍保留选中状态。
    * 当设置了primaryKey或有字段设置了unique才起作用。
-   * @default true
    */
   cacheSelection?: boolean;
+  /**
+   * 缓存变更记录，使切换分页时仍保留变更数据。
+   * 当设置了primaryKey或有字段设置了unique才起作用。
+   */
+  cacheModified?: boolean;
   /**
    * 覆盖默认axios
    */
@@ -429,6 +433,8 @@ export default class DataSet extends EventManager {
   @observable selection: DataSetSelection | false;
 
   @observable cachedSelected: Record[];
+
+  @observable cachedModified: Record[];
 
   @observable dataToJSON: DataToJSON;
 
@@ -787,7 +793,7 @@ export default class DataSet extends EventManager {
    */
   @computed
   get current(): Record | undefined {
-    return this.data.find(record => record.isCurrent) || this.cachedSelected.find(record => record.isCurrent);
+    return this.all.find(record => record.isCurrent);
   }
 
   /**
@@ -796,7 +802,7 @@ export default class DataSet extends EventManager {
    */
   set current(record: Record | undefined) {
     const currentRecord = this.current;
-    if (currentRecord !== record && (!record || !record.isCached)) {
+    if (currentRecord !== record && (!record || record.dataSet === this)) {
       runInAction(() => {
         if (currentRecord) {
           currentRecord.isCurrent = false;
@@ -834,6 +840,19 @@ export default class DataSet extends EventManager {
     return undefined;
   }
 
+  get cacheModifiedKeys(): string[] | undefined {
+    const { cacheModified } = this.props;
+    if (cacheModified) {
+      return this.uniqueKeys;
+    }
+    return undefined;
+  }
+
+  @computed
+  get cachedRecords(): Record[] {
+    return [...new Set([...this.cachedSelected, ...this.cachedModified])];
+  }
+
   /**
    * 获取所有记录包括缓存的选择记录
    * @param index 索引
@@ -841,10 +860,7 @@ export default class DataSet extends EventManager {
    */
   @computed
   get all(): Record[] {
-    if (this.isAllPageSelection) {
-      return this.records;
-    }
-    return this.records.concat(this.cachedSelected.slice());
+    return this.records.concat(this.cachedRecords);
   }
 
   get dirty(): boolean {
@@ -890,6 +906,7 @@ export default class DataSet extends EventManager {
       this.status = DataSetStatus.ready;
       this.currentPage = 1;
       this.cachedSelected = [];
+      this.cachedModified = [];
       this.queryParameter = queryParameter;
       this.pageSize = pageSize!;
       this.selection = selection!;
@@ -958,6 +975,7 @@ export default class DataSet extends EventManager {
     this.currentPage = snapshot.currentPage;
     this.pageSize = snapshot.pageSize;
     this.cachedSelected = snapshot.cachedSelected;
+    this.cachedModified = snapshot.cachedModified;
     this.dataToJSON = snapshot.dataToJSON;
     this.children = snapshot.children;
     this.current = snapshot.current;
@@ -985,7 +1003,7 @@ export default class DataSet extends EventManager {
   }
 
   toData(): object[] {
-    return generateData(this.records).data;
+    return generateData([...this.cachedModified, ...this.records]).data;
   }
 
   /**
@@ -995,7 +1013,7 @@ export default class DataSet extends EventManager {
    */
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
     const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
-    const records = useSelected(dataToJSON) ? this.selected : this.records;
+    const records = useSelected(dataToJSON) ? this.selected : [...this.cachedModified, ...this.records];
     return generateJSONData(this, records).data;
   }
 
@@ -1078,7 +1096,7 @@ export default class DataSet extends EventManager {
     await this.ready();
     if (await this.validate()) {
       return this.pending.add(
-        this.write(useSelected(dataToJSON) ? this.selected : this.records),
+        this.write(useSelected(dataToJSON) ? this.selected : [...this.cachedModified, ...this.records]),
       );
     }
     return false;
@@ -1253,8 +1271,8 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   modifiedCheck(message?: ReactNode | ModalProps & confirmProps): Promise<boolean> {
-    const { modifiedCheck, modifiedCheckMessage } = this.props;
-    if (!modifiedCheck || !this.dirty) {
+    const { modifiedCheck, modifiedCheckMessage, cacheModified } = this.props;
+    if (cacheModified || !modifiedCheck || !this.dirty) {
       return Promise.resolve(true);
     }
     return confirm(message || modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'))
@@ -1949,6 +1967,12 @@ export default class DataSet extends EventManager {
     }
   }
 
+  @action
+  clearCachedRecords() {
+    this.clearCachedSelected();
+    this.clearCachedModified();
+  }
+
   clearCachedSelected(): void {
     this.setCachedSelected([]);
   }
@@ -1962,6 +1986,15 @@ export default class DataSet extends EventManager {
     } else if (selectionStrategy === CheckedStrategy.SHOW_CHILD) {
       cachedSelected.forEach(record => treeSelectParent(this, record, []));
     }
+  }
+
+  clearCachedModified(): void {
+    this.setCachedModified([]);
+  }
+
+  @action
+  setCachedModified(cachedModified: Record[]): void {
+    this.cachedModified = cachedModified;
   }
 
   /**
@@ -2023,7 +2056,7 @@ export default class DataSet extends EventManager {
       const cascade =
         noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
       const validateResult = Promise.all(
-        (useSelected(dataToJSON) ? this.selected : this.data).map(record =>
+        (useSelected(dataToJSON) ? this.selected : [...this.cachedModified.filter(record => !record.isRemoved), ...this.data]).map(record =>
           record.validate(this.props.forceValidate || useAll(dataToJSON), !cascade),
         ),
       ).then(results => results.every(result => result));
@@ -2326,6 +2359,7 @@ Then the query method will be auto invoke.`,
   loadData(allData: (object | Record)[] = [], total?: number): DataSet {
     this.performance.timing.loadStart = Date.now();
     this.storeSelected();
+    this.storeModified();
     const {
       paging,
       pageSize,
@@ -2356,6 +2390,7 @@ Then the query method will be auto invoke.`,
       this.totalCount = allData.length;
     }
     this.releaseCachedSelected();
+    this.releaseCachedModified();
     const nextRecord =
       autoLocateFirst && (idField && parentField ? this.getFromTree(0) : this.get(0));
     if (nextRecord) {
@@ -2591,6 +2626,41 @@ Then the query method will be auto invoke.`,
   }
 
   @action
+  private storeModified() {
+    if (this.cacheModifiedKeys) {
+      this.setCachedModified([
+        ...this.cachedModified.filter(record => isDirtyRecord(record)),
+        ...this.records.reduce<Record[]>((list, record) => {
+          if (isDirtyRecord(record)) {
+            record.isCurrent = false;
+            record.isCached = true;
+            list.push(record);
+          }
+          return list;
+        }, []),
+      ]);
+    }
+  }
+
+  @action
+  releaseCachedModified() {
+    const { cacheModifiedKeys, cachedModified } = this;
+    if (cacheModifiedKeys) {
+      this.records = this.records.map(record => {
+        const index = cachedModified.findIndex(cached =>
+          cacheModifiedKeys.every(key => record.get(key) === cached.get(key)),
+        );
+        if (index !== -1) {
+          const cached = cachedModified.splice(index, 1)[0];
+          cached.isCached = false;
+          return cached;
+        }
+        return record;
+      });
+    }
+  }
+
+  @action
   private storeSelected() {
     if (this.cacheSelectionKeys) {
       const { isAllPageSelection } = this;
@@ -2664,6 +2734,7 @@ Then the query method will be auto invoke.`,
     loadFailed(e);
   }
 
+  @action
   private handleSubmitSuccess(resp: any[], onlyDelete?: boolean) {
     const { dataKey, totalKey } = this;
     const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
@@ -2696,6 +2767,8 @@ Then the query method will be auto invoke.`,
       this.commitData([], total);
     }
     submitSuccess(result);
+    this.clearCachedSelected();
+    this.clearCachedModified();
     return result;
   }
 
@@ -2762,7 +2835,7 @@ Then the query method will be auto invoke.`,
       if (cascadeRecords && cascadeRecordsMap) {
         delete cascadeRecordsMap[childName];
       }
-      ds.clearCachedSelected();
+      ds.clearCachedRecords();
       ds.loadData(childRecords ? childRecords.slice() : []);
       if (currentRecord.isNew) {
         if (ds.length) {
@@ -2783,6 +2856,7 @@ Then the query method will be auto invoke.`,
           ds = new DataSet().restore(oldSnapshot);
         }
         ds.clearCachedSelected();
+        ds.clearCachedModified();
         const dataSetSnapshot = getIf<Record, { [key: string]: DataSetSnapshot }>(currentRecord, 'dataSetSnapshot', {});
         dataSetSnapshot[childName] = ds.loadDataFromResponse(resp).snapshot();
       });
