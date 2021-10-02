@@ -397,7 +397,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
           const statusKey = getConfig('statusKey');
           const statusAdd = getConfig('status').add;
           const status = {};
-          const toJSONFields = conditionDataSet.toJSONData().map((condition) => condition.fieldName);
+          const toJSONFields = conditionDataSet.toJSONData().map((condition: any) => condition.fieldName);
           status[statusKey] = statusAdd;
           if (!toJSONFields.includes(fieldName)) {
             putData.push({

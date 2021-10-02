@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `Message`: Added `message.config` method parameter `maxCount`.
+- 🌟 `Notification`: Added `notification.config` method parameter `maxCount`.
 - 💄 `<pro>DataSet`: Optimize memory.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
