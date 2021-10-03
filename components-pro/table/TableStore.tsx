@@ -530,6 +530,8 @@ export default class TableStore {
 
   lastSelected?: Record;
 
+  activeEmptyCell?: HTMLTableCellElement;
+
   timing: {
     renderStart: number;
     renderEnd: number;

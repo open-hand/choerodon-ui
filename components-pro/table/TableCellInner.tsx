@@ -8,7 +8,7 @@ import React, {
   ReactNode,
   useCallback,
   useContext,
-  useEffect,
+  useEffect, useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
@@ -90,6 +90,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const { currentEditRecord } = tableStore;
   const field = record.getField(name);
   const fieldDisabled = disabled || (field && field.get('disabled'));
+  const innerRef = useRef<HTMLSpanElement | null>(null);
   const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
       return command({ dataSet, record, aggregation });
@@ -101,7 +102,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const cellEditorInCell = isInCellEditor(cellEditor);
   const hasEditor = !pristine && cellEditor && !cellEditorInCell;
   const showEditor = useCallback((cell) => {
-    if (name && hasEditor) {
+    if (name) {
       if (!lock && tableStore.overflowX) {
         const tableBodyWrap = tableStore.virtual ? cell.offsetParent.parentNode.parentNode : cell.offsetParent;
         if (tableBodyWrap) {
@@ -147,13 +148,15 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
         }
       }
     }
-  }, [column, name, hasEditor, columnKey, tableStore]);
+  }, [column, name, columnKey, tableStore]);
   const handleFocus = useCallback((e) => {
     if (canFocus) {
       if (key !== SELECTION_KEY) {
         dataSet.current = record;
       }
-      showEditor(e.currentTarget);
+      if (hasEditor) {
+        showEditor(e.currentTarget);
+      }
       if (!isStickySupport() && (key === SELECTION_KEY || !hasEditor)) {
         const cell = findCell(tableStore, columnKey, lock);
         if (cell && !cell.contains(document.activeElement)) {
@@ -529,10 +532,21 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
       tooltipShownRef.current = false;
     }
   }, [tooltipShownRef]);
+  useLayoutEffect(() => {
+    const { current } = innerRef;
+    const { activeEmptyCell } = tableStore;
+    if (current && activeEmptyCell) {
+      if (activeEmptyCell.dataset.index === name) {
+        delete tableStore.activeEmptyCell;
+        current.focus();
+      }
+    }
+  }, []);
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
     children: text,
+    ref: innerRef,
   };
   const empty = field ? isFieldValueEmpty(
     value,

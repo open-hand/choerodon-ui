@@ -17,7 +17,7 @@ import autobind from '../_util/autobind';
 import { DragTableRowProps, instance } from './Table';
 import { isDraggingStyle, isStickySupport } from './utils';
 import ColumnGroups from './ColumnGroups';
-import TableGroupTitle from './TableGroupTitle';
+import TableRowGroup from './TableRowGroup';
 import { $l } from '../locale-context';
 import Button from '../button/Button';
 import { Size } from '../core/enum';
@@ -190,7 +190,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
       <tbody className={`${prefixCls}-tbody`}>
         {
           cachedRows && (
-            <TableGroupTitle columnGroups={columnGroups} lock={lock}>
+            <TableRowGroup columnGroups={columnGroups} lock={lock}>
               <span>{$l('Table', 'cached_records')}</span>
               <Button
                 funcType={FuncType.link}
@@ -199,15 +199,15 @@ export default class TableTBody extends Component<TableTBodyProps> {
                 size={Size.small}
                 onClick={this.handleClearCache}
               />
-            </TableGroupTitle>
+            </TableRowGroup>
           )
         }
         {cachedRows}
         {
           cachedRows && (
-            <TableGroupTitle columnGroups={columnGroups} lock={lock}>
+            <TableRowGroup columnGroups={columnGroups} lock={lock}>
               {$l('Table', 'current_page_records')}
-            </TableGroupTitle>
+            </TableRowGroup>
           )
         }
         {rows}
