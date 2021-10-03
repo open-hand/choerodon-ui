@@ -36,7 +36,7 @@ const SelectionTips: FunctionComponent<any> = observer(function SelectionTips() 
   return tableStore.showSelectionTips ? (
     <div className={`${prefixCls}-selection-tips`}>
       <span>
-        {$l('Table', 'selection_tips', { count: <b>{dataSet.selected.length}</b> })}
+        {$l('Table', 'selection_tips', { count: <b key="count">{dataSet.selected.length}</b> })}
       </span>
       {cachedButton}
     </div>

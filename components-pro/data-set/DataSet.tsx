@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { action, computed, get, isArrayLike, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
+import { _isComputingDerivation, action, computed, get, isArrayLike, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import axiosStatic, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import unionBy from 'lodash/unionBy';
 import omit from 'lodash/omit';
@@ -1003,6 +1003,9 @@ export default class DataSet extends EventManager {
   }
 
   toData(): object[] {
+    if (_isComputingDerivation && _isComputingDerivation()) {
+      warning(false, 'Please do not use the `dataSet.toData` method during the rendering phase.');
+    }
     return generateData([...this.cachedModified, ...this.records]).data;
   }
 
@@ -1012,6 +1015,9 @@ export default class DataSet extends EventManager {
    * @param noCascade
    */
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
+    if (_isComputingDerivation && _isComputingDerivation()) {
+      warning(false, 'Please do not use the `dataSet.toJSONData` method during the rendering phase.');
+    }
     const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
     const records = useSelected(dataToJSON) ? this.selected : [...this.cachedModified, ...this.records];
     return generateJSONData(this, records).data;

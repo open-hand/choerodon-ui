@@ -9,6 +9,7 @@ import {
   ObservableMap,
   runInAction,
   toJS,
+  _isComputingDerivation,
 } from 'mobx';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
@@ -19,6 +20,7 @@ import isNumber from 'lodash/isNumber';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { addDataSetField, RecordValidationErrors } from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
@@ -464,6 +466,9 @@ export default class Record {
     isCascadeSelect?: boolean,
     all: boolean = true,
   ): any {
+    if (_isComputingDerivation && _isComputingDerivation()) {
+      warning(false, 'Please do not use the `record.toData` method to get the value during the rendering phase, please use `record.get` instead.');
+    }
     const { status, dataSet } = this;
     const { dataToJSON, fields } = dataSet;
     const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
