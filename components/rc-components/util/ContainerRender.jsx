@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
 
-export default class ContainerRender extends Component {
+class ContainerRender extends Component {
   static propTypes = {
     autoMount: PropTypes.bool,
     autoDestroy: PropTypes.bool,
@@ -12,13 +13,13 @@ export default class ContainerRender extends Component {
     getComponent: PropTypes.func.isRequired,
     getContainer: PropTypes.func.isRequired,
     children: PropTypes.func.isRequired,
-  }
+  };
 
   static defaultProps = {
     autoMount: true,
     autoDestroy: true,
     forceRender: false,
-  }
+  };
 
   componentDidMount() {
     if (this.props.autoMount) {
@@ -44,7 +45,7 @@ export default class ContainerRender extends Component {
       this.container.parentNode.removeChild(this.container);
       this.container = null;
     }
-  }
+  };
 
   renderComponent = (props, ready) => {
     const { visible, getComponent, forceRender, getContainer, parent } = this.props;
@@ -60,10 +61,10 @@ export default class ContainerRender extends Component {
           if (ready) {
             ready.call(this);
           }
-        }
+        },
       );
     }
-  }
+  };
 
   render() {
     return this.props.children({
@@ -72,3 +73,5 @@ export default class ContainerRender extends Component {
     });
   }
 }
+
+export default observer(ContainerRender);

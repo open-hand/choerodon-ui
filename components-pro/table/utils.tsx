@@ -206,8 +206,18 @@ export function findCell(
   if (name !== undefined && current && node.element) {
     const wrapperSelector =
       !isStickySupport() && overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
-    const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"] span.${prefixCls}-cell-inner`;
-    return node.element.querySelector(selector);
+    const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"]`;
+    const td = node.element.querySelector(selector);
+    if (td) {
+      const cell = td.querySelector(`span.${prefixCls}-cell-inner`);
+      if (cell) {
+        return cell;
+      }
+      if (tableStore.virtualCell && !td.childElementCount) {
+        return td;
+      }
+    }
+    return undefined;
   }
 }
 

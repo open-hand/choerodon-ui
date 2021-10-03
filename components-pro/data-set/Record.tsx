@@ -696,13 +696,10 @@ export default class Record {
             this.status = RecordStatus.sync;
             if (this.isCached) {
               this.isCached = false;
-              const { dataSet } = this;
-              if (dataSet) {
-                const { cachedModified } = dataSet;
-                const cachedIndex = cachedModified.indexOf(this);
-                if (cachedIndex > -1) {
-                  cachedModified.splice(cachedIndex, 1);
-                }
+              const { cachedModified } = dataSet;
+              const cachedIndex = cachedModified.indexOf(this);
+              if (cachedIndex > -1) {
+                cachedModified.splice(cachedIndex, 1);
               }
             }
           }

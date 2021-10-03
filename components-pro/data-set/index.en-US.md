@@ -96,7 +96,7 @@ title: DataSet
 | 名称 | 说明 | 参数 | 返回值类型 |
 | --- | --- | --- | --- |
 | ready() | 判断数据源是否准备就绪 |  | Promise |
-| query(page, params) | 查询 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数 | Promise&lt;any&gt; |
+| query(page, params, cache) | 查询 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数  `cache`&lt;optional&gt; - 是否保留缓存的变更记录  | Promise&lt;any&gt; |
 | queryMore(page, params) | 查询更多， 保留原数据 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数  | Promise&lt;any&gt; |
 | submit() | 将数据集中的增删改的记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; `false` - 校验失败，`undefined` - 无数据提交或提交相关配置不全，如没有 submitUrl。 |
 | reset() | 重置更改, 并清除校验状态 |  |  |
@@ -153,7 +153,7 @@ title: DataSet
 | bind(ds, name) | 绑定头 DataSet | `ds` - 头 DataSet 对象或 id `name` - 绑定名 |  |
 | setQueryParameter(para, value) | 设置查询参数 | `para` - 参数名 `value` - 参数值 |  |
 | getQueryParameter(para) | 获取查询参数 | `para` - 参数名 |  |
-| loadData(data, total) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 |  |
+| loadData(data, total, cache) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `cache` - 是否保留缓存的变更记录 |  |
 | appendData(data, total, parentRecord) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 |  |
 | setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |

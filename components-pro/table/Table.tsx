@@ -972,18 +972,25 @@ export default class Table extends DataSetComponent<TableProps> {
       if (firstInvalidRecord) {
         const { errors, record } = firstInvalidRecord;
         if (errors.length) {
-          const [{ field: { name } }] = errors;
-          const cell = findCell(tableStore, name, undefined, record);
-          if (cell) {
-            cell.focus();
+          if (!tableStore.showCachedSelection) {
+            if (dataSet.cachedRecords.includes(record)) {
+              runInAction(() => {
+                tableStore.showCachedSelection = true;
+              });
+            }
           }
-        }
-      }
-      if (!tableStore.showCachedSelection) {
-        const { cachedRecords } = dataSet;
-        if (cachedRecords.some(r => r.getValidationErrors().length > 0)) {
-          runInAction(() => {
-            tableStore.showCachedSelection = true;
+          const [{ field: { name } }] = errors;
+          if (tableStore.virtual && !tableStore.virtualData.includes(record)) {
+            const { tableBodyWrap } = this;
+            if (tableBodyWrap) {
+              tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
+            }
+          }
+          raf(() => {
+            const cell = findCell(tableStore, name, undefined, record);
+            if (cell) {
+              cell.focus();
+            }
           });
         }
       }

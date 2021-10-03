@@ -1036,10 +1036,11 @@ export default class DataSet extends EventManager {
    * 查询记录
    * @param page 页码
    * @param params 查询参数
+   * @param cache 是否保留 cachedRecords
    * @return Promise
    */
-  query(page?: number, params?: object): Promise<any> {
-    return this.pending.add(this.doQuery(page, params));
+  query(page?: number, params?: object, cache?: boolean): Promise<any> {
+    return this.pending.add(this.doQuery(page, params, cache));
   }
 
   /**
@@ -1066,9 +1067,9 @@ export default class DataSet extends EventManager {
     return Promise.resolve();
   }
 
-  async doQuery(page, params?: object): Promise<any> {
+  async doQuery(page, params?: object, cache?: boolean): Promise<any> {
     const data = await this.read(page, params);
-    this.loadDataFromResponse(data);
+    this.loadDataFromResponse(data, cache);
     return data;
   }
 
@@ -1295,7 +1296,7 @@ export default class DataSet extends EventManager {
     if (paging === true || paging === 'server') {
       if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
         if (await this.modifiedCheck()) {
-          await this.query(Math.floor(index / pageSize) + 1);
+          await this.query(Math.floor(index / pageSize) + 1, undefined, true);
           currentRecord = this.findInAllPage(index);
           if (currentRecord) {
             this.current = autoLocateFirst ? currentRecord : undefined;
@@ -2356,10 +2357,12 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  loadData(allData: (object | Record)[] = [], total?: number): DataSet {
+  loadData(allData: (object | Record)[] = [], total?: number, cache?: boolean): DataSet {
     this.performance.timing.loadStart = Date.now();
     this.storeSelected();
-    this.storeModified();
+    if (cache) {
+      this.storeModified();
+    }
     const {
       paging,
       pageSize,
@@ -2389,8 +2392,12 @@ Then the query method will be auto invoke.`,
     } else {
       this.totalCount = allData.length;
     }
-    this.releaseCachedSelected();
-    this.releaseCachedModified();
+    this.releaseCachedSelected(cache);
+    if (cache) {
+      this.releaseCachedModified();
+    } else {
+      this.clearCachedModified();
+    }
     const nextRecord =
       autoLocateFirst && (idField && parentField ? this.getFromTree(0) : this.get(0));
     if (nextRecord) {
@@ -2532,12 +2539,12 @@ Then the query method will be auto invoke.`,
     Object.keys(events).forEach(event => this.addEventListener(event, events[event]));
   }
 
-  private loadDataFromResponse(resp: any): DataSet {
+  private loadDataFromResponse(resp: any, cache?: boolean): DataSet {
     if (resp) {
       const { dataKey, totalKey } = this;
       const data: object[] = generateResponseData(resp, dataKey);
       const total: number | undefined = ObjectChainValue.get(resp, totalKey);
-      this.loadData(data, total);
+      this.loadData(data, total, cache);
     }
     return this;
   }
@@ -2676,8 +2683,8 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  releaseCachedSelected() {
-    const { cacheSelectionKeys, cachedSelected } = this;
+  releaseCachedSelected(cache?: boolean) {
+    const { cacheSelectionKeys, cachedSelected, isAllPageSelection } = this;
     if (cacheSelectionKeys) {
       this.records = this.records.map(record => {
         const index = cachedSelected.findIndex(cached =>
@@ -2686,7 +2693,10 @@ Then the query method will be auto invoke.`,
         if (index !== -1) {
           const selected = cachedSelected.splice(index, 1)[0];
           selected.isCached = false;
-          return selected;
+          if (cache) {
+            return selected;
+          }
+          record.isSelected = !isAllPageSelection;
         }
         return record;
       });
@@ -2767,7 +2777,6 @@ Then the query method will be auto invoke.`,
       this.commitData([], total);
     }
     submitSuccess(result);
-    this.clearCachedSelected();
     this.clearCachedModified();
     return result;
   }
@@ -2855,8 +2864,7 @@ Then the query method will be auto invoke.`,
         if (current !== currentRecord) {
           ds = new DataSet().restore(oldSnapshot);
         }
-        ds.clearCachedSelected();
-        ds.clearCachedModified();
+        ds.clearCachedRecords();
         const dataSetSnapshot = getIf<Record, { [key: string]: DataSetSnapshot }>(currentRecord, 'dataSetSnapshot', {});
         dataSetSnapshot[childName] = ds.loadDataFromResponse(resp).snapshot();
       });
