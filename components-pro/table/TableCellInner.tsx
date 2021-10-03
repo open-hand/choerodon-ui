@@ -98,7 +98,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     return command;
   }, [record, command, dataSet, aggregation]);
   const canFocus = useMemo(() => !fieldDisabled && (!inlineEdit || record === currentEditRecord), [fieldDisabled, record, currentEditRecord, inlineEdit]);
-  const cellEditor = getEditorByColumnAndRecord(column, dataSet, record);
+  const cellEditor = getEditorByColumnAndRecord(column, record);
   const cellEditorInCell = isInCellEditor(cellEditor);
   const hasEditor = !pristine && cellEditor && !cellEditorInCell;
   const showEditor = useCallback((cell) => {

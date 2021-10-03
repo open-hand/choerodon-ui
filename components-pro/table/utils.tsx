@@ -134,7 +134,6 @@ export function getPlaceholderByField(field?: Field, record?: Record): string | 
 
 export function getEditorByColumnAndRecord(
   column: ColumnProps,
-  dataSet: DataSet,
   record?: Record,
 ): ReactElement<FormFieldProps> | undefined {
   const { name, editor } = column;
@@ -144,7 +143,7 @@ export function getEditorByColumnAndRecord(
       cellEditor = editor(record, name);
     }
     if (cellEditor === true) {
-      const field = dataSet.getField(name);
+      const field = record.dataSet.getField(name);
       if (field) {
         if (
           !field.get('unique', record) ||
