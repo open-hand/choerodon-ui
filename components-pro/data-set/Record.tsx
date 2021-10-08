@@ -1,7 +1,9 @@
 import {
+  _isComputingDerivation,
   action,
   computed,
   IComputedValue,
+  IMapEntry,
   isArrayLike,
   isObservableArray,
   isObservableObject,
@@ -9,7 +11,6 @@ import {
   ObservableMap,
   runInAction,
   toJS,
-  _isComputingDerivation,
 } from 'mobx';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
@@ -35,12 +36,14 @@ import {
   generateResponseData,
   getChainFieldName,
   getIf,
+  getOrderFields,
   getRecordValue,
   getUniqueKeysAndPrimaryKey,
   isDirtyRecord,
   processIntlField,
   processToJSON,
   processValue,
+  sortTree,
   useCascade,
   useDirtyField,
   useNormal,
@@ -51,6 +54,7 @@ import DataSetSnapshot from './DataSetSnapshot';
 import { BooleanValue, DataSetEvents, DataSetSelection, FieldIgnore, FieldType, RecordStatus } from './enum';
 import isSame from '../_util/isSame';
 import { treeReduce } from '../_util/treeUtils';
+import { iteratorReduce } from '../_util/iteratorUtils';
 
 /**
  * 记录ID生成器
@@ -74,6 +78,44 @@ function initRecordField(record: Record, name: string, fieldProps?: FieldProps):
     fieldProps,
     dataSet,
   );
+}
+
+function processTreeLevel(props: { dataSet: DataSet; value: any; fieldName: string; }) {
+  const { dataSet, value, fieldName } = props;
+  const { parentField, idField, childrenField } = dataSet.props;
+  if (!childrenField && parentField && idField) {
+    if (fieldName === parentField) {
+      const { parent } = this;
+      if (parent) {
+        const oldChildren = parent.children;
+        if (oldChildren) {
+          const oldIndex = oldChildren.indexOf(this);
+          if (oldIndex !== -1) {
+            oldChildren.splice(oldIndex, 1);
+          }
+          if (!oldChildren.length) {
+            parent.children = undefined;
+          }
+        }
+      }
+      const newParent = dataSet.find(r => r.get(idField) === value);
+      this.parent = newParent;
+      if (newParent) {
+        const { children } = newParent;
+        if (children) {
+          children.push(this);
+          if (children.length > 1) {
+            const orderFields = getOrderFields(dataSet);
+            if (orderFields.length > 0) {
+              newParent.children = sortTree(children, orderFields);
+            }
+          }
+        } else {
+          newParent.children = [this];
+        }
+      }
+    }
+  }
 }
 
 export default class Record {
@@ -118,7 +160,7 @@ export default class Record {
     const { dirtyData } = this;
     const data = toJS(this.data);
     if (dirtyData) {
-      [...dirtyData.entries()].forEach(([key, value]) => ObjectChainValue.set(data, key, value));
+      dirtyData.forEach((value, key) => ObjectChainValue.set(data, key, value));
     }
     return data;
   }
@@ -127,10 +169,9 @@ export default class Record {
     runInAction(() => {
       const { dirtyData } = this;
       if (dirtyData) {
-        const dirtyKeys = [...dirtyData.keys()];
         const newData = {};
-        if (dirtyKeys.length) {
-          dirtyKeys.forEach((key) => {
+        if (dirtyData.size) {
+          dirtyData.forEach((_, key) => {
             const item = ObjectChainValue.get(this.data, key);
             ObjectChainValue.set(newData, key, item);
             const newItem = ObjectChainValue.get(data, key);
@@ -193,10 +234,6 @@ export default class Record {
   @observable childrenLoaded?: boolean;
 
   @observable state?: ObservableMap<string, any> | undefined;
-
-  private $children: Record[] | undefined;
-
-  private $parent: Record | undefined;
 
   @computed
   get key(): string | number {
@@ -344,56 +381,9 @@ export default class Record {
     return dataSet.records;
   }
 
-  @computed
-  get children(): Record[] | undefined {
-    const { parentField, idField, childrenField } = this.dataSet.props;
-    if (childrenField) {
-      return this.$children;
-    }
-    if (parentField && idField) {
-      const children = this.records.filter(record => {
-        const childParentId = record.get(parentField);
-        const id = this.get(idField);
-        return !isNil(childParentId) && !isNil(id) && childParentId === id;
-      });
-      return children.length > 0 ? children : undefined;
-    }
-    return undefined;
-  }
+  @observable children?: Record[] | undefined;
 
-  set children(children: Record[] | undefined) {
-    const { childrenField } = this.dataSet.props;
-    if (childrenField) {
-      this.$children = children;
-    } else {
-      throw new Error('Setter of record.children only support in `childrenField` mode.');
-    }
-  }
-
-  @computed
-  get parent(): Record | undefined {
-    const { parentField, idField, childrenField } = this.dataSet.props;
-    if (childrenField) {
-      return this.$parent;
-    }
-    if (parentField && idField) {
-      return this.records.find(record => {
-        const parentId = this.get(parentField);
-        const id = record.get(idField);
-        return !isNil(parentId) && !isNil(id) && parentId === id;
-      });
-    }
-    return undefined;
-  }
-
-  set parent(parent: Record | undefined) {
-    const { childrenField } = this.dataSet.props;
-    if (childrenField) {
-      this.$parent = parent;
-    } else {
-      throw new Error('Setter of record.parent only support in `childrenField` mode.');
-    }
-  }
+  @observable parent?: Record | undefined;
 
   @computed
   get parents(): Record[] {
@@ -475,8 +465,8 @@ export default class Record {
     const normal = all || (dataToJSON && useNormal(dataToJSON));
     let dirty = status !== RecordStatus.sync;
     const childrenKeys: string[] | undefined = cascade ? Object.keys(dataSet.children) : undefined;
-    const jsonFieldKeys: string[] | undefined = childrenKeys && [...fields.entries()].reduce<string[]>((fieldKeys, [key, field]) => {
-      if (field.get('type') === FieldType.json && childrenKeys.some(childKey => key === childKey || childKey.startsWith(`${key}.`))) {
+    const jsonFieldKeys: string[] | undefined = childrenKeys && iteratorReduce<IMapEntry<string, Field>, string[]>(fields.entries(), (fieldKeys, [key, field]) => {
+      if (field.get('type', this) === FieldType.json && childrenKeys.some(childKey => key === childKey || childKey.startsWith(`${key}.`))) {
         fieldKeys.push(key);
       }
       return fieldKeys;
@@ -513,7 +503,7 @@ export default class Record {
     this.validating = true;
     const promises: Promise<boolean>[] = [];
     if (all || this.status !== RecordStatus.sync) {
-      [...dataSet.fields.values()].forEach(field => promises.push(field.checkValidity(false, this)));
+      dataSet.fields.forEach(field => promises.push(field.checkValidity(false, this)));
     }
     if (!noCascade) {
       const { children } = dataSet;
@@ -566,7 +556,7 @@ export default class Record {
   };
 
   getValidationErrors(): RecordValidationErrors[] {
-    return [...this.ownerFields.values()].reduce<RecordValidationErrors[]>((results, field) => {
+    return iteratorReduce<Field, RecordValidationErrors[]>(this.ownerFields.values(), (results, field) => {
       if (!field.valid) {
         results.push({
           field,
@@ -697,7 +687,7 @@ export default class Record {
           }
         } else if (isSame(processToJSON(dirtyData.get(fieldName), field, this), newValueForCompare)) {
           dirtyData.delete(fieldName);
-          if (this.status === RecordStatus.update && dirtyData.size === 0 && [...fields.values()].every(f => !f.isDirty(this))) {
+          if (this.status === RecordStatus.update && dirtyData.size === 0) {
             this.status = RecordStatus.sync;
             if (this.isCached) {
               this.isCached = false;
@@ -723,6 +713,11 @@ export default class Record {
             children.forEach(record => record.set(fieldName, value));
           }
         }
+        processTreeLevel({
+          dataSet,
+          value: newValue,
+          fieldName: oldName,
+        });
       }
       [field, ...findBindFields(field, fields, true, this), ...findBindTargetFields(field, fields, true, this)].forEach((oneField) => (
         oneField.checkValidity(false, this)
@@ -758,6 +753,11 @@ export default class Record {
       }
       ObjectChainValue.set(data, fieldName, newValue, dataSet.fields, this);
       field.commit(this);
+      processTreeLevel({
+        dataSet,
+        value: newValue,
+        fieldName: oldName,
+      });
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.init(key, item[key]));
     }
@@ -803,7 +803,7 @@ export default class Record {
           }
         } else {
           this.commitTls(
-            [...dataSet.fields.entries()].reduce((data, [key, field]) => {
+            iteratorReduce(dataSet.fields.entries(), (data, [key, field]) => {
               if (field.type === FieldType.intl) {
                 data[key] = {
                   [lang]: this.get(key),
@@ -821,7 +821,7 @@ export default class Record {
   @action
   reset(): Record {
     const { status, dataSet, dirty, isRemoved } = this;
-    [...dataSet.fields.values()].forEach(field => field.commit(this));
+    dataSet.fields.forEach(field => field.commit(this));
     if (status === RecordStatus.update || isRemoved) {
       this.status = RecordStatus.sync;
     }
@@ -854,7 +854,7 @@ export default class Record {
 
   @action
   clear(): Record {
-    [...this.dataSet.fields.keys()].forEach((key) => this.set(key, null));
+    this.dataSet.fields.forEach((_, key) => this.set(key, null));
     return this;
   }
 
@@ -863,12 +863,28 @@ export default class Record {
     if (dataSet) {
       const { records } = this;
       if (this.isRemoved) {
-        const index = records.indexOf(this);
-        if (index !== -1) {
-          if (dataSet.records === records) {
-            dataSet.totalCount -= 1;
+        {
+          const index = records.indexOf(this);
+          if (index !== -1) {
+            if (dataSet.records === records) {
+              dataSet.totalCount -= 1;
+            }
+            records.splice(index, 1);
           }
-          records.splice(index, 1);
+        }
+        const { parent } = this;
+        if (parent) {
+          const { children } = parent;
+          if (children) {
+            const index = children.indexOf(this);
+            if (index !== -1) {
+              children.splice(index, 1);
+            }
+            if (!children.length) {
+              parent.children = undefined;
+            }
+          }
+          this.parent = undefined;
         }
         return this;
       }
@@ -904,7 +920,7 @@ export default class Record {
           });
         }
       }
-      [...dataSet.fields.values()].forEach(field => field.commit(this));
+      dataSet.fields.forEach(field => field.commit(this));
     }
     this.dirtyData = undefined;
     this.status = RecordStatus.sync;
@@ -987,7 +1003,7 @@ export default class Record {
   private processData(data: object = {}, needMerge?: boolean): void {
     const newData = { ...data };
     const { fields } = this.dataSet;
-    [...fields.entries()].forEach(([fieldName, field]) => this.processFieldValue(fieldName, field, fields, newData, data, needMerge));
+    fields.forEach((field, fieldName) => this.processFieldValue(fieldName, field, fields, newData, data, needMerge));
   }
 
   private normalizeData(needIgnore?: boolean, jsonFields?: string[]) {
@@ -1000,7 +1016,7 @@ export default class Record {
     const objectFieldsList: Field[][] = [];
     const normalFields: Field[] = [];
     const ignoreFieldNames: Set<string> = new Set();
-    [...fields.entries()].forEach(([key, field]) => {
+    fields.forEach((field, key) => {
       if (field && (!jsonFields || !jsonFields.includes(key))) {
         const ignore = field.get('ignore', this) || fieldIgnore;
         if (

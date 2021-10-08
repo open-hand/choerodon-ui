@@ -1,6 +1,7 @@
 import { Children, isValidElement, JSXElementConstructor, Key, ReactElement, ReactNode } from 'react';
 import { isFragment } from 'react-is';
 import isNil from 'lodash/isNil';
+import { iteratorFindIndex, iteratorSome } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
 import { TabsPosition } from './enum';
 import { isTabGroup, TabGroupProps } from './TabGroup';
 import { TabPaneProps } from './TabPane';
@@ -35,11 +36,15 @@ export function toArray(children: ReactNode): ReactElement<TabPaneProps>[] {
 }
 
 export function getDefaultActiveKeyInGroup(panelMap: Map<string, TabPaneProps>): string | undefined {
-  for (const [key, panel] of panelMap) {
+  let activeKey: string | undefined;
+  iteratorSome(panelMap.entries(), ([key, panel]) => {
     if (!panel.disabled) {
-      return key;
+      activeKey = key;
+      return true;
     }
-  }
+    return false;
+  });
+  return activeKey;
 }
 
 export function getDefaultActiveKey(totalPanelsMap: Map<string, TabPaneProps>, groupedPanelsMap: Map<string, GroupPanelMap>, option: { activeKey?: string | undefined, defaultActiveKey?: string | undefined }): string | undefined {
@@ -61,13 +66,17 @@ export function getDefaultActiveKey(totalPanelsMap: Map<string, TabPaneProps>, g
 }
 
 export function getDefaultGroupKey(groupedPanelsMap: Map<string, GroupPanelMap>): string | undefined {
-  for (const [key, { panelsMap }] of groupedPanelsMap) {
-    for (const [, panel] of panelsMap) {
+  let groupKey: string | undefined;
+  iteratorSome(groupedPanelsMap.entries(), ([key, { panelsMap }]) => (
+    iteratorSome(panelsMap.values(), (panel) => {
       if (!panel.disabled) {
-        return key;
+        groupKey = key;
+        return true;
       }
-    }
-  }
+      return false;
+    })
+  ));
+  return groupKey;
 }
 
 export function getActiveKeyByGroupKey(groupedPanelsMap: Map<string, GroupPanelMap>, key: string): string | undefined {
@@ -89,7 +98,7 @@ export function generateKey(key: Key | undefined | null, index: number): string 
 }
 
 export function getActiveIndex(map: Map<string, TabPaneProps>, activeKey: string | undefined): number {
-  return activeKey === undefined ? -1 : [...map.keys()].findIndex(key => key === activeKey);
+  return activeKey === undefined ? -1 : iteratorFindIndex(map.keys(), key => key === activeKey);
 }
 
 export function setTransform(style: CSSStyleDeclaration, v: string = '') {

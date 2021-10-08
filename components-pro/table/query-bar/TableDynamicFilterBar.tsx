@@ -36,6 +36,7 @@ import FieldList from './FieldList';
 import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';
 import QuickFilterMenu from './quick-filter';
+import { iteratorFilterToArray } from '../../_util/iteratorUtils';
 
 /**
  * 当前数据是否有值并需要选中
@@ -238,12 +239,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   handleDataSetCreate(props: { dataSet: DataSet, record: Record }) {
     const { dataSet, record } = props;
-    const conditionData = Object.entries(record.toData());
-    this.originalValue = record.toData();
-    const keys = [...dataSet.fields.keys()];
+    const originalValue = record.toData();
+    const conditionData = Object.entries(originalValue);
+    this.originalValue = originalValue;
+    const { fields } = dataSet;
     map(conditionData, data => {
       let name = data[0];
-      if (!keys.includes(data[0]) &&
+      if (!fields.has(data[0]) &&
         isObject(data[1]) &&
         !isEnumEmpty(data[1]) &&
         !isArray(data[1])) {
@@ -625,7 +627,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       <FieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: [...queryDataSet.fields.values()].filter(f => !f.get('bind')).slice(queryFieldsLimit),
+                          fields: iteratorFilterToArray(queryDataSet.fields.values(), f => !f.get('bind')).slice(queryFieldsLimit),
                         }]}
                         prefixCls={`${prefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}
