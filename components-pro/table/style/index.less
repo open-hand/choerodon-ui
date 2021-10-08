@@ -606,6 +606,31 @@
     }
   }
 
+  &-row-group {
+    display: table-row;
+
+    &-title {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      font-size: @font-size-sm;
+      line-height: 2;
+      background-color: @table-row-group-title-bg;
+      border-bottom: @table-border;
+
+      &-content {
+        position: sticky;
+        left: 0;
+        display: inline-flex;
+        align-items: center;
+        padding-right: @table-padding-horizontal;
+        padding-left: @table-padding-horizontal;
+        font-weight: 500;
+      }
+    }
+  }
+
+
   &-toolbar {
     padding-bottom: 0.1rem;
     overflow: hidden;

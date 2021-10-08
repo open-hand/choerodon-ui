@@ -18,6 +18,8 @@ const locale: Locale = {
   Table: {
     show_cached_seletion: '選択したすべてのレコードを表示',
     hide_cached_seletion: '選択したすべてのレコードを非表示にする',
+    show_cached_modified: 'すべての変更レコードを表示',
+    hide_cached_modified: 'すべての変更を非表示',
     selection_tips: '{count} データがチェックされました',
     select_current_page: '現在のページを選択してください',
     unselect_current_page: '現在のページの選択を解除します',
@@ -107,6 +109,8 @@ const locale: Locale = {
     collapse_cell: 'セルを折りたたむ',
     collapse_row: '行全体を折りたたむ',
     collapse_column: '列全体を折りたたむ',
+    current_page_records: '現在のページレコード',
+    cached_records: 'キャッシュされたレコード',
   },
   Pagination: {
     page: 'ページ',

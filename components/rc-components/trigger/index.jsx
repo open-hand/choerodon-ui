@@ -1,5 +1,6 @@
 import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
 import { createPortal, findDOMNode } from 'react-dom';
 import noop from 'lodash/noop';
 import contains from '../util/Dom/contains';
@@ -22,7 +23,7 @@ const ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter',
 
 const IS_REACT_16 = !!createPortal;
 
-export default class Trigger extends Component {
+class Trigger extends Component {
   static propTypes = {
     children: PropTypes.any,
     action: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
@@ -598,3 +599,5 @@ export default class Trigger extends Component {
     ];
   }
 }
+
+export default observer(Trigger);

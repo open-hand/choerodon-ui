@@ -72,7 +72,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     } = this;
     return (
       options ||
-      (field && field.options) ||
+      (field && field.getOptions(this.record)) ||
       normalizeTreeNodes({
         textField,
         valueField,

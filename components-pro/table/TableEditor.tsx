@@ -441,7 +441,7 @@ export default class TableEditor extends Component<TableEditorProps> {
     if (!pristine && field && field.get('multiLine', record)) {
       return this.renderMultiLineEditor();
     }
-    const cellEditor = getEditorByColumnAndRecord(column, dataSet, record);
+    const cellEditor = getEditorByColumnAndRecord(column, record);
     if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
       this.editorProps = cellEditor.props;
       const { height } = this;

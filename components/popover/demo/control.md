@@ -15,11 +15,14 @@ Use `visible` prop to control the display of the card.
 
 ````jsx
 import { Popover, Button } from 'choerodon-ui';
+import { DataSet } from 'choerodon-ui/pro';
 
 class App extends React.Component {
   state = {
     visible: false,
   }
+
+  ds = new DataSet({ data: [{ name: 'Hugh' }]})
 
   hide = () => {
     this.setState({
@@ -34,13 +37,12 @@ class App extends React.Component {
   render() {
     return (
       <Popover
-        content={<a onClick={this.hide}>Close</a>}
+        content={() => <a onClick={this.hide}>{this.ds.current.get('name')}</a>}
         title="Title"
-        trigger="click"
         visible={this.state.visible}
         onVisibleChange={this.handleVisibleChange}
       >
-        <Button type="primary">Click me</Button>
+        <Button type="primary" onClick={() => this.ds.current.set('name', 'Wu')}>Click me</Button>
       </Popover>
     );
   }

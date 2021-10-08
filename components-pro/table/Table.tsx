@@ -12,7 +12,7 @@ import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, get, IReactionDisposer, reaction, toJS } from 'mobx';
+import { action, get, IReactionDisposer, reaction, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -967,15 +967,31 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>, dataSet: DataSet }) {
     if (!await result) {
+      const { tableStore } = this;
       const [firstInvalidRecord] = dataSet.getValidationErrors();
       if (firstInvalidRecord) {
         const { errors, record } = firstInvalidRecord;
         if (errors.length) {
-          const [{ field: { name } }] = errors;
-          const cell = findCell(this.tableStore, name, undefined, record);
-          if (cell) {
-            cell.focus();
+          if (!tableStore.showCachedSelection) {
+            if (dataSet.cachedRecords.includes(record)) {
+              runInAction(() => {
+                tableStore.showCachedSelection = true;
+              });
+            }
           }
+          const [{ field: { name } }] = errors;
+          if (tableStore.virtual && !tableStore.virtualData.includes(record)) {
+            const { tableBodyWrap } = this;
+            if (tableBodyWrap) {
+              tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
+            }
+          }
+          raf(() => {
+            const cell = findCell(tableStore, name, undefined, record);
+            if (cell) {
+              cell.focus();
+            }
+          });
         }
       }
     }
