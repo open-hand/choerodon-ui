@@ -14,6 +14,7 @@ import getReactNodeText from '../_util/getReactNodeText';
 import Field from '../data-set/Field';
 import { FormField } from '../field/FormField';
 import { getIf } from '../data-set/utils';
+import { iteratorFilterToArray } from '../_util/iteratorUtils';
 
 export type CustomValidator = (
   value: any,
@@ -65,7 +66,7 @@ export default class Validator {
   private get uniqueRefFields(): Field[] {
     const { name, unique, record } = this.props;
     if (record && isString(unique)) {
-      return [...record.dataSet.fields.values()].filter(
+      return iteratorFilterToArray(record.dataSet.fields.values(),
         field =>
           field.name !== name &&
           field.get('unique', record) === unique &&

@@ -2,7 +2,7 @@ import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode
 import { observer } from 'mobx-react';
 import isObject from 'lodash/isObject';
 import { TableQueryBarType } from '../Table';
-import { TableQueryBarProps, TableQueryBarHookProps } from '../Table.d';
+import { TableQueryBarHookProps, TableQueryBarProps } from '../Table.d';
 import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
 import { getEditorByField, getPlaceholderByField } from '../../table/utils';
@@ -52,7 +52,7 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
       const { fields, current } = queryDataSet;
-      return [...fields.entries()].reduce((list, [name, field]) => {
+      fields.forEach((field, name) => {
         if (!field.get('bind', current) && !name.includes('__tls')) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
@@ -69,7 +69,7 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
             isFlat: type === TableQueryBarType.filterBar,
             ...filterBarProps,
           };
-          list.push(
+          result.push(
             isValidElement(element)
               ? cloneElement(element, props)
               : cloneElement(getEditorByField(field, current, type !== TableQueryBarType.professionalBar, type === TableQueryBarType.filterBar), {
@@ -78,8 +78,7 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
               }),
           );
         }
-        return list;
-      }, result);
+      });
     }
     return result;
   }

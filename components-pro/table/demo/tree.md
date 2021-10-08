@@ -49,14 +49,15 @@ class App extends React.Component {
     parentField: 'parentId',
     idField: 'id',
     checkField: 'ischecked',
+    combineSort: true,
     fields: [
       { name: 'id', type: 'number' },
       { name: 'text', type: 'string', label: '功能名称' },
       { name: 'url', type: 'string', label: '入口页面' },
       { name: 'expand', type: 'boolean', label: '是否展开' },
       { name: 'ischecked', type: 'boolean', label: '是否开启' },
-      { name: 'score', type: 'number', order: 'asc' },
-      { name: 'parentId', type: 'number', parentFieldName: 'id' },
+      { name: 'score', type: 'number', label: '顺序', order: 'asc' },
+      { name: 'parentId', type: 'number' },
     ],
     events: {
       indexchange: ({ current }) => console.log('current user', current),
@@ -138,9 +139,12 @@ class App extends React.Component {
         expandedRowRenderer={expandedRender && expandedRowRenderer}
         rowNumber
         parityRow
+        defaultRowExpanded
+        style={{ height: 300 }}
       >
-        <Column name="text" editor renderer={iconRenderer} width={450} />
-        <Column name="url" editor />
+        <Column name="text" editor renderer={iconRenderer} width={450} sortable />
+        <Column name="url" editor sortable />
+        <Column name="score" />
         <Column name="ischecked" editor hidden={!checkFieldAsColumn} />
         <Column name="expand" editor />
         <Column header="权限设置" width={150} align="center" />

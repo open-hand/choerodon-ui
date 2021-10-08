@@ -1,17 +1,17 @@
 ---
 order: 5
 title:
-  zh-CN: 高性能树形数据
-  en-US: Performance Tree Data
+  zh-CN: 加载树形结构数据
+  en-US: Load Tree Structure Data
 ---
 
 ## zh-CN
 
-高性能树形数据。DataSet 需要设置 childrenField。接口查询的数据需要为树形结构，如果为平铺结构可以通过 transport.read.transformRequest 进行处理。
-注意：这种模式一般用于纯展示， 编辑只能全量提交数据。
+当接口查询的数据为树形结构时，可以使用此方案。
+
 ## en-US
 
-Performance Tree Data.
+This scheme can be used when the data queried by the interface has a tree structure.
 
 ```jsx
 import { DataSet, Table, Button } from 'choerodon-ui/pro';
@@ -146,15 +146,15 @@ const App = () => {
 
   return (
     <>
-    <Button onClick={() => console.log(rightFieldInformationDs.toJSONData())}>toJSONData</Button>
-    <Table
-      mode="tree"
-      selectionMode="treebox"
-      dataSet={rightFieldInformationDs}
-      columns={columns}
-      style={{ height: 200 }}
-      defaultRowExpanded
-    />
+      <Button onClick={() => console.log(rightFieldInformationDs.toJSONData())}>toJSONData</Button>
+      <Table
+        mode="tree"
+        selectionMode="treebox"
+        dataSet={rightFieldInformationDs}
+        columns={columns}
+        style={{ height: 300 }}
+        defaultRowExpanded
+      />
     </>
   );
 };

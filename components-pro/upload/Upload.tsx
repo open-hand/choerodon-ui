@@ -512,10 +512,9 @@ export default class Upload extends FormField<UploadProps> {
       return;
     }
     const files = partialUpload
-      ? Array.from(fileList)
-        .slice(0)
+      ? fileList
         .filter(item => !item.status || item.status !== 'success')
-      : Array.from(fileList).slice(0);
+      : Array.from(fileList);
     const that = this;
     if (!files.length) {
       message.info($l('Upload', 'been_uploaded'));

@@ -6,12 +6,12 @@ import raf from 'raf';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import Row from 'choerodon-ui/lib/row';
+import Row, { RowProps } from 'choerodon-ui/lib/row';
 import Col from 'choerodon-ui/lib/col';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import { FormField, FormFieldProps } from '../field/FormField';
-import TableContext from './TableContext';
+import TableContext, { TableContextValue } from './TableContext';
 import { findCell, findIndexedSibling, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isInCellEditor, isStickySupport } from './utils';
 import { stopEvent } from '../_util/EventManager';
 import { ShowHelp } from '../field/enum';
@@ -51,6 +51,8 @@ export default class TableEditor extends Component<TableEditorProps> {
   static displayName = 'TableEditor';
 
   static contextType = TableContext;
+
+  context: TableContextValue;
 
   editorProps?: any;
 
@@ -97,42 +99,43 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   componentDidMount() {
-    const { column } = this.props;
-    const {
-      tableStore,
-    } = this.context;
-    const { name } = column;
-    const { dataSet, currentEditRecord, editors, inlineEdit, virtual } = tableStore;
-    const record = currentEditRecord || dataSet.current;
-    const field = dataSet.getField(name);
-    if (field && field.get('multiLine', record)) {
-      window.addEventListener('click', this.handleWindowClick);
-    }
-    window.addEventListener('resize', this.handleWindowResize);
-    editors.set(name, this);
-    if (inlineEdit) {
-      this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? raf(() => this.alignEditor()) : this.hideEditor());
-    } else if (virtual) {
-      this.reaction = reaction(() => tableStore.virtualData, (records) => (
-        records.includes(dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
-      ));
-    } else {
-      this.reaction = reaction(() => dataSet.current, r => (
-        r && this.cellNode ? raf(() => this.alignEditor()) : this.hideEditor()
-      ));
+    const { column: { name } } = this.props;
+    if (name) {
+      const {
+        tableStore,
+      } = this.context;
+      const { dataSet, currentEditRecord, editors, inlineEdit, virtual } = tableStore;
+      const record = currentEditRecord || dataSet.current;
+      const field = dataSet.getField(name);
+      if (field && field.get('multiLine', record)) {
+        window.addEventListener('click', this.handleWindowClick);
+      }
+      window.addEventListener('resize', this.handleWindowResize);
+      editors.set(name, this);
+      if (inlineEdit) {
+        this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? raf(() => this.alignEditor()) : this.hideEditor());
+      } else if (virtual) {
+        this.reaction = reaction(() => tableStore.virtualData, (records) => (
+          dataSet.current && records.includes(dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
+        ));
+      } else {
+        this.reaction = reaction(() => dataSet.current, r => (
+          r && this.cellNode ? raf(() => this.alignEditor()) : this.hideEditor()
+        ));
+      }
     }
   }
 
   componentWillUnmount() {
     const { column: { name } } = this.props;
-    const {
-      tableStore: { editors },
-    } = this.context;
-    editors.delete(name);
-    window.removeEventListener('resize', this.handleWindowResize);
-    window.removeEventListener('click', this.handleWindowClick);
-    if (this.reaction) {
-      this.reaction();
+    if (name) {
+      const { tableStore: { editors } } = this.context;
+      editors.delete(name);
+      window.removeEventListener('resize', this.handleWindowResize);
+      window.removeEventListener('click', this.handleWindowClick);
+      if (this.reaction) {
+        this.reaction();
+      }
     }
   }
 
@@ -280,7 +283,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         current.setState(`__column_resize_height_${name}`, height);
       }
       if (inlineEdit) {
-        [...tableStore.editors.values()].forEach((editor) => {
+        tableStore.editors.forEach((editor) => {
           const editorCellNode = editor.cellNode;
           if (editorCellNode) {
             editor.alignEditor(editorCellNode);
@@ -357,12 +360,14 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   showNextEditor(reserve: boolean) {
-    this.blur();
-    const { tableStore } = this.context;
-    const { column } = this.props;
-    tableStore.showNextEditor(column.name, reserve);
-    this.alignEditor();
-    this.focus();
+    const { column: { name } } = this.props;
+    if (name) {
+      this.blur();
+      const { tableStore } = this.context;
+      tableStore.showNextEditor(name, reserve);
+      this.alignEditor();
+      this.focus();
+    }
   }
 
   /**
@@ -370,101 +375,101 @@ export default class TableEditor extends Component<TableEditorProps> {
    */
   renderMultiLineEditor(): ReactElement<FormFieldProps> | undefined {
     const { column: { name } } = this.props;
-    const {
-      prefixCls,
-      dataSet,
-      inlineEdit,
-      rowHeight,
-      tableStore: { currentEditRecord },
-    } = this.context;
-    const record = currentEditRecord || dataSet.current;
-    const multiLineFields = [...dataSet.fields.entries()].map(([key, field]) => {
-      const bind = field.get('bind', record);
-      if (bind && bind.split('.')[0] === name) {
-        return record.fields.get(key) || field;
-      }
-      return null;
-    }).filter(f => f);
-    if (multiLineFields && multiLineFields.length) {
-      return (
-        <div>
-          {multiLineFields.map((field, index) => {
-            if (field) {
-              const { name: fieldName } = field;
-              const editor = getEditorByField(field, record);
-              this.editorProps = editor.props;
-              const { style = {}, ...otherProps } = this.editorProps;
-              if (rowHeight !== 'auto') {
-                style.height = pxToRem(rowHeight);
-              }
-              const newEditorProps = {
-                ...otherProps,
-                style,
-                ref: index === 0 ? this.saveRef : undefined,
-                record,
-                name: fieldName,
-                onKeyDown: this.handleEditorKeyDown,
-                onEnterDown: this.handleEditorKeyEnterDown,
-                onClick: this.handleEditorClick,
-                tabIndex: -1,
-                showHelp: ShowHelp.none,
-                // 目前测试inline时候需要放开限制
-                _inTable: !inlineEdit,
-              };
-              const label = field.get('label', record);
-              return (
-                <Row key={`${record?.index}-multi-${fieldName}`} className={`${prefixCls}-multi`}>
-                  {label && <Col span={8} className={`${prefixCls}-multi-label`}>{label}</Col>}
-                  <Col span={label ? 16 : 24} className={`${prefixCls}-multi-value`}>{cloneElement<FormFieldProps>(editor, newEditorProps)}</Col>
-                </Row>
-              );
+    if (name) {
+      const {
+        prefixCls,
+        dataSet,
+        inlineEdit,
+        rowHeight,
+        tableStore: { currentEditRecord },
+      } = this.context;
+      const record = currentEditRecord || dataSet.current;
+      if (record) {
+        const multiLineFields: ReactElement<RowProps>[] = [];
+        let ref = true;
+        dataSet.fields.forEach((dsField, fieldName) => {
+          const bind = dsField.get('bind', record);
+          if (bind && bind.split('.')[0] === name) {
+            const field = record.fields.get(fieldName) || dsField;
+            const editor = getEditorByField(field, record);
+            this.editorProps = editor.props;
+            const { style = {}, ...otherProps } = this.editorProps;
+            if (rowHeight !== 'auto') {
+              style.height = pxToRem(rowHeight);
             }
-            return null;
-          })}
-        </div>
-      );
+            const newEditorProps = {
+              ...otherProps,
+              style,
+              ref: ref ? this.saveRef : undefined,
+              record,
+              name: fieldName,
+              onKeyDown: this.handleEditorKeyDown,
+              onEnterDown: this.handleEditorKeyEnterDown,
+              onClick: this.handleEditorClick,
+              tabIndex: -1,
+              showHelp: ShowHelp.none,
+              // 目前测试inline时候需要放开限制
+              _inTable: !inlineEdit,
+            };
+            ref = false;
+            const label = field.get('label', record);
+            const key = `${record.index}-multi-${fieldName}`;
+            multiLineFields.push(
+              <Row key={key} className={`${prefixCls}-multi`}>
+                {label && <Col span={8} className={`${prefixCls}-multi-label`}>{label}</Col>}
+                <Col span={label ? 16 : 24} className={`${prefixCls}-multi-value`}>{cloneElement<FormFieldProps>(editor, newEditorProps)}</Col>
+              </Row>,
+            );
+          }
+        });
+        if (multiLineFields.length) {
+          return <div>{multiLineFields}</div>;
+        }
+      }
     }
   }
 
   renderEditor(): ReactElement<FormFieldProps> | undefined {
     const { column } = this.props;
-    const {
-      dataSet,
-      pristine,
-      inlineEdit,
-      tableStore: { currentEditRecord, currentEditorName },
-    } = this.context;
     const { name } = column;
-    const record = currentEditRecord || dataSet.current;
-    const field = dataSet.getField(name);
-    // 多行编辑拦截返回渲染器
-    if (!pristine && field && field.get('multiLine', record)) {
-      return this.renderMultiLineEditor();
-    }
-    const cellEditor = getEditorByColumnAndRecord(column, record);
-    if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
-      this.editorProps = cellEditor.props;
-      const { height } = this;
-      const { style = {}, ...otherProps } = this.editorProps;
-      if (height !== undefined) {
-        style.height = pxToRem(height);
+    if (name) {
+      const {
+        dataSet,
+        pristine,
+        inlineEdit,
+        tableStore: { currentEditRecord, currentEditorName },
+      } = this.context;
+      const record = currentEditRecord || dataSet.current;
+      const field = dataSet.getField(name);
+      // 多行编辑拦截返回渲染器
+      if (!pristine && field && field.get('multiLine', record)) {
+        return this.renderMultiLineEditor();
       }
-      const newEditorProps = {
-        ...otherProps,
-        style,
-        ref: this.saveRef,
-        record,
-        name,
-        onKeyDown: this.handleEditorKeyDown,
-        onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
-        onBlur: this.handleEditorBlur,
-        tabIndex: currentEditorName ? 0 : -1,
-        showHelp: ShowHelp.none,
-        // 目前测试inline时候需要放开限制
-        _inTable: !inlineEdit,
-        preventRenderer: true,
-      };
-      return cloneElement<FormFieldProps>(cellEditor, newEditorProps);
+      const cellEditor = getEditorByColumnAndRecord(column, record);
+      if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
+        this.editorProps = cellEditor.props;
+        const { height } = this;
+        const { style = {}, ...otherProps } = this.editorProps;
+        if (height !== undefined) {
+          style.height = pxToRem(height);
+        }
+        const newEditorProps = {
+          ...otherProps,
+          style,
+          ref: this.saveRef,
+          record,
+          name,
+          onKeyDown: this.handleEditorKeyDown,
+          onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
+          onBlur: this.handleEditorBlur,
+          tabIndex: currentEditorName ? 0 : -1,
+          showHelp: ShowHelp.none,
+          // 目前测试inline时候需要放开限制
+          _inTable: !inlineEdit,
+          preventRenderer: true,
+        };
+        return cloneElement<FormFieldProps>(cellEditor, newEditorProps);
+      }
     }
     this.cellNode = undefined;
   }
