@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `Message`: 新增 message.config 方法参数 maxCount。
 - 🌟 `Notification`: 新增 notification.config 方法参数 maxCount。
 - 🌟 `<pro>DataSet`: 新增 cacheModified 属性， cachedModified, cachedRecords 值， clearCachedModified, clearCachedRecords 方法， query 和 loadData 新增 cache 参数。
+- 🌟 `Badge`: 新增 color, size, title 属性。
 - 💄 `<pro>DataSet`: 优化内存。
 - 💄 `RcTrigger`: 使组件成为观察者。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
