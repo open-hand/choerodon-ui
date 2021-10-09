@@ -148,7 +148,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     runInAction(() => {
       const { field } = this;
       if (field) {
-        field.setAttachments(attachments, this.record);
+        field.setAttachments(attachments, this.record, this.tempAttachmentUUID);
       } else {
         this.observableProps.attachments = attachments;
       }

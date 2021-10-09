@@ -519,7 +519,7 @@ export function getBaseType(type: FieldType): FieldType {
 
 export function checkFieldType(value: any, field: Field, record?: Record): boolean {
   if (process.env.NODE_ENV !== 'production' && !isEmpty(value)) {
-    const fieldType = getBaseType(field.type);
+    const fieldType = getBaseType(field.get('type', record));
     if (fieldType !== FieldType.auto) {
       if (isArrayLike(value)) {
         return value.every(item => checkFieldType(item, field, record));
