@@ -555,7 +555,7 @@ export default class Field {
         if (dirtyData.has(getChainFieldName(record, name))) {
           return true;
         }
-        if (this.type === FieldType.intl) {
+        if (this.get('type', record) === FieldType.intl) {
           const tlsKey = getConfig('tlsKey');
           if (record.get(tlsKey) && Object.keys(localeContext.supports).some(lang => dirtyData.has(getChainFieldName(record, `${tlsKey}.${name}.${lang}`)))) {
             return true;
@@ -1074,8 +1074,10 @@ export default class Field {
 
   getValidatorProps(record: Record | undefined = this.record): ValidatorProps | undefined {
     if (record) {
-      const { dataSet, name, type, required, attachmentCount } = this;
+      const { dataSet, name } = this;
+      const type = this.get('type', record);
       const baseType = getBaseType(type);
+      const required = this.get('required', record);
       const customValidator = this.get('validator', record);
       const max = this.get('max', record);
       const min = this.get('min', record);
@@ -1090,6 +1092,9 @@ export default class Field {
       const multiple = this.get('multiple', record);
       const unique = this.get('unique', record);
       const defaultValidationMessages = this.get('defaultValidationMessages', record);
+      const attachments = this.getAttachments(record);
+      const validAttachments = attachments && attachments.filter(({ status }) => !status || ['success', 'done'].includes(status));
+      const attachmentCount = validAttachments ? validAttachments.length : this.getAttachmentCount(record);
       const validatorProps = {
         type,
         required,
@@ -1257,7 +1262,7 @@ export default class Field {
     const { fetchList } = getConfig('attachment');
     if (fetchList) {
       fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode }).then(action((results) => {
-        this.setAttachments(results.map(file => new AttachmentFile(file)), record);
+        this.setAttachments(results.map(file => new AttachmentFile(file)), record, undefined);
       }));
     }
   }
@@ -1322,16 +1327,16 @@ export default class Field {
   }
 
   @action
-  setAttachments(attachments: AttachmentFile[] | undefined, record: Record | undefined = this.record) {
+  setAttachments(attachments: AttachmentFile[] | undefined, record: Record | undefined = this.record, uuid?: string | undefined) {
     if (record) {
-      const uuid = record.get(this.name);
-      if (uuid) {
+      const value = uuid || record.get(this.name);
+      if (value) {
         const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(this.dataSet, 'attachmentCaches', () => observable.map());
-        const cache = attachmentCaches.get(uuid);
+        const cache = attachmentCaches.get(value);
         if (cache) {
           set(cache, 'attachments', attachments);
         } else {
-          attachmentCaches.set(uuid, { attachments });
+          attachmentCaches.set(value, { attachments });
         }
       }
     } else {

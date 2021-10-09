@@ -804,7 +804,7 @@ export default class Record {
         } else {
           this.commitTls(
             iteratorReduce(dataSet.fields.entries(), (data, [key, field]) => {
-              if (field.type === FieldType.intl) {
+              if (field.get('type', this) === FieldType.intl) {
                 data[key] = {
                   [lang]: this.get(key),
                 };
