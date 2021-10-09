@@ -72,7 +72,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       if (current) {
         const result: string[] = [];
         const keys = queryDataSet.fields.keys();
-        (paramName ? [...new Set([...keys, paramName])] : keys).forEach((key: string) => {
+        (paramName ? [...new Set([...keys, paramName])] : [...keys]).forEach((key: string) => {
           if (key && (!filter || filter(key))) {
             const values = current.get(key);
             if (isArrayLike(values)) {
