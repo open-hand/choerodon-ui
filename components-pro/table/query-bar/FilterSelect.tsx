@@ -72,7 +72,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       if (current) {
         const result: string[] = [];
         const keys = queryDataSet.fields.keys();
-        [...new Set(paramName ? [...keys, paramName] : keys)].forEach((key: string) => {
+        (paramName ? [...new Set([...keys, paramName])] : keys).forEach((key: string) => {
           if (key && (!filter || filter(key))) {
             const values = current.get(key);
             if (isArrayLike(values)) {
@@ -411,7 +411,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     } = this.observableProps;
     const values: Set<string> = new Set<string>();
     optionDataSet.forEach(record => {
-      [...fields.keys()].forEach(key => {
+      fields.forEach((_, key) => {
         const value = record.get(key);
         if (isString(value) && value.toLowerCase().indexOf(filterText.toLowerCase()) !== -1) {
           values.add(value);
@@ -431,7 +431,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     const data: ReactElement<OptionProps>[] = [];
     if (queryDataSet) {
       const { current } = queryDataSet;
-      [...queryDataSet.fields.entries()].forEach(([key, field]) => {
+      queryDataSet.fields.forEach((field, key) => {
         if (
           key !== paramName &&
           (this.getValues().indexOf(key) === -1 ||
@@ -439,7 +439,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           !field.get('bind', current)
         ) {
           data.push(
-            <Option key={key} value={field}>
+            <Option key={String(key)} value={field}>
               {this.getFieldLabel(field, current)}
             </Option>,
           );

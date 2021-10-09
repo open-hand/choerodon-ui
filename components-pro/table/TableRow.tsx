@@ -36,6 +36,7 @@ import Spin from '../spin';
 import useComputed from '../use-computed';
 import ColumnGroups from './ColumnGroups';
 import ColumnGroup from './ColumnGroup';
+import { iteratorSome } from '../_util/iteratorUtils';
 
 export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -72,7 +73,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
-  const needSaveRowHeight = isStickySupport() ? false : (!lock && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn) || [...dataSet.fields.values()].some(field => field.get('multiLine', record))));
+  const needSaveRowHeight = isStickySupport() ? false : (!lock && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn) || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
   const rowExternalProps: any = useComputed(() => ({
     ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
     ...(typeof onRow === 'function'
@@ -229,7 +230,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
   // componentDidMount
   useEffect(() => {
     if (record.status === RecordStatus.add && tableStore.autoFocus) {
-      const editor = [...tableStore.editors.values()][0];
+      const editor = tableStore.editors.values().next().value;
       if (editor && (isStickySupport() || getColumnLock(editor.props.column.lock) === getColumnLock(lock))) {
         const cell = findCell(tableStore, getColumnKey(editor.props.column), lock);
         if (cell) {

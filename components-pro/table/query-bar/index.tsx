@@ -692,7 +692,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
       const { fields, current } = queryDataSet;
-      return [...fields.entries()].reduce((list, [name, field]) => {
+      fields.forEach((field, name) => {
         if (!field.get('bind', current) && !name.includes('__tls')) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
@@ -709,7 +709,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             isFlat: queryBar === TableQueryBarType.filterBar,
             ...filterBarProps,
           };
-          list.push(
+          result.push(
             isValidElement(element)
               ? cloneElement(element, props)
               : cloneElement(getEditorByField(field, current, queryBar !== TableQueryBarType.professionalBar, queryBar === TableQueryBarType.filterBar), {
@@ -718,8 +718,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               }),
           );
         }
-        return list;
-      }, result);
+      });
     }
     return result;
   }

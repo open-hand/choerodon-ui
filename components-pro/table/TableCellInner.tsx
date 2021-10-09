@@ -8,7 +8,8 @@ import React, {
   ReactNode,
   useCallback,
   useContext,
-  useEffect, useLayoutEffect,
+  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
@@ -64,6 +65,7 @@ import { hide, show } from '../tooltip/singleton';
 import useComputed from '../use-computed';
 import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
+import { iteratorReduce } from '../_util/iteratorUtils';
 
 let inTab: boolean = false;
 
@@ -214,7 +216,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   }, [dataSet, record]);
   const multiLine = field && field.get('multiLine', record);
   const fieldType = !aggregation && rowHeight !== 'auto' && field && field.get('type', record);
-  const rows = multiLine ? [...dataSet.fields.values()].reduce((count, dsField) => {
+  const rows = multiLine ? iteratorReduce(dataSet.fields.values(), (count, dsField) => {
     const bind = dsField.get('bind', record);
     if (bind && bind.startsWith(`${name}.`)) {
       return count + 1;

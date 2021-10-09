@@ -17,9 +17,9 @@ timeline: true
 
 - 🌟 `Message`: Added `message.config` method parameter `maxCount`.
 - 🌟 `Notification`: Added `notification.config` method parameter `maxCount`.
-- 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
 - 🌟 `Badge`: Added `color`, `size`, `title` properties.
-- 💄 `<pro>DataSet`: Optimize memory.
+- 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
+- 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.

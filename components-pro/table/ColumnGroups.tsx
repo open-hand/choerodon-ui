@@ -93,6 +93,10 @@ export default class ColumnGroups {
     return [];
   }
 
+  get leafColumnsWidth(): number {
+    return this.allLeafs.reduce<number>((total, { column }) => total + columnWidth(column), 0);
+  }
+
   get leftLeafColumnsWidth(): number {
     return this.leftLeafs.reduce<number>((total, { column }) => total + columnWidth(column), 0);
   }

@@ -27,16 +27,15 @@ function processPaneToData(pane: TabPaneProps, key: string, group?: string) {
 
 function normalizePanesToData(pair: [Map<string, TabPaneProps>, Map<string, GroupPanelMap>]): object[] {
   const [totalPanelsMap, groupPanelMap] = pair;
+  const data: object[] = [];
   if (groupPanelMap.size > 0) {
-    return [...groupPanelMap.entries()].reduce<object[]>((data, [key, paneMap]) => {
-      const { panelsMap } = paneMap;
-      [...panelsMap.entries()].forEach(([paneKey, pane]) => {
-        data.push(processPaneToData(pane, paneKey, key));
-      });
-      return data;
-    }, []);
+    groupPanelMap.forEach((paneMap, key) => (
+      paneMap.panelsMap.forEach((pane, paneKey) => data.push(processPaneToData(pane, paneKey, key)))
+    ));
+  } else {
+    totalPanelsMap.forEach((pane, paneKey) => data.push(processPaneToData(pane, paneKey)));
   }
-  return [...totalPanelsMap.entries()].map(([paneKey, pane]) => processPaneToData(pane, paneKey));
+  return data;
 }
 
 export interface CustomizationSettingsProps {
