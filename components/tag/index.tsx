@@ -6,13 +6,15 @@ import Icon from '../icon';
 import CheckableTag from './CheckableTag';
 import Animate from '../animate';
 import { getPrefixCls } from '../configure';
+import { PresetColorType, isPresetColor as isPresetColorUtil } from '../_util/colors';
+import { LiteralUnion } from '../_util/type';
 
 export { CheckableTagProps } from './CheckableTag';
 
 export interface TagProps {
   prefixCls?: string;
   className?: string;
-  color?: string;
+  color?: LiteralUnion<PresetColorType, string>;
   /** 标签是否可以关闭 */
   closable?: boolean;
   /** 关闭时的回调 */
@@ -73,15 +75,6 @@ export default class Tag extends Component<TagProps, TagState> {
     }
   };
 
-  isPresetColor(color?: string): boolean {
-    if (!color) {
-      return false;
-    }
-    return /^(pink|red|yellow|orange|cyan|green|blue|purple|geekblue|magenta|volcano|gold|lime|gray)(-inverse)?$/.test(
-      color,
-    );
-  }
-
   render() {
     const {
       prefixCls: customizePrefixCls,
@@ -95,7 +88,7 @@ export default class Tag extends Component<TagProps, TagState> {
     const prefixCls = getPrefixCls('tag', customizePrefixCls);
     const { closing, closed } = this.state;
     const closeIcon = closable ? <Icon type="close" onClick={this.close} /> : '';
-    const isPresetColor = this.isPresetColor(color);
+    const isPresetColor = isPresetColorUtil(color);
     const classString = classNames(
       prefixCls,
       {

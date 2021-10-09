@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `Message`: Added `message.config` method parameter `maxCount`.
 - 🌟 `Notification`: Added `notification.config` method parameter `maxCount`.
+- 🌟 `Badge`: Added `color`, `size`, `title` properties.
 - 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance.
 - 💄 `RcTrigger`: Make Component be observer.
