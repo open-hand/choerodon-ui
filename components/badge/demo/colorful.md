@@ -30,6 +30,8 @@ const colors = [
   'volcano',
   'gold',
   'lime',
+  'dark',
+  'gray',
 ];
 
 ReactDOM.render(

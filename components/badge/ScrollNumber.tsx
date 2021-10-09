@@ -60,9 +60,6 @@ const ScrollNumber: React.FC<ScrollNumberProps> = ({
     ));
   }
 
-  // allow specify the border
-  // mock border-color by box-shadow for compatible with old usage:
-  // <Badge count={4} style={{ backgroundColor: '#fff', color: '#999', borderColor: '#d9d9d9' }} />
   if (style && style.borderColor) {
     newProps.style = {
       ...style,

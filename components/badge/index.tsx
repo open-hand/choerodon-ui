@@ -3,11 +3,10 @@ import { useMemo, useRef } from 'react';
 import CSSMotion from 'rc-motion';
 import classNames from 'classnames';
 import ScrollNumber from './ScrollNumber';
-import { PresetColorType, PresetStatusColorType } from '../_util/colors';
+import { PresetColorType, PresetStatusColorType, isPresetColor } from '../_util/colors';
 import { getPrefixCls } from '../configure';
 import { LiteralUnion } from '../_util/type';
 import { cloneElement } from '../_util/reactNode';
-import { isPresetColor } from './utils';
 
 export { ScrollNumberProps } from './ScrollNumber';
 
@@ -153,7 +152,6 @@ const Badge: CompoundedComponent = ({
     className,
   );
 
-  // <Badge status="success" />
   if (!children && hasStatus) {
     const statusTextColor = mergedStyle.color;
     return (
@@ -166,7 +164,6 @@ const Badge: CompoundedComponent = ({
     );
   }
 
-  // <Badge status="success" count={<Icon type="xxx" />}></Badge>
   return (
     <span {...restProps} className={badgeClassName}>
       {children}
