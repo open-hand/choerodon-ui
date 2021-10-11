@@ -516,13 +516,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (queryDataSet && queryFields.length) {
       const prefix = this.getPrefix();
       const fuzzyQuery = this.getFuzzyQuery();
-      const quickFilterMenu = this.tableFilterAdapter && searchCode ? (
+      const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
+      const quickFilterMenu = this.tableFilterAdapter && searchCodes ? (
         <QuickFilterMenu
           autoQuery={autoQuery}
           prefixCls={prefixCls}
           expand={this.expand}
           dynamicFilterBar={dynamicFilterBar}
-          searchCode={searchCode}
+          searchCode={searchCodes}
           dataSet={dataSet}
           queryDataSet={queryDataSet}
           onChange={this.handleSelect}
