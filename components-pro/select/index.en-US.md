@@ -24,6 +24,7 @@ title: Select
 | paramMatcher | 参数匹配器。当为字符串时，进行参数拼接。 | string \| ({ record, text, textField, valueField }) => string | |
 | optionsFilter | 选项过滤 | (record) => boolean |  |
 | checkValueOnOptionsChange | 当选项改变时，检查并清除不在选项中的值 | boolean | true |
+| defaultActiveFirstOption | 是否默认高亮第一个选项。 | boolean | true |
 | dropdownMatchSelectWidth | 下拉框匹配输入框宽度 | boolean | true |
 | dropdownMenuStyle | 下拉框菜单样式名 | object |  |
 | options | 下拉框选项数据源（使用后需要自行处理参数等） | DataSet |  |

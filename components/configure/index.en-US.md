@@ -90,6 +90,7 @@ const prefixCls = getConfig('prefixCls');
 | customizedLoad | Table 个性化加载的钩子 | (code, component: keyof [Customizable](#Customizable)) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
 | tableShowRemovedRow |	默认 Table 是否显示临时移除的行，默认置灰显示 |	boolean |	true |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
+| defaultActiveFirstOption | 默认 Select 高亮第一个选项 | boolean | true |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | drawerSectionBorder | Default if drawer header and foot have a border line | boolean | true |

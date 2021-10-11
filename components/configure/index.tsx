@@ -230,6 +230,7 @@ export type Config = {
   }) => object;
   formatter?: Formatter;
   dropdownMatchSelectWidth?: boolean;
+  defaultActiveFirstOption?: boolean;
   selectReverse?: boolean;
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
@@ -484,6 +485,7 @@ const defaultConfig = {
   icons: categories,
   formatter: defaultFormatter,
   dropdownMatchSelectWidth: true,
+  defaultActiveFirstOption: true,
   selectReverse: true,
   selectPagingOptionContent: '···',
   selectSearchable: false,

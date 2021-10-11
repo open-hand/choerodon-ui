@@ -93,6 +93,7 @@ const prefixCls = getConfig('prefixCls');
 | customizedSave | Table 个性化保存的钩子 | (code, customized, component: keyof [Customizable](#Customizable)) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
 | customizedLoad | Table 个性化加载的钩子 | (code, component: keyof [Customizable](#Customizable)) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
+| defaultActiveFirstOption | 默认 Select 高亮第一个选项 | boolean | true |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
 | drawerSectionBorder | 默认 Drawer 的头和脚有边框线 | boolean | true |

@@ -34,7 +34,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={8}>
-          <Select placeholder="请选择" onChange={handleChange} optionTooltip={visible ? 'overflow' : 'always'}>
+          <Select placeholder="请选择" defaultActiveFirstOption={false} onChange={handleChange} optionTooltip={visible ? 'overflow' : 'always'}>
             <Option value="jack"><em>Jack</em> </Option>
             {
               visible && (
