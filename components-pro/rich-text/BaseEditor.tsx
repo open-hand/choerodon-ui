@@ -23,9 +23,9 @@ let ReactQuill: ComponentClass<ReactQuillProps>;
 let Quill: any;
 
 if (typeof window !== 'undefined') {
-  // eslint-disable-next-line global-require
+  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
   ReactQuill = require('react-quill');
-  // eslint-disable-next-line global-require
+  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
   Quill = require('react-quill').Quill;
 
   /**
@@ -104,7 +104,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
     if (this.editor) {
       this.editor.getEditor().setContents(value);
     }
-  };
+  }
 
   @autobind
   handleRichTextChange(_, __, ___, editor: UnprivilegedEditor) {
@@ -114,7 +114,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
     if (onChange && rtDelta && rtDelta.ops) {
       onChange(rtDelta.ops);
     }
-  };
+  }
 
   componentDidUpdate() {
     const { value } = this.props;

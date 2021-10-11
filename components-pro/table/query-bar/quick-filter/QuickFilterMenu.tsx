@@ -43,17 +43,17 @@ function isEmpty(value) {
  * @param data
  */
 function findFieldObj(queryDataSet, data) {
-  const keys = [...queryDataSet.fields.keys()];
   let name = data[0];
   let value = data[1];
-  if (!keys.includes(data[0]) &&
+  if (!queryDataSet.fields.has(data[0]) &&
     isObject(data[1]) &&
     !isEnumEmpty(data[1]) &&
     !isArray(data[1])) {
     name = `${data[0]}.${Object.keys(data[1])[0]}`;
     value = Object.values(data[1])[0];
   }
-  if (queryDataSet.getField(name) && queryDataSet.getField(name).get('ignore') !== 'always') {
+  const field = queryDataSet.getField(name);
+  if (field && field.get('ignore') !== 'always') {
     return { name, value };
   }
 }
@@ -394,7 +394,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
           const statusKey = getConfig('statusKey');
           const statusAdd = getConfig('status').add;
           const status = {};
-          const toJSONFields = conditionDataSet.toJSONData().map((condition: any) => condition.fieldName);
+          const toJSONFields = conditionDataSet.toJSONData().map((condition) => (condition as { fieldName }).fieldName);
           status[statusKey] = statusAdd;
           if (!toJSONFields.includes(fieldName)) {
             putData.push({

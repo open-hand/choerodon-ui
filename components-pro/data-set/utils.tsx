@@ -23,6 +23,7 @@ import { SubmitTypes, TransportType, TransportTypes } from './Transport';
 import formatString from '../formatter/formatString';
 import { parseNumber } from '../number-field/utils';
 import { treeReduce } from '../_util/treeUtils';
+import { iteratorFilterToArray, iteratorFind, iteratorSliceToArray, iteratorSome } from '../_util/iteratorUtils';
 
 export const defaultTextField = 'meaning';
 export const defaultValueField = 'value';
@@ -60,8 +61,16 @@ export function append(url: string, suffix?: object) {
   return url;
 }
 
-export function getOrderFields(fields: Fields): Field[] {
-  return [...fields.values()].filter(({ order }) => order);
+export function getOrderFields(dataSet: DataSet): Field[] {
+  const { fields, props: { combineSort } } = dataSet;
+  if (combineSort) {
+    return iteratorFilterToArray(fields.values(), (field) => field.order);
+  }
+  const found = iteratorFind(fields.values(), (field) => field.order);
+  if (found) {
+    return [found];
+  }
+  return [];
 }
 
 function processOneToJSON(value, field: Field, record?: Record, checkRange = true) {
@@ -314,22 +323,125 @@ export function childrenInfoForDelete(json: {}, children: { [key: string]: DataS
   }, json);
 }
 
-export function sortTree(children: Record[], orderField: Field): Record[] {
-  if (orderField && children.length > 0) {
-    const { name, order } = orderField;
-    const m = Number.MIN_SAFE_INTEGER;
-    children.sort((record1, record2) => {
-      const a = record1.get(name) || m;
-      const b = record2.get(name) || m;
+function dataSorter<T>(fields: Field[], getter: (item: T, key: string) => any): (a: T, b: T) => number {
+  const m = Number.MIN_SAFE_INTEGER;
+  return (record1, record2) => {
+    let result = 0;
+    fields.some(field => {
+      const { name, order } = field;
+      const a = getter(record1, name) || m;
+      const b = getter(record2, name) || m;
       if (isString(a) || isString(b)) {
-        return order === SortOrder.asc
+        result = order === SortOrder.asc
           ? String(a).localeCompare(String(b))
           : String(b).localeCompare(String(a));
+      } else {
+        result = order === SortOrder.asc ? a - b : b - a;
       }
-      return order === SortOrder.asc ? a - b : b - a;
+      return result !== 0;
     });
+    return result;
+  };
+}
+
+export function sortData(data: object[], dataSet: DataSet): object[] {
+  if (data.length > 1 && !dataSet.paging) {
+    const orderFields = getOrderFields(dataSet);
+    if (orderFields.length > 0) {
+      data.sort(dataSorter<object>(orderFields, (item, key) => item[key]));
+      const { childrenField } = dataSet.props;
+      if (childrenField) {
+        data.forEach(item => {
+          const childData = item[childrenField];
+          if (childData) {
+            sortData(childData, dataSet);
+          }
+        });
+      }
+    }
   }
-  return children;
+  return data;
+}
+
+export function appendRecords(dataSet: DataSet, appendData: Record[], parent?: Record) {
+  if (appendData.length) {
+    const { originalData, records, props: { childrenField, parentField, idField } } = dataSet;
+    let appended = false;
+    if (childrenField) {
+      if (parent) {
+        appendData.forEach(record => {
+          const { key } = record;
+          const { children } = parent;
+          if (children) {
+            if (!children.find(child => child.key === key)) {
+              children.push(record);
+            }
+          } else {
+            parent.children = [record];
+          }
+          if (!records.find(r => r.key === key)) {
+            originalData.push(record);
+            records.push(record);
+          }
+        });
+        appended = true;
+      }
+    } else if (parentField && idField) {
+      appendData.forEach(record => {
+        const parentId = record.get(parentField);
+        const { key } = record;
+        let found;
+        let foundParent;
+        records.some(r => {
+          if (r.get(idField) === parentId) {
+            record.parent = r;
+            const { children } = r;
+            if (children) {
+              if (!children.find(child => child.key === key)) {
+                children.push(record);
+              }
+            } else {
+              r.children = [record];
+            }
+            foundParent = r;
+          }
+          if (r.key === key) {
+            found = r;
+          }
+          return found && foundParent;
+        });
+        if (!found) {
+          originalData.push(record);
+          records.push(record);
+        }
+      });
+      appended = true;
+    }
+    if (!appended) {
+      appendData.forEach(record => {
+        const { key } = record;
+        if (!records.find(r => r.key === key)) {
+          originalData.push(record);
+          records.push(record);
+        }
+      });
+    }
+  }
+}
+
+export function sortTree(records: Record[], orderFields: Field[], deep?: boolean): Record[] {
+  if (records.length > 1 && orderFields.length > 0) {
+    if (deep) {
+      records.forEach(child => {
+        const { children } = child;
+        if (children) {
+          child.children = sortTree(children, orderFields, true);
+        }
+      });
+    }
+    return records.sort(dataSorter<Record>(orderFields, (item, key) => item.get(key)));
+  }
+  return records;
 }
 
 interface Node {
@@ -353,14 +465,14 @@ export function sliceTree(idField: string, parentField: string, allData: object[
         rootMap.set(id, node);
       }
     });
-    [...itemMap.entries()].forEach(([key, node]) => {
+    itemMap.forEach((node, key) => {
       const parent = itemMap.get(node.item[parentField]);
       if (parent) {
         parent.children.push(node);
         rootMap.delete(key);
       }
     });
-    return treeReduce<object[], Node>([...rootMap.values()].slice(0, pageSize), (previousValue, node) => previousValue.concat(node.item), []);
+    return treeReduce<object[], Node>(iteratorSliceToArray(rootMap.values(), 0, pageSize), (previousValue, node) => previousValue.concat(node.item), []);
   }
   return [];
 }
@@ -407,7 +519,7 @@ export function getBaseType(type: FieldType): FieldType {
 
 export function checkFieldType(value: any, field: Field, record?: Record): boolean {
   if (process.env.NODE_ENV !== 'production' && !isEmpty(value)) {
-    const fieldType = getBaseType(field.type);
+    const fieldType = getBaseType(field.get('type', record));
     if (fieldType !== FieldType.auto) {
       if (isArrayLike(value)) {
         return value.every(item => checkFieldType(item, field, record));
@@ -466,7 +578,7 @@ export function doExport(url, data, method = 'post') {
 }
 
 function throwCycleBindingFields(map: Map<string, Field> = new Map()) {
-  const keys = [...map.keys()];
+  const keys = Array.from(map.keys());
   throw new Error(`DataSet: Cycle binding fields[${[...keys].join(' -> ')} -> ${keys[0]}].`);
 }
 
@@ -501,7 +613,7 @@ export function getChainFieldName(record: Record, fieldName: string): string {
 export function findBindTargetFields(myField: Field, fields: Fields, deep?: boolean, record?: Record, bindFields: Map<string, Field> = new Map()): Field[] {
   const bind = myField.get('bind', record);
   if (bind) {
-    [...fields.entries()].some(([fieldName, field]) => {
+    iteratorSome(fields.entries(), ([fieldName, field]) => {
       if (field !== myField) {
         if ((bind === fieldName || bind.startsWith(`${fieldName}.`))) {
           if (bindFields.has(fieldName)) {
@@ -517,12 +629,12 @@ export function findBindTargetFields(myField: Field, fields: Fields, deep?: bool
       return false;
     });
   }
-  return [...bindFields.values()];
+  return Array.from(bindFields.values());
 }
 
 export function findBindFields(myField: Field, fields: Fields, deep?: boolean, record?: Record | undefined, bindFields: Map<string, Field> = new Map()): Field[] {
   const { name } = myField;
-  [...fields.entries()].forEach(([fieldName, field]) => {
+  fields.forEach((field, fieldName) => {
     if (field !== myField) {
       const bind = field.get('bind', record);
       if (bind && (bind === name || bind.startsWith(`${name}.`))) {
@@ -536,7 +648,7 @@ export function findBindFields(myField: Field, fields: Fields, deep?: boolean, r
       }
     }
   });
-  return [...bindFields.values()];
+  return Array.from(bindFields.values());
 }
 
 export function findBindField(
@@ -544,7 +656,7 @@ export function findBindField(
   chainFieldName: string,
   record: Record,
 ): Field | undefined {
-  return [...record.dataSet.fields.values()].find((field) => {
+  return iteratorFind(record.dataSet.fields.values(), (field) => {
     const fieldName = field.name;
     if (fieldName !== myField) {
       const bind = field.get('bind', record);
@@ -554,36 +666,6 @@ export function findBindField(
     }
     return false;
   });
-}
-
-function numberSorter(a, b) {
-  return a - b;
-}
-
-function stringSorter(a, b) {
-  return String(a || '').localeCompare(String(b || ''));
-}
-
-export function getFieldSorter(field: Field) {
-  const { name } = field;
-
-  switch (field.type) {
-    case FieldType.number:
-    case FieldType.currency:
-    case FieldType.date:
-    case FieldType.dateTime:
-    case FieldType.week:
-    case FieldType.month:
-    case FieldType.year:
-    case FieldType.time:
-      return field.order === SortOrder.asc
-        ? (a, b) => numberSorter(a.get(name), b.get(name))
-        : (a, b) => numberSorter(b.get(name), a.get(name));
-    default:
-      return field.order === SortOrder.asc
-        ? (a, b) => stringSorter(a.get(name), b.get(name))
-        : (a, b) => stringSorter(b.get(name), a.get(name));
-  }
 }
 
 export function generateRecordJSONData(array: object[], record: Record, dataToJSON: DataToJSON) {
@@ -792,7 +874,7 @@ export function processIntlField(
 export function findBindFieldBy(myField: Field, fields: Fields, prop: string, record?: Record): Field | undefined {
   const value = myField.get(prop, record);
   const myName = myField.name;
-  return [...fields.values()].find(field => {
+  return iteratorFind(fields.values(), field => {
     const bind = field.get('bind', record);
     return bind && bind === `${myName}.${value}`;
   });
@@ -857,7 +939,7 @@ export function generateJSONData(
 
 export function getUniqueFieldNames(dataSet: DataSet): string[] {
   const keys: string[] = [];
-  [...dataSet.fields.entries()].forEach(([key, field]) => {
+  dataSet.fields.forEach((field, key) => {
     if (field.get('unique')) {
       keys.push(key);
     }

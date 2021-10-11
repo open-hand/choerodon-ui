@@ -18,6 +18,8 @@ const locale: Locale = {
   Table: {
     show_cached_seletion: '显示所有已选记录',
     hide_cached_seletion: '隐藏所有已选记录',
+    show_cached_modified: '显示所有变更记录',
+    hide_cached_modified: '隐藏所有变更记录',
     selection_tips: '已勾选 {count} 条数据',
     select_current_page: '勾选当页',
     unselect_current_page: '取消勾选当页',
@@ -107,6 +109,8 @@ const locale: Locale = {
     collapse_cell: '收起单元格',
     collapse_row: '收起整行',
     collapse_column: '收起整列',
+    current_page_records: '当前页记录',
+    cached_records: '缓存的记录',
   },
   Pagination: {
     page: '页',

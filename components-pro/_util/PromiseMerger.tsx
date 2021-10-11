@@ -56,7 +56,7 @@ export default class PromiseMerger<V, ARGS> {
         };
         promiseList.set(code, promise);
         this.waitID = setTimeout(() => {
-          const codeList: string[] = [...promiseList.keys()];
+          const codeList: string[] = Array.from(promiseList.keys());
 
           if (process.env.LOGGER_LEVEL === 'info') {
             // eslint-disable-next-line no-console

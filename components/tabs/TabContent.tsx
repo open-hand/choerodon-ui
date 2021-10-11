@@ -52,16 +52,20 @@ const TabContent: ForwardRefExoticComponent<PropsWithoutRef<TabContentProps> & R
     }
   }, [animated, totalPanelsMap, activeKey, tabBarPosition, style]);
   const getTabPanes = (): ReactElement<TabPaneProps>[] => {
-    return [...totalPanelsMap.entries()].map(([key, { type, ...child }]) => createElement<TabPaneProps>(
-      type,
-      {
-        ...child,
-        key,
-        active: activeKey === key,
-        destroyInactiveTabPane,
-        rootPrefixCls: prefixCls,
-      },
-    ));
+    const ret: ReactElement<TabPaneProps>[] = [];
+    totalPanelsMap.forEach(({ type, ...child }, key) => {
+      ret.push(createElement<TabPaneProps>(
+        type,
+        {
+          ...child,
+          key,
+          active: activeKey === key,
+          destroyInactiveTabPane,
+          rootPrefixCls: prefixCls,
+        },
+      ));
+    });
+    return ret;
   };
   return (
     <div

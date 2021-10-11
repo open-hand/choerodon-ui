@@ -57,33 +57,20 @@ const eslintrc = {
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
     'max-classes-per-file': 'off',
     'max-len': 'off',
-    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-console': [2, { allow: ['warn', 'error'] }],
     'no-continue': 'off',
-    'no-multiple-empty-lines': 'warn',
     'no-nested-ternary': 'off',
     'no-param-reassign': 'off',
     'no-plusplus': 'off',
     'no-redeclare': 'off',
     'no-restricted-globals': 'off',
-    'no-restricted-syntax': [
-      'error',
-      {
-        selector: 'ForInStatement',
-        message: 'for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array.',
-      },
-      {
-        selector: 'LabeledStatement',
-        message: 'Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand.',
-      },
-      {
-        selector: 'WithStatement',
-        message: '`with` is disallowed in strict mode because it makes code impossible to predict and optimize.',
-      },
-    ],
     'no-return-assign': 'off',
+    'no-shadow': 'off', // Conflicts with typescript-eslint
+    'no-use-before-define': 'off', // Conflicts with typescript-eslint
     'no-underscore-dangle': 'off',
     'object-curly-newline': 'off',
     'prefer-destructuring': 'off',
+    'react/default-props-match-prop-types': 'warn', // Doesn't work well with TS
     'react/display-name': 'off',
     'react/forbid-prop-types': 'off',
     'react/jsx-filename-extension': 'off',
@@ -100,12 +87,21 @@ const eslintrc = {
     'react/sort-comp': 'off',
     'react/state-in-constructor': 'off',
     'react/static-property-placement': 'off',
-    'react/default-props-match-prop-types': 'off', // No idea about this
     '@typescript-eslint/no-non-null-assertion': 'off',
-    // TODO: bad naming, but BC if fixed
-    '@typescript-eslint/camelcase': 'warn',
-    '@typescript-eslint/class-name-casing': 'warn',
-    '@typescript-eslint/interface-name-prefix': 'warn',
+    // TODO: fixing will likely be BC
+    '@typescript-eslint/naming-convention': ['warn', {
+      selector: 'typeLike',
+      format: ['PascalCase'],
+      custom: {
+        regex: '^I[A-Z]', // No prefix I
+        match: false,
+      },
+    }],
+    '@typescript-eslint/ban-types': 'warn', // TODO: re-enable as error
+    // TODO: too many of them
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/explicit-function-return-types': 'off',
   },
 };
 

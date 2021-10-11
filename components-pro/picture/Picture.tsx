@@ -219,7 +219,7 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
     );
   }
   return picture;
-};
+}
 const ForwardPicture: ForwardRefExoticComponent<PropsWithoutRef<PictureProps> & RefAttributes<PictureForwardRef>> = forwardRef<PictureForwardRef, PictureProps>(Picture);
 export type ForwardPictureType = typeof ForwardPicture & { Provider: typeof PictureProvider; Context: typeof PictureContext };
 (ForwardPicture as ForwardPictureType).Provider = PictureProvider;

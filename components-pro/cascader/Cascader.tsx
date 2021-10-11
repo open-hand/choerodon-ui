@@ -398,7 +398,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
     return (
       options ||
-      (field && field.options)
+      (field && field.getOptions(this.record))
     );
   }
 

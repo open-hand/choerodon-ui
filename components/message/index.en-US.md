@@ -51,3 +51,4 @@ message.config({
 | top | the position of the message when it appears on the top | number | 24 |
 | bottom | the position of the message when it appears on the bottom | number | 24 |
 | placement | the position of message, values: `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom`| string | `leftBottom` |
+| maxCount | Max message show, drop oldest if exceed limit | number |  |

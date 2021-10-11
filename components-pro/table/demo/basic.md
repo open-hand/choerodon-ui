@@ -41,11 +41,6 @@ function sexIdRenderer({ dataSet, record }) {
 }
 
 function handleUserDSLoad({ dataSet }) {
-  const first = dataSet.get(0);
-  if (first) {
-    first.selectable = false;
-    first.isSelected = true;
-  }
 }
 
 function renderPhoneEditor(record) {
@@ -134,11 +129,21 @@ class App extends React.Component {
   userDs = new DataSet({
     primaryKey: 'userid',
     autoQuery: true,
-    name: 'large-user',
     exportMode:'client',
-    pageSize: 20,
+    pageSize: 5,
     cacheSelection: true,
+    cacheModified: true,
     transport: {
+      read({ params: { page, pagesize } }) {
+        if (pagesize > 20) {
+          return {
+            url: '/dataset/large-user/queries',
+          };
+        }
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
+      },
       create: {
         url: '/dataset/user/mutations',
         method: 'put',

@@ -187,7 +187,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       if (dataSet) {
         dataSet.pageSize = pageSize;
         dataSet.currentPage = 1;
-        dataSet.query();
+        dataSet.query(1, undefined, true);
       }
     } else {
       this.observableProps.page = page;

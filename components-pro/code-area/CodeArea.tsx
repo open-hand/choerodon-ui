@@ -18,7 +18,7 @@ import { LabelLayout } from '../form/enum';
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
 if (typeof window !== 'undefined') {
-  // eslint-disable-next-line global-require
+  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
   CodeMirror = require('react-codemirror2').Controlled;
 }
 

@@ -1286,7 +1286,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
           onChange(value, old, formNode);
           this.afterSetValue();
         });
-        if (isPromise<boolean>(beforeChange)) {
+        if (isPromise(beforeChange)) {
           this.value = value;
           const rejectCallback = () => {
             this.value = storedValue;
@@ -1381,7 +1381,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       } else {
         const { record, name } = this;
         if (record && name) {
-          const field = record.getField(name)!;
+          const field = record.ownerFields.get(name) || record.addField(name);
           validator = new Validator(field);
           field.validator = validator;
         } else {

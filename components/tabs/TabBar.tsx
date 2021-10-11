@@ -2,6 +2,7 @@ import React, {
   CSSProperties,
   FunctionComponent,
   HTMLAttributes,
+  JSXElementConstructor,
   Key,
   MouseEvent,
   PropsWithoutRef,
@@ -22,6 +23,7 @@ import debounce from 'lodash/debounce';
 import Button from 'choerodon-ui/pro/lib/button';
 import { FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { useModal } from 'choerodon-ui/pro/lib/modal-provider/ModalProvider';
+import { iteratorReduce } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { getActiveKeyByGroupKey, getDataAttr, getHeader, getLeft, getTop, isTransformSupported, isVertical, setTransform } from './utils';
@@ -39,6 +41,7 @@ import KeyCode from '../_util/KeyCode';
 import { Size } from '../_util/enum';
 import CustomizationSettings from './customization-settings';
 import Count from './Count';
+import { TabPaneProps } from './TabPane';
 
 export interface TabBarProps {
   inkBarAnimated?: boolean | undefined;
@@ -145,7 +148,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const [prev, setPrev] = useState<boolean>(false);
   const [prevActiveKey, setActiveKey] = useState<string | undefined>(activeKey);
   const getTabs = (): ReactElement<RippleProps>[] => {
-    return [...currentPanelMap.entries()].reduce<ReactElement<RippleProps>[]>((rst, [key, child], index, list) => {
+    const length = currentPanelMap.size;
+    return iteratorReduce<[string, TabPaneProps & { type: string | JSXElementConstructor<any> }], ReactElement<RippleProps>[]>(currentPanelMap.entries(), (rst, [key, child], index) => {
       const { disabled, closable = true, count, overflowCount, showCount } = child;
       const classes = [`${prefixCls}-tab`];
       const tabProps: PropsWithoutRef<TabBarInnerProps> & RefAttributes<HTMLDivElement> = {
@@ -154,7 +158,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         'aria-disabled': 'false',
         'aria-selected': 'false',
         style: {
-          marginRight: tabBarGutter && index === list.length - 1 ? 0 : tabBarGutter!,
+          marginRight: tabBarGutter && index === length - 1 ? 0 : tabBarGutter!,
         },
       };
       if (disabled) {
@@ -218,6 +222,17 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
 
   const getGroupNode = (): ReactElement<MenuProps> | undefined => {
     if (groupedPanelsMap.size > Number(hideOnlyGroup)) {
+      const items: ReactElement<any>[] = [];
+      groupedPanelsMap.forEach((pane, key) => {
+        const { group: { tab, disabled, dot } } = pane;
+        items.push(
+          <MenuItem key={String(key)} disabled={disabled}>
+            <Badge dot={dot}>
+              {tab}
+            </Badge>
+          </MenuItem>,
+        );
+      });
       return (
         <Menu
           prefixCls={`${prefixCls}-group`}
@@ -225,15 +240,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
           onSelect={handleGroupSelect}
           mode={isVertical(tabBarPosition) ? 'vertical' : 'horizontal'}
         >
-          {
-            [...groupedPanelsMap.entries()].map(([key, { group: { tab, disabled, dot } }]) => (
-              <MenuItem key={key} disabled={disabled}>
-                <Badge dot={dot}>
-                  {tab}
-                </Badge>
-              </MenuItem>
-            ))
-          }
+          {items}
         </Menu>
       );
     }

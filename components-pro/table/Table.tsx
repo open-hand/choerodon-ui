@@ -12,7 +12,7 @@ import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, get, IReactionDisposer, reaction, toJS } from 'mobx';
+import { action, get, IReactionDisposer, reaction, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -50,6 +50,7 @@ import {
   ColumnLock,
   DragColumnAlign,
   HighLightRowType,
+  RowBoxPlacement,
   ScrollPosition,
   SelectionMode,
   TableAutoHeightType,
@@ -60,7 +61,6 @@ import {
   TableMode,
   TablePaginationPosition,
   TableQueryBarType,
-  RowBoxPlacement,
 } from './enum';
 import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
@@ -87,6 +87,7 @@ import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
+import { getUniqueFieldNames } from '../data-set/utils';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode };
 
@@ -962,15 +963,31 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>; dataSet: DataSet }) {
     if (!await result) {
+      const { tableStore } = this;
       const [firstInvalidRecord] = dataSet.getValidationErrors();
       if (firstInvalidRecord) {
         const { errors, record } = firstInvalidRecord;
         if (errors.length) {
-          const [{ field: { name } }] = errors;
-          const cell = findCell(this.tableStore, name, undefined, record);
-          if (cell) {
-            cell.focus();
+          if (!tableStore.showCachedSelection) {
+            if (dataSet.cachedRecords.includes(record)) {
+              runInAction(() => {
+                tableStore.showCachedSelection = true;
+              });
+            }
           }
+          const [{ field: { name } }] = errors;
+          if (tableStore.virtual && !tableStore.virtualData.includes(record)) {
+            const { tableBodyWrap } = this;
+            if (tableBodyWrap) {
+              tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
+            }
+          }
+          raf(() => {
+            const cell = findCell(tableStore, name, undefined, record);
+            if (cell) {
+              cell.focus();
+            }
+          });
         }
       }
     }
@@ -1129,9 +1146,7 @@ export default class Table extends DataSetComponent<TableProps> {
               });
             }
             // remove the unique name of fields
-            const uniqueFieldIterator = new Map([...dataSet.fields.entries()]
-              .filter(([_key, field]) => !!field.get('unique'))).keys();
-            const uniqueFieldNames = Array.from(uniqueFieldIterator);
+            const uniqueFieldNames: string[] = getUniqueFieldNames(dataSet);
             if (uniqueFieldNames && uniqueFieldNames.length > 0) {
               uniqueFieldNames.forEach(element => {
                 if (element) {
@@ -1605,7 +1620,7 @@ export default class Table extends DataSetComponent<TableProps> {
   reorderDataSet(startIndex: number, endIndex: number) {
     const { dataSet } = this.tableStore;
     dataSet.move(startIndex, endIndex);
-  };
+  }
 
   @autobind
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
@@ -1712,7 +1727,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const { scrollLeft } = target;
     if (scrollLeft !== this.lastScrollLeft) {
       if (isStickySupport()) {
-        [...tableStore.editors.values()].forEach((editor) => {
+        tableStore.editors.forEach((editor) => {
           if (editor.lock && editor.cellNode) {
             if (tableStore.inlineEdit) {
               editor.alignEditor(editor.cellNode);
@@ -2084,7 +2099,7 @@ export default class Table extends DataSetComponent<TableProps> {
       }
     }
     return this.getStyleHeight();
-  };
+  }
 
   @autobind
   @action

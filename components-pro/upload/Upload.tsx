@@ -506,10 +506,9 @@ export default class Upload extends FormField<UploadProps> {
       return;
     }
     const files = partialUpload
-      ? Array.from(fileList)
-        .slice(0)
+      ? fileList
         .filter(item => !item.status || item.status !== 'success')
-      : Array.from(fileList).slice(0);
+      : Array.from(fileList);
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     if (!files.length) {

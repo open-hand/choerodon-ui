@@ -53,3 +53,4 @@ message.config({
 | top | 消息在顶部出现时距离顶部的位置 | number | 24 |
 | bottom | 消息在底部出现时距离底部的位置 | number | 24 |
 | placement | 消息展示的位置, 可选值： `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom`| string | `leftBottom`|
+| maxCount | 最大显示数, 超过限制时，最早的消息会被自动关闭 | number |  |

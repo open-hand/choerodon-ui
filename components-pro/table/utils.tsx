@@ -134,7 +134,6 @@ export function getPlaceholderByField(field?: Field, record?: Record): string | 
 
 export function getEditorByColumnAndRecord(
   column: ColumnProps,
-  dataSet: DataSet,
   record?: Record,
 ): ReactElement<FormFieldProps> | undefined {
   const { name, editor } = column;
@@ -144,7 +143,7 @@ export function getEditorByColumnAndRecord(
       cellEditor = editor(record, name);
     }
     if (cellEditor === true) {
-      const field = dataSet.getField(name);
+      const field = record.dataSet.getField(name);
       if (field) {
         if (
           !field.get('unique', record) ||
@@ -206,8 +205,18 @@ export function findCell(
   if (name !== undefined && current && node.element) {
     const wrapperSelector =
       !isStickySupport() && overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
-    const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"] span.${prefixCls}-cell-inner`;
-    return node.element.querySelector(selector);
+    const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"]`;
+    const td = node.element.querySelector(selector);
+    if (td) {
+      const cell = td.querySelector(`span.${prefixCls}-cell-inner`);
+      if (cell) {
+        return cell;
+      }
+      if (tableStore.virtualCell && !td.childElementCount) {
+        return td;
+      }
+    }
+    return undefined;
   }
 }
 
@@ -236,7 +245,7 @@ export function findIndexedSibling(element, direction): HTMLTableRowElement | nu
 }
 
 export function isDisabledRow(record: Record) {
-  return record.isCached || record.status === RecordStatus.delete;
+  return record.status === RecordStatus.delete;
 }
 
 export function isSelectedRow(record: Record) {

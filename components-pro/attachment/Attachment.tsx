@@ -4,6 +4,7 @@ import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
+import omit from 'lodash/omit';
 import isNil from 'lodash/isNil';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -138,7 +139,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   get attachments(): AttachmentFile[] | undefined {
     const { field } = this;
     if (field) {
-      return field.attachments;
+      return field.getAttachments(this.record);
     }
     return this.observableProps.attachments;
   }
@@ -147,7 +148,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     runInAction(() => {
       const { field } = this;
       if (field) {
-        field.attachments = attachments;
+        field.setAttachments(attachments, this.record, this.tempAttachmentUUID);
       } else {
         this.observableProps.attachments = attachments;
       }
@@ -166,7 +167,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       return attachments.length;
     }
     if (field) {
-      const { attachmentCount } = field;
+      const attachmentCount = field.getAttachmentCount(this.record);
       if (attachmentCount !== undefined) {
         return attachmentCount;
       }
@@ -253,7 +254,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       const value = this.getValue();
       if (value) {
         if (field) {
-          field.fetchAttachmentCount(value);
+          field.fetchAttachmentCount(value, this.record);
         } else {
           const { batchFetchCount } = getConfig('attachment');
           if (batchFetchCount && !this.attachments) {
@@ -563,7 +564,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) {
     const { field } = this;
     if (field) {
-      field.fetchAttachments(fetchProps);
+      field.fetchAttachments(fetchProps, this.record);
     } else {
       const { fetchList } = getConfig('attachment');
       if (fetchList) {
@@ -729,7 +730,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         key="view-btn"
         icon="attach_file"
         color={ButtonColor.primary}
-        {...rest}
+        {...omit(rest, ['ref'])}
       >
         {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple && this.count || undefined}
       </Button>

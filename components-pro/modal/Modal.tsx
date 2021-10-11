@@ -221,7 +221,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         {cancelText}
       </Button>
     );
-  };
+  }
 
   contentNode: HTMLElement;
 

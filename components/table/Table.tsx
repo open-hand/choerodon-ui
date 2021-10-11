@@ -686,7 +686,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         } else if (this.refTable) {
           // @ts-expect-error: probably API inconsistency?
           if (this.refTable.scrollIntoViewIfNeeded) {
-            // @ts-expect-error
+            // @ts-expect-error: probably API inconsistency?
             this.refTable.scrollIntoViewIfNeeded({
               block: 'start',
             });

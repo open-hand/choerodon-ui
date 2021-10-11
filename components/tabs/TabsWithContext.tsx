@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 import classnames from 'classnames';
 import ModalProvider from 'choerodon-ui/pro/lib/modal-provider';
+import { iteratorSome } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
 import { TabsPosition, TabsType } from './enum';
 import { getDataAttr, getDefaultActiveKey, getDefaultActiveKeyInGroup, getDefaultGroupKey, isVertical, normalizePanes } from './utils';
 import { Size } from '../_util/enum';
@@ -91,12 +92,16 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   const activeGroupKey = useMemo((): string | undefined => {
     if (groupedPanelsMap.size) {
       if (activeKey) {
-        for (const [groupKey, { panelsMap }] of groupedPanelsMap) {
-          for (const [panelKey] of panelsMap) {
-            if (panelKey === activeKey) {
-              return groupKey;
-            }
+        let groupKey: string | undefined;
+        iteratorSome(groupedPanelsMap.entries(), ([key, { panelsMap }]) => {
+          const found = iteratorSome(panelsMap.keys(), panelKey => panelKey === activeKey);
+          if (found) {
+            groupKey = key;
           }
+          return found;
+        });
+        if (groupKey !== undefined) {
+          return groupKey;
         }
       }
       return getDefaultGroupKey(groupedPanelsMap);

@@ -66,7 +66,7 @@ export interface ImageCropLocale {
   imageCrop?: string;
 }
 
-export enum shapeCroper {
+export enum ShapeCroper {
   rect = 'rect',
   round = 'round',
 }
@@ -88,7 +88,7 @@ export interface BalanceRate {
 export interface EasyCropProps {
   src?: string;
   aspect?: number;
-  shape?: shapeCroper;
+  shape?: ShapeCroper;
   grid?: boolean;
   hasZoom?: boolean;
   zoomVal?: number;
@@ -101,7 +101,7 @@ export interface EasyCropProps {
 
 export interface ImgCropProps {
   aspect?: number;
-  shape?: shapeCroper;
+  shape?: ShapeCroper;
   zoom?: boolean;
   grid?: boolean;
   src?: string;
@@ -513,7 +513,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
 }) as CompoundedComponent
 
 ImgCrop.defaultProps = {
-  shape: shapeCroper.rect,
+  shape: ShapeCroper.rect,
   grid: false,
   zoom: true,
   rotate: false,

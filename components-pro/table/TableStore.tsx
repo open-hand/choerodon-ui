@@ -97,6 +97,9 @@ export function getIdList(store: TableStore) {
 
 function getRowNumbers(record?: Record | null, dataSet?: DataSet | null, isTree?: boolean): number[] {
   if (record && dataSet) {
+    if (record.isCached) {
+      return [];
+    }
     const { paging, currentPage, pageSize } = dataSet;
     const pageIndex = (isTree ? paging === 'server' : paging) ? (currentPage - 1) * pageSize : 0;
     if (isTree) {
@@ -527,6 +530,8 @@ export default class TableStore {
   performanceOn = false;
 
   lastSelected?: Record;
+
+  activeEmptyCell?: HTMLTableCellElement;
 
   timing: {
     renderStart: number;
@@ -1191,10 +1196,18 @@ export default class TableStore {
     return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
   }
 
+  get cachedData(): Record[] {
+    const { dataSet, showCachedSelection } = this;
+    if (showCachedSelection) {
+      return dataSet.cachedRecords;
+    }
+    return [];
+  }
+
   @computed
-  get data(): Record[] {
+  get currentData(): Record[] {
     const { filter, pristine } = this.props;
-    const { dataSet, isTree, showCachedSelection } = this;
+    const { dataSet, isTree } = this;
     let data = isTree ? dataSet.treeRecords : dataSet.records;
     if (typeof filter === 'function') {
       data = data.filter(filter);
@@ -1202,10 +1215,12 @@ export default class TableStore {
     if (pristine) {
       data = data.filter(record => !record.isNew);
     }
-    if (showCachedSelection) {
-      return [...dataSet.cachedSelected, ...data];
-    }
     return data;
+  }
+
+  @computed
+  get data(): Record[] {
+    return [...this.cachedData, ...this.currentData]
   }
 
   @computed
@@ -1576,7 +1591,7 @@ export default class TableStore {
         tableCustomizedSave(customizedCode, this.customized, 'Table');
       }
     }
-  };
+  }
 
   saveCustomizedDebounce = debounce(this.saveCustomized, 1000);
 

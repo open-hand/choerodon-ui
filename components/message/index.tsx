@@ -15,6 +15,7 @@ let customizePrefixCls;
 let transitionName = 'move-up';
 let defaultPlacement: Placement = 'leftBottom';
 let getContainer: () => HTMLElement;
+let defaultMaxCount;
 
 type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading';
 type Placement =
@@ -51,6 +52,7 @@ function getMessageInstance(placement: Placement, callback: (i: any) => void ,co
       transitionName: getPlacementTransitionName(placement, transitionName),
       getContainer,
       contentClassName,
+      defaultMaxCount,
     },
     (instance: any) => {
       if (messageInstance) {
@@ -125,6 +127,7 @@ export interface ConfigOptions {
    */
   bottom?: number;
   placement?: Placement;
+  maxCount?: number;
 }
 
 export default {
@@ -201,6 +204,9 @@ export default {
     }
     if (options.placement !== undefined) {
       defaultPlacement = options.placement;
+    }
+    if (options.maxCount !== undefined) {
+      defaultMaxCount = options.maxCount;
     }
   },
   destroy() {

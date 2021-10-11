@@ -5,6 +5,7 @@ import isEmpty from '../../_util/isEmpty';
 import { methodReturn, ValidatorProps } from '.';
 import { axiosConfigAdapter } from '../../data-set/utils';
 import { FieldType } from '../../data-set/enum';
+import { iteratorSome } from '../../_util/iteratorUtils';
 
 export default async function uniqueError(
   value: any,
@@ -22,9 +23,12 @@ export default async function uniqueError(
     if (myField) {
       let dirty = myField.isDirty(record);
       const fields = { [name]: value };
+      if (!dirty) {
+        return true;
+      }
       if (
         isString(unique) &&
-        [...dataSet.fields.entries()].some(([fieldName, field]) => {
+        iteratorSome(dataSet.fields.entries(), ([fieldName, field]) => {
           if (
             fieldName !== name &&
             field &&
@@ -52,9 +56,6 @@ export default async function uniqueError(
           return false;
         })
       ) {
-        return true;
-      }
-      if (!dirty) {
         return true;
       }
       let invalid = dataSet.some(

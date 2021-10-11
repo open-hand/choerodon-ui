@@ -264,7 +264,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         map.set(modal.key, modal);
       }
     });
-    this.updateModals([...map.values()]);
+    this.updateModals(Array.from(map.values()));
   }
 
   findIndex(modalKey) {

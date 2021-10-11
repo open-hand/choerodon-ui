@@ -89,7 +89,7 @@ export default class ScreeningOption extends Component<ScreeningOptionProps> {
       } else {
         onSelect(info);
       }
-    };
+    }
   };
 
   render() {
@@ -170,5 +170,5 @@ export default class ScreeningOption extends Component<ScreeningOptionProps> {
         </div>
       </Col>
     );
-  };
+  }
 }

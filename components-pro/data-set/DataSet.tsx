@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
-import { action, computed, get, isArrayLike, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
+import { _isComputingDerivation, action, computed, get, IMapEntry, isArrayLike, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import axiosStatic, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
-import unionBy from 'lodash/unionBy';
 import omit from 'lodash/omit';
 import flatMap from 'lodash/flatMap';
 import isNumber from 'lodash/isNumber';
@@ -20,6 +19,7 @@ import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
   adapterDataToJSON,
+  appendRecords,
   arrayMove,
   axiosConfigAdapter,
   checkParentByInsert,
@@ -32,7 +32,6 @@ import {
   generateData,
   generateJSONData,
   generateResponseData,
-  getFieldSorter,
   getIf,
   getOrderFields,
   getSpliceRecord,
@@ -45,6 +44,7 @@ import {
   processExportValue,
   processIntlField,
   sliceTree,
+  sortData,
   sortTree,
   treeSelect,
   treeSelectParent,
@@ -79,8 +79,8 @@ import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 import ValidationResult from '../validator/ValidationResult';
-import { treeReduce } from '../_util/treeUtils';
 import AttachmentFile from './AttachmentFile';
+import { iteratorReduce } from '../_util/iteratorUtils';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
@@ -105,6 +105,66 @@ export function initDataSetField(dataSet: DataSet, name: string, fieldProps?: Fi
     fieldProps,
     dataSet,
   );
+}
+
+function processOneData(dataSet: DataSet, data: object | Record = {}, status: RecordStatus, childrenField?: string | undefined, parent?: Record, all?: Record[]): Record {
+  if (data instanceof Record) {
+    if (data.dataSet !== dataSet) {
+      data.dataSet = dataSet;
+      data.status = status;
+    }
+    if (childrenField) {
+      const { children } = data;
+      if (children) {
+        children.forEach(r => processOneData(dataSet, r, status, childrenField));
+      }
+    }
+    if (all) {
+      all.push(data);
+    }
+    return data;
+  }
+  const self = new Record(data, dataSet, status);
+  if (parent) {
+    self.parent = parent;
+  }
+  if (all) {
+    all.push(self);
+  }
+  if (childrenField) {
+    const children = data[childrenField];
+    if (children) {
+      // eslint-disable-next-line no-use-before-define
+      const normalData = processNormalData(dataSet, children, status, childrenField, self, all);
+      self.children = normalData;
+    }
+  }
+  return self;
+}
+
+function processTreeData(dataSet: DataSet, allData: (object | Record)[], status: RecordStatus, parentField: string, idField: string): Record[] {
+  const allMap = new Map<string, Record>();
+  allData.forEach((data, index) => {
+    const record = processOneData(dataSet, data, status);
+    const id = data[idField] || `__empty_${index}`;
+    allMap.set(id, record);
+  });
+  allMap.forEach((record) => {
+    const parent = allMap.get(record.get(parentField));
+    if (parent) {
+      if (parent.children) {
+        parent.children.push(record);
+      } else {
+        parent.children = [record];
+      }
+      record.parent = parent;
+    }
+  });
+  return Array.from(allMap.values());
+}
+
+function processNormalData(dataSet: DataSet, allData: (object | Record)[], status: RecordStatus = RecordStatus.sync, childrenField?: string, parent?: Record, all?: Record[]): Record[] {
+  return allData.map(data => processOneData(dataSet, data, status, childrenField, parent, all));
 }
 
 export interface RecordValidationErrors {
@@ -281,12 +341,12 @@ export interface DataSetProps {
   idField?: string;
   /**
    * 树形数据当前父节点 id 字段名，与 idField 组合使用。
-   * 适用于平铺数据；渲染性能相对 childrenField 比较差；变更节点层级可直接修改 idField 和 parentField 对应的值
+   * 适用于平铺数据；变更节点层级可直接修改 idField 和 parentField 对应的值
    */
   parentField?: string;
   /**
    * 树形数据子数据集字段名， 如果要异步加载子节点需设置 idField 和 parentField 或者使用 appendData 方法。
-   * 适用于树形数据；渲染性能优于 idField 和 parentField 组合；变更节点层级需要操作 record.parent 和 record.children
+   * 适用于树形数据；变更节点层级需要操作 record.parent 和 record.children
    */
   childrenField?: string;
   /**
@@ -300,9 +360,13 @@ export interface DataSetProps {
   /**
    * 缓存选中记录，使切换分页时仍保留选中状态。
    * 当设置了primaryKey或有字段设置了unique才起作用。
-   * @default true
    */
   cacheSelection?: boolean;
+  /**
+   * 缓存变更记录，使切换分页时仍保留变更数据。
+   * 当设置了primaryKey或有字段设置了unique才起作用。
+   */
+  cacheModified?: boolean;
   /**
    * 覆盖默认axios
    */
@@ -429,6 +493,8 @@ export default class DataSet extends EventManager {
   @observable selection: DataSetSelection | false;
 
   @observable cachedSelected: Record[];
+
+  @observable cachedModified: Record[];
 
   @observable dataToJSON: DataToJSON;
 
@@ -735,12 +801,12 @@ export default class DataSet extends EventManager {
 
   @computed
   get treeRecords(): Record[] {
-    return sortTree(this.records.filter(record => !record.parent), getOrderFields(this.fields)[0]);
+    return this.records.filter(record => !record.parent);
   }
 
   @computed
   get treeData(): Record[] {
-    return sortTree(this.filter(record => !record.parent), getOrderFields(this.fields)[0]);
+    return this.filter(record => !record.parent);
   }
 
   get paging(): boolean | 'server' {
@@ -756,17 +822,15 @@ export default class DataSet extends EventManager {
 
   @computed
   get groups(): string[] {
-    return [...this.fields.entries()]
-      .reduce<string[]>((arr, [name, field]) => {
-        const group = field.get('group');
-        if (isNumber(group)) {
-          arr[group as number] = name;
-        } else if (group === true && !arr[0]) {
-          arr[0] = name;
-        }
-        return arr;
-      }, [])
-      .filter(group => group !== undefined);
+    return iteratorReduce<IMapEntry<string, Field>, string[]>(this.fields.entries(), (arr, [name, field]) => {
+      const group = field.get('group');
+      if (isNumber(group)) {
+        arr[group as number] = name;
+      } else if (group === true && !arr[0]) {
+        arr[0] = name;
+      }
+      return arr;
+    }, []).filter(group => group !== undefined);
   }
 
   @computed
@@ -787,7 +851,7 @@ export default class DataSet extends EventManager {
    */
   @computed
   get current(): Record | undefined {
-    return this.data.find(record => record.isCurrent) || this.cachedSelected.find(record => record.isCurrent);
+    return this.all.find(record => record.isCurrent);
   }
 
   /**
@@ -796,7 +860,7 @@ export default class DataSet extends EventManager {
    */
   set current(record: Record | undefined) {
     const currentRecord = this.current;
-    if (currentRecord !== record && (!record || !record.isCached)) {
+    if (currentRecord !== record && (!record || record.dataSet === this)) {
       runInAction(() => {
         if (currentRecord) {
           currentRecord.isCurrent = false;
@@ -834,6 +898,19 @@ export default class DataSet extends EventManager {
     return undefined;
   }
 
+  get cacheModifiedKeys(): string[] | undefined {
+    const { cacheModified } = this.props;
+    if (cacheModified) {
+      return this.uniqueKeys;
+    }
+    return undefined;
+  }
+
+  @computed
+  get cachedRecords(): Record[] {
+    return [...new Set([...this.cachedSelected, ...this.cachedModified])];
+  }
+
   /**
    * 获取所有记录包括缓存的选择记录
    * @param index 索引
@@ -841,10 +918,7 @@ export default class DataSet extends EventManager {
    */
   @computed
   get all(): Record[] {
-    if (this.isAllPageSelection) {
-      return this.records;
-    }
-    return this.records.concat(this.cachedSelected.slice());
+    return this.records.concat(this.cachedRecords);
   }
 
   get dirty(): boolean {
@@ -890,6 +964,7 @@ export default class DataSet extends EventManager {
       this.status = DataSetStatus.ready;
       this.currentPage = 1;
       this.cachedSelected = [];
+      this.cachedModified = [];
       this.queryParameter = queryParameter;
       this.pageSize = pageSize!;
       this.selection = selection!;
@@ -958,6 +1033,7 @@ export default class DataSet extends EventManager {
     this.currentPage = snapshot.currentPage;
     this.pageSize = snapshot.pageSize;
     this.cachedSelected = snapshot.cachedSelected;
+    this.cachedModified = snapshot.cachedModified;
     this.dataToJSON = snapshot.dataToJSON;
     this.children = snapshot.children;
     this.current = snapshot.current;
@@ -985,7 +1061,10 @@ export default class DataSet extends EventManager {
   }
 
   toData(): object[] {
-    return generateData(this.records).data;
+    if (_isComputingDerivation && _isComputingDerivation()) {
+      warning(false, 'Please do not use the `dataSet.toData` method during the rendering phase.');
+    }
+    return generateData([...this.cachedModified, ...this.records]).data;
   }
 
   /**
@@ -993,9 +1072,12 @@ export default class DataSet extends EventManager {
    * @param isSelected
    * @param noCascade
    */
-  toJSONData(isSelected?: boolean, noCascade?: boolean): unknown[] {
+  toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
+    if (_isComputingDerivation && _isComputingDerivation()) {
+      warning(false, 'Please do not use the `dataSet.toJSONData` method during the rendering phase.');
+    }
     const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
-    const records = useSelected(dataToJSON) ? this.selected : this.records;
+    const records = useSelected(dataToJSON) ? this.selected : [...this.cachedModified, ...this.records];
     return generateJSONData(this, records).data;
   }
 
@@ -1018,10 +1100,11 @@ export default class DataSet extends EventManager {
    * 查询记录
    * @param page 页码
    * @param params 查询参数
+   * @param cache 是否保留 cachedRecords
    * @return Promise
    */
-  query(page?: number, params?: object): Promise<any> {
-    return this.pending.add(this.doQuery(page, params));
+  query(page?: number, params?: object, cache?: boolean): Promise<any> {
+    return this.pending.add(this.doQuery(page, params, cache));
   }
 
   /**
@@ -1048,20 +1131,20 @@ export default class DataSet extends EventManager {
     return Promise.resolve();
   }
 
-  async doQuery(page, params?: object): Promise<any> {
+  async doQuery(page, params?: object, cache?: boolean): Promise<any> {
     const data = await this.read(page, params);
-    this.loadDataFromResponse(data);
+    this.loadDataFromResponse(data, cache);
     return data;
   }
 
   async doQueryMore(page, params?: object): Promise<any> {
-    const data = await this.read(page, params);
+    const data = await this.read(page, params, true);
     this.appendDataFromResponse(data);
     return data;
   }
 
   async doQueryMoreChild(parent: Record, page, params?: object): Promise<any> {
-    const data = await this.read(page, params);
+    const data = await this.read(page, params, true);
     this.appendDataFromResponse(data, parent);
     return data;
   }
@@ -1078,7 +1161,7 @@ export default class DataSet extends EventManager {
     await this.ready();
     if (await this.validate()) {
       return this.pending.add(
-        this.write(useSelected(dataToJSON) ? this.selected : this.records),
+        this.write(useSelected(dataToJSON) ? this.selected : [...this.cachedModified, ...this.records]),
       );
     }
     return false;
@@ -1252,8 +1335,8 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   modifiedCheck(message?: ReactNode | ModalProps & confirmProps): Promise<boolean> {
-    const { modifiedCheck, modifiedCheckMessage } = this.props;
-    if (!modifiedCheck || !this.dirty) {
+    const { modifiedCheck, modifiedCheckMessage, cacheModified } = this.props;
+    if (cacheModified || !modifiedCheck || !this.dirty) {
       return Promise.resolve(true);
     }
     return confirm(message || modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'))
@@ -1276,7 +1359,7 @@ export default class DataSet extends EventManager {
     if (paging === true || paging === 'server') {
       if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
         if (await this.modifiedCheck()) {
-          await this.query(Math.floor(index / pageSize) + 1);
+          await this.query(Math.floor(index / pageSize) + 1, undefined, true);
           currentRecord = this.findInAllPage(index);
           if (currentRecord) {
             this.current = autoLocateFirst ? currentRecord : undefined;
@@ -1369,7 +1452,7 @@ export default class DataSet extends EventManager {
     const record = new Record(data, this);
     const objectFieldsList: [string, any][][] = [];
     const normalFields: [string, any][] = [];
-    [...this.fields.entries()].forEach(([name, field]) => {
+    this.fields.forEach((field, name) => {
       const fieldDefaultValue = field.get('defaultValue', record);
       const multiple = field.get('multiple', record);
       const defaultValue = multiple && isNil(fieldDefaultValue) ? [] : fieldDefaultValue;
@@ -1388,6 +1471,29 @@ export default class DataSet extends EventManager {
         items.forEach(([name, defaultValue]) => record.init(name, toJS(defaultValue)));
       }
     });
+    const { parentField, idField, childrenField } = this.props;
+    if (!childrenField && parentField && idField) {
+      const parentId = record.get(parentField);
+      if (parentId) {
+        const parent = this.find(r => r.get(idField) === parentId);
+        if (parent) {
+          record.parent = parent;
+          const { children } = parent;
+          if (children) {
+            if (isNumber(dataIndex)) {
+              children.splice(dataIndex, 0, record);
+              dataIndex += parent.index + 1;
+            } else {
+              children.push(record);
+              dataIndex = parent.index + children.length;
+            }
+          } else {
+            parent.children = [record];
+            dataIndex = parent.index + 1;
+          }
+        }
+      }
+    }
     if (isNumber(dataIndex)) {
       this.splice(dataIndex, 0, record);
     } else {
@@ -1706,10 +1812,9 @@ export default class DataSet extends EventManager {
     const { combineSort } = this.props;
     const field = this.getField(fieldName);
     if (field) {
-      const currents = getOrderFields(this.fields);
       if (!combineSort) {
-        currents.forEach(current => {
-          if (current !== field) {
+        this.fields.forEach(current => {
+          if (current.order && current !== field) {
             current.order = undefined;
           }
         });
@@ -1725,10 +1830,15 @@ export default class DataSet extends EventManager {
         default:
           field.order = SortOrder.asc;
       }
-      if (this.paging || !order) {
+      if (this.paging) {
         this.query();
       } else {
-        this.records = this.records.sort(getFieldSorter(field));
+        const orderFields = getOrderFields(this);
+        if (orderFields.length) {
+          this.records = sortTree(this.records, orderFields, true);
+        } else {
+          this.query();
+        }
       }
     }
   }
@@ -1948,6 +2058,12 @@ export default class DataSet extends EventManager {
     }
   }
 
+  @action
+  clearCachedRecords() {
+    this.clearCachedSelected();
+    this.clearCachedModified();
+  }
+
   clearCachedSelected(): void {
     this.setCachedSelected([]);
   }
@@ -1961,6 +2077,15 @@ export default class DataSet extends EventManager {
     } else if (selectionStrategy === CheckedStrategy.SHOW_CHILD) {
       cachedSelected.forEach(record => treeSelectParent(this, record, []));
     }
+  }
+
+  clearCachedModified(): void {
+    this.setCachedModified([]);
+  }
+
+  @action
+  setCachedModified(cachedModified: Record[]): void {
+    this.cachedModified = cachedModified;
   }
 
   /**
@@ -2022,7 +2147,7 @@ export default class DataSet extends EventManager {
       const cascade =
         noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
       const validateResult = Promise.all(
-        (useSelected(dataToJSON) ? this.selected : this.data).map(record =>
+        (useSelected(dataToJSON) ? this.selected : [...this.cachedModified.filter(record => !record.isRemoved), ...this.data]).map(record =>
           record.validate(this.props.forceValidate || useAll(dataToJSON), !cascade),
         ),
       ).then(results => results.every(result => result));
@@ -2309,22 +2434,20 @@ Then the query method will be auto invoke.`,
 
   @action
   appendData(allData: (object | Record)[] = [], parent?: Record): DataSet {
-    const { childrenField } = this.props;
-    this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: allData });
-    const appendData = this.processData(allData, undefined, childrenField ? parent : undefined);
-    if (childrenField && parent) {
-      parent.children = unionBy(parent.children, appendData, 'key');
-    }
-    this.originalData = unionBy(this.originalData, appendData, 'key');
-    this.records = unionBy(this.records, appendData, 'key');
+    const sortedData = sortData(allData, this);
+    this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: sortedData });
+    appendRecords(this, this.processData(sortedData, undefined, parent), parent);
     this.fireEvent(DataSetEvents.append, { dataSet: this });
     return this;
   }
 
   @action
-  loadData(allData: (object | Record)[] = [], total?: number): DataSet {
+  loadData(allData: (object | Record)[] = [], total?: number, cache?: boolean): DataSet {
     this.performance.timing.loadStart = Date.now();
     this.storeSelected();
+    if (cache) {
+      this.storeModified();
+    }
     const {
       paging,
       pageSize,
@@ -2335,28 +2458,35 @@ Then the query method will be auto invoke.`,
         allData = allData.slice(0, pageSize);
         break;
       case 'server':
-        allData = idField && parentField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
+        allData = idField && parentField && !childrenField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
         break;
       default:
+        allData = allData.slice();
         break;
     }
-    this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
-    const originalData = this.processData(allData);
-    this.originalData = childrenField ? treeReduce<Record[], Record>(originalData, (list, node) => list.concat(node), []) : originalData;
-    this.records = this.originalData;
+    const sortedData = sortData(allData, this);
+    this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: sortedData });
+    const originalData = this.processData(sortedData, RecordStatus.sync);
+    this.originalData = originalData;
+    this.records = originalData;
     if (total !== undefined && (paging === true || paging === 'server')) {
       this.totalCount = total;
-    } else if (idField && parentField && paging === 'server') {
+    } else if (paging === 'server' && ((idField && parentField) || childrenField)) {
       // 异步情况复用以前的total
       if (!this.totalCount) {
         this.totalCount = this.treeData.length;
       }
     } else {
-      this.totalCount = allData.length;
+      this.totalCount = sortedData.length;
     }
-    this.releaseCachedSelected();
+    this.releaseCachedSelected(cache);
+    if (cache) {
+      this.releaseCachedModified();
+    } else {
+      this.clearCachedModified();
+    }
     const nextRecord =
-      autoLocateFirst && (idField && parentField ? this.getFromTree(0) : this.get(0));
+      autoLocateFirst && ((idField && parentField || childrenField) ? this.getFromTree(0) : this.get(0));
     if (nextRecord) {
       nextRecord.isCurrent = true;
     }
@@ -2366,37 +2496,18 @@ Then the query method will be auto invoke.`,
     return this;
   }
 
-  private processOneData(data: object | Record = {}, status: RecordStatus, childrenField: string | undefined, parent?: Record): Record {
-    if (data instanceof Record) {
-      if (data.dataSet !== this) {
-        data.dataSet = this;
-        data.status = status;
-      }
-      if (childrenField) {
-        const { children } = data;
-        if (children) {
-          children.forEach(r => this.processOneData(r, status, childrenField));
-        }
-      }
-      return data;
-    }
-    const self = new Record(data, this, status);
-    if (parent) {
-      self.parent = parent;
-    }
-    if (childrenField) {
-      const children = data[childrenField];
-      if (children) {
-        self.children = this.processData(children, status, self);
-      }
-    }
-    return self;
-  }
-
   @action
   processData(allData: (object | Record)[], status: RecordStatus = RecordStatus.sync, parent?: Record): Record[] {
-    const { childrenField } = this.props;
-    return allData.map(data => this.processOneData(data, status, childrenField, parent));
+    const { childrenField, parentField, idField } = this.props;
+    if (parentField && idField && !childrenField) {
+      return processTreeData(this, allData, status, parentField, idField);
+    }
+    if (childrenField) {
+      const all: Record[] = [];
+      processNormalData(this, allData, status, childrenField, parent, all);
+      return all;
+    }
+    return processNormalData(this, allData, status);
   }
 
   private deleteRecord(record?: Record): Record | undefined {
@@ -2409,9 +2520,25 @@ Then the query method will be auto invoke.`,
         selected.splice(selectedIndex, 1);
       }
       if (record.isNew) {
-        const index = records.indexOf(record);
-        if (index !== -1) {
-          records.splice(index, 1);
+        {
+          const index = records.indexOf(record);
+          if (index !== -1) {
+            records.splice(index, 1);
+          }
+        }
+        const { parent } = record;
+        if (parent) {
+          const { children } = parent;
+          if (children) {
+            const index = children.indexOf(record);
+            if (index !== -1) {
+              children.splice(index, 1);
+            }
+            if (!children.length) {
+              parent.children = undefined;
+            }
+          }
+          record.parent = undefined;
         }
       } else if (!record.isRemoved) {
         record.status = RecordStatus.delete;
@@ -2496,12 +2623,12 @@ Then the query method will be auto invoke.`,
     Object.keys(events).forEach(event => this.addEventListener(event, events[event]));
   }
 
-  private loadDataFromResponse(resp: any): DataSet {
+  private loadDataFromResponse(resp: any, cache?: boolean): DataSet {
     if (resp) {
       const { dataKey, totalKey } = this;
       const data: object[] = generateResponseData(resp, dataKey);
       const total: number | undefined = ObjectChainValue.get(resp, totalKey);
-      this.loadData(data, total);
+      this.loadData(data, total, cache);
     }
     return this;
   }
@@ -2555,10 +2682,12 @@ Then the query method will be auto invoke.`,
     }
   }
 
-  private async read(page = 1, params?: object): Promise<any> {
+  private async read(page = 1, params?: object, more?: boolean): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
-        this.changeStatus(DataSetStatus.loading);
+        if (!more) {
+          this.changeStatus(DataSetStatus.loading);
+        }
         const data = await this.generateQueryParameter(params);
         const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page));
         if (newConfig.url) {
@@ -2584,8 +2713,45 @@ Then the query method will be auto invoke.`,
         this.handleLoadFail(e);
         throw new DataSetRequestError(e);
       } finally {
-        this.changeStatus(DataSetStatus.ready);
+        if (!more) {
+          this.changeStatus(DataSetStatus.ready);
+        }
       }
+    }
+  }
+
+  @action
+  private storeModified() {
+    if (this.cacheModifiedKeys) {
+      this.setCachedModified([
+        ...this.cachedModified.filter(record => isDirtyRecord(record)),
+        ...this.records.reduce<Record[]>((list, record) => {
+          if (isDirtyRecord(record)) {
+            record.isCurrent = false;
+            record.isCached = true;
+            list.push(record);
+          }
+          return list;
+        }, []),
+      ]);
+    }
+  }
+
+  @action
+  releaseCachedModified() {
+    const { cacheModifiedKeys, cachedModified } = this;
+    if (cacheModifiedKeys) {
+      this.records = this.records.map(record => {
+        const index = cachedModified.findIndex(cached =>
+          cacheModifiedKeys.every(key => record.get(key) === cached.get(key)),
+        );
+        if (index !== -1) {
+          const cached = cachedModified.splice(index, 1)[0];
+          cached.isCached = false;
+          return cached;
+        }
+        return record;
+      });
     }
   }
 
@@ -2605,8 +2771,8 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  releaseCachedSelected() {
-    const { cacheSelectionKeys, cachedSelected } = this;
+  releaseCachedSelected(cache?: boolean) {
+    const { cacheSelectionKeys, cachedSelected, isAllPageSelection } = this;
     if (cacheSelectionKeys) {
       this.records = this.records.map(record => {
         const index = cachedSelected.findIndex(cached =>
@@ -2615,7 +2781,10 @@ Then the query method will be auto invoke.`,
         if (index !== -1) {
           const selected = cachedSelected.splice(index, 1)[0];
           selected.isCached = false;
-          return selected;
+          if (cache) {
+            return selected;
+          }
+          record.isSelected = !isAllPageSelection;
         }
         return record;
       });
@@ -2663,6 +2832,7 @@ Then the query method will be auto invoke.`,
     loadFailed(e);
   }
 
+  @action
   private handleSubmitSuccess(resp: any[], onlyDelete?: boolean) {
     const { dataKey, totalKey } = this;
     const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
@@ -2695,6 +2865,7 @@ Then the query method will be auto invoke.`,
       this.commitData([], total);
     }
     submitSuccess(result);
+    this.clearCachedModified();
     return result;
   }
 
@@ -2761,7 +2932,7 @@ Then the query method will be auto invoke.`,
       if (cascadeRecords && cascadeRecordsMap) {
         delete cascadeRecordsMap[childName];
       }
-      ds.clearCachedSelected();
+      ds.clearCachedRecords();
       ds.loadData(childRecords ? childRecords.slice() : []);
       if (currentRecord.isNew) {
         if (ds.length) {
@@ -2781,7 +2952,7 @@ Then the query method will be auto invoke.`,
         if (current !== currentRecord) {
           ds = new DataSet().restore(oldSnapshot);
         }
-        ds.clearCachedSelected();
+        ds.clearCachedRecords();
         const dataSetSnapshot = getIf<Record, { [key: string]: DataSetSnapshot }>(currentRecord, 'dataSetSnapshot', {});
         dataSetSnapshot[childName] = ds.loadDataFromResponse(resp).snapshot();
       });
@@ -2817,9 +2988,9 @@ Then the query method will be auto invoke.`,
     return {};
   }
 
-  private generateOrderQueryString(): { sortname?: string; sortorder?: string } | string[] {
-    const { fields, props: { combineSort } } = this;
-    const orderFields = getOrderFields(fields);
+  private generateOrderQueryString(): { sortname?: string; sortorder?: string; } | string[] {
+    const { props: { combineSort } } = this;
+    const orderFields = getOrderFields(this);
     if (combineSort) {
       return orderFields.map(orderField => {
         let sortname = orderField.name;

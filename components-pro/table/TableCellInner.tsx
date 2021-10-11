@@ -9,6 +9,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
@@ -64,6 +65,7 @@ import { hide, show } from '../tooltip/singleton';
 import useComputed from '../use-computed';
 import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
+import { iteratorReduce } from '../_util/iteratorUtils';
 
 let inTab = false;
 
@@ -90,6 +92,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   const { currentEditRecord } = tableStore;
   const field = dataSet.getField(name);
   const fieldDisabled = disabled || (field && field.get('disabled', record));
+  const innerRef = useRef<HTMLSpanElement | null>(null);
   const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
       return command({ dataSet, record, aggregation });
@@ -97,11 +100,11 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
     return command;
   }, [record, command, dataSet, aggregation]);
   const canFocus = useMemo(() => !fieldDisabled && (!inlineEdit || record === currentEditRecord), [fieldDisabled, record, currentEditRecord, inlineEdit]);
-  const cellEditor = getEditorByColumnAndRecord(column, dataSet, record);
+  const cellEditor = getEditorByColumnAndRecord(column, record);
   const cellEditorInCell = isInCellEditor(cellEditor);
   const hasEditor = !pristine && cellEditor && !cellEditorInCell;
   const showEditor = useCallback((cell) => {
-    if (name && hasEditor) {
+    if (name) {
       if (!lock && tableStore.overflowX) {
         const tableBodyWrap = tableStore.virtual ? cell.offsetParent.parentNode.parentNode : cell.offsetParent;
         if (tableBodyWrap) {
@@ -147,13 +150,15 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
         }
       }
     }
-  }, [column, name, hasEditor, columnKey, tableStore]);
+  }, [column, name, columnKey, tableStore]);
   const handleFocus = useCallback((e) => {
     if (canFocus) {
       if (key !== SELECTION_KEY) {
         dataSet.current = record;
       }
-      showEditor(e.currentTarget);
+      if (hasEditor) {
+        showEditor(e.currentTarget);
+      }
       if (!isStickySupport() && (key === SELECTION_KEY || !hasEditor)) {
         const cell = findCell(tableStore, columnKey, lock);
         if (cell && !cell.contains(document.activeElement)) {
@@ -211,7 +216,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
   }, [dataSet, record]);
   const multiLine = field && field.get('multiLine', record);
   const fieldType = !aggregation && rowHeight !== 'auto' && field && field.get('type', record);
-  const rows = multiLine ? [...dataSet.fields.values()].reduce((count, dsField) => {
+  const rows = multiLine ? iteratorReduce(dataSet.fields.values(), (count, dsField) => {
     const bind = dsField.get('bind', record);
     if (bind && bind.startsWith(`${name}.`)) {
       return count + 1;
@@ -529,10 +534,21 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
       tooltipShownRef.current = false;
     }
   }, [tooltipShownRef]);
+  useLayoutEffect(() => {
+    const { current } = innerRef;
+    const { activeEmptyCell } = tableStore;
+    if (current && activeEmptyCell) {
+      if (activeEmptyCell.dataset.index === name) {
+        delete tableStore.activeEmptyCell;
+        current.focus();
+      }
+    }
+  }, []);
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
     children: text,
+    ref: innerRef,
   };
   const empty = field ? isFieldValueEmpty(
     value,

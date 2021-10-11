@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, HTMLProps, useCallback, useContext } from 'react';
+import React, { CSSProperties, FunctionComponent, HTMLProps, Key, TdHTMLAttributes, useCallback, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
@@ -10,11 +10,12 @@ import { ColumnProps, defaultAggregationRenderer } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { getColumnKey, getColumnLock, getHeader, isStickySupport } from './utils';
+import { getColumnKey, getColumnLock, getEditorByColumnAndRecord, getHeader, isStickySupport } from './utils';
 import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
 import AggregationButton from './AggregationButton';
 import ColumnGroup from './ColumnGroup';
+import { treeSome } from '../_util/treeUtils';
 
 export interface TableCellProps extends ElementProps {
   columnGroup: ColumnGroup;
@@ -167,17 +168,27 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
   const baseClassName = classNames(cellPrefix, {
     [`${cellPrefix}-fix-${columnLock}`]: columnLock,
   });
-  if (inView === false || columnGroup.inView === false) {
-    return (
-      <td
-        colSpan={colSpan}
-        data-index={key}
-        className={baseClassName}
-        style={baseStyle}
-      />
-    );
-  }
   const { onCell, aggregation } = column;
+  if (inView === false || columnGroup.inView === false) {
+    const hasEditor: boolean = aggregation ? treeSome(column.children || [], (node) => !!getEditorByColumnAndRecord(node, record)) : !!getEditorByColumnAndRecord(column, record);
+    const emptyCellProps: TdHTMLAttributes<HTMLTableDataCellElement> & { 'data-index': Key } = {
+      colSpan,
+      'data-index': key,
+      className: baseClassName,
+      style: baseStyle,
+    };
+    if (hasEditor) {
+      emptyCellProps.onFocus = (e) => {
+        tableStore.activeEmptyCell = e.target;
+      };
+      emptyCellProps.onBlur = () => {
+        delete tableStore.activeEmptyCell;
+      };
+      emptyCellProps.tabIndex = 0;
+    }
+
+    return <td {...emptyCellProps} />;
+  }
   const isBuiltInColumn = tableStore.isBuiltInColumn(column);
   const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
   const cellExternalProps: HTMLProps<HTMLTableCellElement> =
