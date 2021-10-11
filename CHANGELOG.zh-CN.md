@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。
 - 🐞 `<pro>Attachment`： 修复点击查看附件按钮报错的问题。
+- 🐞 `<pro>DataSet.Field`： 修复通过 dynamicProps 设置的校验属性首次校验无效果的问题。
 
 ## 1.4.5
 
