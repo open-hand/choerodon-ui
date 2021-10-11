@@ -161,7 +161,7 @@ function notice(args: ArgsProps) {
               {autoMarginTag}
               {args.message}
             </div>
-            <div className={`${prefixCls}-description`}>{args.description}</div>
+            {args.description ? <div className={`${prefixCls}-description`}>{args.description}</div> : null}
             {args.btn ? <span className={`${prefixCls}-btn`}>{args.btn}</span> : null}
           </div>
         ),

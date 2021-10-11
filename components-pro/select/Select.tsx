@@ -236,6 +236,11 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * 可选值：`none` `always` `overflow`
    */
   optionTooltip?: OptionTooltip;
+  /**
+   * 是否默认高亮第一个选项
+   * @default true
+   */
+  defaultActiveFirstOption?: boolean;
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -330,6 +335,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
      * 可选值：`none` `always` `overflow`
      */
     optionTooltip: PropTypes.string,
+    /**
+     * 是否默认高亮第一个选项
+     * @default true
+     */
+    defaultActiveFirstOption: PropTypes.bool,
     ...TriggerField.propTypes,
   };
 
@@ -592,6 +602,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'reverse',
       'selectAllButton',
       'optionTooltip',
+      'defaultActiveFirstOption',
     ]);
   }
 
@@ -607,6 +618,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       paramMatcher: props.paramMatcher,
       searchable: props.searchable,
       dropdownMatchSelectWidth: props.dropdownMatchSelectWidth,
+      defaultActiveFirstOption: props.defaultActiveFirstOption,
       selectReverse: props.reverse,
       optionsFilter: props.optionsFilter,
     };
@@ -821,7 +833,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       <Menu
         ref={this.saveMenu}
         disabled={menuDisabled}
-        defaultActiveFirst
+        defaultActiveFirst={this.defaultActiveFirstOption}
         multiple={this.menuMultiple}
         selectedKeys={selectedKeys}
         prefixCls={menuPrefix}
@@ -872,6 +884,12 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   get dropdownMatchSelectWidth(): boolean | undefined {
     const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') } = this.observableProps;
     return dropdownMatchSelectWidth;
+  }
+
+  @computed
+  get defaultActiveFirstOption(): boolean | undefined {
+    const { defaultActiveFirstOption = getConfig('defaultActiveFirstOption') } = this.observableProps;
+    return defaultActiveFirstOption;
   }
 
   @computed
