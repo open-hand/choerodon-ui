@@ -104,6 +104,7 @@ const LOOKUP_SIDE_EFFECT_KEYS = [
 const LOV_SIDE_EFFECT_KEYS = ['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl', 'optionsProps'];
 
 const LOOKUP_TOKEN = '__lookup_token__';
+const LOOKUP_DATA = 'lookupData';
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string; };
@@ -519,14 +520,14 @@ export default class Field {
       this.props = observable.map(props);
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
       if (!props.options) {
-        const dynamicProps = this.getProp('dynamicProps');
+        const dynamicProps = this.getProp('dynamicProps', record);
         if (!record || typeof dynamicProps === 'function') {
           raf(() => {
             this.fetchLookup();
             this.fetchLovConfig();
           });
         } else {
-          const computedProps = this.getProp('computedProps');
+          const computedProps = this.getProp('computedProps', record);
           if (computedProps || dynamicProps) {
             const keys = Object.keys({ ...computedProps, ...dynamicProps });
             if (keys.length) {
@@ -778,7 +779,7 @@ export default class Field {
   replace(props: Partial<FieldProps> = {}): Field {
     const p = { ...props };
     this.props.forEach((_v, key) => {
-      if (key !== 'name') {
+      if (![LOOKUP_TOKEN, LOOKUP_DATA, 'name'].includes(key)) {
         this.set(key, props[key]);
       }
       delete p[key];
@@ -803,7 +804,7 @@ export default class Field {
       const lookup = lookupCaches.get(lookupToken);
       if (isArrayLike(lookup)) {
         const valueField = this.get('valueField', record);
-        const lookupData = this.get('lookupData', record);
+        const lookupData = this.get(LOOKUP_DATA, record);
         if (lookupData) {
           const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
           if (others.length) {
@@ -1230,7 +1231,7 @@ export default class Field {
           if (value && valueField) {
             const values = this.get('multiple', record) ? [].concat(...value) : [].concat(value);
             this.set(
-              'lookupData',
+              LOOKUP_DATA,
               values.reduce<object[]>((lookupData, v) => {
                 const found = lookup.find(item => isSameLike(item[valueField], v));
                 if (found) {
@@ -1242,10 +1243,10 @@ export default class Field {
           }
         }
         return toJS(result);
-      })).catch(e => {
+      })).catch(action(e => {
         this.pending = false;
         throw e;
-      });
+      }));
     }
     return Promise.resolve(undefined);
   }
@@ -1404,11 +1405,20 @@ export default class Field {
   }
 
   private checkDynamicProp(propsName: string, newProp, record: Record | undefined = this.record) {
-    const lastDynamicProps = getIf<Field, { [key: string]: any }>(this, 'lastDynamicProps', {});
+    const { name } = this;
+    const lastDynamicProps = record ? (() => {
+      const lastDynamicFieldProps = getIf<Record, Map<string, { [key: string]: any } | undefined>>(record, 'lastDynamicFieldProps', () => new Map());
+      let last = lastDynamicFieldProps.get(name);
+      if (!last) {
+        last = {};
+        lastDynamicFieldProps.set(name, last);
+      }
+      return last;
+    })() : getIf<Field, { [key: string]: any }>(this, 'lastDynamicProps', {});
     const oldProp = lastDynamicProps[propsName];
     if (!isEqualDynamicProps(oldProp, newProp)) {
       raf(action(() => {
-        if (record) {
+        if (record && oldProp !== undefined) {
           const recordField = record.ownerFields.get(this.name);
           if (recordField) {
             const { validator, validatorPropKeys } = recordField;
@@ -1438,7 +1448,7 @@ export default class Field {
     if (
       LOOKUP_SIDE_EFFECT_KEYS.includes(propsName)
     ) {
-      this.set('lookupData', undefined);
+      this.set(LOOKUP_DATA, undefined);
       this.fetchLookup(undefined, record);
     }
     if (LOV_SIDE_EFFECT_KEYS.includes(propsName)) {

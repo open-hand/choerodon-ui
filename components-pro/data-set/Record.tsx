@@ -155,6 +155,8 @@ export default class Record {
 
   computedFieldProps?: Map<string | symbol, IComputedValue<any>>;
 
+  lastDynamicFieldProps?: Map<string, { [key: string]: any } | undefined>;
+
   @computed
   get pristineData(): object {
     const { dirtyData } = this;
