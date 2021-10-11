@@ -1,16 +1,22 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { NumberField, NumberFieldProps } from '../number-field/NumberField';
-import autobind from '../_util/autobind';
-import EventManager from '../_util/EventManager';
-import { FieldType } from '../data-set/enum';
+import noop from 'lodash/noop';
+import Slider, { SliderProps } from 'choerodon-ui/lib/slider';
+import { NumberField } from '../number-field/NumberField';
 
-export interface RangeProps extends NumberFieldProps {
+export interface RangeProps extends SliderProps {
   /**
    *  是否垂直方向
    */
   vertical?: boolean;
+  min?: number;
+  max?: number;
+  dots?: boolean;
+  included?: boolean;
+  range?: boolean;
+  step?: number;
+  defaultValue?: number | [number, number];
 }
 
 @observer
@@ -24,6 +30,9 @@ export default class Range extends NumberField<RangeProps> {
      * false
      */
     vertical: PropTypes.bool,
+    dots: PropTypes.bool,
+    marks: PropTypes.object,
+    included: PropTypes.bool,
     ...NumberField.propTypes,
   };
 
@@ -34,124 +43,43 @@ export default class Range extends NumberField<RangeProps> {
     step: 1,
     max: 100,
     vertical: false,
+    dots: false,
+    marks: {},
+    included: true,
+    range: false,
+    tipFormatter: null,
   };
-
-  dragEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
-
-  track: HTMLDivElement;
-
-  type: string = 'range';
-
-  getFieldType(): FieldType {
-    return FieldType.number;
-  }
-
-  getOmitPropsKeys(): string[] {
-    return super.getOmitPropsKeys().concat([
-      'vertical',
-    ]);
-  }
-
-  getValue() {
-    return super.getValue() || 0;
-  }
-
-  getWrapperClassNames() {
-    const {
-      props: { vertical },
-      prefixCls,
-    } = this;
-    return super.getWrapperClassNames({
-      [`${prefixCls}-vertical`]: vertical,
-    });
-  }
 
   renderWrapper(): ReactNode {
     return (
       <label key="wrapper" {...this.getWrapperProps()}>
-        <input {...this.getOtherProps()} value={this.getValue()} />
         {this.renderTrack()}
-        {this.renderFloatLabel()}
       </label>
     );
   }
 
   renderTrack() {
-    const percent = this.getPercent();
     const {
-      props: { vertical },
+      props: { dataSet, onChange = noop, ...otherProps },
       prefixCls,
     } = this;
+    if (dataSet) {
+      const { fields = [] } = dataSet.props;
+      let props: RangeProps = {};
+      if (otherProps.name) {
+        const fieldProps = fields.find(x => x.name === otherProps.name) as RangeProps
+        props = fieldProps
+      }
+
+      return (
+        <Slider prefixCls={prefixCls} {...otherProps} {...props} onChange={(value) => {
+          this.setValue(value)
+          onChange(value)
+        }} />
+      );
+    }
     return (
-      <div
-        className={`${prefixCls}-track`}
-        onMouseDown={this.readOnly || this.disabled ? undefined : this.handleTrackClick}
-      >
-        <div
-          className={`${prefixCls}-draghandle`}
-          style={vertical ? { bottom: percent } : { left: percent }}
-        />
-        <div
-          className={`${prefixCls}-selection`}
-          style={vertical ? { height: percent } : { width: percent }}
-        />
-      </div>
+      <Slider prefixCls={prefixCls} {...otherProps} onChange={onChange} />
     );
-  }
-
-  @autobind
-  handleTrackClick(e): void {
-    this.track = e.currentTarget;
-    this.handleDrag(e);
-    this.handleDragStart();
-  }
-
-  @autobind
-  handleDragStart(): void {
-    this.dragEvent
-      .addEventListener('mousemove', this.handleDrag)
-      .addEventListener('mouseup', this.handleDragEnd);
-  }
-
-  @autobind
-  handleDragEnd(): void {
-    this.dragEvent
-      .removeEventListener('mousemove', this.handleDrag)
-      .removeEventListener('mouseup', this.handleDragEnd);
-  }
-
-  @autobind
-  handleDrag(e) {
-    const { track } = this;
-    const { vertical } = this.props;
-    const max = this.getProp('max');
-    const min = this.getProp('min');
-    const step = this.getProp('step');
-    const { bottom, left } = track.getBoundingClientRect();
-    const length = vertical ? bottom - e.clientY : e.clientX - left;
-    const totalLength = vertical ? track.clientHeight : track.clientWidth;
-    const oneStepLength = (1 / ((max - min) / step)) * totalLength;
-    let value = min;
-    if (length <= 0) {
-      value = min;
-    } else if (length >= totalLength) {
-      value = max;
-    } else {
-      value = Math.round(length / oneStepLength) * step + min;
-    }
-    this.setValue(value);
-  }
-
-  getPercent() {
-    const value = this.getValue();
-    const max = this.getProp('max');
-    const min = this.getProp('min');
-    if (value <= min) {
-      return 0;
-    }
-    if (value >= max) {
-      return '100%';
-    }
-    return `${((value - min) / (max - min)) * 100}%`;
   }
 }
