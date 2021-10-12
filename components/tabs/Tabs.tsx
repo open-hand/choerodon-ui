@@ -32,6 +32,7 @@ export interface TabsProps<T = string> {
   defaultActiveKey?: string;
   hideAdd?: boolean;
   hideOnlyGroup?: boolean;
+  showMore?: boolean;
   onChange?: (activeKey: T) => void;
   onTabClick?: (key: string) => void;
   onPrevClick?: MouseEventHandler<any>;
@@ -93,6 +94,7 @@ Tabs.displayName = 'Tabs';
 
 Tabs.propTypes = {
   destroyInactiveTabPane: PropTypes.bool,
+  showMore: PropTypes.bool,
   onChange: PropTypes.func,
   children: PropTypes.any,
   prefixCls: PropTypes.string,
@@ -108,6 +110,7 @@ Tabs.propTypes = {
 
 Tabs.defaultProps = {
   hideAdd: false,
+  showMore: false,
   destroyInactiveTabPane: false,
   onChange: noop,
   keyboard: true,

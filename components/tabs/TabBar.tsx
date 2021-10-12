@@ -25,8 +25,9 @@ import { FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { useModal } from 'choerodon-ui/pro/lib/modal-provider/ModalProvider';
 import { iteratorReduce } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
+import Dropdown from 'choerodon-ui/pro/lib/dropdown';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import { getActiveKeyByGroupKey, getDataAttr, getHeader, getLeft, getTop, isTransformSupported, isVertical, setTransform } from './utils';
+import { getActiveKeyByGroupKey, getDataAttr, getHeader, getLeft, getTop, isTransformSupported, isVertical, getStyle, setTransform } from './utils';
 import warning from '../_util/warning';
 import Ripple, { RippleProps } from '../ripple';
 import TabBarInner, { TabBarInnerProps } from './TabBarInner';
@@ -42,6 +43,7 @@ import { Size } from '../_util/enum';
 import CustomizationSettings from './customization-settings';
 import Count from './Count';
 import { TabPaneProps } from './TabPane';
+import TabsAddBtn from './TabsAddBtn'
 
 export interface TabBarProps {
   inkBarAnimated?: boolean | undefined;
@@ -53,13 +55,21 @@ export interface TabBarProps {
   tabBarGutter?: number | undefined;
   className?: string | undefined;
   type?: TabsType | undefined;
+  showMore?: boolean;
+  hideAdd?: boolean;
   onRemoveTab: (targetKey: Key | null, e: MouseEvent<HTMLElement>) => void;
+  onEdit?: (targetKey: Key | MouseEvent<HTMLElement>, action: 'add' | 'remove') => void;
+}
+
+interface MenuKeyValue {
+  key: string,
+  tab: string
 }
 
 const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const {
     scrollAnimated, className, style, inkBarStyle, extraContent,
-    tabBarGutter, inkBarAnimated, type, onRemoveTab, ...restProps
+    tabBarGutter, inkBarAnimated, type, showMore, hideAdd, onRemoveTab, onEdit, ...restProps
   } = props;
   const {
     keyboard, customizable, prefixCls, activeKey, activeGroupKey, tabBarPosition, hideOnlyGroup = false,
@@ -135,11 +145,23 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
     }
   }, [changeActiveKey, activeGroupKey, groupedPanelsMap]);
+  const getOffsetWH = useCallback((node: HTMLDivElement) => {
+    return node[isVertical(tabBarPosition) ? 'offsetHeight' : 'offsetWidth'];
+  }, [tabBarPosition]);
+
+  const getScrollWH = useCallback((node: HTMLDivElement) => {
+    return node[isVertical(tabBarPosition) ? 'scrollHeight' : 'scrollWidth'];
+  }, [tabBarPosition]);
+
+  const getOffsetLT = useCallback((node: HTMLDivElement) => {
+    return node.getBoundingClientRect()[isVertical(tabBarPosition) ? 'top' : 'left'];
+  }, [tabBarPosition]);
   const resizeEvent = useMemo(() => new EventManager(typeof window === 'undefined' ? undefined : window), []);
   const lastNextPrevShownRef = useRef<boolean | undefined>();
   const offsetRef = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navWrapRef = useRef<HTMLDivElement | null>(null);
+  const navScrollRef = useRef<HTMLDivElement | null>(null);
   const navRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const activeTabRef = useRef<HTMLDivElement | null>(null);
@@ -147,8 +169,12 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const [next, setNext] = useState<boolean>(false);
   const [prev, setPrev] = useState<boolean>(false);
   const [prevActiveKey, setActiveKey] = useState<string | undefined>(activeKey);
+  const [menuList, setMenuList] = useState<Array<MenuKeyValue>>([]);
+  const tabsRef = useRef<any>([]);
   const getTabs = (): ReactElement<RippleProps>[] => {
     const length = currentPanelMap.size;
+    const tabBarRef = [...currentPanelMap.entries()].map((item) => ({ key: item[0], value: item[1], ref: React.createRef<HTMLDivElement>() }));
+    tabsRef.current = tabBarRef
     return iteratorReduce<[string, TabPaneProps & { type: string | JSXElementConstructor<any> }], ReactElement<RippleProps>[]>(currentPanelMap.entries(), (rst, [key, child], index) => {
       const { disabled, closable = true, count, overflowCount, showCount } = child;
       const classes = [`${prefixCls}-tab`];
@@ -169,7 +195,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
       if (activeKey === key) {
         classes.push(`${prefixCls}-tab-active`);
-        tabProps.ref = activeTabRef;
+        tabBarRef[index].ref = activeTabRef
         tabProps['aria-selected'] = 'true';
       }
       tabProps.className = classes.join(' ');
@@ -182,7 +208,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       );
       rst.push(
         <Ripple disabled={disabled} key={key}>
-          <TabBarInner {...tabProps}>
+          <TabBarInner ref={tabBarRef[index].ref} {...tabProps} >
             {
               type === TabsType['editable-card'] ? (
                 <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>
@@ -197,11 +223,70 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       return rst;
     }, []);
   };
+
+  const isNextPrevShown = useCallback((state?: { prev: boolean, next: boolean }): boolean => {
+    if (state) {
+      return state.next || state.prev;
+    }
+
+    const navNode = navRef.current;
+    const container = containerRef.current;
+    const navWrap = navWrapRef.current;
+    let isShow = false;
+    if (navNode && container && navWrap) {
+      const navNodeWH = getScrollWH(navNode);
+      const containerWH = getOffsetWH(container);
+      const navWrapNodeWH = getOffsetWH(navWrap);
+      const navNodeWHValue = Math.min(containerWH, navWrapNodeWH);
+      const offset = navNodeWH - navNodeWHValue;
+      isShow = offset > 0
+    }
+    return isShow;
+  }, [next, prev]);
+
+  const onMenuClick = ({ key }) => {
+    changeActiveKey(key);
+  }
+
+  const menu = () => {
+    return (
+      <Menu style={{ maxHeight: 200, overflow: 'auto' }} onClick={onMenuClick}>
+        {menuList.map(x => <Menu.Item key={x.key}>
+          <a target="_blank">{x.tab}</a>
+        </Menu.Item>)}
+      </Menu>
+    )
+  }
+
   const getContent = (contents: ReactElement<HTMLAttributes<HTMLDivElement>>): ReactElement<HTMLAttributes<HTMLDivElement>>[] => {
+    const vertical = isVertical(tabBarPosition)
+    const isEditCard = type === TabsType['editable-card'];
+    const classes = classnames(`${prefixCls}-extra-content`, {
+      [`${prefixCls}-extra-verticalContent`]: vertical,
+    });
+    const dropDownClass = classnames(`${prefixCls}-more-tab`, {
+      [`${prefixCls}-more-verticalTab`]: vertical,
+    });
+
+    const nextPrevShown = isNextPrevShown()
+
+    const moreTool = isEditCard && nextPrevShown && showMore && (
+      <Dropdown overlay={menu} key="more">
+        <Icon type="more_horiz" className={dropDownClass} />
+      </Dropdown>
+    )
+    const addTool = isEditCard && nextPrevShown && !hideAdd && <TabsAddBtn key="add" onEdit={onEdit} vertical={vertical} />
+
+    // 这里是固定项
+    const toolBar = [
+      moreTool,
+      addTool,
+    ];
+
     if (extraContent || customizable) {
       return [
         contents,
-        <div key="extra" className={`${prefixCls}-extra-content`}>
+        <div key="extra" className={classes}>
           {
             customizable && (
               <Button
@@ -213,11 +298,12 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
               />
             )
           }
+          {toolBar}
           {extraContent}
         </div>,
       ];
     }
-    return [contents];
+    return [contents, <div key="extra" className={classes}>{toolBar}</div>];
   };
 
   const getGroupNode = (): ReactElement<MenuProps> | undefined => {
@@ -262,36 +348,25 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     );
   };
 
-  const getOffsetWH = useCallback((node: HTMLDivElement) => {
-    return node[isVertical(tabBarPosition) ? 'offsetHeight' : 'offsetWidth'];
-  }, [tabBarPosition]);
-
-  const getScrollWH = useCallback((node: HTMLDivElement) => {
-    return node[isVertical(tabBarPosition) ? 'scrollHeight' : 'scrollWidth'];
-  }, [tabBarPosition]);
-
-  const getOffsetLT = useCallback((node: HTMLDivElement) => {
-    return node.getBoundingClientRect()[isVertical(tabBarPosition) ? 'top' : 'left'];
-  }, [tabBarPosition]);
-
   const setOffset = useCallback((offset: number, callback?: Function) => {
-    const nav = navRef.current;
-    if (nav) {
-      const target = Math.min(0, offset);
+    const nav = navRef.current; // 节点长度
+    const navScroll = navScrollRef.current;
+    if (nav && navScroll) {
+      const target = offset;
       if (offsetRef.current !== target) {
-        offsetRef.current = target;
+        offsetRef.current = Math.abs(target);
         const navOffset: { name?: string, value?: string } = {};
         const navStyle = nav.style;
         const transformSupported = isTransformSupported(navStyle);
         if (isVertical(tabBarPosition)) {
           if (transformSupported) {
-            navOffset.value = `translate3d(0,${target}px,0)`;
+            navScroll.scrollTo({ top: Math.abs(target) })
           } else {
             navOffset.name = 'top';
             navOffset.value = `${target}px`;
           }
         } else if (transformSupported) {
-          navOffset.value = `translate3d(${target}px,0,0)`;
+          navScroll.scrollTo({ left: Math.abs(target) })
         } else {
           navOffset.name = 'left';
           navOffset.value = `${target}px`;
@@ -316,39 +391,35 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const navNodeWH = getScrollWH(navNode);
       const containerWH = getOffsetWH(container);
       const navWrapNodeWH = getOffsetWH(navWrap);
-      let offset = offsetRef.current;
+      const offset = Math.round(offsetRef.current);
       // 当容器小于tab的时候使用最小值才可以防止回弹问题。
       const navNodeWHValue = Math.min(containerWH, navWrapNodeWH);
-      const minOffset = navNodeWHValue - navNodeWH; // -165
+      const minOffset = Math.round(navNodeWH - navNodeWHValue);
       let $next = next;
       let $prev = prev;
-      if (minOffset >= 0) {
-        $next = false;
-        setOffset(0);
-        offset = 0;
-      } else if (minOffset < offset) {
+      if (minOffset < 0) {
+        $prev = false;
+        $next = false
+      } else if (offset === 0) {
+        $prev = false;
         $next = true;
-      } else {
-        $next = false;
-        // Test with container offset which is stable
-        // and set the offset of the nav wrap node
-        const realOffset = navWrapNodeWH - navNodeWH;
-        setOffset(realOffset);
-        offset = realOffset;
-      }
-
-      if (offset < 0) {
+      } else if (offset > 0 && offset < minOffset) {
         $prev = true;
+        $next = true
+      } else if (offset === minOffset) {
+        $prev = true;
+        $next = false
       } else {
         $prev = false;
       }
 
-      if (prev !== $prev) {
-        setPrev($prev);
-      }
       if (next !== $next) {
         setNext($next);
       }
+      if (prev !== $prev) {
+        setPrev($prev);
+      }
+      setOffset(offset);
       return {
         next: $next,
         prev: $prev,
@@ -356,33 +427,28 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }
   }, [next, prev, navRef, containerRef, navWrapRef, offsetRef, getScrollWH, getOffsetWH, setOffset]);
 
-  const isNextPrevShown = useCallback((state?: { prev: boolean, next: boolean }): boolean => {
-    if (state) {
-      return state.next || state.prev;
-    }
-    return next || prev;
-  }, [next, prev]);
-
-  const toPrev = useCallback((e) => {
-    onPrevClick(e);
+  const toPrev = useCallback(() => {
     const navWrapNode = navWrapRef.current;
     if (navWrapNode) {
       const navWrapNodeWH = getOffsetWH(navWrapNode);
-      setOffset(offsetRef.current + navWrapNodeWH, setNextPrev);
+      const offset = offsetRef.current - navWrapNodeWH
+      setOffset(offset < 0 ? 0 : 0 - offset, setNextPrev);
     }
   }, [getOffsetWH, setOffset, navWrapRef, onPrevClick, setNextPrev]);
 
-  const toNext = useCallback((e) => {
-    onNextClick(e);
+  const toNext = useCallback(() => {
     const navWrapNode = navWrapRef.current;
-    if (navWrapNode) {
+    const navNode = navRef.current;
+    if (navWrapNode && navNode) {
+      const navNodeWH = getScrollWH(navNode);
       const navWrapNodeWH = getOffsetWH(navWrapNode);
-      const offset = offsetRef.current;
-      setOffset(offset - navWrapNodeWH, setNextPrev);
+      const offset = offsetRef.current + navWrapNodeWH;
+      setOffset(0 - (offset > navNodeWH ? navNodeWH - navWrapNodeWH : offset), setNextPrev);
     }
   }, [getOffsetWH, setOffset, navWrapRef, onNextClick, setNextPrev]);
 
   const scrollToActiveTab = useCallback((e?: { target?: HTMLElement, currentTarget?: HTMLElement }) => {
+    const vertical = isVertical(tabBarPosition)
     const activeTab = activeTabRef.current;
     const navWrap = navWrapRef.current;
     if (e && e.target !== e.currentTarget || !activeTab || !navWrap) {
@@ -396,16 +462,16 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       return;
     }
 
-    const activeTabWH = getScrollWH(activeTab);
+    const activeTabWH = getOffsetWH(activeTab) + getStyle(activeTab, vertical ? 'margin-bottom' : 'margin-right');
     const navWrapNodeWH = getOffsetWH(navWrap);
-    let offset = offsetRef.current;
+    let offset = navScrollRef.current ? (vertical ? navScrollRef.current.scrollTop : navScrollRef.current.scrollLeft) : 0;
     const wrapOffset = getOffsetLT(navWrap);
     const activeTabOffset = getOffsetLT(activeTab);
     if (wrapOffset > activeTabOffset) {
-      offset += (wrapOffset - activeTabOffset);
+      offset -= (wrapOffset - activeTabOffset);
       setOffset(offset, setNextPrev);
     } else if ((wrapOffset + navWrapNodeWH) < (activeTabOffset + activeTabWH)) {
-      offset -= (activeTabOffset + activeTabWH) - (wrapOffset + navWrapNodeWH);
+      offset += (activeTabOffset + activeTabWH) - (navWrapNodeWH + wrapOffset);
       setOffset(offset, setNextPrev);
     }
   }, [activeTabRef, navWrapRef, lastNextPrevShownRef, getScrollWH, getOffsetWH, getOffsetLT, setOffset, setNextPrev, isNextPrevShown]);
@@ -422,7 +488,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }
   }, [scrollToActiveTab, containerRef]);
   const getScrollBarNode = (content: [ReactElement<HTMLAttributes<HTMLDivElement>>, ReactElement<RippleProps>[]]): ReactElement<HTMLAttributes<HTMLDivElement>> => {
-    const showNextPrev = prev || next;
+    const showNextPrev = isNextPrevShown();
 
     const prevButton = (
       <span
@@ -455,27 +521,96 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const navClassName = `${prefixCls}-nav`;
     const navClasses = classnames(navClassName, scrollAnimated ? `${navClassName}-animated` : `${navClassName}-no-animated`);
 
+    const vertical = isVertical(tabBarPosition)
+
+    let needScrollStyle = {}
+    const navWrap = navWrapRef.current;
+    if (navWrap && vertical) {
+      const navWrapNodeWH = getOffsetWH(navWrap);
+      needScrollStyle = { height: navWrapNodeWH }
+    }
+    const isEditCard = type === TabsType['editable-card']
     return (
       <div
         className={classnames({
           [`${prefixCls}-nav-container`]: 1,
-          [`${prefixCls}-nav-container-scrolling`]: showNextPrev,
+          [`${prefixCls}-nav-container-scrolling`]: showNextPrev && !isEditCard,
         })}
         key="container"
         ref={containerRef}
       >
-        {prevButton}
-        {nextButton}
+        {!isEditCard && prevButton}
+        {!isEditCard && nextButton}
         <div className={`${prefixCls}-nav-wrap`} ref={navWrapRef}>
-          <div className={`${prefixCls}-nav-scroll`}>
-            <div className={navClasses} ref={navRef}>
+          <div className={`${prefixCls}-nav-scroll`} style={needScrollStyle} ref={navScrollRef}>
+            <div className={navClasses} ref={navRef} >
               {content}
+              {
+                // 这里是跟随新增button，只有卡片样式的页签支持新增选项
+                !hideAdd && isEditCard && <TabsAddBtn extraPrefixCls={showNextPrev ? 'none' : 'inline-block'} vertical={vertical} onEdit={onEdit} />
+              }
             </div>
           </div>
         </div>
       </div>
     );
   };
+  // 发生滚动事件，改变更多的菜单。
+  const handleScrollEvent = ({ target }) => {
+    const vertical = isVertical(tabBarPosition)
+    const { scrollLeft, scrollTop } = target
+    if (!showMore) {
+      setOffset(vertical ? scrollTop : scrollLeft, setNextPrev)
+      return
+    }
+    let hiddenOffset: number = 0;
+    const prevMenuList: Array<MenuKeyValue> = []
+    // 计算前面隐藏的tabs
+    for (let i = 0; i < tabsRef.current.length; i++) {
+      const { key, value, ref } = tabsRef.current[i];
+      const dom = ref.current;
+      let currentTabOffset: number = 0;
+      if (dom) {
+        currentTabOffset = vertical ? (dom.offsetHeight + getStyle(dom, 'margin-bottom')) : (dom.offsetWidth + getStyle(dom, 'margin-right'))
+      }
+      hiddenOffset += currentTabOffset || 0
+      if ((!vertical && scrollLeft > 0) || (vertical && scrollTop > 0)) {
+        prevMenuList.push({ key, tab: value.tab })
+      }
+      if ((!vertical && scrollLeft < hiddenOffset) || (vertical && scrollTop < hiddenOffset)) {
+        break
+      }
+    }
+    // 计算后面隐藏的tabs
+    const nextMenuList: Array<MenuKeyValue> = []
+    const navNode = navRef.current; // 节点长度
+    const navWrap = navWrapRef.current; // 节点滚动区域
+    let totalHiddenOffset: number = 0
+    if (navNode && navWrap) {
+      const navNodeWH = getScrollWH(navNode);
+      const navWrapNodeWH = getOffsetWH(navWrap);
+      totalHiddenOffset = navNodeWH - navWrapNodeWH - (vertical ? scrollTop : scrollLeft);
+    }
+    let hiddenBackOffset = 0
+    for (let i = tabsRef.current.length - 1; i >= 0; i--) {
+      const { key, value, ref } = tabsRef.current[i];
+      const dom = ref.current;
+      let endTabOffset: number = 0
+      if (dom) {
+        endTabOffset = vertical ? (dom.offsetHeight + getStyle(dom, 'margin-bottom')) : (dom.offsetWidth + getStyle(dom, 'margin-right'))
+      }
+      hiddenBackOffset += endTabOffset || 0
+      if (totalHiddenOffset > 0) {
+        nextMenuList.push({ key, tab: value.tab })
+      }
+      if (hiddenBackOffset > totalHiddenOffset) {
+        break
+      }
+    }
+    nextMenuList.reverse()
+    setMenuList(prevMenuList.concat(nextMenuList))
+    setNextPrev();
+  }
 
   useLayoutEffect(() => {
     const inkBarNode = inkBarRef.current;
@@ -539,6 +674,21 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   useEffect(() => {
     setOffset(0, setNextPrev);
   }, [tabBarPosition]);
+
+  useEffect(() => {
+    handleScrollEvent({ target: { scrollLeft: 0, scrollTop: 0 } })
+  }, [])
+  useEffect(() => {
+    const debouncedScroll = debounce((e) => {
+      handleScrollEvent(e)
+    }, 200);
+    const scrollEvent = new EventManager(navScrollRef.current);
+    scrollEvent.addEventListener('scroll', debouncedScroll);
+    return () => {
+      scrollEvent.removeEventListener('scroll', debouncedScroll);
+      debouncedScroll.cancel();
+    }
+  }, [tabBarPosition])
 
   useLayoutEffect(() => {
     const currentNextPrev = {
