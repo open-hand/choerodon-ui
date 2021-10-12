@@ -1329,12 +1329,18 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   searchRemote(text?: string | string[] | undefined) {
-    const { field, searchMatcher } = this;
+    const { field, searchMatcher, record } = this;
     if (field && isString(searchMatcher)) {
       const searchPara = this.getSearchPara(searchMatcher, text);
+      const optionDs = field.get('options', record);
       Object.keys(searchPara).forEach(key => {
         const value = searchPara[key];
-        field.setLovPara(key, value === '' ? undefined : value);
+        const lovPara = value === '' ? undefined : value;
+        if (optionDs) {
+          optionDs.query(undefined, { key: lovPara });
+        } else {
+          field.setLovPara(key, lovPara);
+        }
       });
     }
   }

@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 cacheModified 属性， cachedModified, cachedRecords 值， clearCachedModified, clearCachedRecords 方法， query 和 loadData 新增 cache 参数。
 - 💄 `<pro>DataSet`: 优化内存, 优化树形数据性能。
 - 💄 `RcTrigger`: 使组件成为观察者。
+- 💄 `<pro>Select`: 使用 options 数据源模式下，支持 searchMatcher 配置搜索参数。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。
