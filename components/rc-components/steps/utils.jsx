@@ -8,3 +8,7 @@ export function isFlexSupported() {
   }
   return false;
 }
+
+export function getStyle(el, property) {
+  return +getComputedStyle(el).getPropertyValue(property).replace('px', '');
+}
