@@ -8,7 +8,14 @@ import { UploadFile, UploadListProps } from './interface';
 import Animate from '../animate';
 import { ProgressType } from '../progress/enum';
 import { getPrefixCls } from '../configure';
-import { previewImage } from './utils';
+import { previewImage, getFileType, getFileSizeStr } from './utils';
+import CompressedfileIcon from './icon-svg/compressedfileIcon';
+import DocIcon from './icon-svg/docIcon';
+import FileuploadIcon from './icon-svg/fileuploadIcon';
+import ImageIcon from './icon-svg/imageIcon';
+import PdfIcon from './icon-svg/pdfIcon';
+import XlsIcon from './icon-svg/xlsIcon';
+import { Size } from '../_util/enum';
 
 const isImageUrl = (url: string): boolean => {
   return /^data:image\//.test(url) || /\.(webp|svg|png|gif|jpg|jpeg)$/.test(url);
@@ -36,6 +43,7 @@ export default class UploadList extends Component<UploadListProps, any> {
     showRemoveIcon: true,
     showPreviewIcon: true,
     dragUploadList: false,
+    showFileSize: false,
   };
 
   handleClose = (file: UploadFile) => {
@@ -110,11 +118,36 @@ export default class UploadList extends Component<UploadListProps, any> {
       showRemoveIcon,
       locale,
       dragUploadList,
+      showFileSize,
     } = this.props;
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
     const list = items.map((file, index) => {
       let progress;
-      let icon = <Icon type={file.status === 'uploading' ? 'loading' : 'attach_file'} />;
+      let icon = file.status === 'uploading' ?
+        <Progress key='loading' type={ProgressType.loading} size={Size.small} />
+        : <FileuploadIcon className={`${prefixCls}-icon-file`} />;
+      if (file.status !== 'uploading') {
+        const filetype = getFileType(file.name);
+        switch (filetype) {
+          case 'compressedfile':
+            icon = <CompressedfileIcon className={`${prefixCls}-icon-file`} />;
+            break;
+          case 'doc':
+            icon = <DocIcon className={`${prefixCls}-icon-file`} />;
+            break;
+          case 'image':
+            icon = <ImageIcon className={`${prefixCls}-icon-file`} />;
+            break;
+          case 'pdf':
+            icon = <PdfIcon className={`${prefixCls}-icon-file`} />;
+            break;
+          case 'xls':
+            icon = <XlsIcon className={`${prefixCls}-icon-file`} />;
+            break;
+          default:
+            break;
+        }
+      }
 
       if (listType === 'picture' || listType === 'picture-card') {
         if (listType === 'picture-card' && file.status === 'uploading') {
@@ -220,17 +253,35 @@ export default class UploadList extends Component<UploadListProps, any> {
       } else {
         message = (file.error && file.error.statusText) || locale.uploadError;
       }
-      const iconAndPreview =
+      const filesizeStr = getFileSizeStr(file.size);
+      const fileSize =
+        (showFileSize && filesizeStr !== '' && listType === 'text') ? (
+          <span className={`${prefixCls}-list-item-info-filesize`}>
+            {filesizeStr}
+          </span>
+        ) : null;
+
+      const listItemInfo = (
+        <div className={`${prefixCls}-list-item-info`}>
+          <span className={`${prefixCls}-list-item-span`}>
+            {icon}
+            {preview}
+            {fileSize}
+            {actions}
+          </span>
+          <Animate transitionName="fade" component="">
+            {progress}
+          </Animate>
+        </div>
+      );
+
+      const listItemInfoTooltip =
         file.status === 'error' ? (
           <Tooltip title={message}>
-            {icon}
-            {preview}
+            {listItemInfo}
           </Tooltip>
         ) : (
-          <span>
-            {icon}
-            {preview}
-          </span>
+          listItemInfo
         );
 
       if (dragUploadList) {
@@ -244,11 +295,7 @@ export default class UploadList extends Component<UploadListProps, any> {
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
               >
-                <div className={`${prefixCls}-list-item-info`}>{iconAndPreview}</div>
-                {actions}
-                <Animate transitionName="fade" component="">
-                  {progress}
-                </Animate>
+                {listItemInfoTooltip}
               </div>
             )}
           </Draggable>
@@ -257,11 +304,7 @@ export default class UploadList extends Component<UploadListProps, any> {
 
       return (
         <div className={infoUploadingClass} key={file.uid}>
-          <div className={`${prefixCls}-list-item-info`}>{iconAndPreview}</div>
-          {actions}
-          <Animate transitionName="fade" component="">
-            {progress}
-          </Animate>
+          {listItemInfoTooltip}
         </div>
       );
     });

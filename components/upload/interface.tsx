@@ -77,6 +77,7 @@ export interface UploadProps {
   withCredentials?: boolean;
   locale?: UploadLocale;
   requestFileKeys?:string[]|string;
+  showFileSize?: boolean;
 }
 
 export interface UploadState {
@@ -98,4 +99,5 @@ export interface UploadListProps {
   showPreviewIcon?: boolean;
   locale: UploadLocale;
   previewFile?: PreviewFileHandler;
+  showFileSize?: boolean;
 }
