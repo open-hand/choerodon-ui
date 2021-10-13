@@ -72,6 +72,8 @@ cols: 1
 | rowSelection | object | 表格行是否可选择，[配置项](#rowSelection)  | 
 | rowDraggable | boolean `(false)` | 行拖拽，实现行的拖拽  |
 | onDragEnd |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
+| onDragEndBefore |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
+| onDragStart |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
 
 ### Form methods
 

@@ -18,7 +18,7 @@ import {
   DragDropContext,
   Draggable,
   DraggableProvided,
-  DraggableStateSnapshot,
+  DraggableStateSnapshot, DragStart,
   Droppable,
   DroppableProvided,
   DropResult,
@@ -203,6 +203,9 @@ const propTypes = {
   columnsDragRender: PropTypes.object,
   rowSelection: PropTypes.object,
   rowDraggable: PropTypes.bool,
+  onDragEndBefore: PropTypes.func,
+  onDragEnd: PropTypes.func,
+  onDragStart: PropTypes.func,
 };
 
 export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
@@ -1475,13 +1478,20 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     scrollTop(event.target, 0);
   };
 
+  handleDragStart = (initial: DragStart, provided: ResponderProvided) => {
+    const { onDragStart } = this.props;
+    if (isFunction(onDragStart)) {
+      onDragStart(initial, provided);
+    }
+  };
+
   handleDragEnd = (resultDrag: DropResult, provided: ResponderProvided) => {
     const { onDragEnd, onDragEndBefore } = this.props;
     const { data } = this.state;
     let resultBefore: DropResult | undefined = resultDrag;
     if (onDragEndBefore) {
       const result = onDragEndBefore(resultDrag, provided);
-      if (result === false) {
+      if (!result) {
         return;
       }
       if (isDropresult(result)) {
@@ -1495,7 +1505,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         data: resData,
       });
       if (onDragEnd) {
-        onDragEnd({ resultBefore, provided, data: resData });
+        onDragEnd(resultBefore, provided, resData);
       }
     }
   };
@@ -2489,11 +2499,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     );
 
     return rowDraggable ? (
-      <DragDropContext onDragEnd={this.handleDragEnd}>
+      <DragDropContext onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
         <Droppable
           droppableId="table"
           key="table"
-
         >
           {(droppableProvided: DroppableProvided) => (
             <div
