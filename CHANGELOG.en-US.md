@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
 - 🐞 `<pro>Attachment`: Fix the problem that an error is reported when clicking the View Attachment button.
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the first verification of the verification properties set by `dynamicProps` has no effect.
+- 🐞 `<pro>DataSet`: Fix the issue of `appendData` total parameter update.
 
 ## 1.4.5
 
