@@ -24,20 +24,20 @@ const TableBody: FunctionComponent<TableBodyProps> = observer(function TableBody
   //   // this.element = node;
   // },[getRef])
 
-//   componentDidUpdate(): void {
-//     const { element } = this;
-//   if (element) {
-//     const { scrollHeight, clientHeight } = element;
-//     // Fixed vertical scrollbar not displayed in Chrome when scrollHeight - clientHeight < scrollbarHeight
-//     if (scrollHeight > clientHeight && scrollHeight - clientHeight < measureScrollbar()) {
-//       const { overflow } = element.style;
-//       element.style.overflow = 'scroll';
-//       raf(() => {
-//         element.style.overflow = overflow;
-//       });
-//     }
-//   }
-// }
+  //   componentDidUpdate(): void {
+  //     const { element } = this;
+  //   if (element) {
+  //     const { scrollHeight, clientHeight } = element;
+  //     // Fixed vertical scrollbar not displayed in Chrome when scrollHeight - clientHeight < scrollbarHeight
+  //     if (scrollHeight > clientHeight && scrollHeight - clientHeight < measureScrollbar()) {
+  //       const { overflow } = element.style;
+  //       element.style.overflow = 'scroll';
+  //       raf(() => {
+  //         element.style.overflow = overflow;
+  //       });
+  //     }
+  //   }
+  // }
 
   const getHeightStyle = () => {
     if (!tableStore.customized.heightType) {

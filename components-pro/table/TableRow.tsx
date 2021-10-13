@@ -277,7 +277,7 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
             })
             : {};
         const classString = classNames(`${prefixCls}-expanded-row`, expandRowExternalProps.className);
-        const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties; } = {
+        const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties } = {
           key: `${rowKey}-expanded-row`,
           className: classString,
           style: { ...expandRowExternalProps.style },

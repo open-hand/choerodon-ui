@@ -113,7 +113,7 @@ class Entry<K, V> {
 
   maxAge: number;
 
-  constructor(key: K, value: V, length: number, now: number, maxAge: number = 0) {
+  constructor(key: K, value: V, length: number, now: number, maxAge = 0) {
     this.key = key;
     this.value = value;
     this.length = length;

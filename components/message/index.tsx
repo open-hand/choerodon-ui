@@ -7,8 +7,8 @@ import { getPlacementStyle, getPlacementTransitionName } from './util';
 import { getPrefixCls } from '../configure';
 
 let defaultDuration = 3;
-let defaultTop: number = 24;
-let defaultBottom: number = 24;
+let defaultTop = 24;
+let defaultBottom = 24;
 let messageInstance: any;
 let key = 1;
 let customizePrefixCls;
@@ -40,7 +40,7 @@ function getCustomizePrefixCls() {
   return getPrefixCls('message', customizePrefixCls);
 }
 
-function getMessageInstance(placement: Placement, callback: (i: any) => void ,contentClassName:string) {
+function getMessageInstance(placement: Placement, callback: (i: any) => void ,contentClassName: string) {
   if (messageInstance) {
     callback(messageInstance);
     return;

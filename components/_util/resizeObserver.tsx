@@ -21,9 +21,9 @@ class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
 
   resizeObserver: ResizeObserver | null = null;
 
-  width: number = 0;
+  width = 0;
 
-  height: number = 0;
+  height = 0;
 
   componentDidMount() {
     this.onComponentUpdated();

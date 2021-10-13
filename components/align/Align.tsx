@@ -22,7 +22,7 @@ export interface AlignProps {
   childrenRef?: (node) => void;
   align: object;
   target?: () => Element | Text | null;
-  onAlign?: (source: Element | Text | null, align: object, target: HTMLElement, translate: { x: number, y: number }) => void;
+  onAlign?: (source: Element | Text | null, align: object, target: HTMLElement, translate: { x: number; y: number }) => void;
   monitorBufferTime?: number;
   monitorWindowResize?: boolean;
   hidden?: boolean;

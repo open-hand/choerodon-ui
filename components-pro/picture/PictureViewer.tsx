@@ -11,8 +11,8 @@ export interface PictureViewerProps {
   list: string[];
   defaultIndex?: number;
   modal?: {
-    update(props: ModalProps)
-  }
+    update(props: ModalProps);
+  };
 }
 
 const PictureViewer: FunctionComponent<PictureViewerProps> = function PictureViewer(props) {

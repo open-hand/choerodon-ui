@@ -21,7 +21,7 @@ export interface ItemSuffixProps {
   index: number;
   defaultKey?: string | undefined;
   onDefaultKeyChange: (defaultKey: string) => void;
-  groups: { value: ColumnLock | false, records: Record[] }[];
+  groups: { value: ColumnLock | false; records: Record[] }[];
 }
 
 const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuffix(props) {

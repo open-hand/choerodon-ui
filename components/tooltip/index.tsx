@@ -29,7 +29,7 @@ export interface AbstractTooltipProps {
   style?: CSSProperties;
   overlayStyle?: CSSProperties;
   placement?: TooltipPlacement;
-  builtinPlacements?: Object;
+  builtinPlacements?: Record<string, any>;
   defaultVisible?: boolean;
   visible?: boolean;
   onVisibleChange?: (visible: boolean) => void;

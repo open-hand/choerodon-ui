@@ -1,4 +1,5 @@
 // https://github.com/moment/moment/issues/3650
-export default function interopDefault(m: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function interopDefault(m: any): any {
   return m.default || m;
 }

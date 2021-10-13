@@ -48,7 +48,7 @@ export type TimeStep = {
 
 export type TimeZone = string | ((moment: Moment) => string);
 
-const viewComponents: { [x: string]: typeof DaysView; } = {
+const viewComponents: { [x: string]: typeof DaysView } = {
   [ViewMode.decade]: DecadeYearsView,
   [ViewMode.year]: YearsView,
   [ViewMode.month]: MonthsView,
@@ -496,6 +496,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   handlePopupAnimateAppear() {
+    // noop
   }
 
   @autobind

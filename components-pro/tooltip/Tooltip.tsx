@@ -83,7 +83,7 @@ const PopupContent: React.FC<{
   content: React.ReactNode;
   prefixCls: string;
   theme?: TooltipTheme;
-  translate: { x: number, y: number }
+  translate: { x: number; y: number };
 }> = (props) => {
   const { content, prefixCls, theme, translate: { x, y } } = props;
 

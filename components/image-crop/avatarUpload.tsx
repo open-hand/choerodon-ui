@@ -38,7 +38,6 @@ export interface AvatarArea {
   file?: File;
 }
 
-
 export interface AvatarUploadProps {
   visible: boolean; // 上传图片模态框的显示状态
   onClose?: (visible: boolean) => void; // 模态框关闭时的回调
@@ -145,7 +144,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
       }
       axios.post(`${uploadUrl}?${qs}`, data, config)
         .then((res) => {
-          // @ts-ignore
+          // @ts-expect-error: this field may exist?
           if (res.success) {
             this.uploadOk(res);
           } else {
@@ -303,8 +302,6 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     return dataList
   }
 
-
-
   renderEditor(props) {
     const { img, file, rotate } = this.state;
     const { prefixCls: customizePrefixCls, previewList, editorWidth, editorHeight, defaultRectSize, minRectSize, subTitle, previewTitle, reloadTitle } = this.props;
@@ -316,7 +313,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
       if(isString(previewTitle)) {
         return (
           <h5 className={`${prefixCls}-preview-title`}>
-              <span >{previewTitle}</span>
+            <span >{previewTitle}</span>
           </h5>
         )
       }

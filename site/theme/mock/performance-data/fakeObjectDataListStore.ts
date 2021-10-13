@@ -1,6 +1,24 @@
-const faker = require('faker');
+import faker from 'faker';
 
-export function createFakeRowObjectData(index) {
+type User = {
+  id: number;
+  avartar: string;
+  city: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  suffix: string;
+  street: string;
+  zipCode: string;
+  date: Date;
+  bs: string;
+  catchPhrase: string;
+  companyName: string;
+  words: string;
+  sentence: string;
+}
+
+export function createFakeRowObjectData(index: number): User {
   return {
     id: index,
     avartar: faker.image.avatar(),
@@ -20,10 +38,9 @@ export function createFakeRowObjectData(index) {
   };
 }
 
-export default function fakeObjectDataListStore(size) {
-  const dataList = [];
+export default function fakeObjectDataListStore(size: number): User[] {
+  const dataList: User[] = [];
   for (let i = 0; i < size; i++) {
-    // @ts-ignore
     dataList.push(createFakeRowObjectData(i + 1));
   }
   return dataList;

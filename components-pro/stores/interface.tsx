@@ -1,4 +1,4 @@
 export {
-    responseData,
-    responseType,
+  responseData,
+  responseType,
 } from './LookupCodeStore';

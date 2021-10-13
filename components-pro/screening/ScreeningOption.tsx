@@ -6,7 +6,6 @@ import CheckBox from 'choerodon-ui/lib/checkbox';
 import { ElementProps } from '../core/ViewComponent';
 import Record from '../data-set/Record';
 
-
 export interface Info {
   key: string | number | undefined;
   value: any | Record;
@@ -19,7 +18,6 @@ export interface ColSize {
   push?: number;
   pull?: number;
 }
-
 
 export type ScreeningOptionProps = Omit<ElementProps, "lang" | "spellCheck"> & ColProps & {
   optionkey?: Key;
@@ -39,7 +37,6 @@ export type ScreeningOptionProps = Omit<ElementProps, "lang" | "spellCheck"> & C
   optionRender: React.ReactElement<any> | string;
 }
 
-
 export default class ScreeningOption extends Component<ScreeningOptionProps> {
 
   static displayName: 'ScreeningOption';
@@ -51,7 +48,6 @@ export default class ScreeningOption extends Component<ScreeningOptionProps> {
     onMouseDown: noop,
     isSelected: false,
   };
-
 
   onMouseLeave = () => {
     const { optionkey, value, onMouseLeave } = this.props;
@@ -93,7 +89,7 @@ export default class ScreeningOption extends Component<ScreeningOptionProps> {
       } else {
         onSelect(info);
       }
-    };
+    }
   };
 
   render() {
@@ -155,7 +151,6 @@ export default class ScreeningOption extends Component<ScreeningOptionProps> {
       };
     }
 
-
     const checkbox = multiple ? <CheckBox checked={isSelected} /> : null;
 
     return (
@@ -175,5 +170,5 @@ export default class ScreeningOption extends Component<ScreeningOptionProps> {
         </div>
       </Col>
     );
-  };
+  }
 }

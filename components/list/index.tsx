@@ -48,7 +48,7 @@ export interface ListProps {
   header?: ReactNode;
   footer?: ReactNode;
   empty?: ReactNode;
-  locale?: Object;
+  locale?: Record<string, any>;
 }
 
 export interface ListLocale {

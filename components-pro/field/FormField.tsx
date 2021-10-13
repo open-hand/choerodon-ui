@@ -55,7 +55,7 @@ import formatString from '../formatter/formatString';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 
-const map: { [key: string]: FormField<FormFieldProps>[]; } = {};
+const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
 export type Comparator = (v1: any, v2: any) => boolean;
 
@@ -85,7 +85,7 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 内部属性,标记该组件是否位于table中,适用于CheckBox以及switch等组件
    */
-  _inTable?: boolean,
+  _inTable?: boolean;
   /**
    * 标签名
    */
@@ -429,7 +429,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   tooltipShown?: boolean;
 
   // 多选中出现了校验值的数量大于一那么输入框不需要存在校验信息展示
-  multipleValidateMessageLength: number = 0;
+  multipleValidateMessageLength = 0;
 
   @observable floatLabelOffsetX?: number;
 
@@ -1170,7 +1170,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     }
   }
 
-  removeValues(values: any[], index: number = 0) {
+  removeValues(values: any[], index = 0) {
     let repeat: number;
     this.setValue(
       values.reduce((oldValues, value) => {
@@ -1189,11 +1189,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     );
   }
 
-  removeValue(value: any, index: number = 0) {
+  removeValue(value: any, index = 0) {
     this.removeValues([value], index);
   }
 
   afterRemoveValue(_value, _repeat: number) {
+    // noop
   }
 
   @action
@@ -1302,6 +1303,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   afterSetValue() {
+    // noop
   }
 
   renderRangeValue(value: any, repeat?: number): ReactNode {
@@ -1368,7 +1370,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   @action
-  validate(value?: any, report: boolean = true): Promise<boolean> {
+  validate(value?: any, report = true): Promise<boolean> {
     if (!this.props.noValidate) {
       if (value === undefined) {
         value = this.multiple ? this.getValues() : this.getValue();
@@ -1494,6 +1496,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   forcePositionChanged() {
+    // noop
   }
 }
 

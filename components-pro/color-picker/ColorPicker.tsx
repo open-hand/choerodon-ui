@@ -12,8 +12,7 @@ function getNodeRect(node): ClientRect {
   return node.getBoundingClientRect();
 }
 
-export interface ColorPickerProps extends TriggerFieldProps {
-}
+export type ColorPickerProps = TriggerFieldProps
 
 @observer
 export default class ColorPicker extends TriggerField<ColorPickerProps> {
@@ -98,7 +97,6 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   getFieldType(): FieldType {
     return FieldType.color;
   }
-
 
   getPrefix(): ReactNode {
     const { prefixCls } = this;
@@ -410,9 +408,11 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   handlePopupAnimateAppear() {
+    // noop
   }
 
   handlePopupAnimateEnd() {
+    // noop
   }
 
   getPopupStyleFromAlign(): CSSProperties | undefined {

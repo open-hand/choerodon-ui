@@ -87,7 +87,6 @@ function getSimpleValue(value, valueField) {
   return value;
 }
 
-
 export type onOptionProps = { dataSet: DataSet; record: Record };
 
 export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
@@ -112,7 +111,7 @@ export interface ParamMatcherProps {
 }
 
 export interface SelectPopupContentProps extends TriggerFieldPopupContentProps {
-  dataSet: DataSet,
+  dataSet: DataSet;
   textField: string;
   valueField: string;
   field?: Field | undefined;
@@ -129,7 +128,7 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
   /**
    * 常用项
    */
-  commonItem?: string[],
+  commonItem?: string[];
   /**
    * 常用项标签超出最大数量时的占位描述
    */
@@ -692,14 +691,14 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           <Tag
             key={item}
             className={values.includes(item) ? `${this.prefixCls}-common-item ${this.prefixCls}-common-item-selected` : `${this.prefixCls}-common-item`}
-            // @ts-ignore
+            // @ts-expect-error: investigation needed
             onClick={() => this.handleCommonItemClick(textRecord)}
           >
             {text}
           </Tag>
         );
       });
-      if (valueLength > maxCommonTagCount) {
+      if (maxCommonTagCount && valueLength > maxCommonTagCount) {
         let content: ReactNode = `+ ${valueLength - Number(maxCommonTagCount)} ...`;
         if (maxCommonTagPlaceholder) {
           const omittedValues = commonItem.slice(maxCommonTagCount, valueLength);
@@ -1024,9 +1023,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           case KeyCode.PAGE_UP:
             this.handleKeyDownFirstLast(e, menu, -1);
             break;
-          // case KeyCode.ENTER:
-          //   this.handleKeyDownEnter(e);
-          //   break;
+            // case KeyCode.ENTER:
+            //   this.handleKeyDownEnter(e);
+            //   break;
           case KeyCode.ESC:
             this.handleKeyDownEsc(e);
             break;
@@ -1238,6 +1237,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   handlePopupAnimateAppear() {
+    // noop
   }
 
   @autobind
@@ -1252,6 +1252,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   @autobind
   handlePopupAnimateEnd(_key, _exists) {
+    // noop
   }
 
   @autobind
@@ -1290,6 +1291,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   handleSearch(_text?: string | string[] | undefined) {
+    // noop
   }
 
   @action
@@ -1373,7 +1375,6 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       this.expand();
     }
   }
-
 
   processRecordToObject(record: Record) {
     const { primitive, valueField } = this;

@@ -65,7 +65,6 @@ export default class RichText extends FormField<RichTextProps> {
 
   rtOptions: ReactQuillProps = this.getRichTextOptions();
 
-
   getRichTextOptions(options: ReactQuillProps = this.props.options!): ReactQuillProps {
     if (options) {
       if (options.modules && options.modules.imageDropAndPaste !== false) {

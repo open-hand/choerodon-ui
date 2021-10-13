@@ -10,9 +10,7 @@ import { cloneElement } from '../_util/reactNode';
 
 export { ScrollNumberProps } from './ScrollNumber';
 
-interface CompoundedComponent extends React.FC<BadgeProps> {
-  
-}
+type CompoundedComponent = React.FC<BadgeProps>
 
 export interface BadgeProps {
   /** Number to show in badge */
@@ -98,7 +96,7 @@ const Badge: CompoundedComponent = ({
     if (!offset) {
       return { ...style };
     }
-    
+
     const offsetStyle: React.CSSProperties = {
       marginTop: offset[0],
       marginLeft: offset[1],
@@ -112,24 +110,24 @@ const Badge: CompoundedComponent = ({
 
   // =============================== Render ===============================
   // >>> Title
-  const titleNode = 
-    title ?? 
+  const titleNode =
+    title ??
     (typeof livingCount === 'string' || typeof livingCount === 'number' ? livingCount : undefined);
 
   // >>> Status Text
   const statusTextNode =
     isHidden || !text ? null : <span className={`${prefixCls}-status-text`}>{text}</span>;
-  
+
   // >>> Display Component
   const displayNode =
     !livingCount || typeof livingCount !== 'object'
       ? undefined
       : cloneElement(livingCount, oriProps => ({
-          style: {
-            ...mergedStyle,
-            ...oriProps.style,
-          },
-        }));
+        style: {
+          ...mergedStyle,
+          ...oriProps.style,
+        },
+      }));
 
   // Shared styles
   const statusCls = classNames({

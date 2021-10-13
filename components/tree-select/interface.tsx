@@ -25,14 +25,14 @@ export interface TreeSelectProps extends AbstractSelectProps {
   treeNodeFilterProp?: string;
   treeNodeLabelProp?: string;
   treeData?: Array<TreeData>;
-  treeDataSimpleMode?: boolean | Object;
+  treeDataSimpleMode?: boolean | Record<string, any>;
   loadData?: (node: any) => void;
   showCheckedStrategy?: 'SHOW_ALL' | 'SHOW_PARENT' | 'SHOW_CHILD';
   labelInValue?: boolean;
   treeCheckStrictly?: boolean;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
-  autoClearSearchValue?:boolean;
-  searchValue?:string;
+  autoClearSearchValue?: boolean;
+  searchValue?: string;
   /**
    * 多值标签
    */

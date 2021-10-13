@@ -70,7 +70,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     Map<string, GroupPanelMap>
   ] = useMemo(() => normalizePanes(children, customized), [children, customized]);
   const defaultActiveKey = useMemo((): string | undefined => {
-    const option: { activeKey?: string | undefined, defaultActiveKey?: string | undefined } = {
+    const option: { activeKey?: string | undefined; defaultActiveKey?: string | undefined } = {
       activeKey: propActiveKey,
       defaultActiveKey: propDefaultActiveKey,
     };

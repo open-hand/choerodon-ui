@@ -29,10 +29,10 @@ class Element extends React.Component<SkeletonElementProps, any> {
     const sizeStyle: React.CSSProperties =
       typeof size === 'number'
         ? {
-            width: size,
-            height: size,
-            lineHeight: `${size}px`,
-          }
+          width: size,
+          height: size,
+          lineHeight: `${size}px`,
+        }
         : {};
     return (
       <span

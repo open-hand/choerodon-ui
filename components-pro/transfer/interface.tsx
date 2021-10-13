@@ -1,11 +1,11 @@
 export {
-    TransferProps,
+  TransferProps,
 } from './Transfer';
 
 export { 
-    TransferListProps,
+  TransferListProps,
 } from './TransferList';
 
 export {
-    TransferOperationProps,
+  TransferOperationProps,
 } from './TransferOperation';

@@ -66,7 +66,7 @@ export interface TableLocale {
 }
 
 export type RowSelectionType = 'checkbox' | 'radio';
-export type SelectionSelectFn<T> = (record: T, selected: boolean, selectedRows: Object[]) => any;
+export type SelectionSelectFn<T> = (record: T, selected: boolean, selectedRows: Record<string, any>[]) => any;
 
 export interface TablePaginationConfig extends PaginationProps {
   position?: 'top' | 'bottom' | 'both';
@@ -76,11 +76,11 @@ export interface TablePaginationConfig extends PaginationProps {
 export interface TableRowSelection<T> {
   type?: RowSelectionType;
   selectedRowKeys?: string[] | number[];
-  onChange?: (selectedRowKeys: string[] | number[], selectedRows: Object[]) => any;
-  getCheckboxProps?: (record: T) => Object;
+  onChange?: (selectedRowKeys: string[] | number[], selectedRows: Record<string, any>[]) => any;
+  getCheckboxProps?: (record: T) => Record<string, any>;
   onSelect?: SelectionSelectFn<T>;
-  onSelectAll?: (selected: boolean, selectedRows: Object[], changeRows: Object[]) => any;
-  onSelectInvert?: (selectedRows: Object[]) => any;
+  onSelectAll?: (selected: boolean, selectedRows: Record<string, any>[], changeRows: Record<string, any>[]) => any;
+  onSelectInvert?: (selectedRows: Record<string, any>[]) => any;
   selections?: SelectionItem[] | boolean;
   hideDefaultSelections?: boolean;
   fixed?: boolean;
@@ -112,22 +112,22 @@ export interface TableProps<T> {
   onChange?: (
     pagination: TablePaginationConfig | boolean,
     filters: string[],
-    sorter: Object,
+    sorter: Record<string, any>,
     params: any[],
   ) => any;
   onFilterSelectChange?: (item: any) => void;
   onColumnFilterChange?: (item: any) => void;
   loading?: boolean | SpinProps;
-  locale?: Object;
+  locale?: Record<string, any>;
   indentSize?: number;
   onRowClick?: (record: T, index: number, event: Event) => any;
   onRow?: (record: T, index: number) => any;
   useFixedHeader?: boolean;
   bordered?: boolean;
   showHeader?: boolean;
-  footer?: (currentPageData: Object[]) => ReactNode;
-  title?: (currentPageData: Object[]) => ReactNode;
-  empty?: (currentPageData: Object[]) => ReactNode;
+  footer?: (currentPageData: Record<string, any>[]) => ReactNode;
+  title?: (currentPageData: Record<string, any>[]) => ReactNode;
+  empty?: (currentPageData: Record<string, any>[]) => ReactNode;
   scroll?: { x?: boolean | number | string; y?: boolean | number | string };
   childrenColumnName?: string;
   bodyStyle?: CSSProperties;

@@ -1,3 +1,3 @@
 export {
-    NumberFieldProps,
+  NumberFieldProps,
 } from './NumberField';

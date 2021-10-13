@@ -11,7 +11,7 @@ import Menu, { Item as MenuItem, SubMenu } from '../rc-components/menu';
 
 export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterMenuState> {
   static defaultProps = {
-    handleFilter() {},
+    handleFilter() {/* noop */},
     column: {},
   };
 

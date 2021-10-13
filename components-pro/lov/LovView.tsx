@@ -154,7 +154,7 @@ export default class LovView extends Component<LovViewProps> {
     return {
       onClick: this.handleSelect,
     };
-  };
+  }
 
   @autobind
   handleColumnResize(props: onColumnResizeProps) {

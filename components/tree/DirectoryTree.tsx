@@ -57,7 +57,6 @@ class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeSta
 
   tree: Tree;
 
-
   onDebounceExpand: (event: React.MouseEvent<HTMLElement>, node: EventDataNode) => void;
 
   // Shift click usage

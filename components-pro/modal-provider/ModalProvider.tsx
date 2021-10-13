@@ -21,7 +21,7 @@ const ModalProvider = (props: ModalProviderProps) => {
   const ref = useRef<ModalContainer>(null);
   const prepareToOpen = useMemo<(ModalProps & { children })[]>(
     () => [] as (ModalProps & { children })[],
-    [],
+  [],
   );
 
   const open = useCallback((modalProps: ModalProps & { children }) => {

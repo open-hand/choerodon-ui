@@ -1,3 +1,3 @@
 export {
-    FormatOptions,
+  FormatOptions,
 } from './formatString';

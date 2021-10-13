@@ -1,5 +1,5 @@
 export interface Store {
-  setState: (partial: Object) => void;
+  setState: (partial: Record<string, any>) => void;
   getState: () => any;
   subscribe: (listener: () => void) => () => void;
 }

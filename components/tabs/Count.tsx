@@ -20,9 +20,9 @@ const Count: FunctionComponent<CountProps> = observer(function Count(props) {
   if (number) {
     return (
       <span className={`${prefixCls}-tab-count`}>
-      {
-        overflowCount && number > overflowCount ? `${overflowCount}+` : number
-      }
+        {
+          overflowCount && number > overflowCount ? `${overflowCount}+` : number
+        }
       </span>
     );
   }

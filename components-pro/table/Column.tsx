@@ -15,7 +15,7 @@ export function defaultAggregationRenderer({ text }) {
   return text;
 }
 
-export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps; };
+export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps };
 export type commandProps = { dataSet: DataSet; record: Record; aggregation?: boolean };
 
 export interface ColumnRenderProps extends RenderProps {

@@ -7,11 +7,10 @@ import Icon from '../icon';
 import List, { ListProps } from '../list';
 import buildPlacements from './placements';
 
-
 export interface menuListItemProps {
   href?: string;
   listItemName?: string;
-  listChildren?: ({ listItemName, href }: { listItemName: string, href: string }) => React.ReactNode;
+  listChildren?: ({ listItemName, href }: { listItemName: string; href: string }) => React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
 }
 
@@ -24,7 +23,7 @@ export interface BreadcrumbItemProps {
   listProps?: ListProps;
   menuList?: menuListItemProps[];
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
-  children?;
+  children?: ReactNode;
 }
 
 interface BreadcrumbItemInterface extends React.FC<BreadcrumbItemProps> {
@@ -131,7 +130,6 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
   };
 
   let link: string | React.ReactNode = renderLink(children, restProps, `link`, 'href');
-
 
   // wrap to dropDown
   link = renderBreadcrumbMenu(link);

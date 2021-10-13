@@ -1,7 +1,7 @@
 export {
-    DropDownProps,
+  DropDownProps,
 } from './Dropdown';
 
 export {
-    Placements,
+  Placements,
 } from './enum';

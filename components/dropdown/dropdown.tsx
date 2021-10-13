@@ -13,7 +13,7 @@ export interface DropDownProps {
   onVisibleChange?: (visible?: boolean) => void;
   visible?: boolean;
   disabled?: boolean;
-  align?: Object;
+  align?: Record<string, any>;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   prefixCls?: string;
   className?: string;

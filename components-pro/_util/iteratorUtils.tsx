@@ -87,7 +87,7 @@ export function iteratorReduce<T, U>(iterator: IterableIterator<T>, callbackfn: 
   }
 }
 
-export function iteratorSliceToArray<T>(iterator: IterableIterator<T>, start: number = 0, end: number = Infinity): T[] {
+export function iteratorSliceToArray<T>(iterator: IterableIterator<T>, start = 0, end = Infinity): T[] {
   const ret: T[] = [];
   let index = 0;
   while (true) {

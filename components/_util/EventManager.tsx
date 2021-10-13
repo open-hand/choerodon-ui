@@ -2,7 +2,7 @@ import { action } from 'mobx';
 import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
 
-type EventTarget = { addEventListener?: Function, removeEventListener?: Function, attachEvent?: Function, detachEvent?: Function };
+type EventTarget = { addEventListener?: Function; removeEventListener?: Function; attachEvent?: Function; detachEvent?: Function };
 type EventListenerOrEventListenerObject = Function | { handleEvent: Function };
 
 export type Handler = [EventListenerOrEventListenerObject, EventListenerOptions | AddEventListenerOptions | boolean, Function];

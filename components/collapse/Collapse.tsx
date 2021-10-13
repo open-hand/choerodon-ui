@@ -11,7 +11,6 @@ export type ExpandIconPosition = 'left' | 'right' | 'text-right';
 
 export type TriggerMode = 'icon' | 'header';
 
-
 export interface PanelProps {
   isActive?: boolean;
   header?: React.ReactNode;
@@ -48,7 +47,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     bordered: true,
     openAnimation: {
       ...animation,
-      appear() {},
+      appear() {/* noop */},
     },
   };
 
@@ -99,7 +98,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     const collapseClassName = classNames(
       {
         [`${prefixCls}-borderless`]: !bordered,
-        // @ts-ignore
+        // @ts-expect-error: some useless check, probably signals deeper errors
         [`${prefixCls}-text-action`]: expandIconCof === 'text' && expandIconPositionCof === 'left',
         [`${prefixCls}-trigger`]: triggerCof === 'header',
         [`${prefixCls}-ghost`]: ghost,
@@ -115,8 +114,8 @@ export default class Collapse extends Component<CollapseProps, any> {
       expandIconContent = (panelProps: PanelProps) => {
         return (
           <LocaleReceiver componentName="Collapse" defaultLocale={defaultLocale.Collapse}>
-           {(locale, localeCode) => this.renderExpandTextContent(panelProps, locale, localeCode, expandIconPositionCof)}
-         </LocaleReceiver>)
+            {(locale, localeCode) => this.renderExpandTextContent(panelProps, locale, localeCode, expandIconPositionCof)}
+          </LocaleReceiver>)
       };
     }
 

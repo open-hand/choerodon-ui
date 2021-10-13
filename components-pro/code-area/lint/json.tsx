@@ -5,6 +5,7 @@ import jsonlintMod from 'jsonlint-mod';
 if (typeof window !== 'undefined') {
   require('codemirror/addon/lint/lint.css');
   require('codemirror/addon/lint/lint');
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const CodeMirror = require('codemirror');
 
   CodeMirror.registerHelper('lint', 'json', function(text) {

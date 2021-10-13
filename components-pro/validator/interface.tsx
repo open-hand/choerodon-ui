@@ -1,4 +1,4 @@
 export {
-    CustomValidator,
-   ValidationMessages,
+  CustomValidator,
+  ValidationMessages,
 } from './Validator';

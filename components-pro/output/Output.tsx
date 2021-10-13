@@ -39,6 +39,7 @@ export default class Output extends FormField<OutputProps> {
 
   @autobind
   handleChange() {
+    // noop
   }
 
   getOmitPropsKeys(): string[] {

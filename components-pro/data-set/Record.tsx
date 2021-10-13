@@ -139,7 +139,7 @@ export default class Record {
 
   memo?: object;
 
-  prepareForReport?: { result?: boolean, timeout?: number } | undefined;
+  prepareForReport?: { result?: boolean; timeout?: number } | undefined;
 
   dataSetSnapshot?: { [key: string]: DataSetSnapshot } | undefined;
 
@@ -344,8 +344,8 @@ export default class Record {
         expandField,
         field
           ? expand
-          ? field.get(BooleanValue.trueValue, this)
-          : field.get(BooleanValue.falseValue, this)
+            ? field.get(BooleanValue.trueValue, this)
+            : field.get(BooleanValue.falseValue, this)
           : expand,
       );
     } else {
@@ -456,7 +456,7 @@ export default class Record {
     needIgnore?: boolean,
     noCascade?: boolean,
     isCascadeSelect?: boolean,
-    all: boolean = true,
+    all = true,
   ): any {
     if (_isComputingDerivation && _isComputingDerivation()) {
       warning(false, 'Please do not use the `record.toData` method to get the value during the rendering phase, please use `record.get` instead.');
@@ -496,7 +496,7 @@ export default class Record {
       __id: this.id,
       [getConfig('statusKey')]: getConfig('status')[
         status === RecordStatus.sync ? RecordStatus.update : status
-        ],
+      ],
     };
   }
 
@@ -543,7 +543,7 @@ export default class Record {
   reportValidity(result: boolean) {
     const { dataSet } = this;
     if (!dataSet.validating) {
-      const prepareForReport = getIf<Record, { result?: boolean, timeout?: number }>(this, 'prepareForReport', {});
+      const prepareForReport = getIf<Record, { result?: boolean; timeout?: number }>(this, 'prepareForReport', {});
       if (!result) {
         prepareForReport.result = result;
       }
@@ -555,7 +555,7 @@ export default class Record {
         delete this.prepareForReport;
       }, 200);
     }
-  };
+  }
 
   getValidationErrors(): RecordValidationErrors[] {
     return iteratorReduce<Field, RecordValidationErrors[]>(this.ownerFields.values(), (results, field) => {

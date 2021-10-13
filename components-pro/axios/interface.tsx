@@ -1,8 +1,8 @@
 export { 
-    ICacheLike,
-    Options,
+  ICacheLike,
+  Options,
 } from './cacheAdapterEnhancer';
 export {
-    RecordedCache,
-    Options as throttleOptions,
+  RecordedCache,
+  Options as throttleOptions,
 } from './throttleAdapterEnhancer';

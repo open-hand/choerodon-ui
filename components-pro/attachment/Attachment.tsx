@@ -81,7 +81,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
 export type Sort = {
   type: 'time' | 'name';
   order: 'asc' | 'desc';
-  custom?: boolean,
+  custom?: boolean;
 };
 
 const defaultSort: Sort = {
@@ -561,7 +561,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
-  handleFetchAttachment(fetchProps: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }) {
+  handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) {
     const { field } = this;
     if (field) {
       field.fetchAttachments(fetchProps, this.record);

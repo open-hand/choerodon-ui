@@ -200,7 +200,7 @@ export default class Button extends Component<ButtonProps, any> {
 
     return useWrapper ? (
       <span
-        // @ts-ignore
+        // @ts-expect-error: no idea why this is here
         disabled
         style={style}
         className={classNames(classes, `${prefixCls}-disabled-wrapper`)}

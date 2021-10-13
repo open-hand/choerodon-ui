@@ -57,13 +57,13 @@ export default class Search extends Component<SearchProps, any> {
         enterButtonAsElement,
         enterButtonAsElement.type === Button
           ? {
-              className: `${this.getPrefixCls()}-button`,
-              size,
-              onClick: this.onSearch,
-            }
+            className: `${this.getPrefixCls()}-button`,
+            size,
+            onClick: this.onSearch,
+          }
           : {
-              onClick: this.onSearch,
-            },
+            onClick: this.onSearch,
+          },
       );
     }
     if (enterButton === true) {

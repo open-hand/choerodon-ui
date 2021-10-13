@@ -6,10 +6,10 @@ export default function DropIndicator({
   dropLevelOffset,
   indent,
 }: {
-  dropPosition: -1 | 0 | 1,
-  dropLevelOffset: number,
-  indent: number,
-  prefixCls: string,
+  dropPosition: -1 | 0 | 1;
+  dropLevelOffset: number;
+  indent: number;
+  prefixCls: string;
 }) {
   const style: React.CSSProperties = {
     pointerEvents: 'none',

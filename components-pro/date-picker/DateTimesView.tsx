@@ -46,7 +46,7 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
     return firstDay;
   }
 
-  choose(date: Moment, expand: boolean = true) {
+  choose(date: Moment, expand = true) {
     const { onSelect = noop } = this.props;
     onSelect(date, expand);
   }

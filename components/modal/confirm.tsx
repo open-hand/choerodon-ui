@@ -61,7 +61,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
     };
   }
 
-  function handleCancel() {
+  const handleCancel = () => {
     close({ triggerCancel: true });
   }
 

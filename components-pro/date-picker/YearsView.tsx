@@ -13,12 +13,10 @@ export default class YearsView extends DaysView {
 
   static type = FieldType.year;
 
-
   getViewClassName(): string {
     const { prefixCls } = this;
     return `${prefixCls}-year`;
   }
-
 
   @autobind
   handlePrevYearClick() {

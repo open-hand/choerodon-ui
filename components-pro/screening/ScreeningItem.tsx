@@ -31,7 +31,6 @@ import { $l } from '../locale-context';
 
 const disabledField = '__disabled';
 
-
 const expandedButton = (iconExpanded) => {
   if (iconExpanded === true) {
     return (
@@ -61,11 +60,11 @@ function getSimpleValue(value, valueField) {
 }
 
 export type RenderProps = {
-  options?: DataSet,
-  name?: string,
-  dataSet?: DataSet,
-  onConfirm?: (confirm: Confirm) => void,
-  record?: Record,
+  options?: DataSet;
+  name?: string;
+  dataSet?: DataSet;
+  onConfirm?: (confirm: Confirm) => void;
+  record?: Record;
 };
 
 export type Renderer = (props: RenderProps) => ReactNode;
@@ -74,7 +73,6 @@ export interface Confirm {
   value: string;
   fieldName: string | undefined;
 }
-
 
 export interface ScreeningItemProps extends DataSetComponentProps {
   multiple?: boolean;
@@ -87,7 +85,7 @@ export interface ScreeningItemProps extends DataSetComponentProps {
   onRef?: (ref) => void;
   colProps?: ColProps;
   rowProps?: RowProps;
-  optionRenderer?: ({ text, value, record }: { text: string, value: any, record: Record }) => ReactElement<any>;
+  optionRenderer?: ({ text, value, record }: { text: string; value: any; record: Record }) => ReactElement<any>;
 }
 
 @observer
@@ -96,8 +94,6 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
   static displayName = 'ScreeningItem';
 
   @observable iconExpanded: boolean;
-
-  @observable observableProps: any;
 
   @observable screeningMultiple: boolean;
 
@@ -340,7 +336,7 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
     return v;
   }
 
-  removeValues(values: any[], index: number = 0) {
+  removeValues(values: any[], index = 0) {
     let repeat: number;
     this.setValue(
       values.reduce((oldValues, value) => {
@@ -360,9 +356,10 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
   }
 
   afterRemoveValue(_value, _repeat: number) {
+    // noop
   }
 
-  removeValue(value: any, index: number = 0) {
+  removeValue(value: any, index = 0) {
     this.removeValues([value], index);
   }
 
@@ -442,7 +439,6 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
     this.addValue(...values);
   }
 
-
   handleSelect = (info) => {
     const record = info.value;
     this.choose(record);
@@ -454,6 +450,7 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
   };
 
   handleClick = (_info) => {
+    // noop
   };
 
   findByValue(value): Record | undefined {
@@ -506,7 +503,6 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
     return text;
   }
 
-
   processRecordToObject(record: Record) {
     const { primitive, valueField } = this;
     return primitive ? record.get(valueField) : record.toData();
@@ -546,7 +542,6 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
       : text;
   }
 
-
   getScreeningOption = () => {
     const { colProps, optionRenderer } = this.props;
     const {
@@ -565,7 +560,7 @@ export default class Screening extends DataSetComponent<ScreeningItemProps> {
         const value = record.get(valueField);
         const text = record.get(textField);
         const key: Key = getItemKey(record, text, value);
-        let isSelected: boolean = false;
+        let isSelected = false;
         const valueRecord = this.processRecordToObject(record);
         const selectedValue = toJS(this.value);
         if (multiple) {

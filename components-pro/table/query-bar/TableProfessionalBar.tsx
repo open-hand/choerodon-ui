@@ -27,8 +27,8 @@ export interface TableProfessionalBarProps extends ElementProps {
   buttons: ReactElement<ButtonProps>[];
   formProps?: FormProps;
   summaryBar?: ReactElement<any>;
-  defaultExpanded?: Boolean;
-  autoQueryAfterReset?: Boolean;
+  defaultExpanded?: boolean;
+  autoQueryAfterReset?: boolean;
   onQuery?: () => void;
   onReset?: () => void;
 }
@@ -54,7 +54,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     }
     this.processDataSetListener(true);
   }
-
 
   componentWillReceiveProps(nextProps, _): void {
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = nextProps;
@@ -199,7 +198,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       );
     }
   }
-
 
   @autobind
   handleQueryReset() {

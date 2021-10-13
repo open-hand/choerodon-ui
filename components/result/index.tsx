@@ -10,97 +10,95 @@ import warning from '../_util/warning';
 
 export type ResultStatusType = 403 | 404 | 500 | '403' | '404' | '500' | 'success' | 'error' | 'info' | 'warning'| string;
 
-export type StatusRenderer = object 
+export type StatusRenderer = object
 
 export interface ResultProps {
-    icon?: React.ReactNode;
-    status?: ResultStatusType;
-    title?: React.ReactNode;
-    subTitle?: React.ReactNode;
-    extra?: React.ReactNode;
-    prefixCls?: string;
-    className?: string;
-    style?: React.CSSProperties;
-    children?: React.ReactNode;
-    statusRenderer?: StatusRenderer;
+  icon?: React.ReactNode;
+  status?: ResultStatusType;
+  title?: React.ReactNode;
+  subTitle?: React.ReactNode;
+  extra?: React.ReactNode;
+  prefixCls?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+  statusRenderer?: StatusRenderer;
 }
 
 const renderStatus = (prefixCls: string, { status, icon,statusRenderer }: ResultProps) => {
-    const className = classnames(`${prefixCls}-icon`);
-    warning(
-        !(typeof icon === 'string' && icon.length > 2),
-        `\`icon\` is using ReactNode instead of string naming . Please check \`${icon}\` at https://choerodon.github.io/choerodon-ui/zh/cmp/general/icon`,
-    );
+  const className = classnames(`${prefixCls}-icon`);
+  warning(
+    !(typeof icon === 'string' && icon.length > 2),
+    `\`icon\` is using ReactNode instead of string naming . Please check \`${icon}\` at https://choerodon.github.io/choerodon-ui/zh/cmp/general/icon`,
+  );
 
-    // 初始化map
-    const iconMap = new Map<string, React.ReactNode>(
-        [
-            ['403', <Nnauthorized key="403" />],
-            ['404', <NotFound key="404" />],
-            ['500', <ServerError key="500" />],
-            ['success', <Icon key="success" type="check_circle" />],
-            ['error', <Icon key="error" type="error" />],
-            ['info', <Icon key="info" type="info" />],
-            ['warning', <Icon key="warning" type="warning" />],
-        ],
-    );
+  // 初始化map
+  const iconMap = new Map<string, React.ReactNode>(
+    [
+      ['403', <Nnauthorized key="403" />],
+      ['404', <NotFound key="404" />],
+      ['500', <ServerError key="500" />],
+      ['success', <Icon key="success" type="check_circle" />],
+      ['error', <Icon key="error" type="error" />],
+      ['info', <Icon key="info" type="info" />],
+      ['warning', <Icon key="warning" type="warning" />],
+    ],
+  );
 
-    // 注入全局的config
-    const statusRendererAll = {...getConfig('resultStatusRenderer'),...statusRenderer}
-    
-    if(isObject(statusRendererAll)){
-        if(Object.keys(statusRendererAll).length > 0){
-            Object.keys(statusRendererAll).forEach((item) => {
-                iconMap.set(item,statusRendererAll[item]);
-            })
-        }
+  // 注入全局的config
+  const statusRendererAll = {...getConfig('resultStatusRenderer'),...statusRenderer}
+
+  if(isObject(statusRendererAll)){
+    if(Object.keys(statusRendererAll).length > 0){
+      Object.keys(statusRendererAll).forEach((item) => {
+        iconMap.set(item,statusRendererAll[item]);
+      })
     }
-    // @ts-ignore
-    if (iconMap.get(`${status}`) && iconMap.get(`${status}`)?.type !== Icon) {
-        return (
-            <div className={`${className} ${prefixCls}-image`} style={icon || statusRenderer ? {} : (`${status}` === '500' ? { width: 400 } : { width: 800 })}>
-                {icon || iconMap.get(`${status}`)}
-            </div>
-        )
-    }
+  }
+  // @ts-expect-error: Why is it here?
+  if (iconMap.get(`${status}`) && iconMap.get(`${status}`)?.type !== Icon) {
     return (
-        <div className={`${className}`}>
-            {icon || iconMap.get(`${status}`)}
-        </div>
+      <div className={`${className} ${prefixCls}-image`} style={icon || statusRenderer ? {} : (`${status}` === '500' ? { width: 400 } : { width: 800 })}>
+        {icon || iconMap.get(`${status}`)}
+      </div>
     )
+  }
+  return (
+    <div className={`${className}`}>
+      {icon || iconMap.get(`${status}`)}
+    </div>
+  )
 
 }
 
 const renderExtra = (prefixCls: string, { extra }: ResultProps) =>
-    extra && <div className={`${prefixCls}-extra`}>{extra}</div>;
-
+  extra && <div className={`${prefixCls}-extra`}>{extra}</div>;
 
 const Result = (props: ResultProps) => {
-    const {
-        prefixCls: customizePrefixCls,
-        className: customizeClassName,
-        subTitle,
-        title,
-        style,
-        children,
-        status,
-    } = props;
-    const prefixCls = getPrefixCls('result', customizePrefixCls);
-    const className = classnames(prefixCls, `${prefixCls}-${status}`, customizeClassName);
-    return (
-        <div className={className} style={style}>
-            {renderStatus(prefixCls, props)}
-            <div className={`${prefixCls}-title`}>{title}</div>
-            {subTitle && <div className={`${prefixCls}-subtitle`}>{subTitle}</div>}
-            {children && <div className={`${prefixCls}-content`}>{children}</div>}
-            {renderExtra(prefixCls, props)}
-        </div>
-    );
+  const {
+    prefixCls: customizePrefixCls,
+    className: customizeClassName,
+    subTitle,
+    title,
+    style,
+    children,
+    status,
+  } = props;
+  const prefixCls = getPrefixCls('result', customizePrefixCls);
+  const className = classnames(prefixCls, `${prefixCls}-${status}`, customizeClassName);
+  return (
+    <div className={className} style={style}>
+      {renderStatus(prefixCls, props)}
+      <div className={`${prefixCls}-title`}>{title}</div>
+      {subTitle && <div className={`${prefixCls}-subtitle`}>{subTitle}</div>}
+      {children && <div className={`${prefixCls}-content`}>{children}</div>}
+      {renderExtra(prefixCls, props)}
+    </div>
+  );
 }
 
 Result.defaultProps = {
-    status: 'info',
+  status: 'info',
 };
 
 export default Result;
-

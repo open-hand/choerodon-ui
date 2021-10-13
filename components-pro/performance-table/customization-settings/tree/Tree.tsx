@@ -5,7 +5,7 @@ import TableContext from '../../TableContext';
 
 export interface TreeProps {
   value?: any;
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 const Tree: FunctionComponent<TreeProps> = observer((props) => {

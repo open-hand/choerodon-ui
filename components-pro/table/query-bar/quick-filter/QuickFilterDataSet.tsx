@@ -42,8 +42,7 @@ const ConditionDataSet: () => DataSetProps = () => ({
   ],
   dataToJSON: DataToJSON.all,
   events: {
-    update: () => {
-    },
+    update: () => {/* noop */},
   },
 });
 
@@ -70,9 +69,9 @@ const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) =>
 });
 
 export interface QuickFilterContextValue extends QuickFilterProps {
-  menuDataSet: DataSet,
-  filterMenuDS: DataSet,
-  conditionDataSet: DataSet,
+  menuDataSet: DataSet;
+  filterMenuDS: DataSet;
+  conditionDataSet: DataSet;
 }
 
 const ds = {} as DataSet;
@@ -107,7 +106,6 @@ export const StoreProvider: FunctionComponent<QuickFilterProps> = props => {
     ],
   }), []);
 
-
   const conditionDataSet = useMemo(() => new DataSet(ConditionDataSet()), []);
 
   const menuDataSet = useMemo(() => new DataSet(QuickFilterDataSet({
@@ -124,5 +122,3 @@ export const StoreProvider: FunctionComponent<QuickFilterProps> = props => {
   };
   return <Store.Provider value={value}>{children}</Store.Provider>;
 };
-
-

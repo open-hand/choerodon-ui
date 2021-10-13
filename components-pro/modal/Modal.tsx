@@ -56,8 +56,8 @@ export interface ModalProps extends ViewComponentProps {
   maskClosable?: boolean | 'click' | 'dblclick';
   maskStyle?: CSSProperties;
   autoCenter?: boolean;
-  mask?: boolean,
-  maskClassName?: string,
+  mask?: boolean;
+  maskClassName?: string;
   keyboardClosable?: boolean;
   modalTitle?: ReactNode;
   header?: ((title: ReactNode, closeBtn: ReactNode, okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>) => ReactNode) | ReactNode | boolean;
@@ -221,7 +221,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         {cancelText}
       </Button>
     );
-  };
+  }
 
   contentNode: HTMLElement;
 

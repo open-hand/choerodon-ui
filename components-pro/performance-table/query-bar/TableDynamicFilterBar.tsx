@@ -140,7 +140,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   originalConditionKeys: string[] = [];
 
-  enterNum: number = 0;
+  enterNum = 0;
 
   constructor(props, context) {
     super(props, context);
@@ -351,7 +351,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     );
   }
 
-
   /**
    * 获取筛选下拉
    */
@@ -397,7 +396,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 this.handleQuery(true);
               }}
               onInput={(e) => {
-                // @ts-ignore
+                // @ts-expect-error: value exists
                 const { value } = e.target;
                 runInAction(() => {
                   this.searchText = value || '';
@@ -491,16 +490,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         }
       });
       return (<>
-          <div className={`${proPrefixCls}-dynamic-filter-bar-prefix`}>
-            {children}
-          </div>
-          <span className={`${proPrefixCls}-filter-search-divide`} />
-        </>
+        <div className={`${proPrefixCls}-dynamic-filter-bar-prefix`}>
+          {children}
+        </div>
+        <span className={`${proPrefixCls}-filter-search-divide`} />
+      </>
       );
     }
     return null;
   }
-
 
   /**
    * 渲染查询条

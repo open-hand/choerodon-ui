@@ -19,7 +19,7 @@ const COLUMNS = 5;
 export interface IconPickerProps extends TriggerFieldProps {
   pageSize?: number;
   customFontName?: string;
-  icons?: { [key: string]: string[]; } | string[];
+  icons?: { [key: string]: string[] } | string[];
 }
 type CategoryType = keyof Locale['Icon'];
 
@@ -357,9 +357,11 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   handlePopupAnimateAppear() {
+    // noop
   }
 
   handlePopupAnimateEnd() {
+    // noop
   }
 
   getPopupStyleFromAlign(): CSSProperties | any {

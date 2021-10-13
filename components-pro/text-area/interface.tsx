@@ -1,12 +1,12 @@
 export {
-    NodeType,
+  NodeType,
 } from './calculateNodeHeight';
 
 export {
-    ResizeType,
-    AutoSizeType,
+  ResizeType,
+  AutoSizeType,
 } from './enum'
 
 export {
-    TextAreaProps,
+  TextAreaProps,
 } from './TextArea'

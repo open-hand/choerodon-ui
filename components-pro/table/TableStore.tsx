@@ -63,7 +63,7 @@ export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
 
 export const AGGREGATION_EXPAND_CELL_KEY = '__aggregation-expand-cell__'; // TODO:Symbol
 
-export type HeaderText = { name: string; label: string; };
+export type HeaderText = { name: string; label: string };
 
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
@@ -114,7 +114,7 @@ function hasCheckField({ editor, name, hidden }: ColumnProps, checkField: string
   return !hidden && !!editor && checkField === name;
 }
 
-function renderSelectionBox({ record, store }: { record: any, store: TableStore; }): ReactNode {
+function renderSelectionBox({ record, store }: { record: any; store: TableStore }): ReactNode {
   const { dataSet } = record;
   if (dataSet) {
     const { selection } = dataSet;
@@ -268,7 +268,7 @@ export function mergeDefaultProps(
   const columns: any[] = [];
   const leftColumns: any[] = [];
   const rightColumns: any[] = [];
-  let hasAggregationColumn: boolean = false;
+  let hasAggregationColumn = false;
   originalColumns.forEach((column) => {
     if (isPlainObject(column)) {
       const newColumn: ColumnProps = { ...ColumnDefaultProps, ...column };
@@ -359,7 +359,7 @@ export function normalizeColumns(
   const columns: any[] = [];
   const leftColumns: any[] = [];
   const rightColumns: any[] = [];
-  let hasAggregationColumn: boolean = false;
+  let hasAggregationColumn = false;
   const normalizeColumn = (element) => {
     if (isValidElement<any>(element)) {
       const { props, key, type } = element;
@@ -513,9 +513,9 @@ export default class TableStore {
 
   @observable customizedActiveKey: string[];
 
-  mouseBatchChooseStartId: number = 0;
+  mouseBatchChooseStartId = 0;
 
-  mouseBatchChooseEndId: number = 0;
+  mouseBatchChooseEndId = 0;
 
   @observable mouseBatchChooseState: boolean;
 
@@ -525,9 +525,9 @@ export default class TableStore {
 
   @observable scrollPosition: ScrollPosition;
 
-  inBatchExpansion: boolean = false;
+  inBatchExpansion = false;
 
-  performanceOn: boolean = false;
+  performanceOn = false;
 
   lastSelected?: Record;
 
@@ -589,7 +589,7 @@ export default class TableStore {
   }
 
   @computed
-  get autoHeight(): { type: TableAutoHeightType, diff: number } | undefined {
+  get autoHeight(): { type: TableAutoHeightType; diff: number } | undefined {
     const { autoHeight } = this.props;
     if (autoHeight) {
       const defaultAutoHeight = {
@@ -1591,7 +1591,7 @@ export default class TableStore {
         tableCustomizedSave(customizedCode, this.customized, 'Table');
       }
     }
-  };
+  }
 
   saveCustomizedDebounce = debounce(this.saveCustomized, 1000);
 

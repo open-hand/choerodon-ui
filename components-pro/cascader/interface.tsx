@@ -1,10 +1,10 @@
 export {
-    OptionObject,
-    ProcessOption,
-    CascaderOptionType,
-    onOptionProps,
-    CascaderProps,
+  OptionObject,
+  ProcessOption,
+  CascaderOptionType,
+  onOptionProps,
+  CascaderProps,
 } from './Cascader';
 export {
-    ExpandTrigger,
+  ExpandTrigger,
 } from './enum';
