@@ -270,7 +270,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
 
     const nextPrevShown = isNextPrevShown()
 
-    const moreTool = isEditCard && nextPrevShown && showMore && (
+    const moreTool = nextPrevShown && showMore && (
       <Dropdown overlay={menu} key="more">
         <Icon type="more_horiz" className={dropDownClass} />
       </Dropdown>
@@ -534,13 +534,13 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       <div
         className={classnames({
           [`${prefixCls}-nav-container`]: 1,
-          [`${prefixCls}-nav-container-scrolling`]: showNextPrev && !isEditCard,
+          [`${prefixCls}-nav-container-scrolling`]: showNextPrev && !showMore,
         })}
         key="container"
         ref={containerRef}
       >
-        {!isEditCard && prevButton}
-        {!isEditCard && nextButton}
+        {!showMore && prevButton}
+        {!showMore && nextButton}
         <div className={`${prefixCls}-nav-wrap`} ref={navWrapRef}>
           <div className={`${prefixCls}-nav-scroll`} style={needScrollStyle} ref={navScrollRef}>
             <div className={navClasses} ref={navRef} >
@@ -672,13 +672,10 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   });
 
   useEffect(() => {
-    setOffset(0, setNextPrev);
-  }, [tabBarPosition]);
-
-  useEffect(() => {
     handleScrollEvent({ target: { scrollLeft: 0, scrollTop: 0 } })
   }, [])
   useEffect(() => {
+    setOffset(0, setNextPrev);
     const debouncedScroll = debounce((e) => {
       handleScrollEvent(e)
     }, 200);
@@ -717,6 +714,11 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       debouncedResize.cancel();
     };
   }, [setNextPrev, scrollToActiveTab, resizeEvent]);
+  
+  // 内容变化判断是否显示更多
+  useEffect(()=>{
+    setNextPrev()
+  },[getContent])
 
   const inkBarNode = getInkBarNode();
   const tabs = getTabs();

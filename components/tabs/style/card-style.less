@@ -84,10 +84,9 @@
       border-left: @border-width-base @border-style-base @border-color-split;
       outline: none;
       cursor: pointer;
-      transition: all .3s cubic-bezier(.645,.045,.355,1);
+      transition: all @animation-duration-slow cubic-bezier(.645,.045,.355,1);
       &:hover {
         color: @tabs-card-active-color;
-        // border-color: @tabs-card-active-color;
       }
     }
 
