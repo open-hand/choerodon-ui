@@ -3,7 +3,7 @@
 
 @upload-prefix-cls: ~'@{c7n-prefix}-upload';
 @upload-item: ~'@{c7n-prefix}-upload-list-item';
-@upload-pictrue-card-size: 1.04rem;
+@upload-pictrue-card-size: 0.98rem;
 
 .@{upload-prefix-cls} {
   .reset-component;
@@ -140,14 +140,12 @@
   .reset-component;
   .clearfix;
   &-item {
-    position: relative;
-    height: 0.22rem;
     margin-top: 0.08rem;
-    font-size: @font-size-base;
+    font-size: @font-size-sm;
     &-name {
       display: inline-block;
-      width: 100%;
-      padding-left: @font-size-base + 0.08rem;
+      flex: auto;
+      padding-left: 0.08rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -162,22 +160,24 @@
         display: block;
       }
 
-      .@{iconfont-css-prefix}-loading,
-      .@{iconfont-css-prefix}-attach_file {
-        position: absolute;
-        top: @font-size-base / 2 - 0.02rem;
+      .@{upload-prefix-cls}-icon-file {
+        flex: none;
+        width: 0.2rem;
+        height: 0.2rem;
+      }
+
+      &-filesize {
+        flex: none;
+        padding-right: 0.08rem;
         color: @text-color-secondary;
-        font-size: @font-size-base;
       }
     }
 
     .@{iconfont-css-prefix}-close {
-      .iconfont-size-under-12px(0.1rem);
-      position: absolute;
-      top: 0;
       right: 0.04rem;
+      flex: none;
       color: @text-color-secondary;
-      line-height: 0.22rem;
+      font-size: 0.16rem;
       cursor: pointer;
       opacity: 0;
       transition: all @animation-duration-slow;
@@ -195,7 +195,7 @@
     }
 
     &-error,
-    &-error .@{iconfont-css-prefix}-attach_file,
+    &-error &-info-filesize,
     &-error &-name {
       color: @error-color;
     }
@@ -206,12 +206,19 @@
     }
 
     &-progress {
-      position: absolute;
       bottom: -0.12rem;
       width: 100%;
       padding-left: @font-size-base + 0.12rem;
       font-size: @font-size-base;
       line-height: 0;
+    }
+  }
+
+  &-text {
+    .@{upload-item}-span {
+      display: flex;
+      align-items: center;
+      height: 0.28rem;
     }
   }
 

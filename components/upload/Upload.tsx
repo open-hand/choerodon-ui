@@ -29,6 +29,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
     className: '',
     disabled: false,
     supportServerRender: true,
+    showFileSize: false,
   };
 
   recentUploadStatus: boolean | PromiseLike<any>;
@@ -249,7 +250,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
   };
 
   renderUploadList = (uploadLocale: UploadLocale) => {
-    const { showUploadList, listType, onPreview, locale, previewFile, dragUploadList } = this.props;
+    const { showUploadList, listType, onPreview, locale, previewFile, dragUploadList, showFileSize } = this.props;
     const { fileList } = this.state;
     const { showRemoveIcon, showPreviewIcon } = showUploadList as any;
     return (
@@ -264,6 +265,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
         showRemoveIcon={showRemoveIcon}
         showPreviewIcon={showPreviewIcon}
         locale={{ ...uploadLocale, ...locale }}
+        showFileSize={showFileSize}
       />
     );
   };

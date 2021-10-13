@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `Badge`: 新增 color, size, title 属性。
 - 🌟 `<pro>Select`: 新增 defaultActiveFirstOption 属性是否默认高亮第一个选项。
 - 🌟 `<pro>DataSet`: 新增 cacheModified 属性， cachedModified, cachedRecords 值， clearCachedModified, clearCachedRecords 方法， query 和 loadData 新增 cache 参数。
+- 🌟 `Upload`: 新增 showFileSize 属性，以及优化了组件样式。
 - 💄 `<pro>DataSet`: 优化内存, 优化树形数据性能。
 - 💄 `RcTrigger`: 使组件成为观察者。
 - 💄 `<pro>Select`: 使用 options 数据源模式下，支持 searchMatcher 配置搜索参数。
