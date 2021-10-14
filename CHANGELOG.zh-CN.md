@@ -21,14 +21,17 @@ timeline: true
 - 🌟 `Badge`: 新增 color, size, title 属性。
 - 🌟 `<pro>Select`: 新增 defaultActiveFirstOption 属性是否默认高亮第一个选项。
 - 🌟 `<pro>DataSet`: 新增 cacheModified 属性， cachedModified, cachedRecords 值， clearCachedModified, clearCachedRecords 方法， query 和 loadData 新增 cache 参数。
+- 🌟 `Upload`: 新增 showFileSize 属性，以及优化了组件样式。
 - 💄 `<pro>DataSet`: 优化内存, 优化树形数据性能。
 - 💄 `RcTrigger`: 使组件成为观察者。
 - 💄 `<pro>Select`: 使用 options 数据源模式下，支持 searchMatcher 配置搜索参数。
+- 💄 `<pro>PerformanceTable`: 优化大数据表格拖拽回调事件。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。
 - 🐞 `<pro>Attachment`： 修复点击查看附件按钮报错的问题。
 - 🐞 `<pro>DataSet.Field`： 修复通过 dynamicProps 设置的校验属性首次校验无效果的问题。
+- 🐞 `<pro>DataSet`： 修复 appendData total 参数更新问题。
 
 ## 1.4.5
 

@@ -10,6 +10,7 @@ import { TransportProps } from '../data-set/Transport';
 import { TableQueryBarType } from './Table';
 import { FormProps } from '../form/Form';
 import { TableHeightType } from '../table/enum';
+import { DragStart, DragUpdate, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 
 export interface TableLocale {
   emptyMessage?: string;
@@ -204,6 +205,9 @@ export interface TableProps extends StandardProps {
   columnTitleEditable?: boolean;
   columnsDragRender?: object;
   rowDraggable?: boolean;
+  onDragStart?: (initial: DragStart, provided: ResponderProvided) => void;
+  onDragEnd?: (result: DropResult, provided: ResponderProvided, data: object) => void;
+  onDragEndBefore?: (result: DropResult, provided: ResponderProvided) => boolean;
 }
 
 // Fix the type definition error of typescript

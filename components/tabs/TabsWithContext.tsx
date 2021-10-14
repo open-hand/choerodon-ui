@@ -3,7 +3,6 @@ import React, {
   JSXElementConstructor,
   Key,
   MouseEvent,
-  MouseEventHandler,
   useCallback,
   useEffect,
   useMemo,
@@ -18,7 +17,6 @@ import { Size } from '../_util/enum';
 import { getConfig, getPrefixCls } from '../configure';
 import warning from '../_util/warning';
 import TabBar, { TabBarProps } from './TabBar';
-import Icon from '../icon';
 import TabContent, { TabContentProps } from './TabContent';
 import isFlexSupported from '../_util/isFlexSupported';
 import { Animated, GroupPanelMap, TabsCustomized, TabsProps } from './Tabs';
@@ -42,6 +40,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     style,
     size,
     type,
+    showMore,
     tabBarStyle,
     inkBarStyle = getConfig('tabsInkBarStyle'),
     hideAdd,
@@ -159,11 +158,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     'Tabs[type=card|editable-card] doesn\'t have small or large size, it\'s by designed.',
   );
 
-  const createNewTab: MouseEventHandler<HTMLElement> = useCallback((e: MouseEvent<HTMLElement>) => {
-    if (onEdit) {
-      onEdit(e, 'add');
-    }
-  }, [onEdit]);
+
 
   const removeTab = useCallback((targetKey: Key | null, e: MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -201,20 +196,23 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
 
   const extraContent = !hideAdd && type === TabsType['editable-card'] ? (
     // Add new tab handler
-    <span key="tabBarExtraContent">
-      <Icon type="add" className={`${prefixCls}-new-tab`} onClick={createNewTab} />
+    <div key="tabBarExtraContent" className={`${prefixCls}-extra-bar`}>
       {tabBarExtraContent}
-    </span>
+    </div>
   ) : tabBarExtraContent;
 
   const tabBarProps: TabBarProps = {
     inkBarAnimated,
     extraContent,
+    tabStyle: style,
     style: tabBarStyle,
     tabBarGutter,
     type,
+    showMore,
     onRemoveTab: removeTab,
+    onEdit,
     inkBarStyle,
+    hideAdd,
   };
   const tabContentProps: TabContentProps = {
     animatedWithMargin: true,

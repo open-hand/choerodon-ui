@@ -21,14 +21,17 @@ timeline: true
 - 🌟 `Badge`: Added `color`, `size`, `title` properties.
 - 🌟 `<pro>Select`: Added the `defaultActiveFirstOption` property whether to highlight the first option by default.
 - 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
+- 🌟 `Upload`: Added `showFileSize` property, and optimized the component style.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
+- 💄 `<pro>PerformanceTable`: Optimize the big data table drag and drop callback event.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
 - 🐞 `<pro>Attachment`: Fix the problem that an error is reported when clicking the View Attachment button.
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the first verification of the verification properties set by `dynamicProps` has no effect.
+- 🐞 `<pro>DataSet`: Fix the issue of `appendData` total parameter update.
 
 ## 1.4.5
 
