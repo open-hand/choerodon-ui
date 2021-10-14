@@ -109,6 +109,22 @@ type Offset = {
   height?: number;
 };
 
+/**
+ * 记录rowSpan的坐标
+ * @property rowIndex 行坐标
+ * @property columnIndex 列坐标
+ * @property start rowSpan起始行
+ * @property end rowSpan结束行
+ * @property zIndex 当前行的zIndex
+ */
+type TableRowSpanIndex = {
+  rowIndex: number;
+  columnIndex: number;
+  start: number;
+  end: number;
+  zIndex: number;
+}
+
 interface TableState {
   headerOffset?: Offset;
   tableOffset?: Offset;
@@ -297,7 +313,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   wheelListener: any;
   touchStartListener: any;
   touchMoveListener: any;
-  setRowBottomBorderList: Array<number> = [];
+  rowSpanList: Array<TableRowSpanIndex> = [];
   nextRowZIndex: Array<number> = [];
 
   _cacheCells: any = null;
@@ -1993,25 +2009,22 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         }) || {};
         if (cellExternalProps.rowSpan > 1) {
           let setNextRow = rowIndex + cellExternalProps.rowSpan - 1;
-          if (!this.setRowBottomBorderList.includes(setNextRow)) {
-            this.setRowBottomBorderList.push(setNextRow);
-          }
-          if (!this.nextRowZIndex.includes(setNextRow) && cellUnit.props.fixed) {
-            this.nextRowZIndex.push(setNextRow);
+          const isExit: TableRowSpanIndex | undefined = this.rowSpanList.find(x => x.rowIndex === rowIndex && x.columnIndex === i)
+          if (!isExit) {
+            const filterIsContainer:Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex >= x.start && setNextRow <= x.end && x.columnIndex != i)
+            this.rowSpanList.push({ rowIndex, columnIndex: i, start: rowIndex, end: setNextRow, zIndex: !filterIsContainer.length ? 0 : 0 - filterIsContainer.length })
           }
         }
       }
-    }
-    if (this.setRowBottomBorderList.includes(rowIndex)) {
-      restRowProps.className = `${restRowProps.className} ${this.addPrefix('row-span-end')}`;
     }
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {
       if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
         rowStyles.zIndex = 0;
       }
-      if (this.nextRowZIndex.includes(rowIndex)) {
-        rowStyles.zIndex = -1;
+      const findSpanRow : Array<TableRowSpanIndex>= this.rowSpanList.filter(x => rowIndex > x.start && rowIndex <= x.end)
+      if (findSpanRow.length) {
+        rowStyles.zIndex = findSpanRow[findSpanRow.length - 1].zIndex;
       }
       const {
         fixedLeftCells = [],
