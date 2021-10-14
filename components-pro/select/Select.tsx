@@ -691,7 +691,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           <Tag
             key={item}
             className={values.includes(item) ? `${this.prefixCls}-common-item ${this.prefixCls}-common-item-selected` : `${this.prefixCls}-common-item`}
-            // @ts-expect-error: investigation needed
+            // @ts-ignore
             onClick={() => this.handleCommonItemClick(textRecord)}
           >
             {text}

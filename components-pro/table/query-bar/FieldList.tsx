@@ -81,8 +81,7 @@ const FieldList: FunctionComponent<FieldListProps> = memo(function FieldList({ v
           onChange={(v) => {
             setSearchText(v);
           }}
-          onInput={(e) => {
-            // @ts-expect-error: value exists
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchText(e.target.value);
           }}
           prefix={<Icon type="search" />}

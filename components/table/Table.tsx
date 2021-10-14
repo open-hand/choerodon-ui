@@ -144,7 +144,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   components: TableComponents;
 
-  private refTable: HTMLDivElement | null;
+  private refTable;
 
   constructor(props: TableProps<T>) {
     super(props);
@@ -684,9 +684,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         if (this.refTable && this.refTable.clientHeight > document.body.clientHeight) {
           scrollIntoViewSmoothly(this.refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
         } else if (this.refTable) {
-          // @ts-expect-error: probably API inconsistency?
           if (this.refTable.scrollIntoViewIfNeeded) {
-            // @ts-expect-error: probably API inconsistency?
             this.refTable.scrollIntoViewIfNeeded({
               block: 'start',
             });

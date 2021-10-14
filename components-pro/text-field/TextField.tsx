@@ -845,7 +845,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return (
       <li key="text">
-        <input {...(props as Record<string, any>)} value={text || ''} style={editorStyle} />
+        <input {...(props as object)} value={text || ''} style={editorStyle} />
       </li>
     );
   }

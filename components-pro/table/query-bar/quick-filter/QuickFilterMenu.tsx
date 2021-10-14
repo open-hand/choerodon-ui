@@ -510,8 +510,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
               });
             }
           }}
-          // @ts-expect-error: bad code here
-          onMouseLeave={hide}
+          onMouseLeave={() => hide()}
         >
           {text}
           {isDefault && <Tag>{$l('Table', 'default_flag')}</Tag>}

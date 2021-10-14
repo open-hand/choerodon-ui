@@ -92,13 +92,12 @@ export default class Collapse extends Component<CollapseProps, any> {
     } = this.props;
     const prefixCls = getPrefixCls('collapse', customizePrefixCls);
     const expandIconPositionCof = expandIconPosition || getConfig('collapseExpandIconPosition');
-    const expandIconCof = expandIcon || getConfig('collapseExpandIcon');
+    const expandIconCof: React.ReactNode = expandIcon || getConfig('collapseExpandIcon');
     const triggerCof = trigger || getConfig('collapseTrigger');
 
     const collapseClassName = classNames(
       {
         [`${prefixCls}-borderless`]: !bordered,
-        // @ts-expect-error: some useless check, probably signals deeper errors
         [`${prefixCls}-text-action`]: expandIconCof === 'text' && expandIconPositionCof === 'left',
         [`${prefixCls}-trigger`]: triggerCof === 'header',
         [`${prefixCls}-ghost`]: ghost,

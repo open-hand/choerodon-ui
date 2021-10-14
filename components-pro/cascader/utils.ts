@@ -45,7 +45,7 @@ function treeToList(tree: Tree, valueField = 'value', parentField = "parentValue
   } else if (tree instanceof Object) { // object tree
     list = {};
   } else {
-    // @ts-expect-error: invalid tree
+    // @ts-ignore
     return list;
   }
   let parentValue: unknown;

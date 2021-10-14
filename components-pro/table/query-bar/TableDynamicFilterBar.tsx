@@ -460,8 +460,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             this.handleQuery(true);
           }
         }}
-        onInput={(e) => {
-          // @ts-expect-error: value exists
+        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
           const { value } = e.target;
           runInAction(() => {
             this.searchText = value || '';

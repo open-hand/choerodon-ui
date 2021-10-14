@@ -395,20 +395,15 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
           const { type, name, uid } = fileRef.current;
           canvas.toBlob(
             async (blob) => {
-              let newFile: Blob | UploadFile | null = blob;
+              let newFile: any = blob;
               if (newFile) {
-                // @ts-expect-error: Hmm
                 newFile.lastModifiedDate = Date.now();
-                // @ts-expect-error: Hmmmm
                 newFile.name = name;
-                // @ts-expect-error: Hmmmmmmm
                 newFile.uid = uid;
-                // @ts-expect-error: Hmmmmmmmmmm!
                 newFile.imageCropArea = cropPixelsRef.current;
                 if (resolveRef && rejectRef && resolveRef.current && rejectRef.current) {
                   if (typeof beforeUploadRef.current !== 'function') return resolveRef.current(newFile);
 
-                  // @ts-expect-error: pretty sure there's some bad smell, do we really want to mix Blob and UploadFile?
                   const res = beforeUploadRef.current(newFile, [newFile]);
 
                   if (typeof res !== 'boolean' && !res) {

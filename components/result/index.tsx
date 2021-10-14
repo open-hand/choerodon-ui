@@ -55,8 +55,7 @@ const renderStatus = (prefixCls: string, { status, icon,statusRenderer }: Result
       })
     }
   }
-  // @ts-expect-error: Why is it here?
-  if (iconMap.get(`${status}`) && iconMap.get(`${status}`)?.type !== Icon) {
+  if (iconMap.get(`${status}`) && (iconMap.get(`${status}`) as any)?.type !== Icon) {
     return (
       <div className={`${className} ${prefixCls}-image`} style={icon || statusRenderer ? {} : (`${status}` === '500' ? { width: 400 } : { width: 800 })}>
         {icon || iconMap.get(`${status}`)}

@@ -196,8 +196,8 @@ export interface DynamicFilterBarConfig {
 }
 
 export interface Instance {
-  tbody: React.ReactElement;
-  headtr: React.ReactElement;
+  tbody: React.ReactElement | HTMLElement;
+  headtr: React.ReactElement | HTMLElement;
 }
 
 /**
@@ -266,9 +266,7 @@ export const instance = (wrapperClassName: string | undefined, prefixCls?: strin
     }
     document.body.appendChild(table);
     return {
-      // @ts-expect-error: why not React.createElement?
       tbody,
-      // @ts-expect-error: why?
       headtr,
     };
   };
