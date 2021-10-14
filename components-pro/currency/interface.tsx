@@ -1,3 +1,3 @@
 export {
-    CurrencyProps,
+  CurrencyProps,
 } from './Currency';

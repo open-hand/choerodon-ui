@@ -56,7 +56,7 @@ export interface SiderContext {
 
 const generateId = (() => {
   let i = 0;
-  return (prefix: string = '') => {
+  return (prefix = '') => {
     i += 1;
     return `${prefix}${i}`;
   };
@@ -217,14 +217,14 @@ export default class Sider extends Component<SiderProps, SiderState> {
     const triggerDom =
       trigger !== null
         ? zeroWidthTrigger || (
-            <div
-              className={`${prefixCls}-trigger`}
-              onClick={this.toggle}
-              style={{ width: siderWidth }}
-            >
-              {trigger || defaultTrigger}
-            </div>
-          )
+          <div
+            className={`${prefixCls}-trigger`}
+            onClick={this.toggle}
+            style={{ width: siderWidth }}
+          >
+            {trigger || defaultTrigger}
+          </div>
+        )
         : null;
     const divStyle = {
       ...style,

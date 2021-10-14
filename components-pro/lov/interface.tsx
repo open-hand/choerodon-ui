@@ -14,5 +14,3 @@ export {
 export {
   LovViewProps,
 } from './LovView';
-
-

@@ -1,3 +1,3 @@
 export {
-    UrlFieldProps,
+  UrlFieldProps,
 } from './UrlField';

@@ -135,7 +135,7 @@ export function getFileType(filename: string): string {
 }
 
 export function getFileSizeStr(filesize: number): string {
-  const scale: number = 1024;
+  const scale = 1024;
   if (isNaN(filesize / scale)) {
     return '';
   }

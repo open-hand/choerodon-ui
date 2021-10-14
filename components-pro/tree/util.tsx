@@ -37,7 +37,6 @@ export interface TreeNodeRendererProps {
   style?: React.CSSProperties;
 }
 
-
 export type NodeRenderer = (props: {
   record?: Record | null;
   dataSet?: DataSet | null;

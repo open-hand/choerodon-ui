@@ -107,7 +107,7 @@ const LOOKUP_TOKEN = '__lookup_token__';
 const LOOKUP_DATA = 'lookupData';
 
 export type Fields = ObservableMap<string, Field>;
-export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string; };
+export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
 export type DynamicProps = { [P in keyof FieldProps]?: (DynamicPropsArguments) => FieldProps[P]; }
 export type HighlightProps = {
   title?: ReactNode;
@@ -116,7 +116,7 @@ export type HighlightProps = {
   record?: Record | undefined;
   name?: string | undefined;
   className?: string;
-  style?: CSSProperties
+  style?: CSSProperties;
   hidden?: boolean;
 };
 
@@ -571,7 +571,7 @@ export default class Field {
    * 获取所有属性
    * @return 属性对象
    */
-  getProps(record: Record | undefined = this.record): FieldProps & { [key: string]: any; } {
+  getProps(record: Record | undefined = this.record): FieldProps & { [key: string]: any } {
     const dsField = this.findDataSetField();
     const lovCode = this.get('lovCode', record);
     return merge(
@@ -582,7 +582,6 @@ export default class Field {
       this.props.toPOJO(),
     );
   }
-
 
   /**
    * 根据属性名获取属性值
@@ -1018,19 +1017,19 @@ export default class Field {
   }
 
   /**
-   * 是否禁用
-   * @return true | false
-   */
-  get disabled(): boolean {
-    return this.get('disabled');
-  }
-
-  /**
    * 设置是否只读
    * @param readOnly 是否只读
    */
   set readOnly(readOnly: boolean) {
     this.set('readOnly', readOnly);
+  }
+
+  /**
+   * 是否禁用
+   * @return true | false
+   */
+  get disabled(): boolean {
+    return this.get('disabled');
   }
 
   /**
@@ -1162,7 +1161,7 @@ export default class Field {
    * @return Promise<object[]>
    */
   @action
-  fetchLookup(noCache: boolean = false, record: Record | undefined = this.record): Promise<object[] | undefined> {
+  fetchLookup(noCache = false, record: Record | undefined = this.record): Promise<object[] | undefined> {
     const lookup = this.getLookup(record);
     const lookupCaches = getIf<DataSet, ObservableMap<string, object[] | Promise<object[]>>>(this.dataSet, 'lookupCaches', () => observable.map());
     const oldToken = this.get(LOOKUP_TOKEN, record);

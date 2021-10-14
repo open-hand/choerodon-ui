@@ -262,10 +262,10 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const vertical = isVertical(tabBarPosition)
     const isEditCard = type === TabsType['editable-card'];
     const classes = classnames(`${prefixCls}-extra-content`, {
-      [`${prefixCls}-extra-verticalContent`]: vertical,
+      [`${prefixCls}-extra-vertical-content`]: vertical,
     });
     const dropDownClass = classnames(`${prefixCls}-more-tab`, {
-      [`${prefixCls}-more-verticalTab`]: vertical,
+      [`${prefixCls}-more-vertical-tab`]: vertical,
     });
 
     const nextPrevShown = isNextPrevShown()
@@ -563,13 +563,13 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       setOffset(vertical ? scrollTop : scrollLeft, setNextPrev)
       return
     }
-    let hiddenOffset: number = 0;
+    let hiddenOffset= 0;
     const prevMenuList: Array<MenuKeyValue> = []
     // 计算前面隐藏的tabs
     for (let i = 0; i < tabsRef.current.length; i++) {
       const { key, value, ref } = tabsRef.current[i];
       const dom = ref.current;
-      let currentTabOffset: number = 0;
+      let currentTabOffset= 0;
       if (dom) {
         currentTabOffset = vertical ? (dom.offsetHeight + getStyle(dom, 'margin-bottom')) : (dom.offsetWidth + getStyle(dom, 'margin-right'))
       }
@@ -585,7 +585,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const nextMenuList: Array<MenuKeyValue> = []
     const navNode = navRef.current; // 节点长度
     const navWrap = navWrapRef.current; // 节点滚动区域
-    let totalHiddenOffset: number = 0
+    let totalHiddenOffset = 0
     if (navNode && navWrap) {
       const navNodeWH = getScrollWH(navNode);
       const navWrapNodeWH = getOffsetWH(navWrap);
@@ -595,7 +595,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     for (let i = tabsRef.current.length - 1; i >= 0; i--) {
       const { key, value, ref } = tabsRef.current[i];
       const dom = ref.current;
-      let endTabOffset: number = 0
+      let endTabOffset = 0
       if (dom) {
         endTabOffset = vertical ? (dom.offsetHeight + getStyle(dom, 'margin-bottom')) : (dom.offsetWidth + getStyle(dom, 'margin-right'))
       }

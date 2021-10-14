@@ -1,3 +1,3 @@
 export {
-    ModalProviderProps,
+  ModalProviderProps,
 } from './ModalProvider';

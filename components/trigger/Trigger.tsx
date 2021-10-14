@@ -82,7 +82,7 @@ export interface TriggerProps extends ElementProps {
   popupPlacement?: string;
   popupAlign?: object;
   builtinPlacements?: any;
-  onPopupAlign?: (source: Node, align: object, target: Node | Window, translate: { x: number, y: number }) => void;
+  onPopupAlign?: (source: Node, align: object, target: Node | Window, translate: { x: number; y: number }) => void;
   onPopupAnimateAppear?: (key: Key | null) => void;
   onPopupAnimateEnter?: (key: Key | null) => void;
   onPopupAnimateLeave?: (key: Key | null) => void;
@@ -169,11 +169,11 @@ export default class Trigger extends Component<TriggerProps> {
 
   targetEvent?: EventManager;
 
-  focusTime: number = 0;
+  focusTime = 0;
 
-  preClickTime: number = 0;
+  preClickTime = 0;
 
-  animateFrameId: number = 0;
+  animateFrameId = 0;
 
   @observable popupHidden?: boolean;
 

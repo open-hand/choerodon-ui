@@ -1,3 +1,3 @@
 export {
-    PasswordProps,
+  PasswordProps,
 } from './Password';

@@ -1,3 +1,3 @@
 export {
-    SelectBoxProps,
+  SelectBoxProps,
 } from './SelectBox';

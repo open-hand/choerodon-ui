@@ -14,7 +14,7 @@ interface BodyRowState {
   selected: boolean;
 }
 
-export interface BodyRowClass extends ComponentClass {}
+export type BodyRowClass = ComponentClass
 
 export default function createTableRow(Cmp = 'tr') {
   class BodyRow extends Component<BodyRowProps, BodyRowState> {

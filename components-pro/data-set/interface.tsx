@@ -40,4 +40,3 @@ export {
   TransportType,
   TransportProps,
 } from './Transport';
-

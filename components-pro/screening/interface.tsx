@@ -1,17 +1,17 @@
 export {
-    TagProps,
-    ScreeningProps,
+  TagProps,
+  ScreeningProps,
 } from './index';
 
 export {
-    RenderProps,
-    Renderer,
-    Confirm,
-    ScreeningItemProps,
+  RenderProps,
+  Renderer,
+  Confirm,
+  ScreeningItemProps,
 } from './ScreeningItem';
 
 export {
-    Info,
-    ColSize,
-    ScreeningOptionProps,
+  Info,
+  ColSize,
+  ScreeningOptionProps,
 } from './ScreeningOption';

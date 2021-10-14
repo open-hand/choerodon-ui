@@ -22,8 +22,7 @@ const HIDDEN_STYLE = {
   margin: 0,
 };
 
-const noop = () => {
-};
+const noop = () => {/* noop */};
 
 export const MOTION_KEY = `RC_TREE_MOTION_${Math.random()}`;
 
@@ -188,7 +187,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
   const [transitionRange, setTransitionRange] = React.useState<FlattenNode[]>([]);
   const [motionType, setMotionType] = React.useState<'show' | 'hide' | null>(null);
 
-  function onMotionEnd() {
+  const onMotionEnd = () => {
     setPrevData(data);
     setTransitionData(data);
     setTransitionRange([]);

@@ -44,10 +44,9 @@ import Dropdown from '../../dropdown/Dropdown';
 import Menu from '../../menu';
 import TextField from '../../text-field';
 
-
 export interface TableQueryBarProps {
   buttons?: Buttons[];
-  queryFields?: { [key: string]: ReactElement<any>; };
+  queryFields?: { [key: string]: ReactElement<any> };
   queryFieldsLimit?: number;
   buttonsLimit?: number;
   summaryFieldsLimit?: number;
@@ -152,7 +151,7 @@ const ExportFooter = observer((props) => {
       {dataSet.exportStatus !== DataSetExportStatus.success &&
       dataSet.exportStatus !== DataSetExportStatus.failed &&
       <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray}
-                                                                                onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
+        onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
       }
     </div>
   );
@@ -167,7 +166,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   exportModal;
 
   exportDataSet: DataSet;
-
 
   exportData: any;
 
@@ -361,7 +359,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   getButtonProps(
     type: TableButtonType,
-  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode; } | undefined {
+  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined {
     const {
       isTree, dataSet,
     } = this.context;

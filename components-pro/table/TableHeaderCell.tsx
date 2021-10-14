@@ -117,7 +117,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
     }
   }, [globalRef, setSplitLinePosition]);
 
-
   const resizeEnd = useCallback(action<() => void>(() => {
     tableStore.columnResizing = false;
     setSplitLineHidden(true);

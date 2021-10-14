@@ -4,14 +4,13 @@ import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 
-export interface UrlFieldProps extends TextFieldProps {
-}
+export type UrlFieldProps = TextFieldProps
 
 @observer
 export default class UrlField extends TextField<UrlFieldProps> {
   static displayName = 'UrlField';
 
-  type: string = 'url';
+  type = 'url';
 
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');

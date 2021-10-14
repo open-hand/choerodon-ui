@@ -21,7 +21,6 @@ import TabsWithContext from './TabsWithContext';
 
 export type Animated = { inkBar: boolean; tabPane: boolean };
 
-
 export interface TabsCustomized {
   defaultActiveKey?: string;
   panes: { [key: string]: TabPaneProps };
@@ -57,7 +56,7 @@ export interface TabsProps<T = string> {
   customizedCode?: string;
 }
 
-export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string; }
+export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }
 
 const Tabs: FunctionComponent<TabsProps> = function Tabs(props) {
   const {
@@ -117,7 +116,7 @@ Tabs.defaultProps = {
   tabPosition: TabsPosition.top,
   type: TabsType.line,
 };
-export type ForwardTabsType = typeof Tabs & { TabPane: typeof TabPane, TabGroup: typeof TabGroup }
+export type ForwardTabsType = typeof Tabs & { TabPane: typeof TabPane; TabGroup: typeof TabGroup }
 (Tabs as ForwardTabsType).TabPane = TabPane;
 (Tabs as ForwardTabsType).TabGroup = TabGroup;
 

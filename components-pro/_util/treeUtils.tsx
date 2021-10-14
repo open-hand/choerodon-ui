@@ -2,7 +2,7 @@ export function treeReduce<U, T>(
   nodes: T[],
   fn: (previousValue: U, node: T, index: number, parentNode?: T) => U,
   initialValue: U,
-  childName: string = 'children',
+  childName = 'children',
   parentNode?: T,
 ): U {
   return nodes.reduce<U>((previousValue, node, index) => {
@@ -18,7 +18,7 @@ export function treeReduce<U, T>(
 export function treeForEach<T>(
   nodes: T[],
   fn: (node: T, index: number, parentNode?: T) => void,
-  childName: string = 'children',
+  childName = 'children',
   parentNode?: T,
 ): void {
   nodes.forEach((node, index) => {
@@ -33,7 +33,7 @@ export function treeForEach<T>(
 export function treeSome<T>(
   nodes: T[],
   fn: (node: T, index: number, parentNode?: T) => boolean,
-  childName: string = 'children',
+  childName = 'children',
   parentNode?: T,
 ): boolean {
   return nodes.some((node, index) => {
@@ -50,7 +50,7 @@ export function treeSome<T>(
 export function treeFind<T>(
   nodes: T[],
   fn: (node: T, index: number, parentNode?: T) => unknown,
-  childName: string = 'children',
+  childName = 'children',
   parentNode?: T,
 ): T | undefined {
   let result: T | undefined;

@@ -35,7 +35,7 @@
   &&-card > &-bar &-nav-wrap {
     margin-bottom: 0;
   }
-  &-nav-scroll{
+  &-nav-scroll {
     scroll-behavior: smooth;
     &::-webkit-scrollbar {
       display: none; /* Chrome Safari */
@@ -72,14 +72,14 @@
 
   &-extra-content {
     display: flex;
-    .@{tab-prefix-cls}-extra-bar{
+    .@{tab-prefix-cls}-extra-bar {
       display: flex;
     }
     .@{tab-prefix-cls}-more-tab {
-      min-width: @tabs-card-min-width;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      min-width: @tabs-card-min-width;
       background: @component-background;
       border-left: @border-width-base @border-style-base @border-color-split;
       outline: none;
@@ -91,10 +91,10 @@
     }
 
     .@{tab-prefix-cls}-new-tab {
-      min-width: @tabs-card-min-width;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      min-width: @tabs-card-min-width;
       background: @tabs-card-head-background;
       border: @border-width-base @border-style-base @border-color-split;
       border-bottom: none;
@@ -107,44 +107,44 @@
       }
     }
   }
-  &-extra-verticalContent{
-    width: 100%;
-    height: auto;
+  &-extra-vertical-content {
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
+    height: auto;
   }
   &-nav-add {
     display: inline-block;
-    outline: none;
-    cursor: pointer;
-    height: inherit;
     min-width: @tabs-card-min-width;
+    height: inherit;
     margin-right: 0.02rem;
-    text-align: center;
     line-height: @tabs-card-height - 0.02rem;
+    text-align: center;
     background: @tabs-card-head-background;
     border: @border-width-base @border-style-base @border-color-split;
     border-radius: @border-radius-base @border-radius-base 0 0;
+    outline: none;
+    cursor: pointer;
     transition: all @animation-duration-slow @ease-in-out;
     &:hover {
       color: @tabs-card-active-color;
     }
   }
-  &-nav-verticalAdd {
+  &-nav-vertical-add {
     width: 100%;
+    height: 0.2rem;
     padding: 0 0.16rem;
     line-height: .1rem;
     border-right:none;
     border-bottom: @border-width-base @border-style-base @border-color-split;
-    height: 0.2rem;
   }
-  &-more-verticalTab{
+  &-more-vertical-tab {
     height: 0.2rem;
     margin-bottom: 5px;
-    border-left:none;
-    border-right:none;
     border-top: @border-width-base @border-style-base @border-color-split;
-    border-bottom: @border-width-base @border-style-base @border-color-split;;
+    border-right:none;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-left:none;
   }
   &-vertical&-card > .@{tab-prefix-cls}-bar {
     .@{tab-prefix-cls}-nav-container {

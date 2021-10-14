@@ -1,11 +1,11 @@
 export {
-    SizeChangerPosition,
-    QuickJumperPosition,
+  SizeChangerPosition,
+  QuickJumperPosition,
 } from './enum';
 export {
-    PagerProps,
+  PagerProps,
 } from './Pager';
 export {
-    PagerType,
-    PaginationProps,
+  PagerType,
+  PaginationProps,
 } from './Pagination';

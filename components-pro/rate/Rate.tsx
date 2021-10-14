@@ -42,7 +42,6 @@ export class Rate<T extends RateProps> extends FormField<T> {
   // eslint-disable-next-line camelcase
   static __IS_IN_CELL_EDITOR = true;
 
-
   get hasFloatLabel(): boolean {
     const { labelLayout } = this;
     return [LabelLayout.float, LabelLayout.placeholder].includes(labelLayout);
@@ -125,7 +124,6 @@ export class Rate<T extends RateProps> extends FormField<T> {
     otherProps.onBlur = noop;
     return otherProps;
   }
-
 
   renderWrapper(): ReactNode {
     const value = this.getValue();

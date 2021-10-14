@@ -67,13 +67,13 @@ function getSettingItem(setting: SettingPropType, prefixCls: string) {
 }
 
 const ToolBar: React.FC<ToolBarProps> = ({
-     header,
-     hideToolbar,
-     className,
-     style,
-     buttons = [],
-     settings = [],
-   }) => {
+  header,
+  hideToolbar,
+  className,
+  style,
+  buttons = [],
+  settings = [],
+}) => {
 
   const { tableStore: { prefixCls } } = useContext(tableContext);
   const toolbarPrefixCls = `${prefixCls}-toolbar`;
@@ -102,7 +102,6 @@ const ToolBar: React.FC<ToolBarProps> = ({
     );
   }, [buttons]);
 
-
   const headerNode = useMemo(() =>
     (
       <div className={`${toolbarPrefixCls}-header`}>
@@ -118,18 +117,18 @@ const ToolBar: React.FC<ToolBarProps> = ({
       return null;
     }
     return settings?.length ? (
-        <div className={`${toolbarPrefixCls}-setting-items`}>
-          {settings.map((setting, index) => {
-            const settingItem = getSettingItem(setting, prefixCls);
-            return (
-              // eslint-disable-next-line react/no-array-index-key
-              <div key={index} className={`${toolbarPrefixCls}-setting-item`}>
-                {settingItem}
-              </div>
-            );
-          })}
-        </div>
-      ) : null;
+      <div className={`${toolbarPrefixCls}-setting-items`}>
+        {settings.map((setting, index) => {
+          const settingItem = getSettingItem(setting, prefixCls);
+          return (
+          // eslint-disable-next-line react/no-array-index-key
+            <div key={index} className={`${toolbarPrefixCls}-setting-item`}>
+              {settingItem}
+            </div>
+          );
+        })}
+      </div>
+    ) : null;
   }, [settings]);
 
   // 不展示 toolbar

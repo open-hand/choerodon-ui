@@ -20,10 +20,10 @@ export interface ItemSuffixProps {
   record: Record;
   records: Record[];
   index: number;
-  groups: { value: ColumnLock | false, records: Record[] }[]
+  groups: { value: ColumnLock | false; records: Record[] }[];
 }
 
-function findRecords(record: Record, groups: { value: ColumnLock | false, records: Record[] }[]): Record[] {
+function findRecords(record: Record, groups: { value: ColumnLock | false; records: Record[] }[]): Record[] {
   const { parent } = record;
   if (parent) {
     return parent.children || [];

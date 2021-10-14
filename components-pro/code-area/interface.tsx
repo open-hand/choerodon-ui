@@ -1,6 +1,6 @@
 export {
-    CodeAreaProps,
+  CodeAreaProps,
 } from './CodeArea';
 export {
-    CodeAreaFormatter,
+  CodeAreaFormatter,
 } from './CodeAreaFormatter';

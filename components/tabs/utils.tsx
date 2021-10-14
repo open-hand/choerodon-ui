@@ -47,7 +47,7 @@ export function getDefaultActiveKeyInGroup(panelMap: Map<string, TabPaneProps>):
   return activeKey;
 }
 
-export function getDefaultActiveKey(totalPanelsMap: Map<string, TabPaneProps>, groupedPanelsMap: Map<string, GroupPanelMap>, option: { activeKey?: string | undefined, defaultActiveKey?: string | undefined }): string | undefined {
+export function getDefaultActiveKey(totalPanelsMap: Map<string, TabPaneProps>, groupedPanelsMap: Map<string, GroupPanelMap>, option: { activeKey?: string | undefined; defaultActiveKey?: string | undefined }): string | undefined {
   const { activeKey, defaultActiveKey } = option;
   if (activeKey !== undefined) {
     return activeKey;
@@ -101,7 +101,7 @@ export function getActiveIndex(map: Map<string, TabPaneProps>, activeKey: string
   return activeKey === undefined ? -1 : iteratorFindIndex(map.keys(), key => key === activeKey);
 }
 
-export function setTransform(style: CSSStyleDeclaration, v: string = '') {
+export function setTransform(style: CSSStyleDeclaration, v = '') {
   style.transform = v;
   style.webkitTransform = v;
 }
@@ -110,7 +110,7 @@ export function isTransformSupported(style: CSSStyleDeclaration): boolean {
   return 'transform' in style || 'webkitTransform' in style;
 }
 
-export function setTransition(style: CSSStyleDeclaration, v: string = '') {
+export function setTransition(style: CSSStyleDeclaration, v = '') {
   style.transition = v;
   style.webkitTransition = v;
 }

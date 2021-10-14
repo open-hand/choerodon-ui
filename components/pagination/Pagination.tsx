@@ -64,7 +64,7 @@ export interface PaginationProps {
   size?: Size;
   simple?: boolean;
   style?: CSSProperties;
-  locale?: Object;
+  locale?: Record<string, any>;
   className?: string;
   prefixCls?: string;
   selectPrefixCls?: string;

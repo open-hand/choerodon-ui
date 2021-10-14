@@ -1,5 +1,5 @@
 import isNil from 'lodash/isNil';
 
-export default function isEmpty(value: any, allowBlank: boolean = false): boolean {
+export default function isEmpty(value: any, allowBlank = false): boolean {
   return isNil(value) || (allowBlank ? false : value === '');
 }

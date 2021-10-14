@@ -9,8 +9,8 @@ enum Record {
 function traverseNodesKey(
   treeData: DataNode[],
   callback: (key: string | number | null, node: DataNode) => boolean,
-) {
-  function processNode(dataNode: DataNode) {
+): void {
+  function processNode(dataNode: DataNode): void {
     const { key, children } = dataNode;
     if (callback(key, dataNode) !== false) {
       traverseNodesKey(children || [], callback);
@@ -37,7 +37,7 @@ export function calcRangeKeys(
     return [];
   }
 
-  function matchKey(key: string) {
+  function matchKey(key: string): boolean {
     return key === startKey || key === endKey;
   }
 
@@ -71,7 +71,7 @@ export function calcRangeKeys(
   return keys;
 }
 
-export function convertDirectoryKeysToNodes(treeData: DataNode[], keys: string[]) {
+export function convertDirectoryKeysToNodes(treeData: DataNode[], keys: string[]): DataNode[] {
   const restKeys: string[] = [...keys];
   const nodes: DataNode[] = [];
   traverseNodesKey(treeData, (key: string, node: DataNode) => {

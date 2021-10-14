@@ -21,6 +21,7 @@ if (typeof window !== 'undefined') {
 }
 // Use require over import (will be lifted up)
 // make sure matchMedia polyfill run before require('react-slick')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const SlickCarousel = require('react-slick').default;
 
 export type CarouselEffect = 'scrollx' | 'fade';
@@ -68,7 +69,7 @@ export interface CarouselProps {
   slickGoTo?: number;
 }
 
-export default class Carousel extends Component<CarouselProps, {}> {
+export default class Carousel extends Component<CarouselProps> {
   static displayName = 'Carousel';
 
   static defaultProps = {

@@ -14,8 +14,8 @@ export interface StepsProps {
   progressDot?: boolean | Function;
   style?: CSSProperties;
   headerRender?: () => React.ReactElement<any>;
-  headerIcon?:string;
-  headerText?:string;
+  headerIcon?: string;
+  headerText?: string;
 }
 
 export interface StepProps {

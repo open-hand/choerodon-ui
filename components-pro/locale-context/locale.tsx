@@ -15,7 +15,7 @@ export interface Locale {
     no: string;
     save: string;
     customization_settings: string;
-  },
+  };
   Table: {
     show_cached_seletion: string;
     hide_cached_seletion: string;
@@ -147,7 +147,7 @@ export interface Locale {
     file_max_size: string;
     file_list_max_length: string;
     file_type_mismatch: string;
-  },
+  };
   Modal: {
     ok: string;
     cancel: string;
@@ -258,7 +258,7 @@ export interface Locale {
     multi_select: string;
     confirm: string;
     cancel: string;
-  }
+  };
 }
 
 export default zh_CN;

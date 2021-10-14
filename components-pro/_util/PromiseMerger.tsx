@@ -8,7 +8,7 @@ export default class PromiseMerger<V, ARGS> {
 
   cache: Cache<string, V>;
 
-  promiseMap: Map<string | Symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>;
+  promiseMap: Map<string | symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>;
 
   waitID;
 
@@ -16,9 +16,9 @@ export default class PromiseMerger<V, ARGS> {
 
   reaction: IReactionDisposer;
 
-  constructor(callback: (codes: string[], args?: ARGS) => Promise<{ [key: string]: V }>, config, timeout: number = 200) {
+  constructor(callback: (codes: string[], args?: ARGS) => Promise<{ [key: string]: V }>, config, timeout = 200) {
     this.timeout = timeout;
-    this.promiseMap = new Map<string | Symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>();
+    this.promiseMap = new Map<string | symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>();
     this.cache = new Cache<string, V>(toJS(config));
     this.callback = callback;
     this.reaction = refreshCacheOptions(this.cache);
@@ -29,7 +29,7 @@ export default class PromiseMerger<V, ARGS> {
   }
 
   @action
-  add(code: string, getBatchKey?: (defaultKey: Symbol) => string | Symbol, args?: ARGS): Promise<V> {
+  add(code: string, getBatchKey?: (defaultKey: symbol) => string | symbol, args?: ARGS): Promise<V> {
     const { cache, promiseMap } = this;
     const item = cache.get(code);
     if (item) {

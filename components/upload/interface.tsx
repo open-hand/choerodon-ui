@@ -26,7 +26,6 @@ export interface UploadFile {
   imageCropArea?: Area;
 }
 
-
 export interface UploadChangeParam {
   file: UploadFile;
   fileList: Array<UploadFile>;
@@ -51,7 +50,7 @@ export interface UploadProps {
   defaultFileList?: Array<UploadFile>;
   fileList?: Array<UploadFile>;
   action?: string;
-  data?: Object | ((file: UploadFile) => any);
+  data?: Record<string, any> | ((file: UploadFile) => any);
   headers?: HttpRequestHeader;
   showUploadList?: boolean | ShowUploadListInterface;
   multiple?: boolean;
@@ -92,7 +91,7 @@ export interface UploadListProps {
   onRemove?: (file: UploadFile) => void | boolean;
   onDragEnd: (files: UploadFile[]) => void | boolean;
   items?: Array<UploadFile>;
-  progressAttr?: Object;
+  progressAttr?: Record<string, any>;
   prefixCls?: string;
   showRemoveIcon?: boolean;
   dragUploadList?: boolean;

@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { insertCss } from 'insert-css';
 import warn from '../_util/warning';
 import generateColor from './generate';
 import { AbstractNode, IconDefinition } from './interface';
 import { CustomIconComponentProps } from './Icon';
 
-export function warning(valid: boolean, message: string) {
+export function warning(valid: boolean, message: string): void {
   warn(valid, `[@c7n/icons] ${message}`);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isIconDefinition(target: any): target is IconDefinition {
   return (
     typeof target === 'object' &&
@@ -40,8 +41,8 @@ export interface Attrs {
 export function generate(
   node: AbstractNode,
   key: string,
-  rootProps?: { [key: string]: any } | false,
-): any {
+  rootProps?: { [key: string]: unknown } | false,
+): ReactElement {
   if (!rootProps) {
     return React.createElement(
       node.tag,
@@ -146,7 +147,7 @@ export const iconStyles = `
 
 let cssInjectedFlag = false;
 
-export const useInsertStyles = (styleStr: string = iconStyles) => {
+export const useInsertStyles = (styleStr: string = iconStyles): void => {
   useEffect(() => {
     if (!cssInjectedFlag) {
       insertCss(styleStr, {

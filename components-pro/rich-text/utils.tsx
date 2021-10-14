@@ -1,4 +1,4 @@
-const QuillDeltaToHtmlConverter = require('quill-delta-to-html');
+import QuillDeltaToHtmlConverter from 'quill-delta-to-html';
 
 export function text2Delta(description) {
   if (!description) {

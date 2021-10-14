@@ -11,7 +11,7 @@ export default class Switch extends CheckBox<CheckBoxProps> {
   /**
    * tooltip disable sign
    */
-    // eslint-disable-next-line camelcase
+  // eslint-disable-next-line camelcase
   static __PRO_SWITCH = true;
 
   // eslint-disable-next-line camelcase

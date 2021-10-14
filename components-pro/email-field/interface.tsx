@@ -1,3 +1,3 @@
 export {
-    EmailFieldProps,
+  EmailFieldProps,
 } from './EmailField';

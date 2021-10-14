@@ -28,7 +28,7 @@ const childrenProps = { hidden: 'hidden' };
 
 export interface PopupProps extends ViewComponentProps {
   align: object;
-  onAlign?: (source: Node, align: object, target: HTMLElement, translate: { x: number, y: number }) => void;
+  onAlign?: (source: Node, align: object, target: HTMLElement, translate: { x: number; y: number }) => void;
   getRootDomNode?: () => Element | Text | null;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   transitionName?: string;
@@ -84,7 +84,7 @@ export default class Popup extends ViewComponent<PopupProps> {
 
   target?: HTMLElement;
 
-  contentRendered: boolean = false;
+  contentRendered = false;
 
   popupKey: string = PopupKeyGen.next().value;
 
@@ -217,7 +217,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       this.popupContainer = popupContainer;
       return popupContainer;
     }
-    // eslint-disable-next-line no-use-before-define
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return getGlobalPopupContainer();
   }
 
@@ -245,7 +245,6 @@ export default class Popup extends ViewComponent<PopupProps> {
     }
   }
 }
-
 
 export function getGlobalPopupContainer() {
   if (Popup.popupContainer) {

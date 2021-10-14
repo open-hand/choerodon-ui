@@ -205,8 +205,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
     const { inputLength } = this.state;
     return (maxLength && showLengthInfo) ||
       (maxLength && maxLength > 0 && inputLength === maxLength) ? (
-      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
-    ) : null;
+        <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+      ) : null;
   }
 
   getLabel() {

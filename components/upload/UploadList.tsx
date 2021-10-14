@@ -217,9 +217,9 @@ export default class UploadList extends Component<UploadListProps, any> {
         file.url || file.thumbUrl
           ? undefined
           : ({
-              pointerEvents: 'none',
-              opacity: 0.5,
-            } as CSSProperties);
+            pointerEvents: 'none',
+            opacity: 0.5,
+          } as CSSProperties);
       const previewIcon = showPreviewIcon ? (
         <a
           href={file.url || file.thumbUrl}

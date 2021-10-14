@@ -11,9 +11,9 @@ export interface TriggerChildProps {
   onFocus?: hook;
   onBlur?: hook;
   isClickScrollbar?: {
-    value: boolean | undefined
+    value: boolean | undefined;
   };
-  popupHidden?: boolean,
+  popupHidden?: boolean;
 }
 
 export default class TriggerChild extends PureComponent<TriggerChildProps> {

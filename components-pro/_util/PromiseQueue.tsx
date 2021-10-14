@@ -3,7 +3,7 @@ import { action, observable, runInAction } from 'mobx';
 export default class PromiseQueue {
   @observable queue: Promise<any>[];
 
-  queueing: boolean = false;
+  queueing = false;
 
   get length(): number {
     return this.queue.length;

@@ -67,7 +67,7 @@ import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
 import { iteratorReduce } from '../_util/iteratorUtils';
 
-let inTab: boolean = false;
+let inTab = false;
 
 export interface TableCellInnerProps {
   column: ColumnProps;

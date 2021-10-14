@@ -6,7 +6,7 @@ interface ConductReturnType {
   halfCheckedKeys: Key[];
 }
 
-function removeFromCheckedKeys(halfCheckedKeys: Set<Key>, checkedKeys: Set<Key>) {
+function removeFromCheckedKeys(halfCheckedKeys: Set<Key>, checkedKeys: Set<Key>): Set<Key> {
   const filteredKeys = new Set<Key>();
   halfCheckedKeys.forEach(key => {
     if (!checkedKeys.has(key)) {
@@ -16,7 +16,7 @@ function removeFromCheckedKeys(halfCheckedKeys: Set<Key>, checkedKeys: Set<Key>)
   return filteredKeys;
 }
 
-export function isCheckDisabled(node: DataNode) {
+export function isCheckDisabled(node: DataNode): boolean {
   const { disabled, disableCheckbox, checkable } = (node || {}) as DataNode;
   return !!(disabled || disableCheckbox) || checkable === false;
 }

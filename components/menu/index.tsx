@@ -43,8 +43,8 @@ export interface MenuProps {
   onDeselect?: (param: SelectParam) => void;
   onClick?: (param: ClickParam) => void;
   style?: CSSProperties;
-  openAnimation?: string | Object;
-  openTransitionName?: string | Object;
+  openAnimation?: string | Record<string, any>;
+  openTransitionName?: string | Record<string, any>;
   className?: string;
   prefixCls?: string;
   multiple?: boolean;

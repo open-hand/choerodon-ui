@@ -606,7 +606,6 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     onBlur(e);
   }
 
-
   @autobind
   @action
   handleBlur(e) {

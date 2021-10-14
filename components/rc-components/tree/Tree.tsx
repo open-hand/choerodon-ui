@@ -209,7 +209,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   static TreeNode = TreeNode;
 
-  destroyed: boolean = false;
+  destroyed = false;
 
   delayedDragEnterLogic: Record<Key, number>;
 
@@ -675,7 +675,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.dragNode = null;
   };
 
-  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, _node, outsideTree: boolean = false) => {
+  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, _node, outsideTree = false) => {
     const {
       dragChildrenKeys,
       dropPosition,
@@ -858,7 +858,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
       // [Legacy] This is used for `rc-tree-select`
       const checkedNodes: DataNode[] = [];
-      const checkedNodesPositions: { node: DataNode, pos: string }[] = [];
+      const checkedNodesPositions: { node: DataNode; pos: string }[] = [];
       eventObj.halfCheckedKeys = halfCheckedKeys;
 
       checkedKeys.forEach(checkedKey => {
@@ -1158,7 +1158,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       });
 
       switch (event.which) {
-        // >>> Expand
+      // >>> Expand
         case KeyCode.LEFT: {
           // Collapse if possible
           if (expandable && expandedKeys.includes(activeKey!)) {
@@ -1220,7 +1220,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
    */
   setUncontrolledState = (
     state: Partial<TreeState>,
-    atomic: boolean = false,
+    atomic = false,
     forceState: Partial<TreeState> | null = null,
   ) => {
     if (this.destroyed) {

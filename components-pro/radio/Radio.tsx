@@ -63,7 +63,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   // eslint-disable-next-line camelcase
   static __IS_IN_CELL_EDITOR = true;
 
-  type: string = 'radio';
+  type = 'radio';
 
   labelRef: HTMLSpanElement | null;
 
@@ -146,7 +146,6 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   renderSwitchFloatLabel(): ReactNode | undefined {
     return undefined;
   }
-
 
   renderInner(): ReactNode {
     return <span className={`${this.prefixCls}-inner`} />;

@@ -44,7 +44,7 @@ export interface ValidatorProps {
   min?: number | Moment | null;
   max?: number | Moment | null;
   step?: number | TimeStep;
-  nonStrictStep?:boolean,
+  nonStrictStep?: boolean;
   minLength?: number;
   maxLength?: number;
   dataSet?: DataSet;

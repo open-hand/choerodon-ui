@@ -19,7 +19,7 @@ import { BooleanValue, DataSetSelection } from '../data-set/enum';
 import Spin from '../spin';
 
 export interface C7nNodeEvent extends EventDataNode {
-  eventKey: string
+  eventKey: string;
 }
 
 export interface TreeNodeCheckedEvent {
@@ -133,7 +133,6 @@ export default class Tree extends Component<TreeProps> {
     this.handleDataSetLoad();
     this.processDataSetListener(true);
   }
-
 
   componentWillReceiveProps(nextProps) {
     const { defaultExpandAll, defaultSelectedKeys, defaultExpandedKeys, defaultCheckedKeys } = this.props;
@@ -326,7 +325,6 @@ export default class Tree extends Component<TreeProps> {
     return true;
   }
 
-
   setCheck(eventObj: C7nTreeNodeProps) {
     const { dataSet } = this.props;
     if (dataSet) {
@@ -343,8 +341,8 @@ export default class Tree extends Component<TreeProps> {
             checkField,
             field
               ? checked
-              ? field.get(BooleanValue.trueValue, found)
-              : field.get(BooleanValue.falseValue, found)
+                ? field.get(BooleanValue.trueValue, found)
+                : field.get(BooleanValue.falseValue, found)
               : checked,
           );
           return false;
@@ -437,16 +435,12 @@ export default class Tree extends Component<TreeProps> {
         dataSet,
         dataSet.treeData,
         renderer,
-        // @ts-ignore
         onTreeNode || treeNodeRenderer || defaultNodeCover,
         async || !!loadData,
         titleField,
       ) || [];
-      // @ts-ignore
       props.onExpand = this.handleExpand;
-      // @ts-ignore
       props.onCheck = this.handleCheck;
-      // @ts-ignore
       props.onSelect = this.handleSelect;
       props.selectable = selectable;
       props.loadData = this.handleLoadData;

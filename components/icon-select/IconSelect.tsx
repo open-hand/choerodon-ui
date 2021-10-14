@@ -52,7 +52,7 @@ export default class IconSelect extends Component<IconSelectProps, IconSelectSta
     this.initIcon();
   }
 
-  initIcon(current: number = 1, pageSize: number = 20, filterValue: string = '') {
+  initIcon(current = 1, pageSize = 20, filterValue = '') {
     const { showAll } = this.props;
     const minIndex = (current - 1) * pageSize;
     const maxIndex = current * pageSize;

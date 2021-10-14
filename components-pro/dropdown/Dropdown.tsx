@@ -21,7 +21,7 @@ export interface DropDownProps {
   defaultHidden?: boolean;
   defaultVisible?: boolean;
   disabled?: boolean;
-  align?: Object;
+  align?: Record<string, any>;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   suffixCls?: string;
   prefixCls?: string;
