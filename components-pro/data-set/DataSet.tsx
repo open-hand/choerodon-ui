@@ -792,6 +792,10 @@ export default class DataSet extends EventManager {
    * 记录数
    */
   get length(): number {
+    // Fix mobx error caused by chrome browser console
+    if (this === DataSet.prototype) {
+      return 0;
+    }
     return this.data.length;
   }
 
