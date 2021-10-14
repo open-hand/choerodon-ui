@@ -63,7 +63,7 @@ export type LabelWidthType = LabelWidth | { [key in ResponsiveKeys]: LabelWidth 
 export type LabelAlignType = LabelAlign | { [key in ResponsiveKeys]: LabelAlign };
 export type LabelLayoutType = LabelLayout | { [key in ResponsiveKeys]: LabelLayout };
 export type ColumnsType = number | { [key in ResponsiveKeys]: number };
-export type SeparateSpacing = { width: number, height: number }
+export type SeparateSpacing = { width: number; height: number }
 
 export interface FormProps extends DataSetComponentProps {
   /**
@@ -88,12 +88,12 @@ export interface FormProps extends DataSetComponentProps {
   /**
    * 是否使用冒号
    */
-  useColon?: boolean,
+  useColon?: boolean;
   /**
    * @deprecated
    * 不使用冒号的列表
    */
-  excludeUseColonTagList?: string[],
+  excludeUseColonTagList?: string[];
   /**
    * 内部控件的标签的宽度
    */
@@ -333,9 +333,9 @@ export default class Form extends DataSetComponent<FormProps> {
 
   name = NameGen.next().value;
 
-  validating: boolean = false;
+  validating = false;
 
-  prepareForReport: { result?: boolean, timeout?: number } = {};
+  prepareForReport: { result?: boolean; timeout?: number } = {};
 
   constructor(props, context) {
     super(props, context);
@@ -656,7 +656,7 @@ export default class Form extends DataSetComponent<FormProps> {
 
   // 处理校验失败定位
   @autobind
-  async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>, dataSet: DataSet }) {
+  async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>; dataSet: DataSet }) {
     if (!await result) {
       const [firstInvalidRecord] = dataSet.getValidationErrors();
       if (firstInvalidRecord) {

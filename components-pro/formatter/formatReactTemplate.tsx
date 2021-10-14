@@ -21,7 +21,7 @@ export function formatReactTemplate(
         if (isString(text)) {
           let stringText: string = text;
           if (isValidElement(node)) {
-            const placeholder: string = `{${key}}`;
+            const placeholder = `{${key}}`;
             const { length } = placeholder;
             const textArr: ReactNode[] = [];
             let index = stringText.indexOf(placeholder);

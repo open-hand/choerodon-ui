@@ -29,3 +29,10 @@ tools
 .jest-cache
 .cache
 public
+components-pro/*/__tests__/*.test.js
+webpack.config.js
+tests/**/*.js
+site/**/*
+scripts/**/*
+index-pro-with-locales.js
+index-with-locales.js

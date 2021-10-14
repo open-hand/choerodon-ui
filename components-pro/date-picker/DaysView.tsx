@@ -220,7 +220,7 @@ export default class DaysView extends ViewComponent<DateViewProps>
   renderPanelHead(): ReactNode {
     return (
       <thead>
-      <tr>{this.getDaysOfWeek()}</tr>
+        <tr>{this.getDaysOfWeek()}</tr>
       </thead>
     );
   }

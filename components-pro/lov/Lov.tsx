@@ -407,7 +407,7 @@ export default class Lov extends Select<LovProps> {
             ...(modalProps && modalProps.style),
           },
           afterClose: this.handleLovViewAfterClose,
-        } as ModalProps & { children; });
+        } as ModalProps & { children });
         this.afterOpen(options, fetchSingle);
       }
     }
@@ -482,7 +482,7 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
-  resetOptions(noCache: boolean = false): boolean {
+  resetOptions(noCache = false): boolean {
     const { field, record, options } = this;
     const { queryDataSet, props: { pageSize } } = options;
     let dirty = noCache;
@@ -550,7 +550,7 @@ export default class Lov extends Select<LovProps> {
     const { textField } = this;
     const { mode, searchAction, fetchSingle } = this.props;
     if (mode !== ViewMode.button) {
-      let hasRecord: boolean = false;
+      let hasRecord = false;
       if (this.getValue()) {
         hasRecord = this.getValue()[textField] === value;
       }

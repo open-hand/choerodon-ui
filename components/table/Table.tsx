@@ -144,7 +144,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   components: TableComponents;
 
-  private refTable: HTMLDivElement | null;
+  private refTable;
 
   constructor(props: TableProps<T>) {
     super(props);
@@ -210,12 +210,12 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const pagination: TablePaginationConfig = props.pagination || {};
     return this.hasPagination(props)
       ? {
-          ...defaultPagination,
-          size: props.size,
-          ...pagination,
-          current: pagination.defaultCurrent || pagination.current || 1,
-          pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
-        }
+        ...defaultPagination,
+        size: props.size,
+        ...pagination,
+        current: pagination.defaultCurrent || pagination.current || 1,
+        pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
+      }
       : {};
   }
 
@@ -684,9 +684,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         if (this.refTable && this.refTable.clientHeight > document.body.clientHeight) {
           scrollIntoViewSmoothly(this.refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
         } else if (this.refTable) {
-          // @ts-ignore
           if (this.refTable.scrollIntoViewIfNeeded) {
-            // @ts-ignore
             this.refTable.scrollIntoViewIfNeeded({
               block: 'start',
             });
@@ -970,7 +968,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   // Get pagination, filters, sorter
-  prepareParamsArguments(state: any): [TablePaginationConfig | boolean, string[], Object, any[]] {
+  prepareParamsArguments(state: any): [TablePaginationConfig | boolean, string[], Record<string, any>, any[]] {
     const pagination = { ...state.pagination };
     // remove useless handle function in Table.onChange
     delete pagination.onChange;
@@ -1040,9 +1038,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     return data.sort(sorterFn).map((item: any) =>
       item[childrenColumnName]
         ? {
-            ...item,
-            [childrenColumnName]: this.recursiveSort(item[childrenColumnName], sorterFn),
-          }
+          ...item,
+          [childrenColumnName]: this.recursiveSort(item[childrenColumnName], sorterFn),
+        }
         : item,
     );
   }
@@ -1074,8 +1072,8 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
           const { onFilter, filters: columnFilters } = col;
           filteredData = onFilter
             ? filteredData.filter(record => {
-                return values.some(v => onFilter(v, record, columnFilters));
-              })
+              return values.some(v => onFilter(v, record, columnFilters));
+            })
             : filteredData;
         });
       }

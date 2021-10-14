@@ -1,4 +1,4 @@
 export {
-    ModalContainerState,
-    ModalContainerProps,
+  ModalContainerState,
+  ModalContainerProps,
 } from './ModalContainer'

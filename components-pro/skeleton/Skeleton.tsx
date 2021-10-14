@@ -9,9 +9,8 @@ import SkeletonInput from './Input';
 import Avatar from './Avatar';
 
 export interface SkeletonProps extends DataSetComponentProps, Omit<C7nSkeletonProps, 'title'> {
-  skeletonTitle?: boolean,
+  skeletonTitle?: boolean;
 }
-
 
 @observer
 export default class Skeleton extends DataSetComponent<SkeletonProps> {
@@ -41,13 +40,9 @@ export default class Skeleton extends DataSetComponent<SkeletonProps> {
     const omitProps = omit(otherProps, 'title');
 
     if (dataSet) {
-      // @ts-ignore
       props.loading = dataSet.status !== DataSetStatus.ready;
     }
 
     return <C7nSkeleton {...omitProps} {...props} />;
   }
 }
-
-
-

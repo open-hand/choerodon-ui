@@ -101,3 +101,45 @@ export function previewImage(file: File | Blob): Promise<string> {
   });
 }
 
+/**
+ * 获取部分文件类型
+ * @param filename 文件名
+ * @returns 文件类型
+ */
+export function getFileType(filename: string): string {
+  if (/\.(zip|rar|rar4|7z|Z|gz|bz2|xz|tar|tar\.gz|tar\.bz2|tar\.xz)$/g.test(filename)) {
+    return 'compressedfile';
+  }
+  const suffix = filename ?
+    filename.lastIndexOf('.') === -1 ? '' : filename.split('.').pop()
+    : '';
+  switch (suffix) {
+    case 'doc':
+    case 'docx':
+      return 'doc';
+    case 'webp':
+    case 'svg':
+    case 'png':
+    case 'gif':
+    case 'jpg':
+    case 'jpeg':
+      return 'image';
+    case 'pdf':
+      return 'pdf';
+    case 'xls':
+    case 'xlsx':
+      return 'xls';
+    default:
+      return 'other';
+  }
+}
+
+export function getFileSizeStr(filesize: number): string {
+  const scale = 1024;
+  if (isNaN(filesize / scale)) {
+    return '';
+  }
+  return filesize / scale / scale >= 0.09 ?
+    filesize / scale / scale / scale >= 0.09 ? `${(filesize / scale / scale / scale).toFixed(1)}GB` : `${(filesize / scale / scale).toFixed(1)}MB`
+    : `${(filesize / scale).toFixed(1)}KB`;
+}

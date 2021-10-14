@@ -1,3 +1,3 @@
 export {
-    SpinProps,
+  SpinProps,
 } from './index';

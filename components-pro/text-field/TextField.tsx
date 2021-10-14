@@ -10,6 +10,7 @@ import React, {
   ReactElement,
   ReactNode,
 } from 'react';
+// @ts-expect-error: Cancelable is removed from the new lodash
 import { Cancelable, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
@@ -237,7 +238,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @observable text?: string;
 
-  type: string = 'text';
+  type = 'text';
 
   tagContainer: HTMLUListElement | null;
 
@@ -268,7 +269,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   get clearButton(): boolean {
     const { clearButton } = this.props;
-    return clearButton && !this.readOnly && !this.disabled;
+    return !!clearButton && !this.readOnly && !this.disabled;
   }
 
   /**
@@ -355,7 +356,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.handleChangeWait.cancel();
   }
 
-
   @autobind
   saveTagContainer(node) {
     this.tagContainer = node;
@@ -371,7 +371,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.addonBeforeRef = node;
   }
 
-  getEditorTextInfo(rangeTarget?: 0 | 1): { text: string, width: number, placeholder?: string } {
+  getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
     const { isFlat } = this.props;
     const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = rangeTarget === undefined && this.hasFloatLabel ? [] : this.getPlaceholders();
     if (rangeTarget === undefined) {
@@ -557,11 +557,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const prefix = this.getPrefix();
     return super.getWrapperClassNames(
       {
-        [`${prefixCls}-suffix-button`]: isValidElement<{ onClick; }>(suffix),
+        [`${prefixCls}-suffix-button`]: isValidElement<{ onClick }>(suffix),
         [`${prefixCls}-multiple`]: multiple,
         [`${prefixCls}-range`]: range,
         [`${prefixCls}-border`]: border,
-        [`${prefixCls}-prefix-button`]: isValidElement<{ onClick; }>(prefix),
+        [`${prefixCls}-prefix-button`]: isValidElement<{ onClick }>(prefix),
       },
       ...args,
     );
@@ -592,7 +592,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
     // 修复ie下出现多层model导致的输入框遮盖问题
     // fixed the input would shadow each other in ie brower
-    const ZIndexOfIEProps: { style: CSSProperties; } | {} = isIE() ? { style: { zIndex: 'auto' } } : {};
+    const ZIndexOfIEProps: { style: CSSProperties } | {} = isIE() ? { style: { zIndex: 'auto' } } : {};
 
     const element = (
       <span key="element" {...wrapperProps}>
@@ -786,17 +786,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
                 rangeTarget === undefined || !this.isFocused
                   ? ''
                   : this.text === undefined
-                  ? rangeTarget === 0
-                    ? startText
-                    : endText
-                  : this.text
+                    ? rangeTarget === 0
+                      ? startText
+                      : endText
+                    : this.text
               }
               placeholder={
                 !editable || rangeTarget === undefined || !this.isFocused
                   ? ''
                   : rangeTarget === 0
-                  ? startPlaceholder
-                  : endPlaceholder
+                    ? startPlaceholder
+                    : endPlaceholder
               }
               readOnly={!editable}
               style={editorStyle}
@@ -845,7 +845,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return (
       <li key="text">
-        <input {...(props as Object)} value={text || ''} style={editorStyle} />
+        <input {...(props as object)} value={text || ''} style={editorStyle} />
       </li>
     );
   }
@@ -1157,6 +1157,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   handleTagAnimateEnd() {
+    // noop
   }
 
   @autobind
@@ -1345,7 +1346,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return debounce(this.prepareSetValue, 0);
   }
-
 
   @autobind
   handleChange(e) {

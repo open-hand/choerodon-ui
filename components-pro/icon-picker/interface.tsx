@@ -1,9 +1,9 @@
 export {
-    IconItemProps as IconCategoryItemProps,
+  IconItemProps as IconCategoryItemProps,
 } from './IconCategory';
 export {
-    IconItemProps,
+  IconItemProps,
 } from './IconItem';
 export {
-    IconPickerProps,
+  IconPickerProps,
 } from './IconPicker'

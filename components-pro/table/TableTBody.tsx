@@ -34,7 +34,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
 
   static contextType = TableContext;
 
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   constructor(props, context) {
     super(props, context);
@@ -175,7 +175,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
           }
           return <span />;
         }}
-        getContainerForClone={() => instance(tableStore.node.getClassName(), prefixCls).tbody}
+        getContainerForClone={() => instance(tableStore.node.getClassName(), prefixCls).tbody as React.ReactElement<HTMLElement>}
         {...(rowDragRender && rowDragRender.droppableProps)}
       >
         {(droppableProvided: DroppableProvided) => (

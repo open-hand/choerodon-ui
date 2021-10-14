@@ -29,7 +29,6 @@ import Store from './QuickFilterDataSet';
 
 const modalKey = Modal.key();
 
-
 /**
  * 判断查询值是否为空
  * @param value
@@ -58,7 +57,6 @@ function findFieldObj(queryDataSet, data) {
     return { name, value };
   }
 }
-
 
 /**
  * 当前数据是否有值并需要选中
@@ -163,7 +161,7 @@ const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefix
           />
           <span className={`${proPrefixCls}-form ${proPrefixCls}-field-label`}>
             {$l('Table', 'set_default')}
-        </span>
+          </span>
         </div>
       )}
     </>
@@ -224,7 +222,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     }
   };
 
-  function handleQueryReset() {
+  const handleQueryReset = () => {
     const { current } = filterMenuDS;
     if (current && current.get('filterName')) {
       // 筛选项重置重新赋值
@@ -303,8 +301,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     }
   };
 
-
-  function handleChange(value?: number) {
+  const handleChange = (value?: number) => {
     locateData(value);
   }
 
@@ -335,7 +332,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     }
   }
 
-  function openModal(type, searchId?: String) {
+  function openModal(type, searchId?: string) {
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       const menuRecord = menuDataSet.current;
@@ -363,7 +360,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     });
   }
 
-  async function handleSave() {
+  const handleSave = async () => {
     const filterMenuRecord = filterMenuDS.current;
     if (!filterMenuRecord || !filterMenuRecord.get('filterName')) {
       menuDataSet.create({});
@@ -420,11 +417,11 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     }
   }
 
-  function handleEdit(record) {
+  const handleEdit = (record) => {
     openModal('edit', record.get('searchId'));
   }
 
-  function handleSaveOther() {
+  const handleSaveOther = () => {
     const { current } = menuDataSet;
     if (current) {
       current.set('searchName', '');
@@ -513,8 +510,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
               });
             }
           }}
-          // @ts-ignore
-          onMouseLeave={hide}
+          onMouseLeave={() => hide()}
         >
           {text}
           {isDefault && <Tag>{$l('Table', 'default_flag')}</Tag>}

@@ -360,6 +360,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @autobind
   handleEnterDown() {
+    // noop
   }
 
   @action
@@ -377,6 +378,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   syncValueOnBlur() {
+    // noop
   }
 
   @action

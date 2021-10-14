@@ -52,3 +52,4 @@ jest_*
 components/rc-components/tree/**/*.@(jsx|js)
 components/form/__tests__/type.js
 site/theme/mock/performance-data/*.js
+.eslintcache

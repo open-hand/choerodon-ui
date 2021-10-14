@@ -1,3 +1,3 @@
 export {
-    CheckBoxProps,
+  CheckBoxProps,
 } from './CheckBox';

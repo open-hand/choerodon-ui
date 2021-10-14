@@ -1,5 +1,5 @@
 let scrollbarWidth: number;
-let rootFontSize: number = 100;
+let rootFontSize = 100;
 
 function getRootFontSize(): number {
   if (typeof window !== 'undefined' && document.defaultView) {

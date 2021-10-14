@@ -1,7 +1,6 @@
 export {
-    IntlFieldProps,
+  IntlFieldProps,
 } from './IntlField';
 export {
-    IntlListProps,
+  IntlListProps,
 } from './IntlList';
-

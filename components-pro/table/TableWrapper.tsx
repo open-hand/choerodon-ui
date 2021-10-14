@@ -40,7 +40,7 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = observer(function Tab
       }
       return nodes;
     }, []) : undefined,
-    [leafs, overflowX, lock, hasBody],
+  [leafs, overflowX, lock, hasBody],
   );
 
   const colGroup = useMemo((): ReactNode => {

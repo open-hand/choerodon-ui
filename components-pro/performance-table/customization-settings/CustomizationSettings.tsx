@@ -40,7 +40,7 @@ function normalizeColumnsToTreeData(columns: ColumnProps[]) {
   }), []);
 }
 
-function diff(height: number = 0): number {
+function diff(height = 0): number {
   if (typeof document !== 'undefined') {
     return document.documentElement.clientHeight - height;
   }

@@ -4,13 +4,13 @@ import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 
-export interface EmailFieldProps extends TextFieldProps {}
+export type EmailFieldProps = TextFieldProps
 
 @observer
 export default class EmailField extends TextField<EmailFieldProps> {
   static displayName = 'EmailField';
 
-  type: string = 'email';
+  type = 'email';
 
   getFieldType(): FieldType {
     return FieldType.email;

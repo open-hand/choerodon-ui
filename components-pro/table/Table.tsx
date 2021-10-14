@@ -89,12 +89,12 @@ import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames } from '../data-set/utils';
 
-export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
+export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode };
 
 /**
  * 表头汇总栏hook
  */
-export type SummaryBarHook = (props: SummaryBarProps) => { label: ReactNode | string, value: ReactNode | string };
+export type SummaryBarHook = (props: SummaryBarProps) => { label: ReactNode | string; value: ReactNode | string };
 
 export type Buttons =
   | TableButtonType
@@ -104,8 +104,7 @@ export type Buttons =
 export type Suffixes =
   | 'filter'
   | ReactElement
-  | ((props: { queryDataSet?: DataSet, dataSet: DataSet }) => ReactElement);
-
+  | ((props: { queryDataSet?: DataSet; dataSet: DataSet }) => ReactElement);
 
 export type SummaryBar =
   | Field
@@ -197,8 +196,8 @@ export interface DynamicFilterBarConfig {
 }
 
 export interface Instance {
-  tbody: React.ReactElement;
-  headtr: React.ReactElement;
+  tbody: React.ReactElement | HTMLElement;
+  headtr: React.ReactElement | HTMLElement;
 }
 
 /**
@@ -267,9 +266,7 @@ export const instance = (wrapperClassName: string | undefined, prefixCls?: strin
     }
     document.body.appendChild(table);
     return {
-      // @ts-ignore
       tbody,
-      // @ts-ignore
       headtr,
     };
   };
@@ -379,7 +376,7 @@ export interface TableProps extends DataSetComponentProps {
    * type:week => DatePicker[mode=week]
    * default => TextField
    */
-  queryFields?: { [key: string]: ReactElement<any>; };
+  queryFields?: { [key: string]: ReactElement<any> };
   /**
    * 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口
    * @default 1
@@ -535,7 +532,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否开启自适应高度
    */
-  autoHeight?: boolean | { type: TableAutoHeightType, diff: number };
+  autoHeight?: boolean | { type: TableAutoHeightType; diff: number };
   /**
    * 是否开启自适应宽度
    */
@@ -563,11 +560,11 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 拖拽触发事件
    */
-  onDragEnd?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => void
+  onDragEnd?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => void;
   /**
    * 拖拽触发事件位置切换前回调
    */
-  onDragEndBefore?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void,
+  onDragEndBefore?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void;
   /**
    * 渲染列拖拽
    */
@@ -583,12 +580,12 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否开启关闭快捷键（只关闭新加组合快捷键）
    */
-  keyboard?: boolean,
+  keyboard?: boolean;
   /**
    * @deprecated
    * 筛选条属性配置 使用 queryBarProps.dynamicFilterBar
    */
-  dynamicFilterBar?: DynamicFilterBarConfig,
+  dynamicFilterBar?: DynamicFilterBarConfig;
   /**
    * 异步树
    */
@@ -596,7 +593,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 树节点展开时，加载数据钩子
    */
-  treeLoadData?: ({ record, dataSet }) => Promise<any>,
+  treeLoadData?: ({ record, dataSet }) => Promise<any>;
   /**
    * 树形结构下queryBar触发查询,自动展开树形结构
    */
@@ -604,7 +601,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 显示行号
    */
-  rowNumber?: boolean | ((props: { record?: Record | null, dataSet?: DataSet | null, text: string, pathNumbers: number[] }) => ReactNode);
+  rowNumber?: boolean | ((props: { record?: Record | null; dataSet?: DataSet | null; text: string; pathNumbers: number[] }) => ReactNode);
   /**
    * 个性化编码
    */
@@ -796,10 +793,6 @@ export default class Table extends DataSetComponent<TableProps> {
     rowDragRender: PropTypes.object,
     onDragEndBefore: PropTypes.func,
     /**
-     * 开启新建自动定位
-     */
-    autoFocus: PropTypes.bool,
-    /**
      * 新增的组合键开关闭
      */
     keyboard: PropTypes.bool,
@@ -966,7 +959,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
-  async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>, dataSet: DataSet }) {
+  async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>; dataSet: DataSet }) {
     if (!await result) {
       const { tableStore } = this;
       const [firstInvalidRecord] = dataSet.getValidationErrors();
@@ -1165,7 +1158,6 @@ export default class Table extends DataSetComponent<TableProps> {
       }
     }
   }
-
 
   async handleKeyDownCTRLDELETE(e) {
     e.preventDefault();
@@ -1626,7 +1618,7 @@ export default class Table extends DataSetComponent<TableProps> {
   reorderDataSet(startIndex: number, endIndex: number) {
     const { dataSet } = this.tableStore;
     dataSet.move(startIndex, endIndex);
-  };
+  }
 
   @autobind
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
@@ -2105,7 +2097,7 @@ export default class Table extends DataSetComponent<TableProps> {
       }
     }
     return this.getStyleHeight();
-  };
+  }
 
   @autobind
   @action

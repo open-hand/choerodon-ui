@@ -80,8 +80,8 @@ export function calcDropPosition(
   targetNode: NodeInstance,
   indent: number,
   startMousePosition: {
-    x: number,
-    y: number,
+    x: number;
+    y: number;
   },
   allowDrop: AllowDrop,
   flattenedNodes: FlattenNode[],
@@ -89,13 +89,13 @@ export function calcDropPosition(
   expandKeys: Key[],
   direction: Direction,
 ): {
-  dropPosition: -1 | 0 | 1,
-  dropLevelOffset: number,
-  dropTargetKey: Key,
-  dropTargetPos: string,
-  dropContainerKey: Key | null,
-  dragOverNodeKey: Key,
-  dropAllowed: boolean,
+  dropPosition: -1 | 0 | 1;
+  dropLevelOffset: number;
+  dropTargetKey: Key;
+  dropTargetPos: string;
+  dropContainerKey: Key | null;
+  dragOverNodeKey: Key;
+  dropAllowed: boolean;
 } {
   const { clientX, clientY } = event;
   const { top, height } = (event.target as HTMLElement).getBoundingClientRect();

@@ -2,7 +2,7 @@ import { action, observable } from 'mobx';
 import { ModalProps } from '../modal/Modal';
 import { MousePosition } from '../_util/DocumentUtils';
 
-export type DrawerOffsets = { 'slide-up': number[], 'slide-right': number[], 'slide-down': number[], 'slide-left': number[] };
+export type DrawerOffsets = { 'slide-up': number[]; 'slide-right': number[]; 'slide-down': number[]; 'slide-left': number[] };
 
 export interface IModalContainer {
   maskHidden: boolean;

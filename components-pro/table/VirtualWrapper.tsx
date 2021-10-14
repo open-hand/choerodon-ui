@@ -5,7 +5,7 @@ import TableContext from './TableContext';
 import { TableWrapperProps } from './TableWrapper';
 
 export interface VirtualWrapperProps {
-  children?: ReactElement<TableWrapperProps>
+  children?: ReactElement<TableWrapperProps>;
 }
 
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer(function VirtualWrapper(props) {

@@ -149,7 +149,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
         value.locale(localeCode);
       }
 
-      let pickerProps: Object = {};
+      let pickerProps: Record<string, any> = {};
       let calendarProps: any = {};
       if (props.showTime) {
         calendarProps = {
@@ -217,7 +217,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
         focused,
       };
 
-      const input = ({ value: inputValue }: { value: Moment | null; }) => (
+      const input = ({ value: inputValue }: { value: Moment | null }) => (
         <Input
           {...inputProps}
           ref={this.saveInput}

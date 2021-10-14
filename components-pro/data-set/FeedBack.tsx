@@ -13,7 +13,7 @@ export interface FeedBack {
 }
 
 const defaultFeedback = {
-  loadSuccess(_result: any) {},
+  loadSuccess(_result: any) {/* noop */},
   loadFailed(error) {
     message.error(exception(error, $l('DataSet', 'query_failure')));
   },

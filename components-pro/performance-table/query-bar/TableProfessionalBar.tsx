@@ -25,7 +25,7 @@ export interface TableProfessionalBarProps extends ElementProps {
   queryFields: ReactElement<any>[];
   queryFieldsLimit?: number;
   queryFormProps?: FormProps;
-  defaultExpanded?: Boolean;
+  defaultExpanded?: boolean;
   onQuery?: (props: object) => void;
   onReset?: () => void;
 }
@@ -189,7 +189,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       );
     }
   }
-
 
   @autobind
   handleQueryReset() {

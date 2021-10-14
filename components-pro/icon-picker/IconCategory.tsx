@@ -104,7 +104,7 @@ export default class IconCategory extends Component<IconItemProps> {
   }
 
   @action
-  setPage(page: number = 1) {
+  setPage(page = 1) {
     this.page = page;
   }
 

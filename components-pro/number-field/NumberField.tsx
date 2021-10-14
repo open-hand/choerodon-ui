@@ -31,10 +31,9 @@ function getCurrentValidValue(value: string): number {
 export type FormatNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions) => string;
 
 export type FormatNumberFuncOptions = {
-  lang?: string | undefined,
+  lang?: string | undefined;
   options: Intl.NumberFormatOptions;
 };
-
 
 export interface NumberFieldProps<V = number> extends TextFieldProps<V> {
   /**
@@ -303,7 +302,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const suffix = this.getSuffix();
     const button = this.getInnerSpanButton();
     return super.getWrapperClassNames({
-      [`${prefixCls}-step-suffix`]: button && isValidElement<{ onClick; }>(suffix),
+      [`${prefixCls}-step-suffix`]: button && isValidElement<{ onClick }>(suffix),
       ...args,
     });
   }

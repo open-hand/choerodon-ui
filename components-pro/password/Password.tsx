@@ -36,7 +36,7 @@ export default class Password extends TextField<PasswordProps> {
     reveal: true,
   };
 
-  type: string = 'password';
+  type = 'password';
 
   @observable reveal?: boolean;
 

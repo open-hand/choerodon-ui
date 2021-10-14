@@ -10,10 +10,10 @@ export default class SkeletonInput extends DataSetComponent<SkeletonInputProps> 
    static displayName = 'SkeletonInput'
 
    render(){
-       const {...otherProps} = this.props
+     const {...otherProps} = this.props
 
-       const props:SkeletonInputProps = {}
+     const props: SkeletonInputProps = {}
 
-       return <C7nSkeletonInput {...otherProps} {...props}/>
+     return <C7nSkeletonInput {...otherProps} {...props}/>
    }
 }

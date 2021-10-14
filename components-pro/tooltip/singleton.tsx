@@ -61,7 +61,6 @@ const TooltipContainer: ForwardRefExoticComponent<any> = forwardRef<TooltipConta
   );
 });
 
-
 function getRoot() {
   let { root } = manager;
   if (typeof window !== 'undefined') {

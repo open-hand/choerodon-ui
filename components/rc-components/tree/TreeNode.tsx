@@ -1,6 +1,5 @@
 import * as React from 'react';
 import classNames from 'classnames';
-// @ts-ignore
 import { TreeContext, TreeContextProps } from './contextTypes';
 import { getDataAndAria } from './util';
 import { DataNode, IconType, Key } from './interface';
@@ -588,6 +587,7 @@ const ContextTreeNode: React.FC<TreeNodeProps> = props => (
 ContextTreeNode.displayName = 'TreeNode';
 
 ContextTreeNode.defaultProps = {
+  // eslint-disable-next-line react/default-props-match-prop-types
   title: defaultTitle,
 };
 

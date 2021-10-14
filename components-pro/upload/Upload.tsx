@@ -208,12 +208,6 @@ export default class Upload extends FormField<UploadProps> {
      * {}
      */
     headers: PropTypes.object,
-    /**
-     * 是否支持多选文件
-     * @default
-     * false
-     */
-    multiple: PropTypes.bool,
     uploadImmediately: PropTypes.bool,
     fileListMaxLength: PropTypes.number,
     showPreviewImage: PropTypes.bool,
@@ -515,6 +509,7 @@ export default class Upload extends FormField<UploadProps> {
       ? fileList
         .filter(item => !item.status || item.status !== 'success')
       : Array.from(fileList);
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     if (!files.length) {
       message.info($l('Upload', 'been_uploaded'));
@@ -555,7 +550,7 @@ export default class Upload extends FormField<UploadProps> {
     // 修改文件状态，方便UploadList判断是否展示进度条
     file.status = 'uploading';
     if (xhr.upload) {
-      xhr.upload.onprogress = e => {
+      xhr.upload.onprogress = (e): void => {
         let percent = 0;
         if (e.total > 0) {
           percent = (e.loaded / e.total) * 100;

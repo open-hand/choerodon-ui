@@ -43,13 +43,13 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
       children: (
         <table className={prefixCls}>
           <tbody>
-          <tr>
-            {iconNode}
-            <td>
-              {titleNode}
-              {contentNode}
-            </td>
-          </tr>
+            <tr>
+              {iconNode}
+              <td>
+                {titleNode}
+                {contentNode}
+              </td>
+            </tr>
           </tbody>
         </table>
       ),

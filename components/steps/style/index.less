@@ -26,27 +26,43 @@
 @steps-dot-size: 0.08rem;
 @steps-current-dot-size: 0.1rem;
 @steps-desciption-max-width: 1.4rem;
+@steps-title-min-width: 1.76rem;
 
 .@{steps-prefix-cls} {
   .reset-component;
   display: flex;
   width: 100%;
   font-size: 0;
+
   &-header {
     position: absolute;
-    top:-.3rem;
+    top: -.3rem;
     left: 0;
-    padding:0.05rem;
-    color:@icon-text-color;
-    font-size:  @font-size-base;
+    padding: 0.05rem;
+    color: @icon-text-color;
+    font-size: @font-size-base;
     background: @processing-color;
-    border-top-left-radius:0.1rem;
-    border-bottom-right-radius:0.1rem;
+    border-top-left-radius: 0.1rem;
+    border-bottom-right-radius: 0.1rem;
   }
+
   &-group {
     position: relative;
     margin-top: .3rem;
-    padding:0.3rem .2rem;
+    padding: 0.3rem .2rem;
+  }
+
+  &-dropdown-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.3rem;
+    height: 0.3rem;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: @btn-box-shadow;
+    }
   }
 }
 
@@ -54,6 +70,7 @@
   position: relative;
   display: inline-block;
   flex: 1;
+  min-width: @steps-title-min-width;
   overflow: hidden;
   vertical-align: top;
 
@@ -63,6 +80,10 @@
 
   &:last-child &-tail,
   &:last-child &-title::after {
+    display: none;
+  }
+
+  &-last &-title::after {
     display: none;
   }
 
@@ -84,11 +105,12 @@
     border-radius: @steps-icon-size;
     transition: background-color @animation-duration-slow, border-color @animation-duration-slow;
 
-    > .@{steps-prefix-cls}-icon {
+    >.@{steps-prefix-cls}-icon {
       position: relative;
       top: -0.01rem;
       line-height: 1;
     }
+
     span.@{iconfont-css-prefix} {
       width: @steps-icon-size;
       height: @steps-icon-size;
@@ -96,12 +118,14 @@
       vertical-align: initial;
     }
   }
+
   &-tail {
     position: absolute;
     top: 0.12rem;
     left: 0;
     width: 100%;
     padding: 0 0.1rem;
+
     &::after {
       display: inline-block;
       width: 100%;
@@ -112,6 +136,7 @@
       content: '';
     }
   }
+
   &-title {
     position: relative;
     display: inline-block;
@@ -119,6 +144,7 @@
     color: @text-color;
     font-size: @font-size-lg;
     line-height: @steps-icon-size;
+
     &::after {
       position: absolute;
       top: @steps-icon-size / 2;
@@ -130,16 +156,37 @@
       content: '';
     }
   }
+
   &-description {
     color: @text-color-secondary;
     font-size: @font-size-base;
   }
+
   .step-item-status(wait);
   .step-item-status(process);
 
   &-process &-title {
     font-weight: 500;
   }
+
+  &-dropdown {
+    &-icon {
+      vertical-align: middle;
+    }
+
+    &-title {
+      position: relative;
+      display: inline-block;
+      padding-right: 0.16rem;
+      color: @text-color;
+      font-size: @font-size-lg;
+      line-height: @steps-icon-size;
+    }
+
+    .step-item-status(wait);
+    .step-item-status(process);
+  }
+
   .step-item-status(finish);
   .step-item-status(error);
 }
@@ -148,15 +195,19 @@
   .@{steps-prefix-cls}-item {
     margin-right: 0.16rem;
     white-space: nowrap;
+
     &:last-child {
       margin-right: 0;
     }
+
     &:last-child .@{steps-prefix-cls}-item-title {
       padding-right: 0;
     }
+
     &-tail {
       display: none;
     }
+
     &-description {
       max-width: @steps-desciption-max-width;
     }
@@ -168,24 +219,38 @@
   @title-color: '@{status}-title-color';
   @description-color: '@{status}-description-color';
   @tail-color: '@{status}-tail-color';
+
   &-@{status} &-icon {
     background-color: @@icon-color;
-    > .@{steps-prefix-cls}-icon {
+
+    >.@{steps-prefix-cls}-icon {
       .@{steps-prefix-cls}-icon-dot {
         background: @@icon-color;
       }
     }
   }
-  &-@{status} > &-content > &-title {
+
+  &-@{status}>&-dropdown-title {
     color: @@title-color;
+
     &::after {
       background-color: @@tail-color;
     }
   }
-  &-@{status} > &-content > &-description {
+
+  &-@{status}>&-content>&-title {
+    color: @@title-color;
+
+    &::after {
+      background-color: @@tail-color;
+    }
+  }
+
+  &-@{status}>&-content>&-description {
     color: @@description-color;
   }
-  &-@{status} > &-tail::after {
+
+  &-@{status}>&-tail::after {
     background-color: @@tail-color;
   }
 }

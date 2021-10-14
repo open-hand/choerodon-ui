@@ -2,6 +2,7 @@
 @import '../../style/mixins/index';
 
 @tab-prefix-cls: ~'@{c7n-prefix}-tabs';
+@tabs-card-min-width: 40px;
 
 // card style
 .@{tab-prefix-cls} {
@@ -34,6 +35,14 @@
   &&-card > &-bar &-nav-wrap {
     margin-bottom: 0;
   }
+  &-nav-scroll {
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+      display: none; /* Chrome Safari */
+      -ms-overflow-style: none; /* IE 10+ */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
   &&-card > &-bar &-tab .@{iconfont-css-prefix}-close {
     width: 0.16rem;
     height: @font-size-base;
@@ -62,24 +71,80 @@
   }
 
   &-extra-content {
-    line-height: @tabs-card-height;
+    display: flex;
+    .@{tab-prefix-cls}-extra-bar {
+      display: flex;
+    }
+    .@{tab-prefix-cls}-more-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: @tabs-card-min-width;
+      background: @component-background;
+      border-left: @border-width-base @border-style-base @border-color-split;
+      outline: none;
+      cursor: pointer;
+      transition: all @animation-duration-slow cubic-bezier(.645,.045,.355,1);
+      &:hover {
+        color: @tabs-card-active-color;
+      }
+    }
 
     .@{tab-prefix-cls}-new-tab {
-      width: 0.2rem;
-      height: 0.2rem;
-      color: @text-color;
-      font-size: 0.12rem;
-      line-height: 0.2rem;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: @tabs-card-min-width;
+      background: @tabs-card-head-background;
       border: @border-width-base @border-style-base @border-color-split;
-      border-radius: @border-radius-sm;
+      border-bottom: none;
+      border-radius: 2px 2px 0 0;
+      outline: none;
       cursor: pointer;
       transition: all @animation-duration-slow;
       &:hover {
         color: @tabs-card-active-color;
-        border-color: @tabs-card-active-color;
       }
     }
+  }
+  &-extra-vertical-content {
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+  }
+  &-nav-add {
+    display: inline-block;
+    min-width: @tabs-card-min-width;
+    height: inherit;
+    margin-right: 0.02rem;
+    line-height: @tabs-card-height - 0.02rem;
+    text-align: center;
+    background: @tabs-card-head-background;
+    border: @border-width-base @border-style-base @border-color-split;
+    border-radius: @border-radius-base @border-radius-base 0 0;
+    outline: none;
+    cursor: pointer;
+    transition: all @animation-duration-slow @ease-in-out;
+    &:hover {
+      color: @tabs-card-active-color;
+    }
+  }
+  &-nav-vertical-add {
+    width: 100%;
+    height: 0.2rem;
+    padding: 0 0.16rem;
+    line-height: .1rem;
+    border-right:none;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+  }
+  &-more-vertical-tab {
+    height: 0.2rem;
+    margin-bottom: 5px;
+    border-top: @border-width-base @border-style-base @border-color-split;
+    border-right:none;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-left:none;
   }
   &-vertical&-card > .@{tab-prefix-cls}-bar {
     .@{tab-prefix-cls}-nav-container {

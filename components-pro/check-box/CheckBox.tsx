@@ -55,7 +55,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     indeterminate: false,
   };
 
-  type: string = 'checkbox';
+  type = 'checkbox';
 
   get unCheckedValue() {
     const { unCheckedValue } = this.props;

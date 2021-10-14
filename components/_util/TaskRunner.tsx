@@ -5,7 +5,7 @@ export default class TaskRunner {
 
   callbacks: (() => any)[] = [];
 
-  isRunning: boolean = false;
+  isRunning = false;
 
   constructor(fn?: Function) {
     if (fn) {

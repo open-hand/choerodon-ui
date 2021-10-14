@@ -119,8 +119,8 @@ export default class Transfer extends Component<TransferProps, any> {
         // clear checkedKeys according to targetKeys
         const { dataSource, targetKeys = [] } = nextProps;
 
-        const newSourceSelectedKeys: String[] = [];
-        const newTargetSelectedKeys: String[] = [];
+        const newSourceSelectedKeys: string[] = [];
+        const newTargetSelectedKeys: string[] = [];
         dataSource.forEach(({ key }) => {
           if (sourceSelectedKeys.includes(key) && !targetKeys.includes(key)) {
             newSourceSelectedKeys.push(key);

@@ -6,43 +6,43 @@ import { changeConfirmLocale, ModalLocale } from '../modal/locale';
 
 export interface Locale {
   locale: string;
-  Pagination?: Object;
-  Cascader?: Object;
-  DatePicker?: Object;
-  TimePicker?: Object;
-  Calendar?: Object;
-  Table?: Object;
+  Pagination?: Record<string, any>;
+  Cascader?: Record<string, any>;
+  DatePicker?: Record<string, any>;
+  TimePicker?: Record<string, any>;
+  Calendar?: Record<string, any>;
+  Table?: Record<string, any>;
   Modal?: ModalLocale;
-  Popconfirm?: Object;
-  Transfer?: Object;
-  Select?: Object;
-  Upload?: Object;
+  Popconfirm?: Record<string, any>;
+  Transfer?: Record<string, any>;
+  Select?: Record<string, any>;
+  Upload?: Record<string, any>;
   imageCrop?: imageCrop;
   performanceTable?: PerformanceTable;
 }
 
 export interface imageCrop {
-  editImage: string,
-  avatarUploadError: string,
-  avatarServerError: string,
-  avatarUpload: string,
-  avatarReminder: string,
-  preview: string,
-  reUpload: string,
-  imageTooLarge: string,
-  imageUploadError: string,
-  imageDragHere: string,
-  pleaseUpload: string,
-  uploadType: string,
-  picture: string,
-  cancelButton: string,
-  saveButton: string,
-  changeAvatar: string,
+  editImage: string;
+  avatarUploadError: string;
+  avatarServerError: string;
+  avatarUpload: string;
+  avatarReminder: string;
+  preview: string;
+  reUpload: string;
+  imageTooLarge: string;
+  imageUploadError: string;
+  imageDragHere: string;
+  pleaseUpload: string;
+  uploadType: string;
+  picture: string;
+  cancelButton: string;
+  saveButton: string;
+  changeAvatar: string;
 }
 
 export interface PerformanceTable {
   emptyMessage: string;
-  loading:string;
+  loading: string;
 }
 
 export interface LocaleProviderProps {

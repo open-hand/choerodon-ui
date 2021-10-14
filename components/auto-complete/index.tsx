@@ -38,11 +38,11 @@ export interface AutoCompleteProps extends AbstractSelectProps {
   dataSource?: DataSourceItemType[];
   optionLabelProp?: string;
   onChange?: (value: SelectValue) => void;
-  onSelect?: (value: SelectValue, option: Object) => any;
+  onSelect?: (value: SelectValue, option: Record<string, any>) => any;
   children?: ValidInputElement | ReactElement<OptionProps> | ReactElement<OptionProps>[];
 }
 
-function isSelectOptionOrSelectOptGroup(child: any): Boolean {
+function isSelectOptionOrSelectOptGroup(child: any): boolean {
   return child && child.type && (child.type.isSelectOption || child.type.isSelectOptGroup);
 }
 
@@ -69,8 +69,8 @@ export default class AutoComplete extends Component<AutoCompleteProps, {}> {
       children && isValidElement(children) && children.type !== Option ? (
         Children.only(children)
       ) : (
-          <Input border={false} />
-        );
+        <Input border={false} />
+      );
     const elementProps = { ...(element as ReactElement<any>).props };
 
     delete elementProps.children;

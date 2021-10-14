@@ -18,7 +18,6 @@ export { EventDataNode, DataNode, TreeNodeProps };
 
 export { ExpandAction as DirectoryTreeExpandAction, DirectoryTreeProps } from './DirectoryTree';
 
-
 export interface C7ndTreeNodeAttribute {
   eventKey: string;
   prefixCls: string;
@@ -59,8 +58,7 @@ export interface C7nTreeNodeProps {
   [customProp: string]: any;
 }
 
-export interface C7nTreeNode extends Component<C7nTreeNodeProps, {}> {
-}
+export type C7nTreeNode = Component<C7nTreeNodeProps, {}>
 
 export interface C7nTreeNodeBaseEvent {
   node: C7nTreeNode;

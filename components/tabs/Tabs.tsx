@@ -21,7 +21,6 @@ import TabsWithContext from './TabsWithContext';
 
 export type Animated = { inkBar: boolean; tabPane: boolean };
 
-
 export interface TabsCustomized {
   defaultActiveKey?: string;
   panes: { [key: string]: TabPaneProps };
@@ -32,6 +31,7 @@ export interface TabsProps<T = string> {
   defaultActiveKey?: string;
   hideAdd?: boolean;
   hideOnlyGroup?: boolean;
+  showMore?: boolean;
   onChange?: (activeKey: T) => void;
   onTabClick?: (key: string) => void;
   onPrevClick?: MouseEventHandler<any>;
@@ -56,7 +56,7 @@ export interface TabsProps<T = string> {
   customizedCode?: string;
 }
 
-export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string; }
+export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }
 
 const Tabs: FunctionComponent<TabsProps> = function Tabs(props) {
   const {
@@ -93,6 +93,7 @@ Tabs.displayName = 'Tabs';
 
 Tabs.propTypes = {
   destroyInactiveTabPane: PropTypes.bool,
+  showMore: PropTypes.bool,
   onChange: PropTypes.func,
   children: PropTypes.any,
   prefixCls: PropTypes.string,
@@ -108,13 +109,14 @@ Tabs.propTypes = {
 
 Tabs.defaultProps = {
   hideAdd: false,
+  showMore: false,
   destroyInactiveTabPane: false,
   onChange: noop,
   keyboard: true,
   tabPosition: TabsPosition.top,
   type: TabsType.line,
 };
-export type ForwardTabsType = typeof Tabs & { TabPane: typeof TabPane, TabGroup: typeof TabGroup }
+export type ForwardTabsType = typeof Tabs & { TabPane: typeof TabPane; TabGroup: typeof TabGroup }
 (Tabs as ForwardTabsType).TabPane = TabPane;
 (Tabs as ForwardTabsType).TabGroup = TabGroup;
 

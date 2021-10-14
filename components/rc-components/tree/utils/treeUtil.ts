@@ -1,18 +1,18 @@
-import React, { Children } from 'react';
+import React, { Children, ReactNode } from 'react';
 import warning from '../../../_util/warning';
 import { DataEntity, DataNode, EventDataNode, FlattenNode, GetKey, Key, NodeElement } from '../interface';
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
 
-export function toArray(children) {
-  const ret: any[] = [];
+export function toArray(children: ReactNode): ReactNode[] {
+  const ret: ReactNode[] = [];
 
   Children.forEach(children, (c) => ret.push(c));
 
   return ret;
 }
 
-export function getKey(key: Key | null | undefined, pos: string) {
+export function getKey(key: Key | null | undefined, pos: string): Key {
   if (key !== null && key !== undefined) {
     return key;
   }
@@ -22,10 +22,10 @@ export function getKey(key: Key | null | undefined, pos: string) {
 /**
  * Warning if TreeNode do not provides key
  */
-export function warningWithoutKey(treeData: DataNode[] = []) {
+export function warningWithoutKey(treeData: DataNode[] = []): void {
   const keys: Map<string, boolean> = new Map();
 
-  function dig(list: DataNode[] | undefined, path: string = '') {
+  function dig(list: DataNode[] | undefined, path = ''): void {
     (list || []).forEach(treeNode => {
       const { key, children } = treeNode;
       warning(
@@ -154,7 +154,7 @@ export function traverseDataNodes(
   callback: (data: CallbackData) => void,
   // To avoid too many params, let use config instead of origin param
   config?: TraverseDataNodesConfig | ExternalGetKey,
-) {
+): void {
   // Init config
   let externalGetKey: ExternalGetKey | undefined | null = null;
   let childrenPropName: string | undefined;
@@ -172,12 +172,12 @@ export function traverseDataNodes(
   let syntheticGetKey: (node: DataNode, pos?: string) => Key;
   if (externalGetKey) {
     if (typeof externalGetKey === 'string') {
-      syntheticGetKey = (node: DataNode) => (node as any)[externalGetKey as string];
+      syntheticGetKey = (node: DataNode): Key => node[externalGetKey as string];
     } else if (typeof externalGetKey === 'function') {
-      syntheticGetKey = (node: DataNode) => (externalGetKey as GetKey<DataNode>)(node);
+      syntheticGetKey = (node: DataNode): Key => (externalGetKey as GetKey<DataNode>)(node);
     }
   } else {
-    syntheticGetKey = (node: DataNode, pos: string) => getKey(node.key, pos);
+    syntheticGetKey = (node: DataNode, pos: string): Key => getKey(node.key, pos);
   }
 
   // Process
@@ -185,7 +185,7 @@ export function traverseDataNodes(
     node: DataNode | null,
     index?: number,
     parent?: { node: DataNode | null; pos: string; level: number },
-  ) {
+  ): void {
     const children = node ? node[childrenPropName || 'children'] : dataNodes;
     const pos = node && parent ? getPosition(parent.pos, index) : '0';
 
@@ -244,7 +244,7 @@ export function convertDataToEntities(
   } = {},
   /** @deprecated Use `config.externalGetKey` instead */
   legacyExternalGetKey?: ExternalGetKey,
-) {
+): Wrapper {
   // Init config
   const mergedExternalGetKey = externalGetKey || legacyExternalGetKey;
 
@@ -319,7 +319,7 @@ export function getTreeNodeProps(
     dropPosition,
     keyEntities,
   }: TreeNodeRequiredProps,
-) {
+): TreeNodeProps {
   const entity = keyEntities[key];
 
   const treeNodeProps = {

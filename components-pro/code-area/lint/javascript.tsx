@@ -5,6 +5,7 @@ import { JSHINT } from 'jshint';
 if (typeof window !== 'undefined') {
   require('codemirror/addon/lint/lint.css');
   require('codemirror/addon/lint/lint');
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const CodeMirror = require('codemirror');
 
   const parseErrors = function(errors, output: Annotation[]) {

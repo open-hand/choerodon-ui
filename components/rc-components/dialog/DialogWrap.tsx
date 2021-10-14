@@ -31,7 +31,7 @@ class DialogWrap extends Component<IDialogPropTypes, any> {
     if (visible) {
       this.renderComponent({
         afterClose: this.removeContainer,
-        onClose() {},
+        onClose() {/* noop */},
         visible: false,
       });
     } else {
