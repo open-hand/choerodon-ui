@@ -107,13 +107,13 @@ export function previewImage(file: File | Blob): Promise<string> {
  * @returns 文件类型
  */
 export function getFileType(filename: string): string {
-  if (/\.(zip|rar|rar4|7z|Z|gz|bz2|xz|tar|tar\.gz|tar\.bz2|tar\.xz)$/g.test(filename)) {
+  if (/\.(zip|rar|rar4|7z|Z|gz|bz2|xz|tar|tar\.gz|tar\.bz2|tar\.xz)$/i.test(filename)) {
     return 'compressedfile';
   }
   const suffix = filename ?
     filename.lastIndexOf('.') === -1 ? '' : filename.split('.').pop()
     : '';
-  switch (suffix) {
+  switch (suffix?.toLowerCase()) {
     case 'doc':
     case 'docx':
       return 'doc';
@@ -123,6 +123,10 @@ export function getFileType(filename: string): string {
     case 'gif':
     case 'jpg':
     case 'jpeg':
+    case 'jfif':
+    case 'bmp':
+    case 'dpg':
+    case 'ico':
       return 'image';
     case 'pdf':
       return 'pdf';
@@ -143,3 +147,33 @@ export function getFileSizeStr(filesize: number): string {
     filesize / scale / scale / scale >= 0.09 ? `${(filesize / scale / scale / scale).toFixed(1)}GB` : `${(filesize / scale / scale).toFixed(1)}MB`
     : `${(filesize / scale).toFixed(1)}KB`;
 }
+
+const extname = (url = ''): string => {
+  const temp = url.split('/');
+  const filename = temp[temp.length - 1];
+  const filenameWithoutSuffix = filename.split(/#|\?/)[0];
+  return (/\.[^./\\]*$/.exec(filenameWithoutSuffix) || [''])[0];
+};
+
+export const isImageUrl = (file: UploadFile): boolean => {
+  if (file.type && !file.thumbUrl) {
+    return isImageFileType(file.type);
+  }
+  const url: string = (file.thumbUrl || file.url || '') as string;
+  const extension = extname(url);
+  if (
+    /^data:image\//.test(url) ||
+    /(webp|svg|png|gif|jpg|jpeg|jfif|bmp|dpg|ico)$/i.test(extension)
+  ) {
+    return true;
+  }
+  if (/^data:/.test(url)) {
+    // other file types of base64
+    return false;
+  }
+  if (extension) {
+    // other file types which have extension
+    return false;
+  }
+  return true;
+};
