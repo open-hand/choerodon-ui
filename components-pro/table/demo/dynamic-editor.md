@@ -105,13 +105,20 @@ class App extends React.Component {
         label: '性别',
         computedProps: {
           type: ({ record }) => {
-            return record && record.get('base') === 'Lov' ? 'object' : 'string';
+            switch(record && record.get('base')) {
+               case 'Lov': 
+                 return 'object';
+               case 'DatePicker': 
+                 return 'date';
+               default:
+                 return 'string';
+            }
           },
           lovCode: ({ record }) => {
             return record && record.get('base') === 'Lov' ? 'LOV_CODE' : null;
           },
           lookupCode: ({ record }) => {
-            return record && record.get('base') === 'Lov' ? null : 'HR.EMPLOYEE_GENDER';
+            return record && record.get('base') === 'Select' ? 'HR.EMPLOYEE_GENDER' : null;
           },
         },
         required: true,
@@ -189,6 +196,7 @@ class App extends React.Component {
                 <Select>
                   <Select.Option value="Select">Select</Select.Option>
                   <Select.Option value="Lov">Lov</Select.Option>
+                  <Select.Option value="DatePicker">DatePicker</Select.Option>
                 </Select>
               );
             }}

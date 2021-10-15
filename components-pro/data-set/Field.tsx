@@ -1219,6 +1219,8 @@ export default class Field {
           }));
           lookupCaches.set(lookupToken, promise);
         }
+      } else {
+        this.set(LOOKUP_TOKEN, undefined);
       }
     }
     if (promise) {

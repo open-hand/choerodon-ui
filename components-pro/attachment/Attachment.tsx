@@ -671,7 +671,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       },
     } = this;
     const buttonProps = this.getOtherProps();
-    const { children, ref, className, style, accept, name, fileKey, ...rest } = buttonProps;
+    const { children, ref, className, style, accept, name, fileKey, onChange, ...rest } = buttonProps;
     const max = this.getProp('max');
     const uploadProps = {
       multiple,
@@ -679,6 +679,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       name: name || fileKey || getConfig('attachment').defaultFileKey,
       type: 'file',
       ref,
+      onChange,
     };
     const width = isCardButton ? this.getPictureWidth() : undefined;
     return isCardButton ? (
