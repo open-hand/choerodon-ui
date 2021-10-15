@@ -1,8 +1,8 @@
 import React, { isValidElement, ReactNode } from 'react';
-import format from 'string-template';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import flatMap from 'lodash/flatMap';
+import formatTemplate from './formatTemplate';
 
 export function formatReactTemplate<P extends object>(
   template: ReactNode,
@@ -38,7 +38,7 @@ export function formatReactTemplate(
             }
             return textArr;
           }
-          return format(text, { [key]: node });
+          return formatTemplate(text, { [key]: node }, true);
         }
         return text;
       });

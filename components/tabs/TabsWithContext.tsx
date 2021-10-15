@@ -204,7 +204,6 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   const tabBarProps: TabBarProps = {
     inkBarAnimated,
     extraContent,
-    tabStyle: style,
     style: tabBarStyle,
     tabBarGutter,
     type,

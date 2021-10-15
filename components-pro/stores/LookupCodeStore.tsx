@@ -88,7 +88,7 @@ export class LookupCodeStore {
     return {
       ...config,
       adapter: config.adapter || (noCache ? noCacheAdapter : adapter),
-      url: config.url || this.getUrl(field),
+      url: config.url || this.getUrl(field, record),
       method: config.method || getConfig('lookupAxiosMethod') || 'post',
       params: config.params || params,
     };

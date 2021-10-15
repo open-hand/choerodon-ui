@@ -101,7 +101,6 @@
     "rmc-feedback": "^1.0.0",
     "scroll-into-view-if-needed": "^2.2.25",
     "smooth-scroll-into-view-if-needed": "^1.1.28",
-    "string-template": "^1.0.0",
     "tslib": "^1.9.3",
     "warning": "~4.0.3",
     "xlsx": "^0.17.0"
@@ -128,7 +127,6 @@
     "@types/element-resize-event": "^3.0.0",
     "@types/faker": "^5.5.8",
     "@types/insert-css": "^2.0.1",
-    "@types/is-promise": "^2.2.0",
     "@types/lodash": "^4.14.136",
     "@types/prettier": "1.16.1",
     "@types/prop-types": "^15.7.1",
@@ -138,7 +136,6 @@
     "@types/react-dom": "^16.8.6",
     "@types/react-is": "^16.7.1",
     "@types/react-slick": "~0.23.3",
-    "@types/string-template": "~1.0.2",
     "@types/warning": "~3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
