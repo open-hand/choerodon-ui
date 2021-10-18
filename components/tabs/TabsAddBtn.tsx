@@ -7,10 +7,11 @@ import Icon from '../icon';
 interface TabsAddBtnProps extends TabsProps {
   extraPrefixCls?: string;
   vertical?: boolean;
+  isFixed?: boolean;
 }
 
 const TabsAddBtn: FunctionComponent<TabsAddBtnProps> = function TabsAddBtn(props) {
-  const { onEdit, prefixCls: customizePrefixCls, extraPrefixCls, vertical = false } = props;
+  const { onEdit, prefixCls: customizePrefixCls, extraPrefixCls, vertical = false, isFixed } = props;
 
   const prefixCls = getPrefixCls('tabs', customizePrefixCls);
   const createNewTab: MouseEventHandler<HTMLElement> = useCallback(
@@ -23,6 +24,7 @@ const TabsAddBtn: FunctionComponent<TabsAddBtnProps> = function TabsAddBtn(props
   );
 
   const classes = classnames(`${prefixCls}-nav-add`, {
+    [`${prefixCls}-nav-add-fixed`]: isFixed,
     [`${prefixCls}-nav-vertical-add`]: vertical,
   });
 

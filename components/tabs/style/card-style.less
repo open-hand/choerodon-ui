@@ -37,10 +37,10 @@
   }
   &-nav-scroll {
     scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none; /* Firefox */
     &::-webkit-scrollbar {
       display: none; /* Chrome Safari */
-      -ms-overflow-style: none; /* IE 10+ */
-      scrollbar-width: none; /* Firefox */
     }
   }
   &&-card > &-bar &-tab .@{iconfont-css-prefix}-close {
@@ -114,12 +114,13 @@
     height: auto;
   }
   &-nav-add {
-    display: inline-block;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
     min-width: @tabs-card-min-width;
     height: inherit;
     margin-right: 0.02rem;
     line-height: @tabs-card-height - 0.02rem;
-    text-align: center;
     background: @tabs-card-head-background;
     border: @border-width-base @border-style-base @border-color-split;
     border-radius: @border-radius-base @border-radius-base 0 0;
@@ -129,6 +130,10 @@
     &:hover {
       color: @tabs-card-active-color;
     }
+  }
+  &-nav-add-fixed{
+    position: relative;
+    text-align: center;
   }
   &-nav-vertical-add {
     width: 100%;
