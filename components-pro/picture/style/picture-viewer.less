@@ -9,42 +9,121 @@
   justify-content: space-between;
   height: 100%;
 
-  &-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: @text-color-dark;
-  }
-
   &-modal {
+    &-mask {
+      background-color: rgba(0, 0, 0, 0.65);
+    }
+
     .@{c7n-pro-prefix}-modal {
-      &-header {
-        background-color: #000;
-      }
-
-      &-title,
-      &-header-button {
-        color: inherit;
-      }
-
       &-content {
-        background-color: rgba(0, 0, 0, .75);
+        background-color: transparent;
+      }
+
+      &-body {
+        padding: .4rem;
+        overflow: hidden;
       }
     }
   }
 
-  &-btn {
-    color: @text-color-dark !important;
+  &-btn.@{c7n-pro-prefix}-btn {
+    width: .24rem;
+    height: .24rem;
+    color: @text-color-dark;
+
+    .@{iconfont-css-prefix} {
+      display: block;
+      font-size: .24rem;
+      line-height: 1;
+    }
+  }
+
+  &-btn-nav.@{c7n-pro-prefix}-btn {
+    width: .32rem;
+    height: .32rem;
+
+    .@{iconfont-css-prefix} {
+      font-size: .32rem;
+    }
+  }
+
+  &-btn-nav.@{c7n-pro-prefix}-btn-lg {
+    width: .52rem;
+    height: .52rem;
+
+    .@{iconfont-css-prefix} {
+      font-size: .52rem;
+    }
+  }
+
+  &-btn-close {
+    position: absolute;
+    top: .4rem;
+    right: .4rem;
   }
 
   &-picture {
+    display: flex;
     flex: 1;
+    flex-direction: column;
     height: 100%;
-    margin: 0 auto;
+    margin: 0 .4rem;
+    cursor: grab;
+
+    &-main {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+    }
 
     .@{c7n-pro-prefix}-picture {
       width: 100%;
       height: 100%;
+    }
+  }
+
+  &-toolbar {
+    margin-top: .4rem;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  &-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: .24rem;
+
+    &-scroll {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &-container {
+        margin: 0 .2rem;
+        overflow: hidden;
+      }
+    }
+
+
+    &-item {
+      cursor: pointer;
+    }
+
+    &-item::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      background-color: rgba(0, 0, 0, .3);
+      transition: background-color @animation-duration-base;
+      content: '';
+    }
+
+    &-current::after {
+      background-color: rgba(0, 0, 0, 0);
     }
   }
 }

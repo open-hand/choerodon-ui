@@ -39,6 +39,7 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   border?: boolean;
   preview?: boolean;
   previewUrl?: string;
+  downloadUrl?: string;
   previewTarget?: string;
   objectFit?: ObjectFitProperty;
   objectPosition?: ObjectPositionProperty<string | 0>;
@@ -51,19 +52,22 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
 
 export interface PictureRef {
   src?: string | undefined;
+  downloadUrl?: string | undefined;
 }
 
 export interface PictureForwardRef {
   preview();
+
+  getImage(): HTMLImageElement | null;
 }
 
 function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const {
-    src, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true,
+    src, downloadUrl, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true,
     objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, onPreview, ...rest
   } = props;
   const url = previewUrl || src;
-  const pictureRef = useRef<PictureRef>({ src: url });
+  const pictureRef = useRef<PictureRef>({ src: url, downloadUrl });
   const context = useContext<PictureContextValue | undefined>(PictureContext);
   const customPrefixCls = getProPrefixCls('picture', prefixCls);
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -74,13 +78,13 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
       if (context && isNumber(index)) {
         context.preview(index);
       } else {
-        modalPreview({ list: [url] });
+        modalPreview({ list: [{ src: url, downloadUrl }] });
       }
       if (onPreview) {
         onPreview();
       }
     }
-  }, [context, index, preview, previewTarget, status, url, onPreview]);
+  }, [context, index, preview, previewTarget, status, url, downloadUrl, onPreview]);
   const handleClick = useCallback((e) => {
     handlePreview();
     if (onClick) {
@@ -149,7 +153,8 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
 
   useImperativeHandle(ref, () => ({
     preview: handlePreview,
-  }), [handlePreview]);
+    getImage: () => imgRef.current,
+  }), [handlePreview, imgRef]);
 
   const renderSources = () => {
     if (sources) {
@@ -220,6 +225,7 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   }
   return picture;
 }
+
 const ForwardPicture: ForwardRefExoticComponent<PropsWithoutRef<PictureProps> & RefAttributes<PictureForwardRef>> = forwardRef<PictureForwardRef, PictureProps>(Picture);
 export type ForwardPictureType = typeof ForwardPicture & { Provider: typeof PictureProvider; Context: typeof PictureContext };
 (ForwardPicture as ForwardPictureType).Provider = PictureProvider;

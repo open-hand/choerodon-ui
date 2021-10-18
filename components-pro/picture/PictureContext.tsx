@@ -34,12 +34,7 @@ export const PictureProvider: FunctionComponent<PictureProviderProps> = (props) 
   const preview = useCallback((index: number) => {
     modalPreview({
       defaultIndex: index,
-      list: pictureList.current.reduce<string[]>((items, picture) => {
-        if (picture && picture.src) {
-          items.push(picture.src);
-        }
-        return items;
-      }, []),
+      list: pictureList.current.filter((picture) => picture && picture.src) as PictureRef[],
     });
   }, [pictureList]);
   const value = useMemo(() => ({
