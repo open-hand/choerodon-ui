@@ -1333,12 +1333,11 @@ export default class Field {
     if (record) {
       const value = uuid || record.get(this.name);
       if (value) {
-        const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(this.dataSet, 'attachmentCaches', () => observable.map());
-        const cache = attachmentCaches.get(value);
+        const cache = attachmentStore.get(value);
         if (cache) {
           set(cache, 'attachments', attachments);
         } else {
-          attachmentCaches.set(value, { attachments });
+          attachmentStore.set(value, { attachments });
         }
       }
     } else {
@@ -1348,13 +1347,9 @@ export default class Field {
 
   getAttachments(record: Record | undefined = this.record) {
     if (record) {
-      const { attachmentCaches } = this.dataSet;
       const uuid = record.get(this.name);
-      if (uuid && attachmentCaches) {
-        const cache = attachmentCaches.get(uuid);
-        if (cache) {
-          return get(cache, 'attachments');
-        }
+      if (uuid) {
+        return attachmentStore.getAttachments(uuid);
       }
     } else {
       return this.get('attachments');
@@ -1366,14 +1361,12 @@ export default class Field {
   setAttachmentCount(count: number | undefined, record: Record | undefined = this.record) {
     if (record) {
       const uuid = record.get(this.name);
-      const { dataSet } = this;
       if (uuid) {
-        const attachmentCaches = getIf<DataSet, ObservableMap<string, { count?: number | undefined, attachments?: AttachmentFile[] | undefined }>>(dataSet, 'attachmentCaches', () => observable.map());
-        const cache = attachmentCaches.get(uuid);
+        const cache = attachmentStore.get(uuid);
         if (cache) {
           set(cache, 'count', count);
         } else {
-          attachmentCaches.set(uuid, { count });
+          attachmentStore.set(uuid, { count });
         }
       }
     } else {
@@ -1387,13 +1380,9 @@ export default class Field {
       return attachments.length;
     }
     if (record) {
-      const { attachmentCaches } = this.dataSet;
       const uuid = record.get(this.name);
-      if (uuid && attachmentCaches) {
-        const cache = attachmentCaches.get(uuid);
-        if (cache) {
-          return get(cache, 'count');
-        }
+      if (uuid) {
+        return attachmentStore.getCount(uuid);
       }
     } else {
       return this.get('attachmentCount');
