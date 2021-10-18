@@ -52,8 +52,9 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const attachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
-  const { getPreviewUrl } = attachmentConfig;
+  const { getPreviewUrl, getDownloadUrl } = attachmentConfig;
   const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) : url;
+  const downloadUrl = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = attachment.type.startsWith('image');
   const preview = (status === 'success' || status === 'done');
@@ -89,6 +90,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
           height={14}
           alt={name}
           previewUrl={src}
+          downloadUrl={downloadUrl}
           src={isSrcIcon ? icon as string : undefined}
           objectFit="contain"
           status="loaded"
@@ -124,6 +126,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
             height={width}
             alt={name}
             src={src}
+            downloadUrl={downloadUrl}
             lazy
             objectFit="contain"
             index={index}
@@ -207,20 +210,21 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
           </Tooltip>,
         );
       }
-      const { getDownloadUrl } = attachmentConfig;
-      const downProps = {
-        className: classnames(`${prefixCls}-icon`),
-        icon: isCard ? 'arrow_downward' : 'get_app',
-        funcType: FuncType.link,
-        href: getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) || url,
-        target: ATTACHMENT_TARGET,
-        block: isCard,
-      };
-      buttons.push(
-        <Tooltip key="download" title={$l('Attachment', 'download')}>
-          <Button {...downProps} />
-        </Tooltip>,
-      );
+      if (downloadUrl) {
+        const downProps = {
+          className: classnames(`${prefixCls}-icon`),
+          icon: isCard ? 'arrow_downward' : 'get_app',
+          funcType: FuncType.link,
+          href: downloadUrl,
+          target: ATTACHMENT_TARGET,
+          block: isCard,
+        };
+        buttons.push(
+          <Tooltip key="download" title={$l('Attachment', 'download')}>
+            <Button {...downProps} />
+          </Tooltip>,
+        );
+      }
     }
     if (!readOnly && status !== 'uploading') {
       const rmProps = {

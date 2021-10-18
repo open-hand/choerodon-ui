@@ -108,9 +108,9 @@ export type AttachmentConfig = {
   action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => AxiosRequestConfig);
   batchFetchCount?: <T extends string | number | symbol>(attachmentUUIDs: T[]) => Promise<{ [key in T]: number }>;
   fetchList?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => Promise<FileLike[]>;
-  getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string;
-  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string;
-  getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string;
+  getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string | undefined;
+  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string | undefined;
+  getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string | undefined;
   getAttachmentUUID?: () => Promise<string> | string;
   renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;
   renderHistory?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => ReactNode;
@@ -415,6 +415,9 @@ const defaultFormatter: Formatter = {
 const defaultAttachment: AttachmentConfig = {
   defaultFileKey: 'file',
   defaultFileSize: 0,
+  getDownloadUrl({ attachment }) {
+    return attachment.url;
+  },
 };
 const defaultConfig = {
   prefixCls: 'c7n',

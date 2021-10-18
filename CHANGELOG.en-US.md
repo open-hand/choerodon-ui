@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
 - 💄 `<pro>PerformanceTable`: Optimize the big data table drag and drop callback event.
 - 💄 `Upload`: Optimize upper case picture suffix thumbnail display.
+- 💄 `<pro>Attachment`: Enhanced image preview function.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
