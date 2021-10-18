@@ -1139,6 +1139,14 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return false;
   }
 
+  exchangeRangeValue(start, end) {
+    const { rangeValue } = this;
+    if (rangeValue) {
+      rangeValue[0] = end;
+      rangeValue[1] = start;
+    }
+  }
+
   @action
   prepareSetValue(...value: any[]): void {
     const processV = this.getProp('processValue');
@@ -1154,12 +1162,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         }
         rangeValue[rangeTarget] = newValue;
         if (rangeTarget === 0 && (newValue || isNumber(newValue)) && (end || isNumber(end)) && this.isLowerRange(end, newValue)) {
-          rangeValue[rangeTarget] = end;
-          rangeValue[1] = newValue;
+          this.exchangeRangeValue(newValue, end);
         }
         if (rangeTarget === 1 && (newValue || isNumber(newValue)) && (start || isNumber(start)) && this.isLowerRange(newValue, start)) {
-          rangeValue[rangeTarget] = start;
-          rangeValue[0] = newValue;
+          this.exchangeRangeValue(start, newValue);
         }
       }
     } else {

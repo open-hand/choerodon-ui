@@ -103,8 +103,26 @@ const LOOKUP_SIDE_EFFECT_KEYS = [
 
 const LOV_SIDE_EFFECT_KEYS = ['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl', 'optionsProps'];
 
-const LOOKUP_TOKEN = '__lookup_token__';
 const LOOKUP_DATA = 'lookupData';
+
+function getLookupToken(field: Field, record: Record | undefined): string | undefined {
+  if (record) {
+    const { lookupTokens } = record;
+    if (lookupTokens) {
+      return lookupTokens.get(field.name);
+    }
+  }
+  return field.lookupToken;
+}
+
+function setLookupToken(field: Field, token: string | undefined, record: Record | undefined) {
+  if (record) {
+    const lookupTokens = getIf<Record, ObservableMap<string, string | undefined>>(record, 'lookupTokens', () => observable.map());
+    lookupTokens.set(field.name, token);
+  } else {
+    field.lookupToken = token;
+  }
+}
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
@@ -417,6 +435,8 @@ export default class Field {
 
   @observable pending?: boolean;
 
+  @observable lookupToken?: string | undefined;
+
   lastDynamicProps?: { [key: string]: any } | undefined;
 
   validatorPropKeys?: string[] | undefined;
@@ -693,7 +713,7 @@ export default class Field {
     }
     if (propsName === 'lookup') {
       const { dataSet } = this;
-      const lookupToken = this.get(LOOKUP_TOKEN, record);
+      const lookupToken = getLookupToken(this, record);
       const { lookupCaches } = dataSet;
       if (lookupToken && lookupCaches) {
         return lookupCaches.get(lookupToken);
@@ -759,9 +779,8 @@ export default class Field {
         value,
         oldValue,
       });
-      if (record) {
-        this.handlePropChange(propsName, value, oldValue, record);
-      } else {
+      this.handlePropChange(propsName, value, oldValue, record);
+      if (!record) {
         dataSet.forEach((r) => {
           const recordField = r.ownerFields.get(name);
           if (!recordField || !recordField.props.has(propsName)) {
@@ -778,7 +797,7 @@ export default class Field {
   replace(props: Partial<FieldProps> = {}): Field {
     const p = { ...props };
     this.props.forEach((_v, key) => {
-      if (![LOOKUP_TOKEN, LOOKUP_DATA, 'name'].includes(key)) {
+      if (![LOOKUP_DATA, 'name'].includes(key)) {
         this.set(key, props[key]);
       }
       delete p[key];
@@ -797,7 +816,7 @@ export default class Field {
   }
 
   getLookup(record: Record | undefined = this.record): object[] | undefined {
-    const lookupToken = this.get(LOOKUP_TOKEN, record);
+    const lookupToken = getLookupToken(this, record);
     const { lookupCaches } = this.dataSet;
     if (lookupToken && lookupCaches) {
       const lookup = lookupCaches.get(lookupToken);
@@ -1164,14 +1183,14 @@ export default class Field {
   fetchLookup(noCache = false, record: Record | undefined = this.record): Promise<object[] | undefined> {
     const lookup = this.getLookup(record);
     const lookupCaches = getIf<DataSet, ObservableMap<string, object[] | Promise<object[]>>>(this.dataSet, 'lookupCaches', () => observable.map());
-    const oldToken = this.get(LOOKUP_TOKEN, record);
+    const oldToken = getLookupToken(this, record);
     const batch = this.get('lookupBatchAxiosConfig', record) || getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode', record);
     let promise;
     if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0) {
       const cachedLookup = lookupCaches.get(lookupCode);
       if (lookupCode !== oldToken) {
-        this.set(LOOKUP_TOKEN, lookupCode);
+        setLookupToken(this, lookupCode, record);
       }
       if (cachedLookup) {
         if (isArrayLike(cachedLookup)) {
@@ -1196,7 +1215,7 @@ export default class Field {
       if (axiosConfig.url) {
         const lookupToken = buildURLWithAxiosConfig(axiosConfig);
         if (lookupToken !== oldToken) {
-          this.set(LOOKUP_TOKEN, lookupToken);
+          setLookupToken(this, lookupToken, record);
         }
         if (!noCache) {
           const cachedLookup = lookupCaches.get(lookupToken);
@@ -1220,13 +1239,13 @@ export default class Field {
           lookupCaches.set(lookupToken, promise);
         }
       } else {
-        this.set(LOOKUP_TOKEN, undefined);
+        setLookupToken(this, undefined, record);
       }
     }
     if (promise) {
       return promise.then(action((result) => {
         this.pending = false;
-        if (lookup && oldToken !== this.get(LOOKUP_TOKEN, record)) {
+        if (lookup && oldToken !== getLookupToken(this, record)) {
           const value = this.getValue(record);
           const valueField = this.get('valueField', record);
           if (value && valueField) {

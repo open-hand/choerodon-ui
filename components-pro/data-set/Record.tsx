@@ -153,6 +153,8 @@ export default class Record {
 
   @observable dirtyData?: ObservableMap<string, any> | undefined;
 
+  @observable lookupTokens?: ObservableMap<string, string | undefined> | undefined;
+
   computedFieldProps?: Map<string | symbol, IComputedValue<any>>;
 
   lastDynamicFieldProps?: Map<string, { [key: string]: any } | undefined>;

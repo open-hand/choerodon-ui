@@ -611,11 +611,8 @@ export default class Attachment extends FormField<AttachmentProps> {
       const index = attachments.indexOf(attachment);
       if (index !== -1) {
         attachments.splice(index, 1);
+        this.attachments = attachments;
         this.checkValidity();
-        const { onAttachmentsChange } = this.props;
-        if (onAttachmentsChange) {
-          onAttachmentsChange(attachments);
-        }
       }
     }
     return undefined;

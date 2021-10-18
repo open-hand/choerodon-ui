@@ -29,6 +29,7 @@ timeline: true
 - 💄 `Upload`: 优化大写图片后缀缩略图显示。
 - 💄 `<pro>Attachment`: 增强图片预览功能。
 - 💄 `<pro>Attachment`: 优化缓存逻辑。
+- 💄 `<pro>DateTimePicker`: 优化范围值在自动交换顺序时，由 defaultTime 设置的时间值不变。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。
