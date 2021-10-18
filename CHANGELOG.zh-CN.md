@@ -28,12 +28,14 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 优化大数据表格拖拽回调事件。
 - 💄 `Upload`: 优化大写图片后缀缩略图显示。
 - 💄 `<pro>Attachment`: 增强图片预览功能。
+- 💄 `<pro>Attachment`: 优化缓存逻辑。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。
 - 🐞 `<pro>Table.Column`： 修复 editor 为 true 时， 无法动态从 Select 切换成其他编辑器的问题。
 - 🐞 `<pro>Attachment`： 修复点击查看附件按钮报错的问题。
 - 🐞 `<pro>Attachment`： 修复上传按钮内容溢出并设置了 tooltip 时上传无反应的问题。
+- 🐞 `<pro>Attachment`： 修复 accept 属性无法控制文件选择的问题。
 - 🐞 `<pro>DataSet.Field`： 修复通过 dynamicProps 设置的校验属性首次校验无效果的问题。
 - 🐞 `<pro>DataSet`： 修复 appendData total 参数更新问题。
 - 🐞 `<pro>Validator`： 修复 stepMismatch 错误信息不全的问题。

@@ -79,7 +79,6 @@ import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 import ValidationResult from '../validator/ValidationResult';
-import AttachmentFile from './AttachmentFile';
 import { iteratorReduce } from '../_util/iteratorUtils';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
@@ -461,8 +460,6 @@ export default class DataSet extends EventManager {
   validating = false;
 
   @observable lookupCaches?: ObservableMap<string, object[] | Promise<object[]>>;
-
-  @observable attachmentCaches?: ObservableMap<string, { count?: number | undefined; attachments?: AttachmentFile[] | undefined }>;
 
   @observable selectionStrategy?: CheckedStrategy;
 
