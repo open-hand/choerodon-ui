@@ -58,6 +58,8 @@ const viewComponents: { [x: string]: typeof DaysView } = {
   [ViewMode.time]: TimesView,
 };
 
+const createDefaultTime = () => moment('00:00:00', 'HH:mm:ss');
+
 export interface DatePickerProps extends TriggerFieldProps {
   /**
    * 显示模式date|dateTime|time|year|month|week
@@ -267,7 +269,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   getDefaultTime(): [Moment, Moment] {
-    const createDefaultTime = () => moment('00:00:00', 'HH:mm:ss');
     const { defaultTime = createDefaultTime() } = this.props;
     if (isArrayLike(defaultTime)) {
       return [defaultTime[0] || createDefaultTime(), defaultTime[1] || createDefaultTime()];
@@ -685,6 +686,36 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       return v.format();
     }
     return v;
+  }
+
+  exchangeRangeValue(start: Moment, end: Moment) {
+    const { defaultTime } = this.props;
+    if (defaultTime) {
+      const [startDefaultTime, endDefaultTime] = this.getDefaultTime();
+      const startHour = start.hour();
+      const startMinute = start.minute();
+      const startSecond = start.second();
+      const startDefaultHour = startDefaultTime.hour();
+      const startDefaultMinute = startDefaultTime.minute();
+      const startDefaultSecond = startDefaultTime.second();
+      const endHour = end.hour();
+      const endMinute = end.minute();
+      const endSecond = end.second();
+      const endDefaultHour = endDefaultTime.hour();
+      const endDefaultMinute = endDefaultTime.minute();
+      const endDefaultSecond = endDefaultTime.second();
+      if (startHour === startDefaultHour && startMinute === startDefaultMinute && startSecond === startDefaultSecond) {
+        end.hour(startHour);
+        end.minute(startMinute);
+        end.second(startSecond);
+      }
+      if (endHour === endDefaultHour && endMinute === endDefaultMinute && endSecond === endDefaultSecond) {
+        start.hour(endHour);
+        start.minute(endMinute);
+        start.second(endSecond);
+      }
+    }
+    super.exchangeRangeValue(start, end);
   }
 
   @action
