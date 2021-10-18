@@ -686,9 +686,11 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   handleButtonClick(e) {
-    this.handleOpenModal();
     const { onClick = noop } = this.props;
     onClick(e);
+    if (!e.isDefaultPrevented()) {
+      this.handleOpenModal();
+    }
   }
 
   renderWrapper(): ReactNode {
