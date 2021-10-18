@@ -26,6 +26,7 @@ timeline: true
 - 💄 `RcTrigger`: 使组件成为观察者。
 - 💄 `<pro>Select`: 使用 options 数据源模式下，支持 searchMatcher 配置搜索参数。
 - 💄 `<pro>PerformanceTable`: 优化大数据表格拖拽回调事件。
+- 💄 `Upload`: 优化大写图片后缀缩略图显示。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。

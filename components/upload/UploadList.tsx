@@ -8,7 +8,7 @@ import { UploadFile, UploadListProps } from './interface';
 import Animate from '../animate';
 import { ProgressType } from '../progress/enum';
 import { getPrefixCls } from '../configure';
-import { previewImage, getFileType, getFileSizeStr } from './utils';
+import { previewImage, getFileType, getFileSizeStr, isImageUrl } from './utils';
 import CompressedfileIcon from './icon-svg/compressedfileIcon';
 import DocIcon from './icon-svg/docIcon';
 import FileuploadIcon from './icon-svg/fileuploadIcon';
@@ -16,10 +16,6 @@ import ImageIcon from './icon-svg/imageIcon';
 import PdfIcon from './icon-svg/pdfIcon';
 import XlsIcon from './icon-svg/xlsIcon';
 import { Size } from '../_util/enum';
-
-const isImageUrl = (url: string): boolean => {
-  return /^data:image\//.test(url) || /\.(webp|svg|png|gif|jpg|jpeg)$/.test(url);
-};
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex): UploadFile[] => {
@@ -155,7 +151,7 @@ export default class UploadList extends Component<UploadListProps, any> {
         } else if (!file.thumbUrl && !file.url) {
           icon = <Icon className={`${prefixCls}-list-item-thumbnail`} type="picture" />;
         } else {
-          const thumbnail = isImageUrl((file.thumbUrl || file.url) as string) ? (
+          const thumbnail = isImageUrl(file) ? (
             <img src={file.thumbUrl || file.url} alt={file.name} />
           ) : (
             <Icon type="file" style={{ fontSize: 48, color: 'rgba(0,0,0,0.5)' }} />
