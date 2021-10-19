@@ -15,6 +15,7 @@ import {
 } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
+import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
@@ -42,6 +43,7 @@ import { getLovPara } from '../stores/utils';
 import { TimeStep } from '../date-picker/DatePicker';
 import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from '../number-field/utils';
 import AttachmentFile from './AttachmentFile';
+import { iteratorFind } from '../_util/iteratorUtils';
 
 function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
@@ -1269,7 +1271,7 @@ export default class Field {
 
   isValid(record: Record | undefined = this.record): boolean {
     if (record) {
-      const results = record.getValidationError(this.name);
+      const results = this.getValidationErrorValues(record);
       return !results || !results.length;
     }
     return true;
@@ -1277,7 +1279,7 @@ export default class Field {
 
   getValidationMessage(record: Record | undefined = this.record): ReactNode {
     if (record) {
-      const results = record.getValidationError(this.name);
+      const results = this.getValidationErrorValues(record);
       if (results && results.length) {
         return results[0].validationMessage;
       }
@@ -1287,7 +1289,20 @@ export default class Field {
 
   getValidationErrorValues(record: Record | undefined = this.record): ValidationResult[] {
     if (record) {
-      return record.getValidationError(this.name) || [];
+      const errors = record.getValidationError(this.name);
+      if (errors && errors.length) {
+        return errors;
+      }
+      const { validationErrors } = record;
+      if (validationErrors) {
+        const unique = this.get('unique', record);
+        if (isString(unique)) {
+          const uniqueErrors = iteratorFind(validationErrors.values(), (errors) => errors.some(error => error.ruleName === 'uniqueError' && error.validationProps.unique === unique));
+          if (uniqueErrors) {
+            return uniqueErrors;
+          }
+        }
+      }
     }
     return [];
   }

@@ -29,6 +29,7 @@ timeline: true
 - 💄 `Upload`: 优化大写图片后缀缩略图显示。
 - 💄 `<pro>Attachment`: 增强图片预览功能。
 - 💄 `<pro>Attachment`: 优化缓存逻辑。
+- 💄 `<pro>Attachment`: 在标签上显示必输星号
 - 💄 `<pro>DateTimePicker`: 优化范围值在自动交换顺序时，由 defaultTime 设置的时间值不变。
 - 💄 `<pro>Lov`: 优化按钮模式的 onClick 钩子允许通过调用 event.preventDefault() 阻止弹出模态框。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。

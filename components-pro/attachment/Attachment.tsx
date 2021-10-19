@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action as mobxAction, observable, runInAction, set } from 'mobx';
+import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
@@ -150,35 +150,11 @@ export default class Attachment extends FormField<AttachmentProps> {
         field.setAttachments(attachments, this.record, this.tempAttachmentUUID);
       } else {
         this.observableProps.attachments = attachments;
-        const uuid = this.tempAttachmentUUID || this.getValue();
-        if (uuid) {
-          const cache = attachmentStore.get(uuid);
-          if (cache) {
-            set(cache, 'attachments', attachments);
-          } else {
-            attachmentStore.set(uuid, { attachments });
-          }
-        }
       }
       if (attachments) {
         const { onAttachmentsChange } = this.props;
         if (onAttachmentsChange) {
           onAttachmentsChange(attachments);
-        }
-      }
-    });
-  }
-
-  set count(count: number | undefined) {
-    runInAction(() => {
-      this.observableProps.count = count;
-      const uuid = this.tempAttachmentUUID || this.getValue();
-      if (uuid) {
-        const cache = attachmentStore.get(uuid);
-        if (cache) {
-          set(cache, 'count', count);
-        } else {
-          attachmentStore.set(uuid, { count });
         }
       }
     });
@@ -282,7 +258,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           const { batchFetchCount } = getConfig('attachment');
           if (batchFetchCount && !this.attachments) {
             attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
-              this.count = count || 0;
+              this.observableProps.count = count || 0;
             }));
           }
         }
@@ -660,8 +636,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (this.hasFloatLabel || viewMode === 'popup') {
       const label = this.getLabel();
       if (label) {
+        const { prefixCls } = this;
         return (
-          <span className={`${this.prefixCls}-header-label`}>
+          <span className={classNames(`${prefixCls}-header-label`, { [`${prefixCls}-required`]: this.getProp('required') })}>
             {label}
           </span>
         );
