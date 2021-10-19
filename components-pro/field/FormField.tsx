@@ -895,9 +895,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   getValidationResults(): ValidationResult[] | undefined {
-    const { record, name } = this;
-    if (record && name) {
-      return record.getValidationError(name);
+    const { field, record } = this;
+    if (field) {
+      return field.getValidationErrorValues(record);
     }
     return this.validationResults;
   }
