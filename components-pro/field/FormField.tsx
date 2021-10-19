@@ -194,7 +194,7 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 校验信息渲染器
    */
-  validationRenderer?: (result: ValidationResult, props: ValidatorProps) => ReactNode;
+  validationRenderer?: (result: ValidationResult, props: Partial<ValidatorProps>) => ReactNode;
   /**
    * 多值标签超出最大数量时的占位描述
    */
@@ -439,16 +439,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @observable $validator?: Validator | undefined;
 
-  get validator(): Validator | undefined {
-    const { record, name } = this;
-    if (record && name) {
-      const recordField = record.ownerFields.get(name);
-      if (recordField) {
-        return recordField.validator;
-      }
-    }
-    return this.$validator;
-  }
+  @observable validationResults?: ValidationResult[] | undefined;
 
   get name(): string | undefined {
     return this.observableProps.name;
@@ -564,8 +555,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (field) {
       return field.isValid(this.record);
     }
-    const { validator } = this;
-    return validator ? validator.validity.valid : true;
+    const { validationResults } = this;
+    if (validationResults) {
+      return !validationResults.length;
+    }
+    return true;
   }
 
   get multiple(): boolean {
@@ -876,43 +870,56 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     }
   }
 
+  getValidatorProp(key: string) {
+    switch (key) {
+      case 'type':
+        return this.getFieldType();
+      case 'customValidator':
+        return this.getProp('validator');
+      case 'range':
+        return this.range;
+      case 'multiple':
+        return this.multiple;
+      default:
+        return this.getProp(key);
+    }
+  }
+
   getValidatorProps(): ValidatorProps {
-    const { name, range, multiple, defaultValidationMessages } = this;
-    const type = this.getFieldType();
-    const required = this.getProp('required');
-    const customValidator = this.getProp('validator');
-    const label = this.getProp('label');
+    const { name, defaultValidationMessages } = this;
     return {
-      type,
-      required,
-      customValidator,
       name,
-      label,
-      range,
-      multiple,
       defaultValidationMessages,
       form: this.context.formNode as Form,
     };
   }
 
+  getValidationResults(): ValidationResult[] | undefined {
+    const { record, name } = this;
+    if (record && name) {
+      return record.getValidationError(name);
+    }
+    return this.validationResults;
+  }
+
   getValidationMessage(validationResult: ValidationResult | undefined): ReactNode {
-    const { validator } = this;
-    if (validator) {
-      if (validationResult === undefined && validator) {
-        validationResult = validator.currentValidationResult;
+    if (validationResult === undefined) {
+      const results = this.getValidationResults();
+      if (results && results.length) {
+        validationResult = results[0];
       }
-      const {
-        props: { validationRenderer },
-      } = this;
-      if (validationResult) {
-        if (validationRenderer) {
-          const validationMessage = validationRenderer(validationResult, validator.props);
-          if (validationMessage) {
-            return validationMessage;
-          }
+    }
+    const {
+      props: { validationRenderer },
+    } = this;
+    if (validationResult) {
+      if (validationRenderer) {
+        const validationMessage = validationRenderer(validationResult, validationResult.validationProps);
+        if (validationMessage) {
+          return validationMessage;
         }
-        return validationResult.validationMessage;
       }
+      return validationResult.validationMessage;
     }
   }
 
@@ -1245,7 +1252,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   @action
-  setValue(value: any): void {
+  setValue(value: any, noVaidate?: boolean): void {
     if (!this.readOnly) {
       if (
         this.multiple || this.range
@@ -1278,7 +1285,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
             }
             record.set(name, value);
           }
-        } else {
+        } else if (!noVaidate) {
           this.validate(value, false);
         }
       };
@@ -1330,7 +1337,6 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       prefixCls,
       range,
       disabled,
-      validator,
       props: { maxTagCount, maxTagPlaceholder },
     } = this;
     const values = renderMultipleValues(this.getValue(), {
@@ -1340,7 +1346,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       prefixCls,
       disabled,
       readOnly: this.readOnly || readOnly,
-      validationResults: validator && validator.validationResults,
+      validationResults: this.getValidationResults(),
       isMultipleBlockDisabled: this.isMultipleBlockDisabled,
       processRenderer: this.processRenderer,
       renderValidationResult: this.renderValidationResult,
@@ -1366,10 +1372,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     const valid = await this.validate();
     const { onInvalid = noop } = this.props;
     if (!valid) {
-      const { validator } = this;
-      if (validator) {
-        const { validationResults, validity } = validator;
-        onInvalid(validationResults, validity, name);
+      const validationResults = this.getValidationResults();
+      if (validationResults) {
+        const currentValidationResult = validationResults[0];
+        onInvalid(validationResults, new Validity(currentValidationResult ? { [currentValidationResult.ruleName]: true } : undefined), name);
       }
     }
     return valid;
@@ -1381,29 +1387,30 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       if (value === undefined) {
         value = this.multiple ? this.getValues() : this.getValue();
       }
-      let { validator } = this;
-      if (validator) {
-        validator.reset();
-      } else {
-        const { record, name } = this;
+      const { field, record, name, dataSet } = this;
+      return Validator.checkValidity(
+        value,
+        field && record ? {
+          dataSet,
+          record,
+          name,
+        } : this.getValidatorProps(),
+        field && record ? field.getValidatorPropGetter(record) : this.getValidatorProp.bind(this),
+      ).then(action(({ valid, validationResults, validatorProps }) => {
         if (record && name) {
-          const field = record.ownerFields.get(name) || record.addField(name);
-          validator = new Validator(field);
-          field.validator = validator;
+          record.setValidationError(name, validationResults);
         } else {
-          validator = new Validator(undefined, this);
-          this.$validator = validator;
+          this.validationResults = validationResults;
         }
-      }
-      return validator.checkValidity(value).then((valid) => {
         if (report) {
+          Validator.report(validationResults, validatorProps);
           const { formNode } = this.context;
           if (formNode && !formNode.validating) {
             formNode.reportValidity(valid);
           }
         }
         return valid;
-      });
+      }));
     }
     return Promise.resolve(true);
   }
@@ -1435,13 +1442,16 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   @autobind
+  @action
   reset() {
     if (!this.isControlled && !this.dataSet) {
-      this.setValue(this.props.defaultValue);
+      this.setValue(this.props.defaultValue, true);
     }
-    const { validator } = this;
-    if (validator) {
-      validator.reset();
+    const { record, name } = this;
+    if (record && name) {
+      record.clearValidationError(name);
+    } else {
+      this.validationResults = undefined;
     }
   }
 

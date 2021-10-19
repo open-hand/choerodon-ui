@@ -6,87 +6,107 @@ import { methodReturn, ValidatorProps } from '.';
 import { axiosConfigAdapter } from '../../data-set/utils';
 import { FieldType } from '../../data-set/enum';
 import { iteratorSome } from '../../_util/iteratorUtils';
+import { ValidationMessages } from '../Validator';
 
-export default async function uniqueError(
+export default function uniqueError(
   value: any,
-  props: ValidatorProps,
-): Promise<methodReturn> {
-  const { dataSet, record, unique, name, multiple, range, defaultValidationMessages } = props;
-  if (!isEmpty(value) && dataSet && record && unique && name && !multiple && !range) {
-    const myField = dataSet.getField(name);
-    if (myField && myField.get('type', record) === FieldType.object) {
-      value = value[myField.get('valueField', record)];
-      if (isEmpty(value)) {
-        return true;
-      }
-    }
-    if (myField) {
-      let dirty = myField.isDirty(record);
-      const fields = { [name]: value };
-      if (!dirty) {
-        return true;
-      }
-      if (
-        isString(unique) &&
-        iteratorSome(dataSet.fields.entries(), ([fieldName, field]) => {
-          if (
-            fieldName !== name &&
-            field &&
-            field.get('unique', record) === unique &&
-            !field.get('multiple', record) &&
-            !field.get('range', record)
-          ) {
-            const otherValue = record.get(fieldName);
-            if (isEmpty(otherValue)) {
+  props: ValidatorProps & { defaultValidationMessages: ValidationMessages },
+  getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T],
+): PromiseLike<methodReturn> | methodReturn {
+  const { dataSet, record, name, defaultValidationMessages } = props;
+  if (!isEmpty(value) && dataSet && record && name) {
+    const unique = getProp('unique');
+    if (unique) {
+      const multiple = getProp('multiple');
+      if (!multiple) {
+        const range = getProp('range');
+        if (!range) {
+          const myField = dataSet.getField(name);
+          if (myField && getProp('type') === FieldType.object) {
+            value = value[myField.get('valueField', record)];
+            if (isEmpty(value)) {
               return true;
             }
-            if (!dirty && field.isDirty(record)) {
-              dirty = true;
-            }
-            if (field && field.get('type', record) === FieldType.object) {
-              const otherObjectValue = otherValue[field.get('valueField', record)];
-              if (isEmpty(otherObjectValue)) {
-                return true;
-              }
-              fields[fieldName] = otherObjectValue;
-            } else {
-              fields[fieldName] = otherValue;
-            }
           }
-          return false;
-        })
-      ) {
-        return true;
-      }
-      let invalid = dataSet.some(
-        item =>
-          item !== record &&
-          Object.keys(fields).every(field => {
-            const dataSetField = dataSet.getField(name);
-            if (dataSetField && dataSetField.get('type', record) === FieldType.object) {
-              const valueField = dataSetField.get('valueField', record);
-              return fields[field] === item.get(field)[valueField];
+          if (myField) {
+            let dirty = myField.isDirty(record);
+            const fields = { [name]: value };
+            if (!dirty) {
+              return true;
             }
-            return fields[field] === item.get(field);
-          }),
-      );
-      if (!invalid) {
-        const newConfig = axiosConfigAdapter('validate', dataSet, { unique: [fields] });
-        if (newConfig.url) {
-          const results: any = await dataSet.axios(newConfig);
-          invalid = [].concat(results).some(result => !result);
+            if (
+              isString(unique) &&
+              iteratorSome(dataSet.fields.entries(), ([fieldName, field]) => {
+                if (
+                  fieldName !== name &&
+                  field &&
+                  field.get('unique', record) === unique &&
+                  !field.get('multiple', record) &&
+                  !field.get('range', record)
+                ) {
+                  const otherValue = record.get(fieldName);
+                  if (isEmpty(otherValue)) {
+                    return true;
+                  }
+                  if (!dirty && field.isDirty(record)) {
+                    dirty = true;
+                  }
+                  if (field && field.get('type', record) === FieldType.object) {
+                    const otherObjectValue = otherValue[field.get('valueField', record)];
+                    if (isEmpty(otherObjectValue)) {
+                      return true;
+                    }
+                    fields[fieldName] = otherObjectValue;
+                  } else {
+                    fields[fieldName] = otherValue;
+                  }
+                }
+                return false;
+              })
+            ) {
+              return true;
+            }
+            const invalid = dataSet.some(
+              item =>
+                item !== record &&
+                Object.keys(fields).every(field => {
+                  const dataSetField = dataSet.getField(name);
+                  if (dataSetField && dataSetField.get('type', record) === FieldType.object) {
+                    const valueField = dataSetField.get('valueField', record);
+                    return fields[field] === item.get(field)[valueField];
+                  }
+                  return fields[field] === item.get(field);
+                }),
+            );
+            const call = ($invalid: boolean): methodReturn => {
+              if ($invalid) {
+                const ruleName = 'uniqueError';
+                const {
+                  [ruleName]: validationMessage = $l('Validator', 'unique'),
+                } = defaultValidationMessages;
+                return new ValidationResult({
+                  validationProps: {
+                    unique,
+                    multiple,
+                    range,
+                  },
+                  validationMessage,
+                  value,
+                  ruleName,
+                });
+              }
+              return true;
+            };
+            if (!invalid) {
+              const newConfig = axiosConfigAdapter('validate', dataSet, { unique: [fields] });
+              if (newConfig.url) {
+                const resultsPromise: any = dataSet.axios(newConfig);
+                return resultsPromise.then(results => [].concat(results).some(result => !result));
+              }
+            }
+            return call(invalid);
+          }
         }
-      }
-      if (invalid) {
-        const ruleName = 'uniqueError';
-        const {
-          [ruleName]: validationMessage = $l('Validator', 'unique'),
-        } = defaultValidationMessages;
-        return new ValidationResult({
-          validationMessage,
-          value,
-          ruleName,
-        });
       }
     }
   }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
-import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import defaultTo from 'lodash/defaultTo';
 import isNil from 'lodash/isNil';
@@ -18,7 +17,6 @@ import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
-import { ValidatorProps } from '../validator/rules';
 import defaultFormatNumber from '../formatter/formatNumber';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context/LocaleContext';
@@ -248,21 +246,18 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return limit;
   }
 
-  getValidatorProps(): ValidatorProps {
-    const { min, max } = this;
-    const step = this.getProp('step');
-    const nonStrictStep = this.nonStrictStep;
-
-    return omit({
-      ...super.getValidatorProps(),
-      min,
-      max,
-      step,
-      nonStrictStep,
-    }, [
-      'maxLength',
-      'minLength',
-    ]);
+  getValidatorProp(key) {
+    if (['maxLength', 'minLength'].includes(key)) {
+      return;
+    }
+    switch (key) {
+      case 'min':
+      case 'max':
+      case 'nonStrictStep':
+        return this[key];
+      default:
+        return super.getValidatorProp(key);
+    }
   }
 
   getInnerSpanButton(): ReactNode {

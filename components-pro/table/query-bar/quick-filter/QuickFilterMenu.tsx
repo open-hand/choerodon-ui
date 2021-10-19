@@ -425,13 +425,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
     const { current } = menuDataSet;
     if (current) {
       current.set('searchName', '');
-      const recordField = current.ownerFields.get('searchName');
-      if (recordField) {
-        const { validator } = recordField;
-        if (validator) {
-          validator.reset();
-        }
-      }
+      current.clearValidationError('searchName');
     }
     openModal('save');
   }

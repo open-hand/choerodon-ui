@@ -24,7 +24,6 @@ import ObserverSelect from '../select/Select';
 import BUILT_IN_PLACEMENTS from '../trigger-field/placements';
 import attachmentStore from '../stores/AttachmentStore';
 import { DataSetEvents, FieldType } from '../data-set/enum';
-import { ValidatorProps } from '../validator/rules';
 import { ValidationMessages } from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
 import { open } from '../modal-container/ModalContainer';
@@ -262,13 +261,13 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
-  getValidatorProps(): ValidatorProps {
-    const attachments = this.getValidAttachments();
-    const count = attachments ? attachments.length : this.count;
-    return {
-      ...super.getValidatorProps(),
-      attachmentCount: count || 0,
-    };
+  getValidatorProp(key) {
+    if (key === 'attachmentCount') {
+      const attachments = this.getValidAttachments();
+      const count = attachments ? attachments.length : this.count;
+      return count || 0;
+    }
+    return super.getValidatorProp(key);
   }
 
   fetchCount() {

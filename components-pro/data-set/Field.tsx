@@ -15,7 +15,6 @@ import {
 } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
-import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
@@ -31,7 +30,6 @@ import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
 import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit } from './utils';
-import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
@@ -109,7 +107,10 @@ function getLookupToken(field: Field, record: Record | undefined): string | unde
   if (record) {
     const { lookupTokens } = record;
     if (lookupTokens) {
-      return lookupTokens.get(field.name);
+      const { name } = field;
+      if (lookupTokens.has(name)) {
+        return lookupTokens.get(name);
+      }
     }
   }
   return field.lookupToken;
@@ -431,15 +432,11 @@ export default class Field {
 
   record?: Record | undefined;
 
-  @observable validator?: Validator;
-
   @observable pending?: boolean;
 
   @observable lookupToken?: string | undefined;
 
   lastDynamicProps?: { [key: string]: any } | undefined;
-
-  validatorPropKeys?: string[] | undefined;
 
   dynamicPropsComputingChains?: string[] | undefined;
 
@@ -533,13 +530,13 @@ export default class Field {
     return this.getValidationMessage();
   }
 
-  constructor(props: FieldProps = {}, dataSet: DataSet, record?: Record | undefined) {
+  constructor(props: FieldProps | undefined, dataSet: DataSet, record?: Record | undefined) {
     runInAction(() => {
       this.dataSet = dataSet;
       this.record = record;
-      this.props = observable.map(props);
+      this.props = observable.map(props || {});
       // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
-      if (!props.options) {
+      if (!props || !props.options) {
         const dynamicProps = this.getProp('dynamicProps', record);
         if (!record || typeof dynamicProps === 'function') {
           raf(() => {
@@ -997,17 +994,9 @@ export default class Field {
   }
 
   @action
-  commit(record?: Record | undefined): void {
+  commit(record: Record | undefined = this.record): void {
     if (record) {
-      const recordField = record.ownerFields.get(this.name);
-      if (recordField) {
-        recordField.commit();
-      }
-    } else {
-      const { validator } = this;
-      if (validator) {
-        validator.reset();
-      }
+      record.clearValidationError(this.name);
     }
   }
 
@@ -1091,56 +1080,41 @@ export default class Field {
     this.set('lovPara', p);
   }
 
-  getValidatorProps(record: Record | undefined = this.record): ValidatorProps | undefined {
-    if (record) {
-      const { dataSet, name } = this;
-      const type = this.get('type', record);
-      const baseType = getBaseType(type);
-      const required = this.get('required', record);
-      const customValidator = this.get('validator', record);
-      const max = this.get('max', record);
-      const min = this.get('min', record);
-      const format = this.get('format', record) || getDateFormatByField(this, this.get('type', record), record);
-      const pattern = this.get('pattern', record);
-      const step = this.get('step', record);
-      const nonStrictStep = this.get('nonStrictStep', record) === undefined ? getConfig('numberFieldNonStrictStep') : this.get('nonStrictStep', record);
-      const minLength = baseType !== FieldType.string ? undefined : this.get('minLength', record);
-      const maxLength = baseType !== FieldType.string ? undefined : this.get('maxLength', record);
-      const label = this.get('label', record);
-      const range = this.get('range', record);
-      const multiple = this.get('multiple', record);
-      const unique = this.get('unique', record);
-      const defaultValidationMessages = this.get('defaultValidationMessages', record);
-      const attachments = this.getAttachments(record);
-      const validAttachments = attachments && attachments.filter(({ status }) => !status || ['success', 'done'].includes(status));
-      const attachmentCount = validAttachments ? validAttachments.length : this.getAttachmentCount(record);
-      const validatorProps = {
-        type,
-        required,
-        record,
-        dataSet,
-        name,
-        unique,
-        customValidator,
-        pattern,
-        max: getLimit(max, record),
-        min: getLimit(min, record),
-        step,
-        nonStrictStep,
-        minLength,
-        maxLength,
-        label,
-        range,
-        multiple,
-        format,
-        attachmentCount,
-        defaultValidationMessages,
-      };
-      if (!this.validatorPropKeys) {
-        this.validatorPropKeys = Object.keys(omit(validatorProps, ['label', 'defaultValidationMessages']));
+
+  getValidatorPropGetter(record: Record | undefined = this.record): <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T] {
+    return (key) => {
+      if (record) {
+        switch (key) {
+          case 'attachmentCount': {
+            const attachments = this.getAttachments(record);
+            const validAttachments = attachments && attachments.filter(({ status }) => !status || ['success', 'done'].includes(status));
+            return validAttachments ? validAttachments.length : this.getAttachmentCount(record);
+          }
+          case 'max':
+          case 'min':
+            return getLimit(this.get(key, record), record);
+          case 'minLength':
+          case 'maxLength': {
+            const baseType = getBaseType(this.get('type', record));
+            return baseType !== FieldType.string ? undefined : this.get(key, record);
+          }
+          case 'format' :
+            return this.get('format', record) || getDateFormatByField(this, this.get('type', record), record);
+          case 'nonStrictStep': {
+            const nonStrictStep = this.get('nonStrictStep', record);
+            if (nonStrictStep === undefined) {
+              return getConfig('numberFieldNonStrictStep');
+            }
+            return nonStrictStep;
+          }
+          case 'customValidator': {
+            return this.get('validator', record);
+          }
+          default:
+            return this.get(key, record);
+        }
       }
-      return validatorProps;
-    }
+    };
   }
 
   /**
@@ -1149,25 +1123,21 @@ export default class Field {
    * @return true | false
    */
   @action
-  async checkValidity(report?: boolean, record: Record | undefined = this.record): Promise<boolean> {
+  async checkValidity(record: Record | undefined = this.record): Promise<boolean> {
     if (record) {
       const { name } = this;
-      let recordField = record.ownerFields.get(name);
-      if (!recordField) {
-        recordField = this.record ? this : record.addField(name);
-        record.ownerFields.set(name, recordField);
-      }
-      let { validator } = this;
-      if (validator) {
-        validator.reset();
-      } else {
-        validator = new Validator(recordField);
-        recordField.validator = validator;
-      }
-      const value = record.get(name);
-      const valid = await validator!.checkValidity(value);
-      if (report && !record.validating) {
-        record.reportValidity(valid);
+      const { valid, validationResults } = await Validator.checkValidity(record.get(name), {
+        dataSet: record.dataSet,
+        name,
+        record,
+      }, this.getValidatorPropGetter(record));
+      record.setValidationError(name, validationResults);
+      if (!record.validating) {
+        record.reportValidity({
+          field: this,
+          errors: validationResults,
+          valid,
+        }, true);
       }
       return valid;
     }
@@ -1299,36 +1269,17 @@ export default class Field {
 
   isValid(record: Record | undefined = this.record): boolean {
     if (record) {
-      const recordField = record.ownerFields.get(this.name);
-      if (recordField) {
-        const { validator } = recordField;
-        if (validator) {
-          return validator.validity.valid;
-        }
-      }
+      const results = record.getValidationError(this.name);
+      return !results || !results.length;
     }
     return true;
   }
 
   getValidationMessage(record: Record | undefined = this.record): ReactNode {
     if (record) {
-      const recordField = record.ownerFields.get(this.name);
-      if (recordField) {
-        const { validator } = recordField;
-        if (validator) {
-          return validator.validationMessage;
-        }
-      }
-    }
-    return undefined;
-  }
-
-  getValidityState(record: Record | undefined = this.record): Validity | undefined {
-    if (record) {
-      const recordField = record.ownerFields.get(this.name);
-      if (recordField) {
-        const { validator } = recordField;
-        return validator ? validator.validity : undefined;
+      const results = record.getValidationError(this.name);
+      if (results && results.length) {
+        return results[0].validationMessage;
       }
     }
     return undefined;
@@ -1336,13 +1287,7 @@ export default class Field {
 
   getValidationErrorValues(record: Record | undefined = this.record): ValidationResult[] {
     if (record) {
-      const recordField = record.ownerFields.get(this.name);
-      if (recordField) {
-        const { validator } = recordField;
-        if (validator) {
-          return validator.validationResults;
-        }
-      }
+      return record.getValidationError(this.name) || [];
     }
     return [];
   }
@@ -1428,11 +1373,20 @@ export default class Field {
     if (!isEqualDynamicProps(oldProp, newProp)) {
       raf(action(() => {
         if (record && oldProp !== undefined) {
-          const recordField = record.ownerFields.get(this.name);
-          if (recordField) {
-            const { validator, validatorPropKeys } = recordField;
-            if (validator && (propsName === 'validator' || (validatorPropKeys && validatorPropKeys.includes(propsName)))) {
-              validator.reset();
+          const { name } = this;
+          const errors = record.getValidationError(name);
+          if (errors) {
+            if (propsName === 'validator') {
+              record.clearValidationError(name);
+            } else if (!['label', 'defaultValidationMessages'].includes(propsName)) {
+              errors.some(error => {
+                const { validationProps } = error;
+                if (validationProps && Object.keys(validationProps).includes(propsName)) {
+                  record.clearValidationError(name);
+                  return true;
+                }
+                return false;
+              });
             }
           }
         }

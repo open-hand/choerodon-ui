@@ -91,7 +91,7 @@ export default class IntlField extends TextField<IntlFieldProps> {
       return (await Promise.all(
         languages.map(language => {
           const intlField = record.dataSet.getField(`${tlsKey}.${name}.${language}`);
-          return intlField ? intlField.checkValidity(false, record) : true;
+          return intlField ? intlField.checkValidity(record) : true;
         }),
       )).every(Boolean);
     }

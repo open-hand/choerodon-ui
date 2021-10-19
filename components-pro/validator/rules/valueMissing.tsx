@@ -6,31 +6,54 @@ import { methodReturn, ValidatorProps } from '.';
 import { formatReactTemplate } from '../../formatter/formatReactTemplate';
 import { FieldType } from '../../data-set/enum';
 import { toRangeValue } from '../../field/utils';
+import { ValidationMessages } from '../Validator';
 
 function isEmptyArray(value: any): boolean {
   return isEmpty(value) || (isArrayLike(value) && (value.length === 0 || value.every(item => isEmptyArray(item))));
 }
 
-export default function valueMissing(value: any, props: ValidatorProps): methodReturn {
-  const { required, label, multiple, range, defaultValidationMessages, type, attachmentCount } = props;
-  if (
-    required &&
-    (
-      isEmptyArray(value) ||
-      (type === FieldType.attachment && !attachmentCount) ||
-      (range && (multiple ? value.every(item => isEmptyArray(toRangeValue(item, range))) : isEmptyArray(toRangeValue(value, range))))
-    )
-  ) {
+export default function valueMissing(value: any, props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
+  const required = getProp('required');
+  const call = (validationProps) => {
+    const label = getProp('label');
     const injectionOptions = { label };
     const key = label ? 'value_missing' : 'value_missing_no_label';
     const ruleName = label ? 'valueMissing' : 'valueMissingNoLabel';
-    const { [ruleName]: validationMessage = $l('Validator', key) } = defaultValidationMessages;
+    const { [ruleName]: validationMessage = $l('Validator', key) } = props.defaultValidationMessages;
     return new ValidationResult({
+      validationProps,
       validationMessage: formatReactTemplate(validationMessage, injectionOptions),
       injectionOptions,
       value,
       ruleName,
     });
+  };
+  if (required) {
+    if (isEmptyArray(value)) {
+      return call({ required });
+    }
+    const type = getProp('type');
+    if (type === FieldType.attachment) {
+      const attachmentCount = getProp('attachmentCount');
+      if (!attachmentCount) {
+        return call({
+          required,
+          type,
+          attachmentCount,
+        });
+      }
+    }
+    const range = getProp('range');
+    if (range) {
+      const multiple = getProp('multiple');
+      if ((multiple ? value.every(item => isEmptyArray(toRangeValue(item, range))) : isEmptyArray(toRangeValue(value, range)))) {
+        return call({
+          required,
+          range,
+          multiple,
+        });
+      }
+    }
   }
   return true;
 }

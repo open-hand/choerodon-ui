@@ -6,6 +6,7 @@ import { getNearStepValues } from '../../number-field/utils';
 import { methodReturn, ValidatorProps } from '.';
 import { formatReactTemplate } from '../../formatter/formatReactTemplate';
 import { toRangeValue } from '../../field/utils';
+import { ValidationMessages } from '../Validator';
 
 function isStepMismatch(value, step, min, max, range) {
   if (range) {
@@ -18,30 +19,43 @@ function isStepMismatch(value, step, min, max, range) {
     });
     return nearStepValues;
   }
-  if (!isEmpty(value)) {
-    return getNearStepValues(isMoment(value) ? value : Number(value), step, min, max);
-  }
+  return getNearStepValues(isMoment(value) ? value : Number(value), step, min, max);
 }
 
-export default function stepMismatch(value: any, props: ValidatorProps): methodReturn {
-  const { step, min, max, defaultValidationMessages, range, format, nonStrictStep } = props;
-  if (step !== undefined && nonStrictStep === false) {
-    const nearStepValues = isStepMismatch(value, step, min, max, range);
-    if (nearStepValues !== undefined) {
-      const [before, after] = nearStepValues;
-      const injectionOptions = {
-        0: isMoment(before) ? before.format(format) : before,
-        1: isMoment(after) ? after.format(format) : after,
-      };
-      const ruleName = nearStepValues.length === 2 ? 'stepMismatchBetween' : 'stepMismatch';
-      const key = nearStepValues.length === 2 ? 'step_mismatch_between' : 'step_mismatch';
-      const { [ruleName]: validationMessage = $l('Validator', key) } = defaultValidationMessages;
-      return new ValidationResult({
-        validationMessage: formatReactTemplate(validationMessage, injectionOptions),
-        injectionOptions,
-        value: isMoment(value) ? value.format(format) : value,
-        ruleName,
-      });
+export default function stepMismatch(value: any, props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
+  if (!isEmpty(value)) {
+    const step = getProp('step');
+    if (step !== undefined) {
+      const nonStrictStep = getProp('nonStrictStep');
+      if (nonStrictStep === false) {
+        const min = getProp('min');
+        const max = getProp('max');
+        const range = getProp('range');
+        const nearStepValues = isStepMismatch(value, step, min, max, range);
+        if (nearStepValues !== undefined) {
+          const format = getProp('format');
+          const [before, after] = nearStepValues;
+          const injectionOptions = {
+            0: isMoment(before) ? before.format(format) : before,
+            1: isMoment(after) ? after.format(format) : after,
+          };
+          const ruleName = nearStepValues.length === 2 ? 'stepMismatchBetween' : 'stepMismatch';
+          const key = nearStepValues.length === 2 ? 'step_mismatch_between' : 'step_mismatch';
+          const { [ruleName]: validationMessage = $l('Validator', key) } = props.defaultValidationMessages;
+          return new ValidationResult({
+            validationProps: {
+              step,
+              min,
+              max,
+              range,
+            },
+            validationMessage: formatReactTemplate(validationMessage, injectionOptions),
+            injectionOptions,
+            value: isMoment(value) ? value.format(format) : value,
+            ruleName,
+          });
+        }
+      }
     }
   }
   return true;

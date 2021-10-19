@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>Select`: Added the `defaultActiveFirstOption` property whether to highlight the first option by default.
 - 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
 - 🌟 `Upload`: Added `showFileSize` property, and optimized the component style.
-- 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance.
+- 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
 - 💄 `<pro>PerformanceTable`: Optimize the big data table drag and drop callback event.

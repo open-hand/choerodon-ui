@@ -34,7 +34,6 @@ import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
 import isIE from '../_util/isIE';
 import Icon from '../icon';
-import { ValidatorProps } from '../validator/rules';
 import { preventDefault, stopPropagation } from '../_util/EventManager';
 import measureTextWidth from '../_util/measureTextWidth';
 import Animate from '../animate';
@@ -537,18 +536,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   handleHelpMouseLeave() {
     hide();
-  }
-
-  getValidatorProps(): ValidatorProps {
-    const pattern = this.getProp('pattern');
-    const maxLength = this.getProp('maxLength');
-    const minLength = this.getProp('minLength');
-    return {
-      ...super.getValidatorProps(),
-      pattern,
-      maxLength,
-      minLength,
-    };
   }
 
   getWrapperClassNames(...args): string {
@@ -1311,8 +1298,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @action
-  setValue(value: any): void {
-    super.setValue(value);
+  setValue(value: any, noVaidate?: boolean): void {
+    super.setValue(value, noVaidate);
     this.setText(undefined);
   }
 

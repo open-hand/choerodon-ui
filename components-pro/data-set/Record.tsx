@@ -55,6 +55,7 @@ import { BooleanValue, DataSetEvents, DataSetSelection, FieldIgnore, FieldType, 
 import isSame from '../_util/isSame';
 import { treeReduce } from '../_util/treeUtils';
 import { iteratorReduce } from '../_util/iteratorUtils';
+import ValidationResult from '../validator/ValidationResult';
 
 /**
  * 记录ID生成器
@@ -139,7 +140,7 @@ export default class Record {
 
   memo?: object;
 
-  prepareForReport?: { result?: boolean; timeout?: number } | undefined;
+  private prepareForReport?: { result: RecordValidationErrors[], timeout?: number } | undefined;
 
   dataSetSnapshot?: { [key: string]: DataSetSnapshot } | undefined;
 
@@ -152,6 +153,8 @@ export default class Record {
   @observable data: object;
 
   @observable dirtyData?: ObservableMap<string, any> | undefined;
+
+  @observable validationErrors?: ObservableMap<string, ValidationResult[]>;
 
   @observable lookupTokens?: ObservableMap<string, string | undefined> | undefined;
 
@@ -507,7 +510,7 @@ export default class Record {
     this.validating = true;
     const promises: Promise<boolean>[] = [];
     if (all || this.status !== RecordStatus.sync) {
-      dataSet.fields.forEach(field => promises.push(field.checkValidity(false, this)));
+      dataSet.fields.forEach(field => promises.push(field.checkValidity(this)));
     }
     if (!noCascade) {
       const { children } = dataSet;
@@ -533,7 +536,9 @@ export default class Record {
     return Promise.all(promises)
       .then((results) => {
         const valid = results.every(result => result);
-        this.reportValidity(valid);
+        if (!dataSet.validating) {
+          dataSet.reportValidity({ record: this, errors: this.getValidationErrors(), valid });
+        }
         delete this.validating;
         return valid;
       }).catch((error) => {
@@ -542,33 +547,43 @@ export default class Record {
       });
   }
 
-  reportValidity(result: boolean) {
+  reportValidity(result: RecordValidationErrors, fromField?: boolean) {
     const { dataSet } = this;
     if (!dataSet.validating) {
-      const prepareForReport = getIf<Record, { result?: boolean; timeout?: number }>(this, 'prepareForReport', {});
-      if (!result) {
-        prepareForReport.result = result;
+      const prepareForReport = getIf<Record, { result: RecordValidationErrors[]; timeout?: number; valid: boolean }>(this, 'prepareForReport', {
+        result: [],
+        valid: true,
+      });
+      if (!result.valid) {
+        prepareForReport.valid = false;
+        prepareForReport.result.push(result);
       }
       if (prepareForReport.timeout) {
         window.clearTimeout(prepareForReport.timeout);
       }
       prepareForReport.timeout = window.setTimeout(() => {
-        dataSet.reportValidity(prepareForReport.result || true);
+        dataSet.reportValidity({ record: this, errors: prepareForReport.result, valid: prepareForReport.valid }, fromField);
         delete this.prepareForReport;
       }, 200);
     }
   }
 
   getValidationErrors(): RecordValidationErrors[] {
-    return iteratorReduce<Field, RecordValidationErrors[]>(this.ownerFields.values(), (results, field) => {
-      if (!field.valid) {
-        results.push({
-          field,
-          errors: field.getValidationErrorValues(),
-        });
-      }
-      return results;
-    }, []);
+    const { validationErrors } = this;
+    const results: RecordValidationErrors[] = [];
+    if (validationErrors) {
+      validationErrors.forEach((errors, fieldName) => {
+        const field = this.ownerFields.get(fieldName) || this.dataSet.getField(fieldName);
+        if (field && errors.length) {
+          results.push({
+            field,
+            errors,
+            valid: false,
+          });
+        }
+      });
+    }
+    return results;
   }
 
   @action
@@ -724,7 +739,7 @@ export default class Record {
         });
       }
       [field, ...findBindFields(field, fields, true, this), ...findBindTargetFields(field, fields, true, this)].forEach((oneField) => (
-        oneField.checkValidity(false, this)
+        oneField.checkValidity(this)
       ));
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.set(key, item[key]));
@@ -1002,6 +1017,52 @@ export default class Record {
     }
     ObjectChainValue.set(newData, chainFieldName, value, fields, this);
     ObjectChainValue.set(this.data, chainFieldName, value, fields, this);
+  }
+
+  @action
+  setValidationError(name: string, result: ValidationResult[]) {
+    const validationErrors = getIf<Record, ObservableMap<string, ValidationResult[]>>(this, 'validationErrors', () => observable.map());
+    validationErrors.set(name, result);
+  }
+
+  getValidationError(name: string): ValidationResult[] | undefined {
+    const { validationErrors } = this;
+    if (validationErrors) {
+      return validationErrors.get(name);
+    }
+  }
+
+  @action
+  clearValidationError(name) {
+    const { validationErrors } = this;
+    if (validationErrors) {
+      const errors = validationErrors.get(name);
+      if (errors) {
+        errors.some(error => {
+          if (error.ruleName === 'uniqueError') {
+            const { validationProps } = error;
+            if (validationProps) {
+              const { unique } = validationProps;
+              if (isString(unique)) {
+                this.dataSet.fields.forEach((field, fieldName) => {
+                  if (
+                    fieldName !== name &&
+                    field.get('unique', this) === unique &&
+                    !field.get('multiple', this) &&
+                    !field.get('range', this)
+                  ) {
+                    this.clearValidationError(fieldName);
+                  }
+                });
+              }
+            }
+            return true;
+          }
+          return false;
+        });
+      }
+      return validationErrors.delete(name);
+    }
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {
