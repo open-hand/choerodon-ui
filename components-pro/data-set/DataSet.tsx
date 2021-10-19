@@ -80,6 +80,7 @@ import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 import ValidationResult from '../validator/ValidationResult';
 import { iteratorReduce } from '../_util/iteratorUtils';
+import Validator from '../validator/Validator';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
@@ -169,11 +170,13 @@ function processNormalData(dataSet: DataSet, allData: (object | Record)[], statu
 export interface RecordValidationErrors {
   field: Field;
   errors: ValidationResult[];
+  valid: boolean;
 }
 
 export interface ValidationErrors {
   record: Record;
   errors: RecordValidationErrors[];
+  valid: boolean;
 }
 
 export interface DataSetProps {
@@ -426,7 +429,7 @@ export default class DataSet extends EventManager {
 
   children: DataSetChildren = {};
 
-  prepareForReport: { result?: boolean; timeout?: number } = {};
+  private prepareForReport?: { result: ValidationErrors[]; timeout?: number; valid: boolean };
 
   @computed
   get queryParameter(): object {
@@ -2152,28 +2155,34 @@ export default class DataSet extends EventManager {
           record.validate(this.props.forceValidate || useAll(dataToJSON), !cascade),
         ),
       ).then(results => results.every(result => result));
-      this.reportValidityImmediately(validateResult);
-      return await validateResult;
+      const valid: boolean = await validateResult;
+      this.reportValidityImmediately(valid);
+      return valid;
     } finally {
       this.validating = false;
     }
   }
 
-  reportValidityImmediately(result: Promise<boolean>) {
-    this.fireEvent(DataSetEvents.validate, { dataSet: this, result });
+  reportValidityImmediately(valid: boolean, errors: ValidationErrors[] = this.getValidationErrors(), fromField?: boolean) {
+    this.fireEvent(DataSetEvents.validate, { dataSet: this, result: Promise.resolve(valid), valid, errors, noLocate: fromField });
+    Validator.reportAll(errors);
   }
 
-  reportValidity(result: boolean) {
-    const { prepareForReport } = this;
-    if (!result) {
-      prepareForReport.result = result;
+  reportValidity(result: ValidationErrors, fromField?: boolean) {
+    const prepareForReport = getIf<DataSet, { result: ValidationErrors[], timeout?: number, valid: boolean }>(this, 'prepareForReport', {
+      result: [],
+      valid: true,
+    });
+    if (!result.valid) {
+      prepareForReport.valid = false;
+      prepareForReport.result.push(result);
     }
     if (prepareForReport.timeout) {
       window.clearTimeout(prepareForReport.timeout);
     }
     prepareForReport.timeout = window.setTimeout(() => {
-      this.reportValidityImmediately(Promise.resolve(prepareForReport.result || true));
-      this.prepareForReport = {};
+      this.reportValidityImmediately(prepareForReport.valid, prepareForReport.result, fromField);
+      delete this.prepareForReport;
     }, 200);
   }
 
@@ -2185,6 +2194,7 @@ export default class DataSet extends EventManager {
         results.push({
           record,
           errors: validationResults,
+          valid: false,
         });
       }
       return results;

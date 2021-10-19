@@ -140,7 +140,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
   }
 
   @action
-  setValue(value: any): void {
+  setValue(value: any, noVaidate?: boolean): void {
     const { record, checkedValue, multiple } = this;
     if (record) {
       let values;
@@ -157,9 +157,9 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
       } else {
         values = value;
       }
-      super.setValue(values);
+      super.setValue(values, noVaidate);
     } else {
-      super.setValue(value);
+      super.setValue(value, noVaidate);
     }
   }
 

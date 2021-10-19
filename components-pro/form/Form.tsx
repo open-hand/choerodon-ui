@@ -29,7 +29,7 @@ import isFragment from '../_util/isFragment';
 import { FormField, FormFieldProps, getFieldsById, HighlightRenderer } from '../field/FormField';
 import FormContext from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
-import DataSet from '../data-set/DataSet';
+import DataSet, { ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys, ShowValidation } from './enum';
 import {
@@ -656,9 +656,9 @@ export default class Form extends DataSetComponent<FormProps> {
 
   // 处理校验失败定位
   @autobind
-  async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>; dataSet: DataSet }) {
-    if (!await result) {
-      const [firstInvalidRecord] = dataSet.getValidationErrors();
+  handleDataSetValidate({ valid, errors: validationErrors, noLocate }: { valid: boolean; errors: ValidationErrors[]; noLocate?: boolean }) {
+    if (!noLocate && !valid) {
+      const [firstInvalidRecord] = validationErrors;
       if (firstInvalidRecord) {
         const { errors } = firstInvalidRecord;
         if (errors.length) {

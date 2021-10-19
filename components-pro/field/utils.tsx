@@ -407,11 +407,11 @@ export function renderMultiLine(options: MultiLineRenderOption): { lines?: React
       const lines = (
         multiLineFields.map(fieldItem => {
           if (fieldItem) {
-            const { validator } = fieldItem;
             const required = defaultTo(fieldItem.get('required', record), field.get('required', record));
             const fieldName = fieldItem.name;
             const value = record.get(fieldName);
-            const validationResult = validator && validator.validationResults.find(error => error.value === value);
+            const validationResults = record.getValidationError(fieldName);
+            const validationResult = validationResults && validationResults.find(error => error.value === value);
             const validationMessage =
               validationResult && renderValidationResult(validationResult);
             const validationHidden = isValidationMessageHidden(validationMessage);

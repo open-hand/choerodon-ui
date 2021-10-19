@@ -6,7 +6,6 @@ import raf from 'raf';
 import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
-import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
@@ -27,7 +26,6 @@ import { ViewMode } from './enum';
 import { stopEvent } from '../_util/EventManager';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
-import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
 import Field from '../data-set/Field';
 import { RenderProps } from '../field/FormField';
@@ -830,17 +828,19 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return isValid;
   }
 
-  getValidatorProps(): ValidatorProps {
-    const { min, max } = this;
-    return omit({
-      ...super.getValidatorProps(),
-      min,
-      max,
-      format: this.getDateFormat(),
-    }, [
-      'maxLength',
-      'minLength',
-    ]);
+  getValidatorProp(key) {
+    if (['maxLength', 'minLength'].includes(key)) {
+      return;
+    }
+    switch (key) {
+      case 'min':
+      case 'max':
+        return this[key];
+      case 'format':
+        return this.getDateFormat();
+      default:
+        return super.getValidatorProp(key);
+    }
   }
 
   renderLengthInfo(): ReactNode {

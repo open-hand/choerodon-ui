@@ -32,7 +32,7 @@ import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
-import DataSet from '../data-set/DataSet';
+import DataSet, { ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
 import { TransportProps } from '../data-set/Transport';
@@ -959,10 +959,10 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
-  async handleDataSetValidate({ result, dataSet }: { result: Promise<boolean>; dataSet: DataSet }) {
-    if (!await result) {
+  handleDataSetValidate({ valid, dataSet, errors: validationErrors, noLocate }: { valid: boolean; dataSet: DataSet; errors: ValidationErrors[]; noLocate?: boolean }) {
+    if (!noLocate && !valid) {
       const { tableStore } = this;
-      const [firstInvalidRecord] = dataSet.getValidationErrors();
+      const [firstInvalidRecord] = validationErrors;
       if (firstInvalidRecord) {
         const { errors, record } = firstInvalidRecord;
         if (errors.length) {
