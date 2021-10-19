@@ -109,7 +109,10 @@ function getLookupToken(field: Field, record: Record | undefined): string | unde
   if (record) {
     const { lookupTokens } = record;
     if (lookupTokens) {
-      return lookupTokens.get(field.name);
+      const { name } = field;
+      if (lookupTokens.has(name)) {
+        return lookupTokens.get(name);
+      }
     }
   }
   return field.lookupToken;
