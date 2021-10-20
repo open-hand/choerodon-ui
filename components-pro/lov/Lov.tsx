@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
@@ -21,7 +21,8 @@ import Spin from '../spin';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
-import { isSearchTextEmpty, SearchMatcher, Select, SelectProps } from '../select/Select';
+import ObserverSelect, { isSearchTextEmpty, SearchMatcher, Select, SelectProps } from '../select/Select';
+import Option from '../option/Option';
 import { ColumnAlign, TableQueryBarType } from '../table/enum';
 import { CheckedStrategy, DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
 import { LovFieldType, SearchAction, ViewMode } from './enum';
@@ -29,7 +30,7 @@ import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import { getLovPara } from '../stores/utils';
-import { TableProps, TableQueryBarHook } from '../table/Table';
+import { TableProps, TableQueryBarHook, TableQueryBarHookProps } from '../table/Table';
 import { FieldProps } from '../data-set/Field';
 import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
@@ -132,6 +133,8 @@ export default class Lov extends Select<LovProps> {
 
   @observable modal;
 
+  searchOption?: string | undefined;
+
   fetched?: boolean;
 
   searching?: boolean;
@@ -227,6 +230,59 @@ export default class Lov extends Select<LovProps> {
   isEditable(): boolean {
     const { viewMode } = this.props;
     return viewMode !== 'popup' && super.isEditable();
+  }
+
+  @autobind
+  @action
+  handlePopupOptionChange(searchOption) {
+    this.searchOption = searchOption;
+    this.searchText = undefined;
+  }
+
+  getSearchPara(searchMatcher: string, value?: string | string[] | undefined): object {
+    const { searchOption } = this;
+    if (searchOption) {
+      return super.getSearchPara(searchOption, value);
+    }
+
+    return super.getSearchPara(searchMatcher, value);
+  }
+
+  @autobind
+  renderSearchFieldPrefix(props: TableQueryBarHookProps): ReactNode {
+    const { queryDataSet } = props;
+    if (queryDataSet) {
+      const { fields } = queryDataSet;
+      if (fields.size > 0) {
+        const options: ReactElement[] = [];
+        let { searchOption } = this;
+        fields.forEach((field, name) => {
+          if (!searchOption) {
+            searchOption = name;
+            this.searchOption = name;
+          }
+          options.push(
+            <Option key={String(name)} value={name}>{field.get('label')}</Option>,
+          );
+        });
+        const { prefixCls } = this;
+        return (
+          <>
+            <ObserverSelect
+              value={searchOption}
+              onChange={this.handlePopupOptionChange}
+              border={false}
+              clearButton={false}
+              className={`${prefixCls}-lov-search-option`}
+              isFlat
+            >
+              {options}
+            </ObserverSelect>
+            <div className={`${prefixCls}-lov-search-option-divide`} />
+          </>
+        );
+      }
+    }
   }
 
   getPopupLovView() {

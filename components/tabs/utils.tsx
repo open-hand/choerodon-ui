@@ -1,6 +1,6 @@
 import { Children, isValidElement, JSXElementConstructor, Key, ReactElement, ReactNode } from 'react';
-import { isFragment } from 'react-is';
 import isNil from 'lodash/isNil';
+import isFragment from 'choerodon-ui/pro/lib/_util/isFragment';
 import { iteratorFindIndex, iteratorSome } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
 import { TabsPosition } from './enum';
 import { isTabGroup, TabGroupProps } from './TabGroup';

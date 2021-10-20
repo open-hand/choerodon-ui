@@ -1,6 +1,7 @@
 import React, { CSSProperties, FunctionComponent, ReactNode, useEffect, useState } from 'react';
 import classnames from 'classnames';
 import { getDataAttr } from './utils';
+import { CountRendererProps } from './Count';
 
 export interface TabPaneProps {
   /** 选项卡头显示文字 */
@@ -15,6 +16,7 @@ export interface TabPaneProps {
   forceRender?: boolean;
   destroyInactiveTabPane?: boolean;
   count?: number | (() => number | undefined);
+  countRenderer?: (props: CountRendererProps) => ReactNode;
   overflowCount?: number;
   showCount?: boolean;
   placeholder?: ReactNode;
