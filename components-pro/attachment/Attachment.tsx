@@ -995,10 +995,10 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   render() {
-    const { viewMode, listType, _inTable, hidden } = this.props;
+    const { viewMode, listType, hidden } = this.props;
     const { readOnly, prefixCls } = this;
     if (viewMode === 'popup') {
-      const label = !_inTable && this.hasFloatLabel && this.getLabel();
+      const label = this.hasFloatLabel && this.getLabel();
       return (
         <div className={`${prefixCls}-popup-wrapper`}>
           <Trigger

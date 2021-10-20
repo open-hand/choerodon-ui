@@ -1,4 +1,4 @@
-import { action, observable, ObservableMap, runInAction } from 'mobx';
+import { action, get, observable, ObservableMap } from 'mobx';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import PromiseMerger from '../_util/PromiseMerger';
 import AttachmentFile from '../data-set/AttachmentFile';
@@ -7,13 +7,7 @@ export type AttachmentCache = { count?: number | undefined, attachments?: Attach
 
 export class AttachmentStore {
 
-  cache: ObservableMap<string, AttachmentCache>;
-
-  constructor() {
-    runInAction(() => {
-      this.cache = observable.map<string, AttachmentCache>();
-    });
-  }
+  cache: ObservableMap<string, AttachmentCache> = observable.map<string, AttachmentCache>();
 
   batchCallback = (uuids: string[]): Promise<{ [key: string]: number | undefined }> => {
     const { batchFetchCount } = getConfig('attachment');
@@ -43,14 +37,14 @@ export class AttachmentStore {
   getCount(uuid: string): number | undefined {
     const cache = this.cache.get(uuid);
     if (cache) {
-      return cache.count;
+      return get(cache, 'count');
     }
   }
 
   getAttachments(uuid: string): AttachmentFile[] | undefined {
     const cache = this.cache.get(uuid);
     if (cache) {
-      return cache.attachments;
+      return get(cache, 'attachments');
     }
   }
 
