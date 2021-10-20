@@ -114,6 +114,10 @@ function getLookupToken(field: Field, record: Record | undefined): string | unde
         return lookupTokens.get(name);
       }
     }
+    if (field.record) {
+      const dsField = record.dataSet.getField(field.name);
+      return dsField && dsField.lookupToken;
+    }
   }
   return field.lookupToken;
 }
@@ -1293,10 +1297,10 @@ export default class Field {
       if (errors && errors.length) {
         return errors;
       }
-      const { validationErrors } = record;
-      if (validationErrors) {
-        const unique = this.get('unique', record);
-        if (isString(unique)) {
+      const unique = this.get('unique', record);
+      if (isString(unique)) {
+        const { validationErrors } = record;
+        if (validationErrors) {
           const uniqueErrors = iteratorFind(validationErrors.values(), (errors) => errors.some(error => error.ruleName === 'uniqueError' && error.validationProps.unique === unique));
           if (uniqueErrors) {
             return uniqueErrors;

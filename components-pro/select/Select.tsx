@@ -910,22 +910,29 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     this.doSearch(value);
   }
 
+  renderSearchFieldPrefix(_props: any): ReactNode {
+    return undefined;
+  }
+
   @autobind
-  renderSearchField(): ReactNode {
+  renderSearchField(props?: any): ReactNode {
     const { searchText, prefixCls } = this;
     const searchFieldProps = this.getSearchFieldProps();
     const { multiple, className } = searchFieldProps;
     return (
-      <ObserverTextField
-        value={searchText}
-        onChange={this.handlePopupSearch}
-        prefix={<Icon type="search" />}
-        valueChangeAction={multiple ? ValueChangeAction.blur : ValueChangeAction.input}
-        labelLayout={LabelLayout.none}
-        border={false}
-        {...searchFieldProps}
-        className={classNames(`${prefixCls}-search-bar`, className)}
-      />
+      <div className={`${prefixCls}-search-bar`}>
+        {this.renderSearchFieldPrefix(props)}
+        <ObserverTextField
+          value={searchText}
+          onChange={this.handlePopupSearch}
+          prefix={<Icon type="search" />}
+          valueChangeAction={multiple ? ValueChangeAction.blur : ValueChangeAction.input}
+          labelLayout={LabelLayout.none}
+          border={false}
+          {...searchFieldProps}
+          className={classNames(`${prefixCls}-search-field`, className)}
+        />
+      </div>
     );
   }
 
@@ -1023,9 +1030,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           case KeyCode.PAGE_UP:
             this.handleKeyDownFirstLast(e, menu, -1);
             break;
-            // case KeyCode.ENTER:
-            //   this.handleKeyDownEnter(e);
-            //   break;
+          // case KeyCode.ENTER:
+          //   this.handleKeyDownEnter(e);
+          //   break;
           case KeyCode.ESC:
             this.handleKeyDownEsc(e);
             break;
@@ -1339,7 +1346,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         const value = searchPara[key];
         const lovPara = value === '' ? undefined : value;
         if (optionDs) {
-          optionDs.query(undefined, { key: lovPara });
+          optionDs.query(undefined, { [key]: lovPara });
         } else {
           field.setLovPara(key, lovPara);
         }

@@ -71,6 +71,7 @@ title: DataSet
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | observable&lt;string\|boolean&gt; |
 | selectionStrategy | 树形选择记录策略， `SHOW_ALL` `SHOW_CHILD` `SHOW_PARENT` | observable&lt;string[]&gt; |
 | records | 所有记录 | observable&lt;Record[]&gt; |
+| fields | 所有字段 | ObservableMap<string, Field> |
 | all | 所有记录, 包括缓存的记录 | observable&lt;Record[]&gt; |
 | data | 数据, 不包括删除状态的 Record | observable&lt;Record[]&gt; |
 | created | 新建的数据 | readonly observable&lt;Record[]&gt; |
@@ -227,8 +228,8 @@ title: DataSet
 | toData() | 转换成普通数据, 包括所有级联数据。 注意：禁止通过此方法获取的 data 来获取值，请用更高性能的 get 方法来获取值。 |  | object |
 | validate(all, noCascade) | 校验记录 | `all` - 校验所有字段，默认为 false，只校验修改或新增字段 `noCascade` - 为 true 时，不校验级联数据 | Promise&lt;boolean&gt; |
 | getCascadeRecords(childName) | 根据级联名获取子级联数据 | `childName` - 级联名 | Record[] |
-| getField(fieldName) | 根据字段名获取字段 | `fieldName` - 字段名 | Field |
-| addField(fieldName, fieldProps) | 增加新字段 | `fieldName` - 字段名，`fieldProps` - 字段属性 | Field |
+| getField(fieldName) | 根据字段名获取字段，注意：尽量使用 dataSet.getField 来提高性能, 如果要获取 recordField 的属性， 可以使用 dsField.get(name, record) | `fieldName` - 字段名 | Field |
+| addField(fieldName, fieldProps) | 增加新字段, 如果该字段非 record 独有的话，请选择使用 dataSet.addField | `fieldName` - 字段名，`fieldProps` - 字段属性 | Field |
 | clone() | 克隆记录，自动剔除主键值 |  | Record |
 | ready() | 判断记录是否准备就绪 |  | Promise |
 | reset() | 重置更改 |  |  |
@@ -305,27 +306,28 @@ title: DataSet
 | -------- | -------- | ------------------------- |
 | name     | 字段名   | readonly string           |
 | type     | 类型     | observable&lt;string&gt;  |
-| required | 是否必选 | observable&lt;boolean&gt; |
-| readOnly | 是否只读 | observable&lt;boolean&gt; |
-| disabled | 是否禁用 | observable&lt;boolean&gt; |
-| attachments | 附件列表 | observable&lt;[AttachmentFile](#AttachmentFile)[]&gt; |
-| attachmentCount | 附件数量 | observable&lt;number&gt; |
 
 ### Field Methods
 
 | 名称 | 说明 | 参数 | 返回值类型 |
 | --- | --- | --- | --- |
-| get(propsName) | 根据属性名获取属性值 | `propsName` - 属性名 | any |
+| get(propsName, record) | 根据属性名获取属性值 | `propsName` - 属性名 `record` - 记录 | any |
 | set(propsName, value) | 设置属性值 | `propsName` - 属性名；`value` - 属性值 | - |
 | reset() | 重置设置的属性 |  | - |
-| checkValidity() | 校验字段值 |  | boolean |
-| setLovPara(para, value) | 设置 Lov 的查询参数 | `para` - 参数名；`value` - 参数值 | - |
-| getValue() | 获取当前记录的本字段值 | any |
-| getText(lookupValue) | 根据 lookup 值获取 lookup 描述 | `lookupValue` - lookup 值，默认本字段值 | string |
-| getLookupData(lookupValue) | 根据 lookup 值获取 lookup 数据对象 | `lookupValue` - lookup 值，默认本字段值 | object |
-| fetchLookup() | 请求 lookup 数据，若有缓存直接返回缓存数据。 |  | Promise&lt;object[]&gt; |
-| isValid() | 是否校验通过 |  | boolean |
-| getValidationMessage() | 获取校验信息 |  | string |
+| checkValidity(record) | 校验字段值 |  `record` - 记录 | boolean |
+| setLovPara(para, value, record) | 设置 Lov 的查询参数 | `para` - 参数名；`value` - 参数值  `record` - 记录 | - |
+| getOptions(record) | 获取选项数据集， 设置了 lookupCode 和 lovCode 的字段也适用 | `record` - 记录 | DataSet |
+| getValue(record) | 获取当前记录的本字段值 | `record` - 记录 | any |
+| getText(lookupValue, showValueIfNotFound, record) | 根据 lookup 值获取 lookup 描述 | `lookupValue` - lookup 值，默认本字段值 `showValueIfNotFound` - 当未找到文本时显示值  `record` - 记录 | string |
+| getLookupData(lookupValue, record) | 根据 lookup 值获取 lookup 数据对象 | `lookupValue` - lookup 值，默认本字段值 `record` - 记录 | object |
+| fetchLookup(noCache, record) | 请求 lookup 数据，若有缓存直接返回缓存数据。 |  `noCache` - 是否禁用缓存 `record` - 记录 | Promise&lt;object[]&gt; |
+| isValid(record) | 是否校验通过 |  `record` - 记录 | boolean |
+| getValidationMessage(record) | 获取校验信息 |  `record` - 记录 | string |
+| getValidationErrorValues(record) | 获取校验结果 |  `record` - 记录 | ValidationResult[] |
+| getAttachments(record) | 获取附件列表 |  `record` - 记录 | AttachmentFile[] |
+| getAttachmentCount(record) | 获取附件数量 |  `record` - 记录 | number |
+
+* 当 field 是通过 ds.getField 获取的字段时， 以上传了 record 参数的方法等同于调用了通过 record.getField 得到的 field 对应的方法。版本： 1.5.0+
 
 ### Transport
 
