@@ -37,12 +37,47 @@ export function isCalcSize(num: string) {
   return num.match(calcReg);
 }
 
+/**
+ * 判断是否科学计数法,是则进行转换
+ * @param amount 
+ * @returns 
+ */
+export function scientificCounting(amount): string {
+  if ((amount.indexOf('E') !== -1) || (amount.indexOf('e') !== -1)) {
+    const num: string = amount.replace('px', '')
+    let eIndex = 0
+    if (num.indexOf('E') !== -1) {
+      eIndex = num.indexOf('E')
+    } else {
+      eIndex = num.indexOf('e')
+    }
+    const decimal: string = num.substr(0, eIndex);
+    const numDecimal = Number(decimal)
+    let symbol = ''
+    let symbolIndex = 0
+    if (num.indexOf("+") !== -1) {
+      symbolIndex = num.indexOf("+")
+      symbol = '+'
+    } else {
+      symbolIndex = num.indexOf("-")
+      symbol = '-'
+    }
+    const power: string = num.slice(symbolIndex + 1, num.length)
+    const numPower = Number(power)
+    const resNumber = numDecimal *  (symbol === '+' ? 10 : -10)**numPower
+    return `${resNumber}px`;
+  }
+  return amount;
+}
+
 export function toPx(num?: number | string | null): number | undefined {
   if (num !== undefined && num !== null) {
     if (isNumber(num)) {
       return num;
     }
     if (isString(num) && !builtInHeight.includes(num) && !num.endsWith('%')) {
+      // 如果是string 类型 还要验证是否是科学计数
+      num = scientificCounting(num)
       const calcMatches = isCalcSize(num);
       if (calcMatches) {
         try {

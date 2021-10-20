@@ -62,8 +62,8 @@ export interface TabBarProps {
 }
 
 interface MenuKeyValue {
-  key: string,
-  tab: string
+  key: string;
+  tab: string;
 }
 
 const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
@@ -224,7 +224,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }, []);
   };
 
-  const isNextPrevShown = useCallback((state?: { prev: boolean, next: boolean }): boolean => {
+  const isNextPrevShown = useCallback((state?: { prev: boolean; next: boolean }): boolean => {
     if (state) {
       return state.next || state.prev;
     }
@@ -275,7 +275,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         <Icon type="more_horiz" className={dropDownClass} />
       </Dropdown>
     )
-    const addTool = isEditCard && nextPrevShown && !hideAdd && <TabsAddBtn key="add" onEdit={onEdit} vertical={vertical} />
+    const addTool = isEditCard && nextPrevShown && !hideAdd && <TabsAddBtn key="add" onEdit={onEdit} vertical={vertical} isFixed />
 
     // 这里是固定项
     const toolBar = [
@@ -355,7 +355,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const target = offset;
       if (offsetRef.current !== target) {
         offsetRef.current = Math.abs(target);
-        const navOffset: { name?: string, value?: string } = {};
+        const navOffset: { name?: string; value?: string } = {};
         const navStyle = nav.style;
         const transformSupported = isTransformSupported(navStyle);
         if (isVertical(tabBarPosition)) {
@@ -447,7 +447,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }
   }, [getOffsetWH, setOffset, navWrapRef, onNextClick, setNextPrev]);
 
-  const scrollToActiveTab = useCallback((e?: { target?: HTMLElement, currentTarget?: HTMLElement }) => {
+  const scrollToActiveTab = useCallback((e?: { target?: HTMLElement; currentTarget?: HTMLElement }) => {
     const vertical = isVertical(tabBarPosition)
     const activeTab = activeTabRef.current;
     const navWrap = navWrapRef.current;
@@ -547,7 +547,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
               {content}
               {
                 // 这里是跟随新增button，只有卡片样式的页签支持新增选项
-                !hideAdd && isEditCard && <TabsAddBtn extraPrefixCls={showNextPrev ? 'none' : 'inline-block'} vertical={vertical} onEdit={onEdit} />
+                !hideAdd && isEditCard && <TabsAddBtn prefixCls={prefixCls} extraPrefixCls={showNextPrev ? 'none' : 'inline-flex'} vertical={vertical} onEdit={onEdit} />
               }
             </div>
           </div>
