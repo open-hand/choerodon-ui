@@ -20,20 +20,55 @@ From the stack to the horizontal arrangement.
 You can create a basic grid system by using a single set of `Row` and` Col` grid assembly, all of the columns (Col) must be placed in `Row`.
 
 ````jsx
-import { Select } from 'choerodon-ui/pro';
+import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
 
 const { Option, OptGroup } = Select;
 
+const App = () => {
+  const optionDs = React.useMemo(() => new DataSet({
+    queryUrl: '/common/lov/dataset/LOV_CODE',
+    fields:[
+      { name: 'enabledFlag', type:'string', group: true},
+    ],
+    autoQuery: true,
+  }));
+
+  const ds = React.useMemo(() => new DataSet({
+    fields: [
+      {
+        name: 'code',
+        type: 'string',
+        textField: 'description',
+        valueField: 'code',
+        label: '用户',
+        options: optionDs,
+      },
+    ],
+  }));
+
+
+  return (
+    <Row gutter={10}>
+      <Col span={12}>
+        <Select>
+          <OptGroup label="Manager">
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+          </OptGroup>
+          <OptGroup label="Engineer">
+            <Option value="wu">Wu</Option>
+          </OptGroup>
+        </Select>
+      </Col>
+      <Col span={12}>
+        <Select dataSet={ds} name="code" />
+      </Col>
+    </Row>
+  );
+};
+
 ReactDOM.render(
-  <Select>
-    <OptGroup label="Manager">
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-    </OptGroup>
-    <OptGroup label="Engineer">
-      <Option value="wu">Wu</Option>
-    </OptGroup>
-  </Select>,
+  <App />,
   mountNode
 );
 ````

@@ -176,7 +176,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const tabBarRef = [...currentPanelMap.entries()].map((item) => ({ key: item[0], value: item[1], ref: React.createRef<HTMLDivElement>() }));
     tabsRef.current = tabBarRef
     return iteratorReduce<[string, TabPaneProps & { type: string | JSXElementConstructor<any> }], ReactElement<RippleProps>[]>(currentPanelMap.entries(), (rst, [key, child], index) => {
-      const { disabled, closable = true, count, overflowCount, showCount } = child;
+      const { disabled, closable = true, count, overflowCount, showCount, countRenderer } = child;
       const classes = [`${prefixCls}-tab`];
       const tabProps: PropsWithoutRef<TabBarInnerProps> & RefAttributes<HTMLDivElement> = {
         tabKey: key,
@@ -203,7 +203,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const title = (
         <>
           {getHeader(child)}
-          {showCount && <Count prefixCls={prefixCls} count={count} overflowCount={overflowCount} />}
+          {showCount && <Count prefixCls={prefixCls} count={count} renderer={countRenderer} overflowCount={overflowCount} />}
         </>
       );
       rst.push(
@@ -714,7 +714,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       debouncedResize.cancel();
     };
   }, [setNextPrev, scrollToActiveTab, resizeEvent]);
-  
+
   // 内容变化判断是否显示更多
   useEffect(()=>{
     setNextPrev()

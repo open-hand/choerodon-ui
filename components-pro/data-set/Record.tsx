@@ -126,12 +126,15 @@ export default class Record {
 
   @computed
   get fields(): Fields {
-    return observable.map(
-      {
-        ...this.dataSet.fields.toPOJO(),
-        ...this.ownerFields.toPOJO(),
-      },
-    );
+    warning(false, 'If you only want to get some property from dataSet field or calculated by `dynamicProps` or `computedProps`. Don\'t to iterate fields from `record.fields`, please use `dataSet.fields` instead. And then use `dsField.get(someProp, record)` to get the property which you needed.');
+    const fields = new Map();
+    this.dataSet.fields.forEach((_, name) => {
+      const tempField = this.getField(name);
+      if (tempField) {
+        fields.set(name, tempField);
+      }
+    });
+    return observable.map(fields);
   }
 
   @observable ownerFields: Fields;
@@ -348,9 +351,7 @@ export default class Record {
       this.set(
         expandField,
         field
-          ? expand
-            ? field.get(BooleanValue.trueValue, this)
-            : field.get(BooleanValue.falseValue, this)
+          ? field.get(expand ? BooleanValue.trueValue : BooleanValue.falseValue, this)
           : expand,
       );
     } else {
@@ -499,9 +500,7 @@ export default class Record {
     return {
       ...this.toData(true, noCascade, isCascadeSelect, false),
       __id: this.id,
-      [getConfig('statusKey')]: getConfig('status')[
-        status === RecordStatus.sync ? RecordStatus.update : status
-      ],
+      [getConfig('statusKey')]: getConfig('status')[status === RecordStatus.sync ? RecordStatus.update : status],
     };
   }
 
@@ -606,6 +605,8 @@ export default class Record {
 
   getField(fieldName?: string): Field | undefined {
     if (fieldName) {
+      warning(false, 'If you only want to get some property from dataSet field or calculated by `dynamicProps` or `computedProps`. Don\'t to get field from `record.getField`, please use `dataSet.getField` instead. And then use `dsField.get(someProp, record)` to get the property which you needed.');
+
       {
         const field = this.ownerFields.get(fieldName);
         if (field) {

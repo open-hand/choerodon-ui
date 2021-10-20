@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Select`: Added the `defaultActiveFirstOption` property whether to highlight the first option by default.
 - 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
 - 🌟 `Upload`: Added `showFileSize` property, and optimized the component style.
+- 🌟 `Tabs`: Added `countRenderer` property.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
@@ -32,6 +33,7 @@ timeline: true
 - 💄 `<pro>Attachment`: Display a mandatory asterisk on the label.
 - 💄 `<pro>DateTimePicker`: Optimize the time value set by `defaultTime` does not change when the range value is automatically exchanged.
 - 💄 `<pro>Lov`: Optimized the `onClick` hook of the button mode allows to prevent the modal box from popping up by calling event.preventDefault().
+- 💄 `<pro>Lov`: Optimization In `popup` mode, add query field selection to search box.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.

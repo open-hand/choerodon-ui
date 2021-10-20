@@ -1,13 +1,13 @@
 import React, { Children, Component, CSSProperties, isValidElement, Key, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
-import { isFragment } from 'react-is';
 import classNames from 'classnames';
 import raf from 'raf';
 import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import noop from 'lodash/noop';
 import isEqual from 'lodash/isEqual';
+import isFragment from 'choerodon-ui/pro/lib/_util/isFragment';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import { ElementProps } from 'choerodon-ui/pro/lib/core/ViewComponent';
 import focusable, { findFocusableParent } from 'choerodon-ui/pro/lib/_util/focusable';

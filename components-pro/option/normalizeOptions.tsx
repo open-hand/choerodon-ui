@@ -19,50 +19,48 @@ function getOptionsFromChildren(
 ) {
   if (elements) {
     const getOption = (child) => {
-      if (isValidElement(child)) {
-        if (isFragment(child)) {
-          const { children } = child.props as any;
-          if (children) {
-            Children.forEach(children, getOption);
-          }
-        } else {
-          const { type } = child;
-          if ((type as typeof OptGroup).__PRO_OPT_GROUP) {
-            const props = child.props as OptGroupProps & { children };
-            getOptionsFromChildren(
-              props.children,
-              data,
-              fields,
-              textField,
-              valueField,
-              disabledField,
-              groups.concat(props.label || ''),
-            );
-          } else if ((type as typeof Option).__PRO_OPTION) {
-            const { value, children, disabled, ...rest } = child.props as OptionProps & { children };
-            data.push(
-              groups.reduce(
-                (obj, group, index) => {
-                  const name = `group-${index}`;
-                  obj[name] = group;
-                  if (!fields.find(field => field.name === name)) {
-                    fields.push({
-                      name,
-                      type: FieldType.reactNode,
-                      group: groups.length - 1,
-                    });
-                  }
-                  return obj;
-                },
-                {
-                  [OTHER_OPTION_PROPS]: rest,
-                  [textField]: children,
-                  [valueField]: value === undefined && isValidElement(children) ? children : value,
-                  [disabledField]: disabled,
-                },
-              ),
-            );
-          }
+      if (isFragment(child)) {
+        const { children } = child.props as any;
+        if (children) {
+          Children.forEach(children, getOption);
+        }
+      } else if (isValidElement(child)) {
+        const { type } = child;
+        if ((type as typeof OptGroup).__PRO_OPT_GROUP) {
+          const props = child.props as OptGroupProps & { children };
+          getOptionsFromChildren(
+            props.children,
+            data,
+            fields,
+            textField,
+            valueField,
+            disabledField,
+            groups.concat(props.label || ''),
+          );
+        } else if ((type as typeof Option).__PRO_OPTION) {
+          const { value, children, disabled, ...rest } = child.props as OptionProps & { children };
+          data.push(
+            groups.reduce(
+              (obj, group, index) => {
+                const name = `group-${index}`;
+                obj[name] = group;
+                if (!fields.find(field => field.name === name)) {
+                  fields.push({
+                    name,
+                    type: FieldType.reactNode,
+                    group: groups.length - 1,
+                  });
+                }
+                return obj;
+              },
+              {
+                [OTHER_OPTION_PROPS]: rest,
+                [textField]: children,
+                [valueField]: value === undefined && isValidElement(children) ? children : value,
+                [disabledField]: disabled,
+              },
+            ),
+          );
         }
       }
     };
