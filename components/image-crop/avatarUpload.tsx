@@ -142,7 +142,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
       if (axiosConfig) {
         config = axiosConfig;
       }
-      axios.post(`${uploadUrl}?${qs}`, data, config)
+      axios.post<any, any>(`${uploadUrl}?${qs}`, data, config)
         .then((res) => {
           if (res.success) {
             this.uploadOk(res);
