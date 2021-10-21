@@ -34,7 +34,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
 
   static contextType = TableContext;
 
-  declare context: TableContextValue;
+  context: TableContextValue;
 
   constructor(props, context) {
     super(props, context);
@@ -99,6 +99,9 @@ export default class TableTBody extends Component<TableTBodyProps> {
   handleResize(_width: number, height: number) {
     const { tableStore } = this.context;
     if (!tableStore.hidden) {
+      if (tableStore.overflowY && height === tableStore.height) {
+        height += 1;
+      }
       tableStore.calcBodyHeight = height;
     }
   }

@@ -2,9 +2,11 @@ import React, { FunctionComponent, MouseEvent, useCallback, useContext, useEffec
 import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
+import defaultTo from 'lodash/defaultTo';
 import flatten from 'lodash/flatten';
 import Collapse from 'choerodon-ui/lib/collapse';
 import CollapsePanel from 'choerodon-ui/lib/collapse/CollapsePanel';
+import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getColumnKey, getColumnLock } from '../utils';
 import ColumnGroups from './column-groups';
 import DataSet from '../../data-set/DataSet';
@@ -139,12 +141,13 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
   }), [customizedColumns, tableStore]);
   const handleRestoreTable = useCallback(action((e: MouseEvent<any>) => {
     e.stopPropagation();
-    const { originalHeightType } = tableStore;
+    const { originalHeightType, props: { style } } = tableStore;
+    const defaultHeight = defaultTo(toPx(style && style.height), tableStore.totalHeight);
     tableStore.node.handleHeightTypeChange(true);
     tableRecord.init({
       heightType: originalHeightType,
-      height: tableStore.totalHeight,
-      heightDiff: diff(tableStore.totalHeight),
+      height: defaultHeight,
+      heightDiff: diff(defaultHeight),
     });
   }), [tableRecord, tableStore]);
   const handleRestoreColumns = useCallback(action((e: MouseEvent<any>) => {

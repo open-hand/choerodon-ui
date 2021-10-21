@@ -210,6 +210,13 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     ]);
   }
 
+  getObservableProps(props, context): any {
+    return {
+      ...super.getObservableProps(props, context),
+      viewMode: props.viewMode,
+    };
+  }
+
   getPopupProps(): TriggerFieldPopupContentProps {
     return {
       setValue: this.setValue.bind(this),
