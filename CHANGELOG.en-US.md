@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
 - 🌟 `Upload`: Added `showFileSize` property, and optimized the component style.
 - 🌟 `Tabs`: Added `countRenderer` property.
+- 🌟 `<pro>Lov`: Added `onSearchMatcherChange` property.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.

@@ -100,6 +100,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   autoSelectSingle?: boolean;
   showCheckedStrategy?: CheckedStrategy;
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
+  onSearchMatcherChange?: (searchMatcher?: string) => void;
 }
 
 @observer
@@ -133,8 +134,6 @@ export default class Lov extends Select<LovProps> {
 
   @observable modal;
 
-  searchOption?: string | undefined;
-
   fetched?: boolean;
 
   searching?: boolean;
@@ -145,7 +144,18 @@ export default class Lov extends Select<LovProps> {
     if (isString(searchMatcher)) {
       return searchMatcher;
     }
-    return this.textField;
+    const { viewMode } = this.observableProps;
+    const { textField } = this;
+    if (viewMode === 'popup') {
+      const { options: { queryDataSet } } = this;
+      if (queryDataSet) {
+        const queryFields = Array.from(queryDataSet.fields.keys());
+        if (queryFields.length && !queryFields.includes(textField)) {
+          return queryFields[0];
+        }
+      }
+    }
+    return textField;
   }
 
   @computed
@@ -208,7 +218,7 @@ export default class Lov extends Select<LovProps> {
 
   getSearchFieldProps(): TextFieldProps {
     const searchFieldProps = super.getSearchFieldProps();
-    const { viewMode } = this.props;
+    const { viewMode } = this.observableProps;
     if (viewMode === 'popup') {
       return {
         multiple: true,
@@ -221,31 +231,24 @@ export default class Lov extends Select<LovProps> {
   isSearchFieldInPopup(): boolean | undefined {
     const searchFieldInPopup = super.isSearchFieldInPopup();
     if (searchFieldInPopup === undefined) {
-      const { viewMode } = this.props;
+      const { viewMode } = this.observableProps;
       return viewMode === 'popup';
     }
     return searchFieldInPopup;
   }
 
   isEditable(): boolean {
-    const { viewMode } = this.props;
+    const { viewMode } = this.observableProps;
     return viewMode !== 'popup' && super.isEditable();
   }
 
   @autobind
   @action
-  handlePopupOptionChange(searchOption) {
-    this.searchOption = searchOption;
+  handleSearchMatcherChange(searchMatcher) {
+    this.observableProps.searchMatcher = searchMatcher;
     this.searchText = undefined;
-  }
-
-  getSearchPara(searchMatcher: string, value?: string | string[] | undefined): object {
-    const { searchOption } = this;
-    if (searchOption) {
-      return super.getSearchPara(searchOption, value);
-    }
-
-    return super.getSearchPara(searchMatcher, value);
+    const { onSearchMatcherChange = noop } = this.props;
+    onSearchMatcherChange(searchMatcher);
   }
 
   @autobind
@@ -255,12 +258,8 @@ export default class Lov extends Select<LovProps> {
       const { fields } = queryDataSet;
       if (fields.size > 0) {
         const options: ReactElement[] = [];
-        let { searchOption } = this;
+        const { searchMatcher } = this;
         fields.forEach((field, name) => {
-          if (!searchOption) {
-            searchOption = name;
-            this.searchOption = name;
-          }
           options.push(
             <Option key={String(name)} value={name}>{field.get('label')}</Option>,
           );
@@ -269,8 +268,8 @@ export default class Lov extends Select<LovProps> {
         return (
           <>
             <ObserverSelect
-              value={searchOption}
-              onChange={this.handlePopupOptionChange}
+              value={searchMatcher}
+              onChange={this.handleSearchMatcherChange}
               border={false}
               clearButton={false}
               className={`${prefixCls}-lov-search-option`}
@@ -331,7 +330,8 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   getPopupContent(): ReactNode {
-    const { searchAction, viewMode } = this.props;
+    const { searchAction } = this.props;
+    const { viewMode } = this.observableProps;
     if (viewMode === 'popup') {
       return this.getPopupLovView();
     }
@@ -347,7 +347,7 @@ export default class Lov extends Select<LovProps> {
     if (multiple) {
       options.selectionStrategy = this.getProp('showCheckedStrategy') || CheckedStrategy.SHOW_ALL;
     }
-    const { viewMode } = this.props;
+    const { viewMode } = this.observableProps;
     const { selected } = options;
     if (viewMode === 'modal') {
       options.unSelectAll();
@@ -426,7 +426,8 @@ export default class Lov extends Select<LovProps> {
   @action
   private openModal(fetchSingle?: boolean) {
     this.collapse();
-    const { viewMode, onBeforeSelect } = this.props;
+    const { viewMode } = this.observableProps;
+    const { onBeforeSelect } = this.props;
     if (viewMode === 'modal') {
       const config = this.getConfig();
       this.autoCreate();
@@ -527,7 +528,7 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   handleLovViewSelect(records: Record | Record[]) {
-    const { viewMode } = this.props;
+    const { viewMode } = this.observableProps;
     if (viewMode === 'popup' && !this.multiple) {
       this.collapse();
     }
@@ -598,7 +599,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   getPopupClassName(defaultClassName: string | undefined): string | undefined {
-    const { viewMode } = this.props;
+    const { viewMode } = this.observableProps;
     return classNames(defaultClassName, { [`${this.prefixCls}-lov-popup`]: viewMode === 'popup' });
   }
 
@@ -689,6 +690,7 @@ export default class Lov extends Select<LovProps> {
       'autoSelectSingle',
       'showCheckedStrategy',
       'onBeforeSelect',
+      'onSearchMatcherChange',
     ]);
   }
 
@@ -716,7 +718,8 @@ export default class Lov extends Select<LovProps> {
   }
 
   getSuffix(): ReactNode {
-    const { suffix, viewMode } = this.props;
+    const { viewMode } = this.observableProps;
+    const { suffix } = this.props;
     if (viewMode === 'popup') {
       return super.getSuffix();
     }

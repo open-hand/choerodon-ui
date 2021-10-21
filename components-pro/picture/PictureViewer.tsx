@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState, WheelEvent } from 'react';
+import throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -87,11 +88,12 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: modalChild
       setScale(currentScale - 1);
     }
   }, [getCurrentScale]);
+  const throttleWheel = useMemo(() => throttle((callback: Function) => callback(), 60), []);
   const handleWheel = useCallback((e: WheelEvent) => {
     if (e.deltaX > 0 || e.deltaY > 0) {
-      handleZoomOut();
+      throttleWheel(handleZoomOut);
     } else {
-      handleZoomIn();
+      throttleWheel(handleZoomIn);
     }
   }, [handleZoomOut, handleZoomIn]);
   const translateEvent: EventManager = useMemo(() => new EventManager(), []);
