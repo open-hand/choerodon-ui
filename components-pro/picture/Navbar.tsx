@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FunctionComponent, memo, useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import isString from 'lodash/isString';
 import scrollTo from 'choerodon-ui/lib/_util/scrollTo';
@@ -27,7 +27,7 @@ const MAX = 5;
 const SIZE = 60;
 const GUTTER = 8;
 
-const NavItem: FunctionComponent<NavItemProps> = function NavItem(props) {
+const NavItem: FunctionComponent<NavItemProps> = memo(function NavItem(props) {
   const { prefixCls, index, onClick, active, src } = props;
   const handleClick = useCallback(() => {
     onClick(index);
@@ -47,7 +47,7 @@ const NavItem: FunctionComponent<NavItemProps> = function NavItem(props) {
       onClick={handleClick}
     />
   );
-};
+});
 
 NavItem.displayName = 'NavItem';
 
@@ -124,4 +124,4 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
 
 Navbar.displayName = 'Navbar';
 
-export default Navbar;
+export default memo(Navbar);

@@ -11,6 +11,8 @@ title:
 
 ## en-US
 
+Basic Usage
+
 ````jsx
 import { configure, Row, Col } from 'choerodon-ui';
 import { Attachment, Axios } from 'choerodon-ui/pro';

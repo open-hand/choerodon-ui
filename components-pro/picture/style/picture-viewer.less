@@ -11,7 +11,7 @@
   user-select: none;
 
   &-modal {
-    &-mask {
+    &-mask.@{c7n-pro-prefix}-mask {
       background-color: rgba(0, 0, 0, 0.65);
     }
 
@@ -27,37 +27,37 @@
     }
   }
 
-  &-btn.@{c7n-pro-prefix}-btn {
+  & &-btn {
     width: .24rem;
     height: .24rem;
     color: @text-color-dark;
-
-    .@{iconfont-css-prefix} {
-      display: block;
-      font-size: .24rem;
-      line-height: 1;
-    }
   }
 
-  &-btn-nav.@{c7n-pro-prefix}-btn {
+  &-btn .@{iconfont-css-prefix} {
+    display: block;
+    font-size: .24rem;
+    line-height: 1;
+  }
+
+  & &-btn-nav.@{c7n-pro-prefix}-btn {
     width: .32rem;
     height: .32rem;
-
-    .@{iconfont-css-prefix} {
-      font-size: .32rem;
-    }
   }
 
-  &-btn-nav.@{c7n-pro-prefix}-btn-lg {
+  &-btn-nav.@{c7n-pro-prefix}-btn .@{iconfont-css-prefix} {
+    font-size: .32rem;
+  }
+
+  & &-btn-nav.@{c7n-pro-prefix}-btn-lg {
     width: .52rem;
     height: .52rem;
-
-    .@{iconfont-css-prefix} {
-      font-size: .52rem;
-    }
   }
 
-  &-btn-close {
+  &-btn-nav.@{c7n-pro-prefix}-btn-lg .@{iconfont-css-prefix} {
+    font-size: .52rem;
+  }
+
+  & &-btn-close {
     position: absolute;
     top: .4rem;
     right: .4rem;

@@ -11,6 +11,8 @@ title:
 
 ## en-US
 
+Display in Table
+
 ````jsx
 import { Attachment, Table, DataSet, Row, Col } from 'choerodon-ui/pro';
 
