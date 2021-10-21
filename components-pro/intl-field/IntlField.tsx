@@ -35,7 +35,7 @@ export default class IntlField extends TextField<IntlFieldProps> {
 
   openModal = async () => {
     if (!this.modal) {
-      const { modalProps, maxLengths } = this.props;
+      const { modalProps, maxLengths, fieldType } = this.props;
       const { record, lang, name, element } = this;
       const { supports } = localeContext;
       const maxLengthList = {};
@@ -61,7 +61,7 @@ export default class IntlField extends TextField<IntlFieldProps> {
 
       this.modal = open({
         title: $l('IntlField', 'modal_title'),
-        children: <IntlList readOnly={this.readOnly} disabled={this.disabled} record={record} name={name} lang={lang} maxLengths={maxLengthList} />,
+        children: <IntlList readOnly={this.readOnly} disabled={this.disabled} record={record} name={name} lang={lang} maxLengths={maxLengthList} fieldType={fieldType} />,
         onClose: this.handleIntlListClose,
         onOk: this.handleIntlListOk,
         onCancel: this.handleIntlListCancel,
@@ -108,7 +108,7 @@ export default class IntlField extends TextField<IntlFieldProps> {
 
   @autobind
   handleKeyDown(e) {
-    if (e.keyCode === KeyCode.DOWN) {
+    if (e.keyCode === KeyCode.DOWN && e.target.type !== 'textarea') {
       stopEvent(e);
       this.openModal();
     }

@@ -1029,6 +1029,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         }
       }
     } else {
+      if (this.element && this.element.type === 'textarea') {
+        return;
+      }
       this.blur();
     }
   }

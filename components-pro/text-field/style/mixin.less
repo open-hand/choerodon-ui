@@ -189,6 +189,7 @@
   textarea& {
     max-width: 100%; // prevent textearea resize from coming out of its container
     height: auto;
+    padding: .07rem .1rem;
     vertical-align: bottom;
   }
 
@@ -207,6 +208,15 @@
     margin: auto 0;
     line-height: 1;
     text-align: center;
+  }
+
+  textarea ~ &-suffix {
+    top: 0.06rem;
+    bottom: unset;
+  }
+  textarea ~ &-length-info {
+    top: unset;
+    bottom: 0.06rem;
   }
 
   &-prefix {

@@ -73,7 +73,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={8}>
-          <IntlField dataSet={this.ds} name="first-name" />
+          <IntlField dataSet={this.ds} name="first-name" fieldType="textarea" rows={4} cols={80} resize='both' />
         </Col>
         <Col span={8}>
           <IntlField maxLengths={{ en_GB: 6, en_US: 10 }}  placeholder="默认英文" dataSet={this.ds2} name="first-name" />

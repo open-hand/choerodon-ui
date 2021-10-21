@@ -15,6 +15,7 @@ export interface IntlListProps {
   maxLengths?: object;
   disabled?: boolean;
   readOnly?: boolean;
+  fieldType?: 'input' | 'textarea';
 }
 
 @observer
@@ -27,7 +28,7 @@ export default class IntlList extends Component<IntlListProps> {
   };
 
   renderOptions() {
-    const { name, lang, maxLengths } = this.props;
+    const { name, lang, maxLengths, fieldType } = this.props;
     const { supports } = localeContext;
     const tlsKey = getConfig('tlsKey');
     return Object.keys(supports).map(key => {
@@ -38,6 +39,7 @@ export default class IntlList extends Component<IntlListProps> {
           name={name ? `${tlsKey}.${name}.${key}` : key}
           autoFocus={key === lang}
           key={key}
+          fieldType={fieldType}
         />
       );
     });

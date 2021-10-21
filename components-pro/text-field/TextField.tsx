@@ -144,6 +144,26 @@ export interface TextFieldProps<V = any> extends FormFieldProps<V> {
    * @default true
    */
   border?: boolean;
+
+  /**
+   * 设置组件类型
+   */
+  fieldType?: 'input' | 'textarea';
+
+  /**
+   * fieldType等于textarea有效
+   */
+  cols?: number;
+
+  /**
+   * fieldType等于textarea有效
+   */
+  rows?: number;
+  
+  /**
+   * fieldType等于textarea有效
+   */
+  resize?: 'none' | 'both' | 'vertical' | 'horizontal';
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -233,6 +253,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     border: true,
     valueChangeAction: ValueChangeAction.blur,
     waitType: WaitType.debounce,
+    fieldType: 'input',
   };
 
   @observable text?: string;
@@ -882,7 +903,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       range,
       props: { style, isFlat },
     } = this;
-    const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
+    const { onFocus, onBlur, onMouseEnter, onMouseLeave, fieldType, resize, ...otherProps } = this.getOtherProps();
     if (multiple) {
       const { height } = (style || {}) as CSSProperties;
       const { record } = this;
@@ -947,18 +968,38 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         boxSizing: 'content-box',
       };
     }
-    const childNodes: ReactNode[] = [
+    if (fieldType === 'textarea') {
+      if (resize) {
+        otherProps.style = {
+          ...otherProps.style,
+          resize,
+        }
+      }
+    }
+
+    const totlaProps = {
+      key: "text",
+      ...otherProps,
+      onFocus,
+      onBlur,
+      onMouseEnter,
+      onMouseLeave,
+      placeholder: editorTextInfo.placeholder,
+      value: editorTextInfo.text,
+      readOnly: !this.editable,
+    };
+    
+    const inputComponent = fieldType === 'textarea' ? (
+      <textarea
+        {...totlaProps}
+      />
+    ) : (
       <input
-        key="text"
-        {...otherProps}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        placeholder={editorTextInfo.placeholder}
-        value={editorTextInfo.text}
-        readOnly={!this.editable}
-      />,
+        {...totlaProps}
+      />
+    );
+    const childNodes: ReactNode[] = [
+      inputComponent,
     ];
 
     if (this.showLengthInfo) {
@@ -1012,8 +1053,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const classString = classNames(`${prefixCls}-suffix`, {
       [`${prefixCls}-allow-clear`]: clearButton && !props?.onClick,
     });
+    let style = {};
+    if (this.props.fieldType !== 'textarea') {
+      style = { right: this.lengthInfoWidth };
+    }
     return (
-      <div className={classString} style={{ right: this.lengthInfoWidth }} onMouseDown={preventDefault} {...props}>
+      <div className={classString} style={style} onMouseDown={preventDefault} {...props}>
         {children}
       </div>
     );
