@@ -97,12 +97,11 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: modalChild
   const translateEvent: EventManager = useMemo(() => new EventManager(), []);
   const executeTransform = useCallback((target: HTMLDivElement, r: number, s: number | undefined, t: [number, number]) => {
     const transformValue = toTransformValue({
+      translate: `${t[0]}px,${t[1]}px`,
       rotate: r ? `${r}deg` : undefined,
       scale: s !== undefined && s > -1 ? scaleSteps[s] / scaleSteps[getImageNaturalScale()] : undefined,
     });
     transform(transformValue, target.style);
-    target.style.left = `${t[0]}px`;
-    target.style.top = `${t[1]}px`;
   }, []);
   const handleMouseDown = useCallback((e) => {
     const { current } = transformTargetRef;

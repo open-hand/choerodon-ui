@@ -33,7 +33,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Form dataSet={this.ds} style={{ width: '3.5rem' }}>
+      <Form dataSet={this.ds} style={{ width: '3.5rem' }} useColon>
         <Output name="phone" />
         <NumberField name="age" />
         <Output name="sex" />

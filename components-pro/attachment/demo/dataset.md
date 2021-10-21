@@ -11,6 +11,8 @@ title:
 
 ## en-US
 
+DataSet Binding
+
 ````jsx
 import { Attachment, DataSet, Row, Col } from 'choerodon-ui/pro';
 
@@ -23,6 +25,7 @@ const App = () => {
     name: 'attachment',
     dataSet: ds,
     labelLayout: 'float',
+    showValidation: 'newLine',
   };
 
   React.useEffect(() => {

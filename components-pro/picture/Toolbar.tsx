@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import { stopPropagation } from '../_util/EventManager';
@@ -65,4 +65,4 @@ const Toolbar: FunctionComponent<ToolbarProps> = function Toolbar(props) {
 
 Toolbar.displayName = 'Toolbar';
 
-export default Toolbar;
+export default memo(Toolbar);

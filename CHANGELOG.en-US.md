@@ -44,6 +44,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the first verification of the verification properties set by `dynamicProps` has no effect.
 - 🐞 `<pro>DataSet`: Fix the issue of `appendData` total parameter update.
 - 🐞 `<pro>Validator`: Fix the problem of incomplete `stepMismatch` error information.
+- 🐞 `<pro>Output`: Fix the issue that an asterisk will be displayed when the colon is displayed.
 
 ## 1.4.5
 
