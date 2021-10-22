@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>DateTimePicker`: 优化范围值在自动交换顺序时，由 defaultTime 设置的时间值不变。
 - 💄 `<pro>Lov`: 优化按钮模式的 onClick 钩子允许通过调用 event.preventDefault() 阻止弹出模态框。
 - 💄 `<pro>Lov`: 优化 在 popup 模式下，搜索框添加查询字段选择。
+- 💄 `<pro>NumberField`: 优化 step 按钮执行效率。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。
@@ -42,6 +43,7 @@ timeline: true
 - 🐞 `<pro>Attachment`： 修复点击查看附件按钮报错的问题。
 - 🐞 `<pro>Attachment`： 修复上传按钮内容溢出并设置了 tooltip 时上传无反应的问题。
 - 🐞 `<pro>Attachment`： 修复 accept 属性无法控制文件选择的问题。
+- 🐞 `<pro>Attachment`： 修复附件数据没有 type 可能会报错的问题。
 - 🐞 `<pro>DataSet.Field`： 修复通过 dynamicProps 设置的校验属性首次校验无效果的问题。
 - 🐞 `<pro>DataSet`： 修复 appendData total 参数更新问题。
 - 🐞 `<pro>Validator`： 修复 stepMismatch 错误信息不全的问题。

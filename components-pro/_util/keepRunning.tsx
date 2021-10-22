@@ -1,45 +1,87 @@
-import createDefaultSetter from './createDefaultSetter';
+import { KeyboardEvent, MouseEvent, SyntheticEvent } from 'react';
 import EventManager from './EventManager';
 import TaskRunner from './TaskRunner';
 
-function keep(fn, findEl, e) {
-  if (e && e.target) {
-    const { currentTarget } = e;
-    e.persist();
-    const delayer = new TaskRunner();
-    const keeper = new TaskRunner();
-    const event = new EventManager(currentTarget);
-    const stopFn = () => {
-      if (delayer.isRunning) {
-        delayer.cancel();
-      }
-      if (keeper.isRunning) {
-        keeper.cancel();
-        fn.call(this, e);
-      }
-      event.clear();
-    };
-    const delayFn = () => {
-      keeper.run(40, () => {
-        if (findEl() !== currentTarget) {
-          stopFn();
-        } else {
-          fn.call(this, e, true);
-        }
-      });
-    };
-    delayer.delay(500, delayFn);
-    event.addEventListener('mouseleave', stopFn);
-    event.addEventListener('mouseup', stopFn);
-  }
-  fn.call(this, e);
+
+export interface KeepRunningProps {
+  getStepGenerator(): IterableIterator<number>;
+
+  run?(value: number): void;
+
+  validator(target?: EventTarget): boolean | undefined;
+
+  enabled?(): boolean;
+
+  delay?: number;
+
+  interval?: number;
 }
 
-export default function keepRunning(findEl) {
-  return (target, key, descriptor) => {
+function isEvent(event?: SyntheticEvent): event is SyntheticEvent {
+  return Boolean(event && event.target);
+}
+
+function isKeyboardEvent(event?: MouseEvent | KeyboardEvent): event is KeyboardEvent {
+  if (event && event.type === 'keydown') {
+    event.preventDefault();
+    return true;
+  }
+  return false;
+}
+
+function keep(fn, props: KeepRunningProps, e?: MouseEvent | KeyboardEvent) {
+  const { getStepGenerator, run = fn, validator, enabled, delay = 200, interval = 40 } = props;
+  if (!enabled || enabled.call(this) && ((!isKeyboardEvent(e) || !e.repeat))) {
+    const generator = getStepGenerator.call(this);
+    const firstValue = generator.next().value;
+    if (isEvent(e)) {
+      const { currentTarget, type } = e;
+      const delayer = new TaskRunner();
+      const keeper = new TaskRunner();
+      const event = new EventManager(currentTarget);
+      const stopFn = () => {
+        if (delayer.isRunning) {
+          delayer.cancel();
+          fn.call(this, firstValue);
+        }
+        if (keeper.isRunning) {
+          keeper.cancel();
+          fn.call(this, generator.next().value);
+        }
+        event.clear();
+      };
+      const delayFn = () => {
+        keeper.run(interval, () => {
+          if (validator.call(this, currentTarget) === false) {
+            stopFn();
+          } else {
+            run.call(this, generator.next().value);
+          }
+        });
+      };
+      delayer.delay(delay, delayFn);
+      if (type === 'keydown') {
+        event
+          .addEventListener('keyup', stopFn)
+          .addEventListener('blur', stopFn);
+      } else {
+        event
+          .addEventListener('mouseleave', stopFn)
+          .addEventListener('mouseup', stopFn);
+      }
+      run.call(this, firstValue);
+    } else {
+      fn.call(this, firstValue);
+    }
+  }
+}
+
+export default function keepRunning(props: KeepRunningProps) {
+  return (target, _key, descriptor) => {
     const { constructor } = target;
     const { value: fn } = descriptor;
     return {
+      enumerable: false,
       configurable: true,
       get() {
         if (this === target) {
@@ -50,15 +92,8 @@ export default function keepRunning(findEl) {
           return fn;
         }
 
-        const boundFn = keep.bind(this, fn, findEl.bind(this));
-        Object.defineProperty(this, key, {
-          value: boundFn,
-          configurable: true,
-          writable: true,
-        });
-        return boundFn;
+        return keep.bind(this, fn, props);
       },
-      set: createDefaultSetter(key),
     };
   };
 }

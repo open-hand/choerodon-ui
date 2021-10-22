@@ -48,7 +48,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
   } = props;
-  const { status, name, filename, ext, url, size } = attachment;
+  const { status, name, filename, ext, url, size, type } = attachment;
   const attachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
@@ -56,7 +56,7 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
   const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) : url;
   const downloadUrl = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID });
   const dragProps = { ...provided.dragHandleProps };
-  const isPicture = attachment.type.startsWith('image');
+  const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
   const preview = (status === 'success' || status === 'done');
   const handlePreview = useCallback(() => {
     const { current } = pictureRef;

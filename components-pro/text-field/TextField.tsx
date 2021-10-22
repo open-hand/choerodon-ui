@@ -474,8 +474,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return (this.isEditableLike() || isEmpty(this.text)) && super.isEmpty() && this.isRenderEmpty();
   }
 
-  getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
       'prefix',
       'suffix',
       'clearButton',
@@ -495,6 +495,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'showLengthInfo',
       'border',
     ]);
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
     otherProps.onKeyDown = this.handleKeyDown;
