@@ -14,7 +14,7 @@ import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
-import { suffixCls } from '../modal/utils';
+import { suffixCls, toUsefulDrawerTransitionName } from '../modal/utils';
 import { getDocument, getMousePosition } from '../_util/DocumentUtils';
 
 const { containerInstances } = ModalManager;
@@ -239,8 +239,9 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     modals.slice().reverse().forEach(({ hidden, drawer, drawerOffset, drawerTransitionName }) => {
       if (!hidden) {
         maskHidden = false;
-        if (drawer && drawerTransitionName) {
-          const offsets = drawerOffsets[drawerTransitionName];
+        const transitionName = toUsefulDrawerTransitionName(drawerTransitionName)
+        if (drawer && transitionName) {
+          const offsets = drawerOffsets[transitionName];
           const offset = offsets[0] || 0;
           offsets.unshift(offset + (drawerOffset || 0));
         }
@@ -332,15 +333,16 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     let maskTransition = true;
     const items = modals.map((props, index) => {
       const { drawerTransitionName = getConfig('drawerTransitionName'), drawer, key, transitionAppear = true } = props;
+      const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
         ...props.style,
       };
-      if (drawer && drawerTransitionName) {
-        const i = indexes[drawerTransitionName];
-        indexes[drawerTransitionName] += 1;
-        const offset = getArrayIndex(drawerOffsets[drawerTransitionName], i) + baseOffsets[drawerTransitionName];
+      if (drawer && transitionName) {
+        const i = indexes[transitionName];
+        indexes[transitionName] += 1;
+        const offset = getArrayIndex(drawerOffsets[transitionName], i) + baseOffsets[transitionName];
         if (offset) {
-          switch (drawerTransitionName) {
+          switch (transitionName) {
             case 'slide-up':
               style.marginTop = offset;
               break;
@@ -369,7 +371,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           // UED 用类名判断
           className={props.drawer ? `${getProPrefixCls(suffixCls)}-container-drawer` : `${getProPrefixCls(suffixCls)}-container-pristine`}
           transitionAppear={transitionAppear}
-          transitionName={drawer ? drawerTransitionName : 'zoom'}
+          transitionName={drawer ? transitionName : 'zoom'}
           hiddenProp="hidden"
           onEnd={this.handleAnimationEnd}
         >

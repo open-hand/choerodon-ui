@@ -4,7 +4,7 @@ import isNil from 'lodash/isNil';
 import isBoolean from 'lodash/isBoolean';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
-import { ModalProps } from './Modal';
+import { DrawerTransitionName, ModalProps } from './Modal';
 
 export const suffixCls = 'modal';
 
@@ -26,4 +26,19 @@ export function normalizeProps(
     };
   }
   return props;
+}
+
+const drawerTransitionNames: string[] = ['slide-up', 'slide-right', 'slide-down', 'slide-left'];
+
+function isDrawerTransitionName(drawerTransitionName: string): drawerTransitionName is DrawerTransitionName {
+  return drawerTransitionNames.includes(drawerTransitionName);
+}
+
+export function toUsefulDrawerTransitionName(drawerTransitionName?: string): DrawerTransitionName | undefined {
+  if (drawerTransitionName) {
+    if (isDrawerTransitionName(drawerTransitionName)) {
+      return drawerTransitionName;
+    }
+    return 'slide-right';
+  }
 }

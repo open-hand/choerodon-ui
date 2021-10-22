@@ -30,7 +30,7 @@ export interface PopupProps extends ViewComponentProps {
   align: object;
   onAlign?: (source: Node, align: object, target: HTMLElement, translate: { x: number; y: number }) => void;
   getRootDomNode?: () => Element | Text | null;
-  getPopupContainer?: (triggerNode: Element) => HTMLElement;
+  getPopupContainer?: (triggerNode: Element) => HTMLElement | undefined | null;
   transitionName?: string;
   onAnimateAppear?: (key: Key | null) => void;
   onAnimateEnter?: (key: Key | null) => void;
@@ -213,7 +213,7 @@ export default class Popup extends ViewComponent<PopupProps> {
         }
         Popup.popupContainer = popupContainer;
       }
-      (isElement(mountNode) ? mountNode : root).appendChild(popupContainer);
+      (mountNode && isElement(mountNode) ? mountNode : root).appendChild(popupContainer);
       this.popupContainer = popupContainer;
       return popupContainer;
     }

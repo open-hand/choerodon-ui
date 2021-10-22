@@ -273,6 +273,7 @@ export default class Lov extends Select<LovProps> {
               border={false}
               clearButton={false}
               className={`${prefixCls}-lov-search-option`}
+              getPopupContainer={this.getPopupWrapper}
               isFlat
             >
               {options}

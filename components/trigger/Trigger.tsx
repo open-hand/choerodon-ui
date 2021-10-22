@@ -94,7 +94,7 @@ export interface TriggerProps extends ElementProps {
   getRootDomNode?: () => Element | null | Text;
   getPopupStyleFromAlign?: (target: Node | Window, align: object) => object | undefined;
   getPopupClassNameFromAlign?: (align: object) => string | undefined;
-  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
+  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement | undefined | null;
   focusDelay?: number;
   blurDelay?: number;
   mouseEnterDelay?: number;
@@ -595,6 +595,12 @@ export default class Trigger extends Component<TriggerProps> {
   forcePopupAlign() {
     if (!this.popupHidden && this.popup) {
       this.popup.forceAlign();
+    }
+  }
+
+  getPopupWrapper(): HTMLDivElement | undefined {
+    if (!this.popupHidden && this.popup) {
+      return this.popup.wrapper;
     }
   }
 
