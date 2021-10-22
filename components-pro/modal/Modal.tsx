@@ -22,9 +22,11 @@ import message from '../message';
 import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
-import { suffixCls } from './utils';
+import { suffixCls, toUsefulDrawerTransitionName } from './utils';
 import { modalChildrenProps } from './interface';
 import { getDocument, MousePosition } from '../_util/DocumentUtils';
+
+export type DrawerTransitionName = 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
 
 function fixUnit(n) {
   if (isNumber(n)) {
@@ -81,7 +83,7 @@ export interface ModalProps extends ViewComponentProps {
   okCancel?: boolean;
   drawer?: boolean;
   drawerOffset?: number;
-  drawerTransitionName?: 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
+  drawerTransitionName?: DrawerTransitionName;
   transitionAppear?: boolean;
   key?: Key;
   border?: boolean;
@@ -363,7 +365,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-fullscreen`]: fullScreen,
       [`${prefixCls}-drawer`]: drawer,
       [`${prefixCls}-border`]: drawer ? drawerBorder : border,
-      [`${prefixCls}-drawer-${drawerTransitionName}`]: drawer,
+      [`${prefixCls}-drawer-${toUsefulDrawerTransitionName(drawerTransitionName)}`]: drawer,
       [`${prefixCls}-auto-center`]: autoCenter && !drawer && !fullScreen,
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-active`]: active,

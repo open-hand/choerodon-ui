@@ -57,7 +57,7 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
    * 定义浮层的容器，默认为 body
    * @param triggerNode
    */
-  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
+  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement | undefined | null;
   /**
    * 定义浮层对齐的目标，默认为组件最外层元素
    */
@@ -226,6 +226,14 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   getPopupClassName(defaultClassName: string | undefined): string | undefined {
     return defaultClassName;
+  }
+
+  @autobind
+  getPopupWrapper(): HTMLDivElement | undefined {
+    const { trigger } = this;
+    if (trigger) {
+      return trigger.getPopupWrapper();
+    }
   }
 
   @autobind

@@ -1,6 +1,6 @@
-import { ModalProps } from './Modal';
+import { ModalProps, DrawerTransitionName } from './Modal';
 
-export { ModalProps };
+export { ModalProps, DrawerTransitionName };
 
 export {
   confirmProps,

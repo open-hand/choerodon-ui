@@ -48,6 +48,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the issue of `appendData` total parameter update.
 - 🐞 `<pro>Validator`: Fix the problem of incomplete `stepMismatch` error information.
 - 🐞 `<pro>Output`: Fix the issue that an asterisk will be displayed when the colon is displayed.
+- 🐞 `<pro>Modal`: Fix the problem of illegal `drawerTransitionName` causing page error.
 
 ## 1.4.5
 

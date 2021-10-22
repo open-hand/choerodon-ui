@@ -48,6 +48,7 @@ timeline: true
 - 🐞 `<pro>DataSet`： 修复 appendData total 参数更新问题。
 - 🐞 `<pro>Validator`： 修复 stepMismatch 错误信息不全的问题。
 - 🐞 `<pro>Output`： 修复显示冒号时会显示必输星号的问题。
+- 🐞 `<pro>Modal`： 修复 drawerTransitionName 非法导致页面报错的问题。
 
 ## 1.4.5
 
