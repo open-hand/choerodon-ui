@@ -10,7 +10,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
-import keepRunning from '../_util/keepRunning';
+import keepRunning, { KeepRunningProps } from '../_util/keepRunning';
 import Icon from '../icon';
 import { getNearStepValues, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, parseNumber, plus } from './utils';
 import { ValidationMessages } from '../validator/Validator';
@@ -25,6 +25,59 @@ import { getNumberFormatOptions, getNumberFormatter } from '../field/utils';
 function getCurrentValidValue(value: string): number {
   return Number(value.replace(/\.$/, '')) || 0;
 }
+
+function getStepUpGenerator() {
+  return this.stepGenerator(true);
+}
+
+function getStepDownGenerator() {
+  return this.stepGenerator(false);
+}
+
+function run(value: number) {
+  const { element } = this;
+  if (element) {
+    element.value = String(value);
+  }
+}
+
+function enabled() {
+  return Boolean(this.getProp('step'));
+}
+
+const stepUpKeyboardProps: KeepRunningProps = {
+  getStepGenerator: getStepUpGenerator,
+  run,
+  validator(target: EventTarget) {
+    return target === this.element;
+  },
+  enabled,
+};
+
+const stepDownKeyboardProps: KeepRunningProps = {
+  getStepGenerator: getStepDownGenerator,
+  run,
+  validator(target: EventTarget) {
+    return target === this.element;
+  },
+  enabled,
+};
+
+const stepUpMouseProps: KeepRunningProps = {
+  getStepGenerator: getStepUpGenerator,
+  run,
+  validator(target: EventTarget) {
+    return target === this.plusElement;
+  },
+};
+
+const stepDownMouseProps: KeepRunningProps = {
+  getStepGenerator: getStepDownGenerator,
+  run,
+  validator(target: EventTarget) {
+    return target === this.minusElement;
+  },
+};
 
 export type FormatNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions) => string;
 
@@ -330,32 +383,24 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     super.handleKeyDown(e);
   }
 
-  handleKeyDownUp(e) {
-    e.preventDefault();
-    if (this.getProp('step')) {
-      this.step(true);
-    }
+  @keepRunning(stepUpKeyboardProps)
+  handleKeyDownUp(value) {
+    this.afterStep(value);
   }
 
-  handleKeyDownDown(e) {
-    e.preventDefault();
-    if (this.getProp('step')) {
-      this.step(false);
-    }
+  @keepRunning(stepDownKeyboardProps)
+  handleKeyDownDown(value) {
+    this.afterStep(value);
   }
 
-  @keepRunning(function () {
-    return this.plusElement;
-  })
-  handlePlus(_e, isKeeping) {
-    this.step(true, isKeeping);
+  @keepRunning(stepUpMouseProps)
+  handlePlus(value) {
+    this.afterStep(value);
   }
 
-  @keepRunning(function () {
-    return this.minusElement;
-  })
-  handleMinus(_e, isKeeping) {
-    this.step(false, isKeeping);
+  @keepRunning(stepDownMouseProps)
+  handleMinus(value) {
+    this.afterStep(value);
   }
 
   @autobind
@@ -390,48 +435,53 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     };
   }
 
-  step(isPlus: boolean, isKeeping?: boolean) {
+  stepGenerator(isPlus: boolean): IterableIterator<number> {
     const min = defaultTo(this.min, -MAX_SAFE_INTEGER);
     const max = defaultTo(this.max, MAX_SAFE_INTEGER);
     const step = defaultTo(this.getProp('step'), 1);
     const { nonStrictStep } = this;
-    // 需要处理非严格模式
-    let newValue;
     const value =
       this.multiple || this.isFocused ? Number(this.text || this.getValue()) : this.getValue();
     const currentValue = getCurrentValidValue(String(value));
-    newValue = currentValue;
-    const nearStep = getNearStepValues(currentValue, step as number, min, max);
-    if (nonStrictStep === false && nearStep) {
-      switch (nearStep.length) {
-        case 1:
-          newValue = nearStep[0];
-          break;
-        case 2:
-          newValue = nearStep[isPlus ? 1 : 0];
-          break;
-        default:
-      }
-    } else {
-      const nextValue = plus(currentValue, (isPlus ? step : -step) as number);
-      if (nextValue < min) {
-        newValue = min;
-      } else if (nextValue > max) {
-        const nearMaxStep = getNearStepValues(max as number, step as number, min, max as number);
-
-        if (nearMaxStep) {
-          newValue = nearMaxStep[0];
+    return (function* (newValue: number) {
+      while (true) {
+        const nearStep = getNearStepValues(newValue, step as number, min, max);
+        if (nonStrictStep === false && nearStep) {
+          switch (nearStep.length) {
+            case 1:
+              newValue = nearStep[0];
+              break;
+            case 2:
+              newValue = nearStep[isPlus ? 1 : 0];
+              break;
+            default:
+          }
         } else {
-          newValue = max;
+          const nextValue = plus(newValue, (isPlus ? step : -step) as number);
+          if (nextValue < min) {
+            newValue = min;
+          } else if (nextValue > max) {
+            const nearMaxStep = getNearStepValues(max as number, step as number, min, max as number);
+            if (nearMaxStep) {
+              newValue = nearMaxStep[0];
+            } else {
+              newValue = max;
+            }
+          } else {
+            newValue = nextValue;
+          }
         }
-      } else {
-        newValue = nextValue;
+        yield newValue;
       }
-    }
-    // 不要进行对比操作,在table中使用的时候,因为NumberField会作为editor使用,所以在 对第一个cell只点击一次的情况下(例如plus)
-    // 此时切换到第二个cell进行编辑，无法进行上次操作(同上次的plus)
-    // this.value !== newValue
-    if (this.multiple || isKeeping) {
+    })(currentValue);
+  }
+
+  step(isPlus: boolean) {
+    this.afterStep(this.stepGenerator(isPlus).next().value);
+  }
+
+  afterStep(newValue) {
+    if (this.multiple) {
       this.setText(String(newValue));
     } else {
       this.prepareSetValue(newValue);

@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>DateTimePicker`: Optimize the time value set by `defaultTime` does not change when the range value is automatically exchanged.
 - 💄 `<pro>Lov`: Optimized the `onClick` hook of the button mode allows to prevent the modal box from popping up by calling event.preventDefault().
 - 💄 `<pro>Lov`: Optimization In `popup` mode, add query field selection to search box.
+- 💄 `<pro>NumberField`: Optimize the execution efficiency of the step button.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
@@ -42,6 +43,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the problem that an error is reported when clicking the View Attachment button.
 - 🐞 `<pro>Attachment`: Fix the problem of uploading unresponsive when the upload button content overflows and the `tooltip` is set.
 - 🐞 `<pro>Attachment`: Fix the issue that the `accept` attribute cannot control file selection.
+- 🐞 `<pro>Attachment`： Fix the problem that the attachment data without a type may report an error.
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the first verification of the verification properties set by `dynamicProps` has no effect.
 - 🐞 `<pro>DataSet`: Fix the issue of `appendData` total parameter update.
 - 🐞 `<pro>Validator`: Fix the problem of incomplete `stepMismatch` error information.

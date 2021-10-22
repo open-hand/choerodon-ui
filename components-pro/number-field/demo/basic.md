@@ -35,7 +35,7 @@ ReactDOM.render(
         <NumberField placeholder="step = 1.1, min = 0.3, max = 9" onChange={log} step={1.1} min={0.3} max={9} />
       </Col>
       <Col span={12}>
-        <NumberField placeholder="step = 1.1, min = -0.3" onChange={log} step={1.1} min={-0.3} />
+        <NumberField placeholder="step = 1.1, min = -0.3" onChange={log} step={1.1} min={-0.3} valueChangeAction="input" />
       </Col>
     </Row>
   </div>,

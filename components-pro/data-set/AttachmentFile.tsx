@@ -1,5 +1,6 @@
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { AxiosError } from 'axios';
+import isNil from 'lodash/isNil';
 
 const extReg = /(.*)\.([^.]*)$/;
 
@@ -49,23 +50,41 @@ export default class AttachmentFile implements FileLike {
   creationDate: Date;
 
   constructor(file: FileLike) {
-    this.load(file);
+    runInAction(() => {
+      this.name = '';
+      this.filename = '';
+      this.size = 0;
+      this.type = '';
+      this.uid = '';
+      this.creationDate = new Date();
+      this.load(file);
+    });
   }
 
   @action
   private load(file: FileLike) {
-    Object.assign<AttachmentFile, FileLike>(this, file);
-    this.uid = String(file.uid);
     const { name } = file;
     if (name) {
       const matches = name.match(extReg);
       if (matches && matches.length > 2) {
-        this.ext = matches[2];
+        this.ext = matches[2] ? matches[2].toLowerCase() : '';
         this.filename = matches[1];
       } else {
         this.ext = '';
         this.filename = name;
       }
     }
+    Object.keys(file).forEach(key => {
+      const value = file[key];
+      if (!isNil(value)) {
+        switch (key) {
+          case 'uid':
+            this.uid = String(value);
+            break;
+          default:
+            this[key] = value;
+        }
+      }
+    });
   }
 }
