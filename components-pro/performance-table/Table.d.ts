@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { DragStart, DragUpdate, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
 import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
@@ -10,7 +11,6 @@ import { TransportProps } from '../data-set/Transport';
 import { TableQueryBarType } from './Table';
 import { FormProps } from '../form/Form';
 import { TableHeightType } from '../table/enum';
-import { DragStart, DragUpdate, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 
 export interface TableLocale {
   emptyMessage?: string;

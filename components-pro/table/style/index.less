@@ -832,11 +832,16 @@
     gap: 0.08rem;
     justify-content: flex-end;
     width: 1rem;
-    margin: 0.08rem 0;
+    margin: 0.08rem 0 0;
     background: rgba(232, 232, 232, 0.20);
 
     .@{table-prefix-cls}-filter-menu-expand i {
-      font-size: 0.3rem;
+      margin-top: 0.06rem;
+      font-size: 0.2rem;
+    }
+
+    .@{table-prefix-cls}-filter-buttons {
+      margin-top: 0.02rem;
     }
   }
 
@@ -951,6 +956,7 @@
 
   &-filter-buttons {
     display: flex;
+    flex-shrink: 0;
     gap: 0.08rem;
 
     button:first-child {

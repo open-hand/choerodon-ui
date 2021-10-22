@@ -2448,10 +2448,10 @@ Then the query method will be auto invoke.`,
     const sortedData = sortData(allData, this);
     this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: sortedData });
     appendRecords(this, this.processData(sortedData, undefined, parent), parent);
-    this.fireEvent(DataSetEvents.append, { dataSet: this });
     if (isNumber(total)) {
       this.totalCount = total;
     }
+    this.fireEvent(DataSetEvents.append, { dataSet: this });
     return this;
   }
 
