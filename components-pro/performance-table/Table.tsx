@@ -126,6 +126,12 @@ type TableRowSpanIndex = {
   zIndex: number;
 }
 
+type StartRowSpan = {
+  rowIndex: number;
+  rowSpan: number;
+  height: number;
+}
+
 interface TableState {
   headerOffset?: Offset;
   tableOffset?: Offset;
@@ -316,12 +322,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   touchMoveListener: any;
   rowSpanList: Array<TableRowSpanIndex> = [];
   nextRowZIndex: Array<number> = [];
+  calcStartRowSpan: StartRowSpan = { rowIndex: 0, rowSpan: 0, height: 0 };
+  
+  _cacheCalcStartRowSpan: Array<StartRowSpan> = []; // 缓存合并行的计算结果
+  _cacheOnCellCol:Array<any>; // 缓存存在合并行的列
 
   _cacheCells: any = null;
   _cacheScrollX: number = 0;
   _cacheRenderCols: any = [];
   _cacheChildrenSize = 0;
-  _visibleRows = [];
+  _visibleRows: any = [];
   _lastRowIndex: string | number;
 
   tableStore: TableStore = new TableStore(this);
@@ -2012,7 +2022,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           let setNextRow = rowIndex + cellExternalProps.rowSpan - 1;
           const isExit: TableRowSpanIndex | undefined = this.rowSpanList.find(x => x.rowIndex === rowIndex && x.columnIndex === i)
           if (!isExit) {
-            const filterIsContainer:Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex >= x.start && setNextRow <= x.end && x.columnIndex != i)
+            const filterIsContainer: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex >= x.start && setNextRow <= x.end && x.columnIndex != i)
             this.rowSpanList.push({ rowIndex, columnIndex: i, start: rowIndex, end: setNextRow, zIndex: !filterIsContainer.length ? 0 : 0 - filterIsContainer.length })
           }
         }
@@ -2023,7 +2033,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
         rowStyles.zIndex = 0;
       }
-      const findSpanRow : Array<TableRowSpanIndex>= this.rowSpanList.filter(x => rowIndex > x.start && rowIndex <= x.end)
+      const findSpanRow: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex > x.start && rowIndex <= x.end)
       if (findSpanRow.length) {
         rowStyles.zIndex = findSpanRow[findSpanRow.length - 1].zIndex;
       }
@@ -2455,8 +2465,53 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         topHideHeight = startIndex * nextRowHeight;
         bottomHideHeight = (data.length - endIndex) * nextRowHeight;
 
-        // temp test
-        let keyIndex = 0;
+        /**
+         * 判断行合并的情况，并遍历出合并行，在滚动的时候根据滚动高度判断是否显示
+         */
+        const hasSpanRow: any = []
+        let keyIndex:number = 0;
+        let rowSpanStartIndex:number;
+        if (this.calcStartRowSpan.rowIndex > startIndex) {
+          // 从历史记录往上找
+          const lastHistory: StartRowSpan | undefined = this._cacheCalcStartRowSpan.pop()
+          this.calcStartRowSpan = lastHistory || { rowIndex: 0, rowSpan: 0, height: 0 }
+        }
+        if (this.calcStartRowSpan.height >= minTop) {
+          rowSpanStartIndex = this.calcStartRowSpan.rowIndex
+        } else {
+          rowSpanStartIndex = (this.calcStartRowSpan.rowIndex + this.calcStartRowSpan.rowSpan)
+        }
+
+        // 找到需要合并行的列
+        if(!this._cacheOnCellCol){
+          this._cacheOnCellCol = renderCols.filter(x => x.props.onCell)
+        }
+        for (let i = rowSpanStartIndex; i < endIndex; i++) {
+          const rowData = data[i];
+          for (let j = 0; j < this._cacheOnCellCol.length; j++) {
+            const col = this._cacheOnCellCol[j];
+            const onCellInfo = col.props.onCell({ rowData })
+            const cellRowSpan = onCellInfo.rowSpan; // 12
+            const calcHeight = (cellRowSpan + i) * nextRowHeight
+            if (cellRowSpan > 1 && minTop < calcHeight) {
+              const rowProps = {
+                key: keyIndex,
+                rowIndex: i,
+                top: i * nextRowHeight,
+                width: rowWidth,
+                height: nextRowHeight,
+              };
+              if (calcHeight > this.calcStartRowSpan.height && (cellRowSpan + i) < endIndex && rowSpanStartIndex >= i) {
+                const tempCalc = { rowIndex: i, rowSpan: cellRowSpan, height: calcHeight }
+                this.calcStartRowSpan = tempCalc
+                this._cacheCalcStartRowSpan.push(tempCalc)
+              }
+              hasSpanRow.push({ rowIndex: i, render: this.renderRowData(renderCols, rowData, rowProps, false) });
+              keyIndex++;
+            }
+          }
+        }
+
         for (let index = startIndex; index < endIndex; index++) {
           const rowData = data[index];
           const rowProps = {
@@ -2466,9 +2521,20 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             width: rowWidth,
             height: nextRowHeight,
           };
-          // @ts-ignore
-          this._visibleRows.push(this.renderRowData(renderCols, rowData, rowProps, false));
-          keyIndex++;
+          if (!hasSpanRow.length) {
+            this._visibleRows.push(this.renderRowData(renderCols, rowData, rowProps, false));
+            keyIndex++;
+          } else {
+            const findHasSpanRow = hasSpanRow.find(x => x.rowIndex === index)
+            if (!findHasSpanRow) {
+              hasSpanRow.push({ rowIndex: index, render: this.renderRowData(renderCols, rowData, rowProps, false) })
+              keyIndex++;
+            }
+          }
+        }
+        if (hasSpanRow.length) {
+          const sortRow = hasSpanRow.sort((a, b) => a.rowIndex - b.rowIndex)
+          this._visibleRows = sortRow.map(x => x.render)
         }
       }
     }
