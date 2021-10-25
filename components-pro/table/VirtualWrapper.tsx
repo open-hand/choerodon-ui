@@ -21,6 +21,12 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer(function
       setHeight(virtualHeight);
     }
   }, [virtualHeight, height, tableStore]);
+  useEffect(() => {
+    const { lastScrollTop, node: { tableBodyWrap } } = tableStore;
+    if (lastScrollTop && tableBodyWrap) {
+      tableBodyWrap.scrollTop = 0;
+    }
+  }, [tableStore]);
   return (
     <div
       className={`${prefixCls}-tbody-wrapper`}
