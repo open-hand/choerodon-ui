@@ -41,14 +41,19 @@ class App extends React.Component {
     fields: [
       { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER' },
       {
-        name: 'sex2',
-        type: 'string',
+        name: 'status',
+        defaultValue: 'ACTV',
         computedProps: {
           lookupAxiosConfig: ({ record }) => record && ({
-            url: record.get('sex') ? '/common/code/HR.EMPLOYEE_GENDER/' : null,
+            url: record.get('sex') ? '/common/code/SYS.USER_STATUS/' : null,
             transformResponse(data) {
-              console.log('transformResponse', data);
-              return data;
+              try {
+                const jsonData = JSON.parse(data);
+                console.log('transformResponse', jsonData);
+                return jsonData.rows || jsonData;
+              } catch(e) {
+                return data;
+              }
             },
           }),
         },
@@ -81,7 +86,7 @@ class App extends React.Component {
           <Button onClick={this.changeLookupCode}>修改lookupCode</Button>
         </Col>
         <Col span={12}>
-          <Select dataSet={this.ds} name="sex2" placeholder="请选择" />
+          <Select dataSet={this.ds} name="status" placeholder="请选择" />
         </Col>
         <Col span={24}>
           <Select 

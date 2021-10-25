@@ -1428,12 +1428,30 @@ export default class Field {
       return;
     }
     if (
-      LOOKUP_SIDE_EFFECT_KEYS.includes(propsName)
+      LOOKUP_SIDE_EFFECT_KEYS.includes(propsName) ||
+      (
+        ['dynamicProps', 'computedProps'].includes(propsName) &&
+        (
+          typeof newProp === 'function' || typeof oldProp === 'function' ||
+          (newProp && Object.keys(newProp).some(key => LOOKUP_SIDE_EFFECT_KEYS.includes(key))) ||
+          (oldProp && Object.keys(oldProp).some(key => LOOKUP_SIDE_EFFECT_KEYS.includes(key)))
+        )
+      )
     ) {
       this.set(LOOKUP_DATA, undefined);
       this.fetchLookup(undefined, record);
     }
-    if (LOV_SIDE_EFFECT_KEYS.includes(propsName)) {
+    if (
+      LOV_SIDE_EFFECT_KEYS.includes(propsName) ||
+      (
+        ['dynamicProps', 'computedProps'].includes(propsName) &&
+        (
+          typeof newProp === 'function' || typeof oldProp === 'function' ||
+          (newProp && Object.keys(newProp).some(key => LOV_SIDE_EFFECT_KEYS.includes(key))) ||
+          (oldProp && Object.keys(oldProp).some(key => LOV_SIDE_EFFECT_KEYS.includes(key)))
+        )
+      )
+    ) {
       this.fetchLovConfig(record);
     }
   }
@@ -1448,6 +1466,9 @@ export default class Field {
       try {
         return dynamicProps({ dataSet, record, name });
       } catch (e) {
+        if (record) {
+          throw e;
+        }
         if (process.env.NODE_ENV !== 'production') {
           console.warn(e);
         }
