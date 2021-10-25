@@ -20,6 +20,8 @@ export default class Steps extends Component {
     headerRender: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     headerIcon:PropTypes.string,
     headerText: PropTypes.string,
+    type: PropTypes.string,
+    onChange:PropTypes.func,
   };
 
   _stepIndex = 0;
