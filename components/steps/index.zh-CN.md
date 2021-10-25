@@ -36,6 +36,8 @@ title: Steps
 | headerRender | 头部对应渲染| headerRender?: () => React.ReactElement<any> |  |
 | headerIcon | 头部对应icon | string |  |
 | headerText | 头部对应描述 | string |  |
+| type | 步骤条类型，有 `default` 和 `navigation` 两种, `navigation` 类型只在横向时支持 | string | `default` |
+| onChange | 点击切换步骤时触发 | function | `(current) => void` |
 
 
 ### Steps.Group

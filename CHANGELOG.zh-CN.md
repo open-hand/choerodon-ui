@@ -24,6 +24,8 @@ timeline: true
 - 🌟 `Upload`: 新增 showFileSize 属性，以及优化了组件样式。
 - 🌟 `Tabs`: 新增 countRenderer 属性。
 - 🌟 `<pro>Lov`: 新增 onSearchMatcherChange 属性。
+- 🌟 `Steps`: 新增 type 属性。
+- 🌟 `Steps`: 新增 onChange 回调。
 - 💄 `<pro>DataSet`: 优化内存, 优化树形数据性能, 优化校验性能。
 - 💄 `RcTrigger`: 使组件成为观察者。
 - 💄 `<pro>Select`: 使用 options 数据源模式下，支持 searchMatcher 配置搜索参数。
@@ -50,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Validator`： 修复 stepMismatch 错误信息不全的问题。
 - 🐞 `<pro>Output`： 修复显示冒号时会显示必输星号的问题。
 - 🐞 `<pro>Modal`： 修复 drawerTransitionName 非法导致页面报错的问题。
+- 🐞 `<pro>PerformanceTable`： 修复开启虚拟滚动导致合并行消失的问题。
 
 ## 1.4.5
 

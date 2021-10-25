@@ -24,6 +24,8 @@ timeline: true
 - 🌟 `Upload`: Added `showFileSize` property, and optimized the component style.
 - 🌟 `Tabs`: Added `countRenderer` property.
 - 🌟 `<pro>Lov`: Added `onSearchMatcherChange` property.
+- 🌟 `Steps`: Added `type` property.
+- 🌟 `Steps`: Added `onChange` callback.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
@@ -50,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Validator`: Fix the problem of incomplete `stepMismatch` error information.
 - 🐞 `<pro>Output`: Fix the issue that an asterisk will be displayed when the colon is displayed.
 - 🐞 `<pro>Modal`: Fix the problem of illegal `drawerTransitionName` causing page error.
+- 🐞 `<pro>PerformanceTable`：Fix the problem that the merged line disappears when virtual scrolling is turned on.
 
 ## 1.4.5
 

@@ -35,6 +35,8 @@ The whole of the step bar.
 | headerRender | header render function| headerRender?: () => React.ReactElement<any> |  |
 | headerIcon | header icon | string |  |
 | headerText | header title | string |  |
+| type | steps type of `default` or  `navgation`，navgation only supported horizontal direction | string | `default` |
+| onChange | Triggered when the switch step is clicked | function | `(current) => void` |
 
 ### Steps.Step
 

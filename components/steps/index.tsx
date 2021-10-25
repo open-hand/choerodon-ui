@@ -16,6 +16,8 @@ export interface StepsProps {
   headerRender?: () => React.ReactElement<any>;
   headerIcon?: string;
   headerText?: string;
+  type?:string;
+  onChange?:Function
 }
 
 export interface StepProps {
