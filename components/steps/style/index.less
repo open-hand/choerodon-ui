@@ -31,8 +31,18 @@
 .@{steps-prefix-cls} {
   .reset-component;
   display: flex;
+  justify-content: space-between;
   width: 100%;
   font-size: 0;
+
+  &-default,
+  &-navigation {
+    display: flex;
+  }
+
+  &-navigation &-item {
+    min-width: @steps-title-min-width;
+  }
 
   &-header {
     position: absolute;
@@ -70,12 +80,13 @@
   position: relative;
   display: inline-block;
   flex: 1;
-  min-width: @steps-title-min-width;
   overflow: hidden;
   vertical-align: top;
 
   &:last-child {
     flex: none;
+    width: auto;
+    min-width: auto;
   }
 
   &:last-child &-tail,

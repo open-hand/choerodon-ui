@@ -325,7 +325,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   calcStartRowSpan: StartRowSpan = { rowIndex: 0, rowSpan: 0, height: 0 };
   
   _cacheCalcStartRowSpan: Array<StartRowSpan> = []; // 缓存合并行的计算结果
-  _cacheOnCellCol:Array<any>; // 缓存存在合并行的列
 
   _cacheCells: any = null;
   _cacheScrollX: number = 0;
@@ -2472,7 +2471,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         let keyIndex:number = 0;
         let rowSpanStartIndex:number;
         if (this.calcStartRowSpan.rowIndex > startIndex) {
-          // 从历史记录往上找
+          // 从缓存记录往上找
           const lastHistory: StartRowSpan | undefined = this._cacheCalcStartRowSpan.pop()
           this.calcStartRowSpan = lastHistory || { rowIndex: 0, rowSpan: 0, height: 0 }
         }
@@ -2482,14 +2481,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           rowSpanStartIndex = (this.calcStartRowSpan.rowIndex + this.calcStartRowSpan.rowSpan)
         }
 
-        // 找到需要合并行的列
-        if(!this._cacheOnCellCol){
-          this._cacheOnCellCol = renderCols.filter(x => x.props.onCell)
-        }
+        const hasOnCellCol = renderCols.filter(x => x.props.onCell)
         for (let i = rowSpanStartIndex; i < endIndex; i++) {
           const rowData = data[i];
-          for (let j = 0; j < this._cacheOnCellCol.length; j++) {
-            const col = this._cacheOnCellCol[j];
+          for (let j = 0; j < hasOnCellCol.length; j++) {
+            const col = hasOnCellCol[j];
             const onCellInfo = col.props.onCell({ rowData })
             const cellRowSpan = onCellInfo.rowSpan; // 12
             const calcHeight = (cellRowSpan + i) * nextRowHeight
