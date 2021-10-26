@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { enquireScreen } from 'enquire-js';
 import { addLocaleData, IntlProvider } from 'react-intl';
-import { LocaleProvider } from 'choerodon-ui';
+import { configure as UIConfigure, LocaleProvider } from 'choerodon-ui';
 import { localeContext, ModalProvider } from 'choerodon-ui/pro';
 import moment from 'moment';
 import { configure } from 'mobx';
@@ -17,6 +17,20 @@ import mock from '../../mock';
 mock();
 
 configure({ enforceActions: 'always' });
+
+UIConfigure({
+  performanceEnabled: { Table: true },
+  onPerformance(key, event) {
+    if (event) {
+      const { timing } = event;
+      console.log(key, {
+        fetch: timing.fetchEnd - timing.fetchStart,
+        load: timing.loadEnd - timing.loadStart,
+        render: timing.renderEnd - timing.renderStart,
+      });
+    }
+  },
+});
 
 if (typeof window !== 'undefined') {
   /* eslint-disable global-require */

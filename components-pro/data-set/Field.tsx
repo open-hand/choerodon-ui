@@ -15,6 +15,7 @@ import {
 } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
+import isPromise from 'is-promise';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
@@ -25,7 +26,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
-import { CheckedStrategy, DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
+import { CheckedStrategy, DataSetEvents, DataSetSelection, DataSetStatus, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore from '../stores/AttachmentStore';
@@ -129,6 +130,18 @@ function setLookupToken(field: Field, token: string | undefined, record: Record 
   } else {
     field.lookupToken = token;
   }
+}
+
+function combineWithOldLookupData(lookup: object[], field: Field, record?: Record): object[] {
+  const lookupData = field.get(LOOKUP_DATA, record);
+  if (lookupData) {
+    const valueField = field.get('valueField', record);
+    const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
+    if (others.length) {
+      return others.concat(lookup.slice());
+    }
+  }
+  return lookup;
 }
 
 export type Fields = ObservableMap<string, Field>;
@@ -438,8 +451,6 @@ export default class Field {
 
   record?: Record | undefined;
 
-  @observable pending?: boolean;
-
   @observable lookupToken?: string | undefined;
 
   lastDynamicProps?: { [key: string]: any } | undefined;
@@ -513,7 +524,7 @@ export default class Field {
   }
 
   get dirty(): boolean {
-    return this.isDirty(this.record);
+    return this.isDirty();
   }
 
   get name(): string {
@@ -536,39 +547,60 @@ export default class Field {
     return this.getValidationMessage();
   }
 
-  constructor(props: FieldProps | undefined, dataSet: DataSet, record?: Record | undefined) {
+  private hasLookupSideEffects: boolean | undefined;
+
+  private hasLovSideEffects: boolean | undefined;
+
+  constructor(props: FieldProps = {}, dataSet: DataSet, record?: Record | undefined) {
     runInAction(() => {
       this.dataSet = dataSet;
       this.record = record;
-      this.props = observable.map(props || {});
-      // 优化性能，没有动态属性时不用处理， 直接引用dsField； 有options时，也不处理
-      if (!props || !props.options) {
-        const dynamicProps = this.getProp('dynamicProps', record);
-        if (!record || typeof dynamicProps === 'function') {
+      this.props = observable.map(props);
+      if (!props.options) {
+        const { dynamicProps, computedProps } = props;
+        if (typeof dynamicProps === 'function') {
+          this.hasLookupSideEffects = true;
+          this.hasLovSideEffects = true;
+        } else {
+          const keys = Object.keys({ ...computedProps, ...dynamicProps });
+          if (keys.length) {
+            this.hasLookupSideEffects = keys.some(key => LOOKUP_SIDE_EFFECT_KEYS.includes(key));
+            this.hasLovSideEffects = keys.some(key => LOV_SIDE_EFFECT_KEYS.includes(key));
+          }
+        }
+        if (record) {
+          const dsField = dataSet.getField(props.name);
+          if (dsField) {
+            if (!this.hasLookupSideEffects) {
+              this.hasLookupSideEffects = dsField.hasLookupSideEffects;
+            }
+            if (!this.hasLovSideEffects) {
+              this.hasLovSideEffects = dsField.hasLovSideEffects;
+            }
+          }
+          this.processForLookupAndLovConfig(record);
+        } else {
           raf(() => {
             this.fetchLookup();
             this.fetchLovConfig();
           });
-        } else {
-          const computedProps = this.getProp('computedProps', record);
-          if (computedProps || dynamicProps) {
-            const keys = Object.keys({ ...computedProps, ...dynamicProps });
-            if (keys.length) {
-              const fetches: Function[] = [];
-              if (keys.some(key => LOOKUP_SIDE_EFFECT_KEYS.includes(key))) {
-                fetches.push(this.fetchLookup);
-              }
-              if (keys.some(key => LOV_SIDE_EFFECT_KEYS.includes(key))) {
-                fetches.push(this.fetchLovConfig);
-              }
-              if (fetches.length) {
-                raf(() => fetches.forEach(one => one.call(this)));
-              }
-            }
-          }
         }
       }
     });
+  }
+
+  processForLookupAndLovConfig(record: Record) {
+    const { hasLovSideEffects, hasLookupSideEffects } = this;
+    if (hasLovSideEffects || hasLookupSideEffects) {
+      raf(() => {
+        if (hasLookupSideEffects) {
+          this.fetchLookup(undefined, record);
+        }
+        if (hasLovSideEffects) {
+          this.fetchLovConfig(record);
+        }
+      });
+    }
   }
 
   isDirty(record: Record | undefined = this.record): boolean {
@@ -707,19 +739,23 @@ export default class Field {
     if (value !== undefined) {
       return value;
     }
-    const dsField = this.findDataSetField();
-    if (dsField) {
-      const dsValue = dsField.getProp(propsName);
-      if (dsValue !== undefined) {
-        return dsValue;
-      }
-    }
     if (propsName === 'lookup') {
       const { dataSet } = this;
       const lookupToken = getLookupToken(this, record);
       const { lookupCaches } = dataSet;
       if (lookupToken && lookupCaches) {
-        return lookupCaches.get(lookupToken);
+        const lookup = lookupCaches.get(lookupToken);
+        if (isArrayLike(lookup)) {
+          return lookup;
+        }
+        return undefined;
+      }
+    }
+    const dsField = this.findDataSetField();
+    if (dsField) {
+      const dsValue = dsField.getProp(propsName);
+      if (dsValue !== undefined) {
+        return dsValue;
       }
     }
     if (propsName === 'textField' || propsName === 'valueField') {
@@ -730,7 +766,7 @@ export default class Field {
       }
     }
     if (propsName === 'lookupUrl') {
-      return getConfig(propsName);
+      return getConfig('lookupUrl');
     }
     if (['min', 'max'].includes(propsName)) {
       if (this.get('type', record) === FieldType.number) {
@@ -824,15 +860,7 @@ export default class Field {
     if (lookupToken && lookupCaches) {
       const lookup = lookupCaches.get(lookupToken);
       if (isArrayLike(lookup)) {
-        const valueField = this.get('valueField', record);
-        const lookupData = this.get(LOOKUP_DATA, record);
-        if (lookupData) {
-          const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
-          if (others.length) {
-            return others.concat(lookup.slice());
-          }
-        }
-        return lookup;
+        return combineWithOldLookupData(lookup, this, record);
       }
     }
   }
@@ -956,20 +984,29 @@ export default class Field {
       // 确保 lookup 相关配置介入观察
       lookupStore.getAxiosConfig(this, record);
       const optionsProps = this.get('optionsProps', record);
-      const lookup = this.getLookup(record);
+      const lookupToken = getLookupToken(this, record);
       const type = this.get('type', record);
-      if (lookup) {
-        const parentField = this.get('parentField', record);
-        const idField = this.get('idField', record) || this.get('valueField', record);
-        const selection = this.get('multiple', record) ? DataSetSelection.multiple : DataSetSelection.single;
-        return new DataSet({
-          data: lookup,
-          paging: false,
-          selection,
-          idField,
-          parentField,
-          ...optionsProps,
-        });
+      if (lookupToken) {
+        const { lookupCaches } = this.dataSet;
+        if (lookupCaches) {
+          const lookup = lookupCaches.get(lookupToken);
+          if (isArrayLike(lookup)) {
+            const parentField = this.get('parentField', record);
+            const idField = this.get('idField', record) || this.get('valueField', record);
+            const selection = this.get('multiple', record) ? DataSetSelection.multiple : DataSetSelection.single;
+            return new DataSet({
+              data: combineWithOldLookupData(lookup, this, record),
+              paging: false,
+              selection,
+              idField,
+              parentField,
+              ...optionsProps,
+            });
+          }
+          if (isPromise(lookup)) {
+            return new DataSet({ status: DataSetStatus.loading });
+          }
+        }
       }
       const lovCode = this.get('lovCode', record);
       if (lovCode) {
@@ -1157,7 +1194,6 @@ export default class Field {
    */
   @action
   fetchLookup(noCache = false, record: Record | undefined = this.record): Promise<object[] | undefined> {
-    const lookup = this.getLookup(record);
     const lookupCaches = getIf<DataSet, ObservableMap<string, object[] | Promise<object[]>>>(this.dataSet, 'lookupCaches', () => observable.map());
     const oldToken = getLookupToken(this, record);
     const batch = this.get('lookupBatchAxiosConfig', record) || getConfig('lookupBatchAxiosConfig');
@@ -1172,12 +1208,10 @@ export default class Field {
         if (isArrayLike(cachedLookup)) {
           promise = Promise.resolve<object[] | undefined>(cachedLookup);
         } else {
-          this.pending = true;
           promise = cachedLookup;
         }
       }
       if (!promise) {
-        this.pending = true;
         promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch).then(action((result) => {
           if (result) {
             lookupCaches.set(lookupCode, result);
@@ -1199,13 +1233,11 @@ export default class Field {
             if (isArrayLike(cachedLookup)) {
               promise = Promise.resolve<object[] | undefined>(cachedLookup);
             } else {
-              this.pending = true;
               promise = cachedLookup;
             }
           }
         }
         if (!promise) {
-          this.pending = true;
           promise = lookupStore.fetchLookupData(axiosConfig).then(action((result) => {
             if (result) {
               lookupCaches.set(lookupToken, result);
@@ -1220,8 +1252,8 @@ export default class Field {
     }
     if (promise) {
       return promise.then(action((result) => {
-        this.pending = false;
-        if (lookup && oldToken !== getLookupToken(this, record)) {
+        const lookup = oldToken ? lookupCaches.get(oldToken) : undefined;
+        if (isArrayLike(lookup) && oldToken !== getLookupToken(this, record)) {
           const value = this.getValue(record);
           const valueField = this.get('valueField', record);
           if (value && valueField) {
@@ -1239,9 +1271,6 @@ export default class Field {
           }
         }
         return toJS(result);
-      })).catch(action(e => {
-        this.pending = false;
-        throw e;
       }));
     }
     return Promise.resolve(undefined);

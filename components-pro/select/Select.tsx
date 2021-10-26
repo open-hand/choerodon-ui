@@ -375,13 +375,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     this.$searchText = searchText;
   }
 
-  @computed
   get searchMatcher(): SearchMatcher {
     const { searchMatcher = defaultSearchMatcher } = this.observableProps;
     return searchMatcher;
   }
 
-  @computed
   get paramMatcher(): ParamMatcher {
     const { paramMatcher } = this.observableProps;
     return paramMatcher;
@@ -879,28 +877,23 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     });
   }
 
-  @computed
   get dropdownMatchSelectWidth(): boolean | undefined {
     const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') } = this.observableProps;
     return dropdownMatchSelectWidth;
   }
 
-  @computed
   get defaultActiveFirstOption(): boolean | undefined {
     const { defaultActiveFirstOption = getConfig('defaultActiveFirstOption') } = this.observableProps;
     return defaultActiveFirstOption;
   }
 
-  @computed
   get selectReverse(): boolean | undefined {
     const { selectReverse = getConfig('selectReverse') } = this.observableProps;
     return selectReverse;
   }
 
-  @computed
   get loading(): boolean {
-    const { field, options } = this;
-    return options.status === DataSetStatus.loading || !!(field && field.pending);
+    return this.options.status === DataSetStatus.loading;
   }
 
   @autobind

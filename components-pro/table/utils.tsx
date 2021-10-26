@@ -37,28 +37,24 @@ import ColumnGroup from './ColumnGroup';
 import { FuncType } from '../button/enum';
 
 export function getEditorByField(field: Field, record?: Record, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
-  const lookupCode = field.get('lookupCode', record);
-  const lookupUrl = field.get('lookupUrl', record);
-  const lovCode = field.get('lovCode', record);
-  const multiLine = field.get('multiLine', record);
   const type = field.get('type', record);
   const { name } = field;
   const flatProps = isFlat ? { isFlat, maxTagCount: 4, maxTagTextLength: 4 } : {};
 
   if (
-    lookupCode ||
-    isString(lookupUrl) ||
-    (type !== FieldType.object && (lovCode || field.getLookup(record) || field.get('options', record)))
+    field.get('lookupCode', record) ||
+    isString(field.get('lookupUrl', record)) ||
+    (type !== FieldType.object && (field.get('lovCode', record) || field.getLookup(record) || field.get('options', record)))
   ) {
     if (field.get('parentField', record)) {
       return <TreeSelect {...flatProps} />;
     }
     return <ObserverSelect {...flatProps} />;
   }
-  if (lovCode) {
+  if (field.get('lovCode', record)) {
     return <Lov {...flatProps} />;
   }
-  if (multiLine) {
+  if (field.get('multiLine', record)) {
     return <Output />;
   }
   switch (type) {
@@ -109,13 +105,10 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
 export function getPlaceholderByField(field?: Field, record?: Record): string | undefined {
   if (field) {
     const type = field.get('type', record);
-    const lookupCode = field.get('lookupCode', record);
-    const lookupUrl = field.get('lookupUrl', record);
-    const lovCode = field.get('lovCode', record);
     if (
-      lookupCode ||
-      isString(lookupUrl) ||
-      (type !== FieldType.object && (lovCode || field.getLookup(record) || field.get('options', record)))
+      field.get('lookupCode', record) ||
+      isString(field.get('lookupUrl', record)) ||
+      (type !== FieldType.object && (field.get('lovCode', record) || field.getLookup(record) || field.get('options', record)))
     ) {
       return undefined;
     }
