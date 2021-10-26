@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
-import RenderIcon from './RenderIcon'
-
-function isString(str) {
-  return typeof str === 'string';
-}
+import RenderIcon from './RenderIcon';
 
 export default class Step extends Component {
   static propTypes = {
@@ -24,13 +20,14 @@ export default class Step extends Component {
     title: PropTypes.any,
     progressDot: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     tailContent: PropTypes.any,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
   };
 
-  onClickItem = () => {
-    const { stepNumber, onChange = noop } = this.props
-    onChange(Number(stepNumber)-1)
-  }
+  onClickItem = (e) => {
+    const { stepNumber, onChange = noop, onClick = noop } = this.props;
+    onClick(e);
+    onChange(Number(stepNumber) - 1);
+  };
 
   render() {
     const {
@@ -66,7 +63,9 @@ export default class Step extends Component {
       stepItemStyle.cursor = 'pointer';
     }
     return (
-      <div {...restProps} className={classString} style={stepItemStyle} ref={ref => { this.stepRef = ref }} onClick={this.onClickItem}>
+      <div {...restProps} className={classString} style={stepItemStyle} ref={ref => {
+        this.stepRef = ref;
+      }} onClick={this.onClickItem}>
         <div className={`${prefixCls}-item-tail`}>{tailContent}</div>
         <div className={`${prefixCls}-item-icon`}><RenderIcon {...this.props} /></div>
         <div className={`${prefixCls}-item-content`}>

@@ -695,6 +695,7 @@ export default class Form extends DataSetComponent<FormProps> {
     let noLabel = true;
     const childrenArray: (ReactElement<any> & { ref })[] = [];
     const separateSpacingWidth: number = this.separateSpacing ? this.separateSpacing.width / 2 : 0;
+    const isLabelLayoutHorizontal = labelLayout === LabelLayout.horizontal;
     Children.forEach<ReactNode>(children, (child) => {
       if (isValidElement(child)) {
         const setChild = (arr: ReactElement<any>[], outChild: ReactElement<any>, groupProps = {}) => {
@@ -703,7 +704,7 @@ export default class Form extends DataSetComponent<FormProps> {
           if (type) {
             if (
               noLabel === true &&
-              labelLayout === LabelLayout.horizontal &&
+              isLabelLayoutHorizontal &&
               getProperty(outChildProps, 'label', dataSet, record)
             ) {
               noLabel = false;
@@ -787,16 +788,16 @@ export default class Form extends DataSetComponent<FormProps> {
           matrix[i][j] = true;
         }
       }
-      const isOutput = [LabelLayout.horizontal, LabelLayout.vertical].includes(labelLayout) && (type as any).displayName === 'Output';
+      const isOutput = (type as any).displayName === 'Output';
       const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
-        [`${prefixCls}-required`]: required,
+        [`${prefixCls}-required`]: required && !isOutput,
         [`${prefixCls}-readonly`]: readOnly,
         [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
-        [`${prefixCls}-label-output`]: isOutput,
+        [`${prefixCls}-label-output`]: isLabelLayoutHorizontal && isOutput,
         [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
-        [`${prefixCls}-output`]: isOutput,
+        [`${prefixCls}-output`]: isLabelLayoutHorizontal && isOutput,
       });
       if (!noLabel && !(type as typeof Item).__PRO_FORM_ITEM) {
         const columnLabelWidth = labelWidth[colIndex];
