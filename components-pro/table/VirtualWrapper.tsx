@@ -23,8 +23,8 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer(function
   }, [virtualHeight, height, tableStore]);
   useEffect(() => {
     const { lastScrollTop, node: { tableBodyWrap } } = tableStore;
-    if (lastScrollTop && tableBodyWrap) {
-      tableBodyWrap.scrollTop = 0;
+    if (lastScrollTop) {
+      tableStore.setLastScrollTop(tableBodyWrap ? tableBodyWrap.scrollTop : 0);
     }
   }, [tableStore]);
   return (

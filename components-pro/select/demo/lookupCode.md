@@ -14,7 +14,7 @@ title:
 Lookup Code
 
 ```jsx
-import { DataSet, Select, Button, Row, Col } from 'choerodon-ui/pro';
+import { DataSet, Select, Output, Button, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -41,24 +41,6 @@ class App extends React.Component {
     fields: [
       { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER' },
       {
-        name: 'status',
-        defaultValue: 'ACTV',
-        computedProps: {
-          lookupAxiosConfig: ({ record }) => record && ({
-            url: record.get('sex') ? '/common/code/SYS.USER_STATUS/' : null,
-            transformResponse(data) {
-              try {
-                const jsonData = JSON.parse(data);
-                console.log('transformResponse', jsonData);
-                return jsonData.rows || jsonData;
-              } catch(e) {
-                return data;
-              }
-            },
-          }),
-        },
-      },
-      {
         name: 'lov2',
         type: 'string',
         lookupCode: 'SHI',
@@ -68,6 +50,26 @@ class App extends React.Component {
     ],
     events: {
       update: handleDataSetChange,
+      create({ dataSet, record }) {
+        dataSet.addField('status', {
+           name: 'status',
+           computedProps: {
+             lookupAxiosConfig: ({ record }) => record && ({
+               url: record.get('sex') ? '/common/code/HR.EMPLOYEE_GENDER/' : '/common/code/SYS.USER_STATUS/',
+               transformResponse(data) {
+                 try {
+                   const jsonData = JSON.parse(data);
+                   console.log('transformResponse', jsonData);
+                   return jsonData.rows || jsonData;
+                 } catch(e) {
+                   return data;
+                 }
+               },
+             }),
+           },
+         });
+        record.init('status', 'ACTV');
+      }
     },
   });
 
@@ -77,6 +79,9 @@ class App extends React.Component {
   };
 
   render() {
+    if (!this.ds.current) {
+      return null;
+    }
     return (
       <Row gutter={10}>
         <Col span={6}>
@@ -86,7 +91,7 @@ class App extends React.Component {
           <Button onClick={this.changeLookupCode}>修改lookupCode</Button>
         </Col>
         <Col span={12}>
-          <Select dataSet={this.ds} name="status" placeholder="请选择" />
+          <Output dataSet={this.ds} name="status" placeholder="请选择" />
         </Col>
         <Col span={24}>
           <Select 

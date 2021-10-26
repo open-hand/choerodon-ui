@@ -400,6 +400,7 @@ export interface DataSetProps {
    * 树形选择策略
    */
   selectionStrategy?: CheckedStrategy;
+  status?: DataSetStatus;
 }
 
 export default class DataSet extends EventManager {
@@ -957,6 +958,7 @@ export default class DataSet extends EventManager {
         queryParameter = {},
         dataToJSON,
         selectionStrategy,
+        status = DataSetStatus.ready,
       } = props;
       this.name = name;
       this.selectionStrategy = selectionStrategy;
@@ -965,7 +967,7 @@ export default class DataSet extends EventManager {
       this.state = observable.map<string, any>();
       this.fields = observable.map<string, Field>(fields ? this.initFields(fields) : undefined);
       this.totalCount = 0;
-      this.status = DataSetStatus.ready;
+      this.status = status;
       this.currentPage = 1;
       this.cachedSelected = [];
       this.cachedModified = [];
@@ -2311,6 +2313,7 @@ export default class DataSet extends EventManager {
         const newData = { ...data };
         r.processFieldValue(name, field, fields, newData, data);
       }
+      field.processForLookupAndLovConfig(r);
     });
     return field;
   }

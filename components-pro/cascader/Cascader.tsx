@@ -251,17 +251,14 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   @observable clickTab;
 
-  @computed
   get isClickTab() {
     return this.clickTab;
   }
 
-  @computed
   get activeValue(): any {
     return this.activeValues;
   }
 
-  @computed
   get itemMenuWidth(): number {
     return this.menuItemWith;
   }
@@ -317,12 +314,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     };
   }
 
-  @computed
   get textField(): string {
     return this.getProp('textField') || 'meaning';
   }
 
-  @computed
   get valueField(): string {
     return this.getProp('valueField') || 'value';
   }
@@ -348,27 +343,22 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     return data;
   }
 
-  @computed
   get multiple(): boolean {
     return !!this.getProp('multiple');
   }
 
-  @computed
   get menuMultiple(): boolean {
     return this.multiple;
   }
 
-  @computed
   get parentField(): string {
     return this.getProp('parentField') || 'parentValue';
   }
 
-  @computed
   get idField(): string {
     return this.getProp('idField') || this.valueField;
   }
 
-  @computed
   get searchMatcher(): SearchMatcher {
     const { searchMatcher = defaultSearchMatcher } = this.observableProps;
     return searchMatcher;
@@ -421,10 +411,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
   }
 
-  @computed
   get primitive(): boolean {
-    const type = this.getProp('type');
-    return this.observableProps.primitiveValue !== false && type !== FieldType.object;
+    return this.observableProps.primitiveValue !== false && this.getProp('type') !== FieldType.object;
   }
 
   checkValueReaction?: IReactionDisposer;
@@ -810,16 +798,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     );
   }
 
-  @computed
   get searchable(): boolean {
     return !!this.observableProps.searchable;
   }
 
-  // 遍历出父亲节点
-  @computed
   get loading(): boolean {
-    const { field, options } = this;
-    return options.status === DataSetStatus.loading || !!(field && field.pending);
+    return this.options.status === DataSetStatus.loading;
   }
 
   isEditable(): boolean {

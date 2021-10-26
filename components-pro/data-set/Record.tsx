@@ -12,6 +12,7 @@ import {
   runInAction,
   toJS,
 } from 'mobx';
+import raf from 'raf';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 import pick from 'lodash/pick';
@@ -450,6 +451,9 @@ export default class Record {
       const initData = isObservableObject(data) ? toJS(data) : data;
       this.data = initData;
       this.processData(initData);
+      raf(() => {
+        dataSet.fields.forEach(field => field.processForLookupAndLovConfig(this));
+      });
     });
   }
 
