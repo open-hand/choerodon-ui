@@ -66,23 +66,14 @@
     content: '*';
   }
 
-  &-required&-label&-label-useColon&-label-output::before,
-  &-required&-label&-label-output::after{
-    content: '';
-  }
-
-  &-required&-label-useColon&-label-output::after,
   &-label&-label-useColon::after {
     position: relative;
+    top: -0.01rem;
     width: 0;
     margin: 0 0.1rem 0 0.01rem;
+    color: @label-colon-color;
     vertical-align: baseline;
     content: ':';
-  }
-
-  &-label&-label-useColon::after {
-    top: -0.01rem;
-    color: @label-colon-color;
   }
 
   &-label-vertical&-label&-label-useColon {

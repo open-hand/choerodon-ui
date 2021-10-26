@@ -310,7 +310,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
       if (fieldHelp) {
         return (
           <Tooltip title={fieldHelp} placement="bottom" key="help">
-            <Icon type="help_outline" className={`${prefixCls}-help-icon`} />
+            <span className={`${prefixCls}-help-icon`} />
           </Tooltip>
         );
       }
