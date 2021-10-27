@@ -38,6 +38,8 @@ import ColumnGroups from './ColumnGroups';
 import ColumnGroup from './ColumnGroup';
 import { iteratorSome } from '../_util/iteratorUtils';
 
+const VIRTUAL_HEIGHT = '__VIRTUAL_HEIGHT__';
+
 export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
   columnGroups: ColumnGroups;
@@ -440,8 +442,17 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
     rowProps.style = { ...style };
   }
 
-  const height = needIntersection && (inView !== true || !columnGroups.inView) ? entry ? entry.boundingClientRect.height :
-    pxToRem((rowHeight === 'auto' ? 30 : rowHeight) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)) : lock ?
+  useEffect(() => {
+    if (needIntersection && inView && !record.getState(VIRTUAL_HEIGHT)) {
+      const { current } = rowRef;
+      if (current) {
+        record.setState(VIRTUAL_HEIGHT, current.offsetHeight);
+      }
+    }
+  }, [needIntersection, record, inView]);
+
+  const height = needIntersection && (inView !== true || !columnGroups.inView) ? entry ? pxToRem(entry.boundingClientRect.height) :
+    pxToRem((record.getState(VIRTUAL_HEIGHT) || (rowHeight === 'auto' ? 30 : rowHeight)) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)) : lock ?
     pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number) : undefined;
   if (height) {
     if (rowProps.style) {

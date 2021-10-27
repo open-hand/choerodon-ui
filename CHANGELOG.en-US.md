@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table`: Fix that the contents of the filter bar input box are not aligned.
+- 🐞 `<pro>Table`: Fix the problem that the `maxHeight` style in `virtualCell` mode may cause an endless loop.
 - 🐞 `<pro>Table.Column`: Fix that the editor property which is true does not work when there is no corresponding field.
 - 🐞 `<pro>Table.Column`: Fix the problem that the editor cannot be dynamically switched from Select to other editors when `editor` is true.
 - 🐞 `<pro>Attachment`: Fix the problem that an error is reported when clicking the View Attachment button.
