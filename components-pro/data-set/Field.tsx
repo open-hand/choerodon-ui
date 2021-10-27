@@ -44,7 +44,7 @@ import { getLovPara } from '../stores/utils';
 import { TimeStep } from '../date-picker/DatePicker';
 import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from '../number-field/utils';
 import AttachmentFile from './AttachmentFile';
-import { iteratorFind } from '../_util/iteratorUtils';
+import { iteratorFind, iteratorSome } from '../_util/iteratorUtils';
 
 function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
@@ -608,7 +608,8 @@ export default class Field {
       const { name } = this;
       const { dirtyData } = record;
       if (dirtyData && dirtyData.size) {
-        if (dirtyData.has(getChainFieldName(record, name))) {
+        const chainFieldName = getChainFieldName(record, name);
+        if (dirtyData.has(chainFieldName) || iteratorSome(dirtyData.keys(), (key) => chainFieldName.startsWith(`${key}.`))) {
           return true;
         }
         if (this.get('type', record) === FieldType.intl) {
