@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table`：修复过滤条输入框中内容不能对齐的问题。
+- 🐞 `<pro>Table`：修复 virtualCell 模式下 maxHeight 样式可能导致死循环的问题。
 - 🐞 `<pro>Table.Column`：修复当没有对应字段时 editor 为 true 不起作用。
 - 🐞 `<pro>Table.Column`： 修复 editor 为 true 时， 无法动态从 Select 切换成其他编辑器的问题。
 - 🐞 `<pro>Attachment`： 修复点击查看附件按钮报错的问题。
