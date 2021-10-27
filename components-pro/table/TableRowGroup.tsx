@@ -4,6 +4,7 @@ import { ColumnLock } from './enum';
 import ColumnGroups from './ColumnGroups';
 import TableContext from './TableContext';
 import { isStickySupport } from './utils';
+import { toTransformValue } from '../_util/transform';
 
 export interface TableRowGroupProps {
   lock?: ColumnLock;
@@ -25,9 +26,10 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGr
     }
   })();
   const Cmp = tableStore.parityRow ? 'div' : 'tr';
+  const style = isStickySupport() && tableStore.virtual ? { transform: toTransformValue({ translate: `0,${pxToRem(-tableStore.virtualTop)}` }) } : undefined;
   return (
     <Cmp className={`${prefixCls}-row-group`} style={isStickySupport() ? undefined : { height: pxToRem(25) }}>
-      <td colSpan={colSpan} className={`${prefixCls}-row-group-title`}>
+      <td colSpan={colSpan} className={`${prefixCls}-row-group-title`} style={style}>
         {
           lock !== ColumnLock.right && (
             <div className={`${prefixCls}-row-group-title-content`}>{children}</div>
