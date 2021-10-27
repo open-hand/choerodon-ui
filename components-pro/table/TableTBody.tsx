@@ -120,13 +120,12 @@ export default class TableTBody extends Component<TableTBodyProps> {
       prefixCls, tableStore, rowDragRender, dataSet,
     } = this.context;
     const {
-      cachedData, currentData, virtual, rowDraggable,
+      cachedData, virtualCachedData, virtualCurrentData, virtual, rowDraggable,
     } = tableStore;
-    const virtualData = virtual ? currentData.slice(tableStore.virtualStartIndex, tableStore.virtualEndIndex) : currentData;
-    const cachedRows = cachedData.length ? this.getRows(cachedData, columnGroups, true, virtual) : undefined;
-    const rows = virtualData.length
-      ? this.getRows(virtualData, columnGroups, true, virtual)
-      : this.getEmptyRow(columnGroups);
+    const cachedRows = cachedData.length ? this.getRows(virtualCachedData, columnGroups, true, virtual) : undefined;
+    const rows = virtualCurrentData.length
+      ? this.getRows(virtualCurrentData, columnGroups, true, virtual)
+      : cachedRows ? undefined : this.getEmptyRow(columnGroups);
     const body = rowDraggable ? (
       <Droppable
         droppableId="table"
