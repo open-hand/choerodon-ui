@@ -229,19 +229,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       return state.next || state.prev;
     }
 
-    const navNode = navRef.current;
-    const container = containerRef.current;
-    const navWrap = navWrapRef.current;
-    let isShow = false;
-    if (navNode && container && navWrap) {
-      const navNodeWH = getScrollWH(navNode);
-      const containerWH = getOffsetWH(container);
-      const navWrapNodeWH = getOffsetWH(navWrap);
-      const navNodeWHValue = Math.min(containerWH, navWrapNodeWH);
-      const offset = navNodeWH - navNodeWHValue;
-      isShow = offset > 0
-    }
-    return isShow;
+    return next || prev;
   }, [next, prev]);
 
   const onMenuClick = ({ key }) => {
@@ -393,24 +381,22 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const navWrapNodeWH = getOffsetWH(navWrap);
       const offset = Math.round(offsetRef.current);
       // 当容器小于tab的时候使用最小值才可以防止回弹问题。
-      const navNodeWHValue = Math.min(containerWH, navWrapNodeWH);
-      const minOffset = Math.round(navNodeWH - navNodeWHValue);
+      const minOffset = Math.round(navNodeWH - navWrapNodeWH);
       let $next = next;
       let $prev = prev;
-      if (minOffset < 0) {
-        $prev = false;
-        $next = false
-      } else if (offset === 0) {
+      if (offset === 0 && containerWH < navNodeWH) {
         $prev = false;
         $next = true;
-      } else if (offset > 0 && offset < minOffset) {
-        $prev = true;
-        $next = true
-      } else if (offset === minOffset) {
+      } else if (minOffset>0 && offset === minOffset) {
         $prev = true;
         $next = false
-      } else {
+      } else if (offset > 0) {
+        $prev = true;
+        $next = true
+      }
+      else {
         $prev = false;
+        $next = false;
       }
 
       if (next !== $next) {
@@ -523,12 +509,6 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
 
     const vertical = isVertical(tabBarPosition)
 
-    let needScrollStyle = {}
-    const navWrap = navWrapRef.current;
-    if (navWrap && vertical) {
-      const navWrapNodeWH = getOffsetWH(navWrap);
-      needScrollStyle = { height: navWrapNodeWH }
-    }
     const isEditCard = type === TabsType['editable-card']
     return (
       <div
@@ -542,7 +522,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         {!showMore && prevButton}
         {!showMore && nextButton}
         <div className={`${prefixCls}-nav-wrap`} ref={navWrapRef}>
-          <div className={`${prefixCls}-nav-scroll`} style={needScrollStyle} ref={navScrollRef}>
+          <div className={`${prefixCls}-nav-scroll`} ref={navScrollRef}>
             <div className={navClasses} ref={navRef} >
               {content}
               {
@@ -556,20 +536,16 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     );
   };
   // 发生滚动事件，改变更多的菜单。
-  const handleScrollEvent = ({ target }) => {
+  const handleScrollEvent = useCallback(({ target }) => {
     const vertical = isVertical(tabBarPosition)
     const { scrollLeft, scrollTop } = target
-    if (!showMore) {
-      setOffset(vertical ? scrollTop : scrollLeft, setNextPrev)
-      return
-    }
-    let hiddenOffset= 0;
+    let hiddenOffset = 0;
     const prevMenuList: Array<MenuKeyValue> = []
     // 计算前面隐藏的tabs
     for (let i = 0; i < tabsRef.current.length; i++) {
       const { key, value, ref } = tabsRef.current[i];
       const dom = ref.current;
-      let currentTabOffset= 0;
+      let currentTabOffset = 0;
       if (dom) {
         currentTabOffset = vertical ? (dom.offsetHeight + getStyle(dom, 'margin-bottom')) : (dom.offsetWidth + getStyle(dom, 'margin-right'))
       }
@@ -609,8 +585,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }
     nextMenuList.reverse()
     setMenuList(prevMenuList.concat(nextMenuList))
-    setNextPrev();
-  }
+    setOffset(vertical ? scrollTop : scrollLeft, setNextPrev)
+  }, [tabBarPosition])
 
   useLayoutEffect(() => {
     const inkBarNode = inkBarRef.current;
@@ -681,6 +657,10 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }, 200);
     const scrollEvent = new EventManager(navScrollRef.current);
     scrollEvent.addEventListener('scroll', debouncedScroll);
+    const navScroll = navScrollRef.current
+    if (navScroll) {
+      navScroll.style.height = isVertical(tabBarPosition) ? `100%` : 'auto'
+    }
     return () => {
       scrollEvent.removeEventListener('scroll', debouncedScroll);
       debouncedScroll.cancel();
@@ -716,9 +696,9 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   }, [setNextPrev, scrollToActiveTab, resizeEvent]);
 
   // 内容变化判断是否显示更多
-  useEffect(()=>{
+  useEffect(() => {
     setNextPrev()
-  },[getContent])
+  }, [getContent])
 
   const inkBarNode = getInkBarNode();
   const tabs = getTabs();
