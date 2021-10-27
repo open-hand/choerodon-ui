@@ -690,8 +690,7 @@ export default class TableStore {
   get virtualCachedData(): Record[] {
     const { cachedData, virtual } = this;
     if (virtual) {
-      const { virtualEndIndex, virtualStartIndex } = this;
-      return cachedData.slice(virtualStartIndex, virtualEndIndex);
+      return cachedData.slice(this.virtualStartIndex, this.virtualEndIndex);
     }
     return cachedData;
   }
@@ -700,12 +699,9 @@ export default class TableStore {
   get virtualCurrentData(): Record[] {
     const { currentData, virtual } = this;
     if (virtual) {
-      const { virtualCachedData: { length }, virtualEndIndex, virtualStartIndex } = this;
-      const currentStartIndex = length ? 0 : virtualStartIndex;
-      const currentEndIndex = length ? virtualEndIndex - length : virtualEndIndex;
-      if (currentStartIndex >= currentEndIndex) {
-        return [];
-      }
+      const { cachedData: { length } } = this;
+      const currentStartIndex = Math.max(this.virtualStartIndex - length, 0);
+      const currentEndIndex = Math.max(this.virtualEndIndex - length, 0);
       return currentData.slice(currentStartIndex, currentEndIndex);
     }
     return currentData;

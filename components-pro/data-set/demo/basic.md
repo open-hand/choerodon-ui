@@ -29,7 +29,7 @@ if (typeof window !== 'undefined') {
 const data = [
   {
     id: '1',
-    code: 'code1',
+    code: { code: 'HR.EMPLOYEE_GENDER', description: '性别' },
     name: 'name1',
     number: 30,
     date_multiple_range: [['1984-11-22', '1985-07-01'], ['2020-11-22', '2021-07-01']],
@@ -46,7 +46,7 @@ const data = [
   },
   {
     id: '2',
-    code: 'code2',
+    code: { code: 'HR.EMPLOYEE_STATUS', description: '员工状态' },
     name: 'name2',
     number: 30,
     "model": [
@@ -94,7 +94,8 @@ const App = () => {
     data,
     fields: [
       { name: 'name', label: '名称' },
-      { name: 'code', label: '编码' },
+      { name: 'code', label: '编码', type: 'object', ignore: 'always', lovCode: 'LOV_CODE', textField: 'description', valueField: 'code' },
+      { name: 'code_code', label: '编码', bind: 'code.code' },
       { name: 'number', label: '数字' },
       { name: 'date_multiple_range', type: 'date', multiple: true, range: true, label: '多选日期', ignore: 'never' },
       { name: 'jsonData', type: 'json' },

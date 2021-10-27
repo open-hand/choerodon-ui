@@ -1,4 +1,5 @@
-import React, { FunctionComponent, ReactNode, useContext } from 'react';
+import React, { FunctionComponent, ReactNode, useContext, useLayoutEffect, useRef, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnLock } from './enum';
 import ColumnGroups from './ColumnGroups';
@@ -12,8 +13,12 @@ export interface TableRowGroupProps {
   children?: ReactNode;
 }
 
-const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGroup(props) {
+const TableRowGroup: FunctionComponent<TableRowGroupProps> = observer(function TableRowGroup(props) {
   const { prefixCls, tableStore } = useContext(TableContext);
+  const stickyRef = useRef<HTMLTableCellElement | null>(null);
+  const [stickyOffset, setStickyOffset] = useState<number>(0);
+  const needFixSticky = isStickySupport() && tableStore.virtual;
+  const currentScrollTop: number = needFixSticky ? tableStore.lastScrollTop : 0;
   const { lock, columnGroups, children } = props;
   const colSpan = (() => {
     switch (lock) {
@@ -26,10 +31,21 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGr
     }
   })();
   const Cmp = tableStore.parityRow ? 'div' : 'tr';
-  const style = isStickySupport() && tableStore.virtual ? { transform: toTransformValue({ translate: `0,${pxToRem(-tableStore.virtualTop)}` }) } : undefined;
+  const style = needFixSticky && stickyOffset ? { transform: toTransformValue({ translate: `0,${pxToRem(-stickyOffset)}` }) } : undefined;
+  useLayoutEffect(() => {
+    const { current } = stickyRef;
+    if (current) {
+      const { parentElement } = current;
+      if (parentElement) {
+        const currentOffsetTop = current.offsetTop;
+        const offsetTop = tableStore.virtualTop - currentScrollTop + currentOffsetTop;
+        setStickyOffset(currentScrollTop > currentOffsetTop ? offsetTop : Math.min(offsetTop, currentOffsetTop - parentElement.offsetTop));
+      }
+    }
+  }, [currentScrollTop]);
   return (
     <Cmp className={`${prefixCls}-row-group`} style={isStickySupport() ? undefined : { height: pxToRem(25) }}>
-      <td colSpan={colSpan} className={`${prefixCls}-row-group-title`} style={style}>
+      <td colSpan={colSpan} className={`${prefixCls}-row-group-title`} style={style} ref={needFixSticky ? stickyRef : undefined}>
         {
           lock !== ColumnLock.right && (
             <div className={`${prefixCls}-row-group-title-content`}>{children}</div>
@@ -38,7 +54,7 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGr
       </td>
     </Cmp>
   );
-};
+});
 
 TableRowGroup.displayName = 'TableRowGroup';
 
