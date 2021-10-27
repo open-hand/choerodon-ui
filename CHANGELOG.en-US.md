@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `<pro>Lov`: Added `onSearchMatcherChange` property.
 - 🌟 `Steps`: Added `type` property.
 - 🌟 `Steps`: Added `onChange` callback.
+- 🌟 `Tabs`: Added `showMore` property.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
