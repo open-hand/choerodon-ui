@@ -2,18 +2,17 @@ import isString from 'lodash/isString';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import isEmpty from '../../_util/isEmpty';
-import { methodReturn, ValidatorProps } from '.';
+import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 import { axiosConfigAdapter } from '../../data-set/utils';
 import { FieldType } from '../../data-set/enum';
 import { iteratorSome } from '../../_util/iteratorUtils';
-import { ValidationMessages } from '../Validator';
 
 export default function uniqueError(
   value: any,
-  props: ValidatorProps & { defaultValidationMessages: ValidationMessages },
+  props: ValidatorBaseProps,
   getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T],
 ): PromiseLike<methodReturn> | methodReturn {
-  const { dataSet, record, name, defaultValidationMessages } = props;
+  const { dataSet, record, name } = props;
   if (!isEmpty(value) && dataSet && record && name) {
     const unique = getProp('unique');
     if (unique) {
@@ -83,7 +82,7 @@ export default function uniqueError(
                 const ruleName = 'uniqueError';
                 const {
                   [ruleName]: validationMessage = $l('Validator', 'unique'),
-                } = defaultValidationMessages;
+                } = getProp('defaultValidationMessages') || {};
                 return new ValidationResult({
                   validationProps: {
                     unique,

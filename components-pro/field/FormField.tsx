@@ -31,7 +31,7 @@ import isEmpty from '../_util/isEmpty';
 import { FieldFormat, FieldTrim, FieldType } from '../data-set/enum';
 import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
-import { ValidatorProps } from '../validator/rules';
+import { ValidatorBaseProps, ValidatorProps } from '../validator/rules';
 import { FIELD_SUFFIX } from '../form/utils';
 import { LabelLayout, ShowValidation } from '../form/enum';
 import Animate from '../animate';
@@ -194,7 +194,7 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 校验信息渲染器
    */
-  validationRenderer?: (result: ValidationResult, props: Partial<ValidatorProps>) => ReactNode;
+  validationRenderer?: (result: ValidationResult, props: ValidatorProps) => ReactNode;
   /**
    * 多值标签超出最大数量时的占位描述
    */
@@ -880,16 +880,20 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         return this.range;
       case 'multiple':
         return this.multiple;
+      case 'defaultValidationMessages':
+        return {
+          ...this.defaultValidationMessages,
+          ...getConfig('defaultValidationMessages'),
+        };
       default:
         return this.getProp(key);
     }
   }
 
-  getValidatorProps(): ValidatorProps {
-    const { name, defaultValidationMessages } = this;
+  getValidatorProps(): ValidatorBaseProps {
+    const { name } = this;
     return {
       name,
-      defaultValidationMessages,
       form: this.context.formNode as Form,
     };
   }

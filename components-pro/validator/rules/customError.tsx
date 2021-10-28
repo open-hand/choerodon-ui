@@ -2,12 +2,11 @@ import isString from 'lodash/isString';
 import isPromise from 'is-promise';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
-import { methodReturn, ValidatorProps } from '.';
-import { ValidationMessages } from '../Validator';
+import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
 export default function customError(
   value: any,
-  props: ValidatorProps & { defaultValidationMessages: ValidationMessages },
+  props: ValidatorBaseProps,
   getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T],
 ): methodReturn | PromiseLike<methodReturn> {
   const customValidator = getProp('customValidator');

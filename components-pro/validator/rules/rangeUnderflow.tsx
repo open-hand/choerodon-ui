@@ -3,10 +3,9 @@ import isNil from 'lodash/isNil';
 import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
-import { methodReturn, ValidatorProps } from '.';
+import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 import { formatReactTemplate } from '../../formatter/formatReactTemplate';
 import { toRangeValue } from '../../field/utils';
-import { ValidationMessages } from '../Validator';
 
 const isUnderflow = (value, min, range) => {
   if (range) {
@@ -15,7 +14,7 @@ const isUnderflow = (value, min, range) => {
   return Number(value) < Number(min);
 };
 
-export default function rangeUnderflow(value: any, props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
+export default function rangeUnderflow(value: any, _: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
   if (!isEmpty(value)) {
     const min = getProp('min');
     if (!isNil(min)) {
@@ -27,7 +26,7 @@ export default function rangeUnderflow(value: any, props: ValidatorProps & { def
         const ruleName = 'rangeUnderflow';
         const {
           [ruleName]: validationMessage = $l('Validator', 'range_underflow'),
-        } = props.defaultValidationMessages;
+        } = getProp('defaultValidationMessages') || {};
         return new ValidationResult({
           validationProps: {
             min,

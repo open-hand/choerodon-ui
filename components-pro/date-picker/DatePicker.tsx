@@ -828,7 +828,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return isValid;
   }
 
-  getValidatorProp(key) {
+  getValidatorProp(key: string) {
     if (['maxLength', 'minLength'].includes(key)) {
       return;
     }

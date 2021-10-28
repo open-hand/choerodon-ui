@@ -1,11 +1,10 @@
 import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
-import { methodReturn, ValidatorProps } from '.';
+import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 import { formatReactTemplate } from '../../formatter/formatReactTemplate';
-import { ValidationMessages } from '../Validator';
 
-export default function tooLong(value: any, props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
+export default function tooLong(value: any, _: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
   if (!isEmpty(value)) {
     const maxLength = getProp('maxLength');
     if (maxLength !== undefined && maxLength > 0) {
@@ -15,7 +14,7 @@ export default function tooLong(value: any, props: ValidatorProps & { defaultVal
         const ruleName = 'tooLong';
         const {
           [ruleName]: validationMessage = $l('Validator', 'too_long'),
-        } = props.defaultValidationMessages;
+        } =getProp('defaultValidationMessages') || {};
         return new ValidationResult({
           validationProps: {
             maxLength,
