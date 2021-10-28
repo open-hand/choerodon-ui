@@ -2468,8 +2468,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
          * 判断行合并的情况，并遍历出合并行，在滚动的时候根据滚动高度判断是否显示
          */
         const hasSpanRow: any = []
-        let keyIndex:number = 0;
-        let rowSpanStartIndex:number;
+        let keyIndex: number = 0;
+        let rowSpanStartIndex: number;
         if (this.calcStartRowSpan.rowIndex > startIndex) {
           // 从缓存记录往上找
           const lastHistory: StartRowSpan | undefined = this._cacheCalcStartRowSpan.pop()
@@ -2486,7 +2486,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           const rowData = data[i];
           for (let j = 0; j < hasOnCellCol.length; j++) {
             const col = hasOnCellCol[j];
-            const onCellInfo = col.props.onCell({ rowData })
+            const onCellInfo = col.props.onCell({ rowData, dataIndex: col.props.dataIndex, rowIndex: i })
             const cellRowSpan = onCellInfo.rowSpan; // 12
             const calcHeight = (cellRowSpan + i) * nextRowHeight
             if (cellRowSpan > 1 && minTop < calcHeight) {
