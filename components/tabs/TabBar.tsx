@@ -657,10 +657,6 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }, 200);
     const scrollEvent = new EventManager(navScrollRef.current);
     scrollEvent.addEventListener('scroll', debouncedScroll);
-    const navScroll = navScrollRef.current
-    if (navScroll) {
-      navScroll.style.height = isVertical(tabBarPosition) ? `100%` : 'auto'
-    }
     return () => {
       scrollEvent.removeEventListener('scroll', debouncedScroll);
       debouncedScroll.cancel();

@@ -71,7 +71,8 @@
   }
 
   &-extra-content {
-    display: flex;
+    display: -webkit-inline-box;
+    line-height: @tabs-card-height;
     .@{tab-prefix-cls}-extra-bar {
       display: flex;
     }
@@ -98,7 +99,7 @@
       background: @tabs-card-head-background;
       border: @border-width-base @border-style-base @border-color-split;
       border-bottom: none;
-      border-radius: 2px 2px 0 0;
+      border-radius: @border-radius-sm;
       outline: none;
       cursor: pointer;
       transition: all @animation-duration-slow;
@@ -110,7 +111,7 @@
   &-extra-vertical-content {
     flex-direction: column;
     justify-content: space-between;
-    width: auto;
+    width: 100%;
     height: auto;
   }
   &-nav-add {
