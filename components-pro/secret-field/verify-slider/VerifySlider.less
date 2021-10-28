@@ -1,0 +1,119 @@
+@import '../../../components/style/themes/default';
+
+@secretField-prefix-cls: ~'@{c7n-pro-prefix}-secret-field';
+
+.@{secretField-prefix-cls} {
+  &-verify-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    &-slide {
+      height: calc(100% - 0.42rem);
+      justify-content: center;
+      margin-top: 0.5rem;
+      display: flex;
+    }
+    &-btn {
+      padding: 0.1rem 0.05rem 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  &-simple-verify {
+    width: 3.4rem;
+    height: 0.36rem;
+    border: 1px solid #e4e4e4;
+    background-color: #f2f3f5;
+    border-radius: 0.04rem;
+
+    box-sizing: border-box;
+    line-height: 1;
+    position: relative;
+    -webkit-user-select: none;
+
+    &-tips {
+      widows: 100%;
+      height: 100%;
+      color: #9ca0a7;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.14rem;
+      pointer-events: none;
+    }
+
+    &-box {
+      position: absolute;
+      left: -0.01rem;
+      top: -0.01rem;
+      width: calc(100% + 0.02rem);
+      height: calc(100% + 0.02rem);
+      overflow: hidden;
+      border-radius: 0.04rem;
+    }
+
+    &-slide {
+      border-radius: 0.04rem;
+      background-color: @primary-color;
+      transition-duration: 0s;
+      left: -2.9rem;
+
+      position: absolute;
+      // left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.1s linear, transform 0.3s ease;
+    }
+
+    &-bar {
+      position: absolute;
+      left: -0.01rem;
+      top: -0.01rem;
+      width: 0.5rem;
+      height: 100%;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      transition: transform 0.3s ease;
+      touch-action: none;
+
+      &-icon {
+        width: 0.44rem;
+        height: 0.29rem;
+        box-shadow: rgba(#717277, 0.3) 0 0.03rem 0.1rem;
+        border-radius: 0.04rem;
+        background-color: #fff;
+      }
+    }
+
+    &-success-tips {
+      position: absolute;
+      left: -0.01rem;
+      top: -0.01rem;
+      width: calc(100% + 0.02rem);
+      height: calc(100% + 0.02rem);
+      color: #fff;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.14rem;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.1s linear;
+      pointer-events: none;
+
+      span {
+        width: 0.2rem;
+        height: 0.2rem;
+        margin-right: 0.08rem;
+      }
+    }
+  }
+}

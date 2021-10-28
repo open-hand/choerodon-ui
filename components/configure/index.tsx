@@ -9,11 +9,23 @@ import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { ExportMode, FieldType, RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import { expandIconProps, Suffixes, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
+import {
+  expandIconProps,
+  Suffixes,
+  TableCustomized,
+  TablePaginationConfig,
+  TableProps,
+  TableQueryBarHook,
+} from 'choerodon-ui/pro/lib/table/Table';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table.d.ts';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
-import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import {
+  ColumnAlign,
+  DragColumnAlign,
+  HighLightRowType,
+  TableQueryBarType,
+} from 'choerodon-ui/pro/lib/table/enum';
 import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
 import defaultFeedback, { FeedBack } from 'choerodon-ui/pro/lib/data-set/FeedBack';
@@ -24,7 +36,10 @@ import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
-import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
+import {
+  FormatNumberFunc,
+  FormatNumberFuncOptions,
+} from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { TimeZone } from 'choerodon-ui/pro/lib/date-picker/DatePicker';
@@ -60,23 +75,38 @@ export type PerformanceEvents = {
       renderEnd: number;
     };
   };
-}
+};
 
-export type PerformanceEventHook<T extends keyof PerformanceEvents> = (key: T, event: PerformanceEvents[T]) => void;
+export type PerformanceEventHook<T extends keyof PerformanceEvents> = (
+  key: T,
+  event: PerformanceEvents[T],
+) => void;
 
-export type TooltipTarget = 'table-cell' | 'output' | 'label' | 'button' | 'select-option' | 'validation' | 'help';
+export type TooltipTarget =
+  | 'table-cell'
+  | 'output'
+  | 'label'
+  | 'button'
+  | 'select-option'
+  | 'validation'
+  | 'help';
 
 export type TooltipHook = (target?: TooltipTarget) => Tooltip | undefined;
 
 export type TooltipThemeHook = (target?: TooltipTarget) => TooltipTheme;
 
-export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet }) => AxiosRequestConfig;
+export type TableFilterAdapterProps = ({
+  type,
+  config,
+  searchCode,
+  queryDataSet,
+}) => AxiosRequestConfig;
 
 export type Customizable = {
   Table?: boolean;
   PerformanceTable?: boolean;
   Tabs?: boolean;
-}
+};
 
 function isCustomizable(target: boolean | Customizable | undefined): target is Customizable {
   return isObject(target);
@@ -88,8 +118,15 @@ export interface Customized {
   Tabs?: TabsCustomized;
 }
 
-export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component: T) => void;
-export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T) => Promise<Customized[T] | null>;
+export type CustomizedSave = <T extends keyof Customized>(
+  code: string,
+  customized: Customized[T],
+  component: T,
+) => void;
+export type CustomizedLoad = <T extends keyof Customized>(
+  code: string,
+  component: T,
+) => Promise<Customized[T] | null>;
 
 export type Formatter = {
   jsonDate: string | null;
@@ -105,20 +142,74 @@ export type Formatter = {
 export type AttachmentConfig = {
   defaultFileKey: string;
   defaultFileSize: number;
-  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => AxiosRequestConfig);
-  batchFetchCount?: <T extends string | number | symbol>(attachmentUUIDs: T[]) => Promise<{ [key in T]: number }>;
-  fetchList?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => Promise<FileLike[]>;
-  getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string | undefined;
-  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string | undefined;
-  getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string | undefined;
+  action?:
+    | AxiosRequestConfig
+    | ((props: {
+        attachment: AttachmentFile;
+        bucketName?: string;
+        bucketDirectory?: string;
+        storageCode?: string;
+        attachmentUUID: string;
+      }) => AxiosRequestConfig);
+  batchFetchCount?: <T extends string | number | symbol>(
+    attachmentUUIDs: T[],
+  ) => Promise<{ [key in T]: number }>;
+  fetchList?: (props: {
+    bucketName?: string;
+    bucketDirectory?: string;
+    storageCode?: string;
+    attachmentUUID: string;
+  }) => Promise<FileLike[]>;
+  getPreviewUrl?: (props: {
+    attachment: AttachmentFile;
+    bucketName?: string;
+    bucketDirectory?: string;
+    storageCode?: string;
+    attachmentUUID: string;
+  }) => string | undefined;
+  getDownloadUrl?: (props: {
+    attachment: AttachmentFile;
+    bucketName?: string;
+    bucketDirectory?: string;
+    storageCode?: string;
+    attachmentUUID: string;
+  }) => string | undefined;
+  getDownloadAllUrl?: (props: {
+    bucketName?: string;
+    bucketDirectory?: string;
+    storageCode?: string;
+    attachmentUUID: string;
+  }) => string | undefined;
   getAttachmentUUID?: () => Promise<string> | string;
-  renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;
-  renderHistory?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => ReactNode;
+  renderIcon?: (
+    attachment: AttachmentFile,
+    listType: AttachmentListType,
+    defaultIcon: ReactNode,
+  ) => ReactNode;
+  renderHistory?: (props: {
+    attachment: AttachmentFile;
+    bucketName?: string;
+    bucketDirectory?: string;
+    storageCode?: string;
+    attachmentUUID: string;
+  }) => ReactNode;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
-  onOrderChange?: (props: { attachmentUUID: string; attachments: AttachmentFile[]; bucketName?: string; bucketDirectory?: string; storageCode?: string }) => Promise<void>;
-  onRemove?: (props: { attachment: AttachmentFile; attachmentUUID: string; bucketName?: string; bucketDirectory?: string; storageCode?: string }) => Promise<boolean>;
-}
+  onOrderChange?: (props: {
+    attachmentUUID: string;
+    attachments: AttachmentFile[];
+    bucketName?: string;
+    bucketDirectory?: string;
+    storageCode?: string;
+  }) => Promise<void>;
+  onRemove?: (props: {
+    attachment: AttachmentFile;
+    attachmentUUID: string;
+    bucketName?: string;
+    bucketDirectory?: string;
+    storageCode?: string;
+  }) => Promise<boolean>;
+};
 
 export type Config = {
   prefixCls?: string;
@@ -134,11 +225,11 @@ export type Config = {
   lookupAxiosConfig?:
     | AxiosRequestConfig
     | ((props: {
-    params?: any;
-    dataSet?: DataSet;
-    record?: Record;
-    lookupCode?: string;
-  }) => AxiosRequestConfig);
+        params?: any;
+        dataSet?: DataSet;
+        record?: Record;
+        lookupCode?: string;
+      }) => AxiosRequestConfig);
   lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
   lovDefineUrl?: string | ((code: string) => string);
   lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string) => AxiosRequestConfig);
@@ -148,10 +239,10 @@ export type Config = {
   lovQueryAxiosConfig?:
     | AxiosRequestConfig
     | ((
-    code: string,
-    lovConfig: LovConfig | undefined,
-    props: TransportHookProps,
-  ) => AxiosRequestConfig);
+        code: string,
+        lovConfig: LovConfig | undefined,
+        props: TransportHookProps,
+      ) => AxiosRequestConfig);
   lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>;
   lovTableProps?: Partial<TableProps>;
   lovModalProps?: Partial<ModalProps>;
@@ -191,7 +282,11 @@ export type Config = {
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;
   tableColumnOnCell?: (props: onCellProps) => object;
-  tableColumnAlign?: (column: ColumnProps, field?: Field, record?: Record) => ColumnAlign | undefined;
+  tableColumnAlign?: (
+    column: ColumnProps,
+    field?: Field,
+    record?: Record,
+  ) => ColumnAlign | undefined;
   tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
@@ -235,6 +330,11 @@ export type Config = {
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
   selectTrigger?: Action[];
+  secretFieldEnable?: () => boolean;
+  secretFieldTypes?: () => object[];
+  secretFieldFetchVerifyCode?: (type: string) => Promise<object>;
+  secretFieldQueryData?: (params: object) => Promise<string>;
+  secretFieldSaveData?: (params: object) => Promise<object>;
   useColon?: boolean;
   textFieldAutoComplete?: string;
   resultStatusRenderer?: object;
@@ -351,7 +451,8 @@ export type Config = {
 
 export type ConfigKeys = keyof Config;
 
-const defaultTooltipTheme: TooltipThemeHook = target => target === 'validation' ? 'light' : 'dark';
+const defaultTooltipTheme: TooltipThemeHook = target =>
+  target === 'validation' ? 'light' : 'dark';
 
 const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNode => {
   switch (componentName) {
@@ -367,17 +468,27 @@ const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNo
   }
 };
 
-const defaultFormFieldHighlightRenderer: HighlightRenderer = ({ content, hidden, ...rest }, element): ReactNode => content ? (
-  <Popover {...(hidden ? { ...rest, visible: false } : rest)} content={content}>
-    {element}
-  </Popover>
-) : element;
+const defaultFormFieldHighlightRenderer: HighlightRenderer = (
+  { content, hidden, ...rest },
+  element,
+): ReactNode =>
+  content ? (
+    <Popover {...(hidden ? { ...rest, visible: false } : rest)} content={content}>
+      {element}
+    </Popover>
+  ) : (
+    element
+  );
 
 const defaultButtonProps: ButtonProps = { color: ButtonColor.primary, funcType: FuncType.flat };
 
 const defaultSpinProps = { size: Size.default, wrapperClassName: '' };
 
-const defaultTableColumnAlign = (_column: ColumnProps, field?: Field, record?: Record): ColumnAlign | undefined => {
+const defaultTableColumnAlign = (
+  _column: ColumnProps,
+  field?: Field,
+  record?: Record,
+): ColumnAlign | undefined => {
   if (field) {
     switch (field.get('type', record)) {
       case FieldType.number:
@@ -400,9 +511,20 @@ function getComponentKey(component) {
 }
 
 const defaultLookupCache: CacheOptions<string, AxiosPromise> = { maxAge: 1000 * 60 * 10, max: 100 };
-const defaultStatus: Status = { [RecordStatus.add]: 'add', [RecordStatus.update]: 'update', [RecordStatus.delete]: 'delete' };
-const defaultCustomizedSave: CustomizedSave = (code, customized, component) => localStorage.setItem(`${getComponentKey(component)}.customized.${code}`, JSON.stringify(customized));
-const defaultCustomizedLoad: CustomizedLoad = (code, component) => Promise.resolve(JSON.parse(localStorage.getItem(`${getComponentKey(component)}.customized.${code}`) || 'null'));
+const defaultStatus: Status = {
+  [RecordStatus.add]: 'add',
+  [RecordStatus.update]: 'update',
+  [RecordStatus.delete]: 'delete',
+};
+const defaultCustomizedSave: CustomizedSave = (code, customized, component) =>
+  localStorage.setItem(
+    `${getComponentKey(component)}.customized.${code}`,
+    JSON.stringify(customized),
+  );
+const defaultCustomizedLoad: CustomizedLoad = (code, component) =>
+  Promise.resolve(
+    JSON.parse(localStorage.getItem(`${getComponentKey(component)}.customized.${code}`) || 'null'),
+  );
 const defaultFormatter: Formatter = {
   jsonDate: 'YYYY-MM-DD HH:mm:ss',
   date: 'YYYY-MM-DD',
@@ -507,10 +629,14 @@ const defaultConfig = {
 
 export type DefaultConfig = typeof defaultConfig;
 
-const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
-  Config[ConfigKeys]>(defaultConfig);
+const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<
+  ConfigKeys,
+  Config[ConfigKeys]
+>(defaultConfig);
 
-export function getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {
+export function getConfig<T extends ConfigKeys>(
+  key: T,
+): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {
   return globalConfig.get(key) as T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
 }
 

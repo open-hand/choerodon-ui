@@ -1,0 +1,19 @@
+@import '../../../components/style/themes/default';
+
+@secretField-prefix-cls: ~'@{c7n-pro-prefix}-secret-field';
+
+.@{secretField-prefix-cls} {
+  &-modal {
+    height: 2.4rem;
+    &-btns {
+      text-align: right;
+      padding: 0.1rem 0;
+    }
+    &-raised-btn:hover {
+      border-color: rgba(0, 0, 0, 0.2) !important;
+    }
+    &-verify-btn {
+      width: 1.1rem;
+    }
+  }
+}
