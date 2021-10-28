@@ -299,15 +299,17 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return limit;
   }
 
-  getValidatorProp(key) {
+  getValidatorProp(key: string) {
     if (['maxLength', 'minLength'].includes(key)) {
       return;
     }
     switch (key) {
       case 'min':
+        return this.min;
       case 'max':
+        return this.max;
       case 'nonStrictStep':
-        return this[key];
+        return this.nonStrictStep;
       default:
         return super.getValidatorProp(key);
     }

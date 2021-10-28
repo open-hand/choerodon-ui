@@ -1138,10 +1138,8 @@ export default class Field {
           case 'min':
             return getLimit(this.get(key, record), record);
           case 'minLength':
-          case 'maxLength': {
-            const baseType = getBaseType(this.get('type', record));
-            return baseType !== FieldType.string ? undefined : this.get(key, record);
-          }
+          case 'maxLength':
+            return getBaseType(this.get('type', record)) !== FieldType.string ? undefined : this.get(key, record);
           case 'format' :
             return this.get('format', record) || getDateFormatByField(this, this.get('type', record), record);
           case 'nonStrictStep': {
@@ -1151,9 +1149,13 @@ export default class Field {
             }
             return nonStrictStep;
           }
-          case 'customValidator': {
+          case 'customValidator':
             return this.get('validator', record);
-          }
+          case 'defaultValidationMessages':
+            return {
+              ...getConfig('defaultValidationMessages'),
+              ...this.get('defaultValidationMessages', record),
+            };
           default:
             return this.get(key, record);
         }

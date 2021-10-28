@@ -237,7 +237,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
-  getValidatorProp(key) {
+  getValidatorProp(key: string) {
     if (key === 'attachmentCount') {
       const attachments = this.getValidAttachments();
       const count = attachments ? attachments.length : this.count;

@@ -3,8 +3,7 @@ import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { FieldType } from '../../data-set/enum';
 import { toRangeValue } from '../../field/utils';
-import { methodReturn, ValidatorProps } from '.';
-import { ValidationMessages } from '../Validator';
+import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
 const isBadInput = (value, range) => {
   if (range) {
@@ -13,7 +12,7 @@ const isBadInput = (value, range) => {
   return isNaN(value);
 };
 
-export default function badInput(value: any, props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
+export default function badInput(value: any, _: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
   if (!isEmpty(value)) {
     const type = getProp('type');
     if (type === FieldType.number || type === FieldType.currency) {
@@ -22,7 +21,7 @@ export default function badInput(value: any, props: ValidatorProps & { defaultVa
         const ruleName = 'badInput';
         const {
           [ruleName]: validationMessage = $l('Validator', 'bad_input'),
-        } = props.defaultValidationMessages;
+        } = getProp('defaultValidationMessages') || {};
         return new ValidationResult({
           validationProps: {
             type,
