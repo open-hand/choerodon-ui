@@ -1,8 +1,8 @@
-import React ,{ ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
-import {TextField, TextFieldProps } from '../text-field/TextField';
+import { TextField, TextFieldProps } from '../text-field/TextField';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import { ModalProps } from '../modal/Modal';
@@ -26,7 +26,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
     ...TextField.propTypes,
   };
 
-  countDown=new CountDown();
+  countDown = new CountDown();
 
   // eslint-disable-next-line camelcase
   static __IS_IN_CELL_EDITOR = true;
@@ -35,16 +35,17 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   @action
   private openModal() {
-    const label=this.getLabel();
+    const label = this.getLabel();
     const { readOnly, name } = this;
     if (!this.modal) {
       const { modalProps } = this.props;
       this.modal = open({
         title: label,
+        ...modalProps,
         children: (
           <SecretFieldView
             readOnly={readOnly}
-            name={name ||''}
+            name={name || ''}
             label={label}
             token={this.record?.get('_token')}
             onChange={this.handleChange}
@@ -55,7 +56,6 @@ export default class SecretField extends TextField<SecretFieldProps> {
         closable: true,
         autoFocus: false,
         footer: null,
-        ...modalProps,
         onClose: this.handleSecretFieldViewClose,
       } as ModalProps & { children });
     }
@@ -68,8 +68,8 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   @autobind
-  handleChange(data?:any) {
-    this.record?.init(this.name ||'',data);
+  handleChange(data?: any) {
+    this.record?.init(this.name || '', data);
   }
 
   @autobind

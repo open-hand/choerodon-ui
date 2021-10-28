@@ -93,16 +93,16 @@ export default class VerifySlider extends Component<VerifySliderProps> {
     if (diff >= this.max) {
       diff = this.max;
       this.isSuccess = true;
-      this.tipEle.style.opacity=1;
+      this.tipEle.style.opacity = 1;
       if (onSuccess) {
         onSuccess();
       }
     }
     const { style } = this.slideEle;
-    const { style : barEleStyle } = this.barEle;
+    const { style: barEleStyle } = this.barEle;
     style.transform = `translateX(${diff}px)`;
     style.opacity = 1;
-    style.transitionDuration='0s';
+    style.transitionDuration = '0s';
     barEleStyle.transform = `translateX(${diff}px)`;
   }
 
@@ -113,11 +113,11 @@ export default class VerifySlider extends Component<VerifySliderProps> {
     }
     this.isMousedown = false;
     const { style } = this.slideEle;
-    const { style : barEleStyle } = this.barEle;
+    const { style: barEleStyle } = this.barEle;
     style.transform = `translateX(0)`;
     style.opacity = 0;
     barEleStyle.transform = `translateX(0)`;
-    if(this.moveEvent){
+    if (this.moveEvent) {
       this.moveEvent
         .removeEventListener('mousemove', this.handleMouseMove)
         .removeEventListener('mouseup', this.handleMouseUp);
@@ -133,7 +133,7 @@ export default class VerifySlider extends Component<VerifySliderProps> {
     }
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.moveEvent?.clear()
   }
 

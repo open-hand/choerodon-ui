@@ -40,15 +40,13 @@ const App = () => {
     () => [
       {
         name: 'secretField',
-        renderer: ({ record }) => {
-          return <SecretField record={record} name="secretField" border={false} />;
-        },
+        editor:<SecretField border={false} />,
       },
     ],
     [],
   );
 
-  return <Table dataSet={ds} columns={columns} />;
+  return <Table dataSet={ds} columns={columns}/>;
 };
 
 ReactDOM.render(<App />, mountNode);
