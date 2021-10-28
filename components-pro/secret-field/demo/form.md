@@ -41,7 +41,7 @@ configure({
     return Promise.resolve('oldData');
   },
   secretFieldSaveData() {
-    return Promise.resolve({ value: 'editData', failed: false });
+    return Promise.resolve('editData');
   },
 });
 
@@ -63,6 +63,7 @@ const App = () => {
             readOnly: true,
           },
         ],
+        data:[{phone:'110'}],
       }),
     [],
   );

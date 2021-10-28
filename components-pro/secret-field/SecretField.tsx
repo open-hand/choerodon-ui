@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import Icon from '../icon';
@@ -33,6 +33,21 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   modal;
 
+  constructor(props, context) {
+    super(props, context);
+    runInAction(() => {
+      this.setQueryFlag(true);
+    })
+  }
+
+  @observable queryFlag;
+
+  @autobind
+  @action
+  setQueryFlag(value) {
+    this.queryFlag = value;
+  }
+
   @action
   private openModal() {
     const label = this.getLabel();
@@ -49,6 +64,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
             label={label}
             token={this.record?.get('_token')}
             onChange={this.handleChange}
+            onQueryFlag={this.setQueryFlag}
             countDown={this.countDown}
           />
         ),
@@ -78,8 +94,8 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getSuffix(): ReactNode {
-    const { readOnly } = this;
-    return this.wrapperSuffix(
+    const { readOnly, queryFlag } = this;
+    return queryFlag ? this.wrapperSuffix(
       readOnly ? (
         <Icon type="visibility-o" />
       ) : (
@@ -88,6 +104,6 @@ export default class SecretField extends TextField<SecretFieldProps> {
       {
         onClick: this.handleOpenModal,
       },
-    )
+    ) : null
   }
 }

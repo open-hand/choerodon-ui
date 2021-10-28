@@ -333,8 +333,8 @@ export type Config = {
   secretFieldEnable?: () => boolean;
   secretFieldTypes?: () => object[];
   secretFieldFetchVerifyCode?: (type: string) => Promise<object>;
-  secretFieldQueryData?: (params: object) => Promise<string>;
-  secretFieldSaveData?: (params: object) => Promise<object>;
+  secretFieldQueryData?: (params: object) => Promise<object | string>;
+  secretFieldSaveData?: (params: object) => Promise<object | string>;
   useColon?: boolean;
   textFieldAutoComplete?: string;
   resultStatusRenderer?: object;

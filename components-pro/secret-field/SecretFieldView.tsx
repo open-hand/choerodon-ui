@@ -27,6 +27,7 @@ export interface SecretFieldViewProps {
   token?: string;
   countDown: any;
   onChange?: (data?: any) => void;
+  onQueryFlag: (data: boolean) => void;
 }
 
 export interface VerifyTypeObjProps {
@@ -49,7 +50,6 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
       this.setFormDs();
       this.setCaptchaKey('');
       this.setCaptcha('');
-      this.setLoading(false);
     })
   }
 
@@ -89,6 +89,10 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
     if (secretFieldQueryData) {
       secretFieldQueryData(params).then(
         res => {
+          if ((res as any)?.failed) {
+            // 校验失败
+            return;
+          }
           // 编辑-返回原始数据
           this.formDs?.current?.set(name, res);
           this.setFlag('edit');
@@ -102,7 +106,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   // 确定可查看
   @autobind
   handleQuery() {
-    const { name, token = '', onChange, modal } = this.props;
+    const { name, token = '', onChange, onQueryFlag, modal } = this.props;
     // 查看-校验验证码，返回原始值
     const { captchaKey, captcha } = this;
     const secretFieldQueryData = getConfig('secretFieldQueryData');
@@ -111,12 +115,21 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
     if (secretFieldQueryData) {
       return secretFieldQueryData(params).then(
         res => {
-          if (modal) {
-            modal.close();
+          if ((res as any)?.failed) {
+            // 校验失败
+            return;
           }
           // 查看-返回原始数据
           if (onChange) {
-            onChange(res);
+            if (res) {
+              onChange(res);
+            } else {
+              onChange('');
+            }
+          }
+          if (modal) {
+            modal.close();
+            onQueryFlag(false);
           }
         },
       )
@@ -134,11 +147,17 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
     if (secretFieldSaveData) {
       return secretFieldSaveData(params).then(
         res => {
+          // 校验失败
+          if ((res as any)?.failed) {
+            return;
+          }
           // 编辑-返回修改数据
-          if (!(res as any).failed && onChange) {
-            onChange((res as any).value);
-          } else {
-            message.error((res as any).message);
+          if (onChange) {
+            if (res) {
+              onChange(res);
+            } else if (!res) {
+              onChange('');
+            }
           }
           if (modal) {
             modal.close();
@@ -215,13 +234,6 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   @action
   setCaptcha(value) {
     this.captcha = value;
-  }
-
-  @observable loading;
-
-  @action
-  setLoading(value) {
-    this.loading = value;
   }
 
   // 模态框页面显示。verify:验证页，slider:滑块，edit:编辑页
