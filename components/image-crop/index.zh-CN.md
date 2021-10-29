@@ -23,10 +23,6 @@ subtitle: 图片裁剪
 | rotate      | 启用图片旋转                                   |  boolean             |  false       |
 | rotateStep  | 每次旋转角度                                   |  number              | 90           |
 | beforeCrop  | 弹窗打开前调用，若返回  false ，弹框将不会打开 |  function            |              |
-| modalTitle  | 弹窗标题                                       |  string              |  '编辑图片'  |
-| modalWidth  | 弹窗宽度，像素值或百分比                       |  number  \|  string  |  520         |
-| modalOk     | 弹窗确定按钮文字                               |  string              |  '确定'      |
-| modalCancel | 弹窗取消按钮文字                               |  string              |  '取消'      |
 | onCancel   | 取消模态框触发 |  onCancel?: () => void           |                |
 | onOk  | 点击模态框确定触发 |  { url: string, blob: Blob,area:Area }=> void          |                |
 | modalVisible   |  控制模态框的展示 |  boolean          |  ture               |
