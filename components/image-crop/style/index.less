@@ -56,7 +56,7 @@
 .@{image-avatar-prefix-cls} {
   &-dragger {
     display: block;
-    width: 6rem;
+    width: 5rem;
     height: 3rem;
     margin: 0.92rem auto;
     text-align: center;
@@ -98,7 +98,6 @@
       display: flex;
       margin-top: 0.32rem;
       margin-bottom: 0.16rem;
-      padding: 0 1rem;
     }
 
     &-text {
@@ -198,10 +197,11 @@
     }
 
     &-preview {
-      margin-left: 0.16rem;
-      padding-left: 0.32rem;
-      text-align: center;
-      border-left: 0.01rem solid #979797;
+      display: flex;
+      flex: 1;
+      flex-flow: column;
+      align-items: center;
+      justify-content: space-around;
 
       &-title {
         margin-bottom: 0.24rem;
@@ -209,11 +209,9 @@
       }
 
       &-item {
-        margin-bottom: 0.265rem;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
+        display: flex;
+        flex-flow: column;
+        align-items: center;
       }
 
       i {
@@ -229,8 +227,20 @@
     }
 
     &-button {
-      width: 6.4rem;
       text-align: right;
+
+      > .c7n-btn-group,
+      > .c7n-btn {
+        float: left;
+
+        &.c7n-btn {
+          margin-left: 6px;
+        }
+      }
+
+      .icon {
+        margin-right: 0;
+      }
     }
   }
 }

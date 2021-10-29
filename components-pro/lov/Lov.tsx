@@ -656,7 +656,8 @@ export default class Lov extends Select<LovProps> {
 
   getTableProps(): Partial<TableProps> {
     const { tableProps } = this.props;
-    return { ...getConfig('lovTableProps'), ...tableProps };
+    const lovTablePropsConfig = getConfig('lovTableProps');
+    return typeof lovTablePropsConfig === 'function' ? { ...lovTablePropsConfig(this.multiple), ...tableProps } : { ...lovTablePropsConfig, ...tableProps };
   }
 
   @autobind
@@ -664,7 +665,7 @@ export default class Lov extends Select<LovProps> {
   selectSingle() {
     const { options } = this;
     this.resetOptions(options.length === 1);
-    options.query().then(() => {
+    return options.query().then(() => {
       if (options.length === 1) {
         this.choose(this.options.get(0));
       } else {
@@ -749,7 +750,7 @@ export default class Lov extends Select<LovProps> {
     const { onClick = noop } = this.props;
     onClick(e);
     if (!e.isDefaultPrevented()) {
-      this.handleOpenModal();
+      return this.handleOpenModal();
     }
   }
 

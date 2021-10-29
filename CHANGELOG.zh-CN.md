@@ -26,6 +26,8 @@ timeline: true
 - 🌟 `<pro>Lov`: 新增 onSearchMatcherChange 属性。
 - 🌟 `Steps`: 新增 type 属性。
 - 🌟 `Steps`: 新增 onChange 回调。
+- 🌟 `Tabs`: 新增 showMore 属性。
+- 🌟 `ImageCrop.AvatarUploader`: 移除 minRectSize, subTitle 属性，defaultRectSize 更名为 rectSize。
 - 💄 `<pro>DataSet`: 优化内存, 优化树形数据性能, 优化校验性能。
 - 💄 `RcTrigger`: 使组件成为观察者。
 - 💄 `<pro>Select`: 使用 options 数据源模式下，支持 searchMatcher 配置搜索参数。
@@ -36,8 +38,10 @@ timeline: true
 - 💄 `<pro>Attachment`: 在标签上显示必输星号
 - 💄 `<pro>DateTimePicker`: 优化范围值在自动交换顺序时，由 defaultTime 设置的时间值不变。
 - 💄 `<pro>Lov`: 优化按钮模式的 onClick 钩子允许通过调用 event.preventDefault() 阻止弹出模态框。
+- 💄 `<pro>Lov`: 优化在按钮模式下，查询等待 loading 效果。
 - 💄 `<pro>Lov`: 优化 在 popup 模式下，搜索框添加查询字段选择。
 - 💄 `<pro>NumberField`: 优化 step 按钮执行效率。
+- 💄 `ImageCrop.AvatarUploader`: 优化裁剪功能和界面样式。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table`：修复过滤条输入框中内容不能对齐的问题。

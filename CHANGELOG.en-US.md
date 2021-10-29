@@ -26,6 +26,8 @@ timeline: true
 - 🌟 `<pro>Lov`: Added `onSearchMatcherChange` property.
 - 🌟 `Steps`: Added `type` property.
 - 🌟 `Steps`: Added `onChange` callback.
+- 🌟 `Tabs`: Added `showMore` property.
+- 🌟 `ImageCrop.AvatarUploader`: Remove `minRectSize`, `subTitle` properties, rename `defaultRectSize` property as `rectSize`.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
@@ -36,8 +38,10 @@ timeline: true
 - 💄 `<pro>Attachment`: Display a mandatory asterisk on the label.
 - 💄 `<pro>DateTimePicker`: Optimize the time value set by `defaultTime` does not change when the range value is automatically exchanged.
 - 💄 `<pro>Lov`: Optimized the `onClick` hook of the button mode allows to prevent the modal box from popping up by calling event.preventDefault().
+- 💄 `<pro>Lov`: Optimize the effect of query waiting for loading in button mode.
 - 💄 `<pro>Lov`: Optimization In `popup` mode, add query field selection to search box.
 - 💄 `<pro>NumberField`: Optimize the execution efficiency of the step button.
+- 💄 `ImageCrop.AvatarUploader`: Optimize cropping and interface styles.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table`: Fix that the contents of the filter bar input box are not aligned.

@@ -15,6 +15,7 @@ import isFunction from 'lodash/isFunction';
 import isString from 'lodash/isString';
 import Menu from '../../menu';
 import MenuItem from '../../menu/MenuItem';
+import EventManager from '../../_util/EventManager';
 
 
 
@@ -58,7 +59,7 @@ export default class Steps extends Component {
       isShowMore: false,
     };
     this.calcStepOffsetWidth = debounce(this.calcStepOffsetWidth, 150);
-    this.stepList = Children.toArray(this.props.children).map(x => React.createRef())
+    this.resizeEvent = new EventManager(typeof window === 'undefined' ? undefined : window);
     this.pageNo = 1;
     this.pageSize = 0;
   }
@@ -73,6 +74,10 @@ export default class Steps extends Component {
     }
     if (this.props.type === 'navigation') {
       this.showMore()
+      const debouncedResize = debounce(() => {
+        this.showMore()
+      }, 200);
+      this.resizeEvent.addEventListener('resize', debouncedResize)
     }
   }
 
@@ -89,26 +94,19 @@ export default class Steps extends Component {
     if (this.calcStepOffsetWidth && this.calcStepOffsetWidth.cancel) {
       this.calcStepOffsetWidth.cancel();
     }
+    this.resizeEvent.removeEventListener('resize')
   }
 
   showMore = () => {
     const containerWidth = this.stepsRef.offsetWidth;
-    let displayWidth = 0
-    let lastDisplayIndex = 0
     let isShowMore = false
-    for (let i = 0; i < this.stepList.length; i++) {
-      const currentStep = this.stepList[i].current;
-      if (currentStep) {
-        const { stepRef } = currentStep
-        displayWidth += stepRef.offsetWidth + getStyle(stepRef, 'margin-right')
-        if (displayWidth > containerWidth) {
-          isShowMore = true
-          break;
-        }
-        lastDisplayIndex = i + 1
-      }
+    const childLength = this.props.children.length
+    const minWidth = 176; // 最小宽度176
+    const containerNumber = Math.floor(containerWidth / minWidth); // 可容纳个数
+    if (containerNumber < childLength) {
+      isShowMore = true;
+      this.pageSize = containerNumber
     }
-    this.pageSize = lastDisplayIndex
     this.setState({
       isShowMore,
     })
@@ -187,7 +185,7 @@ export default class Steps extends Component {
     const menu = () => {
       return <Menu onClick={this.menuClick}>
         {
-          filteredChildren.map((child,index) => {
+          filteredChildren.map((child, index) => {
             const childProps = {
               stepNumber: `${index + 1}`,
               prefixCls,
@@ -286,7 +284,6 @@ export default class Steps extends Component {
                 iconPrefix,
                 wrapperStyle: style,
                 progressDot,
-                ref: this.stepList[index],
                 onChange,
                 ...child.props,
               };
