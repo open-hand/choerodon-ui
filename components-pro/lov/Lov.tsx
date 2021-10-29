@@ -252,35 +252,37 @@ export default class Lov extends Select<LovProps> {
   }
 
   @autobind
-  renderSearchFieldPrefix(props: TableQueryBarHookProps): ReactNode {
-    const { queryDataSet } = props;
-    if (queryDataSet) {
-      const { fields } = queryDataSet;
-      if (fields.size > 0) {
-        const options: ReactElement[] = [];
-        const { searchMatcher } = this;
-        fields.forEach((field, name) => {
-          options.push(
-            <Option key={String(name)} value={name}>{field.get('label')}</Option>,
+  renderSearchFieldPrefix(props?: TableQueryBarHookProps): ReactNode {
+    if (props) {
+      const { queryDataSet } = props;
+      if (queryDataSet) {
+        const { fields } = queryDataSet;
+        if (fields.size > 0) {
+          const options: ReactElement[] = [];
+          const { searchMatcher } = this;
+          fields.forEach((field, name) => {
+            options.push(
+              <Option key={String(name)} value={name}>{field.get('label')}</Option>,
+            );
+          });
+          const { prefixCls } = this;
+          return (
+            <>
+              <ObserverSelect
+                value={searchMatcher}
+                onChange={this.handleSearchMatcherChange}
+                border={false}
+                clearButton={false}
+                className={`${prefixCls}-lov-search-option`}
+                getPopupContainer={this.getPopupWrapper}
+                isFlat
+              >
+                {options}
+              </ObserverSelect>
+              <div className={`${prefixCls}-lov-search-option-divide`} />
+            </>
           );
-        });
-        const { prefixCls } = this;
-        return (
-          <>
-            <ObserverSelect
-              value={searchMatcher}
-              onChange={this.handleSearchMatcherChange}
-              border={false}
-              clearButton={false}
-              className={`${prefixCls}-lov-search-option`}
-              getPopupContainer={this.getPopupWrapper}
-              isFlat
-            >
-              {options}
-            </ObserverSelect>
-            <div className={`${prefixCls}-lov-search-option-divide`} />
-          </>
-        );
+        }
       }
     }
   }
