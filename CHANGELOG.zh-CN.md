@@ -52,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Attachment`： 修复上传按钮内容溢出并设置了 tooltip 时上传无反应的问题。
 - 🐞 `<pro>Attachment`： 修复 accept 属性无法控制文件选择的问题。
 - 🐞 `<pro>Attachment`： 修复附件数据没有 type 可能会报错的问题。
+- 🐞 `<pro>Attachment`： 修复删除或者拖拽后图片预览问题。
 - 🐞 `<pro>DataSet.Field`： 修复通过 dynamicProps 设置的校验属性首次校验无效果的问题。
 - 🐞 `<pro>DataSet`： 修复 appendData total 参数更新问题。
 - 🐞 `<pro>Validator`： 修复 stepMismatch 错误信息不全的问题。

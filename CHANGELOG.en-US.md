@@ -52,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the problem of uploading unresponsive when the upload button content overflows and the `tooltip` is set.
 - 🐞 `<pro>Attachment`: Fix the issue that the `accept` attribute cannot control file selection.
 - 🐞 `<pro>Attachment`： Fix the problem that the attachment data without a type may report an error.
+- 🐞 `<pro>Attachment`: Fix the problem of image preview after deleting or dragging.
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the first verification of the verification properties set by `dynamicProps` has no effect.
 - 🐞 `<pro>DataSet`: Fix the issue of `appendData` total parameter update.
 - 🐞 `<pro>Validator`: Fix the problem of incomplete `stepMismatch` error information.

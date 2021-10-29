@@ -82,6 +82,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
       const restCount = index + 1 === limit ? length - limit : undefined;
       const hidden = isNumber(limit) && index >= limit;
       const itemDraggable = draggable && !restCount;
+      const itemIndex = type.startsWith('image') ? previewIndex++ : undefined;
       return (
         <Draggable
           draggableId={uid}
@@ -108,7 +109,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 readOnly={readOnly}
                 restCount={restCount}
                 draggable={itemDraggable}
-                index={type.startsWith('image') ? previewIndex++ : undefined}
+                index={itemIndex}
                 hidden={hidden}
                 onHistory={onHistory}
                 onPreview={onPreview}
