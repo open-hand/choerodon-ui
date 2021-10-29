@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `Message`: Added `message.config` method parameter `maxCount`.
 - 🌟 `Notification`: Added `notification.config` method parameter `maxCount`.
 - 🌟 `Badge`: Added `color`, `size`, `title` properties.
+- 🌟 `<pro>Table`: Added the `summaryBarFieldWidth` property to handle the `summaryBar` field width.
 - 🌟 `<pro>Select`: Added the `defaultActiveFirstOption` property whether to highlight the first option by default.
 - 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
 - 🌟 `Upload`: Added `showFileSize` property, and optimized the component style.
