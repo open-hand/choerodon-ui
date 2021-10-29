@@ -13,7 +13,7 @@ export interface TableRowGroupProps {
   children?: ReactNode;
 }
 
-const TableRowGroup: FunctionComponent<TableRowGroupProps> = observer(function TableRowGroup(props) {
+const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGroup(props) {
   const { prefixCls, tableStore } = useContext(TableContext);
   const stickyRef = useRef<HTMLTableCellElement | null>(null);
   const [stickyOffset, setStickyOffset] = useState<number>(0);
@@ -54,8 +54,8 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = observer(function T
       </td>
     </Cmp>
   );
-});
+};
 
 TableRowGroup.displayName = 'TableRowGroup';
 
-export default TableRowGroup;
+export default observer(TableRowGroup);

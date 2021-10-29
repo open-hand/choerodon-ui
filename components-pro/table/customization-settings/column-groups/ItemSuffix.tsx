@@ -36,7 +36,7 @@ function findRecords(record: Record, groups: { value: ColumnLock | false; record
   return [];
 }
 
-const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuffix(props) {
+const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props) {
   const { record, index, records, groups } = props;
   const { prefixCls, tableStore: { columnHideable, columnTitleEditable, columnDraggable } } = useContext(TableContext);
   const changeLock = useCallback((lock: ColumnLock | false) => {
@@ -146,8 +146,8 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuf
       />
     </>
   );
-});
+};
 
 ItemSuffix.displayName = 'ItemSuffix';
 
-export default ItemSuffix;
+export default observer(ItemSuffix);

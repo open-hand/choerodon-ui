@@ -29,7 +29,7 @@ function defaultRenderer(props: CountRendererProps): ReactNode {
   }
 }
 
-const Count: FunctionComponent<CountProps> = observer(function Count(props) {
+const Count: FunctionComponent<CountProps> = function Count(props) {
   const { count, overflowCount, prefixCls, renderer = defaultRenderer } = props;
   const number = getCount(count);
   const renderedText: ReactNode = renderer({
@@ -45,8 +45,8 @@ const Count: FunctionComponent<CountProps> = observer(function Count(props) {
     );
   }
   return null;
-});
+};
 
 Count.displayName = 'Count';
 
-export default Count;
+export default observer(Count);

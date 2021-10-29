@@ -15,7 +15,7 @@ export interface ColumnGroupsProps {
   dataSet: DataSet;
 }
 
-const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroupsProps>((props) => {
+const ColumnGroups: FunctionComponent<ColumnGroupsProps> = function ColumnGroups(props) {
   const { dataSet } = props;
   const { groupedTreeRecords } = dataSet;
   const { tableStore: { columnDraggable, proPrefixCls: prefixCls } } = useContext(TableContext);
@@ -144,8 +144,8 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
       }
     </div>
   );
-});
+};
 
 ColumnGroups.displayName = 'ColumnGroups';
 
-export default ColumnGroups;
+export default observer<ColumnGroupsProps>(ColumnGroups);

@@ -11,7 +11,7 @@ export interface StickyShadowProps {
   children?: ReactNode;
 }
 
-const StickyShadow: FunctionComponent<StickyShadowProps> = observer(function StickyShadow(props) {
+const StickyShadow: FunctionComponent<StickyShadowProps> = function StickyShadow(props) {
   const { position, children } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
   const { columnGroups } = tableStore;
@@ -42,8 +42,8 @@ const StickyShadow: FunctionComponent<StickyShadowProps> = observer(function Sti
       {children}
     </div>
   );
-});
+};
 
 StickyShadow.displayName = 'StickyShadow';
 
-export default StickyShadow;
+export default observer(StickyShadow);

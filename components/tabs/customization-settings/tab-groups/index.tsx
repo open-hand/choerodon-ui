@@ -15,7 +15,7 @@ export interface TabGroupsProps {
   onDefaultKeyChange: (defaultKey: string) => void;
 }
 
-const TabGroups: FunctionComponent<TabGroupsProps> = observer<TabGroupsProps>((props) => {
+const TabGroups: FunctionComponent<TabGroupsProps> = function TabGroups(props) {
   const { dataSet, defaultKey, onDefaultKeyChange } = props;
   const { groupedTreeRecords } = dataSet;
   const { prefixCls, groupedPanelsMap } = useContext(TabsContext);
@@ -70,8 +70,8 @@ const TabGroups: FunctionComponent<TabGroupsProps> = observer<TabGroupsProps>((p
       {groups}
     </div>
   );
-});
+};
 
 TabGroups.displayName = 'TabGroups';
 
-export default TabGroups;
+export default observer<TabGroupsProps>(TabGroups);

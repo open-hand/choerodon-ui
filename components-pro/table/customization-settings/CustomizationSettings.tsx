@@ -60,7 +60,7 @@ export interface CustomizationSettingsProps {
   modal?: modalChildrenProps;
 }
 
-const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = observer(function CustomizationSettings(props) {
+const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = function CustomizationSettings(props) {
   const { modal } = props;
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { prefixCls, tableStore } = useContext(TableContext);
@@ -346,8 +346,8 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
       </CollapsePanel>
     </Collapse>
   );
-});
+};
 
 CustomizationSettings.displayName = 'CustomizationSettings';
 
-export default CustomizationSettings;
+export default observer(CustomizationSettings);
