@@ -15,7 +15,7 @@ export interface TableHeaderRowProps {
   rows: ColumnGroup[][];
 }
 
-const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = observer(function TableHeaderRow(props) {
+const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = function TableHeaderRow(props) {
   const { rowIndex, lock, children, rows } = props;
   const { rowHeight, tableStore } = useContext(TableContext);
 
@@ -57,8 +57,8 @@ const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = observer(function
       {tr}
     </ResizeObservedRow>
   ) : tr;
-});
+};
 
 TableHeaderRow.displayName = 'TableHeaderRow';
 
-export default TableHeaderRow;
+export default observer(TableHeaderRow);

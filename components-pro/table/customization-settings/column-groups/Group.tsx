@@ -15,7 +15,7 @@ export interface GroupProps {
   treeNodeSuffix: (record: Record, index: number, records: Record[]) => ReactNode;
 }
 
-const Group: FunctionComponent<GroupProps> = observer(function Group(props) {
+const Group: FunctionComponent<GroupProps> = function Group(props) {
   const { header, records, value, onDragEnd, treeNodeRenderer, treeNodeSuffix } = props;
   const { prefixCls } = useContext(TableContext);
   return (
@@ -33,8 +33,8 @@ const Group: FunctionComponent<GroupProps> = observer(function Group(props) {
       </Tree>
     </>
   );
-});
+};
 
 Group.displayName = 'Group';
 
-export default Group;
+export default observer(Group);

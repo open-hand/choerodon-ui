@@ -7,7 +7,7 @@ import Tooltip from '../tooltip';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 
-const SelectionTips: FunctionComponent<any> = observer(function SelectionTips() {
+const SelectionTips: FunctionComponent<any> = function SelectionTips() {
   const { prefixCls, dataSet, tableStore, showSelectionCachedButton, onShowCachedSelectionChange } = useContext(TableContext);
   const { showCachedSelection } = tableStore;
   const handleSwitch = useCallback(action(() => {
@@ -41,8 +41,8 @@ const SelectionTips: FunctionComponent<any> = observer(function SelectionTips() 
       {cachedButton}
     </div>
   ) : cachedButton;
-});
+};
 
 SelectionTips.displayName = 'SelectionTips';
 
-export default SelectionTips;
+export default observer(SelectionTips);

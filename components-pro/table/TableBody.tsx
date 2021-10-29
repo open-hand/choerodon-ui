@@ -12,32 +12,10 @@ export interface TableBodyProps {
   style?: CSSProperties;
 }
 
-const TableBody: FunctionComponent<TableBodyProps> = observer(function TableBody(props) {
+const TableBody: FunctionComponent<TableBodyProps> = function TableBody(props) {
   const { children, lock, onScroll, style, getRef } = props;
   const { prefixCls, tableStore } = useContext(TableContext);
   const { hasFooter, overflowY, overflowX } = tableStore;
-  // const saveRef = useCallback((node: HTMLDivElement | null) => {
-  //   const { getRef } = this.props;
-  //   if (getRef) {
-  //     getRef(node);
-  //   }
-  //   // this.element = node;
-  // },[getRef])
-
-  //   componentDidUpdate(): void {
-  //     const { element } = this;
-  //   if (element) {
-  //     const { scrollHeight, clientHeight } = element;
-  //     // Fixed vertical scrollbar not displayed in Chrome when scrollHeight - clientHeight < scrollbarHeight
-  //     if (scrollHeight > clientHeight && scrollHeight - clientHeight < measureScrollbar()) {
-  //       const { overflow } = element.style;
-  //       element.style.overflow = 'scroll';
-  //       raf(() => {
-  //         element.style.overflow = overflow;
-  //       });
-  //     }
-  //   }
-  // }
 
   const getHeightStyle = () => {
     if (!tableStore.customized.heightType) {
@@ -83,8 +61,8 @@ const TableBody: FunctionComponent<TableBodyProps> = observer(function TableBody
   }
 
   return tableBody;
-});
+};
 
 TableBody.displayName = 'TableBody';
 
-export default TableBody;
+export default observer(TableBody);

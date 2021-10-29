@@ -8,9 +8,9 @@ export interface TreeProps {
   children?: ReactNode;
 }
 
-const Tree: FunctionComponent<TreeProps> = observer((props) => {
+const Tree: FunctionComponent<TreeProps> = function Tree(props) {
   const { children, value } = props;
-  const { tableStore: { columnDraggable, node: { props: { columnsDragRender = {} }}, proPrefixCls: prefixCls} } = useContext(TableContext);
+  const { tableStore: { columnDraggable, node: { props: { columnsDragRender = {} } }, proPrefixCls: prefixCls } } = useContext(TableContext);
   const { droppableProps, renderClone } = columnsDragRender;
   return columnDraggable ? (
     <Droppable
@@ -39,8 +39,8 @@ const Tree: FunctionComponent<TreeProps> = observer((props) => {
       {children}
     </div>
   );
-});
+};
 
 Tree.displayName = 'Tree';
 
-export default Tree;
+export default observer(Tree);

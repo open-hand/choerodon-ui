@@ -11,7 +11,7 @@ export interface ItemTitleProps {
   provided?: DraggableProvided;
 }
 
-const ItemTitle: FunctionComponent<ItemTitleProps> = observer(function ItemTitle(props) {
+const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
   const { record, provided } = props;
   const { dataSet, tableStore, aggregation } = useContext(TableContext);
   const { columnTitleEditable } = tableStore;
@@ -46,8 +46,8 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = observer(function ItemTitle
       }
     </>
   );
-});
+};
 
 ItemTitle.displayName = 'ItemTitle';
 
-export default ItemTitle;
+export default observer(ItemTitle);

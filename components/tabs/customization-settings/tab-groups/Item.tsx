@@ -18,7 +18,7 @@ export interface ItemProps {
   snapshot: DraggableStateSnapshot;
 }
 
-const Item: FunctionComponent<ItemProps> = observer(function TreeNode(props) {
+const Item: FunctionComponent<ItemProps> = function Item(props) {
   const { prefixCls } = useContext(TabsContext);
   const selfPrefixCls = `${prefixCls}-customization-group-item`;
   const { suffix, record, index, records, provided, snapshot, defaultKey } = props;
@@ -70,8 +70,8 @@ const Item: FunctionComponent<ItemProps> = observer(function TreeNode(props) {
       </div>
     </div>
   );
-});
+};
 
-Item.displayName = 'TreeNode';
+Item.displayName = 'Item';
 
-export default Item;
+export default observer(Item);

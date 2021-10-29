@@ -24,7 +24,7 @@ type FieldListProps = {
   groups: Group[];
 }
 
-const FieldList: FunctionComponent<FieldListProps> = memo(function FieldList({ value, onSelect, onUnSelect, groups, prefixCls }) {
+const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value, onSelect, onUnSelect, groups, prefixCls }) {
   const [searchText, setSearchText] = useState('');
   const codes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => o.get('name'))], []), [groups]);
   const hasSelect = useMemo(() => value.length > 0, [value.length]);
@@ -122,8 +122,8 @@ const FieldList: FunctionComponent<FieldListProps> = memo(function FieldList({ v
       </div>
     </div>
   );
-});
+};
 
 FieldList.displayName = 'FieldList';
 
-export default FieldList;
+export default memo(FieldList);

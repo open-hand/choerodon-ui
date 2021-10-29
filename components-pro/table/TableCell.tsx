@@ -28,7 +28,7 @@ export interface TableCellProps extends ElementProps {
   inView?: boolean | undefined;
 }
 
-const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell(props) {
+const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView } = props;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
@@ -238,8 +238,8 @@ const TableCell: FunctionComponent<TableCellProps> = observer(function TableCell
       {renderInnerNode(aggregation, onCellStyle)}
     </td>
   );
-});
+};
 
 TableCell.displayName = 'TableCell';
 
-export default TableCell;
+export default observer(TableCell);

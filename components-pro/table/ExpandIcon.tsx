@@ -9,7 +9,7 @@ export interface ExpandIconProps extends ElementProps {
   onChange: (e) => void;
 }
 
-const ExpandIcon: FunctionComponent<ExpandIconProps> = memo(function ExpandIcon(props) {
+const ExpandIcon: FunctionComponent<ExpandIconProps> = function ExpandIcon(props) {
   const { prefixCls, expanded, expandable, onChange } = props;
   const iconPrefixCls = `${prefixCls}-expand-icon`;
   const classString = classNames(iconPrefixCls, {
@@ -28,8 +28,8 @@ const ExpandIcon: FunctionComponent<ExpandIconProps> = memo(function ExpandIcon(
       tabIndex={expandable ? 0 : -1}
     />
   );
-});
+};
 
 ExpandIcon.displayName = 'ExpandIcon';
 
-export default ExpandIcon;
+export default memo(ExpandIcon);

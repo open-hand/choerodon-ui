@@ -8,15 +8,15 @@ export interface CustomizationColumnHeaderProps {
   onHeaderClick: (modal: { open: Function }) => void;
 }
 
-const CustomizationColumnHeader: FunctionComponent<CustomizationColumnHeaderProps> = memo(function CustomizationColumnHeader(props) {
+const CustomizationColumnHeader: FunctionComponent<CustomizationColumnHeaderProps> = function CustomizationColumnHeader(props) {
   const { onHeaderClick } = props;
   const modal = useModal();
   const openCustomizationModal = useCallback(() => onHeaderClick(modal), [modal, onHeaderClick]);
   return (
     <Button funcType={FuncType.flat} size={Size.small} icon="predefine" onClick={openCustomizationModal} />
   );
-});
+};
 
 CustomizationColumnHeader.displayName = 'CustomizationColumnHeader';
 
-export default CustomizationColumnHeader;
+export default memo(CustomizationColumnHeader);

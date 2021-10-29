@@ -32,7 +32,7 @@ export interface AttachmentListProps {
   showHistory?: boolean;
 }
 
-const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function AttachmentList(props) {
+const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
   const {
     prefixCls,
     attachments,
@@ -160,8 +160,8 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = observer(function
     );
   }
   return null;
-});
+};
 
 AttachmentList.displayName = 'AttachmentList';
 
-export default AttachmentList;
+export default observer(AttachmentList);

@@ -9,7 +9,8 @@ export interface VirtualWrapperProps {
   children?: ReactElement<TableWrapperProps>;
 }
 
-const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer(function VirtualWrapper(props) {
+const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
+  const { children } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
   const { virtualTop, virtualHeight } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
@@ -34,12 +35,12 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = observer(function
       style={{ height: pxToRem(virtualHeight) }}
     >
       <div style={{ transform: toTransformValue({ translate: `0,${pxToRem(virtualTop)}` }) }}>
-        {props.children}
+        {children}
       </div>
     </div>
   );
-});
+};
 
 VirtualWrapper.displayName = 'VirtualWrapper';
 
-export default VirtualWrapper;
+export default observer(VirtualWrapper);

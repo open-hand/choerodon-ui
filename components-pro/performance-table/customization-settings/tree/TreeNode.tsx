@@ -22,8 +22,8 @@ export interface TreeNodeProps {
   children?: ReactNode;
 }
 
-const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
-  const { tableStore: { dataSet, columnDraggable, node: { props: { columnsDragRender = {} }}, proPrefixCls: prefixCls }} = useContext(TableContext);
+const TreeNode: FunctionComponent<TreeNodeProps> = function TreeNode(props) {
+  const { tableStore: { dataSet, columnDraggable, node: { props: { columnsDragRender = {} } }, proPrefixCls: prefixCls } } = useContext(TableContext);
   const { droppableProps, renderClone, renderIcon } = columnsDragRender;
   const selfPrefixCls = `${prefixCls}-customization-tree-treenode`;
   const { renderer, suffix, children, className, isLeaf, hidden, record, index, records, provided, snapshot } = props;
@@ -132,8 +132,8 @@ const TreeNode: FunctionComponent<TreeNodeProps> = observer((props) => {
 
     </div>
   );
-});
+};
 
 TreeNode.displayName = 'TreeNode';
 
-export default TreeNode;
+export default observer(TreeNode);

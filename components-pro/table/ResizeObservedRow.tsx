@@ -6,7 +6,7 @@ export interface ResizeObservedRowProps {
   rowIndex: Key;
 }
 
-const ResizeObservedRow: FunctionComponent<ResizeObservedRowProps> = memo(function ResizeObservedRow(props) {
+const ResizeObservedRow: FunctionComponent<ResizeObservedRowProps> = function ResizeObservedRow(props) {
   const { children, onResize, rowIndex } = props;
   const handleResize = useCallback((_width: number, height: number) => {
     onResize(rowIndex, height);
@@ -16,8 +16,8 @@ const ResizeObservedRow: FunctionComponent<ResizeObservedRowProps> = memo(functi
       {children}
     </ReactResizeObserver>
   );
-});
+};
 
 ResizeObservedRow.displayName = 'ResizeObservedRow';
 
-export default ResizeObservedRow;
+export default memo(ResizeObservedRow);
