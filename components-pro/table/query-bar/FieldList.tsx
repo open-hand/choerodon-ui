@@ -44,7 +44,7 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
           const code = field.get('name');
           const label = field.get('label');
           const checked = isChecked(code);
-          if (label.includes(searchText || '')) {
+          if (label && label.includes(searchText || '')) {
             return (
               <div className={`${prefixCls}-item`} key={code}>
                 <CheckBox

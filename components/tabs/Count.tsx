@@ -32,12 +32,14 @@ function defaultRenderer(props: CountRendererProps): ReactNode {
 }
 
 const Count: FunctionComponent<CountProps> = function Count(props) {
-  const { count, overflowCount, prefixCls, renderer = defaultRenderer, asyncCount=noop } = props;
+  const { count, overflowCount, prefixCls, renderer = defaultRenderer, asyncCount = noop } = props;
   const number = getCount(count);
   
   useEffect(()=>{
-    asyncCount(getCount(count))
-  },[getCount(count)])
+    if (count !== number){
+      asyncCount()
+    }
+  },[number])
   
   const renderedText: ReactNode = renderer({
     text: overflowCount && number && number > overflowCount ? `${overflowCount}+` : number,

@@ -168,7 +168,6 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const inkBarRef = useRef<HTMLDivElement | null>(null);
   const [next, setNext] = useState<boolean>(false);
   const [prev, setPrev] = useState<boolean>(false);
-  const [updateCount, setUpdateCount] = useState<number>(0);
   const [prevActiveKey, setActiveKey] = useState<string | undefined>(activeKey);
   const [menuList, setMenuList] = useState<Array<MenuKeyValue>>([]);
   const tabsRef = useRef<any>([]);
@@ -204,7 +203,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const title = (
         <>
           {getHeader(child)}
-          {showCount && <Count prefixCls={prefixCls} count={count} renderer={countRenderer} overflowCount={overflowCount} asyncCount={(number)=>setUpdateCount(number)}  />}
+          {showCount && <Count prefixCls={prefixCls} count={count} renderer={countRenderer} overflowCount={overflowCount} asyncCount={renderInkBar}  />}
         </>
       );
       rst.push(
@@ -589,7 +588,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     setOffset(vertical ? scrollTop : scrollLeft, setNextPrev)
   }, [tabBarPosition])
 
-  useLayoutEffect(() => {
+  const renderInkBar = ()=>{
     const inkBarNode = inkBarRef.current;
     if (inkBarNode) {
       const inkBarNodeStyle = inkBarNode.style;
@@ -646,7 +645,11 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
       inkBarNodeStyle.visibility = activeTab ? 'visible' : 'hidden';
     }
-  },[updateCount,activeTabRef.current,tabBarPosition]);
+  }
+
+  useLayoutEffect(() => {
+    renderInkBar()
+  });
 
   useEffect(() => {
     handleScrollEvent({ target: { scrollLeft: 0, scrollTop: 0 } })

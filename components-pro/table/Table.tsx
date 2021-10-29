@@ -403,6 +403,11 @@ export interface TableProps extends DataSetComponentProps {
    */
   summaryFieldsLimit?: number;
   /**
+   * 头部显示的汇总字段单个宽度
+   * @default 170
+   */
+  summaryBarFieldWidth?: number;
+  /**
    * 是否使用拖拽选择
    * @default false
    */
@@ -736,6 +741,11 @@ export default class Table extends DataSetComponent<TableProps> {
      */
     summaryFieldsLimit: PropTypes.number,
     /**
+     * 头部显示的汇总字段单个宽度
+     * @default 170
+     */
+    summaryBarFieldWidth: PropTypes.number,
+    /**
      * 显示查询条
      * @default true
      */
@@ -821,6 +831,7 @@ export default class Table extends DataSetComponent<TableProps> {
     expandRowByClick: false,
     indentSize: 15,
     summaryFieldsLimit: 3,
+    summaryBarFieldWidth: 170,
     filterBarFieldName: 'params',
     virtualSpin: false,
     autoHeight: false,
@@ -1312,6 +1323,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'queryFields',
       'queryFieldsLimit',
       'summaryFieldsLimit',
+      'summaryBarFieldWidth',
       'queryBar',
       'queryBarProps',
       'autoFocus',
@@ -1499,6 +1511,7 @@ export default class Table extends DataSetComponent<TableProps> {
         queryFields,
         queryFieldsLimit,
         summaryFieldsLimit,
+        summaryBarFieldWidth,
         filterBarFieldName,
         filterBarPlaceholder,
         summaryBar,
@@ -1563,6 +1576,7 @@ export default class Table extends DataSetComponent<TableProps> {
               summaryBar={summaryBar}
               dynamicFilterBar={dynamicFilterBar}
               queryFieldsLimit={queryFieldsLimit}
+              summaryBarFieldWidth={summaryBarFieldWidth}
               summaryFieldsLimit={summaryFieldsLimit}
               filterBarFieldName={filterBarFieldName}
               filterBarPlaceholder={filterBarPlaceholder}
