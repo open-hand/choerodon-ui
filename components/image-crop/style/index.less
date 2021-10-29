@@ -4,8 +4,6 @@
 @image-crop-prefix-cls: ~'@{c7n-prefix}-image-crop';
 @image-avatar-prefix-cls: ~'@{c7n-prefix}-avatar-crop';
 
-
-
 .@{image-crop-prefix-cls}-modal {
   .@{c7n-prefix}-modal-header {
     .@{c7n-prefix}-modal-title {
@@ -234,13 +232,21 @@
         float: left;
 
         &.c7n-btn {
-          margin-left: 6px;
+          margin-left: 0.06rem;
         }
       }
 
-      .icon {
+      .icon.icon.icon {
         margin-right: 0;
       }
+    }
+  }
+}
+
+.@{c7n-prefix}-modal-footer {
+  .@{c7n-prefix}-btn-loading.@{c7n-prefix}-btn-primary {
+    .@{c7n-prefix}-progress-loading .@{c7n-prefix}-progress-inner circle {
+      stroke: #fff;
     }
   }
 }

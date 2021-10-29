@@ -7,7 +7,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import isString from 'lodash/isString';
 import PropTypes from 'prop-types';
 import Cropper from 'react-easy-crop';
-import Button from '../button';
+import Button, { ButtonProps } from '../button';
 import Icon from '../icon';
 import Modal, { ModalProps } from '../modal';
 import message from '../message';
@@ -341,6 +341,8 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     const { src } = img;
     const style: object = {width: editorWidth, height: editorHeight, position: 'relative'};
     const minZoomVal: number = cropSize / Math.min(width, height);
+    const isMinZoom = zoom === minZoomVal;
+    const isMaxZoom = zoom === maxZoomVal;
     const prefixCls = getPrefixCls('avatar-crop-edit', customizePrefixCls);
     const previewTitleFlag = isString(previewTitle) || React.isValidElement(previewTitle);
     const renderPreviewTitle = (): React.ReactElement | null => {
@@ -380,8 +382,18 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
         </div>
         <div className={`${prefixCls}-button`} style={{width: editorWidth}}>
           <ButtonGroup>
-            <Button funcType="raised" icon="zoom_in" onClick={(): void => this.zoomImage('add')} />
-            <Button funcType="raised" icon="zoom_out" onClick={(): void => this.zoomImage('sub')} />
+            <Button
+              funcType="raised"
+              icon="zoom_in"
+              disabled={isMaxZoom}
+              onClick={(): void => this.zoomImage('add')}
+            />
+            <Button
+              funcType="raised"
+              icon="zoom_out"
+              disabled={isMinZoom}
+              onClick={(): void => this.zoomImage('sub')}
+            />
           </ButtonGroup>
           <Button
             funcType="raised"
@@ -390,7 +402,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
           />
           <Button funcType="raised" onClick={(): void => this.zoomImage('init')}>1:1</Button>
           <Upload {...props}>
-            <Button icon="file_upload" type="primary">
+            <Button funcType="raised" icon="file_upload">
               <span>{reloadTitle || Avatarlocale.reUpload}</span>
             </Button>
           </Upload>
@@ -460,14 +472,8 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   render() {
     const { visible, modalProps, title } = this.props;
     const { img, submitting } = this.state;
-    const modalFooter = [
-      <Button disabled={submitting} key="cancel" onClick={this.handleCancel}>
-        <span>{Avatarlocale.cancelButton}</span>
-      </Button>,
-      <Button key="save" type="primary" disabled={!img} loading={submitting} onClick={this.handleOk}>
-        <span>{Avatarlocale.saveButton}</span>
-      </Button>,
-    ];
+    const cancelButtonProps: ButtonProps = {disabled: submitting, funcType: 'raised'};
+    const okButtonProps: ButtonProps = {funcType: 'raised', type: "primary", disabled: !img, loading: submitting};
     return (
       <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
         {(locale: imageCrop) => {
@@ -478,9 +484,12 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
               className="avatar-modal"
               visible={visible}
               width={600}
-              closable={false}
+              closable
               maskClosable={false}
-              footer={modalFooter}
+              onOk={this.handleOk}
+              onCancel={this.handleCancel}
+              okButtonProps={okButtonProps}
+              cancelButtonProps={cancelButtonProps}
               {...modalProps}
             >
               {this.renderContainer()}
