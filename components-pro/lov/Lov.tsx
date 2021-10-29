@@ -656,7 +656,8 @@ export default class Lov extends Select<LovProps> {
 
   getTableProps(): Partial<TableProps> {
     const { tableProps } = this.props;
-    return { ...getConfig('lovTableProps'), ...tableProps };
+    const lovTablePropsConfig = getConfig('lovTableProps');
+    return typeof lovTablePropsConfig === 'function' ? { ...lovTablePropsConfig(this.multiple), ...tableProps } : { ...lovTablePropsConfig, ...tableProps };
   }
 
   @autobind

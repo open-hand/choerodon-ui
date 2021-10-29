@@ -70,6 +70,8 @@ export type TooltipHook = (target?: TooltipTarget) => Tooltip | undefined;
 
 export type TooltipThemeHook = (target?: TooltipTarget) => TooltipTheme;
 
+export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
+
 export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet }) => AxiosRequestConfig;
 
 export type Customizable = {
@@ -153,7 +155,7 @@ export type Config = {
     props: TransportHookProps,
   ) => AxiosRequestConfig);
   lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>;
-  lovTableProps?: Partial<TableProps>;
+  lovTableProps?: Partial<TableProps> | LovTablePropsHook;
   lovModalProps?: Partial<ModalProps>;
   lovAutoSelectSingle?: boolean;
   lovQueryBar?: TableQueryBarType | TableQueryBarHook;
