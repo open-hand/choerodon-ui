@@ -38,6 +38,7 @@ timeline: true
 - 💄 `<pro>Attachment`: Display a mandatory asterisk on the label.
 - 💄 `<pro>DateTimePicker`: Optimize the time value set by `defaultTime` does not change when the range value is automatically exchanged.
 - 💄 `<pro>Lov`: Optimized the `onClick` hook of the button mode allows to prevent the modal box from popping up by calling event.preventDefault().
+- 💄 `<pro>Lov`: Optimize the effect of query waiting for loading in button mode.
 - 💄 `<pro>Lov`: Optimization In `popup` mode, add query field selection to search box.
 - 💄 `<pro>NumberField`: Optimize the execution efficiency of the step button.
 - 💄 `ImageCrop.AvatarUploader`: Optimize cropping and interface styles.

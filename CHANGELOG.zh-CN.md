@@ -38,6 +38,7 @@ timeline: true
 - 💄 `<pro>Attachment`: 在标签上显示必输星号
 - 💄 `<pro>DateTimePicker`: 优化范围值在自动交换顺序时，由 defaultTime 设置的时间值不变。
 - 💄 `<pro>Lov`: 优化按钮模式的 onClick 钩子允许通过调用 event.preventDefault() 阻止弹出模态框。
+- 💄 `<pro>Lov`: 优化在按钮模式下，查询等待 loading 效果。
 - 💄 `<pro>Lov`: 优化 在 popup 模式下，搜索框添加查询字段选择。
 - 💄 `<pro>NumberField`: 优化 step 按钮执行效率。
 - 💄 `ImageCrop.AvatarUploader`: 优化裁剪功能和界面样式。
