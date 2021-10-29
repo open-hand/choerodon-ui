@@ -168,6 +168,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const inkBarRef = useRef<HTMLDivElement | null>(null);
   const [next, setNext] = useState<boolean>(false);
   const [prev, setPrev] = useState<boolean>(false);
+  const [updateCount, setUpdateCount] = useState<number>(0);
   const [prevActiveKey, setActiveKey] = useState<string | undefined>(activeKey);
   const [menuList, setMenuList] = useState<Array<MenuKeyValue>>([]);
   const tabsRef = useRef<any>([]);
@@ -203,7 +204,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const title = (
         <>
           {getHeader(child)}
-          {showCount && <Count prefixCls={prefixCls} count={count} renderer={countRenderer} overflowCount={overflowCount} />}
+          {showCount && <Count prefixCls={prefixCls} count={count} renderer={countRenderer} overflowCount={overflowCount} asyncCount={(number)=>setUpdateCount(number)}  />}
         </>
       );
       rst.push(
@@ -234,6 +235,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
 
   const onMenuClick = ({ key }) => {
     changeActiveKey(key);
+    scrollToActiveTab()
   }
 
   const menu = () => {
@@ -258,7 +260,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
 
     const nextPrevShown = isNextPrevShown()
 
-    const moreTool = nextPrevShown && showMore && (
+    const moreTool = nextPrevShown && !!showMore && (
       <Dropdown overlay={menu} key="more">
         <Icon type="more_horiz" className={dropDownClass} />
       </Dropdown>
@@ -442,8 +444,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }
 
     // when not scrollable or enter scrollable first time, don't emit scrolling
-    const needToSroll = isNextPrevShown() && lastNextPrevShownRef.current;
-    lastNextPrevShownRef.current = isNextPrevShown();
+    const needToSroll = isNextPrevShown();
     if (!needToSroll) {
       return;
     }
@@ -645,7 +646,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
       inkBarNodeStyle.visibility = activeTab ? 'visible' : 'hidden';
     }
-  });
+  },[updateCount,activeTabRef.current,tabBarPosition]);
 
   useEffect(() => {
     handleScrollEvent({ target: { scrollLeft: 0, scrollTop: 0 } })
