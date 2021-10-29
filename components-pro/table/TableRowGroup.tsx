@@ -38,8 +38,10 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGr
       const { parentElement } = current;
       if (parentElement) {
         const currentOffsetTop = current.offsetTop;
+        const tbody = parentElement.parentElement;
         const offsetTop = tableStore.virtualTop - currentScrollTop + currentOffsetTop;
-        setStickyOffset(currentScrollTop > currentOffsetTop ? offsetTop : Math.min(offsetTop, currentOffsetTop - parentElement.offsetTop));
+        const currentTop = tbody && tbody.offsetHeight < currentScrollTop ? parentElement.offsetTop + current.offsetHeight + tableStore.virtualTop : currentOffsetTop;
+        setStickyOffset(currentScrollTop > currentTop ? offsetTop : Math.min(offsetTop, currentOffsetTop - parentElement.offsetTop));
       }
     }
   }, [currentScrollTop]);
