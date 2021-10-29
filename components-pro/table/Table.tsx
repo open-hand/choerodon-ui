@@ -113,6 +113,7 @@ export type SummaryBar =
 export interface SummaryBarProps {
   dataSet: DataSet;
   summaryFieldsLimit: number;
+  summaryBarFieldWidth?: number;
 }
 
 export interface TableQueryBarHookProps {
