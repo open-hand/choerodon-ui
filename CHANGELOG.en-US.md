@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `<pro>Output`: Fix the issue that an asterisk will be displayed when the colon is displayed.
 - 🐞 `<pro>Modal`: Fix the problem of illegal `drawerTransitionName` causing page error.
 - 🐞 `<pro>PerformanceTable`：Fix the problem that the merged line disappears when virtual scrolling is turned on.
+- 🐞 `<pro>ColorPicker`：Fixed configuration `clearButton` property error and pointer jump when selecting #00000 color.
 
 ## 1.4.5
 
