@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `<pro>Output`： 修复显示冒号时会显示必输星号的问题。
 - 🐞 `<pro>Modal`： 修复 drawerTransitionName 非法导致页面报错的问题。
 - 🐞 `<pro>PerformanceTable`： 修复开启虚拟滚动导致合并行消失的问题。
+- 🐞 `<pro>ColorPicker`：修复配置 clearButton 属性报错，以及选择#00000颜色时指针跳动问题。
 
 ## 1.4.5
 
