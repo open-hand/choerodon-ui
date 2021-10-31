@@ -14,7 +14,7 @@ title: API
 | alwaysShowRowBox      | 是否一直显示 rowbox,开启后在其他模式下也会显示 rowbox                                                                                                                                                                          | boolean                                                                                                | false    |    |
 | onRow                 | 设置行属性                                                                                                                                                                                                                     | ({ dataSet, record, index, expandedRow }) => object                                                    |          |    |
 | buttons               | 功能按钮，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，可选值：add \| delete \| remove \| save \| query \| reset \| expandAll \| collapseAll \| export 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \| ReactNode \| object                                                    |          |    |
-| buttonsLimit | 头部显示功能按钮的数量，超出限制放入更多下拉 | number |  | 1.4.5-beta.0 |
+| buttonsLimit | 头部显示功能按钮的数量，超出限制放入更多下拉 | number |  | 1.4.5 |
 | queryFields           | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件                                                                                                                                      | ReactNode[] \| object                                                                                  |          |    |
 | queryFieldsLimit      | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口                                                                                                                                                                       | number                                                                                                 |          |    |
 | queryBar              | 查询条, 可选值为钩子或者内置类型：filterBar \| professionalBar \| advancedBar \| normal \| bar \| none                                                                                                                                                          | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | normal |   |
@@ -50,7 +50,7 @@ title: API
 | virtualCell | 虚拟单元格 | boolean | false | 1.3.0  |
 | virtualSpin           | 是否开启虚拟滚动 Spin                                                                                                                                                                                                          | boolean                                                                                                | false    |    |
 | virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | | 1.3.0   |
-| autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false | 1.4.5-beta.0 |
+| autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false | 1.4.5 |
 | autoHeight            | 是否开启高度自适应                                                                                                                                                                                                             | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) }                                      | false    |    |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |   |
 | autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |    |
@@ -82,10 +82,10 @@ title: API
 | showHeader |	是否显示表头 |	boolean | true | 1.4.2 |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean | true | 1.4.4 |
 | onColumnResize | 列宽改变的回调事件  | ({ column, width }) => void | | 1.4.4 |
-| searchCode | 动态筛选条后端接口唯一编码 | string | | 1.4.5-beta.0 |
-| rowBoxPlacement | 行选择框位置  | 可选值: start, end \| number | start | 1.4.5-beta.0 |
+| searchCode | 动态筛选条后端接口唯一编码 | string | | 1.4.5 |
+| rowBoxPlacement | 行选择框位置  | 可选值: start, end \| number | start | 1.4.5 |
 
-更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
+更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
 ### Table.Column
 
@@ -156,12 +156,12 @@ title: API
 | ----------- | ---------------------- | ------ | -------- | --- |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3 | |
 | autoQueryAfterReset | 重置后自动查询 | boolean | true | 1.4.4 |
-| dynamicFilterBar | 筛选条属性配置 | DynamicFilterBarConfig | | 1.4.5-beta.0 |
-| fuzzyQuery | 是否开启模糊查询 | boolean | true | 1.4.5-beta.0 |
-| fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  | 1.4.5-beta.0 |
-| autoQuery | 条件变更是否自动查询  | boolean | true |1.4.5-beta.0 |
-| onQuery | 查询回调 | () => void |  | 1.4.5-beta.0 |
-| onReset | 重置回调 | () => void |  | 1.4.5-beta.0 |
+| dynamicFilterBar | 筛选条属性配置 | DynamicFilterBarConfig | | 1.4.5 |
+| fuzzyQuery | 是否开启模糊查询 | boolean | true | 1.4.5 |
+| fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  | 1.4.5 |
+| autoQuery | 条件变更是否自动查询  | boolean | true |1.4.5 |
+| onQuery | 查询回调 | () => void |  | 1.4.5 |
+| onReset | 重置回调 | () => void |  | 1.4.5 |
 
 #### DynamicFilterBarConfig
 

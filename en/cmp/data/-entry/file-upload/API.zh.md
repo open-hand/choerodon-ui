@@ -29,7 +29,8 @@ title: API
 | onProgress          | 上传进度中事件                                                                                                                                                                 | Function({ percent }, file)                                        | 无     |
 | onError             | 上传失败事件                                                                                                                                                                   | Function(error, response, file)                                    | 无     |
 | onDragEnd   | 拖拽`picture-card`事件   | Function(fileList) | 无   |
- | requestFileKeys   | 可以传输文件上面的一些props信息给后台   | string,string[] | 无   |
+| requestFileKeys   | 可以传输文件上面的一些props信息给后台   | string,string[] | 无   |
+| showFileSize`(1.5.0-beta.0)` | `listType`为`text`时是否显示文件大小  | boolean | false |
 
 ### onChange
 

@@ -173,6 +173,20 @@
       "order": 12,
       "height": 265,
       "screenshot": ""
+    },
+    {
+      "filename": "customized.js",
+      "title": {
+        "zh": "个性化",
+        "en": "Customized"
+      },
+      "description": {
+        "zh": "支持对 Tabs 的各项属性进行配置并个性化存储。\n",
+        "en": "Supports the configuration and personalized storage of various properties of Tabs.\n"
+      },
+      "order": 13,
+      "height": 165,
+      "screenshot": ""
     }
   ]
 }

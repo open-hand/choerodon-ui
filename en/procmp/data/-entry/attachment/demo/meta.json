@@ -23,11 +23,11 @@
       "filename": "dataSet.js",
       "title": {
         "zh": "绑定数据源",
-        "en": "Basic usage"
+        "en": "DataSet Binding"
       },
       "description": {
         "zh": "绑定数据源\n",
-        "en": "Basic usage example.\n"
+        "en": "DataSet Binding example.\n"
       },
       "order": 1,
       "screenshot": "",

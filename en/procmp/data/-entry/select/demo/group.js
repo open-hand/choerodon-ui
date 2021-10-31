@@ -1,18 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Select } from 'choerodon-ui/pro';
+import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
 
 const { Option, OptGroup } = Select;
 
-ReactDOM.render(
-  <Select>
-    <OptGroup label="Manager">
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-    </OptGroup>
-    <OptGroup label="Engineer">
-      <Option value="wu">Wu</Option>
-    </OptGroup>
-  </Select>,
-  document.getElementById('container')
-);
+const App = () => {
+  const optionDs = React.useMemo(
+    () =>
+      new DataSet({
+        queryUrl: '/common/lov/dataset/LOV_CODE',
+        fields: [{ name: 'enabledFlag', type: 'string', group: true }],
+        autoQuery: true,
+      }),
+  );
+  const ds = React.useMemo(
+    () =>
+      new DataSet({
+        fields: [
+          {
+            name: 'code',
+            type: 'string',
+            textField: 'description',
+            valueField: 'code',
+            label: '用户',
+            options: optionDs,
+          },
+        ],
+      }),
+  );
+  return (
+    <Row gutter={10}>
+      <Col span={12}>
+        <Select>
+          <OptGroup label="Manager">
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+          </OptGroup>
+          <OptGroup label="Engineer">
+            <Option value="wu">Wu</Option>
+          </OptGroup>
+        </Select>
+      </Col>
+      <Col span={12}>
+        <Select dataSet={ds} name="code" />
+      </Col>
+    </Row>
+  );
+};
+ReactDOM.render(<App />, document.getElementById('container'));

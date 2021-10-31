@@ -23,6 +23,7 @@ const App = () => {
     name: 'attachment',
     dataSet: ds,
     labelLayout: 'float',
+    showValidation: 'newLine',
   };
 
   React.useEffect(() => {

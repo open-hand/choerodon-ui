@@ -38,15 +38,13 @@ title: API
 | handleUpload | 点击上传|   (area: AvatarArea) => void;    |   |
 | cropComplete | 裁剪完成|  (imageState: any) => void;   |   |
 | title | 上传头像标题|  string \| React.ReactElement;   |   |
-| subTitle | 上传头像小标题|  string \| React.ReactElement;  |   |
 | previewTitle | 头像预览标题|  string \| React.ReactElement;  |   |
 | reloadTitle | 重新上传标题|  string \| React.ReactElement;  |   |
 | uploadProps | 上传配置|  UploadProps  |   |
 | modalProps | 模态框的配置|  ModalProps  |   |
 | limit | 限制内容| boolean |  {type: 'jpeg,png,jpg',size: 1024,}  |
-| previewList | 定义预览的大小| number[] | \[80, 30, 18\] |
-| editorWidth | 裁剪容器宽度| number | 540 |
-| editorHeight | 裁剪容器高度| number | 300 |
-| minRectSize | 最小裁剪大小| number | 80 |
-| defaultRectSize | 默认裁剪大小| number | 200 |
+| previewList | 定义预览的大小| number[] | \[80, 48, 34\] |
+| editorWidth | 裁剪容器宽度| number | 380 |
+| editorHeight | 裁剪容器高度| number | 380 |
+| rectSize | 裁剪区域大小| number | 280 |
 | axiosConfig | axios 上传配置 | AxiosRequestConfig |   |

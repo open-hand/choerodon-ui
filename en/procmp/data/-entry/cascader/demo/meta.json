@@ -103,7 +103,7 @@
       "category": "pro"
     },
     {
-      "filename": "changeOnSelect.js",
+      "filename": "changeonSelect.js",
       "title": {
         "zh": "所选既所得",
         "en": "ChangeOnSelect"
@@ -117,7 +117,7 @@
       "category": "pro"
     },
     {
-      "filename": "changeOnSelect.js",
+      "filename": "async.js",
       "title": {
         "zh": "选项异步加载",
         "en": "Asynchronous lazy loading Options"

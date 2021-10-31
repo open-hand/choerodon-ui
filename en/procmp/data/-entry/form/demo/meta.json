@@ -65,49 +65,18 @@
       "category": "pro"
     },
     {
-      "filename": "layout.js",
+      "filename": "label-layout.js",
       "title": {
-        "zh": "布局",
-        "en": "Layout"
+        "zh": "标签布局",
+        "en": "Label Layout"
       },
       "description": {
-        "zh": "布局。\n",
+        "zh": "不同标签布局展示。\n",
         "en": "Layout.\n"
       },
       "order": 3,
       "screenshot": "",
-      "height": 462,
-      "category": "pro"
-    },
-    {
-      "filename": "layout-vertical.js",
-      "title": {
-        "zh": "垂直布局",
-        "en": "Vertical Layout"
-      },
-      "ignores": ["theme1", "theme3"],
-      "description": {
-        "zh": "垂直布局。\n",
-        "en": "Vertical Layout.\n"
-      },
-      "order": 4,
-      "screenshot": "",
-      "height": 595,
-      "category": "pro"
-    },
-    {
-      "filename": "placeholder.js",
-      "title": {
-        "zh": "占位符显示标签",
-        "en": "Placeholder Label"
-      },
-      "description": {
-        "zh": "占位符显示标签。\n",
-        "en": "Placeholder Label.\n"
-      },
-      "order": 5,
-      "screenshot": "",
-      "height": 462,
+      "height": 602,
       "category": "pro"
     },
     {

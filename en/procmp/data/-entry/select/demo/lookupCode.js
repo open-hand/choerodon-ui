@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DataSet, Select, Button, Row, Col } from 'choerodon-ui/pro';
+import { DataSet, Select, Output, Button, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -27,31 +27,38 @@ class App extends React.Component {
     fields: [
       { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER' },
       {
-        name: 'sex2',
-        type: 'string',
-        computedProps: {
-          lookupAxiosConfig: ({ record }) =>
-            record && {
-              url: record.get('sex')
-                ? '/common/code/HR.EMPLOYEE_GENDER/'
-                : null,
-              transformResponse(data) {
-                console.log('transformResponse', data);
-                return data;
-              },
-            },
-        },
-      },
-      {
         name: 'lov2',
         type: 'string',
         lookupCode: 'SHI',
-        defaultValue: ['QP', 'XH', 'HD'],
+        defaultValue: ['QP', 'XH'],
         multiple: true,
       },
     ],
     events: {
       update: handleDataSetChange,
+      create({ dataSet, record }) {
+        dataSet.addField('status', {
+          name: 'status',
+          computedProps: {
+            lookupAxiosConfig: ({ record }) =>
+              record && {
+                url: record.get('sex')
+                  ? '/common/code/HR.EMPLOYEE_GENDER/'
+                  : '/common/code/SYS.USER_STATUS/',
+                transformResponse(data) {
+                  try {
+                    const jsonData = JSON.parse(data);
+                    console.log('transformResponse', jsonData);
+                    return jsonData.rows || jsonData;
+                  } catch (e) {
+                    return data;
+                  }
+                },
+              },
+          },
+        });
+        record.init('status', 'ACTV');
+      },
     },
   });
 
@@ -63,37 +70,39 @@ class App extends React.Component {
   };
 
   render() {
+    if (!this.ds.current) {
+      return null;
+    }
     return (
-      <>
-        <Row gutter={10}>
-          <Col span={6}>
-            <Select
-              dataSet={this.ds}
-              name="sex"
-              placeholder="请选择"
-              onOption={handleOption}
-            />
-          </Col>
-          <Col span={6}>
-            <Button onClick={this.changeLookupCode}>修改lookupCode</Button>
-          </Col>
-          <Col span={12}>
-            <Select dataSet={this.ds} name="sex2" placeholder="请选择" />
-          </Col>
-        </Row>
-        <Row style={{ marginTop: 10 }}>
-          <Col span={12}>
-            <Select
-              dataSet={this.ds}
-              name="lov2"
-              placeholder="请选择"
-              maxTagCount={2}
-              maxTagTextLength={3}
-              maxTagPlaceholder={(restValues) => `+${restValues.length}...`}
-            />
-          </Col>
-        </Row>
-      </>
+      <Row gutter={10}>
+        <Col span={6}>
+          <Select
+            dataSet={this.ds}
+            name="sex"
+            placeholder="请选择"
+            onOption={handleOption}
+            trigger={['hover']}
+          />
+        </Col>
+        <Col span={6}>
+          <Button onClick={this.changeLookupCode}>修改lookupCode</Button>
+        </Col>
+        <Col span={12}>
+          <Output dataSet={this.ds} name="status" placeholder="请选择" />
+        </Col>
+        <Col span={24}>
+          <Select
+            dataSet={this.ds}
+            name="lov2"
+            placeholder="请选择"
+            maxTagCount={2}
+            maxTagTextLength={3}
+            maxTagPlaceholder={(restValues) => `+${restValues.length}...`}
+            style={{ width: '100%' }}
+            trigger={['hover']}
+          />
+        </Col>
+      </Row>
     );
   }
 }

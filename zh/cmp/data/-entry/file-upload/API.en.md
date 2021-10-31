@@ -30,6 +30,7 @@ title: API
 | onError             | A callback function, will be executed when upload error.                                                                                                                             | Function(error, response, file)                                    | 无      |
 | onDragEnd   | A callback function, will drag `picture-card`   | Function(fileList) | -   |
 | requestFileKeys   | can upload the file props to the server   | string,string[] | 无   |
+| showFileSize`(1.5.0-beta.0)` | Whether file sizes are displayed when `listType` is `text`   | boolean | false |
 
 ### onChange
 

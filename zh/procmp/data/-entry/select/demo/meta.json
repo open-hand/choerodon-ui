@@ -176,8 +176,8 @@
         "en": "Options Cascade"
       },
       "description": {
-        "zh": "选项级联。\n",
-        "en": "Options Cascade\n"
+        "zh": "选项级联，详见[级联](/zh/tutorials/select#级联)。\n",
+        "en": "Options Cascade, See details [Cascading](/en/tutorials/select#cascading).\n"
       },
       "order": 11,
       "screenshot": "",
@@ -223,21 +223,6 @@
       "description": {
         "zh": "设置常用项。\n",
         "en": "Common Item.\n"
-      },
-      "order": 14,
-      "screenshot": "",
-      "height": 200,
-      "category": "pro"
-    },
-    {
-      "filename": "dataset-gruop.js",
-      "title": {
-        "zh": "DataSet group 分组",
-        "en": "DataSet group"
-      },
-      "description": {
-        "zh": "DataSet group 分组。\n",
-        "en": "DataSet group.\n"
       },
       "order": 14,
       "screenshot": "",

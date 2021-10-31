@@ -7,7 +7,6 @@ abstract: true
 
 **注意事项**
 
-> DataSet 内部会将普通数据对象转成可观察对象，单次 `loadData | create` 加载超过 1000+ 或遍历创建 record 时会有明显耗时，在对性能有严格要求的项目建议采取其他方案处理大数据量。
 > 初次使用该组件库建议阅读[引导教程](https://huihuawk.gitee.io/c7n-ui/zh/tutorials/introduction)。
 
 ## API
@@ -26,7 +25,7 @@ abstract: true
 | autoLocateAfterRemove | 当前数据被删除后自动定位到其他记录 | boolean | true | |
 | validateBeforeQuery | 查询时是否校验查询字段或查询数据集 | boolean | true | 1.0.0  |
 | selection | 选择的模式, 可选值: false 'multiple' 'single' | boolean \| string | multiple |    |
-| selectionStrategy | 树形选择记录策略， SHOW_ALL \| SHOW_CHILD \| SHOW_PARENT | string | 'SHOW_ALL' | 1.4.2 |
+| selectionStrategy | 树形选择记录策略， SHOW\_ALL \| SHOW\_CHILD \| SHOW\_PARENT | string | 'SHOW_ALL' | 1.4.2 |
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | true |   |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |    |
 | pageSize | 分页大小 | number | 10 |   |
@@ -44,20 +43,21 @@ abstract: true
 | feedback | 查询和提交数据的反馈配置, 详见[Feedback](#feedback) | Feedback |  |    |
 | children | 级联行数据集, 例： { name_1: dataSet1, name_2: dataSet2 } | { name: DataSet } |  | |
 | primaryKey | 主键字段名，一般用作级联行表的查询字段 | string |  | |
-| idField | 树形数据当前节点 id 字段名，与 parentField 组合使用。 适用于平铺数据；渲染性能相对 childrenField 比较差；变更节点层级可直接修改 idField 和 parentField 对应的值 | string |  | |
-| parentField | 树形数据当前父节点 id 字段名，与 idField 组合使用。适用于平铺数据；渲染性能相对 childrenField 比较差；变更节点层级可直接修改 idField 和 parentField 对应的值| string |  | |
-| childrenField | 树形数据子数据集字段名， 如果要异步加载子节点需设置 idField 和 parentField 或者使用 appendData 方法。适用于树形数据；渲染性能优于 idField 和 parentField 组合；变更节点层级需要操作 record.parent 和 record.children | string |  | 1.4.5-beta.0 |
+| idField | 树形数据当前节点 id 字段名，与 parentField 组合使用。 适用于平铺数据；变更节点层级可直接修改 idField 和 parentField 对应的值 | string |  | |
+| parentField | 树形数据当前父节点 id 字段名，与 idField 组合使用。适用于平铺数据；变更节点层级可直接修改 idField 和 parentField 对应的值| string |  | |
+| childrenField | 树形数据子数据集字段名， 如果要异步加载子节点需设置 idField 和 parentField 或者使用 appendData 方法。适用于树形数据；变更节点层级需要操作 record.parent 和 record.children | string |  | 1.4.5 |
 | expandField | 树形数据标记节点是否展开的字段名 | string |  |  |
 | checkField | 树形数据标记节点是否为选中的字段名，在展开按钮后面会显示 checkbox | string |  |  |
 | fields | 字段属性数组，详见[Field Props](#field-props) | object\[\] |  |  |
 | queryFields | 查询字段属性数组，在内部生成 queryDataSet，优先级低于 queryDataSet 属性，详见[Field Props](#field-props) | object\[\] |  |  |
 | cacheSelection | 缓存选中记录，使切换分页时仍保留选中状态。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |   |
+| cacheModified | 缓存变更记录，使切换分页时仍保留变更的记录。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false | 1.5.0-beta.0 |
 | axios | 覆盖默认 axios | AxiosInstance |  |   |
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#dataToJSON) | DataToJSON | dirty |   |
 | cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |   |
 | exportMode | 导出模式选择：前端导出，后端导出 | client \| server | server |   |
 | combineSort | 是否开启组件列排序传参 | boolean | false | 1.4.2 |
-| forceValidate | 始终校验全部数据 | boolean | false | 1.4.5-beta.0 |
+| forceValidate | 始终校验全部数据 | boolean | false | 1.4.5 |
 
 ### DataSet Values
 
@@ -74,7 +74,8 @@ abstract: true
 | selection | 选择的模式, 可选值: false 'multiple' 'single' | observable&lt;string\|boolean&gt; |   |
 | selectionStrategy | 树形选择记录策略， SHOW_ALL \| SHOW_CHILD \| SHOW_PARENT | observable&lt;string[]&gt; |   |
 | records | 所有记录 | observable&lt;Record[]&gt; | |
-| all | 所有记录, 包括缓存的选择记录 | observable&lt;Record[]&gt; | |
+| fields | 所有字段 | ObservableMap<string, Field> | 1.5.0-beta.0 |
+| all | 所有记录, 包括缓存的记录 | observable&lt;Record[]&gt; | |
 | data | 数据, 不包括删除状态的 Record | observable&lt;Record[]&gt; |   |
 | created | 新建的数据 | readonly observable&lt;Record[]&gt; |  |
 | updated | 更新的数据 | readonly observable&lt;Record[]&gt; |  |
@@ -84,6 +85,8 @@ abstract: true
 | currentSelected | 当前页选中记录 | readonly observable&lt;Record[]&gt; | 1.4.0 |
 | currentUnSelected | 当前页未选中记录 | readonly observable&lt;Record[]&gt; | 1.4.0 |
 | cachedSelected | isAllPageSelection 为 false 时缓存的选中记录 或 isAllPageSelection 为 true 时缓存的未选中记录 | readonly observable&lt;Record[]&gt; |    |
+| cachedModified | 缓存的变更记录 | observable&lt;Record[]&gt; | 1.5.0-beta.0 |
+| cachedRecords | 缓存的记录, 包括 cachedSelected 和 cachedModified | observable&lt;Record[]&gt; | 1.5.0-beta.0 |
 | treeSelected | 树形选中记录， 受 selectionStrategy 影响 | readonly observable&lt;Record[]&gt; | 1.4.2  |
 | length | 数据量 | readonly observable&lt;number&gt; | |
 | queryDataSet | 查询数据源 | observable&lt;DataSet&gt; |   |
@@ -97,7 +100,7 @@ abstract: true
 | 名称 | 说明 | 参数 | 返回值类型 | 版本 |
 | --- | --- | --- | --- | --- |
 | ready() | 判断数据源是否准备就绪 |  | Promise |   |
-| query(page, params) | 查询 | page&lt;optional,default:1&gt; - 指定页码 params&lt;optional&gt; - 临时查询参数 | Promise&lt;any&gt; |   |
+| query(page, params, cache) | 查询 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数  `cache`&lt;optional&gt;(1.5.0-beta.0) - 是否保留缓存的变更记录  | Promise&lt;any&gt; | |
 | queryMore(page, params) | 查询更多， 保留原数据 | page&lt;optional,default:1&gt; - 指定页码 params&lt;optional&gt; - 临时查询参数  | Promise&lt;any&gt; | 1.1.0 |
 | submit() | 将数据集中的增删改的记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; false - 校验失败，undefined - 无数据提交或提交相关配置不全，如没有 submitUrl。 | |
 | reset() | 重置更改, 并清除校验状态 |  |  |    |
@@ -142,6 +145,8 @@ abstract: true
 | treeSelect(record) | 选择记录和其子记录 | record - 记录对象 |  | 1.4.2   |
 | treeUnSelect(record) | 取消选择记录和其子记录 | record - 记录对象 |  |  |
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |    |
+| clearCachedModified() | 清除缓存的变更记录 |  |  | 1.5.0-beta.0 |
+| clearCachedRecords() | 清除所有缓存的记录 |  |  | 1.5.0-beta.0 |
 | get(index) | 获取指定索引的记录 | index - 记录索引 | Record |   |
 | getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | index - 记录索引 | Record | |
 | validate() | 校验数据记录是否有效 |  | Promise&lt;boolean&gt; |   |
@@ -152,8 +157,8 @@ abstract: true
 | bind(ds, name) | 绑定头 DataSet | ds - 头 DataSet 对象或 id name - 绑定名 |  |    |
 | setQueryParameter(para, value) | 设置查询参数 | para - 参数名 value - 参数值 |  | |
 | getQueryParameter(para) | 获取查询参数 | para - 参数名 |  | 1.4.0 |
-| loadData(data, total) | 加载数据 | data - 数据数组 total - 总数，可选，用于分页 |  |  |
-| appendData(data, total, parentRecord) | 附加数据 | data - 数据数组 total - 总数，可选，用于分页 parentRecord - 父节点(1.4.5-beat.0)，可选， 用于 childrenField 模式的树形数据 | | 1.1.0 |
+| loadData(data, total, cache) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `cache`(1.5.0-beat.0) - 是否保留缓存的变更记录 | | |
+| appendData(data, parentRecord, total) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 | | 1.1.0 |
 | setState(key, value) | 设置自定义状态值。 | key - 键名或者键值对对象；value - 值 |  | 1.3.1 |
 | getState(key) | 获取自定义状态值。 | key - 键名 |  |  1.3.1  |
 | modifiedCheck(message) | 变更检查 | message - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage | | 1.3.1|
@@ -230,8 +235,8 @@ abstract: true
 | toData() | 转换成普通数据, 包括所有级联数据。 注意：禁止通过此方法获取的 data 来获取值，请用更高性能的 get 方法来获取值。 | | object |    |
 | validate(all, noCascade) | 校验记录 | all - 校验所有字段，默认为 false，只校验修改或新增字段 noCascade - 为 true 时，不校验级联数据 | Promise&lt;boolean&gt; |    |
 | getCascadeRecords(childName) | 根据级联名获取子级联数据 | childName - 级联名 | Record[] |   |
-| getField(fieldName) | 根据字段名获取字段 | fieldName - 字段名 | Field | |
-| addField(fieldName, fieldProps) | 增加新字段 | fieldName - 字段名，fieldProps - 字段属性 | Field |    |
+| getField(fieldName) | 根据字段名获取字段，注意：1.5.0-beta.0 版本后尽量使用 dataSet.getField 来提高性能, 如果要获取 recordField 的属性， 可以使用 dsField.get(name, record) | `fieldName` - 字段名 | Field |
+| addField(fieldName, fieldProps) | 增加新字段, 1.5.0-beta.0 版本后如果该字段非 record 独有的话，请选择使用 dataSet.addField | `fieldName` - 字段名，`fieldProps` - 字段属性 | Field |
 | clone() | 克隆记录，自动剔除主键值 |  | Record |  |
 | ready() | 判断记录是否准备就绪 |  | Promise | |
 | reset() | 重置更改 |  |  |    |
@@ -289,7 +294,7 @@ abstract: true
 | bind | 内部字段别名绑定 | string |  | |
 | dynamicProps | [动态属性对象](/zh/tutorials/dataSet-more#dynamicProps)。对象为字段属性和返回该字段值的钩子的键值对。| { fieldProp: ({ dataSet, record, name }) => value } |  |  |
 | computedProps | 计算属性对象。功能和用法同 dynamicProps，具有 mobx computed 的缓存功能，一般用于计算量大的场景，避免重复计算，提高性能。请确保计算依赖的值是可观察的。  | { fieldProp: ({ dataSet, record, name }) => value } |  | 1.4.0 |
-| cascadeMap | 快码和 LOV 查询时的级联参数映射。详见[级联的基础使用](/en/tutorials/select#implementation-of-cascading) | object |  |   |
+| cascadeMap | 快码和 LOV 查询时的级联参数映射，详见[级联](/en/tutorials/select#cascading)。 | object |  |   |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |   |
 | ignore | 忽略提交, 可选值: always - 总是忽略 clean - 值未变化时忽略 never - 从不忽略 | string | |   |
 | transformRequest | 在发送请求之前对数据进行处理 | (value: any, record: Record) => any |  |    |
@@ -312,29 +317,30 @@ abstract: true
 | -------- | -------- | ------------------------- | --- |
 | name     | 字段名   | readonly string           | |
 | type     | 类型     | observable&lt;string&gt;  | |
-| required | 是否必选 | observable&lt;boolean&gt; | |
-| readOnly | 是否只读 | observable&lt;boolean&gt; | |
-| disabled | 是否禁用 | observable&lt;boolean&gt; | |
-| attachments | 附件列表 | observable&lt;[AttachmentFile](#AttachmentFile)[]&gt; | 1.4.4 |
-| attachmentCount | 附件数量 | observable&lt;number&gt; | 1.4.4 |
 
 ### Field Methods
 
 > 详细介绍：[Field](/zh/tutorials/dataSet-more#fields)
 
-| 名称 | 说明 | 参数 | 返回值类型 |
-| --- | --- | --- | --- |
-| get(propsName) | 根据属性名获取属性值 | propsName - 属性名 | any |
+* 当 field 是通过 ds.getField 获取的字段时， 以上传了 record 参数的方法等同于调用了通过 record.getField 得到的 field 对应的方法。版本：1.5.0-beta.0+
+
+| 名称 | 说明 | 参数 | 返回值类型 | 版本 |
+| --- | --- | --- | --- | --- |
+| get(propsName, record) | 根据属性名获取属性值 | `propsName` - 属性名 `record` - 记录 | any |
 | set(propsName, value) | 设置属性值 | propsName - 属性名；value - 属性值 |  |
 | reset() | 重置设置的属性 |  |  |
-| checkValidity() | 校验字段值 |  | boolean |
-| setLovPara(para, value) | 设置 Lov 的查询参数 | para - 参数名；value - 参数值 |  |
-| getValue() | 获取当前记录的本字段值 | | any |
-| getText(lookupValue) | 根据 lookup 值获取 lookup 描述 | lookupValue - lookup 值，默认本字段值 | string |
-| getLookupData(lookupValue) | 根据 lookup 值获取 lookup 数据对象 | lookupValue - lookup 值，默认本字段值 | object |
-| fetchLookup() | 请求 lookup 数据，若有缓存直接返回缓存数据。 |  | Promise&lt;object[]&gt; |
-| isValid() | 是否校验通过 |  | boolean |
-| getValidationMessage() | 获取校验信息 |  | string |
+| checkValidity(record) | 校验字段值 | `record` - 记录 | boolean |
+| setLovPara(para, value, record) | 设置 Lov 的查询参数 | `para` - 参数名；`value` - 参数值 `record` - 记录 | - |
+| getOptions(record) | 获取选项数据集， 设置了 lookupCode 和 lovCode 的字段也适用 | `record` - 记录 | DataSet |
+| getValue(record) | 获取当前记录的本字段值 | `record` - 记录 | any |
+| getText(lookupValue, showValueIfNotFound, record) | 根据 lookup 值获取 lookup 描述 | `lookupValue` - lookup 值，默认本字段值 `showValueIfNotFound` - 当未找到文本时显示值 `record` - 记录 | string |
+| getLookupData(lookupValue, record) | 根据 lookup 值获取 lookup 数据对象 | `lookupValue` - lookup 值，默认本字段值 `record` - 记录 | object |
+| fetchLookup(noCache, record) | 请求 lookup 数据，若有缓存直接返回缓存数据。 |  `noCache` - 是否禁用缓存 `record` - 记录 | Promise&lt;object[]&gt; |
+| isValid(record) | 是否校验通过 |  `record` - 记录 | boolean |
+| getValidationMessage(record) | 获取校验信息 |  `record` - 记录 | string |
+| getValidationErrorValues(record) | 获取校验结果 |  `record` - 记录 | ValidationResult[] | 1.5.0-beta.0 |
+| getAttachments(record) | 获取附件列表 |  `record` - 记录 | AttachmentFile[] | 1.5.0-beta.0 |
+| getAttachmentCount(record) | 获取附件数量 |  `record` - 记录 | number | 1.5.0-beta.0 |
 
 ### Transport
 

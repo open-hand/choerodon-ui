@@ -17,8 +17,8 @@ configure({
       },
     },
     fetchList({ attachmentUUID }) {
-      return Axios.get(`/attachment/${attachmentUUID}`).then((reponse) => {
-        return reponse.map((file) => ({
+      return Axios.get(`/attachment/${attachmentUUID}`).then((response) => {
+        return response.map((file) => ({
           uid: file.fileId,
           name: file.fileName,
           size: file.fileSize,
@@ -33,7 +33,9 @@ configure({
       return Axios.get(`/attachment-count/${uuids.sort().join(',')}`);
     },
     onRemove() {
-      return Promise.resolve();
+      return new Promise((resolve) =>
+        setTimeout(() => resolve(Math.random() >= 0.1), 1000),
+      );
     },
     onOrderChange() {
       return Promise.resolve();
@@ -59,6 +61,7 @@ configure({
     },
   },
 });
+
 const App = () => {
   const [value, setValue] = React.useState(
     '4c74a34a-fa37-4e92-be9d-5cf726fb1472',
@@ -73,6 +76,7 @@ const App = () => {
     showHistory: true,
     help: '支持文件类型： .deb .txt .pdf image/*',
   };
+
   return (
     <Row gutter={10}>
       <Col span={12}>

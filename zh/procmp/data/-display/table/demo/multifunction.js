@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+import isNaN from 'lodash/isNaN';
+import { action } from 'mobx';
 import {
   DataSet,
   Table,
@@ -18,16 +20,15 @@ import {
 const { Column } = Table;
 const { Option } = Select;
 
-function sexIdRenderer({ record }) {
+function sexIdRenderer({ dataSet, record }) {
   // 获取性别codeValueId
-  return record.getField('sex').getLookupData().codeValueId;
+  const value = record.get('sex') || [];
+  const field = dataSet.getField('sex');
+  return value.map((v) => field.getLookupData(v, record).codeValueId).join(',');
 }
 
 function handleUserDSLoad({ dataSet }) {
-  const first = dataSet.get(0);
-  if (first) {
-    first.selectable = false;
-  }
+  // empty
 }
 
 function renderPhoneEditor(record) {
@@ -136,8 +137,14 @@ class App extends React.Component {
     exportMode: 'client',
     pageSize: 5,
     cacheSelection: true,
+    cacheModified: true,
     transport: {
       read({ params: { page, pagesize } }) {
+        if (pagesize > 20) {
+          return {
+            url: '/dataset/large-user/queries',
+          };
+        }
         return {
           url: `/dataset/user/page/${pagesize}/${page}`,
         };
@@ -203,18 +210,14 @@ class App extends React.Component {
       {
         name: 'name1',
         ignore: 'always',
+        label: '姓名1',
         required: true,
-      },
-      {
-        name: 'name2',
-        ignore: 'always',
-        bind: 'name1',
+        bind: 'name',
       },
       {
         name: 'name',
         type: 'intl',
         computedProps: nameDynamicProps,
-        bind: 'name2',
         ignore: 'clean',
         transformResponse(value) {
           return value && `${value}!`;
@@ -292,21 +295,6 @@ class App extends React.Component {
         },
       },
       {
-        name: 'code_code',
-        type: 'string',
-        label: '代码',
-        maxLength: 20,
-        required: true,
-        bind: 'code.code',
-      },
-      {
-        name: 'code_description',
-        type: 'string',
-        label: '代码描述',
-        defaultValue: '员工状态2',
-        bind: 'code.description',
-      },
-      {
         name: 'code_select',
         type: 'string',
         label: '代码描述(下拉)',
@@ -343,6 +331,7 @@ class App extends React.Component {
         label: '性别',
         lookupCode: 'HR.EMPLOYEE_GENDER',
         required: true,
+        multiple: ',',
       },
       {
         name: 'sexMultiple',
@@ -401,15 +390,58 @@ class App extends React.Component {
     },
   });
 
-  copy = () => {
+  addColumnButton = (
+    <Button icon="add" onClick={this.addColumn} key="addColumn">
+      添加字段
+    </Button>
+  );
+
+  addColumn = action(() => {
     const { userDs } = this;
-    const { selected } = userDs;
-    if (selected.length > 0) {
-      userDs.unshift(...selected.map((record) => record.clone()));
-    } else {
-      Modal.warning('请选择记录');
-    }
-  };
+    userDs.addField('code_code', {
+      type: 'string',
+      label: '代码',
+      maxLength: 20,
+      required: true,
+      bind: 'code.code',
+    });
+    userDs.addField('code_description', {
+      type: 'string',
+      label: '代码描述',
+      defaultValue: '员工状态2',
+      bind: 'code.description',
+    });
+  });
+
+  copyButton = (
+    <Button icon="baseline-file_copy" onClick={this.copy} key="copy">
+      复制
+    </Button>
+  );
+
+  insertButton = (
+    <Button icon="merge_type" onClick={this.insert} key="insert">
+      插入
+    </Button>
+  );
+
+  importButton = (
+    <Button icon="get_app" onClick={this.importData} key="import">
+      导入
+    </Button>
+  );
+
+  removeAllButton = (
+    <Button icon="remove_circle" onClick={this.removeAllData} key="removeAll">
+      全部移除
+    </Button>
+  );
+
+  deleteAllButton = (
+    <Button icon="delete" onClick={this.deleteAllData} key="deleteAll">
+      全部删除
+    </Button>
+  );
 
   insert = () => {
     const { userDs } = this;
@@ -448,42 +480,22 @@ class App extends React.Component {
     this.userDs.deleteAll();
   };
 
-  copyButton = (
-    <Button icon="baseline-file_copy" onClick={this.copy} key="copy">
-      复制
-    </Button>
-  );
-
-  insertButton = (
-    <Button icon="merge_type" onClick={this.insert} key="insert">
-      插入
-    </Button>
-  );
-
-  importButton = (
-    <Button icon="get_app" onClick={this.importData} key="import">
-      导入
-    </Button>
-  );
-
-  removeAllButton = (
-    <Button icon="remove_circle" onClick={this.removeAllData} key="removeAll">
-      全部移除
-    </Button>
-  );
-
-  deleteAllButton = (
-    <Button icon="delete" onClick={this.deleteAllData} key="deleteAll">
-      全部删除
-    </Button>
-  );
+  copy = () => {
+    const { userDs } = this;
+    const { selected } = userDs;
+    if (selected.length > 0) {
+      userDs.unshift(...selected.map((record) => record.clone()));
+    } else {
+      Modal.warning('请选择记录');
+    }
+  };
 
   save = () => {
     console.log('submit result', 'after click');
   };
 
-  handeValueChange = (v) => {
-    const value = v.target.value;
+  handleValueChange = (v) => {
+    const { value } = v.target;
     const suffixList = ['@qq.com', '@163.com', '@hand-china.com'];
     if (value.indexOf('@') !== -1) {
       this.options.loadData([]);
@@ -504,31 +516,34 @@ class App extends React.Component {
       ['delete', { color: 'red' }],
       'remove',
       'reset',
+      'export',
       this.importButton,
       this.copyButton,
       this.insertButton,
       this.removeAllButton,
       this.deleteAllButton,
+      this.addColumnButton,
     ];
     return (
       <Table
         key="user"
-        queryBar="professionalBar"
-        queryFieldsLimit={2}
         buttons={buttons}
         dataSet={this.userDs}
-        style={{ height: 300 }}
         header="User"
+        style={{ height: 300 }}
         rowNumber
         showAllPageSelectionButton
         showSelectionTips
         parityRow
         summary="BASIC DEMO"
+        virtual
+        virtualCell
         pagination={{
           pageSizeEditable: true,
           showQuickJumper: true,
-          pageSizeOptions: ['10', '50', '100', '200'],
+          pageSizeOptions: ['10', '20', '100', '200', '500', '1000'],
         }}
+        onColumnResize={({ column, width }) => console.log(column, width)}
       >
         <Column
           name="userid"
@@ -553,8 +568,8 @@ class App extends React.Component {
           lock
           editor={
             <AutoComplete
-              onFocus={this.handeValueChange}
-              onInput={this.handeValueChange}
+              onFocus={this.handleValueChange}
+              onInput={this.handleValueChange}
               options={this.options}
             />
           }
@@ -575,7 +590,6 @@ class App extends React.Component {
           tooltip="overflow"
         />
         <Column name="name1" editor width={150} />
-        <Column name="name2" editor width={150} />
         <Column name="name" editor width={150} sortable tooltip="always" />
         <Column name="description" editor={<TextArea />} width={150} sortable />
         <Column name="code" editor width={150} sortable />

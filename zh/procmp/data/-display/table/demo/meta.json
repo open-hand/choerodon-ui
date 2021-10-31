@@ -95,14 +95,14 @@
       "category": "pro"
     },
     {
-      "filename": "tree-performance.js",
+      "filename": "load-tree-structure-data.js",
       "title": {
-        "zh": "高性能树形数据",
-        "en": "Performance Tree Data"
+        "zh": "加载树形结构数据",
+        "en": "Load Tree Structure Data"
       },
       "description": {
-        "zh": "高性能树形数据。DataSet 需要设置 childrenField。接口查询的数据需要为树形结构，如果为平铺结构可以通过 transport.read.transformRequest 进行处理。\n注意：这种模式一般用于纯展示， 编辑只能全量提交数据。\n",
-        "en": "Performance Tree Data.\n"
+        "zh": "当接口查询的数据为树形结构时，可以使用此方案。\n",
+        "en": "This scheme can be used when the data queried by the interface has a tree structure.\n"
       },
       "order": 6,
       "screenshot": "",

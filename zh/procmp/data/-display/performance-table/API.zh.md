@@ -58,6 +58,8 @@ title: API
 | rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowSelection)  | 
 | rowDraggable`(1.4.4)` | boolean `(false)` | 行拖拽，实现行的拖拽  |
 | onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
+| onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
+| onDragStart`(1.5.0-beta.0)` |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
 
 ### Form methods
 

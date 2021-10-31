@@ -16,7 +16,7 @@ title: API
 | cellRenderer | 单元格渲染, view 可选值：date \| dateTime \| time \| week \| month \| year \| decade | (view) => (props, text, currentDate, selected) => ReactNode |        |  |
 | renderExtraFooter	| 在面板中添加额外的页脚 |	() => React.ReactNode	||  |
 | extraFooterPlacement	| 额外的页脚的位置 可选值: top bottom |	string |	bottom| |
-| editorInPopup | 编辑器在下拉框中  | boolean |  | 1.4.5-beta.0 |
-| defaultTime | 设置用户选择日期时默认的时分秒，仅应用于 dateTime mode，DateTimePicker 组件 | moment \| \[moment, moment\] | 1.4.5-beta.0 |
+| editorInPopup | 编辑器在下拉框中  | boolean |  | 1.4.5 |
+| defaultTime | 设置用户选择日期时默认的时分秒，仅应用于 dateTime mode，DateTimePicker 组件 | moment \| \[moment, moment\] | | 1.4.5 |
 
 更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。

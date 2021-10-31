@@ -18,6 +18,7 @@ const props = {
       message.error(`${info.file.name} file upload failed.`);
     }
   },
+  showFileSize: true,
 };
 
 ReactDOM.render(
