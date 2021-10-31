@@ -71,8 +71,9 @@
   }
 
   &-extra-content {
-    display: -webkit-inline-box;
-    line-height: @tabs-card-height;
+    display: flex;
+    align-items: center;
+    height: @tabs-card-height;
     .@{tab-prefix-cls}-extra-bar {
       display: flex;
     }
@@ -80,6 +81,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
       min-width: @tabs-card-min-width;
       background: @component-background;
       border-left: @border-width-base @border-style-base @border-color-split;
