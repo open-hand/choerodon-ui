@@ -208,9 +208,6 @@ export default class Record {
 
   set selectable(selectable: boolean) {
     runInAction(() => {
-      if (!selectable) {
-        this.isSelected = false;
-      }
       this.setState(SELECTABLE_KEY, selectable);
     });
   }

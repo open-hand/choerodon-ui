@@ -43,6 +43,7 @@ timeline: true
 - 💄 `<pro>Lov`: Optimization In `popup` mode, add query field selection to search box.
 - 💄 `<pro>NumberField`: Optimize the execution efficiency of the step button.
 - 💄 `ImageCrop.AvatarUploader`: Optimize cropping and interface styles.
+- 🐞 `<pro>Table`: Fix the problem of clearing the checked records when `selectable` is false.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table`: Fix that the contents of the filter bar input box are not aligned.

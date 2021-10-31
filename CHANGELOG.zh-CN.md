@@ -43,6 +43,7 @@ timeline: true
 - 💄 `<pro>Lov`: 优化 在 popup 模式下，搜索框添加查询字段选择。
 - 💄 `<pro>NumberField`: 优化 step 按钮执行效率。
 - 💄 `ImageCrop.AvatarUploader`: 优化裁剪功能和界面样式。
+- 🐞 `<pro>Table`：修复 selectable 为 false 时会清除已勾选的记录问题。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table`：修复过滤条输入框中内容不能对齐的问题。
