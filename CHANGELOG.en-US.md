@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.0-beta.0
+
+`2021-10-31`
+
 - 🌟 `configure`: Added `defaultActiveFirstOption` property.
 - 🌟 `Message`: Added `message.config` method parameter `maxCount`.
 - 🌟 `Notification`: Added `notification.config` method parameter `maxCount`.

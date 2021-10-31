@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.0-beta.0
+
+`2021-10-31`
+
 - 🌟 `configure`: 新增 defaultActiveFirstOption 属性。
 - 🌟 `Message`: 新增 message.config 方法参数 maxCount。
 - 🌟 `Notification`: 新增 notification.config 方法参数 maxCount。

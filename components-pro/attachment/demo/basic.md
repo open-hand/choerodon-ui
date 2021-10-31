@@ -31,8 +31,8 @@ configure({
       },
     },
     fetchList({ attachmentUUID }) {
-      return Axios.get(`/attachment/${attachmentUUID}`).then(reponse => {
-        return reponse.map(file => ({
+      return Axios.get(`/attachment/${attachmentUUID}`).then(response => {
+        return response.map(file => ({
           uid: file.fileId,
           name: file.fileName,
           size: file.fileSize,
