@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property.
+- 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
 
 ## 1.5.0-beta.0
 
