@@ -215,7 +215,7 @@ export type Config = {
   drawerOkFirst?: boolean;
   modalButtonProps?: ButtonProps;
   modalKeyboard?: boolean;
-  modalMaskClosable?: string | boolean;
+  modalMaskClosable?: boolean | 'click' | 'dblclick';
   buttonFuncType?: FuncType;
   buttonColor?: ButtonColor;
   renderEmpty?: renderEmptyHandler;

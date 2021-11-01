@@ -2,7 +2,9 @@ import React, { Component, CSSProperties, Key, MouseEvent } from 'react';
 import { createPortal, render } from 'react-dom';
 import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
+import isPromise from 'is-promise';
 import findLast from 'lodash/findLast';
+import findLastIndex from 'lodash/findLastIndex';
 import noop from 'lodash/noop';
 import EventManager from 'choerodon-ui/lib/_util/EventManager';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -191,17 +193,34 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     }
   };
 
-  handleMaskClick = async () => {
+  handleMaskClick = () => {
     const { modals } = this.state;
-    const modal = findLast(modals, ({ hidden }) => !hidden);
+    const modal: ModalProps | undefined = findLast(modals, (modalProps: ModalProps) => Boolean(!modalProps.hidden && modalProps.mask));
     if (modal) {
       const { close = noop, onCancel = noop, maskClosable = getConfig('modalMaskClosable') } = modal;
       if (maskClosable) {
-        const ret = await onCancel();
-        if (ret !== false) {
-          close();
+        const ret: Promise<boolean | undefined> | boolean | undefined = onCancel();
+        const cb = (result) => {
+          if (result !== false) {
+            close();
+          }
+        };
+        if (isPromise(ret)) {
+          ret.then(cb);
+        } else {
+          cb(ret);
         }
       }
+    }
+  };
+
+  handleModalMouseDown = (e: MouseEvent, modalProps: ModalProps) => {
+    const { onMouseDown } = modalProps;
+    if (onMouseDown) {
+      onMouseDown(e);
+    }
+    if (!e.isDefaultPrevented()) {
+      this.topModal(modalProps);
     }
   };
 
@@ -209,6 +228,13 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   top(): IModalContainer {
     ModalManager.addInstance(this);
     return this;
+  }
+
+  topModal(modalProps: ModalProps) {
+    const { modals } = this.state;
+    this.setState({
+      modals: modals.filter((modal) => modal.key !== modalProps.key).concat(modalProps),
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -239,7 +265,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     modals.slice().reverse().forEach(({ hidden, drawer, drawerOffset, drawerTransitionName }) => {
       if (!hidden) {
         maskHidden = false;
-        const transitionName = toUsefulDrawerTransitionName(drawerTransitionName)
+        const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
         if (drawer && transitionName) {
           const offsets = drawerOffsets[transitionName];
           const offset = offsets[0] || 0;
@@ -329,10 +355,11 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const { maskHidden: hidden, isTop, drawerOffsets, baseOffsets } = this;
     const { modals } = this.state;
     const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
-    let activeModal: ModalProps | undefined;
+    const activeModalIndex: number = isTop ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
+    const activeModal: ModalProps | undefined = modals[activeModalIndex];
     let maskTransition = true;
     const items = modals.map((props, index) => {
-      const { drawerTransitionName = getConfig('drawerTransitionName'), drawer, key, transitionAppear = true } = props;
+      const { drawerTransitionName = getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask, onMouseDown } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
         ...props.style,
@@ -357,10 +384,6 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           }
         }
       }
-      const active = isTop && index === modals.length - 1;
-      if (active) {
-        activeModal = props;
-      }
       if (transitionAppear === false) {
         maskTransition = false;
       }
@@ -375,7 +398,14 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           hiddenProp="hidden"
           onEnd={this.handleAnimationEnd}
         >
-          <Modal key={key} mousePosition={ModalManager.mousePosition} {...props} style={style} active={active} />
+          <Modal
+            key={key}
+            mousePosition={ModalManager.mousePosition}
+            {...props}
+            style={style}
+            active={index === activeModalIndex || (isTop && !mask && index > activeModalIndex)}
+            onMouseDown={mask ? onMouseDown : (e) => this.handleModalMouseDown(e, props)}
+          />
         </Animate>
       );
     });
@@ -389,7 +419,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       }
     }
     const eventProps: any = {};
-    if (activeModal && activeModal.mask) {
+    if (activeModal) {
       const { maskClosable = getConfig('modalMaskClosable') } = activeModal;
       if (maskClosable === 'dblclick') {
         eventProps.onDoubleClick = this.handleMaskClick;
@@ -407,7 +437,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           {...animationProps}
         >
           {
-            activeModal && activeModal.mask ? (
+            activeModal ? (
               <Mask style={activeModal.maskStyle} className={activeModal.maskClassName} hidden={hidden} {...eventProps} onMouseDown={stopEvent} />
             ) : <div hidden={hidden} />
           }

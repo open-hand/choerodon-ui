@@ -16,8 +16,10 @@ timeline: true
 ---
 
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
+- 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
+- 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
 
 ## 1.5.0-beta.0
 
