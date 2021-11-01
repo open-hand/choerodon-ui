@@ -485,8 +485,8 @@ export default class Lov extends Select<LovProps> {
    */
   @action
   searchRemote(text?: string | string[] | undefined) {
-    const { options, searchMatcher } = this;
-    if (isString(searchMatcher) && !isSearchTextEmpty(text)) {
+    const { options, searchMatcher, observableProps: { viewMode } } = this;
+    if (isString(searchMatcher) && (viewMode === 'popup' || !isSearchTextEmpty(text))) {
       this.resetOptions(true);
       const searchPara = this.getSearchPara(searchMatcher, text);
       Object.keys(searchPara).forEach(key => {

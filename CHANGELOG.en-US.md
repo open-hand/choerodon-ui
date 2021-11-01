@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
+- 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
+
 ## 1.5.0-beta.0
 
 `2021-10-31`
