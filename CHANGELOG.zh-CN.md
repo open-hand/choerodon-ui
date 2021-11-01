@@ -16,8 +16,10 @@ timeline: true
 ---
 
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
+- 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
+- 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
 
 ## 1.5.0-beta.0
 

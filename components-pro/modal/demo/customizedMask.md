@@ -25,17 +25,19 @@ const App = () => {
 
   const openModal = React.useCallback((mask = true) => {
     Modal.open({
-      title: 'Customized mask',
+      title: mask ? 'Customized mask' : 'No mask',
       children: (
         <div>
           <p>Some contents...</p>
           <p>Some contents...</p>
           <p>Some contents...</p>
+          <Button onClick={openNoMask}>No mask</Button>
         </div>
       ),
       okText: '确定',
       maskStyle,
       mask,
+      maskClosable: true,
       maskClassName:'mask-class-name',
     });
   }, [Modal]);
