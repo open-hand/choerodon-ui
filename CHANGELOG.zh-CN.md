@@ -20,6 +20,8 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
 - 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
+- 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。
+- 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
 
 ## 1.5.0-beta.0
 
