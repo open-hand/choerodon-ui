@@ -1,6 +1,5 @@
 import React, { isValidElement, ReactNode } from 'react';
 import isString from 'lodash/isString';
-import isNil from 'lodash/isNil';
 import flatMap from 'lodash/flatMap';
 import formatTemplate from './formatTemplate';
 
@@ -14,35 +13,35 @@ export function formatReactTemplate(
   map: { [key: string]: ReactNode },
 ): ReactNode {
   let result: ReactNode[] = [template];
-  Object.keys(map).forEach(key => {
+  const keys = Object.keys(map);
+  const { length } = keys;
+  keys.forEach((key, index) => {
     const node = map[key];
-    if (!isNil(node)) {
-      result = flatMap<ReactNode, ReactNode>(result, (text) => {
-        if (isString(text)) {
-          let stringText: string = text;
-          if (isValidElement(node)) {
-            const placeholder = `{${key}}`;
-            const { length } = placeholder;
-            const textArr: ReactNode[] = [];
-            let index = stringText.indexOf(placeholder);
-            while (index > -1) {
-              if (index > 0) {
-                textArr.push(stringText.slice(0, index));
-              }
-              textArr.push(node);
-              stringText = stringText.slice(index + length);
-              index = stringText.indexOf(placeholder);
+    result = flatMap<ReactNode, ReactNode>(result, (text) => {
+      if (isString(text)) {
+        let stringText: string = text;
+        if (isValidElement(node)) {
+          const placeholder = `{${key}}`;
+          const { length } = placeholder;
+          const textArr: ReactNode[] = [];
+          let index = stringText.indexOf(placeholder);
+          while (index > -1) {
+            if (index > 0) {
+              textArr.push(stringText.slice(0, index));
             }
-            if (stringText) {
-              textArr.push(stringText);
-            }
-            return textArr;
+            textArr.push(node);
+            stringText = stringText.slice(index + length);
+            index = stringText.indexOf(placeholder);
           }
-          return formatTemplate(text, { [key]: node }, true);
+          if (stringText) {
+            textArr.push(stringText);
+          }
+          return textArr;
         }
-        return text;
-      });
-    }
+        return formatTemplate(text, { [key]: node }, index < length - 1);
+      }
+      return text;
+    });
   });
   if (result.every(isString)) {
     return result.join('');
