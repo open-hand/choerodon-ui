@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.0-beta.0
+
+`2021-10-31`
+
 - 🌟 `configure`: 新增 defaultActiveFirstOption 属性。
 - 🌟 `Message`: 新增 message.config 方法参数 maxCount。
 - 🌟 `Notification`: 新增 notification.config 方法参数 maxCount。
@@ -43,6 +47,7 @@ timeline: true
 - 💄 `<pro>Lov`: 优化 在 popup 模式下，搜索框添加查询字段选择。
 - 💄 `<pro>NumberField`: 优化 step 按钮执行效率。
 - 💄 `ImageCrop.AvatarUploader`: 优化裁剪功能和界面样式。
+- 🐞 `<pro>Table`：修复 selectable 为 false 时会清除已勾选的记录问题。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table`：修复过滤条输入框中内容不能对齐的问题。
@@ -60,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Output`： 修复显示冒号时会显示必输星号的问题。
 - 🐞 `<pro>Modal`： 修复 drawerTransitionName 非法导致页面报错的问题。
 - 🐞 `<pro>PerformanceTable`： 修复开启虚拟滚动导致合并行消失的问题。
+- 🐞 `<pro>ColorPicker`：修复配置 clearButton 属性报错，以及选择#00000颜色时指针跳动问题。
 
 ## 1.4.5
 

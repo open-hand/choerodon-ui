@@ -1,6 +1,8 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
+import isEmpty from 'lodash/isEmpty';
+import isNil from 'lodash/isNil';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
@@ -88,7 +90,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   syncValueOnBlur(value) {
-    if (value[0] !== '#' && !value.startsWith('rgb') && !value.startsWith('hls')) {
+    if (value !== '' && value[0] !== '#' && !value.startsWith('rgb') && !value.startsWith('hls')) {
       value = `#${value}`;
     }
     super.syncValueOnBlur(value);
@@ -142,10 +144,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       ref: this.saveSelectPointerRef,
       className: `${prefixCls}-popup-body-selector`,
     };
-    this.setColor(this.getValue());
+    if (isEmpty(this.hueColor)) {
+      this.setColor(this.getValue());
+    }
     return (
       <div className={`${prefixCls}-popup-view`}>
-        <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: this.hueColor }}>
+        <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: this.hueColor ?? '#ff0000' }}>
           <div {...gradientProps} />
           <div {...gradientPointerProps} />
         </div>
@@ -179,7 +183,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @autobind
   setColor(color) {
-    if (color !== undefined && color.slice(0, 1) === '#' && color.length > 3) {
+    if (!isNil(color) && color.slice(0, 1) === '#' && color.length > 3) {
       const { gradient, selectPointer, hue, huePointer } = this;
       const { r, g, b, a } = this.hexToRGB(color);
       const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
@@ -407,8 +411,9 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       .removeEventListener('mouseup', this.onHPMouseUp);
   }
 
+  @autobind
   handlePopupAnimateAppear() {
-    // noop
+    this.setColor(this.getValue());
   }
 
   handlePopupAnimateEnd() {

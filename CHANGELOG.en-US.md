@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.0-beta.0
+
+`2021-10-31`
+
 - 🌟 `configure`: Added `defaultActiveFirstOption` property.
 - 🌟 `Message`: Added `message.config` method parameter `maxCount`.
 - 🌟 `Notification`: Added `notification.config` method parameter `maxCount`.
@@ -43,6 +47,7 @@ timeline: true
 - 💄 `<pro>Lov`: Optimization In `popup` mode, add query field selection to search box.
 - 💄 `<pro>NumberField`: Optimize the execution efficiency of the step button.
 - 💄 `ImageCrop.AvatarUploader`: Optimize cropping and interface styles.
+- 🐞 `<pro>Table`: Fix the problem of clearing the checked records when `selectable` is false.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table`: Fix that the contents of the filter bar input box are not aligned.
@@ -60,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Output`: Fix the issue that an asterisk will be displayed when the colon is displayed.
 - 🐞 `<pro>Modal`: Fix the problem of illegal `drawerTransitionName` causing page error.
 - 🐞 `<pro>PerformanceTable`：Fix the problem that the merged line disappears when virtual scrolling is turned on.
+- 🐞 `<pro>ColorPicker`：Fixed configuration `clearButton` property error and pointer jump when selecting #00000 color.
 
 ## 1.4.5
 
