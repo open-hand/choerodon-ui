@@ -324,9 +324,6 @@
 
   &-popup-inner {
     display: flex;
-    min-width: 3rem;
-    max-width: @dropdown-menu-max-width;
-    max-height: @dropdown-menu-max-height;
   }
 
   &-popup-inner &-header {
@@ -338,7 +335,30 @@
     }
   }
 
-  &-popup-inner &-list-item {
+  &-popup &-list-item {
     background-color: transparent;
+  }
+
+  &-popup &-group,
+  &-popup-inner {
+    min-width: 3rem;
+    max-width: @dropdown-menu-max-width;
+    max-height: @dropdown-menu-max-height;
+  }
+
+  &-popup &-group {
+    overflow: auto;
+  }
+
+  &-group &-header-label {
+    color: @text-color-secondary;
+  }
+
+  &-popup &-group &-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: .05rem .1rem 0 .1rem;
+    background-color: @component-background;
   }
 }

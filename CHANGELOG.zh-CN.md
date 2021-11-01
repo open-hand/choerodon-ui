@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
 
