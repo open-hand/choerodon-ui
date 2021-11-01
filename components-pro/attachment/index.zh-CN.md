@@ -46,6 +46,16 @@ title: Attachment
 | onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile) => void | 无 |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | 无 |
 
-更多属性请参考 [FormField](/components-pro/field/#FormField)。
+更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)
 全局配置参考 [attachment](/component/configure/#Attachment)
+
+### Attachment.Group
+
+附件组, 属性如下:
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| viewMode | 上传列表的显示模式，支持两种基本样式  `list` 和 `popup` | string | 'popup' |
+
+更多属性请参考 [Button](/components-pro/button/#Button)。

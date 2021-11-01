@@ -14,6 +14,7 @@ import Button, { ButtonProps } from '../button/Button';
 import { $l } from '../locale-context';
 import { ButtonColor, FuncType } from '../button/enum';
 import AttachmentList from './AttachmentList';
+import AttachmentGroup from './AttachmentGroup';
 import { FormField, FormFieldProps } from '../field/FormField';
 import axios from '../axios';
 import autobind from '../_util/autobind';
@@ -75,6 +76,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, response: any, attachment: AttachmentFile) => void;
   downloadAll?: ButtonProps;
+  __inGroup?: boolean;
 }
 
 export type Sort = {
@@ -112,6 +114,11 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   // eslint-disable-next-line camelcase
   static __IS_IN_CELL_EDITOR = true;
+
+  // eslint-disable-next-line camelcase
+  static __PRO_ATTACHMENT = true;
+
+  static Group = AttachmentGroup;
 
   @observable sort?: Sort;
 
@@ -845,7 +852,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderHeader(uploadBtn?: ReactNode) {
-    const { prefixCls, props: { downloadAll, viewMode } } = this;
+    const { prefixCls, props: { downloadAll, viewMode, __inGroup } } = this;
     const label = this.renderHeaderLabel();
     const buttons: ReactNode[] = [];
     if (uploadBtn) {
@@ -890,7 +897,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     return (
       <div className={`${prefixCls}-header`}>
         {label}
-        {label && buttons.length ? <span key="divider" className={`${prefixCls}-header-divider`} /> : undefined}
+        {!__inGroup && label && buttons.length ? <span key="divider" className={`${prefixCls}-header-divider`} /> : undefined}
         <div className={`${prefixCls}-header-buttons`}>
           {buttons}
         </div>
@@ -940,13 +947,13 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderWrapperList(uploadBtn?: ReactNode) {
-    const { prefixCls, props: { viewMode, listType } } = this;
+    const { prefixCls, props: { viewMode, listType, __inGroup } } = this;
     const isCard = listType === 'picture-card';
     return (
       <div className={`${prefixCls}-wrapper`}>
         {this.renderHeader(!isCard && uploadBtn)}
-        {viewMode !== 'popup' && this.renderHelp(ShowHelp.newLine)}
-        {this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
+        {!__inGroup && viewMode !== 'popup' && this.renderHelp(ShowHelp.newLine)}
+        {!__inGroup && this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
         {this.renderEmpty()}
         {viewMode !== 'none' && this.renderUploadList(isCard && uploadBtn)}
       </div>
@@ -1002,7 +1009,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       return (
         <div className={`${prefixCls}-popup-wrapper`}>
           <Trigger
-            prefixCls={this.prefixCls}
+            prefixCls={prefixCls}
             popupContent={this.renderWrapper}
             action={[Action.hover, Action.focus]}
             builtinPlacements={BUILT_IN_PLACEMENTS}

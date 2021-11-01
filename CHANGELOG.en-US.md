@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 
