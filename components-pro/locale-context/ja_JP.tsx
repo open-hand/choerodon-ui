@@ -8,7 +8,8 @@ const locale: Locale = {
     default: 'ディフォルト',
     restore_default: 'デフォルトに戻す',
     set_default: 'デフォルトとして設定',
-    set_default_tip: 'デフォルトとして設定されたタブは、次に関数を開いたときにデフォルトで表示されます',
+    set_default_tip:
+      'デフォルトとして設定されたタブは、次に関数を開いたときにデフォルトで表示されます',
     show_count: '表示番号',
     yes: 'はい',
     no: 'いいえ',
@@ -54,8 +55,10 @@ const locale: Locale = {
     export_success: 'エクスポート成功',
     export_ing: 'エクスポート中...',
     retry_button: '再試行',
-    export_break: 'データのエクスポートが中断されました。再試行をクリックして再エクスポートします。',
-    export_operating: '表のデータをエクスポートしています。エクスポートの中止をクリックしてください。',
+    export_break:
+      'データのエクスポートが中断されました。再試行をクリックして再エクスポートします。',
+    export_operating:
+      '表のデータをエクスポートしています。エクスポートの中止をクリックしてください。',
     enter_text_filter: 'フィルタリングするテキストを入力してください',
     clear_filter: 'クリアフィルター',
     save_filter: 'フィルタを保存',
@@ -202,6 +205,19 @@ const locale: Locale = {
     select_re: '逆選択',
     unselect_all: 'いや',
     common_item: '共通アイテム',
+  },
+  SecretField: {
+    edit: '{label}編集',
+    query: '{label}チェック',
+    verify_type: '検証方法の選択',
+    verify_value: '識別番号',
+    verify_code: '検証コード',
+    get_verify_code: '確認コードを取得する',
+    cancel: 'キャンセル',
+    next_step: '次の一歩',
+    verify_slider_hint: '検証を完了するには、最後まで右にスワイプします',
+    verify_finish: '完全な検証',
+    ok_btn: 'もちろん',
   },
   Lov: {
     choose: '選択してください',
