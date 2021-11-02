@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure, Row, Col } from 'choerodon-ui';
 import { Attachment, Axios } from 'choerodon-ui/pro';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 
 // 使用附件功能前需要在全局配置中配置如下， 开发者无需配置

@@ -12,14 +12,14 @@ title: API
 | listType | 上传列表的内建样式，支持三种基本样式 text \| picture \| picture-card | string | text |
 | viewMode | 上传列表的显示模式，支持三种基本样式 none \| list \| popup | string | list |
 | sortable | 是否可排序, 只读模式下不可拖拽 | boolean | true |
-| fileKey | 上传文件的参数名 | string | [attachment.defaultFileKey](/component/configure/#Attachment) |
-| fileSize | 上传文件的大小限制, 单位 `B` | number | [attachment.defaultFileSize](/component/configure/#Attachment) |
+| fileKey | 上传文件的参数名 | string | [attachment.defaultFileKey](/zh/procmp/configure/configure#attachmentconfig) |
+| fileSize | 上传文件的大小限制, 单位 `B` | number | [attachment.defaultFileSize](/zh/procmp/configure/configure#attachmentconfig) |
 | pictureWidth | 图片尺寸， 只适用于 listType 为 picture 和 picture-card | number |  |
 | count | 自定义附件数量 | number |  |
 | max | 同时上传文件的最大数量, `0` 表示无限制 | number |  |
 | showHistory | 可显示操作历史记录 | boolean |  |
 | listLimit | 上传列表最大显示数量，只适用于只读模式 | number |  |
-| downloadAll | 是否显示全部下载按钮，只适用于只读模式， 必须配置[attachment.getDownloadAllUrl](/component/configure/#Attachment) | boolean \| ButtonProps | true |
+| downloadAll | 是否显示全部下载按钮，只适用于只读模式， 必须配置[attachment.getDownloadAllUrl](/zh/procmp/configure/configure#attachmentconfig) | boolean \| ButtonProps | true |
 | bucketName | 附件上传的桶名 | string |  |
 | bucketDirectory | 附件上传的桶目录 | string |  |
 | storageCode | 附件存储编码 | string |  |
@@ -31,6 +31,6 @@ title: API
 | onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile) => void | 无 |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | 无 |
 
-更多属性请参考 [FormField](/components-pro/field/#FormField)。
-附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)
-全局配置参考 [attachment](/component/configure/#Attachment)
+更多属性请参考 [FormField](/zh/procmp/abstract/field#formfield)
+附件对象参考 [AttachmentFile](/zh/procmp/dataset/dataset#attachmentfile)
+全局配置参考 [attachment](/zh/procmp/configure/configure#attachmentconfig)

@@ -6,4 +6,4 @@ title: API
 | --- | --- | --- | --- |
 | onChange | 值变化回调 | (value, oldValue, form) => void |  |
 
-更多属性请参考 [Rate](/components/rate), [FormField](/components-pro/field/#FormField)。
+更多属性请参考 [Rate](/zh/cmp/data-entry/rate), [FormField](/zh/procmp/abstract/field#formfield)。

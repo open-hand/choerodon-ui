@@ -6,4 +6,4 @@ title: API
 | -------- | ----------- | ---- | ------- |
 | onChange | Value change callback | (value, oldValue, form) => void | |
 
-For more attributes, please refer to [Rate](/components/rate), [FormField](/components-pro/field/#FormField).
+For more attributes, please refer to [Rate](/zh/cmp/data-entry/rate), [FormField](/zh/procmp/abstract/field#formfield).
