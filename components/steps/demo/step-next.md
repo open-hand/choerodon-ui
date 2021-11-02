@@ -57,7 +57,7 @@ class App extends React.Component {
       <div>
         <Steps current={current}>
           {steps.map(item => (
-            <Step key={item.title} title={item.title} />
+            <Step key={item.title} title={item.title} onClick={() => message.success(item.title)} />
           ))}
         </Steps>
         <div className="steps-content">{steps[this.state.current].content}</div>

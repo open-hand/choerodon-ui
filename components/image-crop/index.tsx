@@ -6,7 +6,7 @@ import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import Modal, { ModalProps } from '../modal';
 import { UploadFile, UploadProps } from '../upload/interface';
 import defaultLocale from '../locale-provider/default';
-import Button from '../button';
+import Button, { ButtonProps } from '../button';
 import ButtonGroup from '../button/ButtonGroup';
 import Upload from '../upload';
 import AvatarUploader from './avatarUpload';
@@ -107,9 +107,21 @@ export interface ImgCropProps {
   src?: string;
   rotate?: boolean;
   beforeCrop?: (file: UploadFile, uploadFiles: UploadFile[]) => boolean;
+  /**
+   * @deprecated
+   */
   modalTitle?: string;
+  /**
+   * @deprecated
+   */
   modalWidth?: number | string;
+   /**
+   * @deprecated
+   */
   modalOk?: string;
+   /**
+   * @deprecated
+   */
   modalCancel?: string;
   modalProps?: ModalProps;
   onCancel?: () => void;
@@ -214,10 +226,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
   const hasZoom = zoom === true;
   const hasRotate = rotate === true;
 
-  const modalTextProps = { okText: modalOk, cancelText: modalCancel };
-  Object.keys(modalTextProps).forEach((key) => {
-    if (!modalTextProps[key]) delete modalTextProps[key];
-  });
   const [src, setSrc] = useState('');
   const [zoomVal, setZoomVal] = useState(1);
   const [rotateVal, setRotateVal] = useState(0);
@@ -386,7 +394,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
   }, [])
 
   const onOk = useCallback(async () => {
-    closeModal();
+    onClose();
     const naturalModalImg: Element | HTMLImageElement | null = document.querySelector(`.${prefixClsMedia}`);
     if (naturalModalImg) {
       if (naturalModalImg && naturalModalImg instanceof HTMLImageElement) {
@@ -459,7 +467,10 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
       prefixCls={prefixCls}
     />
   )
-
+  
+  const title = modalProps?.title || modalTitle;
+  const cancelButtonProps: ButtonProps = {funcType: 'raised'};
+  const okButtonProps: ButtonProps = {funcType: 'raised', type: "primary"};
   return (
     <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
       {(locale: imageCrop) => {
@@ -470,14 +481,17 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
               <Modal
                 visible={modalVisible}
                 wrapClassName={`${prefixCls}-modal`}
-                title={modalTitle || locale  && locale.editImage ? locale.editImage : 'Edit image'} // 当不存在的语言使用英文
+                title={title || (locale  && locale.editImage ? locale.editImage : 'Edit image')} // 当不存在的语言使用英文
                 width={modalWidth}
                 destroyOnClose
                 maskClosable={false}
-                {...modalProps}
-                onOk={onOk}
                 onCancel={onClose}
-                {...modalTextProps}
+                onOk={onOk}
+                cancelButtonProps={cancelButtonProps}
+                okButtonProps={okButtonProps}
+                okText={modalOk}
+                cancelText={modalCancel}
+                {...modalProps}
               >
                 {cropContent ? cropContent(RenderCrop) : RenderCrop}
                 <div className={`${prefixCls}-control`}>

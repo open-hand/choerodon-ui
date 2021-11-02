@@ -138,7 +138,6 @@ class App extends React.Component {
         border={border}
         expandedRowRenderer={expandedRender && expandedRowRenderer}
         rowNumber
-        parityRow
         defaultRowExpanded
         style={{ height: 300 }}
       >

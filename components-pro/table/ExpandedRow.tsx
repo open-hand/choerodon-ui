@@ -17,7 +17,7 @@ export interface ExpandedRowProps {
   ) => ReactNode);
 }
 
-const ExpandedRow: FunctionComponent<ExpandedRowProps> = observer(function ExpandedRow(props) {
+const ExpandedRow: FunctionComponent<ExpandedRowProps> = function ExpandedRow(props) {
   const { isExpanded, children = null, columnGroups, record } = props;
 
   if (isFunction(children)) {
@@ -27,8 +27,8 @@ const ExpandedRow: FunctionComponent<ExpandedRowProps> = observer(function Expan
     }
   }
   return children;
-});
+};
 
 ExpandedRow.displayName = 'ExpandedRow';
 
-export default ExpandedRow;
+export default observer(ExpandedRow);

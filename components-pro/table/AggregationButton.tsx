@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useContext } from 'react';
+import React, { FunctionComponent, memo, useCallback, useContext } from 'react';
 import { action } from 'mobx';
 import { ClickParam } from 'choerodon-ui/lib/menu';
 import Record from '../data-set/Record';
@@ -14,7 +14,7 @@ export interface AggregationButtonProps {
   columnGroup: ColumnGroup;
 }
 
-const AggregationButton: FunctionComponent<AggregationButtonProps> = (props) => {
+const AggregationButton: FunctionComponent<AggregationButtonProps> = function AggregationButton(props) {
   const { expanded, record, columnGroup } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
   const handleMenuClick = useCallback(action(({ key }: Partial<ClickParam>) => {
@@ -57,4 +57,6 @@ const AggregationButton: FunctionComponent<AggregationButtonProps> = (props) => 
   );
 };
 
-export default AggregationButton;
+AggregationButton.displayName = 'AggregationButton';
+
+export default memo(AggregationButton);

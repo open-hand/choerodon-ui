@@ -1049,20 +1049,35 @@ export default class DataSet extends EventManager {
   @action
   setAllPageSelection(enable: boolean) {
     if (this.selection === DataSetSelection.multiple) {
+      const processAfterAllPageSelection: Function[] = [];
       if (enable) {
-        this.currentSelected.forEach(record => record.isSelected = false);
+        this.records.forEach(record => {
+          if (record.selectable) {
+            if (record.isSelected) {
+              record.isSelected = false;
+            }
+          } else if (!record.isSelected) {
+            processAfterAllPageSelection.push(() => {
+              record.isSelected = false;
+            });
+          }
+        });
       } else {
-        this.currentUnSelected.forEach(record => record.isSelected = true);
-      }
-      this.clearCachedSelected();
-      this.setState(ALL_PAGE_SELECTION, enable);
-      if (enable) {
-        this.records.forEach((record) => {
-          if (!record.selectable) {
-            record.isSelected = false;
+        this.records.forEach(record => {
+          if (record.selectable) {
+            if (!record.isSelected) {
+              record.isSelected = true;
+            }
+          } else if (record.isSelected) {
+            processAfterAllPageSelection.push(() => {
+              record.isSelected = true;
+            });
           }
         });
       }
+      this.clearCachedSelected();
+      this.setState(ALL_PAGE_SELECTION, enable);
+      processAfterAllPageSelection.forEach(cb => cb());
     }
   }
 

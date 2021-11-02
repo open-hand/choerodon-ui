@@ -27,7 +27,7 @@ const MAX = 5;
 const SIZE = 60;
 const GUTTER = 8;
 
-const NavItem: FunctionComponent<NavItemProps> = memo(function NavItem(props) {
+const NavItem: FunctionComponent<NavItemProps> = function NavItem(props) {
   const { prefixCls, index, onClick, active, src } = props;
   const handleClick = useCallback(() => {
     onClick(index);
@@ -47,9 +47,11 @@ const NavItem: FunctionComponent<NavItemProps> = memo(function NavItem(props) {
       onClick={handleClick}
     />
   );
-});
+};
 
 NavItem.displayName = 'NavItem';
+
+const MemoNavItem = memo(NavItem);
 
 const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
   const { prefixCls, value, list, onChange } = props;
@@ -80,7 +82,7 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
   }, [value]);
   const renderList = () => {
     return list.map((item, index) => (
-      <NavItem
+      <MemoNavItem
         key={String(index)}
         prefixCls={navBarPrefixCls}
         active={index === value}

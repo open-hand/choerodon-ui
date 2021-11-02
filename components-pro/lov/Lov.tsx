@@ -252,35 +252,37 @@ export default class Lov extends Select<LovProps> {
   }
 
   @autobind
-  renderSearchFieldPrefix(props: TableQueryBarHookProps): ReactNode {
-    const { queryDataSet } = props;
-    if (queryDataSet) {
-      const { fields } = queryDataSet;
-      if (fields.size > 0) {
-        const options: ReactElement[] = [];
-        const { searchMatcher } = this;
-        fields.forEach((field, name) => {
-          options.push(
-            <Option key={String(name)} value={name}>{field.get('label')}</Option>,
+  renderSearchFieldPrefix(props?: TableQueryBarHookProps): ReactNode {
+    if (props) {
+      const { queryDataSet } = props;
+      if (queryDataSet) {
+        const { fields } = queryDataSet;
+        if (fields.size > 0) {
+          const options: ReactElement[] = [];
+          const { searchMatcher } = this;
+          fields.forEach((field, name) => {
+            options.push(
+              <Option key={String(name)} value={name}>{field.get('label')}</Option>,
+            );
+          });
+          const { prefixCls } = this;
+          return (
+            <>
+              <ObserverSelect
+                value={searchMatcher}
+                onChange={this.handleSearchMatcherChange}
+                border={false}
+                clearButton={false}
+                className={`${prefixCls}-lov-search-option`}
+                getPopupContainer={this.getPopupWrapper}
+                isFlat
+              >
+                {options}
+              </ObserverSelect>
+              <div className={`${prefixCls}-lov-search-option-divide`} />
+            </>
           );
-        });
-        const { prefixCls } = this;
-        return (
-          <>
-            <ObserverSelect
-              value={searchMatcher}
-              onChange={this.handleSearchMatcherChange}
-              border={false}
-              clearButton={false}
-              className={`${prefixCls}-lov-search-option`}
-              getPopupContainer={this.getPopupWrapper}
-              isFlat
-            >
-              {options}
-            </ObserverSelect>
-            <div className={`${prefixCls}-lov-search-option-divide`} />
-          </>
-        );
+        }
       }
     }
   }
@@ -483,8 +485,8 @@ export default class Lov extends Select<LovProps> {
    */
   @action
   searchRemote(text?: string | string[] | undefined) {
-    const { options, searchMatcher } = this;
-    if (isString(searchMatcher) && !isSearchTextEmpty(text)) {
+    const { options, searchMatcher, observableProps: { viewMode } } = this;
+    if (isString(searchMatcher) && (viewMode === 'popup' || !isSearchTextEmpty(text))) {
       this.resetOptions(true);
       const searchPara = this.getSearchPara(searchMatcher, text);
       Object.keys(searchPara).forEach(key => {
@@ -656,7 +658,8 @@ export default class Lov extends Select<LovProps> {
 
   getTableProps(): Partial<TableProps> {
     const { tableProps } = this.props;
-    return { ...getConfig('lovTableProps'), ...tableProps };
+    const lovTablePropsConfig = getConfig('lovTableProps');
+    return typeof lovTablePropsConfig === 'function' ? { ...lovTablePropsConfig(this.multiple), ...tableProps } : { ...lovTablePropsConfig, ...tableProps };
   }
 
   @autobind
@@ -664,7 +667,7 @@ export default class Lov extends Select<LovProps> {
   selectSingle() {
     const { options } = this;
     this.resetOptions(options.length === 1);
-    options.query().then(() => {
+    return options.query().then(() => {
       if (options.length === 1) {
         this.choose(this.options.get(0));
       } else {
@@ -749,7 +752,7 @@ export default class Lov extends Select<LovProps> {
     const { onClick = noop } = this.props;
     onClick(e);
     if (!e.isDefaultPrevented()) {
-      this.handleOpenModal();
+      return this.handleOpenModal();
     }
   }
 

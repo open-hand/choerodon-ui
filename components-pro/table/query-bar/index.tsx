@@ -50,6 +50,7 @@ export interface TableQueryBarProps {
   queryFieldsLimit?: number;
   buttonsLimit?: number;
   summaryFieldsLimit?: number;
+  summaryBarFieldWidth?: number;
   showQueryBar?: boolean;
   pagination?: ReactElement<PaginationProps>;
   summaryBar?: SummaryBar[];
@@ -176,6 +177,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   static defaultProps = {
     summaryFieldsLimit: 3,
+    summaryBarFieldWidth: 170,
   };
 
   get showQueryBar(): boolean {
@@ -435,7 +437,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    */
   renderSummary(summary) {
     const {
-      props: { summaryBar, summaryFieldsLimit = 3 },
+      props: { summaryBar, summaryFieldsLimit = 3, summaryBarFieldWidth },
       context: {
         dataSet,
         prefixCls,
@@ -450,7 +452,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           const summaryValue = reduce(dataSet.map((record) => isNumber(record.get(summaryCol)) ? record.get(summaryCol) : 0), (sum, n) => sum + n);
           return (
             <div key={field.get('name')}>
-              <div className={`${prefixCls}-summary-col`}>
+              <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
                 <div className={`${prefixCls}-summary-col-label`} title={field.get('label')}>{field.get('label')}:</div>
                 <div className={`${prefixCls}-summary-col-value`} title={summaryValue}>{summaryValue}</div>
               </div>
@@ -461,10 +463,10 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           );
         }
         if (typeof summaryCol === 'function') {
-          const summaryObj = (summaryCol as SummaryBarHook)({ summaryFieldsLimit, dataSet });
+          const summaryObj = (summaryCol as SummaryBarHook)({ summaryFieldsLimit, summaryBarFieldWidth, dataSet });
           return (
             <div key={isString(summaryObj.label) ? summaryObj.label : ''}>
-              <div className={`${prefixCls}-summary-col`}>
+              <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
                 <div
                   className={`${prefixCls}-summary-col-label`}
                   title={isString(summaryObj.label) ? summaryObj.label : ''}
@@ -542,10 +544,10 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimit));
       const moreSummary = summaryBar.slice(summaryFieldsLimit);
       const moreSummaryButton: ReactElement | undefined = this.getMoreSummaryButton(moreSummary);
-      const width = 170 * Math.min(summaryBar.length, summaryFieldsLimit!) + Math.min(summaryBar.length, summaryFieldsLimit!);
+      // const width = 170 * Math.min(summaryBar.length, summaryFieldsLimit!) + Math.min(summaryBar.length, summaryFieldsLimit!);
       return (
         <div className={`${prefixCls}-summary-group-wrapper`}>
-          <div className={`${prefixCls}-summary-group`} style={{ width }}>
+          <div className={`${prefixCls}-summary-group`}>
             {currentSummaryBar}
             {this.moreSummary}
           </div>

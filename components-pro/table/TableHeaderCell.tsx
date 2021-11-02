@@ -47,7 +47,7 @@ export interface TableHeaderCellProps extends ElementProps {
   getHeaderNode?: () => HTMLTableSectionElement | null;
 }
 
-const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(function TableHeaderCell(props) {
+const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
   const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onColumnResize = noop } = useContext(TableContext);
@@ -430,8 +430,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = observer(functi
       {columnResizable && renderResizer()}
     </th>
   );
-});
+};
 
 TableHeaderCell.displayName = 'TableHeaderCell';
 
-export default TableHeaderCell;
+export default observer(TableHeaderCell);

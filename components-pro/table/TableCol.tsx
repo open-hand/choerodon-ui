@@ -11,7 +11,7 @@ export interface TableColProps extends ElementProps {
   last: boolean;
 }
 
-const TableCol: FunctionComponent<TableColProps> = observer(function TableCol(props) {
+const TableCol: FunctionComponent<TableColProps> = function TableCol(props) {
   const { column, last } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
   const width = last && !tableStore.hasEmptyWidthColumn ? undefined : get(column, 'width');
@@ -26,8 +26,8 @@ const TableCol: FunctionComponent<TableColProps> = observer(function TableCol(pr
       style={style}
     />
   );
-});
+};
 
 TableCol.displayName = 'TableCol';
 
-export default TableCol;
+export default observer(TableCol);

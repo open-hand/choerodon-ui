@@ -18,7 +18,7 @@ export interface TableFooterProps extends ElementProps {
   columnGroups: ColumnGroups;
 }
 
-const TableFooter: FunctionComponent<TableFooterProps> = observer(function TableFooter(props) {
+const TableFooter: FunctionComponent<TableFooterProps> = function TableFooter(props) {
   const { lock, columnGroups } = props;
   const { prefixCls, rowHeight, tableStore } = useContext(TableContext);
   const { overflowX } = tableStore;
@@ -91,8 +91,8 @@ const TableFooter: FunctionComponent<TableFooterProps> = observer(function Table
       }
     </tfoot>
   );
-});
+};
 
 TableFooter.displayName = 'TableFooter';
 
-export default TableFooter;
+export default observer(TableFooter);

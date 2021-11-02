@@ -410,7 +410,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return isSame(this.momentToTimestamp(oldValue), this.momentToTimestamp(newValue));
   }
 
-  setText(text) {
+  setText(text?: string) {
     super.setText(text);
     if (text) {
       const date = this.toMoment(text);
@@ -667,9 +667,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
+  prepareSetValue(...value: any[]): void {
+    super.prepareSetValue(...value.map(v => v === null ? null : this.checkMoment(v)));
+  }
+
   syncValueOnBlur(value) {
     if (value) {
-      this.prepareSetValue(this.checkMoment(value));
+      this.prepareSetValue(value);
     } else if (!this.multiple) {
       this.prepareSetValue(this.emptyValue);
     }
@@ -828,7 +832,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return isValid;
   }
 
-  getValidatorProp(key) {
+  getValidatorProp(key: string) {
     if (['maxLength', 'minLength'].includes(key)) {
       return;
     }

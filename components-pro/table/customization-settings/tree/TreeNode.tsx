@@ -22,7 +22,7 @@ export interface TreeNodeProps {
   children?: ReactNode;
 }
 
-const TreeNode: FunctionComponent<TreeNodeProps> = observer(function TreeNode(props) {
+const TreeNode: FunctionComponent<TreeNodeProps> = function TreeNode(props) {
   const { dataSet, prefixCls, columnsDragRender = {}, tableStore: { columnDraggable } } = useContext(TableContext);
   const { droppableProps, renderClone, renderIcon } = columnsDragRender;
   const selfPrefixCls = `${prefixCls}-customization-tree-treenode`;
@@ -136,8 +136,8 @@ const TreeNode: FunctionComponent<TreeNodeProps> = observer(function TreeNode(pr
 
     </div>
   );
-});
+};
 
 TreeNode.displayName = 'TreeNode';
 
-export default TreeNode;
+export default observer(TreeNode);

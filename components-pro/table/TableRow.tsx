@@ -49,7 +49,7 @@ export interface TableRowProps extends ElementProps {
   provided?: DraggableProvided;
 }
 
-const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(props) {
+const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const { record, hidden, index, provided, snapshot, className, lock, columnGroups, children } = props;
   const context = useContext(TableContext);
   const {
@@ -482,8 +482,8 @@ const TableRow: FunctionComponent<TableRowProps> = observer(function TableRow(pr
       {renderExpandRow()}
     </>
   );
-});
+};
 
 TableRow.displayName = 'TableRow';
 
-export default TableRow;
+export default observer(TableRow);

@@ -26,7 +26,7 @@ function getHeader(record, title) {
   return record.get('children')[0].props.children;
 }
 
-const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
+const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
   const { record, provided } = props;
   const { tableStore } = useContext(TableContext);
   const { columnTitleEditable } = tableStore;
@@ -57,8 +57,8 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = observer((props) => {
       }
     </>
   );
-});
+};
 
 ItemTitle.displayName = 'ItemTitle';
 
-export default ItemTitle;
+export default observer(ItemTitle);

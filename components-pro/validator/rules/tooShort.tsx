@@ -1,11 +1,10 @@
 import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
-import { methodReturn, ValidatorProps } from '.';
+import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 import { formatReactTemplate } from '../../formatter/formatReactTemplate';
-import { ValidationMessages } from '../Validator';
 
-export default function tooShort(value: any, props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
+export default function tooShort(value: any, _: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
   if (!isEmpty(value)) {
     const minLength = getProp('minLength');
     if (minLength !== undefined && minLength > 0) {
@@ -15,7 +14,7 @@ export default function tooShort(value: any, props: ValidatorProps & { defaultVa
         const ruleName = 'tooShort';
         const {
           [ruleName]: validationMessage = $l('Validator', 'too_short'),
-        } = props.defaultValidationMessages;
+        } = getProp('defaultValidationMessages') || {};
         return new ValidationResult({
           validationProps: {
             minLength,

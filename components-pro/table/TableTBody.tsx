@@ -208,7 +208,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
         }
         {cachedRows}
         {
-          cachedRows && (
+          cachedRows && rows && (
             <TableRowGroup columnGroups={columnGroups} lock={lock}>
               {$l('Table', 'current_page_records')}
             </TableRowGroup>
