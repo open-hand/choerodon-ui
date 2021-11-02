@@ -24,7 +24,7 @@ export interface ItemSuffixProps {
   groups: { value: ColumnLock | false; records: Record[] }[];
 }
 
-const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuffix(props) {
+const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props) {
   const { record, defaultKey, onDefaultKeyChange } = props;
   const { prefixCls } = useContext(TabsContext);
   const itemKey = record.get('key');
@@ -92,8 +92,8 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = observer(function ItemSuf
       />
     </Dropdown>
   ) : null;
-});
+};
 
 ItemSuffix.displayName = 'ItemSuffix';
 
-export default ItemSuffix;
+export default observer(ItemSuffix);

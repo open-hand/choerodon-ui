@@ -145,9 +145,10 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
 
   useEffect(() => {
     if (preview && !previewTarget && context && isNumber(index) && url) {
-      pictureRef.current.src = url;
-      context.registerPicture(index, pictureRef.current);
-      return () => context.unRegisterPicture(index, pictureRef.current);
+      const { current } = pictureRef;
+      current.src = url;
+      context.registerPicture(index, current);
+      return () => context.unRegisterPicture(index, current);
     }
   }, [index, context, pictureRef, preview, previewTarget, url]);
 

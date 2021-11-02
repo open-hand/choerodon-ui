@@ -43,7 +43,7 @@ export interface ItemProps {
   hidden?: boolean;
 }
 
-const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
+const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
@@ -319,8 +319,8 @@ const Item: FunctionComponent<ItemProps> = observer(function Item(props) {
       {!restCount && isCard && renderTitle(true)}
     </div>
   );
-});
+};
 
 Item.displayName = 'Item';
 
-export default Item;
+export default observer(Item);

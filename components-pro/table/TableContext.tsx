@@ -48,7 +48,7 @@ const TableContext = React.createContext<TableContextValue>({
   rowHeight: 30,
 });
 
-const TableContextProvider: FunctionComponent<TableContextProviderProps> = observer((props) => {
+const TableContextProvider: FunctionComponent<TableContextProviderProps> = function TableContextProvider(props) {
   const { children, tableStore, dataSet, ...other } = props;
 
   const value = {
@@ -77,12 +77,14 @@ const TableContextProvider: FunctionComponent<TableContextProviderProps> = obser
       }
     </TableContext.Provider>
   );
-});
+};
 
 TableContextProvider.displayName = 'TableContextProvider';
+
+const ObserverTableContextProvider = observer(TableContextProvider);
 
 export default TableContext;
 
 export {
-  TableContextProvider,
+  ObserverTableContextProvider as TableContextProvider,
 };

@@ -1,4 +1,5 @@
 @import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
 
 &-table {
   border-top: 1px solid @border-color-base;
@@ -175,7 +176,7 @@
       }
 
       &-icon-sort {
-        font-family: icomoon !important;
+        .iconfont-mixin();
 
         &::after {
           content: "\E5D8";

@@ -79,7 +79,7 @@ export interface TableCellInnerProps {
   colSpan?: number;
 }
 
-const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function TableCellInner(props) {
+const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCellInner(props) {
   const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
@@ -639,8 +639,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = observer(function
       }
     </>
   );
-});
+};
 
 TableCellInner.displayName = 'TableCellInner';
 
-export default TableCellInner;
+export default observer(TableCellInner);

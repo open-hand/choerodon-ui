@@ -3,11 +3,10 @@ import { action, isArrayLike, observable, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import ValidationResult from './ValidationResult';
 import Record from '../data-set/Record';
 import Form from '../form/Form';
-import validationRules, { methodReturn, validationRule, ValidatorProps } from './rules';
+import validationRules, { methodReturn, validationRule, ValidatorBaseProps, ValidatorProps } from './rules';
 import valueMissing from './rules/valueMissing';
 import getReactNodeText from '../_util/getReactNodeText';
 import { ValidationErrors } from '../data-set/DataSet';
@@ -21,7 +20,7 @@ export type CustomValidator = (
 export type ValidationReport = {
   valid: boolean,
   validationResults: ValidationResult[];
-  validatorProps: ValidatorProps;
+  validatorProps: ValidatorBaseProps;
 }
 
 export interface ValidationMessages {
@@ -46,25 +45,8 @@ export default class Validator {
   @observable validationResults?: ValidationResult[] | undefined;
 
   @action
-  private static addError(result: ValidationResult, props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, validationResults: ValidationResult[]) {
-    const { record, name, unique } = props;
-    if (record && name) {
-      validationResults.push(result);
-      if (isString(unique)) {
-        record.dataSet.fields.forEach((field, fieldName) => {
-          if (
-            fieldName !== name &&
-            field.get('unique', record) === unique &&
-            !field.get('multiple', record) &&
-            !field.get('range', record)
-          ) {
-            record.setValidationError(fieldName, [result]);
-          }
-        });
-      }
-    } else {
-      validationResults.push(result);
-    }
+  private static addError(result: ValidationResult, validationResults: ValidationResult[]) {
+    validationResults.push(result);
   }
 
   static reportAll(errors: ValidationErrors[]) {
@@ -74,7 +56,7 @@ export default class Validator {
     }
   }
 
-  static async report(results: ValidationResult[], props: ValidatorProps) {
+  static async report(results: ValidationResult[], props: ValidatorBaseProps) {
     if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined' && results.length) {
       const { name, dataSet, record } = props;
       const reportMessage: any[] = [];
@@ -129,7 +111,7 @@ export default class Validator {
     }
   }
 
-  private static async execute(rules: validationRule[], value: any[], props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T], validationResults: ValidationResult[]): Promise<any> {
+  private static async execute(rules: validationRule[], value: any[], props: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T], validationResults: ValidationResult[]): Promise<any> {
     const method = rules.shift();
     if (method) {
       const results: methodReturn[] = [];
@@ -150,7 +132,7 @@ export default class Validator {
       }
       results.forEach(result => {
         if (result instanceof ValidationResult) {
-          this.addError(result, props, validationResults);
+          this.addError(result, validationResults);
           const index = value.indexOf(result.value);
           if (index !== -1) {
             value.splice(index, 1);
@@ -164,25 +146,17 @@ export default class Validator {
   }
 
   @action
-  static async checkValidity(value: unknown = null, props?: Partial<ValidatorProps> | undefined, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T] = noop): Promise<ValidationReport> {
-    const validatorProps: ValidatorProps & { defaultValidationMessages: ValidationMessages } = {
-      ...props,
-      defaultValidationMessages: {
-        ...getConfig('defaultValidationMessages'),
-        ...props && props.defaultValidationMessages,
-      },
-    };
-    // this.reset(validatorProps);
+  static async checkValidity(value: unknown = null, props: ValidatorBaseProps = {}, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T] = noop): Promise<ValidationReport> {
     const validationResults: ValidationResult[] = [];
-    const valueMiss: methodReturn = valueMissing(value, validatorProps, getProp);
+    const valueMiss: methodReturn = valueMissing(value, props, getProp);
     if (valueMiss !== true) {
-      this.addError(valueMiss, validatorProps, validationResults);
+      this.addError(valueMiss, validationResults);
     } else {
       const multiple = getProp('multiple');
       await this.execute(
         validationRules.slice(),
         multiple && isArrayLike(value) ? value.slice() : [value],
-        validatorProps,
+        props,
         getProp,
         validationResults,
       );
@@ -190,7 +164,7 @@ export default class Validator {
     return {
       valid: !validationResults.length,
       validationResults,
-      validatorProps,
+      validatorProps: props,
     };
   }
 }

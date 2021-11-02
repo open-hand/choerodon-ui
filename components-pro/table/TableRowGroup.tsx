@@ -13,7 +13,7 @@ export interface TableRowGroupProps {
   children?: ReactNode;
 }
 
-const TableRowGroup: FunctionComponent<TableRowGroupProps> = observer(function TableRowGroup(props) {
+const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGroup(props) {
   const { prefixCls, tableStore } = useContext(TableContext);
   const stickyRef = useRef<HTMLTableCellElement | null>(null);
   const [stickyOffset, setStickyOffset] = useState<number>(0);
@@ -38,8 +38,10 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = observer(function T
       const { parentElement } = current;
       if (parentElement) {
         const currentOffsetTop = current.offsetTop;
+        const tbody = parentElement.parentElement;
         const offsetTop = tableStore.virtualTop - currentScrollTop + currentOffsetTop;
-        setStickyOffset(currentScrollTop > currentOffsetTop ? offsetTop : Math.min(offsetTop, currentOffsetTop - parentElement.offsetTop));
+        const currentTop = tbody && tbody.offsetHeight < currentScrollTop ? parentElement.offsetTop + current.offsetHeight + tableStore.virtualTop : currentOffsetTop;
+        setStickyOffset(currentScrollTop > currentTop ? offsetTop : Math.min(offsetTop, currentOffsetTop - parentElement.offsetTop));
       }
     }
   }, [currentScrollTop]);
@@ -54,8 +56,8 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = observer(function T
       </td>
     </Cmp>
   );
-});
+};
 
 TableRowGroup.displayName = 'TableRowGroup';
 
-export default TableRowGroup;
+export default observer(TableRowGroup);

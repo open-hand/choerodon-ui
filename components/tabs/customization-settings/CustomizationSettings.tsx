@@ -42,7 +42,7 @@ export interface CustomizationSettingsProps {
   modal?: modalChildrenProps;
 }
 
-const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = observer(function CustomizationSettings(props) {
+const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = function CustomizationSettings(props) {
   const { modal } = props;
   const { customized, saveCustomized, totalPanelsMap, groupedPanelsMap, defaultActiveKey, actuallyDefaultActiveKey, propActiveKey, children } = useContext(TabsContext);
   const oldCustomized: TabsCustomized = useMemo(() => customized ? merge<Partial<TabsCustomized>, TabsCustomized>({}, customized) : { panes: {} }, [customized]);
@@ -102,8 +102,8 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = obs
   return (
     <TabGroups dataSet={panesDataSet} defaultKey={defaultKey} onDefaultKeyChange={handleDefaultKeyChange} />
   );
-});
+};
 
 CustomizationSettings.displayName = 'CustomizationSettings';
 
-export default CustomizationSettings;
+export default  observer(CustomizationSettings);

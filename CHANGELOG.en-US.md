@@ -15,10 +15,23 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
+- 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
+- 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
+- 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
+- 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
+- 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property.
+- 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
+
+## 1.5.0-beta.0
+
+`2021-10-31`
+
 - 🌟 `configure`: Added `defaultActiveFirstOption` property.
 - 🌟 `Message`: Added `message.config` method parameter `maxCount`.
 - 🌟 `Notification`: Added `notification.config` method parameter `maxCount`.
 - 🌟 `Badge`: Added `color`, `size`, `title` properties.
+- 🌟 `<pro>Table`: Added the `summaryBarFieldWidth` property to handle the `summaryBar` field width.
 - 🌟 `<pro>Select`: Added the `defaultActiveFirstOption` property whether to highlight the first option by default.
 - 🌟 `<pro>DataSet`: Added `cacheModified` property, `cachedModified`, `cachedRecords` value, `clearCachedModified`, `clearCachedRecords` method, `query` and `loadData` added `cache` parameter.
 - 🌟 `Upload`: Added `showFileSize` property, and optimized the component style.
@@ -28,6 +41,7 @@ timeline: true
 - 🌟 `Steps`: Added `onChange` callback.
 - 🌟 `Tabs`: Added `showMore` property.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
+- 🌟 `ImageCrop.AvatarUploader`: Remove `minRectSize`, `subTitle` properties, rename `defaultRectSize` property as `rectSize`.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
@@ -38,8 +52,11 @@ timeline: true
 - 💄 `<pro>Attachment`: Display a mandatory asterisk on the label.
 - 💄 `<pro>DateTimePicker`: Optimize the time value set by `defaultTime` does not change when the range value is automatically exchanged.
 - 💄 `<pro>Lov`: Optimized the `onClick` hook of the button mode allows to prevent the modal box from popping up by calling event.preventDefault().
+- 💄 `<pro>Lov`: Optimize the effect of query waiting for loading in button mode.
 - 💄 `<pro>Lov`: Optimization In `popup` mode, add query field selection to search box.
 - 💄 `<pro>NumberField`: Optimize the execution efficiency of the step button.
+- 💄 `ImageCrop.AvatarUploader`: Optimize cropping and interface styles.
+- 🐞 `<pro>Table`: Fix the problem of clearing the checked records when `selectable` is false.
 - 🐞 `<pro>Table`: Fix the problem that the virtual cell does not enter the viewport when the verification fails or the editor is displayed through the Tab key.
 - 🐞 `<pro>Table`: Fix column width cannot be adjusted when crossing iframe via Modal.
 - 🐞 `<pro>Table`: Fix that the contents of the filter bar input box are not aligned.
@@ -50,12 +67,14 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the problem of uploading unresponsive when the upload button content overflows and the `tooltip` is set.
 - 🐞 `<pro>Attachment`: Fix the issue that the `accept` attribute cannot control file selection.
 - 🐞 `<pro>Attachment`： Fix the problem that the attachment data without a type may report an error.
+- 🐞 `<pro>Attachment`: Fix the problem of image preview after deleting or dragging.
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the first verification of the verification properties set by `dynamicProps` has no effect.
 - 🐞 `<pro>DataSet`: Fix the issue of `appendData` total parameter update.
 - 🐞 `<pro>Validator`: Fix the problem of incomplete `stepMismatch` error information.
 - 🐞 `<pro>Output`: Fix the issue that an asterisk will be displayed when the colon is displayed.
 - 🐞 `<pro>Modal`: Fix the problem of illegal `drawerTransitionName` causing page error.
 - 🐞 `<pro>PerformanceTable`：Fix the problem that the merged line disappears when virtual scrolling is turned on.
+- 🐞 `<pro>ColorPicker`：Fixed configuration `clearButton` property error and pointer jump when selecting #00000 color.
 
 ## 1.4.5
 

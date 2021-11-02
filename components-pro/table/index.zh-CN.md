@@ -33,7 +33,8 @@ subtitle: 表格
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number |  |
 | queryBar | 查询条, 可选值为钩子或者内置类型：`filterBar` `professionalBar` `advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | 'normal' |
 | queryBarProps | 查询条参数，不同查询条参数配置应对应。 当查询条是全局配置的自定义查询条，需要传递自定义参数时可以用此属性 | object |  |
-| summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |
+| summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit, summaryBarFieldWidth }) => ReactNode |  |
+| summaryBarFieldWidth | 汇总条单字段宽度 | number | 170 |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |
 | useMouseBatchChoose | 是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
 | rowHeight | 行高 | number \| auto | 30 |

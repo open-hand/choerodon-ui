@@ -203,7 +203,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const title = (
         <>
           {getHeader(child)}
-          {showCount && <Count prefixCls={prefixCls} count={count} renderer={countRenderer} overflowCount={overflowCount} />}
+          {showCount && <Count prefixCls={prefixCls} count={count} renderer={countRenderer} overflowCount={overflowCount} asyncCount={renderInkBar}  />}
         </>
       );
       rst.push(
@@ -234,6 +234,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
 
   const onMenuClick = ({ key }) => {
     changeActiveKey(key);
+    scrollToActiveTab()
   }
 
   const menu = () => {
@@ -258,7 +259,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
 
     const nextPrevShown = isNextPrevShown()
 
-    const moreTool = nextPrevShown && showMore && (
+    const moreTool = nextPrevShown && !!showMore && (
       <Dropdown overlay={menu} key="more">
         <Icon type="more_horiz" className={dropDownClass} />
       </Dropdown>
@@ -442,8 +443,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }
 
     // when not scrollable or enter scrollable first time, don't emit scrolling
-    const needToSroll = isNextPrevShown() && lastNextPrevShownRef.current;
-    lastNextPrevShownRef.current = isNextPrevShown();
+    const needToSroll = isNextPrevShown();
     if (!needToSroll) {
       return;
     }
@@ -588,7 +588,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     setOffset(vertical ? scrollTop : scrollLeft, setNextPrev)
   }, [tabBarPosition])
 
-  useLayoutEffect(() => {
+  const renderInkBar = ()=>{
     const inkBarNode = inkBarRef.current;
     if (inkBarNode) {
       const inkBarNodeStyle = inkBarNode.style;
@@ -645,6 +645,10 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
       inkBarNodeStyle.visibility = activeTab ? 'visible' : 'hidden';
     }
+  }
+
+  useLayoutEffect(() => {
+    renderInkBar()
   });
 
   useEffect(() => {
@@ -657,10 +661,6 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     }, 200);
     const scrollEvent = new EventManager(navScrollRef.current);
     scrollEvent.addEventListener('scroll', debouncedScroll);
-    const navScroll = navScrollRef.current
-    if (navScroll) {
-      navScroll.style.height = isVertical(tabBarPosition) ? `100%` : 'auto'
-    }
     return () => {
       scrollEvent.removeEventListener('scroll', debouncedScroll);
       debouncedScroll.cancel();

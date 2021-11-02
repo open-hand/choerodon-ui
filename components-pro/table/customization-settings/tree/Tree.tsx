@@ -8,7 +8,7 @@ export interface TreeProps {
   children?: ReactNode;
 }
 
-const Tree: FunctionComponent<TreeProps> = observer(function Tree(props) {
+const Tree: FunctionComponent<TreeProps> = function Tree(props) {
   const { children, value } = props;
   const { prefixCls, columnsDragRender = {}, tableStore: { columnDraggable } } = useContext(TableContext);
   const { droppableProps, renderClone } = columnsDragRender;
@@ -43,8 +43,8 @@ const Tree: FunctionComponent<TreeProps> = observer(function Tree(props) {
       {children}
     </div>
   );
-});
+};
 
 Tree.displayName = 'Tree';
 
-export default Tree;
+export default observer(Tree);

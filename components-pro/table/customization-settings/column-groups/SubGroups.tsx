@@ -14,7 +14,7 @@ export interface SubGroupsProps {
   treeNodeSuffix: (record: Record, index: number, records: Record[]) => ReactNode;
 }
 
-const SubGroups: FunctionComponent<SubGroupsProps> = observer<SubGroupsProps>(function SubGroups(props) {
+const SubGroups: FunctionComponent<SubGroupsProps> = function SubGroups(props) {
   const { treeNodeRenderer, treeNodeSuffix, records, onDragEnd, ...rest } = props;
   const { tableStore: { columnDraggable } } = useContext(TableContext);
   return (
@@ -59,8 +59,8 @@ const SubGroups: FunctionComponent<SubGroupsProps> = observer<SubGroupsProps>(fu
         })}
     </>
   );
-});
+};
 
 SubGroups.displayName = 'SubGroups';
 
-export default SubGroups;
+export default observer<SubGroupsProps>(SubGroups);

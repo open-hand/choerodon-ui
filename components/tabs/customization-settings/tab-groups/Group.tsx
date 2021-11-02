@@ -14,7 +14,7 @@ export interface GroupProps {
   nodeSuffix: (record: Record, index: number, records: Record[]) => ReactNode;
 }
 
-const Group: FunctionComponent<GroupProps> = observer(function Group(props) {
+const Group: FunctionComponent<GroupProps> = function Group(props) {
   const { header, records, value, nodeSuffix, defaultKey } = props;
   const { prefixCls } = useContext(TabsContext);
   return (
@@ -64,8 +64,8 @@ const Group: FunctionComponent<GroupProps> = observer(function Group(props) {
       </Droppable>
     </>
   );
-});
+};
 
 Group.displayName = 'Group';
 
-export default Group;
+export default observer(Group);

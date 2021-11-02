@@ -15,10 +15,23 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
+- 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
+- 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
+- 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
+- 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
+- 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。
+- 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
+
+## 1.5.0-beta.0
+
+`2021-10-31`
+
 - 🌟 `configure`: 新增 defaultActiveFirstOption 属性。
 - 🌟 `Message`: 新增 message.config 方法参数 maxCount。
 - 🌟 `Notification`: 新增 notification.config 方法参数 maxCount。
 - 🌟 `Badge`: 新增 color, size, title 属性。
+- 🌟 `<pro>Table`: 新增 summaryBarFieldWidth 属性处理 summaryBar 字段宽度。
 - 🌟 `<pro>Select`: 新增 defaultActiveFirstOption 属性是否默认高亮第一个选项。
 - 🌟 `<pro>DataSet`: 新增 cacheModified 属性， cachedModified, cachedRecords 值， clearCachedModified, clearCachedRecords 方法， query 和 loadData 新增 cache 参数。
 - 🌟 `Upload`: 新增 showFileSize 属性，以及优化了组件样式。
@@ -28,6 +41,7 @@ timeline: true
 - 🌟 `Steps`: 新增 onChange 回调。
 - 🌟 `Tabs`: 新增 showMore 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
+- 🌟 `ImageCrop.AvatarUploader`: 移除 minRectSize, subTitle 属性，defaultRectSize 更名为 rectSize。
 - 💄 `<pro>DataSet`: 优化内存, 优化树形数据性能, 优化校验性能。
 - 💄 `RcTrigger`: 使组件成为观察者。
 - 💄 `<pro>Select`: 使用 options 数据源模式下，支持 searchMatcher 配置搜索参数。
@@ -38,8 +52,11 @@ timeline: true
 - 💄 `<pro>Attachment`: 在标签上显示必输星号
 - 💄 `<pro>DateTimePicker`: 优化范围值在自动交换顺序时，由 defaultTime 设置的时间值不变。
 - 💄 `<pro>Lov`: 优化按钮模式的 onClick 钩子允许通过调用 event.preventDefault() 阻止弹出模态框。
+- 💄 `<pro>Lov`: 优化在按钮模式下，查询等待 loading 效果。
 - 💄 `<pro>Lov`: 优化 在 popup 模式下，搜索框添加查询字段选择。
 - 💄 `<pro>NumberField`: 优化 step 按钮执行效率。
+- 💄 `ImageCrop.AvatarUploader`: 优化裁剪功能和界面样式。
+- 🐞 `<pro>Table`：修复 selectable 为 false 时会清除已勾选的记录问题。
 - 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table`：修复过滤条输入框中内容不能对齐的问题。
@@ -50,12 +67,14 @@ timeline: true
 - 🐞 `<pro>Attachment`： 修复上传按钮内容溢出并设置了 tooltip 时上传无反应的问题。
 - 🐞 `<pro>Attachment`： 修复 accept 属性无法控制文件选择的问题。
 - 🐞 `<pro>Attachment`： 修复附件数据没有 type 可能会报错的问题。
+- 🐞 `<pro>Attachment`： 修复删除或者拖拽后图片预览问题。
 - 🐞 `<pro>DataSet.Field`： 修复通过 dynamicProps 设置的校验属性首次校验无效果的问题。
 - 🐞 `<pro>DataSet`： 修复 appendData total 参数更新问题。
 - 🐞 `<pro>Validator`： 修复 stepMismatch 错误信息不全的问题。
 - 🐞 `<pro>Output`： 修复显示冒号时会显示必输星号的问题。
 - 🐞 `<pro>Modal`： 修复 drawerTransitionName 非法导致页面报错的问题。
 - 🐞 `<pro>PerformanceTable`： 修复开启虚拟滚动导致合并行消失的问题。
+- 🐞 `<pro>ColorPicker`：修复配置 clearButton 属性报错，以及选择#00000颜色时指针跳动问题。
 
 ## 1.4.5
 

@@ -13,7 +13,7 @@ export interface TableHeaderProps extends ElementProps {
   lock?: ColumnLock;
 }
 
-const TableHeader: FunctionComponent<TableHeaderProps> = observer(function TableHeader(props) {
+const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(props) {
   const { lock } = props;
   const {
     prefixCls, border, tableStore,
@@ -119,8 +119,8 @@ const TableHeader: FunctionComponent<TableHeaderProps> = observer(function Table
       {getTrs()}
     </thead>
   );
-});
+};
 
 TableHeader.displayName = 'TableHeader';
 
-export default TableHeader;
+export default observer(TableHeader);

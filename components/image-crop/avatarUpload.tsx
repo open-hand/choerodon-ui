@@ -6,12 +6,12 @@ import React, { Component } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
 import isString from 'lodash/isString';
 import PropTypes from 'prop-types';
-import Button from '../button';
+import Cropper from 'react-easy-crop';
+import Button, { ButtonProps } from '../button';
 import Icon from '../icon';
 import Modal, { ModalProps } from '../modal';
 import message from '../message';
 import Upload, { UploadProps } from '../upload';
-import Crop from './Crop';
 import { getPrefixCls } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
@@ -19,8 +19,12 @@ import { imageCrop } from '../locale-provider';
 
 const Dragger = Upload.Dragger;
 const { round } = Math;
+const ButtonGroup = Button.Group;
 
-function rotateFlag(rotate) {
+const maxZoomVal = 3;
+const zoomStep = 0.5;
+
+function rotateFlag(rotate): boolean {
   return (rotate / 90) % 2 !== 0;
 }
 
@@ -48,7 +52,6 @@ export interface AvatarUploadProps {
   handleUpload?: (area: AvatarArea) => void; // 点击上传
   cropComplete?: (imageState: any) => void; // 裁剪完成
   title?: string | React.ReactElement; // 上传头像标题
-  subTitle?: string | React.ReactElement; // 上传头像小标题
   previewTitle?: string | React.ReactElement; // 头像预览标题
   reloadTitle?: string | React.ReactElement;// 重新上传标题
   uploadProps?: UploadProps; // 上传配置
@@ -57,8 +60,7 @@ export interface AvatarUploadProps {
   previewList: number[]; // 定义预览的大小
   editorWidth: number; // 裁剪容器宽度
   editorHeight: number; // 裁剪容器高度
-  minRectSize: number;  // 最小裁剪大小
-  defaultRectSize: number; // 最大裁剪大小
+  rectSize: number; // 裁剪区域大小
   axiosConfig?: AxiosRequestConfig;
   prefixCls?: string; // 自定义样式前缀
 }
@@ -75,14 +77,12 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     previewList: PropTypes.array,
     editorWidth: PropTypes.number,
     editorHeight: PropTypes.number,
-    minRectSize: PropTypes.number, // 最小的裁剪区域
-    defaultRectSize: PropTypes.number, // 默认最小的
+    rectSize: PropTypes.number, // 默认最小的
     prefixCls: PropTypes.string, // 自定义样式前缀
     handleUpload: PropTypes.func,
     axiosConfig: PropTypes.object,
     cropComplete: PropTypes.func,
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    subTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     previewTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     reloadTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     uploadProps: PropTypes.object,
@@ -97,26 +97,54 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
       type: 'jpeg,png,jpg',
       size: 1024,
     },
-    previewList: [80, 30, 18],
-    editorWidth: 540,
-    editorHeight: 300,
-    minRectSize: 80,
-    defaultRectSize: 200,
+    previewList: [80, 48, 34],
+    editorWidth: 380,
+    editorHeight: 380,
+    rectSize: 280,
   }
 
   constructor(props) {
     super(props);
-    const { defaultRectSize } = props
+    const { rectSize } = props
     this.state = {
       submitting: false,
       img: null,
       file: '',
       imageStyle: { width: 0, height: 0 },
-      size: defaultRectSize,
-      x: 0,
-      y: 0,
+      crop: {
+        x: 0,
+        y: 0,
+      },
       rotate: 0,
+      zoom: 1,
+      cropSize: rectSize,
     };
+  }
+
+  zoomImage = (type): void => {
+    let { zoom } = this.state;
+    const { imageStyle: { width, height }, cropSize } = this.state;
+    const minZoomVal: number = cropSize / Math.min(width, height);
+    switch(type) {
+      case 'add': {
+        zoom = (zoom + zoomStep) >= maxZoomVal ? maxZoomVal : (zoom + zoomStep);
+        this.setState({zoom});
+        break;
+      }
+      case 'sub': {
+        zoom = (zoom - zoomStep) <= minZoomVal ? minZoomVal : (zoom - zoomStep);
+        this.setState({zoom});
+        break;
+      }
+      case 'init': {
+        const x = (width - cropSize) / 2 / width;
+        const y = (height - cropSize) / 2 / width;
+        this.setState({zoom: 1, rotate: 0, crop: {x, y}});
+      }
+        break;
+      default:
+        break;
+    }
   }
 
   handleOk = () => {
@@ -144,7 +172,6 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
       }
       axios.post<any, any>(`${uploadUrl}?${qs}`, data, config)
         .then((res) => {
-          // @ts-ignore
           if (res.success) {
             this.uploadOk(res);
           } else {
@@ -196,18 +223,18 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   };
 
   initImageSize(img, rotate = 0) {
-    const { editorWidth, editorHeight, minRectSize, defaultRectSize } = this.props;
+    const { editorWidth, editorHeight, rectSize } = this.props;
     const { naturalWidth, naturalHeight } = img;
     const flag = rotateFlag(rotate);
     let width = flag ? naturalHeight : naturalWidth;
     let height = flag ? naturalWidth : naturalHeight;
-    if (width < minRectSize || height < minRectSize) {
+    if (width < rectSize || height < rectSize) {
       if (width > height) {
-        width = (width / height) * minRectSize;
-        height = minRectSize;
+        width = (width / height) * rectSize;
+        height = rectSize;
       } else {
-        height = (height / width) * minRectSize;
-        width = minRectSize;
+        height = (height / width) * rectSize;
+        width = rectSize;
       }
     } else if (width > editorWidth || height > editorHeight) {
       if (width / editorWidth > height / editorHeight) {
@@ -223,7 +250,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
       width = height;
       height = tmp;
     }
-    const size = Math.min(defaultRectSize, width, height);
+    const size = Math.min(rectSize, width, height);
     this.setState({
       img,
       imageStyle: {
@@ -234,13 +261,19 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
         transform: `rotate(${rotate}deg)`,
       },
       size,
+      cropSize: size,
       x: (width - size) / 2,
       y: (height - size) / 2,
       rotate,
     });
   }
 
-  onComplete(imageState) {
+  onComplete(imgState): void {
+    const { zoom, imageStyle: {width, height}, cropSize } = this.state;
+    let { x, y } = imgState;
+    x = Math.ceil(x * width / 100);
+    y = Math.ceil(y * height / 100);
+    const imageState = {x, y, size: cropSize / zoom}
     const { cropComplete } = this.props;
     this.setState(imageState);
     if (cropComplete) {
@@ -248,17 +281,17 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     }
   }
 
-  loadImage(src) {
+  loadImage(src): void {
     if(typeof window !== 'undefined'){
       const img = new Image();
       img.src = src;
-      img.onload = () => {
+      img.onload = (): void => {
         this.initImageSize(img);
       };
     }
   }
 
-  getPreviewProps(previewSize) {
+  getPreviewProps(previewSize): object {
     const { size, x, y, img: { src }, rotate, imageStyle: { width, height } } = this.state;
     const previewScale = previewSize / size;
     let radius = (rotate % 360) / 90;
@@ -303,9 +336,13 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   }
 
   renderEditor(props) {
-    const { img, file, rotate } = this.state;
-    const { prefixCls: customizePrefixCls, previewList, editorWidth, editorHeight, defaultRectSize, minRectSize, subTitle, previewTitle, reloadTitle } = this.props;
+    const { img, rotate, zoom, crop, imageStyle: { width, height }, cropSize } = this.state;
+    const { prefixCls: customizePrefixCls, previewList, editorWidth, editorHeight, previewTitle, reloadTitle } = this.props;
     const { src } = img;
+    const style: object = {width: editorWidth, height: editorHeight, position: 'relative'};
+    const minZoomVal: number = cropSize / Math.min(width, height);
+    const isMinZoom = zoom === minZoomVal;
+    const isMaxZoom = zoom === maxZoomVal;
     const prefixCls = getPrefixCls('avatar-crop-edit', customizePrefixCls);
     const previewTitleFlag = isString(previewTitle) || React.isValidElement(previewTitle);
     const renderPreviewTitle = (): React.ReactElement | null => {
@@ -322,34 +359,50 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
 
     return (
       <div>
-        <h3 className={`${prefixCls}-text`}>
-          <span >{subTitle || Avatarlocale.avatarUpload}</span>
-          <Icon type="keyboard_arrow_right" />
-          <span>{file.name}</span>
-        </h3>
-        <h4 className={`${prefixCls}-hint`}>
-          <span>{Avatarlocale.avatarReminder}</span>
-        </h4>
         <div className={`${prefixCls}-wraper`}>
-          <Crop
-            defaultRectSize={defaultRectSize}
-            minRectSize={minRectSize}
-            editorHeight={editorHeight}
-            editorWidth={editorWidth}
-            rotation={rotate} src={src}
-            onComplete={(stateImage) => this.onComplete(stateImage)} />
-          <div className={`${prefixCls}-toolbar`}>
-            <Button icon="replay_90" shape="circle" onClick={() => this.setState({ rotate: rotate - 90 })} />
-            <Button icon="play_90" shape="circle" onClick={() => this.setState({ rotate: rotate + 90 })} />
+          <div className={`${prefixCls}-edit`} style={style}>
+            <Cropper
+              image={src}
+              crop={crop}
+              showGrid={false}
+              cropSize={{width: cropSize, height: cropSize}}
+              zoom={zoom}
+              minZoom={minZoomVal}
+              rotation={rotate}
+              aspect={1 / 1}
+              onCropChange={(crop): void => this.setState({crop})}
+              onCropComplete={({x, y}): void => this.onComplete({x, y, cropSize})}
+              onZoomChange={(zoom): void => {this.setState({zoom})}}
+            />
           </div>
           <div className={`${prefixCls}-preview`}>
             {renderPreviewTitle()}
             {this.renderPreviewItem(previewList)}
           </div>
         </div>
-        <div className={`${prefixCls}-button`}>
+        <div className={`${prefixCls}-button`} style={{width: editorWidth}}>
+          <ButtonGroup>
+            <Button
+              funcType="raised"
+              icon="zoom_in"
+              disabled={isMaxZoom}
+              onClick={(): void => this.zoomImage('add')}
+            />
+            <Button
+              funcType="raised"
+              icon="zoom_out"
+              disabled={isMinZoom}
+              onClick={(): void => this.zoomImage('sub')}
+            />
+          </ButtonGroup>
+          <Button
+            funcType="raised"
+            icon="play_90"
+            onClick={(): void => this.setState({ rotate: (rotate + 90) >= 360 ? 0 : (rotate + 90) })}
+          />
+          <Button funcType="raised" onClick={(): void => this.zoomImage('init')}>1:1</Button>
           <Upload {...props}>
-            <Button icon="file_upload" type="primary">
+            <Button funcType="raised" icon="file_upload">
               <span>{reloadTitle || Avatarlocale.reUpload}</span>
             </Button>
           </Upload>
@@ -419,14 +472,8 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   render() {
     const { visible, modalProps, title } = this.props;
     const { img, submitting } = this.state;
-    const modalFooter = [
-      <Button disabled={submitting} key="cancel" onClick={this.handleCancel}>
-        <span>{Avatarlocale.cancelButton}</span>
-      </Button>,
-      <Button key="save" type="primary" disabled={!img} loading={submitting} onClick={this.handleOk}>
-        <span>{Avatarlocale.saveButton}</span>
-      </Button>,
-    ];
+    const cancelButtonProps: ButtonProps = {disabled: submitting, funcType: 'raised'};
+    const okButtonProps: ButtonProps = {funcType: 'raised', type: "primary", disabled: !img, loading: submitting};
     return (
       <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
         {(locale: imageCrop) => {
@@ -436,10 +483,13 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
               title={title || <span>{Avatarlocale.changeAvatar}</span>}
               className="avatar-modal"
               visible={visible}
-              width={980}
-              closable={false}
+              width={600}
+              closable
               maskClosable={false}
-              footer={modalFooter}
+              onOk={this.handleOk}
+              onCancel={this.handleCancel}
+              okButtonProps={okButtonProps}
+              cancelButtonProps={cancelButtonProps}
               {...modalProps}
             >
               {this.renderContainer()}

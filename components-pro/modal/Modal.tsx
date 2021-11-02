@@ -69,9 +69,9 @@ export interface ModalProps extends ViewComponentProps {
   cancelText?: ReactNode;
   okProps?: ButtonProps;
   cancelProps?: ButtonProps;
-  onClose?: () => Promise<boolean | undefined>;
-  onOk?: () => Promise<boolean | undefined>;
-  onCancel?: () => Promise<boolean | undefined>;
+  onClose?: () => Promise<boolean | undefined> | boolean | undefined;
+  onOk?: () => Promise<boolean | undefined> | boolean | undefined;
+  onCancel?: () => Promise<boolean | undefined> | boolean | undefined;
   afterClose?: () => void;
   close?: () => void;
   update?: (props?: ModalProps) => void;

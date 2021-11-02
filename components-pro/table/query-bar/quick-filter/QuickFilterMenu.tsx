@@ -78,7 +78,7 @@ function isSelect(data) {
  * @param onLocateData
  * @constructor
  */
-const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type, selectFields }) {
+const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type, selectFields }) {
   modal.handleOk(async () => {
     const putData: any[] = [];
     const statusKey = getConfig('statusKey');
@@ -166,12 +166,16 @@ const ModalContent: FunctionComponent<any> = memo(function ModalContent({ prefix
       )}
     </>
   );
-});
+};
+
+ModalContent.displayName = 'ModalContent';
+
+const MemoModalContent = memo(ModalContent);
 
 /**
  * 快速筛选下拉
  */
-const QuickFilterMenu = observer(function QuickFilterMenu() {
+const QuickFilterMenu = function QuickFilterMenu() {
   const {
     autoQuery,
     dataSet,
@@ -345,7 +349,7 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
       closable: true,
       title: getTitle(type),
       children: (
-        <ModalContent
+        <MemoModalContent
           prefixCls={prefixCls}
           type={type}
           menuDataSet={menuDataSet}
@@ -557,8 +561,8 @@ const QuickFilterMenu = observer(function QuickFilterMenu() {
       )}
     </>
   );
-});
+};
 
 QuickFilterMenu.displayName = 'QuickFilterMenu';
 
-export default QuickFilterMenu;
+export default observer(QuickFilterMenu);

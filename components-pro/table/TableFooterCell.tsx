@@ -16,7 +16,7 @@ export interface TableFooterCellProps extends ElementProps {
   right: number;
 }
 
-const TableFooterCell: FunctionComponent<TableFooterCellProps> = observer(function TableFooterCell(props) {
+const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableFooterCell(props) {
   const { columnGroup, style, className, colSpan, right } = props;
   const { rowHeight, dataSet, prefixCls, tableStore } = useContext(TableContext);
   const { column } = columnGroup;
@@ -63,8 +63,8 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = observer(functi
       <div {...innerProps} className={innerClassNames.join(' ')}>{getFooter()}</div>
     </th>
   );
-});
+};
 
 TableFooterCell.displayName = 'TableFooterCell';
 
-export default TableFooterCell;
+export default observer(TableFooterCell);

@@ -21,7 +21,7 @@ export interface TableWrapperProps extends ElementProps {
   columnGroups: ColumnGroups;
 }
 
-const TableWrapper: FunctionComponent<TableWrapperProps> = observer(function TableWrapper(props) {
+const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper(props) {
   const { children, hasBody, lock, hasHeader, hasFooter, columnGroups } = props;
   const { prefixCls, summary, tableStore } = useContext(TableContext);
   const { leafs, width } = columnGroups;
@@ -85,8 +85,8 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = observer(function Tab
       {editors}
     </>
   );
-});
+};
 
 TableWrapper.displayName = 'TableWrapper';
 
-export default TableWrapper;
+export default observer(TableWrapper);

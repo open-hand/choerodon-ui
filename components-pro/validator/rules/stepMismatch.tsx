@@ -3,10 +3,9 @@ import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { getNearStepValues } from '../../number-field/utils';
-import { methodReturn, ValidatorProps } from '.';
+import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 import { formatReactTemplate } from '../../formatter/formatReactTemplate';
 import { toRangeValue } from '../../field/utils';
-import { ValidationMessages } from '../Validator';
 
 function isStepMismatch(value, step, min, max, range) {
   if (range) {
@@ -22,7 +21,7 @@ function isStepMismatch(value, step, min, max, range) {
   return getNearStepValues(isMoment(value) ? value : Number(value), step, min, max);
 }
 
-export default function stepMismatch(value: any, props: ValidatorProps & { defaultValidationMessages: ValidationMessages }, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
+export default function stepMismatch(value: any, _: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
   if (!isEmpty(value)) {
     const step = getProp('step');
     if (step !== undefined) {
@@ -41,7 +40,7 @@ export default function stepMismatch(value: any, props: ValidatorProps & { defau
           };
           const ruleName = nearStepValues.length === 2 ? 'stepMismatchBetween' : 'stepMismatch';
           const key = nearStepValues.length === 2 ? 'step_mismatch_between' : 'step_mismatch';
-          const { [ruleName]: validationMessage = $l('Validator', key) } = props.defaultValidationMessages;
+          const { [ruleName]: validationMessage = $l('Validator', key) } = getProp('defaultValidationMessages') || {};
           return new ValidationResult({
             validationProps: {
               step,

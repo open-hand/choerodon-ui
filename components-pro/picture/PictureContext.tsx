@@ -27,7 +27,7 @@ export const PictureProvider: FunctionComponent<PictureProviderProps> = (props) 
     }
   }, [pictureList]);
   const unRegisterPicture = useCallback((index: number, pictureRef: PictureRef) => {
-    if (pictureList[index] === pictureRef) {
+    if (pictureList.current[index] === pictureRef) {
       pictureList.current[index] = undefined;
     }
   }, [pictureList]);
