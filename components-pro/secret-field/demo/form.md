@@ -37,6 +37,9 @@ configure({
     ];
     return type;
   },
+  secretFieldEnable() {
+    return true;
+  },
   secretFieldQueryData() {
     return Promise.resolve('oldData');
   },
@@ -70,8 +73,8 @@ const App = () => {
 
   return (
     <Form dataSet={ds}>
-      <SecretField name="phone" border={false} />
-      <SecretField name="idCard" />
+      <SecretField name="phone" />
+      <SecretField name="idCard" border={false}  />
     </Form>
   );
 };

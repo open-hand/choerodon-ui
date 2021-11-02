@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
+import { getConfig } from 'choerodon-ui/lib/configure';
 
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import Icon from '../icon';
@@ -37,6 +38,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
     super(props, context);
     runInAction(() => {
       this.setQueryFlag(true);
+      this.setSecretEnable();
     })
   }
 
@@ -46,6 +48,18 @@ export default class SecretField extends TextField<SecretFieldProps> {
   @action
   setQueryFlag(value) {
     this.queryFlag = value;
+  }
+
+  @observable secretEnable;
+
+  @autobind
+  @action
+  setSecretEnable() {
+    // 从配置项获取是否开启脱敏组件
+    const secretFieldEnableConfig = getConfig('secretFieldEnable');
+    if (secretFieldEnableConfig) {
+      this.secretEnable = secretFieldEnableConfig();
+    }
   }
 
   @action
@@ -63,7 +77,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
             name={name || ''}
             label={label}
             token={this.record?.get('_token')}
-            onChange={this.handleChange}
+            onChange={this.handleSecretChange}
             onQueryFlag={this.setQueryFlag}
             countDown={this.countDown}
           />
@@ -84,7 +98,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   @autobind
-  handleChange(data?: any) {
+  handleSecretChange(data?: any) {
     this.record?.init(this.name || '', data);
   }
 
@@ -95,6 +109,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   getSuffix(): ReactNode {
     const { readOnly, queryFlag } = this;
+    if (!this.secretEnable) {
+      return null
+    }
     return queryFlag ? this.wrapperSuffix(
       readOnly ? (
         <Icon type="visibility-o" />
@@ -105,5 +122,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
         onClick: this.handleOpenModal,
       },
     ) : null
+  }
+
+  isEditable(): boolean {
+    return !this.secretEnable && super.isEditable();
   }
 }
