@@ -71,7 +71,6 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
             message.error((res as any).message);
           }
           setTimeout(() => { this.setFlag('verify') }, 500);
-          // this.setFlag('verify');
         },
       ).catch(_e => this.setFlag('verify'))
     }

@@ -42,6 +42,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
     })
   }
 
+  // 是否已经查看过，已查看过不显示查看按钮
   @observable queryFlag;
 
   @autobind
@@ -109,15 +110,14 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   getSuffix(): ReactNode {
     const { readOnly, queryFlag } = this;
+    // 未开启脱敏组件
     if (!this.secretEnable) {
-      return null
+      const { suffix } = this.props;
+      return suffix ? this.wrapperSuffix(suffix) : null;
     }
+    // 开启脱敏组件
     return queryFlag ? this.wrapperSuffix(
-      readOnly ? (
-        <Icon type="visibility-o" />
-      ) : (
-        <Icon type="edit-o" />
-      ),
+      <Icon type={readOnly ? 'visibility-o' : 'edit-o'} />,
       {
         onClick: this.handleOpenModal,
       },
