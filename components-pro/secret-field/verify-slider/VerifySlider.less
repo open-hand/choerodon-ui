@@ -4,49 +4,48 @@
 
 .@{secretField-prefix-cls} {
   &-verify-content {
-    height: 100%;
     display: flex;
     flex-direction: column;
+    height: 100%;
     &-slide {
-      height: calc(100% - 0.42rem);
-      justify-content: center;
-      margin-top: 0.5rem;
       display: flex;
+      justify-content: center;
+      height: calc(100% - 0.42rem);
+      margin-top: 0.5rem;
     }
     &-btn {
-      padding: 0.1rem 0.05rem 0;
       display: flex;
       justify-content: flex-end;
+      padding: 0.1rem 0.05rem 0;
     }
   }
   &-simple-verify {
+    position: relative;
+    box-sizing: border-box;
     width: 3.4rem;
     height: 0.36rem;
-    border: 1px solid #e4e4e4;
-    background-color: #f2f3f5;
-    border-radius: 0.04rem;
-
-    box-sizing: border-box;
     line-height: 1;
-    position: relative;
+    background-color: #f2f3f5;
+    border: 1px solid #e4e4e4;
+    border-radius: 0.04rem;
     -webkit-user-select: none;
 
     &-tips {
-      widows: 100%;
-      height: 100%;
-      color: #9ca0a7;
       display: flex;
       flex-direction: row;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: #9ca0a7;
       font-size: 0.14rem;
       pointer-events: none;
     }
 
     &-box {
       position: absolute;
-      left: -0.01rem;
       top: -0.01rem;
+      left: -0.01rem;
       width: calc(100% + 0.02rem);
       height: calc(100% + 0.02rem);
       overflow: hidden;
@@ -54,57 +53,55 @@
     }
 
     &-slide {
-      border-radius: 0.04rem;
-      background-color: @primary-color;
-      transition-duration: 0s;
-      left: -2.9rem;
-
       position: absolute;
-      // left: 0;
       top: 0;
+      left: -2.9rem;
       width: 100%;
       height: 100%;
+      background-color: @primary-color;
+      border-radius: 0.04rem;
       opacity: 0;
       transition: opacity @animation-duration-fast linear, transform @animation-duration-slow ease;
+      transition-duration: 0s;
     }
 
     &-bar {
       position: absolute;
-      left: -0.01rem;
       top: -0.01rem;
+      left: -0.01rem;
+      z-index: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
       width: 0.5rem;
       height: 100%;
       cursor: pointer;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
       transition: transform @animation-duration-slow ease;
       touch-action: none;
 
       &-icon {
         width: 0.44rem;
         height: 0.29rem;
-        box-shadow: rgba(#717277, 0.3) 0 0.03rem 0.1rem;
-        border-radius: 0.04rem;
         background-color: #fff;
+        border-radius: 0.04rem;
+        box-shadow: rgba(#717277, 0.3) 0 0.03rem 0.1rem;
       }
     }
 
     &-success-tips {
       position: absolute;
-      left: -0.01rem;
       top: -0.01rem;
+      left: -0.01rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
       width: calc(100% + 0.02rem);
       height: calc(100% + 0.02rem);
       color: #fff;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      font-size: 0.14rem;
       font-weight: bold;
+      font-size: 0.14rem;
       opacity: 0;
       transition: opacity @animation-duration-fast linear;
       pointer-events: none;
