@@ -71,6 +71,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
     const label = this.getLabel();
     const { readOnly, name, record } = this;
     const pattern = this.getProp('pattern');
+    const restrict = this.getProp('restrict');
     if (!this.modal) {
       const { modalProps } = this.props;
       this.modal = open({
@@ -82,6 +83,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
             name={name || ''}
             label={label}
             pattern={pattern}
+            restrict={restrict}
             token={record?.get('_token')}
             onChange={this.handleSecretChange}
             onQueryFlag={this.setQueryFlag}

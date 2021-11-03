@@ -5,7 +5,6 @@ import Icon from '../icon';
 import Button from '../button';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
-// import './style/VerifySlider.less';
 
 interface VerifySliderProps {
   onSuccess?: () => void;

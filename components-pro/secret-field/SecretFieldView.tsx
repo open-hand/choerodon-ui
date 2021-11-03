@@ -24,7 +24,8 @@ export interface SecretFieldViewProps {
   readOnly?: boolean;
   name: string;
   label: string;
-  pattern?: RegExp;
+  pattern?: string | RegExp;
+  restrict?: string | RegExp;
   token?: string;
   countDown: any;
   onChange?: (data?: any) => void;
@@ -137,16 +138,30 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
     }
   }
 
+  // 正则string处理
+  generatePattern(pattern: string | RegExp): RegExp {
+    if (pattern instanceof RegExp) {
+      return pattern;
+    }
+    const begin = pattern.startsWith('^') ? '' : '^';
+    const end = pattern.endsWith('$') ? '' : '$';
+    return new RegExp(`${begin}${pattern}${end}`);
+  }
+
   // 确定修改
   @autobind
   handleEdit() {
     const { name, token = '', onChange, modal, pattern } = this.props;
     const editValue = this.formDs?.current?.get(name);
-    if (pattern?.test(editValue) === false) {
-      // 正则校验不通过
-      this.setValidate(false);
-      return;
+    if (pattern) {
+      const newPattern = this.generatePattern(pattern);
+      if (newPattern.test(editValue) === false) {
+        // 正则校验不通过
+        this.setValidate(false);
+        return;
+      }
     }
+
     // 接口查询重置值
     const secretFieldSaveData = getConfig('secretFieldSaveData');
     const params = { _token: token, fieldName: name, value: editValue };
@@ -300,7 +315,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
 
   render() {
     const { flag, captcha, verifyTypeObj, prefixCls, validate } = this;
-    const { readOnly, label, name, countDown } = this.props;
+    const { readOnly, label, name, countDown, restrict } = this.props;
 
     return (
       <div className={`${prefixCls}-modal`}>
@@ -341,7 +356,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
               {
                 flag === 'edit' && (
                   <>
-                    <TextField name={name} colSpan={4} />
+                    <TextField name={name} colSpan={4} restrict={restrict} />
                     <td colSpan={4} className={`${prefixCls}-modal-btns`} >
                       {!validate &&
                         <><p className={`${prefixCls}-modal-validate`} >{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
