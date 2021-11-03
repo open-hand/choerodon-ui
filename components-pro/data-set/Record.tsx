@@ -38,7 +38,7 @@ import {
   getChainFieldName,
   getIf,
   getOrderFields,
-  getRecordValue,
+  getRecordValue, getSortedFields,
   getUniqueKeysAndPrimaryKey,
   isDirtyRecord,
   processIntlField,
@@ -1072,7 +1072,7 @@ export default class Record {
 
   private processData(data: object = {}, needMerge?: boolean): void {
     const newData = { ...data };
-    const { fields } = this.dataSet;
+    const fields = getSortedFields(this.dataSet);
     fields.forEach((field, fieldName) => this.processFieldValue(fieldName, field, fields, newData, data, needMerge));
   }
 
