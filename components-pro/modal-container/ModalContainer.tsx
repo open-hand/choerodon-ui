@@ -1,14 +1,15 @@
-import React, { Component, CSSProperties, Key, MouseEvent } from 'react';
+import React, { Component, CSSProperties, Key, MouseEvent as ReactMouseEVent } from 'react';
 import { createPortal, render } from 'react-dom';
 import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
+import classNames from 'classnames';
 import isPromise from 'is-promise';
 import findLast from 'lodash/findLast';
 import findLastIndex from 'lodash/findLastIndex';
 import noop from 'lodash/noop';
 import EventManager from 'choerodon-ui/lib/_util/EventManager';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import ModalManager, { DrawerOffsets, IModalContainer } from '../modal-manager';
@@ -18,6 +19,7 @@ import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
 import { suffixCls, toUsefulDrawerTransitionName } from '../modal/utils';
 import { getDocument, getMousePosition } from '../_util/DocumentUtils';
+import { ViewComponentProps } from '../core/ViewComponent';
 
 const { containerInstances } = ModalManager;
 
@@ -28,7 +30,7 @@ function getArrayIndex(array, index) {
   return 0;
 }
 
-function getRoot(): HTMLDivElement | undefined {
+function getRoot(): HTMLElement | undefined {
   let { root } = ModalManager;
   if (typeof window !== 'undefined') {
     const doc = getDocument(window);
@@ -56,33 +58,49 @@ function hasScrollBar(body: HTMLElement): boolean {
   return scrollHeight > clientHeight;
 }
 
-function hideBodyScrollBar(body: HTMLElement) {
-  const { style } = body;
-  if (!ModalManager.defaultBodyStyle) {
-    ModalManager.defaultBodyStyle = {
+function hideBodyScrollBar(container: HTMLElement) {
+  if (!ModalManager.containerStyles.has(container)) {
+    const { style } = container;
+    ModalManager.containerStyles.set(container, {
       overflow: style.overflow,
       paddingRight: style.paddingRight,
-    };
+      position: style.position,
+    });
     style.overflow = 'hidden';
-    if (hasScrollBar(body)) {
-      style.paddingRight = pxToRem(measureScrollbar()) || '';
+    if (container.tagName.toLowerCase() === 'body') {
+      if (hasScrollBar(container)) {
+        style.paddingRight = pxToRem(measureScrollbar()) || '';
+      }
+    } else {
+      const { ownerDocument } = container;
+      if (ownerDocument) {
+        const { defaultView } = ownerDocument;
+        if (defaultView) {
+          const { position } = defaultView.getComputedStyle(container);
+          if (position === 'static') {
+            style.position = 'relative';
+          }
+        }
+      }
     }
   }
 }
 
-function showBodyScrollBar(body: HTMLElement) {
-  const { style } = body;
-  if (ModalManager.defaultBodyStyle) {
-    const { overflow, paddingRight } = ModalManager.defaultBodyStyle;
-    ModalManager.defaultBodyStyle = undefined;
+function showBodyScrollBar(container: HTMLElement) {
+  const memoStyle = ModalManager.containerStyles.get(container);
+  if (memoStyle) {
+    const { style } = container;
+    const { overflow, paddingRight, position } = memoStyle;
+    ModalManager.containerStyles.delete(container);
     style.overflow = overflow;
     style.paddingRight = paddingRight;
+    style.position = position;
   }
 }
 
 export interface ModalContainerProps {
   location?: { pathname: string };
-  getContainer?: HTMLElement | (() => HTMLElement) | false;
+  getContainer?: HTMLElement | (() => HTMLElement | undefined) | false;
 }
 
 export interface ModalContainerState {
@@ -124,7 +142,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         return true;
       }
       const { drawerOffsets, maskHidden } = instance;
-      if (!maskHidden) {
+      if (!maskHidden && instance.getOffsetContainer() === this.getOffsetContainer()) {
         offsets['slide-up'] += getArrayIndex(drawerOffsets['slide-up'], 0);
         offsets['slide-right'] += getArrayIndex(drawerOffsets['slide-right'], 0);
         offsets['slide-down'] += getArrayIndex(drawerOffsets['slide-down'], 0);
@@ -161,12 +179,12 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       if (doc && !ModalManager.mousePositionEventBound.has(doc)) {
         new EventManager(doc).addEventListener(
           'click',
-          (e: MouseEvent<any>) => {
+          (e: MouseEvent) => {
             ModalManager.mousePosition = getMousePosition(e.clientX, e.clientY, window);
             // 100ms 内发生过点击事件，则从点击位置动画展示
             // 否则直接 zoom 展示
             // 这样可以兼容非点击方式展开
-            setTimeout(() => (ModalManager.mousePosition = undefined), 100);
+            setTimeout(() => (delete ModalManager.mousePosition), 100);
           },
           true,
         );
@@ -214,7 +232,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     }
   };
 
-  handleModalMouseDown = (e: MouseEvent, modalProps: ModalProps) => {
+  handleModalMouseDown = (e: ReactMouseEVent, modalProps: ModalProps) => {
     const { onMouseDown } = modalProps;
     if (onMouseDown) {
       onMouseDown(e);
@@ -246,14 +264,19 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   }
 
   componentWillUnmount() {
-    const { modals } = this.state;
+    const { modals, mount } = this.state;
     ModalManager.removeInstance(this);
-    const current = ModalManager.containerInstances[0];
-    if (current && modals.length) {
-      current.mergeModals(modals.reduce<ModalProps[]>((list, modal) => modal.__deprecate__ && (!modal.hidden || !modal.destroyOnClose) ? list.concat({
-        ...modal,
-        transitionAppear: false,
-      }) : list, []));
+    if (!mount && modals.length) {
+      const container = this.getContainer();
+      if (container) {
+        const current = ModalManager.containerInstances.find((instance) => !instance.state.mount && instance.getContainer() === container);
+        if (current) {
+          current.mergeModals(modals.reduce<ModalProps[]>((list, modal) => modal.__deprecate__ && (!modal.hidden || !modal.destroyOnClose) ? list.concat({
+            ...modal,
+            transitionAppear: false,
+          }) : list, []));
+        }
+      }
     }
   }
 
@@ -352,19 +375,22 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   }
 
   getComponent(mount?: HTMLElement) {
-    const { maskHidden: hidden, isTop, drawerOffsets, baseOffsets } = this;
+    const { maskHidden: hidden, isTop, drawerOffsets, baseOffsets, props: { getContainer } } = this;
     const { modals } = this.state;
     const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
     const activeModalIndex: number = isTop ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
     const activeModal: ModalProps | undefined = modals[activeModalIndex];
     let maskTransition = true;
+    const offsetContainer = this.getOffsetContainer();
+    const isEmbeddedContainer = offsetContainer.tagName.toLowerCase() !== 'body';
+    const prefixCls = getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
       const { drawerTransitionName = getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask, onMouseDown } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
         ...props.style,
       };
-      if (drawer && transitionName) {
+      if (drawer) {
         const i = indexes[transitionName];
         indexes[transitionName] += 1;
         const offset = getArrayIndex(drawerOffsets[transitionName], i) + baseOffsets[transitionName];
@@ -383,16 +409,21 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
               style.marginRight = offset;
           }
         }
+      } else if (isEmbeddedContainer) {
+        style.top = pxToRem(offsetContainer.scrollTop + (props.autoCenter ? 0 : toPx(style.top) || 100))!;
       }
       if (transitionAppear === false) {
         maskTransition = false;
       }
+      const wrapperClassName = classNames(props.drawer ? `${prefixCls}-drawer` : `${prefixCls}-pristine`, {
+        [`${prefixCls}-embedded`]: isEmbeddedContainer,
+      });
       return (
         <Animate
           key={key}
           component="div"
           // UED 用类名判断
-          className={props.drawer ? `${getProPrefixCls(suffixCls)}-container-drawer` : `${getProPrefixCls(suffixCls)}-container-pristine`}
+          className={wrapperClassName}
           transitionAppear={transitionAppear}
           transitionName={drawer ? transitionName : 'zoom'}
           hiddenProp="hidden"
@@ -410,22 +441,29 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       );
     });
     const animationProps: any = {};
-    if (mount && mount.ownerDocument) {
-      const { body } = mount.ownerDocument;
-      if (containerInstances.every(instance => instance.maskHidden)) {
-        animationProps.onEnd = () => showBodyScrollBar(body);
+    if (mount) {
+      if (containerInstances.every(instance => instance.maskHidden || instance.getOffsetContainer() !== offsetContainer)) {
+        animationProps.onEnd = () => showBodyScrollBar(offsetContainer);
       } else {
-        hideBodyScrollBar(body);
+        hideBodyScrollBar(offsetContainer);
       }
     }
-    const eventProps: any = {};
+    const maskProps: ViewComponentProps = {};
     if (activeModal) {
-      const { maskClosable = getConfig('modalMaskClosable') } = activeModal;
+      const { maskClosable = getConfig('modalMaskClosable'), maskStyle, maskClassName } = activeModal;
+      maskProps.hidden = hidden;
+      maskProps.className = maskClassName;
+      maskProps.onMouseDown = stopEvent;
       if (maskClosable === 'dblclick') {
-        eventProps.onDoubleClick = this.handleMaskClick;
+        maskProps.onDoubleClick = this.handleMaskClick;
       } else {
-        eventProps.onClick = this.handleMaskClick;
+        maskProps.onClick = this.handleMaskClick;
       }
+      maskProps.style = isEmbeddedContainer ? {
+        ...maskStyle,
+        position: 'absolute',
+        height: pxToRem(offsetContainer.scrollHeight)!,
+      } : maskStyle;
     }
     return (
       <>
@@ -437,23 +475,39 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           {...animationProps}
         >
           {
-            activeModal ? (
-              <Mask style={activeModal.maskStyle} className={activeModal.maskClassName} hidden={hidden} {...eventProps} onMouseDown={stopEvent} />
-            ) : <div hidden={hidden} />
+            activeModal ? <Mask {...maskProps} /> : <div hidden={hidden} />
           }
         </Animate>
         {items}
-        {!mount && <span ref={this.saveMount} />}
+        {getContainer === false && <span ref={this.saveMount} />}
       </>
     );
   }
 
-  getContainer() {
+  getContainer(): HTMLElement | undefined {
     const { getContainer: getModalContainer } = this.props;
     if (typeof getModalContainer === 'function') {
       return getModalContainer();
     }
-    return getModalContainer;
+    if (getModalContainer) {
+      return getModalContainer;
+    }
+    return undefined;
+  }
+
+  getOffsetContainer(): HTMLElement {
+    const { mount } = this.state;
+    if (mount) {
+      const { parentElement } = mount;
+      if (parentElement) {
+        return parentElement;
+      }
+    }
+    const container = this.getContainer();
+    if (container && container !== ModalManager.root) {
+      return container;
+    }
+    return getDocument(window).body;
   }
 
   render() {
@@ -473,7 +527,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 export function getContainer(loop?: boolean) {
   const { length } = containerInstances;
   if (length) {
-    return containerInstances[0];
+    return containerInstances.find(instance => instance.getOffsetContainer().tagName.toLowerCase() === 'body') || containerInstances[0];
   }
   if (loop !== true) {
     const root = getRoot();

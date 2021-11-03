@@ -1,4 +1,4 @@
-import React, { cloneElement, CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
+import React, { cloneElement, CSSProperties, isValidElement, Key, ReactElement, ReactNode, MouseEvent as ReactMouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import defer from 'lodash/defer';
@@ -48,6 +48,8 @@ function getTransformOrigin(position: MousePosition, style: CSSProperties) {
   // const originY = `${y - (toPx(top) || 0) - scrollTop}px`;
   return `${originX} ${originY}`;
 }
+
+const HANDLE_MIN_SIZE = 50;
 
 export interface ModalProps extends ViewComponentProps {
   __deprecate__?: boolean;
@@ -168,7 +170,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   mousePosition?: MousePosition | null;
 
-  moveEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : getDocument(window));
+  moveEvent: EventManager = new EventManager();
 
   okCancelEvent: EventManager = new EventManager();
 
@@ -360,13 +362,15 @@ export default class Modal extends ViewComponent<ModalProps> {
       },
     } = this;
 
+    const center = !drawer && !this.offset;
+
     return super.getClassName({
-      [`${prefixCls}-center`]: !drawer && !('left' in style || 'right' in style) && !this.offset,
+      [`${prefixCls}-center`]: center && !('left' in style || 'right' in style),
       [`${prefixCls}-fullscreen`]: fullScreen,
       [`${prefixCls}-drawer`]: drawer,
       [`${prefixCls}-border`]: drawer ? drawerBorder : border,
       [`${prefixCls}-drawer-${toUsefulDrawerTransitionName(drawerTransitionName)}`]: drawer,
-      [`${prefixCls}-auto-center`]: autoCenter && !drawer && !fullScreen,
+      [`${prefixCls}-auto-center`]: autoCenter && center && !fullScreen,
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-active`]: active,
     });
@@ -404,34 +408,48 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   @autobind
-  handleHeaderMouseDown(downEvent: MouseEvent) {
+  handleHeaderMouseDown(downEvent: ReactMouseEvent<HTMLDivElement, MouseEvent>) {
     const { element, contentNode, props: { autoCenter = getConfig('modalAutoCenter') } } = this;
     if (element && contentNode) {
       const { prefixCls } = this;
-      const { clientX, clientY } = downEvent;
-      const { offsetLeft, offsetTop } = element;
-      const heightW = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-      let autoMove = 0;
+      const { clientX, clientY, currentTarget } = downEvent;
+      const clzz = classes(element);
+      const { offsetLeft, offsetParent } = element;
+      const {
+        scrollTop = 0, scrollLeft = 0,
+        offsetHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+        offsetWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+      } = offsetParent || {};
+      const offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
+      const { offsetWidth: headerWidth, offsetHeight: headerHeight } = currentTarget;
       this.moveEvent
+        .setTarget(getDocument(window))
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
           const { clientX: moveX, clientY: moveY } = moveEvent;
-          classes(element).remove(`${prefixCls}-center`);
-          const left = pxToRem(Math.max(offsetLeft + moveX - clientX, 0));
-          const top = pxToRem(Math.max(offsetTop + autoMove + moveY - clientY, 0));
+          clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);
+          const left = pxToRem(
+            Math.min(
+              Math.max(
+                offsetLeft + moveX - clientX,
+                scrollLeft - headerWidth + HANDLE_MIN_SIZE,
+              ),
+              scrollLeft + offsetWidth - HANDLE_MIN_SIZE,
+            ),
+          );
+          const top = pxToRem(
+            Math.min(
+              Math.max(
+                offsetTop + moveY - clientY,
+                scrollTop - headerHeight + HANDLE_MIN_SIZE,
+              ),
+              scrollTop + offsetHeight - HANDLE_MIN_SIZE,
+            ),
+          );
           this.offset = [left, top];
-          if (autoCenter && classes(element).has(`${prefixCls}-auto-center`)) {
-            classes(element).remove(`${prefixCls}-auto-center`);
-            autoMove = Math.max((heightW - contentNode.clientHeight) / 2, 0);
-            Object.assign(element.style, {
-              left,
-              top: pxToRem(autoMove),
-            });
-          } else {
-            Object.assign(element.style, {
-              left,
-              top,
-            });
-          }
+          Object.assign(element.style, {
+            left,
+            top,
+          });
         })
         .addEventListener('mouseup', () => {
           this.moveEvent.clear();

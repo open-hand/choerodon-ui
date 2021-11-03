@@ -1199,6 +1199,22 @@ export function treeUnSelectParent(dataSet: DataSet, record: Record, unSelected:
   }
 }
 
+export function exchangeTreeNode(newRecord: Record, oldRecord: Record): Record {
+  const { parent, children } = oldRecord;
+  newRecord.parent = parent;
+  newRecord.children = children;
+  if (parent) {
+    const { children: parentChildren } = parent;
+    if (parentChildren) {
+      const index = parentChildren.indexOf(oldRecord);
+      if (index !== -1) {
+        parentChildren.splice(index, 1, newRecord);
+      }
+    }
+  }
+  return newRecord;
+}
+
 export function getIf<T, V>(target: T, propName: string, defaultValue: V | (() => V)): V {
   const value = target[propName];
   if (value === undefined) {
