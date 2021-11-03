@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
+- 🐞 `Tabs`: Fix the nesting style problem.
 
 ## 1.5.0-beta.0
 
