@@ -25,6 +25,7 @@ import {
   checkParentByInsert,
   concurrentPromise,
   doExport,
+  exchangeTreeNode,
   exportExcel,
   findBindFieldBy,
   findRootParent,
@@ -1075,7 +1076,7 @@ export default class DataSet extends EventManager {
           }
         });
       }
-      this.clearCachedSelected();
+      this.setCachedSelected([]);
       this.setState(ALL_PAGE_SELECTION, enable);
       processAfterAllPageSelection.forEach(cb => cb());
     }
@@ -2085,8 +2086,11 @@ export default class DataSet extends EventManager {
     this.clearCachedModified();
   }
 
+  @action
   clearCachedSelected(): void {
-    this.setCachedSelected([]);
+    const cachedSelected = this.cachedSelected.slice();
+    this.cachedSelected = [];
+    this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: cachedSelected });
   }
 
   @action
@@ -2781,7 +2785,7 @@ Then the query method will be auto invoke.`,
         if (index !== -1) {
           const cached = cachedModified.splice(index, 1)[0];
           cached.isCached = false;
-          return cached;
+          return exchangeTreeNode(cached, record);
         }
         return record;
       });
@@ -2815,7 +2819,7 @@ Then the query method will be auto invoke.`,
           const selected = cachedSelected.splice(index, 1)[0];
           selected.isCached = false;
           if (cache) {
-            return selected;
+            return exchangeTreeNode(selected, record);
           }
           record.isSelected = !isAllPageSelection;
         }

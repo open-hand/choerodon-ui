@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
 - 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。
 - 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
+- 🐞 `<pro>Lov`: 修复多选值回显到树形列表时数据显示问题。
 
 ## 1.5.0-beta.0
 
