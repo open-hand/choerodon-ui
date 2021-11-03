@@ -214,6 +214,7 @@ const locale: Locale = {
     verify_slider_hint: 'Swipe right to the end to complete verification',
     verify_finish: 'Complete verification',
     ok_btn: 'Sure',
+    type_mismatch: 'Please input a valid {label}.',
   },
   Lov: {
     choose: 'Choose',

@@ -56,9 +56,12 @@ export default class SecretField extends TextField<SecretFieldProps> {
   @autobind
   @action
   setSecretEnable() {
-    // 从配置项获取是否开启脱敏组件
+    const { record } = this;
     const secretFieldEnableConfig = getConfig('secretFieldEnable');
-    if (secretFieldEnableConfig) {
+    if (!record?.get('_token')) {
+      this.secretEnable = false;
+    } else if (secretFieldEnableConfig) {
+      // 从配置项获取是否开启脱敏组件
       this.secretEnable = secretFieldEnableConfig();
     }
   }
@@ -66,7 +69,8 @@ export default class SecretField extends TextField<SecretFieldProps> {
   @action
   private openModal() {
     const label = this.getLabel();
-    const { readOnly, name } = this;
+    const { readOnly, name, record } = this;
+    const pattern = this.getProp('pattern');
     if (!this.modal) {
       const { modalProps } = this.props;
       this.modal = open({
@@ -77,7 +81,8 @@ export default class SecretField extends TextField<SecretFieldProps> {
             readOnly={readOnly}
             name={name || ''}
             label={label}
-            token={this.record?.get('_token')}
+            pattern={pattern}
+            token={record?.get('_token')}
             onChange={this.handleSecretChange}
             onQueryFlag={this.setQueryFlag}
             countDown={this.countDown}
@@ -126,5 +131,13 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   isEditable(): boolean {
     return !this.secretEnable && super.isEditable();
+  }
+
+  getWrapperClassNames(...args): string {
+    const { prefixCls, secretEnable, readOnly } = this;
+    return super.getWrapperClassNames(...args, {
+      [`${prefixCls}-secret-table-border`]: secretEnable && this.getProp('_inTable'),
+      [`${prefixCls}-secret-form-read-border`]: secretEnable && !this.getProp('_inTable') && readOnly,
+    });
   }
 }

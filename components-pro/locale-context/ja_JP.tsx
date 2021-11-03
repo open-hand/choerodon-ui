@@ -218,6 +218,7 @@ const locale: Locale = {
     verify_slider_hint: '検証を完了するには、最後まで右にスワイプします',
     verify_finish: '完全な検証',
     ok_btn: 'もちろん',
+    type_mismatch: '正しく入力してください{label}。',
   },
   Lov: {
     choose: '選択してください',

@@ -15,7 +15,7 @@ import Option from '../option/Option';
 import TextField from '../text-field';
 import Button from '../button/Button';
 import { modalChildrenProps } from '../modal/interface';
-import VerifySlider from './verify-slider/VerifySlider';
+import VerifySlider from './VerifySlider';
 import CountDownButton from './CountDownButton';
 import { ButtonColor } from '../button/enum';
 
@@ -24,6 +24,7 @@ export interface SecretFieldViewProps {
   readOnly?: boolean;
   name: string;
   label: string;
+  pattern?: RegExp;
   token?: string;
   countDown: any;
   onChange?: (data?: any) => void;
@@ -50,6 +51,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
       this.setFormDs();
       this.setCaptchaKey('');
       this.setCaptcha('');
+      this.setValidate(true);
     })
   }
 
@@ -138,8 +140,13 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   // 确定修改
   @autobind
   handleEdit() {
-    const { name, token = '', onChange, modal } = this.props;
+    const { name, token = '', onChange, modal, pattern } = this.props;
     const editValue = this.formDs?.current?.get(name);
+    if (pattern?.test(editValue) === false) {
+      // 正则校验不通过
+      this.setValidate(false);
+      return;
+    }
     // 接口查询重置值
     const secretFieldSaveData = getConfig('secretFieldSaveData');
     const params = { _token: token, fieldName: name, value: editValue };
@@ -181,7 +188,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
 
   @action
   setFormDs() {
-    const { name, label } = this.props;
+    const { name, label, pattern } = this.props;
     const { verifyTypeObj } = this;
     let initData: object[] = [];
     // 传入验证方式时，设置初始值
@@ -212,6 +219,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
             name,
             type: FieldType.string,
             label,
+            pattern,
           },
         ],
         events: {
@@ -233,6 +241,14 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   @action
   setCaptcha(value) {
     this.captcha = value;
+  }
+
+  // 对编辑的值进行正则校验
+  @observable validate;
+
+  @action
+  setValidate(value) {
+    this.validate = value;
   }
 
   // 模态框页面显示。verify:验证页，slider:滑块，edit:编辑页
@@ -283,8 +299,8 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   }
 
   render() {
-    const { flag, captcha, verifyTypeObj, prefixCls } = this;
-    const { readOnly, name, countDown } = this.props;
+    const { flag, captcha, verifyTypeObj, prefixCls, validate } = this;
+    const { readOnly, label, name, countDown } = this.props;
 
     return (
       <div className={`${prefixCls}-modal`}>
@@ -327,8 +343,10 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
                   <>
                     <TextField name={name} colSpan={4} />
                     <td colSpan={4} className={`${prefixCls}-modal-btns`} >
+                      {!validate &&
+                        <><p className={`${prefixCls}-modal-validate`} >{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
-                      <Button onClick={this.handleEdit} color={ButtonColor.primary}> {$l('SecretField', 'ok_btn')}</Button>
+                      <Button onClick={this.handleEdit} color={ButtonColor.primary}>{$l('SecretField', 'ok_btn')}</Button>
                     </td>
                   </>
                 )

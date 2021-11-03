@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import { $l } from '../../locale-context';
-import Icon from '../../icon';
-import Button from '../../button';
-import autobind from '../../_util/autobind';
-import EventManager from '../../_util/EventManager';
-import './VerifySlider.less';
+import { $l } from '../locale-context';
+import Icon from '../icon';
+import Button from '../button';
+import autobind from '../_util/autobind';
+import EventManager from '../_util/EventManager';
+// import './style/VerifySlider.less';
 
 interface VerifySliderProps {
   onSuccess?: () => void;
@@ -151,7 +151,6 @@ export default class VerifySlider extends Component<VerifySliderProps> {
             </div>
             <div className={`${prefixCls}-simple-verify-box`}>
               <div
-                // style={slideStyle}
                 className={`${prefixCls}-simple-verify-slide`}
                 ref={this.slideOnRef}
               />

@@ -58,6 +58,7 @@ const App = () => {
             name: 'phone',
             type: 'string',
             label: '手机号',
+            pattern: /^1[3-9]\d{9}$/,
           },
           {
             name: 'idCard',
@@ -66,7 +67,7 @@ const App = () => {
             readOnly: true,
           },
         ],
-        data:[{phone:'110'}],
+        data:[{phone:'110',_token:'111'}],
       }),
     [],
   );
@@ -74,7 +75,7 @@ const App = () => {
   return (
     <Form dataSet={ds}>
       <SecretField name="phone" />
-      <SecretField name="idCard" border={false}  />
+      <SecretField name="idCard" />
     </Form>
   );
 };
