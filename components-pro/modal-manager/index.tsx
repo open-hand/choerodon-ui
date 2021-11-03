@@ -1,6 +1,7 @@
 import { action, observable } from 'mobx';
 import { ModalProps } from '../modal/Modal';
 import { MousePosition } from '../_util/DocumentUtils';
+import { ModalContainerState } from '../modal-container/ModalContainer';
 
 export type DrawerOffsets = { 'slide-up': number[]; 'slide-right': number[]; 'slide-down': number[]; 'slide-left': number[] };
 
@@ -10,7 +11,13 @@ export interface IModalContainer {
 
   clear(closeByLocationChange?: boolean);
 
+  getContainer(): HTMLElement | undefined;
+
+  getOffsetContainer(): HTMLElement;
+
   mergeModals(modals: ModalProps[]);
+
+  state: ModalContainerState;
 }
 
 export type ModalManagerType = {
@@ -21,8 +28,8 @@ export type ModalManagerType = {
   clear: (closeByLocationChange?: boolean) => void;
   mousePositionEventBound: WeakSet<Document>;
   mousePosition?: MousePosition;
-  defaultBodyStyle?: { overflow; paddingRight };
-  root?: HTMLDivElement;
+  containerStyles: WeakMap<HTMLElement, { overflow: string, paddingRight: string, position: string }>
+  root?: HTMLElement;
 }
 
 const KeyGen = (function* (id) {
@@ -63,6 +70,7 @@ const ModalManager: ModalManagerType = {
   mousePositionEventBound: new WeakSet<Document>(),
   containerInstances,
   clear,
+  containerStyles: new WeakMap(),
 };
 
 export default ModalManager;
