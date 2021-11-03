@@ -28,6 +28,7 @@ import EmailField from '../email-field/EmailField';
 import ColorPicker from '../color-picker/ColorPicker';
 import Output from '../output/Output';
 import Attachment from '../attachment/Attachment';
+import SecretField from '../secret-field/SecretField';
 import DataSet from '../data-set/DataSet';
 import TableStore, { CUSTOMIZED_KEY } from './TableStore';
 import { TablePaginationConfig } from './Table';
@@ -64,7 +65,9 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
           <Option value>{$l('Table', 'query_option_yes')}</Option>
           <Option value={false}>{$l('Table', 'query_option_no')}</Option>
         </ObserverSelect>
-      ) : <ObserverCheckBox />;
+      ) : (
+        <ObserverCheckBox />
+      );
     case FieldType.number:
       return <ObserverNumberField {...flatProps} />;
     case FieldType.currency:
@@ -91,6 +94,8 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
       return <ColorPicker isFlat={isFlat} />;
     case FieldType.attachment:
       return <Attachment viewMode="popup" funcType={FuncType.link} />;
+    case FieldType.secret:
+      return <SecretField isFlat={isFlat} />;
     case FieldType.string:
       return <ObserverTextField isFlat={isFlat} />;
     default:
@@ -175,7 +180,7 @@ export function isStickySupport(): boolean {
   if (typeof window !== 'undefined') {
     const vendorList = ['', '-webkit-', '-ms-', '-moz-', '-o-'];
     const stickyElement = document.createElement('div');
-    STICKY_SUPPORT = vendorList.some((vendor) => {
+    STICKY_SUPPORT = vendorList.some(vendor => {
       stickyElement.style.position = `${vendor}sticky`;
       if (stickyElement.style.position !== '') {
         return true;
@@ -197,7 +202,9 @@ export function findCell(
   const current = record || currentEditRecord || dataSet.current;
   if (name !== undefined && current && node.element) {
     const wrapperSelector =
-      !isStickySupport() && overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
+      !isStickySupport() && overflowX && lock
+        ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} `
+        : '';
     const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"]`;
     const td = node.element.querySelector(selector);
     if (td) {
@@ -229,9 +236,7 @@ export function isCanEdictingRow(element): boolean {
 export function findIndexedSibling(element, direction): HTMLTableRowElement | null {
   const sibling: HTMLTableRowElement | null =
     direction > 0 ? element.nextElementSibling : element.previousElementSibling;
-  if (
-    isCanEdictingRow(element)
-  ) {
+  if (isCanEdictingRow(element)) {
     return sibling;
   }
   return findIndexedSibling(sibling, direction);
@@ -318,9 +323,11 @@ export function getTableHeaderRows(
 
 export function isDropresult(dropResult: any): dropResult is DropResult {
   if (dropResult && dropResult.destination) {
-    return ((typeof (dropResult as DropResult).source.index === 'number')
-      && (typeof (dropResult as DropResult).destination === 'object')
-      && (typeof (dropResult as DropResult).destination!.index === 'number'));
+    return (
+      typeof (dropResult as DropResult).source.index === 'number' &&
+      typeof (dropResult as DropResult).destination === 'object' &&
+      typeof (dropResult as DropResult).destination!.index === 'number'
+    );
   }
   return false;
 }
