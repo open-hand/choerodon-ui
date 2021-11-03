@@ -203,6 +203,19 @@ export interface Locale {
     unselect_all: string;
     common_item: string;
   };
+  SecretField: {
+    edit: string;
+    query: string;
+    verify_type: string;
+    verify_value: string;
+    verify_code: string;
+    get_verify_code: string;
+    cancel: string;
+    next_step: string;
+    verify_slider_hint: string;
+    verify_finish: string;
+    ok_btn: string;
+  };
   Lov: {
     choose: string;
   };

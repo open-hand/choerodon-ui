@@ -40,6 +40,7 @@ timeline: true
 - 🌟 `Steps`: Added `type` property.
 - 🌟 `Steps`: Added `onChange` callback.
 - 🌟 `Tabs`: Added `showMore` property.
+- 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `ImageCrop.AvatarUploader`: Remove `minRectSize`, `subTitle` properties, rename `defaultRectSize` property as `rectSize`.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.

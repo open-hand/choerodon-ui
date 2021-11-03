@@ -76,6 +76,7 @@ export enum FieldType {
   color = 'color',
   json = 'json',
   attachment = 'attachment',
+  secret = 'secret',
   reactNode = 'reactNode',
 }
 
