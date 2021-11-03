@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
 - 🌟 `<pro>ModalProvider`: 新增 getContainer 属性。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
