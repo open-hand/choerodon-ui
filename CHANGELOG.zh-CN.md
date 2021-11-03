@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
@@ -22,7 +23,6 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
 - 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。
 - 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
-- 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 
 ## 1.5.0-beta.0
 
@@ -41,6 +41,7 @@ timeline: true
 - 🌟 `Steps`: 新增 type 属性。
 - 🌟 `Steps`: 新增 onChange 回调。
 - 🌟 `Tabs`: 新增 showMore 属性。
+- 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `ImageCrop.AvatarUploader`: 移除 minRectSize, subTitle 属性，defaultRectSize 更名为 rectSize。
 - 💄 `<pro>DataSet`: 优化内存, 优化树形数据性能, 优化校验性能。
 - 💄 `RcTrigger`: 使组件成为观察者。

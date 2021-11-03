@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
@@ -22,7 +23,6 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
-- 🌟 `<pro>SecretField`: Added `SecretField` component.
 
 ## 1.5.0-beta.0
 
@@ -41,6 +41,7 @@ timeline: true
 - 🌟 `Steps`: Added `type` property.
 - 🌟 `Steps`: Added `onChange` callback.
 - 🌟 `Tabs`: Added `showMore` property.
+- 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `ImageCrop.AvatarUploader`: Remove `minRectSize`, `subTitle` properties, rename `defaultRectSize` property as `rectSize`.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
