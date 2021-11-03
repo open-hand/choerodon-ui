@@ -123,6 +123,10 @@ export interface NumberFieldProps<V = number> extends TextFieldProps<V> {
    * 千分位分组显示
    */
   numberGrouping?: boolean;
+  /**
+   * 是否启用UP DOWN键盘事件
+   */
+  keyboard?: boolean;
 }
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
@@ -157,6 +161,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
      * 是否开启长按步距增加
      */
     formatterOptions: PropTypes.object,
+    /**
+     * 是否启用UP DOWN键盘事件
+     */
+    keyboard: PropTypes.bool,
     ...TextField.propTypes,
   };
 
@@ -269,6 +277,19 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     });
   }
 
+  @computed
+  get keyboardValue(): boolean {
+    const { keyboard } = this.props;
+    if (keyboard !== undefined) {
+      return keyboard;
+    }
+    const numberFieldKeyboard = getConfig('numberFieldKeyboard');
+    if (numberFieldKeyboard !== undefined) {
+      return numberFieldKeyboard;
+    }
+    return true;
+  }
+
   @autobind
   savePlusRef(ref) {
     this.plusElement = ref;
@@ -371,7 +392,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @autobind
   handleKeyDown(e) {
-    if (!this.disabled && !this.readOnly) {
+    if (!this.disabled && !this.readOnly && this.keyboardValue) {
       switch (e.keyCode) {
         case KeyCode.UP:
           this.handleKeyDownUp(e);
@@ -424,7 +445,15 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       'precision',
       'numberGrouping',
       'maxLength',
+      'minLength',
     ]);
+  }
+
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
+    delete otherProps.maxLength;
+    delete otherProps.keyboard;
+    return otherProps;
   }
 
   getObservableProps(props, context) {

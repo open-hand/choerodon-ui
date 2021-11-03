@@ -241,6 +241,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     ]);
   }
 
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
+    delete otherProps.maxLength;
+    return otherProps;
+  }
+
   getObservableProps(props, context): any {
     return {
       ...super.getObservableProps(props, context),
