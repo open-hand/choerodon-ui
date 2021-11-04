@@ -502,6 +502,8 @@ export default class DataSet extends EventManager {
 
   @observable state: ObservableMap<string, any>;
 
+  $needToSortFields?: boolean;
+
   get isAllPageSelection(): boolean {
     return this.getState(ALL_PAGE_SELECTION) === true;
   }
@@ -2316,6 +2318,7 @@ export default class DataSet extends EventManager {
    */
   @action
   addField(name: string, fieldProps?: FieldProps): Field {
+    this.$needToSortFields = true;
     const { fields } = this;
     const oldField = fields.get(name);
     if (oldField) {
