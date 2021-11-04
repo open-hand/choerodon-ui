@@ -297,6 +297,10 @@ export type Config = {
   customizedSave?: CustomizedSave;
   customizedLoad?: CustomizedLoad;
   /**
+   * NumberField 是否启用UP DOWN键盘事件
+   */
+  numberFieldKeyboard?: boolean;
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;
@@ -510,6 +514,7 @@ const defaultConfig = {
   tooltipTheme: defaultTooltipTheme,
   showValidation: ShowValidation.tooltip,
   attachment: defaultAttachment,
+  numberFieldKeyboard: true,
 };
 
 export type DefaultConfig = typeof defaultConfig;

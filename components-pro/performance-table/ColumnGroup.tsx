@@ -17,12 +17,14 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
     headerHeight = 80,
     verticalAlign,
     width,
+    left,
     ...rest
   } = props;
   const height = headerHeight / 2;
   const styles: React.CSSProperties = {
     height,
     width,
+    left
   };
   const contentStyles = { ...styles, verticalAlign };
 
@@ -37,12 +39,12 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
       </div>
 
       {React.Children.map(children, (node: React.ReactElement) => {
-        const nodeStyles = { height, ...node.props?.style, top: styles.height };
-
+        const nodeStyles = { height, ...node.props?.style, top: styles.height, left: styles.left, };
+        const isColumnGroup = (node.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP
         return React.cloneElement(node, {
           className: addPrefix('cell'),
           style: nodeStyles,
-          headerHeight: height,
+          headerHeight: height * (isColumnGroup ? 2 : 1),
           verticalAlign,
           children: <span className={addPrefix('cell-content')}>{node.props.children}</span>
         });

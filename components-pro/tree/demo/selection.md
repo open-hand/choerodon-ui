@@ -63,7 +63,8 @@ class App extends React.Component {
             />
           </Col>
           <Col span={12}>
-            <Button onClick={() => console.log('this.ds.selected', this.ds.selected)}>selected</Button>
+            <Button onClick={() => this.ds.select(this.ds.get(7))}>selected</Button>
+            <Button onClick={() => this.ds.unSelect(this.ds.get(7))}>unSelected</Button>
           </Col>
         </Row>
       </>
