@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
 - 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
+- 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
 - 🐞 `Tabs`: Fix the nesting style problem.
 
 ## 1.5.0-beta.0
