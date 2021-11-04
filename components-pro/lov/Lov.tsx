@@ -420,9 +420,8 @@ export default class Lov extends Select<LovProps> {
     } else if (this.multiple) {
       if (this.resetOptions(noCache)) {
         options.query();
-      } else {
-        options.releaseCachedSelected();
       }
+      options.releaseCachedSelected();
     }
   }
 
