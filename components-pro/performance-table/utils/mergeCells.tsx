@@ -1,5 +1,6 @@
 import * as React from 'react';
 import isFunction from 'lodash/isFunction';
+import groupBy from 'lodash/groupBy'
 import get from 'lodash/get';
 import ColumnGroup from '../ColumnGroup';
 import HeaderCell from '../HeaderCell';
@@ -13,6 +14,9 @@ function cloneCell(Cell, props) {
 
 function mergeCells(cells) {
   const nextCells: React.ReactElement[] = [];
+  let columnGroupLeft: number = 0
+  const mergeMaxCells: any = []
+  let currentGroupName: string = ''
   for (let i = 0; i < cells.length; i += 1) {
     const {
       width,
@@ -22,6 +26,7 @@ function mergeCells(cells) {
       isHeaderCell,
       headerHeight,
       verticalAlign,
+      parent,
     } = cells[i].props;
 
     const groupChildren: React.ReactElement<HeaderCellProps>[] = [];
@@ -43,6 +48,7 @@ function mergeCells(cells) {
           onSortColumn,
           sortColumn,
           sortType,
+          headerHeight,
         } = nextCell.props;
 
         if (j !== 0) {
@@ -60,26 +66,53 @@ function mergeCells(cells) {
             sortColumn={sortColumn}
             sortType={sortType}
             onSortColumn={onSortColumn}
+            headerHeight={headerHeight}
           >
             {children}
           </HeaderCell>,
         );
       }
-      nextCells.push(
-        cloneCell(cells[i], {
+      if (parent) {
+        const isSomeGroup = currentGroupName === parent.props.header
+        mergeMaxCells.push({
+          index: i,
+          content: (<ColumnGroup
+            left={!isSomeGroup ? 0 : columnGroupLeft}
+            width={nextWidth}
+            header={groupHeader}
+            verticalAlign={verticalAlign}
+          >
+            {groupChildren}
+          </ColumnGroup>),
+          ...parent.props,
+          headerHeight: ((headerHeight / 3) * 2),
           width: nextWidth,
-          children: (
-            <ColumnGroup
-              width={nextWidth}
-              headerHeight={headerHeight}
-              header={groupHeader}
-              verticalAlign={verticalAlign}
-            >
-              {groupChildren}
-            </ColumnGroup>
-          ),
-        }),
-      );
+        })
+        // 区分不同的组名
+        if (!isSomeGroup) {
+          columnGroupLeft = nextWidth
+          currentGroupName = parent.props.header
+        } else {
+          columnGroupLeft += nextWidth
+        }
+      } else {
+        nextCells.push(
+          cloneCell(cells[i], {
+            width: nextWidth,
+            children: (
+              <ColumnGroup
+                width={nextWidth}
+                headerHeight={headerHeight}
+                header={groupHeader}
+                verticalAlign={verticalAlign}
+              >
+                {groupChildren}
+              </ColumnGroup>
+            ),
+          }),
+        );
+      }
+
       continue;
     } else if (colSpan) {
       /**
@@ -125,6 +158,34 @@ function mergeCells(cells) {
       continue;
     }
     nextCells.push(cells[i]);
+  }
+
+  if (mergeMaxCells.length) {
+    const groupByHeader = groupBy(mergeMaxCells, 'header')
+    for (let key in groupByHeader) {
+      const mapGroup = groupByHeader[key]
+      const firstMerge = mapGroup[0]
+      const width = mapGroup.reduce((total, col) => total += col.width, 0)
+      const { align, verticalAlign, headerHeight, header, fixed } = firstMerge
+      nextCells.push(
+        cloneCell(cells[firstMerge.index], {
+          width,
+          align,
+          fixed,
+          children: (
+            <ColumnGroup
+              width={width}
+              headerHeight={headerHeight}
+              header={header}
+              verticalAlign={verticalAlign}
+            >
+              {mapGroup.map(x => x.content)}
+            </ColumnGroup>
+          ),
+        }),
+      );
+    }
+
   }
   return nextCells;
 }

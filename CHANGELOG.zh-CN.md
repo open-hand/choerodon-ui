@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: 新增 keyboard 属性，控制UP DOWN键盘事件。
 - 🌟 `<pro>ModalProvider`: 新增 getContainer 属性。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
+- 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
 - 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。

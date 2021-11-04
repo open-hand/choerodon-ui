@@ -132,6 +132,10 @@ type StartRowSpan = {
   height: number;
 }
 
+interface ColumnCellProps extends ColumnProps {
+  parent?: React.ReactElement
+}
+
 interface TableState {
   headerOffset?: Offset;
   tableOffset?: Offset;
@@ -744,6 +748,35 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     });
   }
 
+  getFlattenColumn(column: React.ReactElement, cellProps: ColumnCellProps, array: Array<React.ReactElement>) {
+    const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
+    for (let index = 0; index < childColumns.length; index += 1) {
+      const childColumn = childColumns[index];
+      const parentProps = {
+        align,
+        fixed,
+        verticalAlign,
+        ...cellProps,
+      }
+      const groupCellProps: any = {
+        ...childColumn?.props,
+        ...parentProps,
+      };
+      if (index === 0) {
+        groupCellProps.groupCount = childColumns.length;
+        groupCellProps.groupHeader = header;
+      }
+      if ((childColumn.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
+        const res = this.getFlattenColumn(childColumn, { ...parentProps, parent: column }, array)
+        array.concat(res);
+      } else {
+        array.push(React.cloneElement(childColumn, groupCellProps))
+      }
+
+    }
+    return array
+  }
+
   /**
    * 获取 columns ReactElement 数组
    * - 处理 children 中存在 <Column> 数组的情况
@@ -773,30 +806,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         };
         cellProps.hidden = column.props.hidden;
         if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
-          const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
-          return childColumns.map((childColumn, index) => {
-            // 把 ColumnGroup 设置的属性覆盖到 Column
-            const groupCellProps: any = {
-              ...childColumn?.props,
-              ...cellProps,
-              align,
-              fixed,
-              verticalAlign,
-            };
-
-            /**
-             * 为分组中的第一列设置属性:
-             * groupCount: 分组子项个数
-             * groupHeader: 分组标题
-             * resizable: 设置为不可自定义列宽
-             */
-            if (index === 0) {
-              groupCellProps.groupCount = childColumns.length;
-              groupCellProps.groupHeader = header;
-            }
-
-            return React.cloneElement(childColumn, groupCellProps);
-          });
+          return this.getFlattenColumn(column, cellProps, [])
         }
         return React.cloneElement(column, cellProps);
       }
