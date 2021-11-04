@@ -64,7 +64,7 @@ export interface ElementProps {
   /**
    * 外层自定义样式名
    */
-  className?: string;
+  className?: string | undefined;
   /**
    * 实际元素自定义样式名
    */
@@ -72,7 +72,7 @@ export interface ElementProps {
   /**
    * 内链样式
    */
-  style?: CSSProperties;
+  style?: CSSProperties | undefined;
   /**
    * 是否隐藏
    */

@@ -362,7 +362,6 @@ export default class Lov extends Select<LovProps> {
     }
     if (multiple) {
       const needToFetch = new Map();
-      options.clearCachedSelected();
       options.setCachedSelected(
         this.getValues().map(value => {
           const primitiveValue = primitive ? value : value[valueField];
@@ -420,9 +419,10 @@ export default class Lov extends Select<LovProps> {
       options.query();
     } else if (this.multiple) {
       if (this.resetOptions(noCache)) {
-        options.query(1, undefined, true);
+        options.query();
+      } else {
+        options.releaseCachedSelected();
       }
-      options.releaseCachedSelected();
     }
   }
 

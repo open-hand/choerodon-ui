@@ -34,11 +34,9 @@ function isDrawerTransitionName(drawerTransitionName: string): drawerTransitionN
   return drawerTransitionNames.includes(drawerTransitionName);
 }
 
-export function toUsefulDrawerTransitionName(drawerTransitionName?: string): DrawerTransitionName | undefined {
-  if (drawerTransitionName) {
-    if (isDrawerTransitionName(drawerTransitionName)) {
-      return drawerTransitionName;
-    }
-    return 'slide-right';
+export function toUsefulDrawerTransitionName(drawerTransitionName?: string): DrawerTransitionName {
+  if (drawerTransitionName && isDrawerTransitionName(drawerTransitionName)) {
+    return drawerTransitionName;
   }
+  return 'slide-right';
 }
