@@ -277,17 +277,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     });
   }
 
-  @computed
-  get keyboardValue(): boolean {
-    const { keyboard } = this.props;
-    if (keyboard !== undefined) {
-      return keyboard;
+  get keyboard(): boolean {
+    if ('keyboard' in this.props) {
+      return this.props.keyboard!;
     }
-    const numberFieldKeyboard = getConfig('numberFieldKeyboard');
-    if (numberFieldKeyboard !== undefined) {
-      return numberFieldKeyboard;
-    }
-    return true;
+    return getConfig('numberFieldKeyboard') !== false;
   }
 
   @autobind
@@ -392,7 +386,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @autobind
   handleKeyDown(e) {
-    if (!this.disabled && !this.readOnly && this.keyboardValue) {
+    if (!this.disabled && !this.readOnly && this.keyboard) {
       switch (e.keyCode) {
         case KeyCode.UP:
           this.handleKeyDownUp(e);
@@ -446,13 +440,13 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       'numberGrouping',
       'maxLength',
       'minLength',
+      'keyboard',
     ]);
   }
 
   getOtherProps() {
     const otherProps = super.getOtherProps();
     delete otherProps.maxLength;
-    delete otherProps.keyboard;
     return otherProps;
   }
 
