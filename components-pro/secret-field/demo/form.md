@@ -65,7 +65,6 @@ const App = () => {
             name: 'bankCard',
             type: 'string',
             label: '银行卡号',
-            restrict: "a-zA-Z0-9-@._,",
           },
           {
             name: 'idCard',
@@ -82,8 +81,8 @@ const App = () => {
   return (
     <Form dataSet={ds}>
       <SecretField name="phone" />
-      <SecretField name="bankCard" />
-      <SecretField name="idCard" />
+      <SecretField name="bankCard" restrict="a-zA-Z0-9-@._," />
+      <SecretField name="idCard" renderer={({ value }) => value || '-'} />
     </Form>
   );
 };

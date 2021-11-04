@@ -38,7 +38,6 @@ export default class SecretField extends TextField<SecretFieldProps> {
     super(props, context);
     runInAction(() => {
       this.setQueryFlag(true);
-      this.setSecretEnable();
     })
   }
 
@@ -113,6 +112,10 @@ export default class SecretField extends TextField<SecretFieldProps> {
   @autobind
   handleOpenModal() {
     return this.openModal();
+  }
+
+  componentDidMount() {
+    this.setSecretEnable();
   }
 
   getSuffix(): ReactNode {
