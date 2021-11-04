@@ -51,6 +51,7 @@ timeline: true
 - 🌟 `Tabs`: 新增 showMore 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `ImageCrop.AvatarUploader`: 移除 minRectSize, subTitle 属性，defaultRectSize 更名为 rectSize。
+- 🌟 `<pro>Lov`: 新增 drawer 模式 和 viewRenderer 属性。
 - 💄 `<pro>DataSet`: 优化内存, 优化树形数据性能, 优化校验性能。
 - 💄 `RcTrigger`: 使组件成为观察者。
 - 💄 `<pro>Select`: 使用 options 数据源模式下，支持 searchMatcher 配置搜索参数。

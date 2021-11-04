@@ -218,6 +218,7 @@ export interface Locale {
   };
   Lov: {
     choose: string;
+    selected: string;
   };
   Transfer: {
     items: string;

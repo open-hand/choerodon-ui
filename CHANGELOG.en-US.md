@@ -51,6 +51,7 @@ timeline: true
 - 🌟 `Tabs`: Added `showMore` property.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `ImageCrop.AvatarUploader`: Remove `minRectSize`, `subTitle` properties, rename `defaultRectSize` property as `rectSize`.
+- 🌟 `<pro>Lov`: Added `drawer` mode and `viewRenderer` property.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.
