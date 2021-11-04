@@ -38,6 +38,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
     super(props, context);
     runInAction(() => {
       this.setQueryFlag(true);
+      this.setSecretEnable();
     })
   }
 
@@ -50,16 +51,21 @@ export default class SecretField extends TextField<SecretFieldProps> {
     this.queryFlag = value;
   }
 
-  @observable secretEnable;
+  private secretEnable: Boolean = false;
 
-  @autobind
+  get isSecretEnable(): Boolean {
+    const { record } = this;
+    if (!record?.get('_token')) {
+      // 新增数据，record没有token，显示为textfield
+      return false;
+    }
+    return this.secretEnable;
+  }
+
   @action
   setSecretEnable() {
-    const { record } = this;
     const secretFieldEnableConfig = getConfig('secretFieldEnable');
-    if (!record?.get('_token')) {
-      this.secretEnable = false;
-    } else if (secretFieldEnableConfig) {
+    if (secretFieldEnableConfig) {
       // 从配置项获取是否开启脱敏组件
       this.secretEnable = secretFieldEnableConfig();
     }
@@ -114,14 +120,10 @@ export default class SecretField extends TextField<SecretFieldProps> {
     return this.openModal();
   }
 
-  componentDidMount() {
-    this.setSecretEnable();
-  }
-
   getSuffix(): ReactNode {
-    const { readOnly, queryFlag } = this;
+    const { readOnly, queryFlag, isSecretEnable } = this;
     // 未开启脱敏组件
-    if (!this.secretEnable) {
+    if (!isSecretEnable) {
       const { suffix } = this.props;
       return suffix ? this.wrapperSuffix(suffix) : null;
     }
@@ -135,14 +137,13 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   isEditable(): boolean {
-    return !this.secretEnable && super.isEditable();
+    return !this.isSecretEnable && super.isEditable();
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls, secretEnable, readOnly } = this;
+    const { prefixCls, isSecretEnable } = this;
     return super.getWrapperClassNames(...args, {
-      [`${prefixCls}-secret-table-border`]: secretEnable && this.getProp('_inTable'),
-      [`${prefixCls}-secret-form-read-border`]: secretEnable && !this.getProp('_inTable') && readOnly,
+      [`${prefixCls}-secret`]: isSecretEnable,
     });
   }
 }

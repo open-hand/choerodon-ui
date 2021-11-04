@@ -24,13 +24,11 @@ const App = () => {
             type: 'secret',
             label: '脱敏组件',
             readOnly: true,
-            _inTable: true,
           },
           {
             name: 'secretField1',
             type: 'secret',
             label: '脱敏组件1',
-            _inTable: true,
           },
         ],
         data: [
@@ -52,11 +50,11 @@ const App = () => {
     () => [
       {
         name: 'secretField',
-        editor:<SecretField />,
+        editor:<SecretField border={false}/>,
       },
       {
         name: 'secretField1',
-        editor:<SecretField />,
+        editor:<SecretField border={false}/>,
       },
     ],
     [],
