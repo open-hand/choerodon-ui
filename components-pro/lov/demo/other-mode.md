@@ -20,23 +20,6 @@ function nodeRenderer({ record }) {
   return record.get('text');
 }
 
-function ViewRenderer({ dataSet }) {
-  const treeProps = {
-    selectable: false,
-    checkable: true,
-    dataSet,
-    renderer: nodeRenderer,
-    multiple: true,
-    showLine: {
-      showLeafIcon: false,
-    },
-    defaultExpandAll: true,
-  };
-  return (
-    <Tree {...treeProps} />
-  );
-}
-
 const App = () => {
   const [selectedKeys, setSelectedKeys] = React.useState([]);
   const ds = React.useMemo(
@@ -78,8 +61,24 @@ const App = () => {
           },
         ],
       }),
-    []
+    [],
   );
+
+  const viewRenderer = React.useCallback(({ dataSet, lovConfig, textField, valueField, label, multiple }) => {
+    console.log('info: ', dataSet, lovConfig, textField, valueField, label, multiple);
+    const treeProps = {
+      selectable: false,
+      checkable: true,
+      dataSet,
+      renderer: nodeRenderer,
+      multiple: true,
+      showLine: {
+        showLeafIcon: false,
+      },
+      defaultExpandAll: true,
+    };
+    return <Tree {...treeProps} />;
+  }, []);
 
   return (
     <>
@@ -106,9 +105,7 @@ const App = () => {
             dataSet={ds}
             name="drawer_code_string"
             viewMode="drawer"
-            viewRenderer={({ dataSet }) => {
-              return <ViewRenderer dataSet={dataSet} />;
-            }}
+            viewRenderer={viewRenderer}
           />
         </Col>
       </Row>

@@ -37,7 +37,21 @@ import { TextFieldProps } from '../text-field/TextField';
 
 export type Events = { [key: string]: Function };
 
-export type ViewRenderer = ({ dataSet }: { dataSet: DataSet }) => ReactNode;
+export type ViewRenderer = ({
+  dataSet,
+  lovConfig,
+  textField,
+  valueField,
+  label,
+  multiple,
+}: {
+  dataSet: DataSet;
+  lovConfig: LovConfig | undefined;
+  textField: string | undefined;
+  valueField: string | undefined;
+  label: string | undefined;
+  multiple: boolean;
+}) => ReactNode;
 
 export type LovConfigItem = {
   display?: string;

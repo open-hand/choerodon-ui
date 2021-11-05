@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
 - 🌟 `<pro>NumberField`: Added the `keyboard` property to control `UP` `DOWN` keyboard events.
 - 🌟 `<pro>ModalProvider`: Added `getContainer` property.
+- 🌟 `<pro>Lov`: Added `drawer` mode and `viewRenderer` property.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
@@ -52,7 +53,6 @@ timeline: true
 - 🌟 `Tabs`: Added `showMore` property.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `ImageCrop.AvatarUploader`: Remove `minRectSize`, `subTitle` properties, rename `defaultRectSize` property as `rectSize`.
-- 🌟 `<pro>Lov`: Added `drawer` mode and `viewRenderer` property.
 - 💄 `<pro>DataSet`: Optimize memory. Optimize tree data performance, Optimize verification performance.
 - 💄 `RcTrigger`: Make Component be observer.
 - 💄 `<pro>Select`: In the `options` data source mode, `searchMatcher` is supported to configure search parameters.

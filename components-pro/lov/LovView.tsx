@@ -271,14 +271,37 @@ export default class LovView extends Component<LovViewProps> {
   }
 
   render() {
-    const { modal, viewRenderer, dataSet, viewMode } = this.props;
+    const {
+      modal,
+      viewRenderer,
+      dataSet,
+      viewMode,
+      config: lovConfig,
+      textField,
+      valueField,
+      label,
+      multiple,
+    } = this.props;
     if (modal) {
       modal.handleOk(() => this.handleSelect('close'));
     }
     return (
       <>
         {viewMode === 'drawer' && this.renderSelectionList()}
-        <div>{viewRenderer ? toJS(viewRenderer({ dataSet })) : this.renderTable()}</div>
+        <div>
+          {viewRenderer
+            ? toJS(
+              viewRenderer({
+                dataSet,
+                lovConfig,
+                textField, 
+                valueField, 
+                label, 
+                multiple,
+              }),
+            )
+            : this.renderTable()}
+        </div>
       </>
     );
   }
