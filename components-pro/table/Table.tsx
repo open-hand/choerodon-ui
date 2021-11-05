@@ -118,7 +118,7 @@ export interface SummaryBarProps {
 
 export interface TableQueryBarHookProps {
   dataSet: DataSet;
-  queryDataSet?: DataSet;
+  queryDataSet: DataSet;
   buttons: ReactElement<ButtonProps>[];
   queryFields: ReactElement<any>[];
   queryFieldsLimit: number;
