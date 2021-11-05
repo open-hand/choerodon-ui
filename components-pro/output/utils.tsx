@@ -33,9 +33,6 @@ export function defaultOutputRenderer(renderOption: RenderProps) {
           />
         );
       }
-      if (field.get('type', record) === FieldType.secret) {
-        return <SecretField readOnly name={name} record={record} />;
-      }
     }
   }
   return defaultRenderer(renderOption);

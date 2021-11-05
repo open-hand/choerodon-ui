@@ -30,7 +30,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
   countDown = new CountDown();
 
   // eslint-disable-next-line camelcase
-  static __IS_IN_CELL_EDITOR = true;
+  // static __IS_IN_CELL_EDITOR = true;
 
   modal;
 
@@ -121,19 +121,32 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getSuffix(): ReactNode {
-    const { readOnly, queryFlag, isSecretEnable } = this;
+    const { readOnly, queryFlag, isSecretEnable, name, record } = this;
     // 未开启脱敏组件
     if (!isSecretEnable) {
       const { suffix } = this.props;
       return suffix ? this.wrapperSuffix(suffix) : null;
     }
     // 开启脱敏组件
-    return queryFlag ? this.wrapperSuffix(
-      <Icon type={readOnly ? 'visibility-o' : 'edit-o'} />,
-      {
-        onClick: this.handleOpenModal,
-      },
-    ) : null
+    // 编辑
+    if (!readOnly) {
+      return this.wrapperSuffix(
+        <Icon type='edit-o' />,
+        {
+          onClick: this.handleOpenModal,
+        },
+      )
+    }
+    // 只读：已读/值为空不显示查看按钮
+    if (queryFlag && readOnly && record?.get(name)) {
+      return this.wrapperSuffix(
+        <Icon type='visibility-o' />,
+        {
+          onClick: this.handleOpenModal,
+        },
+      )
+    }
+    return null;
   }
 
   isEditable(): boolean {
@@ -141,9 +154,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls, isSecretEnable } = this;
+    const { prefixCls } = this;
     return super.getWrapperClassNames(...args, {
-      [`${prefixCls}-secret`]: isSecretEnable,
+      [`${prefixCls}-secret`]: true,
     });
   }
 }
