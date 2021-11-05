@@ -498,6 +498,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getOtherProps() {
+    return this.getOtherPropsTextField();
+  }
+
+  getOtherPropsTextField() {
     const otherProps = super.getOtherProps();
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');

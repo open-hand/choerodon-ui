@@ -103,6 +103,10 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     }
   }
 
+  getSuffix(): ReactNode {
+    return null;
+  }
+
   renderWrapper(): ReactNode {
     const { resize = ResizeType.none } = this.props;
     const text = this.getTextNode();
@@ -110,6 +114,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     const wrapperProps = this.getWrapperProps() || {};
     const elementProps = this.getOtherProps() || {};
     const lengthElement = this.renderLengthInfo();
+    const suffix = this.getSuffix();
     if (this.resized) {
       const { style: wrapperStyle } = wrapperProps;
       wrapperProps.style = {
@@ -133,9 +138,10 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
             resizable ? (
               <ReactResizeObserver onResize={this.handleResize} resizeProp={getResizeProp(resize)}>
                 {element}
+                {suffix}
                 {lengthElement}
               </ReactResizeObserver>
-            ) : <>{element}{lengthElement}</>
+            ) : <>{element}{suffix}{lengthElement}</>
           }
           {this.renderFloatLabel()}
         </label>
