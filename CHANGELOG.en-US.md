@@ -15,14 +15,23 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `numberFieldKeyboard` property.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
+- 🌟 `<pro>NumberField`: Added the `keyboard` property to control `UP` `DOWN` keyboard events.
+- 🌟 `<pro>ModalProvider`: Added `getContainer` property.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
+- 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
+- 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
-- 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property.
+- 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property. Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
+- 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties.
+- 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
+- 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
+- 🐞 `Tabs`: Fix the nesting style problem.
 
 ## 1.5.0-beta.0
 

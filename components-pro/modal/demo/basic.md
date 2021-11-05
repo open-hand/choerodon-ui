@@ -59,6 +59,7 @@ const App = () => {
       maskClosable: 'dblclick',
       okProps: { disabled: true },
       closeOnLocationChange: false,
+      autoCenter: true,
     });
   }, [Modal]);
 

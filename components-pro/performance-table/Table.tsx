@@ -25,7 +25,7 @@ import {
   DropResult,
   ResponderProvided,
 } from 'react-beautiful-dnd';
-
+import isPromise from 'is-promise';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import LocaleReceiver from 'choerodon-ui/lib/locale-provider/LocaleReceiver';
 import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider';
@@ -130,6 +130,10 @@ type StartRowSpan = {
   rowIndex: number;
   rowSpan: number;
   height: number;
+}
+
+interface ColumnCellProps extends ColumnProps {
+  parent?: React.ReactElement
 }
 
 interface TableState {
@@ -323,7 +327,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   rowSpanList: Array<TableRowSpanIndex> = [];
   nextRowZIndex: Array<number> = [];
   calcStartRowSpan: StartRowSpan = { rowIndex: 0, rowSpan: 0, height: 0 };
-  
+
   _cacheCalcStartRowSpan: Array<StartRowSpan> = []; // 缓存合并行的计算结果
 
   _cacheCells: any = null;
@@ -744,6 +748,35 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     });
   }
 
+  getFlattenColumn(column: React.ReactElement, cellProps: ColumnCellProps, array: Array<React.ReactElement>) {
+    const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
+    for (let index = 0; index < childColumns.length; index += 1) {
+      const childColumn = childColumns[index];
+      const parentProps = {
+        align,
+        fixed,
+        verticalAlign,
+        ...cellProps,
+      }
+      const groupCellProps: any = {
+        ...childColumn?.props,
+        ...parentProps,
+      };
+      if (index === 0) {
+        groupCellProps.groupCount = childColumns.length;
+        groupCellProps.groupHeader = header;
+      }
+      if ((childColumn.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
+        const res = this.getFlattenColumn(childColumn, { ...parentProps, parent: column }, array)
+        array.concat(res);
+      } else {
+        array.push(React.cloneElement(childColumn, groupCellProps))
+      }
+
+    }
+    return array
+  }
+
   /**
    * 获取 columns ReactElement 数组
    * - 处理 children 中存在 <Column> 数组的情况
@@ -773,30 +806,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         };
         cellProps.hidden = column.props.hidden;
         if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
-          const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
-          return childColumns.map((childColumn, index) => {
-            // 把 ColumnGroup 设置的属性覆盖到 Column
-            const groupCellProps: any = {
-              ...childColumn?.props,
-              ...cellProps,
-              align,
-              fixed,
-              verticalAlign,
-            };
-
-            /**
-             * 为分组中的第一列设置属性:
-             * groupCount: 分组子项个数
-             * groupHeader: 分组标题
-             * resizable: 设置为不可自定义列宽
-             */
-            if (index === 0) {
-              groupCellProps.groupCount = childColumns.length;
-              groupCellProps.groupHeader = header;
-            }
-
-            return React.cloneElement(childColumn, groupCellProps);
-          });
+          return this.getFlattenColumn(column, cellProps, [])
         }
         return React.cloneElement(column, cellProps);
       }
@@ -1511,12 +1521,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
   };
 
-  handleDragEnd = (resultDrag: DropResult, provided: ResponderProvided) => {
+  handleDragEnd = async (resultDrag: DropResult, provided: ResponderProvided) => {
     const { onDragEnd, onDragEndBefore } = this.props;
     const { data } = this.state;
     let resultBefore: DropResult | undefined = resultDrag;
     if (onDragEndBefore) {
-      const result = onDragEndBefore(resultDrag, provided);
+      const resultStatus = onDragEndBefore(resultDrag, provided);
+      let result = isPromise(resultStatus) ? await resultStatus : resultStatus
       if (!result) {
         return;
       }
@@ -1527,8 +1538,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (resultBefore && resultBefore.destination) {
       const resData = [...data];
       arrayMove(resData, resultBefore.source.index, resultBefore.destination.index);
-      this.setState({
-        data: resData,
+      // 使setState变成同步处理
+      setTimeout(() => {
+        this.setState({
+          data: resData,
+        });
       });
       if (onDragEnd) {
         onDragEnd(resultBefore, provided, resData);
@@ -1877,15 +1891,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   };
 
   onRowClick(rowData, event, rowIndex, index) {
-    const { highLightRow, rowKey, rowDraggable } = this.props;
-    const rowNum = rowDraggable ? rowData[rowKey] : rowIndex;
+    const { highLightRow, rowKey, rowDraggable, isTree } = this.props;
+    const rowNum = rowDraggable || isTree ? rowData[rowKey] : rowIndex;
     if (highLightRow) {
       const tableRows = Object.values(this.tableRows);
       let ref = this.tableRows[index] && this.tableRows[index][0];
-      if (rowDraggable) {
-        ref = tableRows.find(row => row[1][rowKey] === rowData[rowKey]) ?
-          tableRows.find(row => row[1][rowKey] === rowData[rowKey])![0] :
-          this.tableRows[index][0];
+      if (rowDraggable || isTree) {
+        const findRow = tableRows.find(row => row[1] && row[1][rowKey] === rowData[rowKey])
+        ref = findRow ? findRow![0] : this.tableRows[index][0];
       }
       if (this._lastRowIndex !== rowNum && ref) {
         if (this._lastRowIndex || this._lastRowIndex === 0) {
@@ -2114,7 +2127,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
 
       return (
-        <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles}>
+        <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
           {fixedLeftCellGroupWidth ? (
             <CellGroup
               fixed="left"
@@ -2186,7 +2199,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
 
     return (
-      <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles}>
+      <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
         <CellGroup>{mergeCells(cells)}</CellGroup>
         {shouldRenderExpandedRow && this.renderRowExpanded(rowData)}
       </Row>
@@ -2502,7 +2515,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                 this.calcStartRowSpan = tempCalc
                 this._cacheCalcStartRowSpan.push(tempCalc)
               }
-              hasSpanRow.push({ rowIndex: i, render: this.renderRowData(renderCols, rowData, rowProps, false) });
+              const isExits = hasSpanRow.find(x => x.rowIndex === i)
+              if (!isExits) {
+                hasSpanRow.push({ rowIndex: i, render: this.renderRowData(renderCols, rowData, rowProps, false) });
+              }
               keyIndex++;
             }
           }
