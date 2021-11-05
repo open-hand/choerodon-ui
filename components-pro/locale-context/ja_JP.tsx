@@ -221,6 +221,7 @@ const locale: Locale = {
   },
   Lov: {
     choose: '選択してください',
+    selected: '選択済み',
   },
   Transfer: {
     items: 'アイテム',

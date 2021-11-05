@@ -67,7 +67,7 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
    */
   tabIntoPopupContent?: boolean;
 
-  viewMode?: 'popup' | 'modal';
+  viewMode?: 'popup' | 'modal' | 'drawer';
 }
 
 export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<T> {
@@ -122,7 +122,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
      */
     tabIntoPopupContent: PropTypes.bool,
 
-    viewMode: PropTypes.oneOf(['none', 'popup', 'modal', 'list']),
+    viewMode: PropTypes.oneOf(['none', 'popup', 'modal', 'list', 'drawer']),
     ...TextField.propTypes,
   };
 

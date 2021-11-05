@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: 新增 keyboard 属性，控制UP DOWN键盘事件。
 - 🌟 `<pro>ModalProvider`: 新增 getContainer 属性。
 - 🌟 `<pro>IntlField`: 新增 type 属性，支持多行输入。
+- 🌟 `<pro>Lov`: 新增 drawer 模式 和 viewRenderer 属性。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 🐞 `<pro>DataSet`: 修复新添字段后字段顺序不正确的问题。

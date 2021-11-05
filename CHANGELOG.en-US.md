@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: Added the `keyboard` property to control `UP` `DOWN` keyboard events.
 - 🌟 `<pro>ModalProvider`: Added `getContainer` property.
 - 🌟 `<pro>IntlField`: Added `type` property, supports multi-line input.
+- 🌟 `<pro>Lov`: Added `drawer` mode and `viewRenderer` property.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
