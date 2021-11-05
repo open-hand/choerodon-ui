@@ -149,7 +149,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     );
   }
 
-  handleEnterDown() {
+  handleEnterDown(_) {
     // noop
   }
 }

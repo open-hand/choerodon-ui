@@ -18,7 +18,7 @@ export interface IntlListProps {
   maxLengths?: object;
   disabled?: boolean;
   readOnly?: boolean;
-  intlType?: IntlType;
+  type?: IntlType;
   rows?: number;
   cols?: number;
   resize?: ResizeType;
@@ -34,11 +34,11 @@ export default class IntlList extends Component<IntlListProps> {
   };
 
   renderOptions() {
-    const { name, lang, maxLengths, intlType, rows, cols, resize } = this.props;
+    const { name, lang, maxLengths, type, rows, cols, resize } = this.props;
     const { supports } = localeContext;
     const tlsKey = getConfig('tlsKey');
-    const FieldTag = intlType === IntlType.multipleLine ? TextArea : ObserverTextField;
-    const otherProps = intlType === IntlType.multipleLine ? { rows, cols, resize } : {};
+    const FieldTag = type === IntlType.multipleLine ? TextArea : ObserverTextField;
+    const otherProps = type === IntlType.multipleLine ? { rows, cols, resize } : {};
     return Object.keys(supports).map(key => {
       const maxLengthProps = maxLengths && maxLengths[key] ? { maxLength: maxLengths[key] } : {};
       return (

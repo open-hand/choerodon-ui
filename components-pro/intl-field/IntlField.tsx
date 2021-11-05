@@ -5,6 +5,7 @@ import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import TextArea, { TextAreaProps } from '../text-area/TextArea';
+import { TextField } from '../text-field/TextField';
 import { ResizeType } from '../text-area/enum';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
@@ -23,7 +24,7 @@ import isSame from '../_util/isSame';
 export interface IntlFieldProps extends TextAreaProps {
   modalProps?: ModalProps;
   maxLengths?: object;
-  intlType?: IntlType;
+  type?: IntlType;
 }
 
 @observer
@@ -34,7 +35,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     ...TextArea.defaultProps,
     rows: 3,
     resize: ResizeType.vertical,
-    intlType: IntlType.singleLine,
+    type: IntlType.singleLine,
   };
 
   modal;
@@ -45,13 +46,13 @@ export default class IntlField extends TextArea<IntlFieldProps> {
 
   constructor(props, context) {
     super(props, context);
-    const suffixCls = this.props.intlType !== IntlType.multipleLine ? 'input' : 'textarea';
+    const suffixCls = this.props.type !== IntlType.multipleLine ? 'input' : 'textarea';
     this.prefixCls = getProPrefixCls(suffixCls, props.prefixCls);
   }
   
   openModal = async () => {
     if (!this.modal) {
-      const { modalProps, maxLengths, intlType, rows, cols, resize } = this.props;
+      const { modalProps, maxLengths, type, rows, cols, resize } = this.props;
       const { record, lang, name, element } = this;
       const { supports } = localeContext;
       const maxLengthList = {};
@@ -85,7 +86,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
             name={name}
             lang={lang}
             maxLengths={maxLengthList}
-            intlType={intlType}
+            type={type}
             rows={rows}
             cols={cols}
             resize={resize}
@@ -137,7 +138,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
 
   @autobind
   handleKeyDown(e) {
-    if (e.keyCode === KeyCode.DOWN && this.props.intlType !== IntlType.multipleLine) {
+    if (e.keyCode === KeyCode.DOWN && this.props.type !== IntlType.multipleLine) {
       stopEvent(e);
       this.openModal();
     }
@@ -161,9 +162,9 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   }
 
   getOmitPropsKeys(): string[] {
-    if (this.props.intlType === IntlType.multipleLine) {
+    if (this.props.type === IntlType.multipleLine) {
       return super.getOmitPropsKeys().concat([
-        'intlType',
+        'type',
       ]);
     }
     return super.getOmitPropsKeys().concat([
@@ -173,15 +174,15 @@ export default class IntlField extends TextArea<IntlFieldProps> {
       'resize',
       'autoSize',
       'onResize',
-      'intlType',
+      'type',
     ]);
   }
 
   getOtherProps() {
-    if (this.props.intlType === IntlType.multipleLine) {
+    if (this.props.type === IntlType.multipleLine) {
       return super.getOtherProps();
     }
-    return this.getOtherPropsTextField();
+    return TextField.prototype.getOtherProps.call(this);
   }
 
   getWrapperClassNames(...args): string {
@@ -205,11 +206,11 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     );
   }
 
-  handleEnterDown() {
-    if (this.props.intlType === IntlType.multipleLine) {
-      super.handleEnterDown();
+  handleEnterDown(e) {
+    if (this.props.type === IntlType.multipleLine) {
+      super.handleEnterDown(e);
     } else {
-      this.blur();
+      TextField.prototype.handleEnterDown.call(this, e);
     }
   }
 
@@ -220,7 +221,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   }
 
   renderWrapper(): ReactNode {
-    if (this.props.intlType === IntlType.multipleLine) {
+    if (this.props.type === IntlType.multipleLine) {
       return super.renderWrapper();
     }
     return this.renderGroup();

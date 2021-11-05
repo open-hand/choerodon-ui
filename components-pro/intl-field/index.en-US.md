@@ -21,14 +21,11 @@ title: IntlField
 |-----------|------------------------------------------|------------|--------|
 | modalProps | 弹窗属性，详见[ModalProps](/components/modal/#Modal) | object  |  |
 | maxLengths | 多语言弹窗内选项输入最大长度(主语言 Field maxLength 配置优先) | object |  |
-| intlType | 单行或多行输入，可选值：`singleLine` \| `multipleLine` | string | singleLine |
-| cols | 文本域宽(intlType为multipleLine有效) | number  | - |
-| rows | 文本域高(intlType为multipleLine有效) | number  | 3 |
-| resize | 是否能够拖拽调整大小(intlType为multipleLine有效)，可选值： `none` `both` `vertical` `horizontal` | string  | vertical |
-| autoSize | 自适应内容高度(intlType为multipleLine有效)，可设置为 true\| false 或对象：{ minRows: 2, maxRows: 6 } | boolean\| object  | false |
-| onResize | 大小调整回调(intlType为multipleLine有效) | (width, height) => void |  |
+| type | Single or multiple lines of input, options: `singleLine` `multipleLine` | string | singleLine |
+| rows | Text field height(The property is available when type is multipleLine) | number  | 3 |
+| resize | Whether you can drag and drop to resize(The property is available when type is multipleLine), options： `none` `both` `vertical` `horizontal` | string  | vertical |
 
-更多属性请参考 [ViewComponent](/components-pro/text-field/#TextField)。
+更多属性请参考 [TextField](/components-pro/text-field/#TextField) 或 [TextArea](/components-pro/text-area/#TextArea)。
 
 <style>
 .code-box .c7n-row {
