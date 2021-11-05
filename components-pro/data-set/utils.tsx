@@ -1,6 +1,6 @@
 import queryString from 'querystringify';
 import moment, { isDate, isMoment } from 'moment';
-import { isArrayLike } from 'mobx';
+import { isArrayLike, ObservableMap } from 'mobx';
 import { AxiosRequestConfig } from 'axios';
 import isBoolean from 'lodash/isBoolean';
 import isObject from 'lodash/isObject';
@@ -1048,63 +1048,68 @@ export function exportExcel(data, excelName) {
   });
 }
 
-// export function getSortedFields(fields: Fields): [string, Field][] {
-//   const normalFields: [string, Field][] = [];
-//   const objectBindFields: [string, Field][] = [];
-//   const bindFields: [string, Field][] = [];
-//   const transformResponseField: [string, Field][] = [];
-//   const dynamicFields: [string, Field][] = [];
-//   const dynamicObjectBindFields: [string, Field][] = [];
-//   const dynamicBindFields: [string, Field][] = [];
-//   [...fields.entries()].forEach((entry) => {
-//     const [, field] = entry;
-//     const dynamicProps = field.get('computedProps') || field.get('dynamicProps');
-//     if (dynamicProps) {
-//       if (dynamicProps.bind) {
-//         if (field.type === FieldType.object) {
-//           dynamicObjectBindFields.push(entry);
-//         } else {
-//           dynamicBindFields.push(entry);
-//         }
-//       } else {
-//         dynamicFields.push(entry);
-//       }
-//     } else {
-//       const bind = field.get('bind');
-//       if (bind) {
-//         const targetNames = bind.split('.');
-//         targetNames.pop();
-//         if (targetNames.some((targetName) => {
-//           const target = fields.get(targetName);
-//           return target && (target.get('computedProps') || target.get('dynamicProps'));
-//         })) {
-//           if (field.type === FieldType.object) {
-//             dynamicObjectBindFields.push(entry);
-//           } else {
-//             dynamicBindFields.push(entry);
-//           }
-//         } else if (field.get('transformResponse')) {
-//           transformResponseField.push(entry);
-//         } else if (field.type === FieldType.object) {
-//           objectBindFields.push(entry);
-//         } else {
-//           bindFields.push(entry);
-//         }
-//       } else {
-//         normalFields.push(entry);
-//       }
-//     }
-//   });
-//   return [
-//     ...normalFields,
-//     ...objectBindFields,
-//     ...bindFields,
-//     ...transformResponseField,
-//     ...dynamicFields,
-//     ...dynamicObjectBindFields,
-//     ...dynamicBindFields,
-//   ];
-// }
+export function getSortedFields(dataSet: DataSet): ObservableMap {
+  const { fields } = dataSet;
+  if (dataSet.$needToSortFields) {
+    const normalFields: [string, Field][] = [];
+    const objectBindFields: [string, Field][] = [];
+    const bindFields: [string, Field][] = [];
+    const transformResponseField: [string, Field][] = [];
+    const dynamicFields: [string, Field][] = [];
+    const dynamicObjectBindFields: [string, Field][] = [];
+    const dynamicBindFields: [string, Field][] = [];
+    fields.forEach((field, name, map) => {
+      const entry: [string, Field] = [name, field];
+      const dynamicProps = field.get('dynamicProps') || field.get('computedProps');
+      const type = field.get('type');
+      const bind = field.get('bind');
+      const transformResponse = field.get('transformResponse');
+      if (dynamicProps) {
+        if (dynamicProps.bind) {
+          if (type === FieldType.object) {
+            dynamicObjectBindFields.push(entry);
+          } else {
+            dynamicBindFields.push(entry);
+          }
+        } else {
+          dynamicFields.push(entry);
+        }
+      } else if (bind) {
+        const targetNames = bind.split('.');
+        targetNames.pop();
+        if (targetNames.some((targetName) => {
+          const target = map.get(targetName);
+          return target && (target.get('computedProps') || target.get('dynamicProps'));
+        })) {
+          if (type === FieldType.object) {
+            dynamicObjectBindFields.push(entry);
+          } else {
+            dynamicBindFields.push(entry);
+          }
+        } else if (transformResponse) {
+          transformResponseField.push(entry);
+        } else if (type === FieldType.object) {
+          objectBindFields.push(entry);
+        } else {
+          bindFields.push(entry);
+        }
+      } else {
+        normalFields.push(entry);
+      }
+    });
+    fields.replace([
+      ...normalFields,
+      ...objectBindFields,
+      ...bindFields,
+      ...transformResponseField,
+      ...dynamicFields,
+      ...dynamicObjectBindFields,
+      ...dynamicBindFields,
+    ]);
+    delete dataSet.$needToSortFields;
+  }
+  return fields;
+}
 
 export async function concurrentPromise(
   promiseLoaders: { getPromise: () => Promise<any> }[],
