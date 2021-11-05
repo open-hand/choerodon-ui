@@ -18,6 +18,7 @@ import { modalChildrenProps } from '../modal/interface';
 import VerifySlider from './VerifySlider';
 import CountDownButton from './CountDownButton';
 import { ButtonColor } from '../button/enum';
+import { ValueChangeAction } from '../text-field/enum';
 
 export interface SecretFieldViewProps {
   modal?: modalChildrenProps;
@@ -331,7 +332,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
                       </Option>)}
                     </SelectBox>
                     <TextField name="verifyNumber" colSpan={4} disabled />
-                    <TextField name="verifyCode" colSpan={3} />
+                    <TextField name="verifyCode" colSpan={3} valueChangeAction={ValueChangeAction.input} />
                     <CountDownButton onClick={this.handleClickButton} countDown={countDown} />
                     <td className={`${prefixCls}-modal-btns`} colSpan={4}>
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
