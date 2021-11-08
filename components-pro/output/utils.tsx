@@ -3,7 +3,6 @@ import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { RenderProps } from '../field/FormField';
 import { BooleanValue, FieldType } from '../data-set/enum';
 import Attachment from '../attachment/Attachment';
-import SecretField from '../secret-field/SecretField';
 import { FuncType } from '../button/enum';
 import { defaultRenderer } from '../field/utils';
 
@@ -32,9 +31,6 @@ export function defaultOutputRenderer(renderOption: RenderProps) {
             funcType={FuncType.link}
           />
         );
-      }
-      if (field.get('type', record) === FieldType.secret) {
-        return <SecretField readOnly name={name} record={record} />;
       }
     }
   }

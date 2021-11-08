@@ -214,6 +214,7 @@ const locale: Locale = {
     verify_slider_hint: '向右滑动到底完成验证',
     verify_finish: '完成验证',
     ok_btn: '确定',
+    type_mismatch: '请输入有效的{label}。',
   },
   Lov: {
     choose: '请选择',
