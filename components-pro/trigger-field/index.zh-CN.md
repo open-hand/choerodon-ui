@@ -24,6 +24,6 @@ title: TriggerField
 | getPopupContainer | 定义浮层的容器，默认为 body | (triggerNode: HTMLElement) => HTMLElement; |  |
 | getPopupAlignTarget | 定义浮层对齐的目标，默认为组件最外层元素 | () => HTMLElement; |  |
 | tabIntoPopupContent | 按 Tab 键进入下拉框中可获焦的元素 | boolean | false |
-| viewMode | 内容的显示模式,  `Lov` 默认值是 `modal` 且目前只有 `Lov` 实现了 `modal` | 'popup', 'modal' | 'popup' |
+| viewMode | 内容的显示模式,  `Lov` 默认值是 `modal` 且目前只有 `Lov` 实现了 `modal` | 'popup', 'modal', 'drawer' | 'popup' |
 
 更多属性请参考 [TextField](/components-pro/text-field/#TextField)。

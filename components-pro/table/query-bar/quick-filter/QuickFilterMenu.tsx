@@ -19,13 +19,12 @@ import TextField from '../../../text-field';
 import { ValueChangeAction } from '../../../text-field/enum';
 import Dropdown from '../../../dropdown';
 import Menu from '../../../menu';
-import DataSet from '../../../data-set/DataSet';
 import Record from '../../../data-set/Record';
 import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
 import isOverflow from '../../../overflow-tip/util';
 
-import Store from './QuickFilterDataSet';
+import Store from './QuickFilterMenuContext';
 
 const modalKey = Modal.key();
 
@@ -182,7 +181,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     menuDataSet,
     prefixCls,
     queryDataSet,
-    filterMenuDS,
+    filterMenuDataSet,
     conditionDataSet,
     onChange = noop,
     // expand,
@@ -190,9 +189,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
     onStatusChange = noop,
     selectFields,
     onOriginalChange = noop,
+    optionDataSet,
+    shouldLocateData,
   } = useContext(Store);
-  const filterNameField = filterMenuDS.getField('filterName');
-  const optionDs: DataSet | undefined = filterNameField ? filterNameField.get('options') as DataSet : undefined;
 
   /**
    * queryDS 筛选赋值并更新初始勾选项
@@ -227,7 +226,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
   };
 
   const handleQueryReset = () => {
-    const { current } = filterMenuDS;
+    const { current } = filterMenuDataSet;
     if (current && current.get('filterName')) {
       // 筛选项重置重新赋值
       conditionAssign();
@@ -244,14 +243,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
       }
     }
     onStatusChange(RecordStatus.sync);
-  }
+  };
 
   /**
    * 定位数据源
    * @param searchId
    */
   const locateData = (searchId?: number | null) => {
-    const { current } = filterMenuDS;
+    const { current } = filterMenuDataSet;
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       const menuRecord = menuDataSet.current;
@@ -286,8 +285,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
    */
   const loadData = async (searchId?: number) => {
     const result = await menuDataSet.query();
-    if (optionDs) {
-      optionDs.loadData(result);
+    if (optionDataSet) {
+      optionDataSet.loadData(result);
     }
     const menuRecord = menuDataSet.current;
     if (menuRecord) {
@@ -296,7 +295,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     if (result && result.length) {
       locateData(searchId);
     } else {
-      const { current } = filterMenuDS;
+      const { current } = filterMenuDataSet;
       if (current) current.set('filterName', undefined);
       locateData();
       if (dataSet.props.autoQuery) {
@@ -307,7 +306,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
 
   const handleChange = (value?: number) => {
     locateData(value);
-  }
+  };
 
   /**
    * 删除该条筛选
@@ -365,7 +364,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
   }
 
   const handleSave = async () => {
-    const filterMenuRecord = filterMenuDS.current;
+    const filterMenuRecord = filterMenuDataSet.current;
     if (!filterMenuRecord || !filterMenuRecord.get('filterName')) {
       menuDataSet.create({});
       openModal('create');
@@ -419,11 +418,11 @@ const QuickFilterMenu = function QuickFilterMenu() {
         }
       }
     }
-  }
+  };
 
   const handleEdit = (record) => {
     openModal('edit', record.get('searchId'));
-  }
+  };
 
   const handleSaveOther = () => {
     const { current } = menuDataSet;
@@ -432,11 +431,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
       current.clearValidationError('searchName');
     }
     openModal('save');
-  }
+  };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (shouldLocateData) {
+      locateData();
+    }
+  }, [shouldLocateData]);
 
   /**
    * 默认设置
@@ -451,8 +452,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
     }
     const res = await menuDataSet.submit();
     const result = await menuDataSet.query();
-    if (optionDs) {
-      optionDs.loadData(result);
+    if (optionDataSet) {
+      optionDataSet.loadData(result);
     }
     if ((res && res.failed) || !res) {
       record.reset();
@@ -468,7 +469,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
    * @param text
    */
   const optionRenderer = ({ record, text }) => {
-    const filterMenuRecord = filterMenuDS.current;
+    const filterMenuRecord = filterMenuDataSet.current;
     const isSelected = String(filterMenuRecord && filterMenuRecord.get('filterName')) === String(record.get('searchId'));
     const isDefault = record.get('defaultFlag') === 1;
     const menu = (
@@ -490,9 +491,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
           {$l('Table', 'rename')}
         </Menu.Item>
         <Menu.Item key='filter_delete'>
-          <span style={{ color: '#F13131' }}>
-            {$l('Table', 'delete_button')}
-          </span>
+          {$l('Table', 'delete_button')}
         </Menu.Item>
       </Menu>
     );
@@ -531,7 +530,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         isFlat
         placeholder={$l('Table', 'fast_filter')}
         className={`${prefixCls}-filterName-select`}
-        dataSet={filterMenuDS}
+        dataSet={filterMenuDataSet}
         name="filterName"
         dropdownMatchSelectWidth={false}
         dropdownMenuStyle={{ width: '1.72rem' }}
@@ -546,7 +545,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
-          {filterMenuDS.current?.get('filterName') && (
+          {filterMenuDataSet.current?.get('filterName') && (
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>

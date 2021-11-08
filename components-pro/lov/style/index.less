@@ -5,6 +5,9 @@
 @select-prefix-cls: ~'@{c7n-pro-prefix}-select';
 @progress-prefix-cls: ~'@{c7n-prefix}-progress';
 @lov-prefix-cls: ~'@{select-prefix-cls}-lov';
+@drawer-prefix-cls: ~'@{modal-prefix-cls}-selection-list';
+@spin-prefix-cls: ~'@{c7n-prefix}-spin-nested-loading';
+@drawer-list-padding: 0.2rem;
 
 .@{modal-prefix-cls} {
   &-body {
@@ -17,6 +20,74 @@
             vertical-align: middle;
           }
         }
+      }
+    }
+  }
+
+  .@{drawer-prefix-cls}-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 3rem;
+    height: 100%;
+    padding-top: @drawer-list-padding;
+    padding-bottom: @drawer-list-padding;
+    background: #fbfbfc;
+    border-left: @border-width-base @border-style-base @border-color-base;
+
+    .@{drawer-prefix-cls}-intro {
+      height: 0.18rem;
+      margin-bottom: 0.1rem;
+      padding-right: @drawer-list-padding;
+      padding-left: @drawer-list-padding;
+      color: @text-color-secondary;
+      font-size: @font-size-sm;
+      line-height: 0.18rem;
+
+      >span {
+        margin: 0 0.02rem;
+        color: @primary-color;
+      }
+    }
+
+    .@{drawer-prefix-cls}-list {
+      height: calc(100% - 0.1rem);
+      padding: 0;
+      overflow-y: auto;
+
+      .@{drawer-prefix-cls}-item {
+        display: flex;
+        align-items: center;
+        height: 0.38rem;
+        padding-right: @drawer-list-padding;
+        padding-left: @drawer-list-padding;
+        font-size: 0.14rem;
+        transition: background-color @animation-duration-slow;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        &>span {
+          flex: 1;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        &>.icon-cancel {
+          width: 0.16rem;
+          color: rgba(0, 0, 0, 0.25);
+          cursor: pointer;
+        }
+      }
+    }
+
+    &+div {
+      width: calc(100% - 2.8rem);
+      &>.@{table-prefix-cls}-wrapper {
+        width: calc(100% - 0.15rem);
       }
     }
   }
@@ -56,7 +127,7 @@
       background-color: transparent;
     }
 
-    .@{c7n-pro-prefix}-btn + .@{c7n-pro-prefix}-btn:not(.@{c7n-pro-prefix}-btn-block) {
+    .@{c7n-pro-prefix}-btn+.@{c7n-pro-prefix}-btn:not(.@{c7n-pro-prefix}-btn-block) {
       margin-left: 0;
     }
   }

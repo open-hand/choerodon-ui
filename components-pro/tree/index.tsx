@@ -196,14 +196,18 @@ export default class Tree extends Component<TreeProps> {
     } = this;
     this.stateCheckedKeys = this.dealDefaultCheckExpand(dataSet, defaultCheckedKeys);
     if (dataSet) {
-      const { checkField } = dataSet.props;
-      if (checkField && checkable && selectable === false) {
-        const field = dataSet.getField(checkField);
-        dataSet.forEach(record => {
-          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
-            record.isSelected = true;
-          }
-        });
+      const { checkField, idField } = dataSet.props;
+      if (checkable && selectable === false) {
+        if (checkField) {
+          const field = dataSet.getField(checkField);
+          dataSet.forEach(record => {
+            if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+              record.isSelected = true;
+            }
+          });
+        } else {
+          this.stateCheckedKeys = dataSet.selected.map(selected => String(idField ? selected.get(idField) : selected.id));
+        }
       }
     }
   }

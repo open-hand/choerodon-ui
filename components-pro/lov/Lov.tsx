@@ -37,6 +37,22 @@ import { TextFieldProps } from '../text-field/TextField';
 
 export type Events = { [key: string]: Function };
 
+export type ViewRenderer = ({
+  dataSet,
+  lovConfig,
+  textField,
+  valueField,
+  label,
+  multiple,
+}: {
+  dataSet: DataSet;
+  lovConfig: LovConfig | undefined;
+  textField: string | undefined;
+  valueField: string | undefined;
+  label: string | undefined;
+  multiple: boolean;
+}) => ReactNode;
+
 export type LovConfigItem = {
   display?: string;
   conditionField?: string;
@@ -101,6 +117,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   showCheckedStrategy?: CheckedStrategy;
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   onSearchMatcherChange?: (searchMatcher?: string) => void;
+  viewRenderer?: ViewRenderer;
 }
 
 @observer
@@ -120,6 +137,7 @@ export default class Lov extends Select<LovProps> {
      */
     searchAction: PropTypes.oneOf([SearchAction.blur, SearchAction.input]),
     showCheckedStrategy: PropTypes.string,
+    viewRenderer: PropTypes.func,
   };
 
   static defaultProps = {
@@ -313,11 +331,11 @@ export default class Lov extends Select<LovProps> {
         border: false,
         size: Size.small,
       };
-      const { onBeforeSelect } = this.props;
+      const { onBeforeSelect, viewMode } = this.props;
       return (
         <LovView
           {...lovViewProps}
-          popup
+          viewMode={viewMode}
           dataSet={options}
           config={config}
           tableProps={mergedTableProps}
@@ -350,9 +368,9 @@ export default class Lov extends Select<LovProps> {
     if (multiple) {
       options.selectionStrategy = this.getProp('showCheckedStrategy') || CheckedStrategy.SHOW_ALL;
     }
-    const { viewMode } = this.observableProps;
+    const { viewMode, viewRenderer } = this.props;
     const { selected } = options;
-    if (viewMode === 'modal') {
+    if (viewMode === 'modal' || viewMode === 'drawer') {
       options.unSelectAll();
       // TODO：lovEvents deprecated
       const { lovEvents } = this.props;
@@ -396,6 +414,8 @@ export default class Lov extends Select<LovProps> {
           };
           if (viewMode === 'popup') {
             fetchCachedSelected();
+          } else if (viewMode === 'drawer' && viewRenderer !== undefined) {
+            return {};
           } else {
             return {
               tableProps: {
@@ -429,21 +449,27 @@ export default class Lov extends Select<LovProps> {
   private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode } = this.observableProps;
-    const { onBeforeSelect } = this.props;
-    if (viewMode === 'modal') {
+    const { onBeforeSelect, viewRenderer } = this.props;
+    const drawer = viewMode === 'drawer';
+    if (viewMode === 'modal' || drawer) {
       const config = this.getConfig();
       this.autoCreate();
       const { options } = this;
+      const hasLovViewRenderer = viewRenderer !== undefined;
       if (!this.modal && config && options) {
         const modalProps = this.getModalProps();
-        const tableProps = this.getTableProps();
+        const tableProps = hasLovViewRenderer ? {} : this.getTableProps();
         const { width, title } = config;
         const lovViewProps = this.beforeOpen(options);
+        const label = this.getProp('label');
+        const valueField = this.getProp('valueField');
+        const textField = this.getProp('textField');
         this.modal = open({
           title,
           children: (
             <LovView
               {...lovViewProps}
+              viewMode={viewMode}
               dataSet={options}
               config={config}
               tableProps={{ ...(lovViewProps && lovViewProps.tableProps), ...tableProps }}
@@ -451,6 +477,10 @@ export default class Lov extends Select<LovProps> {
               onBeforeSelect={onBeforeSelect}
               multiple={this.multiple}
               values={this.getValues()}
+              label={label}
+              valueField={valueField}
+              textField={textField}
+              viewRenderer={viewRenderer}
             />
           ),
           onClose: this.handleLovViewClose,
@@ -466,6 +496,8 @@ export default class Lov extends Select<LovProps> {
             ...(modalProps && modalProps.style),
           },
           afterClose: this.handleLovViewAfterClose,
+          drawer,
+          drawerBorder: !drawer,
         } as ModalProps & { children });
         this.afterOpen(options, fetchSingle);
       }
@@ -694,6 +726,7 @@ export default class Lov extends Select<LovProps> {
       'showCheckedStrategy',
       'onBeforeSelect',
       'onSearchMatcherChange',
+      'viewRenderer',
     ]);
   }
 
