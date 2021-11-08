@@ -60,6 +60,8 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
             const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
             filterBarProps = {
               placeholder,
+              border: false,
+              clearButton: true,
             };
           }
           const props: any = {
@@ -90,6 +92,7 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
 
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
     const { tableStore: { prefixCls } } = this.context;
+    // @ts-ignore
     return <TableDynamicFilterBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 

@@ -3,6 +3,7 @@
 
 @intl-prefix-input: ~'@{c7n-pro-prefix}-input';
 @intl-prefix-intl: ~'@{intl-prefix-input}-intl';
+@intl-prefix-textarea: ~'@{c7n-pro-prefix}-textarea';
 .@{intl-prefix-input} {
     &-suffix-button {
         .@{intl-prefix-intl} {
@@ -13,4 +14,8 @@
     }
 }
 
-
+.@{intl-prefix-textarea}-wrapper {
+    .@{intl-prefix-textarea} {
+        padding-right: 0.24rem;
+    }
+}

@@ -217,6 +217,7 @@ const locale: Locale = {
   },
   Lov: {
     choose: '请选择',
+    selected: '已选择',
   },
   Transfer: {
     items: '项',
