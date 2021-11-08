@@ -74,6 +74,10 @@
     z-index: @zindex-modal-container;
   }
 
+  &-container-embedded & {
+    position: absolute;
+  }
+
   .modal-active;
   .modal-border;
 
@@ -86,6 +90,7 @@
     top: 0;
     right: 0;
     bottom: 0;
+    z-index: 10;
   }
 
   &-header-button {

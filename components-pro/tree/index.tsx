@@ -15,7 +15,7 @@ import { CheckInfo } from 'choerodon-ui/lib/rc-components/tree/Tree';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import { getKey, getTreeNodes, NodeRenderer, TreeNodeRenderer } from './util';
-import { BooleanValue, DataSetSelection } from '../data-set/enum';
+import { BooleanValue, DataSetEvents, DataSetSelection } from '../data-set/enum';
 import Spin from '../spin';
 
 export interface C7nNodeEvent extends EventDataNode {
@@ -129,6 +129,8 @@ export default class Tree extends Component<TreeProps> {
 
   @observable stateLoadedKeys: string[];
 
+  inCheckExpansion = false;
+
   componentWillMount() {
     this.handleDataSetLoad();
     this.processDataSetListener(true);
@@ -151,10 +153,14 @@ export default class Tree extends Component<TreeProps> {
   }
 
   processDataSetListener(flag: boolean) {
-    const { dataSet } = this.props;
+    const { dataSet, selectable, checkable } = this.props;
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
-      handler.call(dataSet, 'load', this.handleDataSetLoad);
+      handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
+      if (checkable && selectable === false) {
+        handler.call(dataSet, DataSetEvents.batchSelect, this.handleBatchSelect);
+        handler.call(dataSet, DataSetEvents.batchUnSelect, this.handleUnBatchSelect);
+      }
     }
   }
 
@@ -183,10 +189,27 @@ export default class Tree extends Component<TreeProps> {
     const {
       props: {
         dataSet,
+        checkable,
+        selectable,
         defaultCheckedKeys,
       },
     } = this;
     this.stateCheckedKeys = this.dealDefaultCheckExpand(dataSet, defaultCheckedKeys);
+    if (dataSet) {
+      const { checkField, idField } = dataSet.props;
+      if (checkable && selectable === false) {
+        if (checkField) {
+          const field = dataSet.getField(checkField);
+          dataSet.forEach(record => {
+            if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+              record.isSelected = true;
+            }
+          });
+        } else {
+          this.stateCheckedKeys = dataSet.selected.map(selected => String(idField ? selected.get(idField) : selected.id));
+        }
+      }
+    }
   }
 
   @action
@@ -268,7 +291,7 @@ export default class Tree extends Component<TreeProps> {
   }
 
   get checkedKeys(): string[] {
-    const { dataSet, selectable, checkable } = this.props;
+    const { dataSet } = this.props;
     if (dataSet) {
       const { checkField, idField } = dataSet.props;
       if (checkField) {
@@ -278,9 +301,6 @@ export default class Tree extends Component<TreeProps> {
           const key = getKey(record, idField);
           if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
             keys.push(key);
-            if (checkable && record.selectable && !record.isSelected && selectable === false) {
-              record.isSelected = true;
-            }
           }
         });
         return keys;
@@ -365,6 +385,7 @@ export default class Tree extends Component<TreeProps> {
 
   @autobind
   handleCheck(checkedKeys: string[], eventObj: CheckInfo, oldCheckedKeys: string[]) {
+    this.inCheckExpansion = true;
     const { dataSet, selectable } = this.props;
 
     if (this.setCheck(eventObj)) {
@@ -390,6 +411,41 @@ export default class Tree extends Component<TreeProps> {
 
     const { onCheck = noop } = this.props;
     onCheck(checkedKeys, eventObj, oldCheckedKeys);
+    this.inCheckExpansion = false;
+  }
+
+  @autobind
+  handleBatchSelect({ dataSet, records }) {
+    this.handleDataSetSelect({ dataSet, records }, true);
+  }
+
+  @autobind
+  handleUnBatchSelect({ dataSet, records }) {
+    this.handleDataSetSelect({ dataSet, records }, false);
+  }
+
+  @autobind
+  handleDataSetSelect({ dataSet, records }, checked) {
+    if (!this.inCheckExpansion) {
+      const { checkField, idField } = dataSet.props;
+      if (checkField) {
+        const field = dataSet.getField(checkField);
+        records.forEach((record) => {
+          record.set(
+            checkField,
+            field
+              ? checked
+                ? field.get(BooleanValue.trueValue, record)
+                : field.get(BooleanValue.falseValue, record)
+              : checked,
+          );
+        });
+      } else {
+        runInAction(() => {
+          this.stateCheckedKeys = dataSet.selected.map(selected => String(idField ? selected.get(idField) : selected.id));
+        });
+      }
+    }
   }
 
   @autobind

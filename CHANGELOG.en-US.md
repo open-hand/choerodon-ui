@@ -15,14 +15,28 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `numberFieldKeyboard` property.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
+- 🌟 `<pro>NumberField`: Added the `keyboard` property to control `UP` `DOWN` keyboard events.
+- 🌟 `<pro>ModalProvider`: Added `getContainer` property.
+- 🌟 `<pro>IntlField`: Added `type` property, supports multi-line input.
+- 🌟 `<pro>Lov`: Added `drawer` mode and `viewRenderer` property.
+- 🌟 `BarCode`: Added component of BarCode.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
+- 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
+- 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
+- 💄 `<pro>Table`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
+- 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
-- 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property.
+- 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property. Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
+- 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties.
+- 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
+- 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
+- 🐞 `Tabs`: Fix the nesting style problem.
 
 ## 1.5.0-beta.0
 
@@ -111,7 +125,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem that spaces cannot be entered.
 - 🐞 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.
 - 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
-- 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode. 
+- 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode.
 - 🐞 `<pro>Table`: Fix the problem of editor dislocation caused by `virtualCell`.
 - 🐞 `<pro>Table`: Fix an error rendering filter bar when the query field range property value is an array.
 - 🐞 `<pro>Table`: Fix the display problem when the editor is SelectBox in `multiple` mode.
@@ -160,7 +174,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
 - 🌟 `<pro>PerformanceTable`: Added `rowDraggable` property to support row drag.
 - 🌟 `<pro>PerformanceTable`: Added horizontal virtual scroll.
-- 🌟 `<pro>Table`: Added `onResize` callback. 
+- 🌟 `<pro>Table`: Added `onResize` callback.
 - 🌟 `Tabs`: Added TabGroup component.
 - 🌟 `Icon`: Added a lot of icons.
 - 🌟 `<pro>Table`: Added `autoQueryAfterReset` property to support ProfessionalBar & DynamicFilterBar to reset whether to automatically query.
@@ -711,7 +725,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the query conditions does not show the loading effect by clicking the query.
 - 💄 `<pro>Table`: Optimize the TableButtonProps type, now you can correctly use children in ts to change the text of the default button.
 - 🐞 `<pro>FormField`: Fixed cascade mode error to disable sub-components.
-- 🐞 `<pro>Switch`: Fixed switch when `labelLayout` is float, the label cant't find. 
+- 🐞 `<pro>Switch`: Fixed switch when `labelLayout` is float, the label cant't find.
 - 🐞 `<pro>Table`: Fixed the issue that editable lines are automatically positioned to radio buttons.
 - 🐞 `<pro>Table.advancedBar`: Fixed the problem of undefined rendering of multi-select clear tags in the advanced search bar.
 

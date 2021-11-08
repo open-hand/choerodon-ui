@@ -217,6 +217,7 @@ const locale: Locale = {
   },
   Lov: {
     choose: 'Choose',
+    selected: 'Selected',
   },
   Transfer: {
     items: 'items',

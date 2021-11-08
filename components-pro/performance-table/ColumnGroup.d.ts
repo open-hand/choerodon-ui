@@ -3,6 +3,7 @@ export interface ColumnGroupProps {
   verticalAlign?: 'top' | 'middle' | 'bottom';
   fixed?: boolean | 'left' | 'right';
   width?: number;
+  left?: number;
   header?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;

@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { toJS } from 'mobx';
 import { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import Record from '../data-set/Record';
 import DataSet from '../data-set/DataSet';
@@ -97,7 +98,7 @@ export function getTreeNodes(
               record,
               children,
               idField,
-              renderer({ dataSet, record, text: record.get(titleField) }),
+              renderer({ dataSet, record, text: toJS(record.get(titleField)) }),
               onTreeNode({ dataSet, record }),
               async,
               filterText,

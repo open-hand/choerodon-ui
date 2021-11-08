@@ -1,6 +1,6 @@
 import React, { Component, Key } from 'react';
 import classNames from 'classnames';
-import { action } from 'mobx';
+import { action, toJS } from 'mobx';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -10,11 +10,12 @@ import Table, { onColumnResizeProps, TableProps } from '../table/Table';
 import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
 import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
-import { LovConfig } from './Lov';
 import { ColumnProps } from '../table/Column';
 import { modalChildrenProps } from '../modal/interface';
 import autobind from '../_util/autobind';
 import { getColumnKey } from '../table/utils';
+import SelectionList, { TIMESTAMP }  from './SelectionList';
+import { ViewRenderer, LovConfig } from './Lov';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -22,11 +23,15 @@ export interface LovViewProps {
   tableProps?: Partial<TableProps>;
   multiple: boolean;
   values: any[];
-  popup?: boolean;
+  viewMode?: string;
   onSelect: (records: Record | Record[]) => void;
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   modal?: modalChildrenProps;
   popupHidden?: boolean;
+  label?: string;
+  valueField?: string;
+  textField?: string;
+  viewRenderer?: ViewRenderer;
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -42,11 +47,11 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       dataSet: { selection },
       multiple,
-      popup,
+      viewMode,
     } = this.props;
     this.selection = selection;
     dataSet.selection = multiple ? DataSetSelection.multiple : DataSetSelection.single;
-    if (popup && multiple) {
+    if ((viewMode === 'popup' || viewMode === 'drawer') && multiple) {
       dataSet.addEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.addEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
@@ -54,17 +59,17 @@ export default class LovView extends Component<LovViewProps> {
 
   @action
   componentWillUnmount() {
-    const { dataSet, multiple, popup } = this.props;
+    const { dataSet, multiple, viewMode } = this.props;
     dataSet.selection = this.selection;
-    if (popup && multiple) {
+    if ((viewMode === 'popup' || viewMode === 'drawer') && multiple) {
       dataSet.removeEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.removeEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
   }
 
   shouldComponentUpdate(nextProps: Readonly<LovViewProps>): boolean {
-    const { popup } = this.props;
-    if (popup && nextProps.popupHidden) {
+    const { viewMode } = this.props;
+    if (viewMode === 'popup' && nextProps.popupHidden) {
       return false;
     }
     return true;
@@ -75,7 +80,7 @@ export default class LovView extends Component<LovViewProps> {
     const {
       config: { lovItems },
       tableProps,
-      popup,
+      viewMode,
     } = this.props;
     return lovItems
       ? lovItems
@@ -91,7 +96,7 @@ export default class LovView extends Component<LovViewProps> {
             key: gridFieldName,
             header: display,
             name: gridFieldName,
-            width: popup ? gridFieldName ? this.resizedColumns.get(gridFieldName) : undefined : gridFieldWidth,
+            width: viewMode === 'popup' ? gridFieldName ? this.resizedColumns.get(gridFieldName) : undefined : gridFieldWidth,
             align: gridFieldAlign,
             editor: false,
           };
@@ -100,9 +105,23 @@ export default class LovView extends Component<LovViewProps> {
   }
 
   @autobind
-  handleSelect(event?: React.MouseEvent) {
+  handleSelect(event?: React.MouseEvent | string) {
     const { selectionMode } = this;
-    const { onSelect, onBeforeSelect = noop, modal, multiple, dataSet, tableProps } = this.props;
+    const { onSelect, onBeforeSelect = noop, modal, multiple, dataSet, tableProps, viewMode } = this.props;
+    // 为了drawer模式下右侧勾选项的顺序
+    if (viewMode === 'drawer' && multiple) {
+      dataSet.map(item => {
+        const timeStampState = item.getState(TIMESTAMP);
+        if (!item.isSelected && timeStampState) {
+          item.setState(TIMESTAMP, 0);
+        }
+        if (item.isSelected && !timeStampState) {
+          const timestamp = new Date().getTime();
+          item.setState(TIMESTAMP, timestamp);
+        }
+        return item;
+      });
+    }
     let records: Record[] = selectionMode === SelectionMode.treebox ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
@@ -112,10 +131,12 @@ export default class LovView extends Component<LovViewProps> {
     }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     if (record && onBeforeSelect(record) !== false) {
-      if (modal) {
+      if (modal && (!multiple || event === 'close')) {
         modal.close();
       }
-      onSelect(record);
+      if (!multiple || viewMode === 'popup' || event === 'close') {
+        onSelect(record);
+      }
     }
     return false;
   }
@@ -162,19 +183,16 @@ export default class LovView extends Component<LovViewProps> {
     this.resizedColumns.set(getColumnKey(column), width);
   }
 
-  render() {
+  renderTable() {
     const {
       dataSet,
-      config: { queryBar, height, treeFlag, queryColumns, tableProps: configTableProps },
+      config: { queryBar, height, treeFlag, queryColumns, tableProps: configTableProps = {} },
       multiple,
-      popup,
       tableProps,
-      modal,
+      viewMode,
     } = this.props;
-    if (modal) {
-      modal.handleOk(this.handleSelect);
-    }
     const columns = this.getColumns();
+    const popup = viewMode === 'popup';
     const lovTableProps: TableProps = {
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
@@ -230,9 +248,61 @@ export default class LovView extends Component<LovViewProps> {
     if (!popup && !lovTableProps.queryBar && isProfessionalBar) {
       lovTableProps.queryBar = (props) => <TableProfessionalBar {...props} />;
     }
-
     this.selectionMode = lovTableProps.selectionMode;
-
     return <Table {...lovTableProps} />;
+  }
+
+  renderSelectionList() {
+    const {
+      dataSet,
+      label = '',
+      valueField = '',
+      textField = '',
+    } = this.props;
+    return (
+      <SelectionList
+        dataSet={dataSet}
+        selectionMode={this.selectionMode}
+        valueField={valueField}
+        textField={textField}
+        label={label}
+      />
+    );
+  }
+
+  render() {
+    const {
+      modal,
+      viewRenderer,
+      dataSet,
+      viewMode,
+      config: lovConfig,
+      textField,
+      valueField,
+      label,
+      multiple,
+    } = this.props;
+    if (modal) {
+      modal.handleOk(() => this.handleSelect('close'));
+    }
+    return (
+      <>
+        {viewMode === 'drawer' && this.renderSelectionList()}
+        <div>
+          {viewRenderer
+            ? toJS(
+              viewRenderer({
+                dataSet,
+                lovConfig,
+                textField, 
+                valueField, 
+                label, 
+                multiple,
+              }),
+            )
+            : this.renderTable()}
+        </div>
+      </>
+    );
   }
 }
