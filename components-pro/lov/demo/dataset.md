@@ -75,7 +75,13 @@ class App extends React.Component {
       dataSet={this.ds}
       name="code"
       noCache
-      tableProps={{ alwaysShowRowBox: true }}
+      tableProps={{ 
+        queryBar: 'filterBar',
+        queryBarProps: {
+          fuzzyQuery: false,
+          expandButton: false,
+        },
+      }}
      />
     </Col>
     <Col span={12}>

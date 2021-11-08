@@ -22,8 +22,11 @@ timeline: true
 - 🌟 `<pro>ModalProvider`: 新增 getContainer 属性。
 - 🌟 `<pro>IntlField`: 新增 type 属性，支持多行输入。
 - 🌟 `<pro>Lov`: 新增 drawer 模式 和 viewRenderer 属性。
+- 🌟 `BarCode`: 新增条码组件。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
+- 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
+- 💄 `<pro>Table`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
 - 🐞 `<pro>DataSet`: 修复新添字段后字段顺序不正确的问题。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。

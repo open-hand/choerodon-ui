@@ -22,8 +22,11 @@ timeline: true
 - 🌟 `<pro>ModalProvider`: Added `getContainer` property.
 - 🌟 `<pro>IntlField`: Added `type` property, supports multi-line input.
 - 🌟 `<pro>Lov`: Added `drawer` mode and `viewRenderer` property.
+- 🌟 `BarCode`: Added component of BarCode.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
+- 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
+- 💄 `<pro>Table`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.

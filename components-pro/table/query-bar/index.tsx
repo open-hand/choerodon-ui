@@ -544,7 +544,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimit));
       const moreSummary = summaryBar.slice(summaryFieldsLimit);
       const moreSummaryButton: ReactElement | undefined = this.getMoreSummaryButton(moreSummary);
-      // const width = 170 * Math.min(summaryBar.length, summaryFieldsLimit!) + Math.min(summaryBar.length, summaryFieldsLimit!);
       return (
         <div className={`${prefixCls}-summary-group-wrapper`}>
           <div className={`${prefixCls}-summary-group`}>
@@ -700,6 +699,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
             filterBarProps = {
               placeholder,
+              border: false,
+              clearButton: true,
             };
           }
           const props: any = {
