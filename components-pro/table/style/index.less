@@ -66,6 +66,15 @@
       line-height: @output-line-height;
       border-radius: @table-editable-cell-border-radius-base;
 
+      .@{c7n-pro-prefix}-input-secret {
+        margin-top: -0.02rem;
+        background-color: transparent;
+        .@{c7n-pro-prefix}-input {
+          padding: 0;
+          border: none;
+        }
+      }
+
       &:focus {
         outline: none;
       }
@@ -1387,6 +1396,7 @@
   }
 
   .sm;
+
 }
 
 .border() {
