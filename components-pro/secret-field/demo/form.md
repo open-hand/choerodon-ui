@@ -58,13 +58,13 @@ const App = () => {
             name: 'phone',
             type: 'string',
             label: '手机号',
-            // pattern: /^1[3-9]\d{9}$/, // 正则表达式
-            pattern: '1[3-9]\\d{9}', // string类型
+            pattern: /^1[3-9]\d{9}$/,
           },
           {
             name: 'bankCard',
             type: 'string',
             label: '银行卡号',
+            restrict: 'a-zA-Z0-9-@._,',
           },
           {
             name: 'idCard',
@@ -73,7 +73,7 @@ const App = () => {
             readOnly: true,
           },
         ],
-        data:[{phone:'110',_token:'111'}],
+        data:[{phone:'110', bankCard:'111', idCard:'222', _token:'111'}],
       }),
     [],
   );
@@ -81,8 +81,8 @@ const App = () => {
   return (
     <Form dataSet={ds}>
       <SecretField name="phone" />
-      <SecretField name="bankCard" restrict="a-zA-Z0-9-@._," />
-      <SecretField name="idCard" renderer={({ value }) => value || '-'} />
+      <SecretField name="bankCard" />
+      <SecretField name="idCard" />
     </Form>
   );
 };

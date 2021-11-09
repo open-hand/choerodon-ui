@@ -23,15 +23,12 @@ const App = () => {
             name: 'secretField',
             type: 'secret',
             label: '脱敏组件查看',
+            readOnly: true,
           },
           {
             name: 'secretField1',
             type: 'secret',
             label: '脱敏组件编辑',
-          },
-          {
-            name: 'textField',
-            label: '文本',
             readOnly: false,
           },
         ],
@@ -39,15 +36,13 @@ const App = () => {
           {
             secretField: 'test1',
             secretField1: 'test1',
-            textField: 'test1',
             _token:'111',
           },
           {
             secretField: 'test2',
             secretField1: 'test2',
-            textField: 'test2',
+            _token:'222',
           },
-          {},
         ],
       }),
     [],
@@ -56,15 +51,11 @@ const App = () => {
     () => [
       {
         name: 'secretField',
-        editor:<SecretField readOnly={true}/>,
+        editor:<SecretField />,
       },
       {
         name: 'secretField1',
-        editor:<SecretField readOnly={false}/>,
-      },
-      {
-        name: 'textField',
-        editor:<TextField />,
+        editor:<SecretField />,
       },
     ],
     [],
