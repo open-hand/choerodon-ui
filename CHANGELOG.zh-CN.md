@@ -27,13 +27,14 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
 - 💄 `<pro>Table`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
+- 💄 `<pro>Output`: 优化Form多列情况，Output和其他输入类型组件高度问题。
 - 🐞 `<pro>DataSet`: 修复新添字段后字段顺序不正确的问题。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
 - 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
 - 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。修复 maxLength 和 minLength 属性的错误限制。
 - 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
-- 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 属性的错误限制。
+- 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 属性的错误限制。修复range模式下 UP DOWN 按键不起效果。
 - 🐞 `<pro>Lov`: 修复多选值回显到树形列表时数据显示问题。
 - 🐞 `<pro>Tree`: 修复只使用 check 模式下 DataSet 勾选方法失效问题。
 - 🐞 `Tabs`: 修复嵌套样式问题。

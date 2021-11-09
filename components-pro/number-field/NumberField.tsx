@@ -465,8 +465,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const max = defaultTo(this.max, MAX_SAFE_INTEGER);
     const step = defaultTo(this.getProp('step'), 1);
     const { nonStrictStep } = this;
-    const value =
-      this.multiple || this.isFocused ? Number(this.text || this.getValue()) : this.getValue();
+    const value = this.element ? this.element.value : this.getValue();
     const currentValue = getCurrentValidValue(String(value));
     return (function* (newValue: number) {
       while (true) {

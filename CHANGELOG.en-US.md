@@ -27,13 +27,14 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
 - 💄 `<pro>Table`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
+- 💄 `<pro>Output`: Optimize `Form` multiple columns, `Output` and other input type component height issues.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property. Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
-- 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties.
+- 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties. Fixed `UP` `DOWN` keyword not working in Range mode.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
 - 🐞 `Tabs`: Fix the nesting style problem.
