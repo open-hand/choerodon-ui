@@ -6,7 +6,7 @@ import { QRBarCodeProps } from './index';
 const QR: FunctionComponent<QRBarCodeProps> = function QR(props) {
   const { renderAs, value, ...rest } = props;
 
-  return <QRCode renderAs={renderAs} value={value} {...rest} />;
+  return <QRCode renderAs={renderAs as any} value={value} {...rest} />;
 };
 
 export default QR;

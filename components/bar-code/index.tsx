@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { BaseQRCodeProps } from 'qrcode.react';
 import { BaseOptions as JsBarCodeBaseOption } from 'jsbarcode';
-import QRCode from './qrcode';
-import BarCode from './barcode';
+import QRCode from './QRCode';
+import BarCode from './BarCode';
 
 export enum CodeType {
   QR = 'qr',
