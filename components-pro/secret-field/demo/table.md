@@ -12,7 +12,7 @@ title:
 ## en-US
 
 ```jsx
-import { Table, DataSet, SecretField } from 'choerodon-ui/pro';
+import { Table, DataSet, SecretField, TextField } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(
@@ -22,15 +22,31 @@ const App = () => {
           {
             name: 'secretField',
             type: 'secret',
-            label: '脱敏组件',
-            readOnly: true,
+            label: '脱敏组件查看',
+          },
+          {
+            name: 'secretField1',
+            type: 'secret',
+            label: '脱敏组件编辑',
+          },
+          {
+            name: 'textField',
+            label: '文本',
+            readOnly: false,
           },
         ],
         data: [
           {
             secretField: 'test1',
+            secretField1: 'test1',
+            textField: 'test1',
+            _token:'111',
           },
-          {},
+          {
+            secretField: 'test2',
+            secretField1: 'test2',
+            textField: 'test2',
+          },
           {},
         ],
       }),
@@ -40,7 +56,15 @@ const App = () => {
     () => [
       {
         name: 'secretField',
-        editor:<SecretField border={false} />,
+        editor:<SecretField readOnly={true}/>,
+      },
+      {
+        name: 'secretField1',
+        editor:<SecretField readOnly={false}/>,
+      },
+      {
+        name: 'textField',
+        editor:<TextField />,
       },
     ],
     [],

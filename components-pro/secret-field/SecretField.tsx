@@ -30,7 +30,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
   countDown = new CountDown();
 
   // eslint-disable-next-line camelcase
-  static __IS_IN_CELL_EDITOR = true;
+  // static __IS_IN_CELL_EDITOR = true;
 
   modal;
 
@@ -51,14 +51,22 @@ export default class SecretField extends TextField<SecretFieldProps> {
     this.queryFlag = value;
   }
 
-  @observable secretEnable;
+  private secretEnable: Boolean = false;
 
-  @autobind
+  get isSecretEnable(): Boolean {
+    const { record } = this;
+    if (!record?.get('_token')) {
+      // 新增数据，record没有token，显示为textfield
+      return false;
+    }
+    return this.secretEnable;
+  }
+
   @action
   setSecretEnable() {
-    // 从配置项获取是否开启脱敏组件
     const secretFieldEnableConfig = getConfig('secretFieldEnable');
     if (secretFieldEnableConfig) {
+      // 从配置项获取是否开启脱敏组件
       this.secretEnable = secretFieldEnableConfig();
     }
   }
@@ -66,7 +74,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
   @action
   private openModal() {
     const label = this.getLabel();
-    const { readOnly, name } = this;
+    const { readOnly, name, record } = this;
+    const pattern = this.getProp('pattern');
+    const restrict = this.getProp('restrict');
     if (!this.modal) {
       const { modalProps } = this.props;
       this.modal = open({
@@ -77,7 +87,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
             readOnly={readOnly}
             name={name || ''}
             label={label}
-            token={this.record?.get('_token')}
+            pattern={pattern}
+            restrict={restrict}
+            token={record?.get('_token')}
             onChange={this.handleSecretChange}
             onQueryFlag={this.setQueryFlag}
             countDown={this.countDown}
@@ -109,22 +121,42 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getSuffix(): ReactNode {
-    const { readOnly, queryFlag } = this;
+    const { readOnly, queryFlag, isSecretEnable, name, record } = this;
     // 未开启脱敏组件
-    if (!this.secretEnable) {
+    if (!isSecretEnable) {
       const { suffix } = this.props;
       return suffix ? this.wrapperSuffix(suffix) : null;
     }
     // 开启脱敏组件
-    return queryFlag ? this.wrapperSuffix(
-      <Icon type={readOnly ? 'visibility-o' : 'edit-o'} />,
-      {
-        onClick: this.handleOpenModal,
-      },
-    ) : null
+    // 编辑
+    if (!readOnly) {
+      return this.wrapperSuffix(
+        <Icon type='edit-o' />,
+        {
+          onClick: this.handleOpenModal,
+        },
+      )
+    }
+    // 只读：已读/值为空不显示查看按钮
+    if (queryFlag && readOnly && record?.get(name)) {
+      return this.wrapperSuffix(
+        <Icon type='visibility-o' />,
+        {
+          onClick: this.handleOpenModal,
+        },
+      )
+    }
+    return null;
   }
 
   isEditable(): boolean {
-    return !this.secretEnable && super.isEditable();
+    return !this.isSecretEnable && super.isEditable();
+  }
+
+  getWrapperClassNames(...args): string {
+    const { prefixCls } = this;
+    return super.getWrapperClassNames(...args, {
+      [`${prefixCls}-secret`]: true,
+    });
   }
 }
