@@ -1,5 +1,6 @@
 import { Children, isValidElement, JSXElementConstructor, Key, ReactElement, ReactNode } from 'react';
 import isNil from 'lodash/isNil';
+import omit from 'lodash/omit';
 import isFragment from 'choerodon-ui/pro/lib/_util/isFragment';
 import { iteratorFindIndex, iteratorSome } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
 import { TabsPosition } from './enum';
@@ -211,7 +212,19 @@ export function getHeader(props: TabPaneProps): ReactNode {
   }
 }
 
-export function normalizePanes(children: ReactNode, customized?: TabsCustomized | undefined | null): [
+function sorter(item1: [string, TabPaneProps], item2: [string, TabPaneProps]) {
+  const { sort = 0 } = item1[1];
+  const { sort: sort2 = 0 } = item2[1];
+  return sort - sort2;
+}
+
+interface normalizeOptions {
+  tabDraggable?: boolean | undefined;
+  tabTitleEditable?: boolean | undefined;
+  tabCountHideable?: boolean | undefined;
+}
+
+export function normalizePanes(children: ReactNode, customized?: TabsCustomized | undefined | null, options?: normalizeOptions): [
   Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>,
   Map<string, GroupPanelMap>
 ] {
@@ -219,15 +232,30 @@ export function normalizePanes(children: ReactNode, customized?: TabsCustomized 
   const groupedPanels = new Map<string, GroupPanelMap>();
   const panelList: [string, TabPaneProps & { type: string | JSXElementConstructor<any> }][] = [];
   const panes = customized && customized.panes;
+  const omitKeys: string[] = [];
+  if (options) {
+    const { tabDraggable, tabTitleEditable, tabCountHideable } = options;
+    if (!tabDraggable) {
+      omitKeys.push('sort');
+    }
+    if (!tabTitleEditable) {
+      omitKeys.push('title');
+    }
+    if (!tabCountHideable) {
+      omitKeys.push('showCount');
+    }
+  }
+  const { length } = omitKeys;
   const getCustomizedPane = (key: string) => {
     if (panes) {
-      return panes[key];
+      const pane = panes[key];
+      if (pane) {
+        if (length) {
+          return omit(pane, omitKeys);
+        }
+        return pane;
+      }
     }
-  };
-  const sorter = (item1: [string, TabPaneProps], item2: [string, TabPaneProps]) => {
-    const { sort = 0 } = item1[1];
-    const { sort: sort2 = 0 } = item2[1];
-    return sort - sort2;
   };
   if (groups.length) {
     let index = 0;
@@ -247,7 +275,7 @@ export function normalizePanes(children: ReactNode, customized?: TabsCustomized 
       });
     });
   } else {
-    toArray(children).sort().forEach((child, index) => {
+    toArray(children).forEach((child, index) => {
       const key = generateKey(child.key, index);
       panelList.push([key, { type: child.type, sort: index, ...child.props, ...getCustomizedPane(key) }]);
     });

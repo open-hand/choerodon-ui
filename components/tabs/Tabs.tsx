@@ -55,6 +55,10 @@ export interface TabsProps<T = string> {
   children?: ReactNode;
   customizable?: boolean;
   customizedCode?: string;
+  tabDraggable?: boolean;
+  tabTitleEditable?: boolean;
+  tabCountHideable?: boolean;
+  defaultChangeable?: boolean;
 }
 
 export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }
@@ -87,7 +91,12 @@ const Tabs: FunctionComponent<TabsProps> = function Tabs(props) {
   }, [$customizable, loadCustomized]);
 
   return loaded ? (
-    <TabsWithContext {...props} customized={customized} setCustomized={setCustomized} customizable={$customizable} />
+    <TabsWithContext
+      {...props}
+      customized={customized}
+      setCustomized={setCustomized}
+      customizable={$customizable}
+    />
   ) : null;
 };
 
@@ -110,6 +119,10 @@ Tabs.propTypes = {
 };
 
 Tabs.defaultProps = {
+  defaultChangeable: true,
+  tabCountHideable: true,
+  tabTitleEditable: true,
+  tabDraggable: true,
   hideAdd: false,
   showMore: false,
   destroyInactiveTabPane: false,

@@ -43,6 +43,10 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     hideOnlyGroup,
     customizedCode, customizable, children, defaultActiveKey: propDefaultActiveKey, setCustomized, customized,
     prefixCls: customizePrefixCls, activeKey: propActiveKey, onChange, onTabClick, onPrevClick, onNextClick, keyboard,
+    defaultChangeable,
+    tabDraggable,
+    tabTitleEditable,
+    tabCountHideable,
     ...restProps
   } = props;
   const hasPropActiveKey = 'activeKey' in props;
@@ -59,7 +63,11 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   const [totalPanelsMap, groupedPanelsMap]: [
     Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>,
     Map<string, GroupPanelMap>
-  ] = useMemo(() => normalizePanes(children, customized), [children, customized]);
+  ] = useMemo(() => normalizePanes(children, customized, {
+    tabDraggable,
+    tabTitleEditable,
+    tabCountHideable,
+  }), [children, customized, tabDraggable, tabTitleEditable, tabCountHideable]);
   const defaultActiveKey = useMemo((): string | undefined => {
     const option: { activeKey?: string | undefined; defaultActiveKey?: string | undefined } = {
       activeKey: propActiveKey,
@@ -68,7 +76,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     return getDefaultActiveKey(totalPanelsMap, groupedPanelsMap, option);
   }, []);
   const actuallyDefaultActiveKey = useMemo((): string | undefined => {
-    if (customized) {
+    if (defaultChangeable && customized) {
       const $defaultActiveKey = customized.defaultActiveKey;
       if ($defaultActiveKey !== undefined) {
         if (onChange && $defaultActiveKey !== defaultActiveKey) {
@@ -78,7 +86,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
       }
     }
     return defaultActiveKey;
-  }, [defaultActiveKey]);
+  }, [defaultActiveKey, defaultChangeable]);
   const [activeKey, setActiveKey] = useState<string | undefined>(actuallyDefaultActiveKey);
   const activeGroupKey = useMemo((): string | undefined => {
     if (groupedPanelsMap.size) {
@@ -134,6 +142,10 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     onPrevClick,
     onNextClick,
     children,
+    tabDraggable,
+    tabTitleEditable,
+    tabCountHideable,
+    defaultChangeable,
   };
   const inkBarAnimated = isAnimated(animated) ? animated.inkBar : animated;
   let tabPaneAnimated = isAnimated(animated) ? animated.tabPane : animated;
@@ -149,7 +161,6 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     !(isCard && (size === Size.small || size === Size.large)),
     'Tabs[type=card|editable-card] doesn\'t have small or large size, it\'s by designed.',
   );
-
 
 
   const removeTab = useCallback((targetKey: Key | null, e: MouseEvent<HTMLElement>) => {

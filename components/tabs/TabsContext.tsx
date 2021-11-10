@@ -26,6 +26,10 @@ export interface TabsContextValue {
   onPrevClick?: MouseEventHandler<HTMLSpanElement> | undefined;
   onNextClick?: MouseEventHandler<HTMLSpanElement> | undefined;
   children?: ReactNode;
+  tabDraggable?: boolean | undefined;
+  tabTitleEditable?: boolean | undefined;
+  tabCountHideable?: boolean | undefined;
+  defaultChangeable?: boolean | undefined;
 }
 
 const TabsContext = getContext<TabsContextValue>(Symbols.TabsContext, {

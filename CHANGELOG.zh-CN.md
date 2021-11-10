@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `hooks`: 新增 useConfig 钩子。
 - 🌟 `<pro>hooks`: 新增 useDataSet 钩子。
 - 🌟 `configure`: 新增 numberFieldKeyboard 属性。
+- 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
 - 🌟 `<pro>NumberField`: 新增 keyboard 属性，控制UP DOWN键盘事件。
