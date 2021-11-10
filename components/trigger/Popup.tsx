@@ -30,6 +30,7 @@ export interface PopupProps extends ViewComponentProps {
   getStyleFromAlign?: (target: HTMLElement, align: object) => object | undefined;
   getClassNameFromAlign?: (align: object) => string | undefined;
   getFocusableElements?: (elements: HTMLElement[]) => void;
+  forceRender?: boolean;
 }
 
 function newPopupContainer() {
@@ -122,12 +123,13 @@ export default class Popup extends ViewComponent<PopupProps> {
       align,
       transitionName,
       getRootDomNode,
+      forceRender,
       onAnimateAppear = noop,
       onAnimateEnter = noop,
       onAnimateLeave = noop,
       onAnimateEnd = noop,
     } = this.props;
-    if (!hidden) {
+    if (!hidden || forceRender) {
       this.contentRendered = true;
     }
     const container = this.getContainer();
