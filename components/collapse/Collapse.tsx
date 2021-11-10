@@ -1,11 +1,11 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import animation from '../_util/openAnimation';
 import CollapsePanel from './CollapsePanel';
 import RcCollapse from '../rc-components/collapse';
-import { getPrefixCls, getConfig } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export type ExpandIconPosition = 'left' | 'right' | 'text-right';
 
@@ -13,13 +13,13 @@ export type TriggerMode = 'icon' | 'header';
 
 export interface PanelProps {
   isActive?: boolean;
-  header?: React.ReactNode;
+  header?: ReactNode;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   showArrow?: boolean;
   forceRender?: boolean;
   disabled?: boolean;
-  extra?: React.ReactNode;
+  extra?: ReactNode;
 }
 
 export interface CollapseProps {
@@ -32,7 +32,7 @@ export interface CollapseProps {
   className?: string;
   bordered?: boolean;
   prefixCls?: string;
-  expandIcon?: (panelProps: PanelProps) => React.ReactNode | 'text';
+  expandIcon?: (panelProps: PanelProps) => ReactNode | 'text';
   expandIconPosition?: ExpandIconPosition;
   trigger?: TriggerMode;
   ghost?: boolean;
@@ -40,6 +40,10 @@ export interface CollapseProps {
 
 export default class Collapse extends Component<CollapseProps, any> {
   static displayName = 'Collapse';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static Panel = CollapsePanel;
 
@@ -51,6 +55,8 @@ export default class Collapse extends Component<CollapseProps, any> {
     },
   };
 
+  context: ConfigContextValue;
+
   renderExpandIcon = (panelProps: PanelProps = {}) => {
     const { expandIcon } = this.props;
     return expandIcon ? expandIcon(panelProps) : null;
@@ -60,6 +66,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     const {
       prefixCls: customizePrefixCls,
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('collapse', customizePrefixCls);
 
     const iconCls = classNames({
@@ -90,9 +97,10 @@ export default class Collapse extends Component<CollapseProps, any> {
       trigger,
       ghost,
     } = this.props;
+    const { getPrefixCls, getConfig } = this.context;
     const prefixCls = getPrefixCls('collapse', customizePrefixCls);
     const expandIconPositionCof = expandIconPosition || getConfig('collapseExpandIconPosition');
-    const expandIconCof: React.ReactNode = expandIcon || getConfig('collapseExpandIcon');
+    const expandIconCof: ReactNode = expandIcon || getConfig('collapseExpandIcon');
     const triggerCof = trigger || getConfig('collapseTrigger');
 
     const collapseClassName = classNames(

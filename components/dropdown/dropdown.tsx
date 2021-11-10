@@ -3,12 +3,12 @@ import classNames from 'classnames';
 import DropdownButton from './dropdown-button';
 import warning from '../_util/warning';
 import RcDropdown from '../rc-components/dropdown';
-import { getPrefixCls } from '../configure';
 import { Placements } from './enum';
 import { RenderFunction } from '../tooltip';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface DropDownProps {
-  trigger?: ('click' | 'hover' | 'contextMenu')[];
+  trigger?: 'click' | 'hover' | 'contextMenu' | ('click' | 'hover' | 'contextMenu')[];
   overlay: ReactNode | RenderFunction;
   onVisibleChange?: (visible?: boolean) => void;
   visible?: boolean;
@@ -25,6 +25,10 @@ export interface DropDownProps {
 }
 
 export default class Dropdown extends Component<DropDownProps, any> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'Dropdown';
 
   static Button: typeof DropdownButton;
@@ -34,6 +38,8 @@ export default class Dropdown extends Component<DropDownProps, any> {
     mouseLeaveDelay: 0.1,
     placement: 'bottomLeft',
   };
+
+  context: ConfigContextValue;
 
   getTransitionName() {
     const { placement = '', transitionName } = this.props;
@@ -74,6 +80,7 @@ export default class Dropdown extends Component<DropDownProps, any> {
       trigger,
       disabled,
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('dropdown', customizePrefixCls);
 
     const child = Children.only(children) as ReactElement<any>;

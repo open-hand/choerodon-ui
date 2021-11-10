@@ -24,6 +24,18 @@
       ],
       "choerodon-ui/pro/lib/*": [
         "./components-pro/*"
+      ],
+      "choerodon-ui/dataset/*": [
+        "./components-dataset/*"
+      ],
+      "choerodon-ui/shared/*": [
+        "./components-shared/*"
+      ],
+      "choerodon-ui/dataset": [
+        "./components-dataset/index"
+      ],
+      "choerodon-ui/shared": [
+        "./components-shared/index"
       ]
     }
   },
@@ -31,6 +43,8 @@
     "node_modules",
     "pro",
     "lib",
-    "es"
+    "es",
+    "dataset",
+    "shared"
   ]
 }

@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { observer } from 'mobx-react-lite';
+import { getContext, Symbols } from 'choerodon-ui/shared';
 import TableStore from './TableStore';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -41,7 +42,7 @@ export interface TableContextValue extends TableContextProviderProps {
   rowHeight: 'auto' | number;
 }
 
-const TableContext = React.createContext<TableContextValue>({
+const TableContext = getContext<TableContextValue>(Symbols.ProTableContext, {
   tableStore: {} as TableStore,
   dataSet: {} as DataSet,
   indentSize: 15,

@@ -1,20 +1,10 @@
-import React, {
-  FunctionComponent,
-  JSXElementConstructor,
-  Key,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { FunctionComponent, JSXElementConstructor, Key, MouseEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import classnames from 'classnames';
 import ModalProvider from 'choerodon-ui/pro/lib/modal-provider';
 import { iteratorSome } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
 import { TabsPosition, TabsType } from './enum';
 import { getDataAttr, getDefaultActiveKey, getDefaultActiveKeyInGroup, getDefaultGroupKey, isVertical, normalizePanes } from './utils';
 import { Size } from '../_util/enum';
-import { getConfig, getPrefixCls } from '../configure';
 import warning from '../_util/warning';
 import TabBar, { TabBarProps } from './TabBar';
 import TabContent, { TabContentProps } from './TabContent';
@@ -22,6 +12,7 @@ import isFlexSupported from '../_util/isFlexSupported';
 import { Animated, GroupPanelMap, TabsCustomized, TabsProps } from './Tabs';
 import { TabPaneProps } from './TabPane';
 import TabsContext, { TabsContextValue } from './TabsContext';
+import ConfigContext from '../config-provider/ConfigContext';
 
 function isAnimated(animated?: boolean | Animated): animated is Animated {
   return typeof animated === 'object';
@@ -33,6 +24,7 @@ export interface TabsWithContextProps extends TabsProps {
 }
 
 const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWithContext(props) {
+  const { getConfig, getPrefixCls } = useContext(ConfigContext);
   const {
     tabPosition,
     className,

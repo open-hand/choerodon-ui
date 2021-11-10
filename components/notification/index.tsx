@@ -1,7 +1,7 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import Icon from '../icon';
 import Notification from '../rc-components/notification';
-import { getPrefixCls } from '../configure';
+import { getPrefixCls } from '../configure/utils';
 
 export type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 

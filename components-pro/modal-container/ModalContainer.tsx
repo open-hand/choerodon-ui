@@ -7,11 +7,13 @@ import isPromise from 'is-promise';
 import findLast from 'lodash/findLast';
 import findLastIndex from 'lodash/findLastIndex';
 import noop from 'lodash/noop';
+import { ModalContainerState } from 'choerodon-ui/shared/modal-manager';
 import EventManager from 'choerodon-ui/lib/_util/EventManager';
+import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import ModalManager, { DrawerOffsets, IModalContainer } from '../modal-manager';
 import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
@@ -20,6 +22,8 @@ import { stopEvent } from '../_util/EventManager';
 import { suffixCls, toUsefulDrawerTransitionName } from '../modal/utils';
 import { getDocument, getMousePosition } from '../_util/DocumentUtils';
 import { ViewComponentProps } from '../core/ViewComponent';
+
+export { ModalContainerState };
 
 const { containerInstances } = ModalManager;
 
@@ -30,11 +34,11 @@ function getArrayIndex(array, index) {
   return 0;
 }
 
-function getRoot(): HTMLElement | undefined {
+function getRoot(): HTMLElement | null {
   let { root } = ModalManager;
   if (typeof window !== 'undefined') {
     const doc = getDocument(window);
-    if (root) {
+    if (root && root.ownerDocument === doc) {
       if (!root.parentNode) {
         doc.body.appendChild(root);
       }
@@ -45,7 +49,10 @@ function getRoot(): HTMLElement | undefined {
       ModalManager.root = root;
     }
   }
-  return root;
+  if (root) {
+    return root;
+  }
+  return null;
 }
 
 /**
@@ -100,21 +107,22 @@ function showBodyScrollBar(container: HTMLElement) {
 
 export interface ModalContainerProps {
   location?: { pathname: string };
-  getContainer?: HTMLElement | (() => HTMLElement | undefined) | false;
-}
-
-export interface ModalContainerState {
-  modals: ModalProps[];
-  mount?: HTMLElement;
+  getContainer?: HTMLElement | null | (() => HTMLElement | undefined) | false;
 }
 
 @observer
 export default class ModalContainer extends Component<ModalContainerProps> implements IModalContainer {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'ModalContainer';
 
   static defaultProps = {
     getContainer: getRoot,
   };
+
+  context: ConfigContextValue;
 
   state: ModalContainerState = {
     modals: [],
@@ -215,7 +223,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const { modals } = this.state;
     const modal: ModalProps | undefined = findLast(modals, (modalProps: ModalProps) => Boolean(!modalProps.hidden && modalProps.mask));
     if (modal) {
-      const { close = noop, onCancel = noop, maskClosable = getConfig('modalMaskClosable') } = modal;
+      const { context } = this;
+      const { close = noop, onCancel = noop, maskClosable = context.getConfig('modalMaskClosable') } = modal;
       if (maskClosable) {
         const ret: Promise<boolean | undefined> | boolean | undefined = onCancel();
         const cb = (result) => {
@@ -377,15 +386,16 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   getComponent(mount?: HTMLElement) {
     const { maskHidden: hidden, isTop, drawerOffsets, baseOffsets, props: { getContainer } } = this;
     const { modals } = this.state;
+    const { context } = this;
     const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
     const activeModalIndex: number = isTop ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
     const activeModal: ModalProps | undefined = modals[activeModalIndex];
     let maskTransition = true;
     const offsetContainer = this.getOffsetContainer();
     const isEmbeddedContainer = offsetContainer.tagName.toLowerCase() !== 'body';
-    const prefixCls = getProPrefixCls(`${suffixCls}-container`);
+    const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
-      const { drawerTransitionName = getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask, onMouseDown } = props;
+      const { drawerTransitionName = context.getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask, onMouseDown } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
         ...props.style,
@@ -450,7 +460,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     }
     const maskProps: ViewComponentProps = {};
     if (activeModal) {
-      const { maskClosable = getConfig('modalMaskClosable'), maskStyle, maskClassName } = activeModal;
+      const { maskClosable = context.getConfig('modalMaskClosable'), maskStyle, maskClassName } = activeModal;
       maskProps.hidden = hidden;
       maskProps.className = maskClassName;
       maskProps.onMouseDown = stopEvent;
@@ -524,41 +534,42 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   }
 }
 
-export function getContainer(loop?: boolean) {
+export async function getContainer(): Promise<IModalContainer> {
   const { length } = containerInstances;
   if (length) {
     return containerInstances.find(instance => instance.getOffsetContainer().tagName.toLowerCase() === 'body') || containerInstances[0];
   }
-  if (loop !== true) {
-    const root = getRoot();
-    if (root) {
-      render(<ModalContainer />, root);
-    }
-    return getContainer(true);
-  }
+  await new Promise(resolve => {
+    render(<ModalContainer />, getRoot(), resolve);
+  });
+  return getContainer();
 }
 
-export function open(props: ModalProps & { children? }) {
-  const container = getContainer();
+export async function open(props: ModalProps) {
+  const container = await getContainer();
 
-  function getCurrentContainer() {
-    return containerInstances.includes(container) ? container : getContainer();
+  function getCurrentContainer(): Promise<IModalContainer> {
+    return containerInstances.includes(container) ? Promise.resolve(container) : getContainer();
   }
 
   async function close(destroy?: boolean) {
     const { onClose = noop } = props;
     if ((await onClose()) !== false) {
+      const $container = await getCurrentContainer();
       if (destroy) {
-        getCurrentContainer().close({ ...props, destroyOnClose: true });
+        $container.close({ ...props, destroyOnClose: true });
       } else {
-        getCurrentContainer().close(props);
+        $container.close(props);
       }
     }
   }
 
-  function update(newProps) {
-    getCurrentContainer().update({ ...newProps, key: props.key });
+  async function update(newProps) {
+    const $container = await getCurrentContainer();
+    $container.update({ ...newProps, key: props.key });
   }
+
+  const { autoCenter = container.context.getConfig('modalAutoCenter') } = props;
 
   props = {
     __deprecate__: true,
@@ -566,11 +577,13 @@ export function open(props: ModalProps & { children? }) {
     update,
     ...Modal.defaultProps as ModalProps,
     ...props,
+    autoCenter,
   };
   container.open(props);
 
-  function show(newProps) {
-    getCurrentContainer().open({ ...props, ...newProps });
+  async function show(newProps) {
+    const $container = await getCurrentContainer();
+    $container.open({ ...props, ...newProps });
   }
 
   return {

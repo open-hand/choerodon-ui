@@ -1,8 +1,10 @@
-import { Children, Component, ReactElement } from 'react';
+import React, { Children, Component, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { getContext, Symbols } from 'choerodon-ui/shared';
 import interopDefault from '../_util/interopDefault';
 import { changeConfirmLocale, ModalLocale } from '../modal/locale';
+import { LocaleReceiverContext } from './LocaleReceiver';
 
 export interface Locale {
   locale: string;
@@ -50,6 +52,8 @@ export interface LocaleProviderProps {
   children?: ReactElement<any>;
 }
 
+export const LocaleContext = getContext<LocaleReceiverContext>(Symbols.LocaleContext, {});
+
 function setMomentLocale(locale: Locale) {
   if (locale && locale.locale) {
     interopDefault(moment).locale(locale.locale);
@@ -67,11 +71,7 @@ export default class LocaleProvider extends Component<LocaleProviderProps, any> 
     locale: {},
   };
 
-  static childContextTypes = {
-    c7nLocale: PropTypes.object,
-  };
-
-  getChildContext() {
+  getContextValue() {
     const { locale } = this.props;
     return {
       c7nLocale: {
@@ -106,6 +106,10 @@ export default class LocaleProvider extends Component<LocaleProviderProps, any> 
 
   render() {
     const { children } = this.props;
-    return Children.only(children);
+    return (
+      <LocaleContext.Provider value={this.getContextValue()}>
+        {Children.only(children)}
+      </LocaleContext.Provider>
+    );
   }
 }

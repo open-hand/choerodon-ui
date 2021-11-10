@@ -1,6 +1,6 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties, FunctionComponent, memo, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface DividerProps {
   prefixCls?: string;
@@ -12,7 +12,7 @@ export interface DividerProps {
   style?: CSSProperties;
 }
 
-export default function Divider({
+const Divider: FunctionComponent<DividerProps> = function Divider({
   prefixCls: customizePrefixCls,
   type = 'horizontal',
   orientation = '',
@@ -20,7 +20,8 @@ export default function Divider({
   children,
   dashed,
   ...restProps
-}: DividerProps) {
+}) {
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('divider', customizePrefixCls);
   const orientationPrefix = orientation.length > 0 ? `-${orientation}` : orientation;
   const classString = classNames(className, prefixCls, `${prefixCls}-${type}`, {
@@ -32,4 +33,8 @@ export default function Divider({
       {children && <span className={`${prefixCls}-inner-text`}>{children}</span>}
     </div>
   );
-}
+};
+
+Divider.displayName = 'Divider';
+
+export default memo(Divider);

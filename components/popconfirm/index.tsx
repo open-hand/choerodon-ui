@@ -6,7 +6,7 @@ import { ButtonType } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface PopconfirmProps extends AbstractTooltipProps {
   title: ReactNode | RenderFunction;
@@ -29,12 +29,18 @@ export interface PopconfirmLocale {
 export default class Popconfirm extends Component<PopconfirmProps, PopconfirmState> {
   static displayName = 'Popconfirm';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     transitionName: 'zoom-big',
     placement: 'top',
     trigger: 'click',
     okType: 'primary',
   };
+
+  context: ConfigContextValue;
 
   private tooltip: any;
 
@@ -127,6 +133,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('popover', prefixCls);
   }
 

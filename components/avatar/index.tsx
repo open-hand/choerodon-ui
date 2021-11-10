@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import isNumber from 'lodash/isNumber';
 import Icon from '../icon';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface AvatarProps {
   /** Shape of avatar, options:`circle`, `square` */
@@ -36,15 +36,21 @@ export interface AvatarState {
 export default class Avatar extends Component<AvatarProps, AvatarState> {
   static displayName = 'Avatar';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     shape: 'circle',
     size: Size.default,
   };
 
+  context: ConfigContextValue;
+
   private avatarChildren: any;
 
-  constructor(props: AvatarProps) {
-    super(props);
+  constructor(props: AvatarProps, context: ConfigContextValue) {
+    super(props, context);
     this.state = {
       scale: 1,
       isImgExist: true,
@@ -105,6 +111,7 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
       alt,
       ...others
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('avatar', customizePrefixCls);
 
     const { isImgExist, scale } = this.state;

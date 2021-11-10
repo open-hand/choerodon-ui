@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import { LocaleContext } from './index';
 
 export interface LocaleReceiverProps {
   componentName: string;
@@ -12,9 +12,9 @@ export interface LocaleReceiverContext {
 }
 
 export default class LocaleReceiver extends Component<LocaleReceiverProps> {
-  static contextTypes = {
-    c7nLocale: PropTypes.object,
-  };
+  static get contextType() {
+    return LocaleContext;
+  }
 
   context: LocaleReceiverContext;
 

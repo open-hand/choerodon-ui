@@ -1,7 +1,9 @@
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
-import { getConfig, TooltipTarget } from '../configure';
+import { TooltipTheme } from '../tooltip';
+import { TooltipTarget } from '../configure';
+import { getConfig } from '../configure/utils';
 
-function getTooltipPolyfill(target?: TooltipTarget): Tooltip | undefined {
+export function getUsefulTooltip(target?: TooltipTarget): Tooltip | undefined {
   switch (target) {
     case 'table-cell':
       return getConfig('tableColumnTooltip');
@@ -20,10 +22,10 @@ export function getTooltip(target?: TooltipTarget): Tooltip | undefined {
   if (typeof tooltip === 'function') {
     return tooltip(target);
   }
-  return getTooltipPolyfill(target) || tooltip;
+  return getUsefulTooltip(target) || tooltip;
 }
 
-export function getTooltipTheme(target?: TooltipTarget) {
+export function getTooltipTheme(target?: TooltipTarget): TooltipTheme {
   const tooltipTheme = getConfig('tooltipTheme');
   if (typeof tooltipTheme === 'function') {
     return tooltipTheme(target);

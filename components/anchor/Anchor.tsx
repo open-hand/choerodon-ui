@@ -1,13 +1,13 @@
 import React, { Component, CSSProperties, MouseEvent, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import addEventListener from '../_util/addEventListener';
 import Affix from '../affix';
 import AnchorLink from './AnchorLink';
-import { getPrefixCls } from '../configure';
 import scrollTo from '../_util/scrollTo';
 import getScroll from '../_util/getScroll';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import { AnchorContextProvider } from './AnchorContext';
 
 function getDefaultContainer() {
   return window;
@@ -76,14 +76,18 @@ export interface C7NAnchor {
   unregisterLink: (link: string) => void;
   activeLink: string | null;
   scrollTo: (link: string) => void;
-  onClick?: (
+  onClick?: ((
     e: React.MouseEvent<HTMLElement>,
     link: { title: React.ReactNode; href: string },
-  ) => void;
+  ) => void) | undefined;
 }
 
 export default class Anchor extends Component<AnchorProps, AnchorState> {
   static displayName = 'Anchor';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static Link: typeof AnchorLink;
 
@@ -93,9 +97,7 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
     getContainer: getDefaultContainer,
   };
 
-  static childContextTypes = {
-    c7nAnchor: PropTypes.object,
-  };
+  context: ConfigContextValue;
 
   state = {
     activeLink: null,
@@ -112,7 +114,7 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
 
   private animating: boolean;
 
-  getChildContext() {
+  getContextValue() {
     const { onClick } = this.props;
     const { activeLink } = this.state;
     const c7nAnchor: C7NAnchor = {
@@ -264,6 +266,7 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('anchor', prefixCls);
   }
 
@@ -278,6 +281,7 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
       getContainer,
     } = this.props;
     const { activeLink } = this.state;
+    const { getPrefixCls } = this.context;
     const prefixCls = this.getPrefixCls();
     const inkClass = classNames(`${prefixCls}-ink-ball`, {
       visible: activeLink,
@@ -300,7 +304,9 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
           <div className={`${prefixCls}-ink`}>
             <span className={inkClass} ref={this.saveInkNode} />
           </div>
-          {children}
+          <AnchorContextProvider {...this.getContextValue()} getPrefixCls={getPrefixCls}>
+            {children}
+          </AnchorContextProvider>
         </div>
       </div>
     );

@@ -1,17 +1,17 @@
-import * as React from 'react';
+import React, { createElement, CSSProperties, FunctionComponent, memo, ReactElement, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
 import { cloneElement } from '../_util/reactNode';
 import SingleNumber from './SingleNumber';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface ScrollNumberProps {
   prefixCls?: string;
   className?: string;
   motionClassName?: string;
   count?: string | number | null;
-  children?: React.ReactElement<HTMLElement>;
+  children?: ReactElement<HTMLElement>;
   component?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   title?: string | number | null;
   show: boolean;
 }
@@ -21,7 +21,7 @@ export interface ScrollNumberState {
   count?: string | number | null;
 }
 
-const ScrollNumber: React.FC<ScrollNumberProps> = ({
+const ScrollNumber: FunctionComponent<ScrollNumberProps> = function ScrollNumber({
   prefixCls: customizePrefixCls,
   count,
   className,
@@ -32,7 +32,8 @@ const ScrollNumber: React.FC<ScrollNumberProps> = ({
   component = 'sup',
   children,
   ...restProps
-}) => {
+}) {
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('scroll-number', customizePrefixCls);
 
   // ============================ Render ============================
@@ -45,7 +46,7 @@ const ScrollNumber: React.FC<ScrollNumberProps> = ({
   };
 
   // Only integer need motion
-  let numberNodes: React.ReactNode = count;
+  let numberNodes: ReactNode = count;
   if (count && Number(count) % 1 === 0) {
     const numberList = String(count).split('');
 
@@ -71,7 +72,9 @@ const ScrollNumber: React.FC<ScrollNumberProps> = ({
       className: classNames(`${prefixCls}-custom-component`, oriProps?.className, motionClassName),
     }));
   }
-  return React.createElement(component, newProps, numberNodes);
+  return createElement(component, newProps, numberNodes);
 };
 
-export default ScrollNumber;
+ScrollNumber.displayName = 'ScrollNumber';
+
+export default memo(ScrollNumber);

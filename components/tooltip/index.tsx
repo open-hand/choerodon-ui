@@ -2,8 +2,7 @@ import React, { cloneElement, Component, CSSProperties, isValidElement, ReactEle
 import classNames from 'classnames';
 import getPlacements, { AdjustOverflow, PlacementsConfig } from './placements';
 import RcTooltip from '../rc-components/tooltip';
-import { getPrefixCls } from '../configure';
-import { getTooltipTheme } from '../_util/TooltipUtils';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { AdjustOverflow, PlacementsConfig };
 
@@ -69,6 +68,10 @@ const splitObject = (obj: any, keys: string[]) => {
 export default class Tooltip extends Component<TooltipProps, any> {
   static displayName = 'Tooltip';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     placement: 'top',
     transitionName: 'zoom-big-fast',
@@ -79,6 +82,8 @@ export default class Tooltip extends Component<TooltipProps, any> {
   };
 
   private tooltip: any;
+
+  context: ConfigContextValue;
 
   state: { visible: boolean };
 
@@ -220,6 +225,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   render() {
     const { props, state } = this;
+    const { getTooltipTheme, getPrefixCls } = this.context;
     const {
       prefixCls: customizePrefixCls,
       title,

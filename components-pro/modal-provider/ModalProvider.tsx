@@ -9,7 +9,7 @@ import React, {
 import noop from 'lodash/noop';
 import ModalContainer, { ModalContainerProps } from '../modal-container/ModalContainer';
 import Modal, { ModalProps } from '../modal/Modal';
-import ModalContext from './ModalContext';
+import ModalContext, { ModalContextValue } from './ModalContext';
 
 export interface ModalProviderProps extends ModalContainerProps {
   children?: ReactNode;
@@ -18,7 +18,7 @@ export interface ModalProviderProps extends ModalContainerProps {
 const ModalProvider = (props: ModalProviderProps) => {
   const { location: contextLocation } = useContext(ModalContext);
   const { location = contextLocation, children, getContainer } = props;
-  const ref = useRef<ModalContainer>(null);
+  const ref = useRef<ModalContainer | null>(null);
   const prepareToOpen = useMemo<(ModalProps & { children })[]>(
     () => [] as (ModalProps & { children })[],
   [],
@@ -82,7 +82,7 @@ const ModalProvider = (props: ModalProviderProps) => {
   );
 };
 
-export const useModal = () => {
+export const useModal = (): ModalContextValue => {
   return useContext(ModalContext);
 };
 
@@ -92,7 +92,7 @@ export const injectModal = Target => {
     return <Target {...props} Modal={modal} />;
   };
 
-  Hoc.displayName = `${Target.displayName || 'Anonymous'}-with-inject-modal`;
+  Hoc.displayName = `${Target.displayName || Target.name || 'Anonymous'}-with-inject-modal`;
 
   return Hoc;
 };

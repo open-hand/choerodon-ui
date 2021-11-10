@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Input, { InputProps } from './Input';
 import Button from '../button';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface SearchProps extends InputProps {
   inputPrefixCls?: string;
@@ -14,10 +14,16 @@ export interface SearchProps extends InputProps {
 export default class Search extends Component<SearchProps, any> {
   static displayName = 'Search';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     enterButton: false,
     size: Size.small,
   };
+
+  context: ConfigContextValue;
 
   private input: Input;
 
@@ -43,6 +49,7 @@ export default class Search extends Component<SearchProps, any> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('input-search', prefixCls);
   }
 
@@ -80,6 +87,7 @@ export default class Search extends Component<SearchProps, any> {
 
   render() {
     const { className, inputPrefixCls, size, suffix, enterButton, ...others } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = this.getPrefixCls();
     delete (others as any).onSearch;
     delete (others as any).prefixCls;

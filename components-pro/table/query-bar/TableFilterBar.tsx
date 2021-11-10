@@ -1,7 +1,7 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
 import DataSet from '../../data-set/DataSet';

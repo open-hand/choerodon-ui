@@ -6,7 +6,7 @@ import { Circle } from '../rc-components/progress';
 import Loading from './Loading';
 import { Size } from '../_util/enum';
 import { ProgressPosition, ProgressStatus, ProgressType } from './enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface ProgressProps {
   prefixCls?: string;
@@ -30,6 +30,10 @@ export interface ProgressProps {
 
 export default class Progress extends Component<ProgressProps, {}> {
   static displayName = 'Progress';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static Line: any;
 
@@ -69,7 +73,9 @@ export default class Progress extends Component<ProgressProps, {}> {
     format: PropTypes.func,
     gapDegree: PropTypes.number,
     size: PropTypes.oneOf([Size.default, Size.small, Size.large]),
-  };
+  }
+
+  context: ConfigContextValue;
 
   renderPointer = () => {
     const props = this.props;
@@ -80,6 +86,7 @@ export default class Progress extends Component<ProgressProps, {}> {
       status,
       successPercent,
     } = props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('progress', customizePrefixCls);
     const progressStatus =
       parseInt(successPercent ? successPercent.toString() : percent.toString(), 10) >= 100 &&
@@ -146,6 +153,7 @@ export default class Progress extends Component<ProgressProps, {}> {
       showPointer,
       ...restProps
     } = props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('progress', customizePrefixCls);
     const progressStatus =
       parseInt(successPercent ? successPercent.toString() : percent.toString(), 10) >= 100 &&

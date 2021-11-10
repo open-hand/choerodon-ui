@@ -1,12 +1,4 @@
-import React, {
-  ChangeEvent,
-  Component,
-  CSSProperties,
-  KeyboardEvent,
-  ReactNode,
-  MouseEventHandler,
-  ReactElement,
-} from 'react';
+import React, { ChangeEvent, Component, CSSProperties, KeyboardEvent, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import arrayTreeFilter from 'array-tree-filter';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -16,9 +8,9 @@ import Icon from '../icon';
 import RcCascader from '../rc-components/cascader';
 import KeyCode from '../_util/KeyCode';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import enUS from '../rc-components/cascader/locale/en_US';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface CascaderOptionType {
   value: string;
@@ -152,6 +144,10 @@ const defaultDisplayRender = (label: string[]) => label.join(' / ');
 export default class Cascader extends Component<CascaderProps, CascaderState> {
   static displayName = 'Cascader';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     placeholder: 'Please select',
     transitionName: 'slide-up',
@@ -162,6 +158,8 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
     notFoundContent: 'Not Found',
     menuMode:MenuMode.multiple,
   };
+
+  context: ConfigContextValue;
 
   cachedOptions: CascaderOptionType[];
 
@@ -353,6 +351,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
       allowClear,
       ...otherProps
     } = props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('cascader', customizePrefixCls);
     const inputPrefixCls = getPrefixCls('input', customizeInputPrefixCls);
     const defaultValue = props.defaultValue;

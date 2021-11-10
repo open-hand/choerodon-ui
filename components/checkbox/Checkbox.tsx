@@ -1,16 +1,9 @@
-import React, {
-  Component,
-  CSSProperties,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  ReactNode,
-} from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, CSSProperties, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
 import classNames from 'classnames';
 import shallowEqual from 'lodash/isEqual';
 import CheckboxGroup, { CheckboxGroupContext } from './Group';
 import RcCheckbox from '../rc-components/checkbox';
-import { getPrefixCls } from '../configure';
+import CheckboxContext from './CheckboxContext';
 
 export interface AbstractCheckboxProps<T> {
   prefixCls?: string;
@@ -54,9 +47,11 @@ export default class Checkbox extends Component<CheckboxProps, {}> {
     indeterminate: false,
   };
 
-  static contextTypes = {
-    checkboxGroup: PropTypes.any,
-  };
+  static get contextType() {
+    return CheckboxContext;
+  }
+
+  context: CheckboxGroupContext;
 
   private rcCheckbox: any;
 
@@ -65,11 +60,11 @@ export default class Checkbox extends Component<CheckboxProps, {}> {
     nextState: {},
     nextContext: CheckboxGroupContext,
   ) {
-    const { checkboxGroup } = this.context;
+    const { checkboxGroup, getPrefixCls } = this.context;
     return (
       !shallowEqual(this.props, nextProps) ||
       !shallowEqual(this.state, nextState) ||
-      !shallowEqual(checkboxGroup, nextContext.checkboxGroup)
+      !shallowEqual(checkboxGroup, nextContext.checkboxGroup) || getPrefixCls !== nextContext.getPrefixCls
     );
   }
 
@@ -97,8 +92,8 @@ export default class Checkbox extends Component<CheckboxProps, {}> {
       onMouseLeave,
       ...restProps
     } = props;
+    const { checkboxGroup, getPrefixCls } = context;
     const prefixCls = getPrefixCls('checkbox', customizePrefixCls);
-    const { checkboxGroup } = context;
     const checkboxProps: CheckboxProps = { ...restProps };
     if (checkboxGroup) {
       checkboxProps.onChange = () =>

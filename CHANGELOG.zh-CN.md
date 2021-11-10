@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 拆分 dataset 和 shared 库。
+- 🌟 `ConfigProvider`: 新增 ConfigProvider 组件。
+- 🌟 `hooks`: 新增 useConfig 钩子。
+- 🌟 `<pro>hooks`: 新增 useDataSet 钩子。
 - 🌟 `configure`: 新增 numberFieldKeyboard 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。

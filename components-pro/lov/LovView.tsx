@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { action, toJS } from 'mobx';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Table, { onColumnResizeProps, TableProps } from '../table/Table';
@@ -14,12 +14,14 @@ import { ColumnProps } from '../table/Column';
 import { modalChildrenProps } from '../modal/interface';
 import autobind from '../_util/autobind';
 import { getColumnKey } from '../table/utils';
-import SelectionList, { TIMESTAMP }  from './SelectionList';
-import { ViewRenderer, LovConfig } from './Lov';
+import SelectionList, { TIMESTAMP } from './SelectionList';
+import { LovConfig, ViewRenderer } from './Lov';
+import { FormContextValue } from '../form/FormContext';
 
 export interface LovViewProps {
   dataSet: DataSet;
   config: LovConfig;
+  context: FormContextValue;
   tableProps?: Partial<TableProps>;
   multiple: boolean;
   values: any[];
@@ -35,6 +37,10 @@ export interface LovViewProps {
 }
 
 export default class LovView extends Component<LovViewProps> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   selection: DataSetSelection | false;
 
   selectionMode: SelectionMode | undefined;
@@ -190,7 +196,9 @@ export default class LovView extends Component<LovViewProps> {
       multiple,
       tableProps,
       viewMode,
+      context,
     } = this.props;
+    const { getConfig } = context;
     const columns = this.getColumns();
     const popup = viewMode === 'popup';
     const lovTableProps: TableProps = {
@@ -294,9 +302,9 @@ export default class LovView extends Component<LovViewProps> {
               viewRenderer({
                 dataSet,
                 lovConfig,
-                textField, 
-                valueField, 
-                label, 
+                textField,
+                valueField,
+                label,
                 multiple,
               }),
             )

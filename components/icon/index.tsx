@@ -1,7 +1,7 @@
-import React, { CSSProperties, FocusEventHandler, MouseEventHandler } from 'react';
+import React, { CSSProperties, FocusEventHandler, MouseEventHandler, useContext } from 'react';
 import classNames from 'classnames';
-import { getConfig } from '../configure';
 import createFromIconfontCN from './IconFont';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface IconProps {
   type: string;
@@ -22,6 +22,7 @@ export interface IconProps {
 }
 
 const Icon = function Icon(props: IconProps) {
+  const { getConfig } = useContext(ConfigContext);
   const iconfontPrefix = getConfig('iconfontPrefix');
   const { type, customFontName, height, width, className = '', scriptUrl, ...otherProps } = props;
   const classString = classNames(iconfontPrefix, customFontName, `${iconfontPrefix}-${type}`, className);

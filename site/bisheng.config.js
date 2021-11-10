@@ -80,6 +80,8 @@ module.exports = {
   },
   webpackConfig(config) {
     config.resolve.alias = {
+      'choerodon-ui/dataset': path.join(process.cwd(), 'components-dataset'),
+      'choerodon-ui/shared': path.join(process.cwd(), 'components-shared'),
       'choerodon-ui/pro/lib': path.join(process.cwd(), 'components-pro'),
       'choerodon-ui/pro': path.join(process.cwd(), 'index-pro'),
       'choerodon-ui/lib': path.join(process.cwd(), 'components'),

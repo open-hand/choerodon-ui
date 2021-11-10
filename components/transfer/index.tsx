@@ -8,7 +8,7 @@ import Search from './search';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import { TransferDirection } from './enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { TransferListProps } from './list';
 export { TransferOperationProps } from './operation';
@@ -55,6 +55,10 @@ export interface TransferLocale {
 }
 
 export default class Transfer extends Component<TransferProps, any> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'Transfer';
 
   static List = List;
@@ -88,6 +92,8 @@ export default class Transfer extends Component<TransferProps, any> {
     rowKey: PropTypes.func,
     lazy: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   };
+
+  context: ConfigContextValue;
 
   splitedDataSource: {
     leftDataSource: TransferItem[];
@@ -354,6 +360,7 @@ export default class Transfer extends Component<TransferProps, any> {
       render,
       lazy,
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('transfer', customizePrefixCls);
     const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys } = this.state;
 

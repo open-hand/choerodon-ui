@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import ObserverTextField from '../text-field/TextField';
 import TextArea from '../text-area/TextArea';
 import { ResizeType } from '../text-area/enum';
@@ -22,6 +22,8 @@ export interface IntlListProps {
   rows?: number;
   cols?: number;
   resize?: ResizeType;
+
+  getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
 }
 
 @observer
@@ -34,7 +36,7 @@ export default class IntlList extends Component<IntlListProps> {
   };
 
   renderOptions() {
-    const { name, lang, maxLengths, type, rows, cols, resize } = this.props;
+    const { name, lang, maxLengths, type, rows, cols, resize, getConfig } = this.props;
     const { supports } = localeContext;
     const tlsKey = getConfig('tlsKey');
     const FieldTag = type === IntlType.multipleLine ? TextArea : ObserverTextField;

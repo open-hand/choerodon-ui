@@ -1,5 +1,6 @@
-import { createContext, JSXElementConstructor, MouseEventHandler, ReactNode } from 'react';
+import { JSXElementConstructor, MouseEventHandler, ReactNode } from 'react';
 import noop from 'lodash/noop';
+import { getContext, Symbols } from 'choerodon-ui/shared';
 import { GroupPanelMap, TabsCustomized } from './Tabs';
 import { TabPaneProps } from './TabPane';
 import { TabsPosition } from './enum';
@@ -27,7 +28,7 @@ export interface TabsContextValue {
   children?: ReactNode;
 }
 
-const TabsContext = createContext<TabsContextValue>({
+const TabsContext = getContext<TabsContextValue>(Symbols.TabsContext, {
   changeActiveKey: noop,
   saveCustomized: noop,
   groupedPanelsMap: new Map<string, GroupPanelMap>(),

@@ -10,7 +10,7 @@ import { RangePickerPresetRange, RangePickerValue } from './interface';
 import RangeCalendar from '../rc-components/calendar/RangeCalendar';
 import RcDatePicker from '../rc-components/calendar/Picker';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface RangePickerState {
   value?: RangePickerValue;
@@ -68,6 +68,10 @@ function fixLocale(value: RangePickerValue | undefined, localeCode: string) {
 export default class RangePicker extends Component<any, RangePickerState> {
   static displayName = 'RangePicker';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     allowClear: true,
     showToday: false,
@@ -75,8 +79,10 @@ export default class RangePicker extends Component<any, RangePickerState> {
 
   private picker: HTMLSpanElement;
 
-  constructor(props: any) {
-    super(props);
+  context: ConfigContextValue;
+
+  constructor(props: any, context: ConfigContextValue) {
+    super(props, context);
     const value = props.value || props.defaultValue || [];
     if (
       (value[0] && !interopDefault(moment).isMoment(value[0])) ||
@@ -235,6 +241,7 @@ export default class RangePicker extends Component<any, RangePickerState> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('calendar', prefixCls);
   }
 

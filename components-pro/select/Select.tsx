@@ -15,8 +15,6 @@ import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getConfig } from 'choerodon-ui/lib/configure';
-import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { Tooltip as OptionTooltip } from '../core/enum';
 import TriggerField, { TriggerFieldPopupContentProps, TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -30,7 +28,7 @@ import Spin from '../spin';
 import { preventDefault, stopEvent } from '../_util/EventManager';
 import normalizeOptions, { OTHER_OPTION_PROPS } from '../option/normalizeOptions';
 import { $l } from '../locale-context';
-import * as ObjectChainValue from '../_util/ObjectChainValue';
+import ObjectChainValue from '../_util/ObjectChainValue';
 import isEmpty from '../_util/isEmpty';
 import isSame from '../_util/isSame';
 import isSameLike from '../_util/isSameLike';
@@ -44,6 +42,7 @@ import Icon from '../icon';
 import { ValueChangeAction } from '../text-field/enum';
 import { LabelLayout } from '../form/enum';
 import { isFieldValueEmpty } from '../field/utils';
+import { Action } from '../trigger/enum';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -349,7 +348,6 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     checkValueOnOptionsChange: true,
     onOption: defaultOnOption,
     selectAllButton: true,
-    trigger: getConfig('selectTrigger'),
   };
 
   static Option = Option;
@@ -439,7 +437,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   get searchable(): boolean {
-    const { searchable = getConfig('selectSearchable') } = this.observableProps;
+    const { searchable = this.getContextConfig('selectSearchable') } = this.observableProps;
     return !!searchable;
   }
 
@@ -646,7 +644,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     if (notFoundContent !== undefined) {
       return notFoundContent;
     }
-    return getConfig('renderEmpty')('Select');
+    return this.getContextConfig('renderEmpty')('Select');
   }
 
   getPagingOptionContent() {
@@ -654,7 +652,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     if (pagingOptionContent !== undefined) {
       return pagingOptionContent;
     }
-    return getConfig('selectPagingOptionContent');
+    return this.getContextConfig('selectPagingOptionContent');
   }
 
   getOtherNextNode(): ReactNode {
@@ -728,6 +726,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     if (!options) {
       return null;
     }
+    const { getTooltip, getTooltipTheme } = this.context;
     const {
       disabled: menuDisabled,
       textField,
@@ -878,17 +877,17 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   get dropdownMatchSelectWidth(): boolean | undefined {
-    const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') } = this.observableProps;
+    const { dropdownMatchSelectWidth = this.getContextConfig('dropdownMatchSelectWidth') } = this.observableProps;
     return dropdownMatchSelectWidth;
   }
 
   get defaultActiveFirstOption(): boolean | undefined {
-    const { defaultActiveFirstOption = getConfig('defaultActiveFirstOption') } = this.observableProps;
+    const { defaultActiveFirstOption = this.getContextConfig('defaultActiveFirstOption') } = this.observableProps;
     return defaultActiveFirstOption;
   }
 
   get selectReverse(): boolean | undefined {
-    const { selectReverse = getConfig('selectReverse') } = this.observableProps;
+    const { selectReverse = this.getContextConfig('selectReverse') } = this.observableProps;
     return selectReverse;
   }
 
@@ -985,6 +984,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         };
       }
     }
+  }
+
+  getDefaultAction(): Action[] {
+    return this.getContextConfig('selectTrigger') || super.getDefaultAction();
   }
 
   getTriggerIconFont(): string {

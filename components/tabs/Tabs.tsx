@@ -7,17 +7,18 @@ import React, {
   MouseEventHandler,
   ReactNode,
   useCallback,
+  useContext,
   useEffect,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
-import { getConfig, getCustomizable } from '../configure';
 import { TabsPosition, TabsType } from './enum';
 import TabPane, { TabPaneProps } from './TabPane';
 import TabGroup, { TabGroupProps } from './TabGroup';
 import { Size } from '../_util/enum';
 import TabsWithContext from './TabsWithContext';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export type Animated = { inkBar: boolean; tabPane: boolean };
 
@@ -59,6 +60,7 @@ export interface TabsProps<T = string> {
 export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }
 
 const Tabs: FunctionComponent<TabsProps> = function Tabs(props) {
+  const { getConfig, getCustomizable } = useContext(ConfigContext);
   const {
     customizedCode, customizable = customizedCode ? getCustomizable('Tabs') : undefined,
   } = props;

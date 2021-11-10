@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  ComponentClass,
-  CSSProperties,
-  FormEvent,
-  FormEventHandler,
-  ReactNode,
-  SFC,
-} from 'react';
+import React, { Component, ComponentClass, CSSProperties, FormEvent, FormEventHandler, ReactNode, SFC } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -17,7 +9,8 @@ import { createFormField } from '../rc-components/form';
 import createDOMForm from '../rc-components/form/createDOMForm';
 import PureRenderMixin from '../rc-components/util/PureRenderMixin';
 import { FormLayout } from './enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import { FormContextProvider } from './FormContext';
 
 export interface FormCreateOption<T> {
   onFieldsChange?: (props: T, fields: Array<any>) => void;
@@ -129,13 +122,15 @@ export interface FormComponentProps {
 }
 
 export interface ComponentDecorator {
-  <P extends FormComponentProps>(component: ComponentClass<P> | SFC<P>): ComponentClass<
-    Omit<P, keyof FormComponentProps>
-  >;
+  <P extends FormComponentProps>(component: ComponentClass<P> | SFC<P>): ComponentClass<Omit<P, keyof FormComponentProps>>;
 }
 
 export default class Form extends Component<FormProps, any> {
   static displayName = 'Form';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static defaultProps = {
     layout: FormLayout.horizontal,
@@ -153,15 +148,11 @@ export default class Form extends Component<FormProps, any> {
     hideRequiredMark: PropTypes.bool,
   };
 
-  static childContextTypes = {
-    vertical: PropTypes.bool,
-  };
-
   static Item = FormItem;
 
   static createFormField = createFormField;
 
-  static create = function<TOwnProps>(
+  static create = function <TOwnProps>(
     options: FormCreateOption<TOwnProps> = {},
   ): ComponentDecorator {
     return createDOMForm({
@@ -171,6 +162,8 @@ export default class Form extends Component<FormProps, any> {
       fieldDataProp: FIELD_DATA_PROP,
     });
   };
+
+  context: ConfigContextValue;
 
   constructor(props: FormProps) {
     super(props);
@@ -182,15 +175,9 @@ export default class Form extends Component<FormProps, any> {
     return PureRenderMixin.shouldComponentUpdate.apply(this, args);
   }
 
-  getChildContext() {
-    const { layout } = this.props;
-    return {
-      vertical: layout === 'vertical',
-    };
-  }
-
   render() {
     const { prefixCls: customizePrefixCls, hideRequiredMark, className = '', layout } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('form', customizePrefixCls);
     const formClassName = classNames(
       prefixCls,
@@ -209,6 +196,10 @@ export default class Form extends Component<FormProps, any> {
       'hideRequiredMark',
     ]);
 
-    return <form {...formProps} className={formClassName} />;
+    return (
+      <FormContextProvider vertical={layout === 'vertical'} getPrefixCls={getPrefixCls}>
+        <form {...formProps} className={formClassName} />
+      </FormContextProvider>
+    );
   }
 }

@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import { ObjectFitProperty, ObjectPositionProperty } from 'csstype';
 import ReactIntersectionObserver from 'react-intersection-observer';
 import isNumber from 'lodash/isNumber';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from '../icon';
 import objectFitPolyfill, { isObjectFitSupport } from '../_util/objectFitPolyfill';
@@ -69,6 +69,7 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const url = previewUrl || src;
   const pictureRef = useRef<PictureRef>({ src: url, downloadUrl });
   const context = useContext<PictureContextValue | undefined>(PictureContext);
+  const { getProPrefixCls } = useContext(ConfigContext);
   const customPrefixCls = getProPrefixCls('picture', prefixCls);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [status, setStatus] = useState<ImageStatus>(propStatus || 'empty');

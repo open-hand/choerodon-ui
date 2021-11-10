@@ -18,7 +18,7 @@ export default class Dropdown extends Component {
     overlayStyle: PropTypes.object,
     placement: PropTypes.string,
     overlay: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    trigger: PropTypes.array,
+    trigger: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     showAction: PropTypes.array,
     hideAction: PropTypes.array,
     getPopupContainer: PropTypes.func,

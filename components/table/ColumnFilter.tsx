@@ -6,7 +6,7 @@ import { Item as MenuItem } from '../rc-components/menu';
 import { UNSELECTABLE_ATTRIBUTE, UNSELECTABLE_STYLE } from '../rc-components/select/util';
 import { getColumnKey } from './util';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface ColumnFilterProps<T> {
   prefixCls?: string;
@@ -20,7 +20,13 @@ export interface ColumnFilterState {
 }
 
 export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, ColumnFilterState> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'ColumnFilter';
+
+  context: ConfigContextValue;
 
   state = {
     open: false,
@@ -29,6 +35,7 @@ export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, Col
   render() {
     const { prefixCls, getPopupContainer } = this.props;
     const { open } = this.state;
+    const { getPrefixCls } = this.context;
     return (
       <div className={`${prefixCls}-columns-chooser`}>
         <SelectTrigger

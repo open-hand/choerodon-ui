@@ -17,7 +17,6 @@ import SelectionBox from './SelectionBox';
 import SelectionCheckboxAll from './SelectionCheckboxAll';
 import Column from './Column';
 import ColumnGroup from './ColumnGroup';
-import { getConfig, getPrefixCls } from '../configure';
 import createBodyRow from './createBodyRow';
 import {
   findColumnByFilterValue,
@@ -47,6 +46,7 @@ import FilterBar from './FilterBar';
 import { VALUE_OR } from './FilterSelect';
 import RcTable from '../rc-components/table';
 import { Size } from '../_util/enum';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function findBodyDom(dom: Element | HTMLDivElement, reg: RegExp): any {
   if (dom.childElementCount > 0) {
@@ -85,6 +85,10 @@ const emptyObject = {};
 
 export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   static displayName = 'Table';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static Column = Column;
 
@@ -133,6 +137,8 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     noFilter: false,
     autoScroll: true,
   };
+
+  context: ConfigContextValue;
 
   CheckboxPropsCache: {
     [key: string]: any;
@@ -193,7 +199,8 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
-    return getPrefixCls('table', prefixCls);
+    const { context } = this;
+    return context.getPrefixCls('table', prefixCls);
   }
 
   getDefaultSelection() {
@@ -855,6 +862,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   renderColumnsDropdown(columns: ColumnProps<T>[], locale: TableLocale) {
     const { dropdownPrefixCls: customizeDropdownPrefixCls, filterBar } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = this.getPrefixCls();
     const dropdownPrefixCls = getPrefixCls('dropdown', customizeDropdownPrefixCls);
     const { sortOrder, filters } = this.state;
@@ -948,6 +956,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     }
     const { pagination } = this.state;
     const { size } = this.props;
+    const { getConfig } = this.context;
     const prefixCls = this.getPrefixCls();
     const position = pagination.position || 'bottom';
     const total = pagination.total || this.getLocalData().length;

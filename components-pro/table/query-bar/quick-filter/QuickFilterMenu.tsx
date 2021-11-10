@@ -6,9 +6,9 @@ import isObject from 'lodash/isObject';
 import isEnumEmpty from 'lodash/isEmpty';
 import isArray from 'lodash/isArray';
 import noop from 'lodash/noop';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
 import Tag from 'choerodon-ui/lib/tag';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import isSampleEmpty from '../../../_util/isEmpty';
 import { $l } from '../../../locale-context';
 import Button from '../../../button';
@@ -78,6 +78,7 @@ function isSelect(data) {
  * @constructor
  */
 const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type, selectFields }) {
+  const { getConfig } = useContext(ConfigContext);
   modal.handleOk(async () => {
     const putData: any[] = [];
     const statusKey = getConfig('statusKey');
@@ -175,6 +176,7 @@ const MemoModalContent = memo(ModalContent);
  * 快速筛选下拉
  */
 const QuickFilterMenu = function QuickFilterMenu() {
+  const { getConfig } = useContext(ConfigContext);
   const {
     autoQuery,
     dataSet,

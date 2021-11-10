@@ -15,7 +15,7 @@ import isString from 'lodash/isString';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -29,7 +29,7 @@ import Button from '../../button';
 import Dropdown from '../../dropdown';
 import TextField from '../../text-field';
 import Tooltip from '../../tooltip';
-import TableContext from '../TableContext';
+import TableContext, { Props } from '../TableContext';
 import { ElementProps } from '../../core/ViewComponent';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
@@ -106,7 +106,9 @@ export interface TableDynamicFilterBarProps extends ElementProps {
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   static defaultProps = {
     prefixCls: getProPrefixCls('table'),
@@ -116,6 +118,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     autoQuery: true,
     expandButton: true,
   };
+
+  context: Props;
 
   @observable moreFields: Field[];
 
@@ -336,9 +340,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * tableFilterSuffix 预留自定义区域
    */
   renderSuffix() {
-    const { tableStore: { proPrefixCls } } = this.context;
+    const { tableStore, tableStore: { proPrefixCls } } = this.context;
     const { dynamicFilterBar, queryDataSet, dataSet } = this.props;
-    const suffixes: Suffixes[] | undefined = dynamicFilterBar && dynamicFilterBar.suffixes || getConfig('tableFilterSuffix');
+    const suffixes: Suffixes[] | undefined = dynamicFilterBar && dynamicFilterBar.suffixes || tableStore.getConfig('tableFilterSuffix');
     const children: ReactElement[] = [];
     if (suffixes && suffixes.length) {
       suffixes.forEach(suffix => {
@@ -415,7 +419,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   get tableFilterAdapter() {
     const { dynamicFilterBar } = this.props;
-    return dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || getConfig('tableFilterAdapter');
+    const { tableStore } = this.context;
+    return dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || tableStore.getConfig('tableFilterAdapter');
   }
 
   /**
@@ -515,7 +520,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   getFuzzyQuery(): ReactNode {
     const { tableStore, tableStore: { proPrefixCls, node, highlightRowIndexs } } = this.context;
     const { dataSet, dynamicFilterBar, autoQueryAfterReset, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
-    const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
+    const searchText = dynamicFilterBar?.searchText || tableStore.getConfig('tableFilterSearchText') || 'params';
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     if (!fuzzyQuery) return null;
     return (<div className={`${proPrefixCls}-filter-search`}>

@@ -6,7 +6,7 @@ import Icon from '../icon';
 import Select, { SelectProps } from '../select';
 import Pagination from '../pagination';
 import Tooltip from '../tooltip';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 const Option = Select.Option;
 
@@ -26,6 +26,10 @@ export interface IconSelectState {
 export default class IconSelect extends Component<IconSelectProps, IconSelectState> {
   static displayName = 'IconSelect';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     filter: true,
     showArrow: false,
@@ -33,12 +37,14 @@ export default class IconSelect extends Component<IconSelectProps, IconSelectSta
     showAll: false,
   };
 
+  context: ConfigContextValue;
+
   icons: any;
 
   rcSelect: ReactNode | null;
 
-  constructor(props: IconSelectProps) {
-    super(props);
+  constructor(props: IconSelectProps, context: ConfigContextValue) {
+    super(props, context);
     this.state = {
       current: 1,
       total: 0,
@@ -146,6 +152,7 @@ export default class IconSelect extends Component<IconSelectProps, IconSelectSta
   render() {
     const { className, prefixCls: customizePrefixCls, dropdownClassName } = this.props;
     const { filterValue } = this.state;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('icon-select', customizePrefixCls);
     const selectCls = classNames(className, prefixCls);
     const dropDownCls = classNames(dropdownClassName, `${prefixCls}-dropdown`);

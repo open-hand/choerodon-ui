@@ -10,8 +10,6 @@ import { computed, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import isPromise from 'is-promise';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
-import { getConfig } from 'choerodon-ui/lib/configure';
-import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import Icon from '../icon';
 import FormContext from '../form/FormContext';
 import Progress from '../progress';
@@ -89,7 +87,9 @@ export default class Button extends DataSetComponent<ButtonProps> {
   // eslint-disable-next-line camelcase
   static __PRO_BUTTON = true;
 
-  static contextType = FormContext;
+  static get contextType() {
+    return FormContext;
+  }
 
   static propTypes = {
     /**
@@ -255,6 +255,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   handleMouseEnter(e) {
+    const { getTooltip, getTooltipTheme } = this.context;
     const { tooltip = getTooltip('button'), children } = this.props;
     const { element } = this;
     if (tooltip === ButtonTooltip.always || (tooltip === ButtonTooltip.overflow && isOverflow(element))) {
@@ -294,6 +295,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   getOtherProps() {
     const otherProps = super.getOtherProps();
+    const { getTooltip } = this.context;
     const { tooltip = getTooltip('button') } = this.props;
     if (!this.disabled) {
       otherProps.onClick = this.handleClickIfBubble;
@@ -309,8 +311,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const {
       prefixCls,
       props: {
-        color = getConfig('buttonColor'),
-        funcType = getConfig('buttonFuncType'),
+        color = this.getContextConfig('buttonColor'),
+        funcType = this.getContextConfig('buttonFuncType'),
         children,
         icon,
         block,

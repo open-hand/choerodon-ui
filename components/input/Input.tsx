@@ -1,12 +1,4 @@
-import React, {
-  ChangeEventHandler,
-  Component,
-  CSSProperties,
-  FocusEvent,
-  FormEventHandler,
-  KeyboardEvent,
-  ReactNode,
-} from 'react';
+import React, { ChangeEventHandler, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -15,7 +7,7 @@ import Search from './Search';
 import TextArea from './TextArea';
 import Icon from '../icon';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function fixControlledValue(value: undefined | null | string) {
   if (typeof value === 'undefined' || value === null) {
@@ -76,6 +68,10 @@ export interface InputState {
 export default class Input extends Component<InputProps, any> {
   static displayName = 'Input';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static Group: typeof Group;
 
   static Search: typeof Search;
@@ -121,6 +117,8 @@ export default class Input extends Component<InputProps, any> {
     showPasswordEye: PropTypes.bool,
   };
 
+  context: ConfigContextValue;
+
   state: InputState;
 
   input: HTMLInputElement;
@@ -131,8 +129,8 @@ export default class Input extends Component<InputProps, any> {
 
   suffix: HTMLSpanElement;
 
-  constructor(props) {
-    super(props);
+  constructor(props, context: ConfigContextValue) {
+    super(props, context);
     this.state = {
       value: typeof props.value === 'undefined' ? props.defaultValue : props.value,
       focused: false,
@@ -293,6 +291,7 @@ export default class Input extends Component<InputProps, any> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('input', prefixCls);
   }
 
@@ -334,8 +333,7 @@ export default class Input extends Component<InputProps, any> {
     const { className, type } = this.props;
     const { showPassword, value } = this.state;
     // Fix https://fb.me/react-unknown-prop
-    const otherProps = omit<
-      InputProps,
+    const otherProps = omit<InputProps,
       | 'placeholder'
       | 'prefixCls'
       | 'onPressEnter'
@@ -350,24 +348,23 @@ export default class Input extends Component<InputProps, any> {
       | 'showLengthInfo'
       | 'showPasswordEye'
       | 'size'
-      | 'border'
-    >(this.props, [
-      'placeholder',
-      'prefixCls',
-      'onPressEnter',
-      'addonBefore',
-      'addonAfter',
-      'prefix',
-      'suffix',
-      'label',
-      'copy',
-      'style',
-      'focused',
-      'showLengthInfo',
-      'showPasswordEye',
-      'size',
-      'border',
-    ]);
+      | 'border'>(this.props, [
+        'placeholder',
+        'prefixCls',
+        'onPressEnter',
+        'addonBefore',
+        'addonAfter',
+        'prefix',
+        'suffix',
+        'label',
+        'copy',
+        'style',
+        'focused',
+        'showLengthInfo',
+        'showPasswordEye',
+        'size',
+        'border',
+      ]);
 
     return (
       <input
@@ -390,7 +387,7 @@ export default class Input extends Component<InputProps, any> {
     const { value } = this.state;
     const inputLength = value ? value.length : 0;
     return (maxLength && showLengthInfo) ||
-      (maxLength && maxLength > 0 && inputLength === maxLength) ? (
+    (maxLength && maxLength > 0 && inputLength === maxLength) ? (
         <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
       ) : null;
   }

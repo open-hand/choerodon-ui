@@ -8,9 +8,9 @@ import Icon from '../icon';
 import Progress from '../progress';
 import { ProgressType } from '../progress/enum';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
 import { DataNode, EventDataNode, Key } from '../rc-components/tree/interface';
 import { isValidElement, cloneElement } from '../_util/reactNode';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { TreeNode };
 
@@ -147,6 +147,10 @@ export interface TreeProps extends Omit<RcTreeProps, 'prefixCls' | 'showLine'> {
 export default class Tree extends Component<TreeProps, any> {
   static displayName = 'Tree';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static TreeNode = TreeNode;
 
   static DirectoryTree = DirectoryTree;
@@ -156,6 +160,8 @@ export default class Tree extends Component<TreeProps, any> {
     showIcon: false,
     openAnimation: animation,
   };
+
+  context: ConfigContextValue;
 
   renderSwitcherIcon = ({ isLeaf, loading }: C7nTreeNodeProps) => {
     const { showLine, switcherIcon } = this.props;
@@ -201,6 +207,7 @@ export default class Tree extends Component<TreeProps, any> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('tree', prefixCls);
   }
 

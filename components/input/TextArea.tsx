@@ -1,18 +1,9 @@
-import React, {
-  ChangeEvent,
-  Component,
-  CSSProperties,
-  FocusEvent,
-  FormEventHandler,
-  KeyboardEvent,
-  ReactNode,
-  TextareaHTMLAttributes,
-} from 'react';
+import React, { ChangeEvent, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode, TextareaHTMLAttributes } from 'react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
 import { AbstractInputProps } from './Input';
 import calculateNodeHeight from './calculateNodeHeight';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function onNextFrame(cb: () => void) {
   if (window.requestAnimationFrame) {
@@ -52,10 +43,16 @@ export type HTMLTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>;
 export default class TextArea extends Component<TextAreaProps & HTMLTextareaProps, TextAreaState> {
   static displayName = 'TextArea';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     showLengthInfo: true,
     border: true,
   };
+
+  context: ConfigContextValue;
 
   nextFrameActionId: number;
 
@@ -127,6 +124,7 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('input', prefixCls);
   }
 

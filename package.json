@@ -35,7 +35,9 @@
     "dist",
     "lib",
     "es",
-    "pro"
+    "pro",
+    "dataset",
+    "shared"
   ],
   "typings": "lib/index.d.ts",
   "license": "MIT",

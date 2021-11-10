@@ -34,7 +34,9 @@ const propTypes = {
 class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
   static propTypes = propTypes;
 
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-cell-header'),

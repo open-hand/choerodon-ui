@@ -26,6 +26,8 @@ import {
   ResponderProvided,
 } from 'react-beautiful-dnd';
 import isPromise from 'is-promise';
+
+import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import LocaleReceiver from 'choerodon-ui/lib/locale-provider/LocaleReceiver';
 import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider';
@@ -295,6 +297,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
     return null;
   }
+
+  static get contextType() {
+    return ConfigContext;
+  }
+
+  context: ConfigContextValue;
 
   translateDOMPositionXY = null;
   scrollListener: any = null;

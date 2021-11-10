@@ -1,11 +1,4 @@
-import React, {
-  Children,
-  ClassicComponentClass,
-  Component,
-  FormEventHandler,
-  isValidElement,
-  ReactElement,
-} from 'react';
+import React, { Children, ClassicComponentClass, Component, FormEventHandler, isValidElement, ReactElement } from 'react';
 import classNames from 'classnames';
 import Select, { AbstractSelectProps, OptGroupProps, OptionProps, SelectValue } from '../select';
 import Input from '../input';
@@ -13,7 +6,7 @@ import InputElement from './InputElement';
 import { OptGroup, Option } from '../rc-components/select';
 import { Size } from '../_util/enum';
 import { SelectMode } from '../select/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface DataSourceItemObject {
   value: string;
@@ -49,6 +42,10 @@ function isSelectOptionOrSelectOptGroup(child: any): boolean {
 export default class AutoComplete extends Component<AutoCompleteProps, {}> {
   static displayName = 'AutoComplete';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static Option = Option as ClassicComponentClass<OptionProps>;
 
   static OptGroup = OptGroup as ClassicComponentClass<OptGroupProps>;
@@ -60,6 +57,8 @@ export default class AutoComplete extends Component<AutoCompleteProps, {}> {
     showSearch: false,
     filterOption: false,
   };
+
+  context: ConfigContextValue;
 
   private select: any;
 
@@ -99,6 +98,7 @@ export default class AutoComplete extends Component<AutoCompleteProps, {}> {
       dataSource,
       children,
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('select', customizePrefixCls);
 
     const cls = classNames({

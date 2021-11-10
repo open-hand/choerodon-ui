@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 Split `dataset` and `shared` libraries.
+- 🌟 `ConfigProvider`: Added `ConfigProvider` component.
+- 🌟 `hooks`: Added `useConfig` hook.
+- 🌟 `<pro>hooks`: Added `useDataSet` hook.
 - 🌟 `configure`: Added `numberFieldKeyboard` property.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.

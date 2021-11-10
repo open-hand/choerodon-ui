@@ -1,7 +1,7 @@
-import React, { Children, cloneElement, FunctionComponent, isValidElement, memo, ReactElement, ReactNode, useMemo } from 'react';
+import React, { Children, cloneElement, FunctionComponent, isValidElement, memo, ReactElement, ReactNode, useContext, useMemo } from 'react';
 import Trigger from 'choerodon-ui/lib/trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import BUILT_IN_PLACEMENTS from '../trigger-field/placements';
 import { ButtonColor, FuncType } from '../button/enum';
 import Button, { ButtonProps } from '../button/Button';
@@ -30,6 +30,7 @@ function normalizeAttachments(children: ReactNode): ReactNode {
 
 const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function AttachmentGroup(props) {
   const { viewMode, children, hidden, ...buttonProps } = props;
+  const { getProPrefixCls } = useContext(ConfigContext);
   const prefixCls = getProPrefixCls('attachment');
   const attachments: ReactElement | null = useMemo(() => children ? (
     <div className={`${prefixCls}-group`}>

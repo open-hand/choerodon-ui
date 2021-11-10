@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from '../_util/warning';
 import BreadcrumbItem, { BreadcrumbItemProps } from './BreadcrumbItem';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface Route {
   path: string;
@@ -41,6 +41,10 @@ function defaultItemRender(route: Route, params: any, routes: Route[], paths: st
 export default class Breadcrumb extends Component<BreadcrumbProps, any> {
   static displayName = 'Breadcrumb';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static Item: any;
 
   static defaultProps = {
@@ -54,6 +58,8 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
     params: PropTypes.object,
     itemRender: PropTypes.func,
   };
+
+  context: ConfigContextValue;
 
   componentDidMount() {
     const props = this.props;
@@ -75,6 +81,7 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
       children,
       itemRender = defaultItemRender,
     } = this.props;
+    const { getPrefixCls } = this.context;
     if (routes && routes.length > 0) {
       const paths: string[] = [];
       crumbs = routes.map(route => {

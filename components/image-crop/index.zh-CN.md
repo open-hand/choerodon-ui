@@ -28,7 +28,7 @@ subtitle: 图片裁剪
 | modalVisible   |  控制模态框的展示 |  boolean          |  ture               |
 | serverCrop   | 服务端裁剪 |  boolean          |  false            |
 | onCropComplete   | 裁剪完毕触发方法 |({ url: string, blob: Blob, area: Area }) => void        |            |
-| cropContent   | 修改裁剪编辑位置的渲染 | (crop: ReactElement<EasyCropProps>) => React.ReactElement<any>      |            |
+| cropContent   | 修改裁剪编辑位置的渲染 | (crop: ReactElement&lt;EasyCropProps&gt;) => React.ReactElement&lt;any&gt;      |            |
 | modalProps   | modal 的属性配置不可以更改onOk，onCancel | ModalProps     |            |
 
 ## ImgCrop.AvatarUploader 

@@ -1,9 +1,17 @@
 import * as React from 'react';
-import { DragStart, DragUpdate, DropResult, ResponderProvided } from 'react-beautiful-dnd';
-import { Size } from 'choerodon-ui/lib/_util/enum';
+import { ReactElement } from 'react';
+import {
+  DraggableChildrenFn,
+  DraggableProps,
+  DraggableStateSnapshot,
+  DragStart,
+  DroppableProps,
+  DropResult,
+  ResponderProvided,
+} from 'react-beautiful-dnd';
 import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
 import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
-import { StandardProps, SortType, RowDataType } from './common';
+import { RowDataType, SortType, StandardProps } from './common';
 import { ColumnProps } from './Column.d';
 import { ToolBarProps } from './tool-bar';
 import DataSet from '../data-set';
@@ -135,6 +143,19 @@ export interface SelectionInfo {
   nativeEvent?: Event;
 }
 
+export interface ColumnRenderIcon {
+  column: ColumnProps;
+  dataSet?: DataSet | undefined;
+  snapshot?: DraggableStateSnapshot;
+}
+
+export interface DragRender {
+  droppableProps?: DroppableProps;
+  draggableProps?: DraggableProps;
+  renderClone?: DraggableChildrenFn;
+  renderIcon?: ((rowRenderIcon: ColumnRenderIcon) => ReactElement<any>);
+}
+
 export interface TableProps extends StandardProps {
   /** 左上角的 title */
   headerTitle?: React.ReactNode;
@@ -203,7 +224,7 @@ export interface TableProps extends StandardProps {
   customizable?: boolean;
   columnDraggable?: boolean;
   columnTitleEditable?: boolean;
-  columnsDragRender?: object;
+  columnsDragRender?: DragRender;
   rowDraggable?: boolean;
   onDragStart?: (initial: DragStart, provided: ResponderProvided) => void;
   onDragEnd?: (result: DropResult, provided: ResponderProvided, data: object) => void;

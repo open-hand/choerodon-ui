@@ -27,6 +27,8 @@ const libRcDir = path.join(cwd, 'lib', 'rc-components');
 const esRcDir = path.join(cwd, 'es', 'rc-components');
 const libProDir = path.join(cwd, 'pro', 'lib');
 const esProDir = path.join(cwd, 'pro', 'es');
+const datasetDir = path.join(cwd, 'dataset');
+const sharedDir = path.join(cwd, 'shared');
 
 const packageJson = require(`${cwd}/package.json`);
 
@@ -117,6 +119,56 @@ function babelify(js, modules) {
 function compileRc(modules) {
   const source = ['components/rc-components/**/*.jsx', 'components/rc-components/**/*.js'];
   return babelify(gulp.src(source), modules);
+}
+
+function compileShared() {
+  const source = ['components-shared/**/*.tsx', 'components-shared/**/*.ts', 'typings/**/*.d.ts'];
+  let error = 0;
+  const tsResult = gulp.src(source).pipe(
+    ts(tsConfig, {
+      error(e) {
+        tsDefaultReporter.error(e);
+        error = 1;
+      },
+      finish: tsDefaultReporter.finish,
+    })
+  );
+
+  function check() {
+    if (error && !argv['ignore-error']) {
+      process.exit(1);
+    }
+  }
+
+  tsResult.on('finish', check);
+  tsResult.on('end', check);
+
+  return merge2([babelify(tsResult.js), tsResult.dts]);
+}
+
+function compileDataset() {
+  const source = ['components-dataset/**/*.tsx', 'components-dataset/**/*.ts', 'typings/**/*.d.ts'];
+  let error = 0;
+  const tsResult = gulp.src(source).pipe(
+    ts(tsConfig, {
+      error(e) {
+        tsDefaultReporter.error(e);
+        error = 1;
+      },
+      finish: tsDefaultReporter.finish,
+    })
+  );
+
+  function check() {
+    if (error && !argv['ignore-error']) {
+      process.exit(1);
+    }
+  }
+
+  tsResult.on('finish', check);
+  tsResult.on('end', check);
+
+  return merge2([babelify(tsResult.js), tsResult.dts]);
 }
 
 function compilePro(modules) {
@@ -348,6 +400,20 @@ gulp.task('compile-with-pro-lib', done => {
     .on('finish', done);
 });
 
+gulp.task('compile-with-dataset', done => {
+  rimraf.sync(datasetDir);
+  compileDataset()
+    .pipe(gulp.dest(datasetDir))
+    .on('finish', done);
+});
+
+gulp.task('compile-with-shared', done => {
+  rimraf.sync(sharedDir);
+  compileShared()
+    .pipe(gulp.dest(sharedDir))
+    .on('finish', done);
+});
+
 gulp.task('compile-with-rc-es', done => {
   compileRc(false)
     .pipe(gulp.dest(esRcDir))
@@ -367,6 +433,8 @@ gulp.task(
     'compile-with-lib',
     'compile-with-pro-es',
     'compile-with-pro-lib',
+    'compile-with-dataset',
+    'compile-with-shared',
     'compile-with-rc-es',
     'compile-with-rc-lib',
   ),

@@ -1,12 +1,12 @@
-import React, { FunctionComponent, isValidElement, ReactNode, useCallback, useEffect, useRef } from 'react';
+import React, { FunctionComponent, isValidElement, ReactNode, useCallback, useContext, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import classnames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import isString from 'lodash/isString';
 import { Size } from 'choerodon-ui/lib/_util/enum';
+import { AttachmentConfig } from 'choerodon-ui/lib/configure';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
-import { getConfig } from 'choerodon-ui/lib/configure';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import Progress from '../progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
@@ -49,7 +49,8 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
-  const attachmentConfig = getConfig('attachment');
+  const { getConfig, getTooltipTheme } = useContext(ConfigContext);
+  const attachmentConfig: AttachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const { getPreviewUrl, getDownloadUrl } = attachmentConfig;
@@ -270,7 +271,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       });
       tooltipRef.current = true;
     }
-  }, [errorMessageNode, tooltipRef]);
+  }, [errorMessageNode, getTooltipTheme, tooltipRef]);
   const handleMouseLeave = useCallback(() => {
     if (tooltipRef.current) {
       hide();

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import omit from 'lodash/omit';
 import RcSwitch from '../rc-components/switch';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface SwitchProps {
   prefixCls?: string;
@@ -20,6 +20,10 @@ export interface SwitchProps {
 }
 
 export default class Switch extends Component<SwitchProps, {}> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'Switch';
 
   static propTypes = {
@@ -29,6 +33,8 @@ export default class Switch extends Component<SwitchProps, {}> {
     size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
     className: PropTypes.string,
   };
+
+  context: ConfigContextValue;
 
   private rcSwitch: any;
 
@@ -46,6 +52,7 @@ export default class Switch extends Component<SwitchProps, {}> {
 
   render() {
     const { prefixCls: customizePrefixCls, size, loading, className = '' } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('switch', customizePrefixCls);
     const classes = classNames(className, {
       [`${prefixCls}-small`]: size === Size.small,

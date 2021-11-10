@@ -1,8 +1,8 @@
 import React, { Component, CSSProperties } from 'react';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
 import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 // matchMedia polyfill for
 // https://github.com/WickyNilliams/enquire.js/issues/82
@@ -72,11 +72,17 @@ export interface CarouselProps {
 export default class Carousel extends Component<CarouselProps> {
   static displayName = 'Carousel';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     dots: true,
     arrows: false,
     draggable: false,
   };
+
+  context: ConfigContextValue;
 
   innerSlider: any;
 
@@ -129,6 +135,7 @@ export default class Carousel extends Component<CarouselProps> {
   }
 
   render() {
+    const { getPrefixCls } = this.context;
     const props: CarouselProps & { children?: any } = {
       ...this.props,
     };

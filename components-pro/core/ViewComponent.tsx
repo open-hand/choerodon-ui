@@ -1,7 +1,8 @@
 import {
   AriaAttributes,
   ClipboardEventHandler,
-  Component, CompositionEventHandler,
+  Component,
+  CompositionEventHandler,
   CSSProperties,
   FocusEventHandler,
   Key,
@@ -17,7 +18,8 @@ import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
 import { Size } from './enum';
 import normalizeLanguage from '../_util/normalizeLanguage';
@@ -247,7 +249,7 @@ export interface ViewComponentProps
 }
 
 /* eslint-disable react/no-unused-prop-types */
-export default class ViewComponent<P extends ViewComponentProps> extends Component<P, any> {
+export default class ViewComponent<P extends ViewComponentProps, C extends ConfigContextValue = ConfigContextValue> extends Component<P, any> {
   static propTypes = {
     /**
      * 组件id
@@ -380,6 +382,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     onKeyPress: PropTypes.func,
   };
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   element: any;
 
   height: number | string | undefined;
@@ -395,6 +401,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   @observable observableProps: any;
 
   prefixCls?: string;
+
+  context: C;
 
   @computed
   get lang(): Lang {
@@ -414,7 +422,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     super(props, context);
     this.setCode(props);
     this.setObservableProps(props, context);
-    this.prefixCls = getProPrefixCls(props.suffixCls!, props.prefixCls);
+    this.prefixCls = this.getContextProPrefixCls(props.suffixCls!, props.prefixCls);
   }
 
   setCode(props) {
@@ -652,7 +660,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     const { code, prefixCls } = this.props;
     const { prefixCls: nextPrefixCls } = nextProps;
     if (prefixCls !== nextPrefixCls) {
-      this.prefixCls = getProPrefixCls(nextProps.suffixCls!, nextPrefixCls);
+      this.prefixCls = this.getContextProPrefixCls(nextProps.suffixCls!, nextPrefixCls);
     }
     if (nextProps.code !== code) {
       this.setCode(nextProps);
@@ -675,4 +683,15 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     }
   }
 
+  @autobind
+  getContextConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {
+    const { context } = this;
+    return context.getConfig(key);
+  }
+
+  @autobind
+  getContextProPrefixCls(suffixCls: string, customizePrefixCls?: string): string {
+    const { context } = this;
+    return context.getProPrefixCls(suffixCls, customizePrefixCls);
+  }
 }

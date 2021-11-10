@@ -2,13 +2,8 @@ import React, { Component, CSSProperties, FocusEvent, FocusEventHandler } from '
 import classNames from 'classnames';
 import shallowequal from 'lodash/isEqual';
 import Icon from '../icon';
-import RcMention, {
-  getMentions,
-  Nav,
-  toEditorState,
-  toString,
-} from '../rc-components/editor-mention';
-import { getPrefixCls } from '../configure';
+import RcMention, { getMentions, Nav, toEditorState, toString } from '../rc-components/editor-mention';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export type MentionPlacement = 'top' | 'bottom';
 
@@ -43,6 +38,10 @@ export interface MentionState {
 export default class Mention extends Component<MentionProps, MentionState> {
   static displayName = 'Mention';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static getMentions = getMentions;
 
   static defaultProps = {
@@ -57,6 +56,8 @@ export default class Mention extends Component<MentionProps, MentionState> {
   static toString = toString;
 
   static toContentState = toEditorState;
+
+  context: ConfigContextValue;
 
   private mentionEle: any;
 
@@ -139,6 +140,7 @@ export default class Mention extends Component<MentionProps, MentionState> {
       notFoundContent,
       onChange,
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('mention', customizePrefixCls);
     const { suggestions, focus } = this.state;
     const cls = classNames(className, {
