@@ -1,3 +1,5 @@
+import { MousePosition } from 'choerodon-ui/shared/modal-manager';
+
 export function getDocument(self: Window): Document {
   try {
     const { parent, top } = self;
@@ -26,7 +28,7 @@ export function findIFrame(self: Window): HTMLIFrameElement | undefined {
   return [...self.parent.document.querySelectorAll('iframe')].find(frame => frame.contentWindow === self);
 }
 
-export type MousePosition = { x: number; y: number };
+export { MousePosition };
 
 function getPageMousePosition(x, y, self: Window): MousePosition {
   const { scrollTop, scrollLeft } = self.document.documentElement;

@@ -1,8 +1,8 @@
-import React, { FunctionComponent, MouseEvent, MouseEventHandler, useCallback } from 'react';
+import React, { FunctionComponent, memo, MouseEvent, MouseEventHandler, useCallback, useContext } from 'react';
 import classnames from 'classnames';
-import { getPrefixCls } from '../configure';
 import { TabsProps } from './Tabs';
 import Icon from '../icon';
+import ConfigContext from '../config-provider/ConfigContext';
 
 interface TabsAddBtnProps extends TabsProps {
   extraPrefixCls?: string;
@@ -11,6 +11,7 @@ interface TabsAddBtnProps extends TabsProps {
 }
 
 const TabsAddBtn: FunctionComponent<TabsAddBtnProps> = function TabsAddBtn(props) {
+  const { getPrefixCls } = useContext(ConfigContext);
   const { onEdit, prefixCls: customizePrefixCls, extraPrefixCls, vertical = false, isFixed } = props;
 
   const prefixCls = getPrefixCls('tabs', customizePrefixCls);
@@ -35,4 +36,6 @@ const TabsAddBtn: FunctionComponent<TabsAddBtnProps> = function TabsAddBtn(props
   );
 };
 
-export default TabsAddBtn;
+TabsAddBtn.displayName = 'TabsAddBtn';
+
+export default memo(TabsAddBtn);

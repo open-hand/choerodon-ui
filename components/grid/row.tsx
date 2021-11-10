@@ -1,9 +1,9 @@
-import React, { Children, cloneElement, Component, HTMLAttributes, ReactElement } from 'react';
+import React, { Children, cloneElement, HTMLAttributes, PureComponent, ReactElement } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import Responsive, { BreakpointMap } from '../responsive/Responsive';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface RowProps extends HTMLAttributes<HTMLDivElement> {
   gutter?: number | BreakpointMap;
@@ -15,8 +15,12 @@ export interface RowProps extends HTMLAttributes<HTMLDivElement> {
 
 const defaultGutter = 0;
 
-export default class Row extends Component<RowProps> {
+export default class Row extends PureComponent<RowProps> {
   static displayName = 'Row';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static defaultProps = {
     gutter: defaultGutter,
@@ -32,6 +36,8 @@ export default class Row extends Component<RowProps> {
     prefixCls: PropTypes.string,
   };
 
+  context: ConfigContextValue;
+
   renderRow = ([gutter = defaultGutter]) => {
     const {
       type,
@@ -43,6 +49,7 @@ export default class Row extends Component<RowProps> {
       prefixCls: customizePrefixCls,
       ...others
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('row', customizePrefixCls);
     const classes = classNames(
       {

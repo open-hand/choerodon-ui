@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { $l } from '../locale-context';
 import Icon from '../icon';
 import Button from '../button';
@@ -12,9 +12,18 @@ interface VerifySliderProps {
 }
 
 export default class VerifySlider extends Component<VerifySliderProps> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'VerifySlider';
 
-  prefixCls = getProPrefixCls('secret-field');
+  context: ConfigContextValue;
+
+  get prefixCls() {
+    const { context } = this;
+    return context.getProPrefixCls('secret-field');
+  }
 
   /**
    * 初始数据

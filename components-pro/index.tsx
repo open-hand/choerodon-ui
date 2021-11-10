@@ -134,6 +134,8 @@ export { default as Screening } from './screening';
 
 export { default as injectModal } from './inject-modal';
 
+export { default as useDataSet } from './use-data-set';
+
 export { default as useModal } from './use-modal';
 
 export { default as useComputed } from './use-computed';

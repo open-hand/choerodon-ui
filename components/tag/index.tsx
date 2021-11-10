@@ -5,9 +5,9 @@ import omit from 'lodash/omit';
 import Icon from '../icon';
 import CheckableTag from './CheckableTag';
 import Animate from '../animate';
-import { getPrefixCls } from '../configure';
 import { PresetColorType, isPresetColor as isPresetColorUtil } from '../_util/colors';
 import { LiteralUnion } from '../_util/type';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { CheckableTagProps } from './CheckableTag';
 
@@ -30,6 +30,10 @@ export interface TagState {
 }
 
 export default class Tag extends Component<TagProps, TagState> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'Tag';
 
   static CheckableTag = CheckableTag;
@@ -37,6 +41,8 @@ export default class Tag extends Component<TagProps, TagState> {
   static defaultProps = {
     closable: false,
   };
+
+  context: ConfigContextValue;
 
   state = {
     closing: false,
@@ -85,6 +91,7 @@ export default class Tag extends Component<TagProps, TagState> {
       style,
       ...otherProps
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('tag', customizePrefixCls);
     const { closing, closed } = this.state;
     const closeIcon = closable ? <Icon type="close" onClick={this.close} /> : '';

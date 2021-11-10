@@ -7,7 +7,6 @@ import Progress from '../progress';
 import { UploadFile, UploadListProps } from './interface';
 import Animate from '../animate';
 import { ProgressType } from '../progress/enum';
-import { getPrefixCls } from '../configure';
 import { previewImage, getFileType, getFileSizeStr, isImageUrl } from './utils';
 import CompressedfileIcon from './icon-svg/compressedfileIcon';
 import DocIcon from './icon-svg/docIcon';
@@ -16,6 +15,7 @@ import ImageIcon from './icon-svg/imageIcon';
 import PdfIcon from './icon-svg/pdfIcon';
 import XlsIcon from './icon-svg/xlsIcon';
 import { Size } from '../_util/enum';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex): UploadFile[] => {
@@ -29,6 +29,10 @@ const reorder = (list, startIndex, endIndex): UploadFile[] => {
 export default class UploadList extends Component<UploadListProps, any> {
   static displayName = 'UploadList';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     listType: 'text', // or picture
     progressAttr: {
@@ -41,6 +45,8 @@ export default class UploadList extends Component<UploadListProps, any> {
     dragUploadList: false,
     showFileSize: false,
   };
+
+  context: ConfigContextValue;
 
   handleClose = (file: UploadFile) => {
     const { onRemove } = this.props;
@@ -116,6 +122,7 @@ export default class UploadList extends Component<UploadListProps, any> {
       dragUploadList,
       showFileSize,
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
     const list = items.map((file, index) => {
       let progress;

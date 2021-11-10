@@ -13,8 +13,7 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import FormContext from './FormContext';
 import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import { LabelLayout } from './enum';
@@ -42,6 +41,7 @@ export interface IItem extends FunctionComponent<ItemProps> {
 
 const Label: FunctionComponent<LabelProps> = (props) => {
   const { children, className, tooltip, width } = props;
+  const { getTooltipTheme } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => width ? ({ width }) : undefined, [width]);
   const handleMouseEnter = useCallback((e) => {
@@ -81,7 +81,7 @@ const Label: FunctionComponent<LabelProps> = (props) => {
 Label.displayName = 'Label';
 
 const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
-  const { dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon } = useContext(FormContext);
+  const { getConfig, dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon, getProPrefixCls } = useContext(FormContext);
   const { children, useColon: fieldUseColon = useColon, ...rest } = props;
   const child = Children.only<ReactElement<FormFieldProps>>(children);
   if (isValidElement<FormFieldProps>(child)) {

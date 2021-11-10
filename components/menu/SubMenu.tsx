@@ -1,12 +1,14 @@
-import React, { Component, MouseEventHandler } from 'react';
-import PropTypes from 'prop-types';
+import React, { MouseEventHandler, PureComponent } from 'react';
 import classNames from 'classnames';
 import { SubMenu as RcSubMenu } from '../rc-components/menu';
+import MenuContext, { MenuContextValue } from './MenuContext';
 
-class SubMenu extends Component<any, any> {
-  static contextTypes = {
-    menuTheme: PropTypes.string,
-  };
+class SubMenu extends PureComponent<any, any> {
+  static get contextType() {
+    return MenuContext;
+  }
+
+  context: MenuContextValue;
 
   private subMenu: any;
 

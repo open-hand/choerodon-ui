@@ -13,12 +13,10 @@ import isEqual from 'lodash/isEqual';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
-
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
-
 import Field from '../../data-set/Field';
 import DataSet, { DataSetProps } from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
@@ -95,8 +93,11 @@ export interface TableDynamicFilterBarProps extends ElementProps {
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
-    prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 3,
     autoQueryAfterReset: true,
     fuzzyQuery: true,
@@ -104,6 +105,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     expandButton: true,
     buttons: [],
   };
+
+  context: ConfigContextValue;
+
+  get prefixCls() {
+    const { prefixCls } = this.props;
+    const { getProPrefixCls } = this.context;
+    return getProPrefixCls('table', prefixCls);
+  }
 
   @observable moreFields: Field[];
 
@@ -328,7 +337,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * tableFilterSuffix 预留自定义区域
    */
   renderSuffix() {
-    const { prefixCls, dynamicFilterBar, queryDataSet, dataSet, buttons = [] } = this.props;
+    const { dynamicFilterBar, queryDataSet, dataSet, buttons = [] } = this.props;
+    const { getConfig } = this.context;
+    const { prefixCls } = this;
     const suffixes: Suffixes[] | undefined = dynamicFilterBar && dynamicFilterBar.suffixes || getConfig('tableFilterSuffix');
     const children: ReactElement[] = [];
     let suffixesDom: ReactElement | null = null;
@@ -358,7 +369,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   getPrefix(): ReactNode {
-    const { prefixCls, dynamicFilterBar, queryDataSet, dataSet } = this.props;
+    const { dynamicFilterBar, queryDataSet, dataSet } = this.props;
+    const { prefixCls } = this;
     const prefixes = dynamicFilterBar && dynamicFilterBar.prefixes;
     const children: ReactElement[] = [];
     if (prefixes && prefixes.length) {
@@ -412,6 +424,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   get tableFilterAdapter() {
     const { dynamicFilterBar } = this.props;
+    const { getConfig } = this.context;
     return dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || getConfig('tableFilterAdapter');
   }
 
@@ -462,10 +475,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * @param hidden 是否隐藏全部
    */
   getExpandNode(hidden): ReactNode {
-    const { prefixCls, expandButton } = this.props;
+    const { expandButton } = this.props;
     if (!expandButton) {
       return;
     }
+    const { prefixCls } = this;
     return (
       <span
         className={`${prefixCls}-filter-menu-expand`}
@@ -509,7 +523,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { prefixCls, dataSet, queryDataSet, dynamicFilterBar, autoQueryAfterReset, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { dataSet, queryDataSet, dynamicFilterBar, autoQueryAfterReset, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { getConfig } = this.context;
+    const { prefixCls } = this;
     const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     if (!fuzzyQuery) return null;
@@ -546,7 +562,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染重置按钮
    */
   getResetButton() {
-    const { prefixCls, queryDataSet, autoQueryAfterReset, onReset = noop } = this.props;
+    const { queryDataSet, autoQueryAfterReset, onReset = noop } = this.props;
+    const { prefixCls } = this;
     return (
       <div className={`${prefixCls}-filter-buttons`}>
         {
@@ -580,7 +597,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * fuzzyQuery + quickFilterMenu + resetButton + buttons
    */
   getFilterMenu(): ReactNode {
-    const { prefixCls, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, expandButton } = this.props;
+    const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, expandButton } = this.props;
+    const { prefixCls } = this;
     if (queryDataSet && queryFields.length) {
       const prefix = this.getPrefix();
       const fuzzyQuery = this.getFuzzyQuery();
@@ -633,7 +651,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit = 3, queryFields, queryDataSet } = this.props;
+    const { queryFieldsLimit = 3, queryFields, queryDataSet } = this.props;
+    const { prefixCls } = this;
     const selectFields = queryDataSet.getState('selectFields') || [];
     const singleLineModeAction = this.isSingleLineOpt() ?
       <div className={`${prefixCls}-dynamic-filter-bar-single-action`}>
@@ -751,7 +770,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   render() {
-    const { summaryBar, buttons, prefixCls } = this.props;
+    const { summaryBar, buttons } = this.props;
+    const { prefixCls } = this;
     const queryBar = this.getQueryBar();
     if (queryBar) {
       return [queryBar, summaryBar];

@@ -10,12 +10,12 @@ import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mo
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { LovConfig as DataSetLovConfig, LovConfigItem } from 'choerodon-ui/dataset/interface';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView, { LovViewProps } from './LovView';
 import { ModalProps } from '../modal/Modal';
-import DataSet, { DataSetProps } from '../data-set/DataSet';
+import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Spin from '../spin';
 import lovStore from '../stores/LovCodeStore';
@@ -23,15 +23,14 @@ import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
 import ObserverSelect, { isSearchTextEmpty, SearchMatcher, Select, SelectProps } from '../select/Select';
 import Option from '../option/Option';
-import { ColumnAlign, TableQueryBarType } from '../table/enum';
-import { CheckedStrategy, DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
-import { LovFieldType, SearchAction, ViewMode } from './enum';
+import { TableQueryBarType } from '../table/enum';
+import { CheckedStrategy, DataSetStatus, RecordStatus } from '../data-set/enum';
+import { SearchAction, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import { getLovPara } from '../stores/utils';
 import { TableProps, TableQueryBarHook, TableQueryBarHookProps } from '../table/Table';
-import { FieldProps } from '../data-set/Field';
 import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
 
@@ -53,45 +52,12 @@ export type ViewRenderer = ({
   multiple: boolean;
 }) => ReactNode;
 
-export type LovConfigItem = {
-  display?: string;
-  conditionField?: string;
-  conditionFieldLovCode?: string;
-  conditionFieldType?: FieldType | LovFieldType;
-  conditionFieldName?: string;
-  conditionFieldSelectCode?: string;
-  conditionFieldSelectUrl?: string;
-  conditionFieldSelectTf?: string;
-  conditionFieldSelectVf?: string;
-  conditionFieldSequence: number;
-  conditionFieldRequired?: boolean;
-  gridField?: string;
-  gridFieldName?: string;
-  gridFieldWidth?: number;
-  gridFieldAlign?: ColumnAlign;
-  gridFieldSequence: number;
-  fieldProps?: Partial<FieldProps>;
-};
+export { LovConfigItem };
 
-export type LovConfig = {
-  title?: string;
-  width?: number;
-  height?: number;
-  customUrl?: string;
-  lovPageSize?: string;
-  lovItems: LovConfigItem[] | null;
-  treeFlag?: 'Y' | 'N';
-  parentIdField?: string;
-  idField?: string;
-  textField?: string;
-  valueField?: string;
-  placeholder?: string;
-  editableFlag?: 'Y' | 'N';
-  queryColumns?: number;
+export interface LovConfig extends DataSetLovConfig {
   queryBar?: TableQueryBarType | TableQueryBarHook;
-  dataSetProps?: Partial<DataSetProps>;
   tableProps?: Partial<TableProps>;
-};
+}
 
 export interface LovProps extends SelectProps, ButtonProps {
   modalProps?: ModalProps;
@@ -209,7 +175,7 @@ export default class Lov extends Select<LovProps> {
     if ('autoSelectSingle' in this.props) {
       return this.props.autoSelectSingle;
     }
-    const autoSelectSingle = getConfig('lovAutoSelectSingle');
+    const autoSelectSingle = this.getContextConfig('lovAutoSelectSingle');
     if (typeof autoSelectSingle !== 'undefined') {
       return autoSelectSingle;
     }
@@ -338,6 +304,7 @@ export default class Lov extends Select<LovProps> {
           viewMode={viewMode}
           dataSet={options}
           config={config}
+          context={this.context}
           tableProps={mergedTableProps}
           onSelect={this.handleLovViewSelect}
           onBeforeSelect={onBeforeSelect}
@@ -397,7 +364,7 @@ export default class Lov extends Select<LovProps> {
       );
       const { lovCode } = this;
       if (lovCode) {
-        const lovQueryCachedSelected = getConfig('lovQueryCachedSelected');
+        const lovQueryCachedSelected = this.getContextConfig('lovQueryCachedSelected');
         if (lovQueryCachedSelected) {
           const fetchCachedSelected = () => {
             if (needToFetch.size) {
@@ -472,6 +439,7 @@ export default class Lov extends Select<LovProps> {
               viewMode={viewMode}
               dataSet={options}
               config={config}
+              context={this.context}
               tableProps={{ ...(lovViewProps && lovViewProps.tableProps), ...tableProps }}
               onSelect={this.handleLovViewSelect}
               onBeforeSelect={onBeforeSelect}
@@ -684,12 +652,12 @@ export default class Lov extends Select<LovProps> {
 
   getModalProps(): Partial<ModalProps> {
     const { modalProps } = this.props;
-    return { ...getConfig('lovModalProps'), ...modalProps };
+    return { ...this.getContextConfig('lovModalProps'), ...modalProps };
   }
 
   getTableProps(): Partial<TableProps> {
     const { tableProps } = this.props;
-    const lovTablePropsConfig = getConfig('lovTableProps');
+    const lovTablePropsConfig = this.getContextConfig('lovTableProps');
     return typeof lovTablePropsConfig === 'function' ? { ...lovTablePropsConfig(this.multiple), ...tableProps } : { ...lovTablePropsConfig, ...tableProps };
   }
 

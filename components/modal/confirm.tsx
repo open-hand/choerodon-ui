@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import Icon from '../icon';
 import Dialog, { ModalFuncProps } from './Modal';
 import ActionButton from './ActionButton';
 import { getConfirmLocale } from './locale';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 interface ConfirmDialogProps extends ModalFuncProps {
   afterClose?: () => void;
@@ -37,6 +37,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
     title,
     content,
   } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const propOkType = okType || 'primary';
   const prefixCls = getPrefixCls('confirm', customizePrefixCls);
   const propWidth = width || 416;
@@ -63,7 +64,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
 
   const handleCancel = () => {
     close({ triggerCancel: true });
-  }
+  };
 
   return (
     <Dialog

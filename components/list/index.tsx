@@ -1,5 +1,4 @@
 import React, { Children, cloneElement, Component, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import Spin, { SpinProps } from '../spin';
@@ -9,7 +8,8 @@ import { Size } from '../_util/enum';
 import Pagination from '../pagination';
 import { Row } from '../grid';
 import Item from './Item';
-import { getPrefixCls } from '../configure';
+import { ListContextProvider } from './ListContext';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { ListItemProps, ListItemMetaProps } from './Item';
 
@@ -60,9 +60,9 @@ export default class List extends Component<ListProps> {
 
   static Item: typeof Item = Item;
 
-  static childContextTypes = {
-    grid: PropTypes.any,
-  };
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static defaultProps = {
     dataSource: [],
@@ -72,12 +72,16 @@ export default class List extends Component<ListProps> {
     pagination: false,
   };
 
+  context: ConfigContextValue;
+
   private keys: { [key: string]: string } = {};
 
-  getChildContext() {
+  getContextValue() {
     const { grid } = this.props;
+    const { getPrefixCls } = this.context;
     return {
       grid,
+      getPrefixCls,
     };
   }
 
@@ -115,6 +119,7 @@ export default class List extends Component<ListProps> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('list', prefixCls);
   }
 
@@ -204,12 +209,14 @@ export default class List extends Component<ListProps> {
     );
 
     return (
-      <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem','selectable'])}>
-        {header && <div className={`${prefixCls}-header`}>{header}</div>}
-        {content}
-        {children}
-        {footer && <div className={`${prefixCls}-footer`}>{footer}</div>}
-      </div>
+      <ListContextProvider {...this.getContextValue()}>
+        <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem', 'selectable'])}>
+          {header && <div className={`${prefixCls}-header`}>{header}</div>}
+          {content}
+          {children}
+          {footer && <div className={`${prefixCls}-footer`}>{footer}</div>}
+        </div>
+      </ListContextProvider>
     );
   }
 }

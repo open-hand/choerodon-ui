@@ -26,7 +26,9 @@ export interface ColumnFilterProps {
 export default class ColumnFilter extends Component<ColumnFilterProps> {
   static displayName = 'ColumnFilter';
 
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   @observable hidden;
 

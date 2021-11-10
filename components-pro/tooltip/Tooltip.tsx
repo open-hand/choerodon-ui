@@ -1,8 +1,7 @@
 import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import isNil from 'lodash/isNil';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import Trigger, { RenderFunction, TriggerProps } from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
@@ -101,6 +100,10 @@ const PopupContent: React.FC<{
 };
 
 export default class Tooltip extends Component<TooltipProps, any> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'Tooltip';
 
   static propTypes = {
@@ -150,13 +153,16 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   static hide;
 
+  context: ConfigContextValue;
+
   state = {
     translate: { x: 0, y: 0 },
   };
 
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
-    return getProPrefixCls(suffixCls!, prefixCls);
+    const { context } = this;
+    return context.getProPrefixCls(suffixCls!, prefixCls);
   }
 
   get placements() {
@@ -198,6 +204,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   @autobind
   renderPopupContent(...props) {
     const { translate } = this.state;
+    const { getTooltipTheme } = this.context;
     const { theme = getTooltipTheme() } = this.props;
     const content = this.getContent(...props);
     if (content) {

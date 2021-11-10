@@ -32,7 +32,7 @@ The whole of the step bar.
 | progressDot | Steps with progress dot style, customize the progress dot by setting it to a function | Boolean or (iconDot, {index, status, title, description}) => ReactNode | false |
 | size | to specify the size of the step bar, `default` and `small` are currently supported | string | `default` |
 | status | to specify the status of current step, can be set to one of the following values: `wait` `process` `finish` `error` | string | `process` |
-| headerRender | header render function| headerRender?: () => React.ReactElement<any> |  |
+| headerRender | header render function| headerRender?: () => React.ReactElement&lt;any&gt; |  |
 | headerIcon | header icon | string |  |
 | headerText | header title | string |  |
 | type | steps type of `default` or  `navgation`，navgation only supported horizontal direction | string | `default` |

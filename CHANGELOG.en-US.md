@@ -15,7 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 Split `dataset` and `shared` libraries.
+- 🌟 `ConfigProvider`: Added `ConfigProvider` component.
+- 🌟 `hooks`: Added `useConfig` hook.
+- 🌟 `<pro>hooks`: Added `useDataSet` hook.
 - 🌟 `configure`: Added `numberFieldKeyboard` property.
+- 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
 - 🌟 `<pro>NumberField`: Added the `keyboard` property to control `UP` `DOWN` keyboard events.

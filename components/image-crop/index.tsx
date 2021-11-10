@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useRef, forwardRef, Ref, ReactElement } from 'react';
+import React, { forwardRef, ReactElement, Ref, useCallback, useContext, useRef, useState } from 'react';
 import Cropper from 'react-easy-crop';
 import isFunction from 'lodash/isFunction';
-import { getPrefixCls } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import Modal, { ModalProps } from '../modal';
 import { UploadFile, UploadProps } from '../upload/interface';
@@ -11,6 +10,7 @@ import ButtonGroup from '../button/ButtonGroup';
 import Upload from '../upload';
 import AvatarUploader from './avatarUpload';
 import { imageCrop } from '../locale-provider';
+import ConfigContext from '../config-provider/ConfigContext';
 
 // ssr
 if (typeof window !== 'undefined') {
@@ -115,11 +115,11 @@ export interface ImgCropProps {
    * @deprecated
    */
   modalWidth?: number | string;
-   /**
+  /**
    * @deprecated
    */
   modalOk?: string;
-   /**
+  /**
    * @deprecated
    */
   modalCancel?: string;
@@ -189,12 +189,12 @@ const imageToCanvas = (image) => {
   canvas.height = image.naturalHeight;
   if (ctx) {
     ctx.drawImage(image, 0, 0);
-    return canvas
+    return canvas;
   }
-  return undefined
-}
+  return undefined;
+};
 
-const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
+const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   const {
     aspect,
     shape,
@@ -218,10 +218,11 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     onCropComplete,
     prefixCls: customizePrefixCls,
   } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
 
   const prefixCls = getPrefixCls('image-crop', customizePrefixCls);
 
-  const prefixClsMedia = `${prefixCls}-media`
+  const prefixClsMedia = `${prefixCls}-media`;
 
   const hasZoom = zoom === true;
   const hasRotate = rotate === true;
@@ -269,7 +270,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
         return canvas;
       }
     }
-  }
+  };
 
   /**
    * Upload
@@ -311,15 +312,15 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     if (imageSrc && (typeof window !== 'undefined')) {
       const newimage = new Image();
       newimage.src = imageSrc;
-      newimage.crossOrigin = "anonymous"
+      newimage.crossOrigin = 'anonymous';
       newimage.onload = function () {
-        const canvas = imageToCanvas(newimage)
+        const canvas = imageToCanvas(newimage);
         if (canvas) {
           if (isFunction(onModalOk) && canvas) {
-            setSrc(canvas.toDataURL())
+            setSrc(canvas.toDataURL());
           }
         }
-      }
+      };
     }
   }, [beforeCrop, children]);
 
@@ -330,15 +331,15 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     cropPixelsRef.current = croppedAreaPixels;
     if (isFunction(onCropComplete)) {
       const naturalModalImg: Element | HTMLImageElement | null = document.querySelector(`.${prefixClsMedia}`);
-      const canvas = serverCrop ? imageToCanvas(naturalModalImg) : imageCropCanvas(naturalModalImg)
+      const canvas = serverCrop ? imageToCanvas(naturalModalImg) : imageCropCanvas(naturalModalImg);
       if (canvas) {
         canvas.toBlob((blob) => {
-          let area = {}
+          let area = {};
           if (cropPixelsRef.current) {
-            area = cropPixelsRef.current
+            area = cropPixelsRef.current;
           }
-          onCropComplete({ url: canvas.toDataURL(), blob, area })
-        })
+          onCropComplete({ url: canvas.toDataURL(), blob, area });
+        });
       }
     }
   }, [rotateVal, hasRotate]);
@@ -371,11 +372,11 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
   }, [isMaxRotate, rotateVal]);
 
   const initVal = useCallback(() => {
-    if(!isMinZoom || !isMinRotate) {
+    if (!isMinZoom || !isMinRotate) {
       setZoomVal(MIN_ZOOM);
       setRotateVal(MIN_ROTATE);
     }
-  }, [zoomVal, rotateVal])
+  }, [zoomVal, rotateVal]);
 
   /**
    * Modal
@@ -389,16 +390,16 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
   const onClose = useCallback(() => {
     closeModal();
     if (isFunction(onModalCancel)) {
-      onModalCancel()
+      onModalCancel();
     }
-  }, [])
+  }, []);
 
   const onOk = useCallback(async () => {
     onClose();
     const naturalModalImg: Element | HTMLImageElement | null = document.querySelector(`.${prefixClsMedia}`);
     if (naturalModalImg) {
       if (naturalModalImg && naturalModalImg instanceof HTMLImageElement) {
-        const canvas: HTMLCanvasElement | undefined = serverCrop ? imageToCanvas(naturalModalImg) : imageCropCanvas(naturalModalImg)
+        const canvas: HTMLCanvasElement | undefined = serverCrop ? imageToCanvas(naturalModalImg) : imageCropCanvas(naturalModalImg);
         if (fileRef.current && canvas) {
           const { type, name, uid } = fileRef.current;
           canvas.toBlob(
@@ -439,12 +440,12 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
         }
         if (isFunction(onModalOk) && canvas) {
           canvas.toBlob((blob) => {
-            let area = {}
+            let area = {};
             if (cropPixelsRef.current) {
-              area = cropPixelsRef.current
+              area = cropPixelsRef.current;
             }
-            onModalOk({ url: canvas.toDataURL(), blob, area })
-          })
+            onModalOk({ url: canvas.toDataURL(), blob, area });
+          });
         }
       }
     }
@@ -466,11 +467,11 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
       onComplete={onComplete}
       prefixCls={prefixCls}
     />
-  )
-  
+  );
+
   const title = modalProps?.title || modalTitle;
-  const cancelButtonProps: ButtonProps = {funcType: 'raised'};
-  const okButtonProps: ButtonProps = {funcType: 'raised', type: "primary"};
+  const cancelButtonProps: ButtonProps = { funcType: 'raised' };
+  const okButtonProps: ButtonProps = { funcType: 'raised', type: 'primary' };
   return (
     <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
       {(locale: imageCrop) => {
@@ -481,7 +482,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
               <Modal
                 visible={modalVisible}
                 wrapClassName={`${prefixCls}-modal`}
-                title={title || (locale  && locale.editImage ? locale.editImage : 'Edit image')} // 当不存在的语言使用英文
+                title={title || (locale && locale.editImage ? locale.editImage : 'Edit image')} // 当不存在的语言使用英文
                 width={modalWidth}
                 destroyOnClose
                 maskClosable={false}
@@ -506,7 +507,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                     &&
                     <Button
                       funcType="raised"
-                      icon={rotateStep === 90 ? "play_90" : "rotate_right"}
+                      icon={rotateStep === 90 ? 'play_90' : 'rotate_right'}
                       onClick={addRotateVal}
                     />
                   }
@@ -515,11 +516,13 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
               </Modal>
             )}
           </>
-        )
+        );
       }}
     </LocaleReceiver>
   );
-}) as CompoundedComponent
+}) as CompoundedComponent;
+
+ImgCrop.displayName = 'ImgCrop';
 
 ImgCrop.defaultProps = {
   shape: ShapeCroper.rect,
@@ -531,6 +534,6 @@ ImgCrop.defaultProps = {
   serverCrop: false,
 };
 
-ImgCrop.AvatarUploader = AvatarUploader
+ImgCrop.AvatarUploader = AvatarUploader;
 
 export default ImgCrop;

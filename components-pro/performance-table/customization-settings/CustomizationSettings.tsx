@@ -140,7 +140,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
 
   const handleRestoreColumns = useCallback(action((e: MouseEvent<any>) => {
     e.stopPropagation();
-    const { columns } = tableStore.node.props;
+    const { columns = [] } = tableStore.node.props;
     setCustomizedColumns(columns.map((column) => {
       const fixed = getColumnFixed(column.fixed);
       const hidden = column.hidden || false;

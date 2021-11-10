@@ -1,7 +1,7 @@
-import React, { HTMLAttributes } from 'react';
+import React, { FunctionComponent, HTMLAttributes, memo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 const stringOrNumber = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 const objectOrNumber = PropTypes.oneOfType([PropTypes.object, PropTypes.number]);
@@ -15,11 +15,11 @@ export interface ColSize {
 }
 
 export interface ColProps extends HTMLAttributes<HTMLDivElement> {
-  span?: number;
-  order?: number;
-  offset?: number;
-  push?: number;
-  pull?: number;
+  span?: number | string;
+  order?: number | string;
+  offset?: number | string;
+  push?: number | string;
+  pull?: number | string;
   xs?: number | ColSize;
   sm?: number | ColSize;
   md?: number | ColSize;
@@ -29,7 +29,7 @@ export interface ColProps extends HTMLAttributes<HTMLDivElement> {
   prefixCls?: string;
 }
 
-export default function Col(props: ColProps) {
+const Col: FunctionComponent<ColProps> = function Col(props) {
   const {
     span,
     order,
@@ -41,6 +41,7 @@ export default function Col(props: ColProps) {
     prefixCls: customizePrefixCls,
     ...others
   } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('col', customizePrefixCls);
   let sizeClassObj = {};
   ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].forEach(size => {
@@ -58,7 +59,7 @@ export default function Col(props: ColProps) {
       [`${prefixCls}-${size}-${sizeProps.span}`]: sizeProps.span !== undefined,
       [`${prefixCls}-${size}-order-${sizeProps.order}`]: sizeProps.order || sizeProps.order === 0,
       [`${prefixCls}-${size}-offset-${sizeProps.offset}`]:
-        sizeProps.offset || sizeProps.offset === 0,
+      sizeProps.offset || sizeProps.offset === 0,
       [`${prefixCls}-${size}-push-${sizeProps.push}`]: sizeProps.push || sizeProps.push === 0,
       [`${prefixCls}-${size}-pull-${sizeProps.pull}`]: sizeProps.pull || sizeProps.pull === 0,
     };
@@ -80,7 +81,7 @@ export default function Col(props: ColProps) {
       {children}
     </div>
   );
-}
+};
 
 Col.displayName = 'Col';
 
@@ -99,3 +100,5 @@ Col.propTypes = {
   xl: objectOrNumber,
   xxl: objectOrNumber,
 };
+
+export default memo(Col);

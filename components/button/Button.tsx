@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, Children, Component, CSSProperties, KeyboardEventHandler, MouseEventHandler } from 'react';
+import React, { ButtonHTMLAttributes, Children, CSSProperties, KeyboardEventHandler, MouseEventHandler, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -6,9 +6,9 @@ import Icon from '../icon';
 import Group from './ButtonGroup';
 import Ripple from '../ripple';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
 import { ProgressType } from '../progress/enum';
 import Progress from '../progress';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export type ButtonType = 'primary' | 'ghost' | 'dashed' | 'danger';
 export type ButtonShape = 'circle' | 'circle-outline';
@@ -40,8 +40,12 @@ export interface ButtonProps {
   funcType?: ButtonFuncType;
 }
 
-export default class Button extends Component<ButtonProps, any> {
+export default class Button extends PureComponent<ButtonProps, any> {
   static displayName = 'Button';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static Group: typeof Group;
 
@@ -65,6 +69,8 @@ export default class Button extends Component<ButtonProps, any> {
     ghost: PropTypes.bool,
     funcType: PropTypes.oneOf(['raised', 'flat']),
   };
+
+  context: ConfigContextValue;
 
   timeout: number;
 
@@ -131,6 +137,7 @@ export default class Button extends Component<ButtonProps, any> {
     } = this.props;
 
     const { loading, clicked } = this.state;
+    const { getPrefixCls } = this.context;
 
     const prefixCls = getPrefixCls('btn', customizePrefixCls);
 

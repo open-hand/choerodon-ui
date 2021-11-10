@@ -1,11 +1,4 @@
-export enum LovFieldType {
-  INT = 'INT',
-  TEXT = 'TEXT',
-  DATE = 'DATE',
-  DATETIME = 'DATETIME',
-  POPUP = 'POPUP',
-  SELECT = 'SELECT',
-}
+export { LovFieldType } from 'choerodon-ui/dataset/enum';
 
 export enum ViewMode {
   default = 'default',

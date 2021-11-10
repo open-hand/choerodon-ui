@@ -1,9 +1,9 @@
-import React, { Children, Component, CSSProperties, ReactElement, ReactNode, SFC } from 'react';
-import PropTypes from 'prop-types';
+import React, { Children, CSSProperties, FunctionComponent, memo, ReactElement, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
 import { Col } from '../grid';
 import { ColumnType, ListGridType } from './index';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
+import ListContext from './ListContext';
 
 export interface ListItemProps {
   className?: string;
@@ -25,8 +25,9 @@ export interface ListItemMetaProps {
   title?: ReactNode;
 }
 
-export const Meta: SFC<ListItemMetaProps> = props => {
+const ListMeta: FunctionComponent<ListItemMetaProps> = function ListMeta(props) {
   const { prefixCls: customizePrefixCls, className, avatar, title, description, ...others } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('list', customizePrefixCls);
 
   const classString = classNames(`${prefixCls}-item-meta`, className);
@@ -46,115 +47,106 @@ export const Meta: SFC<ListItemMetaProps> = props => {
   );
 };
 
-Meta.displayName = 'ListMeta';
+ListMeta.displayName = 'ListMeta';
+
+export const Meta = memo(ListMeta);
 
 function getGrid(grid: ListGridType, t: ColumnType) {
   return grid[t] && Math.floor(24 / grid[t]!);
 }
 
-const GridColumns = ['', 1, 2, 3, 4, 6, 8, 12, 24];
+export interface ListItemComponent extends FunctionComponent<ListItemProps> {
+  Meta: typeof Meta;
+}
 
-export default class Item extends Component<ListItemProps, any> {
-  static displayName = 'ListItem';
+const ListItem = function ListItem(props) {
+  const { grid, getPrefixCls } = useContext(ListContext);
+  const {
+    prefixCls: customizePrefixCls,
+    children,
+    actions,
+    extra,
+    className,
+    ...others
+  } = props;
+  const prefixCls = getPrefixCls('list', customizePrefixCls);
+  const classString = classNames(`${prefixCls}-item`, className);
 
-  static Meta: typeof Meta = Meta;
+  const metaContent: ReactElement<any>[] = [];
+  const otherContent: ReactElement<any>[] = [];
 
-  static propTypes = {
-    column: PropTypes.oneOf(GridColumns),
-    xs: PropTypes.oneOf(GridColumns),
-    sm: PropTypes.oneOf(GridColumns),
-    md: PropTypes.oneOf(GridColumns),
-    lg: PropTypes.oneOf(GridColumns),
-    xl: PropTypes.oneOf(GridColumns),
-    xxl: PropTypes.oneOf(GridColumns),
-  };
-
-  static contextTypes = {
-    grid: PropTypes.any,
-  };
-
-  render() {
-    const { grid } = this.context;
-    const {
-      prefixCls: customizePrefixCls,
-      children,
-      actions,
-      extra,
-      className,
-      ...others
-    } = this.props;
-    const prefixCls = getPrefixCls('list', customizePrefixCls);
-    const classString = classNames(`${prefixCls}-item`, className);
-
-    const metaContent: ReactElement<any>[] = [];
-    const otherContent: ReactElement<any>[] = [];
-
-    Children.forEach(children, (element: ReactElement<any>) => {
-      if (element && element.type && element.type === Meta) {
-        metaContent.push(element);
-      } else {
-        otherContent.push(element);
-      }
-    });
-
-    const contentClassString = classNames(`${prefixCls}-item-content`, {
-      [`${prefixCls}-item-content-single`]: metaContent.length < 1,
-    });
-    const content =
-      otherContent.length > 0 ? <div className={contentClassString}>{otherContent}</div> : null;
-
-    let actionsContent;
-    if (actions && actions.length > 0) {
-      const actionsContentItem = (action: ReactNode, i: number) => (
-        <li key={`${prefixCls}-item-action-${i}`}>
-          {action}
-          {i !== actions.length - 1 && <em className={`${prefixCls}-item-action-split`} />}
-        </li>
-      );
-      actionsContent = (
-        <ul className={`${prefixCls}-item-action`}>
-          {actions.map((action, i) => actionsContentItem(action, i))}
-        </ul>
-      );
+  Children.forEach(children, (element: ReactElement<any>) => {
+    if (element && element.type && element.type === Meta) {
+      metaContent.push(element);
+    } else {
+      otherContent.push(element);
     }
+  });
 
-    const extraContent = (
-      <div className={`${prefixCls}-item-extra-wrap`}>
-        <div className={`${prefixCls}-item-main`}>
-          {metaContent}
-          {content}
-          {actionsContent}
-        </div>
-        <div className={`${prefixCls}-item-extra`}>{extra}</div>
-      </div>
+  const contentClassString = classNames(`${prefixCls}-item-content`, {
+    [`${prefixCls}-item-content-single`]: metaContent.length < 1,
+  });
+  const content =
+    otherContent.length > 0 ? <div className={contentClassString}>{otherContent}</div> : null;
+
+  let actionsContent;
+  if (actions && actions.length > 0) {
+    const actionsContentItem = (action: ReactNode, i: number) => (
+      <li key={`${prefixCls}-item-action-${i}`}>
+        {action}
+        {i !== actions.length - 1 && <em className={`${prefixCls}-item-action-split`} />}
+      </li>
     );
+    actionsContent = (
+      <ul className={`${prefixCls}-item-action`}>
+        {actions.map((action, i) => actionsContentItem(action, i))}
+      </ul>
+    );
+  }
 
-    const mainContent = grid ? (
-      <Col
-        span={getGrid(grid, 'column')}
-        xs={getGrid(grid, 'xs')}
-        sm={getGrid(grid, 'sm')}
-        md={getGrid(grid, 'md')}
-        lg={getGrid(grid, 'lg')}
-        xl={getGrid(grid, 'xl')}
-        xxl={getGrid(grid, 'xxl')}
-      >
-        <div {...others} className={classString}>
-          {extra && extraContent}
-          {!extra && metaContent}
-          {!extra && content}
-          {!extra && actionsContent}
-        </div>
-      </Col>
-    ) : (
+  const extraContent = (
+    <div className={`${prefixCls}-item-extra-wrap`}>
+      <div className={`${prefixCls}-item-main`}>
+        {metaContent}
+        {content}
+        {actionsContent}
+      </div>
+      <div className={`${prefixCls}-item-extra`}>{extra}</div>
+    </div>
+  );
+
+  const mainContent = grid ? (
+    <Col
+      span={getGrid(grid, 'column')}
+      xs={getGrid(grid, 'xs')}
+      sm={getGrid(grid, 'sm')}
+      md={getGrid(grid, 'md')}
+      lg={getGrid(grid, 'lg')}
+      xl={getGrid(grid, 'xl')}
+      xxl={getGrid(grid, 'xxl')}
+    >
       <div {...others} className={classString}>
         {extra && extraContent}
         {!extra && metaContent}
         {!extra && content}
         {!extra && actionsContent}
       </div>
-    );
+    </Col>
+  ) : (
+    <div {...others} className={classString}>
+      {extra && extraContent}
+      {!extra && metaContent}
+      {!extra && content}
+      {!extra && actionsContent}
+    </div>
+  );
 
-    return mainContent;
-  }
-}
+  return mainContent;
+} as ListItemComponent;
+
+
+ListItem.displayName = 'ListItem';
+
+ListItem.Meta = Meta;
+
+export default ListItem;

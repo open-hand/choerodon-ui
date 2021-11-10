@@ -8,7 +8,7 @@ import noop from 'lodash/noop';
 import getScroll from '../_util/getScroll';
 import { throttleByAnimationFrameDecorator } from '../_util/throttleByAnimationFrame';
 import addEventListener from '../_util/addEventListener';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function getTargetRect(target: HTMLElement | Window | null): ClientRect {
   return target !== window
@@ -65,11 +65,17 @@ export interface AffixState {
 export default class Affix extends Component<AffixProps, AffixState> {
   static displayName = 'Affix';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static propTypes = {
     offsetTop: PropTypes.number,
     offsetBottom: PropTypes.number,
     target: PropTypes.func,
   };
+
+  context: ConfigContextValue;
 
   state: AffixState = {
     affixStyle: undefined,
@@ -283,6 +289,7 @@ export default class Affix extends Component<AffixProps, AffixState> {
   render() {
     const { prefixCls, style, children } = this.props;
     const { affixStyle, placeholderStyle } = this.state;
+    const { getPrefixCls } = this.context;
     const className = classNames({
       [getPrefixCls('affix', prefixCls)]: affixStyle,
     });

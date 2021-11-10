@@ -17,6 +17,8 @@ export { default as Affix } from './affix';
 
 export { default as Anchor } from './anchor';
 
+export { default as Animate } from './animate';
+
 export { default as AutoComplete } from './auto-complete';
 
 export { default as Alert } from './alert';
@@ -26,6 +28,8 @@ export { default as Avatar } from './avatar';
 export { default as BackTop } from './back-top';
 
 export { default as Badge } from './badge';
+
+export { default as BarCode } from './bar-code';
 
 export { default as Breadcrumb } from './breadcrumb';
 
@@ -45,6 +49,10 @@ export { default as Checkbox } from './checkbox';
 
 export { default as Col } from './col';
 
+export { default as ConfigProvider } from './config-provider';
+
+export { default as configure } from './configure';
+
 export { default as DatePicker } from './date-picker';
 
 export { default as Divider } from './divider';
@@ -53,7 +61,13 @@ export { default as Dropdown } from './dropdown';
 
 export { default as Form } from './form';
 
+export { default as getConfig } from './get-config';
+
 export { default as Icon } from './icon';
+
+export { default as IconSelect } from './icon-select';
+
+export { default as ImageCrop } from './image-crop';
 
 export { default as Input } from './input';
 
@@ -85,6 +99,10 @@ export { default as Radio } from './radio';
 
 export { default as Rate } from './rate';
 
+export { default as Responsive } from './responsive';
+
+export { default as Result } from './result';
+
 export { default as Row } from './row';
 
 export { default as Select } from './select';
@@ -92,6 +110,8 @@ export { default as Select } from './select';
 export { default as Slider } from './slider';
 
 export { default as Spin } from './spin';
+
+export { default as Statistic } from './statistic';
 
 export { default as Steps } from './steps';
 
@@ -121,22 +141,6 @@ export { default as Mention } from './mention';
 
 export { default as Upload } from './upload';
 
+export { default as useConfig } from './use-config';
+
 export { default as version } from './version';
-
-export { default as IconSelect } from './icon-select';
-
-export { default as Animate } from './animate';
-
-export { default as Responsive } from './responsive';
-
-export { default as configure } from './configure';
-
-export { default as getConfig } from './get-config';
-
-export { default as Result } from './result';
-
-export { default as ImageCrop } from './image-crop';
-
-export { default as Statistic } from './statistic';
-
-export { default as BarCode } from './bar-code';

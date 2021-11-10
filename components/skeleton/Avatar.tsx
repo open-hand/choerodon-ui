@@ -1,37 +1,32 @@
 import * as React from 'react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
 import Element, { SkeletonElementProps } from './Element';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface AvatarProps extends Omit<SkeletonElementProps, 'shape'> {
   shape?: 'circle' | 'square';
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
-class SkeletonAvatar extends React.Component<AvatarProps, any> {
-  static defaultProps: Partial<AvatarProps> = {
-    size: 'default',
-    shape: 'circle',
-  };
+const SkeletonAvatar: React.FunctionComponent<AvatarProps> = function SkeletonAvatar(props) {
+  const { prefixCls: customizePrefixCls, className, active } = props;
+  const { getPrefixCls } = React.useContext(ConfigContext);
+  const prefixCls = getPrefixCls('skeleton', customizePrefixCls);
+  const cls = classNames(prefixCls, className, `${prefixCls}-element`, {
+    [`${prefixCls}-active`]: active,
+  });
+  return (
+    <div className={cls}>
+      <Element prefixCls={`${prefixCls}-avatar`} {...omit(props, ['prefixCls'])} />
+    </div>
+  );
+};
 
-  renderSkeletonAvatar = () => {
-    const { prefixCls: customizePrefixCls, className, active } = this.props;
-    const prefixCls = getPrefixCls('skeleton', customizePrefixCls);
-    const otherProps = omit(this.props, ['prefixCls']);
-    const cls = classNames(prefixCls, className, `${prefixCls}-element`, {
-      [`${prefixCls}-active`]: active,
-    });
-    return (
-      <div className={cls}>
-        <Element prefixCls={`${prefixCls}-avatar`} {...otherProps} />
-      </div>
-    );
-  };
+SkeletonAvatar.displayName = 'SkeletonAvatar';
 
-  render() {
-    return <>{this.renderSkeletonAvatar()}</>;
-  }
-}
+SkeletonAvatar.defaultProps = {
+  size: 'default',
+  shape: 'circle',
+};
 
-export default SkeletonAvatar;
+export default React.memo(SkeletonAvatar);

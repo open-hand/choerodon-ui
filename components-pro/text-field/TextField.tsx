@@ -26,8 +26,6 @@ import { action, computed, observable, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getConfig } from 'choerodon-ui/lib/configure';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { WaitType } from '../core/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
@@ -279,7 +277,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if ('showLengthInfo' in this.props) {
       return this.props.showLengthInfo;
     }
-    return getConfig('showLengthInfo');
+    return this.getContextConfig('showLengthInfo');
   }
 
   constructor(props, context) {
@@ -502,7 +500,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
     otherProps.onKeyDown = this.handleKeyDown;
-    otherProps.autoComplete = this.props.autoComplete || getConfig('textFieldAutoComplete') || 'off';
+    otherProps.autoComplete = this.props.autoComplete || this.getContextConfig('textFieldAutoComplete') || 'off';
     return otherProps;
   }
 
@@ -531,9 +529,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleHelpMouseEnter(e) {
+    const { getTooltipTheme } = this.context;
     show(e.currentTarget, {
       title: this.getProp('help'),
-      popupClassName: `${getConfig('proPrefixCls')}-tooltip-popup-help`,
+      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
     });
   }

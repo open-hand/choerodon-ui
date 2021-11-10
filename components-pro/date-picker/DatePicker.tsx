@@ -9,9 +9,9 @@ import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
+import { TimeStep } from 'choerodon-ui/dataset/interface';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import DaysView, { DateViewProps } from './DaysView';
 import DateTimesView from './DateTimesView';
@@ -38,11 +38,7 @@ export type RenderFunction = (
   selected: Moment,
 ) => ReactNode;
 
-export type TimeStep = {
-  hour?: number;
-  minute?: number;
-  second?: number;
-};
+export { TimeStep };
 
 export type TimeZone = string | ((moment: Moment) => string);
 
@@ -260,7 +256,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     const mode = this.getDefaultViewMode();
     const { value } = props;
     if (value && [ViewMode.time, ViewMode.dateTime].includes(mode)) {
-      const { timeZone = getConfig('formatter').timeZone } = this.props;
+      const { timeZone = this.getContextConfig('formatter').timeZone } = this.props;
       if (timeZone) {
         const renderedTimeZone = typeof timeZone === 'function' ? timeZone(value) : value.format(timeZone);
         if (isString(renderedTimeZone)) {

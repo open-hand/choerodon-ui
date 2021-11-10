@@ -23,7 +23,6 @@ import {
   DropResult,
   ResponderProvided,
 } from 'react-beautiful-dnd';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { isCalcSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -1540,8 +1539,8 @@ export default class Table extends DataSetComponent<TableProps> {
     } = this;
     const content = this.getTable();
     const pagination = this.getPagination(TablePaginationPosition.top);
-    const tableSpinProps = getConfig('tableSpinProps');
-    const tableButtonsLimit = isNil(buttonsLimit) ? getConfig('tableButtonsLimit') : buttonsLimit;
+    const tableSpinProps = this.getContextConfig('tableSpinProps');
+    const tableButtonsLimit = isNil(buttonsLimit) ? this.getContextConfig('tableButtonsLimit') : buttonsLimit;
     const styleHeight = style ? toPx(style.height) : 0;
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>

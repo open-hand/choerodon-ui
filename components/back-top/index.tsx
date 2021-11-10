@@ -1,11 +1,11 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { CSSProperties, PureComponent } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import Animate from '../animate';
 import addEventListener from '../_util/addEventListener';
-import { getPrefixCls } from '../configure';
 import getScroll from '../_util/getScroll';
 import scrollTo from '../_util/scrollTo';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function getDefaultTarget() {
   return window;
@@ -21,12 +21,18 @@ export interface BackTopProps {
   visible?: boolean; // Only for test. Don't use it.
 }
 
-export default class BackTop extends Component<BackTopProps, any> {
+export default class BackTop extends PureComponent<BackTopProps, any> {
   static displayName = 'BackTop';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static defaultProps = {
     visibilityHeight: 400,
   };
+
+  context: ConfigContextValue;
 
   scrollEvent: any;
 
@@ -71,6 +77,7 @@ export default class BackTop extends Component<BackTopProps, any> {
       visible: propsVisible,
       children,
     } = this.props;
+    const { getPrefixCls } = this.context;
     const { visible: stateVisible } = this.state;
     const prefixCls = getPrefixCls('back-top', customizePrefixCls);
     const classString = classNames(prefixCls, className);

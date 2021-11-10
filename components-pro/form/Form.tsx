@@ -18,16 +18,15 @@ import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
 import { AxiosInstance } from 'axios';
+import { Form as IForm } from 'choerodon-ui/dataset/interface';
 import Responsive, { hasBreakPointMap } from 'choerodon-ui/lib/responsive/Responsive';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getTooltip } from 'choerodon-ui/lib/_util/TooltipUtils';
 import isFunction from 'lodash/isFunction';
 import axios from '../axios';
 import autobind from '../_util/autobind';
 import isFragment from '../_util/isFragment';
 import { FormField, FormFieldProps, getFieldsById, HighlightRenderer } from '../field/FormField';
-import FormContext from './FormContext';
+import FormContext, { FormContextValue, FormProvider } from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet, { ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -192,7 +191,7 @@ const labelLayoutPropTypes = PropTypes.oneOf([
 ]);
 
 @observer
-export default class Form extends DataSetComponent<FormProps> {
+export default class Form extends DataSetComponent<FormProps, FormContextValue> implements IForm {
   static displayName = 'Form';
 
   static FormVirtualGroup = FormVirtualGroup;
@@ -323,7 +322,9 @@ export default class Form extends DataSetComponent<FormProps> {
     layout: FormLayout.table,
   };
 
-  static contextType = FormContext;
+  static get contextType() {
+    return FormContext;
+  }
 
   fields: FormField<FormFieldProps>[] = [];
 
@@ -346,7 +347,7 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @computed
   get axios(): AxiosInstance {
-    return this.observableProps.axios || getConfig('axios') || axios;
+    return this.observableProps.axios || this.getContextConfig('axios') || axios;
   }
 
   @computed
@@ -398,7 +399,7 @@ export default class Form extends DataSetComponent<FormProps> {
       return useColon;
     }
 
-    const configUseColon = getConfig('useColon');
+    const configUseColon = this.getContextConfig('useColon');
     if (configUseColon !== undefined) {
       return configUseColon;
     }
@@ -414,7 +415,7 @@ export default class Form extends DataSetComponent<FormProps> {
       return excludeUseColonTagList;
     }
 
-    const configExcludeUseColonTagList = getConfig('excludeUseColonTagList');
+    const configExcludeUseColonTagList = this.getContextConfig('excludeUseColonTagList');
     if (configExcludeUseColonTagList !== undefined) {
       return configExcludeUseColonTagList;
     }
@@ -484,7 +485,7 @@ export default class Form extends DataSetComponent<FormProps> {
         return responsiveLabelLayout;
       }
     }
-    return getConfig('labelLayout') || LabelLayout.horizontal;
+    return this.getContextConfig('labelLayout') || LabelLayout.horizontal;
   }
 
   @computed
@@ -493,6 +494,7 @@ export default class Form extends DataSetComponent<FormProps> {
     if (labelTooltip) {
       return labelTooltip;
     }
+    const { getTooltip } = this.context;
     return getTooltip('label');
   }
 
@@ -685,7 +687,7 @@ export default class Form extends DataSetComponent<FormProps> {
       readOnly: formReadOnly,
       props: { children },
     } = this;
-    const prefixCls = getProPrefixCls(FIELD_SUFFIX);
+    const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
     const labelWidth = normalizeLabelWidth(this.labelWidth, columns);
     const rows: ReactElement<any>[] = [];
     let cols: ReactElement<any>[] = [];
@@ -921,8 +923,8 @@ export default class Form extends DataSetComponent<FormProps> {
       useColon,
       showValidation,
     } = this;
-    const { formNode } = this.context;
-    const value = {
+    const { formNode, getConfig, getProPrefixCls, getPrefixCls, getCustomizable, getTooltip, getTooltipTheme } = this.context;
+    const value: FormContextValue = {
       formNode: formNode || this,
       dataSet,
       dataIndex,
@@ -937,6 +939,12 @@ export default class Form extends DataSetComponent<FormProps> {
       fieldHighlightRenderer,
       useColon,
       showValidation,
+      getConfig,
+      getPrefixCls,
+      getProPrefixCls,
+      getCustomizable,
+      getTooltip,
+      getTooltipTheme,
     };
     const children: ReactNode = [
       this.getHeader(),
@@ -952,7 +960,7 @@ export default class Form extends DataSetComponent<FormProps> {
         ]}
         onChange={this.handleResponsive}
       >
-        <FormContext.Provider value={value}>
+        <FormProvider value={value}>
           {
             this.isUnderForm ? children :
               formNode && this.isUnderForm === undefined ? (
@@ -965,7 +973,7 @@ export default class Form extends DataSetComponent<FormProps> {
                 </form>
               )
           }
-        </FormContext.Provider>
+        </FormProvider>
       </Responsive>
     );
   }

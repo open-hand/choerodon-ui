@@ -2,35 +2,30 @@ import * as React from 'react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
 import Element, { SkeletonElementProps } from './Element';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface SkeletonInputProps extends Omit<SkeletonElementProps, 'size' | 'shape'> {
   size?: 'large' | 'small' | 'default';
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
-class SkeletonInput extends React.Component<SkeletonInputProps, any> {
-  static defaultProps: Partial<SkeletonInputProps> = {
-    size: 'default',
-  };
+const SkeletonInput: React.FunctionComponent<SkeletonInputProps> = function SkeletonInput(props) {
+  const { prefixCls: customizePrefixCls, className, active } = props;
+  const { getPrefixCls } = React.useContext(ConfigContext);
+  const prefixCls = getPrefixCls('skeleton', customizePrefixCls);
+  const cls = classNames(prefixCls, className, `${prefixCls}-element`, {
+    [`${prefixCls}-active`]: active,
+  });
+  return (
+    <div className={cls}>
+      <Element prefixCls={`${prefixCls}-input`} {...omit(props, ['prefixCls'])} />
+    </div>
+  );
+};
 
-  renderSkeletonInput = () => {
-    const { prefixCls: customizePrefixCls, className, active } = this.props;
-    const prefixCls = getPrefixCls('skeleton', customizePrefixCls);
-    const otherProps = omit(this.props, ['prefixCls']);
-    const cls = classNames(prefixCls, className, `${prefixCls}-element`, {
-      [`${prefixCls}-active`]: active,
-    });
-    return (
-      <div className={cls}>
-        <Element prefixCls={`${prefixCls}-input`} {...otherProps} />
-      </div>
-    );
-  };
+SkeletonInput.displayName = 'SkeletonInput';
 
-  render() {
-    return <>{this.renderSkeletonInput()}</>;
-  }
-}
+SkeletonInput.defaultProps = {
+  size: 'default',
+};
 
-export default SkeletonInput;
+export default React.memo(SkeletonInput);

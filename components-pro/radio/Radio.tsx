@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
@@ -113,6 +112,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     if (labelRef && (labelTooltip === TextTooltip.always || (labelTooltip === TextTooltip.overflow && isOverflow(labelRef)))) {
       const labelText = this.getLabelText();
       if (labelText) {
+        const { getTooltipTheme } = this.context;
         show(labelRef, {
           title: labelText,
           theme: getTooltipTheme('label'),

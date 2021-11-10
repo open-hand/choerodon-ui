@@ -1,29 +1,31 @@
-import React, { Children, cloneElement, isValidElement, PureComponent, ReactNode } from 'react';
+import React, { Children, cloneElement, FunctionComponent, isValidElement, memo, ReactNode, useContext } from 'react';
 import RippleChild from './RippleChild';
-import { getConfig, getPrefixCls } from '../configure';
 import createChains from '../_util/createChains';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface RippleProps {
   prefixCls?: string;
   disabled?: boolean;
+  children?: ReactNode;
 }
 
-export default class Ripple extends PureComponent<RippleProps> {
-  static displayName = 'Ripple';
+const Ripple: FunctionComponent<RippleProps> = function Ripple(props) {
+  const { prefixCls: customizePrefixCls, disabled, children, ...rest } = props;
+  const { getPrefixCls, getConfig } = useContext(ConfigContext);
+  const prefixCls = getPrefixCls('ripple', customizePrefixCls);
 
-  render() {
-    const { disabled, children, ...rest } = this.props;
-    if (disabled || !children || !getConfig('ripple')) {
-      if (children) {
-        return Children.map(children, child => isValidElement(child) ? cloneElement(child, createChains(rest, child.props)) : child);
-      }
-      return children;
+  const rippleChild = (child: ReactNode) => {
+    return <RippleChild prefixCls={prefixCls} {...rest}>{child}</RippleChild>;
+  };
+  if (disabled || !children || !getConfig('ripple')) {
+    if (children) {
+      return <>{Children.map(children, child => isValidElement(child) ? cloneElement(child, createChains(rest, child.props)) : child)}</>;
     }
-    return Children.map(children, (child) => this.rippleChild(child, rest));
+    return null;
   }
+  return <>{Children.map(children, (child) => rippleChild(child))}</>;
+};
 
-  rippleChild(child: ReactNode, rest) {
-    const { prefixCls } = this.props;
-    return <RippleChild prefixCls={getPrefixCls('ripple', prefixCls)} {...rest}>{child}</RippleChild>;
-  }
-}
+Ripple.displayName = 'Ripple';
+
+export default memo(Ripple);

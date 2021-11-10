@@ -1,14 +1,16 @@
-import React, { Component, MouseEventHandler } from 'react';
-import PropTypes from 'prop-types';
+import React, { MouseEventHandler, PureComponent } from 'react';
 import Tooltip from '../tooltip';
 import { Item } from '../rc-components/menu';
+import MenuContext, { MenuContextValue } from './MenuContext';
 
-class MenuItem extends Component<any, any> {
-  static contextTypes = {
-    inlineCollapsed: PropTypes.bool,
-  };
+class MenuItem extends PureComponent<any, any> {
+  static get contextType() {
+    return MenuContext;
+  }
 
   static isMenuItem = 1;
+
+  context: MenuContextValue;
 
   private menuItem: any;
 

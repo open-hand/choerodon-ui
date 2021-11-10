@@ -37,7 +37,9 @@ const propTypes = {
 };
 
 class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   static propTypes = propTypes;
 

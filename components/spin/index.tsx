@@ -7,7 +7,7 @@ import Animate from '../animate';
 import Progress from '../progress/progress';
 import { Size } from '../_util/enum';
 import { ProgressType } from '../progress/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export type SpinIndicator = ReactElement<any>;
 
@@ -31,6 +31,10 @@ export interface SpinState {
 export default class Spin extends Component<SpinProps, SpinState> {
   static displayName = 'Spin';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     spinning: true,
     size: Size.default,
@@ -45,6 +49,8 @@ export default class Spin extends Component<SpinProps, SpinState> {
     wrapperClassName: PropTypes.string,
     indicator: PropTypes.node,
   };
+
+  context: ConfigContextValue;
 
   debounceTimeout: number;
 
@@ -128,6 +134,7 @@ export default class Spin extends Component<SpinProps, SpinState> {
       ...restProps
     } = this.props;
     const { spinning, notCssAnimationSupported } = this.state;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('spin', customizePrefixCls);
 
     const spinClassName = classNames(

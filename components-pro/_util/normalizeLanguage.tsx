@@ -1,3 +1,4 @@
-export default function normalizeLanguage(language?: string): string | undefined {
-  return language && language.replace('_', '-').toLowerCase();
-}
+import { Utils } from 'choerodon-ui/dataset';
+
+export default Utils.normalizeLanguage;
+

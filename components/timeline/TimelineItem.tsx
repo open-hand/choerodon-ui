@@ -1,6 +1,6 @@
-import React, { CSSProperties, FunctionComponent, ReactNode } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface TimeLineItemProps {
   prefixCls?: string;
@@ -23,6 +23,7 @@ const TimelineItem: FunctionComponent<TimeLineItemProps> = props => {
     dot,
     ...restProps
   } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('timeline', customizePrefixCls);
 
   const itemClassName = classNames(

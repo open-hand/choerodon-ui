@@ -1,28 +1,31 @@
-import React, { createRef, forwardRef, ForwardRefExoticComponent, RefObject, useCallback, useImperativeHandle, useMemo, useState } from 'react';
+import React, {
+  createRef,
+  forwardRef,
+  ForwardRefExoticComponent,
+  RefObject,
+  useCallback,
+  useContext,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
 import { render } from 'react-dom';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { TooltipManager } from 'choerodon-ui/shared';
+import { TooltipContainerRef, TooltipManagerType } from 'choerodon-ui/shared/tooltip-manager';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { getGlobalPopupContainer } from 'choerodon-ui/lib/trigger/Popup';
 import Tooltip, { TooltipProps } from './Tooltip';
 import TaskRunner from '../_util/TaskRunner';
 
 export const suffixCls = 'singleton-tooltip';
 
-const manager: TooltipManagerType = {};
-
-export type TooltipContainerRef = {
-  open: (target: Node, props: TooltipProps, duration?: number) => TaskRunner;
-  close: (duration?: number) => TaskRunner;
-}
-
-export type TooltipManagerType = {
-  container?: RefObject<TooltipContainerRef>;
-  root?: HTMLDivElement;
-}
+export { TooltipContainerRef, TooltipManagerType };
 
 const TooltipContainer: ForwardRefExoticComponent<any> = forwardRef<TooltipContainerRef>((_, ref) => {
   const task = useMemo(() => new TaskRunner(), []);
   const [tooltipProps, setTooltipProps] = useState<TooltipProps>();
+  const { getTooltipTheme } = useContext(ConfigContext);
   const open = useCallback((target, args, duration = 100) => {
     task.cancel();
     task.delay(duration, () => {
@@ -34,7 +37,7 @@ const TooltipContainer: ForwardRefExoticComponent<any> = forwardRef<TooltipConta
       });
     });
     return task;
-  }, [task]);
+  }, [task, getTooltipTheme]);
   const close = useCallback((duration = 100) => {
     task.cancel();
     task.delay(duration, () => {
@@ -62,7 +65,7 @@ const TooltipContainer: ForwardRefExoticComponent<any> = forwardRef<TooltipConta
 });
 
 function getRoot() {
-  let { root } = manager;
+  let { root } = TooltipManager;
   if (typeof window !== 'undefined') {
     const popupContainer = getGlobalPopupContainer();
     const doc = window.document;
@@ -74,14 +77,14 @@ function getRoot() {
       root = doc.createElement('div');
       root.className = `${getProPrefixCls(suffixCls)}-container`;
       popupContainer.appendChild(root);
-      manager.root = root;
+      TooltipManager.root = root;
     }
   }
   return root;
 }
 
 async function getContainer(): Promise<RefObject<TooltipContainerRef>> {
-  const { container } = manager;
+  const { container } = TooltipManager;
   if (container) {
     return container;
   }
@@ -89,7 +92,7 @@ async function getContainer(): Promise<RefObject<TooltipContainerRef>> {
     const root = getRoot();
     if (root) {
       const ref = createRef<TooltipContainerRef>();
-      manager.container = ref;
+      TooltipManager.container = ref;
       render(<TooltipContainer ref={ref} />, root, () => resolve(ref));
     }
   });

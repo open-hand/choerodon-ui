@@ -8,7 +8,7 @@ import Tabs from '../tabs';
 import { throttleByAnimationFrameDecorator } from '../_util/throttleByAnimationFrame';
 import warning from '../_util/warning';
 import addEventListener from '../_util/addEventListener';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { CardGridProps } from './Grid';
 export { CardMetaProps } from './Meta';
@@ -46,9 +46,15 @@ export interface CardProps {
 export default class Card extends Component<CardProps, {}> {
   static displayName = 'Card';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static Grid: typeof Grid = Grid;
 
   static Meta: typeof Meta = Meta;
+
+  context: ConfigContextValue;
 
   resizeEvent: any;
 
@@ -160,6 +166,7 @@ export default class Card extends Component<CardProps, {}> {
       ...others
     } = this.props;
     const { widerPadding } = this.state;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('card', customizePrefixCls);
 
     const classString = classNames(prefixCls, className, {

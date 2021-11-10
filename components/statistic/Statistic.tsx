@@ -1,9 +1,9 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
 import StatisticNumber from './Number';
 import Countdown from './Countdown';
-import { valueType, FormatConfig } from './utils';
+import { FormatConfig, valueType } from './utils';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface StatisticProps extends FormatConfig {
   prefixCls?: string;
@@ -20,13 +20,13 @@ export interface StatisticProps extends FormatConfig {
 }
 
 interface CompoundedComponent
-    extends React.ForwardRefExoticComponent<StatisticProps> {
-    Countdown: typeof Countdown;
+  extends React.ForwardRefExoticComponent<StatisticProps> {
+  Countdown: typeof Countdown;
 }
 
-const Statistic = forwardRef((props: StatisticProps,_ref) => {
+const Statistic = forwardRef(function Statistic(props: StatisticProps, _ref) {
   const {
-    prefixCls : customizePrefixCls,
+    prefixCls: customizePrefixCls,
     className,
     style,
     valueStyle,
@@ -38,6 +38,7 @@ const Statistic = forwardRef((props: StatisticProps,_ref) => {
     onMouseEnter,
     onMouseLeave,
   } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('statistic', customizePrefixCls);
   const valueNode = <StatisticNumber {...props} prefixCls={prefixCls} value={value} />;
   const cls = classNames(prefixCls, className);
@@ -51,13 +52,15 @@ const Statistic = forwardRef((props: StatisticProps,_ref) => {
       </div>
     </div>
   );
-}) as CompoundedComponent
+}) as CompoundedComponent;
+
+Statistic.displayName = 'Statistic';
 
 Statistic.defaultProps = {
   decimalSeparator: '.',
   groupSeparator: ',',
 };
 
-Statistic.Countdown = Countdown
+Statistic.Countdown = Countdown;
 
 export default Statistic;

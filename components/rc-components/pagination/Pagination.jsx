@@ -35,7 +35,7 @@ export default class Pagination extends Component {
     showQuickJumper: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     showTitle: PropTypes.bool,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.string),
-    showTotal: PropTypes.func,
+    showTotal: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     locale: PropTypes.object,
     style: PropTypes.object,
     itemRender: PropTypes.func,

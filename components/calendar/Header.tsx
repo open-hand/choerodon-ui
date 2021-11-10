@@ -3,7 +3,7 @@ import { Moment } from 'moment';
 import { Size } from '../_util/enum';
 import Select from '../select';
 import { Button, Group, RadioChangeEvent } from '../radio';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 const Option = Select.Option;
 
@@ -23,15 +23,22 @@ export interface HeaderProps {
 export default class Header extends Component<HeaderProps, any> {
   static displayName = 'Header';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     yearSelectOffset: 10,
     yearSelectTotal: 20,
   };
 
+  context: ConfigContextValue;
+
   private calenderHeaderNode: HTMLDivElement;
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('fullcalendar-header', prefixCls);
   }
 

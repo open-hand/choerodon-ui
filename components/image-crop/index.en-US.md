@@ -26,7 +26,7 @@ crop the image.
 | modalVisible   |  control the modal visibility |  boolean          |  ture               |
 | serverCrop   | when use upload the crop info to server and naturl image blob |  boolean          |  false            |
 | onCropComplete   | crop complete callback|({ url: string, blob: Blob, area: Area }) => void        |            |
-| cropContent   | crop area render | (crop: ReactElement<EasyCropProps>) => React.ReactElement<any>      |            |
+| cropContent   | crop area render | (crop: ReactElement&lt;EasyCropProps&gt;) => React.ReactElement&lt;any&gt;      |            |
 | modalProps   | modal props can't change the  onOk ， onCancel  | ModalProps     |            |
 
 

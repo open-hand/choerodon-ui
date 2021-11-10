@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 
@@ -41,9 +41,18 @@ export interface VerifyTypeObjProps {
 
 @observer
 export default class SecretFieldView extends Component<SecretFieldViewProps> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'SecretFieldView';
 
-  prefixCls = getProPrefixCls('secret-field');
+  context: ConfigContextValue;
+
+  get prefixCls() {
+    const { context } = this;
+    return context.getProPrefixCls('secret-field');
+  }
 
   constructor(props, context) {
     super(props, context);
@@ -54,15 +63,16 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
       this.setCaptchaKey('');
       this.setCaptcha('');
       this.setValidate(true);
-    })
+    });
   }
 
   // 滑块拖到最右
   @autobind
   handleSuccess() {
     const { countDown } = this.props;
+    const { context } = this;
     // 发送信息以获取验证码
-    const secretFieldFetchVerifyCode = getConfig('secretFieldFetchVerifyCode');
+    const secretFieldFetchVerifyCode = context.getConfig('secretFieldFetchVerifyCode');
     if (secretFieldFetchVerifyCode) {
       secretFieldFetchVerifyCode(this.formDs?.current?.get('verifyType')).then(
         res => {
@@ -74,9 +84,11 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
           } else {
             message.error((res as any).message);
           }
-          setTimeout(() => { this.setFlag('verify') }, 500);
+          setTimeout(() => {
+            this.setFlag('verify');
+          }, 500);
         },
-      ).catch(_e => this.setFlag('verify'))
+      ).catch(_e => this.setFlag('verify'));
     }
   }
 
@@ -85,8 +97,8 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   handleGoToEdit() {
     const { name, token = '' } = this.props;
     // 编辑-校验验证码，返回原始值
-    const { captchaKey, captcha } = this;
-    const secretFieldQueryData = getConfig('secretFieldQueryData');
+    const { captchaKey, captcha, context } = this;
+    const secretFieldQueryData = context.getConfig('secretFieldQueryData');
     const type = this.formDs?.current?.get('verifyType');
     const params = { type, _token: token, fieldName: name, captchaKey, captcha, action: 'edit' };
     if (secretFieldQueryData) {
@@ -100,7 +112,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
           this.formDs?.current?.set(name, res);
           this.setFlag('edit');
         },
-      )
+      );
     } else {
       this.setFlag('edit');
     }
@@ -111,8 +123,8 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   handleQuery() {
     const { name, token = '', onChange, onQueryFlag, modal } = this.props;
     // 查看-校验验证码，返回原始值
-    const { captchaKey, captcha } = this;
-    const secretFieldQueryData = getConfig('secretFieldQueryData');
+    const { captchaKey, captcha, context } = this;
+    const secretFieldQueryData = context.getConfig('secretFieldQueryData');
     const type = this.formDs?.current?.get('verifyType');
     const params = { type, _token: token, fieldName: name, captchaKey, captcha, action: 'query' };
     if (secretFieldQueryData) {
@@ -135,7 +147,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
             onQueryFlag(false);
           }
         },
-      )
+      );
     }
   }
 
@@ -153,6 +165,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   @autobind
   handleEdit() {
     const { name, token = '', onChange, modal, pattern } = this.props;
+    const { context } = this;
     const editValue = this.formDs?.current?.get(name);
     if (pattern) {
       const newPattern = this.generatePattern(pattern);
@@ -164,7 +177,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
     }
 
     // 接口查询重置值
-    const secretFieldSaveData = getConfig('secretFieldSaveData');
+    const secretFieldSaveData = context.getConfig('secretFieldSaveData');
     const params = { _token: token, fieldName: name, value: editValue };
     if (secretFieldSaveData) {
       return secretFieldSaveData(params).then(
@@ -185,7 +198,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
             modal.close();
           }
         },
-      )
+      );
     }
   }
 
@@ -279,8 +292,9 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
 
   @action
   setVerifyTypeObj() {
+    const { context } = this;
     // 从配置项获取验证方式
-    const secretFieldTypesConfig = getConfig('secretFieldTypes');
+    const secretFieldTypesConfig = context.getConfig('secretFieldTypes');
     if (secretFieldTypesConfig) {
       this.verifyTypeObj = secretFieldTypesConfig() as VerifyTypeObjProps[];
     } else {
@@ -326,8 +340,8 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
               {
                 flag === 'verify' && (
                   <>
-                    <SelectBox name="verifyType" colSpan={4} >
-                      {verifyTypeObj?.map(item => <Option value={item.type} key={item.type} >
+                    <SelectBox name="verifyType" colSpan={4}>
+                      {verifyTypeObj?.map(item => <Option value={item.type} key={item.type}>
                         {item.name}
                       </Option>)}
                     </SelectBox>
@@ -337,7 +351,12 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
                     <td className={`${prefixCls}-modal-btns`} colSpan={4}>
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
                       {readOnly ? (
-                        <Button onClick={this.handleQuery} className={`${prefixCls}-modal-raised-btn`} disabled={!captcha} color={ButtonColor.primary}>
+                        <Button
+                          onClick={this.handleQuery}
+                          className={`${prefixCls}-modal-raised-btn`}
+                          disabled={!captcha}
+                          color={ButtonColor.primary}
+                        >
                           {$l('SecretField', 'ok_btn')}
                         </Button>
                       ) : (
@@ -358,9 +377,9 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
                 flag === 'edit' && (
                   <>
                     <TextField name={name} colSpan={4} restrict={restrict} />
-                    <td colSpan={4} className={`${prefixCls}-modal-btns`} >
+                    <td colSpan={4} className={`${prefixCls}-modal-btns`}>
                       {!validate &&
-                        <><p className={`${prefixCls}-modal-validate`} >{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
+                      <><p className={`${prefixCls}-modal-validate`}>{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
                       <Button onClick={this.handleEdit} color={ButtonColor.primary}>{$l('SecretField', 'ok_btn')}</Button>
                     </td>

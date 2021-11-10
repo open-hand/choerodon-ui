@@ -1,6 +1,5 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { CSSProperties, PureComponent } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import animation from '../_util/openAnimation';
 import warning from '../_util/warning';
@@ -8,7 +7,8 @@ import SubMenu from './SubMenu';
 import Item from './MenuItem';
 import { SiderContext } from '../layout/Sider';
 import RcMenu, { Divider, ItemGroup } from '../rc-components/menu';
-import { getPrefixCls } from '../configure';
+import LayoutSiderContext, { LayoutSiderContextValue } from '../layout/LayoutSiderContext';
+import { MenuContextProvider } from './MenuContext';
 
 export interface SelectParam {
   key: string;
@@ -58,8 +58,12 @@ export interface MenuState {
   openKeys: string[];
 }
 
-export default class Menu extends Component<MenuProps, MenuState> {
+export default class Menu extends PureComponent<MenuProps, MenuState> {
   static displayName = 'Menu';
+
+  static get contextType() {
+    return LayoutSiderContext;
+  }
 
   static Divider = Divider;
 
@@ -75,15 +79,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
     focusable: false,
   };
 
-  static childContextTypes = {
-    inlineCollapsed: PropTypes.bool,
-    menuTheme: PropTypes.string,
-  };
-
-  static contextTypes = {
-    siderCollapsed: PropTypes.bool,
-    collapsedWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  };
+  context: LayoutSiderContextValue;
 
   switchModeFromInline: boolean;
 
@@ -91,8 +87,8 @@ export default class Menu extends Component<MenuProps, MenuState> {
 
   inlineOpenKeys: string[] = [];
 
-  constructor(props: MenuProps) {
-    super(props);
+  constructor(props: MenuProps, context: LayoutSiderContextValue) {
+    super(props, context);
 
     warning(
       !('onOpen' in props || 'onClose' in props),
@@ -116,7 +112,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
     };
   }
 
-  getChildContext() {
+  getContextValue() {
     const { theme } = this.props;
     return {
       inlineCollapsed: this.getInlineCollapsed(),
@@ -126,6 +122,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('menu', prefixCls);
   }
 
@@ -277,6 +274,10 @@ export default class Menu extends Component<MenuProps, MenuState> {
       return null;
     }
 
-    return <RcMenu {...this.props} {...menuProps} prefixCls={prefixCls} />;
+    return (
+      <MenuContextProvider {...this.getContextValue()}>
+        <RcMenu {...this.props} {...menuProps} prefixCls={prefixCls} />
+      </MenuContextProvider>
+    );
   }
 }

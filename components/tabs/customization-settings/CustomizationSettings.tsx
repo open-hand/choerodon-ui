@@ -106,4 +106,4 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
 
 CustomizationSettings.displayName = 'CustomizationSettings';
 
-export default  observer(CustomizationSettings);
+export default observer(CustomizationSettings);

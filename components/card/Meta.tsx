@@ -1,6 +1,6 @@
-import React, { CSSProperties, ReactNode, SFC } from 'react';
+import React, { CSSProperties, FunctionComponent, memo, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface CardMetaProps {
   prefixCls?: string;
@@ -11,8 +11,9 @@ export interface CardMetaProps {
   description?: ReactNode;
 }
 
-const Meta: SFC<CardMetaProps> = (props) => {
+const CardMeta: FunctionComponent<CardMetaProps> = function CardMeta(props) {
   const { prefixCls: customizePrefixCls, className, avatar, title, description, ...others } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('card', customizePrefixCls);
   const classString = classNames(`${prefixCls}-meta`, className);
   const avatarDom = avatar ? <div className={`${prefixCls}-meta-avatar`}>{avatar}</div> : null;
@@ -32,6 +33,6 @@ const Meta: SFC<CardMetaProps> = (props) => {
   );
 };
 
-Meta.displayName = 'CardMeta';
+CardMeta.displayName = 'CardMeta';
 
-export default Meta;
+export default memo(CardMeta);

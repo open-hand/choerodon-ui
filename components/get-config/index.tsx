@@ -1,3 +1,3 @@
-import { getConfig } from '../configure';
+import { getConfig } from '../configure/utils';
 
 export default getConfig;

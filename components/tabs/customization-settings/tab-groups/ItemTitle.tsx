@@ -8,7 +8,7 @@ import { getHeader } from '../../utils';
 
 export interface ItemTitleProps {
   record: Record;
-  provided: DraggableProvided;
+  provided: DraggableProvided | undefined;
 }
 
 const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
@@ -22,7 +22,10 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
   }, [record]);
   const title = record.get('title');
   const header = getHeader({ tab: record.get('tab'), title });
-
+  const spanProps = provided ? {
+    ...provided.dragHandleProps,
+    style: { cursor: 'move' },
+  } : {};
   return (
     <>
       {
@@ -34,7 +37,7 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
             autoFocus
           />
         ) : (
-          <span {...provided.dragHandleProps} style={{ cursor: 'move' }}>
+          <span {...spanProps}>
             {toJS(header)}
           </span>
         )

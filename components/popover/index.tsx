@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import Tooltip, { AbstractTooltipProps, RenderFunction } from '../tooltip';
 import warning from '../_util/warning';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface PopoverProps extends AbstractTooltipProps {
   title?: ReactNode;
@@ -11,6 +11,10 @@ export interface PopoverProps extends AbstractTooltipProps {
 export default class Popover extends Component<PopoverProps, {}> {
   static displayName = 'Popover';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     placement: 'top',
     transitionName: 'zoom-big',
@@ -19,6 +23,8 @@ export default class Popover extends Component<PopoverProps, {}> {
     mouseLeaveDelay: 0.1,
     overlayStyle: {},
   };
+
+  context: ConfigContextValue;
 
   private tooltip: Tooltip;
 
@@ -48,6 +54,7 @@ export default class Popover extends Component<PopoverProps, {}> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('popover', prefixCls);
   }
 

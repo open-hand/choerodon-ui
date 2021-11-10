@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, memo, useContext } from 'react';
 import { AbstractCheckboxProps } from '../checkbox/Checkbox';
 import Radio from './radio';
 import { RadioChangeEvent } from './interface';
-import { getPrefixCls } from '../configure';
+import RadioContext from './RadioContext';
 
 export type RadioButtonProps = AbstractCheckboxProps<RadioChangeEvent>;
 
-const RadioButton = function(props: RadioButtonProps, context) {
-  const { radioGroup } = context;
+const RadioButton: FunctionComponent<RadioButtonProps> = function (props) {
+  const { radioGroup, getPrefixCls } = useContext(RadioContext);
   const radioProps: RadioButtonProps = { ...props };
   if (radioGroup) {
     radioProps.checked = props.value === radioGroup.value;
@@ -19,8 +18,5 @@ const RadioButton = function(props: RadioButtonProps, context) {
 };
 
 RadioButton.displayName = 'RadioButton';
-RadioButton.contextTypes = {
-  radioGroup: PropTypes.any,
-};
 
-export default RadioButton;
+export default memo(RadioButton);

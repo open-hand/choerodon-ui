@@ -7,7 +7,6 @@ import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import ObserverSelect from '../select/Select';
@@ -147,7 +146,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   }
 
   getObservableProps(props, context) {
-    const globalPagination = getConfig('pagination');
+    const globalPagination = this.getContextConfig('pagination');
     const pageSizeOptions = props.pageSizeOptions || (globalPagination && globalPagination.pageSizeOptions) || ['10', '20', '50', '100'];
     const maxPageSize = Math.max(defaultTo('maxPageSize' in props ? props.maxPageSize : (globalPagination && globalPagination.maxPageSize), 100), ...pageSizeOptions);
     return {

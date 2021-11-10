@@ -6,10 +6,9 @@ import Icon from '../icon';
 import { conductExpandParent } from '../rc-components/tree/util';
 import { EventDataNode, DataNode, Key } from '../rc-components/tree/interface';
 import { convertDataToEntities, convertTreeToData } from '../rc-components/tree/utils/treeUtil';
-import { getPrefixCls } from '../configure';
-
 import Tree, { TreeProps, C7ndTreeNodeAttribute } from './index';
 import { calcRangeKeys, convertDirectoryKeysToNodes } from './utils/dictUtil';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export type ExpandAction = false | 'click' | 'doubleClick';
 
@@ -22,14 +21,19 @@ export interface DirectoryTreeState {
   selectedKeys?: Key[];
 }
 
-function getIcon(props: C7ndTreeNodeAttribute): React.ReactNode {
-
+function TreeIcon(props: C7ndTreeNodeAttribute) {
+  const { getPrefixCls } = React.useContext(ConfigContext);
   const { isLeaf, expanded, prefixCls } = props;
   const prefixCl = getPrefixCls('tree', prefixCls);
   if (isLeaf) {
     return <Icon type="insert_drive_file" className={`${prefixCl}-switcher-line-icon`} />;
   }
-  return expanded ? <Icon type="baseline-file_copy" className={`${prefixCl}-switcher-line-icon`} />: <Icon type="library_books" className={`${prefixCl}-switcher-line-icon`} />;
+  return expanded ? <Icon type="baseline-file_copy" className={`${prefixCl}-switcher-line-icon`} /> :
+    <Icon type="library_books" className={`${prefixCl}-switcher-line-icon`} />;
+}
+
+function getIcon(props: C7ndTreeNodeAttribute): React.ReactNode {
+  return <TreeIcon {...props} />;
 }
 
 function getTreeData({ treeData, children }: DirectoryTreeProps) {
@@ -37,6 +41,10 @@ function getTreeData({ treeData, children }: DirectoryTreeProps) {
 }
 
 class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeState> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     showIcon: true,
     expandAction: 'click',
@@ -52,6 +60,8 @@ class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeSta
     }
     return newState;
   }
+
+  context: ConfigContextValue;
 
   state: DirectoryTreeState;
 
@@ -80,7 +90,7 @@ class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeSta
       this.state.expandedKeys = Object.keys(keyEntities);
     } else if (defaultExpandParent) {
       this.state.expandedKeys = conductExpandParent(
-        expandedKeys || defaultExpandedKeys|| [],
+        expandedKeys || defaultExpandedKeys || [],
         keyEntities,
       );
     } else {
@@ -220,6 +230,7 @@ class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeSta
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('tree', prefixCls);
   }
 
@@ -234,9 +245,9 @@ class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeSta
     const { className, ...props } = this.props;
     const { expandedKeys, selectedKeys } = this.state;
 
-    const prefixCls = this.getPrefixCls()
+    const prefixCls = this.getPrefixCls();
     const connectClassName = classNames(`${prefixCls}-directory`, className, {
-      [`${prefixCls}-directory-rtl`]: true ,
+      [`${prefixCls}-directory-rtl`]: true,
     });
 
     return (

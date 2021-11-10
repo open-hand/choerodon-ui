@@ -1,4 +1,4 @@
-import React, { cloneElement, CSSProperties, isValidElement, Key, ReactElement, ReactNode, MouseEvent as ReactMouseEvent } from 'react';
+import React, { cloneElement, CSSProperties, isValidElement, Key, MouseEvent as ReactMouseEvent, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import defer from 'lodash/defer';
@@ -9,7 +9,6 @@ import classNames from 'classnames';
 import classes from 'component-classes';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
@@ -184,10 +183,10 @@ export default class Modal extends ViewComponent<ModalProps> {
       okText = $l('Modal', 'ok'),
       drawer,
     } = this.props;
-    const modalButtonProps = getConfig('modalButtonProps');
+    const modalButtonProps = this.getContextConfig('modalButtonProps');
     const funcType: FuncType | undefined = drawer
       ? FuncType.raised
-      : (getConfig('buttonFuncType') as FuncType);
+      : (this.getContextConfig('buttonFuncType') as FuncType);
     return (
       <Button
         key="ok"
@@ -208,10 +207,10 @@ export default class Modal extends ViewComponent<ModalProps> {
       cancelText = $l('Modal', 'cancel'),
       drawer,
     } = this.props;
-    const modalButtonProps = getConfig('modalButtonProps');
+    const modalButtonProps = this.getContextConfig('modalButtonProps');
     const funcType: FuncType | undefined = drawer
       ? FuncType.raised
-      : (getConfig('buttonFuncType') as FuncType);
+      : (this.getContextConfig('buttonFuncType') as FuncType);
 
     return (
       <Button
@@ -318,7 +317,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   getOtherProps() {
     const otherProps = super.getOtherProps();
-    const { hidden, mousePosition, keyboardClosable = getConfig('modalKeyboard'), style = {}, drawer } = this.props;
+    const { hidden, mousePosition, keyboardClosable = this.getContextConfig('modalKeyboard'), style = {}, drawer } = this.props;
     if (keyboardClosable) {
       otherProps.autoFocus = true;
       otherProps.tabIndex = -1;
@@ -353,12 +352,12 @@ export default class Modal extends ViewComponent<ModalProps> {
         style = {},
         fullScreen,
         drawer,
-        drawerTransitionName = getConfig('drawerTransitionName'),
+        drawerTransitionName = this.getContextConfig('drawerTransitionName'),
         size,
         active,
-        border = getConfig('modalSectionBorder'),
-        drawerBorder = getConfig('drawerSectionBorder'),
-        autoCenter = getConfig('modalAutoCenter'),
+        border = this.getContextConfig('modalSectionBorder'),
+        drawerBorder = this.getContextConfig('drawerSectionBorder'),
+        autoCenter = this.getContextConfig('modalAutoCenter'),
       },
     } = this;
 
@@ -409,7 +408,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   @autobind
   handleHeaderMouseDown(downEvent: ReactMouseEvent<HTMLDivElement, MouseEvent>) {
-    const { element, contentNode, props: { autoCenter = getConfig('modalAutoCenter') } } = this;
+    const { element, contentNode, props: { autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
     if (element && contentNode) {
       const { prefixCls } = this;
       const { clientX, clientY, currentTarget } = downEvent;
@@ -595,13 +594,13 @@ export default class Modal extends ViewComponent<ModalProps> {
   };
 
   getDefaultFooter = (okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>, _modalChildrenProps: modalChildrenProps) => {
-    const { okCancel, okButton, cancelButton = okCancel !== false, okFirst = getConfig('modalOkFirst'), drawer } = this.props;
+    const { okCancel, okButton, cancelButton = okCancel !== false, okFirst = this.getContextConfig('modalOkFirst'), drawer } = this.props;
     const buttons: ReactNode[] = [];
     if (okButton !== false) {
       buttons.push(okBtn);
     }
     if (cancelButton !== false) {
-      const drawerOkFirst = getConfig('drawerOkFirst');
+      const drawerOkFirst = this.getContextConfig('drawerOkFirst');
       if (drawer && !isNil(drawerOkFirst)) {
         if (drawerOkFirst) {
           buttons.push(cancelBtn);

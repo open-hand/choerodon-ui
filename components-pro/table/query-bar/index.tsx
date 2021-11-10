@@ -1,4 +1,4 @@
-import React, { cloneElement, useState, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode } from 'react';
+import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
 import isObject from 'lodash/isObject';
@@ -6,7 +6,6 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import reduce from 'lodash/reduce';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
 import { DropDownProps } from 'choerodon-ui/lib/dropdown';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
@@ -19,12 +18,13 @@ import Table, {
   SummaryBar,
   SummaryBarHook,
   TableButtonProps,
-  TableQueryBarHook, TableQueryBarHookCustomProps,
+  TableQueryBarHook,
+  TableQueryBarHookCustomProps,
   TableQueryBarHookProps,
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
-import { ButtonType, ButtonColor } from '../../button/enum';
-import { DataSetStatus, FieldType, DataSetExportStatus } from '../../data-set/enum';
+import { ButtonColor, ButtonType } from '../../button/enum';
+import { DataSetExportStatus, DataSetStatus, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
 import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
@@ -39,7 +39,7 @@ import TableAdvancedQueryBar from './TableAdvancedQueryBar';
 import TableProfessionalBar from './TableProfessionalBar';
 import TableDynamicFilterBar from './TableDynamicFilterBar';
 import { PaginationProps } from '../../pagination/Pagination';
-import { findBindFieldBy, exportExcel } from '../../data-set/utils';
+import { exportExcel, findBindFieldBy } from '../../data-set/utils';
 import Dropdown from '../../dropdown/Dropdown';
 import Menu from '../../menu';
 import TextField from '../../text-field';
@@ -151,8 +151,14 @@ const ExportFooter = observer((props) => {
         <Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
       {dataSet.exportStatus !== DataSetExportStatus.success &&
       dataSet.exportStatus !== DataSetExportStatus.failed &&
-      <><span>{messageTimeout || $l('Table', 'export_operating')}</span><Button color={ButtonColor.gray}
-        onClick={handleClick}>{$l('Table', 'cancel_button')}</Button></>
+      <>
+        <span>{messageTimeout || $l('Table', 'export_operating')}</span>
+        <Button
+          color={ButtonColor.gray}
+          onClick={handleClick}
+        >{$l('Table', 'cancel_button')}
+        </Button>
+      </>
       }
     </div>
   );
@@ -162,7 +168,9 @@ const ExportFooter = observer((props) => {
 export default class TableQueryBar extends Component<TableQueryBarProps> {
   static displayName = 'TableQueryBar';
 
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   exportModal;
 
@@ -562,8 +570,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    */
   getMoreButton(buttonsLimits: number): ReactElement {
     const { buttons } = this.props;
-    const { prefixCls } = this.context;
-    const tableButtonProps = getConfig('tableButtonProps');
+    const { prefixCls, tableStore } = this.context;
+    const tableButtonProps = tableStore.getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     if (buttons && buttons.length && buttonsLimits) {
       buttons.slice(buttonsLimits).forEach(button => {
@@ -629,11 +637,12 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   getButtons(): ReactElement<ButtonProps>[] {
     const { buttons, summaryBar, buttonsLimit } = this.props;
+    const { tableStore } = this.context;
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     if (buttons) {
       // 汇总条存在下 buttons 大于 3 个放入下拉
       const buttonsLimits = summaryBar ? (buttonsLimit || 3) : buttonsLimit;
-      const tableButtonProps = getConfig('tableButtonProps');
+      const tableButtonProps = tableStore.getConfig('tableButtonProps');
       const buttonsArr = buttons.slice(0, buttonsLimits);
       buttonsArr.forEach(button => {
         let props: TableButtonProps = {};
@@ -789,6 +798,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         prefixCls,
         dataSet,
         isTree,
+        tableStore,
         tableStore: { queryBar, props: { queryBarProps } },
       },
       props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded },
@@ -797,7 +807,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
       const queryFields = this.getQueryFields();
-      const tableQueryBarProps = { ...queryBarProps, ...getConfig('queryBarProps') };
+      const tableQueryBarProps = { ...queryBarProps, ...tableStore.getConfig('queryBarProps') };
       const onReset = tableQueryBarProps && typeof tableQueryBarProps.onReset === 'function' ? tableQueryBarProps.onReset : noop;
       const onQuery = tableQueryBarProps && typeof tableQueryBarProps.onQuery === 'function' ? tableQueryBarProps.onQuery : noop;
       const props: TableQueryBarHookCustomProps & TableQueryBarHookProps = {

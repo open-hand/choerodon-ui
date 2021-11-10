@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
 import Button from '../../button';

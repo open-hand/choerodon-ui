@@ -1,6 +1,3 @@
-import isEqual from 'lodash/isEqual';
-import isEmpty from './isEmpty';
+import { Utils } from 'choerodon-ui/dataset';
 
-export default function isSame(newValue, oldValue) {
-  return (isEmpty(newValue) && isEmpty(oldValue)) || isEqual(newValue, oldValue);
-}
+export default Utils.isSame;

@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import sortBy from 'lodash/sortBy'
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { SelectionMode } from '../table/enum';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';

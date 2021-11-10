@@ -6,7 +6,7 @@ import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isNil from 'lodash/isNil';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
@@ -183,7 +183,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   get axios(): AxiosInstance {
-    return getConfig('axios') || axios;
+    return this.getContextConfig('axios') || axios;
   }
 
   get defaultValidationMessages(): ValidationMessages {
@@ -262,7 +262,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         if (field) {
           field.fetchAttachmentCount(value, this.record);
         } else {
-          const { batchFetchCount } = getConfig('attachment');
+          const { batchFetchCount } = this.getContextConfig('attachment');
           if (batchFetchCount && !this.attachments) {
             attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
               this.observableProps.count = count || 0;
@@ -311,7 +311,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   getUploadAxiosConfig(attachment: AttachmentFile, attachmentUUID: string): AxiosRequestConfig | undefined {
     const { originFileObj } = attachment;
     if (originFileObj) {
-      const globalConfig = getConfig('attachment');
+      const globalConfig = this.getContextConfig('attachment');
       const { action, data, headers, fileKey = globalConfig.defaultFileKey, withCredentials } = this.props;
       const newHeaders = {
         'X-Requested-With': 'XMLHttpRequest',
@@ -381,7 +381,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   getAttachmentUUID() {
-    const { getAttachmentUUID } = getConfig('attachment');
+    const { getAttachmentUUID } = this.getContextConfig('attachment');
     if (!getAttachmentUUID) {
       throw new Error('no getAttachmentUUID hook in global configure.');
     }
@@ -465,7 +465,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     return new Promise((resolve) => {
       setTimeout(mobxAction(() => {
         attachment.status = 'success';
-        const { onUploadSuccess: handleUploadSuccess } = getConfig('attachment');
+        const { onUploadSuccess: handleUploadSuccess } = this.getContextConfig('attachment');
         if (handleUploadSuccess) {
           handleUploadSuccess(response, attachment);
         }
@@ -481,7 +481,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @mobxAction
   handleError(error: AxiosError, attachment: AttachmentFile) {
-    const { onUploadError: handleUploadError } = getConfig('attachment');
+    const { onUploadError: handleUploadError } = this.getContextConfig('attachment');
     const { response } = error;
     const { onUploadError } = this.props;
     attachment.status = 'error';
@@ -519,7 +519,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @mobxAction
   doRemove(attachment: AttachmentFile): Promise<any> | undefined {
-    const { onRemove } = getConfig('attachment');
+    const { onRemove } = this.getContextConfig('attachment');
     const attachmentUUID = this.getValue();
     if (onRemove && attachmentUUID) {
       if (attachment.status === 'error') {
@@ -542,7 +542,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @autobind
   handleHistory(attachment: AttachmentFile, attachmentUUID: string) {
-    const { renderHistory } = getConfig('attachment');
+    const { renderHistory } = this.getContextConfig('attachment') as AttachmentConfig;
     if (renderHistory) {
       const { bucketName, bucketDirectory, storageCode } = this;
       open({
@@ -572,7 +572,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (field) {
       field.fetchAttachments(fetchProps, this.record);
     } else {
-      const { fetchList } = getConfig('attachment');
+      const { fetchList } = this.getContextConfig('attachment');
       if (fetchList) {
         fetchList(fetchProps).then((results) => {
           this.attachments = results.map(file => new AttachmentFile(file));
@@ -602,7 +602,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @mobxAction
   beforeUpload(attachment: AttachmentFile, attachments: AttachmentFile[]): boolean | undefined | PromiseLike<boolean | undefined> {
-    const { beforeUpload, fileSize = getConfig('attachment').defaultFileSize, accept } = this.props;
+    const { beforeUpload, fileSize = this.getContextConfig('attachment').defaultFileSize, accept } = this.props;
     if (accept && !this.isAcceptFile(attachment, accept)) {
       attachment.status = 'error';
       attachment.invalid = true;
@@ -680,7 +680,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     const uploadProps = {
       multiple,
       accept: accept ? accept.join(',') : undefined,
-      name: name || fileKey || getConfig('attachment').defaultFileKey,
+      name: name || fileKey || this.getContextConfig('attachment').defaultFileKey,
       type: 'file',
       ref,
       onChange,
@@ -719,7 +719,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (this.showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
-        showValidationMessage(e, message);
+        showValidationMessage(e, message, this.context.getTooltipTheme('validation'));
         return true;
       }
     }
@@ -765,7 +765,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     const attachmentUUID = this.getValue();
     if (attachmentUUID) {
       const attachments = this.getValidAttachments();
-      const { onOrderChange } = getConfig('attachment');
+      const { onOrderChange } = this.getContextConfig('attachment');
       if (onOrderChange && attachments) {
         const { bucketName, bucketDirectory, storageCode } = this;
         onOrderChange({
@@ -863,7 +863,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (this.readOnly) {
       if (this.count) {
         if (downloadAll) {
-          const { getDownloadAllUrl } = getConfig('attachment');
+          const { getDownloadAllUrl } = this.getContextConfig('attachment');
           if (getDownloadAllUrl) {
             const { bucketName, bucketDirectory, storageCode } = this;
             const attachmentUUID = this.getValue();
@@ -940,7 +940,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (viewMode === 'popup' && !this.count) {
       return (
         <div className={`${this.prefixCls}-empty`}>
-          {getConfig('renderEmpty')('Attachment')}
+          {this.getContextConfig('renderEmpty')('Attachment')}
         </div>
       );
     }
@@ -972,13 +972,13 @@ export default class Attachment extends FormField<AttachmentProps> {
     switch (forceHelpMode) {
       case ShowHelp.tooltip:
         return (
-          <Tooltip title={help} openClassName={`${getConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
+          <Tooltip title={help} openClassName={`${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
             <Icon type="help" style={{ fontSize: '14px', color: '#8c8c8c' }} />
           </Tooltip>
         );
       default:
         return (
-          <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>
+          <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
             {help}
           </div>
         );

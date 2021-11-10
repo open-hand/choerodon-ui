@@ -47,9 +47,15 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     multiple: true,
     clearButton: true,
     editable: true,
-    prefix: <Icon type="filter_list" />,
     dropdownMenuStyle: { minWidth: pxToRem(180) },
   };
+
+  getPrefix(): ReactNode {
+    const { prefix = <Icon type="filter_list" /> } = this.props;
+    if (prefix) {
+      return this.wrapperPrefix(prefix);
+    }
+  }
 
   @observable selectField?: Field;
 

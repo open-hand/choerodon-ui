@@ -1,8 +1,8 @@
-import React, { Component, ComponentClass, FunctionComponent, HTMLAttributes } from 'react';
-import PropTypes from 'prop-types';
+import React, { ComponentClass, FunctionComponent, HTMLAttributes, PureComponent } from 'react';
 import classNames from 'classnames';
 import { SiderProps } from './Sider';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import { LayoutContextProvider } from './LayoutContext';
 
 export interface BasicProps extends HTMLAttributes<HTMLDivElement> {
   prefixCls?: string;
@@ -17,8 +17,12 @@ export type GeneratorProps = {
 
 function generator({ displayName, suffixCls }: GeneratorProps) {
   return (BasicComponent: FunctionComponent<BasicProps> | ComponentClass<BasicProps>): any => {
-    return class Adapter extends Component<BasicProps, any> {
+    return class Adapter extends PureComponent<BasicProps, any> {
       static displayName = displayName;
+
+      static get contextType() {
+        return ConfigContext;
+      }
 
       static Header: any;
 
@@ -28,8 +32,11 @@ function generator({ displayName, suffixCls }: GeneratorProps) {
 
       static Sider: any;
 
+      context: ConfigContextValue;
+
       render() {
         const { prefixCls: customizePrefixCls } = this.props;
+        const { getPrefixCls } = this.context;
         return (
           <BasicComponent {...this.props} prefixCls={getPrefixCls(suffixCls, customizePrefixCls)} />
         );
@@ -48,15 +55,20 @@ function Basic(props: BasicProps) {
   );
 }
 
-class BasicLayout extends Component<BasicProps, any> {
-  static childContextTypes = {
-    siderHook: PropTypes.object,
-  };
+class BasicLayout extends PureComponent<BasicProps, any> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
+  static displayName = 'BasicLayout';
 
   state = { siders: [] };
 
-  getChildContext() {
+  context: ConfigContextValue;
+
+  getContextValue() {
     const { siders } = this.state;
+    const { getPrefixCls } = this.context;
     return {
       siderHook: {
         addSider: (id: string) => {
@@ -70,6 +82,7 @@ class BasicLayout extends Component<BasicProps, any> {
           });
         },
       },
+      getPrefixCls,
     };
   }
 
@@ -80,9 +93,11 @@ class BasicLayout extends Component<BasicProps, any> {
       [`${prefixCls}-has-sider`]: hasSider || siders.length > 0,
     });
     return (
-      <div className={divCls} {...others}>
-        {children}
-      </div>
+      <LayoutContextProvider {...this.getContextValue()}>
+        <div className={divCls} {...others}>
+          {children}
+        </div>
+      </LayoutContextProvider>
     );
   }
 }

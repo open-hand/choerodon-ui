@@ -44,6 +44,10 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | keyboard| tabs的快捷键盘| boolean | true |
 | customizable | 是否显示个性化设置入口按钮  | boolean | |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
+| tabDraggable | &lt;个性化&gt;是否可拖拽  | boolean | true |
+| tabTitleEditable | &lt;个性化&gt;是否可编辑标题  | boolean | true |
+| tabCountHideable | &lt;个性化&gt;是否可隐藏计数  | boolean | true |
+| defaultChangeable | &lt;个性化&gt;是否可改变默认显示  | boolean | true |
 | showMore | 页签超过容器宽度是否显示更多 | boolean | false |
 
 ### Tabs.TabPane

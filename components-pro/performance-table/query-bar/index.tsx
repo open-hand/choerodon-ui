@@ -16,7 +16,9 @@ export type TableQueryBarHook = (props: TableQueryBarHookCustomProps & TableQuer
 export default class PerformanceTableQueryBar extends Component<TableQueryBarProps> {
   static displayName = 'PerformanceTableQueryBar';
 
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   static defaultProps = {
     queryFieldsLimit: 3,

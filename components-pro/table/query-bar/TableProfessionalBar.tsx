@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import Icon from 'choerodon-ui/lib/icon';
 import TableButtons from './TableButtons';
 import DataSet from '../../data-set';
@@ -35,7 +35,9 @@ export interface TableProfessionalBarProps extends ElementProps {
 
 @observer
 export default class TableProfessionalBar extends Component<TableProfessionalBarProps> {
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   static defaultProps = {
     prefixCls: getProPrefixCls('table'),

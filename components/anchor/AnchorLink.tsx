@@ -1,8 +1,6 @@
 import React, { Component, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { C7NAnchor } from './Anchor';
-import { getPrefixCls } from '../configure';
+import AnchorContext, { AnchorContextValue } from './AnchorContext';
 
 export interface AnchorLinkProps {
   prefixCls?: string;
@@ -19,51 +17,56 @@ export default class AnchorLink extends Component<AnchorLinkProps, any> {
     href: '#',
   };
 
-  static contextTypes = {
-    c7nAnchor: PropTypes.object,
-  };
+  static get contextType() {
+    return AnchorContext;
+  }
 
-  context: {
-    c7nAnchor: C7NAnchor;
-  };
+  context: AnchorContextValue;
 
   componentDidMount() {
     const { c7nAnchor } = this.context;
-    const { href } = this.props;
-    c7nAnchor.registerLink(href);
+    if (c7nAnchor) {
+      const { href } = this.props;
+      c7nAnchor.registerLink(href);
+    }
   }
 
   componentDidUpdate({ href: prevHref }: AnchorLinkProps) {
     const { href } = this.props;
     if (prevHref !== href) {
       const { c7nAnchor } = this.context;
-      c7nAnchor.unregisterLink(prevHref);
-      c7nAnchor.registerLink(href);
+      if (c7nAnchor) {
+        c7nAnchor.unregisterLink(prevHref);
+        c7nAnchor.registerLink(href);
+      }
     }
   }
 
   componentWillUnmount() {
     const { c7nAnchor } = this.context;
     const { href } = this.props;
-    c7nAnchor.unregisterLink(href);
+    if (c7nAnchor) {
+      c7nAnchor.unregisterLink(href);
+    }
   }
 
   handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const {
-      c7nAnchor: { scrollTo, onClick },
-    } = this.context;
-    const { href, title } = this.props;
-    if (onClick) {
-      onClick(e, { title, href });
+    const { c7nAnchor } = this.context;
+    if (c7nAnchor) {
+      const { scrollTo, onClick } = c7nAnchor;
+      const { href, title } = this.props;
+      if (onClick) {
+        onClick(e, { title, href });
+      }
+      scrollTo(href);
     }
-    scrollTo(href);
   };
 
   render() {
-    const { c7nAnchor } = this.context;
+    const { c7nAnchor, getPrefixCls } = this.context;
     const { prefixCls: customizePrefixCls, href, title, children, className } = this.props;
     const prefixCls = getPrefixCls('anchor', customizePrefixCls);
-    const active = c7nAnchor.activeLink === href;
+    const active = c7nAnchor && c7nAnchor.activeLink === href;
     const wrapperClassName = classNames(className, `${prefixCls}-link`, {
       [`${prefixCls}-link-active`]: active,
     });

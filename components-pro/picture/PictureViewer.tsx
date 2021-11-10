@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState, WheelEvent } from 'react';
+import React, { FunctionComponent, useCallback, useContext, useEffect, useMemo, useRef, useState, WheelEvent } from 'react';
 import throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
@@ -34,6 +34,7 @@ function getPreviewItem(item: string | PictureRef): PictureRef {
 
 const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: modalChildrenProps }> = function PictureViewer(props) {
   const { list, defaultIndex = 0, prefixCls, modal } = props;
+  const { getProPrefixCls } = useContext(ConfigContext);
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const transformTargetRef = useRef<HTMLDivElement | null>(null);
   const [index, setIndex] = useState<number>(defaultIndex);

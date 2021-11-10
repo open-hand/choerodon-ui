@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import React, { FunctionComponent, useContext } from 'react';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { observer } from 'mobx-react-lite';
 import { $l } from '../locale-context';
 import Button from '../button/Button';
@@ -10,9 +10,10 @@ export interface CountDownProps {
   countDown: any;
 }
 
-const CountDownButton: FunctionComponent<CountDownProps> = observer(function CountDownButton(
+const CountDownButton: FunctionComponent<CountDownProps> = function CountDownButton(
   props,
 ) {
+  const { getProPrefixCls } = useContext(ConfigContext)
   const prefixCls = getProPrefixCls('secret-field');
   const { onClick, countDown } = props;
   const { count } = countDown;
@@ -27,8 +28,8 @@ const CountDownButton: FunctionComponent<CountDownProps> = observer(function Cou
       {count > 0 ? `${count}s` : $l('SecretField', 'get_verify_code')}
     </Button>
   );
-});
+};
 
 CountDownButton.displayName = 'CountDownButton';
 
-export default CountDownButton;
+export default observer(CountDownButton);

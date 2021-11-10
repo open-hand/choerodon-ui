@@ -6,7 +6,7 @@ import defaultLocale from './locale/en_US';
 import interopDefault from '../_util/interopDefault';
 import RcTimePicker from '../rc-components/time-picker';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export function generateShowHourMinuteSecond(format: string) {
   // Ref: http://momentjs.com/docs/#/parsing/string-format/
@@ -56,6 +56,10 @@ export interface TimePickerLocale {
 export default class TimePicker extends Component<TimePickerProps, any> {
   static displayName = 'TimePicker';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     align: {
       offset: [0, -2],
@@ -69,6 +73,8 @@ export default class TimePicker extends Component<TimePickerProps, any> {
     transitionName: 'slide-up',
     focusOnOpen: true,
   };
+
+  context: ConfigContextValue;
 
   private timePickerRef: any;
 
@@ -134,6 +140,7 @@ export default class TimePicker extends Component<TimePickerProps, any> {
       ...this.props,
     };
     const { value } = this.state;
+    const { getPrefixCls } = this.context;
     delete props.defaultValue;
     const prefixCls = getPrefixCls('time-picker', props.prefixCls);
     const format = this.getDefaultFormat();

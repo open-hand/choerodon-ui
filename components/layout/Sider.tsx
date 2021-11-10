@@ -1,10 +1,10 @@
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
+import React, { HTMLAttributes, PureComponent, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
-import PropTypes from 'prop-types';
 import Icon from '../icon';
-import { getPrefixCls } from '../configure';
 import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
+import LayoutContext, { LayoutContextValue } from './LayoutContext';
+import { LayoutSiderContextProvider } from './LayoutSiderContext';
 
 if (typeof window !== 'undefined') {
   // const matchMediaPolyfill = (mediaQuery: string): MediaQueryList => {
@@ -62,8 +62,12 @@ const generateId = (() => {
   };
 })();
 
-export default class Sider extends Component<SiderProps, SiderState> {
+export default class Sider extends PureComponent<SiderProps, SiderState> {
   static displayName = 'LayoutSider';
+
+  static get contextType() {
+    return LayoutContext;
+  }
 
   static __C7N_LAYOUT_SIDER: any = true;
 
@@ -76,21 +80,15 @@ export default class Sider extends Component<SiderProps, SiderState> {
     style: {},
   };
 
-  static childContextTypes = {
-    siderCollapsed: PropTypes.bool,
-    collapsedWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  };
-
-  static contextTypes = {
-    siderHook: PropTypes.object,
-  };
+  context: LayoutContextValue;
 
   private mql: MediaQueryList;
 
   private uniqueId: string;
 
-  constructor(props: SiderProps) {
-    super(props);
+  constructor(props: SiderProps, context: LayoutContextValue) {
+    super(props, context);
+    const { getPrefixCls } = context;
     this.uniqueId = generateId(getPrefixCls('sider-'));
     let matchMedia;
     if (typeof window !== 'undefined') {
@@ -111,7 +109,7 @@ export default class Sider extends Component<SiderProps, SiderState> {
     };
   }
 
-  getChildContext() {
+  getContextValue() {
     const { collapsedWidth } = this.props;
     const { collapsed } = this.state;
     return {
@@ -198,6 +196,7 @@ export default class Sider extends Component<SiderProps, SiderState> {
       ...others
     } = this.props;
     const { collapsed, below } = this.state;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('layout-sider', customizePrefixCls);
     const divProps = omit(others, ['collapsed', 'defaultCollapsed', 'onCollapse', 'breakpoint']);
     const siderWidth = collapsed ? collapsedWidth : width;
@@ -240,10 +239,12 @@ export default class Sider extends Component<SiderProps, SiderState> {
       [`${prefixCls}-zero-width`]: siderWidth === 0 || siderWidth === '0' || siderWidth === '0px',
     });
     return (
-      <div className={siderCls} {...divProps} style={divStyle}>
-        <div className={`${prefixCls}-children`}>{children}</div>
-        {collapsible || (below && zeroWidthTrigger) ? triggerDom : null}
-      </div>
+      <LayoutSiderContextProvider {...this.getContextValue()} getPrefixCls={getPrefixCls}>
+        <div className={siderCls} {...divProps} style={divStyle}>
+          <div className={`${prefixCls}-children`}>{children}</div>
+          {collapsible || (below && zeroWidthTrigger) ? triggerDom : null}
+        </div>
+      </LayoutSiderContextProvider>
     );
   }
 }

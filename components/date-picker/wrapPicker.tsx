@@ -5,7 +5,7 @@ import { generateShowHourMinuteSecond } from '../time-picker';
 import enUS from './locale/en_US';
 import TimePickerPanel from '../rc-components/time-picker/Panel';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function getColumns({ showHour, showMinute, showSecond, use12Hours }: any) {
   let column = 0;
@@ -28,18 +28,25 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
   return class PickerWrapper extends Component<any, any> {
     static displayName = 'PickerWrapper';
 
+    static get contextType() {
+      return ConfigContext;
+    }
+
     static defaultProps = {
       format: defaultFormat || 'YYYY-MM-DD',
       transitionName: 'slide-up',
       popupStyle: {},
-      onChange() {/* noop */},
-      onOk() {/* noop */},
-      onOpenChange() {/* noop */},
+      onChange() {/* noop */
+      },
+      onOk() {/* noop */
+      },
+      onOpenChange() {/* noop */
+      },
       locale: {},
-      prefixCls: getPrefixCls('calendar'),
-      inputPrefixCls: getPrefixCls('input'),
       border: true,
     };
+
+    context: ConfigContextValue;
 
     private picker: any;
 
@@ -95,8 +102,9 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
     };
 
     renderPicker = (locale: any, localeCode: string) => {
-      const props = this.props;
-      const { prefixCls, inputPrefixCls } = props;
+      const { props } = this;
+      const { getPrefixCls } = this.context;
+      const { prefixCls = getPrefixCls('calendar'), inputPrefixCls = getPrefixCls('input') } = props;
       const pickerClass = classNames(`${prefixCls}-picker`, {
         [`${prefixCls}-picker-${props.size}`]: !!props.size,
       });

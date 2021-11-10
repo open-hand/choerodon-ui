@@ -1,7 +1,7 @@
-import React, { CSSProperties, FunctionComponent } from 'react';
+import React, { CSSProperties, FunctionComponent, memo, useContext } from 'react';
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface GroupProps {
   className?: string;
@@ -12,8 +12,9 @@ export interface GroupProps {
   compact?: boolean;
 }
 
-const Group: FunctionComponent<GroupProps> = props => {
+const Group: FunctionComponent<GroupProps> = function Group(props) {
   const { prefixCls: customizePrefixCls, className = '', size, compact, style, children } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('input-group', customizePrefixCls);
   const cls = classNames(
     prefixCls,
@@ -31,4 +32,6 @@ const Group: FunctionComponent<GroupProps> = props => {
   );
 };
 
-export default Group;
+Group.displayName = 'Group';
+
+export default memo(Group);

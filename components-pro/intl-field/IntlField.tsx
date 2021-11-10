@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import TextArea, { TextAreaProps } from '../text-area/TextArea';
 import { TextField } from '../text-field/TextField';
@@ -47,9 +46,9 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   constructor(props, context) {
     super(props, context);
     const suffixCls = this.props.type !== IntlType.multipleLine ? 'input' : 'textarea';
-    this.prefixCls = getProPrefixCls(suffixCls, props.prefixCls);
+    this.prefixCls = this.getContextProPrefixCls(suffixCls, props.prefixCls);
   }
-  
+
   openModal = async () => {
     if (!this.modal) {
       const { modalProps, maxLengths, type, rows, cols, resize } = this.props;
@@ -90,6 +89,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
             rows={rows}
             cols={cols}
             resize={resize}
+            getConfig={this.getContextConfig}
           />
         ),
         onClose: this.handleIntlListClose,
@@ -117,7 +117,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     const languages = Object.keys(supports);
     const { record, name, field } = this;
     if (record && field) {
-      const tlsKey = getConfig('tlsKey');
+      const tlsKey = this.getContextConfig('tlsKey');
       return (await Promise.all(
         languages.map(language => {
           const intlField = record.dataSet.getField(`${tlsKey}.${name}.${language}`);
@@ -131,7 +131,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   async handleIntlListCancel() {
     const { name, record } = this;
     if (record) {
-      const tlsKey = getConfig('tlsKey');
+      const tlsKey = this.getContextConfig('tlsKey');
       record.set(`${tlsKey}.${name}`, this.locales);
     }
   }
@@ -156,7 +156,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   storeLocales() {
     const { name, record } = this;
     if (record) {
-      const tlsKey = getConfig('tlsKey');
+      const tlsKey = this.getContextConfig('tlsKey');
       this.locales = { ...record.get(`${tlsKey}.${name}`) };
     }
   }

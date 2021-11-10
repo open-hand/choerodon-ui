@@ -22,10 +22,9 @@ import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Record from '../data-set/Record';
 import { ColumnProps } from './Column';
 import TableContext from './TableContext';
@@ -83,6 +82,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
+  const { getTooltip, getTooltipTheme } = useContext(ConfigContext);
   const { pristine, aggregation, inlineEdit, rowHeight, tableStore, dataSet, columnEditorBorder, indentSize, checkField, selectionMode } = useContext(TableContext);
   const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
@@ -244,7 +244,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   })();
 
   const renderCommand = useCallback(() => {
-    const tableCommandProps = getConfig('tableCommandProps');
+    const tableCommandProps = tableStore.getConfig('tableCommandProps');
     const classString = classNames(`${prefixCls}-command`, tableCommandProps && tableCommandProps.className);
     if (record.editing) {
       return [
@@ -330,7 +330,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       });
       return commands;
     }
-  }, [prefixCls, record, columnCommand, aggregation, disabled, handleCommandEdit, handleCommandDelete, handleCommandSave, handleCommandCancel]);
+  }, [tableStore, prefixCls, record, columnCommand, aggregation, disabled, handleCommandEdit, handleCommandDelete, handleCommandSave, handleCommandCancel]);
   const renderEditor = useCallback(() => {
     if (isValidElement(cellEditor)) {
       /**
@@ -390,7 +390,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     }
     return style;
   }, [fieldType, key, rows, rowHeight, height, style, aggregation, hasEditor]);
-  const textAlign = useMemo(() => (align || (columnCommand ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field, record))), [columnCommand, align, column, field, record]);
+  const textAlign = useMemo(() => (align || (columnCommand ? ColumnAlign.center : tableStore.getConfig('tableColumnAlign')(column, field, record))), [columnCommand, align, column, field, record]);
   const colSpanStyle = useMemo(() => (colSpan && colSpan > 1 && (textAlign === ColumnAlign.right || textAlign === ColumnAlign.center)) ? { width: `calc(100% - ${pxToRem(30)})` } : {}, [colSpan, textAlign]);
   const innerStyle = useMemo(() => {
     if (inAggregation) {
@@ -448,7 +448,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             processRenderer,
             renderValidationResult,
             isValidationMessageHidden,
-            showValidationMessage,
+            showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation')),
             validationResults: field.getValidationErrorValues(record),
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
@@ -477,17 +477,17 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     const textNode = processRenderer(value);
-    return textNode === '' ? getConfig('tableDefaultRenderer') : textNode;
+    return textNode === '' ? tableStore.getConfig('tableDefaultRenderer') : textNode;
   };
   const result = getRenderedValue();
-  const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : getConfig('renderEmpty')('Output') : result;
+  const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : tableStore.getConfig('renderEmpty')('Output') : result;
 
   const showTooltip = useCallback((e) => {
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator', record) && field.get('multiple', record) && toMultipleValue(value, field.get('range', record)).length))) {
       const validationResults = field.getValidationErrorValues(record);
       const message = validationResults && !!validationResults.length && renderValidationResult(validationResults[0]);
       if (!isValidationMessageHidden(message)) {
-        showValidationMessage(e, message);
+        showValidationMessage(e, message, getTooltipTheme('validation'));
         return true;
       }
     }
@@ -503,7 +503,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     return false;
-  }, [renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text]);
+  }, [getTooltipTheme, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text]);
   const handleMouseEnter = useCallback((e) => {
     if (!tableStore.columnResizing && showTooltip(e)) {
       tooltipShownRef.current = true;
@@ -577,7 +577,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     if (editorBorder) {
-      if (field.get('required', record) && (empty || !getConfig('showRequiredColorsOnlyEmpty'))) {
+      if (field.get('required', record) && (empty || !tableStore.getConfig('showRequiredColorsOnlyEmpty'))) {
         innerClassName.push(`${prefixCls}-inner-required`);
       }
       highlight = field.get('highlight', record);
