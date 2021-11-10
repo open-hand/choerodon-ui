@@ -79,7 +79,7 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
       >
         <Button
           icon="attach_file"
-          funcType={FuncType.flat}
+          funcType={FuncType.link}
           color={ButtonColor.primary}
           {...buttonProps}
         >
