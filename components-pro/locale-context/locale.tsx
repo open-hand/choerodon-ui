@@ -215,6 +215,7 @@ export interface Locale {
     verify_slider_hint: string;
     verify_finish: string;
     ok_btn: string;
+    type_mismatch: string;
   };
   Lov: {
     choose: string;

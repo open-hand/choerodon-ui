@@ -33,16 +33,16 @@ Used to set barcode parameters.
 | displayValue | Whether to display text | boolean | true |
 | text | Text | string | |
 | textPosition | Text position | number | bottom |
-| width | Width | number | 2 | 
+| width | Width | number | 2 |
 | height | Height | number | 100 |
 | font | Font | string | monospace |
 | textAlign | Text arrangement | string | center |
-| textPosition | Text position |	string | center |
+| textPosition | Text position | string | center |
 | textMargin | Font spacing | number | 2 |
 | fontSize | Font size | number | 20 |
 | background | Background color（Priority is higher than bgColor）| string | #ffffff |
 | lineColor | Line color（Priority is higher thanfgColor）| string | #000000 |
-| margin | margin（Contains up, down, left, and right） | number | 10	|
+| margin | margin（Contains up, down, left, and right） | number | 10 |
 | marginTop | Top margin | number | |
 | marginRight | Right margin | number | |
 | marginBottom | Bottom margin | number | |
