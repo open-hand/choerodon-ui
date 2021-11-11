@@ -43,6 +43,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
 - 🐞 `<pro>Lov`: Fix the problem of repeated query when the `autoSelectSingle` property is turned on.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
+- 🐞 `<pro>Attachment`: Fix the problem that the `children` and `className` properties has no effect.
 - 🐞 `Tabs`: Fix the nesting style problem.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
 
