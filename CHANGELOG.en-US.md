@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
 - 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties. And fixed `UP` `DOWN` keyword not working in Range mode.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
+- 🐞 `<pro>Lov`: Fix the problem of repeated query when the `autoSelectSingle` property is turned on.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
 - 🐞 `Tabs`: Fix the nesting style problem.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
