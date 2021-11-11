@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
+- 🐞 `<pro>Attachment`: Fix the problem that the `children` property has no effect.
 - 🐞 `Tabs`: Fix the nesting style problem.
 
 ## 1.5.0-beta.0

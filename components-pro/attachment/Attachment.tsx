@@ -671,11 +671,11 @@ export default class Attachment extends FormField<AttachmentProps> {
       multiple,
       prefixCls,
       props: {
-        viewMode, accept,
+        children, viewMode, accept,
       },
     } = this;
     const buttonProps = this.getOtherProps();
-    const { children, ref, className, style, name, fileKey, onChange, ...rest } = buttonProps;
+    const { ref, className, style, name, fileKey, onChange, ...rest } = buttonProps;
     const max = this.getProp('max');
     const uploadProps = {
       multiple,
@@ -727,8 +727,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderViewButton(label?: ReactNode): ReactElement<ButtonProps> {
-    const { multiple, viewMode } = this.props;
-    const { children, ...rest } = this.getOtherProps();
+    const { children, multiple, viewMode } = this.props;
+    const rest = this.getOtherProps();
     return (
       <Button
         funcType={viewMode === 'popup' ? FuncType.flat : FuncType.link}
