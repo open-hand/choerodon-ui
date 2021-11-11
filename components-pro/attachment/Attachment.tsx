@@ -675,7 +675,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       },
     } = this;
     const buttonProps = this.getOtherProps();
-    const { ref, className, style, name, fileKey, onChange, ...rest } = buttonProps;
+    const { ref, style, name, fileKey, onChange, ...rest } = buttonProps;
     const max = this.getProp('max');
     const uploadProps = {
       multiple,
@@ -692,7 +692,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         key="upload-btn"
         icon="add"
         {...rest}
-        className={classNames(`${prefixCls}-card-button`, className)}
+        className={classNames(`${prefixCls}-card-button`, this.getClassName())}
         style={{ ...style, width, height: width }}
       >
         <div>{children || $l('Attachment', 'upload_picture')}</div>
@@ -706,6 +706,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         icon="file_upload"
         color={this.isValid ? ButtonColor.primary : ButtonColor.red}
         {...rest}
+        className={this.getClassName()}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
@@ -949,8 +950,15 @@ export default class Attachment extends FormField<AttachmentProps> {
   renderWrapperList(uploadBtn?: ReactNode) {
     const { prefixCls, props: { viewMode, listType, __inGroup } } = this;
     const isCard = listType === 'picture-card';
+    const classes = [`${prefixCls}-wrapper`];
+    if (viewMode !== 'popup') {
+      const wrapperClassName = this.getWrapperClassNames();
+      if (wrapperClassName) {
+        classes.push(wrapperClassName);
+      }
+    }
     return (
-      <div className={`${prefixCls}-wrapper`}>
+      <div className={classes.join(' ')}>
         {this.renderHeader(!isCard && uploadBtn)}
         {!__inGroup && viewMode !== 'popup' && this.renderHelp(ShowHelp.newLine)}
         {!__inGroup && this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
@@ -1007,7 +1015,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (viewMode === 'popup') {
       const label = this.hasFloatLabel && this.getLabel();
       return (
-        <div className={`${prefixCls}-popup-wrapper`}>
+        <div className={classNames(`${prefixCls}-popup-wrapper`, this.getWrapperClassNames())}>
           <Trigger
             prefixCls={prefixCls}
             popupContent={this.renderWrapper}

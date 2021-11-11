@@ -41,7 +41,7 @@ timeline: true
 - 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 属性的错误限制。
 - 🐞 `<pro>Lov`: 修复多选值回显到树形列表时数据显示问题。
 - 🐞 `<pro>Tree`: 修复只使用 check 模式下 DataSet 勾选方法失效问题。
-- 🐞 `<pro>Attachment`: 修复 children 属性不起效果的问题。
+- 🐞 `<pro>Attachment`: 修复 children, className 属性不起效果的问题。
 - 🐞 `Tabs`: 修复嵌套样式问题。
 
 ## 1.5.0-beta.0
