@@ -34,6 +34,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
 - 💄 `<pro>Output`: 优化 Form 多列情况，Output 和其他输入类型组件高度问题。
 - 🐞 `<pro>DataSet`: 修复新添字段后字段顺序不正确的问题。
+- 🐞 `<pro>DataSet`: 废弃 appendData 方法 total 参数。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
 - 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
