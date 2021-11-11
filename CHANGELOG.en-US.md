@@ -39,7 +39,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property. Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
-- 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties. Fixed `UP` `DOWN` keyword not working in Range mode.
+- 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties. And fixed `UP` `DOWN` keyword not working in Range mode.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
 - 🐞 `Tabs`: Fix the nesting style problem.
