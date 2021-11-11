@@ -75,6 +75,7 @@ class App extends React.Component {
       dataSet={this.ds}
       name="code"
       noCache
+      autoSelectSingle
       tableProps={{ 
         queryBar: 'filterBar',
         queryBarProps: {
