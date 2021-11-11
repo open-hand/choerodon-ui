@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
 - 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 属性的错误限制。修复range模式下 UP DOWN 按键不起效果。
 - 🐞 `<pro>Lov`: 修复多选值回显到树形列表时数据显示问题。
+- 🐞 `<pro>Lov`: 修复开启 autoSelectSingle 属性重复查询的问题。
 - 🐞 `<pro>Tree`: 修复只使用 check 模式下 DataSet 勾选方法失效问题。
 - 🐞 `Tabs`: 修复嵌套样式问题。
 - 🐞 `<pro>PerformanceTable`: 修复表格内容更新后勾选列消失的问题。
