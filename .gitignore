@@ -27,6 +27,8 @@ dist
 /lib
 /es
 /pro
+/dataset
+/shared
 /public
 elasticsearch-*
 config/base.yaml
@@ -39,6 +41,12 @@ components/**/*.d.ts
 components/style/core/fonts
 components-pro/**/*.js
 components-pro/**/*.jsx
+components-dataset/**/*.jsx
+components-dataset/**/*.js
+components-dataset/**/*.d.ts
+components-shared/**/*.jsx
+components-shared/**/*.js
+components-shared/**/*.d.ts
 #components-pro/**/*.d.ts
 !components/rc-components/**/*.@(jsx|js)
 components/rc-components/dialog/*.@(jsx|js)

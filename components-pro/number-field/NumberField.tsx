@@ -7,7 +7,6 @@ import isPlainObject from 'lodash/isPlainObject';
 import defaultTo from 'lodash/defaultTo';
 import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning, { KeepRunningProps } from '../_util/keepRunning';
@@ -229,7 +228,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     if (nonStrictStep !== undefined) {
       return nonStrictStep;
     }
-    const numberFieldNonStrictStep = getConfig('numberFieldNonStrictStep');
+    const numberFieldNonStrictStep = this.getContextConfig('numberFieldNonStrictStep');
     if (numberFieldNonStrictStep !== undefined) {
       return numberFieldNonStrictStep;
     }
@@ -281,7 +280,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     if ('keyboard' in this.props) {
       return this.props.keyboard!;
     }
-    return getConfig('numberFieldKeyboard') !== false;
+    return this.getContextConfig('numberFieldKeyboard') !== false;
   }
 
   @autobind

@@ -9,8 +9,8 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getConfig, getCustomizable, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import { getTooltip } from 'choerodon-ui/lib/_util/TooltipUtils';
+import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
+import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
 import Column, { ColumnDefaultProps, ColumnProps } from './Column';
@@ -463,6 +463,8 @@ async function getHeaderTexts(
 }
 
 export default class TableStore {
+  configContext: ConfigContextValue;
+
   node: Table;
 
   editors: Map<string, TableEditor> = new Map();
@@ -551,7 +553,7 @@ export default class TableStore {
   }
 
   get performanceEnabled(): boolean {
-    const performanceEnabled = getConfig('performanceEnabled');
+    const performanceEnabled = this.getConfig('performanceEnabled');
     return performanceEnabled && performanceEnabled.Table;
   }
 
@@ -561,7 +563,7 @@ export default class TableStore {
 
   get prefixCls() {
     const { suffixCls, prefixCls } = this.props;
-    return getProPrefixCls(suffixCls!, prefixCls);
+    return this.node.getContextProPrefixCls(suffixCls!, prefixCls);
   }
 
   get customizable(): boolean | undefined {
@@ -570,7 +572,7 @@ export default class TableStore {
       if ('customizable' in this.props) {
         return this.props.customizable;
       }
-      return getConfig('tableCustomizable') || getCustomizable('Table');
+      return this.getConfig('tableCustomizable') || this.node.context.getCustomizable('Table');
     }
     return false;
   }
@@ -594,7 +596,7 @@ export default class TableStore {
     if (autoHeight) {
       const defaultAutoHeight = {
         type: TableAutoHeightType.minHeight,
-        diff: getConfig('tableAutoHeightDiff') || 80,
+        diff: this.getConfig('tableAutoHeightDiff') || 80,
       };
       if (isObject(autoHeight)) {
         return {
@@ -640,7 +642,7 @@ export default class TableStore {
     if ('virtualCell' in this.props) {
       return this.props.virtualCell!;
     }
-    return getConfig('tableVirtualCell');
+    return this.getConfig('tableVirtualCell');
   }
 
   /**
@@ -659,7 +661,7 @@ export default class TableStore {
       if ('virtual' in this.props) {
         return this.props.virtual;
       }
-      return getConfig('tableVirtual');
+      return this.getConfig('tableVirtual');
     }
     return false;
   }
@@ -724,7 +726,7 @@ export default class TableStore {
     if ('alwaysShowRowBox' in this.props) {
       return this.props.alwaysShowRowBox!;
     }
-    const alwaysShowRowBox = getConfig('tableAlwaysShowRowBox');
+    const alwaysShowRowBox = this.getConfig('tableAlwaysShowRowBox');
     if (typeof alwaysShowRowBox !== 'undefined') {
       return alwaysShowRowBox;
     }
@@ -735,7 +737,7 @@ export default class TableStore {
     if ('keyboard' in this.props) {
       return this.props.keyboard!;
     }
-    const keyboard = getConfig('tableKeyboard');
+    const keyboard = this.getConfig('tableKeyboard');
     if (typeof keyboard !== 'undefined') {
       return keyboard;
     }
@@ -749,14 +751,14 @@ export default class TableStore {
     if ('columnResizable' in this.props) {
       return this.props.columnResizable!;
     }
-    return getConfig('tableColumnResizable') !== false;
+    return this.getConfig('tableColumnResizable') !== false;
   }
 
   get columnHideable(): boolean {
     if ('columnHideable' in this.props) {
       return this.props.columnHideable!;
     }
-    return getConfig('tableColumnHideable') !== false;
+    return this.getConfig('tableColumnHideable') !== false;
   }
 
   /**
@@ -766,21 +768,21 @@ export default class TableStore {
     if ('columnTitleEditable' in this.props) {
       return this.props.columnTitleEditable!;
     }
-    return getConfig('tableColumnTitleEditable') === true;
+    return this.getConfig('tableColumnTitleEditable') === true;
   }
 
   get pagination(): TablePaginationConfig | false | undefined {
     if ('pagination' in this.props) {
       return this.props.pagination;
     }
-    return getConfig('pagination');
+    return this.getConfig('pagination');
   }
 
   get dragColumnAlign(): DragColumnAlign | undefined {
     if ('dragColumnAlign' in this.props) {
       return this.props.dragColumnAlign;
     }
-    return getConfig('tableDragColumnAlign');
+    return this.getConfig('tableDragColumnAlign');
   }
 
   get columnDraggable(): boolean {
@@ -790,10 +792,10 @@ export default class TableStore {
     if ('dragColumn' in this.props) {
       return this.props.dragColumn!;
     }
-    if (getConfig('tableColumnDraggable') === true) {
+    if (this.getConfig('tableColumnDraggable') === true) {
       return true;
     }
-    return getConfig('tableDragColumn') === true;
+    return this.getConfig('tableDragColumn') === true;
   }
 
   get rowDraggable(): boolean {
@@ -806,10 +808,10 @@ export default class TableStore {
     if ('dragRow' in this.props) {
       return this.props.dragRow!;
     }
-    if (getConfig('tableRowDraggable') === true) {
+    if (this.getConfig('tableRowDraggable') === true) {
       return true;
     }
-    return getConfig('tableDragRow') === true;
+    return this.getConfig('tableDragRow') === true;
   }
 
   get size(): Size {
@@ -825,7 +827,7 @@ export default class TableStore {
     if ('rowHeight' in this.props) {
       rowHeight = this.props.rowHeight!;
     } else {
-      const tableRowHeight = getConfig('tableRowHeight');
+      const tableRowHeight = this.getConfig('tableRowHeight');
       if (typeof tableRowHeight !== 'undefined') {
         rowHeight = tableRowHeight;
       }
@@ -850,14 +852,14 @@ export default class TableStore {
   }
 
   get emptyText(): ReactNode {
-    return getConfig('renderEmpty')('Table');
+    return this.getConfig('renderEmpty')('Table');
   }
 
   get highLightRow(): boolean | string {
     if ('highLightRow' in this.props) {
       return this.props.highLightRow!;
     }
-    return getConfig('tableHighLightRow');
+    return this.getConfig('tableHighLightRow');
   }
 
   get parityRow(): boolean {
@@ -868,49 +870,49 @@ export default class TableStore {
     if ('parityRow' in this.props) {
       return this.props.parityRow!;
     }
-    return getConfig('tableParityRow') === true;
+    return this.getConfig('tableParityRow') === true;
   }
 
   get showRemovedRow(): boolean {
     if ('showRemovedRow' in this.props) {
       return this.props.showRemovedRow!;
     }
-    return getConfig('tableShowRemovedRow') === true;
+    return this.getConfig('tableShowRemovedRow') === true;
   }
 
   get autoFocus(): boolean {
     if ('autoFocus' in this.props) {
       return this.props.autoFocus!;
     }
-    return getConfig('tableAutoFocus') !== false;
+    return this.getConfig('tableAutoFocus') !== false;
   }
 
   get selectedHighLightRow(): boolean {
     if ('selectedHighLightRow' in this.props) {
       return this.props.selectedHighLightRow!;
     }
-    return getConfig('tableSelectedHighLightRow') !== false;
+    return this.getConfig('tableSelectedHighLightRow') !== false;
   }
 
   get editorNextKeyEnterDown(): boolean {
     if ('editorNextKeyEnterDown' in this.props) {
       return this.props.editorNextKeyEnterDown!;
     }
-    return getConfig('tableEditorNextKeyEnterDown') !== false;
+    return this.getConfig('tableEditorNextKeyEnterDown') !== false;
   }
 
   get border(): boolean {
     if ('border' in this.props) {
       return this.props.border!;
     }
-    return getConfig('tableBorder') !== false;
+    return this.getConfig('tableBorder') !== false;
   }
 
   get columnEditorBorder(): boolean {
     if ('columnEditorBorder' in this.props) {
       return this.props.columnEditorBorder!;
     }
-    const tableColumnEditorBorder = getConfig('tableColumnEditorBorder');
+    const tableColumnEditorBorder = this.getConfig('tableColumnEditorBorder');
     if (tableColumnEditorBorder !== undefined) {
       return tableColumnEditorBorder;
     }
@@ -918,11 +920,11 @@ export default class TableStore {
   }
 
   get queryBar(): TableQueryBarType | TableQueryBarHook | undefined {
-    return this.props.queryBar || getConfig('queryBar');
+    return this.props.queryBar || this.getConfig('queryBar');
   }
 
   get expandIcon(): ((props: expandIconProps) => ReactNode) | undefined {
-    return this.props.expandIcon || getConfig('tableExpandIcon');
+    return this.props.expandIcon || this.getConfig('tableExpandIcon');
   }
 
   // get pristine(): boolean | undefined {
@@ -976,7 +978,7 @@ export default class TableStore {
     if (useMouseBatchChoose !== undefined) {
       return useMouseBatchChoose;
     }
-    return getConfig('tableUseMouseBatchChoose');
+    return this.getConfig('tableUseMouseBatchChoose');
   }
 
   get showSelectionTips(): boolean {
@@ -984,7 +986,7 @@ export default class TableStore {
     if (showSelectionTips !== undefined) {
       return showSelectionTips;
     }
-    const tableShowSelectionTips = getConfig('tableShowSelectionTips');
+    const tableShowSelectionTips = this.getConfig('tableShowSelectionTips');
     if (tableShowSelectionTips !== undefined) {
       return tableShowSelectionTips;
     }
@@ -1349,7 +1351,7 @@ export default class TableStore {
     if (tooltip) {
       return tooltip;
     }
-    return getTooltip('table-cell');
+    return this.node.context.getTooltip('table-cell');
   }
 
   getColumnHeaders(): Promise<HeaderText[]> {
@@ -1515,7 +1517,7 @@ export default class TableStore {
 
   @computed
   get cellHighlightRenderer(): HighlightRenderer {
-    const { cellHighlightRenderer = getConfig('highlightRenderer') } = this.props;
+    const { cellHighlightRenderer = this.getConfig('highlightRenderer') } = this.props;
     return cellHighlightRenderer;
   }
 
@@ -1607,7 +1609,7 @@ export default class TableStore {
         this.customized = customized;
       }
       if (customizedCode) {
-        const tableCustomizedSave = getConfig('tableCustomizedSave') || getConfig('customizedSave');
+        const tableCustomizedSave = this.getConfig('tableCustomizedSave') || this.getConfig('customizedSave');
         tableCustomizedSave(customizedCode, this.customized, 'Table');
       }
     }
@@ -1642,7 +1644,7 @@ export default class TableStore {
   async loadCustomized() {
     const { customizedCode } = this.props;
     if (this.customizable && customizedCode) {
-      const tableCustomizedLoad = getConfig('tableCustomizedLoad') || getConfig('customizedLoad');
+      const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
       runInAction(() => {
         delete this.customizedLoaded;
         this.loading = true;
@@ -1696,6 +1698,10 @@ export default class TableStore {
         </Menu.Item>
       </Menu>
     );
+  }
+
+  getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {
+    return this.node.getContextConfig(key);
   }
 
   @autobind

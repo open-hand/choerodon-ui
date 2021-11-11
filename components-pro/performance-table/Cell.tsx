@@ -43,7 +43,9 @@ export const propTypes = {
 };
 
 class Cell extends React.PureComponent<CellProps> {
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   static propTypes = propTypes;
   static defaultProps = {

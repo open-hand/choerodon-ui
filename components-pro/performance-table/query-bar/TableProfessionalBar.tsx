@@ -4,7 +4,7 @@ import { action, observable, runInAction } from 'mobx';
 import isFunction from 'lodash/isFunction';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import Icon from 'choerodon-ui/lib/icon';
 import DataSet from '../../data-set';
 import Button from '../../button';
@@ -32,7 +32,9 @@ export interface TableProfessionalBarProps extends ElementProps {
 
 @observer
 export default class TableProfessionalBar extends Component<TableProfessionalBarProps> {
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   static defaultProps = {
     prefixCls: getProPrefixCls('performance-table'),

@@ -8,12 +8,16 @@ import UploadList from './UploadList';
 import { UploadChangeParam, UploadFile, UploadLocale, UploadProps, UploadState } from './interface';
 import { fileToObject, genPercentAdd, getFileItem, removeFileItem, T } from './utils';
 import RcUpload from '../rc-components/upload';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { UploadProps };
 
 export default class Upload extends Component<UploadProps, UploadState> {
   static displayName = 'Upload';
+
+  static get contextType() {
+    return ConfigContext;
+  }
 
   static Dragger: typeof Dragger;
 
@@ -31,6 +35,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
     supportServerRender: true,
     showFileSize: false,
   };
+
+  context: ConfigContextValue;
 
   recentUploadStatus: boolean | PromiseLike<any>;
 
@@ -282,6 +288,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
       dragUploadList,
     } = this.props;
     const { fileList, dragState } = this.state;
+
+    const { getPrefixCls } = this.context;
 
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
 

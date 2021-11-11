@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Dialog, { ModalFuncProps } from './Modal';
 import Button from '../button';
 import { getConfirmLocale } from './locale';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface SidebarState {
   open: boolean;
@@ -31,6 +31,10 @@ function isFixedWidth(width: ModalFuncProps['width']) {
 export default class Sidebar extends Component<SidebarProps, {}> {
   static displayName = 'Sidebar';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     width: '100%',
     transitionName: 'slide-right',
@@ -42,10 +46,12 @@ export default class Sidebar extends Component<SidebarProps, {}> {
     funcType: 'raised',
   };
 
+  context: ConfigContextValue;
+
   state: SidebarState;
 
-  constructor(props: any) {
-    super(props);
+  constructor(props: any, context: ConfigContextValue) {
+    super(props, context);
     this.state = {
       open: false,
     };
@@ -109,6 +115,7 @@ export default class Sidebar extends Component<SidebarProps, {}> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('modal', prefixCls);
   }
 

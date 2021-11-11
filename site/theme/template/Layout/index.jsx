@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { enquireScreen } from 'enquire-js';
 import { addLocaleData, IntlProvider } from 'react-intl';
-import { configure as UIConfigure, LocaleProvider } from 'choerodon-ui';
+import { ConfigProvider, LocaleProvider } from 'choerodon-ui';
 import { localeContext, ModalProvider } from 'choerodon-ui/pro';
 import moment from 'moment';
 import { configure } from 'mobx';
@@ -18,7 +18,7 @@ mock();
 
 configure({ enforceActions: 'always' });
 
-UIConfigure({
+const uiConfigure = {
   performanceEnabled: { Table: true },
   onPerformance(key, event) {
     if (event) {
@@ -30,7 +30,7 @@ UIConfigure({
       });
     }
   },
-});
+};
 
 if (typeof window !== 'undefined') {
   /* eslint-disable global-require */
@@ -103,14 +103,16 @@ export default class Layout extends React.Component {
     localeContext.setLocale(proComponentsLocale);
     return (
       <IntlProvider locale={locale} messages={messages}>
-        <LocaleProvider locale={componentsLocale}>
-          <div className="page-wrapper">
-            <ModalProvider location={location}>
-              <Header {...restProps} />
-              {children}
-            </ModalProvider>
-          </div>
-        </LocaleProvider>
+        <ConfigProvider {...uiConfigure}>
+          <LocaleProvider locale={componentsLocale}>
+            <div className="page-wrapper">
+              <ModalProvider location={location}>
+                <Header {...restProps} />
+                {children}
+              </ModalProvider>
+            </div>
+          </LocaleProvider>
+        </ConfigProvider>
       </IntlProvider>
     );
   }

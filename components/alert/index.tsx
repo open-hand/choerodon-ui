@@ -1,9 +1,9 @@
-import React, { Component, CSSProperties, MouseEventHandler, ReactNode } from 'react';
+import React, { CSSProperties, MouseEventHandler, PureComponent, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import Icon from '../icon';
 import Animate from '../animate';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface AlertProps {
   /**
@@ -31,8 +31,14 @@ export interface AlertProps {
   banner?: boolean;
 }
 
-export default class Alert extends Component<AlertProps, any> {
+export default class Alert extends PureComponent<AlertProps, any> {
   static displayName = 'Alert';
+
+  static get contextType() {
+    return ConfigContext;
+  }
+
+  context: ConfigContextValue;
 
   state = {
     closing: true,
@@ -80,6 +86,7 @@ export default class Alert extends Component<AlertProps, any> {
     } = props;
     let { closable, showIcon, type, iconType } = props;
     const { closing, closed } = this.state;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('alert', customizePrefixCls);
 
     // banner模式默认有 Icon

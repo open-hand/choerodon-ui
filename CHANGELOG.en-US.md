@@ -15,7 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 Split `dataset` and `shared` libraries.
+- 🌟 `ConfigProvider`: Added `ConfigProvider` component.
+- 🌟 `hooks`: Added `useConfig` hook.
+- 🌟 `<pro>hooks`: Added `useDataSet` hook.
 - 🌟 `configure`: Added `numberFieldKeyboard` property.
+- 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
 - 🌟 `<pro>NumberField`: Added the `keyboard` property to control `UP` `DOWN` keyboard events.
@@ -38,6 +43,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
 - 🐞 `Tabs`: Fix the nesting style problem.
+- 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
 
 ## 1.5.0-beta.0
 

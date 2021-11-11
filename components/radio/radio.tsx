@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shallowEqual from 'lodash/isEqual';
 import RadioGroup from './group';
 import RadioButton from './radioButton';
-import { RadioChangeEvent, RadioGroupContext, RadioProps } from './interface';
+import { RadioChangeEvent, RadioProps } from './interface';
 import RcCheckbox from '../rc-components/checkbox';
-import { getPrefixCls } from '../configure';
+import RadioContext, { RadioGroupContext } from './RadioContext';
 
 export default class Radio extends Component<RadioProps, {}> {
   static displayName = 'Radio';
@@ -19,18 +18,18 @@ export default class Radio extends Component<RadioProps, {}> {
     type: 'radio',
   };
 
-  static contextTypes = {
-    radioGroup: PropTypes.any,
-  };
+  static get contextType() {
+    return RadioContext;
+  }
 
   private rcCheckbox: any;
 
   shouldComponentUpdate(nextProps: RadioProps, nextState: {}, nextContext: RadioGroupContext) {
-    const { radioGroup } = this.context;
+    const { radioGroup, getPrefixCls } = this.context;
     return (
       !shallowEqual(this.props, nextProps) ||
       !shallowEqual(this.state, nextState) ||
-      !shallowEqual(radioGroup, nextContext.radioGroup)
+      !shallowEqual(radioGroup, nextContext.radioGroup) || getPrefixCls !== nextContext.getPrefixCls
     );
   }
 
@@ -60,8 +59,8 @@ export default class Radio extends Component<RadioProps, {}> {
   render() {
     const { props, context } = this;
     const { prefixCls: customizePrefixCls, className, children, style, ...restProps } = props;
+    const { radioGroup, getPrefixCls } = context;
     const prefixCls = getPrefixCls('radio', customizePrefixCls);
-    const { radioGroup } = context;
     const radioProps: RadioProps = { ...restProps };
     if (radioGroup) {
       radioProps.name = radioGroup.name;

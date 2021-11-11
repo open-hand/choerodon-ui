@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
-import { getConfig } from 'choerodon-ui/lib/configure';
 
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import Icon from '../icon';
@@ -64,7 +63,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   @action
   setSecretEnable() {
-    const secretFieldEnableConfig = getConfig('secretFieldEnable');
+    const secretFieldEnableConfig = this.getContextConfig('secretFieldEnable');
     if (secretFieldEnableConfig) {
       // 从配置项获取是否开启脱敏组件
       this.secretEnable = secretFieldEnableConfig();

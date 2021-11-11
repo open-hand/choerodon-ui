@@ -1,9 +1,4 @@
-import warning from 'warning';
+import { Utils } from 'choerodon-ui/dataset';
 
-const warned: { [msg: string]: boolean } = {};
-export default (valid: boolean, message: string): void => {
-  if (!valid && !warned[message]) {
-    warning(false, message);
-    warned[message] = true;
-  }
-};
+export default Utils.warning;
+

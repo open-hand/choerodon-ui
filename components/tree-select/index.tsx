@@ -11,11 +11,15 @@ import RcTreeSelect, {
   TreeNode,
 } from '../rc-components/tree-select';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { TreeData, TreeSelectProps } from './interface';
 
 export default class TreeSelect extends Component<TreeSelectProps, any> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'TreeSelect';
 
   static TreeNode = TreeNode;
@@ -31,6 +35,8 @@ export default class TreeSelect extends Component<TreeSelectProps, any> {
     choiceTransitionName: 'zoom',
     showSearch: false,
   };
+
+  context: ConfigContextValue;
 
   private rcTreeSelect: any;
 
@@ -65,6 +71,7 @@ export default class TreeSelect extends Component<TreeSelectProps, any> {
       dropdownClassName,
       ...restProps
     } = this.props;
+    const { getPrefixCls } = this.context;
 
     const prefixCls = getPrefixCls('select', customizePrefixCls);
     const cls = classNames(

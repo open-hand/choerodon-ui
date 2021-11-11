@@ -1,10 +1,10 @@
-import React, { MouseEventHandler } from 'react';
+import React, { FunctionComponent, memo, MouseEventHandler, useContext } from 'react';
 import classNames from 'classnames';
 import Button from '../button';
 import { ButtonGroupProps } from '../button/ButtonGroup';
 import Icon from '../icon';
 import Dropdown, { DropDownProps } from './dropdown';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 const ButtonGroup = Button.Group;
 
@@ -15,7 +15,7 @@ export interface DropdownButtonProps extends ButtonGroupProps, DropDownProps {
   children?: any;
 }
 
-export default function DropdownButton(props: DropdownButtonProps) {
+const DropdownButton: FunctionComponent<DropdownButtonProps> = function DropdownButton(props) {
   const {
     prefixCls: customizePrefixCls,
     type,
@@ -32,6 +32,7 @@ export default function DropdownButton(props: DropdownButtonProps) {
     getPopupContainer,
     ...restProps
   } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
 
   const prefixCls = getPrefixCls('dropdown-button', customizePrefixCls);
   const dropdownProps = {
@@ -59,11 +60,12 @@ export default function DropdownButton(props: DropdownButtonProps) {
       </Dropdown>
     </ButtonGroup>
   );
-}
+};
 
 DropdownButton.displayName = 'DropdownButton';
 
 DropdownButton.defaultProps = {
   placement: 'bottomRight',
-  type: 'default',
 };
+
+export default memo(DropdownButton);

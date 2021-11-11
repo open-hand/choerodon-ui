@@ -7,9 +7,10 @@ import defaultTo from 'lodash/defaultTo';
 import isPlainObject from 'lodash/isPlainObject';
 import { get, isArrayLike, isObservableObject } from 'mobx';
 import classNames from 'classnames';
-import moment, { isMoment } from 'moment';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { isMoment } from 'moment';
+import { Utils } from 'choerodon-ui/dataset';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
+import { TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
@@ -23,7 +24,7 @@ import Icon from '../icon';
 import { $l } from '../locale-context';
 import isReactChildren from '../_util/isReactChildren';
 import { defaultTextField, findBindFields } from '../data-set/utils';
-import * as ObjectChainValue from '../_util/ObjectChainValue';
+import ObjectChainValue from '../_util/ObjectChainValue';
 import MultiLine from '../output/MultiLine';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -31,19 +32,13 @@ import Field, { HighlightProps } from '../data-set/Field';
 import { Renderer, RenderProps } from './FormField';
 import { Tooltip } from '../core/enum';
 
-export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
-  if (isArrayLike(range)) {
-    if (isObservableObject(value)) {
-      return [get(value, range[0]), get(value, range[1])];
-    }
-    if (isObject(value)) {
-      return [value[range[0]], value[range[1]]];
-    }
-  } else if (isArrayLike(value)) {
-    return value.slice(0, 2) as [any, any];
-  }
-  return [undefined, undefined];
-}
+const { toRangeValue, getDateFormatByFieldType, getDateFormatByField } = Utils;
+
+export {
+  toRangeValue,
+  getDateFormatByFieldType,
+  getDateFormatByField,
+};
 
 export function fromRangeValue(value: any[], range?: boolean | [string, string]): any {
   if (isArrayLike(range)) {
@@ -65,36 +60,6 @@ export function toMultipleValue(value: any, range?: boolean | [string, string]) 
     return multipleValue;
   }
   return [];
-}
-
-export function getDateFormatByFieldType(type: FieldType): string {
-  const formatter = getConfig('formatter');
-  switch (type) {
-    case FieldType.date:
-      return formatter.date;
-    case FieldType.dateTime:
-      return formatter.dateTime;
-    case FieldType.week:
-      return formatter.week;
-    case FieldType.month:
-      return formatter.month;
-    case FieldType.year:
-      return formatter.year;
-    case FieldType.time:
-      return formatter.time;
-    default:
-      return formatter.date;
-  }
-}
-
-export function getDateFormatByField(field?: Field, type?: FieldType, record?: Record): string {
-  if (field) {
-    return field.get('format', record) || getDateFormatByFieldType(type || field.get('type', record));
-  }
-  if (type) {
-    return getDateFormatByFieldType(type);
-  }
-  return getConfig('formatter').jsonDate || moment.defaultFormat;
 }
 
 export function transformHighlightProps(highlight: true | ReactNode | HighlightProps, props: HighlightProps): HighlightProps {
@@ -259,12 +224,13 @@ export type MultipleRenderOption = {
   disabled?: boolean | undefined;
   readOnly?: boolean | undefined;
   validationResults?: ValidationResult[] | undefined;
+  tooltipTheme?: TooltipTheme;
   isMultipleBlockDisabled?(v: any): boolean;
   processRenderer(v: any, repeat?: number): ReactNode;
   renderValidationResult(result: ValidationResult): ReactNode;
   handleMutipleValueRemove?(e, value: any, index: number): void;
   isValidationMessageHidden(message?: ReactNode): boolean | undefined;
-  showValidationMessage(e, message?: ReactNode): void;
+  showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme): void;
   getKey?(v: any): string;
 }
 
@@ -310,6 +276,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
   const {
     range, maxTagPlaceholder, prefixCls, validationResults, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
     renderValidationResult, handleMutipleValueRemove, getKey = getValueKey, isValidationMessageHidden, showValidationMessage: selfShowValidationMessage,
+    tooltipTheme,
   } = option;
   const values = toMultipleValue(value, range);
   const valueLength = values.length;
@@ -355,7 +322,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
       );
       if (!isValidationMessageHidden(validationMessage)) {
         return cloneElement(inner, {
-          onMouseEnter: (e) => selfShowValidationMessage(e, validationMessage),
+          onMouseEnter: (e) => selfShowValidationMessage(e, validationMessage, tooltipTheme),
           onMouseLeave: () => hide(),
         });
       }
@@ -478,11 +445,11 @@ export function defaultRenderer(renderOption: RenderProps) {
     : text;
 }
 
-export function showValidationMessage(e, message?: ReactNode): void {
+export function showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme): void {
   show(e.currentTarget, {
     suffixCls: `form-tooltip ${getConfig('proPrefixCls')}-tooltip`,
     title: message,
-    theme: getTooltipTheme('validation'),
+    theme: tooltipTheme,
     placement: 'bottomLeft',
   });
 }

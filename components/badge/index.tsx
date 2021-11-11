@@ -1,38 +1,37 @@
-import * as React from 'react';
-import { useMemo, useRef } from 'react';
+import React, { CSSProperties, FunctionComponent, memo, ReactNode, useContext, useMemo, useRef } from 'react';
 import CSSMotion from 'rc-motion';
 import classNames from 'classnames';
+import defaultTo from 'lodash/defaultTo';
 import ScrollNumber from './ScrollNumber';
-import { PresetColorType, PresetStatusColorType, isPresetColor } from '../_util/colors';
-import { getPrefixCls } from '../configure';
+import { isPresetColor, PresetColorType, PresetStatusColorType } from '../_util/colors';
 import { LiteralUnion } from '../_util/type';
 import { cloneElement } from '../_util/reactNode';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export { ScrollNumberProps } from './ScrollNumber';
 
-type CompoundedComponent = React.FC<BadgeProps>
-
 export interface BadgeProps {
   /** Number to show in badge */
-  count?: React.ReactNode;
+  count?: ReactNode;
   showZero?: boolean;
   /** Max count to show */
   overflowCount?: number;
   /** Whether to show red dot without number */
   dot?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   prefixCls?: string;
   scrollNumberPrefixCls?: string;
   className?: string;
   status?: PresetStatusColorType;
   color?: LiteralUnion<PresetColorType, string>;
-  text?: React.ReactNode;
+  text?: ReactNode;
   size?: 'default' | 'small';
   offset?: [number | string, number | string];
   title?: string;
+  children?: ReactNode;
 }
 
-const Badge: CompoundedComponent = ({
+const Badge: FunctionComponent<BadgeProps> = function Badge({
   prefixCls: customizePrefixCls,
   scrollNumberPrefixCls: customizeScrollNumberPrefixCls,
   children,
@@ -49,7 +48,8 @@ const Badge: CompoundedComponent = ({
   className,
   showZero = false,
   ...restProps
-}) => {
+}) {
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('badge', customizePrefixCls);
 
   // ================================ Misc ================================
@@ -92,12 +92,12 @@ const Badge: CompoundedComponent = ({
   }
 
   // =============================== Styles ===============================
-  const mergedStyle = useMemo<React.CSSProperties>(() => {
+  const mergedStyle = useMemo<CSSProperties>(() => {
     if (!offset) {
       return { ...style };
     }
 
-    const offsetStyle: React.CSSProperties = {
+    const offsetStyle: CSSProperties = {
       marginTop: offset[0],
       marginLeft: offset[1],
     };
@@ -110,9 +110,7 @@ const Badge: CompoundedComponent = ({
 
   // =============================== Render ===============================
   // >>> Title
-  const titleNode =
-    title ??
-    (typeof livingCount === 'string' || typeof livingCount === 'number' ? livingCount : undefined);
+  const titleNode = defaultTo(title, typeof livingCount === 'string' || typeof livingCount === 'number' ? livingCount : undefined);
 
   // >>> Status Text
   const statusTextNode =
@@ -136,7 +134,7 @@ const Badge: CompoundedComponent = ({
     [`${prefixCls}-status-${color}`]: isPresetColor(color),
   });
 
-  const statusStyle: React.CSSProperties = {};
+  const statusStyle: CSSProperties = {};
   if (color && !isPresetColor(color)) {
     statusStyle.background = color;
   }
@@ -179,12 +177,12 @@ const Badge: CompoundedComponent = ({
             [`${prefixCls}-count`]: !isDot,
             [`${prefixCls}-count-sm`]: size === 'small',
             [`${prefixCls}-multiple-words`]:
-              !isDot && displayCount && displayCount.toString().length > 1,
+            !isDot && displayCount && displayCount.toString().length > 1,
             [`${prefixCls}-status-${status}`]: !!status,
             [`${prefixCls}-status-${color}`]: isPresetColor(color),
           });
 
-          let scrollNumberStyle: React.CSSProperties = { ...mergedStyle };
+          let scrollNumberStyle: CSSProperties = { ...mergedStyle };
           if (color && !isPresetColor(color)) {
             scrollNumberStyle = scrollNumberStyle || {};
             scrollNumberStyle.background = color;
@@ -209,6 +207,8 @@ const Badge: CompoundedComponent = ({
       {statusTextNode}
     </span>
   );
-}
+};
 
-export default Badge;
+Badge.displayName = 'Badge';
+
+export default memo(Badge);

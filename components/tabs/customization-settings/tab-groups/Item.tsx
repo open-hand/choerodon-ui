@@ -19,7 +19,7 @@ export interface ItemProps {
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
-  const { prefixCls } = useContext(TabsContext);
+  const { prefixCls, tabDraggable } = useContext(TabsContext);
   const selfPrefixCls = `${prefixCls}-customization-group-item`;
   const { suffix, record, index, records, provided, snapshot, defaultKey } = props;
   const sort = record.get('sort');
@@ -33,18 +33,22 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   }, [sort]);
 
   function getIcon() {
-    const iconProps = { ...provided.dragHandleProps, style: { cursor: 'move' } };
-    return (
-      <Icon className={`${selfPrefixCls}-drag-icon`} type="baseline-drag_indicator"  {...iconProps} />
-    );
+    if (tabDraggable) {
+      const iconProps = { ...provided.dragHandleProps, style: { cursor: 'move' } };
+      return (
+        <Icon className={`${selfPrefixCls}-drag-icon`} type="baseline-drag_indicator"  {...iconProps} />
+      );
+    }
   }
 
+  const divProps = tabDraggable ? {
+    ref: provided.innerRef,
+    ...provided.draggableProps,
+    className: classNames({ [`${selfPrefixCls}-dragging`]: isDragging }),
+  } : {};
+
   return (
-    <div
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      className={classNames({ [`${selfPrefixCls}-dragging`]: isDragging })}
-    >
+    <div {...divProps}>
       <div
         className={classNames(selfPrefixCls, { [`${selfPrefixCls}-hover`]: isHover })}
         onMouseEnter={handleMouseEnter}
@@ -56,7 +60,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             <span className={`${selfPrefixCls}-title-text`}>
               <ItemTitle
                 record={record}
-                provided={provided}
+                provided={tabDraggable ? provided : undefined}
               />
               {
                 defaultKey === record.get('key') && (

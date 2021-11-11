@@ -8,7 +8,7 @@ import { FIELD_DATA_PROP, FIELD_META_PROP } from './constants';
 import PureRenderMixin from '../rc-components/util/PureRenderMixin';
 import Animate from '../animate';
 import { FormItemValidateStatus } from './enum';
-import { getPrefixCls } from '../configure';
+import FormContext, { FormContextValue } from './FormContext';
 
 export interface FormItemProps {
   prefixCls?: string;
@@ -23,10 +23,6 @@ export interface FormItemProps {
   required?: boolean;
   style?: CSSProperties;
   colon?: boolean;
-}
-
-export interface FormItemContext {
-  vertical: boolean;
 }
 
 export default class FormItem extends Component<FormItemProps, any> {
@@ -55,11 +51,11 @@ export default class FormItem extends Component<FormItemProps, any> {
     colon: PropTypes.bool,
   };
 
-  static contextTypes = {
-    vertical: PropTypes.bool,
-  };
+  static get contextType() {
+    return FormContext;
+  }
 
-  context: FormItemContext;
+  context: FormContextValue;
 
   state = { helpShow: false };
 
@@ -140,6 +136,7 @@ export default class FormItem extends Component<FormItemProps, any> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('form', prefixCls);
   }
 

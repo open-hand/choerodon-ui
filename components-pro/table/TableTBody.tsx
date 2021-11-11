@@ -4,7 +4,6 @@ import { action } from 'mobx';
 import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import isFunction from 'lodash/isFunction';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext, { TableContextValue } from './TableContext';
@@ -32,7 +31,9 @@ export interface TableTBodyProps extends ElementProps {
 export default class TableTBody extends Component<TableTBodyProps> {
   static displayName = 'TableTBody';
 
-  static contextType = TableContext;
+  static get contextType() {
+    return TableContext;
+  }
 
   context: TableContextValue;
 
@@ -52,7 +53,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
     if (tableStore.performanceEnabled && tableStore.performanceOn) {
       const { timing } = tableStore;
       const { performance } = dataSet;
-      const onPerformance = getConfig('onPerformance');
+      const onPerformance = tableStore.getConfig('onPerformance');
       timing.renderEnd = Date.now();
       onPerformance('Table', {
         name: code,

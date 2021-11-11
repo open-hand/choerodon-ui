@@ -1,11 +1,21 @@
-import React, { cloneElement, CSSProperties, isValidElement, PureComponent, ReactNode } from 'react';
-import PropTypes from 'prop-types';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import React, {
+  cloneElement,
+  CSSProperties,
+  FunctionComponent,
+  isValidElement,
+  memo,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Trigger, { RenderFunction } from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
 import { Placements } from './enum';
 import builtinPlacements from './placements';
-import autobind from '../_util/autobind';
 
 const popupStyle: CSSProperties = { whiteSpace: 'nowrap' };
 
@@ -30,109 +40,50 @@ export interface DropDownProps {
   placement?: Placements;
   forceRender?: boolean;
   popupClassName?: string;
+  children?: ReactNode;
 }
 
-export interface DropdownState {
-  hidden?: boolean;
-}
-
-export default class Dropdown extends PureComponent<DropDownProps> {
-  static displayName = 'Dropdown';
-
-  static propTypes = {
-    trigger: PropTypes.arrayOf(
-      PropTypes.oneOf([Action.focus, Action.hover, Action.click, Action.contextMenu]),
-    ),
-    overlay: PropTypes.any,
-    placement: PropTypes.oneOf([
-      Placements.bottomLeft,
-      Placements.bottomCenter,
-      Placements.bottomRight,
-      Placements.topLeft,
-      Placements.topCenter,
-      Placements.topRight,
-    ]),
-    hidden: PropTypes.bool,
-    visible: PropTypes.bool,
-    onHiddenChange: PropTypes.func,
-    onHiddenBeforeChange: PropTypes.func,
-    onVisibleChange: PropTypes.func,
-    onOverlayClick: PropTypes.func,
-    suffixCls: PropTypes.string,
-    prefixCls: PropTypes.string,
-    defaultHidden: PropTypes.bool,
-    defaultVisible: PropTypes.bool,
-    popupClassName: PropTypes.string,
-  };
-
-  static defaultProps = {
-    suffixCls: 'dropdown',
-    placement: Placements.bottomLeft,
-    trigger: [Action.hover, Action.focus],
-    defaultHidden: true,
-  };
-
-  renderedContentProps?: any;
-
-  get triggerAction(): Action[] {
-    const { trigger } = this.props;
-    return trigger as Action[];
-  }
-
-  get transitionName() {
-    const { placement } = this.props;
-    let result = 'slide-up';
-    if (placement && placement.startsWith('top')) {
-      result = 'slide-down';
-    }
-    return result;
-  }
-
-  get prefixCls(): string {
-    const { suffixCls, prefixCls } = this.props;
-    return getProPrefixCls(suffixCls!, prefixCls);
-  }
-
-  state: DropdownState;
-
-  constructor(props) {
-    super(props);
+const Dropdown: FunctionComponent<DropDownProps> = function Dropdown(props) {
+  const { getProPrefixCls } = useContext(ConfigContext);
+  const {
+    onOverlayClick, hidden: propsHidden, visible: propsVisible, trigger, overlay, children, placement, popupClassName,
+    getPopupContainer, onHiddenBeforeChange, suffixCls, prefixCls: customizePrefixCls, onHiddenChange, onVisibleChange,
+  } = props;
+  const prefixCls = getProPrefixCls(suffixCls!, customizePrefixCls);
+  const [hidden, setHidden] = useState<boolean>(() => {
     if ('hidden' in props) {
-      this.state = {
-        hidden: props.hidden,
-      };
-    } else if ('visible' in props) {
-      this.state = {
-        hidden: !props.visible,
-      };
-    } else if ('defaultHidden' in props) {
-      this.state = {
-        hidden: props.defaultHidden,
-      };
-    } else {
-      this.state = {
-        hidden: !props.defaultVisible,
-      };
+      return props.hidden!;
     }
-  }
-
-  /**
-   * 调用传入的onHiddenChange方法
-   *
-   * @param {boolean} hidden
-   */
-  @autobind
-  handlePopupHiddenChange(hidden: boolean) {
-    const {
-      onHiddenChange,
-      onVisibleChange,
-      hidden: propsHidden,
-      visible: propsVisible,
-    } = this.props;
+    if ('visible' in props) {
+      return !props.visible!;
+    }
+    if ('defaultHidden' in props) {
+      return props.defaultHidden!;
+    }
+    return !props.defaultVisible;
+  });
+  const renderedContentPropsRef = useRef<{ onClick?(e) }>();
+  const getContent = useCallback((...popupProps): ReactNode => {
+    if (typeof overlay === 'function') {
+      return overlay(...popupProps);
+    }
+    return overlay;
+  }, [overlay]);
+  const handleClick = useCallback((e) => {
+    if (onOverlayClick) {
+      onOverlayClick(e);
+    }
+    const { onClick } = renderedContentPropsRef.current || {};
+    if (onClick) {
+      onClick(e);
+    }
     if (propsHidden === undefined && propsVisible === undefined) {
-      this.setState({
-        hidden,
-      });
+      setHidden(true);
+    }
+  }, [onOverlayClick, propsHidden, propsVisible]);
+  const handlePopupHiddenChange = useCallback((hidden) => {
+    if (propsHidden === undefined && propsVisible === undefined) {
+      setHidden(hidden);
     }
     if (onHiddenChange) {
       onHiddenChange(hidden);
@@ -140,79 +91,51 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     if (onVisibleChange) {
       onVisibleChange(!hidden);
     }
-  }
-
-  @autobind
-  handleClick(e) {
-    const { onOverlayClick, hidden, visible } = this.props;
-    const { onClick } = this.renderedContentProps || {};
-    if (onOverlayClick) {
-      onOverlayClick(e);
-    }
-    if (onClick) {
-      onClick(e);
-    }
-    if (hidden === undefined && visible === undefined) {
-      this.setState({
-        hidden: true,
-      });
-    }
-  }
-
-  getContent(...props) {
-    const { overlay } = this.props;
-    if (typeof overlay === 'function') {
-      return overlay(...props);
-    }
-    return overlay;
-  }
-
-  @autobind
-  renderPopupContent(...props) {
-    const content = this.getContent(...props);
+  }, [propsHidden, propsVisible, onHiddenChange, onVisibleChange]);
+  const renderPopupContent = useCallback((...popupProps) => {
+    const content = getContent(...popupProps);
     if (isValidElement<any>(content)) {
-      this.renderedContentProps = content.props;
+      renderedContentPropsRef.current = content.props;
       return cloneElement<any>(content, {
-        onClick: this.handleClick,
+        onClick: handleClick,
       });
     }
-  }
+  }, [getContent]);
 
-  componentWillReceiveProps({ hidden, visible }: DropDownProps) {
-    if (hidden !== undefined) {
-      this.setState({
-        hidden,
-      });
-    } else if (visible !== undefined) {
-      this.setState({
-        hidden: !visible,
-      });
+  useEffect(() => {
+    if (propsHidden !== undefined) {
+      setHidden(propsHidden);
+    } else if (propsVisible !== undefined) {
+      setHidden(!propsVisible);
     }
-  }
+  }, [propsHidden, propsVisible]);
 
-  render() {
-    const {
-      prefixCls,
-      state: { hidden },
-      props: { children, placement, popupClassName, getPopupContainer, onHiddenBeforeChange },
-    } = this;
+  return (
+    <Trigger
+      prefixCls={prefixCls}
+      action={trigger}
+      builtinPlacements={builtinPlacements}
+      popupPlacement={placement}
+      popupContent={renderPopupContent}
+      popupStyle={popupStyle}
+      popupClassName={popupClassName}
+      onPopupHiddenChange={handlePopupHiddenChange}
+      onPopupHiddenBeforeChange={onHiddenBeforeChange}
+      popupHidden={hidden}
+      getPopupContainer={getPopupContainer}
+    >
+      {children}
+    </Trigger>
+  );
+};
 
-    return (
-      <Trigger
-        prefixCls={prefixCls}
-        action={this.triggerAction}
-        builtinPlacements={builtinPlacements}
-        popupPlacement={placement}
-        popupContent={this.renderPopupContent}
-        popupStyle={popupStyle}
-        popupClassName={popupClassName}
-        onPopupHiddenChange={this.handlePopupHiddenChange}
-        onPopupHiddenBeforeChange={onHiddenBeforeChange}
-        popupHidden={hidden}
-        getPopupContainer={getPopupContainer}
-      >
-        {children}
-      </Trigger>
-    );
-  }
-}
+Dropdown.displayName = 'Dropdown';
+
+Dropdown.defaultProps = {
+  suffixCls: 'dropdown',
+  placement: Placements.bottomLeft,
+  trigger: [Action.hover, Action.focus],
+  defaultHidden: true,
+};
+
+export default memo(Dropdown);

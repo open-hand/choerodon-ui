@@ -1,10 +1,10 @@
 import React, { Children, Component, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shallowEqual from 'lodash/isEqual';
 import Radio from './radio';
 import { RadioChangeEvent, RadioGroupProps, RadioGroupState } from './interface';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import { RadioContextProvider } from './RadioContext';
 
 function getCheckedValue(children: ReactNode) {
   let value = null;
@@ -21,16 +21,18 @@ function getCheckedValue(children: ReactNode) {
 export default class RadioGroup extends Component<RadioGroupProps, RadioGroupState> {
   static displayName = 'RadioGroup';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     disabled: false,
   };
 
-  static childContextTypes = {
-    radioGroup: PropTypes.any,
-  };
+  context: ConfigContextValue;
 
-  constructor(props: RadioGroupProps) {
-    super(props);
+  constructor(props: RadioGroupProps, context: ConfigContextValue) {
+    super(props, context);
     let value;
     if ('value' in props) {
       value = props.value;
@@ -45,7 +47,7 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
     };
   }
 
-  getChildContext() {
+  getContextValue() {
     const { disabled, name } = this.props;
     const { value } = this.state;
     return {
@@ -96,6 +98,7 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
     const { props } = this;
     const { prefixCls: customizePrefixCls, className = '', options, size, label, disabled } = props;
     const { value } = this.state;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('radio-group', customizePrefixCls);
     const classString = classNames(
       prefixCls,
@@ -153,7 +156,9 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
           onMouseLeave={props.onMouseLeave}
           id={props.id}
         >
-          {children}
+          <RadioContextProvider {...this.getContextValue()} getPrefixCls={getPrefixCls}>
+            {children}
+          </RadioContextProvider>
         </div>
       </div>
     );

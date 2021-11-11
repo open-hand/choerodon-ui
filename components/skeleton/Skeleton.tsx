@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import Title, { SkeletonTitleProps } from './Title';
 import Grid, { SkeletonGridProps } from './Grid';
 import Paragraph, { SkeletonParagraphProps } from './Paragraph';
-import { getPrefixCls } from '../configure';
 import SkeletonButton from './Button';
 import Element from './Element';
 import SkeletonAvatar, { AvatarProps } from './Avatar';
 import SkeletonInput from './Input';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 /* This only for skeleton internal. */
 type SkeletonAvatarProps = Omit<AvatarProps, 'active'>
@@ -71,6 +71,10 @@ function getParagraphBasicProps(hasAvatar: boolean, hasTitle: boolean): Skeleton
 }
 
 class Skeleton extends React.Component<SkeletonProps, any> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static Button: typeof SkeletonButton;
 
   static Avatar: typeof SkeletonAvatar;
@@ -82,6 +86,8 @@ class Skeleton extends React.Component<SkeletonProps, any> {
     title: true,
     paragraph: true,
   };
+
+  context: ConfigContextValue;
 
   renderSkeleton = () => {
     const {
@@ -95,6 +101,7 @@ class Skeleton extends React.Component<SkeletonProps, any> {
       active,
       grid,
     } = this.props;
+    const { getPrefixCls } = this.context;
 
     const prefixCls = getPrefixCls('skeleton', customizePrefixCls);
 

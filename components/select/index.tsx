@@ -1,12 +1,4 @@
-import React, {
-  ClassicComponentClass,
-  Component,
-  CSSProperties,
-  KeyboardEvent,
-  MouseEvent,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import React, { ClassicComponentClass, Component, CSSProperties, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
@@ -14,7 +6,7 @@ import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import RcSelect, { OptGroup, Option } from '../rc-components/select';
 import { SelectMode } from './enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface AbstractSelectProps {
   prefixCls?: string;
@@ -106,6 +98,10 @@ export interface SelectLocale {
 // export { Option, OptGroup };
 
 export default class Select extends Component<SelectProps, {}> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'Select';
 
   static Option = Option as ClassicComponentClass<OptionProps>;
@@ -149,6 +145,8 @@ export default class Select extends Component<SelectProps, {}> {
     blurChange: PropTypes.bool,
   };
 
+  context: ConfigContextValue;
+
   private rcSelect: any;
 
   focus() {
@@ -175,6 +173,7 @@ export default class Select extends Component<SelectProps, {}> {
 
   renderSelect = (locale: SelectLocale) => {
     const { prefixCls: customizePrefixCls, className = '', size, mode, ...restProps } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('select', customizePrefixCls);
     const cls = classNames(
       {

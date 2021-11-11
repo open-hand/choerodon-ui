@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
 import Tree, { TreeNodeProps } from 'choerodon-ui/lib/tree';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, defaultAggregationRenderer } from './Column';
 import Record from '../data-set/Record';
@@ -33,7 +32,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
-  const tableColumnOnCell = getConfig('tableColumnOnCell');
+  const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
   const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean) => (
     <TableCellInner
       column={col}

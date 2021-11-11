@@ -1,11 +1,11 @@
-import React, { ReactNode, useState, useCallback } from 'react';
+import React, { FunctionComponent, memo, ReactNode, useCallback, useContext, useState } from 'react';
 import classNames from 'classnames';
 import DropDown, { DropDownProps } from '../dropdown';
 import { Placements } from '../dropdown/enum';
-import { getPrefixCls } from '../configure';
 import Icon from '../icon';
 import List, { ListProps } from '../list';
 import buildPlacements from './placements';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface menuListItemProps {
   href?: string;
@@ -26,11 +26,11 @@ export interface BreadcrumbItemProps {
   children?: ReactNode;
 }
 
-interface BreadcrumbItemInterface extends React.FC<BreadcrumbItemProps> {
+interface BreadcrumbItemInterface extends FunctionComponent<BreadcrumbItemProps> {
   __C7N_BREADCRUMB_ITEM?: boolean;
 }
 
-const BreadcrumbItem: BreadcrumbItemInterface = ({
+const BreadcrumbItem: BreadcrumbItemInterface = function BreadcrumbItem({
   prefixCls: customizePrefixCls,
   separator = '/',
   menuList = [],
@@ -39,7 +39,8 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
   listProps,
   dropdownProps,
   ...restProps
-}) => {
+}) {
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('breadcrumb', customizePrefixCls);
   const [active, setActive] = useState(false);
   const isMenuListOn = menuList ? menuList.length > 0 : false;
@@ -147,6 +148,8 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
   return null;
 };
 
+BreadcrumbItem.displayName = 'BreadcrumbItem';
+
 BreadcrumbItem.__C7N_BREADCRUMB_ITEM = true;
 
-export default BreadcrumbItem;
+export default memo(BreadcrumbItem);

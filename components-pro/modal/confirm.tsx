@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react';
 import noop from 'lodash/noop';
-import { getProPrefixCls, getConfig } from 'choerodon-ui/lib/configure';
 import ModalManager from '../modal-manager';
 import { ModalProps } from './Modal';
-import { open } from '../modal-container/ModalContainer';
+import { getContainer, open } from '../modal-container/ModalContainer';
 import Icon from '../icon';
 import { confirmProps, normalizeProps } from './utils';
 
-export default function confirm(props: ModalProps & confirmProps | ReactNode) {
+export default async function confirm(props: ModalProps & confirmProps | ReactNode) {
+  const container = await getContainer();
   const {
     children,
     type = 'confirm',
@@ -15,13 +15,12 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
     onCancel = noop,
     onClose = noop,
     iconType,
-    autoCenter = getConfig('modalAutoCenter'),
     border = false,
     okCancel = true,
     title,
     ...otherProps
   } = normalizeProps(props);
-  const prefixCls = getProPrefixCls('confirm');
+  const prefixCls = container.context.getProPrefixCls('confirm');
   const titleNode = title && <div className={`${prefixCls}-title`}>{title}</div>;
   const contentNode = children && <div className={`${prefixCls}-content`}>{children}</div>;
   const iconNode = iconType && (
@@ -36,7 +35,6 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
       border,
       destroyOnClose: true,
       okCancel,
-      autoCenter,
       closable: false,
       movable: false,
       style: { width: '4.16rem' },

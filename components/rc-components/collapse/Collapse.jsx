@@ -1,9 +1,9 @@
 import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { getConfig } from '../../configure';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
+import ConfigContext from '../../config-provider/ConfigContext';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -14,6 +14,10 @@ function toArray(activeKey) {
 }
 
 export default class Collapse extends Component {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static propTypes = {
     children: PropTypes.any,
     prefixCls: PropTypes.string,
@@ -42,6 +46,8 @@ export default class Collapse extends Component {
   };
 
   static Panel = CollapsePanel;
+
+  context;
 
   constructor(props) {
     super(props);
@@ -93,6 +99,7 @@ export default class Collapse extends Component {
     const activeKey = this.state.activeKey;
     const { prefixCls, accordion, destroyInactivePanel, expandIcon, expandIconPosition } = this.props;
     const newChildren = [];
+    const { getConfig } = this.context;
 
     Children.forEach(this.props.children, (child, index) => {
       if (!child) return;

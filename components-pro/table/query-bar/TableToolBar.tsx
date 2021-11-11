@@ -2,7 +2,7 @@ import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import DataSet from '../../data-set/DataSet';
 import { ElementProps } from '../../core/ViewComponent';
 import Button, { ButtonProps } from '../../button/Button';

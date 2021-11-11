@@ -556,6 +556,7 @@ export default class Trigger extends Component<TriggerProps> {
             getStyleFromAlign={getPopupStyleFromAlign}
             getClassNameFromAlign={this.getPopupClassNameFromAlign}
             getPopupContainer={getPopupContainer}
+            forceRender={forceRender}
             {...mouseProps}
           >
             {this.getPopupContent()}

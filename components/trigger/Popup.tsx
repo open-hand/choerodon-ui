@@ -1,28 +1,19 @@
 import React, { CSSProperties, Key } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import shallowEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import isElement from 'lodash/isElement';
+import { PopupManager } from 'choerodon-ui/shared';
 import ViewComponent, { ViewComponentProps } from 'choerodon-ui/pro/lib/core/ViewComponent';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import { findFocusableElements } from 'choerodon-ui/pro/lib/_util/focusable';
 import { getDocument } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
 import Align from '../align';
-import { getProPrefixCls } from '../configure';
+import { getProPrefixCls } from '../configure/utils';
 import Animate from '../animate';
 import PopupInner from './PopupInner';
-
-/**
- * 记录ID生成器
- */
-const PopupKeyGen: IterableIterator<string> = (function* (start: number) {
-  while (true) {
-    yield `popup-key-${start++}`;
-  }
-})(1);
 
 const childrenProps = { hidden: 'hidden' };
 
@@ -39,6 +30,7 @@ export interface PopupProps extends ViewComponentProps {
   getStyleFromAlign?: (target: HTMLElement, align: object) => object | undefined;
   getClassNameFromAlign?: (align: object) => string | undefined;
   getFocusableElements?: (elements: HTMLElement[]) => void;
+  forceRender?: boolean;
 }
 
 function newPopupContainer() {
@@ -51,23 +43,6 @@ function newPopupContainer() {
 @observer
 export default class Popup extends ViewComponent<PopupProps> {
   static displayName = 'Popup';
-
-  static popupContainer?: HTMLDivElement;
-
-  static propTypes = {
-    align: PropTypes.object,
-    onAlign: PropTypes.func,
-    getRootDomNode: PropTypes.func,
-    getPopupContainer: PropTypes.func,
-    transitionName: PropTypes.string,
-    onAnimateAppear: PropTypes.func,
-    onAnimateEnter: PropTypes.func,
-    onAnimateLeave: PropTypes.func,
-    onAnimateEnd: PropTypes.func,
-    getStyleFromAlign: PropTypes.func,
-    getClassNameFromAlign: PropTypes.func,
-    ...ViewComponent.propTypes,
-  };
 
   static defaultProps = {
     suffixCls: 'popup',
@@ -86,7 +61,7 @@ export default class Popup extends ViewComponent<PopupProps> {
 
   contentRendered = false;
 
-  popupKey: string = PopupKeyGen.next().value;
+  popupKey: string = PopupManager.getKey();
 
   saveRef = align => (this.align = align);
 
@@ -109,7 +84,7 @@ export default class Popup extends ViewComponent<PopupProps> {
 
   componentWillUnmount() {
     const { popupContainer } = this;
-    if (popupContainer && popupContainer !== Popup.popupContainer && popupContainer.parentNode) {
+    if (popupContainer && popupContainer !== PopupManager.container && popupContainer.parentNode) {
       popupContainer.parentNode.removeChild(popupContainer);
     }
   }
@@ -148,12 +123,13 @@ export default class Popup extends ViewComponent<PopupProps> {
       align,
       transitionName,
       getRootDomNode,
+      forceRender,
       onAnimateAppear = noop,
       onAnimateEnter = noop,
       onAnimateLeave = noop,
       onAnimateEnd = noop,
     } = this.props;
-    if (!hidden) {
+    if (!hidden || forceRender) {
       this.contentRendered = true;
     }
     const container = this.getContainer();
@@ -193,7 +169,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       return undefined;
     }
     const { getPopupContainer, getRootDomNode = noop } = this.props;
-    const globalContainer = Popup.popupContainer;
+    const globalContainer = PopupManager.container;
     if (getPopupContainer) {
       const container = this.popupContainer;
       if (container) {
@@ -211,7 +187,7 @@ export default class Popup extends ViewComponent<PopupProps> {
           this.popupContainer = globalContainer;
           return globalContainer;
         }
-        Popup.popupContainer = popupContainer;
+        PopupManager.container = popupContainer;
       }
       (mountNode && isElement(mountNode) ? mountNode : root).appendChild(popupContainer);
       this.popupContainer = popupContainer;
@@ -247,12 +223,12 @@ export default class Popup extends ViewComponent<PopupProps> {
 }
 
 export function getGlobalPopupContainer() {
-  if (Popup.popupContainer) {
-    return Popup.popupContainer;
+  if (PopupManager.container) {
+    return PopupManager.container;
   }
   const popupContainer = newPopupContainer();
   const root = getDocument(window).body;
   root.appendChild(popupContainer);
-  Popup.popupContainer = popupContainer;
+  PopupManager.container = popupContainer;
   return popupContainer;
 }

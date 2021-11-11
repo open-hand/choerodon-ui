@@ -26,7 +26,7 @@ export interface ItemSuffixProps {
 
 const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props) {
   const { record, defaultKey, onDefaultKeyChange } = props;
-  const { prefixCls } = useContext(TabsContext);
+  const { prefixCls, tabCountHideable, defaultChangeable, tabTitleEditable } = useContext(TabsContext);
   const itemKey = record.get('key');
   const showCount = record.get('showCount');
   const handleMenuClick = useCallback((arg: ClickParam) => {
@@ -53,7 +53,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props
   };
   const getTreeNodesMenus = (): ReactElement<MenuProps> | undefined => {
     const menus: ReactElement<any>[] = [];
-    if (itemKey !== defaultKey) {
+    if (defaultChangeable && itemKey !== defaultKey) {
       menus.push(
         <Item key="set_default">
           <span>{$l('Tabs', 'set_default')}</span>
@@ -62,24 +62,32 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props
           </Tooltip>
         </Item>);
     }
-    menus.push(
-      <Item key="rename">{$l('Tabs', 'rename')}</Item>,
-      <SubMenu key="show_count" title={$l('Tabs', 'show_count')}>
-        <Item key="show_count_yes">
-          <span>{$l('Tabs', 'yes')}</span>
-          {renderCheckOption(true)}
-        </Item>
-        <Item key="show_count_no">
-          <span>{$l('Tabs', 'no')}</span>
-          {renderCheckOption(false)}
-        </Item>
-      </SubMenu>,
-    );
-    return (
-      <Menu prefixCls={`${prefixCls}-dropdown-menu`} onClick={handleMenuClick} mode="vertical">
-        {menus}
-      </Menu>
-    );
+    if (tabTitleEditable) {
+      menus.push(
+        <Item key="rename">{$l('Tabs', 'rename')}</Item>,
+      );
+    }
+    if (tabCountHideable) {
+      menus.push(
+        <SubMenu key="show_count" title={$l('Tabs', 'show_count')}>
+          <Item key="show_count_yes">
+            <span>{$l('Tabs', 'yes')}</span>
+            {renderCheckOption(true)}
+          </Item>
+          <Item key="show_count_no">
+            <span>{$l('Tabs', 'no')}</span>
+            {renderCheckOption(false)}
+          </Item>
+        </SubMenu>,
+      );
+    }
+    if (menus.length) {
+      return (
+        <Menu prefixCls={`${prefixCls}-dropdown-menu`} onClick={handleMenuClick} mode="vertical">
+          {menus}
+        </Menu>
+      );
+    }
   };
   const menu = getTreeNodesMenus();
   return menu ? (

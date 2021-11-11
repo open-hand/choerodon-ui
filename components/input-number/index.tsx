@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import RcInputNumber from '../rc-components/input-number';
 import { AbstractInputProps } from '../input/Input';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface InputNumberProps extends AbstractInputProps {
   prefixCls?: string;
@@ -30,14 +30,21 @@ export interface InputNumberProps extends AbstractInputProps {
 export default class InputNumber extends Component<InputNumberProps, any> {
   static displayName = 'InputNumber';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     step: 1,
   };
+
+  context: ConfigContextValue;
 
   private inputNumberRef: any;
 
   render() {
     const { className, size, prefixCls: customizePrefixCls, ...others } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('input-number', customizePrefixCls);
     const inputNumberClass = classNames(
       {

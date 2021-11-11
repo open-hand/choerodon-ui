@@ -8,6 +8,10 @@ components-pro/performance-table/*.tsx
 components-pro/performance-table/utils/*.ts
 components-pro/performance-table/utils/*.tsx
 components-pro/rich-text/utils/*.tsx
+components-dataset/**/*.js
+components-dataset/**/*.jsx
+components-shared/**/*.js
+components-shared/**/*.jsx
 !components/*/__tests__/**/*.js
 !components/*/demo/*
 !components-pro/*/__tests__/**/*.js
@@ -21,6 +25,8 @@ typings
 es/**/*
 lib/**/*
 pro/**/*
+dataset/**/*
+shared/**/*
 node_modules
 _site
 dist

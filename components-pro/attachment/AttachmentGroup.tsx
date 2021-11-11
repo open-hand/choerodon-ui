@@ -1,13 +1,16 @@
-import React, { Children, cloneElement, FunctionComponent, isValidElement, memo, ReactElement, ReactNode, useMemo } from 'react';
+import React, { Children, cloneElement, FunctionComponent, isValidElement, ReactElement, ReactNode, useContext, useMemo, useRef } from 'react';
+import { action, observable, ObservableMap } from 'mobx';
+import { observer } from 'mobx-react-lite';
 import Trigger from 'choerodon-ui/lib/trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import BUILT_IN_PLACEMENTS from '../trigger-field/placements';
 import { ButtonColor, FuncType } from '../button/enum';
 import Button, { ButtonProps } from '../button/Button';
 import { $l } from '../locale-context';
 import isFragment from '../_util/isFragment';
-import { AttachmentProps } from './Attachment';
+import Attachment, { AttachmentProps } from './Attachment';
+import { iteratorReduce } from '../_util/iteratorUtils';
 
 export interface AttachmentGroupProps extends ButtonProps {
   viewMode: 'list' | 'popup';
@@ -16,13 +19,24 @@ export interface AttachmentGroupProps extends ButtonProps {
   rowSpan?: number;
 }
 
-function normalizeAttachments(children: ReactNode): ReactNode {
+type GetRef = (attachment: Attachment | null, index: number) => void;
+
+function getRefCallback(callback, index) {
+  return item => callback(item, index);
+}
+
+function normalizeAttachments(children: ReactNode, getRef?: GetRef, index = 0): ReactNode {
   return Children.map(children, (child) => {
     if (isFragment(child)) {
-      return normalizeAttachments(child.props.children);
+      return normalizeAttachments(child.props.children, getRef, index);
     }
     if (isValidElement<AttachmentProps>(child) && (child.type as any).__PRO_ATTACHMENT) {
-      return cloneElement<AttachmentProps>(child, { viewMode: 'list', readOnly: true, __inGroup: true });
+      const props: AttachmentProps & { ref?: GetRef } = { viewMode: 'list', readOnly: true, __inGroup: true };
+      if (getRef) {
+        props.ref = getRefCallback(getRef, index);
+        index += 1;
+      }
+      return cloneElement<AttachmentProps>(child, props);
     }
     return undefined;
   });
@@ -30,10 +44,20 @@ function normalizeAttachments(children: ReactNode): ReactNode {
 
 const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function AttachmentGroup(props) {
   const { viewMode, children, hidden, ...buttonProps } = props;
+  const { getProPrefixCls } = useContext(ConfigContext);
+  const listRef = useRef<ObservableMap<number, Attachment>>(observable.map());
   const prefixCls = getProPrefixCls('attachment');
   const attachments: ReactElement | null = useMemo(() => children ? (
     <div className={`${prefixCls}-group`}>
-      {normalizeAttachments(children)}
+      {
+        normalizeAttachments(children, viewMode === 'list' ? undefined : action((attachment, index) => {
+          if (attachment) {
+            listRef.current.set(index, attachment);
+          } else {
+            listRef.current.delete(index);
+          }
+        }))
+      }
     </div>
   ) : null, [children]);
   const renderGroup = (): ReactElement | null => {
@@ -43,6 +67,7 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
     if (viewMode === 'list') {
       return attachments;
     }
+    const count = iteratorReduce<Attachment, number>(listRef.current.values(), (sum, attachment) => sum + (attachment.count || 0), 0);
     return (
       <Trigger
         prefixCls={prefixCls}
@@ -50,14 +75,15 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
         action={[Action.hover, Action.focus]}
         builtinPlacements={BUILT_IN_PLACEMENTS}
         popupPlacement="bottomLeft"
+        forceRender
       >
         <Button
           icon="attach_file"
-          funcType={FuncType.flat}
+          funcType={FuncType.link}
           color={ButtonColor.primary}
           {...buttonProps}
         >
-          {$l('Attachment', 'view_attachment')}
+          {$l('Attachment', 'view_attachment')} {count || undefined}
         </Button>
       </Trigger>
     );
@@ -72,4 +98,4 @@ AttachmentGroup.defaultProps = {
 
 AttachmentGroup.displayName = 'AttachmentGroup';
 
-export default memo(AttachmentGroup);
+export default observer(AttachmentGroup);

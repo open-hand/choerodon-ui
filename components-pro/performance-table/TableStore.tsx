@@ -6,20 +6,21 @@ import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
-import { getConfig, getCustomizable, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
 import CustomizationSettings from './customization-settings';
 import DataSet from '../data-set';
 import { getColumnKey } from './utils';
-import { PerformanceTableCustomized, TableProps, TableQueryBarHookProps, TableRowSelection } from './Table.d';
+import { PerformanceTableCustomized, TableProps, TableQueryBarProps, TableRowSelection } from './Table.d';
 import { ColumnProps } from './Column.d';
 import Column from './Column';
 import autobind from '../_util/autobind';
 import { ModalProps } from '../modal/Modal';
 import { $l } from '../locale-context';
 import { ColumnLock, TableHeightType } from '../table/enum';
+import PerformanceTable from './Table';
 // import isFragment from '../_util/isFragment';
 
 // export function normalizeColumns(
@@ -171,7 +172,7 @@ export interface CheckboxPropsCache {
 }
 
 export default class TableStore {
-  node: any;
+  node: PerformanceTable;
 
   searchText: string;
 
@@ -203,8 +204,7 @@ export default class TableStore {
 
   @observable selectedRowKeys: string[] | number[];
 
-  @computed
-  get queryBar(): TableQueryBarHookProps {
+  get queryBar(): TableQueryBarProps | false | undefined {
     return this.node.props.queryBar;
   }
 
@@ -214,15 +214,17 @@ export default class TableStore {
   @computed
   get columnTitleEditable(): boolean {
     if ('columnTitleEditable' in this.node.props) {
-      return this.node.props.columnTitleEditable;
+      return this.node.props.columnTitleEditable!;
     }
-    return getConfig('performanceTableColumnTitleEditable') === true;
+    return this.getConfig('performanceTableColumnTitleEditable') === true;
   }
 
 
-  @computed
-  get dataSet(): DataSet {
-    return this.node.props.queryBar?.dataSet;
+  get dataSet(): DataSet | undefined {
+    const { queryBar } = this;
+    if (queryBar) {
+      return queryBar.dataSet;
+    }
   }
 
   // @computed
@@ -233,7 +235,7 @@ export default class TableStore {
   async loadCustomized() {
     const { customizedCode } = this.node.props;
     if (this.customizable && customizedCode) {
-      const tableCustomizedLoad = getConfig('tableCustomizedLoad') || getConfig('customizedLoad');
+      const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
       runInAction(() => {
         this.loading = true;
       });
@@ -268,7 +270,7 @@ export default class TableStore {
 
   @computed
   get proPrefixCls() {
-    return getProPrefixCls('table');
+    return this.node.context.getProPrefixCls('table');
   }
 
   @computed
@@ -276,7 +278,7 @@ export default class TableStore {
     if ('columnHideable' in this.node.props) {
       return this.node.props.columnHideable;
     }
-    return getConfig('performanceTableColumnHideable') !== false;
+    return this.getConfig('performanceTableColumnHideable') !== false;
   }
 
   @computed
@@ -286,7 +288,7 @@ export default class TableStore {
       if ('customizable' in this.node.props) {
         return this.node.props.customizable;
       }
-      return getConfig('performanceTableCustomizable') || getCustomizable('PerformanceTable');
+      return this.getConfig('performanceTableCustomizable') || this.node.context.getCustomizable('PerformanceTable');
     }
     return false;
   }
@@ -324,12 +326,6 @@ export default class TableStore {
   @autobind
   @action
   openCustomizationModal(modal) {
-    const {
-      node: { element, props: { height } },
-    } = this;
-    if (height === undefined) {
-      this.totalHeight = element.offsetHeight;
-    }
     const { customizedCode } = this.node.props;
     const modalProps: ModalProps = {
       drawer: true,
@@ -355,7 +351,7 @@ export default class TableStore {
   @action
   initColumns() {
     const { customized, customizable } = this;
-    const { columns } = this.node.props;
+    const { columns = [] } = this.node.props;
     const customizedColumns = customizable ? customized.columns : undefined;
     this.originalColumns = mergeDefaultProps(columns, customizedColumns);
     this.node._cacheCells = null;
@@ -388,7 +384,7 @@ export default class TableStore {
       }
       this.node.forceUpdate();
       if (customizedCode) {
-        const tableCustomizedSave = getConfig('tableCustomizedSave') || getConfig('customizedSave');
+        const tableCustomizedSave = this.getConfig('tableCustomizedSave') || this.getConfig('customizedSave');
         tableCustomizedSave(customizedCode, this.customized, 'PerformanceTable');
       }
     }
@@ -399,14 +395,18 @@ export default class TableStore {
   @computed
   get columnDraggable(): boolean {
     if ('columnDraggable' in this.node.props) {
-      return this.node.props.columnDraggable;
+      return this.node.props.columnDraggable!;
     }
-    return getConfig('performanceTableColumnDraggable') === true;
+    return this.getConfig('performanceTableColumnDraggable') === true;
   }
 
   setCheckboxPropsCache = (cache: CheckboxPropsCache) => this.checkboxPropsCache = cache;
 
-  constructor(node) {
+  getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {
+    return this.node.context.getConfig(key);
+  }
+
+  constructor(node: PerformanceTable) {
     runInAction(() => {
       this.node = node;
       this.rowZIndex = [];

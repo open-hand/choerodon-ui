@@ -1,6 +1,6 @@
-import React, { FunctionComponent, ReactNode, useCallback, useEffect, useRef } from 'react';
+import React, { FunctionComponent, memo, ReactNode, useCallback, useContext, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { hide, show } from '../tooltip/singleton';
 import Row from '../row';
 import Col from '../col';
@@ -18,7 +18,8 @@ export interface MultiLineProps {
   children?: ReactNode;
 }
 
-const MultiLine: FunctionComponent<MultiLineProps> = (props) => {
+const MultiLine: FunctionComponent<MultiLineProps> = function MultiLine(props) {
+  const { getTooltip, getTooltipTheme } = useContext(ConfigContext);
   const { prefixCls, label, validationMessage, required, validationHidden, tooltip = getTooltip('output'), labelTooltip, children } = props;
   const tooltipRef = useRef<boolean>(false);
   const handleLabelMouseEnter = useCallback((e) => {
@@ -84,4 +85,4 @@ const MultiLine: FunctionComponent<MultiLineProps> = (props) => {
 
 MultiLine.displayName = 'MultiLine';
 
-export default MultiLine;
+export default memo(MultiLine);

@@ -11,7 +11,7 @@ import interopDefault from '../_util/interopDefault';
 import MonthCalendar from '../rc-components/calendar/MonthCalendar';
 import RcDatePicker from '../rc-components/calendar/Picker';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface PickerProps {
   value?: Moment;
@@ -22,6 +22,10 @@ export default function createPicker(TheCalendar: ComponentClass): any {
   return class CalenderWrapper extends Component<any, any> {
     static displayName = 'CalenderWrapper';
 
+    static get contextType() {
+      return ConfigContext;
+    }
+
     static defaultProps = {
       allowClear: true,
       showToday: true,
@@ -31,8 +35,10 @@ export default function createPicker(TheCalendar: ComponentClass): any {
 
     private picker: any;
 
-    constructor(props: any) {
-      super(props);
+    context: ConfigContextValue;
+
+    constructor(props: any, context: ConfigContextValue) {
+      super(props, context);
       const value = props.value || props.defaultValue;
       if (value && !interopDefault(moment).isMoment(value)) {
         throw new Error(
@@ -128,6 +134,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
 
     getPrefixCls() {
       const { prefixCls } = this.props;
+      const { getPrefixCls } = this.context;
       return getPrefixCls('calendar', prefixCls);
     }
 

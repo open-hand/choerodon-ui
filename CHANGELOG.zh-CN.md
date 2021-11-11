@@ -15,7 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 拆分 dataset 和 shared 库。
+- 🌟 `ConfigProvider`: 新增 ConfigProvider 组件。
+- 🌟 `hooks`: 新增 useConfig 钩子。
+- 🌟 `<pro>hooks`: 新增 useDataSet 钩子。
 - 🌟 `configure`: 新增 numberFieldKeyboard 属性。
+- 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
 - 🌟 `<pro>NumberField`: 新增 keyboard 属性，控制UP DOWN键盘事件。
@@ -38,6 +43,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复多选值回显到树形列表时数据显示问题。
 - 🐞 `<pro>Tree`: 修复只使用 check 模式下 DataSet 勾选方法失效问题。
 - 🐞 `Tabs`: 修复嵌套样式问题。
+- 🐞 `<pro>PerformanceTable`: 修复表格内容更新后勾选列消失的问题。
 
 ## 1.5.0-beta.0
 

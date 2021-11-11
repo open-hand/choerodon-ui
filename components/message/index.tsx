@@ -4,7 +4,7 @@ import isString from 'lodash/isString';
 import Icon from '../icon';
 import Notification from '../rc-components/notification';
 import { getPlacementStyle, getPlacementTransitionName } from './util';
-import { getPrefixCls } from '../configure';
+import { getPrefixCls } from '../configure/utils';
 
 let defaultDuration = 3;
 let defaultTop = 24;

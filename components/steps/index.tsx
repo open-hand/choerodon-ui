@@ -1,8 +1,8 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { CSSProperties, FunctionComponent, useContext } from 'react';
 import PropTypes from 'prop-types';
 import RcSteps, { Step, StepGroup } from '../rc-components/steps';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface StepsProps {
   prefixCls?: string;
@@ -16,8 +16,8 @@ export interface StepsProps {
   headerRender?: () => React.ReactElement<any>;
   headerIcon?: string;
   headerText?: string;
-  type?:string;
-  onChange?:Function
+  type?: string;
+  onChange?: Function
 }
 
 export interface StepProps {
@@ -32,26 +32,33 @@ export interface StepProps {
   style?: React.CSSProperties;
 }
 
-export default class Steps extends Component<StepsProps, any> {
-  static displayName = 'Steps';
-
-  static Step = Step as React.ClassicComponentClass<StepProps>;
-
-  static StepGroup = StepGroup as React.ClassicComponentClass<StepsProps>;
-
-  static defaultProps = {
-    iconPrefix: 'icon',
-    current: 0,
-  };
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    iconPrefix: PropTypes.string,
-    current: PropTypes.number,
-  };
-
-  render() {
-    const { props } = this;
-    return <RcSteps {...props} prefixCls={getPrefixCls('steps', props.prefixCls)} />;
-  }
+export interface StepsComponent extends FunctionComponent<StepsProps> {
+  Step: React.ClassicComponentClass<StepProps>;
+  StepGroup: React.ClassicComponentClass<StepProps>;
 }
+
+const Steps = function Steps(props) {
+  const { prefixCls: customizePrefixCls } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
+  const prefixCls = getPrefixCls('steps', customizePrefixCls);
+  return <RcSteps {...props} prefixCls={prefixCls} />;
+} as StepsComponent;
+
+Steps.displayName = 'Steps';
+
+Steps.Step = Step as React.ClassicComponentClass<StepProps>;
+
+Steps.StepGroup = StepGroup as React.ClassicComponentClass<StepProps>;
+
+Steps.defaultProps = {
+  iconPrefix: 'icon',
+  current: 0,
+};
+
+Steps.propTypes = {
+  prefixCls: PropTypes.string,
+  iconPrefix: PropTypes.string,
+  current: PropTypes.number,
+};
+
+export default Steps;

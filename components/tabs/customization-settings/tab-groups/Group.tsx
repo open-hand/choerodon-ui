@@ -16,7 +16,7 @@ export interface GroupProps {
 
 const Group: FunctionComponent<GroupProps> = function Group(props) {
   const { header, records, value, nodeSuffix, defaultKey } = props;
-  const { prefixCls } = useContext(TabsContext);
+  const { prefixCls, tabDraggable } = useContext(TabsContext);
   return (
     <>
       {
@@ -27,6 +27,7 @@ const Group: FunctionComponent<GroupProps> = function Group(props) {
         )
       }
       <Droppable
+        isDropDisabled={!tabDraggable}
         droppableId={value}
         key="group"
       >

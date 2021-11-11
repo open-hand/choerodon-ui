@@ -7,7 +7,7 @@ import Header from './Header';
 import interopDefault from '../_util/interopDefault';
 import enUS from './locale/en_US';
 import FullCalendar from '../rc-components/calendar/FullCalendar';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { HeaderProps } from './Header';
 
@@ -47,6 +47,10 @@ export interface CalendarState {
 export default class Calendar extends Component<CalendarProps, CalendarState> {
   static displayName = 'Calendar';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     locale: {},
     fullscreen: true,
@@ -70,6 +74,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     onSelect: PropTypes.func,
     mode: PropTypes.string,
   };
+
+  context: ConfigContextValue;
 
   constructor(props: CalendarProps) {
     super(props);
@@ -100,6 +106,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
   getPrefixCls() {
     const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
     return getPrefixCls('fullcalendar', prefixCls);
   }
 

@@ -8,7 +8,7 @@ import LargeSelect from './LargeSelect';
 import RcPagination from '../rc-components/pagination';
 import enUS from '../rc-components/pagination/locale/en_US';
 import Button from '../button/Button';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function getSelect(size?: Size) {
   switch (size) {
@@ -60,7 +60,7 @@ export interface PaginationProps {
   pageSizeOptions?: string[];
   onShowSizeChange?: (current: number, size: number) => void;
   showQuickJumper?: boolean;
-  showTotal?: (total: number, range: [number, number]) => ReactNode;
+  showTotal?: false | ((total: number, range: [number, number]) => ReactNode);
   size?: Size;
   simple?: boolean;
   style?: CSSProperties;
@@ -79,6 +79,10 @@ export type PaginationLocale = any;
 export default class Pagination extends Component<PaginationProps, {}> {
   static displayName = 'Pagination';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     showSizeChanger: true,
     showSizeChangerLabel: true,
@@ -89,6 +93,8 @@ export default class Pagination extends Component<PaginationProps, {}> {
     itemRender,
   };
 
+  context: ConfigContextValue;
+
   renderPagination = (locale: PaginationLocale) => {
     const {
       className,
@@ -97,6 +103,7 @@ export default class Pagination extends Component<PaginationProps, {}> {
       selectPrefixCls: customizeSelectPrefixCls,
       ...restProps
     } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('pagination', customizePrefixCls);
     const selectPrefixCls = getPrefixCls('select', customizeSelectPrefixCls);
     return (

@@ -6,6 +6,7 @@ import { action, observable, runInAction } from 'mobx';
 import { PropTypes as MobxPropTypes } from 'mobx-react';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
+import { getIf } from '../data-set/utils';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import Icon from '../icon';
@@ -70,7 +71,7 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
   viewMode?: 'popup' | 'modal' | 'drawer';
 }
 
-export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<T> {
+export default abstract class TriggerField<T extends TriggerFieldProps = TriggerFieldProps> extends TextField<T> {
   static displayName = 'TriggerField';
 
   static propTypes = {
@@ -131,13 +132,12 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     suffixCls: 'trigger',
     clearButton: true,
     popupPlacement: 'bottomLeft',
-    trigger: ['focus', 'click'],
     triggerShowDelay: 150,
     triggerHiddenDelay: 50,
     viewMode: 'popup',
   };
 
-  popupTask: TaskRunner = new TaskRunner();
+  popupTask?: TaskRunner;
 
   trigger: Trigger | null;
 
@@ -248,6 +248,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     return popupContent;
   }
 
+  getDefaultAction(): Action[] {
+    return [Action.focus, Action.click];
+  }
+
   getWrappedEditor(renderedValue?: ReactNode) {
     const {
       prefixCls,
@@ -256,7 +260,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         popupStyle,
         popupPlacement,
         hidden,
-        trigger,
+        trigger = this.getDefaultAction(),
         triggerShowDelay,
         triggerHiddenDelay,
         getPopupContainer,
@@ -334,16 +338,18 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   }
 
   expand() {
-    this.popupTask.cancel();
+    const popupTask = getIf<TriggerField, TaskRunner>(this, 'popupTask', () => new TaskRunner());
+    popupTask.cancel();
     if (!this.readOnly && !this.popup) {
-      this.popupTask.delay(this.props.triggerShowDelay as number, () => {
+      popupTask.delay(this.props.triggerShowDelay as number, () => {
         this.setPopup(true);
       });
     }
   }
 
   collapse() {
-    this.popupTask.cancel();
+    const popupTask = getIf<TriggerField, TaskRunner>(this, 'popupTask', () => new TaskRunner());
+    popupTask.cancel();
     if (!this.readOnly && this.popup) {
       const { element } = this;
       // 如果当前焦点在popup中，将焦点换给输入框
@@ -353,7 +359,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         const { triggerShowDelay } = this.props;
         triggerHiddenDelay += triggerShowDelay as number;
       }
-      this.popupTask.delay(triggerHiddenDelay as number, () => {
+      popupTask.delay(triggerHiddenDelay as number, () => {
         this.setPopup(false);
       });
     }

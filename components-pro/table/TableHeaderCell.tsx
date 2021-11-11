@@ -22,8 +22,7 @@ import defaultTo from 'lodash/defaultTo';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
-import { getConfig } from 'choerodon-ui/lib/configure';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
@@ -51,6 +50,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onColumnResize = noop } = useContext(TableContext);
+  const { getTooltipTheme } = useContext(ConfigContext);
   const { columnResizable } = tableStore;
   const {
     headerClassName,
@@ -200,7 +200,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       });
       globalRef.current.tooltipShown = true;
     }
-  }, [tableStore, column, globalRef]);
+  }, [tableStore, column, globalRef, getTooltipTheme]);
 
   const handleMouseLeave = useCallback(() => {
     if (globalRef.current.tooltipShown) {
@@ -338,7 +338,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const classList: string[] = [`${prefixCls}-cell`];
   const cellStyle: CSSProperties = {
     textAlign: align ||
-      (command || (children && children.length) ? ColumnAlign.center : getConfig('tableColumnAlign')(column, field)),
+      (command || (children && children.length) ? ColumnAlign.center : tableStore.getConfig('tableColumnAlign')(column, field)),
     ...headerStyle,
   };
   if (columnLock) {

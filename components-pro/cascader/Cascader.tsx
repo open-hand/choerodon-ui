@@ -11,7 +11,6 @@ import { observer } from 'mobx-react';
 import { action, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
 import { Menus, SingleMenu } from 'choerodon-ui/lib/rc-components/cascader';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import cloneDeep from 'lodash/cloneDeep';
 import isFunction from 'lodash/isFunction';
@@ -27,7 +26,7 @@ import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
 import normalizeOptions, { expandTreeRecords } from './utils';
 import { $l } from '../locale-context';
-import * as ObjectChainValue from '../_util/ObjectChainValue';
+import ObjectChainValue from '../_util/ObjectChainValue';
 import isEmptyUtil from '../_util/isEmpty';
 import isSameLike from '../_util/isSameLike';
 import { OptionProps } from '../option/Option';
@@ -510,7 +509,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     if (pagingOptionContent !== undefined) {
       return pagingOptionContent;
     }
-    return getConfig('selectPagingOptionContent');
+    return this.getContextConfig('selectPagingOptionContent');
   }
 
   renderMultipleHolder() {
@@ -534,7 +533,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     if (notFoundContent !== undefined) {
       return notFoundContent;
     }
-    return getConfig('renderEmpty')('Select');
+    return this.getContextConfig('renderEmpty')('Select');
   }
 
   /**

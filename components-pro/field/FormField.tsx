@@ -15,8 +15,6 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
 import { Tooltip as TextTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
@@ -24,7 +22,7 @@ import Record from '../data-set/Record';
 import Field, { HighlightProps } from '../data-set/Field';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import Validity from '../validator/Validity';
-import FormContext from '../form/FormContext';
+import FormContext, { FormContextValue } from '../form/FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import Form from '../form/Form';
 import isEmpty from '../_util/isEmpty';
@@ -268,8 +266,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   processValue?: (value: any, range?: 0 | 1) => any;
 }
 
-export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSetComponent<T> {
-  static contextType = FormContext;
+export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSetComponent<T, FormContextValue> {
+  static get contextType() {
+    return FormContext;
+  }
 
   static propTypes = {
     _inTable: PropTypes.bool,
@@ -455,12 +455,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     });
   }
 
-  get labelLayout() {
+  get labelLayout(): LabelLayout | undefined {
     return this.props.labelLayout || this.context.labelLayout;
   }
 
-  get labelTooltip() {
-    return this.props.labelTooltip || this.context.labelTooltip || getTooltip('label');
+  get labelTooltip(): TextTooltip | undefined {
+    return this.props.labelTooltip || this.context.labelTooltip || this.context.getTooltip('label');
   }
 
   get hasFloatLabel(): boolean {
@@ -596,13 +596,13 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @computed
   get showValidation(): ShowValidation {
-    const { showValidation = getConfig('showValidation') } = this.observableProps;
+    const { showValidation = this.getContextConfig('showValidation') } = this.observableProps;
     return showValidation;
   }
 
   @computed
   get highlightRenderer(): HighlightRenderer {
-    const { highlightRenderer = getConfig('highlightRenderer') } = this.observableProps;
+    const { highlightRenderer = this.getContextConfig('highlightRenderer') } = this.observableProps;
     return highlightRenderer;
   }
 
@@ -626,6 +626,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   isValidationMessageHidden(message?: ReactNode): boolean {
     const { hidden, noValidate } = this.props;
     return !!(hidden || !message || this.pristine || (!this.record && noValidate));
+  }
+
+  @autobind
+  showValidationMessage(e, message?: ReactNode) {
+    showValidationMessage(e, message, this.context.getTooltipTheme('validation'));
   }
 
   isEmpty() {
@@ -748,7 +753,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         [`${prefixCls}-invalid`]: !this.isValid,
         [`${prefixCls}-float-label`]: this.hasFloatLabel,
         [`${prefixCls}-required`]: required,
-        [`${prefixCls}-required-colors`]: required && (empty || !getConfig('showRequiredColorsOnlyEmpty')),
+        [`${prefixCls}-required-colors`]: required && (empty || !this.getContextConfig('showRequiredColorsOnlyEmpty')),
       },
       this.getWrapperClassNamesExcludeOutput(prefixCls, empty),
       ...args,
@@ -765,7 +770,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       const help = this.getProp('help');
       if (help) {
         return (
-          <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>
+          <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
             {help}
           </div>
         );
@@ -782,7 +787,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       const label = this.getLabel();
       if (label) {
         const { labelTooltip, floatLabelOffsetX } = this;
-        const prefixCls = getProPrefixCls(FIELD_SUFFIX);
+        const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
         const classString = classNames(`${prefixCls}-label`, {
           [`${prefixCls}-required`]: required,
@@ -795,7 +800,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
           <div className={`${prefixCls}-label-wrapper`} style={style}>
             <div
               className={classString}
-              title={isString(label) && ![TextTooltip.always, TextTooltip.overflow].includes(labelTooltip) ? label : undefined}
+              title={isString(label) && !(labelTooltip && [TextTooltip.always, TextTooltip.overflow].includes(labelTooltip)) ? label : undefined}
               onMouseEnter={this.handleFloatLabelMouseEnter}
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
@@ -883,7 +888,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       case 'defaultValidationMessages':
         return {
           ...this.defaultValidationMessages,
-          ...getConfig('defaultValidationMessages'),
+          ...this.getContextConfig('defaultValidationMessages'),
         };
       default:
         return this.getProp(key);
@@ -931,7 +936,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (!this.hasFloatLabel && this.showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
-        showValidationMessage(e, message);
+        showValidationMessage(e, message, this.context.getTooltipTheme('validation'));
         return true;
       }
     }
@@ -959,7 +964,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @autobind
   handleFloatLabelMouseEnter(e) {
-    const { labelTooltip } = this;
+    const { labelTooltip, context: { getTooltipTheme } } = this;
     const { currentTarget } = e;
     if (labelTooltip === TextTooltip.always || (labelTooltip === TextTooltip.overflow && isOverflow(currentTarget))) {
       show(currentTarget, {
@@ -1356,7 +1361,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       renderValidationResult: this.renderValidationResult,
       handleMutipleValueRemove: this.handleMutipleValueRemove,
       isValidationMessageHidden: this.isValidationMessageHidden,
-      showValidationMessage,
+      showValidationMessage: this.showValidationMessage,
       getKey: this.getValueKey,
     });
     this.multipleValidateMessageLength = values.multipleValidateMessageLength;

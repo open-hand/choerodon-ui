@@ -1,17 +1,19 @@
-import React, { CSSProperties, FunctionComponent } from 'react';
+import React, { CSSProperties, FunctionComponent, memo, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface ButtonGroupProps {
   size?: Size;
   style?: CSSProperties;
   className?: string;
   prefixCls?: string;
+  children?: ReactNode;
 }
 
-const ButtonGroup: FunctionComponent<ButtonGroupProps> = props => {
+const ButtonGroup: FunctionComponent<ButtonGroupProps> = function ButtonGroup(props) {
   const { prefixCls: customizePrefixCls, size, className, ...others } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('btn-group', customizePrefixCls);
 
   // large => lg
@@ -40,4 +42,4 @@ const ButtonGroup: FunctionComponent<ButtonGroupProps> = props => {
 
 ButtonGroup.displayName = 'ButtonGroup';
 
-export default ButtonGroup;
+export default memo(ButtonGroup);

@@ -6,7 +6,7 @@ import Select, { LabeledValue, OptionProps } from '../select';
 import { filterByInputValue, getColumnKey } from './util';
 import Checkbox from '../checkbox/Checkbox';
 import { SelectMode } from '../select/enum';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 const { Option, OptGroup } = Select;
 const PAIR_SPLIT = ':';
@@ -58,6 +58,14 @@ function removeDoubleOr(filters: LabeledValue[]): LabeledValue[] {
 }
 
 export default class FilterSelect<T> extends Component<FilterSelectProps<T>, FilterSelectState<T>> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
+  static displayName = 'FilterSelect';
+
+  context: ConfigContextValue;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -595,6 +603,7 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
   };
 
   getRootDomNode = (): HTMLElement => {
+    const { getPrefixCls } = this.context;
     return (findDOMNode(this) as HTMLElement).querySelector(
       `.${getPrefixCls('select')}-search__field`,
     ) as HTMLElement;

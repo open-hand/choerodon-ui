@@ -2,7 +2,7 @@ import React, { Component, CSSProperties, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '../icon';
 import RcRate from '../rc-components/rate';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface RateProps {
   prefixCls?: string;
@@ -22,6 +22,10 @@ export interface RateProps {
 export default class Rate extends Component<RateProps, any> {
   static displayName = 'Rate';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static propTypes = {
     prefixCls: PropTypes.string,
     character: PropTypes.node,
@@ -30,6 +34,8 @@ export default class Rate extends Component<RateProps, any> {
   static defaultProps = {
     character: <Icon type="star" />,
   };
+
+  context: ConfigContextValue;
 
   private rcRate: any;
 
@@ -46,6 +52,7 @@ export default class Rate extends Component<RateProps, any> {
   };
 
   render() {
+    const { getPrefixCls } = this.context;
     return <RcRate ref={this.saveRate} prefixCls={getPrefixCls('rate')} {...this.props} />;
   }
 }

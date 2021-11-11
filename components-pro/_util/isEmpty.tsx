@@ -1,5 +1,3 @@
-import isNil from 'lodash/isNil';
+import { Utils } from 'choerodon-ui/dataset';
 
-export default function isEmpty(value: any, allowBlank = false): boolean {
-  return isNil(value) || (allowBlank ? false : value === '');
-}
+export default Utils.isEmpty;

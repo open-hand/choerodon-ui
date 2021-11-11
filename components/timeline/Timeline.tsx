@@ -1,15 +1,8 @@
-import React, {
-  Children,
-  cloneElement,
-  Component,
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import React, { Children, cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import TimelineItem from './TimelineItem';
 import Icon from '../icon';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface TimelineProps {
   prefixCls?: string;
@@ -23,7 +16,13 @@ export interface TimelineProps {
 export default class Timeline extends Component<TimelineProps, any> {
   static displayName = 'Timeline';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static Item = TimelineItem;
+
+  context: ConfigContextValue;
 
   render() {
     const {
@@ -34,6 +33,7 @@ export default class Timeline extends Component<TimelineProps, any> {
       className,
       ...restProps
     } = this.props;
+    const { getPrefixCls } = this.context;
     const pendingNode = typeof pending === 'boolean' ? null : pending;
     const prefixCls = getPrefixCls('timeline', customizePrefixCls);
     const classString = classNames(

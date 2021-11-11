@@ -1,6 +1,6 @@
-import React, { CSSProperties, SFC } from 'react';
+import React, { CSSProperties, FunctionComponent, useContext } from 'react';
 import classNames from 'classnames';
-import { getPrefixCls } from '../configure';
+import ConfigContext from '../config-provider/ConfigContext';
 
 export interface CardGridProps {
   prefixCls?: string;
@@ -8,8 +8,9 @@ export interface CardGridProps {
   className?: string;
 }
 
-const Grid: SFC<CardGridProps> = (props) => {
+const Grid: FunctionComponent<CardGridProps> = function Grid(props) {
   const { prefixCls: customizePrefixCls, className, ...others } = props;
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('card', customizePrefixCls);
   const classString = classNames(`${prefixCls}-grid`, className);
   return <div {...others} className={classString} />;

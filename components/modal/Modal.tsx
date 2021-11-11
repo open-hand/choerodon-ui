@@ -1,13 +1,13 @@
 import React, { Component, CSSProperties, MouseEvent, ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button';
-import { ButtonFuncType, ButtonType, ButtonProps } from '../button/Button';
+import { ButtonFuncType, ButtonProps, ButtonType } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import { getConfirmLocale } from './locale';
 import Dialog from '../rc-components/dialog';
 import addEventListener from '../_util/addEventListener';
 import Sidebar from './Sidebar';
-import { getPrefixCls, getConfig } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 let mousePosition: { x: number; y: number } | null;
 let mousePositionEventBinded: boolean;
@@ -106,6 +106,10 @@ export interface ModalLocale {
 export default class Modal extends Component<ModalProps, {}> {
   static displayName = 'Modal';
 
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static info: ModalFunc;
 
   static success: ModalFunc;
@@ -130,7 +134,6 @@ export default class Modal extends Component<ModalProps, {}> {
     visible: false,
     okType: 'primary',
     center: false,
-    keyboard: getConfig('modalKeyboard'),
   };
 
   static propTypes = {
@@ -157,6 +160,8 @@ export default class Modal extends Component<ModalProps, {}> {
     okButtonProps: PropTypes.object,
     cancelButtonProps: PropTypes.object,
   };
+
+  context: ConfigContextValue;
 
   handleCancel = (e: any) => {
     const { onCancel } = this.props;
@@ -227,7 +232,8 @@ export default class Modal extends Component<ModalProps, {}> {
   };
 
   render() {
-    const { footer, visible, prefixCls: customizePrefixCls } = this.props;
+    const { getPrefixCls, getConfig } = this.context;
+    const { footer, visible, prefixCls: customizePrefixCls, keyboard = getConfig('modalKeyboard') } = this.props;
     const prefixCls = getPrefixCls('modal', customizePrefixCls);
     const defaultFooter = (
       <LocaleReceiver componentName="Modal" defaultLocale={getConfirmLocale()}>
@@ -237,6 +243,7 @@ export default class Modal extends Component<ModalProps, {}> {
     return (
       <Dialog
         {...this.props}
+        keyboard={keyboard}
         prefixCls={prefixCls}
         footer={footer === undefined ? defaultFooter : footer}
         visible={visible}

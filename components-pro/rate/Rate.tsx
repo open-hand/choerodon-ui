@@ -3,9 +3,7 @@ import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import C7NRate, { RateProps as C7NRateProps  } from 'choerodon-ui/lib/rate';
-import { getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import C7NRate, { RateProps as C7NRateProps } from 'choerodon-ui/lib/rate';
 import { Tooltip as TextTooltip } from '../core/enum';
 import { FIELD_SUFFIX } from '../form/utils';
 import { FormField, FormFieldProps } from '../field/FormField';
@@ -22,7 +20,8 @@ export interface RateProps extends C7NRateProps, FormFieldProps {
   value?: number;
 }
 
-export class Rate<T extends RateProps> extends FormField<T> {
+@observer
+export default class Rate<T extends RateProps> extends FormField<T> {
   static displayName = 'Rate';
 
   static propTypes = {
@@ -44,7 +43,10 @@ export class Rate<T extends RateProps> extends FormField<T> {
 
   get hasFloatLabel(): boolean {
     const { labelLayout } = this;
-    return [LabelLayout.float, LabelLayout.placeholder].includes(labelLayout);
+    if (labelLayout) {
+      return [LabelLayout.float, LabelLayout.placeholder].includes(labelLayout);
+    }
+    return false;
   }
 
   @autobind
@@ -52,7 +54,7 @@ export class Rate<T extends RateProps> extends FormField<T> {
     const validationMessage = this.getValidationMessage(validationResult);
     const { labelLayout, showValidation } = this.context;
     if (validationMessage) {
-      const showIcon = !([LabelLayout.float, LabelLayout.placeholder].includes(labelLayout) || showValidation === ShowValidation.newLine);
+      const showIcon = !((labelLayout && [LabelLayout.float, LabelLayout.placeholder].includes(labelLayout)) || showValidation === ShowValidation.newLine);
       return renderValidationMessage(validationMessage, showIcon);
     }
   }
@@ -63,9 +65,10 @@ export class Rate<T extends RateProps> extends FormField<T> {
 
   @autobind
   handleHelpMouseEnter(e) {
+    const { getTooltipTheme } = this.context;
     show(e.currentTarget, {
       title: this.getProp('help'),
-      popupClassName: `${getConfig('proPrefixCls')}-tooltip-popup-help`,
+      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
     });
   }
@@ -92,7 +95,7 @@ export class Rate<T extends RateProps> extends FormField<T> {
       const label = this.getLabel();
       if (label) {
         const { labelTooltip, floatLabelOffsetX } = this;
-        const prefixCls = getProPrefixCls(FIELD_SUFFIX);
+        const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
         const classString = classNames(`${prefixCls}-label`, {
           [`${prefixCls}-required`]: required,
@@ -105,7 +108,7 @@ export class Rate<T extends RateProps> extends FormField<T> {
           <div className={`${prefixCls}-label-wrapper`} style={style}>
             <div
               className={classString}
-              title={isString(label) && ![TextTooltip.always, TextTooltip.overflow].includes(labelTooltip) ? label : undefined}
+              title={isString(label) && !(labelTooltip && [TextTooltip.always, TextTooltip.overflow].includes(labelTooltip)) ? label : undefined}
               onMouseEnter={this.handleFloatLabelMouseEnter}
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
@@ -143,22 +146,11 @@ export class Rate<T extends RateProps> extends FormField<T> {
       const help = this.getProp('help');
       if (help) {
         return (
-          <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>
+          <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
             {help}
           </div>
         );
       }
     }
   }
-}
-
-@observer
-export default class ObserverRate extends Rate<RateProps> {
-  static defaultProps = Rate.defaultProps;
-
-  // eslint-disable-next-line camelcase
-  static __PRO_RATE = true;
-
-  // eslint-disable-next-line camelcase
-  static __IS_IN_CELL_EDITOR = true;
 }

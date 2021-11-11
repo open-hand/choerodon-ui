@@ -4,7 +4,6 @@ import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import flatten from 'lodash/flatten';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import Icon from '../icon';
 import Tabs from '../tabs';
@@ -51,7 +50,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   @computed
   get categories(): { [key: string]: string[] } {
     const { icons: propsIcon } = this.props;
-    const icons = propsIcon || getConfig('icons');
+    const icons = propsIcon || this.getContextConfig('icons');
     return isArrayLike(icons) ? { default: icons } : icons;
   }
 

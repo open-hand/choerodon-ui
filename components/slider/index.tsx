@@ -1,7 +1,7 @@
 import React, { Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import Tooltip from '../tooltip';
 import RcSlider, { Handle as RcHandle, Range as RcRange } from '../rc-components/slider';
-import { getPrefixCls } from '../configure';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface SliderMarks {
   [key: number]:
@@ -47,6 +47,10 @@ export interface SliderState {
 }
 
 export default class Slider extends Component<SliderProps, SliderState> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static displayName = 'Slider';
 
   static defaultProps = {
@@ -54,6 +58,8 @@ export default class Slider extends Component<SliderProps, SliderState> {
       return value.toString();
     },
   };
+
+  context: ConfigContextValue;
 
   private rcSlider: any;
 
@@ -75,6 +81,7 @@ export default class Slider extends Component<SliderProps, SliderState> {
 
   handleWithTooltip: HandleGeneratorFn = ({ value, dragging, index, ...restProps }) => {
     const { tooltipPrefixCls: customizeTooltipPrefixCls, tipFormatter } = this.props;
+    const { getPrefixCls } = this.context;
     const tooltipPrefixCls = getPrefixCls('tooltip', customizeTooltipPrefixCls);
     const { visibles } = this.state;
     const visible = tipFormatter ? visibles[index] || dragging : false;
@@ -111,6 +118,7 @@ export default class Slider extends Component<SliderProps, SliderState> {
 
   render() {
     const { range, prefixCls: customizePrefixCls, ...restProps } = this.props;
+    const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('slider', customizePrefixCls);
     if (range) {
       return (

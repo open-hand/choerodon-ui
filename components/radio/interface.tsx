@@ -1,4 +1,4 @@
-import { ChangeEventHandler, MouseEventHandler, ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 import { Size } from '../_util/enum';
 import { AbstractCheckboxGroupProps } from '../checkbox/Group';
 import { AbstractCheckboxProps } from '../checkbox/Checkbox';
@@ -6,7 +6,7 @@ import { AbstractCheckboxProps } from '../checkbox/Checkbox';
 export interface RadioGroupProps extends AbstractCheckboxGroupProps {
   defaultValue?: any;
   value?: any;
-  onChange?: (e: RadioChangeEvent) => void;
+  onChange?: (ev: RadioChangeEvent) => void;
   size?: Size;
   onMouseEnter?: MouseEventHandler<HTMLDivElement>;
   onMouseLeave?: MouseEventHandler<HTMLDivElement>;
@@ -20,14 +20,7 @@ export interface RadioGroupState {
   value: any;
 }
 
-export interface RadioGroupContext {
-  radioGroup: {
-    onChange: ChangeEventHandler<HTMLInputElement>;
-    value: any;
-    disabled: boolean;
-    name: string;
-  };
-}
+export { RadioGroupContext } from './RadioContext';
 
 export type RadioProps = AbstractCheckboxProps<RadioChangeEvent>;
 

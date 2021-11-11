@@ -1,6 +1,3 @@
-import isSame from './isSame';
+import { Utils } from 'choerodon-ui/dataset';
 
-export default function isSameLike(newValue, oldValue) {
-  /* eslint-disable-next-line */
-  return isSame(newValue, oldValue) || newValue == oldValue;
-}
+export default Utils.isSameLike;
