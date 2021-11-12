@@ -34,6 +34,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
 - 💄 `<pro>Output`: Optimize `Form` multiple columns, `Output` and other input type component height issues.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
+- 🐞 `<pro>DataSet`: The `total` parameter of the `appendData` method is discarded.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.

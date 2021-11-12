@@ -2470,13 +2470,10 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  appendData(allData: (object | Record)[] = [], parent?: Record, total?: number): DataSet {
+  appendData(allData: (object | Record)[] = [], parent?: Record): DataSet {
     const sortedData = sortData(allData, this);
     this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: sortedData });
     appendRecords(this, this.processData(sortedData, undefined, parent), parent);
-    if (isNumber(total)) {
-      this.totalCount = total;
-    }
     this.fireEvent(DataSetEvents.append, { dataSet: this });
     return this;
   }
@@ -2675,10 +2672,9 @@ Then the query method will be auto invoke.`,
 
   private appendDataFromResponse(resp: any, parent?: Record): DataSet {
     if (resp) {
-      const { dataKey, totalKey } = this;
+      const { dataKey } = this;
       const data: object[] = generateResponseData(resp, dataKey);
-      const total: number | undefined = ObjectChainValue.get(resp, totalKey);
-      this.appendData(data, parent, total);
+      this.appendData(data, parent);
     }
     return this;
   }
