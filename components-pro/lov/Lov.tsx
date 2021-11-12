@@ -52,6 +52,8 @@ export type ViewRenderer = ({
   multiple: boolean;
 }) => ReactNode;
 
+export type NodeRenderer = (record: Record) => ReactNode;
+
 export { LovConfigItem };
 
 export interface LovConfig extends DataSetLovConfig {
@@ -84,6 +86,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   onSearchMatcherChange?: (searchMatcher?: string) => void;
   viewRenderer?: ViewRenderer;
+  nodeRenderer?: NodeRenderer;
 }
 
 @observer
@@ -104,6 +107,7 @@ export default class Lov extends Select<LovProps> {
     searchAction: PropTypes.oneOf([SearchAction.blur, SearchAction.input]),
     showCheckedStrategy: PropTypes.string,
     viewRenderer: PropTypes.func,
+    nodeRenderer: PropTypes.func,
   };
 
   static defaultProps = {
@@ -420,7 +424,7 @@ export default class Lov extends Select<LovProps> {
   private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode } = this.observableProps;
-    const { onBeforeSelect, viewRenderer } = this.props;
+    const { onBeforeSelect, viewRenderer, nodeRenderer } = this.props;
     const drawer = viewMode === 'drawer';
     if (viewMode === 'modal' || drawer) {
       const config = this.getConfig();
@@ -453,6 +457,7 @@ export default class Lov extends Select<LovProps> {
               valueField={valueField}
               textField={textField}
               viewRenderer={viewRenderer}
+              nodeRenderer={nodeRenderer}
             />
           ),
           onClose: this.handleLovViewClose,
@@ -698,6 +703,7 @@ export default class Lov extends Select<LovProps> {
       'onBeforeSelect',
       'onSearchMatcherChange',
       'viewRenderer',
+      'nodeRenderer',
     ]);
   }
 
