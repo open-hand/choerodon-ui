@@ -10,7 +10,7 @@ export { default as Cache, refreshCacheOptions } from './cache';
 
 export { default as Yallist } from './cache/Yallist';
 
-export { default as configure, getConfig } from './configure';
+export { default as configure, getConfig, overwriteDefaultConfig } from './configure';
 
 export { default } from './data-set';
 

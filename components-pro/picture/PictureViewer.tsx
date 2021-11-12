@@ -109,8 +109,8 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: modalChild
   const handleMouseDown = useCallback((e) => {
     const { current } = transformTargetRef;
     if (current) {
-      current.style.cursor = 'grabbing';
-      const { pageX, pageY } = e;
+      const { pageX, pageY, currentTarget } = e;
+      currentTarget.style.cursor = 'grabbing';
       let [currentX, currentY] = translate;
       const startX = currentX - pageX;
       const startY = currentY - pageY;
@@ -120,7 +120,7 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: modalChild
         executeTransform(current, rotate, scale, [currentX, currentY]);
       };
       const handleMouseUp = () => {
-        current.style.cursor = '';
+        currentTarget.style.cursor = '';
         setTranslate([currentX, currentY]);
         translateEvent
           .removeEventListener('mousemove', handleMouseMove)

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import { CSSProperties, ReactNode } from 'react';
-import { configure as configureDataSet } from 'choerodon-ui/dataset';
+import { overwriteDefaultConfig, configure as configureDataSet } from 'choerodon-ui/dataset';
 import { AttachmentConfig as DataSetAttachmentConfig, Config as DataSetConfig, DefaultConfig as DataSetDefaultConfig, Formatter, Status } from 'choerodon-ui/dataset/configure';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { expandIconProps, Suffixes, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
@@ -24,7 +24,7 @@ import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
 import defaults from './default';
 
-configureDataSet<Config>(defaults);
+overwriteDefaultConfig<Config>(defaults);
 
 export { Status, Formatter };
 

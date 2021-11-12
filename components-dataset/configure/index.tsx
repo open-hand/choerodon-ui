@@ -3,7 +3,7 @@ import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, Method } f
 import { Moment } from 'moment';
 import isObject from 'lodash/isObject';
 import { LovConfig } from '../interface';
-import { RecordStatus, ExportMode } from '../data-set/enum';
+import { ExportMode, RecordStatus } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
 import { TransportHookProps, TransportProps } from '../data-set/Transport';
 import DataSet from '../data-set/DataSet';
@@ -144,11 +144,35 @@ const defaultConfig = {
 
 export type DefaultConfig = typeof defaultConfig;
 
-const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
+const defaultGlobalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
   Config[ConfigKeys]>(defaultConfig);
 
+const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
+  Config[ConfigKeys]>();
+
 export function getConfig<C extends Config, T extends keyof C, D extends DefaultConfig>(key: T): T extends keyof D ? D[T] : C[T] {
-  return (globalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
+  const custom = (globalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
+  if (custom === undefined) {
+    return (defaultGlobalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
+  }
+  return custom;
+}
+
+export function overwriteDefaultConfig<T extends Config>(config: T, mergeProps: (keyof T)[] | null = ['transport', 'feedback', 'formatter', 'attachment']) {
+  runInAction(() => {
+    Object.keys(config).forEach((key) => {
+      const configKey = key as keyof T;
+      const value = config[configKey];
+      if (mergeProps && mergeProps.includes(configKey) && isObject(value)) {
+        (defaultGlobalConfig as ObservableMap<keyof T, T[keyof T]>).set(configKey, {
+          ...toJS<any>((defaultGlobalConfig as ObservableMap<keyof T, T[keyof T]>).get(configKey)),
+          ...value,
+        });
+      } else {
+        (defaultGlobalConfig as ObservableMap<keyof T, T[keyof T]>).set(configKey, config[configKey]);
+      }
+    });
+  });
 }
 
 export default function configure<T extends Config>(config: T, mergeProps: (keyof T)[] | null = ['transport', 'feedback', 'formatter', 'attachment']) {
