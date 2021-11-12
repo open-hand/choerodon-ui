@@ -1,4 +1,5 @@
 import React, { CSSProperties, ReactNode } from 'react';
+import PropTypes from 'prop-types';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import { action, computed, observable } from 'mobx';
@@ -6,7 +7,7 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import autobind from '../_util/autobind';
 import { TimeUnit, ViewMode } from './enum';
-import DaysView, { alwaysValidDate } from './DaysView';
+import DaysView, { alwaysValidDate, DateViewProps } from './DaysView';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import { stopEvent } from '../_util/EventManager';
@@ -17,9 +18,26 @@ const stepMapping = {
   [TimeUnit.second]: 'second',
 };
 
+export interface TimesViewProps extends DateViewProps {
+  /**
+   * 是否是dateTime是使用，内部使用
+   */
+  datetimeSide?: boolean;
+}
+
 @observer
-export default class TimesView extends DaysView {
+export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
   static displayName = 'TimesView';
+
+  static propTypes = {
+    datetimeSide: PropTypes.bool,
+    ...DaysView.propTypes,
+  };
+
+  static defaultProps = {
+    datetimeSide: false,
+    ...DaysView.defaultProps,
+  };
 
   static type = FieldType.time;
 
@@ -276,6 +294,7 @@ export default class TimesView extends DaysView {
         [`${prefixCls}-now-disabled`]: disabledNow,
       }),
       onClick: !disabledNow ? this.choose.bind(this, moment()) : noop,
+      hidden: this.props.datetimeSide,
     };
 
     return (
@@ -370,7 +389,7 @@ export default class TimesView extends DaysView {
         onMouseEnter={this.changeUnit.bind(this, unit)}
         style={this.barStyle}
       >
-        <ul style={{ top: `${(top + 4.5) * 100}%` }}>{items}</ul>
+        <ul style={{ top: `${(top + 3.5) * 100}%` }}>{items}</ul>
         <div className={`${prefixCls}-time-focus`} />
       </div>
     );

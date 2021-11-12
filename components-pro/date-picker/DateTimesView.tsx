@@ -3,15 +3,15 @@ import moment, { Moment } from 'moment';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import { DatePickerKeyboardEvent } from './DatePicker';
-import DaysView from './DaysView';
-import TimesView from './TimesView';
+import DaysView, { DateViewProps } from './DaysView';
+import TimesView, { TimesViewProps } from './TimesView';
 import autobind from '../_util/autobind';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import { getDateFormatByFieldType } from '../field/utils';
 
-export default class DateTimesView extends DaysView implements DatePickerKeyboardEvent {
+export default class DateTimesView<T extends DateViewProps> extends DaysView<T> implements DatePickerKeyboardEvent {
   static displayName = 'DateTimesView';
 
   static type = FieldType.dateTime;
@@ -54,7 +54,7 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
   renderFooter(): ReactNode {
     const {
       prefixCls,
-      props: { date, disabledNow },
+      props: { disabledNow },
     } = this;
     const footerProps = {
       className: classNames(`${prefixCls}-footer-now-btn`,{
@@ -67,9 +67,36 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
         <a {...footerProps}>
           {$l('DatePicker', 'now')}
         </a>
-        <a className={`${prefixCls}-footer-view-select`} onClick={this.handleTimeSelect}>
-          {date.format(getDateFormatByFieldType(TimesView.type))}
-        </a>
+      </div>
+    );
+  }
+
+  getTimeProps = () => {
+    const timeProps = {
+      ...this.props,
+      mode: ViewMode.time,
+      datetimeSide: true,
+      format: getDateFormatByFieldType(TimesView.type),
+    } as TimesViewProps;
+    return timeProps;
+  }
+
+  render() {
+    const {
+      prefixCls,
+      props: { className, extraFooterPlacement },
+    } = this;
+    const classString = classNames(`${prefixCls}-view`, className, this.getViewClassName());
+    return (
+      <div className={`${this.getViewClassName()}-wrapper`}>
+        <div className={classString}>
+          {this.renderHeader()}
+          {this.renderBody()}
+          {extraFooterPlacement === 'top' && this.customFooter}
+          {this.renderFooter()}
+          {extraFooterPlacement === 'bottom' && this.customFooter}
+        </div>
+        <TimesView {...this.getTimeProps()} />
       </div>
     );
   }

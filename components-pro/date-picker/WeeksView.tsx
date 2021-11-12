@@ -3,13 +3,13 @@ import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import { DatePickerKeyboardEvent } from './DatePicker';
-import DaysView from './DaysView';
+import DaysView, { DateViewProps } from './DaysView';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import { stopEvent } from '../_util/EventManager';
 
-export default class WeeksView extends DaysView implements DatePickerKeyboardEvent {
+export default class WeeksView<T extends DateViewProps> extends DaysView<T> implements DatePickerKeyboardEvent {
   static displayName = 'WeeksView';
 
   static type = FieldType.week;

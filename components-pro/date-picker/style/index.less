@@ -4,10 +4,11 @@
 
 @date-picker-prefix: ~'@{c7n-pro-prefix}-calendar';
 @date-picker-width: 2.8rem;
+@datetime-picker-width: 4.3rem;
 @date-picker-horizontal-padding: 0.12rem;
 @date-picker-border-base: @border-width-base @border-style-base @input-border-color;
 @date-time-list-width: (@date-picker-width - @date-picker-horizontal-padding * 2 + 0.02rem) / 3;
-@date-time-list-item-height: 0.24rem;
+@date-time-list-item-height: 0.29rem;
 
 .@{date-picker-prefix} {
   &-picker {
@@ -37,6 +38,19 @@
       .@{iconfont-css-prefix} {
         display: block;
       }
+    }
+
+    &-popup-datetime {
+      width: @datetime-picker-width;
+    }
+  }
+
+  &-datetime-wrapper {
+    display: flex;
+    align-items: center;
+
+    .@{date-picker-prefix}-time {
+      width: 40%;
     }
   }
 
@@ -270,7 +284,7 @@
   }
 
   &-time-panel {
-    height: 2.26rem;
+    height: 2.10rem;
 
     &-inner {
       position: relative;
@@ -314,7 +328,7 @@
   &-time-focus,
   &-time-focus-active {
     position: absolute;
-    top: 450%;
+    top: 350%;
     border: @border-width-base @border-style-base @input-border-color;
   }
 
