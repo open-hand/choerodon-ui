@@ -14,6 +14,7 @@ import C7NTree, {
 import { CheckInfo } from 'choerodon-ui/lib/rc-components/tree/Tree';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
+import Record from '../data-set/Record';
 import { getKey, getTreeNodes, NodeRenderer, TreeNodeRenderer } from './util';
 import { BooleanValue, DataSetEvents, DataSetSelection } from '../data-set/enum';
 import Spin from '../spin';
@@ -56,6 +57,7 @@ export interface TreeProps extends C7NTreeProps {
    */
   treeNodeRenderer?: TreeNodeRenderer;
   async?: boolean;
+  filter?: (record: Record, index: number, array: Record[]) => boolean;
 }
 
 export function defaultRenderer({ text }) {
@@ -119,6 +121,7 @@ export default class Tree extends Component<TreeProps> {
     filterTreeNode: PropTypes.func,
     motion: PropTypes.object,
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    filter: PropTypes.func,
   };
 
   static TreeNode = TreeNode;
@@ -484,7 +487,7 @@ export default class Tree extends Component<TreeProps> {
   }
 
   render() {
-    const { dataSet, renderer = defaultRenderer, titleField, treeNodeRenderer, onTreeNode, loadData, async, selectable, ...otherProps } = this.props;
+    const { dataSet, renderer = defaultRenderer, titleField, treeNodeRenderer, onTreeNode, loadData, async, selectable, filter: optionsFilter, ...otherProps } = this.props;
     if (dataSet) {
       const props: TreeProps = {};
       props.treeData = getTreeNodes(
@@ -494,6 +497,7 @@ export default class Tree extends Component<TreeProps> {
         onTreeNode || treeNodeRenderer || defaultNodeCover,
         async || !!loadData,
         titleField,
+        optionsFilter,
       ) || [];
       props.onExpand = this.handleExpand;
       props.onCheck = this.handleCheck;
