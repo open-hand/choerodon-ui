@@ -2,12 +2,12 @@ import React, { ReactNode } from 'react';
 import { Moment } from 'moment';
 import classNames from 'classnames';
 import Icon from '../icon';
-import DaysView, { alwaysValidDate } from './DaysView';
+import DaysView, { alwaysValidDate, DateViewProps } from './DaysView';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { stopEvent } from '../_util/EventManager';
 
-export default class MonthsView extends DaysView {
+export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
   static displayName = 'MonthsView';
 
   static type = FieldType.month;

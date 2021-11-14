@@ -34,6 +34,8 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
 - 💄 `<pro>Table`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
 - 💄 `<pro>Output`: Optimize `Form` multiple columns, `Output` and other input type component height issues.
+- 💄 `<pro>DatePicker`: Optimized `mode` to `dateTime` style.
+- 💄 `Message`: Optimized `loading` type message icon.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
 - 🐞 `<pro>DataSet`: The `total` parameter of the `appendData` method is discarded.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.

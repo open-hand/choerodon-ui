@@ -3,11 +3,11 @@ import { Moment } from 'moment';
 import classNames from 'classnames';
 import autobind from '../_util/autobind';
 import Icon from '../icon';
-import DaysView, { alwaysValidDate } from './DaysView';
+import DaysView, { alwaysValidDate, DateViewProps } from './DaysView';
 import { ViewMode } from './enum';
 import { stopEvent } from '../_util/EventManager';
 
-export default class DecadeYearsView extends DaysView {
+export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T> {
   static displayName = 'DecadeYearView';
 
   getViewClassName(): string {

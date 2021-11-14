@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import autobind from '../_util/autobind';
 import Icon from '../icon';
 import { ViewMode } from './enum';
-import DaysView, { alwaysValidDate } from './DaysView';
+import DaysView, { alwaysValidDate, DateViewProps } from './DaysView';
 import { FieldType } from '../data-set/enum';
 import { stopEvent } from '../_util/EventManager';
 
-export default class YearsView extends DaysView {
+export default class YearsView<T extends DateViewProps> extends DaysView<T> {
   static displayName = 'YearsView';
 
   static type = FieldType.year;

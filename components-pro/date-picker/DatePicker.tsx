@@ -284,6 +284,14 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return mode;
   }
 
+  getPopupClassName(defaultClassName: string | undefined): string | undefined {
+    return classNames(
+      super.getPopupClassName(defaultClassName), {
+        [`${this.prefixCls}-popup-${this.getViewMode()?.toLowerCase()}`]: this.getViewMode(),
+      },
+    );
+  }
+
   getPopupEditor() {
     const { editorInPopup } = this.observableProps;
     if (editorInPopup) {
