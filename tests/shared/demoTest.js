@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import glob from 'glob';
 import { render } from 'enzyme';
 import MockDate from 'mockdate';

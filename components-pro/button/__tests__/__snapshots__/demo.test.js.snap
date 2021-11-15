@@ -1,5 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`renders ./components-pro/button/demo/block.md correctly 1`] = `
+<div>
+  <button
+    class="undefined-btn-wrapper undefined-btn undefined-btn-flat undefined-btn-primary undefined-btn-block"
+    type="button"
+  >
+    <span>
+      flat按钮
+    </span>
+  </button>
+  <button
+    class="undefined-btn-wrapper undefined-btn undefined-btn-raised undefined-btn-primary undefined-btn-block"
+    type="button"
+  >
+    <span>
+      raised按钮
+    </span>
+  </button>
+  <button
+    class="undefined-btn-wrapper undefined-btn undefined-btn-link undefined-btn-primary undefined-btn-block"
+    type="button"
+  >
+    <span>
+      link按钮
+    </span>
+  </button>
+</div>
+`;
+
 exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
 <div>
   <div>
@@ -676,4 +705,40 @@ exports[`renders ./components-pro/button/demo/throttle.md correctly 1`] = `
     />
   </button>
 </div>
+`;
+
+exports[`renders ./components-pro/button/demo/tooltip.md correctly 1`] = `
+Array [
+  <span
+    class="undefined-btn-wrapper undefined-btn-disabled undefined-btn undefined-btn-disabled-wrapper"
+  >
+    <button
+      disabled=""
+      type="button"
+    >
+      <span>
+        始终显示气泡的按钮
+      </span>
+    </button>
+  </span>,
+  <button
+    class="undefined-btn-wrapper undefined-btn"
+    style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+    type="button"
+  >
+    <span>
+      内容超长时显示气泡&lt;点击改变样式&gt;
+    </span>
+  </button>,
+  <a
+    class="undefined-btn-wrapper undefined-btn-disabled undefined-btn"
+    disabled=""
+    href="https://choerodon.io"
+    target="_blank"
+  >
+    <span>
+      跳转按钮
+    </span>
+  </a>,
+]
 `;

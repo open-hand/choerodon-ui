@@ -65,7 +65,7 @@ exports[`Button renders Chinese characters correctly 3`] = `
 
 exports[`Button renders components-pro correctly 1`] = `
 <button
-  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
   type="button"
 >
   <span>

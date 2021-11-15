@@ -37,8 +37,29 @@ function injectRequire() {
   injected = true;
 }
 
+function isThereHaveBrowserslistConfig() {
+  try {
+    const packageJson = require(getProjectPath('package.json'));
+    if (packageJson.browserslist) {
+      return true;
+    }
+  } catch (e) {
+    //
+  }
+  if (fs.existsSync(getProjectPath('.browserslistrc'))) {
+    return true;
+  }
+  if (fs.existsSync(getProjectPath('browserslist'))) {
+    return true;
+  }
+
+  return false;
+}
+
+
 module.exports = {
   getProjectPath,
   resolve,
   injectRequire,
+  isThereHaveBrowserslistConfig,
 };

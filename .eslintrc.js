@@ -112,11 +112,16 @@ const eslintrc = {
       },
     ],
     '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/ban-types': 'off', // TODO: re-enable as error  
+    '@typescript-eslint/ban-types': 'off', // TODO: re-enable as error
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off', // Typescript eslint v5.0.0 discards this property
     '@typescript-eslint/explicit-function-return-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    'jest/no-test-callback': 'off',
+    'jest/expect-expect': 'off',
+    'jest/no-done-callback': 'off',
+    'jest/valid-title': 'off',
+    'jest/no-conditional-expect': 'off',
   },
 };
 
