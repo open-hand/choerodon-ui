@@ -47,6 +47,7 @@ title: DataSet
 | expandField | 树形数据标记节点是否展开的字段名 | string |  |
 | checkField | 树形数据标记节点是否为选中的字段名，在展开按钮后面会显示 checkbox | string |  |
 | fields | 字段属性数组，详见[Field Props](#Field Props) | object\[\] |  |
+| record | 记录属性，详见[Record Props](#Record Props) | object |  |
 | queryFields | 查询字段属性数组，在内部生成 queryDataSet，优先级低于 queryDataSet 属性，详见[Field Props](#Field Props) | object\[\] |  |
 | cacheSelection | 缓存选中记录，使切换分页时仍保留选中状态。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |
 | cacheModified | 缓存变更记录，使切换分页时仍保留变更的记录。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |
@@ -192,6 +193,16 @@ title: DataSet
 | reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 记录集 | 是 |
 | validate | 校验事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果集 | 是 |
 
+### Record Props
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| disabled | 是否禁用 | boolean | false |
+| selectable | 是否可选 | boolean | true |
+| defaultSelected | 是否默认选中 | boolean | false |
+| defaultExpanded | 是否默认展开 | boolean | false |
+| dynamicProps | 动态属性对象。对象为记录属性和返回该记录属性值的钩子的键值对。 | { recordProp: (record) => value } |  |
+
 ### Record Values
 
 | 名称           | 说明                                            | 类型                      |
@@ -199,6 +210,7 @@ title: DataSet
 | id             | 唯一 ID，自增长的数字                           | number                    |
 | key            | 唯一键，主键字段或唯一索引键字段的值，默认同 id | string \| number          |
 | status         | 状态， 可选值 `add` `update` `delete` `sync`    | observable&lt;string&gt;  |
+| disabled       | 禁用                                            | observable&lt;boolean&gt; |
 | selectable     | 可选                                            | observable&lt;boolean&gt; |
 | isSelected     | 是否选中                                        | observable&lt;boolean&gt; |
 | isCurrent      | 是否当前记录                                    | observable&lt;boolean&gt; |

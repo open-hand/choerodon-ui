@@ -118,7 +118,7 @@ export default class Table extends Component {
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
   }
 
-  getContextValue() {
+  getChildContext() {
     return {
       table: {
         props: this.props,

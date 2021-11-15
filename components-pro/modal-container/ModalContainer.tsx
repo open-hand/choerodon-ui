@@ -545,11 +545,12 @@ export async function getContainer(): Promise<IModalContainer> {
   return getContainer();
 }
 
-export async function open(props: ModalProps) {
-  const container = await getContainer();
+export function open(props: ModalProps) {
+  const containerPromise = getContainer();
 
-  function getCurrentContainer(): Promise<IModalContainer> {
-    return containerInstances.includes(container) ? Promise.resolve(container) : getContainer();
+  async function getCurrentContainer(): Promise<IModalContainer> {
+    const container = await containerPromise;
+    return containerInstances.includes(container) ? container : getContainer();
   }
 
   async function close(destroy?: boolean) {
@@ -569,17 +570,20 @@ export async function open(props: ModalProps) {
     $container.update({ ...newProps, key: props.key });
   }
 
-  const { autoCenter = container.context.getConfig('modalAutoCenter') } = props;
-
   props = {
     __deprecate__: true,
     close,
     update,
     ...Modal.defaultProps as ModalProps,
     ...props,
-    autoCenter,
   };
-  container.open(props);
+  containerPromise.then(($container) => {
+    const { autoCenter = $container.context.getConfig('modalAutoCenter') } = props;
+    $container.open({
+      ...props,
+      autoCenter,
+    });
+  });
 
   async function show(newProps) {
     const $container = await getCurrentContainer();

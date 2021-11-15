@@ -14,7 +14,7 @@ import { isEmpty, warning } from '../utils';
 import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
 import localeContext, { $l } from '../locale-context';
 import axios from '../axios';
-import Record from './Record';
+import Record, { RecordProps } from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
   adapterDataToJSON,
@@ -202,6 +202,10 @@ export interface DataSetProps {
    * 查询字段组
    */
   queryFields?: FieldProps[];
+  /**
+   * 记录动态属性
+   */
+  record?: RecordProps;
   /**
    * 事件
    */

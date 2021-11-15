@@ -48,7 +48,6 @@ class App extends React.Component {
     autoQuery: true,
     parentField: 'parentId',
     idField: 'id',
-    expandField: 'expand',
     checkField: 'ischecked',
     fields: [
       { name: 'id', type: 'number' },
@@ -59,6 +58,11 @@ class App extends React.Component {
       { name: 'score', type: 'number', order: 'asc' },
       { name: 'parentId', type: 'number', parentFieldName: 'id' },
     ],
+    record: {
+      dynamicProps: {
+        defaultExpanded: (record) => record.index === 1,
+      }
+    },
     events: {
       indexchange: ({ current }) => console.log('current user', current),
       submit: ({ data }) => console.log('submit tree data', data),
