@@ -86,7 +86,6 @@ export function calcDropPosition(
   allowDrop: AllowDrop,
   flattenedNodes: FlattenNode[],
   keyEntities: Record<Key, DataEntity>,
-  expandKeys: Key[],
   direction: Direction,
 ): {
   dropPosition: -1 | 0 | 1;
@@ -147,8 +146,7 @@ export function calcDropPosition(
     // first half of first node in first level
     dropPosition = -1;
   } else if (
-    (abstractDragOverEntity.children || []).length &&
-    expandKeys.includes(dragOverNodeKey)
+    (abstractDragOverEntity.children || []).length 
   ) {
     // drop on expanded node
     // only allow drop inside

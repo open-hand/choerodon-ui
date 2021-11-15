@@ -29,6 +29,7 @@ timeline: true
 - 🌟 `<pro>Lov`: 新增 drawer 模式 和 viewRenderer 属性。
 - 🌟 `BarCode`: 新增条码组件。
 - 🌟 `<pro>Tree`: 新增 filter 属性。
+- 🌟 `Tree`: 新增 onDropBefore 回调函数。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
