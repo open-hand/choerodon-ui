@@ -579,10 +579,11 @@ export function open(props: ModalProps) {
   };
   containerPromise.then(($container) => {
     const { autoCenter = $container.context.getConfig('modalAutoCenter') } = props;
-    $container.open({
+    props = {
       ...props,
       autoCenter,
-    });
+    };
+    $container.open(props);
   });
 
   async function show(newProps) {
