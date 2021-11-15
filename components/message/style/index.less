@@ -41,8 +41,21 @@
   }
 
   &-info .@{iconfont-css-prefix},
-  &-loading .@{iconfont-css-prefix} {
+  &-loading .@{c7n-prefix}-progress-loading {
     color: @info-color;
+  }
+
+  &-loading .@{c7n-prefix}-progress-loading {
+    position: relative;
+    top: -0.01rem;
+    margin-right: 0.08rem;
+    font-size: @font-size-lg;
+    line-height: 1;
+
+    .@{c7n-prefix}-progress-inner {
+      width: 0.16rem;
+      height: 0.16rem;
+    }
   }
 
   .@{iconfont-css-prefix} {

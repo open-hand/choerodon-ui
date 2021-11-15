@@ -28,21 +28,28 @@ timeline: true
 - 🌟 `<pro>IntlField`: Added `type` property, supports multi-line input.
 - 🌟 `<pro>Lov`: Added `drawer` mode and `viewRenderer` property.
 - 🌟 `BarCode`: Added component of BarCode.
+- 🌟 `<pro>Tree`: Added `filter` property.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
 - 💄 `<pro>Table`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
+- 💄 `<pro>Output`: Optimize `Form` multiple columns, `Output` and other input type component height issues.
+- 💄 `<pro>DatePicker`: Optimized `mode` to `dateTime` style.
+- 💄 `Message`: Optimized `loading` type message icon.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
+- 🐞 `<pro>DataSet`: The `total` parameter of the `appendData` method is discarded.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property. Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
-- 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties.
+- 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties. And fixed `UP` `DOWN` keyword not working in Range mode.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
+- 🐞 `<pro>Lov`: Fix the problem of repeated query when the `autoSelectSingle` property is turned on.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
 - 🐞 `<pro>Attachment`: Fix the problem that the `children` and `className` properties has no effect.
 - 🐞 `Tabs`: Fix the nesting style problem.
+- 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
 
 ## 1.5.0-beta.0
 

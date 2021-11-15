@@ -2,24 +2,26 @@ import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
 import sortBy from 'lodash/sortBy'
-import { action } from 'mobx';
+import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
-import { SelectionMode } from '../table/enum';
+import { LovConfig } from 'choerodon-ui/dataset/interface';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Animate from '../animate';
 import Icon from '../icon';
 import { $l } from '../locale-context';
+import { NodeRenderer } from './Lov';
 
 export const TIMESTAMP = '__TIMESTAMP__';
 
 export interface SelectionListProps {
   dataSet: DataSet;
-  selectionMode: SelectionMode | undefined;
+  treeFlag?: LovConfig['treeFlag'];
   valueField: string;
   textField: string;
   label?: string;
+  nodeRenderer?: NodeRenderer,
 }
 
 @observer
@@ -46,9 +48,9 @@ export default class SelectionList extends Component<SelectionListProps> {
   }
 
   unSelect = (record: Record) => {
-    const { dataSet, selectionMode } = this.props;
+    const { dataSet, treeFlag } = this.props;
     record.setState(TIMESTAMP, 0);
-    if (selectionMode === SelectionMode.treebox) {
+    if (treeFlag === 'Y') {
       dataSet.treeUnSelect(record);
     } else {
       dataSet.unSelect(record);
@@ -56,9 +58,8 @@ export default class SelectionList extends Component<SelectionListProps> {
   };
 
   render() {
-    // TODO:观察selectionMode
-    const { dataSet, selectionMode, label = '', valueField = '', textField = '' } = this.props;
-    const records: Record[] = selectionMode === SelectionMode.treebox ? dataSet.treeSelected : dataSet.selected;
+    const { dataSet, treeFlag, label = '', valueField = '', textField = '', nodeRenderer } = this.props;
+    const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
     if (isEmpty(records)) {
       return null;
     }
@@ -67,7 +68,7 @@ export default class SelectionList extends Component<SelectionListProps> {
     const animateChildren = this.getRecords(records).map((record: Record) => {
       return (
         <li key={record.get(valueField)} className={`${classString}-item`}>
-          <span>{record.get(textField)}</span>
+          { nodeRenderer ? toJS(nodeRenderer(record)) : <span>{record.get(textField)}</span> }
           <Icon
             type="cancel"
             onClick={() => {

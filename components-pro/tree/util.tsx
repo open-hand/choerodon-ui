@@ -65,10 +65,10 @@ function getTreeNode(record, children, idField, text, treeNodeProps, async, filt
       children,
       record,
       ...record.get('__treeNodeProps'),
-      ...treeNodeProps,
       selectable: record.dataSet.selection ? record.selectable : false,
       eventKey: key,
       key,
+      ...treeNodeProps,
     }
   );
 }

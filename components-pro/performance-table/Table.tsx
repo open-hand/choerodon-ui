@@ -429,40 +429,44 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.wheelWrapperRef = React.createRef();
     this.tableHeaderRef = React.createRef();
 
-    runInAction(() => {
-      const { rowSelection } = this.props;
-      if (rowSelection) {
-        let rowSelectionFixed: any = 'left';
-        if ('fixed' in rowSelection) {
-          rowSelectionFixed = rowSelection.fixed;
-        }
-        if (columns && columns.length) {
-          const columnsWithRowSelectionProps: ColumnProps = {
-            title: $l('Table', 'select_current_page'),
-            key: 'rowSelection',
-            width: 50,
-            align: 'center',
-            fixed: rowSelectionFixed,
-          };
-          columns.splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelectionProps);
-        }
+    runInAction(this.setSelectionColumn);
+  }
 
-        if (children && (children as any[]).length) {
-          const columnsWithRowSelection = this.renderRowSelection(rowSelectionFixed);
-
-          if (columnsWithRowSelection) {
-            if (rowSelectionFixed) {
-              (children as any[]).splice((rowSelectionFixed === true || 'left') ? (rowSelection.columnIndex || 0) : (rowSelection.columnIndex || (children as any[]).length), 0, columnsWithRowSelection);
-              this.setState({ shouldFixedColumn: true });
-            } else {
-              (children as any[]).splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelection);
-            }
-          }
-        }
+  setSelectionColumn = () => {
+    const { rowSelection, columns = [], children = [] } = this.props;
+    const index = columns.findIndex(column => column.key === 'rowSelection');
+    if (rowSelection) {
+      if(index > -1) columns.splice(index, 1);
+      let rowSelectionFixed: any = 'left';
+      if ('fixed' in rowSelection) {
+        rowSelectionFixed = rowSelection.fixed;
       }
-      this.tableStore.originalColumns = columns;
-      this.tableStore.originalChildren = children as any[];
-    });
+      if (columns && columns.length) {
+        const columnsWithRowSelectionProps: ColumnProps = {
+          title: $l('Table', 'select_current_page'),
+          key: 'rowSelection',
+          width: 50,
+          align: 'center',
+          fixed: rowSelectionFixed,
+        };
+        columns.splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelectionProps);
+      }
+
+      if (children && (children as any[]).length) {
+        const columnsWithRowSelection = this.renderRowSelection(rowSelectionFixed);
+
+        if (columnsWithRowSelection) {
+          if (rowSelectionFixed) {
+            (children as any[]).splice((rowSelectionFixed === true || 'left') ? (rowSelection.columnIndex || 0) : (rowSelection.columnIndex || (children as any[]).length), 0, columnsWithRowSelection);
+            this.setState({ shouldFixedColumn: true });
+          } else {
+            (children as any[]).splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelection);
+          }
+        } 
+      }
+    }
+    this.tableStore.originalColumns = columns;
+    this.tableStore.originalChildren = children as any[];
   }
 
   listenWheel = (deltaX: number, deltaY: number) => {
@@ -522,7 +526,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, height, virtualized, children, columns } = prevProps;
+    const { rowHeight, data, height, virtualized, children, columns, rowSelection } = prevProps;
+    const { rowSelection: currentRowSelection, columns: currentColumns, children: currentChildren } = this.props;
+    const flag = rowSelection !== currentRowSelection || columns !== currentColumns || children !== currentChildren;
+    if(flag) {
+      runInAction(this.setSelectionColumn);
+    }
 
     if (data !== this.props.data) {
       this.calculateRowMaxHeight();

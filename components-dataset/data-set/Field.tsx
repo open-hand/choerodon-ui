@@ -119,9 +119,11 @@ function getLookupToken(field: Field, record: Record | undefined): string | unde
 
 function setLookupToken(field: Field, token: string | undefined, record: Record | undefined) {
   if (record) {
-    const lookupTokens = getIf<Record, ObservableMap<string, string | undefined>>(record, 'lookupTokens', () => observable.map());
-    lookupTokens.set(field.name, token);
-  } else {
+    if (token !== undefined || record.lookupTokens) {
+      const lookupTokens = getIf<Record, ObservableMap<string, string | undefined>>(record, 'lookupTokens', () => observable.map());
+      lookupTokens.set(field.name, token);
+    }
+  } else if (token !== field.lookupToken) {
     field.lookupToken = token;
   }
 }

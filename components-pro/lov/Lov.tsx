@@ -52,6 +52,8 @@ export type ViewRenderer = ({
   multiple: boolean;
 }) => ReactNode;
 
+export type NodeRenderer = (record: Record) => ReactNode;
+
 export { LovConfigItem };
 
 export interface LovConfig extends DataSetLovConfig {
@@ -84,6 +86,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   onSearchMatcherChange?: (searchMatcher?: string) => void;
   viewRenderer?: ViewRenderer;
+  nodeRenderer?: NodeRenderer;
 }
 
 @observer
@@ -104,6 +107,7 @@ export default class Lov extends Select<LovProps> {
     searchAction: PropTypes.oneOf([SearchAction.blur, SearchAction.input]),
     showCheckedStrategy: PropTypes.string,
     viewRenderer: PropTypes.func,
+    nodeRenderer: PropTypes.func,
   };
 
   static defaultProps = {
@@ -401,14 +405,18 @@ export default class Lov extends Select<LovProps> {
 
   @action
   afterOpen(options: DataSet, fetchSingle?: boolean) {
-    const noCache = this.getProp('noCache');
-    if (this.resetOptions(noCache) && fetchSingle !== true && !this.multiple) {
-      options.query();
-    } else if (this.multiple) {
-      if (this.resetOptions(noCache)) {
+    if (this.autoSelectSingle) {
+      if (this.multiple) options.releaseCachedSelected();
+    } else {
+      const noCache = this.getProp('noCache');
+      if (this.resetOptions(noCache) && fetchSingle !== true && !this.multiple) {
         options.query();
+      } else if (this.multiple) {
+        if (this.resetOptions(noCache)) {
+          options.query();
+        }
+        options.releaseCachedSelected();
       }
-      options.releaseCachedSelected();
     }
   }
 
@@ -416,7 +424,7 @@ export default class Lov extends Select<LovProps> {
   private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode } = this.observableProps;
-    const { onBeforeSelect, viewRenderer } = this.props;
+    const { onBeforeSelect, viewRenderer, nodeRenderer } = this.props;
     const drawer = viewMode === 'drawer';
     if (viewMode === 'modal' || drawer) {
       const config = this.getConfig();
@@ -449,6 +457,7 @@ export default class Lov extends Select<LovProps> {
               valueField={valueField}
               textField={textField}
               viewRenderer={viewRenderer}
+              nodeRenderer={nodeRenderer}
             />
           ),
           onClose: this.handleLovViewClose,
@@ -663,16 +672,15 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   @action
-  selectSingle() {
+  async selectSingle() {
     const { options } = this;
     this.resetOptions(options.length === 1);
-    return options.query().then(() => {
-      if (options.length === 1) {
-        this.choose(this.options.get(0));
-      } else {
-        this.openModal();
-      }
-    });
+    await options.query();
+    if (options.length === 1) {
+      this.choose(options.get(0));
+    } else {
+      this.openModal();
+    }
   }
 
   @autobind
@@ -695,6 +703,7 @@ export default class Lov extends Select<LovProps> {
       'onBeforeSelect',
       'onSearchMatcherChange',
       'viewRenderer',
+      'nodeRenderer',
     ]);
   }
 
@@ -727,7 +736,7 @@ export default class Lov extends Select<LovProps> {
     if (viewMode === 'popup') {
       return super.getSuffix();
     }
-    const icon = this.loading ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
+    const icon = this.loading && !this.modal ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
     return this.wrapperSuffix(suffix || icon, {
       onClick: (this.disabled || this.readOnly) ? undefined : this.handleOpenModal,
     });

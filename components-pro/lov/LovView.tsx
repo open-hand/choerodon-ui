@@ -15,7 +15,7 @@ import { modalChildrenProps } from '../modal/interface';
 import autobind from '../_util/autobind';
 import { getColumnKey } from '../table/utils';
 import SelectionList, { TIMESTAMP } from './SelectionList';
-import { LovConfig, ViewRenderer } from './Lov';
+import { LovConfig, ViewRenderer, NodeRenderer } from './Lov';
 import { FormContextValue } from '../form/FormContext';
 
 export interface LovViewProps {
@@ -34,6 +34,7 @@ export interface LovViewProps {
   valueField?: string;
   textField?: string;
   viewRenderer?: ViewRenderer;
+  nodeRenderer?: NodeRenderer,
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -113,7 +114,16 @@ export default class LovView extends Component<LovViewProps> {
   @autobind
   handleSelect(event?: React.MouseEvent | string) {
     const { selectionMode } = this;
-    const { onSelect, onBeforeSelect = noop, modal, multiple, dataSet, tableProps, viewMode } = this.props;
+    const {
+      onSelect,
+      onBeforeSelect = noop,
+      modal,
+      multiple,
+      dataSet,
+      tableProps,
+      viewMode,
+      config: { treeFlag },
+    } = this.props;
     // 为了drawer模式下右侧勾选项的顺序
     if (viewMode === 'drawer' && multiple) {
       dataSet.map(item => {
@@ -128,7 +138,7 @@ export default class LovView extends Component<LovViewProps> {
         return item;
       });
     }
-    let records: Record[] = selectionMode === SelectionMode.treebox ?
+    let records: Record[] = treeFlag === 'Y' ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     // 满足单选模式下，双击和勾选框选中均支持
@@ -266,14 +276,17 @@ export default class LovView extends Component<LovViewProps> {
       label = '',
       valueField = '',
       textField = '',
+      nodeRenderer,
+      config: { treeFlag },
     } = this.props;
     return (
       <SelectionList
         dataSet={dataSet}
-        selectionMode={this.selectionMode}
+        treeFlag={treeFlag}
         valueField={valueField}
         textField={textField}
         label={label}
+        nodeRenderer={nodeRenderer}
       />
     );
   }

@@ -33,7 +33,7 @@ export interface DateViewProps extends ViewComponentProps {
   disabledNow?: boolean;
 }
 
-export default class DaysView extends ViewComponent<DateViewProps>
+export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   implements DatePickerKeyboardEvent {
   static displayName = 'DaysView';
 

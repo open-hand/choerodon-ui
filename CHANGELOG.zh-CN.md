@@ -23,26 +23,33 @@ timeline: true
 - 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
-- 🌟 `<pro>NumberField`: 新增 keyboard 属性，控制UP DOWN键盘事件。
+- 🌟 `<pro>NumberField`: 新增 keyboard 属性，控制 UP DOWN 键盘事件。
 - 🌟 `<pro>ModalProvider`: 新增 getContainer 属性。
 - 🌟 `<pro>IntlField`: 新增 type 属性，支持多行输入。
 - 🌟 `<pro>Lov`: 新增 drawer 模式 和 viewRenderer 属性。
 - 🌟 `BarCode`: 新增条码组件。
+- 🌟 `<pro>Tree`: 新增 filter 属性。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
 - 💄 `<pro>Table`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
+- 💄 `<pro>Output`: 优化 Form 多列情况，Output 和其他输入类型组件高度问题。
+- 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 的样式。
+- 💄 `Message`: 优化 loading 类型消息图标。
 - 🐞 `<pro>DataSet`: 修复新添字段后字段顺序不正确的问题。
+- 🐞 `<pro>DataSet`: 废弃 appendData 方法 total 参数。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
 - 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
 - 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。修复 maxLength 和 minLength 属性的错误限制。
 - 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
-- 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 属性的错误限制。
+- 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 属性的错误限制。修复 range 模式下 UP DOWN 按键不起效果。
 - 🐞 `<pro>Lov`: 修复多选值回显到树形列表时数据显示问题。
+- 🐞 `<pro>Lov`: 修复开启 autoSelectSingle 属性重复查询的问题。
 - 🐞 `<pro>Tree`: 修复只使用 check 模式下 DataSet 勾选方法失效问题。
 - 🐞 `<pro>Attachment`: 修复 children, className 属性不起效果的问题。
 - 🐞 `Tabs`: 修复嵌套样式问题。
+- 🐞 `<pro>PerformanceTable`: 修复表格内容更新后勾选列消失的问题。
 
 ## 1.5.0-beta.0
 

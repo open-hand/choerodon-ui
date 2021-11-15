@@ -2,6 +2,9 @@ import React, { ReactNode } from 'react';
 import noop from 'lodash/noop';
 import isString from 'lodash/isString';
 import Icon from '../icon';
+import Progress from '../progress';
+import { ProgressType } from '../progress/enum';
+import { Size } from '../_util/enum';
 import Notification from '../rc-components/notification';
 import { getPlacementStyle, getPlacementTransitionName } from './util';
 import { getPrefixCls } from '../configure/utils';
@@ -94,6 +97,9 @@ function notice(
 
   const target = key++;
   const prefixCls = getCustomizePrefixCls();
+  const icon = iconType === "loading" ?
+    <Progress type={ProgressType.loading} size={Size.small} /> :
+    <Icon type={iconType} />;
   getMessageInstance(placement || defaultPlacement, instance => {
     instance.notice({
       key: target,
@@ -102,7 +108,7 @@ function notice(
       contentClassName:`${prefixCls}-content-${type}`,
       content: (
         <div className={`${prefixCls}-custom-content ${prefixCls}-${type}`}>
-          <Icon type={iconType} />
+          {icon}
           <span>{content}</span>
         </div>
       ),

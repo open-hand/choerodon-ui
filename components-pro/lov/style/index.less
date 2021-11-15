@@ -59,6 +59,7 @@
       .@{drawer-prefix-cls}-item {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         height: 0.38rem;
         padding-right: @drawer-list-padding;
         padding-left: @drawer-list-padding;
@@ -69,8 +70,7 @@
           background-color: rgba(0, 0, 0, 0.05);
         }
 
-        &>span {
-          flex: 1;
+        &:first-child {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
