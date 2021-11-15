@@ -37,6 +37,7 @@ import {
   getChainFieldName,
   getIf,
   getOrderFields,
+  getRecordDynamicProps,
   getRecordValue,
   getSortedFields,
   getUniqueKeysAndPrimaryKey,
@@ -68,6 +69,7 @@ const IDGen: IterableIterator<number> = (function* (start: number) {
 
 const EXPANDED_KEY = '__EXPANDED_KEY__';  // TODO:Symbol
 const SELECTABLE_KEY = '__SELECTABLE_KEY__';  // TODO:Symbol
+const DISABLED_KEY = '__DISABLED_KEY__';  // TODO:Symbol
 const SELECT_KEY = '__SELECT_KEY__';  // TODO:Symbol
 const UNSELECT_KEY = '__UNSELECT_KEY__';  // TODO:Symbol
 
@@ -117,6 +119,19 @@ function processTreeLevel(props: { dataSet: DataSet; value: any; fieldName: stri
       }
     }
   }
+}
+
+export interface RecordBaseProps {
+  disabled?: boolean | undefined;
+  selectable?: boolean | undefined;
+  defaultSelected?: boolean | undefined;
+  defaultExpanded?: boolean | undefined;
+}
+
+export type RecordDynamicProps = { [P in keyof RecordBaseProps]: (record: Record) => RecordBaseProps[P]; }
+
+export interface RecordProps extends RecordBaseProps {
+  dynamicProps?: Partial<RecordDynamicProps>;
 }
 
 export default class Record {
@@ -202,13 +217,27 @@ export default class Record {
   @observable status: RecordStatus;
 
   get selectable(): boolean {
-    return this.getState(SELECTABLE_KEY);
+    const $selectable = this.getState(SELECTABLE_KEY);
+    if ($selectable !== undefined) {
+      return $selectable;
+    }
+    return getRecordDynamicProps(this, 'selectable', true);
   }
 
   set selectable(selectable: boolean) {
-    runInAction(() => {
-      this.setState(SELECTABLE_KEY, selectable);
-    });
+    this.setState(SELECTABLE_KEY, selectable);
+  }
+
+  get disabled(): boolean {
+    const $disabled = this.getState(DISABLED_KEY);
+    if ($disabled !== undefined) {
+      return $disabled;
+    }
+    return getRecordDynamicProps(this, 'disabled', false);
+  }
+
+  set disabled(selectable: boolean) {
+    this.setState(DISABLED_KEY, selectable);
   }
 
   get isDataSetInAllPageSelection(): boolean {
@@ -219,7 +248,11 @@ export default class Record {
     if (this.isDataSetInAllPageSelection) {
       return !this.getState(UNSELECT_KEY);
     }
-    return this.getState(SELECT_KEY);
+    const $isSelected = this.getState(SELECT_KEY);
+    if ($isSelected !== undefined) {
+      return $isSelected;
+    }
+    return getRecordDynamicProps(this, 'defaultSelected', false);
   }
 
   set isSelected(isSelected: boolean) {
@@ -337,7 +370,11 @@ export default class Record {
       const field = dataSet.getField(expandField);
       return expanded === (field ? field.get(BooleanValue.trueValue, this) : true);
     }
-    return this.getState(EXPANDED_KEY);
+    const $expanded = this.getState(EXPANDED_KEY);
+    if ($expanded !== undefined) {
+      return $expanded;
+    }
+    return getRecordDynamicProps(this, 'defaultExpanded', false);
   }
 
   set isExpanded(expand: boolean) {
@@ -441,8 +478,6 @@ export default class Record {
       this.dataSet = dataSet;
       this.ownerFields = observable.map();
       this.status = status;
-      this.selectable = true;
-      this.isSelected = false;
       this.id = IDGen.next().value;
       const initData = isObservableObject(data) ? toJS(data) : data;
       this.data = initData;

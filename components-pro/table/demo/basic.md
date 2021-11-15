@@ -40,9 +40,6 @@ function sexIdRenderer({ dataSet, record }) {
   return value.map(v => field.getLookupData(v, record).codeValueId).join(',');
 }
 
-function handleUserDSLoad({ dataSet }) {
-}
-
 function renderPhoneEditor(record) {
   const region = (
     <Select record={record} name="phone-region">
@@ -338,11 +335,17 @@ class App extends React.Component {
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
       { name: 'date.endDate', type: 'time', range: true, label: '结束日期', computedProps: { defaultValue: () => [moment(), moment()] } },
     ],
+    record: {
+      dynamicProps: {
+        selectable: (record) => record.index !== 0,
+        defaultSelected: (record) => record.index === 0,
+        disabled: (record) => record.index === 0,
+      },
+    },
     events: {
       selectAll: ({ dataSet }) => console.log('select all', dataSet.selected),
       indexchange: ({ record }) => console.log('current user', record),
       submit: ({ data }) => console.log('submit data', data),
-      load: handleUserDSLoad,
       query: ({ params, data }) => console.log('user query parameter', params, data),
       export: ({ params, data }) => console.log('user export parameter', params, data),
       remove: ({ records }) => console.log('removed records', records),

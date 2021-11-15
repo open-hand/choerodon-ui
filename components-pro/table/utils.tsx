@@ -243,7 +243,7 @@ export function findIndexedSibling(element, direction): HTMLTableRowElement | nu
 }
 
 export function isDisabledRow(record: Record) {
-  return record.status === RecordStatus.delete;
+  return record.status === RecordStatus.delete || record.disabled;
 }
 
 export function isSelectedRow(record: Record) {

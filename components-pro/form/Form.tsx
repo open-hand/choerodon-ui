@@ -537,6 +537,18 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     return this.readOnly;
   }
 
+  isDisabled(): boolean {
+    const disabled = super.isDisabled();
+    if (disabled) {
+      return disabled;
+    }
+    const { record } = this;
+    if (record) {
+      return record.disabled;
+    }
+    return false;
+  }
+
   getObservableProps(props, context) {
     const observableProps: any = {
       ...super.getObservableProps(props, context),

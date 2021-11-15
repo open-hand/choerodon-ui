@@ -150,15 +150,23 @@ const defaultGlobalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = obser
 const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys,
   Config[ConfigKeys]>();
 
+const baseMergeProps: (keyof Config)[] = ['transport', 'feedback', 'formatter', 'attachment'];
+
 export function getConfig<C extends Config, T extends keyof C, D extends DefaultConfig>(key: T): T extends keyof D ? D[T] : C[T] {
   const custom = (globalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
   if (custom === undefined) {
     return (defaultGlobalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
   }
+  if ((baseMergeProps as T[]).includes(key)) {
+    return {
+      ...(defaultGlobalConfig as ObservableMap<keyof C, C[T]>).get(key),
+      ...custom,
+    };
+  }
   return custom;
 }
 
-export function overwriteDefaultConfig<T extends Config>(config: T, mergeProps: (keyof T)[] | null = ['transport', 'feedback', 'formatter', 'attachment']) {
+export function overwriteDefaultConfig<T extends Config>(config: T, mergeProps: (keyof T)[] | null = baseMergeProps) {
   runInAction(() => {
     Object.keys(config).forEach((key) => {
       const configKey = key as keyof T;
@@ -175,7 +183,11 @@ export function overwriteDefaultConfig<T extends Config>(config: T, mergeProps: 
   });
 }
 
-export default function configure<T extends Config>(config: T, mergeProps: (keyof T)[] | null = ['transport', 'feedback', 'formatter', 'attachment']) {
+export function overwriteConfigMergeProps<T extends Config>(customMergeProps: (keyof T)[]) {
+  (baseMergeProps as (keyof T)[]).push(...customMergeProps);
+}
+
+export default function configure<T extends Config>(config: T, mergeProps: (keyof T)[] | null = baseMergeProps) {
   runInAction(() => {
     Object.keys(config).forEach((key) => {
       const configKey = key as keyof T;
