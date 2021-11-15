@@ -36,6 +36,7 @@ import { $l } from '../locale-context';
 import measureTextWidth from '../_util/measureTextWidth';
 import ColumnGroup from './ColumnGroup';
 import { FuncType } from '../button/enum';
+import { ViewMode } from '../lov/enum';
 
 export function getEditorByField(field: Field, record?: Record, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const type = field.get('type', record);
@@ -53,7 +54,7 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
     return <ObserverSelect {...flatProps} />;
   }
   if (field.get('lovCode', record)) {
-    return <Lov {...flatProps} />;
+    return <Lov {...flatProps} viewMode={isFlat ? ViewMode.popup :  ViewMode.modal} />;
   }
   if (field.get('multiLine', record)) {
     return <Output />;

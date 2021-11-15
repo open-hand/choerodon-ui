@@ -238,8 +238,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
        * 重置初始勾选项及初始赋值
        */
       onOriginalChange();
-      queryDataSet.removeAll();
-      queryDataSet.create({});
+      queryDataSet.locate(0);
       if (autoQuery) {
         dataSet.query();
       }
