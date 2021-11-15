@@ -172,7 +172,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { queryDataSet } = this.props;
     if (queryDataSet) {
       if (flag && queryDataSet.length === 1) {
-        this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.get(0) || undefined });
+        this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.get(0)! });
       }
       const handler = flag ? queryDataSet.addEventListener : queryDataSet.removeEventListener;
       handler.call(queryDataSet, DataSetEvents.validate, this.handleDataSetValidate);
