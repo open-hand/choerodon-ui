@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `ConfigProvider`: Added `ConfigProvider` component.
 - 🌟 `hooks`: Added `useConfig` hook.
 - 🌟 `<pro>hooks`: Added `useDataSet` hook.
-- 🌟 `configure`: Added `numberFieldKeyboard` property.
+- 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultMinWidth` properties.
 - 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.

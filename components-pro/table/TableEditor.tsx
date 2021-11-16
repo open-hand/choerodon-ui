@@ -299,14 +299,14 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   blur() {
     const { editor } = this;
-    if (editor) {
+    if (editor && editor.blur) {
       editor.blur();
     }
   }
 
   focus() {
     const { editor } = this;
-    if (editor) {
+    if (editor && editor.focus) {
       editor.focus();
     }
   }
@@ -338,7 +338,9 @@ export default class TableEditor extends Component<TableEditorProps> {
           this.width = width;
         }
         wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left)}, ${pxToRem(top)})`)}`;
-        editor.forcePositionChanged();
+        if (editor.forcePositionChanged) {
+          editor.forcePositionChanged();
+        }
       }
     }
   }

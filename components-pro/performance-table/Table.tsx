@@ -347,8 +347,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   tableStore: TableStore = new TableStore(this);
 
-  constructor(props: TableProps) {
-    super(props);
+  constructor(props: TableProps, context: ConfigContextValue) {
+    super(props, context);
     const {
       width,
       height,
@@ -436,7 +436,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { rowSelection, columns = [], children = [] } = this.props;
     const index = columns.findIndex(column => column.key === 'rowSelection');
     if (rowSelection) {
-      if(index > -1) columns.splice(index, 1);
+      if (index > -1) columns.splice(index, 1);
       let rowSelectionFixed: any = 'left';
       if ('fixed' in rowSelection) {
         rowSelectionFixed = rowSelection.fixed;
@@ -462,12 +462,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           } else {
             (children as any[]).splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelection);
           }
-        } 
+        }
       }
     }
     this.tableStore.originalColumns = columns;
     this.tableStore.originalChildren = children as any[];
-  }
+  };
 
   listenWheel = (deltaX: number, deltaY: number) => {
     this.handleWheel(deltaX, deltaY);
@@ -529,7 +529,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { rowHeight, data, height, virtualized, children, columns, rowSelection } = prevProps;
     const { rowSelection: currentRowSelection, columns: currentColumns, children: currentChildren } = this.props;
     const flag = rowSelection !== currentRowSelection || columns !== currentColumns || children !== currentChildren;
-    if(flag) {
+    if (flag) {
       runInAction(this.setSelectionColumn);
     }
 
@@ -774,7 +774,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         fixed,
         verticalAlign,
         ...cellProps,
-      }
+      };
       const groupCellProps: any = {
         ...childColumn?.props,
         ...parentProps,
@@ -784,14 +784,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         groupCellProps.groupHeader = header;
       }
       if ((childColumn.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
-        const res = this.getFlattenColumn(childColumn, { ...parentProps, parent: column }, array)
+        const res = this.getFlattenColumn(childColumn, { ...parentProps, parent: column }, array);
         array.concat(res);
       } else {
-        array.push(React.cloneElement(childColumn, groupCellProps))
+        array.push(React.cloneElement(childColumn, groupCellProps));
       }
 
     }
-    return array
+    return array;
   }
 
   /**
@@ -823,7 +823,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         };
         cellProps.hidden = column.props.hidden;
         if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
-          return this.getFlattenColumn(column, cellProps, [])
+          return this.getFlattenColumn(column, cellProps, []);
         }
         return React.cloneElement(column, cellProps);
       }
@@ -837,9 +837,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
      * 排列成正常显示列的顺序
      * 提供给后面bodyCell使用
      */
-    const { fixedLeftCells, fixedRightCells, scrollCells } = this.calculateFixedAndScrollColumn(flatColumns)
+    const { fixedLeftCells, fixedRightCells, scrollCells } = this.calculateFixedAndScrollColumn(flatColumns);
     // 重新计算列的时候需清除在虚拟滚动时候的渲染列缓存
-    this._cacheRenderCols = []
+    this._cacheRenderCols = [];
     return [...fixedLeftCells, ...scrollCells, ...fixedRightCells];
   }
 
@@ -1544,7 +1544,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     let resultBefore: DropResult | undefined = resultDrag;
     if (onDragEndBefore) {
       const resultStatus = onDragEndBefore(resultDrag, provided);
-      let result = isPromise(resultStatus) ? await resultStatus : resultStatus
+      let result = isPromise(resultStatus) ? await resultStatus : resultStatus;
       if (!result) {
         return;
       }
@@ -1760,7 +1760,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const height = this.getTableHeight();
     this.setState({ contentWidth });
     // 这里 -SCROLLBAR_WIDTH 是为了让滚动条不挡住内容部分
-    this.minScrollX = - (contentWidth - this.state.width) - (contentHeight > height ? SCROLLBAR_WIDTH : 0);
+    this.minScrollX = -(contentWidth - this.state.width) - (contentHeight > height ? SCROLLBAR_WIDTH : 0);
     /**
      * 1.判断 Table 列数是否发生变化
      * 2.判断 Table 内容区域是否宽度有变化
@@ -1914,7 +1914,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const tableRows = Object.values(this.tableRows);
       let ref = this.tableRows[index] && this.tableRows[index][0];
       if (rowDraggable || isTree) {
-        const findRow = tableRows.find(row => row[1] && row[1][rowKey] === rowData[rowKey])
+        const findRow = tableRows.find(row => row[1] && row[1][rowKey] === rowData[rowKey]);
         ref = findRow ? findRow![0] : this.tableRows[index][0];
       }
       if (this._lastRowIndex !== rowNum && ref) {
@@ -2014,7 +2014,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         scrollCells.push(cell);
       }
     }
-    return { fixedLeftCells, fixedRightCells, scrollCells, fixedLeftCellGroupWidth, fixedRightCellGroupWidth }
+    return { fixedLeftCells, fixedRightCells, scrollCells, fixedLeftCellGroupWidth, fixedRightCellGroupWidth };
   }
 
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
@@ -2049,10 +2049,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         }) || {};
         if (cellExternalProps.rowSpan > 1) {
           let setNextRow = rowIndex + cellExternalProps.rowSpan - 1;
-          const isExit: TableRowSpanIndex | undefined = this.rowSpanList.find(x => x.rowIndex === rowIndex && x.columnIndex === i)
+          const isExit: TableRowSpanIndex | undefined = this.rowSpanList.find(x => x.rowIndex === rowIndex && x.columnIndex === i);
           if (!isExit) {
-            const filterIsContainer: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex >= x.start && setNextRow <= x.end && x.columnIndex != i)
-            this.rowSpanList.push({ rowIndex, columnIndex: i, start: rowIndex, end: setNextRow, zIndex: !filterIsContainer.length ? 0 : 0 - filterIsContainer.length })
+            const filterIsContainer: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex >= x.start && setNextRow <= x.end && x.columnIndex != i);
+            this.rowSpanList.push({
+              rowIndex,
+              columnIndex: i,
+              start: rowIndex,
+              end: setNextRow,
+              zIndex: !filterIsContainer.length ? 0 : 0 - filterIsContainer.length,
+            });
           }
         }
       }
@@ -2062,7 +2068,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
         rowStyles.zIndex = 0;
       }
-      const findSpanRow: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex > x.start && rowIndex <= x.end)
+      const findSpanRow: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex > x.start && rowIndex <= x.end);
       if (findSpanRow.length) {
         rowStyles.zIndex = findSpanRow[findSpanRow.length - 1].zIndex;
       }
@@ -2071,7 +2077,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         fixedRightCells = [],
         scrollCells = [],
         fixedLeftCellGroupWidth = 0,
-        fixedRightCellGroupWidth = 0
+        fixedRightCellGroupWidth = 0,
       } = this.calculateFixedAndScrollColumn(cells);
 
       if (rowDraggable && !isHeaderRow) {
@@ -2199,7 +2205,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-            // {...(rowDragRender && rowDragRender.draggableProps)} todo
+              // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}
@@ -2354,9 +2360,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             const bc = bodyCells[i];
             const { fixed } = bc.props;
             if ((fixed && fixed !== 'right') || fixed === 'left') {
-              renderLeftFixedCol.push(bc)
+              renderLeftFixedCol.push(bc);
             } else {
-              break
+              break;
             }
           }
           // 找到右固定列
@@ -2364,12 +2370,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             const bc = bodyCells[i];
             const { fixed } = bc.props;
             if (fixed === 'right') {
-              renderRightFixedCol.push(bc)
+              renderRightFixedCol.push(bc);
             } else {
-              break
+              break;
             }
           }
-          renderRightFixedCol = renderRightFixedCol.reverse()
+          renderRightFixedCol = renderRightFixedCol.reverse();
           // 计算需要减去左右固定列的宽度和
           divideLeftFixedCol = renderLeftFixedCol.reduce((val, item) => val + item.props.width, 0);
           divideRightFixedCol = renderRightFixedCol.reduce((val, item) => val + item.props.width, 0);
@@ -2403,14 +2409,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         const colEndIndex: number = (showNum ? (colIndex + showNum) + 1 : bodyCells.length) - renderRightFixedCol.length; //
         // 最后slice 需要渲染的部分列
         if (renderLeftFixedCol.length + renderRightFixedCol.length === bodyCells.length) {
-          renderCols = [...renderLeftFixedCol, ...renderRightFixedCol]
+          renderCols = [...renderLeftFixedCol, ...renderRightFixedCol];
         } else {
-          renderCols = [...renderLeftFixedCol, ...bodyCells.slice(colStartIndex, colEndIndex), ...renderRightFixedCol]
+          renderCols = [...renderLeftFixedCol, ...bodyCells.slice(colStartIndex, colEndIndex), ...renderRightFixedCol];
         }
         this._cacheScrollX = minLeft;
         this._cacheRenderCols = renderCols;
       } else {
-        renderCols = this._cacheRenderCols.length ? this._cacheRenderCols : bodyCells
+        renderCols = this._cacheRenderCols.length ? this._cacheRenderCols : bodyCells;
       }
 
       /**
@@ -2497,28 +2503,28 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         /**
          * 判断行合并的情况，并遍历出合并行，在滚动的时候根据滚动高度判断是否显示
          */
-        const hasSpanRow: any = []
+        const hasSpanRow: any = [];
         let keyIndex: number = 0;
         let rowSpanStartIndex: number;
         if (this.calcStartRowSpan.rowIndex > startIndex) {
           // 从缓存记录往上找
-          const lastHistory: StartRowSpan | undefined = this._cacheCalcStartRowSpan.pop()
-          this.calcStartRowSpan = lastHistory || { rowIndex: 0, rowSpan: 0, height: 0 }
+          const lastHistory: StartRowSpan | undefined = this._cacheCalcStartRowSpan.pop();
+          this.calcStartRowSpan = lastHistory || { rowIndex: 0, rowSpan: 0, height: 0 };
         }
         if (this.calcStartRowSpan.height >= minTop) {
-          rowSpanStartIndex = this.calcStartRowSpan.rowIndex
+          rowSpanStartIndex = this.calcStartRowSpan.rowIndex;
         } else {
-          rowSpanStartIndex = (this.calcStartRowSpan.rowIndex + this.calcStartRowSpan.rowSpan)
+          rowSpanStartIndex = (this.calcStartRowSpan.rowIndex + this.calcStartRowSpan.rowSpan);
         }
 
-        const hasOnCellCol = renderCols.filter(x => x.props.onCell)
+        const hasOnCellCol = renderCols.filter(x => x.props.onCell);
         for (let i = rowSpanStartIndex; i < endIndex; i++) {
           const rowData = data[i];
           for (let j = 0; j < hasOnCellCol.length; j++) {
             const col = hasOnCellCol[j];
-            const onCellInfo = col.props.onCell({ rowData, dataIndex: col.props.dataIndex, rowIndex: i })
+            const onCellInfo = col.props.onCell({ rowData, dataIndex: col.props.dataIndex, rowIndex: i });
             const cellRowSpan = onCellInfo.rowSpan; // 12
-            const calcHeight = (cellRowSpan + i) * nextRowHeight
+            const calcHeight = (cellRowSpan + i) * nextRowHeight;
             if (cellRowSpan > 1 && minTop < calcHeight) {
               const rowProps = {
                 key: keyIndex,
@@ -2528,11 +2534,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                 height: nextRowHeight,
               };
               if (calcHeight > this.calcStartRowSpan.height && (cellRowSpan + i) < endIndex && rowSpanStartIndex >= i) {
-                const tempCalc = { rowIndex: i, rowSpan: cellRowSpan, height: calcHeight }
-                this.calcStartRowSpan = tempCalc
-                this._cacheCalcStartRowSpan.push(tempCalc)
+                const tempCalc = { rowIndex: i, rowSpan: cellRowSpan, height: calcHeight };
+                this.calcStartRowSpan = tempCalc;
+                this._cacheCalcStartRowSpan.push(tempCalc);
               }
-              const isExits = hasSpanRow.find(x => x.rowIndex === i)
+              const isExits = hasSpanRow.find(x => x.rowIndex === i);
               if (!isExits) {
                 hasSpanRow.push({ rowIndex: i, render: this.renderRowData(renderCols, rowData, rowProps, false) });
               }
@@ -2554,16 +2560,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             this._visibleRows.push(this.renderRowData(renderCols, rowData, rowProps, false));
             keyIndex++;
           } else {
-            const findHasSpanRow = hasSpanRow.find(x => x.rowIndex === index)
+            const findHasSpanRow = hasSpanRow.find(x => x.rowIndex === index);
             if (!findHasSpanRow) {
-              hasSpanRow.push({ rowIndex: index, render: this.renderRowData(renderCols, rowData, rowProps, false) })
+              hasSpanRow.push({ rowIndex: index, render: this.renderRowData(renderCols, rowData, rowProps, false) });
               keyIndex++;
             }
           }
         }
         if (hasSpanRow.length) {
-          const sortRow = hasSpanRow.sort((a, b) => a.rowIndex - b.rowIndex)
-          this._visibleRows = sortRow.map(x => x.render)
+          const sortRow = hasSpanRow.sort((a, b) => a.rowIndex - b.rowIndex);
+          this._visibleRows = sortRow.map(x => x.render);
         }
       }
     }
