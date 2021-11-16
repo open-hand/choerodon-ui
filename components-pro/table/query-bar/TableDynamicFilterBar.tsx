@@ -88,7 +88,6 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   fuzzyQueryPlaceholder?: string;
   searchCode?: string;
   autoQuery?: boolean;
-  expandButton?: boolean;
 }
 
 @observer
@@ -102,7 +101,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     autoQueryAfterReset: true,
     fuzzyQuery: true,
     autoQuery: true,
-    expandButton: true,
     buttons: [],
   };
 
@@ -133,6 +131,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @observable shouldLocateData: boolean;
 
+  @observable showExpandIcon: boolean;
+
   refDropdown: HTMLDivElement | null = null;
 
   refSingleWrapper: HTMLDivElement | null = null;
@@ -154,6 +154,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   componentDidMount(): void {
     this.processDataSetListener(true);
     document.addEventListener('click', this.handleClickOut);
+    if (this.isSingleLineOpt() && this.refSingleWrapper) {
+      const { height } = this.refSingleWrapper.getBoundingClientRect();
+      const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
+      runInAction(() => {
+        this.showExpandIcon = height > (childHeight + 18);
+      });
+    }
   }
 
   componentWillUnmount(): void {
@@ -164,6 +171,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   processDataSetListener(flag: boolean) {
     const { queryDataSet } = this.props;
     if (queryDataSet) {
+      if (flag && queryDataSet.length === 1) {
+        this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.get(0)! });
+      }
       const handler = flag ? queryDataSet.addEventListener : queryDataSet.removeEventListener;
       handler.call(queryDataSet, DataSetEvents.validate, this.handleDataSetValidate);
       handler.call(queryDataSet, DataSetEvents.update, this.handleDataSetUpdate);
@@ -475,11 +485,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * @param hidden 是否隐藏全部
    */
   getExpandNode(hidden): ReactNode {
-    const { expandButton } = this.props;
-    if (!expandButton) {
-      return;
-    }
     const { prefixCls } = this;
+    if (!this.showExpandIcon) return null;
     return (
       <span
         className={`${prefixCls}-filter-menu-expand`}
@@ -597,7 +604,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * fuzzyQuery + quickFilterMenu + resetButton + buttons
    */
   getFilterMenu(): ReactNode {
-    const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, expandButton } = this.props;
+    const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery } = this.props;
     const { prefixCls } = this;
     if (queryDataSet && queryFields.length) {
       const prefix = this.getPrefix();
@@ -627,7 +634,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         </QuickFilterMenuContext.Provider>
       ) : null;
       const resetButton = this.isSingleLineOpt() || this.tableFilterAdapter ? null : this.getResetButton();
-      const expandNode = this.getExpandNode(true);
 
       return (
         <div className={`${prefixCls}-filter-menu`}>
@@ -637,8 +643,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           {resetButton}
           {this.isSingleLineOpt() ? null : (
             <>
-              {expandButton ? <span className={`${prefixCls}-filter-search-divide`} /> : null}
-              {expandNode}
+              <span className={`${prefixCls}-filter-search-divide`} />
+              {this.getExpandNode(true)}
             </>
           )}
           {this.renderSuffix()}
@@ -653,7 +659,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   getQueryBar(): ReactNode {
     const { queryFieldsLimit = 3, queryFields, queryDataSet } = this.props;
     const { prefixCls } = this;
-    const selectFields = queryDataSet.getState('selectFields') || [];
+    const selectFields = queryDataSet?.getState('selectFields') || [];
     const singleLineModeAction = this.isSingleLineOpt() ?
       <div className={`${prefixCls}-dynamic-filter-bar-single-action`}>
         {this.getResetButton()}
@@ -675,7 +681,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   <div
                     className={`${prefixCls}-filter-content`}
                     key={name}
-                    onClick={() => this.refEditors.get(name).focus()}
+                    onClick={() => {
+                      const editor = this.refEditors.get(name);
+                      if (editor && Object.prototype.hasOwnProperty.call(editor, 'focus')) {
+                        this.refEditors.get(name).focus();
+                      }
+                    }}
                   >
                     <span className={`${prefixCls}-filter-label`}>{queryField?.get('label')}</span>
                     <span className={itemClassName}>{this.createFields(element, name)}</span>

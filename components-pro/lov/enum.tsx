@@ -3,6 +3,9 @@ export { LovFieldType } from 'choerodon-ui/dataset/enum';
 export enum ViewMode {
   default = 'default',
   button = 'button',
+  popup = 'popup',
+  drawer = 'drawer',
+  modal = 'modal',
 }
 
 export enum PrefixRule {

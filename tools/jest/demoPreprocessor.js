@@ -81,9 +81,6 @@ module.exports = {
     const markdown = markTwain(src);
     src = getCode(markdown.content);
 
-    // @ @ secret API.
-    global.__clearBabelAntdPlugin && global.__clearBabelAntdPlugin(); // eslint-disable-line
-
     const babelConfig = getBabelCommonConfig();
     babelConfig.plugins = [...babelConfig.plugins];
 

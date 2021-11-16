@@ -3,6 +3,11 @@
 // eslint-disable-next-line no-console
 // console.log('Current React Version:', React.version);
 
+import defaults from 'choerodon-ui/lib/configure/default';
+import configure from 'choerodon-ui/dataset/configure';
+
+configure(defaults);
+
 /* eslint-disable global-require */
 if (typeof window !== 'undefined') {
   global.window.resizeTo = (width, height) => {
