@@ -108,7 +108,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const { current } = globalRef;
     const { resizeColumnGroup } = current;
     if (resizeColumnGroup) {
-      const limit = current.resizeBoundary + minColumnWidth(resizeColumnGroup.column);
+      const limit = current.resizeBoundary + minColumnWidth(resizeColumnGroup.column, tableStore);
       let left = e.clientX;
       if (left < limit) {
         left = limit;
@@ -124,7 +124,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const { resizePosition, resizeColumnGroup } = globalRef.current;
     if (resizePosition !== undefined && resizeColumnGroup) {
       const { column: resizeColumn } = resizeColumnGroup;
-      const newWidth = Math.round(Math.max(resizePosition - globalRef.current.resizeBoundary, minColumnWidth(resizeColumn)));
+      const newWidth = Math.round(Math.max(resizePosition - globalRef.current.resizeBoundary, minColumnWidth(resizeColumn, tableStore)));
       if (newWidth !== resizeColumn.width) {
         const { width } = resizeColumn;
         let group: ColumnGroup | undefined = resizeColumnGroup;
@@ -255,7 +255,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         ...[
           ...element.querySelectorAll(`[data-index="${resizeColumnGroup.key}"] > .${prefixCls}-cell-inner`),
         ].map((node) => node.parentNode.offsetWidth + getMaxClientWidth(node) - node.clientWidth + 1),
-        minColumnWidth(col),
+        minColumnWidth(col, tableStore),
         col.width ? col.width : 0,
       );
       if (maxWidth !== col.width) {

@@ -287,10 +287,10 @@ export function mergeDefaultProps(
           newColumn.lock = parent.lock;
         }
         if (children) {
-          const [, childrenColumns, , childrenHasAffregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, newColumn, defaultKey);
+          const [, childrenColumns, , childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, newColumn, defaultKey);
           newColumn.children = childrenColumns;
-          if (!hasAggregationColumn && childrenHasAffregationColumn) {
-            hasAggregationColumn = childrenHasAffregationColumn;
+          if (!hasAggregationColumn && childrenHasAggregationColumn) {
+            hasAggregationColumn = childrenHasAggregationColumn;
           }
         }
         if (parent || !newColumn.lock) {
@@ -313,22 +313,16 @@ export function mergeDefaultProps(
           rightColumns.push(newColumn);
         }
       } else if (children) {
-        const [, nodes, , childrenHasAffregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
-        if (!hasAggregationColumn && childrenHasAffregationColumn) {
-          hasAggregationColumn = childrenHasAffregationColumn;
+        const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+        if (!hasAggregationColumn && childrenHasAggregationColumn) {
+          hasAggregationColumn = childrenHasAggregationColumn;
         }
         if (parent) {
-          parent.children = nodes;
+          parent.children = [...leftNodes, ...nodes, ...rightNodes];
         } else {
-          nodes.forEach((node) => {
-            if (!node.lock) {
-              columns.push(node);
-            } else if (node.lock === true || node.lock === ColumnLock.left) {
-              leftColumns.push(node);
-            } else {
-              rightColumns.push(node);
-            }
-          });
+          leftColumns.push(...leftNodes);
+          columns.push(...nodes);
+          rightColumns.push(...rightNodes);
         }
       }
     }
@@ -388,10 +382,10 @@ export function normalizeColumns(
           if (parent) {
             column.lock = parent.lock;
           }
-          const [, childrenColumns, , childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
+          const [, childrenColumns, , childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
           column.children = childrenColumns;
-          if (!hasAggregationColumn && childrenHasAffregationColumn) {
-            hasAggregationColumn = childrenHasAffregationColumn;
+          if (!hasAggregationColumn && childrenHasAggregationColumn) {
+            hasAggregationColumn = childrenHasAggregationColumn;
           }
           if (parent || !column.lock) {
             if (column.sort === undefined) {
@@ -413,22 +407,16 @@ export function normalizeColumns(
             rightColumns.push(column);
           }
         } else {
-          const [, nodes, , childrenHasAffregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
-          if (!hasAggregationColumn && childrenHasAffregationColumn) {
-            hasAggregationColumn = childrenHasAffregationColumn;
+          const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+          if (!hasAggregationColumn && childrenHasAggregationColumn) {
+            hasAggregationColumn = childrenHasAggregationColumn;
           }
           if (parent) {
-            parent.children = nodes;
+            parent.children = [...leftNodes, ...nodes, ...rightNodes];
           } else {
-            nodes.forEach((node) => {
-              if (!node.lock) {
-                columns.push(node);
-              } else if (node.lock === true || node.lock === ColumnLock.left) {
-                leftColumns.push(node);
-              } else {
-                rightColumns.push(node);
-              }
-            });
+            leftColumns.push(...leftNodes);
+            columns.push(...nodes);
+            rightColumns.push(...rightNodes);
           }
         }
       }
@@ -1166,17 +1154,17 @@ export default class TableStore {
 
   @computed
   get columnGroups(): ColumnGroups {
-    return new ColumnGroups(this.columns, this.aggregation);
+    return new ColumnGroups(this.columns, this);
   }
 
   @computed
   get leftColumnGroups(): ColumnGroups {
-    return new ColumnGroups(this.leftColumns, this.aggregation);
+    return new ColumnGroups(this.leftColumns, this);
   }
 
   @computed
   get rightColumnGroups(): ColumnGroups {
-    return new ColumnGroups(this.rightColumns, this.aggregation);
+    return new ColumnGroups(this.rightColumns, this);
   }
 
   @computed

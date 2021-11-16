@@ -1,7 +1,13 @@
 import { AxiosRequestConfig } from 'axios';
 import { CSSProperties, ReactNode } from 'react';
-import { overwriteDefaultConfig, configure as configureDataSet } from 'choerodon-ui/dataset';
-import { AttachmentConfig as DataSetAttachmentConfig, Config as DataSetConfig, DefaultConfig as DataSetDefaultConfig, Formatter, Status } from 'choerodon-ui/dataset/configure';
+import { configure as configureDataSet, overwriteConfigMergeProps, overwriteDefaultConfig } from 'choerodon-ui/dataset';
+import {
+  AttachmentConfig as DataSetAttachmentConfig,
+  Config as DataSetConfig,
+  DefaultConfig as DataSetDefaultConfig,
+  Formatter,
+  Status,
+} from 'choerodon-ui/dataset/configure';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { expandIconProps, Suffixes, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table.d.ts';
@@ -24,6 +30,7 @@ import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
 import defaults from './default';
 
+overwriteConfigMergeProps<Config>(['pagination']);
 overwriteDefaultConfig<Config>(defaults);
 
 export { Status, Formatter };
@@ -118,6 +125,8 @@ export interface Config extends DataSetConfig {
   tableCommandProps?: ButtonProps;
   tableColumnOnCell?: (props: onCellProps) => object;
   tableColumnAlign?: (column: ColumnProps, field?: Field, record?: Record) => ColumnAlign | undefined;
+  tableColumnDefaultMinWidth?: number;
+  tableAggregationColumnDefaultMinWidth?: number;
   tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
@@ -280,5 +289,5 @@ export type DefaultConfig = DataSetDefaultConfig & (typeof defaults);
 export { getConfig, getPrefixCls, getProPrefixCls, getCustomizable, isCustomizable } from './utils';
 
 export default function configure(config: Config, merge = true) {
-  configureDataSet<Config>(config, merge ? ['transport', 'feedback', 'formatter', 'attachment', 'pagination'] : null);
+  configureDataSet<Config>(config, merge ? undefined : null);
 }

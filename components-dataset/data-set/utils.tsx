@@ -14,7 +14,7 @@ import Field, { FieldProps, Fields } from './Field';
 // import XLSX from 'xlsx';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet, { Group } from './DataSet';
-import Record from './Record';
+import Record, { RecordDynamicProps } from './Record';
 import * as ObjectChainValue from '../object-chain-value';
 import localeContext, { $l } from '../locale-context';
 import { SubmitTypes, TransportType, TransportTypes } from './Transport';
@@ -1224,4 +1224,25 @@ export function getIf<T, V>(target: T, propName: string, defaultValue: V | (() =
     return target[propName];
   }
   return value;
+}
+
+export function getRecordDynamicProps<T extends keyof RecordDynamicProps>(record: Record, key: T, defaultValue: NonNullable<ReturnType<NonNullable<RecordDynamicProps[T]>>>): NonNullable<ReturnType<NonNullable<RecordDynamicProps[T]>>> {
+  const { dataSet: { props: { record: recordProps } } } = record;
+  if (recordProps) {
+    const { dynamicProps } = recordProps;
+    if (dynamicProps) {
+      const hook = dynamicProps[key];
+      if (hook) {
+        const result = hook(record);
+        if (result !== undefined) {
+          return result as NonNullable<ReturnType<NonNullable<RecordDynamicProps[T]>>>;
+        }
+      }
+    }
+    const value = recordProps[key];
+    if (value !== undefined) {
+      return value as NonNullable<ReturnType<NonNullable<RecordDynamicProps[T]>>>;
+    }
+  }
+  return defaultValue;
 }

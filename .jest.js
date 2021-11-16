@@ -6,7 +6,7 @@ const transformIgnorePatterns = [
 ];
 module.exports = {
   verbose: true,
-  testURL: 'http://localhost/',
+  testURL: 'http://localhost',
   setupFiles: ['./tests/setup.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'md'],
   modulePathIgnorePatterns: ['/_site/'],
@@ -31,6 +31,13 @@ module.exports = {
     '!components-pro/*/locale/index.tsx',
     '!components-pro/*/__tests__/**/type.tsx',
     '!components-pro/**/*/interface.{ts,tsx}',
+
+    'components-dataset/**/*.{ts,tsx}',
+    'components-shared/**/*.{ts,tsx}',
+    '!components-dataset/*/__tests__/**/type.tsx',
+    '!components-dataset/**/*/interface.{ts,tsx}',
+
+
     '!components/style/v2-compatible-reset.tsx',
     '!components/responsive/*.{ts,tsx}',
     '!components/mention/*.{ts,tsx}',
