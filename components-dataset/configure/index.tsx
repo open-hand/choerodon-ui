@@ -154,7 +154,8 @@ const baseMergeProps: (keyof Config)[] = ['transport', 'feedback', 'formatter', 
 
 export function getConfig<C extends Config, T extends keyof C, D extends DefaultConfig>(key: T): T extends keyof D ? D[T] : C[T] {
   const custom = (globalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
-  if (custom === undefined) {
+  const hasCustom = (globalConfig as ObservableMap<keyof C, C[T]>).has(key);
+  if (!hasCustom) {
     return (defaultGlobalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
   }
   if ((baseMergeProps as T[]).includes(key)) {
