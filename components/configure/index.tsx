@@ -125,6 +125,8 @@ export interface Config extends DataSetConfig {
   tableCommandProps?: ButtonProps;
   tableColumnOnCell?: (props: onCellProps) => object;
   tableColumnAlign?: (column: ColumnProps, field?: Field, record?: Record) => ColumnAlign | undefined;
+  tableColumnDefaultMinWidth?: number;
+  tableAggregationColumnDefaultMinWidth?: number;
   tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
