@@ -947,10 +947,25 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
+  getWrapperClassNames() {
+    const {
+      prefixCls,
+      props: { className, size },
+    } = this;
+    return classNames(
+      `${prefixCls}-wrapper`,
+      className,
+      {
+        [`${prefixCls}-sm`]: size === Size.small,
+        [`${prefixCls}-lg`]: size === Size.large,
+      },
+    );
+  }
+
   renderWrapperList(uploadBtn?: ReactNode) {
     const { prefixCls, props: { viewMode, listType, __inGroup } } = this;
     const isCard = listType === 'picture-card';
-    const classes = [`${prefixCls}-wrapper`];
+    const classes = [`${prefixCls}-list-wrapper`];
     if (viewMode !== 'popup') {
       const wrapperClassName = this.getWrapperClassNames();
       if (wrapperClassName) {
