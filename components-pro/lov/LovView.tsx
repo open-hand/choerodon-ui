@@ -138,7 +138,7 @@ export default class LovView extends Component<LovViewProps> {
         return item;
       });
     }
-    let records: Record[] = treeFlag === 'Y' ?
+    let records: Record[] = treeFlag === 'Y' && multiple ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     // 满足单选模式下，双击和勾选框选中均支持
