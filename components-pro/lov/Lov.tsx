@@ -467,14 +467,14 @@ export default class Lov extends Select<LovProps> {
           bodyStyle: {
             minHeight: isIE() ? pxToRem(Math.min(350, window.innerHeight)) : 'min(3.5rem, 100vh)',
           },
+          drawer,
+          drawerBorder: !drawer,
           ...modalProps,
           style: {
             width: pxToRem(width),
             ...(modalProps && modalProps.style),
           },
           afterClose: this.handleLovViewAfterClose,
-          drawer,
-          drawerBorder: !drawer,
         } as ModalProps & { children });
         this.afterOpen(options, fetchSingle);
       }
