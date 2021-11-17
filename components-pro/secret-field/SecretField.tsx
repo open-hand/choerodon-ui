@@ -26,8 +26,6 @@ export default class SecretField extends TextField<SecretFieldProps> {
     ...TextField.propTypes,
   };
 
-  countDown = new CountDown();
-
   // eslint-disable-next-line camelcase
   // static __IS_IN_CELL_EDITOR = true;
 
@@ -74,8 +72,12 @@ export default class SecretField extends TextField<SecretFieldProps> {
   private openModal() {
     const label = this.getLabel();
     const { readOnly, name, record } = this;
+    if (!record?.getState(`_secretField_countDown_${name}`)) {
+      record?.setState({ [`_secretField_countDown_${name}`]: new CountDown() });
+    }
     const pattern = this.getProp('pattern');
     const restrict = this.getProp('restrict');
+    const required = this.getProp('required');
     if (!this.modal) {
       const { modalProps } = this.props;
       this.modal = open({
@@ -88,10 +90,11 @@ export default class SecretField extends TextField<SecretFieldProps> {
             label={label}
             pattern={pattern}
             restrict={restrict}
+            required={required}
             token={record?.get('_token')}
             onChange={this.handleSecretChange}
             onQueryFlag={this.setQueryFlag}
-            countDown={this.countDown}
+            countDown={record?.getState(`_secretField_countDown_${name}`)}
           />
         ),
         destroyOnClose: true,
