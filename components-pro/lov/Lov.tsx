@@ -430,10 +430,9 @@ export default class Lov extends Select<LovProps> {
       const config = this.getConfig();
       this.autoCreate();
       const { options } = this;
-      const hasLovViewRenderer = viewRenderer !== undefined;
       if (!this.modal && config && options) {
         const modalProps = this.getModalProps();
-        const tableProps = hasLovViewRenderer ? {} : this.getTableProps();
+        const tableProps = this.getTableProps();
         const { width, title } = config;
         const lovViewProps = this.beforeOpen(options);
         const label = this.getProp('label');
