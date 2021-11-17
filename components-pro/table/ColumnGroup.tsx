@@ -4,8 +4,11 @@ import { ColumnProps, columnWidth } from './Column';
 import ColumnGroups from './ColumnGroups';
 import { getColumnKey, getColumnLock } from './utils';
 import { ColumnLock } from './enum';
+import TableStore from './TableStore';
 
 export default class ColumnGroup {
+  store: TableStore;
+
   column: ColumnProps;
 
   children?: ColumnGroups;
@@ -51,7 +54,7 @@ export default class ColumnGroup {
 
   get width(): number {
     const { children } = this;
-    return children ? children.width : columnWidth(this.column);
+    return children ? children.width : columnWidth(this.column, this.store);
   }
 
   @computed
@@ -98,14 +101,15 @@ export default class ColumnGroup {
     return [];
   }
 
-  constructor(column: ColumnProps, parent: ColumnGroups) {
+  constructor(column: ColumnProps, parent: ColumnGroups, store: TableStore) {
+    this.store = store;
     this.column = column;
     this.key = getColumnKey(column);
     this.parent = parent;
     const { children } = column;
     const { aggregation } = parent;
     if ((!column.aggregation || !aggregation) && children && children.length > 0) {
-      this.children = new ColumnGroups(children, aggregation, this);
+      this.children = new ColumnGroups(children, store, this);
     }
   }
 

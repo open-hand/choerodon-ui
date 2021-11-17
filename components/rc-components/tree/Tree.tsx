@@ -3,6 +3,7 @@
 
 import * as React from 'react';
 import classNames from 'classnames';
+import isPromise from 'is-promise';
 import KeyCode from '../../_util/KeyCode';
 import warning from '../../_util/warning';
 
@@ -131,6 +132,14 @@ export interface TreeProps {
       dropToGap: boolean;
     } | null,
   ) => void;
+  onDropBefore?: (
+    info: NodeDragEventParams & {
+      dragNode: EventDataNode | null;
+      dragNodesKeys: Key[];
+      dropPosition: number;
+      dropToGap: boolean;
+    } | null,
+  ) => boolean;
   /**
    * Used for `rc-tree-select` only.
    * Do not use in your production code directly since this will be refactor.
@@ -447,7 +456,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop!,
       flattenNodes,
       keyEntities,
-      expandedKeys,
       direction,
     );
 
@@ -548,7 +556,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragChildrenKeys,
       flattenNodes,
       keyEntities,
-      expandedKeys,
       indent,
     } = this.state;
     const { onDragOver, allowDrop, direction } = this.props;
@@ -570,7 +577,6 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop!,
       flattenNodes,
       keyEntities,
-      expandedKeys,
       direction,
     );
 
@@ -675,7 +681,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.dragNode = null;
   };
 
-  onNodeDrop = (event: React.MouseEvent<HTMLDivElement>, _node, outsideTree = false) => {
+  onNodeDrop = async (event: React.MouseEvent<HTMLDivElement>, _node, outsideTree = false) => {
     const {
       dragChildrenKeys,
       dropPosition,
@@ -687,7 +693,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     if (!dropAllowed) return;
 
-    const { onDrop } = this.props;
+    const { onDrop, onDropBefore } = this.props;
 
     this.setState({
       dragOverNodeKey: null,
@@ -721,6 +727,14 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropToGap: dropPosition !== 0,
       dropPosition: dropPosition === null ? 0 : dropPosition + Number(posArr[posArr.length - 1]),
     };
+
+    if (onDropBefore && !outsideTree) {
+      const resultStatus = onDropBefore(dropResult);
+      const result = isPromise(resultStatus) ? await resultStatus : resultStatus;
+      if (!result) {
+        return;
+      }
+    }
 
     if (onDrop && !outsideTree) {
       onDrop(dropResult);

@@ -20,7 +20,7 @@ const ConfigProvider: FunctionComponent<ConfigProviderProps> = function ConfigPr
   }), localConfig);
   const getLocalConfig = useCallback<typeof getConfig>((key) => {
     const localValue = configStore.config.get(key);
-    if (localValue !== undefined) {
+    if (configStore.config.has(key)) {
       return localValue;
     }
     return getParentConfig(key);

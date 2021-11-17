@@ -2,13 +2,18 @@ import { computed } from 'mobx';
 import { ColumnProps, columnWidth } from './Column';
 import ColumnGroup from './ColumnGroup';
 import { ColumnLock } from './enum';
+import TableStore from './TableStore';
 
 export default class ColumnGroups {
   columns: ColumnGroup[];
 
-  aggregation?: boolean | undefined;
+  store: TableStore;
 
   parent?: ColumnGroup;
+
+  get aggregation(): boolean | undefined {
+    return this.store.aggregation;
+  }
 
   @computed
   get wide(): number {
@@ -94,23 +99,23 @@ export default class ColumnGroups {
   }
 
   get leafColumnsWidth(): number {
-    return this.allLeafs.reduce<number>((total, { column }) => total + columnWidth(column), 0);
+    return this.allLeafs.reduce<number>((total, { column }) => total + columnWidth(column, this.store), 0);
   }
 
   get leftLeafColumnsWidth(): number {
-    return this.leftLeafs.reduce<number>((total, { column }) => total + columnWidth(column), 0);
+    return this.leftLeafs.reduce<number>((total, { column }) => total + columnWidth(column, this.store), 0);
   }
 
   get rightLeafColumnsWidth(): number {
-    return this.rightLeafs.reduce<number>((total, { column }) => total + columnWidth(column), 0);
+    return this.rightLeafs.reduce<number>((total, { column }) => total + columnWidth(column, this.store), 0);
   }
 
-  constructor(columns: ColumnProps[], aggregation?: boolean | undefined, parent?: ColumnGroup) {
-    this.aggregation = aggregation;
+  constructor(columns: ColumnProps[], store: TableStore, parent?: ColumnGroup) {
+    this.store = store;
     this.parent = parent;
     let prev: ColumnGroup | undefined;
     this.columns = columns.map(col => {
-      const group = new ColumnGroup(col, this);
+      const group = new ColumnGroup(col, this, store);
       if (prev) {
         prev.next = group;
         group.prev = prev;
