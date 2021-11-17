@@ -342,7 +342,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
       <div className={`${prefixCls}-modal`}>
         {
           flag !== 'slider' && (
-            <Form style={{ height: 'calc(100% - 42px)' }} dataSet={this.formDs} columns={4} labelWidth="auto">
+            <Form className={`${prefixCls}-modal-form`} dataSet={this.formDs} columns={4} labelWidth="auto">
               {
                 flag === 'verify' && (
                   <>
@@ -383,7 +383,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
                 flag === 'edit' && (
                   <>
                     <TextField name={name} colSpan={4} restrict={restrict} />
-                    <td colSpan={4} className={`${prefixCls}-modal-btns`}>
+                    <td colSpan={4} className={`${prefixCls}-modal-edit-btns`}>
                       {!validate &&
                       <><p className={`${prefixCls}-modal-validate`}>{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
