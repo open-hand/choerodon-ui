@@ -276,14 +276,19 @@ export default class LovView extends Component<LovViewProps> {
       valueField = '',
       textField = '',
       nodeRenderer,
-      config: { treeFlag },
+      config: { treeFlag, tableProps: configTableProps = {} },
       tableProps,
     } = this.props;
-    if (!tableProps || !tableProps.selectionMode) {
-      this.selectionMode = treeFlag === 'Y' ? SelectionMode.treebox : SelectionMode.rowbox;
-    } else {
-      this.selectionMode = tableProps.selectionMode;
+
+    if (!this.selectionMode) {
+      const selectionMode = tableProps?.selectionMode || configTableProps?.selectionMode;
+      if (!selectionMode) {
+        this.selectionMode = treeFlag === 'Y' ? SelectionMode.treebox : SelectionMode.rowbox;
+      } else {
+        this.selectionMode = selectionMode;
+      }
     }
+
     return (
       <SelectionList
         dataSet={dataSet}
