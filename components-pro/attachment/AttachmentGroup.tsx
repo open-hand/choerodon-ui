@@ -17,6 +17,7 @@ export interface AttachmentGroupProps extends ButtonProps {
   label?: ReactNode;
   colSpan?: number;
   rowSpan?: number;
+  text?: ReactNode;
 }
 
 type GetRef = (attachment: Attachment | null, index: number) => void;
@@ -43,7 +44,7 @@ function normalizeAttachments(children: ReactNode, getRef?: GetRef, index = 0): 
 }
 
 const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function AttachmentGroup(props) {
-  const { viewMode, children, hidden, ...buttonProps } = props;
+  const { viewMode, children, hidden, text, ...buttonProps } = props;
   const { getProPrefixCls } = useContext(ConfigContext);
   const listRef = useRef<ObservableMap<number, Attachment>>(observable.map());
   const prefixCls = getProPrefixCls('attachment');
@@ -83,7 +84,7 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
           color={ButtonColor.primary}
           {...buttonProps}
         >
-          {$l('Attachment', 'view_attachment')} {count || undefined}
+          {text || $l('Attachment', 'view_attachment')} {count || undefined}
         </Button>
       </Trigger>
     );

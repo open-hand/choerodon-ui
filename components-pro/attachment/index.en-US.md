@@ -56,5 +56,6 @@ title: Attachment
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | viewMode | 上传列表的显示模式，支持两种基本样式  `list` 和 `popup` | string | 'popup' |
+| text | 按钮文字 | ReactNode |  |
 
 更多属性请参考 [Button](/components-pro/button/#Button)。
