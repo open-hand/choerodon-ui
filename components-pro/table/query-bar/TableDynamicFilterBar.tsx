@@ -312,7 +312,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         },
       ],
     });
-    // const initSelectFields = queryDataSet.current
     // 初始化状态
     queryDataSet.setState('menuDataSet', menuDataSet);
     queryDataSet.setState('conditionDataSet', conditionDataSet);
@@ -320,7 +319,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     queryDataSet.setState('filterMenuDataSet', filterMenuDataSet);
     queryDataSet.setState('conditionStatus', RecordStatus.sync);
     queryDataSet.setState('searchText', '');
-    // queryDataSet.setState('selectFields', []);
 
     const result = await menuDataSet.query();
     if (optionDataSet) {
