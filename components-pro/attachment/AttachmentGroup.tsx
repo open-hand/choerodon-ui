@@ -18,6 +18,7 @@ export interface AttachmentGroupProps extends ButtonProps {
   colSpan?: number;
   rowSpan?: number;
   text?: ReactNode;
+  count?: number;
 }
 
 type GetRef = (attachment: Attachment | null, index: number) => void;
@@ -44,14 +45,15 @@ function normalizeAttachments(children: ReactNode, getRef?: GetRef, index = 0): 
 }
 
 const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function AttachmentGroup(props) {
-  const { viewMode, children, hidden, text, ...buttonProps } = props;
+  const { viewMode, children, hidden, text, count, ...buttonProps } = props;
+  const hasCount = count !== undefined;
   const { getProPrefixCls } = useContext(ConfigContext);
   const listRef = useRef<ObservableMap<number, Attachment>>(observable.map());
   const prefixCls = getProPrefixCls('attachment');
   const attachments: ReactElement | null = useMemo(() => children ? (
     <div className={`${prefixCls}-group`}>
       {
-        normalizeAttachments(children, viewMode === 'list' ? undefined : action((attachment, index) => {
+        normalizeAttachments(children, hasCount || viewMode === 'list' ? undefined : action((attachment, index) => {
           if (attachment) {
             listRef.current.set(index, attachment);
           } else {
@@ -68,7 +70,7 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
     if (viewMode === 'list') {
       return attachments;
     }
-    const count = iteratorReduce<Attachment, number>(listRef.current.values(), (sum, attachment) => sum + (attachment.count || 0), 0);
+    const computedCount = hasCount ? count : iteratorReduce<Attachment, number>(listRef.current.values(), (sum, attachment) => sum + (attachment.count || 0), 0);
     return (
       <Trigger
         prefixCls={prefixCls}
@@ -76,7 +78,7 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
         action={[Action.hover, Action.focus]}
         builtinPlacements={BUILT_IN_PLACEMENTS}
         popupPlacement="bottomLeft"
-        forceRender
+        forceRender={!hasCount}
       >
         <Button
           icon="attach_file"
@@ -84,7 +86,7 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
           color={ButtonColor.primary}
           {...buttonProps}
         >
-          {text || $l('Attachment', 'view_attachment')} {count || undefined}
+          {text || $l('Attachment', 'view_attachment')} {computedCount || undefined}
         </Button>
       </Trigger>
     );

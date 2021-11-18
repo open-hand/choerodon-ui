@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <Form columns={3} labelWidth="auto">
-      <Group label="分组1">
+      <Group label="分组1" text="附件">
         <Attachment label="技术附件" value={value} onChange={setValue} {...props} />
         <Attachment dataSet={ds} name="attachment" {...props} />
       </Group>
