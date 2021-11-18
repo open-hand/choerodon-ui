@@ -15,6 +15,7 @@ import ViewComponent from '../core/ViewComponent';
 export interface TransferListProps extends SelectProps {
   header?: ReactNode;
   selected: Record[];
+  currentSelectedIndex?: number;
   footer?: (options: Record[]) => ReactNode;
   onSelect: (e) => void;
   onSelectAll: (value: any) => void;
@@ -22,6 +23,10 @@ export interface TransferListProps extends SelectProps {
 
 @observer
 export default class TransferList extends Select<TransferListProps> {
+  wrapperRef: HTMLDivElement | null = null;
+
+  lastSelectIndex: number | undefined = undefined;
+
   get popup() {
     return true;
   }
@@ -57,15 +62,37 @@ export default class TransferList extends Select<TransferListProps> {
     return undefined;
   }
 
+  componentDidUpdate() {
+    const { currentSelectedIndex } = this.props;
+    // 在渲染完之后执行
+    if (this.wrapperRef && this.lastSelectIndex !== currentSelectedIndex) {
+      const contentDom = this.wrapperRef.getElementsByTagName('ul')[0];
+      const findSelectedDom = this.wrapperRef.getElementsByTagName('li');
+      for (let i = 0; i < findSelectedDom.length; i++) {
+        findSelectedDom[i].style.backgroundColor = i === currentSelectedIndex ? '#e2e6ff' : '';
+      }
+
+      if (contentDom && currentSelectedIndex && currentSelectedIndex > -1) {
+        const selectedDom = findSelectedDom[currentSelectedIndex] as HTMLLIElement;
+        const offset = selectedDom.offsetTop + selectedDom.offsetHeight;
+        const selectedDomRect = selectedDom.getBoundingClientRect();
+        const conetentDomRect = contentDom.getBoundingClientRect();
+        if (
+          offset > contentDom.offsetHeight &&
+          selectedDomRect.top + selectedDomRect.height >
+            conetentDomRect.top + conetentDomRect.height
+        ) {
+          contentDom.scrollTo({ top: offset - contentDom.offsetHeight });
+        }
+      }
+      this.lastSelectIndex = currentSelectedIndex;
+    }
+  }
+
   getOmitPropsKeys(): string[] {
-    return super.getOmitPropsKeys().concat([
-      'autoComplete',
-      'footer',
-      'header',
-      'selected',
-      'onSelect',
-      'onSelectAll',
-    ]);
+    return super
+      .getOmitPropsKeys()
+      .concat(['autoComplete', 'footer', 'header', 'selected', 'onSelect', 'onSelectAll']);
   }
 
   getOtherProps() {
@@ -74,6 +101,8 @@ export default class TransferList extends Select<TransferListProps> {
     delete otherProps.type;
     delete otherProps.onChange;
     delete otherProps.onKeyDown;
+    delete otherProps.currentSelectedIndex;
+    delete otherProps.showSort;
     return otherProps;
   }
 
@@ -165,6 +194,9 @@ export default class TransferList extends Select<TransferListProps> {
         {searchField}
         <div
           className={`${prefixCls}-content-wrapper`}
+          ref={dom => {
+            this.wrapperRef = dom;
+          }}
           onFocus={searchable ? stopPropagation : undefined}
         >
           {this.getMenu({ selectedKeys, onClick: onSelect, focusable: !this.searchable })}

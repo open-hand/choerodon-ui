@@ -2,8 +2,10 @@ import React, { ChangeEvent, Component, CSSProperties, ReactNode, SyntheticEvent
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
+import cloneDeep from 'lodash/cloneDeep';
 import List, { TransferListProps } from './list';
 import Operation from './operation';
+import Sort from './sort';
 import Search from './search';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
@@ -33,7 +35,9 @@ export interface TransferProps {
   style?: CSSProperties;
   listStyle?: CSSProperties;
   titles?: string[];
-  operations?: string[];
+  operations?: string[] | ReactNode[];
+  showSort?: boolean;
+  sorts?: string[] | ReactNode[];
   showSearch?: boolean;
   filterOption?: (inputValue: any, item: any) => boolean;
   searchPlaceholder?: string;
@@ -83,6 +87,8 @@ export default class Transfer extends Component<TransferProps, any> {
     className: PropTypes.string,
     titles: PropTypes.array,
     operations: PropTypes.array,
+    showSort: PropTypes.bool,
+    sorts: PropTypes.array,
     showSearch: PropTypes.bool,
     filterOption: PropTypes.func,
     searchPlaceholder: PropTypes.string,
@@ -100,6 +106,8 @@ export default class Transfer extends Component<TransferProps, any> {
     rightDataSource: TransferItem[];
   } | null;
 
+  transferRef: HTMLElement | null = null;
+
   constructor(props: TransferProps) {
     super(props);
 
@@ -109,6 +117,8 @@ export default class Transfer extends Component<TransferProps, any> {
       rightFilter: '',
       sourceSelectedKeys: selectedKeys.filter(key => targetKeys.indexOf(key) === -1),
       targetSelectedKeys: selectedKeys.filter(key => targetKeys.indexOf(key) > -1),
+      highlightKey: '',
+      sortKeys: null,
     };
   }
 
@@ -151,15 +161,17 @@ export default class Transfer extends Component<TransferProps, any> {
     }
   }
 
-  splitDataSource() {
+  splitDataSource(sortKeys?: Array<string>) {
     if (this.splitedDataSource) {
       return this.splitedDataSource;
     }
 
     const { dataSource, rowKey, targetKeys = [] } = this.props;
 
+    const useKeys = sortKeys || targetKeys;
+
     const leftDataSource: TransferItem[] = [];
-    const rightDataSource: TransferItem[] = new Array(targetKeys.length);
+    const rightDataSource: TransferItem[] = new Array(useKeys.length);
     dataSource.forEach(record => {
       if (rowKey) {
         record.key = rowKey(record);
@@ -167,7 +179,7 @@ export default class Transfer extends Component<TransferProps, any> {
 
       // rightDataSource should be ordered by targetKeys
       // leftDataSource should be ordered by dataSource
-      const indexOfKey = targetKeys.indexOf(record.key);
+      const indexOfKey = useKeys.indexOf(record.key);
       if (indexOfKey !== -1) {
         rightDataSource[indexOfKey] = record;
       } else {
@@ -203,6 +215,8 @@ export default class Transfer extends Component<TransferProps, any> {
       direction === TransferDirection.right ? TransferDirection.left : TransferDirection.right;
     this.setState({
       [this.getSelectedKeysName(oppositeDirection)]: [],
+      sortKeys: null,
+      highlightKey: '',
     });
     this.handleSelectChange(oppositeDirection, []);
 
@@ -211,9 +225,55 @@ export default class Transfer extends Component<TransferProps, any> {
     }
   };
 
+  sortTo = (direction: TransferDirection) => {
+    const { prefixCls: customizePrefixCls } = this.props;
+    const { highlightKey } = this.state;
+    const { rightDataSource } = this.splitDataSource();
+
+    const mapRightKey = rightDataSource.map(x => x.key);
+
+    const index = mapRightKey.indexOf(highlightKey);
+    const cloneMapRightKey = cloneDeep(mapRightKey);
+
+    cloneMapRightKey[index] = cloneMapRightKey.splice(
+      index + (direction === TransferDirection.up ? -1 : 1),
+      1,
+      cloneMapRightKey[index],
+    )[0];
+    this.splitedDataSource = null;
+    this.setState(
+      {
+        sortKeys: cloneMapRightKey,
+      },
+      () => {
+        // 向下移动位置，滚动条跟随
+        if (this.transferRef) {
+          const { getPrefixCls } = this.context;
+          const prefixCls = getPrefixCls('transfer', customizePrefixCls);
+          const selectedCls = `${prefixCls}-list-content-item-highlight`;
+          const contentCls = `${prefixCls}-list-content`;
+          const selectedDom = this.transferRef.getElementsByClassName(
+            selectedCls,
+          )[0] as HTMLDivElement;
+          const contentDom = this.transferRef.getElementsByClassName(
+            contentCls,
+          )[1] as HTMLDivElement;
+          const offset = selectedDom.offsetTop + selectedDom.offsetHeight;
+          if (offset > contentDom.offsetHeight && direction === TransferDirection.down) {
+            contentDom.scrollTo({ top: offset - contentDom.offsetHeight });
+          }
+        }
+      },
+    );
+  };
+
   moveToLeft = () => this.moveTo(TransferDirection.left);
 
   moveToRight = () => this.moveTo(TransferDirection.right);
+
+  moveToUp = () => this.sortTo(TransferDirection.up);
+
+  moveToDown = () => this.sortTo(TransferDirection.down);
 
   handleSelectChange(direction: TransferDirection, holder: string[]) {
     const { onSelectChange } = this.props;
@@ -310,6 +370,11 @@ export default class Transfer extends Component<TransferProps, any> {
         [this.getSelectedKeysName(direction)]: holder,
       });
     }
+    if (direction === TransferDirection.right) {
+      this.setState({
+        highlightKey: selectedItem.key,
+      });
+    }
   };
 
   handleLeftSelect = (selectedItem: TransferItem, checked: boolean) => {
@@ -350,6 +415,8 @@ export default class Transfer extends Component<TransferProps, any> {
       prefixCls: customizePrefixCls,
       className,
       operations = [],
+      showSort = false,
+      sorts = [],
       showSearch,
       notFoundContent,
       searchPlaceholder,
@@ -362,17 +429,33 @@ export default class Transfer extends Component<TransferProps, any> {
     } = this.props;
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('transfer', customizePrefixCls);
-    const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys } = this.state;
+    const {
+      leftFilter,
+      rightFilter,
+      sourceSelectedKeys,
+      targetSelectedKeys,
+      highlightKey,
+      sortKeys,
+    } = this.state;
 
-    const { leftDataSource, rightDataSource } = this.splitDataSource();
+    const { leftDataSource, rightDataSource } = this.splitDataSource(sortKeys);
     const leftActive = targetSelectedKeys.length > 0;
     const rightActive = sourceSelectedKeys.length > 0;
 
+    const mapRightKey = rightDataSource.map(x => x.key);
+    const upActive = !!highlightKey && mapRightKey.indexOf(highlightKey) !== 0;
+    const downActive =
+      !!highlightKey && mapRightKey.indexOf(highlightKey) !== mapRightKey.length - 1;
     const cls = classNames(className, prefixCls);
 
     const titles = this.getTitles(locale);
     return (
-      <div className={cls}>
+      <div
+        className={cls}
+        ref={dom => {
+          this.transferRef = dom;
+        }}
+      >
         <List
           prefixCls={`${prefixCls}-list`}
           titleText={titles[0]}
@@ -413,6 +496,7 @@ export default class Transfer extends Component<TransferProps, any> {
           filterOption={filterOption}
           style={listStyle}
           checkedKeys={targetSelectedKeys}
+          highlightKey={highlightKey}
           handleFilter={this.handleRightFilter}
           handleClear={this.handleRightClear}
           handleSelect={this.handleRightSelect}
@@ -428,6 +512,17 @@ export default class Transfer extends Component<TransferProps, any> {
           lazy={lazy}
           onScroll={this.handleRightScroll}
         />
+        {!!showSort && (
+          <Sort
+            className={`${prefixCls}-sort`}
+            upActive={upActive}
+            upArrowText={sorts[0]}
+            moveToUp={this.moveToUp}
+            downActive={downActive}
+            downArrowText={sorts[1]}
+            moveToDown={this.moveToDown}
+          />
+        )}
       </div>
     );
   };
