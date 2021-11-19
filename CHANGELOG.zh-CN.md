@@ -34,7 +34,8 @@ timeline: true
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
-- 💄 `<pro>Table`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
+- 💄 `<pro>Table`: 优化动态筛选条交互和缓存。
+- 💄 `<pro>Table`: 优化 command 预设按钮，icon 转文字渲染。
 - 💄 `<pro>Output`: 优化 Form 多列情况，Output 和其他输入类型组件高度问题。
 - 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 的样式。
 - 💄 `Message`: 优化 loading 类型消息图标。
@@ -53,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复 children, className 属性不起效果的问题。
 - 🐞 `Tabs`: 修复嵌套样式问题。
 - 🐞 `<pro>PerformanceTable`: 修复表格内容更新后勾选列消失的问题。
+- 🐞 `List.Item.Meta`: 修复文字类头像不显示的问题。
 
 ## 1.5.0-beta.0
 

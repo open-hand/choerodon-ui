@@ -56,5 +56,7 @@ title: Attachment
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | viewMode | 上传列表的显示模式，支持两种基本样式  `list` 和 `popup` | string | 'popup' |
+| text | 按钮文字 | ReactNode |  |
+| count | 自定义附件数量, 未设置时会自动获取组内的附件数量 | number |  |
 
 更多属性请参考 [Button](/components-pro/button/#Button)。

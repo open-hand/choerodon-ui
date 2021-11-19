@@ -34,7 +34,8 @@ timeline: true
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
-- 💄 `<pro>Table`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
+- 💄 `<pro>Table`: Optimize the interaction and caching of the dynamic filter bar.
+- 💄 `<pro>Table`: Optimize the command preset button, icon to text.
 - 💄 `<pro>Output`: Optimize `Form` multiple columns, `Output` and other input type component height issues.
 - 💄 `<pro>DatePicker`: Optimized `mode` to `dateTime` style.
 - 💄 `Message`: Optimized `loading` type message icon.
@@ -53,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the problem that the `children` and `className` properties has no effect.
 - 🐞 `Tabs`: Fix the nesting style problem.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
+- 🐞 `List.Item.Meta`: Fix the problem that text avatars are not displayed.
 
 ## 1.5.0-beta.0
 

@@ -706,7 +706,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         icon="file_upload"
         color={this.isValid ? ButtonColor.primary : ButtonColor.red}
         {...rest}
-        className={this.getClassName()}
+        className={viewMode === 'popup' ? this.getMergedClassNames() : this.getClassName()}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
@@ -737,6 +737,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         icon="attach_file"
         color={ButtonColor.primary}
         {...omit(rest, ['ref'])}
+        className={this.getMergedClassNames()}
       >
         {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple && this.count || undefined}
       </Button>
@@ -947,10 +948,25 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
+  getWrapperClassNames() {
+    const {
+      prefixCls,
+      props: { className, size },
+    } = this;
+    return classNames(
+      `${prefixCls}-wrapper`,
+      className,
+      {
+        [`${prefixCls}-sm`]: size === Size.small,
+        [`${prefixCls}-lg`]: size === Size.large,
+      },
+    );
+  }
+
   renderWrapperList(uploadBtn?: ReactNode) {
     const { prefixCls, props: { viewMode, listType, __inGroup } } = this;
     const isCard = listType === 'picture-card';
-    const classes = [`${prefixCls}-wrapper`];
+    const classes = [`${prefixCls}-list-wrapper`];
     if (viewMode !== 'popup') {
       const wrapperClassName = this.getWrapperClassNames();
       if (wrapperClassName) {
@@ -1015,7 +1031,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (viewMode === 'popup') {
       const label = this.hasFloatLabel && this.getLabel();
       return (
-        <div className={classNames(`${prefixCls}-popup-wrapper`, this.getWrapperClassNames())}>
+        <>
           <Trigger
             prefixCls={prefixCls}
             popupContent={this.renderWrapper}
@@ -1029,7 +1045,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           </Trigger>
           {this.renderHelp(ShowHelp.tooltip)}
           {this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
-        </div>
+        </>
       );
     }
     return this.renderWrapperList(readOnly ? undefined : this.renderUploadBtn(listType === 'picture-card'));

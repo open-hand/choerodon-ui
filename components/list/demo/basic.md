@@ -38,7 +38,7 @@ ReactDOM.render(
     renderItem={item => (
       <List.Item>
         <List.Item.Meta
-          avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+          avatar={<Avatar>Choerodon</Avatar>}
           title={<a href="https://choerodon.github.io/choerodon-ui/">{item.title}</a>}
           description="Choerodon"
         />
