@@ -798,7 +798,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       const mergedProps = optionProps ? {
         ...optionProps,
         ...itemProps,
-        className: classNames(optionProps.className, itemProps.className),
+        className: classNames(optionProps.className, itemProps.className, {
+          [`${this.prefixCls}-current`]: record.isCurrent,
+        }),
         style: {
           ...optionProps.style,
           ...itemProps.style,
