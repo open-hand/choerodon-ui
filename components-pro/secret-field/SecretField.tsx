@@ -51,9 +51,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
   private secretEnable: Boolean = false;
 
   get isSecretEnable(): Boolean {
-    const { record } = this;
-    if (!record?.get('_token')) {
-      // 新增数据，record没有token，显示为textfield
+    const { record, name } = this;
+    if (!record?.get('_token') || !record?.get(name) ) {
+      // 新增数据，record没有token或者没有值，显示为textfield
       return false;
     }
     return this.secretEnable;
@@ -123,10 +123,11 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getSuffix(): ReactNode {
-    const { readOnly, queryFlag, isSecretEnable, name, record } = this;
-    // 未开启脱敏组件
+    const { readOnly, queryFlag, isSecretEnable, props } = this;
+    const disabled = this.getProp('disabled') || props.disabled;
+    // 未开启脱敏组件或者脱敏组件值为空时,不显示编辑/查看按钮
     if (!isSecretEnable) {
-      const { suffix } = this.props;
+      const { suffix } = props;
       return suffix ? this.wrapperSuffix(suffix) : null;
     }
     // 开启脱敏组件
@@ -135,16 +136,16 @@ export default class SecretField extends TextField<SecretFieldProps> {
       return this.wrapperSuffix(
         <Icon type='edit-o' />,
         {
-          onClick: this.handleOpenModal,
+          onClick: disabled ? null : this.handleOpenModal,
         },
       )
     }
-    // 只读：已读/值为空不显示查看按钮
-    if (queryFlag && readOnly && record?.get(name)) {
+    // 只读：已读不显示查看按钮
+    if (queryFlag && readOnly) {
       return this.wrapperSuffix(
         <Icon type='visibility-o' />,
         {
-          onClick: this.handleOpenModal,
+          onClick: disabled ? null : this.handleOpenModal,
         },
       )
     }
