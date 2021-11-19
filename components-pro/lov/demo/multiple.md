@@ -90,6 +90,7 @@ class App extends React.Component {
         placeholder="复选LOV"
         tableProps={tableProps}
         onBeforeSelect={this.handleBeforeSelect}
+        showSelectedInModal={true}
       />
     );
   }

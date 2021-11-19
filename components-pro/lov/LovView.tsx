@@ -14,7 +14,7 @@ import { ColumnProps } from '../table/Column';
 import { modalChildrenProps } from '../modal/interface';
 import autobind from '../_util/autobind';
 import { getColumnKey } from '../table/utils';
-import SelectionList, { TIMESTAMP } from './SelectionList';
+import SelectionList, { TIMESTAMP, SelectionsPosition } from './SelectionList';
 import { LovConfig, ViewRenderer, NodeRenderer } from './Lov';
 import { FormContextValue } from '../form/FormContext';
 
@@ -35,6 +35,7 @@ export interface LovViewProps {
   textField?: string;
   viewRenderer?: ViewRenderer;
   nodeRenderer?: NodeRenderer,
+  showSelectedInModal?: boolean;
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -206,6 +207,7 @@ export default class LovView extends Component<LovViewProps> {
       tableProps,
       viewMode,
       context,
+      showSelectedInModal,
     } = this.props;
     const { getConfig } = context;
     const columns = this.getColumns();
@@ -266,7 +268,12 @@ export default class LovView extends Component<LovViewProps> {
       lovTableProps.queryBar = (props) => <TableProfessionalBar {...props} />;
     }
     this.selectionMode = lovTableProps.selectionMode;
-    return <Table {...lovTableProps} />;
+    return (
+      <>
+        <Table {...lovTableProps} />
+        {showSelectedInModal && viewMode === 'modal' && multiple && this.renderSelectionList()}
+      </>
+    );
   }
 
   renderSelectionList() {
@@ -278,6 +285,9 @@ export default class LovView extends Component<LovViewProps> {
       nodeRenderer,
       config: { treeFlag, tableProps: configTableProps = {} },
       tableProps,
+      multiple,
+      viewMode,
+      showSelectedInModal,
     } = this.props;
 
     if (!this.selectionMode) {
@@ -288,6 +298,9 @@ export default class LovView extends Component<LovViewProps> {
         this.selectionMode = selectionMode;
       }
     }
+    const selectionsPosition = viewMode === 'drawer' ?
+      SelectionsPosition.side :
+      (showSelectedInModal && viewMode === 'modal' && multiple ? SelectionsPosition.below : undefined);
 
     return (
       <SelectionList
@@ -297,6 +310,7 @@ export default class LovView extends Component<LovViewProps> {
         textField={textField}
         label={label}
         nodeRenderer={nodeRenderer}
+        selectionsPosition={selectionsPosition}
       />
     );
   }

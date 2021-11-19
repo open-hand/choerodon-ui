@@ -31,6 +31,7 @@ timeline: true
 - 🌟 `<pro>Tree`: Added `filter` property.
 - 🌟 `Tree`: Added callback of `onDropBefore` function.
 - 🌟 `<pro>DataSet`: Added `record` property.
+- 🌟 `<pro>Lov`: Added `showSelectedInModal` property.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
 import sortBy from 'lodash/sortBy'
@@ -6,6 +6,7 @@ import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { LovConfig } from 'choerodon-ui/dataset/interface';
+import Tag from 'choerodon-ui/lib/tag';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Animate from '../animate';
@@ -15,6 +16,11 @@ import { NodeRenderer } from './Lov';
 
 export const TIMESTAMP = '__TIMESTAMP__';
 
+export enum SelectionsPosition {
+  side = 'side',
+  below = 'below',
+}
+
 export interface SelectionListProps {
   dataSet: DataSet;
   treeFlag?: LovConfig['treeFlag'];
@@ -22,6 +28,7 @@ export interface SelectionListProps {
   textField: string;
   label?: string;
   nodeRenderer?: NodeRenderer,
+  selectionsPosition?: SelectionsPosition,
 }
 
 @observer
@@ -57,7 +64,7 @@ export default class SelectionList extends Component<SelectionListProps> {
     }
   };
 
-  render() {
+  renderSide = (): ReactNode => {
     const { dataSet, treeFlag, label = '', valueField = '', textField = '', nodeRenderer } = this.props;
     const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
     if (isEmpty(records)) {
@@ -95,5 +102,52 @@ export default class SelectionList extends Component<SelectionListProps> {
         </Animate>
       </div>
     );
+  }
+
+  renderBelow = (): ReactNode => {
+    const { dataSet, treeFlag, valueField = '', textField = '' } = this.props;
+    const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
+    if (isEmpty(records)) {
+      return null;
+    }
+
+    const classString = `${this.prefixCls}-selection-list-below`;
+    const animateChildren = this.getRecords(records).map((record: Record) => {
+      return (
+        <li key={record.get(valueField)} className={`${classString}-item`}>
+          <Tag closable onClose={() => { this.handleRemove(record); }}>
+            <span>{record.get(textField)}</span>
+          </Tag>
+        </li>
+      );
+    });
+    return (
+      <div className={classString}>
+        <p className={`${classString}-intro`}>
+          {$l('Table', 'selection_tips', {
+            count: <b key="count">{records.length}</b>,
+          })}
+        </p>
+        <Animate
+          className={`${classString}-list`}
+          transitionAppear
+          transitionName="fade"
+          component="ul"
+        >
+          {animateChildren}
+        </Animate>
+      </div>
+    );
+  }
+
+  render() {
+    const { selectionsPosition } = this.props;
+    if (selectionsPosition === SelectionsPosition.side) {
+      return this.renderSide();
+    }
+    if (selectionsPosition === SelectionsPosition.below) {
+      return this.renderBelow();
+    }
+    return null;
   }
 }

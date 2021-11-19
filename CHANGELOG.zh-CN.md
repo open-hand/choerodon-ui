@@ -31,6 +31,7 @@ timeline: true
 - 🌟 `<pro>Tree`: 新增 filter 属性。
 - 🌟 `Tree`: 新增 onDropBefore 回调函数。
 - 🌟 `<pro>DataSet`: 新增 record 属性。
+- 🌟 `<pro>Lov`: 新增 showSelectedInModal 属性。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。

@@ -5,6 +5,7 @@
 @select-prefix-cls: ~'@{c7n-pro-prefix}-select';
 @progress-prefix-cls: ~'@{c7n-prefix}-progress';
 @lov-prefix-cls: ~'@{select-prefix-cls}-lov';
+@lov-select-prefix-cls: ~'@{modal-prefix-cls}-selection-list-below';
 @drawer-prefix-cls: ~'@{modal-prefix-cls}-selection-list';
 @spin-prefix-cls: ~'@{c7n-prefix}-spin-nested-loading';
 @drawer-list-padding: 0.2rem;
@@ -89,6 +90,26 @@
       &>.@{table-prefix-cls}-wrapper {
         width: calc(100% - 0.15rem);
       }
+    }
+  }
+
+  .@{lov-select-prefix-cls} {
+    &-intro {
+      margin: 0.1rem 0;
+      padding-left: 0.08rem;
+      font-size: 0.15rem;
+      border-left: 0.03rem solid #3f51b5;
+    }
+
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      max-height: 1.2rem;
+      overflow: auto;
+    }
+
+    &-item {
+      margin-bottom: 0.04rem;
     }
   }
 }

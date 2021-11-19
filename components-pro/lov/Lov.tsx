@@ -87,6 +87,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   onSearchMatcherChange?: (searchMatcher?: string) => void;
   viewRenderer?: ViewRenderer;
   nodeRenderer?: NodeRenderer;
+  showSelectedInModal?: boolean;
 }
 
 @observer
@@ -108,6 +109,7 @@ export default class Lov extends Select<LovProps> {
     showCheckedStrategy: PropTypes.string,
     viewRenderer: PropTypes.func,
     nodeRenderer: PropTypes.func,
+    showSelectedInModal: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -118,6 +120,7 @@ export default class Lov extends Select<LovProps> {
     searchAction: SearchAction.input,
     fetchSingle: false,
     viewMode: 'modal',
+    showSelectedInModal: false,
   };
 
   @observable modal;
@@ -424,7 +427,7 @@ export default class Lov extends Select<LovProps> {
   private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode } = this.observableProps;
-    const { onBeforeSelect, viewRenderer, nodeRenderer } = this.props;
+    const { onBeforeSelect, viewRenderer, nodeRenderer, showSelectedInModal } = this.props;
     const drawer = viewMode === 'drawer';
     if (viewMode === 'modal' || drawer) {
       const config = this.getConfig();
@@ -457,6 +460,7 @@ export default class Lov extends Select<LovProps> {
               textField={textField}
               viewRenderer={viewRenderer}
               nodeRenderer={nodeRenderer}
+              showSelectedInModal={showSelectedInModal}
             />
           ),
           onClose: this.handleLovViewClose,
