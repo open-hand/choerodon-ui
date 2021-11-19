@@ -75,7 +75,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   onUploadProgress?: (percent: number, attachment: AttachmentFile) => void;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, response: any, attachment: AttachmentFile) => void;
-  downloadAll?: ButtonProps;
+  downloadAll?: ButtonProps | boolean;
   __inGroup?: boolean;
 }
 
@@ -824,10 +824,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     } = this.props;
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
-    if (attachmentUUID || uploadButton) {
-      const { bucketName, bucketDirectory, storageCode } = this;
+    if (attachmentUUID || uploadButton || (attachments && attachments.length)) {
+      const { bucketName, bucketDirectory, storageCode, readOnly } = this;
       const width = this.getPictureWidth();
-      const { readOnly } = this;
       return (
         <AttachmentList
           prefixCls={`${this.prefixCls}-list`}
@@ -867,20 +866,24 @@ export default class Attachment extends FormField<AttachmentProps> {
         if (downloadAll) {
           const { getDownloadAllUrl } = this.getContextConfig('attachment');
           if (getDownloadAllUrl) {
-            const { bucketName, bucketDirectory, storageCode } = this;
             const attachmentUUID = this.getValue();
-            getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID });
-            const downProps: ButtonProps = {
-              key: 'download',
-              icon: 'get_app',
-              funcType: FuncType.link,
-              href: getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID }),
-              target: '_blank',
-              color: ButtonColor.primary,
-              children: $l('Attachment', 'download_all'),
-              ...downloadAll,
-            };
-            buttons.push(<Button {...downProps} />);
+            if (attachmentUUID) {
+              const { bucketName, bucketDirectory, storageCode } = this;
+              const downloadAllUrl = getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID });
+              if (downloadAllUrl) {
+                const downProps: ButtonProps = {
+                  key: 'download',
+                  icon: 'get_app',
+                  funcType: FuncType.link,
+                  href: downloadAllUrl,
+                  target: '_blank',
+                  color: ButtonColor.primary,
+                  children: $l('Attachment', 'download_all'),
+                  ...downloadAll,
+                };
+                buttons.push(<Button {...downProps} />);
+              }
+            }
           }
         }
       } else if (viewMode !== 'popup') {

@@ -73,7 +73,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     }
   }, [onFetchAttachments, attachments, bucketName, bucketDirectory, storageCode, attachmentUUID]);
 
-  if (attachments && attachmentUUID) {
+  if (attachments) {
     const { length } = attachments;
     const draggable = sortable && !readOnly && length > 1;
     let previewIndex = 0;
