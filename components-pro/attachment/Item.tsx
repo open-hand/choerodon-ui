@@ -37,7 +37,7 @@ export interface ItemProps {
   bucketName?: string;
   bucketDirectory?: string;
   storageCode?: string;
-  attachmentUUID: string;
+  attachmentUUID?: string;
   provided: DraggableProvided;
   draggable?: boolean;
   hidden?: boolean;
@@ -185,7 +185,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   };
   const renderButtons = (): ReactNode => {
     const buttons: ReactNode[] = [];
-    if (!readOnly && status === 'error' && !attachment.invalid) {
+    if (attachmentUUID && !readOnly && status === 'error' && !attachment.invalid) {
       const upProps = {
         key: 'upload',
         className: classnames(`${prefixCls}-icon`),
@@ -197,7 +197,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       buttons.push(<Button {...upProps} />);
     }
     if (!status || status === 'success' || status === 'done') {
-      if (onHistory) {
+      if (attachmentUUID && onHistory) {
         const historyProps = {
           className: classnames(`${prefixCls}-icon`),
           icon: 'library_books',
@@ -227,7 +227,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         );
       }
     }
-    if (!readOnly && status !== 'uploading') {
+    if (attachmentUUID && !readOnly && status !== 'uploading') {
       const rmProps = {
         className: classnames(`${prefixCls}-icon`),
         icon: isCard ? 'delete_forever-o' : 'close',
