@@ -17,6 +17,9 @@ title: Transfer
 
 | 参数      | 说明                                     | 类型        |默认值 |
 |-----------|------------------------------------------|------------|--------|
+| operations | A set of operations that are sorted from bottom to top. | string\[] \| ReactNode[] | ['>', '<'] |
+| sortable | If included, it will show sort button | boolean | false |
+| sortOperations | A set of sort that are sorted raise and down. | string\[] \| ReactNode[] | ['∧', '∨'] |
 
 更多属性请参考 [Select](/components-pro/select/#Select)。
 
