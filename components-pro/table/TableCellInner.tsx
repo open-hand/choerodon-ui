@@ -82,7 +82,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
-  const { getTooltip, getTooltipTheme } = useContext(ConfigContext);
+  const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const { pristine, aggregation, inlineEdit, rowHeight, tableStore, dataSet, columnEditorBorder, indentSize, checkField, selectionMode } = useContext(TableContext);
   const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
@@ -458,7 +458,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             processRenderer,
             renderValidationResult,
             isValidationMessageHidden,
-            showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation')),
+            showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation')),
             validationResults: field.getValidationErrorValues(record),
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
@@ -497,7 +497,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       const validationResults = field.getValidationErrorValues(record);
       const message = validationResults && !!validationResults.length && renderValidationResult(validationResults[0]);
       if (!isValidationMessageHidden(message)) {
-        showValidationMessage(e, message, getTooltipTheme('validation'));
+        showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation'));
         return true;
       }
     }
@@ -506,14 +506,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       if (text) {
         show(element, {
           title: text,
-          placement: 'right',
+          placement: getTooltipPlacement('table-cell') || 'right',
           theme: getTooltipTheme('table-cell'),
         });
         return true;
       }
     }
     return false;
-  }, [getTooltipTheme, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text]);
+  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text]);
   const handleMouseEnter = useCallback((e) => {
     if (!tableStore.columnResizing && showTooltip(e)) {
       tooltipShownRef.current = true;

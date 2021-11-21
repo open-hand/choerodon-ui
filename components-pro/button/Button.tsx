@@ -255,13 +255,14 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   handleMouseEnter(e) {
-    const { getTooltip, getTooltipTheme } = this.context;
+    const { getTooltip, getTooltipTheme, getTooltipPlacement} = this.context;
     const { tooltip = getTooltip('button'), children } = this.props;
     const { element } = this;
     if (tooltip === ButtonTooltip.always || (tooltip === ButtonTooltip.overflow && isOverflow(element))) {
       show(element, {
         title: children,
         theme: getTooltipTheme('button'),
+        placement: getTooltipPlacement('button'),
       });
       this.isTooltipShown = true;
     }

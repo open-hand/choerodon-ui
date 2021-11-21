@@ -1,5 +1,5 @@
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
-import { TooltipTheme } from '../tooltip';
+import { TooltipTheme, TooltipPlacement } from '../tooltip';
 import { TooltipTarget } from '../configure';
 import { getConfig } from '../configure/utils';
 
@@ -37,4 +37,12 @@ export function getTooltipTheme(target?: TooltipTarget): TooltipTheme {
     }
   }
   return tooltipTheme;
+}
+
+export function getTooltipPlacement(target?: TooltipTarget): TooltipPlacement  | undefined {
+  const tooltipPlacement = getConfig('tooltipPlacement');
+  if (typeof tooltipPlacement === 'function') {
+    return tooltipPlacement(target);
+  }
+  return tooltipPlacement;
 }

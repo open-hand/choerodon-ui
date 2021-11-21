@@ -1,6 +1,6 @@
 import { getContext, Symbols } from 'choerodon-ui/shared';
 import { getConfig, getCustomizable, getPrefixCls, getProPrefixCls } from '../configure/utils';
-import { getTooltip, getTooltipTheme } from '../_util/TooltipUtils';
+import { getTooltip, getTooltipTheme, getTooltipPlacement } from '../_util/TooltipUtils';
 
 export interface ConfigContextValue {
   getConfig: typeof getConfig;
@@ -14,6 +14,8 @@ export interface ConfigContextValue {
   getTooltip: typeof getTooltip;
 
   getTooltipTheme: typeof getTooltipTheme;
+
+  getTooltipPlacement: typeof getTooltipPlacement;
 }
 
 const ConfigContext = getContext<ConfigContextValue>(Symbols.ConfigContext, {
@@ -23,6 +25,7 @@ const ConfigContext = getContext<ConfigContextValue>(Symbols.ConfigContext, {
   getCustomizable,
   getTooltip,
   getTooltipTheme,
+  getTooltipPlacement,
 });
 
 export default ConfigContext;

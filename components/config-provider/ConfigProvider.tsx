@@ -6,7 +6,7 @@ import { FormProvider } from 'choerodon-ui/pro/lib/form/FormContext';
 import ConfigContext, { ConfigContextValue } from './ConfigContext';
 import { Config } from '../configure';
 import { getConfig, getCustomizable, getPrefixCls, getProPrefixCls, isCustomizable } from '../configure/utils';
-import { getTooltip, getTooltipTheme, getUsefulTooltip } from '../_util/TooltipUtils';
+import { getTooltip, getTooltipTheme, getUsefulTooltip, getTooltipPlacement } from '../_util/TooltipUtils';
 
 export interface ConfigProviderProps extends Config {
   children?: ReactNode;
@@ -66,6 +66,13 @@ const ConfigProvider: FunctionComponent<ConfigProviderProps> = function ConfigPr
     }
     return tooltipTheme;
   }, [getLocalConfig]);
+  const getLocalTooltipPlacement = useCallback<typeof getTooltipPlacement>((target) => {
+    const tooltipPlacement = getLocalConfig('tooltipPlacement');
+    if (typeof tooltipPlacement === 'function') {
+      return tooltipPlacement(target);
+    }
+    return tooltipPlacement;
+  }, [getLocalConfig]);
   const value = useMemo<ConfigContextValue>(() => ({
     getConfig: getLocalConfig,
     getPrefixCls: getLocalPrefixCls,
@@ -73,7 +80,8 @@ const ConfigProvider: FunctionComponent<ConfigProviderProps> = function ConfigPr
     getCustomizable: getLocalCustomizable,
     getTooltip: getLocalTooltip,
     getTooltipTheme: getLocalTooltipTheme,
-  }), [getConfig, getLocalPrefixCls, getLocalProPrefixCls, getLocalCustomizable, getLocalTooltip, getLocalTooltipTheme]);
+    getTooltipPlacement: getLocalTooltipPlacement,
+  }), [getConfig, getLocalPrefixCls, getLocalProPrefixCls, getLocalCustomizable, getLocalTooltip, getLocalTooltipTheme, getLocalTooltipPlacement]);
   return (
     <ConfigContext.Provider value={value}>
       <FormProvider>

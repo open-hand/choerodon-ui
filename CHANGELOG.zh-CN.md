@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `ConfigProvider`: 新增 ConfigProvider 组件。
 - 🌟 `hooks`: 新增 useConfig 钩子。
 - 🌟 `<pro>hooks`: 新增 useDataSet 钩子。
-- 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultMinWidth, tableAggregationColumnDefaultMinWidth 属性。
+- 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultMinWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement 属性。
 - 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。

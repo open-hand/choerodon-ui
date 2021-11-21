@@ -529,11 +529,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleHelpMouseEnter(e) {
-    const { getTooltipTheme } = this.context;
+    const { getTooltipTheme, getTooltipPlacement } = this.context;
     show(e.currentTarget, {
       title: this.getProp('help'),
       popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
+      placement: getTooltipPlacement('help'),
     });
   }
 

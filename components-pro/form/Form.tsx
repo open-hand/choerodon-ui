@@ -943,7 +943,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       useColon,
       showValidation,
     } = this;
-    const { formNode, getConfig, getProPrefixCls, getPrefixCls, getCustomizable, getTooltip, getTooltipTheme } = this.context;
+    const { formNode, getConfig, getProPrefixCls, getPrefixCls, getCustomizable, getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const value: FormContextValue = {
       formNode: formNode || this,
       dataSet,
@@ -965,6 +965,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       getCustomizable,
       getTooltip,
       getTooltipTheme,
+      getTooltipPlacement,
     };
     const children: ReactNode = [
       this.getHeader(),

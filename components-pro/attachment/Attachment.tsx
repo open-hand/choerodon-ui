@@ -720,7 +720,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (this.showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
-        showValidationMessage(e, message, this.context.getTooltipTheme('validation'));
+        showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'));
         return true;
       }
     }
@@ -879,9 +879,8 @@ export default class Attachment extends FormField<AttachmentProps> {
                   target: '_blank',
                   color: ButtonColor.primary,
                   children: $l('Attachment', 'download_all'),
-                  ...downloadAll,
                 };
-                buttons.push(<Button {...downProps} />);
+                buttons.push(<Button {...downProps} {...downloadAll} />);
               }
             }
           }

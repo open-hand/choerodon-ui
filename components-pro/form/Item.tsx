@@ -41,7 +41,7 @@ export interface IItem extends FunctionComponent<ItemProps> {
 
 const Label: FunctionComponent<LabelProps> = (props) => {
   const { children, className, tooltip, width } = props;
-  const { getTooltipTheme } = useContext(ConfigContext);
+  const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => width ? ({ width }) : undefined, [width]);
   const handleMouseEnter = useCallback((e) => {
@@ -50,6 +50,7 @@ const Label: FunctionComponent<LabelProps> = (props) => {
       show(currentTarget, {
         title: children,
         theme: getTooltipTheme('label'),
+        placement: getTooltipPlacement('label'),
       });
       tooltipRef.current = true;
     }

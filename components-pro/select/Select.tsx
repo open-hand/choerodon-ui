@@ -726,7 +726,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     if (!options) {
       return null;
     }
-    const { getTooltip, getTooltipTheme } = this.context;
+    const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const {
       disabled: menuDisabled,
       textField,
@@ -794,6 +794,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         disabled: menuDisabled,
         tooltip: optionTooltip,
         tooltipTheme: getTooltipTheme('select-option'),
+        tooltipPlacement: getTooltipPlacement('select-option'),
       };
       const mergedProps = optionProps ? {
         ...optionProps,

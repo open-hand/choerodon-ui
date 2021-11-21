@@ -123,8 +123,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getSuffix(): ReactNode {
-    const { readOnly, queryFlag, isSecretEnable, props } = this;
-    const disabled = this.getProp('disabled') || props.disabled;
+    const { readOnly, queryFlag, isSecretEnable, props, disabled } = this;
     // 未开启脱敏组件或者脱敏组件值为空时,不显示编辑/查看按钮
     if (!isSecretEnable) {
       const { suffix } = props;
