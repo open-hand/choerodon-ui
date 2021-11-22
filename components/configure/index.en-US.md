@@ -197,7 +197,7 @@ const prefixCls = getConfig('prefixCls');
 | output               | Output                | 'right' |
 | validation               | 校验信息                | 'bottomLeft' |
 | help               | 帮助信息                | |
-| text-field-disabled               | 输入类组件禁用状态           | |
+| text-field-disabled               | 输入类组件禁用状态           | 'right' |
 
 ### AttachmentConfig
 
