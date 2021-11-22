@@ -17,7 +17,7 @@ import formatReactTemplate from 'choerodon-ui/pro/lib/formatter/formatReactTempl
 import defaultFeedback from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import confirm from 'choerodon-ui/pro/lib/modal/confirm';
 import { Size } from '../_util/enum';
-import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook } from './index';
+import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook } from './index';
 import { Action } from '../trigger/enum';
 import Popover from '../popover';
 
@@ -72,6 +72,8 @@ function getComponentKey(component) {
 const defaultCustomizedSave: CustomizedSave = (code, customized, component) => localStorage.setItem(`${getComponentKey(component)}.customized.${code}`, JSON.stringify(customized));
 const defaultCustomizedLoad: CustomizedLoad = (code, component) => Promise.resolve(JSON.parse(localStorage.getItem(`${getComponentKey(component)}.customized.${code}`) || 'null'));
 
+const defaultLovShowSelectedInView: LovShowSelectedInViewHook = (viewMode) => viewMode === 'drawer';
+
 const defaults = {
   prefixCls: 'c7n',
   proPrefixCls: 'c7n-pro',
@@ -82,6 +84,7 @@ const defaults = {
   lovTableProps: {},
   lovModalProps: {},
   lovAutoSelectSingle: false,
+  lovShowSelectedInView: defaultLovShowSelectedInView,
   labelLayout: LabelLayout.horizontal,
   queryBar: TableQueryBarType.normal,
   tableBorder: true,
