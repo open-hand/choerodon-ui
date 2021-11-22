@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `hooks`: 新增 useConfig 钩子。
 - 🌟 `<pro>hooks`: 新增 useDataSet 钩子。
 - 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultMinWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement 属性。
+- 🌟 `configure`: TooltipTarget 新增 text-field-disabled 输入类组件禁用状态对象。
 - 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment`: 新增 isPublic 属性。

@@ -183,6 +183,7 @@ const prefixCls = getConfig('prefixCls');
 | output               | Output                |
 | validation               | validation message                |
 | help               | help message                |
+| text-field-disabled  | 输入类组件禁用状态       |
 | undefined               | default                |
 
 ### TooltipPlacement
@@ -196,6 +197,7 @@ const prefixCls = getConfig('prefixCls');
 | output               | Output                | 'right' |
 | validation               | 校验信息                | 'bottomLeft' |
 | help               | 帮助信息                | |
+| text-field-disabled               | 输入类组件禁用状态           | |
 
 ### AttachmentConfig
 
