@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `hooks`: Added `useConfig` hook.
 - 🌟 `<pro>hooks`: Added `useDataSet` hook.
 - 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement` properties.
+- 🌟 `configure`: `TooltipTarget` adds `text-field-disabled` input class component disabled state object.
 - 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment`: Added `isPublic` property.

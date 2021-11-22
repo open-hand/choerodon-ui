@@ -306,10 +306,16 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
 
   const getHelpIcon = () => {
     if (column.showHelp !== ShowHelp.none) {
+
       const fieldHelp = defaultTo(field && field.get('help'), column.help);
       if (fieldHelp) {
         return (
-          <Tooltip title={fieldHelp} placement="bottom" key="help">
+          <Tooltip
+            title={fieldHelp}
+            placement={getTooltipPlacement('help')}
+            theme={getTooltipTheme('help')}
+            key="help"
+          >
             <span className={`${prefixCls}-help-icon`} />
           </Tooltip>
         );
