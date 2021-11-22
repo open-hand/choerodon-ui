@@ -44,6 +44,7 @@ components-pro/**/*.jsx
 components-dataset/**/*.jsx
 components-dataset/**/*.js
 components-dataset/**/*.d.ts
+!components-dataset/data-set/__tests__/**/*.test.js
 components-shared/**/*.jsx
 components-shared/**/*.js
 components-shared/**/*.d.ts

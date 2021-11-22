@@ -1,0 +1,466 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataSetProps modifiedCheck modifiedCheck: true,有记录更改,验证是否有警告提示 1`] = `
+<div
+  class="c7n-pro-table-wrapper"
+>
+  <div
+    class="c7n-spin-nested-loading"
+  >
+    <div
+      class="c7n-spin-container"
+    >
+      <div
+        class="c7n-pro-table c7n-pro-table-bordered"
+        style="line-height: 0.3rem;"
+        tabindex="0"
+      >
+        <div
+          class="c7n-pro-table-content c7n-pro-table-content-overflow"
+        >
+          <table
+            class="c7n-pro-table-last-row-bordered"
+            style="width: 0.5rem;"
+          >
+            <colgroup>
+              <col
+                class="c7n-pro-table-col"
+                style="min-width: 0.5rem; width: 0.5rem;"
+              />
+            </colgroup>
+            <thead
+              class="c7n-pro-table-thead c7n-pro-table-column-resizable"
+            >
+              <tr>
+                <th
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-cell-last c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="text-align: center; left: 0px;"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="c7n-pro-table-tbody"
+            >
+              <tr
+                class="c7n-pro-table-row c7n-pro-table-row-current"
+                data-index="1042"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1043"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1044"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1045"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1046"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1047"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1048"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1049"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1050"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1051"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="c7n-pro-table-sticky-shadow"
+          style="left: 0.49rem;"
+        />
+        <div
+          class="c7n-pro-table-split-line"
+        />
+      </div>
+    </div>
+  </div>
+  <nav
+    class="c7n-pro-pagination-wrapper c7n-pro-table-pagination c7n-pro-pagination"
+  >
+    <span
+      class="c7n-pro-pagination-perpage"
+    >
+      Number of items per page:
+    </span>
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-pagination-size-changer c7n-pro-select-sm c7n-pro-select-suffix-button c7n-pro-select-border c7n-pro-select-not-editable"
+    >
+      <input
+        type="hidden"
+        value="10"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          style="width: 4px; box-sizing: content-box;"
+          type="text"
+          value="10"
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+    <span
+      class="c7n-pro-pagination-page-info"
+    >
+      1 - 10 / 30
+    </span>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-first c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-first_page"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-prev c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_before"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-next c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_next"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-last c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      type="button"
+    >
+      <i
+        class="icon icon-last_page"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </nav>
+</div>
+`;
