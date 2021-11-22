@@ -33,6 +33,7 @@ import { getLovPara } from '../stores/utils';
 import { TableProps, TableQueryBarHook, TableQueryBarHookProps } from '../table/Table';
 import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
+import { modalChildrenProps } from '../modal/interface';
 
 export type Events = { [key: string]: Function };
 
@@ -41,15 +42,15 @@ export type ViewRenderer = ({
   lovConfig,
   textField,
   valueField,
-  label,
   multiple,
+  modal,
 }: {
   dataSet: DataSet;
   lovConfig: LovConfig | undefined;
   textField: string | undefined;
   valueField: string | undefined;
-  label: string | undefined;
   multiple: boolean;
+  modal?: modalChildrenProps;
 }) => ReactNode;
 
 export type NodeRenderer = (record: Record) => ReactNode;
@@ -430,13 +431,11 @@ export default class Lov extends Select<LovProps> {
       const config = this.getConfig();
       this.autoCreate();
       const { options } = this;
-      const hasLovViewRenderer = viewRenderer !== undefined;
       if (!this.modal && config && options) {
         const modalProps = this.getModalProps();
-        const tableProps = hasLovViewRenderer ? {} : this.getTableProps();
+        const tableProps = this.getTableProps();
         const { width, title } = config;
         const lovViewProps = this.beforeOpen(options);
-        const label = this.getProp('label');
         const valueField = this.getProp('valueField');
         const textField = this.getProp('textField');
         this.modal = open({
@@ -453,7 +452,6 @@ export default class Lov extends Select<LovProps> {
               onBeforeSelect={onBeforeSelect}
               multiple={this.multiple}
               values={this.getValues()}
-              label={label}
               valueField={valueField}
               textField={textField}
               viewRenderer={viewRenderer}
@@ -467,14 +465,14 @@ export default class Lov extends Select<LovProps> {
           bodyStyle: {
             minHeight: isIE() ? pxToRem(Math.min(350, window.innerHeight)) : 'min(3.5rem, 100vh)',
           },
+          drawer,
+          drawerBorder: !drawer,
           ...modalProps,
           style: {
             width: pxToRem(width),
             ...(modalProps && modalProps.style),
           },
           afterClose: this.handleLovViewAfterClose,
-          drawer,
-          drawerBorder: !drawer,
         } as ModalProps & { children });
         this.afterOpen(options, fetchSingle);
       }

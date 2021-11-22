@@ -5,11 +5,27 @@
 .@{secretField-prefix-cls} {
   &-modal {
     height: 2.4rem;
+    &-form {
+      height: 2.4rem;
+      > table{
+        height: 2.4rem;
+        > tbody {
+          height: 2.4rem;
+        }
+      }
+    }
     &-validate {
       float: left;
       color: red;
     }
     &-btns {
+      margin-top: 0.36rem;
+      margin-left: 0.07rem;
+      text-align: right;
+    }
+    &-edit-btns {
+      margin-top: 1.42rem;
+      margin-left: 0.07rem;
       text-align: right;
     }
     &-raised-btn:hover {
@@ -34,7 +50,6 @@
     &-btn {
       display: flex;
       justify-content: flex-end;
-      padding: 0.1rem 0.05rem 0;
     }
   }
   &-simple-verify {

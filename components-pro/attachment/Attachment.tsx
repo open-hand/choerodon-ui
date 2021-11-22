@@ -75,7 +75,8 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   onUploadProgress?: (percent: number, attachment: AttachmentFile) => void;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, response: any, attachment: AttachmentFile) => void;
-  downloadAll?: ButtonProps;
+  downloadAll?: ButtonProps | boolean;
+  isPublic?: boolean;
   __inGroup?: boolean;
 }
 
@@ -140,6 +141,10 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   get storageCode() {
     return this.getProp('storageCode');
+  }
+
+  get isPublic() {
+    return this.getProp('isPublic');
   }
 
   get attachments(): AttachmentFile[] | undefined {
@@ -259,12 +264,13 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (viewMode !== 'list' && isNil(this.count)) {
       const value = this.getValue();
       if (value) {
+        const { isPublic } = this;
         if (field) {
-          field.fetchAttachmentCount(value, this.record);
+          field.fetchAttachmentCount(value, isPublic, this.record);
         } else {
           const { batchFetchCount } = this.getContextConfig('attachment');
           if (batchFetchCount && !this.attachments) {
-            attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
+            attachmentStore.fetchCountInBatch(value, undefined, isPublic).then(mobxAction((count) => {
               this.observableProps.count = count || 0;
             }));
           }
@@ -298,6 +304,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'max',
       'listLimit',
       'showHistory',
+      'isPublic',
       'downloadAll',
       'attachments',
       'onAttachmentsChange',
@@ -339,13 +346,14 @@ export default class Attachment extends FormField<AttachmentProps> {
       }
       const actionHook = globalConfig.action;
       if (actionHook) {
-        const { bucketName, bucketDirectory, storageCode } = this;
+        const { bucketName, bucketDirectory, storageCode, isPublic } = this;
         const newConfig = typeof actionHook === 'function' ? actionHook({
           attachment,
           bucketName,
           bucketDirectory,
           storageCode,
           attachmentUUID,
+          isPublic,
         }) : actionHook;
         const { data: customData, onUploadProgress: customUploadProgress } = newConfig;
         if (customData) {
@@ -385,7 +393,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (!getAttachmentUUID) {
       throw new Error('no getAttachmentUUID hook in global configure.');
     }
-    return getAttachmentUUID();
+    return getAttachmentUUID({ isPublic: this.isPublic });
   }
 
   @mobxAction
@@ -525,9 +533,9 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (attachment.status === 'error') {
         return this.removeAttachment(attachment);
       }
-      const { bucketName, bucketDirectory, storageCode } = this;
+      const { bucketName, bucketDirectory, storageCode, isPublic } = this;
       attachment.status = 'deleting';
-      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode })
+      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic })
         .then(mobxAction((result) => {
           if (result !== false) {
             this.removeAttachment(attachment);
@@ -567,7 +575,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
-  handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) {
+  handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) {
     const { field } = this;
     if (field) {
       field.fetchAttachments(fetchProps, this.record);
@@ -706,7 +714,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         icon="file_upload"
         color={this.isValid ? ButtonColor.primary : ButtonColor.red}
         {...rest}
-        className={this.getClassName()}
+        className={viewMode === 'popup' ? this.getMergedClassNames() : this.getClassName()}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
@@ -720,7 +728,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (this.showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
-        showValidationMessage(e, message, this.context.getTooltipTheme('validation'));
+        showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'));
         return true;
       }
     }
@@ -737,6 +745,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         icon="attach_file"
         color={ButtonColor.primary}
         {...omit(rest, ['ref'])}
+        className={this.getMergedClassNames()}
       >
         {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple && this.count || undefined}
       </Button>
@@ -768,13 +777,14 @@ export default class Attachment extends FormField<AttachmentProps> {
       const attachments = this.getValidAttachments();
       const { onOrderChange } = this.getContextConfig('attachment');
       if (onOrderChange && attachments) {
-        const { bucketName, bucketDirectory, storageCode } = this;
+        const { bucketName, bucketDirectory, storageCode, isPublic } = this;
         onOrderChange({
           bucketName,
           bucketDirectory,
           storageCode,
           attachments,
           attachmentUUID,
+          isPublic,
         });
       }
     }
@@ -823,10 +833,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     } = this.props;
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
-    if (attachmentUUID || uploadButton) {
-      const { bucketName, bucketDirectory, storageCode } = this;
+    if (attachmentUUID || uploadButton || (attachments && attachments.length)) {
+      const { bucketName, bucketDirectory, storageCode, readOnly, isPublic } = this;
       const width = this.getPictureWidth();
-      const { readOnly } = this;
       return (
         <AttachmentList
           prefixCls={`${this.prefixCls}-list`}
@@ -840,6 +849,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           uploadButton={uploadButton}
           sortable={sortable}
           readOnly={readOnly}
+          isPublic={isPublic}
           limit={readOnly ? listLimit : undefined}
           onHistory={showHistory ? this.handleHistory : undefined}
           onRemove={this.handleRemove}
@@ -866,20 +876,29 @@ export default class Attachment extends FormField<AttachmentProps> {
         if (downloadAll) {
           const { getDownloadAllUrl } = this.getContextConfig('attachment');
           if (getDownloadAllUrl) {
-            const { bucketName, bucketDirectory, storageCode } = this;
             const attachmentUUID = this.getValue();
-            getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID });
-            const downProps: ButtonProps = {
-              key: 'download',
-              icon: 'get_app',
-              funcType: FuncType.link,
-              href: getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID }),
-              target: '_blank',
-              color: ButtonColor.primary,
-              children: $l('Attachment', 'download_all'),
-              ...downloadAll,
-            };
-            buttons.push(<Button {...downProps} />);
+            if (attachmentUUID) {
+              const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+              const downloadAllUrl = getDownloadAllUrl({
+                bucketName,
+                bucketDirectory,
+                storageCode,
+                attachmentUUID,
+                isPublic,
+              });
+              if (downloadAllUrl) {
+                const downProps: ButtonProps = {
+                  key: 'download',
+                  icon: 'get_app',
+                  funcType: FuncType.link,
+                  href: downloadAllUrl,
+                  target: '_blank',
+                  color: ButtonColor.primary,
+                  children: $l('Attachment', 'download_all'),
+                };
+                buttons.push(<Button {...downProps} {...downloadAll} />);
+              }
+            }
           }
         }
       } else if (viewMode !== 'popup') {
@@ -947,10 +966,25 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
+  getWrapperClassNames() {
+    const {
+      prefixCls,
+      props: { className, size },
+    } = this;
+    return classNames(
+      `${prefixCls}-wrapper`,
+      className,
+      {
+        [`${prefixCls}-sm`]: size === Size.small,
+        [`${prefixCls}-lg`]: size === Size.large,
+      },
+    );
+  }
+
   renderWrapperList(uploadBtn?: ReactNode) {
     const { prefixCls, props: { viewMode, listType, __inGroup } } = this;
     const isCard = listType === 'picture-card';
-    const classes = [`${prefixCls}-wrapper`];
+    const classes = [`${prefixCls}-list-wrapper`];
     if (viewMode !== 'popup') {
       const wrapperClassName = this.getWrapperClassNames();
       if (wrapperClassName) {
@@ -1015,7 +1049,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (viewMode === 'popup') {
       const label = this.hasFloatLabel && this.getLabel();
       return (
-        <div className={classNames(`${prefixCls}-popup-wrapper`, this.getWrapperClassNames())}>
+        <>
           <Trigger
             prefixCls={prefixCls}
             popupContent={this.renderWrapper}
@@ -1029,7 +1063,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           </Trigger>
           {this.renderHelp(ShowHelp.tooltip)}
           {this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
-        </div>
+        </>
       );
     }
     return this.renderWrapperList(readOnly ? undefined : this.renderUploadBtn(listType === 'picture-card'));

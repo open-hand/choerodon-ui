@@ -106,6 +106,8 @@ const defaults = {
   tableKeyboard: false,
   tableFilterSearchText: 'params',
   tableAutoHeightDiff: 80,
+  tableColumnDefaultMinWidth: 100,
+  tableAggregationColumnDefaultMinWidth: 250,
   customizedSave: defaultCustomizedSave,
   customizedLoad: defaultCustomizedLoad,
   tableShowRemovedRow: true,

@@ -45,6 +45,7 @@ Almost anything can be represented in a tree structure. Examples include directo
 | onDragOver | Callback function for when the onDragOver event occurs | function({event, node}) | - |
 | onDragStart | Callback function for when the onDragStart event occurs | function({event, node}) | - |
 | onDrop | Callback function for when the onDrop event occurs | function({event, node, dragNode, dragNodesKeys}) | - |
+| onDropBefore | Callback function for when the onDrop before event occurs | function({event, node, dragNode, dragNodesKeys}) | - |
 | onExpand | Callback function for when a treeNode is expanded or collapsed | function(expandedKeys, {expanded: bool, node}) | - |
 | onLoad | Callback function for when a treeNode is loaded | function(loadedKeys, {event, node}) | - |
 | onRightClick | Callback function for when the user right clicks a treeNode | function({event, node}) | - |

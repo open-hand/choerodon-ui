@@ -7,9 +7,7 @@ import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import { Commands } from './Table';
-
-export const defaultMinWidth = 100;
-export const defaultAggregationMinWidth = 250;
+import TableStore from './TableStore';
 
 export function defaultAggregationRenderer({ text }) {
   return text;
@@ -191,7 +189,7 @@ Column.__PRO_TABLE_COLUMN = true;
 Column.defaultProps = ColumnDefaultProps;
 export default Column;
 
-export function minColumnWidth(col): number {
+export function minColumnWidth(col: ColumnProps, store: TableStore): number {
   const hidden = get(col, 'hidden');
   if (hidden) {
     return 0;
@@ -199,14 +197,14 @@ export function minColumnWidth(col): number {
   const width: number | undefined = get(col, 'width');
   const min: number | undefined = get(col, 'minWidth');
   const aggregation: boolean | undefined = get(col, 'aggregation');
-  const minWidth = min === undefined ? aggregation ? defaultAggregationMinWidth : defaultMinWidth : min;
+  const minWidth = min === undefined ? store.getConfig(aggregation ? 'tableAggregationColumnDefaultMinWidth' : 'tableColumnDefaultMinWidth') : min;
   if (width === undefined) {
     return minWidth;
   }
   return Math.min(width, minWidth);
 }
 
-export function columnWidth(col): number {
+export function columnWidth(col: ColumnProps, store: TableStore): number {
   const hidden = get(col, 'hidden');
   if (hidden) {
     return 0;
@@ -216,7 +214,7 @@ export function columnWidth(col): number {
     const minWidth: number | undefined = get(col, 'minWidth');
     if (minWidth === undefined) {
       const aggregation: boolean | undefined = get(col, 'aggregation');
-      return aggregation ? defaultAggregationMinWidth : defaultMinWidth;
+      return store.getConfig(aggregation ? 'tableAggregationColumnDefaultMinWidth' : 'tableColumnDefaultMinWidth');
     }
     return minWidth;
   }

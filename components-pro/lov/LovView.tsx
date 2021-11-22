@@ -30,7 +30,6 @@ export interface LovViewProps {
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   modal?: modalChildrenProps;
   popupHidden?: boolean;
-  label?: string;
   valueField?: string;
   textField?: string;
   viewRenderer?: ViewRenderer;
@@ -122,7 +121,6 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       tableProps,
       viewMode,
-      config: { treeFlag },
     } = this.props;
     // 为了drawer模式下右侧勾选项的顺序
     if (viewMode === 'drawer' && multiple) {
@@ -138,7 +136,7 @@ export default class LovView extends Component<LovViewProps> {
         return item;
       });
     }
-    let records: Record[] = treeFlag === 'Y' ?
+    let records: Record[] = selectionMode === SelectionMode.treebox ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     // 满足单选模式下，双击和勾选框选中均支持
@@ -273,19 +271,28 @@ export default class LovView extends Component<LovViewProps> {
   renderSelectionList() {
     const {
       dataSet,
-      label = '',
       valueField = '',
       textField = '',
       nodeRenderer,
-      config: { treeFlag },
+      config: { treeFlag, tableProps: configTableProps = {} },
+      tableProps,
     } = this.props;
+
+    if (!this.selectionMode) {
+      const selectionMode = tableProps?.selectionMode || configTableProps?.selectionMode;
+      if (!selectionMode) {
+        this.selectionMode = treeFlag === 'Y' ? SelectionMode.treebox : SelectionMode.rowbox;
+      } else {
+        this.selectionMode = selectionMode;
+      }
+    }
+
     return (
       <SelectionList
         dataSet={dataSet}
         treeFlag={treeFlag}
         valueField={valueField}
         textField={textField}
-        label={label}
         nodeRenderer={nodeRenderer}
       />
     );
@@ -300,7 +307,6 @@ export default class LovView extends Component<LovViewProps> {
       config: lovConfig,
       textField,
       valueField,
-      label,
       multiple,
     } = this.props;
     if (modal) {
@@ -308,7 +314,7 @@ export default class LovView extends Component<LovViewProps> {
     }
     return (
       <>
-        {viewMode === 'drawer' && this.renderSelectionList()}
+        {viewMode === 'drawer' && multiple && this.renderSelectionList()}
         <div>
           {viewRenderer
             ? toJS(
@@ -317,8 +323,8 @@ export default class LovView extends Component<LovViewProps> {
                 lovConfig,
                 textField,
                 valueField,
-                label,
                 multiple,
+                modal,
               }),
             )
             : this.renderTable()}

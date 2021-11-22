@@ -19,7 +19,7 @@ export interface MultiLineProps {
 }
 
 const MultiLine: FunctionComponent<MultiLineProps> = function MultiLine(props) {
-  const { getTooltip, getTooltipTheme } = useContext(ConfigContext);
+  const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const { prefixCls, label, validationMessage, required, validationHidden, tooltip = getTooltip('output'), labelTooltip, children } = props;
   const tooltipRef = useRef<boolean>(false);
   const handleLabelMouseEnter = useCallback((e) => {
@@ -34,7 +34,7 @@ const MultiLine: FunctionComponent<MultiLineProps> = function MultiLine(props) {
     if (validationMessage) {
       show(currentTarget, {
         title: validationMessage,
-        placement: 'bottomLeft',
+        placement: getTooltipPlacement('validation') || 'bottomLeft',
         theme: getTooltipTheme('validation'),
       });
       tooltipRef.current = true;

@@ -8,6 +8,7 @@ import { ButtonColor } from '../button/enum';
 export interface CountDownProps {
   onClick: () => void;
   countDown: any;
+  verifyNumber: any
 }
 
 const CountDownButton: FunctionComponent<CountDownProps> = function CountDownButton(
@@ -15,14 +16,13 @@ const CountDownButton: FunctionComponent<CountDownProps> = function CountDownBut
 ) {
   const { getProPrefixCls } = useContext(ConfigContext)
   const prefixCls = getProPrefixCls('secret-field');
-  const { onClick, countDown } = props;
+  const { onClick, countDown, verifyNumber } = props;
   const { count } = countDown;
-
   return (
     <Button
       className={`${prefixCls}-modal-verify-btn`}
       color={ButtonColor.primary}
-      disabled={count > 0}
+      disabled={count > 0 || !verifyNumber}
       onClick={onClick}
     >
       {count > 0 ? `${count}s` : $l('SecretField', 'get_verify_code')}

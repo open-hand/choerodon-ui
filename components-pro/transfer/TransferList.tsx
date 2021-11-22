@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
+import scrollIntoView from 'scroll-into-view-if-needed';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { $l } from '../locale-context';
 import Record from '../data-set/Record';
@@ -15,6 +16,7 @@ import ViewComponent from '../core/ViewComponent';
 export interface TransferListProps extends SelectProps {
   header?: ReactNode;
   selected: Record[];
+  currentIndex?: number;
   footer?: (options: Record[]) => ReactNode;
   onSelect: (e) => void;
   onSelectAll: (value: any) => void;
@@ -22,6 +24,10 @@ export interface TransferListProps extends SelectProps {
 
 @observer
 export default class TransferList extends Select<TransferListProps> {
+  wrapperRef: HTMLDivElement | null = null;
+
+  lastSelectIndex: number | undefined = undefined;
+
   get popup() {
     return true;
   }
@@ -57,15 +63,25 @@ export default class TransferList extends Select<TransferListProps> {
     return undefined;
   }
 
+  componentDidUpdate() {
+    const { currentIndex } = this.props;
+    // 在渲染完之后执行
+    if (this.wrapperRef && this.lastSelectIndex !== currentIndex) {
+      const contentDom = this.wrapperRef.getElementsByTagName('ul')[0];
+      const findSelectedDom = this.wrapperRef.getElementsByTagName('li');
+
+      if (contentDom && currentIndex && currentIndex > -1) {
+        const selectedDom = findSelectedDom[currentIndex] as HTMLLIElement;
+        scrollIntoView(selectedDom, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
+      }
+      this.lastSelectIndex = currentIndex;
+    }
+  }
+
   getOmitPropsKeys(): string[] {
-    return super.getOmitPropsKeys().concat([
-      'autoComplete',
-      'footer',
-      'header',
-      'selected',
-      'onSelect',
-      'onSelectAll',
-    ]);
+    return super
+      .getOmitPropsKeys()
+      .concat(['autoComplete', 'footer', 'header', 'selected', 'onSelect', 'onSelectAll']);
   }
 
   getOtherProps() {
@@ -74,6 +90,9 @@ export default class TransferList extends Select<TransferListProps> {
     delete otherProps.type;
     delete otherProps.onChange;
     delete otherProps.onKeyDown;
+    delete otherProps.currentIndex;
+    delete otherProps.sortable;
+    delete otherProps.sortOperations;
     return otherProps;
   }
 
@@ -165,6 +184,9 @@ export default class TransferList extends Select<TransferListProps> {
         {searchField}
         <div
           className={`${prefixCls}-content-wrapper`}
+          ref={dom => {
+            this.wrapperRef = dom;
+          }}
           onFocus={searchable ? stopPropagation : undefined}
         >
           {this.getMenu({ selectedKeys, onClick: onSelect, focusable: !this.searchable })}
