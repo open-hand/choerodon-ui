@@ -129,7 +129,12 @@
     border-radius: 0 0 @border-radius-base @border-radius-base;
   }
 
-  &-operation {
+  &-current{
+    background-color: @transfer-selected-bg;
+  }
+
+  &-operation,
+  &-sort {
     display: inline-block;
     margin-left: 0.08rem;
     vertical-align: middle;
@@ -144,5 +149,17 @@
         margin-bottom: 0;
       }
     }
+  }
+  &-operation-custom-left-active,
+  &-operation-custom-right-active,
+  &-sort-custom-up-active,
+  &-sort-custom-down-active {
+    cursor: pointer;
+  }
+  &-operation-custom-left-disable,
+  &-operation-custom-right-disable,
+  &-sort-custom-up-disable,
+  &-sort-custom-down-disable {
+    cursor: no-drop;
   }
 }

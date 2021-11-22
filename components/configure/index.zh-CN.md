@@ -133,6 +133,7 @@ const prefixCls = getConfig('prefixCls');
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
 | tooltip | 是否开启提示, 参数 target 详见 [TooltipTarget](#TooltipTarget) | Tooltip.always \| Tooltip.overflow \| Tooltip.none \| function(target) | |
 | tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 target 详见 [TooltipTarget](#TooltipTarget) | dark \| light \| function(target) |  (target) => target === 'validation' ? 'light' : 'dark' |
+| tooltipPlacement | Tooltip 位置 或 返回位置的钩子, 参数 placement 详见 [TooltipPlacement](#TooltipPlacement) | [placement](/components-pro/tooltip/#API) \| function(target) |  [TooltipPlacement](#TooltipPlacement) |
 | attachment | 附件上传配置 | [AttachmentConfig](#AttachmentConfig) |   |
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 | numberFieldKeyboard | NumberField 组件是否启用 UP DOWN 键盘事件 | boolean | true |
@@ -189,25 +190,37 @@ const prefixCls = getConfig('prefixCls');
 | help               | 帮助信息                |
 | undefined               | 默认                |
 
+### TooltipPlacement
+
+| 属性              | 说明                | 默认 |
+| ----------------- | ------------------- |--- |
+| table-cell         | 表格单元格               | 'right' |
+| button               | 按钮                | |
+| label               | 表单控件标签                | |
+| select-option               | 表单控件标签                ||
+| output               | Output                | 'right' |
+| validation               | 校验信息                | 'bottomLeft' |
+| help               | 帮助信息                | |
+
 ### AttachmentConfig
 
 | 属性              | 说明                | 类型                                |
 | ----------------- | ------------------- | ----------------------------------- |
 | defaultFileKey               | 上传文件的参数名                | string                              |
 | defaultFileSize               | 上传文件的大小限制, 单位 `B`                | number                              |
-| action               | 上传的 axios 请求配置或返回 axios 请求配置的钩子               | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => AxiosRequestConfig                             |
-| batchFetchCount               | 批量获取附件数量                | (attachmentUUIDs: string[]) => Promise<{\[key as string\]: number}>                             |
-| fetchList               | 查询附件列表                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => Promise<FileLike[]>                             |
-| getPreviewUrl               | 获取预览地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => string                             |
-| getDownloadUrl               | 获取下载地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => string                             |
-| getDownloadAllUrl               | 获取全部下载地址                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => string                            |
-| getAttachmentUUID               | 获取附件的UUID                | () => Promise<string> \| string                            |
+| action               | 上传的 axios 请求配置或返回 axios 请求配置的钩子               | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => AxiosRequestConfig                             |
+| batchFetchCount               | 批量获取附件数量                | (attachmentUUIDs: string[], { isPublic?: boolean }) => Promise<{\[key as string\]: number}>                             |
+| fetchList               | 查询附件列表                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => Promise<FileLike[]>                             |
+| getPreviewUrl               | 获取预览地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string                             |
+| getDownloadUrl               | 获取下载地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string                             |
+| getDownloadAllUrl               | 获取全部下载地址                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string                            |
+| getAttachmentUUID               | 获取附件的UUID                | ({ isPublic?: boolean }) => Promise<string> \| string                            |
 | renderIcon               | 附件列表项的前缀图标渲染函数                | (attachment: AttachmentFile, listType: 'text'\| 'picture' \| 'picture-card', defaultIcon: ReactNode) => ReactNode                            |
 | renderHistory               | 渲染操作历史                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => ReactNode                            |
 | onUploadSuccess | 上传成功的回调 | (attachment: AttachmentFile, response: any) => void |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void |
-| onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[]) => void |
-| onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => boolean |
+| onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void |
+| onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean |
 
 ### AxiosRequestConfig
 

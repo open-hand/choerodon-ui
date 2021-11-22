@@ -10,11 +10,21 @@ export default class Item extends Component<any, any> {
   }
 
   render() {
-    const { renderedText, renderedEl, item, lazy, checked, prefixCls, onClick } = this.props;
+    const {
+      renderedText,
+      renderedEl,
+      item,
+      lazy,
+      checked,
+      isHighlight,
+      prefixCls,
+      onClick,
+    } = this.props;
 
     const className = classNames({
       [`${prefixCls}-content-item`]: true,
       [`${prefixCls}-content-item-disabled`]: item.disabled,
+      [`${prefixCls}-content-item-highlight`]: isHighlight,
     });
 
     const listItem = (

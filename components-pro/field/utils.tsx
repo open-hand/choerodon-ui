@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { isMoment } from 'moment';
 import { Utils } from 'choerodon-ui/dataset';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
-import { TooltipTheme } from 'choerodon-ui/lib/tooltip';
+import { TooltipTheme, TooltipPlacement } from 'choerodon-ui/lib/tooltip';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
@@ -230,7 +230,7 @@ export type MultipleRenderOption = {
   renderValidationResult(result: ValidationResult): ReactNode;
   handleMutipleValueRemove?(e, value: any, index: number): void;
   isValidationMessageHidden(message?: ReactNode): boolean | undefined;
-  showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme): void;
+  showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme, tooltipPlacement?: TooltipPlacement): void;
   getKey?(v: any): string;
 }
 
@@ -445,11 +445,11 @@ export function defaultRenderer(renderOption: RenderProps) {
     : text;
 }
 
-export function showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme): void {
+export function showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme, tooltipPlacement?: TooltipPlacement): void {
   show(e.currentTarget, {
     suffixCls: `form-tooltip ${getConfig('proPrefixCls')}-tooltip`,
     title: message,
     theme: tooltipTheme,
-    placement: 'bottomLeft',
+    placement: tooltipPlacement || 'bottomLeft',
   });
 }

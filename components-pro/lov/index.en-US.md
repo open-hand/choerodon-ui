@@ -31,7 +31,7 @@ title: Lov
 | showCheckedStrategy | 定义选中项回填的方式。`SHOW_CHILD`: 只显示子节点. `SHOW_PARENT`: 只显示父节点(当父节点下所有子节点都选中时). 默认显示所有选中节点(包括父节点). | string | SHOW_ALL |
 | onBeforeSelect | 确认勾选前回调，返回 false 弹窗不关闭 | (records: Record | Record[]) => boolean \| undefined |  |
 | onSearchMatcherChange | viewMode 为 popup 时，查询条选项值变更事件 | (searchMatcher?:string) => void \| undefined |  |
-| viewRenderer | 自定义弹窗视图渲染器 | ({ dataSet, lovConfig, textField, valueField, label, multiple }}) => ReactNode |  |
+| viewRenderer | 自定义弹窗视图渲染器 | ({ dataSet, lovConfig, textField, valueField, multiple, modal }}) => ReactNode |  |
 | showSelectedInModal | 多选时且 viewMode 为 modal，在 modal 中显示已选记录 | boolean | false |
 
 更多属性请参考 [TextField](/components-pro/text-field/#TextField), [Button](/components-pro/button/#Button)。

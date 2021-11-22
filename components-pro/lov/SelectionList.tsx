@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
-import sortBy from 'lodash/sortBy'
+import sortBy from 'lodash/sortBy';
 import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
@@ -26,9 +26,8 @@ export interface SelectionListProps {
   treeFlag?: LovConfig['treeFlag'];
   valueField: string;
   textField: string;
-  label?: string;
-  nodeRenderer?: NodeRenderer,
-  selectionsPosition?: SelectionsPosition,
+  nodeRenderer?: NodeRenderer;
+  selectionsPosition?: SelectionsPosition;
 }
 
 @observer
@@ -42,18 +41,6 @@ export default class SelectionList extends Component<SelectionListProps> {
   }
 
   @action
-  handleRemove(record: Record) {
-    this.unSelect(record);
-
-    if (record.parent && !isUndefined(record.parent)) {
-      this.unSelect(record.parent);
-    }
-
-    record.children?.forEach(item => {
-      this.handleRemove(item);
-    });
-  }
-
   unSelect = (record: Record) => {
     const { dataSet, treeFlag } = this.props;
     record.setState(TIMESTAMP, 0);
@@ -62,10 +49,14 @@ export default class SelectionList extends Component<SelectionListProps> {
     } else {
       dataSet.unSelect(record);
     }
+
+    if (!isUndefined(record.parent)) {
+      dataSet.unSelect(record.parent);
+    }
   };
 
-  renderSide = (): ReactNode => {
-    const { dataSet, treeFlag, label = '', valueField = '', textField = '', nodeRenderer } = this.props;
+  renderSide() {
+    const { dataSet, treeFlag, valueField = '', textField = '', nodeRenderer } = this.props;
     const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
     if (isEmpty(records)) {
       return null;
@@ -75,11 +66,11 @@ export default class SelectionList extends Component<SelectionListProps> {
     const animateChildren = this.getRecords(records).map((record: Record) => {
       return (
         <li key={record.get(valueField)} className={`${classString}-item`}>
-          { nodeRenderer ? toJS(nodeRenderer(record)) : <span>{record.get(textField)}</span> }
+          {nodeRenderer ? toJS(nodeRenderer(record)) : <span>{record.get(textField)}</span>}
           <Icon
             type="cancel"
             onClick={() => {
-              this.handleRemove(record);
+              this.unSelect(record);
             }}
           />
         </li>
@@ -88,9 +79,9 @@ export default class SelectionList extends Component<SelectionListProps> {
     return (
       <div className={`${classString}-container`}>
         <p className={`${classString}-intro`}>
-          {$l('Lov', 'selected')}
-          <span>{records.length}</span>
-          {label}
+          {$l('Lov', 'selection_tips', {
+            count: <b key="count">{records.length}</b>,
+          })}
         </p>
         <Animate
           className={`${classString}-list`}
@@ -115,7 +106,7 @@ export default class SelectionList extends Component<SelectionListProps> {
     const animateChildren = this.getRecords(records).map((record: Record) => {
       return (
         <li key={record.get(valueField)} className={`${classString}-item`}>
-          <Tag closable onClose={() => { this.handleRemove(record); }}>
+          <Tag closable onClose={() => { this.unSelect(record); }}>
             <span>{record.get(textField)}</span>
           </Tag>
         </li>

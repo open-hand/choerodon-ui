@@ -26,6 +26,7 @@ class Tooltip extends Component {
     arrowContent: PropTypes.any,
     id: PropTypes.string,
     theme: PropTypes.string,
+    placements: PropTypes.string,
   };
 
   static defaultProps = {

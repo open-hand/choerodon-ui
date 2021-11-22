@@ -37,25 +37,26 @@ export interface ItemProps {
   bucketName?: string;
   bucketDirectory?: string;
   storageCode?: string;
-  attachmentUUID: string;
+  attachmentUUID?: string;
   provided: DraggableProvided;
   draggable?: boolean;
   hidden?: boolean;
+  isPublic?: boolean;
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview,
-    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
+    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
-  const { getConfig, getTooltipTheme } = useContext(ConfigContext);
+  const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const attachmentConfig: AttachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const { getPreviewUrl, getDownloadUrl } = attachmentConfig;
-  const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) : url;
-  const downloadUrl = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID });
+  const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
+  const downloadUrl = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
   const preview = (status === 'success' || status === 'done');
@@ -104,7 +105,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         >
           {isValidElement(icon) ? icon : undefined}
         </Picture>
-      ) : preview ? (
+      ) : preview && src ? (
         <Button
           href={src}
           target={ATTACHMENT_TARGET}
@@ -185,7 +186,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   };
   const renderButtons = (): ReactNode => {
     const buttons: ReactNode[] = [];
-    if (!readOnly && status === 'error' && !attachment.invalid) {
+    if (attachmentUUID && !readOnly && status === 'error' && !attachment.invalid) {
       const upProps = {
         key: 'upload',
         className: classnames(`${prefixCls}-icon`),
@@ -197,7 +198,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       buttons.push(<Button {...upProps} />);
     }
     if (!status || status === 'success' || status === 'done') {
-      if (onHistory) {
+      if (attachmentUUID && onHistory) {
         const historyProps = {
           className: classnames(`${prefixCls}-icon`),
           icon: 'library_books',
@@ -227,7 +228,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         );
       }
     }
-    if (!readOnly && status !== 'uploading') {
+    if (attachmentUUID && !readOnly && status !== 'uploading') {
       const rmProps = {
         className: classnames(`${prefixCls}-icon`),
         icon: isCard ? 'delete_forever-o' : 'close',
@@ -268,10 +269,11 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       show(e.currentTarget, {
         title: errorMessageNode,
         theme: getTooltipTheme('validation'),
+        placement: getTooltipPlacement('validation') || 'bottomLeft',
       });
       tooltipRef.current = true;
     }
-  }, [errorMessageNode, getTooltipTheme, tooltipRef]);
+  }, [errorMessageNode, getTooltipTheme, getTooltipPlacement, tooltipRef]);
   const handleMouseLeave = useCallback(() => {
     if (tooltipRef.current) {
       hide();

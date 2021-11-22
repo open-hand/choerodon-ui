@@ -33,6 +33,7 @@ import { getLovPara } from '../stores/utils';
 import { TableProps, TableQueryBarHook, TableQueryBarHookProps } from '../table/Table';
 import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
+import { modalChildrenProps } from '../modal/interface';
 
 export type Events = { [key: string]: Function };
 
@@ -41,15 +42,15 @@ export type ViewRenderer = ({
   lovConfig,
   textField,
   valueField,
-  label,
   multiple,
+  modal,
 }: {
   dataSet: DataSet;
   lovConfig: LovConfig | undefined;
   textField: string | undefined;
   valueField: string | undefined;
-  label: string | undefined;
   multiple: boolean;
+  modal?: modalChildrenProps;
 }) => ReactNode;
 
 export type NodeRenderer = (record: Record) => ReactNode;
@@ -438,7 +439,6 @@ export default class Lov extends Select<LovProps> {
         const tableProps = this.getTableProps();
         const { width, title } = config;
         const lovViewProps = this.beforeOpen(options);
-        const label = this.getProp('label');
         const valueField = this.getProp('valueField');
         const textField = this.getProp('textField');
         this.modal = open({
@@ -455,7 +455,6 @@ export default class Lov extends Select<LovProps> {
               onBeforeSelect={onBeforeSelect}
               multiple={this.multiple}
               values={this.getValues()}
-              label={label}
               valueField={valueField}
               textField={textField}
               viewRenderer={viewRenderer}

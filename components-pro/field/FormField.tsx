@@ -630,7 +630,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @autobind
   showValidationMessage(e, message?: ReactNode) {
-    showValidationMessage(e, message, this.context.getTooltipTheme('validation'));
+    showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'));
   }
 
   isEmpty() {
@@ -936,7 +936,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (!this.hasFloatLabel && this.showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
-        showValidationMessage(e, message, this.context.getTooltipTheme('validation'));
+        showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'));
         return true;
       }
     }
@@ -964,12 +964,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @autobind
   handleFloatLabelMouseEnter(e) {
-    const { labelTooltip, context: { getTooltipTheme } } = this;
+    const { labelTooltip, context: { getTooltipTheme, getTooltipPlacement } } = this;
     const { currentTarget } = e;
     if (labelTooltip === TextTooltip.always || (labelTooltip === TextTooltip.overflow && isOverflow(currentTarget))) {
       show(currentTarget, {
         title: this.getLabel(),
-        placement: 'top',
+        placement: getTooltipPlacement('label'),
         theme: getTooltipTheme('label'),
       });
     }

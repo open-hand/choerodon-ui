@@ -30,7 +30,6 @@ export interface LovViewProps {
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   modal?: modalChildrenProps;
   popupHidden?: boolean;
-  label?: string;
   valueField?: string;
   textField?: string;
   viewRenderer?: ViewRenderer;
@@ -279,7 +278,6 @@ export default class LovView extends Component<LovViewProps> {
   renderSelectionList() {
     const {
       dataSet,
-      label = '',
       valueField = '',
       textField = '',
       nodeRenderer,
@@ -308,7 +306,6 @@ export default class LovView extends Component<LovViewProps> {
         treeFlag={treeFlag}
         valueField={valueField}
         textField={textField}
-        label={label}
         nodeRenderer={nodeRenderer}
         selectionsPosition={selectionsPosition}
       />
@@ -324,7 +321,6 @@ export default class LovView extends Component<LovViewProps> {
       config: lovConfig,
       textField,
       valueField,
-      label,
       multiple,
     } = this.props;
     if (modal) {
@@ -341,8 +337,8 @@ export default class LovView extends Component<LovViewProps> {
                 lovConfig,
                 textField,
                 valueField,
-                label,
                 multiple,
+                modal,
               }),
             )
             : this.renderTable()}

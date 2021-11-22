@@ -7,13 +7,18 @@ import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
 import TransferList from './TransferList';
 import TransferOperation from './TransferOperation';
+import TransferSort from './TransferSort';
 import autobind from '../_util/autobind';
 import Record from '../data-set/Record';
 import isSameLike from '../_util/isSameLike';
+import { arrayMove } from '../data-set/utils';
 
 export interface TransferProps extends SelectProps {
   titles?: [ReactNode, ReactNode];
   footer?: (props: any) => ReactNode;
+  operations: string[] | ReactNode[];
+  sortable?: boolean;
+  sortOperations?: string[] | ReactNode[];
 }
 
 @observer
@@ -23,12 +28,14 @@ export default class Transfer extends Select<TransferProps> {
   static propTypes = {
     ...Select.propTypes,
     titles: PropTypes.arrayOf(PropTypes.node),
+    sortable: PropTypes.bool,
   };
 
   static defaultProps = {
     ...Select.defaultProps,
     suffixCls: 'transfer',
     multiple: true,
+    sortable: false,
   };
 
   static Option = Option;
@@ -38,6 +45,8 @@ export default class Transfer extends Select<TransferProps> {
   @observable sourceSelected: Record[];
 
   @observable targetSelected: Record[];
+
+  @observable targetCurrentSelected: string | undefined;
 
   constructor(props, context) {
     super(props, context);
@@ -103,6 +112,7 @@ export default class Transfer extends Select<TransferProps> {
     } else {
       this.removeValue(value);
     }
+    this.options.locate(value.index);
   }
 
   @autobind
@@ -111,6 +121,8 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.removeValues(this.targetSelected.map(record => record.get(valueField)));
     this.targetSelected = [];
+    this.changeOptionIndex()
+    this.clearCurrentIndex();
   }
 
   @autobind
@@ -119,6 +131,20 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));
     this.sourceSelected = [];
+    this.changeOptionIndex()
+    this.clearCurrentIndex();
+  }
+
+  @autobind
+  @action
+  handleSortTo(direction: string) {
+    const targetCurrentSelected = this.options.currentIndex;
+    const to = direction === 'up' ? -1 : 1
+    this.options.move(targetCurrentSelected, targetCurrentSelected + to);
+    const values = this.getValues()
+    const index = values.findIndex(x => x ===  this.options.current?.get('value'))
+    arrayMove(values, index, index + to);
+    this.setValue(values)
   }
 
   @autobind
@@ -143,6 +169,33 @@ export default class Transfer extends Select<TransferProps> {
     }
   }
 
+  @action
+  clearCurrentIndex = () => {
+    const current = this.options.current
+    if(current){
+      current.isCurrent = false
+    }
+  };
+
+  changeOptionIndex = () => {
+    const { valueField, options } = this;
+    const targetValues = this.getValues(); // 这是有顺序的
+    let optionData = options.data;
+    const sortOpt: Record[] = [];
+    targetValues.forEach(key => {
+      optionData = optionData.filter(record => {
+        if (record.get(valueField) !== key) {
+          return true;
+        }
+        sortOpt.push(record);
+        return false;
+      });
+    });
+
+    optionData.unshift(...sortOpt);
+    this.options.data = optionData;
+  };
+
   renderWrapper() {
     const {
       disabled,
@@ -150,8 +203,14 @@ export default class Transfer extends Select<TransferProps> {
       targetSelected,
       sourceSelected,
       multiple,
-      props: { titles = [] },
+      props: { titles = [], operations = [], sortOperations = [], sortable },
     } = this;
+
+    const targetValues = this.getValues();
+    const currentTarget = this.options.current;
+    const currentIndex = currentTarget ? targetValues.indexOf(currentTarget.get('value')) : -1;
+    const upActive = currentIndex > -1 && currentIndex !== 0;
+    const downActive = currentIndex > -1 && currentIndex !== targetValues.length - 1;
     return (
       <span key="wrapper" className={`${prefixCls}-wrapper`}>
         <TransferList
@@ -167,6 +226,8 @@ export default class Transfer extends Select<TransferProps> {
           className={`${prefixCls}-operation`}
           leftActive={!(!targetSelected.length || disabled)}
           rightActive={!(!sourceSelected.length || disabled)}
+          rightArrowText={operations[0]}
+          leftArrowText={operations[1]}
           moveToLeft={this.handleMoveToLeft}
           moveToRight={this.handleMoveToRight}
           multiple={multiple}
@@ -176,10 +237,23 @@ export default class Transfer extends Select<TransferProps> {
           options={this.options}
           selected={targetSelected}
           header={titles[1]}
+          currentIndex={currentIndex}
           onSelectAll={this.handleTargetSelectAllChange}
           onSelect={this.handleTargetMenuClick}
           optionsFilter={this.targetFilter}
         />
+        {!!sortable && (
+          <TransferSort
+            className={`${prefixCls}-sort`}
+            upActive={upActive}
+            downActive={downActive}
+            upArrowText={sortOperations[0]}
+            downArrowText={sortOperations[1]}
+            moveToUp={() => this.handleSortTo('up')}
+            moveToDown={() => this.handleSortTo('down')}
+            multiple={multiple}
+          />
+        )}
       </span>
     );
   }

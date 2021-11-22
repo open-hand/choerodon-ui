@@ -211,7 +211,7 @@ const locale: Locale = {
   },
   Lov: {
     choose: '選択してください',
-    selected: '選択済み',
+    selection_tips: '{count} データがチェックされました',
   },
   Transfer: {
     items: 'アイテム',
