@@ -97,12 +97,12 @@ const MenuItem = createReactClass({
   },
 
   handleRippleMouseEnter(e) {
-    const { tooltip, tooltipTheme, children, mode } = this.props;
+    const { tooltip, tooltipTheme, tooltipPlacement, children, mode } = this.props;
     const { currentTarget } = e;
     if (children && (tooltip === 'always' || (tooltip === 'overflow' && isOverflow(currentTarget)))) {
       show(currentTarget, {
         title: children,
-        placement: mode === 'horizontal' ? 'top' : 'right',
+        placement: tooltipPlacement || mode === 'horizontal' ? 'top' : 'right',
         theme: tooltipTheme,
       });
     }

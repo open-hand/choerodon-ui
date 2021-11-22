@@ -33,11 +33,11 @@ import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isS
 import { FieldType, RecordStatus } from '../data-set/enum';
 import { SELECTION_KEY } from './TableStore';
 import { ColumnAlign, SelectionMode, TableCommandType } from './enum';
-import Tooltip from '../tooltip/Tooltip';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { $l } from '../locale-context';
 import Button, { ButtonProps } from '../button/Button';
+import { FuncType } from '../button/enum';
 import { LabelLayout } from '../form/enum';
 import { findFirstFocusableElement } from '../_util/focusable';
 import SelectionTreeBox from './SelectionTreeBox';
@@ -82,7 +82,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
-  const { getTooltip, getTooltipTheme } = useContext(ConfigContext);
+  const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const { pristine, aggregation, inlineEdit, rowHeight, tableStore, dataSet, columnEditorBorder, indentSize, checkField, selectionMode } = useContext(TableContext);
   const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
@@ -248,12 +248,24 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     const classString = classNames(`${prefixCls}-command`, tableCommandProps && tableCommandProps.className);
     if (record.editing) {
       return [
-        <Tooltip key="save" title={$l('Table', 'save_button')}>
-          <Button {...tableCommandProps} className={classString} icon="finished" onClick={handleCommandSave} />
-        </Tooltip>,
-        <Tooltip key="cancel" title={$l('Table', 'cancel_button')}>
-          <Button {...tableCommandProps} className={classString} icon="cancle_a" onClick={handleCommandCancel} />
-        </Tooltip>,
+        <Button
+          {...tableCommandProps}
+          key="save"
+          className={classString}
+          onClick={handleCommandSave}
+          funcType={FuncType.link}
+        >
+          {$l('Table', 'save_button')}
+        </Button>,
+        <Button
+          {...tableCommandProps}
+          key="cancel"
+          className={classString}
+          onClick={handleCommandCancel}
+          funcType={FuncType.link}
+        >
+          {$l('Table', 'cancel_button')}
+        </Button>,
       ];
     }
     if (columnCommand) {
@@ -271,17 +283,17 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             switch (type) {
               case TableCommandType.edit:
                 return {
-                  icon: 'mode_edit',
+                  funcType: FuncType.link,
                   onClick: handleCommandEdit,
                   disabled,
-                  title: $l('Table', 'edit_button'),
+                  children: $l('Table', 'edit_button'),
                 };
               case TableCommandType.delete:
                 return {
-                  icon: 'delete',
+                  funcType: FuncType.link,
                   onClick: handleCommandDelete,
                   disabled,
-                  title: $l('Table', 'delete_button'),
+                  children: $l('Table', 'delete_button'),
                 };
               default:
             }
@@ -300,16 +312,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
                 }
               };
             }
-            const { title, ...otherProps } = defaultButtonProps;
+            const { ...otherProps } = defaultButtonProps;
             commands.push(
-              <Tooltip key={button} title={title}>
-                <Button
-                  {...tableCommandProps}
-                  {...otherProps}
-                  {...buttonProps}
-                  className={classNames(classString, otherProps.className, buttonProps.className)}
-                />
-              </Tooltip>,
+              <Button
+                {...tableCommandProps}
+                {...otherProps}
+                {...buttonProps}
+                className={classNames(classString, otherProps.className, buttonProps.className)}
+              />,
             );
           }
         } else if (isValidElement<ButtonProps>(button)) {
@@ -448,7 +458,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             processRenderer,
             renderValidationResult,
             isValidationMessageHidden,
-            showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation')),
+            showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation')),
             validationResults: field.getValidationErrorValues(record),
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
@@ -487,7 +497,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       const validationResults = field.getValidationErrorValues(record);
       const message = validationResults && !!validationResults.length && renderValidationResult(validationResults[0]);
       if (!isValidationMessageHidden(message)) {
-        showValidationMessage(e, message, getTooltipTheme('validation'));
+        showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation'));
         return true;
       }
     }
@@ -496,14 +506,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       if (text) {
         show(element, {
           title: text,
-          placement: 'right',
+          placement: getTooltipPlacement('table-cell') || 'right',
           theme: getTooltipTheme('table-cell'),
         });
         return true;
       }
     }
     return false;
-  }, [getTooltipTheme, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text]);
+  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text]);
   const handleMouseEnter = useCallback((e) => {
     if (!tableStore.columnResizing && showTooltip(e)) {
       tooltipShownRef.current = true;

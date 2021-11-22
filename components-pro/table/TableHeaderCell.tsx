@@ -50,7 +50,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onColumnResize = noop } = useContext(TableContext);
-  const { getTooltipTheme } = useContext(ConfigContext);
+  const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const { columnResizable } = tableStore;
   const {
     headerClassName,
@@ -195,12 +195,12 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget)))) {
       show(currentTarget, {
         title: header,
-        placement: 'right',
+        placement: getTooltipPlacement('table-cell') || 'right',
         theme: getTooltipTheme('table-cell'),
       });
       globalRef.current.tooltipShown = true;
     }
-  }, [tableStore, column, globalRef, getTooltipTheme]);
+  }, [tableStore, column, globalRef, getTooltipTheme, getTooltipPlacement]);
 
   const handleMouseLeave = useCallback(() => {
     if (globalRef.current.tooltipShown) {

@@ -49,7 +49,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
-  const { getConfig, getTooltipTheme } = useContext(ConfigContext);
+  const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const attachmentConfig: AttachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
@@ -268,10 +268,11 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       show(e.currentTarget, {
         title: errorMessageNode,
         theme: getTooltipTheme('validation'),
+        placement: getTooltipPlacement('validation') || 'bottomLeft',
       });
       tooltipRef.current = true;
     }
-  }, [errorMessageNode, getTooltipTheme, tooltipRef]);
+  }, [errorMessageNode, getTooltipTheme, getTooltipPlacement, tooltipRef]);
   const handleMouseLeave = useCallback(() => {
     if (tooltipRef.current) {
       hide();

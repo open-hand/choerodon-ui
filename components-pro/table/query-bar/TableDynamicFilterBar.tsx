@@ -19,7 +19,6 @@ import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
 import Field from '../../data-set/Field';
 import DataSet, { DataSetProps } from '../../data-set/DataSet';
-import Record from '../../data-set/Record';
 import { DataSetEvents, DataSetSelection, FieldIgnore, FieldType, RecordStatus } from '../../data-set/enum';
 import Button from '../../button';
 import Dropdown from '../../dropdown';
@@ -226,10 +225,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   setOriginalConditionFields = (code) => {
     const { queryDataSet } = this.props;
     if (!code) {
-      this.originalConditionFields = [];
+      this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.get(0) });
     } else {
-      const codes = Array.isArray(code) ? code : [code];
-      this.originalConditionFields = uniq([...this.originalConditionFields, ...codes]);
+      this.originalConditionFields = Array.isArray(code) ? code : [code];
     }
     queryDataSet.setState('selectFields', [...this.originalConditionFields]);
   };
@@ -255,7 +253,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * queryDS 新建，初始勾选值
    */
   @autobind
-  handleDataSetCreate(props: { dataSet: DataSet; record: Record }) {
+  handleDataSetCreate(props) {
+    this.initConditionFields(props);
+    this.initMenuDataSet();
+  }
+
+  initConditionFields(props) {
     const { dataSet, record } = props;
     const { queryDataSet } = this.props;
     const originalValue = record.toData();
@@ -278,7 +281,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         }
       }
     });
-    this.initMenuDataSet();
   }
 
   /**
@@ -317,7 +319,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     queryDataSet.setState('filterMenuDataSet', filterMenuDataSet);
     queryDataSet.setState('conditionStatus', RecordStatus.sync);
     queryDataSet.setState('searchText', '');
-    queryDataSet.setState('selectFields', []);
 
     const result = await menuDataSet.query();
     if (optionDataSet) {

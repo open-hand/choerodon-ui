@@ -133,6 +133,7 @@ const prefixCls = getConfig('prefixCls');
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
 | tooltip | 是否开启提示, 参数 target 详见 [TooltipTarget](#TooltipTarget) | Tooltip.always \| Tooltip.overflow \| Tooltip.none \| function(target) | |
 | tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 target 详见 [TooltipTarget](#TooltipTarget) | dark \| light \| function(target) |  (target) => target === 'validation' ? 'light' : 'dark' |
+| tooltipPlacement | Tooltip 位置 或 返回位置的钩子, 参数 placement 详见 [TooltipPlacement](#TooltipPlacement) | [placement](/components-pro/tooltip/#API) \| function(target) |  [TooltipPlacement](#TooltipPlacement) |
 | attachment | 附件上传配置 | [AttachmentConfig](#AttachmentConfig) |   |
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 | numberFieldKeyboard | NumberField 组件是否启用 UP DOWN 键盘事件 | boolean | true |
@@ -188,6 +189,18 @@ const prefixCls = getConfig('prefixCls');
 | validation               | 校验信息                |
 | help               | 帮助信息                |
 | undefined               | 默认                |
+
+### TooltipPlacement
+
+| 属性              | 说明                | 默认 |
+| ----------------- | ------------------- |--- |
+| table-cell         | 表格单元格               | 'right' |
+| button               | 按钮                | |
+| label               | 表单控件标签                | |
+| select-option               | 表单控件标签                ||
+| output               | Output                | 'right' |
+| validation               | 校验信息                | 'bottomLeft' |
+| help               | 帮助信息                | |
 
 ### AttachmentConfig
 
