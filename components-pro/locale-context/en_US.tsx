@@ -208,7 +208,7 @@ const locale: Locale = {
   },
   Lov: {
     choose: 'Choose',
-    selected: 'Selected',
+    selection_tips: '{count} data selected',
   },
   Transfer: {
     items: 'items',
