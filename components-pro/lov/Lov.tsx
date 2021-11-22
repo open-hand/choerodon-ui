@@ -12,6 +12,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { LovConfig as DataSetLovConfig, LovConfigItem } from 'choerodon-ui/dataset/interface';
+import { LovViewTarget } from 'choerodon-ui/lib/configure';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView, { LovViewProps } from './LovView';
@@ -214,7 +215,7 @@ export default class Lov extends Select<LovProps> {
     }
     const lovShowSelectedInView = this.getContextConfig('lovShowSelectedInView');
     if (isFunction(lovShowSelectedInView)) {
-      return lovShowSelectedInView(this.props.viewMode as any);
+      return lovShowSelectedInView(this.props.viewMode as LovViewTarget);
     }
     return lovShowSelectedInView;
   }
@@ -725,6 +726,7 @@ export default class Lov extends Select<LovProps> {
       'onSearchMatcherChange',
       'viewRenderer',
       'nodeRenderer',
+      'showSelectedInView',
     ]);
   }
 
