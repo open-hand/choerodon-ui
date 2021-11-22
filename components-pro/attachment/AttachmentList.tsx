@@ -20,7 +20,7 @@ export interface AttachmentListProps {
   onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onRemove: (attachment: AttachmentFile) => Promise<any> | undefined;
   onOrderChange: (props: { attachments: AttachmentFile[] }) => void;
-  onFetchAttachments: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => void;
+  onFetchAttachments: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => void;
   onPreview: () => void;
   bucketName?: string;
   bucketDirectory?: string;
@@ -30,6 +30,7 @@ export interface AttachmentListProps {
   sortable?: boolean;
   readOnly?: boolean;
   showHistory?: boolean;
+  isPublic?: boolean;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -52,6 +53,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     limit,
     onHistory,
     onPreview,
+    isPublic,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -69,9 +71,9 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
   }, [attachments, onOrderChange]);
   useEffect(() => {
     if (!attachments && attachmentUUID) {
-      onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID });
+      onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
     }
-  }, [onFetchAttachments, attachments, bucketName, bucketDirectory, storageCode, attachmentUUID]);
+  }, [onFetchAttachments, attachments, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic]);
 
   if (attachments) {
     const { length } = attachments;
@@ -113,6 +115,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 hidden={hidden}
                 onHistory={onHistory}
                 onPreview={onPreview}
+                isPublic={isPublic}
               />
             )
           }

@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement` properties.
 - 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
+- 🌟 `<pro>Attachment`: Added `isPublic` property.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
 - 🌟 `<pro>NumberField`: Added the `keyboard` property to control `UP` `DOWN` keyboard events.
 - 🌟 `<pro>ModalProvider`: Added `getContainer` property.
