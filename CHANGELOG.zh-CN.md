@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultMinWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement 属性。
 - 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
+- 🌟 `<pro>Attachment`: 新增 isPublic 属性。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
 - 🌟 `<pro>NumberField`: 新增 keyboard 属性，控制 UP DOWN 键盘事件。
 - 🌟 `<pro>ModalProvider`: 新增 getContainer 属性。

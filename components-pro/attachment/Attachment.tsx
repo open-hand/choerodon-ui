@@ -76,6 +76,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, response: any, attachment: AttachmentFile) => void;
   downloadAll?: ButtonProps | boolean;
+  isPublic?: boolean;
   __inGroup?: boolean;
 }
 
@@ -140,6 +141,10 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   get storageCode() {
     return this.getProp('storageCode');
+  }
+
+  get isPublic() {
+    return this.getProp('isPublic');
   }
 
   get attachments(): AttachmentFile[] | undefined {
@@ -259,12 +264,13 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (viewMode !== 'list' && isNil(this.count)) {
       const value = this.getValue();
       if (value) {
+        const { isPublic } = this;
         if (field) {
-          field.fetchAttachmentCount(value, this.record);
+          field.fetchAttachmentCount(value, isPublic, this.record);
         } else {
           const { batchFetchCount } = this.getContextConfig('attachment');
           if (batchFetchCount && !this.attachments) {
-            attachmentStore.fetchCountInBatch(value).then(mobxAction((count) => {
+            attachmentStore.fetchCountInBatch(value, undefined, isPublic).then(mobxAction((count) => {
               this.observableProps.count = count || 0;
             }));
           }
@@ -298,6 +304,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'max',
       'listLimit',
       'showHistory',
+      'isPublic',
       'downloadAll',
       'attachments',
       'onAttachmentsChange',
@@ -339,13 +346,14 @@ export default class Attachment extends FormField<AttachmentProps> {
       }
       const actionHook = globalConfig.action;
       if (actionHook) {
-        const { bucketName, bucketDirectory, storageCode } = this;
+        const { bucketName, bucketDirectory, storageCode, isPublic } = this;
         const newConfig = typeof actionHook === 'function' ? actionHook({
           attachment,
           bucketName,
           bucketDirectory,
           storageCode,
           attachmentUUID,
+          isPublic,
         }) : actionHook;
         const { data: customData, onUploadProgress: customUploadProgress } = newConfig;
         if (customData) {
@@ -385,7 +393,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (!getAttachmentUUID) {
       throw new Error('no getAttachmentUUID hook in global configure.');
     }
-    return getAttachmentUUID();
+    return getAttachmentUUID({ isPublic: this.isPublic });
   }
 
   @mobxAction
@@ -525,9 +533,9 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (attachment.status === 'error') {
         return this.removeAttachment(attachment);
       }
-      const { bucketName, bucketDirectory, storageCode } = this;
+      const { bucketName, bucketDirectory, storageCode, isPublic } = this;
       attachment.status = 'deleting';
-      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode })
+      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic })
         .then(mobxAction((result) => {
           if (result !== false) {
             this.removeAttachment(attachment);
@@ -567,7 +575,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
-  handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) {
+  handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) {
     const { field } = this;
     if (field) {
       field.fetchAttachments(fetchProps, this.record);
@@ -769,13 +777,14 @@ export default class Attachment extends FormField<AttachmentProps> {
       const attachments = this.getValidAttachments();
       const { onOrderChange } = this.getContextConfig('attachment');
       if (onOrderChange && attachments) {
-        const { bucketName, bucketDirectory, storageCode } = this;
+        const { bucketName, bucketDirectory, storageCode, isPublic } = this;
         onOrderChange({
           bucketName,
           bucketDirectory,
           storageCode,
           attachments,
           attachmentUUID,
+          isPublic,
         });
       }
     }
@@ -825,7 +834,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
     if (attachmentUUID || uploadButton || (attachments && attachments.length)) {
-      const { bucketName, bucketDirectory, storageCode, readOnly } = this;
+      const { bucketName, bucketDirectory, storageCode, readOnly, isPublic } = this;
       const width = this.getPictureWidth();
       return (
         <AttachmentList
@@ -840,6 +849,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           uploadButton={uploadButton}
           sortable={sortable}
           readOnly={readOnly}
+          isPublic={isPublic}
           limit={readOnly ? listLimit : undefined}
           onHistory={showHistory ? this.handleHistory : undefined}
           onRemove={this.handleRemove}
@@ -868,8 +878,14 @@ export default class Attachment extends FormField<AttachmentProps> {
           if (getDownloadAllUrl) {
             const attachmentUUID = this.getValue();
             if (attachmentUUID) {
-              const { bucketName, bucketDirectory, storageCode } = this;
-              const downloadAllUrl = getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID });
+              const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+              const downloadAllUrl = getDownloadAllUrl({
+                bucketName,
+                bucketDirectory,
+                storageCode,
+                attachmentUUID,
+                isPublic,
+              });
               if (downloadAllUrl) {
                 const downProps: ButtonProps = {
                   key: 'download',
