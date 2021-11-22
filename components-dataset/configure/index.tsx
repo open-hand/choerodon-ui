@@ -40,12 +40,12 @@ export type Formatter = {
 export interface AttachmentConfig {
   defaultFileKey: string;
   defaultFileSize: number;
-  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => AxiosRequestConfig);
+  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean }) => AxiosRequestConfig);
   batchFetchCount?: <T extends string | number | symbol>(attachmentUUIDs: T[]) => Promise<{ [key in T]: number }>;
-  fetchList?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => Promise<FileLike[]>;
-  getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string }) => string | undefined;
-  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string }) => string | undefined;
-  getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => string | undefined;
+  fetchList?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => Promise<FileLike[]>;
+  getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | undefined;
+  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | undefined;
+  getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => string | undefined;
   getAttachmentUUID?: () => Promise<string> | string;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;

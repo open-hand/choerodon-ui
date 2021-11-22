@@ -76,6 +76,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, response: any, attachment: AttachmentFile) => void;
   downloadAll?: ButtonProps | boolean;
+  isPublic?: boolean;
   __inGroup?: boolean;
 }
 
@@ -298,6 +299,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'max',
       'listLimit',
       'showHistory',
+      'isPublic',
       'downloadAll',
       'attachments',
       'onAttachmentsChange',
@@ -346,6 +348,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           bucketDirectory,
           storageCode,
           attachmentUUID,
+          isPublic: this.getProp('isPublic'),
         }) : actionHook;
         const { data: customData, onUploadProgress: customUploadProgress } = newConfig;
         if (customData) {
@@ -567,7 +570,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
-  handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) {
+  handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; public?: boolean; }) {
     const { field } = this;
     if (field) {
       field.fetchAttachments(fetchProps, this.record);
@@ -847,6 +850,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onOrderChange={this.handleOrderChange}
           onFetchAttachments={this.handleFetchAttachment}
           onPreview={this.handlePreview}
+          isPublic={this.getProp('isPublic')}
         />
       );
     }
@@ -869,7 +873,13 @@ export default class Attachment extends FormField<AttachmentProps> {
             const attachmentUUID = this.getValue();
             if (attachmentUUID) {
               const { bucketName, bucketDirectory, storageCode } = this;
-              const downloadAllUrl = getDownloadAllUrl({ bucketName, bucketDirectory, storageCode, attachmentUUID });
+              const downloadAllUrl = getDownloadAllUrl({
+                bucketName,
+                bucketDirectory,
+                storageCode,
+                attachmentUUID,
+                isPublic: this.getProp('isPublic'),
+              });
               if (downloadAllUrl) {
                 const downProps: ButtonProps = {
                   key: 'download',

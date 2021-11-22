@@ -203,12 +203,12 @@ const prefixCls = getConfig('prefixCls');
 | ----------------- | ------------------- | ----------------------------------- |
 | defaultFileKey               | 上传文件的参数名                | string                              |
 | defaultFileSize               | 上传文件的大小限制, 单位 `B`                | number                              |
-| action               | 上传的 axios 请求配置或返回 axios 请求配置的钩子                | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => AxiosRequestConfig                             |
+| action               | 上传的 axios 请求配置或返回 axios 请求配置的钩子                | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => AxiosRequestConfig                             |
 | batchFetchCount               | 批量获取附件数量                | (attachmentUUIDs: string[]) => Promise<{\[key as string\]: number}>                             |
-| fetchList               | 查询附件列表                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => Promise<FileLike[]>                             |
-| getPreviewUrl               | 获取预览地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => string                             |
-| getDownloadUrl               | 获取下载地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => string                             |
-| getDownloadAllUrl               | 获取全部下载地址                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => string                            |
+| fetchList               | 查询附件列表                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => Promise<FileLike[]>                             |
+| getPreviewUrl               | 获取预览地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string                             |
+| getDownloadUrl               | 获取下载地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string                             |
+| getDownloadAllUrl               | 获取全部下载地址                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string                            |
 | getAttachmentUUID               | 获取附件的UUID                | () => Promise<string> \| string                            |
 | renderIcon               | 附件列表项的前缀图标渲染函数                | (attachment: AttachmentFile, listType: 'text'\| 'picture' \| 'picture-card', defaultIcon: ReactNode) => ReactNode                            |
 | renderHistory               | 渲染操作历史                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => ReactNode                            |

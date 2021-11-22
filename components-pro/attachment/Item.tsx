@@ -41,12 +41,13 @@ export interface ItemProps {
   provided: DraggableProvided;
   draggable?: boolean;
   hidden?: boolean;
+  isPublic?: boolean;
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview,
-    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden,
+    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -54,8 +55,8 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const { getPreviewUrl, getDownloadUrl } = attachmentConfig;
-  const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID }) : url;
-  const downloadUrl = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID });
+  const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
+  const downloadUrl = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
   const preview = (status === 'success' || status === 'done');
@@ -104,7 +105,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         >
           {isValidElement(icon) ? icon : undefined}
         </Picture>
-      ) : preview ? (
+      ) : preview && src ? (
         <Button
           href={src}
           target={ATTACHMENT_TARGET}
