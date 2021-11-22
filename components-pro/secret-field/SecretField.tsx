@@ -14,6 +14,12 @@ export interface SecretFieldProps extends TextFieldProps {
   modalProps?: ModalProps;
 }
 
+export interface VerifyTypeObjProps {
+  name: string,
+  type: string,
+  value: string,
+}
+
 @observer
 export default class SecretField extends TextField<SecretFieldProps> {
   static displayName = 'SecretField';
@@ -36,7 +42,23 @@ export default class SecretField extends TextField<SecretFieldProps> {
     runInAction(() => {
       this.setQueryFlag(true);
       this.setSecretEnable();
+      this.setVerifyTypeObj();
     })
+  }
+
+  // 校验类型
+  @observable verifyTypeObj;
+
+  @action
+  setVerifyTypeObj() {
+    const { context } = this;
+    // 从配置项获取验证方式
+    const secretFieldTypesConfig = context.getConfig('secretFieldTypes');
+    if (secretFieldTypesConfig) {
+      this.verifyTypeObj = secretFieldTypesConfig() as VerifyTypeObjProps[];
+    } else {
+      this.verifyTypeObj = [];
+    }
   }
 
   // 是否已经查看过，已查看过不显示查看按钮
@@ -52,7 +74,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   get isSecretEnable(): Boolean {
     const { record, name } = this;
-    if (!record?.get('_token') || !record?.get(name) ) {
+    if (!record?.get('_token') || !record?.get(name)) {
       // 新增数据，record没有token或者没有值，显示为textfield
       return false;
     }
@@ -71,10 +93,14 @@ export default class SecretField extends TextField<SecretFieldProps> {
   @action
   private openModal() {
     const label = this.getLabel();
-    const { readOnly, name, record } = this;
-    if (!record?.getState(`_secretField_countDown_${name}`)) {
-      record?.setState({ [`_secretField_countDown_${name}`]: new CountDown() });
-    }
+    const { readOnly, name, record, verifyTypeObj } = this;
+    const modalCountDown = {};
+    verifyTypeObj.forEach((item) => {
+      if (!record?.getState(`_secretField_countDown_${name}_${item.type}`)) {
+        record?.setState({ [`_secretField_countDown_${name}_${item.type}`]: new CountDown() });
+      }
+      modalCountDown[item.type] = record?.getState(`_secretField_countDown_${name}_${item.type}`);
+    });
     const pattern = this.getProp('pattern');
     const restrict = this.getProp('restrict');
     const required = this.getProp('required');
@@ -94,7 +120,8 @@ export default class SecretField extends TextField<SecretFieldProps> {
             token={record?.get('_token')}
             onChange={this.handleSecretChange}
             onQueryFlag={this.setQueryFlag}
-            countDown={record?.getState(`_secretField_countDown_${name}`)}
+            countDown={modalCountDown}
+            verifyTypeObj={verifyTypeObj}
           />
         ),
         destroyOnClose: true,
