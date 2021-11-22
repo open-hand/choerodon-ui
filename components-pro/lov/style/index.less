@@ -25,6 +25,10 @@
     }
   }
 
+  .@{lov-prefix-cls}-selection-wrapper &-body {
+    max-height: calc(100vh - 1.2rem - 1.1rem);
+  }
+
   .@{drawer-prefix-cls}-container {
     position: absolute;
     top: 0;
@@ -97,14 +101,18 @@
     &-intro {
       margin: 0.1rem 0;
       padding-left: 0.08rem;
-      font-size: 0.15rem;
-      border-left: 0.03rem solid #3f51b5;
+      font-size: @lov-selected-in-view-intro-font-size;
+      border-left: 0.03rem solid @lov-selected-in-view-border-color;
+
+      & b {
+        font-weight: 500;
+      }
     }
 
     &-list {
       display: flex;
       flex-wrap: wrap;
-      max-height: 1.2rem;
+      max-height: 0.8rem;
       overflow: auto;
     }
 

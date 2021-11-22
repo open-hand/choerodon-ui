@@ -65,6 +65,8 @@ export type TooltipPlacementHook = (target?: TooltipTarget) => TooltipPlacement;
 
 export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
+export type lovShowSelectedInViewHook = (viewMode?: 'modal' | 'drawer') => boolean;
+
 export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet }) => AxiosRequestConfig;
 
 export type Customizable = {
@@ -101,6 +103,7 @@ export interface Config extends DataSetConfig {
   lovAutoSelectSingle?: boolean;
   lovQueryBar?: TableQueryBarType | TableQueryBarHook;
   lovQueryBarProps?: object;
+  lovShowSelectedInView?: boolean | lovShowSelectedInViewHook;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   queryBarProps?: object;

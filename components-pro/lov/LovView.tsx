@@ -34,7 +34,7 @@ export interface LovViewProps {
   textField?: string;
   viewRenderer?: ViewRenderer;
   nodeRenderer?: NodeRenderer,
-  showSelectedInModal?: boolean;
+  showSelectedInView?: boolean;
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -206,11 +206,13 @@ export default class LovView extends Component<LovViewProps> {
       tableProps,
       viewMode,
       context,
-      showSelectedInModal,
+      showSelectedInView,
     } = this.props;
     const { getConfig } = context;
     const columns = this.getColumns();
     const popup = viewMode === 'popup';
+    const modal = viewMode === 'modal';
+    const drawer = viewMode === 'drawer';
     const lovTableProps: TableProps = {
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
@@ -266,11 +268,14 @@ export default class LovView extends Component<LovViewProps> {
     if (!popup && !lovTableProps.queryBar && isProfessionalBar) {
       lovTableProps.queryBar = (props) => <TableProfessionalBar {...props} />;
     }
+    if ((modal || drawer) && showSelectedInView) {
+      lovTableProps.showSelectionTips = false;
+    }
     this.selectionMode = lovTableProps.selectionMode;
     return (
       <>
         <Table {...lovTableProps} />
-        {showSelectedInModal && viewMode === 'modal' && multiple && this.renderSelectionList()}
+        {modal && this.renderSelectionList()}
       </>
     );
   }
@@ -285,8 +290,11 @@ export default class LovView extends Component<LovViewProps> {
       tableProps,
       multiple,
       viewMode,
-      showSelectedInModal,
+      showSelectedInView,
     } = this.props;
+    if (!showSelectedInView || !multiple) {
+      return null;
+    }
 
     if (!this.selectionMode) {
       const selectionMode = tableProps?.selectionMode || configTableProps?.selectionMode;
@@ -296,9 +304,10 @@ export default class LovView extends Component<LovViewProps> {
         this.selectionMode = selectionMode;
       }
     }
+
     const selectionsPosition = viewMode === 'drawer' ?
       SelectionsPosition.side :
-      (showSelectedInModal && viewMode === 'modal' && multiple ? SelectionsPosition.below : undefined);
+      (viewMode === 'modal' ? SelectionsPosition.below : undefined);
 
     return (
       <SelectionList
@@ -328,7 +337,7 @@ export default class LovView extends Component<LovViewProps> {
     }
     return (
       <>
-        {viewMode === 'drawer' && multiple && this.renderSelectionList()}
+        {viewMode === 'drawer' && this.renderSelectionList()}
         <div>
           {viewRenderer
             ? toJS(

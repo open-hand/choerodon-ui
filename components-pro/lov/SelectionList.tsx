@@ -115,7 +115,7 @@ export default class SelectionList extends Component<SelectionListProps> {
     return (
       <div className={classString}>
         <p className={`${classString}-intro`}>
-          {$l('Table', 'selection_tips', {
+          {$l('Lov', 'selection_tips', {
             count: <b key="count">{records.length}</b>,
           })}
         </p>
