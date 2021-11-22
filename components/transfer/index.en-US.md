@@ -24,13 +24,15 @@ One or more elements can be selected from either column, one click on the proper
 | lazy | property of [react-lazy-load](https://github.com/loktar00/react-lazy-load) for lazy rendering items. Turn off it by set to `false`. | object\|boolean | `{ height: 32, offset: 32 }` |
 | listStyle | A custom CSS style used for rendering the transfer columns. | object |  |
 | notFoundContent | Text to display when a column is empty. | string\|ReactNode | 'The list is empty' |
-| operations | A set of operations that are sorted from bottom to top. | string\[] | ['>', '<'] |
+| operations | A set of operations that are sorted from bottom to top. | string\[] \| ReactNode[] | ['>', '<'] |
 | render | The function to generate the item shown on a column. Based on an record (element of the dataSource array), this function should return a React element which is generated from that record. Also, it can return a plain object with `value` and `label`, `label` is a React element and `value` is for title | Function(record) |  |
 | searchPlaceholder | The hint text of the search box. | string | 'Search here' |
 | selectedKeys | A set of keys of selected items. | string\[] | \[] |
 | showSearch | If included, a search box is shown on each column. | boolean | false |
 | targetKeys | A set of keys of elements that are listed on the right column. | string\[] | \[] |
 | titles | A set of titles that are sorted from left to right. | string\[] | - |
+| sortable | If included, it will show sort button | boolean | false |
+| sortOperations | A set of sort that are sorted raise and down. | string\[] \| ReactNode[] | ['∧', '∨'] |
 | onChange | A callback function that is executed when the transfer between columns is complete. | (targetKeys, direction, moveKeys): void |  |
 | onScroll | A callback function which is executed when scroll options list | (direction, event): void |  |
 | onSearchChange | A callback function which is executed when search field are changed | (direction: 'left'\|'right', event: Event): void | - |

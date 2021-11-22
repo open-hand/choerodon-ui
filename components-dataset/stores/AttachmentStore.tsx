@@ -6,7 +6,9 @@ import { getGlobalConfig } from './utils';
 
 export type AttachmentCache = { count?: number | undefined, attachments?: AttachmentFile[] | undefined };
 
-type callbackArgs = [Field | undefined];
+type callbackArgs = [Field | undefined, boolean | undefined];
+
+const publicKey = Symbol('PUBLIC_KEY');
 
 export class AttachmentStore {
 
@@ -15,7 +17,7 @@ export class AttachmentStore {
   batchCallback = (uuids: string[], args?: callbackArgs): Promise<{ [key: string]: number | undefined }> => {
     const { batchFetchCount } = getGlobalConfig('attachment', args && args[0]);
     if (batchFetchCount) {
-      return batchFetchCount(uuids);
+      return batchFetchCount(uuids, { isPublic: args && args[1] });
     }
     return Promise.resolve({});
   };
@@ -25,8 +27,8 @@ export class AttachmentStore {
     { maxAge: 60000, max: 100 },
   );
 
-  fetchCountInBatch(uuid: string): Promise<number | undefined> {
-    return this.merger.add(uuid);
+  fetchCountInBatch(uuid: string, field: Field | undefined, isPublic?: boolean): Promise<number | undefined> {
+    return this.merger.add(uuid, (privateKey) => isPublic ? publicKey : privateKey, [field, isPublic]);
   }
 
   get(uuid: string): AttachmentCache | undefined {

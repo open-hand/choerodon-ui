@@ -25,19 +25,20 @@ export { TooltipContainerRef, TooltipManagerType };
 const TooltipContainer: ForwardRefExoticComponent<any> = forwardRef<TooltipContainerRef>((_, ref) => {
   const task = useMemo(() => new TaskRunner(), []);
   const [tooltipProps, setTooltipProps] = useState<TooltipProps>();
-  const { getTooltipTheme } = useContext(ConfigContext);
+  const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const open = useCallback((target, args, duration = 100) => {
     task.cancel();
     task.delay(duration, () => {
       setTooltipProps({
         theme: getTooltipTheme(),
+        placement: getTooltipPlacement(),
         ...args,
         hidden: false,
         getRootDomNode: () => target,
       });
     });
     return task;
-  }, [task, getTooltipTheme]);
+  }, [task, getTooltipTheme, getTooltipPlacement]);
   const close = useCallback((duration = 100) => {
     task.cancel();
     task.delay(duration, () => {

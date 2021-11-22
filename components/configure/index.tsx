@@ -24,7 +24,7 @@ import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
 import { Action } from '../trigger/enum';
-import { TooltipTheme } from '../tooltip';
+import { TooltipPlacement, TooltipTheme } from '../tooltip';
 import { SpinProps } from '../spin';
 import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
@@ -55,11 +55,13 @@ export type PerformanceEvents = {
 
 export type PerformanceEventHook<T extends keyof PerformanceEvents> = (key: T, event: PerformanceEvents[T]) => void;
 
-export type TooltipTarget = 'table-cell' | 'output' | 'label' | 'button' | 'select-option' | 'validation' | 'help';
+export type TooltipTarget = 'table-cell' | 'output' | 'label' | 'button' | 'select-option' | 'validation' | 'help' | 'text-field-disabled';
 
 export type TooltipHook = (target?: TooltipTarget) => Tooltip | undefined;
 
 export type TooltipThemeHook = (target?: TooltipTarget) => TooltipTheme;
+
+export type TooltipPlacementHook = (target?: TooltipTarget) => TooltipPlacement;
 
 export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
@@ -200,6 +202,10 @@ export interface Config extends DataSetConfig {
    * tooltip 主题
    */
   tooltipTheme?: TooltipTheme | TooltipThemeHook;
+  /**
+   * tooltip 位置
+   */
+  tooltipPlacement?: TooltipPlacement | TooltipPlacementHook;
   /**
    * 附件相关配置
    */

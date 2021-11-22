@@ -2,7 +2,7 @@ import React, { FunctionComponent, memo, ReactNode, useContext, useMemo } from '
 import { getContext, Symbols } from 'choerodon-ui/shared';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { getConfig, getCustomizable, getPrefixCls, getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
-import { getTooltip, getTooltipTheme } from 'choerodon-ui/lib/_util/TooltipUtils';
+import { getTooltip, getTooltipTheme, getTooltipPlacement } from 'choerodon-ui/lib/_util/TooltipUtils';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { LabelAlign, LabelLayout, ShowValidation } from './enum';
@@ -38,6 +38,7 @@ const FormContext = getContext<FormContextValue>(Symbols.ProFormContext, {
   getCustomizable,
   getTooltip,
   getTooltipTheme,
+  getTooltipPlacement,
 });
 
 const BaseFormProvider: FunctionComponent<FormProviderProps> = function FormProvider(props) {
@@ -49,6 +50,7 @@ const BaseFormProvider: FunctionComponent<FormProviderProps> = function FormProv
     getCustomizable: getGlobalCustomizable,
     getTooltip: getGlobalTooltip,
     getTooltipTheme: getGlobalTooltipTheme,
+    getTooltipPlacement: getGlobalTooltipPlacement,
   } = useContext(ConfigContext);
   const newValue = useMemo(() => ({
     ...value,
@@ -58,7 +60,8 @@ const BaseFormProvider: FunctionComponent<FormProviderProps> = function FormProv
     getCustomizable: getGlobalCustomizable,
     getTooltip: getGlobalTooltip,
     getTooltipTheme: getGlobalTooltipTheme,
-  }), [value, getGlobalConfig, getGlobalPrefixCls, getGlobalProPrefixCls, getGlobalCustomizable, getGlobalTooltip, getGlobalTooltipTheme]);
+    getTooltipPlacement: getGlobalTooltipPlacement,
+  }), [value, getGlobalConfig, getGlobalPrefixCls, getGlobalProPrefixCls, getGlobalCustomizable, getGlobalTooltip, getGlobalTooltipTheme, getGlobalTooltipPlacement]);
   return (
     <FormContext.Provider value={newValue}>
       {children}

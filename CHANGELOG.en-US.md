@@ -19,9 +19,11 @@ timeline: true
 - 🌟 `ConfigProvider`: Added `ConfigProvider` component.
 - 🌟 `hooks`: Added `useConfig` hook.
 - 🌟 `<pro>hooks`: Added `useDataSet` hook.
-- 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultMinWidth` properties.
+- 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement` properties.
+- 🌟 `configure`: `TooltipTarget` adds `text-field-disabled` input class component disabled state object.
 - 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
+- 🌟 `<pro>Attachment`: Added `isPublic` property.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
 - 🌟 `<pro>NumberField`: Added the `keyboard` property to control `UP` `DOWN` keyboard events.
 - 🌟 `<pro>ModalProvider`: Added `getContainer` property.
@@ -31,6 +33,8 @@ timeline: true
 - 🌟 `<pro>Tree`: Added `filter` property.
 - 🌟 `Tree`: Added callback of `onDropBefore` function.
 - 🌟 `<pro>DataSet`: Added `record` property.
+- 🌟 `Transfer`: Added `sortable` and `sortOperations` property.
+- 🌟 `<pro>Transfer`: Added `sortable`、`sortOperations` and `operations` property.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.

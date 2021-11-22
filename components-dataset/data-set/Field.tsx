@@ -1282,20 +1282,20 @@ export default class Field {
     }
   }
 
-  fetchAttachments(props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string }, record: Record | undefined = this.record) {
-    const { bucketName, bucketDirectory, attachmentUUID, storageCode } = props;
+  fetchAttachments(props: { bucketName?: string, bucketDirectory?: string, storageCode?: string, attachmentUUID: string, isPublic?: boolean }, record: Record | undefined = this.record) {
+    const { bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic } = props;
     const { fetchList } = this.dataSet.getConfig('attachment');
     if (fetchList) {
-      fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode }).then(action((results) => {
+      fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic }).then(action((results) => {
         this.setAttachments(results.map(file => new AttachmentFile(file)), record, undefined);
       }));
     }
   }
 
-  fetchAttachmentCount(uuid: string, record: Record | undefined = this.record) {
+  fetchAttachmentCount(uuid: string, isPublic?: boolean, record: Record | undefined = this.record) {
     const { batchFetchCount } = this.dataSet.getConfig('attachment');
     if (batchFetchCount && !this.attachments) {
-      attachmentStore.fetchCountInBatch(uuid).then((count) => {
+      attachmentStore.fetchCountInBatch(uuid, this, isPublic).then((count) => {
         this.setAttachmentCount(count, record);
       });
     }

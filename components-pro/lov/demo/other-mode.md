@@ -48,7 +48,6 @@ const App = () => {
             lovCode: 'LOV_CODE',
             multiple: true,
             required: true,
-            label: '条数据',
           },
           {
             name: 'drawer_code_string',
@@ -57,7 +56,6 @@ const App = () => {
             lovCode: 'LOV_TREE_CODE',
             multiple: true,
             required: true,
-            label: '条数据',
           },
         ],
       }),

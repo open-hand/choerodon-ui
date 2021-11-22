@@ -26,6 +26,7 @@ export interface TransferListProps {
   filterOption?: (filterText: any, item: any) => boolean;
   style?: CSSProperties;
   checkedKeys: string[];
+  highlightKey?: string;
   handleFilter: (e: any) => void;
   handleSelect: (selectedItem: any, checked: boolean) => void;
   handleSelectAll: (dataSource: any[], checkAll: boolean) => void;
@@ -147,6 +148,7 @@ export default class TransferList extends Component<TransferListProps, any> {
       dataSource,
       titleText,
       checkedKeys,
+      highlightKey,
       lazy,
       body = noop,
       footer = noop,
@@ -187,6 +189,7 @@ export default class TransferList extends Component<TransferListProps, any> {
       }
 
       const checked = checkedKeys.indexOf(item.key) >= 0;
+      const isHighlight = highlightKey === item.key;
       return (
         <Item
           key={item.key}
@@ -195,6 +198,7 @@ export default class TransferList extends Component<TransferListProps, any> {
           renderedText={renderedText}
           renderedEl={renderedEl}
           checked={checked}
+          isHighlight={isHighlight}
           prefixCls={prefixCls}
           onClick={this.handleSelect}
         />
