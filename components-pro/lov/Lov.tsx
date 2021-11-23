@@ -6,11 +6,13 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
+import isFunction from 'lodash/isFunction';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { LovConfig as DataSetLovConfig, LovConfigItem } from 'choerodon-ui/dataset/interface';
+import { LovViewTarget } from 'choerodon-ui/lib/configure';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView, { LovViewProps } from './LovView';
@@ -88,6 +90,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   onSearchMatcherChange?: (searchMatcher?: string) => void;
   viewRenderer?: ViewRenderer;
   nodeRenderer?: NodeRenderer;
+  showSelectedInView?: boolean;
 }
 
 @observer
@@ -109,6 +112,7 @@ export default class Lov extends Select<LovProps> {
     showCheckedStrategy: PropTypes.string,
     viewRenderer: PropTypes.func,
     nodeRenderer: PropTypes.func,
+    showSelectedInView: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -203,6 +207,17 @@ export default class Lov extends Select<LovProps> {
       }
     }
     return new DataSet();
+  }
+
+  get showSelectedInView(): boolean {
+    if ('showSelectedInView' in this.props) {
+      return this.props.showSelectedInView!;
+    }
+    const lovShowSelectedInView = this.getContextConfig('lovShowSelectedInView');
+    if (isFunction(lovShowSelectedInView)) {
+      return lovShowSelectedInView(this.props.viewMode as LovViewTarget);
+    }
+    return lovShowSelectedInView;
   }
 
   getSearchFieldProps(): TextFieldProps {
@@ -433,6 +448,7 @@ export default class Lov extends Select<LovProps> {
       const { options } = this;
       if (!this.modal && config && options) {
         const modalProps = this.getModalProps();
+        modalProps.className = this.getModalClassName(modalProps);
         const tableProps = this.getTableProps();
         const { width, title } = config;
         const lovViewProps = this.beforeOpen(options);
@@ -456,6 +472,7 @@ export default class Lov extends Select<LovProps> {
               textField={textField}
               viewRenderer={viewRenderer}
               nodeRenderer={nodeRenderer}
+              showSelectedInView={this.showSelectedInView}
             />
           ),
           onClose: this.handleLovViewClose,
@@ -477,6 +494,13 @@ export default class Lov extends Select<LovProps> {
         this.afterOpen(options, fetchSingle);
       }
     }
+  }
+
+  getModalClassName(modalProps: Partial<ModalProps>): string {
+    const { viewMode } = this.props;
+    return classNames(modalProps.className, {
+      [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === 'modal' && this.showSelectedInView,
+    });
   }
 
   @action
@@ -702,6 +726,7 @@ export default class Lov extends Select<LovProps> {
       'onSearchMatcherChange',
       'viewRenderer',
       'nodeRenderer',
+      'showSelectedInView',
     ]);
   }
 

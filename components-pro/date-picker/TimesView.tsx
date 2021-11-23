@@ -11,6 +11,8 @@ import DaysView, { alwaysValidDate, DateViewProps } from './DaysView';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import { stopEvent } from '../_util/EventManager';
+import Button from '../button';
+import { ButtonColor } from '../button/enum';
 
 const stepMapping = {
   [TimeUnit.hour]: 'hour',
@@ -302,12 +304,13 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
         <a {...footerProps}>
           {$l('DatePicker', 'now')}
         </a>
-        <a
+        <Button
+          color={ButtonColor.primary}
           className={`${prefixCls}-footer-view-select`}
-          onClick={this.choose.bind(this, this.props.date)}
+          onClick={() => { this.choose(this.props.date); }}
         >
           {$l('DatePicker', 'ok')}
-        </a>
+        </Button>
       </div>
     );
   }
