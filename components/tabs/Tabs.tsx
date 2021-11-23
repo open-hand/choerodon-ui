@@ -115,7 +115,7 @@ Tabs.propTypes = {
   keyboard: PropTypes.bool,
   hideAdd: PropTypes.bool,
   tabPosition: PropTypes.oneOf<TabsPosition>([TabsPosition.top, TabsPosition.right, TabsPosition.bottom, TabsPosition.left]),
-  type: PropTypes.oneOf<TabsType>([TabsType.card, TabsType.line, TabsType['editable-card']]),
+  type: PropTypes.oneOf<TabsType>([TabsType.card, TabsType.line, TabsType['editable-card'], TabsType['second-level']]),
 };
 
 Tabs.defaultProps = {
