@@ -247,6 +247,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
        */
       onOriginalChange();
       queryDataSet.locate(0);
+      queryDataSet.get(0)?.reset();
       if (autoQuery) {
         dataSet.query();
       }
