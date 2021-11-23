@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。修复 maxLength 和 minLength 属性的错误限制。
 - 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
 - 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 属性的错误限制。修复 range 模式下 UP DOWN 按键不起效果。
+- 🐞 `<pro>NumberField`: 修复动态 max 和 min 变化时不会触发校验重置的问题。
 - 🐞 `<pro>Lov`: 修复多选值回显到树形列表时数据显示问题。
 - 🐞 `<pro>Lov`: 修复开启 autoSelectSingle 属性重复查询的问题。
 - 🐞 `<pro>Tree`: 修复只使用 check 模式下 DataSet 勾选方法失效问题。

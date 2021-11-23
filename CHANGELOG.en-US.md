@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property. Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
 - 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties. And fixed `UP` `DOWN` keyword not working in Range mode.
+- 🐞 `<pro>NumberField`: Fix the issue that the verification reset will not be triggered when the dynamic `max` and `min` changes.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
 - 🐞 `<pro>Lov`: Fix the problem of repeated query when the `autoSelectSingle` property is turned on.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
