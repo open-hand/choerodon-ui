@@ -71,17 +71,19 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   @autobind
   handleSuccess() {
     const { countDown } = this.props;
-    const { context } = this;
+    const { context, formDs } = this;
+    const type = formDs?.current?.get('verifyType');
     // 发送信息以获取验证码
     const secretFieldFetchVerifyCode = context.getConfig('secretFieldFetchVerifyCode');
     if (secretFieldFetchVerifyCode) {
-      secretFieldFetchVerifyCode(this.formDs?.current?.get('verifyType')).then(
+      secretFieldFetchVerifyCode(type).then(
         res => {
           if ((res as any).success) {
             message.success((res as any).message);
             this.setCaptchaKey((res as any).captchaKey);
             // 验证码倒计时
             countDown.start();
+            countDown.setVerifyType(type);
           } else {
             message.error((res as any).message);
           }
@@ -176,8 +178,8 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
         return;
       }
     }
-    if(required){
-      if(!editValue){
+    if (required) {
+      if (!editValue) {
         return;
       }
     }
@@ -223,12 +225,21 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
 
   @action
   setFormDs() {
-    const { name, label, pattern, required } = this.props;
+    const { name, label, pattern, required, countDown } = this.props;
     const { verifyTypeObj } = this;
+    const { verifyType } = countDown;
     let initData: object[] = [];
+    let verifyValue = '';
     // 传入验证方式时，设置初始值
+    if (verifyType) {
+      verifyTypeObj.forEach(item => {
+        if (item.type === verifyType) {
+          verifyValue = item.value;
+        }
+      });
+    }
     if (verifyTypeObj.length > 0) {
-      initData = [{ 'verifyType': verifyTypeObj[0].type, 'verifyNumber': verifyTypeObj[0].value || '' }];
+      initData = [{ 'verifyType': verifyType || verifyTypeObj[0].type, 'verifyNumber': verifyType ? verifyValue : verifyTypeObj[0].value || '' }];
     }
     this.formDs = new DataSet(
       {
@@ -338,6 +349,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   render() {
     const { flag, captcha, verifyTypeObj, prefixCls, validate, formDs } = this;
     const { readOnly, label, name, countDown, restrict } = this.props;
+    const { count } = countDown;
     return (
       <div className={`${prefixCls}-modal`}>
         {
@@ -346,7 +358,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
               {
                 flag === 'verify' && (
                   <>
-                    <SelectBox name="verifyType" colSpan={4}>
+                    <SelectBox name="verifyType" colSpan={4} disabled={count}>
                       {verifyTypeObj?.map(item => <Option value={item.type} key={item.type}>
                         {item.name}
                       </Option>)}
@@ -385,7 +397,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
                     <TextField name={name} colSpan={4} restrict={restrict} />
                     <td colSpan={4} className={`${prefixCls}-modal-edit-btns`}>
                       {!validate &&
-                      <><p className={`${prefixCls}-modal-validate`}>{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
+                        <><p className={`${prefixCls}-modal-validate`}>{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
                       <Button onClick={this.handleEdit} color={ButtonColor.primary}>{$l('SecretField', 'ok_btn')}</Button>
                     </td>
