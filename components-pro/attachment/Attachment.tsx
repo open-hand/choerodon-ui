@@ -863,8 +863,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderHeader(uploadBtn?: ReactNode) {
-    const { prefixCls, props: { downloadAll, viewMode, __inGroup } } = this;
-    const label = this.renderHeaderLabel();
+    const { prefixCls, count, props: { downloadAll, viewMode, __inGroup } } = this;
+    const label = (!__inGroup || count) && this.renderHeaderLabel();
     const buttons: ReactNode[] = [];
     if (uploadBtn) {
       buttons.push(
@@ -901,7 +901,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             }
           }
         }
-      } else if (viewMode !== 'popup') {
+      } else if (viewMode !== 'popup' && !__inGroup) {
         const viewProps: ButtonProps = {
           key: 'view',
           funcType: FuncType.link,
@@ -911,19 +911,23 @@ export default class Attachment extends FormField<AttachmentProps> {
         buttons.push(
           <Button {...viewProps} />,
         );
-
       }
     }
-    return (
-      <div className={`${prefixCls}-header`}>
-        {label}
-        {!__inGroup && label && buttons.length ? <span key="divider" className={`${prefixCls}-header-divider`} /> : undefined}
-        <div className={`${prefixCls}-header-buttons`}>
-          {buttons}
+    const hasButton = buttons.length;
+    const sorter = this.renderSorter();
+    const divider = !__inGroup && label && hasButton ? <span key="divider" className={`${prefixCls}-header-divider`} /> : undefined;
+    if (label || divider || hasButton || sorter) {
+      return (
+        <div className={`${prefixCls}-header`}>
+          {label}
+          {divider}
+          <div className={`${prefixCls}-header-buttons`}>
+            {buttons}
+          </div>
+          {sorter}
         </div>
-        {this.renderSorter()}
-      </div>
-    );
+      );
+    }
   }
 
   @autobind
@@ -996,7 +1000,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         {this.renderHeader(!isCard && uploadBtn)}
         {!__inGroup && viewMode !== 'popup' && this.renderHelp(ShowHelp.newLine)}
         {!__inGroup && this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
-        {this.renderEmpty()}
+        {!__inGroup && this.renderEmpty()}
         {viewMode !== 'none' && this.renderUploadList(isCard && uploadBtn)}
       </div>
     );
