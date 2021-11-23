@@ -5,6 +5,8 @@ class CountDown {
 
   startTime: number;
 
+  verifyType: any;
+
   constructor() {
     runInAction(() => {
       this.count = 0;
@@ -25,8 +27,14 @@ class CountDown {
       // 倒计时结束
       if (this.count <= 0) {
         clearInterval(timer);
+        this.setVerifyType();
       }
     }, 1000);
+  }
+
+  // 获取验证码时的验证方式
+  setVerifyType(value?:string) {
+    this.verifyType = value || null;
   }
 }
 export default CountDown;
