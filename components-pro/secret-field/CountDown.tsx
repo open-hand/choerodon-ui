@@ -33,7 +33,7 @@ class CountDown {
   }
 
   // 获取验证码时的验证方式
-  setVerifyType(value?:string) {
+  setVerifyType(value?: string) {
     this.verifyType = value || null;
   }
 }

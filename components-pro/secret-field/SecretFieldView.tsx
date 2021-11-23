@@ -178,8 +178,8 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
         return;
       }
     }
-    if(required){
-      if(!editValue){
+    if (required) {
+      if (!editValue) {
         return;
       }
     }
@@ -229,9 +229,17 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
     const { verifyTypeObj } = this;
     const { verifyType } = countDown;
     let initData: object[] = [];
+    let verifyValue = '';
     // 传入验证方式时，设置初始值
+    if (verifyType) {
+      verifyTypeObj.forEach(item => {
+        if (item.type === verifyType) {
+          verifyValue = item.value;
+        }
+      });
+    }
     if (verifyTypeObj.length > 0) {
-      initData = [{ 'verifyType': verifyType || verifyTypeObj[0].type, 'verifyNumber': verifyTypeObj[0].value || '' }];
+      initData = [{ 'verifyType': verifyType || verifyTypeObj[0].type, 'verifyNumber': verifyType ? verifyValue : verifyTypeObj[0].value || '' }];
     }
     this.formDs = new DataSet(
       {
@@ -389,7 +397,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
                     <TextField name={name} colSpan={4} restrict={restrict} />
                     <td colSpan={4} className={`${prefixCls}-modal-edit-btns`}>
                       {!validate &&
-                      <><p className={`${prefixCls}-modal-validate`}>{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
+                        <><p className={`${prefixCls}-modal-validate`}>{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
                       <Button onClick={this.handleEdit} color={ButtonColor.primary}>{$l('SecretField', 'ok_btn')}</Button>
                     </td>
