@@ -91,7 +91,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           width={14}
           height={14}
           alt={name}
-          previewUrl={src}
+          previewUrl={src || url}
           downloadUrl={downloadUrl}
           src={isSrcIcon ? icon as string : undefined}
           objectFit="contain"
@@ -127,7 +127,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             width={width}
             height={width}
             alt={name}
-            src={src}
+            src={src || url}
             downloadUrl={downloadUrl}
             lazy
             objectFit="contain"
