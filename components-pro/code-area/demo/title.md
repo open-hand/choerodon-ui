@@ -1,24 +1,22 @@
 ---
-order: 3
+order: 8
 title:
-  zh-CN: 主题
-  en-US: Theme
-iframe: 650
+  zh-CN: 标题
+  en-US: Title
 across: true
 ---
 
 ## zh-CN
 
-使用不同主题。
+设置标题和默认主题切换。
 
 ## en-US
 
-Using different themes.
+Set the title and function.
 
 ````jsx
-import { CodeArea, Switch, DataSet } from 'choerodon-ui/pro';
-// 这两个主题不是组件内置的主题，需要手动引入
-import 'codemirror/theme/eclipse.css';
+import { CodeArea, Switch, DataSet, Button } from 'choerodon-ui/pro';
+import { Icon } from 'choerodon-ui';
 // 处理 codemirror 的SSR问题， 如无需SSR，请用import代替require;
 if (typeof window !== 'undefined') {
   // 提供对应语言的语法高亮
@@ -54,7 +52,7 @@ const style = { height: 525 };
 
 class App extends React.Component {
   state = {
-    theme: 'neat',
+    hiddenContent: false,
   }
 
   ds = new DataSet({
@@ -64,8 +62,28 @@ class App extends React.Component {
     ],
   });
 
-  handleThemeChange = (value) => {
-    this.setState({ theme: value ? 'eclipse' : 'neat' });
+  toggleHidden = () => {
+    this.setState({ hiddenContent: !this.state.hiddenContent });
+  }
+
+  get getIconType(): string {
+    return this.state.hiddenContent ? 'baseline-arrow_drop_up' : 'baseline-arrow_drop_down';
+  }
+
+  getHeader = () => (
+    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+        <div>代码区</div>
+        <Icon type={this.getIconType} style={{ marginLeft: '4px' }} onClick={this.toggleHidden} />
+      </div>
+      <Button size="small" color="gray">
+        Button
+      </Button>
+    </div>
+  )
+
+  get getClassName(): string {
+    return this.state.hiddenContent ? 'hidden-content' : '';
   }
 
   render() {
@@ -74,10 +92,11 @@ class App extends React.Component {
         <CodeArea
           dataSet={this.ds}
           name="content"
-          options={{ theme: this.state.theme }}
           style={style}
+          className={this.getClassName}
+          title={this.getHeader()}
+          themeSwitch="idea"
         />
-        <Switch onChange={this.handleThemeChange} unCheckedChildren="neat">eclipse</Switch>
       </div>
     );
   }
@@ -85,3 +104,9 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, mountNode);
 ````
+
+<style>
+.hidden-content .react-codemirror2 {
+  visibility: hidden;
+}
+</style>

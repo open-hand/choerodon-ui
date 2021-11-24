@@ -36,6 +36,7 @@ timeline: true
 - 🌟 `Transfer`: Added `sortable` and `sortOperations` property.
 - 🌟 `<pro>Transfer`: Added `sortable`、`sortOperations` and `operations` property.
 - 🌟 `<pro>Lov`: Added `showSelectedInView` property.
+- 🌟 `<pro>CodeArea`: Added `themeSwitch`, `title` properties.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
