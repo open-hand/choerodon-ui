@@ -26,7 +26,7 @@ import { action, computed, observable, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { WaitType } from '../core/enum';
+import { Tooltip as TextTooltip, WaitType } from '../core/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
@@ -47,6 +47,8 @@ import isReactChildren from '../_util/isReactChildren';
 import TextFieldGroup from './TextFieldGroup';
 import { findFirstFocusableElement } from '../_util/focusable';
 import { hide, show } from '../tooltip/singleton';
+import isOverflow from '../overflow-tip/util';
+import { toRangeValue } from '../field/utils';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -529,11 +531,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleHelpMouseEnter(e) {
-    const { getTooltipTheme } = this.context;
+    const { getTooltipTheme, getTooltipPlacement } = this.context;
     show(e.currentTarget, {
       title: this.getProp('help'),
       popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
+      placement: getTooltipPlacement('help'),
     });
   }
 
@@ -559,6 +562,34 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderWrapper(): ReactNode {
     return this.renderGroup();
+  }
+
+  getRenderedValue(): ReactNode {
+    if (this.range) {
+      return this.renderRangeValue(toRangeValue(this.getValue(), this.range));
+    }
+    return this.processRenderer(this.getValue());
+  }
+
+  showTooltip(e): boolean {
+    if (super.showTooltip(e)) {
+      return true;
+    }
+    const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
+    const { tooltip = getTooltip('text-field-disabled') } = this.props;
+    const { element } = this;
+    if (element && this.disabled && !this.multiple && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
+      const title = this.getRenderedValue();
+      if (title) {
+        show(element, {
+          title,
+          placement: getTooltipPlacement('text-field-disabled') || 'right',
+          theme: getTooltipTheme('text-field-disabled'),
+        });
+        return true;
+      }
+    }
+    return false;
   }
 
   renderInputElement(): ReactNode {

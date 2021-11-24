@@ -225,7 +225,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   render() {
     const { props, state } = this;
-    const { getTooltipTheme, getPrefixCls } = this.context;
+    const { getTooltipTheme, getTooltipPlacement, getPrefixCls } = this.context;
     const {
       prefixCls: customizePrefixCls,
       title,
@@ -234,6 +234,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
       getPopupContainer,
       getTooltipContainer,
       theme = getTooltipTheme(),
+      placement = getTooltipPlacement(),
     } = props;
     const prefixCls = getPrefixCls('tooltip', customizePrefixCls);
     const children = props.children as ReactElement<any>;
@@ -263,6 +264,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
         onVisibleChange={this.onVisibleChange}
         onPopupAlign={this.onPopupAlign}
         theme={theme}
+        placement={placement}
       >
         {visible ? cloneElement(child, { className: childCls }) : child}
       </RcTooltip>

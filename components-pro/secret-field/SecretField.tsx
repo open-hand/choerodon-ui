@@ -26,8 +26,6 @@ export default class SecretField extends TextField<SecretFieldProps> {
     ...TextField.propTypes,
   };
 
-  countDown = new CountDown();
-
   // eslint-disable-next-line camelcase
   // static __IS_IN_CELL_EDITOR = true;
 
@@ -53,9 +51,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
   private secretEnable: Boolean = false;
 
   get isSecretEnable(): Boolean {
-    const { record } = this;
-    if (!record?.get('_token')) {
-      // 新增数据，record没有token，显示为textfield
+    const { record, name } = this;
+    if (!record?.get('_token') || !record?.get(name) ) {
+      // 新增数据，record没有token或者没有值，显示为textfield
       return false;
     }
     return this.secretEnable;
@@ -74,8 +72,12 @@ export default class SecretField extends TextField<SecretFieldProps> {
   private openModal() {
     const label = this.getLabel();
     const { readOnly, name, record } = this;
+    if (!record?.getState(`_secretField_countDown_${name}`)) {
+      record?.setState({ [`_secretField_countDown_${name}`]: new CountDown() });
+    }
     const pattern = this.getProp('pattern');
     const restrict = this.getProp('restrict');
+    const required = this.getProp('required');
     if (!this.modal) {
       const { modalProps } = this.props;
       this.modal = open({
@@ -88,10 +90,11 @@ export default class SecretField extends TextField<SecretFieldProps> {
             label={label}
             pattern={pattern}
             restrict={restrict}
+            required={required}
             token={record?.get('_token')}
             onChange={this.handleSecretChange}
             onQueryFlag={this.setQueryFlag}
-            countDown={this.countDown}
+            countDown={record?.getState(`_secretField_countDown_${name}`)}
           />
         ),
         destroyOnClose: true,
@@ -120,10 +123,10 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getSuffix(): ReactNode {
-    const { readOnly, queryFlag, isSecretEnable, name, record } = this;
-    // 未开启脱敏组件
+    const { readOnly, queryFlag, isSecretEnable, props, disabled } = this;
+    // 未开启脱敏组件或者脱敏组件值为空时,不显示编辑/查看按钮
     if (!isSecretEnable) {
-      const { suffix } = this.props;
+      const { suffix } = props;
       return suffix ? this.wrapperSuffix(suffix) : null;
     }
     // 开启脱敏组件
@@ -132,16 +135,16 @@ export default class SecretField extends TextField<SecretFieldProps> {
       return this.wrapperSuffix(
         <Icon type='edit-o' />,
         {
-          onClick: this.handleOpenModal,
+          onClick: disabled ? null : this.handleOpenModal,
         },
       )
     }
-    // 只读：已读/值为空不显示查看按钮
-    if (queryFlag && readOnly && record?.get(name)) {
+    // 只读：已读不显示查看按钮
+    if (queryFlag && readOnly) {
       return this.wrapperSuffix(
         <Icon type='visibility-o' />,
         {
-          onClick: this.handleOpenModal,
+          onClick: disabled ? null : this.handleOpenModal,
         },
       )
     }

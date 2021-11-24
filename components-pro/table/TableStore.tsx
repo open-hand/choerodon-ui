@@ -313,7 +313,7 @@ export function mergeDefaultProps(
           rightColumns.push(newColumn);
         }
       } else if (children) {
-        const [leftNodes, nodes, rightNodes , childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+        const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
         if (!hasAggregationColumn && childrenHasAggregationColumn) {
           hasAggregationColumn = childrenHasAggregationColumn;
         }
@@ -1154,17 +1154,17 @@ export default class TableStore {
 
   @computed
   get columnGroups(): ColumnGroups {
-    return new ColumnGroups(this.columns, this.aggregation);
+    return new ColumnGroups(this.columns, this);
   }
 
   @computed
   get leftColumnGroups(): ColumnGroups {
-    return new ColumnGroups(this.leftColumns, this.aggregation);
+    return new ColumnGroups(this.leftColumns, this);
   }
 
   @computed
   get rightColumnGroups(): ColumnGroups {
-    return new ColumnGroups(this.rightColumns, this.aggregation);
+    return new ColumnGroups(this.rightColumns, this);
   }
 
   @computed

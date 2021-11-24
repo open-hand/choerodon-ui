@@ -6,11 +6,13 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
+import isFunction from 'lodash/isFunction';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { LovConfig as DataSetLovConfig, LovConfigItem } from 'choerodon-ui/dataset/interface';
+import { LovViewTarget } from 'choerodon-ui/lib/configure';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView, { LovViewProps } from './LovView';
@@ -33,6 +35,7 @@ import { getLovPara } from '../stores/utils';
 import { TableProps, TableQueryBarHook, TableQueryBarHookProps } from '../table/Table';
 import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
+import { modalChildrenProps } from '../modal/interface';
 
 export type Events = { [key: string]: Function };
 
@@ -41,15 +44,15 @@ export type ViewRenderer = ({
   lovConfig,
   textField,
   valueField,
-  label,
   multiple,
+  modal,
 }: {
   dataSet: DataSet;
   lovConfig: LovConfig | undefined;
   textField: string | undefined;
   valueField: string | undefined;
-  label: string | undefined;
   multiple: boolean;
+  modal?: modalChildrenProps;
 }) => ReactNode;
 
 export type NodeRenderer = (record: Record) => ReactNode;
@@ -87,6 +90,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   onSearchMatcherChange?: (searchMatcher?: string) => void;
   viewRenderer?: ViewRenderer;
   nodeRenderer?: NodeRenderer;
+  showSelectedInView?: boolean;
 }
 
 @observer
@@ -108,6 +112,7 @@ export default class Lov extends Select<LovProps> {
     showCheckedStrategy: PropTypes.string,
     viewRenderer: PropTypes.func,
     nodeRenderer: PropTypes.func,
+    showSelectedInView: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -202,6 +207,17 @@ export default class Lov extends Select<LovProps> {
       }
     }
     return new DataSet();
+  }
+
+  get showSelectedInView(): boolean {
+    if ('showSelectedInView' in this.props) {
+      return this.props.showSelectedInView!;
+    }
+    const lovShowSelectedInView = this.getContextConfig('lovShowSelectedInView');
+    if (isFunction(lovShowSelectedInView)) {
+      return lovShowSelectedInView(this.props.viewMode as LovViewTarget);
+    }
+    return lovShowSelectedInView;
   }
 
   getSearchFieldProps(): TextFieldProps {
@@ -430,13 +446,12 @@ export default class Lov extends Select<LovProps> {
       const config = this.getConfig();
       this.autoCreate();
       const { options } = this;
-      const hasLovViewRenderer = viewRenderer !== undefined;
       if (!this.modal && config && options) {
         const modalProps = this.getModalProps();
-        const tableProps = hasLovViewRenderer ? {} : this.getTableProps();
+        modalProps.className = this.getModalClassName(modalProps);
+        const tableProps = this.getTableProps();
         const { width, title } = config;
         const lovViewProps = this.beforeOpen(options);
-        const label = this.getProp('label');
         const valueField = this.getProp('valueField');
         const textField = this.getProp('textField');
         this.modal = open({
@@ -453,11 +468,11 @@ export default class Lov extends Select<LovProps> {
               onBeforeSelect={onBeforeSelect}
               multiple={this.multiple}
               values={this.getValues()}
-              label={label}
               valueField={valueField}
               textField={textField}
               viewRenderer={viewRenderer}
               nodeRenderer={nodeRenderer}
+              showSelectedInView={this.showSelectedInView}
             />
           ),
           onClose: this.handleLovViewClose,
@@ -467,18 +482,25 @@ export default class Lov extends Select<LovProps> {
           bodyStyle: {
             minHeight: isIE() ? pxToRem(Math.min(350, window.innerHeight)) : 'min(3.5rem, 100vh)',
           },
+          drawer,
+          drawerBorder: !drawer,
           ...modalProps,
           style: {
             width: pxToRem(width),
             ...(modalProps && modalProps.style),
           },
           afterClose: this.handleLovViewAfterClose,
-          drawer,
-          drawerBorder: !drawer,
         } as ModalProps & { children });
         this.afterOpen(options, fetchSingle);
       }
     }
+  }
+
+  getModalClassName(modalProps: Partial<ModalProps>): string {
+    const { viewMode } = this.props;
+    return classNames(modalProps.className, {
+      [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === 'modal' && this.showSelectedInView,
+    });
   }
 
   @action
@@ -704,6 +726,7 @@ export default class Lov extends Select<LovProps> {
       'onSearchMatcherChange',
       'viewRenderer',
       'nodeRenderer',
+      'showSelectedInView',
     ]);
   }
 

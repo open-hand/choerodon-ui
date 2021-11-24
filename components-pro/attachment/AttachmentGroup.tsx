@@ -17,6 +17,8 @@ export interface AttachmentGroupProps extends ButtonProps {
   label?: ReactNode;
   colSpan?: number;
   rowSpan?: number;
+  text?: ReactNode;
+  count?: number;
 }
 
 type GetRef = (attachment: Attachment | null, index: number) => void;
@@ -43,14 +45,16 @@ function normalizeAttachments(children: ReactNode, getRef?: GetRef, index = 0): 
 }
 
 const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function AttachmentGroup(props) {
-  const { viewMode, children, hidden, ...buttonProps } = props;
-  const { getProPrefixCls } = useContext(ConfigContext);
+  const { viewMode, children, hidden, text, count, ...buttonProps } = props;
+  const hasCount = count !== undefined;
+  const { getProPrefixCls, getConfig } = useContext(ConfigContext);
   const listRef = useRef<ObservableMap<number, Attachment>>(observable.map());
   const prefixCls = getProPrefixCls('attachment');
-  const attachments: ReactElement | null = useMemo(() => children ? (
+  const computedCount = hasCount ? count : iteratorReduce<Attachment, number>(listRef.current.values(), (sum, attachment) => sum + (attachment.count || 0), 0);
+  const attachments = useMemo((): ReactElement | undefined => children ? (
     <div className={`${prefixCls}-group`}>
       {
-        normalizeAttachments(children, viewMode === 'list' ? undefined : action((attachment, index) => {
+        normalizeAttachments(children, hasCount || viewMode === 'list' ? undefined : action((attachment, index) => {
           if (attachment) {
             listRef.current.set(index, attachment);
           } else {
@@ -59,23 +63,37 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
         }))
       }
     </div>
-  ) : null, [children]);
+  ) : undefined, [children, hasCount, viewMode, prefixCls]);
+  const renderEmpty = (): ReactElement | undefined => {
+    if (computedCount === 0) {
+      return (
+        <div className={`${prefixCls}-empty`}>
+          {getConfig('renderEmpty')('Attachment')}
+        </div>
+      );
+    }
+  };
+  const content: ReactElement = (
+    <>
+      {renderEmpty()}
+      {attachments}
+    </>
+  );
   const renderGroup = (): ReactElement | null => {
     if (hidden) {
       return null;
     }
     if (viewMode === 'list') {
-      return attachments;
+      return content;
     }
-    const count = iteratorReduce<Attachment, number>(listRef.current.values(), (sum, attachment) => sum + (attachment.count || 0), 0);
     return (
       <Trigger
         prefixCls={prefixCls}
-        popupContent={attachments}
+        popupContent={content}
         action={[Action.hover, Action.focus]}
         builtinPlacements={BUILT_IN_PLACEMENTS}
         popupPlacement="bottomLeft"
-        forceRender
+        forceRender={!hasCount}
       >
         <Button
           icon="attach_file"
@@ -83,7 +101,7 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
           color={ButtonColor.primary}
           {...buttonProps}
         >
-          {$l('Attachment', 'view_attachment')} {count || undefined}
+          {text || $l('Attachment', 'view_attachment')} {computedCount || undefined}
         </Button>
       </Trigger>
     );

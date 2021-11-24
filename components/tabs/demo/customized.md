@@ -30,7 +30,7 @@ const App = () => {
     callback(key);
   }, []);
   return (
-    <Tabs keyboard={false} activeKey={activeKey} onChange={handleChange} customizable customizedCode="customized" tabDraggable={false} tabTitleEditable={false} tabCountHideable={false} defaultChangeable={false}>
+    <Tabs keyboard={false} activeKey={activeKey} onChange={handleChange} customizable customizedCode="customized">
       <TabPane tab={tabARender} title="Tab A" key="1" count={117}>
         Content of Tab Pane 1
       </TabPane>

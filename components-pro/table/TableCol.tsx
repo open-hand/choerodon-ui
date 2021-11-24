@@ -15,7 +15,7 @@ const TableCol: FunctionComponent<TableColProps> = function TableCol(props) {
   const { column, last } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
   const width = last && !tableStore.hasEmptyWidthColumn ? undefined : get(column, 'width');
-  const minWidth = minColumnWidth(column);
+  const minWidth = minColumnWidth(column, tableStore);
   const style = useMemo(() => ({
     width: pxToRem(width),
     minWidth: pxToRem(minWidth),

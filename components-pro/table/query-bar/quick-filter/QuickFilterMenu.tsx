@@ -203,26 +203,34 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const { current } = menuDataSet;
     if (current) {
       const { conditionList } = current.toData();
-      const emptyRecord = new Record({}, queryDataSet);
-      runInAction(() => {
-        queryDataSet.records.push(emptyRecord);
-        queryDataSet.current = emptyRecord;
-      });
+      const initData = {};
       if (conditionList && conditionList.length) {
         map(conditionList, condition => {
           if (condition.comparator === 'EQUAL') {
             const { fieldName, value } = condition;
-            emptyRecord.set(fieldName, value);
+            initData[fieldName] = value;
             onChange(fieldName);
             onOriginalChange(fieldName);
           }
         });
+        const emptyRecord = new Record({...initData}, queryDataSet);
+        queryDataSet.setState('selectFields', Object.keys(initData));
+        runInAction(() => {
+          queryDataSet.records.push(emptyRecord);
+          queryDataSet.current = emptyRecord;
+        });
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
+        const emptyRecord = new Record({}, queryDataSet);
+        queryDataSet.setState('selectFields', []);
+        runInAction(() => {
+          queryDataSet.records.push(emptyRecord);
+          queryDataSet.current = emptyRecord;
+        });
         onStatusChange(RecordStatus.sync);
-        if (autoQuery) {
-          dataSet.query();
-        }
+      }
+      if (autoQuery) {
+        dataSet.query();
       }
     }
   };
@@ -239,6 +247,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
        */
       onOriginalChange();
       queryDataSet.locate(0);
+      queryDataSet.get(0)?.reset();
       if (autoQuery) {
         dataSet.query();
       }

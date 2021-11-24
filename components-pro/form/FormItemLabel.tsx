@@ -15,7 +15,7 @@ export interface FormLabelProps {
 
 const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(props) {
   const { className, rowSpan, paddingLeft, tooltip, children } = props;
-  const { getTooltipTheme } = useContext(ConfigContext);
+  const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => paddingLeft ? { paddingLeft } : undefined, [paddingLeft]);
   const handleMouseEnter = useCallback((e) => {
@@ -24,6 +24,7 @@ const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(
       show(currentTarget, {
         title: children,
         theme: getTooltipTheme('label'),
+        placement: getTooltipPlacement('label'),
       });
       tooltipRef.current = true;
     }

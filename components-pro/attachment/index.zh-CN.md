@@ -38,6 +38,7 @@ title: Attachment
 | bucketName | 附件上传的桶名 | string |  |
 | bucketDirectory | 附件上传的桶目录 | string |  |
 | storageCode | 附件存储编码 | string |  |
+| isPublic | 是否是公共的， [attachment](/component/configure/#Attachment)配置中相关钩子会使用该属性 | boolean |  |
 | attachments | 附件列表 | (AttachmentFile \| FileLike)[] |  |
 | showValidation | 校验信息展示方式 | `newLine` \| `tooltip` | `viewMode` == `popup` ? `tooltip` : `newLine` |
 | onAttachmentsChange | 附件列表变更事件 | (AttachmentFile[]) => void |  |
@@ -57,5 +58,7 @@ title: Attachment
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | viewMode | 上传列表的显示模式，支持两种基本样式  `list` 和 `popup` | string | 'popup' |
+| text | 按钮文字 | ReactNode |  |
+| count | 自定义附件数量, 未设置时会自动获取组内的附件数量 | number |  |
 
 更多属性请参考 [Button](/components-pro/button/#Button)。

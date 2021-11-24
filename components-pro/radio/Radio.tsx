@@ -112,10 +112,11 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     if (labelRef && (labelTooltip === TextTooltip.always || (labelTooltip === TextTooltip.overflow && isOverflow(labelRef)))) {
       const labelText = this.getLabelText();
       if (labelText) {
-        const { getTooltipTheme } = this.context;
+        const { getTooltipTheme, getTooltipPlacement } = this.context;
         show(labelRef, {
           title: labelText,
           theme: getTooltipTheme('label'),
+          placement: getTooltipPlacement('label'),
         });
         return true;
       }

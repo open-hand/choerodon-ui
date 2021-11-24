@@ -27,6 +27,7 @@ export interface SecretFieldViewProps {
   label: string;
   pattern?: string | RegExp;
   restrict?: string | RegExp;
+  required?: boolean;
   token?: string;
   countDown: any;
   onChange?: (data?: any) => void;
@@ -70,17 +71,19 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   @autobind
   handleSuccess() {
     const { countDown } = this.props;
-    const { context } = this;
+    const { context, formDs } = this;
+    const type = formDs?.current?.get('verifyType');
     // 发送信息以获取验证码
     const secretFieldFetchVerifyCode = context.getConfig('secretFieldFetchVerifyCode');
     if (secretFieldFetchVerifyCode) {
-      secretFieldFetchVerifyCode(this.formDs?.current?.get('verifyType')).then(
+      secretFieldFetchVerifyCode(type).then(
         res => {
           if ((res as any).success) {
             message.success((res as any).message);
             this.setCaptchaKey((res as any).captchaKey);
             // 验证码倒计时
             countDown.start();
+            countDown.setVerifyType(type);
           } else {
             message.error((res as any).message);
           }
@@ -164,7 +167,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   // 确定修改
   @autobind
   handleEdit() {
-    const { name, token = '', onChange, modal, pattern } = this.props;
+    const { name, token = '', onChange, modal, pattern, required } = this.props;
     const { context } = this;
     const editValue = this.formDs?.current?.get(name);
     if (pattern) {
@@ -172,6 +175,11 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
       if (newPattern.test(editValue) === false) {
         // 正则校验不通过
         this.setValidate(false);
+        return;
+      }
+    }
+    if (required) {
+      if (!editValue) {
         return;
       }
     }
@@ -217,12 +225,21 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
 
   @action
   setFormDs() {
-    const { name, label, pattern } = this.props;
+    const { name, label, pattern, required, countDown } = this.props;
     const { verifyTypeObj } = this;
+    const { verifyType } = countDown;
     let initData: object[] = [];
+    let verifyValue = '';
     // 传入验证方式时，设置初始值
+    if (verifyType) {
+      verifyTypeObj.forEach(item => {
+        if (item.type === verifyType) {
+          verifyValue = item.value;
+        }
+      });
+    }
     if (verifyTypeObj.length > 0) {
-      initData = [{ 'verifyType': verifyTypeObj[0].type, 'verifyNumber': verifyTypeObj[0].value }];
+      initData = [{ 'verifyType': verifyType || verifyTypeObj[0].type, 'verifyNumber': verifyType ? verifyValue : verifyTypeObj[0].value || '' }];
     }
     this.formDs = new DataSet(
       {
@@ -249,6 +266,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
             type: FieldType.string,
             label,
             pattern,
+            required,
           },
         ],
         events: {
@@ -329,25 +347,25 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   }
 
   render() {
-    const { flag, captcha, verifyTypeObj, prefixCls, validate } = this;
+    const { flag, captcha, verifyTypeObj, prefixCls, validate, formDs } = this;
     const { readOnly, label, name, countDown, restrict } = this.props;
-
+    const { count } = countDown;
     return (
       <div className={`${prefixCls}-modal`}>
         {
           flag !== 'slider' && (
-            <Form style={{ height: 'calc(100% - 42px)' }} dataSet={this.formDs} columns={4} labelWidth="auto">
+            <Form className={`${prefixCls}-modal-form`} dataSet={this.formDs} columns={4} labelWidth="auto">
               {
                 flag === 'verify' && (
                   <>
-                    <SelectBox name="verifyType" colSpan={4}>
+                    <SelectBox name="verifyType" colSpan={4} disabled={count}>
                       {verifyTypeObj?.map(item => <Option value={item.type} key={item.type}>
                         {item.name}
                       </Option>)}
                     </SelectBox>
                     <TextField name="verifyNumber" colSpan={4} disabled />
                     <TextField name="verifyCode" colSpan={3} valueChangeAction={ValueChangeAction.input} />
-                    <CountDownButton onClick={this.handleClickButton} countDown={countDown} />
+                    <CountDownButton onClick={this.handleClickButton} countDown={countDown} verifyNumber={formDs.current.get('verifyNumber')} />
                     <td className={`${prefixCls}-modal-btns`} colSpan={4}>
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
                       {readOnly ? (
@@ -377,9 +395,9 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
                 flag === 'edit' && (
                   <>
                     <TextField name={name} colSpan={4} restrict={restrict} />
-                    <td colSpan={4} className={`${prefixCls}-modal-btns`}>
+                    <td colSpan={4} className={`${prefixCls}-modal-edit-btns`}>
                       {!validate &&
-                      <><p className={`${prefixCls}-modal-validate`}>{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
+                        <><p className={`${prefixCls}-modal-validate`}>{$l('SecretField', 'type_mismatch', { label })}</p><br /></>}
                       <Button onClick={this.handleCancel}>{$l('SecretField', 'cancel')}</Button>
                       <Button onClick={this.handleEdit} color={ButtonColor.primary}>{$l('SecretField', 'ok_btn')}</Button>
                     </td>

@@ -113,6 +113,9 @@
         color: @btn-disable-color;
         cursor: not-allowed;
       }
+      &-item-highlight {
+        background-color: @transfer-selected-bg;
+      }
     }
 
     &-body-not-found {
@@ -140,7 +143,8 @@
     }
   }
 
-  &-operation {
+  &-operation,
+  &-sort {
     display: inline-block;
     margin: 0 0.08rem;
     overflow: hidden;
@@ -157,6 +161,18 @@
         font-size: 0.12rem;
       }
     }
+  }
+  &-operation-custom-left-active,
+  &-operation-custom-right-active,
+  &-sort-custom-up-active,
+  &-sort-custom-down-active {
+    cursor: pointer;
+  }
+  &-operation-custom-left-disable,
+  &-operation-custom-right-disable,
+  &-sort-custom-up-disable,
+  &-sort-custom-down-disable {
+    cursor: no-drop;
   }
 }
 

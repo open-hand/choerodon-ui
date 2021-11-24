@@ -134,7 +134,7 @@ export default class Output extends FormField<OutputProps> {
     if (super.showTooltip(e)) {
       return true;
     }
-    const { getTooltip, getTooltipTheme } = this.context;
+    const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const { tooltip = getTooltip('output') } = this.props;
     const { element, field } = this;
     if (element && !(field && field.get('multiLine', this.record)) && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
@@ -142,7 +142,7 @@ export default class Output extends FormField<OutputProps> {
       if (title) {
         show(element, {
           title,
-          placement: 'right',
+          placement: getTooltipPlacement('output') || 'right',
           theme: getTooltipTheme('output'),
         });
         return true;
