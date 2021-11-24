@@ -55,7 +55,7 @@ export type PerformanceEvents = {
 
 export type PerformanceEventHook<T extends keyof PerformanceEvents> = (key: T, event: PerformanceEvents[T]) => void;
 
-export type TooltipTarget = 'table-cell' | 'output' | 'label' | 'button' | 'select-option' | 'validation' | 'help' | 'text-field';
+export type TooltipTarget = 'table-cell' | 'output' | 'label' | 'button' | 'select-option' | 'validation' | 'help' | 'text-field-disabled';
 
 export type TooltipHook = (target?: TooltipTarget) => Tooltip | undefined;
 
@@ -64,6 +64,10 @@ export type TooltipThemeHook = (target?: TooltipTarget) => TooltipTheme;
 export type TooltipPlacementHook = (target?: TooltipTarget) => TooltipPlacement;
 
 export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
+
+export type LovViewTarget = 'modal' | 'drawer';
+
+export type LovShowSelectedInViewHook = (viewMode?: LovViewTarget) => boolean;
 
 export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet }) => AxiosRequestConfig;
 
@@ -101,6 +105,7 @@ export interface Config extends DataSetConfig {
   lovAutoSelectSingle?: boolean;
   lovQueryBar?: TableQueryBarType | TableQueryBarHook;
   lovQueryBarProps?: object;
+  lovShowSelectedInView?: boolean | LovShowSelectedInViewHook;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   queryBarProps?: object;

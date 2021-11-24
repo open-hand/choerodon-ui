@@ -210,7 +210,7 @@ export interface Locale extends DataSetLocale {
   };
   Lov: {
     choose: string;
-    selected: string;
+    selection_tips: string;
   };
   Transfer: {
     items: string;

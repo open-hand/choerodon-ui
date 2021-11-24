@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import scrollIntoView from 'scroll-into-view-if-needed';
+import { arrayMove } from 'choerodon-ui/pro/lib/data-set/utils';
 import List, { TransferListProps } from './list';
 import Operation from './operation';
 import SortButton from './SortButton';
@@ -11,7 +12,6 @@ import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import { TransferDirection } from './enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
-import { arrayMove } from '../../components-pro/data-set/utils';
 
 export { TransferListProps } from './list';
 export { TransferOperationProps } from './operation';

@@ -137,6 +137,7 @@ const prefixCls = getConfig('prefixCls');
 | attachment | 附件上传配置 | [AttachmentConfig](#AttachmentConfig) |   |
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 | numberFieldKeyboard | NumberField 组件是否启用 UP DOWN 键盘事件 | boolean | true |
+| lovShowSelectedInView | Lov 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录  | boolean \| (viewMode) => boolean | (viewMode) => viewMode === 'drawer' |
 
 ### Customizable
 
@@ -188,6 +189,7 @@ const prefixCls = getConfig('prefixCls');
 | output               | Output                |
 | validation               | 校验信息                |
 | help               | 帮助信息                |
+| text-field-disabled  | 输入类组件禁用状态       |
 | undefined               | 默认                |
 
 ### TooltipPlacement
@@ -201,6 +203,7 @@ const prefixCls = getConfig('prefixCls');
 | output               | Output                | 'right' |
 | validation               | 校验信息                | 'bottomLeft' |
 | help               | 帮助信息                | |
+| text-field-disabled               | 输入类组件禁用状态           | 'right' |
 
 ### AttachmentConfig
 
