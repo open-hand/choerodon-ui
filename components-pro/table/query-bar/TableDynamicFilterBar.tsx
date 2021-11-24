@@ -443,8 +443,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 是否单行操作
    */
   isSingleLineOpt(): boolean {
-    const { fuzzyQuery } = this.props;
-    return !(fuzzyQuery || this.tableFilterAdapter);
+    const { fuzzyQuery, dynamicFilterBar, searchCode } = this.props;
+    const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
+    return !(fuzzyQuery || this.tableFilterAdapter || searchCodes);
   }
 
   /**
@@ -487,7 +488,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getExpandNode(hidden): ReactNode {
     const { prefixCls } = this;
-    if (!this.showExpandIcon) return null;
+    if (!this.showExpandIcon && !hidden) return null;
     return (
       <span
         className={`${prefixCls}-filter-menu-expand`}
@@ -582,7 +583,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   const { current } = queryDataSet;
                   if (current) {
                     current.reset();
-                    this.handleDataSetCreate({ dataSet: queryDataSet, record: current });
                   }
                 }
                 this.setConditionStatus(RecordStatus.sync);

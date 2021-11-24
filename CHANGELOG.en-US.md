@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `ConfigProvider`: Added `ConfigProvider` component.
 - 🌟 `hooks`: Added `useConfig` hook.
 - 🌟 `<pro>hooks`: Added `useDataSet` hook.
-- 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement` properties.
+- 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement`, `lovShowSelectedInView` properties.
 - 🌟 `configure`: `TooltipTarget` adds `text-field-disabled` input class component disabled state object.
 - 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
@@ -35,6 +35,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `record` property.
 - 🌟 `Transfer`: Added `sortable` and `sortOperations` property.
 - 🌟 `<pro>Transfer`: Added `sortable`、`sortOperations` and `operations` property.
+- 🌟 `<pro>Lov`: Added `showSelectedInView` property.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.
@@ -52,6 +53,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property. Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
 - 🐞 `<pro>NumberField`: Fixed error limits for `maxLength` and `minLength` properties. And fixed `UP` `DOWN` keyword not working in Range mode.
+- 🐞 `<pro>NumberField`: Fix the issue that the verification reset will not be triggered when the dynamic `max` and `min` changes.
 - 🐞 `<pro>Lov`: Fix the data display problem when multiple selection values are echoed to the tree list.
 - 🐞 `<pro>Lov`: Fix the problem of repeated query when the `autoSelectSingle` property is turned on.
 - 🐞 `<pro>Tree`: Fix the problem that the DataSet check method is invalid when only using the check mode.
