@@ -342,7 +342,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     /**
      * 显示提示信息的方式
      */
-    showHelp: PropTypes.oneOf([ShowHelp.tooltip, ShowHelp.newLine, ShowHelp.none]),
+    showHelp: PropTypes.oneOf([ShowHelp.tooltip, ShowHelp.newLine, ShowHelp.label, ShowHelp.none]),
     /**
      * 渲染器
      */
@@ -418,7 +418,6 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     readOnly: false,
     disabled: false,
     noValidate: false,
-    showHelp: 'newLine',
     trim: FieldTrim.both,
   };
 
@@ -601,6 +600,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   @computed
+  get showHelp(): ShowHelp {
+    const { showHelp = this.getContextConfig('showHelp') } = this.observableProps;
+    return showHelp;
+  }
+
+  @computed
   get highlightRenderer(): HighlightRenderer {
     const { highlightRenderer = this.getContextConfig('highlightRenderer') } = this.observableProps;
     return highlightRenderer;
@@ -677,6 +682,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       highlight: props.highlight,
       highlightRenderer: 'highlightRenderer' in props ? props.highlightRenderer : context.fieldHighlightRenderer,
       showValidation: 'showValidation' in props ? props.showValidation : context.showValidation,
+      showHelp: 'showHelp' in props ? props.showHelp : context.showHelp,
     };
     if ('record' in props) {
       observableProps.record = props.record;
@@ -765,7 +771,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   renderHelpMessage(): ReactNode {
-    const { showHelp } = this.props;
+    const { showHelp } = this;
     if (showHelp === ShowHelp.newLine) {
       const help = this.getProp('help');
       if (help) {
