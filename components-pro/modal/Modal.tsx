@@ -52,6 +52,7 @@ const HANDLE_MIN_SIZE = 50;
 
 export interface ModalProps extends ViewComponentProps {
   __deprecate__?: boolean;
+  eventKey?: Key;
   children?: any;
   closable?: boolean;
   movable?: boolean;
@@ -91,6 +92,7 @@ export interface ModalProps extends ViewComponentProps {
   drawerBorder?: boolean;
   okFirst?: boolean;
   active?: boolean;
+  onTop?: (key?: Key) => void;
   mousePosition?: MousePosition | null;
   contentStyle?: CSSProperties;
   bodyStyle?: CSSProperties;
@@ -242,6 +244,11 @@ export default class Modal extends ViewComponent<ModalProps> {
     };
   }
 
+  shouldComponentUpdate(nextProps: Readonly<ModalProps>): boolean {
+    const { props } = this;
+    return Object.keys(props).some(key => props[key] !== nextProps[key] && (key !== 'mousePosition' || !this.mousePosition || !nextProps.drawer));
+  }
+
   componentWillReceiveProps(nextProps: ModalProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
     if (!isEqual(this.props, nextProps)) {
@@ -309,6 +316,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'autoCenter',
       'mousePosition',
       'active',
+      'onTop',
       'contentStyle',
       'bodyStyle',
       'closeOnLocationChange',
@@ -317,7 +325,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   getOtherProps() {
     const otherProps = super.getOtherProps();
-    const { hidden, mousePosition, keyboardClosable = this.getContextConfig('modalKeyboard'), style = {}, drawer } = this.props;
+    const { hidden, mousePosition, keyboardClosable = this.getContextConfig('modalKeyboard'), style = {}, drawer, onTop } = this.props;
     if (keyboardClosable) {
       otherProps.autoFocus = true;
       otherProps.tabIndex = -1;
@@ -335,6 +343,10 @@ export default class Modal extends ViewComponent<ModalProps> {
       if (hidden) {
         this.mousePosition = null;
       }
+    }
+
+    if (onTop) {
+      otherProps.onMouseDown = this.handleMouseDown;
     }
 
     return otherProps;
@@ -404,6 +416,15 @@ export default class Modal extends ViewComponent<ModalProps> {
   componentWillUnmount() {
     this.moveEvent.clear();
     this.okCancelEvent.clear();
+  }
+
+  @autobind
+  handleMouseDown(e) {
+    const { onMouseDown = noop, onTop = noop, eventKey } = this.props;
+    onMouseDown(e);
+    if (!e.isDefaultPrevented()) {
+      onTop(eventKey);
+    }
   }
 
   @autobind
