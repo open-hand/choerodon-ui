@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultWidth`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement`, `lovShowSelectedInView`, `showHelp` properties.
 - 🌟 `configure`: `TooltipTarget` adds `text-field-disabled` input class component disabled state object.
 - 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
+- 🌟 `<pro>DataSet.Field`: `optionsProps` property supports hooks.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment`: Added `isPublic` property.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.

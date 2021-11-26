@@ -30,7 +30,7 @@ import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
-import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit } from './utils';
+import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit, mergeDataSetProps } from './utils';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
 import { LovConfig, TimeStep } from '../interface';
@@ -267,7 +267,7 @@ export type FieldProps = {
   /**
    * 值集组件的数据集配置
    */
-  optionsProps?: DataSetProps;
+  optionsProps?: DataSetProps | ((p: DataSetProps) => DataSetProps);
   /**
    * 是否分组
    * 如果是number，则为分组的顺序
@@ -991,14 +991,15 @@ export default class Field {
             const parentField = this.get('parentField', record);
             const idField = this.get('idField', record) || this.get('valueField', record);
             const selection = this.get('multiple', record) ? DataSetSelection.multiple : DataSetSelection.single;
-            return new DataSet({
+            const props = {
               data: combineWithOldLookupData(lookup, this, record),
               paging: false,
               selection,
               idField,
               parentField,
-              ...optionsProps,
-            });
+            };
+
+            return new DataSet(mergeDataSetProps(props, optionsProps));
           }
           if (isPromise(lookup)) {
             return new DataSet({ status: DataSetStatus.loading });
