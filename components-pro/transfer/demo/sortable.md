@@ -1,20 +1,20 @@
 ---
-order: 2
+order: 6
 title:
-  zh-CN: 绑定数据源
-  en-US: DataSet Binding
+  zh-CN: 排序
+  en-US: sortable
 ---
 
 ## zh-CN
 
-绑定数据源。
+可以上下排序，并可以自定义上下按钮
 
 ## en-US
 
-DataSet Binding
+You can sort up and down, and customize the up and down buttons.
 
 ````jsx
-import { DataSet, Transfer, Row, Col } from 'choerodon-ui/pro';
+import { DataSet, Transfer } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log('[dataset newValue]', value, '[oldValue]', oldValue, '[record.get(name)]', record.get(name));
@@ -55,8 +55,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Transfer dataSet={this.ds} sortable name="first-name" />
-        <Transfer dataSet={this.ds} name="last-name">
+        <Transfer dataSet={this.ds} name="first-name" sortable/>
+        <Transfer dataSet={this.ds} name="last-name" sortable searchable>
           <Option value="jack">Jack</Option>
           <Option value="lucy">Lucy</Option>
           <Option value="wu">Wu</Option>

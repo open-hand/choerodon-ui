@@ -1,5 +1,7 @@
 @import '~codemirror/lib/codemirror.css';
 @import '~codemirror/theme/neat.css';
+@import '~codemirror/theme/material.css';
+@import '~codemirror/theme/idea.css';
 @import '../../../components/style/themes/default';
 @import "../../field/style/mixin";
 @import "../../text-field/style/mixin";
@@ -11,10 +13,66 @@
     position: relative;
   }
 
+  &-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 0.28rem;
+    padding: 0.04rem 0.12rem;
+    background: @codearea-header-bg;
+    border-radius: 0.02rem 0.02rem 0 0;
+
+    &-title {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      color: @codearea-header-title-color;
+      font-weight: @codearea-header-title-font-weight;
+      font-size: @codearea-header-title-font-size;
+    }
+
+    div&-title:nth-last-child(2) {
+      padding-right: 0.6rem;
+    }
+
+    &-switch {
+      position: absolute;
+      right: 0.12rem;
+      .@{iconfont-css-prefix} {
+        color: @primary-color;
+        font-size: 0.14rem;
+      }
+    }
+
+    &-dark {
+      background: @codearea-header-dark-bg;
+    }
+
+    &-dark &-title {
+      color: @codearea-header-title-dark-color;
+    }
+
+    &-dark &-switch {
+      .@{c7n-pro-prefix}-switch-label {
+        background: #5a5a5a;
+      }
+      .@{iconfont-css-prefix} {
+        color: #9c9c9c;
+      }
+    }
+  }
+
   .CodeMirror {
     display: block;
     width: 100%;
     border: @codearea-border;
+    border-radius: 0 0 0.02rem 0.02rem;
+  }
+
+  &-dark {
+    .CodeMirror {
+      border: unset;
+    }
   }
 
   &-invalid .CodeMirror {

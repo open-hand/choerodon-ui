@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultWidth, tableColumnDefaultMinWidth, tableAggregationColumnDefaultWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement, lovShowSelectedInView 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field-disabled 输入类组件禁用状态对象。
 - 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
+- 🌟 `<pro>DataSet.Field`: optionsProps 属性支持钩子。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment`: 新增 isPublic 属性。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
@@ -36,6 +37,8 @@ timeline: true
 - 🌟 `Transfer`: 新增 sortable 和 sortOperations 属性。
 - 🌟 `<pro>Transfer`: 新增 sortable、sortOperations、operations 属性。
 - 🌟 `<pro>Lov`: 新增 showSelectedInView 属性。
+- 🌟 `Tab`: 新增 second-level 类型.
+- 🌟 `<pro>CodeArea`: 新增 themeSwitch, title 属性。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。

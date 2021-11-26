@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultWidth`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement`, `lovShowSelectedInView` properties.
 - 🌟 `configure`: `TooltipTarget` adds `text-field-disabled` input class component disabled state object.
 - 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
+- 🌟 `<pro>DataSet.Field`: `optionsProps` property supports hooks.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
 - 🌟 `<pro>Attachment`: Added `isPublic` property.
 - 🌟 `<pro>Attachment.Group`: Added `Attachment.Group` component.
@@ -36,6 +37,8 @@ timeline: true
 - 🌟 `Transfer`: Added `sortable` and `sortOperations` property.
 - 🌟 `<pro>Transfer`: Added `sortable`、`sortOperations` and `operations` property.
 - 🌟 `<pro>Lov`: Added `showSelectedInView` property.
+- 🌟 `Tab`: Added `second-level` type.
+- 🌟 `<pro>CodeArea`: Added `themeSwitch`, `title` properties.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.

@@ -50,5 +50,5 @@ export interface LovConfig {
   placeholder?: string;
   editableFlag?: 'Y' | 'N';
   queryColumns?: number;
-  dataSetProps?: Partial<DataSetProps>;
+  dataSetProps?: DataSetProps | ((p: DataSetProps) => DataSetProps);
 }

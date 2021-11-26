@@ -244,11 +244,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     };
   }
 
-  shouldComponentUpdate(nextProps: Readonly<ModalProps>): boolean {
-    const { props } = this;
-    return Object.keys(props).some(key => props[key] !== nextProps[key] && (key !== 'mousePosition' || !this.mousePosition || !nextProps.drawer));
-  }
-
   componentWillReceiveProps(nextProps: ModalProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
     if (!isEqual(this.props, nextProps)) {
@@ -435,15 +430,16 @@ export default class Modal extends ViewComponent<ModalProps> {
       const { clientX, clientY, currentTarget } = downEvent;
       const clzz = classes(element);
       const { offsetLeft, offsetParent } = element;
+      const doc = getDocument(window);
       const {
         scrollTop = 0, scrollLeft = 0,
-        offsetHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
-        offsetWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        offsetHeight = doc.documentElement.clientHeight || doc.body.clientHeight,
+        offsetWidth = doc.documentElement.clientWidth || doc.body.clientWidth,
       } = offsetParent || {};
       const offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
       const { offsetWidth: headerWidth, offsetHeight: headerHeight } = currentTarget;
       this.moveEvent
-        .setTarget(getDocument(window))
+        .setTarget(doc)
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
           const { clientX: moveX, clientY: moveY } = moveEvent;
           clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);

@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
+import classNames from 'classnames';
 import { Select, SelectProps } from '../select/Select';
 import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
@@ -11,12 +12,11 @@ import TransferSort from './TransferSort';
 import autobind from '../_util/autobind';
 import Record from '../data-set/Record';
 import isSameLike from '../_util/isSameLike';
-import { arrayMove } from '../data-set/utils';
 
 export interface TransferProps extends SelectProps {
   titles?: [ReactNode, ReactNode];
   footer?: (props: any) => ReactNode;
-  operations: string[] | ReactNode[];
+  operations?: string[] | ReactNode[];
   sortable?: boolean;
   sortOperations?: string[] | ReactNode[];
 }
@@ -121,7 +121,7 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.removeValues(this.targetSelected.map(record => record.get(valueField)));
     this.targetSelected = [];
-    this.changeOptionIndex()
+    this.changeOptionIndex();
     this.clearCurrentIndex();
   }
 
@@ -131,20 +131,25 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));
     this.sourceSelected = [];
-    this.changeOptionIndex()
+    this.changeOptionIndex();
     this.clearCurrentIndex();
   }
 
   @autobind
   @action
   handleSortTo(direction: string) {
-    const targetCurrentSelected = this.options.currentIndex;
+    const { valueField } = this;
     const to = direction === 'up' ? -1 : 1
-    this.options.move(targetCurrentSelected, targetCurrentSelected + to);
-    const values = this.getValues()
-    const index = values.findIndex(x => x ===  this.options.current?.get('value'))
-    arrayMove(values, index, index + to);
-    this.setValue(values)
+    
+    const targetFilteredOptions = this.options.getState('targetFilteredOptions');
+    const index = targetFilteredOptions.findIndex(record => record.get(valueField)=== this.options.current?.get(valueField))
+    const currentOpt =  targetFilteredOptions[index]
+    const moveOpt =  targetFilteredOptions[index + to]
+    
+    const optionsCurrentIndex = this.options.findIndex(record => record.get(valueField) === currentOpt.get(valueField))
+    const optionsMoveIndex = this.options.findIndex(record=>record.get(valueField) === moveOpt.get(valueField))
+
+    this.options.move(optionsCurrentIndex, optionsMoveIndex);
   }
 
   @autobind
@@ -171,9 +176,9 @@ export default class Transfer extends Select<TransferProps> {
 
   @action
   clearCurrentIndex = () => {
-    const current = this.options.current
-    if(current){
-      current.isCurrent = false
+    const current = this.options.current;
+    if (current) {
+      current.isCurrent = false;
     }
   };
 
@@ -203,16 +208,29 @@ export default class Transfer extends Select<TransferProps> {
       targetSelected,
       sourceSelected,
       multiple,
+      valueField,
       props: { titles = [], operations = [], sortOperations = [], sortable },
     } = this;
 
     const targetValues = this.getValues();
     const currentTarget = this.options.current;
-    const currentIndex = currentTarget ? targetValues.indexOf(currentTarget.get('value')) : -1;
-    const upActive = currentIndex > -1 && currentIndex !== 0;
-    const downActive = currentIndex > -1 && currentIndex !== targetValues.length - 1;
+
+    let upActive = false;
+    let downActive = false;
+    let currentIndex = currentTarget ? targetValues.findIndex(x => x === currentTarget.get(valueField)) : -1;
+
+    const targetFilteredOptions = this.options.getState('targetFilteredOptions');
+    if (targetFilteredOptions && currentTarget) {
+      currentIndex = targetFilteredOptions.findIndex(record => record.get(valueField) === currentTarget.get(valueField));
+      upActive = currentIndex > -1 && currentIndex !== 0;
+      downActive = currentIndex > -1 && currentIndex !== targetFilteredOptions.length - 1;
+    }
+    const classNameString = classNames(`${prefixCls}-wrapper`, {
+      [`${prefixCls}-sortable`]: sortable,
+    });
+
     return (
-      <span key="wrapper" className={`${prefixCls}-wrapper`}>
+      <span key="wrapper" className={classNameString}>
         <TransferList
           {...this.props}
           options={this.options}
@@ -242,7 +260,7 @@ export default class Transfer extends Select<TransferProps> {
           onSelect={this.handleTargetMenuClick}
           optionsFilter={this.targetFilter}
         />
-        {!!sortable && (
+        {sortable && (
           <TransferSort
             className={`${prefixCls}-sort`}
             upActive={upActive}

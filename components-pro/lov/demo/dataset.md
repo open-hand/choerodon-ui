@@ -58,6 +58,10 @@ class App extends React.Component {
     type: 'object',
     lovCode: 'LOV_CODE',
     required: true,
+    optionsProps: (dsProps) => {
+      console.log(dsProps);
+      return dsProps;
+    }
    },
    { name: 'code_code', type: 'string', bind: 'code.code' },
    { name: 'code_description', type: 'string', bind: 'code.description' },
@@ -80,7 +84,6 @@ class App extends React.Component {
         queryBar: 'filterBar',
         queryBarProps: {
           fuzzyQuery: false,
-          expandButton: false,
         },
       }}
      />

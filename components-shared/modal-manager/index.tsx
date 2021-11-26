@@ -16,6 +16,8 @@ export interface IModalContainer {
 
   maskHidden: boolean;
 
+  active: boolean;
+
   drawerOffsets: DrawerOffsets;
 
   clear(closeByLocationChange?: boolean);
