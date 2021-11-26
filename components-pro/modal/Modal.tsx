@@ -244,11 +244,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     };
   }
 
-  shouldComponentUpdate(nextProps: Readonly<ModalProps>): boolean {
-    const { props } = this;
-    return Object.keys(props).some(key => props[key] !== nextProps[key] && (key !== 'mousePosition' || !this.mousePosition || !nextProps.drawer));
-  }
-
   componentWillReceiveProps(nextProps: ModalProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
     if (!isEqual(this.props, nextProps)) {
