@@ -11,6 +11,7 @@ import { LovFieldType } from '../enum';
 import { LovConfig, LovConfigItem } from '../interface';
 import { getGlobalConfig, processAxiosConfig } from './utils';
 import { TransportHookProps } from '../data-set/Transport';
+import { mergeDataSetProps } from '../data-set/utils';
 
 function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType {
   switch (conditionFieldType) {
@@ -142,7 +143,7 @@ export class LovCodeStore {
   }
 
   // lovCode 作为key 缓存了 ds
-  getLovDataSet(code: string, field?: Field, dataSetProps?: DataSetProps, record?: Record): DataSet | undefined {
+  getLovDataSet(code: string, field?: Field, dataSetProps?: DataSetProps | ((p: DataSetProps) => DataSetProps), record?: Record): DataSet | undefined {
     const config = this.getConfig(code);
     if (config) {
       const { lovPageSize, lovItems, parentIdField, idField, treeFlag, dataSetProps: configDataSetProps } = config;
@@ -185,7 +186,7 @@ export class LovCodeStore {
           dsProps.fields = fields;
         }
       }
-      return new DataSet({ ...dsProps, ...configDataSetProps, ...dataSetProps });
+      return new DataSet(mergeDataSetProps(mergeDataSetProps(dsProps, configDataSetProps), dataSetProps));
     }
     warning(false, `LOV: code<${code}> is not exists`);
     return undefined;
