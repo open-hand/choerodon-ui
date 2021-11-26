@@ -446,6 +446,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   getOtherProps() {
     const otherProps = super.getOtherProps();
     delete otherProps.maxLength;
+    otherProps.max = this.max;
+    otherProps.min = this.min;
     return otherProps;
   }
 

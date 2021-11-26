@@ -14,6 +14,18 @@
   overflow: hidden;
   .clearfix;
 
+  &-second-tab {
+    display: inline-flex;
+    margin: 0;
+    padding: 0.03rem 0.08rem;
+    color: rgba(0, 0, 0, 0.45);
+    font-weight: 400;
+    font-size: 0.14rem;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  
   &-ink-bar {
     position: absolute;
     bottom: 0.01rem;
@@ -146,7 +158,8 @@
     border: 0;
     cursor: pointer;
     opacity: 0;
-    transition: width @animation-duration-slow @ease-in-out, opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
+    transition: width @animation-duration-slow @ease-in-out,
+      opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
     user-select: none;
     pointer-events: none;
 
@@ -217,7 +230,7 @@
     white-space: nowrap;
   }
 
-  &-nav {
+  &-nav, &-second-nav {
     position: relative;
     display: inline-block;
     box-sizing: border-box;
@@ -267,13 +280,21 @@
       }
     }
 
+    .@{tab-prefix-cls}-second-tab-active {
+      color: rgba(0, 0, 0, 0.8);
+      font-weight: 600;
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 0 2px 0 rgb(213 213 213);
+    }
+
     .@{tab-prefix-cls}-tab-active,
     .@{tab-prefix-cls}-tab-active .@{tab-prefix-cls}-tab-count {
       color: @tab-highlight-color;
       font-weight: 500;
     }
 
-    .@{tab-prefix-cls}-tab-disabled,
+    .@{tab-prefix-cls}-tab-disabled,.@{tab-prefix-cls}-second-tab-disabled,
     .@{tab-prefix-cls}-tab-disabled .@{tab-prefix-cls}-tab-count {
       color: @disabled-color;
       cursor: default;
@@ -288,6 +309,15 @@
     .@{tab-prefix-cls}-tab:active,
     .@{tab-prefix-cls}-tab:active .@{tab-prefix-cls}-tab-count {
       color: @tab-active-color;
+    }
+  }
+  &-second-nav {
+    height: auto;
+    margin: 0;
+    padding: .02rem;
+    background-color: rgba(0, 0, 0, 0.05);
+    > .@{tab-prefix-cls}-ink-bar-animated {
+      display: none;
     }
   }
 
@@ -355,7 +385,8 @@
       &-tab-next {
         width: @tab-scrolling-size;
         height: 0;
-        transition: height @animation-duration-slow @ease-in-out, opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
+        transition: height @animation-duration-slow @ease-in-out,
+          opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
       }
 
       &-tab-prev.@{tab-prefix-cls}-tab-arrow-show,
@@ -437,7 +468,7 @@
         }
       }
 
-      .@{tab-prefix-cls}-group-item {
+      .@{tab-prefix-cls}-group-item, .@{tab-prefix-cls}-second-tab {
         display: block;
       }
 
@@ -538,12 +569,14 @@
 
 .@{tab-prefix-cls}-top .@{tab-prefix-cls}-ink-bar-animated,
 .@{tab-prefix-cls}-bottom .@{tab-prefix-cls}-ink-bar-animated {
-  transition: transform @animation-duration-slow @ease-in-out, width @animation-duration-slow @ease-in-out;
+  transition: transform @animation-duration-slow @ease-in-out,
+    width @animation-duration-slow @ease-in-out;
 }
 
 .@{tab-prefix-cls}-left .@{tab-prefix-cls}-ink-bar-animated,
 .@{tab-prefix-cls}-right .@{tab-prefix-cls}-ink-bar-animated {
-  transition: transform @animation-duration-slow @ease-in-out, height @animation-duration-slow @ease-in-out;
+  transition: transform @animation-duration-slow @ease-in-out,
+    height @animation-duration-slow @ease-in-out;
 }
 
 .no-flex,

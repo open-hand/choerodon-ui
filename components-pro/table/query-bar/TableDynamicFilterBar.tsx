@@ -434,9 +434,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   get tableFilterAdapter() {
-    const { dynamicFilterBar } = this.props;
+    const { dynamicFilterBar, searchCode } = this.props;
     const { getConfig } = this.context;
-    return dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || getConfig('tableFilterAdapter');
+    const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
+    return searchCodes ? dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || getConfig('tableFilterAdapter') : null;
   }
 
   /**
@@ -487,7 +488,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getExpandNode(hidden): ReactNode {
     const { prefixCls } = this;
-    if (!this.showExpandIcon) return null;
+    if (!this.showExpandIcon && !hidden) return null;
     return (
       <span
         className={`${prefixCls}-filter-menu-expand`}
@@ -582,7 +583,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   const { current } = queryDataSet;
                   if (current) {
                     current.reset();
-                    this.handleDataSetCreate({ dataSet: queryDataSet, record: current });
                   }
                 }
                 this.setConditionStatus(RecordStatus.sync);

@@ -31,6 +31,12 @@
     white-space: nowrap;
   }
 
+  &-sortable {
+    .@{transfer-prefix-cls}-operation {
+      margin-right: 0.08rem;
+    }
+  }
+
   &-disabled & {
     background: @transfer-disabled-bg;
   }
@@ -141,12 +147,20 @@
 
     .@{c7n-pro-prefix}-btn {
       display: block;
+      width: 0.24rem;
+      height: 0.24rem;
       margin-bottom: 0.08rem;
+      padding: 0;
       + .@{c7n-pro-prefix}-btn {
         margin-left: 0;
       }
       &:last-child {
         margin-bottom: 0;
+      }
+
+      .icon {
+        margin: 0;
+        font-size: 0.16rem;
       }
     }
   }

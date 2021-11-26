@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `ConfigProvider`: 新增 ConfigProvider 组件。
 - 🌟 `hooks`: 新增 useConfig 钩子。
 - 🌟 `<pro>hooks`: 新增 useDataSet 钩子。
-- 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultMinWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement, lovShowSelectedInView 属性。
+- 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultWidth, tableColumnDefaultMinWidth, tableAggregationColumnDefaultWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement, lovShowSelectedInView, showHelp 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field-disabled 输入类组件禁用状态对象。
 - 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
@@ -36,6 +36,11 @@ timeline: true
 - 🌟 `Transfer`: 新增 sortable 和 sortOperations 属性。
 - 🌟 `<pro>Transfer`: 新增 sortable、sortOperations、operations 属性。
 - 🌟 `<pro>Lov`: 新增 showSelectedInView 属性。
+- 🌟 `Tab`: 新增 second-level 类型.
+- 🌟 `<pro>CodeArea`: 新增 themeSwitch, title 属性。
+- 🌟 `<pro>Form`: 新增 showHelp 属性, 控制表单输入框 help 展示方式。
+- 🌟 `<pro>FormItem`: showHelp 属性新增 label 方式，支持在 Label 上展示 help 信息。
+- 💄 `<pro>FormItem`: 优化表单输入框必输、冒号样式，超出省略不隐藏。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
@@ -53,6 +58,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。修复 maxLength 和 minLength 属性的错误限制。
 - 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。
 - 🐞 `<pro>NumberField`: 修复 maxLength 和 minLength 属性的错误限制。修复 range 模式下 UP DOWN 按键不起效果。
+- 🐞 `<pro>NumberField`: 修复动态 max 和 min 变化时不会触发校验重置的问题。
 - 🐞 `<pro>Lov`: 修复多选值回显到树形列表时数据显示问题。
 - 🐞 `<pro>Lov`: 修复开启 autoSelectSingle 属性重复查询的问题。
 - 🐞 `<pro>Tree`: 修复只使用 check 模式下 DataSet 勾选方法失效问题。

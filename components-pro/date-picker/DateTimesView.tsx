@@ -57,11 +57,11 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
       props: { disabledNow },
     } = this;
     const footerProps = {
-      className: classNames(`${prefixCls}-footer-now-btn`,{
+      className: classNames(`${prefixCls}-footer-now-btn`, {
         [`${prefixCls}-now-disabled`]: disabledNow,
       }),
-      onClick : !disabledNow ? this.choose.bind(this, moment(), false) : noop,
-    }
+      onClick: !disabledNow ? this.choose.bind(this, moment(), false) : noop,
+    };
     return (
       <div className={`${prefixCls}-footer`}>
         <a {...footerProps}>
@@ -79,7 +79,7 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
       format: getDateFormatByFieldType(TimesView.type),
     } as TimesViewProps;
     return timeProps;
-  }
+  };
 
   render() {
     const {

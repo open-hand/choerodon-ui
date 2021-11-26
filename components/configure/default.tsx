@@ -12,6 +12,7 @@ import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
+import { ShowHelp } from 'choerodon-ui/pro/lib/field/enum';
 import getReactNodeText from 'choerodon-ui/pro/lib/_util/getReactNodeText';
 import formatReactTemplate from 'choerodon-ui/pro/lib/formatter/formatReactTemplate';
 import defaultFeedback from 'choerodon-ui/pro/lib/data-set/FeedBack';
@@ -109,8 +110,10 @@ const defaults = {
   tableKeyboard: false,
   tableFilterSearchText: 'params',
   tableAutoHeightDiff: 80,
-  tableColumnDefaultMinWidth: 100,
-  tableAggregationColumnDefaultMinWidth: 250,
+  tableColumnDefaultWidth: 100,
+  tableColumnDefaultMinWidth: 50,
+  tableAggregationColumnDefaultWidth: 250,
+  tableAggregationColumnDefaultMinWidth: 50,
   customizedSave: defaultCustomizedSave,
   customizedLoad: defaultCustomizedLoad,
   tableShowRemovedRow: true,
@@ -140,6 +143,7 @@ const defaults = {
   performanceEnabled: { Table: false },
   tooltipTheme: defaultTooltipTheme,
   showValidation: ShowValidation.tooltip,
+  showHelp: ShowHelp.newLine,
   numberFieldKeyboard: true,
   feedback: defaultFeedback,
   confirm: async (message) => (await confirm(message)) !== 'cancel',

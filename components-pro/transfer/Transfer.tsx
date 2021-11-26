@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
+import classNames from 'classnames';
 import { Select, SelectProps } from '../select/Select';
 import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
@@ -121,7 +122,7 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.removeValues(this.targetSelected.map(record => record.get(valueField)));
     this.targetSelected = [];
-    this.changeOptionIndex()
+    this.changeOptionIndex();
     this.clearCurrentIndex();
   }
 
@@ -131,7 +132,7 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));
     this.sourceSelected = [];
-    this.changeOptionIndex()
+    this.changeOptionIndex();
     this.clearCurrentIndex();
   }
 
@@ -139,12 +140,12 @@ export default class Transfer extends Select<TransferProps> {
   @action
   handleSortTo(direction: string) {
     const targetCurrentSelected = this.options.currentIndex;
-    const to = direction === 'up' ? -1 : 1
+    const to = direction === 'up' ? -1 : 1;
     this.options.move(targetCurrentSelected, targetCurrentSelected + to);
-    const values = this.getValues()
-    const index = values.findIndex(x => x ===  this.options.current?.get('value'))
+    const values = this.getValues();
+    const index = values.findIndex(x => x === this.options.current?.get('value'));
     arrayMove(values, index, index + to);
-    this.setValue(values)
+    this.setValue(values);
   }
 
   @autobind
@@ -171,9 +172,9 @@ export default class Transfer extends Select<TransferProps> {
 
   @action
   clearCurrentIndex = () => {
-    const current = this.options.current
-    if(current){
-      current.isCurrent = false
+    const current = this.options.current;
+    if (current) {
+      current.isCurrent = false;
     }
   };
 
@@ -211,8 +212,11 @@ export default class Transfer extends Select<TransferProps> {
     const currentIndex = currentTarget ? targetValues.indexOf(currentTarget.get('value')) : -1;
     const upActive = currentIndex > -1 && currentIndex !== 0;
     const downActive = currentIndex > -1 && currentIndex !== targetValues.length - 1;
+    const classNameString = classNames(`${prefixCls}-wrapper`, {
+      [`${prefixCls}-sortable`]: sortable,
+    });
     return (
-      <span key="wrapper" className={`${prefixCls}-wrapper`}>
+      <span key="wrapper" className={classNameString}>
         <TransferList
           {...this.props}
           options={this.options}
@@ -242,7 +246,7 @@ export default class Transfer extends Select<TransferProps> {
           onSelect={this.handleTargetMenuClick}
           optionsFilter={this.targetFilter}
         />
-        {!!sortable && (
+        {sortable && (
           <TransferSort
             className={`${prefixCls}-sort`}
             upActive={upActive}

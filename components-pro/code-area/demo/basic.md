@@ -36,7 +36,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={8}>
-          <CodeArea style={style} />
+          <CodeArea style={style} themeSwitch="idea" />
         </Col>
         <Col span={8}>
           <CodeArea readOnly={readOnly} style={style} defaultValue="ReadOnly" />
