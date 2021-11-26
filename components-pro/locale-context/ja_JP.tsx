@@ -229,7 +229,6 @@ const locale: Locale = {
   Icon: {
     icons: 'アイコン',
     whatsNew: '追加',
-    hzero_new: 'Hzero 追加',
     direction: '方向性',
     suggestion: 'プロンプト提案',
     edit: 'クラスの編集',

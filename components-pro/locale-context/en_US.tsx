@@ -226,7 +226,6 @@ const locale: Locale = {
   Icon: {
     icons: ' Icons',
     whatsNew: 'New',
-    hzero_new: 'Hzero New',
     direction: 'Directional',
     suggestion: 'Suggested',
     edit: 'Editor',

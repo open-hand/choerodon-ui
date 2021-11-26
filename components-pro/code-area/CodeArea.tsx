@@ -183,7 +183,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     const themeSwitchNode = !options?.theme && themeSwitch ? (
       <div className={`${this.prefixCls}-header-switch`}>
         <Switch
-          unCheckedChildren={<Icon type="anhei" />}
+          unCheckedChildren={<Icon type="moon-circle" />}
           defaultChecked={(this.theme !== ThemeSwitch.material)}
           onChange={this.handleThemeChange}
         >
