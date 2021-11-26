@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, Key, MouseEvent as ReactMouseEVent } from 'react';
+import React, { Component, CSSProperties, Key } from 'react';
 import { createPortal, render } from 'react-dom';
 import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -138,6 +138,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 
   @observable maskHidden: boolean;
 
+  @observable active: boolean;
+
   @observable drawerOffsets: DrawerOffsets;
 
   @computed
@@ -149,8 +151,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       if (instance === this) {
         return true;
       }
-      const { drawerOffsets, maskHidden } = instance;
-      if (!maskHidden && instance.getOffsetContainer() === this.getOffsetContainer()) {
+      const { drawerOffsets, active } = instance;
+      if (active && instance.getOffsetContainer() === this.getOffsetContainer()) {
         offsets['slide-up'] += getArrayIndex(drawerOffsets['slide-up'], 0);
         offsets['slide-right'] += getArrayIndex(drawerOffsets['slide-right'], 0);
         offsets['slide-down'] += getArrayIndex(drawerOffsets['slide-down'], 0);
@@ -181,6 +183,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     super(props, context);
     runInAction(() => {
       this.maskHidden = true;
+      this.active = false;
       this.drawerOffsets = { 'slide-up': [], 'slide-right': [], 'slide-down': [], 'slide-left': [] };
       this.top();
       const doc = typeof window === 'undefined' ? undefined : document;
@@ -241,13 +244,23 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     }
   };
 
-  handleModalMouseDown = (e: ReactMouseEVent, modalProps: ModalProps) => {
-    const { onMouseDown } = modalProps;
-    if (onMouseDown) {
-      onMouseDown(e);
-    }
-    if (!e.isDefaultPrevented()) {
-      this.topModal(modalProps);
+  handleModalTopChange = (key?: Key) => {
+    const { modals } = this.state;
+    if (key) {
+      const last = findLast(modals, (modalProps: ModalProps) => !modalProps.hidden);
+      if (last && last.key !== key) {
+        const [under, top] = modals.reduce<[ModalProps[], ModalProps[]]>(([left, right], modal) => {
+          if (modal.key === key) {
+            right.push(modal);
+          } else {
+            left.push(modal);
+          }
+          return [left, right];
+        }, [[], []]);
+        this.setState({
+          modals: under.concat(top),
+        });
+      }
     }
   };
 
@@ -255,13 +268,6 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   top(): IModalContainer {
     ModalManager.addInstance(this);
     return this;
-  }
-
-  topModal(modalProps: ModalProps) {
-    const { modals } = this.state;
-    this.setState({
-      modals: modals.filter((modal) => modal.key !== modalProps.key).concat(modalProps),
-    });
   }
 
   componentDidUpdate(prevProps) {
@@ -293,10 +299,14 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   updateModals(modals: ModalProps[]) {
     this.top();
     let maskHidden = true;
+    let active = false;
     const drawerOffsets: DrawerOffsets = { 'slide-up': [], 'slide-right': [], 'slide-down': [], 'slide-left': [] };
-    modals.slice().reverse().forEach(({ hidden, drawer, drawerOffset, drawerTransitionName }) => {
+    modals.slice().reverse().forEach(({ hidden, drawer, drawerOffset, drawerTransitionName, mask }) => {
       if (!hidden) {
-        maskHidden = false;
+        active = true;
+        if (mask) {
+          maskHidden = false;
+        }
         const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
         if (drawer && transitionName) {
           const offsets = drawerOffsets[transitionName];
@@ -307,6 +317,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     });
     this.drawerOffsets = drawerOffsets;
     this.maskHidden = maskHidden; // modals.every(({ hidden }) => hidden);
+    this.active = active;
     this.setState({ modals });
   }
 
@@ -384,7 +395,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   }
 
   getComponent(mount?: HTMLElement) {
-    const { maskHidden: hidden, isTop, drawerOffsets, baseOffsets, props: { getContainer } } = this;
+    const { maskHidden, isTop, drawerOffsets, baseOffsets, props: { getContainer } } = this;
     const { modals } = this.state;
     const { context } = this;
     const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
@@ -395,7 +406,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const isEmbeddedContainer = offsetContainer.tagName.toLowerCase() !== 'body';
     const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
-      const { drawerTransitionName = context.getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask, onMouseDown } = props;
+      const { drawerTransitionName = context.getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
         ...props.style,
@@ -440,19 +451,19 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           onEnd={this.handleAnimationEnd}
         >
           <Modal
-            key={key}
+            eventKey={key}
             mousePosition={ModalManager.mousePosition}
             {...props}
             style={style}
             active={index === activeModalIndex || (isTop && !mask && index > activeModalIndex)}
-            onMouseDown={mask ? onMouseDown : (e) => this.handleModalMouseDown(e, props)}
+            onTop={mask || drawer ? undefined : this.handleModalTopChange}
           />
         </Animate>
       );
     });
     const animationProps: any = {};
     if (mount) {
-      if (containerInstances.every(instance => instance.maskHidden || instance.getOffsetContainer() !== offsetContainer)) {
+      if (containerInstances.every(instance => !instance.active || instance.getOffsetContainer() !== offsetContainer)) {
         animationProps.onEnd = () => showBodyScrollBar(offsetContainer);
       } else {
         hideBodyScrollBar(offsetContainer);
@@ -461,7 +472,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const maskProps: ViewComponentProps = {};
     if (activeModal) {
       const { maskClosable = context.getConfig('modalMaskClosable'), maskStyle, maskClassName } = activeModal;
-      maskProps.hidden = hidden;
+      maskProps.hidden = maskHidden;
       maskProps.className = maskClassName;
       maskProps.onMouseDown = stopEvent;
       if (maskClosable === 'dblclick') {
@@ -485,7 +496,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           {...animationProps}
         >
           {
-            activeModal ? <Mask {...maskProps} /> : <div hidden={hidden} />
+            activeModal ? <Mask {...maskProps} /> : <div hidden={!this.active} />
           }
         </Animate>
         {items}

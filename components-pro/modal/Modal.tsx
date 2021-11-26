@@ -52,6 +52,7 @@ const HANDLE_MIN_SIZE = 50;
 
 export interface ModalProps extends ViewComponentProps {
   __deprecate__?: boolean;
+  eventKey?: Key;
   children?: any;
   closable?: boolean;
   movable?: boolean;
@@ -91,6 +92,7 @@ export interface ModalProps extends ViewComponentProps {
   drawerBorder?: boolean;
   okFirst?: boolean;
   active?: boolean;
+  onTop?: (key?: Key) => void;
   mousePosition?: MousePosition | null;
   contentStyle?: CSSProperties;
   bodyStyle?: CSSProperties;
@@ -309,6 +311,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'autoCenter',
       'mousePosition',
       'active',
+      'onTop',
       'contentStyle',
       'bodyStyle',
       'closeOnLocationChange',
@@ -317,7 +320,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   getOtherProps() {
     const otherProps = super.getOtherProps();
-    const { hidden, mousePosition, keyboardClosable = this.getContextConfig('modalKeyboard'), style = {}, drawer } = this.props;
+    const { hidden, mousePosition, keyboardClosable = this.getContextConfig('modalKeyboard'), style = {}, drawer, onTop } = this.props;
     if (keyboardClosable) {
       otherProps.autoFocus = true;
       otherProps.tabIndex = -1;
@@ -335,6 +338,10 @@ export default class Modal extends ViewComponent<ModalProps> {
       if (hidden) {
         this.mousePosition = null;
       }
+    }
+
+    if (onTop) {
+      otherProps.onMouseDown = this.handleMouseDown;
     }
 
     return otherProps;
@@ -407,6 +414,15 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   @autobind
+  handleMouseDown(e) {
+    const { onMouseDown = noop, onTop = noop, eventKey } = this.props;
+    onMouseDown(e);
+    if (!e.isDefaultPrevented()) {
+      onTop(eventKey);
+    }
+  }
+
+  @autobind
   handleHeaderMouseDown(downEvent: ReactMouseEvent<HTMLDivElement, MouseEvent>) {
     const { element, contentNode, props: { autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
     if (element && contentNode) {
@@ -414,15 +430,16 @@ export default class Modal extends ViewComponent<ModalProps> {
       const { clientX, clientY, currentTarget } = downEvent;
       const clzz = classes(element);
       const { offsetLeft, offsetParent } = element;
+      const doc = getDocument(window);
       const {
         scrollTop = 0, scrollLeft = 0,
-        offsetHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
-        offsetWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        offsetHeight = doc.documentElement.clientHeight || doc.body.clientHeight,
+        offsetWidth = doc.documentElement.clientWidth || doc.body.clientWidth,
       } = offsetParent || {};
       const offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
       const { offsetWidth: headerWidth, offsetHeight: headerHeight } = currentTarget;
       this.moveEvent
-        .setTarget(getDocument(window))
+        .setTarget(doc)
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
           const { clientX: moveX, clientY: moveY } = moveEvent;
           clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);

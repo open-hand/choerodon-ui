@@ -2,7 +2,6 @@ import React, { FormEventHandler, ReactNode } from 'react';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import Button from '../button';
-import { Size } from '../core/enum';
 import { ButtonColor } from '../button/enum';
 
 export interface TransferOperationProps {
@@ -38,8 +37,7 @@ export default function TransferOperation(props: TransferOperationProps) {
       <div className={className}>
         {typeof leftArrowText === 'string' ? (
           <Button
-            color={ButtonColor.primary}
-            size={Size.small}
+            color={leftActive ? ButtonColor.primary : ButtonColor.default}
             disabled={!leftActive}
             onClick={moveToLeft}
             icon="navigate_before"
@@ -54,8 +52,7 @@ export default function TransferOperation(props: TransferOperationProps) {
 
         {typeof rightArrowText === 'string' ? (
           <Button
-            color={ButtonColor.primary}
-            size={Size.small}
+            color={rightActive ? ButtonColor.primary : ButtonColor.default}
             disabled={!rightActive}
             onClick={moveToRight}
             icon="navigate_next"

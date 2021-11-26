@@ -14,23 +14,24 @@ title:
 Customized mask.
 
 ```jsx
-import { useModal, Button } from 'choerodon-ui/pro';
+import { useModal, Button, Modal, ModalProvider } from 'choerodon-ui/pro';
 
 const maskStyle = {
   backgroundColor: 'rgb(0, 193, 255,.3)',
 }
 
 const App = () => {
-  const Modal = useModal();
+  const modal = useModal();
 
   const openModal = React.useCallback((mask = true) => {
-    Modal.open({
+    (mask ? modal : Modal).open({
       title: mask ? 'Customized mask' : 'No mask',
       children: (
         <div>
           <p>Some contents...</p>
           <p>Some contents...</p>
           <p>Some contents...</p>
+          { mask && <ModalProvider /> }
           <Button onClick={openNoMask}>No mask</Button>
         </div>
       ),
@@ -40,7 +41,7 @@ const App = () => {
       maskClosable: true,
       maskClassName:'mask-class-name',
     });
-  }, [Modal]);
+  }, [modal]);
 
   const openMask = React.useCallback(() => {
     openModal();

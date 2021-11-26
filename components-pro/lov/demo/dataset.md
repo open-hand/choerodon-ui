@@ -80,7 +80,6 @@ class App extends React.Component {
         queryBar: 'filterBar',
         queryBarProps: {
           fuzzyQuery: false,
-          expandButton: false,
         },
       }}
      />

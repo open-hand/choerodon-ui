@@ -59,7 +59,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const downloadUrl = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
-  const preview = (status === 'success' || status === 'done');
+  const preview = !!src && (status === 'success' || status === 'done');
   const handlePreview = useCallback(() => {
     const { current } = pictureRef;
     if (current) {
@@ -91,7 +91,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           width={14}
           height={14}
           alt={name}
-          previewUrl={src || url}
+          previewUrl={src}
           downloadUrl={downloadUrl}
           src={isSrcIcon ? icon as string : undefined}
           objectFit="contain"
@@ -105,7 +105,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         >
           {isValidElement(icon) ? icon : undefined}
         </Picture>
-      ) : preview && src ? (
+      ) : preview ? (
         <Button
           href={src}
           target={ATTACHMENT_TARGET}
@@ -155,7 +155,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         {ext && <span className={`${prefixCls}-ext`}>.{ext}</span>}
       </>
     );
-    const nameNode = preview && src && listType === 'text' ? (
+    const nameNode = preview && listType === 'text' ? (
       <a
         {...isPicture ? { onClick: handlePreview } : { href: src, target: ATTACHMENT_TARGET }}
         className={`${prefixCls}-link`}
