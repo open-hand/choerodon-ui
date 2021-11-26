@@ -80,8 +80,10 @@ const prefixCls = getConfig('prefixCls');
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | tableColumnOnCell | Custom cell property configuration | (dataSet, record, column) => object | - |
 | tableColumnAlign | 默认表格列对齐方式 | (column, field) => 'left' \| 'center' \| 'right' \| undefined | Function |
-| tableColumnDefaultMinWidth | 默认表格列最小宽度 | number | 100 |
-| tableAggregationColumnDefaultMinWidth | 默认表格聚合列最小宽度 | number | 250 |
+| tableColumnDefaultWidth | 默认表格列宽度, 只在出横向滚动条时起作用 | number | 100 |
+| tableColumnDefaultMinWidth | 默认表格列最小宽度 | number | 50 |
+| tableAggregationColumnDefaultWidth | 默认表格聚合列宽度, 只在出横向滚动条时起作用 | number | 250 |
+| tableAggregationColumnDefaultMinWidth | 默认表格聚合列最小宽度 | number | 50 |
 | tableKeyboard | Table 开启或关闭新增的快捷按钮事件 | boolean | false |
 | tableFilterAdapter | Table 筛选条请求适配器 | ({ type, config, searchCode, queryDataSet} )=>AxiosRequestConfig | |
 | tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |
@@ -123,6 +125,7 @@ const prefixCls = getConfig('prefixCls');
 | showInvalidDate | 显示无效日期 | boolean |  |
 | showRequiredColorsOnlyEmpty | 只有在空值时显示必填背景色和边框色 | boolean |  |
 | showValidation | 校验信息提示方式 | `tooltip` \| `newLine` | `tooltip` |
+| showHelp| 显示提示信息的方式 | `tooltip` \| `newLine`\| `label`\| `none`| `newline` |
 | highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | performanceEnabled | 开启性能监控 | { Table: boolean } | { Table: false }  |
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |

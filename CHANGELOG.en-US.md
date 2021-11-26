@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `ConfigProvider`: Added `ConfigProvider` component.
 - 🌟 `hooks`: Added `useConfig` hook.
 - 🌟 `<pro>hooks`: Added `useDataSet` hook.
-- 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement`, `lovShowSelectedInView` properties.
+- 🌟 `configure`: Added `numberFieldKeyboard`, `tableColumnDefaultWidth`, `tableColumnDefaultMinWidth`, `tableAggregationColumnDefaultWidth`, `tableAggregationColumnDefaultMinWidth`, `tooltipPlacement`, `lovShowSelectedInView`, `showHelp` properties.
 - 🌟 `configure`: `TooltipTarget` adds `text-field-disabled` input class component disabled state object.
 - 🌟 `Tabs`: Added `tabDraggable`, `tabTitleEditable`, `tabCountHideable`, `defaultChangeable` properties.
 - 🌟 `<pro>SecretField`: Added `SecretField` component.
@@ -37,6 +37,9 @@ timeline: true
 - 🌟 `<pro>Transfer`: Added `sortable`、`sortOperations` and `operations` property.
 - 🌟 `<pro>Lov`: Added `showSelectedInView` property.
 - 🌟 `<pro>CodeArea`: Added `themeSwitch`, `title` properties.
+- 🌟 `<pro>Form`: Added the `showHelp` attribute to control the display mode of the form input box help.
+- 🌟 `<pro>FormItem`: The new `label` method is added to the `showHelp` property, which supports the display of help information on the Label.
+- 💄 `<pro>FormItem`: Optimize the mandatory input and colon styles in the form input box, and will not hide if it is omitted.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
 - 💄 `<pro>PerformanceTable`: Optimize the interaction and caching of the dynamic filter bar, and add the `expandButton` attribute.

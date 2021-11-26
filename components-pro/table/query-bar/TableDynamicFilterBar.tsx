@@ -434,18 +434,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   get tableFilterAdapter() {
-    const { dynamicFilterBar } = this.props;
+    const { dynamicFilterBar, searchCode } = this.props;
     const { getConfig } = this.context;
-    return dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || getConfig('tableFilterAdapter');
+    const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
+    return searchCodes ? dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || getConfig('tableFilterAdapter') : null;
   }
 
   /**
    * 是否单行操作
    */
   isSingleLineOpt(): boolean {
-    const { fuzzyQuery, dynamicFilterBar, searchCode } = this.props;
-    const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
-    return !(fuzzyQuery || this.tableFilterAdapter || searchCodes);
+    const { fuzzyQuery } = this.props;
+    return !(fuzzyQuery || this.tableFilterAdapter);
   }
 
   /**
