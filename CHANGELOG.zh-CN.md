@@ -36,6 +36,7 @@ timeline: true
 - 🌟 `Transfer`: 新增 sortable 和 sortOperations 属性。
 - 🌟 `<pro>Transfer`: 新增 sortable、sortOperations、operations 属性。
 - 🌟 `<pro>Lov`: 新增 showSelectedInView 属性。
+- 🌟 `Tab`: 新增 second-level 类型.
 - 🌟 `<pro>CodeArea`: 新增 themeSwitch, title 属性。
 - 🌟 `<pro>Form`: 新增 showHelp 属性, 控制表单输入框 help 展示方式。
 - 🌟 `<pro>FormItem`: showHelp 属性新增 label 方式，支持在 Label 上展示 help 信息。
