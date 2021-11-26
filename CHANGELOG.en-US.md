@@ -36,6 +36,7 @@ timeline: true
 - 🌟 `Transfer`: Added `sortable` and `sortOperations` property.
 - 🌟 `<pro>Transfer`: Added `sortable`、`sortOperations` and `operations` property.
 - 🌟 `<pro>Lov`: Added `showSelectedInView` property.
+- 🌟 `<pro>CodeArea`: Added `themeSwitch`, `title` properties.
 - 🌟 `<pro>Form`: Added the `showHelp` attribute to control the display mode of the form input box help.
 - 🌟 `<pro>FormItem`: The new `label` method is added to the `showHelp` property, which supports the display of help information on the Label.
 - 💄 `<pro>FormItem`: Optimize the mandatory input and colon styles in the form input box, and will not hide if it is omitted.
