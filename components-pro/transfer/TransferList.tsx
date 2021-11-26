@@ -26,8 +26,6 @@ export interface TransferListProps extends SelectProps {
 export default class TransferList extends Select<TransferListProps> {
   wrapperRef: HTMLDivElement | null = null;
 
-  lastSelectIndex: number | undefined = undefined;
-
   get popup() {
     return true;
   }
@@ -66,15 +64,15 @@ export default class TransferList extends Select<TransferListProps> {
   componentDidUpdate() {
     const { currentIndex } = this.props;
     // 在渲染完之后执行
-    if (this.wrapperRef && this.lastSelectIndex !== currentIndex) {
+    if (this.wrapperRef && typeof currentIndex !== 'undefined') {
       const contentDom = this.wrapperRef.getElementsByTagName('ul')[0];
       const findSelectedDom = this.wrapperRef.getElementsByTagName('li');
 
-      if (contentDom && currentIndex && currentIndex > -1) {
+      if (contentDom && currentIndex && currentIndex > -1 && currentIndex < this.filteredOptions.length) {
         const selectedDom = findSelectedDom[currentIndex] as HTMLLIElement;
-        scrollIntoView(selectedDom, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
+        scrollIntoView(selectedDom, { block: 'end', behavior: 'smooth', scrollMode: 'if-needed', boundary: contentDom });
       }
-      this.lastSelectIndex = currentIndex;
+      this.options.setState('targetFilteredOptions', this.filteredOptions);
     }
   }
 
