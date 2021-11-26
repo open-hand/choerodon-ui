@@ -2,7 +2,6 @@ import React, { FormEventHandler, ReactNode } from 'react';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import Button from '../button';
-import { Size } from '../core/enum';
 import { ButtonColor } from '../button/enum';
 
 export interface TransferSortProps {
@@ -38,8 +37,7 @@ export default function TransferSort(props: TransferSortProps) {
       <div className={className}>
         {typeof upArrowText === 'string' ? (
           <Button
-            color={ButtonColor.primary}
-            size={Size.small}
+            color={upActive ? ButtonColor.primary : ButtonColor.default}
             disabled={!upActive}
             onClick={moveToUp}
             icon="expand_less"
@@ -54,8 +52,7 @@ export default function TransferSort(props: TransferSortProps) {
 
         {typeof downArrowText === 'string' ? (
           <Button
-            color={ButtonColor.primary}
-            size={Size.small}
+            color={downActive ? ButtonColor.primary : ButtonColor.default}
             disabled={!downActive}
             onClick={moveToDown}
             icon="expand_more"

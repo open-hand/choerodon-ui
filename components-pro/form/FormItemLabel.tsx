@@ -11,10 +11,11 @@ export interface FormLabelProps {
   children?: ReactNode;
   paddingLeft?: string;
   tooltip?: LabelTooltip;
+  help?: ReactNode;
 }
 
 const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(props) {
-  const { className, rowSpan, paddingLeft, tooltip, children } = props;
+  const { className, rowSpan, paddingLeft, tooltip, children, help } = props;
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => paddingLeft ? { paddingLeft } : undefined, [paddingLeft]);
@@ -41,18 +42,21 @@ const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(
       tooltipRef.current = false;
     }
   }, [tooltipRef]);
+
   return (
     <td
       className={className}
       rowSpan={rowSpan}
       style={style}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <label title={isString(children) && ![LabelTooltip.always, LabelTooltip.overflow].includes(tooltip!) ? children : undefined}>
-        <span>
+        <span
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           {children}
         </span>
+        {help}
       </label>
     </td>
   );

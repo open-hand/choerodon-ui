@@ -55,7 +55,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Transfer dataSet={this.ds} name="first-name" />
+        <Transfer dataSet={this.ds} sortable name="first-name" />
         <Transfer dataSet={this.ds} name="last-name">
           <Option value="jack">Jack</Option>
           <Option value="lucy">Lucy</Option>

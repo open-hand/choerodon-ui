@@ -2,6 +2,7 @@ import React, { ComponentClass, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classes from 'component-classes';
+import classNames from 'classnames';
 import { action, autorun, IReactionDisposer, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { EditorConfiguration } from 'codemirror';
@@ -10,10 +11,12 @@ import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import Icon from 'choerodon-ui/lib/icon';
 import { FormField, FormFieldProps } from '../field/FormField';
 import { CodeAreaFormatter } from './CodeAreaFormatter';
 import autobind from '../_util/autobind';
 import { LabelLayout } from '../form/enum';
+import Switch from '../switch';
 
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
@@ -22,16 +25,22 @@ if (typeof window !== 'undefined') {
   CodeMirror = require('react-codemirror2').Controlled;
 }
 
+export enum ThemeSwitch {
+  idea = 'idea',
+  material = 'material',
+}
+
 export interface CodeAreaProps extends FormFieldProps {
   options?: EditorConfiguration;
   formatHotKey?: string;
   unFormatHotKey?: string;
   formatter?: CodeAreaFormatter;
   editorDidMount?: (editor: IInstance, value: string, cb: () => void) => void;
+  themeSwitch?: ThemeSwitch,
 }
 
 const defaultCodeMirrorOptions: EditorConfiguration = {
-  theme: 'neat',
+  theme: 'idea',
   lineNumbers: true,
   lint: true,
   gutters: ['CodeMirror-lint-markers'],
@@ -47,6 +56,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     unFormatHotKey: PropTypes.string,
     formatter: PropTypes.object,
     editorDidMount: PropTypes.func,
+    themeSwitch: PropTypes.oneOf([ThemeSwitch.idea, ThemeSwitch.material]),
     ...FormField.propTypes,
   };
 
@@ -65,8 +75,12 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   disposer: IReactionDisposer;
 
+  @observable theme?: string;
+
   constructor(props, content) {
     super(props, content);
+    const theme = this.props.options?.theme ? this.props.options?.theme : this.props.themeSwitch;
+    this.setTheme(theme ?? defaultCodeMirrorOptions.theme);
     this.disposer = autorun(() => {
       // 在绑定dataSet的情况下
       // 当手动修改过codeArea里面的值以后 再使用record.set去更新值 组件不会更新
@@ -129,20 +143,68 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     return otherProps;
   }
 
+  setThemeWrapper(nextProps) {
+    const { options, themeSwitch } = nextProps;
+    const { options: preOptions, themeSwitch: preThemeSwitch } = this.props;
+    if (preOptions?.theme !== options?.theme || preThemeSwitch !== themeSwitch) {
+      const theme = (options?.theme ? options?.theme : themeSwitch) ?? defaultCodeMirrorOptions.theme;
+      if (theme !== this.theme) {
+        this.setTheme(theme);
+      }
+    }
+  }
+
   componentWillReceiveProps(nextProps, nextContext) {
     const { options } = nextProps;
     if (!isEqual(options, this.props.options)) {
       this.cmOptions = this.getCodeMirrorOptions(options);
     }
+    this.setThemeWrapper(nextProps);
     super.componentWillReceiveProps(nextProps, nextContext);
+  }
+
+  handleThemeChange = (value) => {
+    this.setTheme(value ? ThemeSwitch.idea : ThemeSwitch.material);
+  }
+  
+  getHeader = () => {
+    const { title, options, themeSwitch } = this.props;
+    if (!title && (options?.theme || !themeSwitch)) {
+      return null;
+    }
+    const titleNode = title ? <div className={`${this.prefixCls}-header-title`}>{title}</div> : null;
+    const themeSwitchNode = !options?.theme && themeSwitch ? (
+      <div className={`${this.prefixCls}-header-switch`}>
+        <Switch
+          unCheckedChildren={<Icon type="anhei" />}
+          defaultChecked={(this.theme !== ThemeSwitch.material)}
+          onChange={this.handleThemeChange}
+        >
+          <Icon type="wb_sunny" />
+        </Switch>
+      </div>
+    ) : null;
+    const headerClassNames = classNames(`${this.prefixCls}-header`, {
+      [`${this.prefixCls}-header-light`]: this.theme !== ThemeSwitch.material,
+      [`${this.prefixCls}-header-dark`]: this.theme === ThemeSwitch.material,
+    });
+    return (
+      <div className={headerClassNames}>
+        {titleNode}
+        {themeSwitchNode}
+      </div>
+    );
   }
 
   renderWrapper(): ReactNode {
     if (CodeMirror) {
       this.cmOptions.readOnly = this.disabled ? 'nocursor' : this.readOnly;
+      this.cmOptions.theme = this.theme;
       const text = this.getTextNode();
+      const header = this.getHeader();
       return (
         <div {...this.getWrapperProps()}>
+          {header}
           <label>
             <CodeMirror
               {...this.getOtherProps()}
@@ -157,6 +219,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
         </div>
       );
     }
+  }
+
+  @action
+  setTheme(theme?: string): void {
+    this.theme = theme;
   }
 
   @action
