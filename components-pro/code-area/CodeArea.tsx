@@ -140,7 +140,14 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     const otherProps = super.getOtherProps();
     delete otherProps.onChange;
     otherProps.onKeyDown = this.handleCodeMirrorKeyDown;
+    otherProps.className = this.getOtherClassName(otherProps);
     return otherProps;
+  }
+
+  getOtherClassName(otherProps: any) {
+    return classNames(otherProps.className, {
+      [`${this.prefixCls}-dark`]: this.theme === ThemeSwitch.material,
+    });
   }
 
   setThemeWrapper(nextProps) {
@@ -165,8 +172,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   handleThemeChange = (value) => {
     this.setTheme(value ? ThemeSwitch.idea : ThemeSwitch.material);
-  }
-  
+  };
+
   getHeader = () => {
     const { title, options, themeSwitch } = this.props;
     if (!title && (options?.theme || !themeSwitch)) {
@@ -194,7 +201,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
         {themeSwitchNode}
       </div>
     );
-  }
+  };
 
   renderWrapper(): ReactNode {
     if (CodeMirror) {
