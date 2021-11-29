@@ -8,6 +8,7 @@ import Record from '../data-set/Record';
 import { LabelAlign, LabelLayout, ShowValidation } from './enum';
 import Form, { LabelWidth } from './Form';
 import { Tooltip } from '../core/enum';
+import { ShowHelp } from '../field/enum';
 
 export interface FormContextValue extends ConfigContextValue {
   dataSet?: DataSet | undefined;
@@ -22,6 +23,7 @@ export interface FormContextValue extends ConfigContextValue {
   labelWidth?: LabelWidth | undefined;
   labelTooltip?: Tooltip | undefined;
   showValidation?: ShowValidation | undefined;
+  showHelp?: ShowHelp | undefined;
   useColon?: boolean | undefined;
   formNode?: Form | undefined;
 }
