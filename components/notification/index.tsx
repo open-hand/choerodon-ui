@@ -1,48 +1,35 @@
 import React, { CSSProperties, ReactNode } from 'react';
+import isPromise from 'is-promise';
+import { NotificationManager } from 'choerodon-ui/shared';
+import { ConfigProps as ConfigOptions, NotificationInterface, NotificationPlacement } from 'choerodon-ui/shared/notification-manager';
 import Icon from '../icon';
-import Notification from '../rc-components/notification';
+import { newNotificationInstance } from './Notification';
 import { getPrefixCls } from '../configure/utils';
 
-export type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
-
 export type IconType = 'success' | 'info' | 'error' | 'warning';
+const { config } = NotificationManager;
 
-const notificationInstance: { [key: string]: any } = {};
-let defaultDuration = 4.5;
-let defaultTop = 24;
-let defaultBottom = 24;
-let defaultPlacement: NotificationPlacement = 'topRight';
-let defaultGetContainer: () => HTMLElement;
-let defaultMaxCount;
-
-export interface ConfigProps {
-  top?: number;
-  bottom?: number;
-  duration?: number;
-  placement?: NotificationPlacement;
-  getContainer?: () => HTMLElement;
-  maxCount?: number;
-}
+export type ConfigProps = Partial<ConfigOptions>
 
 function setNotificationConfig(options: ConfigProps) {
   const { duration, placement, bottom, top, getContainer, maxCount } = options;
   if (duration !== undefined) {
-    defaultDuration = duration;
+    config.duration = duration;
   }
   if (placement !== undefined) {
-    defaultPlacement = placement;
+    config.placement = placement;
   }
   if (bottom !== undefined) {
-    defaultBottom = bottom;
+    config.bottom = bottom;
   }
   if (top !== undefined) {
-    defaultTop = top;
+    config.top = top;
   }
   if (getContainer !== undefined) {
-    defaultGetContainer = getContainer;
+    config.getContainer = getContainer;
   }
   if (maxCount !== undefined) {
-    defaultMaxCount = maxCount;
+    config.maxCount = maxCount;
   }
 }
 
@@ -52,14 +39,14 @@ function getPlacementStyle(placement: NotificationPlacement) {
     case 'topLeft':
       style = {
         left: 0,
-        top: defaultTop,
+        top: config.top,
         bottom: 'auto',
       };
       break;
     case 'topRight':
       style = {
         right: 0,
-        top: defaultTop,
+        top: config.top,
         bottom: 'auto',
       };
       break;
@@ -67,14 +54,14 @@ function getPlacementStyle(placement: NotificationPlacement) {
       style = {
         left: 0,
         top: 'auto',
-        bottom: defaultBottom,
+        bottom: config.bottom,
       };
       break;
     default:
       style = {
         right: 0,
         top: 'auto',
-        bottom: defaultBottom,
+        bottom: config.bottom,
       };
       break;
   }
@@ -84,27 +71,35 @@ function getPlacementStyle(placement: NotificationPlacement) {
 function getNotificationInstance(
   prefixCls: string,
   placement: NotificationPlacement,
-  callback: (n: any) => void,
+  callback: (n: NotificationInterface) => void,
 ) {
   const cacheKey = `${prefixCls}-${placement}`;
-  if (notificationInstance[cacheKey]) {
-    callback(notificationInstance[cacheKey]);
+  const instance = NotificationManager.instances.get(cacheKey);
+  if (instance) {
+    if (isPromise<NotificationInterface, NotificationInterface>(instance)) {
+      instance.then(callback);
+    } else {
+      callback(instance);
+    }
     return;
   }
-  (Notification as any).newInstance(
-    {
-      prefixCls,
-      className: `${prefixCls}-${placement}`,
-      style: getPlacementStyle(placement),
-      getContainer: defaultGetContainer,
-      closeIcon: <Icon className={`${prefixCls}-close-icon`} type="close" />,
-      defaultMaxCount,
-    },
-    (notification: any) => {
-      notificationInstance[cacheKey] = notification;
-      callback(notification);
-    },
-  );
+  const { config } = NotificationManager;
+  NotificationManager.instances.set(cacheKey, new Promise((resolve) => {
+    newNotificationInstance(
+      {
+        prefixCls,
+        className: cacheKey,
+        style: getPlacementStyle(placement),
+        getContainer: config.getContainer,
+        maxCount: config.maxCount,
+      },
+      (notification: any) => {
+        resolve(notification);
+        NotificationManager.instances.set(cacheKey, notification);
+        callback(notification);
+      },
+    );
+  }));
 }
 
 const typeToIcon = {
@@ -132,7 +127,7 @@ export interface ArgsProps {
 function notice(args: ArgsProps) {
   const outerPrefixCls = getPrefixCls('notification', args.prefixCls);
   const prefixCls = `${outerPrefixCls}-notice`;
-  const duration = args.duration === undefined ? defaultDuration : args.duration;
+  const duration = args.duration === undefined ? config.duration : args.duration;
 
   let iconNode: ReactNode = null;
   if (args.icon) {
@@ -151,10 +146,10 @@ function notice(args: ArgsProps) {
 
   getNotificationInstance(
     outerPrefixCls,
-    args.placement || defaultPlacement,
+    args.placement || config.placement,
     (notification: any) => {
       notification.notice({
-        content: (
+        children: (
           <div className={iconNode ? `${prefixCls}-with-icon` : ''}>
             {iconNode}
             <div className={`${prefixCls}-message`}>
@@ -179,16 +174,11 @@ function notice(args: ArgsProps) {
 const api: any = {
   open: notice,
   close(key: string) {
-    Object.keys(notificationInstance).forEach(cacheKey =>
-      notificationInstance[cacheKey].removeNotice(key),
-    );
+    NotificationManager.remove(key);
   },
   config: setNotificationConfig,
   destroy() {
-    Object.keys(notificationInstance).forEach(cacheKey => {
-      notificationInstance[cacheKey].destroy();
-      delete notificationInstance[cacheKey];
-    });
+    NotificationManager.clear();
   },
 };
 
