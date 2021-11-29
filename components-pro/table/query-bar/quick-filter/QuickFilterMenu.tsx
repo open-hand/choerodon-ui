@@ -195,10 +195,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
     shouldLocateData,
   } = useContext(Store);
 
+
   /**
    * queryDS 筛选赋值并更新初始勾选项
+   * @param init
+   * 初始化查询依赖于ds props autoQuery, 切换依赖组件 autoQuery props
    */
-  const conditionAssign = () => {
+  const conditionAssign = (init?: boolean) => {
     onOriginalChange();
     const { current } = menuDataSet;
     if (current) {
@@ -229,7 +232,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
         });
         onStatusChange(RecordStatus.sync);
       }
-      if (autoQuery) {
+      if (init) {
+        if (dataSet.props.autoQuery) dataSet.query();
+      } else if (autoQuery) {
         dataSet.query();
       }
     }
@@ -258,8 +263,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
   /**
    * 定位数据源
    * @param searchId
+   * @param init 初始化
    */
-  const locateData = (searchId?: number | null) => {
+  const locateData = (searchId?: number | null, init?: boolean) => {
     const { current } = filterMenuDataSet;
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
@@ -268,7 +274,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         conditionDataSet.loadData(menuRecord.get('conditionList'));
       }
       if (current) current.set('filterName', searchId);
-      conditionAssign();
+      conditionAssign(init);
     } else if (searchId === null) {
       handleQueryReset();
     } else {
@@ -280,11 +286,10 @@ const QuickFilterMenu = function QuickFilterMenu() {
           conditionDataSet.loadData(menuRecord.get('conditionList'));
           if (current) current.set('filterName', menuRecord.get('searchId'));
         }
-        conditionAssign();
+        conditionAssign(init);
       } else {
         if (current) current.set('filterName', undefined);
         queryDataSet.reset();
-        queryDataSet.create({});
       }
     }
   };
@@ -445,7 +450,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
 
   useEffect(() => {
     if (shouldLocateData) {
-      locateData();
+      locateData(undefined, true);
     }
   }, [shouldLocateData]);
 

@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `ConfigProvider`: 新增 ConfigProvider 组件。
 - 🌟 `hooks`: 新增 useConfig 钩子。
 - 🌟 `<pro>hooks`: 新增 useDataSet 钩子。
-- 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultWidth, tableColumnDefaultMinWidth, tableAggregationColumnDefaultWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement, lovShowSelectedInView 属性。
+- 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultWidth, tableColumnDefaultMinWidth, tableAggregationColumnDefaultWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement, lovShowSelectedInView, showHelp 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field-disabled 输入类组件禁用状态对象。
 - 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
 - 🌟 `<pro>DataSet.Field`: optionsProps 属性支持钩子。
@@ -39,6 +39,9 @@ timeline: true
 - 🌟 `<pro>Lov`: 新增 showSelectedInView 属性。
 - 🌟 `Tab`: 新增 second-level 类型.
 - 🌟 `<pro>CodeArea`: 新增 themeSwitch, title 属性。
+- 🌟 `<pro>Form`: 新增 showHelp 属性, 控制表单输入框 help 展示方式。
+- 🌟 `<pro>FormItem`: showHelp 属性新增 label 方式，支持在 Label 上展示 help 信息。
+- 💄 `<pro>FormItem`: 优化表单输入框必输、冒号样式，超出省略不隐藏。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。
@@ -52,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
 - 🐞 `<pro>Table`: 修复在聚合列下的锁定列在平铺模式下无法显示的问题。
+- 🐞 `<pro>Table`: 修复在切换显示时可能导致的高度问题。
 - 🐞 `<pro>Modal`: 修复打开无遮罩的模态框时会导致有遮罩的模态框遮罩消失的问题。
 - 🐞 `<pro>DatePicker`: 修复在 range 模式和有 timeZone 的情况下连着输入值报错的问题。修复 maxLength 和 minLength 属性的错误限制。
 - 🐞 `<pro>Validator`: 修复校验信息没有完全格式化，例如没有 label 时。

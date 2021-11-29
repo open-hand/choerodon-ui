@@ -16,6 +16,7 @@ import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } fro
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
+import { ShowHelp } from 'choerodon-ui/pro/lib/field/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
@@ -221,6 +222,10 @@ export interface Config extends DataSetConfig {
    * 表单校验提示方式
    */
   showValidation?: ShowValidation;
+  /**
+   * 显示提示信息的方式
+   */
+  showHelp?: ShowHelp;
   /**
    * Tabs 墨条样式
    */
