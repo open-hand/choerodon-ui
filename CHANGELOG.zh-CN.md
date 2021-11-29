@@ -19,9 +19,10 @@ timeline: true
 - 🌟 `ConfigProvider`: 新增 ConfigProvider 组件。
 - 🌟 `hooks`: 新增 useConfig 钩子。
 - 🌟 `<pro>hooks`: 新增 useDataSet 钩子。
-- 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultWidth, tableColumnDefaultMinWidth, tableAggregationColumnDefaultWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement, lovShowSelectedInView, showHelp 属性。
+- 🌟 `configure`: 新增 numberFieldKeyboard, tableColumnDefaultWidth, tableColumnDefaultMinWidth, tableAggregationColumnDefaultWidth, tableAggregationColumnDefaultMinWidth, tooltipPlacement, lovShowSelectedInView 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field-disabled 输入类组件禁用状态对象。
 - 🌟 `Tabs`: 新增 tabDraggable, tabTitleEditable, tabCountHideable, defaultChangeable 属性。
+- 🌟 `<pro>DataSet.Field`: optionsProps 属性支持钩子。
 - 🌟 `<pro>SecretField`: 新增 SecretField 组件。
 - 🌟 `<pro>Attachment`: 新增 isPublic 属性。
 - 🌟 `<pro>Attachment.Group`: 新增 Attachment.Group 组件。
@@ -38,9 +39,6 @@ timeline: true
 - 🌟 `<pro>Lov`: 新增 showSelectedInView 属性。
 - 🌟 `Tab`: 新增 second-level 类型.
 - 🌟 `<pro>CodeArea`: 新增 themeSwitch, title 属性。
-- 🌟 `<pro>Form`: 新增 showHelp 属性, 控制表单输入框 help 展示方式。
-- 🌟 `<pro>FormItem`: showHelp 属性新增 label 方式，支持在 Label 上展示 help 信息。
-- 💄 `<pro>FormItem`: 优化表单输入框必输、冒号样式，超出省略不隐藏。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
 - 💄 `<pro>PerformanceTable`: 优化动态筛选条交互和缓存，新增 expandButton 属性。

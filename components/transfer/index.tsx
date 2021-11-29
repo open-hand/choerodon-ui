@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Component, CSSProperties, ReactNode, SyntheticEvent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { computed } from 'mobx';
 import noop from 'lodash/noop';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { arrayMove } from 'choerodon-ui/pro/lib/data-set/utils';
@@ -196,6 +197,17 @@ export default class Transfer extends Component<TransferProps, any> {
     return this.splitedDataSource;
   }
 
+  @computed
+  get computedRightDataSource(): TransferItem[] {
+    const { filterOption } = this.props;
+    const { rightFilter } = this.state;
+    const { rightDataSource } = this.splitDataSource();
+    if (filterOption && rightFilter) {
+      return  rightDataSource.filter(opt => filterOption(rightFilter, opt))
+    }
+    return rightDataSource
+  }
+
   moveTo = (direction: TransferDirection) => {
     const { targetKeys = [], dataSource = [], onChange } = this.props;
     const { sourceSelectedKeys, targetSelectedKeys } = this.state;
@@ -229,12 +241,18 @@ export default class Transfer extends Component<TransferProps, any> {
   sortTo = (direction: TransferDirection) => {
     const { prefixCls: customizePrefixCls } = this.props;
     const { highlightKey } = this.state;
+    const to = direction === TransferDirection.up ? -1 : 1
     const { rightDataSource } = this.splitDataSource();
 
     const mapRightKey = rightDataSource.map(x => x.key);
 
-    const index = mapRightKey.indexOf(highlightKey);
-    arrayMove(mapRightKey, index, index + (direction === TransferDirection.up ? -1 : 1));
+    const filterRightDataSource: TransferItem[] = this.computedRightDataSource;
+    const filterCurrentIndex = filterRightDataSource.findIndex(x => x.key === highlightKey);
+    const sourceIndex = rightDataSource.findIndex(x => x.key === highlightKey)
+    const moveToOption = filterRightDataSource[filterCurrentIndex + to];
+    const moveToIndex = rightDataSource.findIndex(x => x.key === moveToOption.key)
+
+    arrayMove(mapRightKey, sourceIndex, moveToIndex);
     this.splitedDataSource = null;
     this.setState(
       {
@@ -250,9 +268,10 @@ export default class Transfer extends Component<TransferProps, any> {
             selectedCls,
           )[0] as HTMLDivElement;
           scrollIntoView(selectedDom, {
-            block: 'start',
+            block: 'end',
             behavior: 'smooth',
             scrollMode: 'if-needed',
+            boundary: this.transferRef,
           });
         }
       },
@@ -434,10 +453,12 @@ export default class Transfer extends Component<TransferProps, any> {
     const leftActive = targetSelectedKeys.length > 0;
     const rightActive = sourceSelectedKeys.length > 0;
 
-    const mapRightKey = rightDataSource.map(x => x.key);
-    const upActive = !!highlightKey && mapRightKey.indexOf(highlightKey) !== 0;
-    const downActive =
-      !!highlightKey && mapRightKey.indexOf(highlightKey) !== mapRightKey.length - 1;
+    const filterRightDataSource: TransferItem[] = this.computedRightDataSource
+
+    const mapRightKey = filterRightDataSource.map(x => x.key);
+    const hasHighlight = !!highlightKey && mapRightKey.indexOf(highlightKey) > -1
+    const upActive = hasHighlight && mapRightKey.indexOf(highlightKey) !== 0;
+    const downActive = hasHighlight && mapRightKey.indexOf(highlightKey) !== mapRightKey.length - 1;
     const cls = classNames(className, prefixCls);
 
     const titles = this.getTitles(locale);

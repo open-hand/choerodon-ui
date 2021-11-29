@@ -65,7 +65,14 @@
   .CodeMirror {
     display: block;
     width: 100%;
+    border: @codearea-border;
     border-radius: 0 0 0.02rem 0.02rem;
+  }
+
+  &-dark {
+    .CodeMirror {
+      border: unset;
+    }
   }
 
   &-invalid .CodeMirror {
