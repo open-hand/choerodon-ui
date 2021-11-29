@@ -41,20 +41,18 @@ configure({
     return true;
   },
   secretFieldQueryData(params) {
-    return Axios.get(`/secretField/queryField`).then(
-      res=> {
-        let value = res[params.fieldName];
-        if(params.fieldName === 'secretField' || params.fieldName === 'secretField1'){
-          res[params.fieldName].map(item => {
-            if(item._token === params._token){
-              value = item[params.fieldName];
-            }
-            return value;
-          })
-        }
-        return value;
-      },
-    );
+    return Axios.get(`/secretField/queryField`).then(res => {
+      let value = res[params.fieldName];
+      if (params.fieldName === 'secretField' || params.fieldName === 'secretField1') {
+        res[params.fieldName].map(item => {
+          if (item._token === params._token) {
+            value = item[params.fieldName];
+          }
+          return value;
+        });
+      }
+      return value;
+    });
   },
   secretFieldSaveData(params) {
     return Promise.resolve(params.value);
@@ -66,7 +64,6 @@ const App = () => {
     () =>
       new DataSet({
         autoCreate: true,
-        autoQuery: true,
         fields: [
           {
             name: 'phone',
@@ -78,7 +75,7 @@ const App = () => {
             name: 'bankCard',
             type: 'string',
             label: '银行卡号',
-            restrict: "a-zA-Z0-9-@._,",
+            restrict: 'a-zA-Z0-9-@._,',
           },
           {
             name: 'idCard',
@@ -87,13 +84,9 @@ const App = () => {
             readOnly: true,
           },
         ],
-        transport: {
-          read() {
-            return {
-              url: `/secretField/form/query`,
-            }
-          },
-        },
+        data: [
+          { phone: '153*****560', bankCard: '123*****456', idCard: '322*****001', _token: '111' },
+        ],
       }),
     [],
   );

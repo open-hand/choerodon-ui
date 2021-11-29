@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
-import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 
 import autobind from '../_util/autobind';
 
 import { $l } from '../locale-context';
+import Record from '../data-set/Record';
 import DataSet from '../data-set/DataSet';
 import message from '../message';
 import { FieldType } from '../data-set/enum';
@@ -148,7 +148,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
           }
           if (modal) {
             modal.close();
-            record?.setState({[`_secretField_queryFlag_${name}`]: true});
+            record?.setState({ [`_secretField_queryFlag_${name}`]: true });
           }
         },
       );

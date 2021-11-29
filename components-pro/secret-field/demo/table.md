@@ -19,7 +19,6 @@ const App = () => {
     () =>
       new DataSet({
         autoCreate: true,
-        autoQuery: true,
         fields: [
           {
             name: 'secretField',
@@ -34,13 +33,18 @@ const App = () => {
             readOnly: false,
           },
         ],
-        transport: {
-          read() {
-            return {
-              url: `/secretField/table/query`,
-            }
+        data: [
+          {
+            secretField: 't***1',
+            secretField1: 't***1',
+            _token: '111',
           },
-        },
+          {
+            secretField: 't***2',
+            secretField1: 't***2',
+            _token: '222',
+          },
+        ],
       }),
     [],
   );
@@ -48,17 +52,17 @@ const App = () => {
     () => [
       {
         name: 'secretField',
-        editor:<SecretField />,
+        editor: <SecretField />,
       },
       {
         name: 'secretField1',
-        editor:<SecretField />,
+        editor: <SecretField />,
       },
     ],
     [],
   );
 
-  return <Table dataSet={ds} columns={columns}/>;
+  return <Table dataSet={ds} columns={columns} />;
 };
 
 ReactDOM.render(<App />, mountNode);
