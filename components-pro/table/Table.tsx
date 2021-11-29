@@ -2117,6 +2117,9 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   syncSize(width: number = this.getWidth()) {
     const { element, tableStore, bodyHeightReaction } = this;
+    if (tableStore.hidden || !element.offsetParent) {
+      return;
+    }
     if (bodyHeightReaction) {
       bodyHeightReaction();
       delete this.bodyHeightReaction;
