@@ -228,7 +228,6 @@ export interface Locale extends DataSetLocale {
   Icon: {
     icons: string;
     whatsNew: string;
-    hzero_new: string,
     direction: string;
     suggestion: string;
     edit: string;
