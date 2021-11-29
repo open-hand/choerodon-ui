@@ -68,6 +68,7 @@ timeline: true
 - 🐞 `Tabs`: 修复嵌套样式问题。
 - 🐞 `<pro>PerformanceTable`: 修复表格内容更新后勾选列消失的问题。
 - 🐞 `List.Item.Meta`: 修复文字类头像不显示的问题。
+- 🐞 `Notification`: 修复首次在 useEffect 中多次调用时重叠的问题。
 
 ## 1.5.0-beta.0
 

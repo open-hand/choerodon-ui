@@ -68,6 +68,7 @@ timeline: true
 - 🐞 `Tabs`: Fix the nesting style problem.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
 - 🐞 `List.Item.Meta`: Fix the problem that text avatars are not displayed.
+- 🐞 `Notification`: Fix the overlap problem when called multiple times in useEffect hook for the first time.
 
 ## 1.5.0-beta.0
 
