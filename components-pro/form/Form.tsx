@@ -8,6 +8,7 @@ import React, {
   isValidElement,
   ReactElement,
   ReactNode,
+  MouseEvent,
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -45,6 +46,9 @@ import { Tooltip as LabelTooltip } from '../core/enum';
 import { DataSetEvents } from '../data-set/enum';
 import Item from './Item';
 import FormItemLabel from './FormItemLabel';
+import { ShowHelp } from '../field/enum';
+import Icon from '../icon';
+import { hide, show } from '../tooltip/singleton';
 
 /**
  * 表单name生成器
@@ -174,6 +178,7 @@ export interface FormProps extends DataSetComponentProps {
   acceptCharset?: string;
   encType?: string;
   showValidation?: ShowValidation;
+  showHelp?: ShowHelp;
 }
 
 const labelWidthPropTypes = PropTypes.oneOfType([
@@ -312,6 +317,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
      * 校验信息提示方式
      */
     showValidation: PropTypes.string,
+    showHelp: PropTypes.string,
     ...DataSetComponent.propTypes,
   };
 
@@ -337,6 +343,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   validating = false;
 
   prepareForReport: { result?: boolean; timeout?: number } = {};
+
+  isTooltipShown?: boolean;
 
   constructor(props, context) {
     super(props, context);
@@ -519,6 +527,15 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   @computed
+  get showHelp(): ShowHelp {
+    const { showHelp } = this.observableProps;
+    if (isString(showHelp)) {
+      return showHelp as ShowHelp;
+    }
+    return this.getContextConfig('showHelp') || ShowHelp.newLine;
+  }
+
+  @computed
   get separateSpacing(): SeparateSpacing | undefined {
     const { separateSpacing } = this.observableProps;
     if (separateSpacing) {
@@ -559,6 +576,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       labelLayout: 'labelLayout' in props ? props.labelLayout : context.labelLayout,
       labelAlign: 'labelAlign' in props ? props.labelAlign : context.labelAlign,
       showValidation: 'showValidation' in props ? props.showValidation : context.showValidation,
+      showHelp: 'showHelp' in props ? props.showHelp : context.showHelp,
       labelTooltip: 'labelTooltip' in props ? props.labelTooltip : context.labelTooltip,
       disabled: 'disabled' in props ? props.disabled : context.disabled,
       readOnly: 'readOnly' in props ? props.readOnly : context.readOnly,
@@ -596,6 +614,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       'fieldHighlightRenderer',
       'layout',
       'showValidation',
+      'showHelp',
     ]);
   }
 
@@ -646,6 +665,10 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   componentWillUnmount() {
     this.processDataSetListener(false);
+    if (this.isTooltipShown) {
+      hide();
+      delete this.isTooltipShown;
+    }
   }
 
   @mobxAction
@@ -686,6 +709,35 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     }
   }
 
+  @autobind
+  handleHelpMouseEnter(e: MouseEvent, help: string) {
+    const { target } = e;
+    const { getTooltipTheme, getTooltipPlacement } = this.context;
+    show(target as HTMLElement, {
+      title: help,
+      theme: getTooltipTheme('help'),
+      placement: getTooltipPlacement('help'),
+    });
+    this.isTooltipShown = true;
+  }
+
+  @autobind
+  handleHelpMouseLeave() {
+    hide();
+  }
+
+  renderTooltipHelp(help) {
+    if (help) {
+      return (
+        <Icon
+          type="help_outline"
+          onMouseEnter={(e) => this.handleHelpMouseEnter(e, help)}
+          onMouseLeave={this.handleHelpMouseLeave}
+        />
+      );
+    }
+  }
+
   rasterizedChildren() {
     const {
       dataSet,
@@ -697,6 +749,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       useColon,
       excludeUseColonTagList,
       readOnly: formReadOnly,
+      showHelp,
       props: { children },
     } = this;
     const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
@@ -763,6 +816,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
       const TagName = isFunction(type) ? (type as any).displayName : type;
       const label = getProperty(props, 'label', dataSet, record);
+      const help = getProperty(props, 'help', dataSet, record);
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
       const readOnly = getProperty(props, 'readOnly', dataSet, record) || formReadOnly;
@@ -807,8 +861,15 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           matrix[i][j] = true;
         }
       }
+      const fieldElementProps: any = {
+        ref,
+        key,
+        className: classNames(prefixCls, className),
+        ...otherProps,
+      };
       const isOutput = (type as any).displayName === 'Output';
       const outputMix = !isAllOutputCom && isOutput ? 'mix' : '';
+      const isLabelShowHelp = (fieldElementProps.showHelp || showHelp) === ShowHelp.label;
       const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
         [`${prefixCls}-required`]: required && !isOutput,
         [`${prefixCls}-readonly`]: readOnly,
@@ -816,6 +877,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         [`${prefixCls}-label-output`]: isLabelLayoutHorizontal && isOutput,
         [`${prefixCls}-label-output-${outputMix}`]: isLabelLayoutHorizontal && isOutput && outputMix,
         [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
+        [`${prefixCls}-label-help`]: isLabelShowHelp,
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
         [`${prefixCls}-output`]: isLabelLayoutHorizontal && isOutput,
@@ -834,17 +896,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             rowSpan={rowSpan}
             paddingLeft={this.labelLayout === LabelLayout.horizontal && separateSpacingWidth ? pxToRem(separateSpacingWidth + 5) : undefined}
             tooltip={tooltip}
+            help={isLabelShowHelp ? this.renderTooltipHelp(help) : undefined}
           >
             {label}
           </FormItemLabel>,
         );
       }
-      const fieldElementProps: any = {
-        ref,
-        key,
-        className: classNames(prefixCls, className),
-        ...otherProps,
-      };
       if (!isString(type)) {
         fieldElementProps.rowIndex = rowIndex;
         fieldElementProps.colIndex = colIndex;
@@ -860,7 +917,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             ? { paddingRight: pxToRem(separateSpacingWidth + 5) } : undefined}
         >
           {labelLayout === LabelLayout.vertical && !!label && (
-            <label className={labelClassName}>{label}</label>
+            <>
+              <label className={labelClassName}>
+                {label}
+              </label>
+              {isLabelShowHelp ? this.renderTooltipHelp(help) : null}
+            </>
           )}
           <div className={wrapperClassName}>{createElement(type, fieldElementProps)}</div>
         </td>,
@@ -942,6 +1004,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       props,
       useColon,
       showValidation,
+      showHelp,
     } = this;
     const { formNode, getConfig, getProPrefixCls, getPrefixCls, getCustomizable, getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const value: FormContextValue = {
@@ -959,6 +1022,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       fieldHighlightRenderer,
       useColon,
       showValidation,
+      showHelp,
       getConfig,
       getPrefixCls,
       getProPrefixCls,

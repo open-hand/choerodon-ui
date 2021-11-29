@@ -7,7 +7,7 @@
   display: inline-block;
   width: 100%;
 
-  &-label,
+  &-label label > span,
   &-label-vertical {
     overflow: hidden;
     font-weight: @label-font-weight;
@@ -15,10 +15,11 @@
     white-space: @label-white-space;
     text-overflow: ellipsis;
     vertical-align: middle;
+  }
 
-    label {
-      display: inline;
-    }
+  &-label {
+    padding: @label-wrapper-padding;
+    color: @label-color-horizontal;
 
     &-right {
       text-align: right;
@@ -27,22 +28,35 @@
     &-center {
       text-align: center;
     }
-  }
 
-  &-label {
-    padding: @label-wrapper-padding;
-    color: @label-color-horizontal;
+    label {
+      display: flex;
+      align-items: baseline;
+
+      > span {
+        flex: 1;
+      }
+    }
+
+    &-left label > span {
+      flex: unset;
+    }
   }
 
   &-wrapper {
     padding: @form-item-wrapper-padding;
+
+    .@{c7n-pro-prefix}-checkbox-wrapper, .@{c7n-pro-prefix}-switch-wrapper {
+      height: @input-height-base;
+    }
   }
 
   &-label-vertical {
-    display: block;
+    display: inline-block;
     padding-top: @label-vertical-wrapper-padding-vertical;
     padding-bottom: @label-vertical-wrapper-padding-vertical;
     color: @label-color-vertical;
+    line-height: @label-line-height;
     direction: ltr;
     text-align: left;
 
@@ -51,10 +65,8 @@
     }
   }
 
-  &-label::after {
+  &-label label::after {
     display: inline-block;
-    width: 0.08rem;
-    margin-left: 0.04rem;
     color: @label-required-color;
     font-family: SimSun, sans-serif;
     line-height: 1;
@@ -62,28 +74,53 @@
     content: ' ';
   }
 
-  &-required&-label::after {
+  &-required&-label label::after {
+    width: 0.08rem;
+    margin-left: 0.04rem;
     content: '*';
   }
 
-  &-label&-label-useColon::after {
+  &-label-vertical&-required::after, &-label&-label-useColon::after {
+    display: none;
+  }
+
+  &-label&-label-useColon label::after {
     position: relative;
     top: -0.01rem;
     width: 0;
-    margin: 0 0.1rem 0 0.01rem;
+    margin-left: 0.02rem;
     color: @label-colon-color;
     vertical-align: baseline;
     content: ':';
+  }
+
+  &-label-help {
+    .icon-help_outline {
+      position: relative;
+      top: 0.02rem;
+      margin-left: 0.02rem;
+      font-size: 0.16rem;
+    }
+
+    & + .icon-help_outline {
+      margin-left: 0.02rem;
+      font-size: 0.16rem;
+
+      & + .@{field-prefix-cls}-wrapper {
+        padding-top: 0;
+      }
+    }
   }
 
   &-label-vertical&-label&-label-useColon {
     width: auto;
   }
 
-  &-required&-label&-label-useColon::before {
+  &-label-vertical&-required&-label::before, &-required&-label&-label-useColon label > span::before {
     display: inline-block;
-    margin-right: 0.02rem;
+    margin-right: 0.04rem;
     color: @label-required-color;
+    font-size: 0.14rem;
     line-height: 1;
     content: '*';
   }
