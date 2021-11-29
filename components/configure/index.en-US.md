@@ -136,6 +136,11 @@ const prefixCls = getConfig('prefixCls');
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 | numberFieldKeyboard | control `UP` `DOWN` keyboard events for `NumberField` component | boolean | true |
 | lovShowSelectedInView | Lov 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录  | boolean \| (viewMode) => boolean | (viewMode) => viewMode === 'drawer' |
+| secretFieldEnable | 获取是否开启数据操作保护 | () => boolean |  |
+| secretFieldTypes | 获取验证方式以及验证号码 | () => object[] |  |
+| secretFieldFetchVerifyCode | 校验验证码 | (type: string) => Promise<object> |  |
+| secretFieldQueryData | 获取真实数据 | ({type: string, _token: string, fieldName: string, captchaKey: string, captcha: string, action: string }) => Promise |  |
+| secretFieldSaveData | 保存编辑后的数据 | ({ _token: string, fieldName: string, value: string }) => Promise |  |
 
 ### Customizable
 
