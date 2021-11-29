@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
+import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 
@@ -24,6 +25,7 @@ export interface SecretFieldViewProps {
   modal?: modalChildrenProps;
   readOnly?: boolean;
   name: string;
+  record?: Record,
   label: string;
   pattern?: string | RegExp;
   restrict?: string | RegExp;
@@ -31,7 +33,6 @@ export interface SecretFieldViewProps {
   token?: string;
   countDown: any;
   onChange?: (data?: any) => void;
-  onQueryFlag: (data: boolean) => void;
 }
 
 export interface VerifyTypeObjProps {
@@ -124,7 +125,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   // 确定可查看
   @autobind
   handleQuery() {
-    const { name, token = '', onChange, onQueryFlag, modal } = this.props;
+    const { name, token = '', onChange, modal, record } = this.props;
     // 查看-校验验证码，返回原始值
     const { captchaKey, captcha, context } = this;
     const secretFieldQueryData = context.getConfig('secretFieldQueryData');
@@ -147,7 +148,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
           }
           if (modal) {
             modal.close();
-            onQueryFlag(false);
+            record?.setState({[`_secretField_queryFlag_${name}`]: true});
           }
         },
       );

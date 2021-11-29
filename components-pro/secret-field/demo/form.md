@@ -13,7 +13,7 @@ title:
 
 ```jsx
 import { Row, Col, configure } from 'choerodon-ui';
-import { DataSet, SecretField, Form } from 'choerodon-ui/pro';
+import { DataSet, SecretField, Form, Axios } from 'choerodon-ui/pro';
 
 configure({
   secretFieldFetchVerifyCode() {
@@ -40,11 +40,24 @@ configure({
   secretFieldEnable() {
     return true;
   },
-  secretFieldQueryData() {
-    return Promise.resolve('oldData');
+  secretFieldQueryData(params) {
+    return Axios.get(`/secretField/queryField`).then(
+      res=> {
+        let value = res[params.fieldName];
+        if(params.fieldName === 'secretField' || params.fieldName === 'secretField1'){
+          res[params.fieldName].map(item => {
+            if(item._token === params._token){
+              value = item[params.fieldName];
+            }
+            return value;
+          })
+        }
+        return value;
+      },
+    );
   },
-  secretFieldSaveData() {
-    return Promise.resolve('editData');
+  secretFieldSaveData(params) {
+    return Promise.resolve(params.value);
   },
 });
 
@@ -53,6 +66,7 @@ const App = () => {
     () =>
       new DataSet({
         autoCreate: true,
+        autoQuery: true,
         fields: [
           {
             name: 'phone',
@@ -73,7 +87,13 @@ const App = () => {
             readOnly: true,
           },
         ],
-        data:[{phone:'110', bankCard:'111', idCard:'222', _token:'111'}],
+        transport: {
+          read() {
+            return {
+              url: `/secretField/form/query`,
+            }
+          },
+        },
       }),
     [],
   );

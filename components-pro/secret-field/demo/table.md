@@ -18,6 +18,8 @@ const App = () => {
   const ds = React.useMemo(
     () =>
       new DataSet({
+        autoCreate: true,
+        autoQuery: true,
         fields: [
           {
             name: 'secretField',
@@ -32,18 +34,13 @@ const App = () => {
             readOnly: false,
           },
         ],
-        data: [
-          {
-            secretField: 'test1',
-            secretField1: 'test1',
-            _token:'111',
+        transport: {
+          read() {
+            return {
+              url: `/secretField/table/query`,
+            }
           },
-          {
-            secretField: 'test2',
-            secretField1: 'test2',
-            _token:'222',
-          },
-        ],
+        },
       }),
     [],
   );
