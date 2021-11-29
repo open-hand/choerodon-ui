@@ -13,7 +13,7 @@ import { isEmpty, parseNumber, warning } from '../utils';
 import Field, { FieldProps, Fields } from './Field';
 // import XLSX from 'xlsx';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
-import DataSet, { Group } from './DataSet';
+import DataSet, { DataSetProps, Group } from './DataSet';
 import Record, { RecordDynamicProps } from './Record';
 import * as ObjectChainValue from '../object-chain-value';
 import localeContext, { $l } from '../locale-context';
@@ -1245,4 +1245,11 @@ export function getRecordDynamicProps<T extends keyof RecordDynamicProps>(record
     }
   }
   return defaultValue;
+}
+
+export function mergeDataSetProps(props: DataSetProps | undefined, dataSetProps?: DataSetProps | ((p: DataSetProps) => DataSetProps)): DataSetProps {
+  if (typeof dataSetProps === 'function') {
+    return dataSetProps(props || {});
+  }
+  return { ...props, ...dataSetProps };
 }
