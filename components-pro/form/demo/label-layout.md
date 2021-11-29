@@ -46,7 +46,7 @@ const App = () => {
           <Option value="float">float</Option>
           <Option value="none">none</Option>
         </SelectBox>
-        <SelectBox label="labelLayout" value={labelAlign} onChange={setLabelAlign}>
+        <SelectBox label="labelAlign" value={labelAlign} onChange={setLabelAlign}>
           <Option value="right">right</Option>
           <Option value="left">left</Option>
         </SelectBox>
