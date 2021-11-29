@@ -213,14 +213,11 @@ export function columnWidth(col: ColumnProps, store: TableStore): number {
   if (width === undefined) {
     const aggregation: boolean | undefined = get(col, 'aggregation');
     const globalDefaultWidth = store.getConfig(aggregation ? 'tableAggregationColumnDefaultWidth' : 'tableColumnDefaultWidth');
-    if (globalDefaultWidth !== undefined) {
-      return globalDefaultWidth;
-    }
     const minWidth: number | undefined = get(col, 'minWidth');
     if (minWidth === undefined) {
-      return store.getConfig(aggregation ? 'tableAggregationColumnDefaultMinWidth' : 'tableColumnDefaultMinWidth');
+      return Math.max(store.getConfig(aggregation ? 'tableAggregationColumnDefaultMinWidth' : 'tableColumnDefaultMinWidth'), globalDefaultWidth);
     }
-    return minWidth;
+    return Math.max(minWidth, globalDefaultWidth);
   }
   return width;
 }
