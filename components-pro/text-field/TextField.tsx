@@ -282,6 +282,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return this.getContextConfig('showLengthInfo');
   }
 
+  @computed
+  get showHelp(): ShowHelp {
+    const { showHelp } = this.props;
+    if (isString(showHelp)) {
+      return showHelp;
+    }
+    return this.context.showHelp || this.getContextConfig('showHelp') || ShowHelp.newLine;
+  }
+
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
@@ -645,8 +654,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderGroup(): ReactNode {
     const {
+      showHelp,
       prefixCls,
-      props: { addonBefore, addonAfter, addonBeforeStyle, addonAfterStyle, showHelp, groupClassName, _inTable, onBlur, tabIndex },
+      props: { addonBefore, addonAfter, addonBeforeStyle, addonAfterStyle, groupClassName, _inTable, onBlur, tabIndex },
     } = this;
     const inputElement = this.renderInputElement();
     const help = showHelp === ShowHelp.tooltip ? this.renderTooltipHelp() : null;
