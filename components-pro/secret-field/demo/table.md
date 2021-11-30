@@ -18,6 +18,7 @@ const App = () => {
   const ds = React.useMemo(
     () =>
       new DataSet({
+        autoCreate: true,
         fields: [
           {
             name: 'secretField',
@@ -34,14 +35,14 @@ const App = () => {
         ],
         data: [
           {
-            secretField: 'test1',
-            secretField1: 'test1',
-            _token:'111',
+            secretField: 't***1',
+            secretField1: 't***1',
+            _token: '111',
           },
           {
-            secretField: 'test2',
-            secretField1: 'test2',
-            _token:'222',
+            secretField: 't***2',
+            secretField1: 't***2',
+            _token: '222',
           },
         ],
       }),
@@ -51,17 +52,17 @@ const App = () => {
     () => [
       {
         name: 'secretField',
-        editor:<SecretField />,
+        editor: <SecretField />,
       },
       {
         name: 'secretField1',
-        editor:<SecretField />,
+        editor: <SecretField />,
       },
     ],
     [],
   );
 
-  return <Table dataSet={ds} columns={columns}/>;
+  return <Table dataSet={ds} columns={columns} />;
 };
 
 ReactDOM.render(<App />, mountNode);

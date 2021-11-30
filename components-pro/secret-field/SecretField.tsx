@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, observable, runInAction } from 'mobx';
+import { action, runInAction } from 'mobx';
 
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import Icon from '../icon';
@@ -34,18 +34,8 @@ export default class SecretField extends TextField<SecretFieldProps> {
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
-      this.setQueryFlag(true);
       this.setSecretEnable();
     })
-  }
-
-  // 是否已经查看过，已查看过不显示查看按钮
-  @observable queryFlag;
-
-  @autobind
-  @action
-  setQueryFlag(value) {
-    this.queryFlag = value;
   }
 
   private secretEnable: Boolean = false;
@@ -87,13 +77,13 @@ export default class SecretField extends TextField<SecretFieldProps> {
           <SecretFieldView
             readOnly={readOnly}
             name={name || ''}
+            record={record}
             label={label}
             pattern={pattern}
             restrict={restrict}
             required={required}
             token={record?.get('_token')}
             onChange={this.handleSecretChange}
-            onQueryFlag={this.setQueryFlag}
             countDown={record?.getState(`_secretField_countDown_${name}`)}
           />
         ),
@@ -123,7 +113,7 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getSuffix(): ReactNode {
-    const { readOnly, queryFlag, isSecretEnable, props, disabled } = this;
+    const { readOnly, record, name, isSecretEnable, props, disabled } = this;
     // 未开启脱敏组件或者脱敏组件值为空时,不显示编辑/查看按钮
     if (!isSecretEnable) {
       const { suffix } = props;
@@ -140,7 +130,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
       )
     }
     // 只读：已读不显示查看按钮
-    if (queryFlag && readOnly) {
+    // readFlag: true已查看 undefined未查看
+    const readFlag = record?.getState(`_secretField_queryFlag_${name}`);
+    if (!readFlag && readOnly) {
       return this.wrapperSuffix(
         <Icon type='visibility-o' />,
         {

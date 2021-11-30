@@ -4,6 +4,7 @@ import lov, { lovTempleList } from './lov';
 import lookup, { lookupTempleList } from './lookup';
 import upload, { uploadTempList } from './upload';
 import attachment, { attachmentTempleList } from './attachment';
+import secretField, { secretFieldTempleList } from './secretField';
 
 export default function () {
   dataset();
@@ -12,6 +13,7 @@ export default function () {
   lookup();
   upload();
   attachment();
+  secretField();
   if (typeof window !== 'undefined') {
     const XHR = window._XMLHttpRequest;
     if (XHR) {
@@ -28,4 +30,5 @@ export const mockTempleList = [
   ...dsTempleList,
   ...uploadTempList,
   ...attachmentTempleList,
+  ...secretFieldTempleList,
 ];

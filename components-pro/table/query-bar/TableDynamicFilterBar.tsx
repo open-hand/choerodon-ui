@@ -142,6 +142,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   originalConditionFields: string[] = [];
 
+  menuResult = false;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -168,15 +170,17 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   processDataSetListener(flag: boolean) {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, dataSet } = this.props;
     if (queryDataSet) {
       if (flag && queryDataSet.length === 1) {
         this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.get(0)! });
       }
       const handler = flag ? queryDataSet.addEventListener : queryDataSet.removeEventListener;
+      const dsHandler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
       handler.call(queryDataSet, DataSetEvents.validate, this.handleDataSetValidate);
       handler.call(queryDataSet, DataSetEvents.update, this.handleDataSetUpdate);
       handler.call(queryDataSet, DataSetEvents.create, this.handleDataSetCreate);
+      dsHandler.call(dataSet, DataSetEvents.query, this.handleDataSetQuery);
     }
   }
 
@@ -186,6 +190,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       this.fieldSelectHidden = true;
     }
   };
+
+  @autobind
+  handleDataSetQuery() {
+    return this.menuResult;
+  }
 
   /**
    * queryDataSet 查询前校验事件 触发展开动态字段
@@ -321,6 +330,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     queryDataSet.setState('searchText', '');
 
     const result = await menuDataSet.query();
+    this.menuResult = true;
     if (optionDataSet) {
       optionDataSet.loadData(result);
     }

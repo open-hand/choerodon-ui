@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Table`: Fix the problem that locked columns under aggregate column cannot be displayed when `aggregation` is false.
+- 🐞 `<pro>Table`: Fix the height problem that may be caused when switching the display.
 - 🐞 `<pro>Modal`: Fix the problem that the mask of the masked modal will disappear when the modal without mask is opened.
 - 🐞 `<pro>DatePicker`: Fix the problem that the input value is reported incorrectly in `range` mode and using `timeZone` property. Fixed error limits for `maxLength` and `minLength` properties.
 - 🐞 `<pro>Validator`: Fix the validation message is not fully formatted if no label.
@@ -67,6 +68,7 @@ timeline: true
 - 🐞 `Tabs`: Fix the nesting style problem.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
 - 🐞 `List.Item.Meta`: Fix the problem that text avatars are not displayed.
+- 🐞 `Notification`: Fix the overlap problem when called multiple times in useEffect hook for the first time.
 
 ## 1.5.0-beta.0
 
