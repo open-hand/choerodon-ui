@@ -55,7 +55,7 @@ import * as ObjectChainValue from '../object-chain-value';
 import DataSetSnapshot from './DataSetSnapshot';
 import { BooleanValue, DataSetEvents, DataSetSelection, FieldIgnore, FieldType, RecordStatus } from './enum';
 import { treeReduce } from '../tree-helper';
-import { iteratorReduce } from '../iterator-helper';
+import { iteratorReduce, iteratorSome } from '../iterator-helper';
 import ValidationResult from '../validator/ValidationResult';
 
 /**
@@ -787,8 +787,21 @@ export default class Record {
     if (fieldName) {
       const chainFieldName = getChainFieldName(this, fieldName);
       const { dirtyData } = this;
-      if (dirtyData && dirtyData.has(chainFieldName)) {
-        return dirtyData.get(chainFieldName);
+      if (dirtyData) {
+        if (dirtyData.has(chainFieldName)) {
+          return dirtyData.get(chainFieldName);
+        }
+        let v;
+        const has = iteratorSome(dirtyData.entries(), ([key, value]) => {
+          if (chainFieldName.startsWith(`${key}.`)) {
+            v = ObjectChainValue.get(value, chainFieldName.replace(`${key}.`, ''));
+            return true;
+          }
+          return false;
+        });
+        if (has) {
+          return v;
+        }
       }
       return this.get(chainFieldName);
     }

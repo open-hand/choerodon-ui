@@ -52,6 +52,7 @@ timeline: true
 - 💄 `Message`: Optimized `loading` type message icon.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
 - 🐞 `<pro>DataSet`: The `total` parameter of the `appendData` method is discarded.
+- 🐞 `<pro>DataSet.Record`: Fix the `getPristineValue` method cannot correctly obtain the key value in the object type field value.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Table`: Fix the problem that locked columns under aggregate column cannot be displayed when `aggregation` is false.
