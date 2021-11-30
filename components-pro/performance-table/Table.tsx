@@ -769,13 +769,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
     for (let index = 0; index < childColumns.length; index += 1) {
       const childColumn = childColumns[index];
+      const { verticalAlign: childVerticalAlign, align: childAlign } = childColumn.props;
       const parentProps = {
-        align,
+        align: childAlign || align,
         fixed,
-        verticalAlign,
+        verticalAlign: childVerticalAlign || verticalAlign,
         ...cellProps,
       };
       const groupCellProps: any = {
+        parent: column,
         ...childColumn?.props,
         ...parentProps,
       };
@@ -2205,7 +2207,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-              // {...(rowDragRender && rowDragRender.draggableProps)} todo
+            // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}

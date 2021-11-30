@@ -4,7 +4,7 @@ import JsBarCode from 'jsbarcode';
 import { QRBarCodeProps } from './index';
 
 const BarCode: FunctionComponent<QRBarCodeProps> = function BarCode(props) {
-  const { value, renderAs, bgColor, fgColor, option } = props;
+  const { value, renderAs = 'canvas', bgColor, fgColor, option } = props;
   const canvasBarCodeRef = useRef<HTMLCanvasElement>(null);
   const svgBarCodeRef = useRef<SVGSVGElement>(null);
   const renderCode = useCallback(() => {
