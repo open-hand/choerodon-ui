@@ -45,12 +45,28 @@
     }
 
     padding: 0;
+    overflow: hidden;
     color: @float-label-color;
+    font-weight: @label-font-weight;
     line-height: @float-label-line-height;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
     transform-origin: inherit;
     transition: inherit;
   }
+
+  &-float-label .@{field-label-prefix-cls}.@{field-prefix-cls}-required::after {
+    display: inline-block;
+    width: 0.08rem;
+    margin-left: 0.04rem;
+    color: @label-required-color;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    vertical-align: middle;
+    content: '*';
+  }
+
   &-float-label&-focused .@{field-label-prefix-cls} {
     color: @outline-color;
   }
@@ -77,6 +93,10 @@
   }
   &-float-label:not(&-multiple) & {
     height: @float-label-height-base;
+    border-radius: @input-float-border-radius;
+  }
+  &-float-label & {
+    min-height: @float-label-height-base;
     border-radius: @input-float-border-radius;
   }
   &-float-label&-sm:not(&-multiple) & {

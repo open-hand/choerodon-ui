@@ -7,6 +7,7 @@
   display: inline-block;
   width: 100%;
 
+  &-row &-label,
   &-label label > span,
   &-label-vertical {
     overflow: hidden;
@@ -65,6 +66,7 @@
     }
   }
 
+  &-row &-label::after,
   &-label label::after {
     display: inline-block;
     color: @label-required-color;
@@ -74,19 +76,23 @@
     content: ' ';
   }
 
+  &-row &-required&-label::after,
   &-required&-label label::after {
     width: 0.08rem;
     margin-left: 0.04rem;
     content: '*';
   }
 
-  &-label-vertical&-required::after, &-label&-label-useColon::after {
+  &-label-vertical&-required::after,
+  &-label&-label-useColon::after {
     display: none;
   }
 
+  &-row &-label&-label-useColon::after,
   &-label&-label-useColon label::after {
     position: relative;
     top: -0.01rem;
+    display: inline-block;
     width: 0;
     margin-left: 0.02rem;
     color: @label-colon-color;
@@ -116,7 +122,9 @@
     width: auto;
   }
 
-  &-label-vertical&-required&-label::before, &-required&-label&-label-useColon label > span::before {
+  &-row &-required&-label-useColon::before,
+  &-label-vertical&-required&-label::before,
+  &-required&-label&-label-useColon label > span::before {
     display: inline-block;
     margin-right: 0.04rem;
     color: @label-required-color;
