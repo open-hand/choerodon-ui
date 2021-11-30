@@ -766,9 +766,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   getFlattenColumn(column: React.ReactElement, cellProps: ColumnCellProps, array: Array<React.ReactElement>) {
-    const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
+    const { header, children: childColumns, fixed } = column.props;
     for (let index = 0; index < childColumns.length; index += 1) {
       const childColumn = childColumns[index];
+      const { verticalAlign, align } = childColumn.props;
       const parentProps = {
         align,
         fixed,
@@ -776,6 +777,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         ...cellProps,
       };
       const groupCellProps: any = {
+        parent: column,
         ...childColumn?.props,
         ...parentProps,
       };
@@ -2205,7 +2207,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-              // {...(rowDragRender && rowDragRender.draggableProps)} todo
+            // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}
