@@ -25,6 +25,18 @@
     }
   }
 
+  &-drawer-content {
+
+    .@{modal-prefix-cls}-header-buttons {
+      z-index: 10;
+    }
+
+    .@{modal-prefix-cls}-footer {
+      position: relative;
+      z-index: 10;
+    }
+  }
+
   .@{lov-prefix-cls}-selection-wrapper &-body {
     max-height: calc(100vh - 1.2rem - 1.1rem);
   }
@@ -91,6 +103,7 @@
 
     &+div {
       width: calc(100% - 2.8rem);
+
       &>.@{table-prefix-cls}-wrapper {
         width: calc(100% - 0.15rem);
       }
