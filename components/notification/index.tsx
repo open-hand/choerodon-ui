@@ -12,7 +12,7 @@ const { config } = NotificationManager;
 export type ConfigProps = Partial<ConfigOptions>
 
 function setNotificationConfig(options: ConfigProps) {
-  const { duration, placement, bottom, top, getContainer, maxCount } = options;
+  const { duration, placement, bottom, top, getContainer, maxCount, foldCount } = options;
   if (duration !== undefined) {
     config.duration = duration;
   }
@@ -30,6 +30,9 @@ function setNotificationConfig(options: ConfigProps) {
   }
   if (maxCount !== undefined) {
     config.maxCount = maxCount;
+  }
+  if (foldCount !== undefined) {
+    config.foldCount = foldCount;
   }
 }
 
@@ -92,6 +95,7 @@ function getNotificationInstance(
         style: getPlacementStyle(placement),
         getContainer: config.getContainer,
         maxCount: config.maxCount,
+        foldCount: config.foldCount,
       },
       (notification: any) => {
         resolve(notification);
@@ -124,7 +128,7 @@ export interface ArgsProps {
   readonly type?: IconType;
 }
 
-function notice(args: ArgsProps) {
+function notice(args: ArgsProps, foldable?: boolean) {
   const outerPrefixCls = getPrefixCls('notification', args.prefixCls);
   const prefixCls = `${outerPrefixCls}-notice`;
   const duration = args.duration === undefined ? config.duration : args.duration;
@@ -148,7 +152,7 @@ function notice(args: ArgsProps) {
     outerPrefixCls,
     args.placement || config.placement,
     (notification: any) => {
-      notification.notice({
+      const config = {
         children: (
           <div className={iconNode ? `${prefixCls}-with-icon` : ''}>
             {iconNode}
@@ -166,13 +170,19 @@ function notice(args: ArgsProps) {
         key: args.key,
         style: args.style || {},
         className: args.className,
-      });
+      }
+      if (foldable) {
+        notification.fold(config)
+      } else {
+        notification.notice(config)
+      }
     },
   );
 }
 
 const api: any = {
   open: notice,
+  fold: (arg) => notice(arg, true),
   close(key: string) {
     NotificationManager.remove(key);
   },

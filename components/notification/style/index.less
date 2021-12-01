@@ -17,6 +17,61 @@
   max-width: ~'calc(100vw - .32rem)';
   margin-right: 0.24rem;
 
+  &-fold{
+    width: auto;
+    overflow-y: auto;
+    padding: 0 0.1rem 0.1rem 0.1rem;
+  }
+
+  &-scroll {
+    width: auto;
+    padding: 0 0.12rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &-before-shadow {
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0.12rem;
+      z-index: 1;
+      width: calc(100% - 0.48rem);
+      height: 25%;
+      margin: 0 0.12rem;
+      background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 1),
+        rgba(255, 255, 255, 0) 100%
+      );
+      content: '';
+    }
+  }
+  &-after-shadow {
+    &::after {
+      position: absolute;
+      z-index: 1;
+      width: calc(100% - 0.48rem);
+      height: 25%;
+      margin: 0 0.12rem;
+      left: 0.12rem;
+      bottom: 35px;
+      background-image: linear-gradient(
+        to top,
+        rgba(255, 255, 255, 1),
+        rgba(255, 255, 255, 0) 100%
+      );
+      content: '';
+    }
+  }
+
+  &-alert {
+    background: @component-background;
+    margin: 0 0.12rem;
+    border: none;
+    box-shadow: @shadow-2;
+  }
+
   &-topLeft,
   &-bottomLeft {
     margin-right: 0;
@@ -30,6 +85,7 @@
 
   &-notice {
     position: relative;
+    width: @notification-width;
     margin-bottom: @notification-margin-bottom;
     padding: @notification-padding;
     overflow: hidden;
@@ -37,6 +93,7 @@
     background: @component-background;
     border-radius: @border-radius-base;
     box-shadow: @shadow-2;
+    transition: all @animation-duration-slow @ease-in-out;
 
     &-message {
       display: inline-block;
@@ -63,6 +120,12 @@
 
     &-closable &-message {
       padding-right: 0.24rem;
+    }
+
+    &-hide-shadow {
+      box-shadow: none;
+      transform: scale(0.98);
+      transition: all @animation-duration-slow @ease-in-out;
     }
 
     &-with-icon &-message {

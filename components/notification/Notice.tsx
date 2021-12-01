@@ -15,6 +15,9 @@ export interface NoticeProps {
   style?: CSSProperties
   children?: ReactNode;
   closeIcon?: ReactNode;
+  foldable?: Boolean;
+  offset?: number;
+  scrollHeight?: string | number;
 }
 
 
@@ -29,7 +32,12 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
     style,
     duration,
     onClose = noop,
+    foldable,
+    offset = 0,
+    scrollHeight = 0,
   } = props;
+
+  const noticeRef = useRef<HTMLDivElement | null>(null)
 
   const closeTimer = useRef<number | null>(null);
 
@@ -57,9 +65,20 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
     return clearCloseTimer;
   }, [startCloseTimer]);
 
+
+  let hideShadow: Boolean = false;
+  const noticeRefCurrnet = noticeRef.current;
+  if (noticeRefCurrnet && foldable && typeof scrollHeight === 'number') {
+    const bottomH =
+      scrollHeight + offset - noticeRefCurrnet.offsetTop - noticeRefCurrnet.offsetHeight;
+    if (noticeRefCurrnet.offsetTop < offset || bottomH < 0) {
+      hideShadow = true;
+    }
+  }
   const componentClass = `${prefixCls}-notice`;
   const classString = classNames(componentClass, className, {
     [`${componentClass}-closable`]: closable,
+    [`${componentClass}-hide-shadow`]: hideShadow,
   });
   return (
     <div
@@ -67,6 +86,7 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
       style={style}
       onMouseEnter={clearCloseTimer}
       onMouseLeave={startCloseTimer}
+      ref={noticeRef}
     >
       <div className={classNames(`${componentClass}-content`, contentClassName)}>{children}</div>
       {

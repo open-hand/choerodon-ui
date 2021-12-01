@@ -23,6 +23,7 @@ subtitle: 通知提醒框
 - `notification.info(config)`
 - `notification.warning(config)`
 - `notification.warn(config)`
+- `notification.fold(config)`
 - `notification.close(key: String)`
 - `notification.destroy()`
 
@@ -61,3 +62,4 @@ notification.config({
 | placement | 弹出位置，可选 `topLeft` `topRight` `bottomLeft` `bottomRight` | string | topRight |
 | top | 消息从顶部弹出时，距离顶部的位置，单位像素。 | number | 24 |
 | maxCount | 最大显示数, 超过限制时，最早的消息会被自动关闭 | number |  |
+| foldCount | 超过指定数量折叠显示, 仅仅适用于 `notification.fold(config)` API  | number | 2 |
