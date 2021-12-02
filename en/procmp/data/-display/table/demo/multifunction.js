@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
-import isNaN from 'lodash/isNaN';
 import { action } from 'mobx';
+import isNaN from 'lodash/isNaN';
 import {
   DataSet,
   Table,
@@ -25,10 +25,6 @@ function sexIdRenderer({ dataSet, record }) {
   const value = record.get('sex') || [];
   const field = dataSet.getField('sex');
   return value.map((v) => field.getLookupData(v, record).codeValueId).join(',');
-}
-
-function handleUserDSLoad({ dataSet }) {
-  // empty
 }
 
 function renderPhoneEditor(record) {
@@ -377,11 +373,17 @@ class App extends React.Component {
         computedProps: { defaultValue: () => [moment(), moment()] },
       },
     ],
+    record: {
+      dynamicProps: {
+        selectable: (record) => record.index !== 0,
+        defaultSelected: (record) => record.index === 0,
+        disabled: (record) => record.index === 0,
+      },
+    },
     events: {
       selectAll: ({ dataSet }) => console.log('select all', dataSet.selected),
       indexchange: ({ record }) => console.log('current user', record),
       submit: ({ data }) => console.log('submit data', data),
-      load: handleUserDSLoad,
       query: ({ params, data }) =>
         console.log('user query parameter', params, data),
       export: ({ params, data }) =>
@@ -390,11 +392,52 @@ class App extends React.Component {
     },
   });
 
-  addColumnButton = (
-    <Button icon="add" onClick={this.addColumn} key="addColumn">
-      添加字段
-    </Button>
-  );
+  copy = () => {
+    const { userDs } = this;
+    const { selected } = userDs;
+    if (selected.length > 0) {
+      userDs.unshift(...selected.map((record) => record.clone()));
+    } else {
+      Modal.warning('请选择记录');
+    }
+  };
+
+  insert = () => {
+    const { userDs } = this;
+    const { selected } = userDs;
+    if (selected.length > 0) {
+      userDs.splice(0, 1, ...selected);
+    } else {
+      Modal.warning('请选择记录');
+    }
+  };
+
+  importData = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const { userDs } = this;
+        userDs.current.set('userid', Math.random());
+        console.log(userDs.toJSONData());
+        console.log(userDs.toJSONData(true));
+        console.log(userDs.toJSONData(false, true));
+        userDs.create({
+          other: { enemy: [{}, {}] },
+          code_code: '1',
+          code_description: 'xxx',
+          name: 'Hugh',
+        });
+        resolve();
+      }, 2000);
+    });
+  };
+
+  removeAllData = () => {
+    this.userDs.removeAll();
+  };
+
+  deleteAllData = () => {
+    this.userDs.deleteAll();
+  };
 
   addColumn = action(() => {
     const { userDs } = this;
@@ -443,58 +486,17 @@ class App extends React.Component {
     </Button>
   );
 
-  insert = () => {
-    const { userDs } = this;
-    const { selected } = userDs;
-    if (selected.length > 0) {
-      userDs.splice(0, 1, ...selected);
-    } else {
-      Modal.warning('请选择记录');
-    }
-  };
-
-  importData = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const { userDs } = this;
-        userDs.current.set('userid', Math.random());
-        console.log(userDs.toJSONData());
-        console.log(userDs.toJSONData(true));
-        console.log(userDs.toJSONData(false, true));
-        userDs.create({
-          other: { enemy: [{}, {}] },
-          code_code: '1',
-          code_description: 'xxx',
-          name: 'Hugh',
-        });
-        resolve();
-      }, 2000);
-    });
-  };
-
-  removeAllData = () => {
-    this.userDs.removeAll();
-  };
-
-  deleteAllData = () => {
-    this.userDs.deleteAll();
-  };
-
-  copy = () => {
-    const { userDs } = this;
-    const { selected } = userDs;
-    if (selected.length > 0) {
-      userDs.unshift(...selected.map((record) => record.clone()));
-    } else {
-      Modal.warning('请选择记录');
-    }
-  };
+  addColumnButton = (
+    <Button icon="add" onClick={this.addColumn} key="addColumn">
+      添加字段
+    </Button>
+  );
 
   save = () => {
     console.log('submit result', 'after click');
   };
 
-  handleValueChange = (v) => {
+  handeValueChange = (v) => {
     const { value } = v.target;
     const suffixList = ['@qq.com', '@163.com', '@hand-china.com'];
     if (value.indexOf('@') !== -1) {
@@ -568,8 +570,8 @@ class App extends React.Component {
           lock
           editor={
             <AutoComplete
-              onFocus={this.handleValueChange}
-              onInput={this.handleValueChange}
+              onFocus={this.handeValueChange}
+              onInput={this.handeValueChange}
               options={this.options}
             />
           }

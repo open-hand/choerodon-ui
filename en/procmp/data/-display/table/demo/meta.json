@@ -182,7 +182,7 @@
       "order": 11,
       "screenshot": "",
       "height": 480,
-      "ignores": ["theme1", "theme3"],
+      "ignores": ["theme1", "theme3", "theme5"],
       "category": "pro"
     },
     {
@@ -198,7 +198,7 @@
       "order": 12,
       "screenshot": "",
       "height": 558,
-      "ignores": ["theme1", "theme3"],
+      "ignores": ["theme1", "theme3", "theme5"],
       "category": "pro"
     },
     {
@@ -214,6 +214,7 @@
       "order": 13,
       "screenshot": "",
       "height": 520,
+      "ignores": ["theme5"],
       "category": "pro"
     },
     {
@@ -244,6 +245,7 @@
       "order": 15,
       "screenshot": "",
       "height": 625,
+      "ignores": ["theme5"],
       "category": "pro"
     },
     {

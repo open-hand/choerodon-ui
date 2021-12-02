@@ -1,6 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Form, TextField, Password, NumberField, EmailField, UrlField, DatePicker, Select, SelectBox, Button, Menu, Dropdown, Icon } from 'choerodon-ui/pro';
+import {
+  DataSet,
+  Form,
+  TextField,
+  Password,
+  NumberField,
+  EmailField,
+  UrlField,
+  Lov,
+  Switch,
+  DatePicker,
+  Select,
+  SelectBox,
+  Button,
+  Menu,
+  Dropdown,
+  Icon,
+} from 'choerodon-ui/pro';
 
 const { Option } = Select;
 
@@ -14,13 +31,27 @@ function passwordValidator(value, name, form) {
 const menu = (
   <Menu>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.io/">1st menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.io/">
+        1st menu item
+      </a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.com.cn/">2nd menu item</a>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://choerodon.com.cn/"
+      >
+        2nd menu item
+      </a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui">3rd menu item</a>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://github.com/open-hand/choerodon-ui"
+      >
+        3rd menu item
+      </a>
     </Menu.Item>
   </Menu>
 );
@@ -33,30 +64,176 @@ const dropdown = (
   </Dropdown>
 );
 
-ReactDOM.render(
-  <Form disabled style={{ width: '4rem' }}>
-    <TextField label="手机号" pattern="1[3-9]\d{9}" name="phone" required clearButton addonBefore="+86" addonAfter="中国大陆" />
-    <Password label="密码" name="password" required />
-    <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} help="请输入与上方相同的密码" showHelp="tooltip" />
-    <NumberField label="年龄" name="age" min={18} step={1} required help="我们需要确定你的年龄" addonAfter="周岁" />
-    <SelectBox label="性别" name="sex" required>
-      <Option value="M">男</Option>
-      <Option value="F">女</Option>
-    </SelectBox>
-    <Select label="语言" name="language" required help="超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息">
-      <Option value="zh-cn">简体中文</Option>
-      <Option value="en-us">英语(美国)</Option>
-      <Option value="ja-jp">日本語</Option>
-    </Select>
-    <EmailField label="邮箱" name="email" required addonAfter={dropdown} />
-    <UrlField label="个人主页" name="homepage" required addonBefore="Http://" />
-    <DatePicker label="生日" name="birth" required />
-    <Form>
-      <div>
-        <Button type="submit">注册</Button>
-        <Button type="reset" style={{ marginLeft: 8 }}>重置</Button>
-      </div>
-    </Form>
-  </Form>,
-  document.getElementById('container')
-);
+const App = () => {
+  const ds = React.useMemo(
+    () =>
+      new DataSet({
+        autoCreate: true,
+        fields: [
+          {
+            name: 'phone',
+            type: 'string',
+            label: '手机号',
+            labelWidth: 150,
+            required: true,
+            pattern: '^1[3-9]\\d{9}$',
+          },
+          {
+            name: 'password',
+            type: 'string',
+            label: '密码',
+            required: true,
+          },
+          {
+            name: 'confirmPassword',
+            type: 'string',
+            label: '确认密码',
+            required: true,
+          },
+          {
+            name: 'age',
+            type: 'number',
+            label: '年龄',
+            required: true,
+            min: 18,
+            step: 1,
+            help: '我们需要确定你的年龄',
+          },
+          {
+            name: 'sex',
+            type: 'string',
+            label: '性别',
+            required: true,
+            highlight: true,
+          },
+          {
+            name: 'language',
+            type: 'string',
+            label: '语言（labelWidth为auto自适应）',
+            required: true,
+            help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
+          },
+          {
+            name: 'email',
+            type: 'email',
+            label: '邮箱',
+            required: true,
+            highlight: '生日高亮',
+          },
+          {
+            name: 'homepage',
+            maxLength: 12,
+            type: 'url',
+            label: '个人主页',
+            required: true,
+          },
+          { name: 'birth', type: 'date', label: '生日', required: true },
+          {
+            name: 'code',
+            type: 'object',
+            label: '代码描述',
+            lovCode: 'LOV_CODE',
+            placeholder: 'd1',
+          },
+          { name: 'frozen', type: 'boolean', label: '是否冻结' },
+        ],
+        record: {
+          dynamicProps: {
+            disabled: (record) => record.isCurrent,
+          },
+        },
+      }),
+    [],
+  );
+  return (
+    <>
+      <Form header="Basic" disabled style={{ width: '4rem' }}>
+        <TextField
+          label="手机号"
+          tooltip="overflow"
+          defaultValue="1588888888822158888888882215888888888221588888888822"
+          pattern="1[3-9]\d{9}"
+          name="phone"
+          required
+          clearButton
+          addonBefore="+86"
+          addonAfter="中国大陆"
+        />
+        <Password label="密码" name="password" required />
+        <Password
+          label="确认密码"
+          name="confirmPassword"
+          required
+          validator={passwordValidator}
+          help="请输入与上方相同的密码"
+          showHelp="tooltip"
+        />
+        <NumberField
+          label="年龄"
+          name="age"
+          min={18}
+          step={1}
+          required
+          help="我们需要确定你的年龄"
+          addonAfter="周岁"
+        />
+        <SelectBox label="性别" name="sex" required>
+          <Option value="M">男</Option>
+          <Option value="F">女</Option>
+        </SelectBox>
+        <Select
+          label="语言"
+          name="language"
+          required
+          help="超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息"
+        >
+          <Option value="zh-cn">简体中文</Option>
+          <Option value="en-us">英语(美国)</Option>
+          <Option value="ja-jp">日本語</Option>
+        </Select>
+        <EmailField label="邮箱" name="email" required addonAfter={dropdown} />
+        <UrlField
+          label="个人主页"
+          name="homepage"
+          required
+          addonBefore="Http://"
+        />
+        <DatePicker label="生日" name="birth" required />
+        <Form>
+          <div>
+            <Button type="submit">注册</Button>
+            <Button type="reset" style={{ marginLeft: 8 }}>
+              重置
+            </Button>
+          </div>
+        </Form>
+      </Form>
+      <Form header="DataSet" dataSet={ds} style={{ width: '4.5rem' }}>
+        <TextField name="phone" />
+        <Password name="password" />
+        <Password name="confirmPassword" />
+        <NumberField name="age" addonAfter="周岁" showHelp="tooltip" />
+        <SelectBox name="sex">
+          <Option value="M">男</Option>
+          <Option value="F">女</Option>
+        </SelectBox>
+        <Select name="language">
+          <Option value="zh-cn">简体中文</Option>
+          <Option value="en-us">英语(美国)</Option>
+          <Option value="ja-jp">日本語</Option>
+        </Select>
+        <EmailField name="email" />
+        <UrlField name="homepage" showLengthInfo valueChangeAction="input" />
+        <DatePicker name="birth" />
+        <Lov name="code" placeholder="d2" />
+        <Switch name="frozen" />
+        <div>
+          <Button type="submit">注册</Button>
+          <Button type="reset">重置</Button>
+        </div>
+      </Form>
+    </>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('container'));

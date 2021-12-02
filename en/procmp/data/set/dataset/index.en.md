@@ -49,6 +49,7 @@ abstract: true
 | expandField | 树形数据标记节点是否展开的字段名 | string |  |  |
 | checkField | 树形数据标记节点是否为选中的字段名，在展开按钮后面会显示 checkbox | string |  |  |
 | fields | 字段属性数组，详见[Field Props](#field-props) | object\[\] |  |  |
+| record | 记录属性，详见[Record Props](#record-Props) | object |  |
 | queryFields | 查询字段属性数组，在内部生成 queryDataSet，优先级低于 queryDataSet 属性，详见[Field Props](#field-props) | object\[\] |  |  |
 | cacheSelection | 缓存选中记录，使切换分页时仍保留选中状态。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |   |
 | cacheModified | 缓存变更记录，使切换分页时仍保留变更的记录。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false | 1.5.0-beta.0 |
@@ -158,7 +159,7 @@ abstract: true
 | setQueryParameter(para, value) | 设置查询参数 | para - 参数名 value - 参数值 |  | |
 | getQueryParameter(para) | 获取查询参数 | para - 参数名 |  | 1.4.0 |
 | loadData(data, total, cache) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `cache`(1.5.0-beat.0) - 是否保留缓存的变更记录 | | |
-| appendData(data, parentRecord, total) | 附加数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 | | 1.1.0 |
+| appendData(data, parentRecord) | 附加数据 | `data` - 数据数组 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 | |
 | setState(key, value) | 设置自定义状态值。 | key - 键名或者键值对对象；value - 值 |  | 1.3.1 |
 | getState(key) | 获取自定义状态值。 | key - 键名 |  |  1.3.1  |
 | modifiedCheck(message) | 变更检查 | message - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage | | 1.3.1|
@@ -195,6 +196,20 @@ abstract: true
 | reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | dataSet - 数据集 records - 记录集 | 是 |   |
 | validate | 校验事件 | ({ dataSet, result }) =&gt; void | dataSet - 数据集 result - 校验结果集 | 是 |  |
 
+
+### Record Props
+
+> 1.5.0  版本新增属性，更多案例参考 [Form](/zh/procmp/data-entry/form#禁用) & [Table](/zh/procmp/data-display/table#功能总和)。
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| disabled | 是否禁用 | boolean | false |
+| selectable | 是否可选 | boolean | true |
+| defaultSelected | 是否默认选中 | boolean | false |
+| defaultExpanded | 是否默认展开 | boolean | false |
+| dynamicProps | 动态属性对象。对象为记录属性和返回该记录属性值的钩子的键值对。 | { recordProp: (record) => value } |  |
+
+
 ### Record Values
 
 > 详细介绍：[Record](/zh/tutorials/dataSet-more#record-%E5%AF%B9%E8%B1%A1)
@@ -204,6 +219,7 @@ abstract: true
 | id             | 唯一 ID，自增长的数字                           | number                    |
 | key            | 唯一键，主键字段或唯一索引键字段的值，默认同 id | string \| number          |
 | status         | 状态， 可选值 add \| update \| delete \| sync    | observable&lt;string&gt;  |
+| disabled(1.5.0)       | 禁用                                            | observable&lt;boolean&gt; |
 | selectable     | 可选                                            | observable&lt;boolean&gt; |
 | isSelected     | 是否选中                                        | observable&lt;boolean&gt; |
 | isCurrent      | 是否当前记录                                    | observable&lt;boolean&gt; |
@@ -275,7 +291,7 @@ abstract: true
 | trueValue | 类型为 boolean 时，true 对应的值 | boolean \|string \|number | true | |
 | falseValue | 类型为 boolean 时，false 对应的值 | boolean |string \|number | false |   |
 | options | 下拉框组件的菜单数据集 | DataSet |  |   |
-| optionsProps | 值集组件的数据集配置 | DataSetProps |  | |
+| optionsProps | 值集组件的数据集配置 | DataSetProps \| | (DataSetProps) => DataSetProps |  | |
 | group | 是否分组，如果是 number，则为分组的顺序 | boolean \|number |  | |
 | defaultValue | 默认值 | any |  |  |
 | multiple | 是否为值数组。 当为字符串时，作为数据分隔符，查询时会将字符串分割成数组，提交时会将数组拼接成字符串 | boolean \| string | false |  |
@@ -399,7 +415,7 @@ abstract: true
 | url   | url地址    | string |
 | filename   | 文件名（不包含后缀）    | string |
 | ext   | 文件后缀    | string |
-| status   | 状态 error \| succes \| uploading \| deleting \| done    | string |
+| status   | 状态 error \| success \| uploading \| deleting \| done    | string |
 | percent   | 上传进度, 0 至 100   | number |
 | error   | 上传错误对象  | AxiosError |
 | errorMessage   | 错误消息  | string |

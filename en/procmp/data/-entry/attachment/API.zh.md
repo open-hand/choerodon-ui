@@ -23,6 +23,7 @@ title: API
 | bucketName | 附件上传的桶名 | string |  |
 | bucketDirectory | 附件上传的桶目录 | string |  |
 | storageCode | 附件存储编码 | string |  |
+| isPublic(1.5.0) | 是否是公共的， [attachment](/zh/procmp/configure/configure#attachmentconfig)配置中相关钩子会使用该属性 | boolean | |
 | attachments | 附件列表 | (AttachmentFile \| FileLike)[] |  |
 | showValidation | 校验信息展示方式 | newLine \| tooltip | viewMode == popup ? tooltip : newLine |
 | onAttachmentsChange | 附件列表变更事件 | (AttachmentFile[]) => void |  |
@@ -31,6 +32,22 @@ title: API
 | onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile) => void | 无 |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | 无 |
 
-更多属性请参考 [FormField](/zh/procmp/abstract/field#formfield)
+更多属性请参考 [FormField](/zh/procmp/abstract/field#formfield) 和 [Button](/zh/procmp/general/button#API)。
+
 附件对象参考 [AttachmentFile](/zh/procmp/dataset/dataset#attachmentfile)
+
 全局配置参考 [attachment](/zh/procmp/configure/configure#attachmentconfig)
+
+### Attachment.Group
+
+> 1.5.0 版本新增组件。
+
+附件组, 属性如下:
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| viewMode | 上传列表的显示模式，支持两种基本样式  list 和 popup | string | popup |
+| text | 按钮文字 | ReactNode |  |
+| count | 自定义附件数量, 未设置时会自动获取组内的附件数量 | number |  |
+
+更多属性请参考 [Button](/zh/procmp/general/button#API)。

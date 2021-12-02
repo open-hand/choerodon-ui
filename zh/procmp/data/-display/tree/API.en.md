@@ -14,7 +14,8 @@ title: API
 | defaultCheckedKeys  | defalut check these node when dataSet bind checkField ignore it                                        | string[]                                                                                  | []       |
 | defaultSelectKeys   | defalut select these node when dataSet bind idField ignore it                                          | string[]                                                                                  | []       |
 | treeNodeRenderer    | customize cover Tree node props                                                                        | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps ) | () => {} |
-| selectable | 是否可选中 | boolean | true | 1.4.4 |
+| selectable(1.4.4) | 是否可选中 | boolean | true |
+| filter(1.5.0) | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean | |
 
 ### TreeNodeRenderer props
 

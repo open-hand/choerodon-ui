@@ -16,7 +16,7 @@ title: API
 | tabBarStyle | Tab bar style object | object | - ||
 | inkBarStyle | Ink bar style object | object |  | 1.4.5 |
 | tabPosition | Position of tabs | `top` \| `right` \| `bottom` \| `left` | `top` ||
-| type | Basic style of tabs | `line` \| `card` \| `editable-card` | `line` ||
+| type | Basic style of tabs | `line` \| `card` \| `editable-card` \| `second-level`(1.5.0) | `line` |
 | onChange | Callback executed when active tab is changed | (newActiveKey, oldActiveKey) => void | - ||
 | onEdit | Callback executed when tab is added or removed. Only works while `type="editable-card"` | (targetKey, action): void | - ||
 | onNextClick | Callback executed when next button is clicked | (e) => void | - ||
@@ -26,6 +26,10 @@ title: API
 | keyboard| keyboard events| boolean | true | ||
 | customizable | 是否显示个性化设置入口按钮  | boolean | | 1.4.5 |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | | 1.4.5 |
+| tabDraggable | &lt;个性化&gt;是否可拖拽  | boolean | true | 1.5.0 |
+| tabTitleEditable | &lt;个性化&gt;是否可编辑标题  | boolean | true | 1.5.0 |
+| tabCountHideable | &lt;个性化&gt;是否可隐藏计数  | boolean | true | 1.5.0 |
+| defaultChangeable | &lt;个性化&gt;是否可改变默认显示  | boolean | true | 1.5.0 |
 | showMore | Display more tabs than the width of the container | boolean | false | 1.5.0-beta.0 |
 
 ### Tabs.TabPane

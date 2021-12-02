@@ -80,6 +80,21 @@
       "category": "pro"
     },
     {
+      "filename": "group.js",
+      "title": {
+        "zh": "附件组合",
+        "en": "Accessory combination"
+      },
+      "description": {
+        "zh": "附件组合显示。\n",
+        "en": "Accessory combination display.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 230,
+      "category": "pro"
+    },
+    {
       "filename": "table.js",
       "title": {
         "zh": "在表格中显示",
@@ -89,7 +104,7 @@
         "zh": "在表格中显示。\n",
         "en": "Display in Table.\n"
       },
-      "order": 5,
+      "order": 6,
       "screenshot": "",
       "height": 230,
       "category": "pro"

@@ -16,6 +16,12 @@ title: API
 | showCheckedStrategy | 定义选中项回填的方式。SHOW_CHILD: 只显示子节点. SHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时). 默认显示所有选中节点(包括父节点). | string | SHOW_ALL | 1.4.2 |
 | onBeforeSelect | 确认勾选前回调，返回 false 弹窗不关闭 | (records: Record \| Record[]) => boolean \| undefined |  | 1.4.4 |
 | onSearchMatcherChange | viewMode 为 popup 时，查询条选项值变更事件 | (searchMatcher?:string) => void \| undefined | | 1.5.0-beta.0 |
+| nodeRenderer | 树形展示节点渲染器 | (record: Record) => ReactNode |  | 1.5.0 |
+| viewRenderer | 自定义弹窗视图渲染器 | ({ dataSet }) => ReactNode |  | 1.5.0 |
+
+### Lov多选时输入框显示过长
+
+参考 [Select maxTagCount](/en/tutorials/select#when-set-multiple-then-input-field-too-long) 说明，Lov 相同。
 
 更多属性请参考[Select](/zh/procmp/data-entry/select/#API), [TextField](/zh/procmp/data-entry/text-field/#TextField), [Button](/zh/procmp/general/button/#Button)。
 

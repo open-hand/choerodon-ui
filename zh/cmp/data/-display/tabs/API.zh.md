@@ -16,7 +16,7 @@ title: API
 | tabBarStyle | tab bar 的样式对象 | object |  | |
 | inkBarStyle | ink bar 的样式对象 | object |  | 1.4.5 |
 | tabPosition | 页签位置，可选值有 `top` `right` `bottom` `left` | string | 'top' | |
-| type | 页签的基本样式，可选 `line`、`card` `editable-card` 类型 | string | 'line' | |
+| type | 页签的基本样式，可选 `line`、`card`、`editable-card`、`second-level`(1.5.0) 类型 | string | 'line' |
 | onChange | 切换面板的回调 | (newActiveKey, oldActiveKey) => void | 无 | |
 | onEdit | 新增和删除页签的回调，在 `type="editable-card"` 时有效 | (targetKey, action): void | 无 | |
 | onNextClick | next 按钮被点击的回调 | (e) => void | 无 | |
@@ -26,6 +26,10 @@ title: API
 | keyboard| keyboard events| boolean | true | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | | 1.4.5 |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | | 1.4.5 |
+| tabDraggable | &lt;个性化&gt;是否可拖拽  | boolean | true | 1.5.0 |
+| tabTitleEditable | &lt;个性化&gt;是否可编辑标题  | boolean | true | 1.5.0 |
+| tabCountHideable | &lt;个性化&gt;是否可隐藏计数  | boolean | true | 1.5.0 |
+| defaultChangeable | &lt;个性化&gt;是否可改变默认显示  | boolean | true | 1.5.0 |
 | showMore | 页签超过容器宽度是否显示更多 | boolean | false | 1.5.0-beta.0 |
 
 ### Tabs.TabPane

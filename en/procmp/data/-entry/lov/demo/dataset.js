@@ -29,6 +29,10 @@ class App extends React.Component {
         name: 'code_string',
         type: 'object',
         lovCode: 'LOV_CODE',
+        optionsProps: (dsProps) => {
+          console.log(dsProps);
+          return dsProps;
+        },
         required: true,
       },
       { name: 'code_code', type: 'string', bind: 'code.code' },

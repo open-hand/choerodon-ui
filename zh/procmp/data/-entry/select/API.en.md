@@ -45,3 +45,7 @@ title: API
 | value    | 选项值 | any     |
 | disabled | 禁用   | boolean |
 
+
+### 多选时输入框显示过长
+
+参考 [Select maxTagCount](/en/tutorials/select#when-set-multiple-then-input-field-too-long) 说明。

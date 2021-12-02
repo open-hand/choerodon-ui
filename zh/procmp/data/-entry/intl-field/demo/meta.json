@@ -17,6 +17,21 @@
       "order": 2,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "multiple.js",
+      "title": {
+        "zh": "多行",
+        "en": "multi-line"
+      },
+      "height": 150,
+      "description": {
+        "zh": "多行输入。\n",
+        "en": "Input multiple-line.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

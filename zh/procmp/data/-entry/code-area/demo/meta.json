@@ -124,6 +124,21 @@
       "screenshot": "",
       "height": 317,
       "category": "pro"
+    },
+    {
+      "filename": "title.js",
+      "title": {
+        "zh": "标题",
+        "en": "Title"
+      },
+      "description": {
+        "zh": "设置标题。\n",
+        "en": "Custom title.\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "height": 647,
+      "category": "pro"
     }
   ]
 }

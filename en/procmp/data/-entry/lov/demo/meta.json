@@ -92,14 +92,14 @@
       "category": "pro"
     },
     {
-      "filename": "popup-mode.js",
+      "filename": "other-mode.js",
       "title": {
-        "zh": "下拉框模式",
-        "en": "Popup mode"
+        "zh": "其他模式",
+        "en": "other mode"
       },
       "description": {
-        "zh": "下拉框模式。\n",
-        "en": "Popup mode.\n"
+        "zh": "其他展示模式，popup & draw。\n",
+        "en": "Other popup & draw.\n"
       },
       "order": 6,
       "screenshot": "",

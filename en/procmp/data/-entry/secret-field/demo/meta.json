@@ -1,0 +1,38 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "form.js",
+      "title": {
+        "zh": "在表单中显示",
+        "en": "Display in Form"
+      },
+      "description": {
+        "zh": "在表单中显示。\n",
+        "en": "Display in Form.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
+    },
+    {
+      "filename": "table.js",
+      "title": {
+        "zh": "在表格中显示",
+        "en": "Display in Table"
+      },
+      "description": {
+        "zh": "在表格中显示。\n",
+        "en": "Display in Table.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 230,
+      "category": "pro"
+    }
+  ]
+}

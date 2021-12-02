@@ -1,0 +1,92 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "qrcode.js",
+      "title": {
+        "zh": "二维码",
+        "en": "QRCode"
+      },
+      "description": {
+        "zh": "二维码。\n",
+        "en": "QRCode.\n"
+      },
+      "order": 0,
+      "height": 200,
+      "screenshot": ""
+    },
+    {
+      "filename": "barcode.js",
+      "title": {
+        "zh": "条形码",
+        "en": "BarCode"
+      },
+      "height": 200,
+      "description": {
+        "zh": "设置type='bar'可以显示条形码。\n",
+        "en": "set type of bar.\n"
+      },
+      "order": 1,
+      "screenshot": ""
+    },
+    {
+      "filename": "color.js",
+      "title": {
+        "zh": "设置颜色",
+        "en": "colors"
+      },
+      "height": 200,
+      "description": {
+        "zh": "可以对二维码/条形码设置背景色或者前景色。\n",
+        "en": "setting background color or front color.\n"
+      },
+      "order": 2,
+      "screenshot": ""
+    },
+    {
+      "filename": "image.js",
+      "title": {
+        "zh": "设置图片",
+        "en": "image"
+      },
+      "description": {
+        "zh": "在二维码中设置图片。\n",
+        "en": "has an image of QRCode.\n"
+      },
+      "height": 200,
+      "order": 3,
+      "screenshot": ""
+    },
+    {
+      "filename": "download.js",
+      "title": {
+        "zh": "下载二维码",
+        "en": "download"
+      },
+      "description": {
+        "zh": "可以把二维码当做图片下载下来。\n",
+        "en": "could download a picture of QRCode.\n"
+      },
+      "height": 200,
+      "order": 4,
+      "screenshot": ""
+    },
+    {
+      "filename": "option.js",
+      "title": {
+        "zh": "自定义条形码样式",
+        "en": "custom BarCode"
+      },
+      "description": {
+        "zh": "使用option 参数可以自定义条形码样式。\n",
+        "en": "custom style when use option param.\n"
+      },
+      "height": 200,
+      "order": 5,
+      "screenshot": ""
+    }
+  ]
+}

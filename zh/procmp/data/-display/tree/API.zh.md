@@ -13,7 +13,8 @@ title: API
 | defaultCheckedKeys  | 默认选中复选框的树节点当 dataSet 绑定 checkField 时候忽略 | string[]                                                                                  | []       |
 | defaultSelectKeys   | 默认选择节点当，默认绑定 dataSet 的 idField               | string[]                                                                                  | []       |
 | treeNodeRenderer    | 对于 Treenode 结点的渲染覆盖                              | (({ record, dataSet }) => TreeNodeRendererProps ) | () => {} |
-| selectable | 是否可选中 | boolean | true | 1.4.4 |
+| selectable(1.4.4) | 是否可选中 | boolean | true |
+| filter(1.5.0) | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean | |
 
 ### TreeNodeRenderer Props
 

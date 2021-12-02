@@ -74,6 +74,20 @@
       "order": 4,
       "height": 293,
       "screenshot": ""
+    },
+    {
+      "filename": "sortable.js",
+      "title": {
+        "zh": "排序",
+        "en": "Sortable"
+      },
+      "description": {
+        "zh": "右侧数据点击排序。\n",
+        "en": "Click to sort the data on the right.\n"
+      },
+      "order": 5,
+      "height": 300,
+      "screenshot": ""
     }
   ]
 }
