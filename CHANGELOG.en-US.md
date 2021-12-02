@@ -70,6 +70,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
 - 🐞 `List.Item.Meta`: Fix the problem that text avatars are not displayed.
 - 🐞 `Notification`: Fix the overlap problem when called multiple times in useEffect hook for the first time.
+- 🐞 `<pro>Tree`: Fixed error in `dataset` selected records when `async` is enabled and `selectable` is set to false.
 
 ## 1.5.0-beta.0
 
