@@ -221,7 +221,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     const queryBar = this.getQueryBar();
     const tableButtons = buttons.length ? (
       <div key="professional_toolbar" className={`${prefixCls}-professional-toolbar`}>
-        <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons}>
+        <TableButtons key="table_buttons" prefixCls={prefixCls} buttons={buttons}>
           {summaryBar}
         </TableButtons>
       </div>
