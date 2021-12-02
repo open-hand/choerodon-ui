@@ -444,7 +444,9 @@ export default class Lov extends Select<LovProps> {
     const drawer = viewMode === 'drawer';
     if (viewMode === 'modal' || drawer) {
       const config = this.getConfig();
-      this.autoCreate();
+      if (!this.autoSelectSingle) {
+        this.autoCreate();
+      }
       const { options } = this;
       if (!this.modal && config && options) {
         const modalProps = this.getModalProps();
