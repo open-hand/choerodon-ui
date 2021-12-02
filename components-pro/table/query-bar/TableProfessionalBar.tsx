@@ -226,7 +226,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
         </TableButtons>
       </div>
     ) : (
-      <div className={`${prefixCls}-toolbar`}>
+      <div className={`${prefixCls}-toolbar`} key="professional_toolbar">
         {summaryBar}
       </div>
     );
