@@ -483,13 +483,11 @@ export default class Tree extends Component<TreeProps> {
     if (loadData) {
       promises.push(loadData(event));
     }
-    return Promise.all(promises).then(() => {
-      runInAction(() => {
-        this.stateLoadedKeys.push(event.key);
-      });
+    return Promise.all(promises).then(action(() => {
+      this.stateLoadedKeys.push(event.key);
 
       this.handleAfterLoadData(event);
-    });
+    }));
   }
   
   @autobind
@@ -501,7 +499,7 @@ export default class Tree extends Component<TreeProps> {
       if (!loadRootRecord) {
         return;
       }
-      let loadRecords: Record[] = loadRootRecord.children && loadRootRecord.children.length > 0 ? loadRootRecord.children : [];
+      const loadRecords: Record[] = loadRootRecord.children ?? [];
 
       if (checkField) {
         const field = dataSet.getField(checkField);
@@ -510,10 +508,10 @@ export default class Tree extends Component<TreeProps> {
             dataSet.select(record);
           }
         });
-        if (loadRecords.every(record => record.isSelected) && !loadRootRecord.isSelected) {
+        if (!loadRootRecord.isSelected && loadRecords.every(record => record.isSelected)) {
           dataSet.select(loadRootRecord);
         }
-        if (loadRecords.some(record => !record.isSelected) && loadRootRecord.isSelected) {
+        else if (loadRootRecord.isSelected && loadRecords.some(record => !record.isSelected)) {
           dataSet.unSelect(loadRootRecord);
         }
       }
