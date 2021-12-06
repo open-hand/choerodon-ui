@@ -1,10 +1,9 @@
-import React from 'react';
 import DataSet from '..';
 import Record from '../Record';
 import { data, commonDs } from "./mock";
 import { randomIdx, randomData } from './utils';
 
-describe('DataSet.Values', () => {
+describe('DataSet Values', () => {
   describe('length', () => {
     it('dataSet.length是否正确', () => {
       const testDs = new DataSet({...commonDs, data});

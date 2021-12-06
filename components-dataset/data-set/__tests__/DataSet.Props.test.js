@@ -6,7 +6,7 @@ import Tree from '../../../components-pro/tree';
 import { testName, data, commonDs, commonQueryFields, simpleTreeDs, childDs, fatherDs } from "./mock";
 import { randomData } from './utils';
 
-describe('selection about properties test', () => {
+describe('DataSet Props', () => {
   describe('selection', () => {
     it('value is single', () => {
       const singleDs = new DataSet({...simpleTreeDs, selection: 'single'});
@@ -106,19 +106,17 @@ describe('selection about properties test', () => {
       expect(showChildDs.treeSelected.length).toBe(3);
     });
   });
-});
 
-describe('autoLocateAfter something...', () => {
   describe('autoLocateAfterRemove', () => {
     // TODO: should keep it ?
-    it('just one piece of data and turn it on', () => {
+    it('只有一条数据并开启autoLocateAfterRemove', () => {
       const testDs = new DataSet({...commonDs, autoLocateAfterRemove: true, data: data.slice(0, 1)});
       testDs.get(0).isCurrent = true;
       testDs.remove(testDs.records[0]);
       expect(testDs.get(0)).toBeUndefined();
     });
 
-    it('more than one piece of data and turn it on', () => {
+    it('超过一条数据并开启autoLocateAfterRemove', () => {
       const testDs = new DataSet({...commonDs, autoLocateAfterRemove: true, data})
       testDs.records.map(record => {
         record.isCurrent = false;
@@ -133,7 +131,7 @@ describe('autoLocateAfter something...', () => {
       expect(obj).toEqual({firstIsCurrent: false, customIsCurrent: true, autoIsCurrent: true});
     });
 
-    it('more than one piece of data and turn it off', () => {
+    it('超过一条数据并关闭autoLocateAfterRemove', () => {
       const testDs = new DataSet({...commonDs, autoLocateAfterRemove: false, data})
       testDs.records.map(record => {
         record.isCurrent = false;
@@ -150,19 +148,19 @@ describe('autoLocateAfter something...', () => {
   });
 
   describe('autoLocateAfterCreate', () => {
-    it('no data and turn it on', () => {
+    it('没有数据并打开autoLocateAfterCreate', () => {
       const testDs = new DataSet({...commonDs, autoLocateAfterCreate: true});
       testDs.create(data.slice(0, 1));
       expect(testDs.get(0).isCurrent).toBeTruthy();
     });
 
-    it('no data and turn it off', () => {
+    it('没有数据并关闭autoLocateAfterCreate', () => {
       const testDs = new DataSet({...commonDs, autoLocateAfterCreate: false});
       testDs.create(data.slice(0, 1));
       expect(testDs.get(0).isCurrent).toBeFalsy();
     });
 
-    it('more than one piece data and turn it on', () => {
+    it('超过一条数据并打开autoLocateAfterCreate', () => {
       const testDs = new DataSet({...commonDs, autoLocateAfterCreate: true, data});
       const index = testDs.length;
       testDs.create({
@@ -176,7 +174,7 @@ describe('autoLocateAfter something...', () => {
       expect(testDs.get(index).isCurrent).toBeTruthy();
     });
 
-    it('more than one piece data and turn it off', () => {
+    it('超过一条数据并打开autoLocateAfterCreate', () => {
       const testDs = new DataSet({...commonDs, autoLocateAfterCreate: false, data});
       const index = testDs.length;
       testDs.create({
@@ -190,11 +188,30 @@ describe('autoLocateAfter something...', () => {
       expect(testDs.get(index).isCurrent).toBeFalsy();
     });
   })
-  
-});
 
-describe('pageSize about properties test', () => {
-  describe('the correct paginated information', () => {
+  describe('checkField', () => {
+    it('checkField是否有效', () => {
+      const data = simpleTreeDs.data.map(data => ({...data, check: true}));
+      const testDsWithoutCheckField = new DataSet({...simpleTreeDs, data});
+      const testDsWithCheckField = new DataSet({...simpleTreeDs, data, checkField: 'check'});
+      const wrapperWithoutCheckField = mount(<Tree checkable dataSet={testDsWithoutCheckField} />)
+      const wrapperWithCheckField = mount(<Tree checkable dataSet={testDsWithCheckField} />)
+      const checkedCount1 = wrapperWithoutCheckField.find('.c7n-tree-checkbox-checked').length;
+      const checkedCount2 = wrapperWithCheckField.find('.c7n-tree-checkbox-checked').length;
+      expect({checkedCount1, checkedCount2}).toEqual({checkedCount1: 0, checkedCount2: 4});
+    });
+  });
+
+  describe('expandField', () => {
+    it('expandField是否有效', () => {
+      const testDsBefore = new DataSet({...simpleTreeDs, expandField: undefined});
+      const testDsAfter = new DataSet(simpleTreeDs);
+      const obj = {beforeIsExpanded: testDsBefore.get(0).isExpanded, afterIsExpanded: testDsAfter.get(0).isExpanded};
+      expect(obj).toEqual({beforeIsExpanded: false, afterIsExpanded: true});
+    });
+  });
+
+  describe('pageSize', () => {
     it('pageSize: 5, paging: true', () => {
       const testDs = new DataSet({...commonDs, pageSize: 5, paging: true, data: randomData(11)});
       const obj = {
@@ -218,123 +235,61 @@ describe('pageSize about properties test', () => {
       };
       expect(obj).toEqual({currentPage: 1, totalCount: 11, totalPage: 1, pageSize: 5, paging: false});
     });
+  })
 
-    // TODO: test in tree mode Table ?
-    // it('pageSize: 5, paging: server', () => {
-    //   const testDs = new DataSet({...largeTreeDs, pageSize: 5, paging: 'server'});
-    //   const obj = {
-    //     currentPage: testDs.currentPage,
-    //     totalCount: testDs.totalCount,
-    //     totalPage: testDs.totalPage,
-    //     pageSize: testDs.pageSize,
-    //     paging: testDs.paging,
-    //   };
-    //   expect(obj).toEqual({currentPage: 1, totalCount: 10, totalPage: 2, pageSize: 5, paging: 'server'});
-    // });
-
-    it('does expandField work correctly', () => {
-      const testDsBefore = new DataSet({...simpleTreeDs, expandField: undefined});
-      const testDsAfter = new DataSet(simpleTreeDs);
-      const obj = {beforeIsExpanded: testDsBefore.get(0).isExpanded, afterIsExpanded: testDsAfter.get(0).isExpanded};
-      expect(obj).toEqual({beforeIsExpanded: false, afterIsExpanded: true});
-    });
-
-    // TODO: 只是说明了选中字段  并没有像api上说的生成checkbox 需要添加checkable
-    it('does checkField work correctly', () => {
-      const data = simpleTreeDs.data.map(data => ({...data, check: true}));
-      const testDsWithoutCheckField = new DataSet({...simpleTreeDs, data});
-      const testDsWithCheckField = new DataSet({...simpleTreeDs, data, checkField: 'check'});
-      const wrapperWithoutCheckField = mount(<Tree checkable dataSet={testDsWithoutCheckField} />)
-      const wrapperWithCheckField = mount(<Tree checkable dataSet={testDsWithCheckField} />)
-      // let wrapperWithoutCheckField, wrapperWithCheckField;
-      // act(() => {
-      //   wrapperWithoutCheckField = mount(<Tree checkable dataSet={testDsWithoutCheckField} />);
-      //   wrapperWithCheckField = mount(<Tree checkable dataSet={testDsWithCheckField} />);
-      // });
-      const checkedCount1 = wrapperWithoutCheckField.find('.c7n-tree-checkbox-checked').length;
-      const checkedCount2 = wrapperWithCheckField.find('.c7n-tree-checkbox-checked').length;
-      expect({checkedCount1, checkedCount2}).toEqual({checkedCount1: 0, checkedCount2: 4});
-    });
-
-    // TODO: 缺少条件 不能翻页等查询操作
-    // it('does cacheSelection work correctly', () => {
-      
-    // });
-  });
-});
-
-describe('query test', () => {
-  it('combineSort 设置为 true', async () => {
-    const testDs = new DataSet({
-      ...commonDs,
-      fields: commonDs.fields.map(field => {
-        field.order = 'asc';
-        return field;
-      }),
-      combineSort: true,
-      data, 
-      events: {
-        query({params}) {
-          expect(params.sort).toEqual(["userid,asc", "name,asc", "age,asc", "sex,asc", "email,asc", "active,asc"]);
+  describe('queryParameter', () => {
+    it('queryParameter是否添加上查询参数', async () => {
+      const testDs = new DataSet({
+        ...commonDs,
+        queryParameter: {page: 2, pageSize: 123},
+        events: {
+          query({params}) {
+            expect({pageSize: params.pageSize, page: params.page}).toEqual({pageSize: 123, page: 2});
+          }
         },
-      },
+      });
+      await testDs.query();
     });
-    await testDs.query();
   });
 
-  it('combineSort 设置为 false', async () => {
-    const testDs = new DataSet({
-      ...commonDs,
-      fields: commonDs.fields.map(field => {
-        field.order = 'asc';
-        return field;
-      }),
-      combineSort: false,
-      data, 
-      events: {
-        query({params}) {
-          expect(params.sort).toBeUndefined();
+  describe('combineSort', () => {
+    it('combineSort 设置为 true', async () => {
+      const testDs = new DataSet({
+        ...commonDs,
+        fields: commonDs.fields.map(field => {
+          field.order = 'asc';
+          return field;
+        }),
+        combineSort: true,
+        data, 
+        events: {
+          query({params}) {
+            expect(params.sort).toEqual(["userid,asc", "name,asc", "age,asc", "sex,asc", "email,asc", "active,asc"]);
+          },
         },
-      },
+      });
+      await testDs.query();
     });
-    await testDs.query();
-  });
-
-  it('does queryParameter work', async () => {
-    const testDs = new DataSet({
-      ...commonDs,
-      queryParameter: {page: 2, pageSize: 123},
-      events: {
-        query({params}) {
-          expect({pageSize: params.pageSize, page: params.page}).toEqual({pageSize: 123, page: 2});
-        }
-      },
+  
+    it('combineSort 设置为 false', async () => {
+      const testDs = new DataSet({
+        ...commonDs,
+        fields: commonDs.fields.map(field => {
+          field.order = 'asc';
+          return field;
+        }),
+        combineSort: false,
+        data, 
+        events: {
+          query({params}) {
+            expect(params.sort).toBeUndefined();
+          },
+        },
+      });
+      await testDs.query();
     });
-    await testDs.query();
-  });
-});
+  })
 
-describe('validateBeforeQuery', async () => {
-  const testDs = new DataSet({
-    ...commonDs,
-    fields: commonDs.fields.map(field => ({...field, valiedator: () => false})),
-    data: data.map(oo => ({...oo, name: null})),
-    validateBeforeQuery: true,
-    events: {
-      query() {
-        // expect(false).toBeTruthy();
-      },
-      validate({dataSet, result}) {
-        expect(false).toBeTruthy();
-        expect(result).toEqual({});
-      },
-    },
-  });
-  await testDs.query();
-})
-
-
-describe('data processing transformation', () => {
   describe('dataToJSON', () => {
     it('值为dirty时测试本身改变和级联数据改变的情况', () => {
       const dataToJSON = 'dirty';
@@ -520,9 +475,7 @@ describe('data processing transformation', () => {
       expect({resultLength, flag}).toEqual({resultLength: 1, flag: true});
     });
   })
-})
 
-describe('DataSetProps', () => {
   describe('name', () => {
     it('name-自动生成 submitUrl，queryUrl，tlsUrl，validateUrl 正确性校验', () => {
       const ds = new DataSet({ ...commonDs, name: testName });

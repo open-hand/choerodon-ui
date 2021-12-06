@@ -296,7 +296,8 @@ describe('DataSet Methods', () => {
   describe('next()', () => {
     it('next()-paging为true-调用该方法-是否定位到下一条记录', () => {
       const ds = new DataSet({ ...commonDs, paging: true, data: data });
-      const orderIndex = Math.floor((Math.random() * 8)) - 1 < 1 ? 2 : Math.floor((Math.random() * 8)) - 1;
+      const i = Math.floor((Math.random() * 8));
+      const orderIndex = i - 1 < 1 ? 2 : i - 1;
       ds.locate(orderIndex);
       expect(ds.current).toEqual(ds.get(orderIndex));
       ds.next();
