@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.0
+
+`2021-12-02`
+
 - 🌟 Split `dataset` and `shared` libraries.
 - 🌟 `ConfigProvider`: Added `ConfigProvider` component.
 - 🌟 `hooks`: Added `useConfig` hook.
