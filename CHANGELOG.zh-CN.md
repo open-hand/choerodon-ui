@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.0
+
+`2021-12-02`
+
 - 🌟 拆分 dataset 和 shared 库。
 - 🌟 `ConfigProvider`: 新增 ConfigProvider 组件。
 - 🌟 `hooks`: 新增 useConfig 钩子。
