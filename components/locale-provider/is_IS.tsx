@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Alls',
+    message: 'skilaboð',
+    closeAll: 'Lokaðu öllu',
+  },
 };

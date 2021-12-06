@@ -73,4 +73,9 @@ export default {
     emptyMessage: 'No data found',
     loading: 'Loading...',
   },
+  Notification: {
+    total: 'A total of',
+    message: 'messages',
+    closeAll: 'Close all',
+  },
 };

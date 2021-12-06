@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `Notification`: Added config props of `foldCount`.
+- 💄 `Step`: Optimize the navigation style of the Steps.
+
 ## 1.5.0
 
 `2021-12-02`

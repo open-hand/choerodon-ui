@@ -44,4 +44,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Celkem',
+    message: 'zprávy',
+    closeAll: 'Zavřete vše',
+  },
 };

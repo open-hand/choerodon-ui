@@ -33,4 +33,9 @@ export default {
   Select: {
     notFoundContent: 'Pas de résultat',
   },
+  Notification: {
+    total: 'Un total de',
+    message: 'messages',
+    closeAll: 'Ferme tout',
+  },
 };

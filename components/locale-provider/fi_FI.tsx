@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Yhteensä',
+    message: 'viestiä',
+    closeAll: 'Sulje kaikki',
+  },
 };

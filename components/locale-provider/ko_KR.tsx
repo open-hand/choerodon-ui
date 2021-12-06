@@ -43,4 +43,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: '총',
+    message: '개의 메시지',
+    closeAll: '모두 닫기',
+  },
 };

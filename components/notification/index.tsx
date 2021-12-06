@@ -12,7 +12,7 @@ const { config } = NotificationManager;
 export type ConfigProps = Partial<ConfigOptions>
 
 function setNotificationConfig(options: ConfigProps) {
-  const { duration, placement, bottom, top, getContainer, maxCount } = options;
+  const { duration, placement, bottom, top, getContainer, maxCount, foldCount } = options;
   if (duration !== undefined) {
     config.duration = duration;
   }
@@ -30,6 +30,9 @@ function setNotificationConfig(options: ConfigProps) {
   }
   if (maxCount !== undefined) {
     config.maxCount = maxCount;
+  }
+  if (foldCount !== undefined) {
+    config.foldCount = foldCount;
   }
 }
 
@@ -92,6 +95,7 @@ function getNotificationInstance(
         style: getPlacementStyle(placement),
         getContainer: config.getContainer,
         maxCount: config.maxCount,
+        foldCount: config.foldCount,
       },
       (notification: any) => {
         resolve(notification);
