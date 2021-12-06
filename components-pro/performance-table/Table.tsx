@@ -429,11 +429,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.wheelWrapperRef = React.createRef();
     this.tableHeaderRef = React.createRef();
 
-    runInAction(this.setSelectionColumn);
+    runInAction(() => this.setSelectionColumn(props));
   }
 
-  setSelectionColumn = () => {
-    const { rowSelection, columns = [], children = [] } = this.props;
+  setSelectionColumn = (props) => {
+    const { rowSelection, columns = [], children = [] } = props;
     const index = columns.findIndex(column => column.key === 'rowSelection');
     if (rowSelection) {
       if (index > -1) columns.splice(index, 1);
@@ -521,18 +521,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this._cacheCells = null;
       this.tableStore.updateProps(nextProps, this);
     }
-
+    const flag = this.props.columns !== nextProps.columns
+      || this.props.children !== nextProps.children
+      || this.props.rowSelection !== nextProps.rowSelection
+    if(flag) {  
+      runInAction(() => this.setSelectionColumn(nextProps));
+    }
     return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, height, virtualized, children, columns, rowSelection } = prevProps;
-    const { rowSelection: currentRowSelection, columns: currentColumns, children: currentChildren } = this.props;
-    const flag = rowSelection !== currentRowSelection || columns !== currentColumns || children !== currentChildren;
-    if (flag) {
-      runInAction(this.setSelectionColumn);
-    }
-
+    const { rowHeight, data, height, virtualized, children, columns } = prevProps;
     if (data !== this.props.data) {
       this.calculateRowMaxHeight();
       this.props.onDataUpdated?.(this.props.data, this.scrollTo);
@@ -769,13 +768,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
     for (let index = 0; index < childColumns.length; index += 1) {
       const childColumn = childColumns[index];
+      const { verticalAlign: childVerticalAlign, align: childAlign } = childColumn.props;
       const parentProps = {
-        align,
+        align: childAlign || align,
         fixed,
-        verticalAlign,
+        verticalAlign: childVerticalAlign || verticalAlign,
         ...cellProps,
       };
       const groupCellProps: any = {
+        parent: column,
         ...childColumn?.props,
         ...parentProps,
       };
@@ -2205,7 +2206,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-              // {...(rowDragRender && rowDragRender.draggableProps)} todo
+            // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}

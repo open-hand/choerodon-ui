@@ -483,7 +483,44 @@ export default class Tree extends Component<TreeProps> {
     if (loadData) {
       promises.push(loadData(event));
     }
-    return Promise.all(promises).then(action(() => this.stateLoadedKeys.push(event.key)));
+    return Promise.all(promises).then(action(() => {
+      this.stateLoadedKeys.push(event.key);
+
+      this.handleAfterLoadData(event);
+    }));
+  }
+  
+  @autobind
+  handleAfterLoadData(event): void {
+    const { dataSet, selectable } = this.props;
+    if (dataSet && selectable === false) {
+      const { checkField, idField } = dataSet.props;
+      const loadRootRecord = dataSet.find(record => getKey(record, idField) === String(event.key));
+      if (!loadRootRecord) {
+        return;
+      }
+      const loadRecords: Record[] = loadRootRecord.children ?? [];
+
+      if (checkField) {
+        const field = dataSet.getField(checkField);
+        loadRecords.forEach(record => {
+          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+            dataSet.select(record);
+          }
+        });
+        if (!loadRootRecord.isSelected && loadRecords.every(record => record.isSelected)) {
+          dataSet.select(loadRootRecord);
+        }
+        else if (loadRootRecord.isSelected && loadRecords.some(record => !record.isSelected)) {
+          dataSet.unSelect(loadRootRecord);
+        }
+      }
+      else if (event.checked) {
+        loadRecords.forEach(record => {
+          dataSet.select(record);
+        });
+      }
+    }
   }
 
   render() {

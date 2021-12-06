@@ -21,7 +21,6 @@ function nodeRenderer({ record }) {
 }
 
 const App = () => {
-  const [selectedKeys, setSelectedKeys] = React.useState([]);
   const ds = React.useMemo(
     () =>
       new DataSet({
@@ -39,7 +38,7 @@ const App = () => {
             type: 'object',
             lovCode: 'LOV_CODE',
             multiple: true,
-            defaultValue: [{ value: 'c7n', code: 'c7n' }],
+            defaultValue: [{ description: 'Choerodon UI', code: 'c7n' }],
           },
           {
             name: 'drawer_code',

@@ -54,7 +54,7 @@ const App = () => {
         <OpenModalButton drawer>Open Drawer</OpenModalButton>
       </ModalProvider>
       <div style={{ marginTop: 400 }}>
-        <ModalProvider getContainer={() => containerRef.current}>
+        <ModalProvider getContainer={getContainer}>
           <OpenModalButton autoCenter>Open autoCenter Modal</OpenModalButton>
           <OpenModalButton>Open Modal</OpenModalButton>
         </ModalProvider>

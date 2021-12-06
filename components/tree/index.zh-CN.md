@@ -46,7 +46,7 @@ subtitle: 树形控件
 | onDragOver | dragover 触发时调用 | function({event, node}) | - |
 | onDragStart | 开始拖拽时调用 | function({event, node}) | - |
 | onDrop | drop 触发时调用 | function({event, node, dragNode, dragNodesKeys}) | - |
-| onDropBefore | drop 触发之前时调用 | function({event, node, dragNode, dragNodesKeys}) | - |
+| onDropBefore | drop 触发之前时调用 | function({event, node, dragNode, dragNodesKeys}) => boolean | - |
 | onExpand | 展开/收起节点时触发 | function(expandedKeys, {expanded: bool, node}) | - |
 | onLoad | 节点加载完毕时触发 | function(loadedKeys, {event, node}) | - |
 | onRightClick | 响应右键点击 | function({event, node}) | - |

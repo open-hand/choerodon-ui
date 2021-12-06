@@ -6,6 +6,7 @@ import { action, observable, runInAction } from 'mobx';
 import autobind from '../_util/autobind';
 
 import { $l } from '../locale-context';
+import Record from '../data-set/Record';
 import DataSet from '../data-set/DataSet';
 import message from '../message';
 import { FieldType } from '../data-set/enum';
@@ -24,6 +25,7 @@ export interface SecretFieldViewProps {
   modal?: modalChildrenProps;
   readOnly?: boolean;
   name: string;
+  record?: Record,
   label: string;
   pattern?: string | RegExp;
   restrict?: string | RegExp;
@@ -31,7 +33,6 @@ export interface SecretFieldViewProps {
   token?: string;
   countDown: any;
   onChange?: (data?: any) => void;
-  onQueryFlag: (data: boolean) => void;
 }
 
 export interface VerifyTypeObjProps {
@@ -124,7 +125,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   // 确定可查看
   @autobind
   handleQuery() {
-    const { name, token = '', onChange, onQueryFlag, modal } = this.props;
+    const { name, token = '', onChange, modal, record } = this.props;
     // 查看-校验验证码，返回原始值
     const { captchaKey, captcha, context } = this;
     const secretFieldQueryData = context.getConfig('secretFieldQueryData');
@@ -147,7 +148,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
           }
           if (modal) {
             modal.close();
-            onQueryFlag(false);
+            record?.setState({ [`_secretField_queryFlag_${name}`]: true });
           }
         },
       );

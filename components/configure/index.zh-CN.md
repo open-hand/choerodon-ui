@@ -228,6 +228,18 @@ const prefixCls = getConfig('prefixCls');
 | onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void |
 | onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean |
 
+
+### SecretFieldConfig
+
+| 属性              | 说明                | 类型                                |
+| ----------------- | ------------------- | ----------------------------------- |
+| secretFieldEnable | 获取是否开启数据操作保护 | () => boolean |  |
+| secretFieldTypes | 获取验证方式以及验证号码 | () => object[] |  |
+| secretFieldFetchVerifyCode | 校验验证码 | (type: string) => Promise<object> |  |
+| secretFieldQueryData | 获取真实数据 | ({type: string, _token: string, fieldName: string, captchaKey: string, captcha: string, action: string }) => Promise |  |
+| secretFieldSaveData | 保存编辑后的数据 | ({ _token: string, fieldName: string, value: string }) => Promise |  |
+
+
 ### AxiosRequestConfig
 
 | 属性              | 说明                | 类型                                |
