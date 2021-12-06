@@ -33,4 +33,9 @@ export default {
   Select: {
     notFoundContent: 'Info saknas',
   },
+  Notification: {
+    total: 'Totalt',
+    message: 'meddelanden',
+    closeAll: 'Stäng alla',
+  },
 };

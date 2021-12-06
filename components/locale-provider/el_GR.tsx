@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Συνολικά',
+    message: 'μηνύματα',
+    closeAll: 'Κλεί τα όλα',
+  },
 };

@@ -47,4 +47,9 @@ export default {
     fold: '折る',
     unfold: '展開する',
   },
+  Notification: {
+    total: '合計',
+    message: 'つのメッセージ',
+    closeAll: 'すべて閉じる',
+  },
 };

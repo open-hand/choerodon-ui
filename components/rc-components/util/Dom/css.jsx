@@ -32,6 +32,10 @@ function getStyleValue(node, type, value) {
   return removePixel[type] ? (parseFloat(value) || 0) : value;
 }
 
+export function getStyle(el, property) {
+  return +getComputedStyle(el).getPropertyValue(property).replace('px', '');
+}
+
 export function get(node, name) {
   const length = arguments.length;
   const style = getComputedStyle(node);

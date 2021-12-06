@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Spolu',
+    message: 'správy',
+    closeAll: 'Zavrieť všetky',
+  },
 };

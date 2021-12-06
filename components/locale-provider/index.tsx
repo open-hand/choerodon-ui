@@ -21,6 +21,7 @@ export interface Locale {
   Upload?: Record<string, any>;
   imageCrop?: imageCrop;
   performanceTable?: PerformanceTable;
+  Notification?: LocaleNotification;
 }
 
 export interface imageCrop {
@@ -45,6 +46,12 @@ export interface imageCrop {
 export interface PerformanceTable {
   emptyMessage: string;
   loading: string;
+}
+
+export interface LocaleNotification {
+  total: string;
+  message: string;
+  closeAll: string;
 }
 
 export interface LocaleProviderProps {
