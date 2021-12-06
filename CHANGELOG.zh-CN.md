@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `Notification`: 新增 foldCount 全局配置属性。
+- 💄 `Step`: 优化Steps组件的导航条样式。
+
 ## 1.5.0
 
 `2021-12-02`
@@ -45,7 +48,6 @@ timeline: true
 - 🌟 `<pro>CodeArea`: 新增 themeSwitch, title 属性。
 - 🌟 `<pro>Form`: 新增 showHelp 属性, 控制表单输入框 help 展示方式。
 - 🌟 `<pro>FormItem`: showHelp 属性新增 label 方式，支持在 Label 上展示 help 信息。
-- 🌟 `Notification`: 新增 foldCount 配置属性.
 - 💄 `<pro>FormItem`: 优化表单输入框必输、冒号样式，超出省略不隐藏。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。

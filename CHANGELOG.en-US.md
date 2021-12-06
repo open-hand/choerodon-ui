@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `Notification`: Added config props of `foldCount`.
+- 💄 `Step`: Optimize the navigation style of the Steps.
+
 ## 1.5.0
 
 `2021-12-02`
@@ -45,7 +48,6 @@ timeline: true
 - 🌟 `<pro>CodeArea`: Added `themeSwitch`, `title` properties.
 - 🌟 `<pro>Form`: Added the `showHelp` attribute to control the display mode of the form input box help.
 - 🌟 `<pro>FormItem`: The new `label` method is added to the `showHelp` property, which supports the display of help information on the Label.
-- 🌟 `Notification`: Added config props of `foldCount`.
 - 💄 `<pro>FormItem`: Optimize the mandatory input and colon styles in the form input box, and will not hide if it is omitted.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.
