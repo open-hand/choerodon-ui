@@ -21,7 +21,6 @@ function nodeRenderer({ record }) {
 }
 
 const App = () => {
-  const [selectedKeys, setSelectedKeys] = React.useState([]);
   const ds = React.useMemo(
     () =>
       new DataSet({

@@ -23,6 +23,7 @@ import Record from '../../../data-set/Record';
 import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
 import isOverflow from '../../../overflow-tip/util';
+import { isEqualDynamicProps } from '../TableDynamicFilterBar';
 
 import Store from './QuickFilterMenuContext';
 
@@ -199,11 +200,11 @@ const QuickFilterMenu = function QuickFilterMenu() {
   /**
    * queryDS 筛选赋值并更新初始勾选项
    * @param init
-   * 初始化查询依赖于ds props autoQuery, 切换依赖组件 autoQuery props
    */
   const conditionAssign = (init?: boolean) => {
     onOriginalChange();
     const { current } = menuDataSet;
+    let shouldQuery = false;
     if (current) {
       const { conditionList } = current.toData();
       const initData = {};
@@ -218,6 +219,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         });
         const emptyRecord = new Record({...initData}, queryDataSet);
         queryDataSet.setState('selectFields', Object.keys(initData));
+        shouldQuery = !isEqualDynamicProps(initData, queryDataSet?.current?.toData());
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
@@ -232,17 +234,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
         });
         onStatusChange(RecordStatus.sync);
       }
-      if (init) {
-        if (dataSet.props.autoQuery) dataSet.query();
-      } else if (autoQuery) {
+      if (!init && shouldQuery && autoQuery) {
         dataSet.query();
       }
     }
   };
 
   const handleQueryReset = () => {
-    const { current } = filterMenuDataSet;
-    if (current && current.get('filterName')) {
+    if (filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName')) {
       // 筛选项重置重新赋值
       conditionAssign();
     } else {
@@ -250,9 +249,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
        * 未选择或清除筛选项
        * 重置初始勾选项及初始赋值
        */
-      onOriginalChange();
       queryDataSet.locate(0);
       queryDataSet.get(0)?.reset();
+      onOriginalChange();
       if (autoQuery) {
         dataSet.query();
       }
@@ -288,8 +287,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         }
         conditionAssign(init);
       } else {
-        if (current) current.set('filterName', undefined);
-        queryDataSet.reset();
+        current?.set('filterName', undefined);
       }
     }
   };
@@ -560,7 +558,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
-          {filterMenuDataSet.current?.get('filterName') && (
+          {filterMenuDataSet?.current?.get('filterName') && (
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>

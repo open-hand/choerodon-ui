@@ -17,6 +17,8 @@ function mergeCells(cells) {
   let columnGroupLeft: number = 0
   const mergeMaxCells: any = []
   let currentGroupName: string = ''
+  let usedCells: string[] = [];
+  let preWidth: number[] = [0];
   for (let i = 0; i < cells.length; i += 1) {
     const {
       width,
@@ -27,15 +29,25 @@ function mergeCells(cells) {
       headerHeight,
       verticalAlign,
       parent,
+      dataKey,
+      sortable,
+      sortColumn,
+      sortType,
+      onSortColumn,
+      children
     } = cells[i].props;
 
+    if (usedCells.includes(cells[i].key)) {
+      continue;
+    }
+    let groupChildrenStore: any = []
     const groupChildren: React.ReactElement<HeaderCellProps>[] = [];
 
     // fix(ColumnGroup): fix column cannot be sorted in ColumnGroup
     /**
      * 为列头添加分组
      */
-    if (groupCount && isHeaderCell) {
+    if (parent && isHeaderCell) {
       let nextWidth = width;
       let left = 0;
       for (let j = 0; j < groupCount; j += 1) {
@@ -49,7 +61,16 @@ function mergeCells(cells) {
           sortColumn,
           sortType,
           headerHeight,
+          groupHeader: nextGroupHeader = currentGroupName,
         } = nextCell.props;
+        if (j === 0) {
+          currentGroupName = nextGroupHeader
+        }
+        if (currentGroupName !== nextGroupHeader) {
+          groupChildrenStore = [...groupChildren]
+          i = i + j
+          break;
+        }
 
         if (j !== 0) {
           nextWidth += nextCellWidth;
@@ -66,35 +87,64 @@ function mergeCells(cells) {
             sortColumn={sortColumn}
             sortType={sortType}
             onSortColumn={onSortColumn}
-            headerHeight={headerHeight}
+            verticalAlign={verticalAlign}
+            headerHeight={headerHeight / 2}
           >
             {children}
           </HeaderCell>,
         );
+        usedCells.push(nextCell.key)
       }
-      if (parent) {
-        const isSomeGroup = currentGroupName === parent.props.header
-        mergeMaxCells.push({
-          index: i,
-          content: (<ColumnGroup
-            left={!isSomeGroup ? 0 : columnGroupLeft}
-            width={nextWidth}
-            header={groupHeader}
-            verticalAlign={verticalAlign}
-          >
-            {groupChildren}
-          </ColumnGroup>),
-          ...parent.props,
-          headerHeight: ((headerHeight / 3) * 2),
-          width: nextWidth,
-        })
-        // 区分不同的组名
-        if (!isSomeGroup) {
+      if (groupHeader !== parent.props.header) {
+        if (mergeMaxCells.length && parent.props.header !== mergeMaxCells[mergeMaxCells.length - 1].header) {
           columnGroupLeft = nextWidth
-          currentGroupName = parent.props.header
+          preWidth = [0]
         } else {
           columnGroupLeft += nextWidth
         }
+        mergeMaxCells.push({
+          index: i,
+          content: groupCount ? (
+            <ColumnGroup
+              left={preWidth[preWidth.length - 1]}
+              width={nextWidth}
+              header={groupHeader}
+              verticalAlign={verticalAlign}
+              headerHeight={(headerHeight / 3) * 2}
+            >
+              {groupChildren.map(x => React.cloneElement(x, { ...x.props, headerHeight: headerHeight / 3 }))}
+            </ColumnGroup>) :
+            (<HeaderCell
+              key={i}
+              left={preWidth[preWidth.length - 1]}
+              dataKey={dataKey}
+              width={nextWidth}
+              sortable={sortable}
+              sortColumn={sortColumn}
+              sortType={sortType}
+              onSortColumn={onSortColumn}
+              verticalAlign={verticalAlign}
+              headerHeight={(headerHeight / 3) * 2}
+            >
+              {children}
+            </HeaderCell>),
+          ...parent.props,
+          headerHeight,
+          width: nextWidth,
+        })
+        preWidth.push(columnGroupLeft)
+      } else if (groupChildrenStore.length) {
+        columnGroupLeft += nextWidth
+        preWidth.push(columnGroupLeft)
+        groupChildrenStore.forEach((x) => {
+          mergeMaxCells.push({
+            index: i,
+            content: React.cloneElement(x, { ...x.props, headerHeight: headerHeight * (2 / 3) }),
+            ...parent.props,
+            headerHeight,
+            width: x.props.width,
+          })
+        });
       } else {
         nextCells.push(
           cloneCell(cells[i], {
@@ -166,16 +216,16 @@ function mergeCells(cells) {
       const mapGroup = groupByHeader[key]
       const firstMerge = mapGroup[0]
       const width = mapGroup.reduce((total, col) => total += col.width, 0)
-      const { align, verticalAlign, headerHeight, header, fixed } = firstMerge
+      const { align, verticalAlign, headerHeight, header, fixed, index } = firstMerge
       nextCells.push(
-        cloneCell(cells[firstMerge.index], {
+        cloneCell(cells[index], {
           width,
           align,
           fixed,
           children: (
             <ColumnGroup
               width={width}
-              headerHeight={headerHeight}
+              headerHeight={headerHeight / 3 * 2}
               header={header}
               verticalAlign={verticalAlign}
             >

@@ -15,7 +15,7 @@ across: true
 Set the title and function.
 
 ````jsx
-import { CodeArea, Switch, DataSet, Button } from 'choerodon-ui/pro';
+import { CodeArea, DataSet, Button } from 'choerodon-ui/pro';
 import { Icon } from 'choerodon-ui';
 // 处理 codemirror 的SSR问题， 如无需SSR，请用import代替require;
 if (typeof window !== 'undefined') {
@@ -66,7 +66,7 @@ class App extends React.Component {
     this.setState({ hiddenContent: !this.state.hiddenContent });
   }
 
-  get getIconType(): string {
+  get getIconType() {
     return this.state.hiddenContent ? 'baseline-arrow_drop_up' : 'baseline-arrow_drop_down';
   }
 
@@ -82,7 +82,7 @@ class App extends React.Component {
     </div>
   )
 
-  get getClassName(): string {
+  get getClassName() {
     return this.state.hiddenContent ? 'hidden-content' : '';
   }
 

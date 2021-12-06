@@ -52,6 +52,7 @@ timeline: true
 - 💄 `Message`: 优化 loading 类型消息图标。
 - 🐞 `<pro>DataSet`: 修复新添字段后字段顺序不正确的问题。
 - 🐞 `<pro>DataSet`: 废弃 appendData 方法 total 参数。
+- 🐞 `<pro>DataSet.Record`: 修复 getPristineValue 方法无法正确获取 object 类型字段值中的键值。
 - 🐞 `<pro>Lov`: 修复在 popup 模式下搜索框置空时不查询的问题。
 - 🐞 `<pro>Table`: 修复跨页全选时选中记录提示中显示的数量问题。
 - 🐞 `<pro>Table`: 修复在聚合列下的锁定列在平铺模式下无法显示的问题。
@@ -69,6 +70,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复表格内容更新后勾选列消失的问题。
 - 🐞 `List.Item.Meta`: 修复文字类头像不显示的问题。
 - 🐞 `Notification`: 修复首次在 useEffect 中多次调用时重叠的问题。
+- 🐞 `<pro>Tree`: 修复开启异步且设置 selectable 为 false 时, dataset选中记录不对的问题。
 
 ## 1.5.0-beta.0
 
