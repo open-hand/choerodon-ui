@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'رسائل',
+    message: 'ما مجموعه',
+    closeAll: 'أغلق الكل',
+  },
 };
