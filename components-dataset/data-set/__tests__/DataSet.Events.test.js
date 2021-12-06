@@ -282,4 +282,151 @@ describe('DataSet Events', () => {
 		})
 	})
 
+	describe('batchSelect', () => {
+    it('batchSelect-同步-select方法触发-是否会成功触发批量选择记录事件', () => {
+      const ds = new DataSet({
+        ...commonDs,
+        data: mockData,
+        events: {
+          batchSelect({
+            dataSet,
+            records
+          }) {
+            expect(records).toEqual([dataSet.get(0)]);
+          },
+        },
+      });
+      ds.select(ds.get(0));
+    });
+
+    it('batchSelect-同步-treeSelect方法触发-是否会成功触发批量选择记录事件', () => {
+      const ds = new DataSet({
+        ...simpleTreeDs,
+        events: {
+          batchSelect({
+            dataSet,
+            records
+          }) {
+            expect(dataSet.length).toBe(records.length);
+            expect(records).toEqual(dataSet.slice());
+          },
+        },
+      });
+      ds.treeSelect(ds.get(0));
+    });
+
+    it('batchSelect-同步-batchSelect方法触发-是否会成功触发批量选择记录事件', () => {
+      const ds = new DataSet({
+        ...commonDs,
+        data: mockData,
+        events: {
+          batchSelect({
+            dataSet,
+            records
+          }) {
+            expect(records).toEqual(dataSet.slice(0, 4));
+          },
+        },
+      });
+      ds.batchSelect(ds.slice(0, 4));
+    });
+  });
+
+  describe('batchUnSelect', () => {
+    it('batchUnSelect-同步-unSelect方法触发-是否会成功触发批量取消选择记录事件', () => {
+      const ds = new DataSet({
+        ...commonDs,
+        data: mockData,
+        events: {
+          batchUnSelect({dataSet, records}) {
+            expect(records).toEqual([dataSet.get(0)]);
+          },
+        },
+      });
+      ds.forEach(record => record.isSelected = true)
+      expect(ds.selected.length).toBe(8);
+      ds.unSelect(ds.get(0));
+    });
+
+    it('batchUnSelect-同步-batchUnSelect方法触发-是否会成功触发批量取消选择记录事件', () => {
+      const ds = new DataSet({
+        ...commonDs,
+        data: mockData,
+        events: {
+          batchUnSelect({
+            dataSet,
+            records
+          }) {
+            expect(records).toEqual(dataSet.slice(0, 4));
+          },
+        },
+      });
+      ds.forEach((record, index) => {
+        if (index < 4) record.isSelected = true;
+      });
+      ds.batchUnSelect(ds.slice(0, 4));
+    });
+
+    it('batchUnSelect-同步-treeUnSelect方法触发-是否会成功触发批量取消选择记录事件', () => {
+      const ds = new DataSet({
+        ...simpleTreeDs,
+        events: {
+          batchUnSelect({dataSet, records}) {
+            expect(records).toEqual(dataSet.slice());
+          }
+        },
+      });
+      ds.forEach(record => record.isSelected = true);
+      ds.treeUnSelect(ds.get(0));
+    });
+  })
+
+  describe('fieldChange', () => {
+    it('fieldChange-同步-是否会成功触发字段属性变更事件', () => {
+      const ds = new DataSet({
+        ...commonDs,
+        data: mockData,
+        events: {
+          fieldChange({dataSet, record, name, propsName, value, oldValue}) {
+            expect(name).toBe('name');
+            expect(propsName).toBe('required');
+            expect(value).toBeTruthy();
+            expect(oldValue).toBeFalsy();
+          },
+        },
+      });
+      ds.getField('name').set('required', true);
+    });
+  });
+
+  describe('create', () => {
+    it('create-同步-是否会成功触发记录创建事件', () => {
+      const ds = new DataSet({
+        ...commonDs,
+        events: {
+          create({dataSet, record}) {
+            expect(dataSet.length).toBe(1);
+            expect(record.get('name')).toBe('testName');
+          },
+        },
+      });
+      ds.create({name: 'testName'});
+    });
+  });
+  
+  describe('remove', () => {
+    it('remove-同步-是否会成功触发记录移除事件', () => {
+      const ds = new DataSet({
+        ...commonDs,
+        data: mockData,
+        events: {
+          remove({dataSet, records}) {
+            expect(dataSet.records).toEqual(records);
+            expect(dataSet.toData().length).toBe(0);
+          },
+        },
+      });
+      ds.remove(ds.slice());
+    });
+  });
 })
