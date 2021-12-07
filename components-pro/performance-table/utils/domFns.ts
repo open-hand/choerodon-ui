@@ -1,5 +1,5 @@
 import { Key } from 'react';
-import { ColumnProps } from '../Column.d';
+import { ColumnProps } from '../Column';
 
 // @ts-ignore
 export function addEvent(el?: any, event: string, handler: EventListener | EventListenerObject | null, inputOptions?: Object): void {

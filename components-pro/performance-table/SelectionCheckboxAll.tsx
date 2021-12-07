@@ -4,7 +4,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import { observer } from 'mobx-react';
 import Checkbox from 'choerodon-ui/lib/checkbox';
 import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
-import { SelectionCheckboxAllProps, SelectionCheckboxAllState, SelectionItem } from './Table.d';
+import { SelectionCheckboxAllProps, SelectionCheckboxAllState, SelectionItem } from './Table';
 import Dropdown from '../dropdown';
 import Menu from '../menu';
 import Icon from '../icon';

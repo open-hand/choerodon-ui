@@ -15,6 +15,7 @@ import isString from 'lodash/isString';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 
+import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
@@ -36,13 +37,14 @@ import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
 import FieldList from '../../table/query-bar/FieldList';
 import ColumnFilter from '../tool-bar/ColumnFilter';
-import { DynamicFilterBarConfig } from '../Table.d';
+import { DynamicFilterBarConfig } from '../Table';
 import { Suffixes } from '../../table/Table';
 import { ValueChangeAction } from '../../text-field/enum';
 import { iteratorFilterToArray } from '../../_util/iteratorUtils';
 import QuickFilterMenu from '../../table/query-bar/quick-filter/QuickFilterMenu';
 import QuickFilterMenuContext from '../../table/query-bar/quick-filter/QuickFilterMenuContext';
-import { QuickFilterDataSet, ConditionDataSet } from '../../table/query-bar/quick-filter/QuickFilterDataSet';
+import { ConditionDataSet, QuickFilterDataSet } from '../../table/query-bar/quick-filter/QuickFilterDataSet';
+import { TransportProps } from '../../data-set/Transport';
 
 /**
  * 当前数据是否有值并需要选中
@@ -417,7 +419,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
 
-  get tableFilterAdapter() {
+  get tableFilterAdapter(): TransportProps | TableFilterAdapterProps | null | undefined {
     const { dynamicFilterBar } = this.props;
     const { tableStore } = this.context;
     return dynamicFilterBar && dynamicFilterBar.tableFilterAdapter || tableStore.getConfig('tableFilterAdapter');

@@ -1,10 +1,9 @@
 import * as React from 'react';
 import isFunction from 'lodash/isFunction';
-import groupBy from 'lodash/groupBy'
+import groupBy from 'lodash/groupBy';
 import get from 'lodash/get';
 import ColumnGroup from '../ColumnGroup';
-import HeaderCell from '../HeaderCell';
-import { HeaderCellProps } from '../HeaderCell.d';
+import HeaderCell, { HeaderCellProps } from '../HeaderCell';
 
 import isNullOrUndefined from './isNullOrUndefined';
 

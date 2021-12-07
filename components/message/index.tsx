@@ -56,13 +56,24 @@ function getMessageInstance(placement: MessagePlacement, callback: (i: Notificat
   return promise;
 }
 
+export interface ThenableArgument {
+  (_: any): any;
+}
+
+export interface MessageType {
+  (): void;
+
+  then: (fill: ThenableArgument, reject: ThenableArgument) => Promise<any>;
+  promise: Promise<any>;
+}
+
 function notice(
   content: ReactNode,
   duration: ConfigDuration = config.duration,
   type: NoticeType,
   onClose?: ConfigOnClose,
   placement?: MessagePlacement,
-) {
+): MessageType {
   const iconType = {
     info: 'info',
     success: 'check_circle',
@@ -88,24 +99,37 @@ function notice(
   const icon = iconType === 'loading' ?
     <Progress type={ProgressType.loading} size={Size.small} /> :
     <Icon type={iconType} />;
-  const promise: Promise<NotificationInterface> = getMessageInstance(placement || config.placement, instance => {
-    instance.notice({
-      key: target,
-      duration,
-      style: {},
-      contentClassName: `${prefixCls}-content-${type}`,
-      children: (
-        <div className={`${prefixCls}-custom-content ${prefixCls}-${type}`}>
-          {icon}
-          <span>{content}</span>
-        </div>
-      ),
-      onClose,
-    });
-  }, `${prefixCls}-content-${type}`);
-  return () => {
-    promise.then((ins) => ins.removeNotice(target));
+  let promise: Promise<NotificationInterface>;
+  const closePromise = new Promise(resolve => {
+    promise = getMessageInstance(placement || config.placement, instance => {
+      instance.notice({
+        key: target,
+        duration,
+        style: {},
+        contentClassName: `${prefixCls}-content-${type}`,
+        children: (
+          <div className={`${prefixCls}-custom-content ${prefixCls}-${type}`}>
+            {icon}
+            <span>{content}</span>
+          </div>
+        ),
+        onClose() {
+          if (typeof onClose === 'function') {
+            onClose();
+          }
+          resolve();
+        },
+      });
+    }, `${prefixCls}-content-${type}`);
+  });
+  const result: any = () => {
+    if (promise) {
+      promise.then((ins) => ins.removeNotice(target));
+    }
   };
+  result.then = (filled: ThenableArgument, rejected: ThenableArgument) => closePromise.then(filled, rejected);
+  result.promise = closePromise;
+  return result;
 }
 
 export type ConfigOptions = Partial<ConfigProps>;

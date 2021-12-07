@@ -1,8 +1,20 @@
 import React, { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { ColumnGroupProps } from './ColumnGroup.d';
 import { defaultClassPrefix, prefix } from './utils';
+
+export interface ColumnGroupProps {
+  align?: 'left' | 'center' | 'right';
+  verticalAlign?: 'top' | 'middle' | 'bottom';
+  fixed?: boolean | 'left' | 'right';
+  width?: number;
+  left?: number;
+  header?: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+  headerHeight?: number;
+  classPrefix?: string; // Fixed ColumnGroup does not support `classPrefix`
+}
 
 export interface IColumnGroup extends ForwardRefExoticComponent<PropsWithoutRef<ColumnGroupProps> & RefAttributes<HTMLDivElement>> {
   __PRO_TABLE_COLUMN_GROUP?: boolean;

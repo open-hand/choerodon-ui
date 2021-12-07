@@ -8,7 +8,7 @@ import ColumnGroups from './column-groups';
 import { getColumnFixed, getColumnKey } from '../utils';
 import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
-import { ColumnProps } from '../Column.d';
+import { ColumnProps } from '../Column';
 import TableContext from '../TableContext';
 import { $l } from '../../locale-context';
 import Button from '../../button/Button';
