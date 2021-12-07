@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Skupaj',
+    message: 'sporočila',
+    closeAll: 'Zapri vse',
+  },
 };

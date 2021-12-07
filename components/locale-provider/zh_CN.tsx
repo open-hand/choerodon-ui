@@ -72,4 +72,9 @@ export default {
     emptyMessage: '暂无数据',
     loading: '加载中...',
   },
+  Notification: {
+    total: '共',
+    message: '条信息',
+    closeAll: '关闭全部',
+  },
 };

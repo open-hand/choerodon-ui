@@ -13,6 +13,7 @@ import isEqual from 'lodash/isEqual';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
+import omit from 'lodash/omit';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
@@ -190,6 +191,20 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   async handleDataSetQuery({ dataSet }) {
     if (!dataSet.getState('_menuResult') && this.tableFilterAdapter) {
       await this.initMenuDataSet();
+      const { conditionList } = dataSet.getState('_menuResult').filter(menu => menu.defaultFlag)[0];
+      const initQueryData = {};
+      if (conditionList && conditionList.length) {
+        map(conditionList, condition => {
+          if (condition.comparator === 'EQUAL') {
+            const { fieldName, value } = condition;
+            initQueryData[fieldName] = value;
+          }
+        });
+        if (Object.keys(initQueryData).length) {
+          dataSet.query();
+          return false;
+        }
+      }
     }
   }
 
@@ -246,7 +261,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { dataSet, onQuery = noop, autoQuery } = this.props;
     let status = RecordStatus.update;
     if (record) {
-      status = isEqualDynamicProps(this.originalValue, record.toData()) ? RecordStatus.sync : RecordStatus.update;
+      status = isEqualDynamicProps(this.originalValue, omit(record.toData(true), ['__dirty'])) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
     if (autoQuery) {
@@ -270,7 +285,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   initConditionFields(props) {
     const { dataSet, record } = props;
-    const originalValue = record.toData();
+    const originalValue = omit(record.toData(true), ['__dirty']);
     const conditionData = Object.entries(originalValue);
     this.originalValue = originalValue;
     const { fields } = dataSet;
@@ -588,7 +603,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (queryDataSet) {
                   const { current } = queryDataSet;
                   if (current) {
-                    shouldQuery = !isEqualDynamicProps(this.originalValue, current.toData());
+                    shouldQuery = !isEqualDynamicProps(this.originalValue, omit(current.toData(true), ['__dirty']));
                     current.reset();
                     queryDataSet.setState('searchText', '');
                     queryDataSet.setState('selectFields', [...this.originalConditionFields]);

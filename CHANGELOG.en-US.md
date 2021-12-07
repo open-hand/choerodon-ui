@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `Notification`: Added config props of `foldCount`.
+- 💄 `Step`: Optimize the navigation style of the `Steps`.
+- 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
+
 ## 1.5.0
 
 `2021-12-02`

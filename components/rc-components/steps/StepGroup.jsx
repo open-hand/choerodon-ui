@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import Dropdown from 'choerodon-ui/pro/lib/dropdown';
+import scrollIntoView from 'scroll-into-view-if-needed';
 import { isFlexSupported, getStyle } from './utils';
 import StepGroup from './StepGroup';
 import Step from './Step';
@@ -15,7 +16,7 @@ import isFunction from 'lodash/isFunction';
 import isString from 'lodash/isString';
 import Menu from '../../menu';
 import MenuItem from '../../menu/MenuItem';
-import EventManager from '../../_util/EventManager';
+import Button from '../../button'
 
 
 
@@ -59,9 +60,8 @@ export default class Steps extends Component {
       isShowMore: false,
     };
     this.calcStepOffsetWidth = debounce(this.calcStepOffsetWidth, 150);
-    this.resizeEvent = new EventManager(typeof window === 'undefined' ? undefined : window);
-    this.pageNo = 1;
-    this.pageSize = 0;
+    this.navRef = null;
+    this.menuRef = null;
   }
 
   componentDidMount() {
@@ -74,16 +74,27 @@ export default class Steps extends Component {
     }
     if (this.props.type === 'navigation') {
       this.showMore()
-      const debouncedResize = debounce(() => {
-        this.showMore()
-      }, 200);
-      this.resizeEvent.addEventListener('resize', debouncedResize)
     }
   }
 
   componentDidUpdate() {
-    this.props.setNumberChange((this.pageNo - 1) * this.pageSize)
+    this.props.setNumberChange(0)
     this.calcStepOffsetWidth();
+    // 定位到进行中的导航步骤
+    const { prefixCls, type } = this.props;
+    if (this.navRef && type === 'navigation') {
+      const processCls = `${prefixCls}-item-process`
+      const processDom = this.navRef.getElementsByClassName(processCls)
+      if (processDom.length) {
+        scrollIntoView(processDom[0], {
+          block: 'end',
+          behavior: 'smooth',
+          scrollMode: 'if-needed',
+          boundary: this.navRef,
+        });
+      }
+
+    }
   }
 
   componentWillUnmount() {
@@ -94,22 +105,15 @@ export default class Steps extends Component {
     if (this.calcStepOffsetWidth && this.calcStepOffsetWidth.cancel) {
       this.calcStepOffsetWidth.cancel();
     }
-    this.resizeEvent.removeEventListener('resize')
   }
 
   showMore = () => {
-    const containerWidth = this.stepsRef.offsetWidth;
-    let isShowMore = false
-    const childLength = this.props.children.length
-    const minWidth = 176; // 最小宽度176
-    const containerNumber = Math.floor(containerWidth / minWidth); // 可容纳个数
-    if (containerNumber < childLength) {
-      isShowMore = true;
-      this.pageSize = containerNumber
+    const stepsDom = this.navRef
+    if (stepsDom) {
+      this.setState({
+        isShowMore: (stepsDom.scrollWidth > stepsDom.clientWidth) || (stepsDom.offsetWidth > stepsDom.clientWidth)
+      })
     }
-    this.setState({
-      isShowMore,
-    })
   }
 
   calcStepOffsetWidth = () => {
@@ -150,6 +154,23 @@ export default class Steps extends Component {
     const { onChange = noop } = this.props;
     onChange(Number(e.key))
   }
+
+  onVisibleChange = (visible) => {
+    const { prefixCls, current } = this.props;
+    if (visible) {
+      setTimeout(() => {
+        if (this.menuRef) {
+          const processDom = this.menuRef.getElementsByTagName('li')[current]
+          scrollIntoView(processDom, {
+            block: 'end',
+            behavior: 'smooth',
+            scrollMode: 'if-needed',
+            boundary: this.menuRef,
+          });
+        }
+      });
+    }
+  }
   render() {
     const {
       prefixCls,
@@ -176,46 +197,50 @@ export default class Steps extends Component {
     const filteredChildren = Children.toArray(children).filter(c => !!c);
     const lastIndex = filteredChildren.length - 1;
     const adjustedlabelPlacement = !!progressDot ? 'vertical' : labelPlacement;
-    const classString = classNames(prefixCls, `${prefixCls}-${direction}`, className, {
+    // 限制导航步骤条只能横向显示
+    const isNavigation = type === 'navigation' && direction !== 'vertical';
+    const classString = classNames(`${prefixCls}-${direction}`, className, {
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-label-${adjustedlabelPlacement}`]: direction === 'horizontal',
       [`${prefixCls}-dot`]: !!progressDot,
+      [`${prefixCls}-${isNavigation ? 'navigation' : 'default'}`]: 1
     });
-
     const menu = () => {
-      return <Menu onClick={this.menuClick}>
-        {
-          filteredChildren.map((child, index) => {
-            const childProps = {
-              stepNumber: `${index + 1}`,
-              prefixCls,
-              iconPrefix,
-              ...child.props,
-            };
-            if (!child.props.status) {
-              if (index === current) {
-                childProps.status = status;
-              } else if (index < current) {
-                childProps.status = 'finish';
-              } else {
-                childProps.status = 'wait';
+      return <div ref={dom => { this.menuRef = dom }}>
+        <Menu onClick={this.menuClick} className={`${prefixCls}-dropdown-menu`}>
+          {
+            filteredChildren.map((child, index) => {
+              const childProps = {
+                stepNumber: `${index + 1}`,
+                prefixCls,
+                iconPrefix,
+                ...child.props,
+              };
+              if (!child.props.status) {
+                if (index === current) {
+                  childProps.status = status;
+                } else if (index < current) {
+                  childProps.status = 'finish';
+                } else {
+                  childProps.status = 'wait';
+                }
               }
-            }
-            const classString = classNames(`${prefixCls}-item`, `${prefixCls}-item-${childProps.status}`, className, {
-              [`${prefixCls}-item-custom`]: child.props.icon,
-            });
-            const iconCls = classNames(`${prefixCls}-item-icon`, `${prefixCls}-item-dropdown-icon`)
-            return (
-              <MenuItem key={index}>
-                <div className={classString}>
-                  <div className={iconCls}>{<RenderIcon {...childProps} />}</div>
-                  <div className={`${prefixCls}-item-dropdown-title`}>{childProps.title}</div>
-                </div>
-              </MenuItem>
-            )
-          })
-        }
-      </Menu>
+              const classString = classNames(`${prefixCls}-item`, `${prefixCls}-item-${childProps.status}`, className, {
+                [`${prefixCls}-item-custom`]: child.props.icon,
+              });
+              const iconCls = classNames(`${prefixCls}-item-icon`, `${prefixCls}-item-dropdown-icon`)
+              return (
+                <MenuItem key={index}>
+                  <div className={classString}>
+                    <div className={iconCls}>{<RenderIcon {...childProps} />}</div>
+                    <div className={`${prefixCls}-item-dropdown-title`}>{childProps.title}</div>
+                  </div>
+                </MenuItem>
+              )
+            })
+          }
+        </Menu>
+      </div>
     }
 
     const renderHeader = (renderFn, headerTitle, IconText) => {
@@ -245,37 +270,15 @@ export default class Steps extends Component {
       return headerChildren.length > 0 ? <div className={`${prefixCls}-header`}>{headerChildren}</div> : null;
     }
 
-    // 限制导航步骤条 只能 横向显示
-    const isNavigation = type === 'navigation' && direction !== 'vertical';
-
-    // 当步骤过多超过容器宽度，应分页显示
-    const getChild = () => {
-      if (!isNavigation) {
-        return filteredChildren
-      }
-      if (this.pageSize > 0) {
-        if (current + 1 > this.pageSize && current >= (this.pageSize * this.pageNo)) {
-          setNumberChange(this.pageSize * this.pageNo)
-          this.pageNo++;
-        } else if (current + 1 <= (this.pageSize * (this.pageNo - 1)) && this.pageNo > 1) {
-          this.pageNo--
-          setNumberChange(this.pageSize * (this.pageNo - 1))
-        }
-        return filteredChildren.slice(this.pageSize * (this.pageNo - 1), (this.pageSize * this.pageNo))
-      } else {
-        return filteredChildren
-      }
-    }
-
     return (
-      <div className={`${prefixCls}-${isNavigation ? `navigation` : 'defalut'}`}>
-        <div className={classString} style={style} {...restProps} ref={ref => { this.stepsRef = ref }}>
+      <div className={`${prefixCls}`}>
+        <div className={classString} style={style} {...restProps} ref={ref => { this.navRef = ref }}>
           {renderHeader(
             headerRender,
             headerText,
             headerIcon
           )}
-          {Children.map(getChild(), (child, index) => {
+          {Children.map(filteredChildren, (child, index) => {
             if (child.type === Step) {
               let gIndex = getNumberChange()
               const childProps = {
@@ -285,6 +288,7 @@ export default class Steps extends Component {
                 wrapperStyle: style,
                 progressDot,
                 onChange,
+                navigation: isNavigation,
                 ...child.props,
               };
               /**
@@ -325,9 +329,12 @@ export default class Steps extends Component {
         </div>
         {
           isShowMore && direction !== 'vertical' &&
-          <div className={`${prefixCls}-dropdown`} >
-            <Dropdown overlay={menu} key="more">
-              <div className={`${prefixCls}-dropdown-icon`}><Icon type="more_horiz" /></div>
+          <div className={`${prefixCls}-dropdown`}>
+            <Dropdown overlay={menu} key="more" onVisibleChange={this.onVisibleChange}>
+              <Button
+                type="primary"
+                icon="more_horiz"
+              />
             </Dropdown>
           </div>
         }

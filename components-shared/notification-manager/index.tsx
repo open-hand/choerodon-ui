@@ -9,6 +9,7 @@ export interface ConfigProps<P = NotificationPlacement> {
   placement: P;
   getContainer?: () => HTMLElement;
   maxCount?: number;
+  foldCount?: number;
 }
 
 export interface NotificationInterface {

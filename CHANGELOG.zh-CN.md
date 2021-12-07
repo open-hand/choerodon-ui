@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `Notification`: 新增 foldCount 全局配置属性。
+- 💄 `Step`: 优化 Steps 组件的导航条样式。
+- 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
+
 ## 1.5.0
 
 `2021-12-02`
