@@ -1,8 +1,7 @@
 import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import isObject from 'lodash/isObject';
-import { TableQueryBarType } from '../Table';
-import { TableQueryBarHookProps, TableQueryBarProps } from '../Table.d';
+import { TableQueryBarHookProps, TableQueryBarProps, TableQueryBarType } from '../Table';
 import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
 import { getEditorByField, getPlaceholderByField } from '../../table/utils';

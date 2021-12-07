@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import Checkbox from 'choerodon-ui/lib/checkbox';
 import Radio from 'choerodon-ui/lib/radio';
-import { SelectionBoxProps, SelectionBoxState } from './Table.d';
+import { SelectionBoxProps, SelectionBoxState } from './Table';
 
 @observer
 export default class SelectionBox extends React.Component<SelectionBoxProps, SelectionBoxState> {

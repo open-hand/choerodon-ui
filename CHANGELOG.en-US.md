@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `Notification`: Added config props of `foldCount`.
+- 🌟 `Message`: Added a promised interface to handle callback.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 

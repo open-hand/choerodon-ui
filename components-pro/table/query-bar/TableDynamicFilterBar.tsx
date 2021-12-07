@@ -15,6 +15,7 @@ import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
@@ -39,6 +40,7 @@ import { iteratorFilterToArray } from '../../_util/iteratorUtils';
 import QuickFilterMenu from './quick-filter/QuickFilterMenu';
 import QuickFilterMenuContext from './quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from './quick-filter/QuickFilterDataSet';
+import { TransportProps } from '../../data-set/Transport';
 
 /**
  * 当前数据是否有值并需要选中
@@ -457,7 +459,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return isArrayLike(value) ? !value.length : isEmpty(value);
   }
 
-  get tableFilterAdapter() {
+  get tableFilterAdapter(): TransportProps | TableFilterAdapterProps | null | undefined {
     const { dynamicFilterBar, searchCode } = this.props;
     const { getConfig } = this.context;
     const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;

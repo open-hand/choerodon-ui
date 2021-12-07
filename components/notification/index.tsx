@@ -6,6 +6,8 @@ import Icon from '../icon';
 import { newNotificationInstance } from './Notification';
 import { getPrefixCls } from '../configure/utils';
 
+export { NotificationPlacement };
+
 export type IconType = 'success' | 'info' | 'error' | 'warning';
 const { config } = NotificationManager;
 
