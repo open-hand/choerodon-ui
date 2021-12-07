@@ -347,10 +347,11 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const { onMouseEnter, onMouseLeave } = props;
     const tooltipWrapper = disabled && !href && (onMouseEnter || onMouseLeave);
     const buttonProps = tooltipWrapper ? omit(props, ['className', 'style']) : props;
+    const hrefButtonProps = href ? omit(buttonProps, ['type']) : buttonProps;
     const rippleDisabled = disabled || funcType === FuncType.link;
     const button = (
       <Ripple disabled={rippleDisabled}>
-        <Cmp {...(href ? omit(buttonProps, ['type']) : buttonProps)}>
+        <Cmp {...(disabled ? omit(hrefButtonProps, ['href']) : hrefButtonProps)}>
           {buttonIcon}
           {hasString ? <span>{children}</span> : children}
         </Cmp>
