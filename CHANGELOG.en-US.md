@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `Message`: Added a promised interface to handle callback.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
+- 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.
 
 ## 1.5.0
 
