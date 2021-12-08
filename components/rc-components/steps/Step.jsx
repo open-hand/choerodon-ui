@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import RenderIcon from './RenderIcon';
+import Icon from '../../icon';
 
 export default class Step extends Component {
   static propTypes = {
@@ -20,6 +21,7 @@ export default class Step extends Component {
     title: PropTypes.any,
     progressDot: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     tailContent: PropTypes.any,
+    navigation: PropTypes.bool,
     onChange: PropTypes.func,
   };
 
@@ -46,6 +48,7 @@ export default class Step extends Component {
       progressDot,
       tailContent,
       onChange,
+      navigation,
       ...restProps
     } = this.props;
 
@@ -69,7 +72,10 @@ export default class Step extends Component {
         <div className={`${prefixCls}-item-tail`}>{tailContent}</div>
         <div className={`${prefixCls}-item-icon`}><RenderIcon {...this.props} /></div>
         <div className={`${prefixCls}-item-content`}>
-          <div className={`${prefixCls}-item-title`}>{title}</div>
+          <div className={`${prefixCls}-item-title`}>
+            {title}
+            {navigation && <Icon type="navigate_next" className={`${prefixCls}-item-title-icon`} />}
+          </div>
           {description && <div className={`${prefixCls}-item-description`}>{description}</div>}
         </div>
       </div>

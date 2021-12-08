@@ -16,7 +16,7 @@ export interface QRBarCodeProps extends BaseQRCodeProps {
   value: string;
   bgColor?: string;
   fgColor?: string;
-  renderAs: 'canvas' | 'svg';
+  renderAs?: 'canvas' | 'svg';
   /**
    * JsBarcode 需要的属性
    */

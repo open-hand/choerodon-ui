@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface StandardProps {
   /** The prefix of the component CSS class */
   classPrefix?: string;
@@ -12,7 +14,9 @@ export interface StandardProps {
 }
 
 export type SortType = 'desc' | 'asc';
+
 export interface RowDataType {
   dataKey: string;
+
   [key: string]: any;
 }

@@ -15,6 +15,17 @@ timeline: true
 
 ---
 
+- 🌟 `Notification`: Added config props of `foldCount`.
+- 🌟 `Message`: Added a promised interface to handle callback.
+- 💄 `Step`: Optimize the navigation style of the `Steps`.
+- 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
+- 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.
+- 🐞 `<pro>Button`: Fix the problem that the `href` button can be jumped when the href button is `disabled`.
+
+## 1.5.0
+
+`2021-12-02`
+
 - 🌟 Split `dataset` and `shared` libraries.
 - 🌟 `ConfigProvider`: Added `ConfigProvider` component.
 - 🌟 `hooks`: Added `useConfig` hook.
@@ -52,6 +63,7 @@ timeline: true
 - 💄 `Message`: Optimized `loading` type message icon.
 - 🐞 `<pro>DataSet`: Fix the problem of incorrect field sequence after adding new fields.
 - 🐞 `<pro>DataSet`: The `total` parameter of the `appendData` method is discarded.
+- 🐞 `<pro>DataSet.Record`: Fix the `getPristineValue` method cannot correctly obtain the key value in the object type field value.
 - 🐞 `<pro>Lov`: Fix the problem of not searching when the search box is empty in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of the number displayed in the selected record prompt when selecting all across pages.
 - 🐞 `<pro>Table`: Fix the problem that locked columns under aggregate column cannot be displayed when `aggregation` is false.
@@ -68,6 +80,8 @@ timeline: true
 - 🐞 `Tabs`: Fix the nesting style problem.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that check column disappear after the table content is updated.
 - 🐞 `List.Item.Meta`: Fix the problem that text avatars are not displayed.
+- 🐞 `Notification`: Fix the overlap problem when called multiple times in useEffect hook for the first time.
+- 🐞 `<pro>Tree`: Fixed error in `dataset` selected records when `async` is enabled and `selectable` is set to false.
 
 ## 1.5.0-beta.0
 

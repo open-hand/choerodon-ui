@@ -10,7 +10,7 @@ import {
 } from 'choerodon-ui/dataset/configure';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { expandIconProps, Suffixes, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
-import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table.d.ts';
+import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';

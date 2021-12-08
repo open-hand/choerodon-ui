@@ -1,13 +1,16 @@
 import React, { FocusEventHandler, FunctionComponent, ReactNode, useEffect, useRef } from 'react';
+import classNames from 'classnames';
 
 export interface TextFieldGroupProps {
   prefixCls?: string;
   onBlur?: FocusEventHandler<any>;
   children?: ReactNode;
+  className?: string;
 }
 
-const TextFieldGroup: FunctionComponent<TextFieldGroupProps> = ({ prefixCls, onBlur, children, ...otherProps }) => {
+const TextFieldGroup: FunctionComponent<TextFieldGroupProps> = ({ prefixCls, onBlur, children, className, ...otherProps }) => {
   const ref = useRef<HTMLDivElement | null>(null);
+  const selfPrefixCls = `${prefixCls}-group-wrapper`;
   useEffect(() => {
     const { current } = ref;
     if (current && onBlur) {
@@ -25,7 +28,7 @@ const TextFieldGroup: FunctionComponent<TextFieldGroupProps> = ({ prefixCls, onB
     }
   }, [onBlur, ref]);
   return (
-    <div ref={ref} className={`${prefixCls}-group-wrapper`} {...otherProps}>
+    <div ref={ref} {...otherProps} className={classNames(selfPrefixCls, className)}>
       {children}
     </div>
   );

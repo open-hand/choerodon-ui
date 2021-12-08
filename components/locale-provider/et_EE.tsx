@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Kokku',
+    message: 'sõnumit',
+    closeAll: 'Sulgege kõik',
+  },
 };

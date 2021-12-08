@@ -7,10 +7,9 @@ import { Action } from 'choerodon-ui/lib/trigger/enum';
 import Dropdown from '../../dropdown/Dropdown';
 import TableContext from '../TableContext';
 import { Placements } from '../../dropdown/enum';
-import { ColumnProps } from '../Column.d';
+import Column, { ColumnProps } from '../Column';
 import { stopEvent, stopPropagation } from '../../_util/EventManager';
 import autobind from '../../_util/autobind';
-import Column from '../Column';
 
 function handleMenuClick({ domEvent }) {
   domEvent.preventDefault();

@@ -1,43 +1,43 @@
 export {
-    CellProps,
-} from './Cell.d';
+  CellProps,
+} from './Cell';
 
 export {
-    CellGroupProps,
-} from './CellGroup.d';
+  CellGroupProps,
+} from './CellGroup';
 
 export {
-    ColumnProps,
-} from './Column.d';
+  ColumnProps,
+} from './Column';
 
 export {
-    ColumnGroupProps,
-} from './ColumnGroup.d';
+  ColumnGroupProps,
+} from './ColumnGroup';
 
 export {
-    ColumnResizeHandlerProps,
-} from './ColumnResizeHandler.d';
+  ColumnResizeHandlerProps,
+} from './ColumnResizeHandler';
 
 export {
-    StandardProps,
-    SortType,
-    RowDataType,
-} from './Common.d';
+  StandardProps,
+  SortType,
+  RowDataType,
+} from './common';
 
 export {
-    HeaderCellProps,
-} from './HeaderCell.d';
+  HeaderCellProps,
+} from './HeaderCell';
 
 export {
-    RowProps,
-} from './Row.d';
+  RowProps,
+} from './Row';
 
 export {
-    ScrollbarProps,
-} from './Scrollbar.d';
+  ScrollbarProps,
+} from './Scrollbar';
 
 export {
-    TableLocale,
-    TableScrollLength,
-    TableProps,
-} from './Table.d';
+  TableLocale,
+  TableScrollLength,
+  TableProps,
+} from './Table';

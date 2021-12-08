@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'toplam',
+    message: 'mesaj',
+    closeAll: 'Hepsini kapat',
+  },
 };
