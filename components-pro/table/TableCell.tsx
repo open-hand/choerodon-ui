@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
+import defaultTo from 'lodash/defaultTo';
 import Tree, { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, defaultAggregationRenderer } from './Column';
@@ -112,8 +113,11 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         const visibleChildren = childColumns.filter(child => !child.hidden);
         const { length } = visibleChildren;
         if (length > 0) {
-          const { renderer = defaultAggregationRenderer, aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll } = column;
-          const expanded = tableStore.isAggregationCellExpanded(record, key);
+          const { renderer = defaultAggregationRenderer, aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll, aggregationLimitDefaultExpanded } = column;
+          const expanded: boolean = defaultTo(
+            tableStore.isAggregationCellExpanded(record, key),
+            typeof aggregationLimitDefaultExpanded === 'function' ? aggregationLimitDefaultExpanded(record) : aggregationLimitDefaultExpanded,
+          ) || false;
           const hasExpand = length > aggregationLimit!;
           const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
 

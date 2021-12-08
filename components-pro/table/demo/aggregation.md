@@ -414,14 +414,14 @@ class App extends React.Component {
             <Column name="description" editor={<TextArea />} width={150} sortable />
           </Column>
         </Column>
-        <Column header="代码组" align="left" aggregation renderer={aggregationRendereer} key="code-group">
+        <Column header="代码组" align="left" aggregation renderer={aggregationRendereer} key="code-group" aggregationLimitDefaultExpanded>
           <Column name="code" editor width={150} sortable />
           <Column name="code_code" editor width={150} tooltip="overflow" />
           <Column name="code_select" editor width={150} />
           <Column name="codeMultiple" editor width={150} />
           <Column name="codeMultiple_code" width={150} />
         </Column>
-        <Column header="性别组" align="left" aggregationLimit={2} aggregation key="sex-group">
+        <Column header="性别组" align="left" aggregationLimit={2} aggregation key="sex-group" aggregationLimitDefaultExpanded={record => record.get('sex') === 'M'}>
           <Column name="sex" editor={<SelectBox />} width={150} />
           <Column header="性别id" renderer={sexIdRenderer} />
           <Column name="sexMultiple" editor width={150} />

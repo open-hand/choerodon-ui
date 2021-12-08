@@ -131,6 +131,7 @@ subtitle: 表格
 | tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | [globalConfig.tooltip](/components/configure#API) |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |
 | aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
+| aggregationLimitDefaultExpanded | 聚合超过限制的条目默认是否展开显示  | boolean \| (record) => boolean | |
 | aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |

@@ -1,5 +1,5 @@
 import React, { Children, isValidElement, Key, ReactNode } from 'react';
-import { action, computed, get, observable, runInAction, set } from 'mobx';
+import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -1421,25 +1421,17 @@ export default class TableStore {
     this.hasAggregationColumn = hasAggregationColumn;
   }
 
-  isAggregationCellExpanded(record: Record, key: Key): boolean {
-    const expandedKeys = record.getState(AGGREGATION_EXPAND_CELL_KEY);
+  isAggregationCellExpanded(record: Record, key: Key): boolean | undefined {
+    const expandedKeys: ObservableMap<Key, boolean> | undefined = record.getState(AGGREGATION_EXPAND_CELL_KEY) as ObservableMap<Key, boolean>;
     if (expandedKeys) {
-      return expandedKeys.includes(key);
+      return expandedKeys.get(key);
     }
-    return false;
   }
 
   @action
   setAggregationCellExpanded(record: Record, key: Key, expanded: boolean) {
-    const expandedKeys = record.getState(AGGREGATION_EXPAND_CELL_KEY) || [];
-    const index = expandedKeys.indexOf(key);
-    if (expanded) {
-      if (index === -1) {
-        expandedKeys.push(key);
-      }
-    } else if (index !== -1) {
-      expandedKeys.splice(index, 1);
-    }
+    const expandedKeys: ObservableMap<Key, boolean> = record.getState(AGGREGATION_EXPAND_CELL_KEY) || observable.map();
+    expandedKeys.set(key, expanded);
     record.setState(AGGREGATION_EXPAND_CELL_KEY, expandedKeys);
   }
 

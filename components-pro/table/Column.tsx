@@ -143,6 +143,10 @@ export interface ColumnPropsBase extends ElementProps {
    */
   aggregationLimit?: number;
   /**
+   * 默认展开聚合列的展开按钮
+   */
+  aggregationLimitDefaultExpanded?: boolean | ((record: Record) => boolean);
+  /**
    * 默认展开指定的聚合列树节点
    */
   aggregationDefaultExpandedKeys?: Key[];
