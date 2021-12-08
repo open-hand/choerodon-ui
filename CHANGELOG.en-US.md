@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.
 - 🐞 `<pro>Button`: Fix the problem that the `href` button can be jumped when the href button is `disabled`.
+- 🐞 `<pro>Button`: Fixed button `disabled` property controlled, then remove the disabled trigger `onClick` event at the same time.
 
 ## 1.5.0
 

@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。
 - 🐞 `<pro>Button`: 修复 href 按钮禁用状态下任可跳转的问题。
+- 🐞 `<pro>Button`: 修复当按钮 disabled 属性受控时，解除禁用后同时触发 onClick 事件问题。
 
 ## 1.5.0
 
