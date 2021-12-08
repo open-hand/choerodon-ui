@@ -57,7 +57,7 @@ export const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapte
     }),
   },
   fields: [
-    { name: 'searchName', type: 'string', maxLength: 10, required: true },
+    { name: 'searchName', type: 'string', maxLength: 20, required: true },
     { name: 'searchId', type: 'string' },
     { name: 'defaultFlag', type: 'boolean', falseValue: 0, trueValue: 1 },
     { name: 'searchCode', type: 'string', defaultValue: searchCode },

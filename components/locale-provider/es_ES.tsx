@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Un total de',
+    message: 'mensajes',
+    closeAll: 'Cierra todo',
+  },
 };

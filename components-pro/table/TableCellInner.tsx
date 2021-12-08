@@ -12,6 +12,7 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import { isArrayLike } from 'mobx';
@@ -89,10 +90,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const { name, key, lock, renderer, command, align } = column;
   const columnKey = getColumnKey(column);
   const height = record.getState(`__column_resize_height_${name}`);
-  const { currentEditRecord } = tableStore;
+  const { currentEditRecord, isTree } = tableStore;
   const field = dataSet.getField(name);
   const fieldDisabled = disabled || (field && field.get('disabled', record));
   const innerRef = useRef<HTMLSpanElement | null>(null);
+  const prefixRef = useRef<HTMLSpanElement | null>(null);
+  const [paddingLeft, setPaddingLeft] = useState<number>(indentSize * record.level);
   const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
       return command({ dataSet, record, aggregation });
@@ -617,12 +620,24 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   if (height !== undefined && rows === 0) {
     innerClassName.push(`${prefixCls}-inner-fixed-height`);
   }
+
+  useEffect(() => {
+    // 兼容Table Tree模式嵌套过深样式
+    if (isTree && prefixRef.current) {
+      const parentWidth = prefixRef.current.parentElement!.clientWidth;
+      const prefixWidth = prefixRef.current.offsetWidth;
+      if (prefixWidth > parentWidth) {
+        setPaddingLeft(paddingLeft - (prefixWidth - parentWidth));
+      }
+    }
+  }, [prefixRef, paddingLeft, setPaddingLeft, isTree]);
+
   const indentText = children && (
-    <span style={{ paddingLeft: pxToRem(indentSize * record.level) }} />
+    <span style={{ paddingLeft: pxToRem(paddingLeft) }} />
   );
 
   const prefix = (indentText || children || checkBox) && (
-    <span key="prefix" className={`${prefixCls}-prefix`} style={prefixStyle}>
+    <span key="prefix" className={`${prefixCls}-prefix`} style={prefixStyle} ref={prefixRef}>
       {indentText}
       {children}
       {checkBox}

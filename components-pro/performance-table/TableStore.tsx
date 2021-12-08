@@ -13,14 +13,12 @@ import CustomizationColumnHeader from './customization-settings/CustomizationCol
 import CustomizationSettings from './customization-settings';
 import DataSet from '../data-set';
 import { getColumnKey } from './utils';
-import { PerformanceTableCustomized, TableProps, TableQueryBarProps, TableRowSelection } from './Table.d';
-import { ColumnProps } from './Column.d';
-import Column from './Column';
+import PerformanceTable, { PerformanceTableCustomized, TableProps, TableQueryBarProps, TableRowSelection } from './Table';
+import Column, { ColumnProps } from './Column';
 import autobind from '../_util/autobind';
 import { ModalProps } from '../modal/Modal';
 import { $l } from '../locale-context';
 import { ColumnLock, TableHeightType } from '../table/enum';
-import PerformanceTable from './Table';
 // import isFragment from '../_util/isFragment';
 
 // export function normalizeColumns(

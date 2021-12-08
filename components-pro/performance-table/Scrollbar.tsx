@@ -1,14 +1,30 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { DOMMouseMoveTracker, addStyle, getOffset } from 'dom-lib';
-import isNumber from 'lodash/isNumber'
+import { addStyle, DOMMouseMoveTracker, getOffset } from 'dom-lib';
+import isNumber from 'lodash/isNumber';
 import Icon from 'choerodon-ui/lib/icon';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { SCROLLBAR_MIN_WIDTH } from './constants';
 import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import TableContext from './TableContext';
-import { ScrollbarProps } from './Scrollbar.d';
+import { TableScrollLength } from './Table';
+
+export interface ScrollbarProps {
+  vertical?: boolean;
+  length: number;
+  scrollLength: number;
+  scrollBarOffset: number;
+  className?: string;
+  classPrefix?: string;
+  tableId?: string;
+  onScroll?: (delta: number, event: React.MouseEvent) => void;
+  onMouseDown?: (event: React.MouseEvent) => void;
+  clickScrollLength: TableScrollLength,
+  showScrollArrow?: boolean;
+
+  [key: string]: any;
+}
 
 type Offset = {
   top: number;
@@ -210,12 +226,12 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
     e.stopPropagation();
     const { vertical, clickScrollLength, scrollLength, length } = this.props;
     if (vertical) {
-      if(isNumber(clickScrollLength.vertical)) {
+      if (isNumber(clickScrollLength.vertical)) {
         const handleLength = (length / scrollLength) * clickScrollLength.vertical;
         this.handleScroll(sort === 'fir' ? -handleLength : handleLength, e);
       }
     } else {
-      if(isNumber(clickScrollLength.horizontal)) {
+      if (isNumber(clickScrollLength.horizontal)) {
         const handleLength = (length / scrollLength) * clickScrollLength.horizontal;
         this.handleScroll(sort === 'fir' ? -handleLength : handleLength, e);
       }

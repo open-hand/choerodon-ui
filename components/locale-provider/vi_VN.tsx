@@ -45,4 +45,9 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  Notification: {
+    total: 'Tổng cộng có',
+    message: 'tin nhắn',
+    closeAll: 'Đóng tất cả',
+  },
 };

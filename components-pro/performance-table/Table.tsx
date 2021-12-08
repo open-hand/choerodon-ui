@@ -17,10 +17,13 @@ import { addStyle, getHeight, getOffset, getWidth, on, scrollLeft, scrollTop, Wh
 import {
   DragDropContext,
   Draggable,
+  DraggableChildrenFn,
+  DraggableProps,
   DraggableProvided,
   DraggableStateSnapshot,
   DragStart,
   Droppable,
+  DroppableProps,
   DroppableProvided,
   DropResult,
   ResponderProvided,
@@ -38,13 +41,13 @@ import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
 
 import { stopPropagation } from '../_util/EventManager';
 import ModalProvider from '../modal-provider/ModalProvider';
-import Row from './Row';
+import Row, { RowProps } from './Row';
 import CellGroup from './CellGroup';
 import Scrollbar from './Scrollbar';
 import SelectionBox from './SelectionBox';
 import SelectionCheckboxAll from './SelectionCheckboxAll';
 import TableContext from './TableContext';
-import { CELL_PADDING_HEIGHT, SCROLLBAR_WIDTH, SCROLLBAR_LARGE_WIDTH } from './constants';
+import { CELL_PADDING_HEIGHT, SCROLLBAR_LARGE_WIDTH, SCROLLBAR_WIDTH } from './constants';
 import {
   cancelAnimationTimeout,
   defaultClassPrefix,
@@ -64,31 +67,240 @@ import {
 } from './utils';
 
 import isMobile from '../_util/isMobile';
-import {
-  TableProps,
-  SelectionInfo,
-  TableRowSelection,
-  RowSelectionType,
-  SelectionItemSelectFn,
-  TableSelectWay,
-} from './Table.d';
-import { RowProps } from './Row.d';
-import { SortType } from './common.d';
+import { RowDataType, SortType, StandardProps } from './common';
 import ColumnGroup from './ColumnGroup';
-import Column from './Column';
+import Column, { ColumnProps } from './Column';
 import Cell from './Cell';
 import HeaderCell from './HeaderCell';
-import { ColumnProps } from './Column.d';
 import Spin from '../spin';
 import PerformanceTableQueryBar from './query-bar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import TableStore from './TableStore';
-import Toolbar from './tool-bar';
+import Toolbar, { ToolBarProps } from './tool-bar';
 import { TableHeightType } from '../table/enum';
 import { isDropresult } from '../table/utils';
 import { arrayMove } from '../data-set/utils';
 import { $l } from '../locale-context';
+import DataSet from '../data-set';
+import { TransportProps } from '../data-set/Transport';
+import { FormProps } from '../form/Form';
+
+export interface TableLocale {
+  emptyMessage?: string;
+  loading?: string;
+}
+
+
+export interface TableScrollLength {
+  horizontal?: number;
+  vertical?: number;
+}
+
+export enum TableQueryBarType {
+  professionalBar = 'professionalBar',
+  filterBar = 'filterBar',
+}
+
+export interface TableQueryBarProps {
+  type?: TableQueryBarType;
+  renderer?: (props: TableQueryBarHookProps) => React.ReactNode;
+  dataSet?: DataSet;
+  queryFormProps?: FormProps;
+  defaultExpanded?: Boolean;
+  queryDataSet?: DataSet;
+  queryFields?: React.ReactElement<any>[];
+  queryFieldsLimit?: number;
+  onQuery?: (props: object) => void;
+  onReset?: () => void;
+}
+
+export interface TableQueryBarHookProps {
+  dataSet: DataSet;
+  queryDataSet?: DataSet;
+  queryFields: React.ReactElement<any>[];
+  queryFieldsLimit?: number;
+  onQuery?: (props: object) => void;
+  onReset?: () => void;
+}
+
+export interface DynamicFilterBarConfig {
+  searchCode: string;
+  searchText?: string;
+  quickSearch?: boolean;
+  suffixes?: React.ReactElement<any>[];
+  prefixes?: React.ReactElement<any>[];
+  tableFilterAdapter?: TransportProps;
+}
+
+export interface PerformanceTableCustomized {
+  columns: object;
+  heightType?: TableHeightType;
+  height?: number;
+  heightDiff?: number;
+}
+
+export type RowSelectionType = 'checkbox' | 'radio';
+export type SelectionSelectFn = (
+  record: object,
+  selected: boolean,
+  selectedRows: Object[],
+  nativeEvent: Event,
+) => void;
+
+export type TableSelectWay = 'onSelect' | 'onSelectMultiple' | 'onSelectAll' | 'onSelectInvert';
+export type SelectionItemSelectFn = (key: string[]) => void;
+
+export interface SelectionItem {
+  key: string;
+  text: React.ReactNode;
+  onSelect?: SelectionItemSelectFn;
+}
+
+export interface TableRowSelection {
+  type?: RowSelectionType;
+  selectedRowKeys?: string[] | number[];
+  onChange?: (selectedRowKeys: string[] | number[], selectedRows: object[]) => void;
+  getCheckboxProps?: (record: object) => Object;
+  onSelect?: SelectionSelectFn;
+  onSelectMultiple?: (selected: boolean, selectedRows: object[], changeRows: object[]) => void;
+  onSelectAll?: (selected: boolean, selectedRows: object[], changeRows: object[]) => void;
+  onSelectInvert?: (selectedRowKeys: string[] | number[]) => void;
+  selections?: SelectionItem[] | boolean;
+  hideDefaultSelections?: boolean;
+  fixed?: boolean | string;
+  columnWidth?: number;
+  selectWay?: TableSelectWay;
+  columnTitle?: string | React.ReactNode;
+  columnIndex?: number;
+}
+
+export interface SelectionCheckboxAllProps {
+  store: any;
+  disabled: boolean;
+  getCheckboxPropsByItem: (item: object, index: number) => { defaultChecked: boolean };
+  getRecordKey: (record: object, index?: number) => string;
+  data: object[];
+  prefixCls: string | undefined;
+  onSelect: (key: string, index: number, selectFunc: any) => void;
+  hideDefaultSelections?: boolean;
+  selections?: SelectionItem[] | boolean;
+}
+
+export interface SelectionCheckboxAllState {
+  checked?: boolean;
+  indeterminate?: boolean;
+}
+
+export interface SelectionBoxProps {
+  store: any;
+  type?: RowSelectionType;
+  defaultSelection: string[];
+  rowIndex: string;
+  name?: string;
+  disabled?: boolean;
+  onChange: (e: RadioChangeEvent | CheckboxChangeEvent) => void;
+}
+
+export interface SelectionBoxState {
+  checked?: boolean;
+}
+
+export interface SelectionInfo {
+  selectWay: TableSelectWay;
+  record?: object;
+  checked?: boolean;
+  changeRowKeys?: React.Key[];
+  nativeEvent?: Event;
+}
+
+export interface ColumnRenderIcon {
+  column: ColumnProps;
+  dataSet?: DataSet | undefined;
+  snapshot?: DraggableStateSnapshot;
+}
+
+export interface DragRender {
+  droppableProps?: DroppableProps;
+  draggableProps?: DraggableProps;
+  renderClone?: DraggableChildrenFn;
+  renderIcon?: ((rowRenderIcon: ColumnRenderIcon) => React.ReactElement<any>);
+}
+
+export interface TableProps extends StandardProps {
+  /** 左上角的 title */
+  headerTitle?: React.ReactNode;
+  rowSelection?: TableRowSelection;
+  queryBar?: false | TableQueryBarProps;
+  toolbar?: ToolBarProps,
+  /** 渲染操作栏 */
+  toolBarRender?: ToolBarProps['toolBarRender'] | false,
+  columns?: ColumnProps[];
+  autoHeight?: boolean;
+  affixHeader?: boolean | number;
+  affixHorizontalScrollbar?: boolean | number;
+  bodyRef?: (ref: HTMLElement) => void;
+  bordered?: boolean;
+  className?: string;
+  classPrefix: string;
+  children: React.ReactNode;
+  cellBordered?: boolean;
+  defaultSortType?: SortType;
+  disabledScroll?: boolean;
+  defaultExpandAllRows?: boolean;
+  defaultExpandedRowKeys?: string[] | number[];
+  data: object[];
+  expandedRowKeys?: string[] | number[];
+  height: number;
+  hover: boolean;
+  headerHeight: number;
+  locale: TableLocale;
+  clickScrollLength: TableScrollLength,
+  loading?: boolean;
+  loadAnimation?: boolean;
+  minHeight: number;
+  rowHeight: number | ((rowData: object) => number);
+  rowKey: string;
+  isTree?: boolean;
+  rowExpandedHeight?: number;
+  rowClassName?: string | ((rowData: object) => string);
+  showHeader?: boolean;
+  showScrollArrow?: boolean;
+  style?: React.CSSProperties;
+  sortColumn?: string;
+  sortType?: SortType;
+  shouldUpdateScroll?: boolean;
+  translate3d?: boolean;
+  rtl?: boolean;
+  width?: number;
+  wordWrap?: boolean;
+  virtualized?: boolean;
+  renderTreeToggle?: (
+    expandButton: React.ReactNode,
+    rowData?: RowDataType,
+    expanded?: boolean,
+  ) => React.ReactNode;
+  renderRowExpanded?: (rowDate?: object) => React.ReactNode;
+  renderEmpty?: (info: React.ReactNode) => React.ReactNode;
+  renderLoading?: (loading: React.ReactNode) => React.ReactNode;
+  onRowClick?: (rowData: object, event: React.MouseEvent) => void;
+  onRowContextMenu?: (rowData: object, event: React.MouseEvent) => void;
+  onScroll?: (scrollX: number, scrollY: number) => void;
+  onSortColumn?: (dataKey: string, sortType?: SortType) => void;
+  onExpandChange?: (expanded: boolean, rowData: object) => void;
+  onTouchStart?: (event: React.TouchEvent) => void; // for tests
+  onTouchMove?: (event: React.TouchEvent) => void; // for tests
+  onDataUpdated?: (nextData: object[], scrollTo: (coord: { x: number; y: number }) => void) => void;
+  customizedCode?: string;
+  customizable?: boolean;
+  columnDraggable?: boolean;
+  columnTitleEditable?: boolean;
+  columnsDragRender?: DragRender;
+  rowDraggable?: boolean;
+  onDragStart?: (initial: DragStart, provided: ResponderProvided) => void;
+  onDragEnd?: (result: DropResult, provided: ResponderProvided, data: object) => void;
+  onDragEndBefore?: (result: DropResult, provided: ResponderProvided) => boolean;
+}
 
 interface TableRowProps extends RowProps {
   key?: string | number;
@@ -99,11 +311,6 @@ const SORT_TYPE = {
   DESC: 'desc',
   ASC: 'asc',
 };
-
-export enum TableQueryBarType {
-  professionalBar = 'professionalBar',
-  filterBar = 'filterBar',
-}
 
 type Offset = {
   top?: number;
@@ -429,11 +636,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.wheelWrapperRef = React.createRef();
     this.tableHeaderRef = React.createRef();
 
-    runInAction(this.setSelectionColumn);
+    runInAction(() => this.setSelectionColumn(props));
   }
 
-  setSelectionColumn = () => {
-    const { rowSelection, columns = [], children = [] } = this.props;
+  setSelectionColumn = (props) => {
+    const { rowSelection, columns = [], children = [] } = props;
     const index = columns.findIndex(column => column.key === 'rowSelection');
     if (rowSelection) {
       if (index > -1) columns.splice(index, 1);
@@ -521,18 +728,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this._cacheCells = null;
       this.tableStore.updateProps(nextProps, this);
     }
-
+    const flag = this.props.columns !== nextProps.columns
+      || this.props.children !== nextProps.children
+      || this.props.rowSelection !== nextProps.rowSelection
+    if(flag) {
+      runInAction(() => this.setSelectionColumn(nextProps));
+    }
     return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, height, virtualized, children, columns, rowSelection } = prevProps;
-    const { rowSelection: currentRowSelection, columns: currentColumns, children: currentChildren } = this.props;
-    const flag = rowSelection !== currentRowSelection || columns !== currentColumns || children !== currentChildren;
-    if (flag) {
-      runInAction(this.setSelectionColumn);
-    }
-
+    const { rowHeight, data, height, virtualized, children, columns } = prevProps;
     if (data !== this.props.data) {
       this.calculateRowMaxHeight();
       this.props.onDataUpdated?.(this.props.data, this.scrollTo);
@@ -769,13 +975,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
     for (let index = 0; index < childColumns.length; index += 1) {
       const childColumn = childColumns[index];
+      const { verticalAlign: childVerticalAlign, align: childAlign } = childColumn.props;
       const parentProps = {
-        align,
+        align: childAlign || align,
         fixed,
-        verticalAlign,
+        verticalAlign: childVerticalAlign || verticalAlign,
         ...cellProps,
       };
       const groupCellProps: any = {
+        parent: column,
         ...childColumn?.props,
         ...parentProps,
       };
@@ -2205,7 +2413,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-              // {...(rowDragRender && rowDragRender.draggableProps)} todo
+            // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}

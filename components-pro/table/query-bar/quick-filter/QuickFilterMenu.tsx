@@ -6,6 +6,7 @@ import isObject from 'lodash/isObject';
 import isEnumEmpty from 'lodash/isEmpty';
 import isArray from 'lodash/isArray';
 import noop from 'lodash/noop';
+import omit from 'lodash/omit';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
 import Tag from 'choerodon-ui/lib/tag';
@@ -23,6 +24,7 @@ import Record from '../../../data-set/Record';
 import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
 import isOverflow from '../../../overflow-tip/util';
+import { isEqualDynamicProps } from '../TableDynamicFilterBar';
 
 import Store from './QuickFilterMenuContext';
 
@@ -86,7 +88,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
     const status = {};
     status[statusKey] = statusAdd;
     if (type !== 'edit') {
-      const conditionData = Object.entries(queryDataSet.current.toData());
+      const conditionData = Object.entries(omit(queryDataSet.current.toData(true), ['__dirty']));
       map(conditionData, data => {
         if (isSelect(data)) {
           const fieldObj = findFieldObj(queryDataSet, data);
@@ -133,7 +135,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
   });
 
   modal.handleCancel(() => {
-    menuDataSet.current.reset();
+    menuDataSet.reset();
   });
 
   const proPrefixCls = getConfig('proPrefixCls');
@@ -199,11 +201,11 @@ const QuickFilterMenu = function QuickFilterMenu() {
   /**
    * queryDS 筛选赋值并更新初始勾选项
    * @param init
-   * 初始化查询依赖于ds props autoQuery, 切换依赖组件 autoQuery props
    */
   const conditionAssign = (init?: boolean) => {
     onOriginalChange();
     const { current } = menuDataSet;
+    let shouldQuery = false;
     if (current) {
       const { conditionList } = current.toData();
       const initData = {};
@@ -218,12 +220,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
         });
         const emptyRecord = new Record({...initData}, queryDataSet);
         queryDataSet.setState('selectFields', Object.keys(initData));
+        shouldQuery = !isEqualDynamicProps(initData, omit(queryDataSet?.current?.toData(true), ['__dirty']));
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
         });
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
+        shouldQuery = !isEqualDynamicProps(initData, omit(queryDataSet?.current?.toData(true), ['__dirty']));
         const emptyRecord = new Record({}, queryDataSet);
         queryDataSet.setState('selectFields', []);
         runInAction(() => {
@@ -232,17 +236,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
         });
         onStatusChange(RecordStatus.sync);
       }
-      if (init) {
-        if (dataSet.props.autoQuery) dataSet.query();
-      } else if (autoQuery) {
+      if (!init && shouldQuery && autoQuery) {
         dataSet.query();
       }
     }
   };
 
   const handleQueryReset = () => {
-    const { current } = filterMenuDataSet;
-    if (current && current.get('filterName')) {
+    if (filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName')) {
       // 筛选项重置重新赋值
       conditionAssign();
     } else {
@@ -250,9 +251,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
        * 未选择或清除筛选项
        * 重置初始勾选项及初始赋值
        */
-      onOriginalChange();
       queryDataSet.locate(0);
       queryDataSet.get(0)?.reset();
+      onOriginalChange();
       if (autoQuery) {
         dataSet.query();
       }
@@ -288,8 +289,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         }
         conditionAssign(init);
       } else {
-        if (current) current.set('filterName', undefined);
-        queryDataSet.reset();
+        current?.set('filterName', undefined);
       }
     }
   };
@@ -320,6 +320,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
   };
 
   const handleChange = (value?: number) => {
+    queryDataSet.current?.reset();
     locateData(value);
   };
 
@@ -386,7 +387,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     } else {
       const { current } = queryDataSet;
       if (current) {
-        const conditionData = Object.entries(current.toData());
+        const conditionData = Object.entries(omit(current.toData(true), ['__dirty']));
         conditionDataSet.reset();
         map(conditionData, data => {
           const fieldObj = findFieldObj(queryDataSet, data);
@@ -425,7 +426,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         });
         const menuRecord = menuDataSet.current;
         if (menuRecord) {
-          menuRecord.set('conditionList', { ...conditionDataSet.toJSONData(), ...putData });
+          menuRecord.set('conditionList', [...conditionDataSet.toJSONData(), ...putData]);
         }
         const res = await menuDataSet.submit();
         if (res && res.success) {
@@ -435,15 +436,20 @@ const QuickFilterMenu = function QuickFilterMenu() {
     }
   };
 
+  /**
+   * 重命名，定位到重命名记录
+   * @param record
+   */
   const handleEdit = (record) => {
+    locateData(record.get('searchId'));
     openModal('edit', record.get('searchId'));
   };
 
   const handleSaveOther = () => {
     const { current } = menuDataSet;
     if (current) {
-      current.set('searchName', '');
-      current.clearValidationError('searchName');
+      const searchName = current.get('searchName');
+      current.set('searchName', `${searchName}-copy`);
     }
     openModal('save');
   };
@@ -560,7 +566,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
-          {filterMenuDataSet.current?.get('filterName') && (
+          {filterMenuDataSet?.current?.get('filterName') && (
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>

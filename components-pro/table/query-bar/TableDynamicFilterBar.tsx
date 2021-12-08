@@ -13,7 +13,9 @@ import isEqual from 'lodash/isEqual';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
+import omit from 'lodash/omit';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
@@ -38,6 +40,7 @@ import { iteratorFilterToArray } from '../../_util/iteratorUtils';
 import QuickFilterMenu from './quick-filter/QuickFilterMenu';
 import QuickFilterMenuContext from './quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from './quick-filter/QuickFilterDataSet';
+import { TransportProps } from '../../data-set/Transport';
 
 /**
  * 当前数据是否有值并需要选中
@@ -50,7 +53,7 @@ function isSelect(data) {
   return data[0] !== '__dirty' && !isEmpty(data[1]);
 }
 
-function isEqualDynamicProps(originalValue, newValue) {
+export function isEqualDynamicProps(originalValue, newValue) {
   if (isEqual(newValue, originalValue)) {
     return true;
   }
@@ -142,8 +145,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   originalConditionFields: string[] = [];
 
-  menuResult = false;
-
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -172,9 +173,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   processDataSetListener(flag: boolean) {
     const { queryDataSet, dataSet } = this.props;
     if (queryDataSet) {
-      if (flag && queryDataSet.length === 1) {
-        this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.get(0)! });
-      }
       const handler = flag ? queryDataSet.addEventListener : queryDataSet.removeEventListener;
       const dsHandler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
       handler.call(queryDataSet, DataSetEvents.validate, this.handleDataSetValidate);
@@ -192,8 +190,24 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   };
 
   @autobind
-  handleDataSetQuery() {
-    return this.menuResult;
+  async handleDataSetQuery({ dataSet }) {
+    if (!dataSet.getState('_menuResult') && this.tableFilterAdapter) {
+      await this.initMenuDataSet();
+      const { conditionList } = dataSet.getState('_menuResult').filter(menu => menu.defaultFlag)[0];
+      const initQueryData = {};
+      if (conditionList && conditionList.length) {
+        map(conditionList, condition => {
+          if (condition.comparator === 'EQUAL') {
+            const { fieldName, value } = condition;
+            initQueryData[fieldName] = value;
+          }
+        });
+        if (Object.keys(initQueryData).length) {
+          dataSet.query();
+          return false;
+        }
+      }
+    }
   }
 
   /**
@@ -249,7 +263,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { dataSet, onQuery = noop, autoQuery } = this.props;
     let status = RecordStatus.update;
     if (record) {
-      status = isEqualDynamicProps(this.originalValue, record.toData()) ? RecordStatus.sync : RecordStatus.update;
+      status = isEqualDynamicProps(this.originalValue, omit(record.toData(true), ['__dirty'])) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
     if (autoQuery) {
@@ -262,15 +276,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * queryDS 新建，初始勾选值
    */
   @autobind
-  handleDataSetCreate(props) {
-    this.initConditionFields(props);
-    this.initMenuDataSet();
+  handleDataSetCreate() {
+    const { queryDataSet } = this.props;
+    this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
   }
 
+  /**
+   * 初始化勾选值、条件字段
+   * @param props
+   */
   initConditionFields(props) {
     const { dataSet, record } = props;
-    const { queryDataSet } = this.props;
-    const originalValue = record.toData();
+    const originalValue = omit(record.toData(true), ['__dirty']);
     const conditionData = Object.entries(originalValue);
     this.originalValue = originalValue;
     const { fields } = dataSet;
@@ -282,7 +299,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         !isArray(data[1])) {
         name = `${data[0]}.${Object.keys(data[1])[0]}`;
       }
-      if (isSelect(data) && !(queryDataSet.getState('selectFields') || []).includes(name)) {
+      if (isSelect(data) && !(dataSet.getState('selectFields') || []).includes(name)) {
         const field = dataSet.getField(name);
         if (!field || !field.get('bind', record)) {
           this.originalConditionFields.push(name);
@@ -296,62 +313,61 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 初始筛选条数据源状态
    */
   @autobind
-  async initMenuDataSet(): Promise<void> {
+  async initMenuDataSet(): Promise<boolean> {
     const { queryDataSet, dataSet, dynamicFilterBar, searchCode } = this.props;
     const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
-    const menuDataSet = new DataSet(QuickFilterDataSet({
-      searchCode: searchCodes,
-      queryDataSet,
-      tableFilterAdapter: this.tableFilterAdapter,
-    }) as DataSetProps);
-    const conditionDataSet = new DataSet(ConditionDataSet());
-    const optionDataSet = new DataSet({
-      selection: DataSetSelection.single,
-    });
-    const filterMenuDataSet = new DataSet({
-      autoCreate: true,
-      fields: [
-        {
-          name: 'filterName',
-          type: FieldType.string,
-          textField: 'searchName',
-          valueField: 'searchId',
-          options: optionDataSet,
-          ignore: FieldIgnore.always,
-        },
-      ],
-    });
-    // 初始化状态
-    queryDataSet.setState('menuDataSet', menuDataSet);
-    queryDataSet.setState('conditionDataSet', conditionDataSet);
-    queryDataSet.setState('optionDataSet', optionDataSet);
-    queryDataSet.setState('filterMenuDataSet', filterMenuDataSet);
-    queryDataSet.setState('conditionStatus', RecordStatus.sync);
-    queryDataSet.setState('searchText', '');
-
-    const result = await menuDataSet.query();
-    this.menuResult = true;
-    if (optionDataSet) {
-      optionDataSet.loadData(result);
-    }
-    const menuRecord = menuDataSet.current;
-    if (menuRecord) {
-      conditionDataSet.loadData(menuRecord.get('conditionList'));
-    }
-    if (result && result.length) {
-      runInAction(() => {
-        this.shouldLocateData = true;
+    if (this.tableFilterAdapter) {
+      const menuDataSet = new DataSet(QuickFilterDataSet({
+        searchCode: searchCodes,
+        queryDataSet,
+        tableFilterAdapter: this.tableFilterAdapter,
+      }) as DataSetProps);
+      const conditionDataSet = new DataSet(ConditionDataSet());
+      const optionDataSet = new DataSet({
+        selection: DataSetSelection.single,
       });
-    } else {
-      const { current } = filterMenuDataSet;
-      if (current) current.set('filterName', undefined);
-      runInAction(() => {
-        this.shouldLocateData = true;
+      const filterMenuDataSet = new DataSet({
+        autoCreate: true,
+        fields: [
+          {
+            name: 'filterName',
+            type: FieldType.string,
+            textField: 'searchName',
+            valueField: 'searchId',
+            options: optionDataSet,
+            ignore: FieldIgnore.always,
+          },
+        ],
       });
-      if (dataSet.props.autoQuery) {
-        dataSet.query();
+      // 初始化状态
+      queryDataSet.setState('menuDataSet', menuDataSet);
+      queryDataSet.setState('conditionDataSet', conditionDataSet);
+      queryDataSet.setState('optionDataSet', optionDataSet);
+      queryDataSet.setState('filterMenuDataSet', filterMenuDataSet);
+      queryDataSet.setState('conditionStatus', RecordStatus.sync);
+      queryDataSet.setState('searchText', '');
+      const result = await menuDataSet.query();
+      dataSet.setState('_menuResult', result);
+      if (optionDataSet) {
+        optionDataSet.loadData(result);
+      }
+      const menuRecord = menuDataSet.current;
+      if (menuRecord) {
+        conditionDataSet.loadData(menuRecord.get('conditionList'));
+      }
+      if (result && result.length) {
+        runInAction(() => {
+          this.shouldLocateData = true;
+        });
+      } else {
+        const { current } = filterMenuDataSet;
+        if (current) current.set('filterName', undefined);
+        runInAction(() => {
+          this.shouldLocateData = true;
+        });
       }
     }
+    return true;
   }
 
   /**
@@ -443,7 +459,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return isArrayLike(value) ? !value.length : isEmpty(value);
   }
 
-  get tableFilterAdapter() {
+  get tableFilterAdapter(): TransportProps | TableFilterAdapterProps | null | undefined {
     const { dynamicFilterBar, searchCode } = this.props;
     const { getConfig } = this.context;
     const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
@@ -542,7 +558,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, queryDataSet, dynamicFilterBar, autoQueryAfterReset, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { dataSet, queryDataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { getConfig } = this.context;
     const { prefixCls } = this;
     const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
@@ -568,10 +584,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             queryDataSet.setState('searchText', '');
           });
           onReset();
-          if (autoQueryAfterReset) {
-            dataSet.setQueryParameter(searchText, undefined);
-            this.handleQuery(true);
-          }
         }}
       />
     </div>);
@@ -589,15 +601,19 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           queryDataSet.getState('conditionStatus') === RecordStatus.update && (
             <Button
               onClick={() => {
+                let shouldQuery = false;
                 if (queryDataSet) {
                   const { current } = queryDataSet;
                   if (current) {
+                    shouldQuery = !isEqualDynamicProps(this.originalValue, omit(current.toData(true), ['__dirty']));
                     current.reset();
+                    queryDataSet.setState('searchText', '');
+                    queryDataSet.setState('selectFields', [...this.originalConditionFields]);
                   }
                 }
                 this.setConditionStatus(RecordStatus.sync);
                 onReset();
-                if (autoQueryAfterReset) {
+                if (autoQueryAfterReset && shouldQuery) {
                   this.handleQuery();
                 }
               }}
@@ -671,13 +687,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { queryFieldsLimit = 3, queryFields, queryDataSet } = this.props;
     const { prefixCls } = this;
     const selectFields = queryDataSet?.getState('selectFields') || [];
-    const singleLineModeAction = this.isSingleLineOpt() ?
-      <div className={`${prefixCls}-dynamic-filter-bar-single-action`}>
-        {this.getResetButton()}
-        {this.getExpandNode(false)}
-      </div> : null;
-
     if (queryDataSet && queryFields.length) {
+      const singleLineModeAction = this.isSingleLineOpt() ?
+        <div className={`${prefixCls}-dynamic-filter-bar-single-action`}>
+          {this.getResetButton()}
+          {this.getExpandNode(false)}
+        </div> : null;
       return (
         <div key="query_bar" className={`${prefixCls}-dynamic-filter-bar`}>
           {this.getFilterMenu()}

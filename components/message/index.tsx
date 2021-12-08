@@ -1,80 +1,79 @@
 import React, { ReactNode } from 'react';
+import isPromise from 'is-promise';
 import noop from 'lodash/noop';
 import isString from 'lodash/isString';
+import { MessageManager } from 'choerodon-ui/shared';
+import { NotificationInterface } from 'choerodon-ui/shared/notification-manager';
+import { MessagePlacement, ConfigProps } from 'choerodon-ui/shared/message-manager';
 import Icon from '../icon';
 import Progress from '../progress';
 import { ProgressType } from '../progress/enum';
 import { Size } from '../_util/enum';
-import Notification from '../rc-components/notification';
+import { newNotificationInstance } from '../notification/Notification';
 import { getPlacementStyle, getPlacementTransitionName } from './util';
 import { getPrefixCls } from '../configure/utils';
 
-let defaultDuration = 3;
-let defaultTop = 24;
-let defaultBottom = 24;
-let messageInstance: any;
-let key = 1;
-let customizePrefixCls;
-let transitionName = 'move-up';
-let defaultPlacement: Placement = 'leftBottom';
-let getContainer: () => HTMLElement;
-let defaultMaxCount;
+const { config } = MessageManager;
 
 type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading';
-type Placement =
-  | 'top'
-  | 'left'
-  | 'right'
-  | 'bottom'
-  | 'topRight'
-  | 'topLeft'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'rightTop'
-  | 'leftTop'
-  | 'rightBottom'
-  | 'leftBottom';
 
 type ConfigContent = ReactNode;
-type ConfigDuration = number | Placement | (() => void);
-export type ConfigOnClose = (() => void) | Placement;
+type ConfigDuration = number | MessagePlacement | (() => void);
+export type ConfigOnClose = (() => void) | MessagePlacement;
 
 function getCustomizePrefixCls() {
-  return getPrefixCls('message', customizePrefixCls);
+  return getPrefixCls('message', config.prefixCls);
 }
 
-function getMessageInstance(placement: Placement, callback: (i: any) => void ,contentClassName: string) {
-  if (messageInstance) {
-    callback(messageInstance);
-    return;
+function getMessageInstance(placement: MessagePlacement, callback: (i: NotificationInterface) => void, contentClassName: string): Promise<NotificationInterface> {
+  const { instance } = MessageManager;
+  if (instance) {
+    if (isPromise<NotificationInterface, NotificationInterface>(instance)) {
+      instance.then(callback);
+      return instance;
+    }
+    callback(instance);
+    return Promise.resolve(instance);
   }
-  Notification.newInstance(
-    {
-      prefixCls: getCustomizePrefixCls(),
-      style: getPlacementStyle(placement, defaultTop, defaultBottom),
-      transitionName: getPlacementTransitionName(placement, transitionName),
-      getContainer,
-      contentClassName,
-      defaultMaxCount,
-    },
-    (instance: any) => {
-      if (messageInstance) {
-        callback(messageInstance);
-        return;
-      }
-      messageInstance = instance;
-      callback(instance);
-    },
-  );
+  const promise: Promise<NotificationInterface> = new Promise((resolve) => {
+    newNotificationInstance(
+      {
+        prefixCls: getCustomizePrefixCls(),
+        style: getPlacementStyle(placement, config.top, config.bottom),
+        transitionName: getPlacementTransitionName(placement, config.transitionName),
+        getContainer: config.getContainer,
+        contentClassName,
+        maxCount: config.maxCount,
+      },
+      (instance: NotificationInterface) => {
+        resolve(instance);
+        MessageManager.instance = instance;
+        callback(instance);
+      },
+    );
+  });
+  MessageManager.instance = promise;
+  return promise;
+}
+
+export interface ThenableArgument {
+  (_: any): any;
+}
+
+export interface MessageType {
+  (): void;
+
+  then: (fill: ThenableArgument, reject: ThenableArgument) => Promise<any>;
+  promise: Promise<any>;
 }
 
 function notice(
   content: ReactNode,
-  duration: ConfigDuration = defaultDuration,
+  duration: ConfigDuration = config.duration,
   type: NoticeType,
   onClose?: ConfigOnClose,
-  placement?: Placement,
-) {
+  placement?: MessagePlacement,
+): MessageType {
   const iconType = {
     info: 'info',
     success: 'check_circle',
@@ -90,58 +89,57 @@ function notice(
 
   if (typeof duration === 'function') {
     onClose = duration;
-    duration = defaultDuration;
+    duration = config.duration;
   } else if (isString(duration)) {
     placement = duration;
   }
 
-  const target = key++;
+  const target = MessageManager.getUuid();
   const prefixCls = getCustomizePrefixCls();
-  const icon = iconType === "loading" ?
+  const icon = iconType === 'loading' ?
     <Progress type={ProgressType.loading} size={Size.small} /> :
     <Icon type={iconType} />;
-  getMessageInstance(placement || defaultPlacement, instance => {
-    instance.notice({
-      key: target,
-      duration,
-      style: {},
-      contentClassName:`${prefixCls}-content-${type}`,
-      content: (
-        <div className={`${prefixCls}-custom-content ${prefixCls}-${type}`}>
-          {icon}
-          <span>{content}</span>
-        </div>
-      ),
-      onClose,
-    });
-  },`${prefixCls}-content-${type}`);
-  return () => {
-    if (messageInstance) {
-      messageInstance.removeNotice(target);
+  let promise: Promise<NotificationInterface>;
+  const closePromise = new Promise(resolve => {
+    promise = getMessageInstance(placement || config.placement, instance => {
+      instance.notice({
+        key: target,
+        duration,
+        style: {},
+        contentClassName: `${prefixCls}-content-${type}`,
+        children: (
+          <div className={`${prefixCls}-custom-content ${prefixCls}-${type}`}>
+            {icon}
+            <span>{content}</span>
+          </div>
+        ),
+        onClose() {
+          if (typeof onClose === 'function') {
+            onClose();
+          }
+          resolve();
+        },
+      });
+    }, `${prefixCls}-content-${type}`);
+  });
+  const result: any = () => {
+    if (promise) {
+      promise.then((ins) => ins.removeNotice(target));
     }
   };
+  result.then = (filled: ThenableArgument, rejected: ThenableArgument) => closePromise.then(filled, rejected);
+  result.promise = closePromise;
+  return result;
 }
 
-export interface ConfigOptions {
-  top?: number;
-  duration?: number;
-  prefixCls?: string;
-  getContainer?: () => HTMLElement;
-  transitionName?: string;
-  /**
-   * 消息距离视窗位置
-   */
-  bottom?: number;
-  placement?: Placement;
-  maxCount?: number;
-}
+export type ConfigOptions = Partial<ConfigProps>;
 
 export default {
   info(
     content: ConfigContent,
     duration?: ConfigDuration,
     onClose?: ConfigOnClose,
-    placement?: Placement,
+    placement?: MessagePlacement,
   ) {
     return notice(content, duration, 'info', onClose, placement);
   },
@@ -149,7 +147,7 @@ export default {
     content: ConfigContent,
     duration?: ConfigDuration,
     onClose?: ConfigOnClose,
-    placement?: Placement,
+    placement?: MessagePlacement,
   ) {
     return notice(content, duration, 'success', onClose, placement);
   },
@@ -157,7 +155,7 @@ export default {
     content: ConfigContent,
     duration?: ConfigDuration,
     onClose?: ConfigOnClose,
-    placement?: Placement,
+    placement?: MessagePlacement,
   ) {
     return notice(content, duration, 'error', onClose, placement);
   },
@@ -166,7 +164,7 @@ export default {
     content: ConfigContent,
     duration?: ConfigDuration,
     onClose?: ConfigOnClose,
-    placement?: Placement,
+    placement?: MessagePlacement,
   ) {
     return notice(content, duration, 'warning', onClose, placement);
   },
@@ -174,7 +172,7 @@ export default {
     content: ConfigContent,
     duration?: ConfigDuration,
     onClose?: ConfigOnClose,
-    placement?: Placement,
+    placement?: MessagePlacement,
   ) {
     return notice(content, duration, 'warning', onClose, placement);
   },
@@ -182,43 +180,40 @@ export default {
     content: ConfigContent,
     duration?: ConfigDuration,
     onClose?: ConfigOnClose,
-    placement?: Placement,
+    placement?: MessagePlacement,
   ) {
     return notice(content, duration, 'loading', onClose, placement);
   },
   config(options: ConfigOptions) {
     if (options.top !== undefined) {
-      defaultTop = options.top;
-      messageInstance = null; // delete messageInstance for new defaultTop
+      config.top = options.top;
+      MessageManager.clear();
     }
     if (options.bottom !== undefined) {
-      defaultBottom = options.bottom;
-      messageInstance = null; // delete messageInstance for new defaultBottom
+      config.bottom = options.bottom;
+      MessageManager.clear();
     }
     if (options.duration !== undefined) {
-      defaultDuration = options.duration;
+      config.duration = options.duration;
     }
     if (options.prefixCls !== undefined) {
-      customizePrefixCls = options.prefixCls;
+      config.prefixCls = options.prefixCls;
     }
     if (options.getContainer !== undefined) {
-      getContainer = options.getContainer;
+      config.getContainer = options.getContainer;
     }
     if (options.transitionName !== undefined) {
-      transitionName = options.transitionName;
-      messageInstance = null; // delete messageInstance for new transitionName
+      config.transitionName = options.transitionName;
+      MessageManager.clear();
     }
     if (options.placement !== undefined) {
-      defaultPlacement = options.placement;
+      config.placement = options.placement;
     }
     if (options.maxCount !== undefined) {
-      defaultMaxCount = options.maxCount;
+      config.maxCount = options.maxCount;
     }
   },
   destroy() {
-    if (messageInstance) {
-      messageInstance.destroy();
-      messageInstance = null;
-    }
+    MessageManager.clear();
   },
 };

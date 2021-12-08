@@ -33,4 +33,9 @@ export default {
   Select: {
     notFoundContent: 'No trobat',
   },
+  Notification: {
+    total: 'Un total de',
+    message: 'missatges',
+    closeAll: 'Tanca-ho tot',
+  },
 };

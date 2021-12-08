@@ -1,8 +1,20 @@
 import React, { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { ColumnGroupProps } from './ColumnGroup.d';
 import { defaultClassPrefix, prefix } from './utils';
+
+export interface ColumnGroupProps {
+  align?: 'left' | 'center' | 'right';
+  verticalAlign?: 'top' | 'middle' | 'bottom';
+  fixed?: boolean | 'left' | 'right';
+  width?: number;
+  left?: number;
+  header?: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+  headerHeight?: number;
+  classPrefix?: string; // Fixed ColumnGroup does not support `classPrefix`
+}
 
 export interface IColumnGroup extends ForwardRefExoticComponent<PropsWithoutRef<ColumnGroupProps> & RefAttributes<HTMLDivElement>> {
   __PRO_TABLE_COLUMN_GROUP?: boolean;
@@ -39,13 +51,10 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
       </div>
 
       {React.Children.map(children, (node: React.ReactElement) => {
-        const nodeStyles = { height, ...node.props?.style, top: styles.height, left: styles.left, };
-        const isColumnGroup = (node.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP
+        const nodeStyles = { ...node.props?.style, top: styles.height, left: styles.left };
         return React.cloneElement(node, {
           className: addPrefix('cell'),
           style: nodeStyles,
-          headerHeight: height * (isColumnGroup ? 2 : 1),
-          verticalAlign,
           children: <span className={addPrefix('cell-content')}>{node.props.children}</span>
         });
       })}
