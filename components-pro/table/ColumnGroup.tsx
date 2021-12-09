@@ -1,5 +1,6 @@
 import { Key } from 'react';
 import { action, computed, observable } from 'mobx';
+import Group from 'choerodon-ui/dataset/data-set/Group';
 import { ColumnProps, columnWidth } from './Column';
 import ColumnGroups from './ColumnGroups';
 import { getColumnKey, getColumnLock } from './utils';
@@ -99,6 +100,14 @@ export default class ColumnGroup {
       return this.allLeafs;
     }
     return [];
+  }
+
+  get rowGroup(): Group | undefined {
+    const { __group } = this.column;
+    if (__group) {
+      return __group;
+    }
+    return this.parent.rowGroup;
   }
 
   constructor(column: ColumnProps, parent: ColumnGroups, store: TableStore) {

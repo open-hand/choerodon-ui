@@ -13,8 +13,9 @@ import { isEmpty, parseNumber, warning } from '../utils';
 import Field, { FieldProps, Fields } from './Field';
 // import XLSX from 'xlsx';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
-import DataSet, { DataSetProps, Group } from './DataSet';
+import DataSet, { DataSetProps } from './DataSet';
 import Record, { RecordDynamicProps } from './Record';
+import Group from './Group';
 import * as ObjectChainValue from '../object-chain-value';
 import localeContext, { $l } from '../locale-context';
 import { SubmitTypes, TransportType, TransportTypes } from './Transport';
@@ -975,58 +976,78 @@ export function fixAxiosConfig(config: AxiosRequestConfig): AxiosRequestConfig {
   return config;
 }
 
-const EMPTY_GROUP_KEY = '__empty_group__';
+const EMPTY_GROUP_KEY = Symbol('__empty_group__');
 
-export function normalizeGroups(groups: string[], records: Record[]): Group[] {
+export function normalizeGroups(groups: string[], hGroups: string[], records: Record[]): Group[] {
   const optGroups: Group[] = [];
-  const restRecords: Record[] = [];
+  const emptyGroup = new Group(EMPTY_GROUP_KEY);
   records.forEach((record) => {
     let previousGroup: Group | undefined;
-    groups.every((key) => {
+    groups.forEach((key) => {
       const label = record.get(key);
-      if (label !== undefined) {
+      if (!previousGroup) {
+        previousGroup = optGroups.find(item => item.value === label);
+        if (!previousGroup) {
+          previousGroup = new Group(key, label);
+          optGroups.push(previousGroup);
+        }
+      } else {
+        const { subGroups } = previousGroup;
+        const parent = previousGroup;
+        previousGroup = subGroups.find(item => item.value === label);
+        if (!previousGroup) {
+          previousGroup = new Group(key, label, parent);
+          subGroups.push(previousGroup);
+        }
+      }
+    });
+    if (hGroups.length) {
+      let { subHGroups } = previousGroup || emptyGroup;
+      if (!subHGroups) {
+        subHGroups = new Set<Group>();
+        (previousGroup || emptyGroup).subHGroups = subHGroups;
+      }
+      hGroups.forEach((key) => {
+        const label = record.get(key);
         if (!previousGroup) {
           previousGroup = optGroups.find(item => item.value === label);
           if (!previousGroup) {
-            previousGroup = {
-              name: key,
-              value: label,
-              records: [],
-              subGroups: [],
-            };
+            previousGroup = new Group(key, label);
             optGroups.push(previousGroup);
           }
         } else {
           const { subGroups } = previousGroup;
+          const parent = previousGroup;
           previousGroup = subGroups.find(item => item.value === label);
           if (!previousGroup) {
-            previousGroup = {
-              name: key,
-              value: label,
-              records: [],
-              subGroups: [],
-            };
+            previousGroup = new Group(key, label, parent);
             subGroups.push(previousGroup);
           }
         }
-        return true;
+      });
+      if (previousGroup) {
+        subHGroups.add(previousGroup);
       }
-      return false;
-    });
+    }
     if (previousGroup) {
       const { records: groupRecords } = previousGroup;
       groupRecords.push(record);
-    } else {
-      restRecords.push(record);
+      let parent: Group | undefined = previousGroup;
+      while (parent) {
+        parent.totalRecords.push(record);
+        parent = parent.parent;
+      }
     }
   });
-  if (restRecords.length) {
-    optGroups.push({
-      name: EMPTY_GROUP_KEY,
-      value: undefined,
-      records: restRecords,
-      subGroups: [],
-    });
+  if (!groups.length) {
+    if (hGroups.length) {
+      emptyGroup.subGroups = optGroups;
+    } else {
+      emptyGroup.records = records.slice();
+    }
+    return [
+      emptyGroup,
+    ];
   }
   return optGroups;
 }

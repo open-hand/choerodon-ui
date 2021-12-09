@@ -19,6 +19,8 @@ subtitle: 表格
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| columns | 列组， 优先级和性能高于children | ColumnProps[] |  |
+| groups | 分组 | [TableGroup](#TableGroup)[] |  |
 | header | 表头 | ReactNode \| (records) => ReactNode |  |
 | footer | 表脚 | ReactNode \| (records) => ReactNode |  |
 | border | 是否显示边框 | boolean | true |
@@ -103,6 +105,7 @@ subtitle: 表格
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| children | 子列组， JSX模式下请对应 ReactElement<ColumnProps>[] | ColumnProps[] \| ReactElement<ColumnProps>[] |  |
 | name | 列对照的字段名 | string |  |
 | width | 列宽，不推荐给所有列设置宽度，而是给某一列不设置宽度达到自动宽度的效果 | number |  |
 | minWidth | 最小列宽 | number | 100 |
@@ -136,6 +139,14 @@ subtitle: 表格
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |
 | highlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
+
+### TableGroup
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| type | 分组类型， 可选值 `column` `row` `header` `none` | string | 'none' |
+| name | 分组对照的字段名 | string |  |
+| columnProps | 列属性 | ColumnProps |  |
 
 ### Table.FilterBar
 

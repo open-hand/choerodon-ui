@@ -94,3 +94,10 @@ export enum HighLightRowType {
   click = 'click',
   focus = 'focus',
 }
+
+export enum GroupType {
+  header = 'header',
+  column = 'column',
+  row = 'row',
+  none = 'none',
+}

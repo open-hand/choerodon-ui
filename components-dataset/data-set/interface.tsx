@@ -19,8 +19,8 @@ export {
   DataSetChildren,
   Events,
   DataSetProps,
-  Group,
 } from './DataSet';
+export { default as Group } from './Group';
 export { FeedBack } from './FeedBack';
 export {
   Fields,
