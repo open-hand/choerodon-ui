@@ -65,6 +65,7 @@ export interface NotificationProps {
 export interface NotificationState {
   notices: NoticeProps[];
   scrollHeight: string | number;
+  totalHeight: number;
   offset: number;
 }
 
@@ -94,11 +95,12 @@ export default class Notification extends PureComponent<NotificationProps, Notif
 
   scrollEvent: any;
 
-  noticesHeight: number;
+  isRemove: boolean;
 
   state: NotificationState = {
     notices: [],
     scrollHeight: 'auto',
+    totalHeight: 0,
     offset: 0,
   };
   
@@ -137,28 +139,28 @@ export default class Notification extends PureComponent<NotificationProps, Notif
       if (!childSpan) return
       const childNodes = childSpan.childNodes;
       const lastNode = childNodes[childNodes.length - 1] as HTMLDivElement;
-
+      
       if (childNodes.length > foldCount && notices.length > foldCount) {
         let totalHeight = 0;
         for (let i = 0; i < childNodes.length; i += 1) {
           const element = childNodes[i] as HTMLDivElement;
           totalHeight += element.offsetHeight + getStyle(element, 'margin-bottom');
         }
-        this.noticesHeight = totalHeight;
         const scrollHeight = (totalHeight / childNodes.length) * (foldCount + 0.5);
         this.setState(
           {
             scrollHeight,
-          },
-          () => {
-            scrollIntoView(lastNode, {
-              block: 'center',
-              behavior: 'smooth',
-              scrollMode: 'if-needed',
-              boundary: this.scrollRef,
-            });
-          },
-        );
+            totalHeight,
+          }, () => {
+            if (!this.isRemove) {
+              scrollIntoView(lastNode, {
+                block: 'center',
+                behavior: 'smooth',
+                scrollMode: 'if-needed',
+                boundary: this.scrollRef,
+              });
+            }
+          });
       }
     }
   }
@@ -175,6 +177,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
         if (maxCount && notices && notices.length > 0 && notices.length >= maxCount) {
           notices.shift();
         }
+        this.isRemove = false
         return {
           ...previousState,
           notices: notices.concat(notice),
@@ -184,9 +187,13 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   }
 
   remove(key: Key) {
+    const { foldCount } = this.props;
     this.setState(previousState => {
+      this.isRemove = true;
+      const notices = previousState.notices.filter(notice => notice.key !== key)
       return {
-        notices: previousState.notices.filter(notice => notice.key !== key),
+        notices,
+        scrollHeight: foldCount && notices.length <= foldCount ? 'auto' : previousState.scrollHeight,
       };
     });
   }
@@ -194,7 +201,6 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   clearNotices = (): void => {
     this.setState({
       notices: [],
-      scrollHeight: 'auto',
     });
   }
 
@@ -220,10 +226,6 @@ export default class Notification extends PureComponent<NotificationProps, Notif
     });
     const cls = classNames(`${prefixCls}`, className, [{
       [`${prefixCls}-fold`]: !!foldCount,
-      [`${prefixCls}-before-shadow`]: !!foldCount && notices.length > foldCount && offset > 0,
-      [`${prefixCls}-after-shadow`]:
-        foldCount && notices.length > foldCount &&
-        Math.abs(this.noticesHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 1,
     }]);
 
     const scrollCls = classNames({
