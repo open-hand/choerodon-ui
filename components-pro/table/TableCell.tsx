@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
 import defaultTo from 'lodash/defaultTo';
+import Group from 'choerodon-ui/dataset/data-set/Group';
 import Tree, { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, defaultAggregationRenderer } from './Column';
@@ -11,7 +12,7 @@ import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import { getColumnKey, getColumnLock, getEditorByColumnAndRecord, getHeader, isStickySupport } from './utils';
-import { ColumnLock } from './enum';
+import { ColumnLock, GroupType } from './enum';
 import TableCellInner from './TableCellInner';
 import AggregationButton from './AggregationButton';
 import ColumnGroup from './ColumnGroup';
@@ -19,22 +20,24 @@ import { treeSome } from '../_util/treeUtils';
 
 export interface TableCellProps extends ElementProps {
   columnGroup: ColumnGroup;
-  record: Record;
+  record: Record | undefined;
   colSpan?: number;
   isDragging: boolean;
   lock?: ColumnLock | boolean;
   provided?: DraggableProvided;
   disabled?: boolean;
   inView?: boolean | undefined;
+  groupPath?: [Group, boolean][];
+  rowIndex?: number;
 }
 
 const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
-  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView } = props;
+  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView, groupPath } = props;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
-  const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean) => (
+  const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean) => record ? (
     <TableCellInner
       column={col}
       record={record}
@@ -46,10 +49,10 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     >
       {children}
     </TableCellInner>
-  ), [record, disabled, children, cellPrefix, colSpan]);
+  ) : undefined, [record, disabled, children, cellPrefix, colSpan]);
 
   const getColumnsInnerNode = useCallback((columns: ColumnProps[]) => {
-    return columns.map((col) => {
+    return record ? columns.map((col) => {
       const { hidden, hiddenInAggregation } = col;
       if (!hidden && !(typeof hiddenInAggregation === 'function' ? hiddenInAggregation(record) : hiddenInAggregation)) {
         const { onCell } = col;
@@ -94,9 +97,56 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         );
       }
       return undefined;
-    });
+    }) : [];
   }, [tableStore, record, dataSet, cellPrefix, getInnerNode, tableColumnOnCell, tableAggregation]);
+  const { style, lock, onCell, aggregation, __tableGroup } = column;
+  const columnLock = isStickySupport() && getColumnLock(lock);
+  const baseStyle: CSSProperties | undefined = (() => {
+    if (columnLock) {
+      if (columnLock === ColumnLock.left) {
+        return {
+          ...style,
+          left: pxToRem(columnGroup.left)!,
+        };
+      }
+      if (columnLock === ColumnLock.right) {
+        return {
+          ...style,
+          right: pxToRem(colSpan && colSpan > 1 ? 0 : columnGroup.right)!,
+        };
+      }
+    }
+    return style;
+  })();
+  const baseClassName = classNames(cellPrefix, {
+    [`${cellPrefix}-fix-${columnLock}`]: columnLock,
+  });
+  if (!record) {
+    return (
+      <td
+        className={baseClassName}
+        style={baseStyle}
+        data-index={key}
+      />
+    );
+  }
+  const [group, isLast]: [Group | undefined, boolean] = __tableGroup && groupPath && groupPath.find(([path]) => path.name === __tableGroup.name) || [undefined, false];
+  const indexInGroup: number = group ? group.totalRecords.indexOf(record) : -1;
+  if (indexInGroup > 0) {
+    return null;
+  }
+  const groupCell = indexInGroup === 0;
   const renderInnerNode = (aggregation, onCellStyle?: CSSProperties) => {
+    if (groupCell && group && __tableGroup) {
+      const { columnProps } = __tableGroup;
+      const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
+      const text = renderer({ text: group.value, group, dataSet, record: group.totalRecords[0], type: GroupType.column });
+      return (
+        <div className={`${cellPrefix}-inner`}>
+          {text}
+        </div>
+      );
+    }
     if (expandIconAsCell && children) {
       return (
         <span
@@ -149,33 +199,12 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
     return getInnerNode(column, onCellStyle);
   };
-  const { style, lock } = column;
-  const columnLock = isStickySupport() && getColumnLock(lock);
-  const baseStyle: CSSProperties | undefined = (() => {
-    if (columnLock) {
-      if (columnLock === ColumnLock.left) {
-        return {
-          ...style,
-          left: pxToRem(columnGroup.left)!,
-        };
-      }
-      if (columnLock === ColumnLock.right) {
-        return {
-          ...style,
-          right: pxToRem(colSpan && colSpan > 1 ? 0 : columnGroup.right)!,
-        };
-      }
-    }
-    return style;
-  })();
-  const baseClassName = classNames(cellPrefix, {
-    [`${cellPrefix}-fix-${columnLock}`]: columnLock,
-  });
-  const { onCell, aggregation } = column;
+  const rowSpan = groupCell && group ? tableStore.headerTableGroups.length ? group.rowSpan : group.totalRecords.length : undefined;
   if (inView === false || columnGroup.inView === false) {
     const hasEditor: boolean = aggregation ? treeSome(column.children || [], (node) => !!getEditorByColumnAndRecord(node, record)) : !!getEditorByColumnAndRecord(column, record);
     const emptyCellProps: TdHTMLAttributes<HTMLTableDataCellElement> & { 'data-index': Key } = {
       colSpan,
+      rowSpan,
       'data-index': key,
       className: baseClassName,
       style: baseStyle,
@@ -197,7 +226,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const cellExternalProps: HTMLProps<HTMLTableCellElement> =
     typeof columnOnCell === 'function'
       ? columnOnCell({
-        dataSet: record.dataSet!,
+        dataSet,
         record,
         column,
       })
@@ -211,6 +240,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     baseClassName,
     {
       [`${cellPrefix}-aggregation`]: aggregation,
+      [`${cellPrefix}-last-group`]: groupCell && isLast,
     },
     column.className,
     className,
@@ -232,6 +262,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   return (
     <td
       colSpan={colSpan}
+      rowSpan={rowSpan}
       {...cellExternalProps}
       className={classString}
       data-index={key}

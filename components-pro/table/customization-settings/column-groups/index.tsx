@@ -53,7 +53,7 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
         if (destGroup) {
           const { records: destRecords } = destGroup;
           if (destRecords.length) {
-            destRecords.splice(destIndex, 0, removed);
+            destRecords.splice(destIndex + destRecords.reduce((sum, r) => sum + (r.get('draggable') === false ? 1 : 0), 0), 0, removed);
           } else {
             destRecords.push(removed);
           }

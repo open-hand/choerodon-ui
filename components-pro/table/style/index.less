@@ -69,6 +69,7 @@
       .@{c7n-pro-prefix}-input-secret {
         margin-top: -0.02rem;
         background-color: transparent;
+
         .@{c7n-pro-prefix}-input {
           padding: 0;
           border: none;
@@ -643,6 +644,11 @@
         padding-left: @table-padding-horizontal;
         font-weight: 500;
       }
+    }
+
+    &-divider {
+      margin-right: .05rem;
+      margin-left: .05rem;
     }
   }
 
@@ -1427,7 +1433,8 @@
   }
 
   &-row:last-of-type &-cell,
-  &-row + &-expanded-row:last-child &-cell {
+  &-row + &-expanded-row:last-child &-cell,
+  &-cell-last-group {
     border-bottom-style: none;
   }
 

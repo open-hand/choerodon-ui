@@ -37,6 +37,7 @@ import useComputed from '../use-computed';
 import ColumnGroups from './ColumnGroups';
 import ColumnGroup from './ColumnGroup';
 import { iteratorSome } from '../_util/iteratorUtils';
+import { Group } from '../data-set/DataSet';
 
 const VIRTUAL_HEIGHT = '__VIRTUAL_HEIGHT__';
 
@@ -47,10 +48,11 @@ export interface TableRowProps extends ElementProps {
   index: number;
   snapshot?: DraggableStateSnapshot;
   provided?: DraggableProvided;
+  groupPath?: [Group, boolean][];
 }
 
 const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
-  const { record, hidden, index, provided, snapshot, className, lock, columnGroups, children } = props;
+  const { record, hidden, index, provided, snapshot, className, lock, columnGroups, children, groupPath } = props;
   const context = useContext(TableContext);
   const {
     tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow, aggregation, rowHeight,
@@ -353,11 +355,12 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => (
     <TableCell
       columnGroup={columnGroup}
-      record={record}
+      record={columnGroup.rowGroup ? columnGroup.rowGroup.totalRecords[index] : record}
       isDragging={snapshot ? snapshot.isDragging : false}
       lock={lock}
       provided={rest.key === DRAG_KEY ? provided : undefined}
       inView={needIntersection ? inView : undefined}
+      groupPath={groupPath}
       {...rest}
     >
       {hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined}

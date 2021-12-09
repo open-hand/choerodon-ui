@@ -31,7 +31,7 @@ import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
-import DataSet, { ValidationErrors } from '../data-set/DataSet';
+import DataSet, { Group, ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
 import { TransportProps } from '../data-set/Transport';
@@ -48,6 +48,7 @@ import TableFooter from './TableFooter';
 import {
   ColumnLock,
   DragColumnAlign,
+  GroupType,
   HighLightRowType,
   RowBoxPlacement,
   ScrollPosition,
@@ -83,10 +84,21 @@ import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { Size } from '../core/enum';
-import { HighlightRenderer } from '../field/FormField';
+import { HighlightRenderer, Renderer, RenderProps } from '../field/FormField';
 import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames } from '../data-set/utils';
+
+export interface GroupRenderProps extends RenderProps {
+  group: Group;
+  type: GroupType;
+}
+
+export type TableGroup = {
+  name: string;
+  type: GroupType;
+  columnProps?: ColumnProps & { renderer?: Renderer<GroupRenderProps> };
+}
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode };
 
@@ -657,6 +669,10 @@ export interface TableProps extends DataSetComponentProps {
    * 动态筛选条编码
    */
   searchCode?: string;
+  /**
+   * 分组
+   */
+  groups?: TableGroup[];
 }
 
 @observer
@@ -1379,6 +1395,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'onAggregationChange',
       'showRemovedRow',
       'searchCode',
+      'groups',
     ]);
   }
 

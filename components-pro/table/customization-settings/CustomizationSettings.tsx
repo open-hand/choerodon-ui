@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
-import flatten from 'lodash/flatten';
 import Collapse from 'choerodon-ui/lib/collapse';
 import CollapsePanel from 'choerodon-ui/lib/collapse/CollapsePanel';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -18,7 +17,7 @@ import { $l } from '../../locale-context';
 import Button from '../../button/Button';
 import { ButtonColor, FuncType } from '../../button/enum';
 import { Size } from '../../core/enum';
-import { mergeDefaultProps, normalizeColumns, SELECTION_KEY } from '../TableStore';
+import { normalizeGroupColumns } from '../TableStore';
 import Form from '../../form/Form';
 import ObserverNumberField from '../../number-field/NumberField';
 import SelectBox from '../../select-box/SelectBox';
@@ -44,6 +43,7 @@ function normalizeColumnsToTreeData(columns: ColumnProps[]) {
     sort: column.sort,
     titleEditable: column.titleEditable,
     hideable: column.hideable,
+    draggable: column.draggable,
   }), []);
 }
 
@@ -65,7 +65,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { prefixCls, tableStore } = useContext(TableContext);
   const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized } = tableStore;
-  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns].filter(column => column.key !== SELECTION_KEY));
+  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
       {
@@ -97,10 +97,8 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
             record.set('height', diff(value));
             set(tempCustomized, 'heightType', TableHeightType.flex);
           } else if (name === 'aggregation') {
-            setCustomizedColumns(columns
-              ? flatten(mergeDefaultProps(columns, value, tempCustomized.columns).slice(0, 3))
-              : flatten(normalizeColumns(children, value, tempCustomized.columns).slice(0, 3)),
-            );
+            const [left, center, right] = normalizeGroupColumns(tableStore, columns, children, value, tempCustomized.columns);
+            setCustomizedColumns([...left, ...center, ...right]);
           }
         }
         record.setState(HEIGHT_CHANGE_KEY, record.getState(HEIGHT_CHANGE_KEY) - 1);
@@ -154,9 +152,8 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     e.stopPropagation();
     const { props: { columns, children } } = tableStore;
     const aggregation = tableRecord.get('aggregation');
-    setCustomizedColumns(columns
-      ? flatten(mergeDefaultProps(columns, aggregation).slice(0, 3))
-      : flatten(normalizeColumns(children, aggregation).slice(0, 3)));
+    const [left, center, right] = normalizeGroupColumns(tableStore, columns, children, aggregation);
+    setCustomizedColumns([...left, ...center, ...right]);
     tableStore.tempCustomized.columns = {};
   }), [tableRecord, tableStore]);
   const handleOption = useCallback(() => ({

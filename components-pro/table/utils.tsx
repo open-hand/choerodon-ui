@@ -250,21 +250,25 @@ export function isSelectedRow(record: Record) {
   return record.isSelected;
 }
 
-export function getHeader(column: ColumnProps, dataSet: DataSet, aggregation?: boolean): ReactNode {
-  const { header, name, title } = column;
-  if (typeof header === 'function') {
-    return header(dataSet, name, title, aggregation);
-  }
-  if (title !== undefined) {
-    return title;
-  }
-  if (header !== undefined) {
-    return header;
-  }
+function getLabel(dataSet, name) {
   const field = dataSet.getField(name);
   if (field) {
     return field.get('label');
   }
+}
+
+export function getHeader(column: ColumnProps, dataSet: DataSet, aggregation?: boolean): ReactNode {
+  const { header, name, title } = column;
+  if (header !== undefined) {
+    if (typeof header === 'function') {
+      return header(dataSet, name, title === undefined ? getLabel(dataSet, name) : title, aggregation);
+    }
+    return header;
+  }
+  if (title !== undefined) {
+    return title;
+  }
+  return getLabel(dataSet, name);
 }
 
 export function getColumnKey({ name, key }: ColumnProps): Key {
