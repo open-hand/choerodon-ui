@@ -122,9 +122,10 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       tableProps,
       viewMode,
+      showSelectedInView,
     } = this.props;
     // 为了drawer模式下右侧勾选项的顺序
-    if ((viewMode === 'drawer' || viewMode === 'modal') && multiple) {
+    if (showSelectedInView && (viewMode === 'drawer' || viewMode === 'modal') && multiple) {
       dataSet.map(item => {
         const timeStampState = item.getState(TIMESTAMP);
         if (!item.isSelected && timeStampState) {
