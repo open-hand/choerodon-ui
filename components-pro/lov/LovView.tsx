@@ -58,7 +58,7 @@ export default class LovView extends Component<LovViewProps> {
     } = this.props;
     this.selection = selection;
     dataSet.selection = multiple ? DataSetSelection.multiple : DataSetSelection.single;
-    if ((viewMode === 'popup' || viewMode === 'drawer') && multiple) {
+    if ((viewMode === 'popup' || viewMode === 'drawer' || viewMode === 'modal') && multiple) {
       dataSet.addEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.addEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
@@ -68,7 +68,7 @@ export default class LovView extends Component<LovViewProps> {
   componentWillUnmount() {
     const { dataSet, multiple, viewMode } = this.props;
     dataSet.selection = this.selection;
-    if ((viewMode === 'popup' || viewMode === 'drawer') && multiple) {
+    if ((viewMode === 'popup' || viewMode === 'drawer' || viewMode === 'modal') && multiple) {
       dataSet.removeEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.removeEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
@@ -124,7 +124,7 @@ export default class LovView extends Component<LovViewProps> {
       viewMode,
     } = this.props;
     // 为了drawer模式下右侧勾选项的顺序
-    if (viewMode === 'drawer' && multiple) {
+    if ((viewMode === 'drawer' || viewMode === 'modal') && multiple) {
       dataSet.map(item => {
         const timeStampState = item.getState(TIMESTAMP);
         if (!item.isSelected && timeStampState) {
