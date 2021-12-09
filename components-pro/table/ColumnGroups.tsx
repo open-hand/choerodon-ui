@@ -1,4 +1,5 @@
 import { computed } from 'mobx';
+import Group from 'choerodon-ui/dataset/data-set/Group';
 import { ColumnProps, columnWidth } from './Column';
 import ColumnGroup from './ColumnGroup';
 import { ColumnLock } from './enum';
@@ -108,6 +109,13 @@ export default class ColumnGroups {
 
   get rightLeafColumnsWidth(): number {
     return this.rightLeafs.reduce<number>((total, { column }) => total + columnWidth(column, this.store), 0);
+  }
+
+  get rowGroup(): Group | undefined {
+    const { parent } = this;
+    if (parent) {
+      return parent.rowGroup;
+    }
   }
 
   constructor(columns: ColumnProps[], store: TableStore, parent?: ColumnGroup) {

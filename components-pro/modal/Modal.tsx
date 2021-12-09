@@ -315,6 +315,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'contentStyle',
       'bodyStyle',
       'closeOnLocationChange',
+      'eventKey',
     ]);
   }
 

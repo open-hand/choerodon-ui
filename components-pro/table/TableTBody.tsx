@@ -2,6 +2,7 @@ import React, { Component, CSSProperties, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import isFunction from 'lodash/isFunction';
@@ -9,18 +10,19 @@ import { ElementProps } from '../core/ViewComponent';
 import TableContext, { TableContextValue } from './TableContext';
 import TableRow from './TableRow';
 import Record from '../data-set/Record';
-import { ColumnLock, DragColumnAlign } from './enum';
+import { ColumnLock, DragColumnAlign, GroupType } from './enum';
 import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
 import autobind from '../_util/autobind';
 import { DragTableRowProps, instance } from './Table';
-import { isDraggingStyle, isStickySupport } from './utils';
+import { getHeader, isDraggingStyle, isStickySupport } from './utils';
 import ColumnGroups from './ColumnGroups';
 import TableRowGroup from './TableRowGroup';
 import { $l } from '../locale-context';
 import Button from '../button/Button';
 import { Size } from '../core/enum';
 import { ButtonColor, FuncType } from '../button/enum';
+import { defaultAggregationRenderer } from './Column';
 
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock;
@@ -124,7 +126,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
       cachedData, virtualCachedData, virtualCurrentData, virtual, rowDraggable,
     } = tableStore;
     const cachedRows = cachedData.length ? this.getRows(virtualCachedData, columnGroups, true, virtual) : undefined;
-    const rows = virtualCurrentData.length
+    const rows = tableStore.groups.length ? this.getGroupRows(tableStore.groupedData, columnGroups) : virtualCurrentData.length
       ? this.getRows(virtualCurrentData, columnGroups, true, virtual)
       : cachedRows ? undefined : this.getEmptyRow(columnGroups);
     const body = rowDraggable ? (
@@ -227,6 +229,52 @@ export default class TableTBody extends Component<TableTBodyProps> {
     );
   }
 
+  getGroupRows(groups: Group[], columnGroups: ColumnGroups, groupPath: [Group, boolean][] = [], index = { count: 0 }, isParentLast?: boolean): ReactNode[] {
+    const rows: ReactNode[] = [];
+    const { tableStore, prefixCls } = this.context;
+    const { groups: tableGroups, dataSet } = tableStore;
+    const { length } = groups;
+    groups.forEach((group, i) => {
+      const isLast = i === length - 1 && isParentLast !== false;
+      const { subGroups, records, name, subHGroups } = group;
+      const path: [Group, boolean][] = [...groupPath, [group, isLast]];
+      const tableGroup = tableGroups && tableGroups.find(g => g.name === name);
+      if (tableGroup && tableGroup.type === GroupType.row) {
+        const { lock } = this.props;
+        const { columnProps } = tableGroup;
+        const { renderer = defaultAggregationRenderer } = columnProps || {};
+        const groupName = tableGroup.name;
+        const header = getHeader({ ...columnProps, name: groupName }, dataSet);
+        rows.push(
+          <TableRowGroup columnGroups={columnGroups} lock={lock}>
+            {header}
+            {header && <span className={`${prefixCls}-row-group-divider`} />}
+            {renderer({ text: group.value, group, name: groupName, dataSet, record: group.totalRecords[0], type: GroupType.row })}
+          </TableRowGroup>,
+        );
+      }
+      if (subHGroups) {
+        let i = 0;
+        subHGroups.forEach((group) => {
+          group.records.slice(i).forEach(record => {
+            rows.push(this.getRow(columnGroups, record, index.count++, true, path));
+            i++;
+          });
+        });
+      } else {
+        if (subGroups && subGroups.length) {
+          rows.push(
+            ...this.getGroupRows(subGroups, columnGroups, path, index, isLast),
+          );
+        }
+        records.forEach((record) => {
+          rows.push(this.getRow(columnGroups, record, index.count++, true, path));
+        });
+      }
+    });
+    return rows;
+  }
+
   getRows(
     records: Record[],
     columnGroups: ColumnGroups,
@@ -272,6 +320,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
     record: Record,
     index: number,
     expanded?: boolean,
+    groupPath?: [Group, boolean][],
   ): ReactNode {
     const { lock } = this.props;
     const { tableStore, rowDragRender } = this.context;
@@ -320,6 +369,7 @@ export default class TableTBody extends Component<TableTBodyProps> {
         columnGroups={columnGroups}
         record={record}
         index={index}
+        groupPath={groupPath}
       >
         {children}
       </TableRow>

@@ -1,12 +1,12 @@
 import { CSSProperties, FunctionComponent, Key, ReactElement, ReactNode } from 'react';
 import { get } from 'mobx';
-import DataSet from '../data-set/DataSet';
+import DataSet, { Group } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { FormFieldProps, HighlightRenderer, Renderer, RenderProps } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
-import { Commands } from './Table';
+import { Commands, TableGroup } from './Table';
 import TableStore from './TableStore';
 
 export function defaultAggregationRenderer({ text }) {
@@ -166,6 +166,8 @@ export interface ColumnPropsBase extends ElementProps {
 
 export interface ColumnProps extends ColumnPropsBase {
   children?: ColumnProps[];
+  __tableGroup?: TableGroup;
+  __group?: Group;
 }
 
 export interface ColumnPropsInner extends ColumnPropsBase {

@@ -15,6 +15,7 @@ import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
 import localeContext, { $l } from '../locale-context';
 import axios from '../axios';
 import Record, { RecordProps } from './Record';
+import Group from './Group';
 import Field, { FieldProps, Fields } from './Field';
 import {
   adapterDataToJSON,
@@ -85,8 +86,6 @@ const QUERY_PARAMETER = '__QUERY_PARAMETER__';  // TODO:Symbol
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
-
-export type Group = { name: string; value: any; records: Record[]; subGroups: Group[] };
 
 export function addDataSetField(dataSet: DataSet, name: string) {
   const field = new Field({ name }, dataSet);
@@ -849,13 +848,13 @@ export default class DataSet extends EventManager {
   @computed
   get groupedRecords(): Group[] {
     const { groups, records } = this;
-    return normalizeGroups(groups, records);
+    return normalizeGroups(groups, [], records);
   }
 
   @computed
   get groupedTreeRecords(): Group[] {
     const { groups, treeRecords } = this;
-    return normalizeGroups(groups, treeRecords);
+    return normalizeGroups(groups, [], treeRecords);
   }
 
   /**
@@ -1018,7 +1017,7 @@ export default class DataSet extends EventManager {
   }
 
   @action
-  setState(item: string | object, value?: any) {
+  setState(item: string | object, value?: any): DataSet {
     if (isString(item)) {
       this.state.set(item, value);
     } else if (isPlainObject(item)) {

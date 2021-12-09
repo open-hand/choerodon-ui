@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
+- 🌟 `<pro>Table`: 新增 groups 属性。
 - 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded 属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
