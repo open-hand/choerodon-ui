@@ -122,10 +122,10 @@ const prefixCls = getConfig('prefixCls');
 | textFieldAutoComplete | 全局配置textField的autoComplete属性 | 可选值: `on` `off` |  |
 | resultStatusRenderer | 自定义状态展示,可以覆盖现有状态展示，也可以增加状态展示，支持全局配置 | object -> {string:react.ReactNode} | - |
 | numberFieldNonStrictStep | 全局配置 NumberField 的 nonStrictStep 属性 | boolean | false |
-| numberFieldFormatter | NumberField格式器   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
-| numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
-| currencyFormatter | Currency格式器   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
-| currencyFormatterOptions | Currency格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
+| numberFieldFormatter | NumberField格式器   | FormatNumberFunc: (value: string, lang: string, options: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)) => string |        |
+| numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |        |
+| currencyFormatter | Currency格式器   | FormatNumberFunc: (value: string, lang: string, options: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)) => string |        |
+| currencyFormatterOptions | Currency格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |        |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
 | showInvalidDate | 显示无效日期 | boolean |  |
 | showRequiredColorsOnlyEmpty | 只有在空值时显示必填背景色和边框色 | boolean |  |

@@ -139,7 +139,10 @@ function combineWithOldLookupData(lookup: object[], field: Field, record?: Recor
   }
   return lookup;
 }
-
+export type FormatNumberFuncOptions = {
+  lang?: string | undefined;
+  options: Intl.NumberFormatOptions;
+};
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
 export type DynamicProps = { [P in keyof FieldProps]?: (DynamicPropsArguments) => FieldProps[P]; }
@@ -209,13 +212,17 @@ export type FieldProps = {
    */
   min?: MomentInput | null;
   /**
-   * 小数点精度
+   * 小数点精度， 提交时会截断
    */
   precision?: number;
   /**
    * 千分位分组显示
    */
   numberGrouping?: boolean;
+  /**
+   * 数字和货币格式化配置
+   */
+  formatterOptions?: FormatNumberFuncOptions;
   /**
    * 校验器
    */
