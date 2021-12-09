@@ -78,7 +78,7 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
   const componentClass = `${prefixCls}-notice`;
   const classString = classNames(componentClass, className, {
     [`${componentClass}-closable`]: closable,
-    [`${componentClass}-hide-shadow`]: hideShadow,
+    [`${componentClass}-opacity`]: hideShadow,
   });
   return (
     <div

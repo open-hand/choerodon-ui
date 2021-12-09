@@ -203,7 +203,6 @@ export default class Steps extends Component {
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-label-${adjustedlabelPlacement}`]: direction === 'horizontal',
       [`${prefixCls}-dot`]: !!progressDot,
-      [`${prefixCls}-${isNavigation ? 'navigation' : 'default'}`]: 1
     });
     const menu = () => {
       return <div ref={dom => { this.menuRef = dom }}>
@@ -271,7 +270,7 @@ export default class Steps extends Component {
     }
 
     return (
-      <div className={`${prefixCls}`}>
+      <div className={`${prefixCls}-${isNavigation ? `navigation` : 'default'}`}>
         <div className={classString} style={style} {...restProps} ref={ref => { this.navRef = ref }}>
           {renderHeader(
             headerRender,
@@ -288,7 +287,7 @@ export default class Steps extends Component {
                 wrapperStyle: style,
                 progressDot,
                 onChange,
-                navigation: isNavigation,
+                navigation: isNavigation && filteredChildren.length - 1 !== index,
                 ...child.props,
               };
               /**
