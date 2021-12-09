@@ -29,6 +29,10 @@
   }
 
   a&[disabled] {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     pointer-events: auto;
   }
 
@@ -356,6 +360,10 @@
   > *,
   &-disabled-wrapper > button > * {
     vertical-align: middle;
+  }
+
+  &[disabled] > *, &-disabled > * {
+    pointer-events: none;
   }
 }
 

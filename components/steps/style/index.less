@@ -29,11 +29,7 @@
 @steps-title-min-width: 1.76rem;
 
 .@{steps-prefix-cls} {
-  display: flex;
-  align-items: center;
-
   .reset-component;
-
 
   &-header {
     position: absolute;
@@ -68,25 +64,56 @@
 
   &-default {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
     font-size: 0;
+
+    .@{steps-prefix-cls}-horizontal {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    .@{steps-prefix-cls}-item {
+      flex: 1;
+      &:last-child {
+        flex: none;
+        width: auto;
+        min-width: auto;
+      }
+      &-title {
+        display: inline-block;
+        padding-right: 0.16rem;
+        &::after {
+          position: absolute;
+          top: @steps-icon-size / 2;
+          left: 100%;
+          display: block;
+          width: 99.99rem;
+          height: 0.01rem;
+          background: @wait-tail-color;
+          content: '';
+        }
+      }
+    }
   }
 
   &-navigation {
-    display: inline-block;
-    width: auto;
-    max-width: calc(100% - 0.3rem);
-    padding: 0.07rem 0.24rem;
-    overflow: scroll;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    .@{steps-prefix-cls}-horizontal {
+      display: inline-block;
+      width: auto;
+      max-width: calc(100% - 0.3rem);
+      padding: 0.07rem 0.24rem;
+      overflow: scroll;
+      white-space: nowrap;
 
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+      scroll-behavior: smooth;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-      display: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
@@ -101,10 +128,6 @@
         display: flex;
         align-items: center;
       }
-    }
-
-    &-icon {
-      vertical-align: middle;
     }
 
     &-title {
@@ -213,38 +236,6 @@
     font-weight: 500;
   }
 
-}
-
-.@{steps-prefix-cls}-default {
-  .@{steps-prefix-cls}-item {
-    flex: 1;
-
-    &:last-child {
-      flex: none;
-      width: auto;
-      min-width: auto;
-    }
-
-    &-title {
-      display: inline-block;
-      padding-right: 0.16rem;
-
-      &::after {
-        position: absolute;
-        top: @steps-icon-size / 2;
-        left: 100%;
-        display: block;
-        width: 99.99rem;
-        height: 0.01rem;
-        background: @wait-tail-color;
-        content: '';
-      }
-    }
-
-  }
-}
-
-.@{steps-prefix-cls}-item {
   .step-item-status(wait);
   .step-item-status(process);
 

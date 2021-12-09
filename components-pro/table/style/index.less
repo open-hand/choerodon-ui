@@ -156,12 +156,19 @@
     }
 
     &-prefix {
+      display: flex;
+      flex-direction: row;
       float: left;
       padding-right: @table-padding-horizontal;
       padding-left: @table-padding-horizontal;
 
       > * {
         vertical-align: middle;
+      }
+
+      .@{table-prefix-cls}-expand-icon {
+        display: inline-flex;
+        align-items: center;
       }
     }
 
