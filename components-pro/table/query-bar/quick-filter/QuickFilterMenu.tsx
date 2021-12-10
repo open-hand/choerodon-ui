@@ -389,16 +389,18 @@ const QuickFilterMenu = function QuickFilterMenu() {
       if (current) {
         const conditionData = Object.entries(omit(current.toData(true), ['__dirty']));
         conditionDataSet.reset();
+        conditionDataSet.map(record => {
+          if (!selectFields?.includes(record.get('fieldName'))) {
+            conditionDataSet.remove(record);
+          }
+          return null;
+        });
         map(conditionData, data => {
           const fieldObj = findFieldObj(queryDataSet, data);
           if (fieldObj?.name) {
             const currentRecord = conditionDataSet.find(record => record.get('fieldName') === fieldObj.name);
             if (currentRecord) {
-              if (isEmpty(fieldObj.value) || (isObject(fieldObj.value) && isEnumEmpty(fieldObj.value))) {
-                conditionDataSet.remove(currentRecord);
-              } else {
-                currentRecord.set('value', fieldObj.value);
-              }
+              currentRecord.set('value', fieldObj.value);
             } else if (isSelect(data)) {
               conditionDataSet.create({
                 fieldName: fieldObj.name,
@@ -553,7 +555,6 @@ const QuickFilterMenu = function QuickFilterMenu() {
         className={`${prefixCls}-filterName-select`}
         dataSet={filterMenuDataSet}
         name="filterName"
-        title={filterMenuDataSet?.current?.get('filterName')}
         dropdownMatchSelectWidth={false}
         dropdownMenuStyle={{ width: '1.72rem' }}
         optionRenderer={optionRenderer}
