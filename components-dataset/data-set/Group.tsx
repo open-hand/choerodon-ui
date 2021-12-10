@@ -1,5 +1,5 @@
 import Record from './Record';
-import { iteratorReduce } from '../../dataset/iterator-helper';
+import { iteratorReduce } from '../iterator-helper';
 
 export default class Group {
 
