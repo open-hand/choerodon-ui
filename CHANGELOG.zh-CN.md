@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded 属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
+- 💄 `Upload`: 优化图片列表上传时显示 loading 图标。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。
 - 🐞 `<pro>Button`: 修复 href 按钮禁用状态下仍可跳转的问题。
