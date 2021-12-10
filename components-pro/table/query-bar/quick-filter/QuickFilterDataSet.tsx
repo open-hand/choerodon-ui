@@ -30,10 +30,19 @@ export const ConditionDataSet: () => DataSetProps = () => ({
     },
     {
       name: 'value',
-    },
-    {
-      name: 'searchConditionId',
-      type: FieldType.number,
+      transformRequest: value => {
+        if (typeof value === 'object') {
+          return JSON.stringify(value)
+        }
+        return value;
+      },
+      transformResponse: value => {
+        try {
+          return JSON.parse(value);
+        } catch (e) {
+          return value;
+        }
+      },
     },
   ],
   dataToJSON: DataToJSON.all,

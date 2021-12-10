@@ -24,7 +24,7 @@ import Record from '../../../data-set/Record';
 import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
 import isOverflow from '../../../overflow-tip/util';
-import { isEqualDynamicProps } from '../TableDynamicFilterBar';
+import { isEqualDynamicProps, omitData, parseValue, stringifyValue, SELECTFIELDS } from '../TableDynamicFilterBar';
 
 import Store from './QuickFilterMenuContext';
 
@@ -96,7 +96,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
             putData.push({
               comparator: 'EQUAL',
               fieldName: fieldObj.name,
-              value: fieldObj.value,
+              value: stringifyValue(fieldObj.value),
               ...status,
             });
           }
@@ -110,7 +110,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
           putData.push({
             comparator: 'EQUAL',
             fieldName,
-            value,
+            value: stringifyValue(value),
             ...status,
           });
         }
@@ -121,7 +121,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
       const otherRecord = menuDataSet.current.clone();
       otherRecord.set('conditionList', putData);
       menuDataSet.current.reset();
-      menuDataSet.create({ ...otherRecord.toData(), searchId: undefined });
+      menuDataSet.create({ ...omitData(otherRecord.toData())});
       // 新建
     } else if (type === 'create') {
       menuDataSet.current.set('conditionList', putData);
@@ -213,13 +213,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
         map(conditionList, condition => {
           if (condition.comparator === 'EQUAL') {
             const { fieldName, value } = condition;
-            initData[fieldName] = value;
+            initData[fieldName] = parseValue(value);
             onChange(fieldName);
-            onOriginalChange(fieldName);
           }
         });
+        onOriginalChange(Object.keys(initData));
         const emptyRecord = new Record({...initData}, queryDataSet);
-        queryDataSet.setState('selectFields', Object.keys(initData));
+        dataSet.setState(SELECTFIELDS, Object.keys(initData));
         shouldQuery = !isEqualDynamicProps(initData, omit(queryDataSet?.current?.toData(true), ['__dirty']));
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
@@ -229,7 +229,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       } else {
         shouldQuery = !isEqualDynamicProps(initData, omit(queryDataSet?.current?.toData(true), ['__dirty']));
         const emptyRecord = new Record({}, queryDataSet);
-        queryDataSet.setState('selectFields', []);
+        dataSet.setState(SELECTFIELDS, []);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
@@ -449,7 +449,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const { current } = menuDataSet;
     if (current) {
       const searchName = current.get('searchName');
-      current.set('searchName', `${searchName}-copy`);
+      current.set('searchName', `${searchName}_copy`);
     }
     openModal('save');
   };
@@ -531,8 +531,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
           onMouseLeave={() => hide()}
         >
           {text}
-          {isDefault && <Tag>{$l('Table', 'default_flag')}</Tag>}
         </span>
+        {isDefault && <Tag>{$l('Table', 'default_flag')}</Tag>}
         {isSelected && <div className={`${prefixCls}-filter-menu-option-selected`}>
           <Icon type="check" />
         </div>}
@@ -553,6 +553,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         className={`${prefixCls}-filterName-select`}
         dataSet={filterMenuDataSet}
         name="filterName"
+        title={filterMenuDataSet?.current?.get('filterName')}
         dropdownMatchSelectWidth={false}
         dropdownMenuStyle={{ width: '1.72rem' }}
         optionRenderer={optionRenderer}

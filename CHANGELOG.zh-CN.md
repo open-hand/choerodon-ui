@@ -23,7 +23,7 @@ timeline: true
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。
-- 🐞 `<pro>Button`: 修复 href 按钮禁用状态下任可跳转的问题。
+- 🐞 `<pro>Button`: 修复 href 按钮禁用状态下仍可跳转的问题。
 - 🐞 `Notification`: 修复多个非同时打开的消息会同时关闭的问题。
 
 ## 1.5.0
