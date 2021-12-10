@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
 - 🌟 `<pro>Table`: 新增 groups 属性。

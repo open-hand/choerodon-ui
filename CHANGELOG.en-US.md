@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.
 - 🌟 `<pro>Table`: Added `groups` property.
