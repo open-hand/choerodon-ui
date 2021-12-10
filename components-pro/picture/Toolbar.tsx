@@ -1,11 +1,13 @@
 import React, { FunctionComponent, memo } from 'react';
+import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import { stopPropagation } from '../_util/EventManager';
 
 export interface ToolbarProps {
   prefixCls?: string;
-  downloadUrl?: string;
+  downloadUrl?: string | Function;
   zoomInDisabled?: boolean;
   zoomOutDisabled?: boolean;
   onZoomIn?: () => void;
@@ -54,7 +56,8 @@ const Toolbar: FunctionComponent<ToolbarProps> = function Toolbar(props) {
             icon="get_app"
             funcType={FuncType.link}
             className={`${prefixCls}-btn ${prefixCls}-btn-tool`}
-            href={downloadUrl}
+            href={isString(downloadUrl) ? downloadUrl : undefined}
+            onClick={isFunction(downloadUrl) ? downloadUrl : undefined}
             target="_blank"
           />
         )

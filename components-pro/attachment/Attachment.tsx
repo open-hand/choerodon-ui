@@ -6,6 +6,8 @@ import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isNil from 'lodash/isNil';
+import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
@@ -891,7 +893,8 @@ export default class Attachment extends FormField<AttachmentProps> {
                   key: 'download',
                   icon: 'get_app',
                   funcType: FuncType.link,
-                  href: downloadAllUrl,
+                  href: isString(downloadAllUrl) ? downloadAllUrl : undefined,
+                  onClick: isFunction(downloadAllUrl) ? downloadAllUrl : undefined,
                   target: '_blank',
                   color: ButtonColor.primary,
                   children: $l('Attachment', 'download_all'),
