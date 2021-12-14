@@ -60,6 +60,15 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   @observable resized?: boolean;
 
+  componentDidMount() {
+    super.componentDidMount();
+    const { autoSize, value, defaultValue } = this.props;
+    if (this.element && autoSize && (value || defaultValue)) {
+      // 自适应高度且有默认值时，重新渲染高度
+      this.forceUpdate();
+    }
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'resize',
@@ -115,6 +124,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     const elementProps = this.getOtherProps() || {};
     const lengthElement = this.renderLengthInfo();
     const suffix = this.getSuffix();
+    const button = this.getInnerSpanButton();
     if (this.resized) {
       const { style: wrapperStyle } = wrapperProps;
       wrapperProps.style = {
@@ -140,6 +150,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
                 {element}
                 {suffix}
                 {lengthElement}
+                {button}
               </ReactResizeObserver>
             ) : <>{element}{suffix}{lengthElement}</>
           }

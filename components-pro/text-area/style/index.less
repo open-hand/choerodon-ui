@@ -9,6 +9,19 @@
 
   &-wrapper {
     max-width: 100%;
+
+    label {
+      .@{textarea-prefix}:not(:last-child) {
+        padding-right: 0.13rem;
+      }
+
+      .@{textarea-prefix}-clear-button {
+        top: 0.07rem;
+        right: 0.03rem;
+        bottom: unset;
+        width: 0.2rem;
+      }
+    }
   }
 
   &,
