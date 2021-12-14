@@ -47,13 +47,13 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGr
   }, [currentScrollTop]);
   return (
     <Cmp className={`${prefixCls}-row-group`} style={isStickySupport() ? undefined : { height: pxToRem(25) }}>
-      <td colSpan={colSpan} className={`${prefixCls}-row-group-title`} style={style} ref={needFixSticky ? stickyRef : undefined}>
+      <th colSpan={colSpan} className={`${prefixCls}-row-group-title`} style={style} ref={needFixSticky ? stickyRef : undefined} scope="colgroup">
         {
           lock !== ColumnLock.right && (
             <div className={`${prefixCls}-row-group-title-content`}>{children}</div>
           )
         }
-      </td>
+      </th>
     </Cmp>
   );
 };

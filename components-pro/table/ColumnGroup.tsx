@@ -14,6 +14,8 @@ export default class ColumnGroup {
 
   children?: ColumnGroups;
 
+  childrenInAggregation?: ColumnGroups;
+
   parent: ColumnGroups;
 
   prev?: ColumnGroup;
@@ -102,7 +104,7 @@ export default class ColumnGroup {
     return [];
   }
 
-  get rowGroup(): Group | undefined {
+  get headerGroup(): Group | undefined {
     const { __group } = this.column;
     if (__group) {
       return __group;
@@ -117,8 +119,12 @@ export default class ColumnGroup {
     this.parent = parent;
     const { children } = column;
     const { aggregation } = parent;
-    if ((!column.aggregation || !aggregation) && children && children.length > 0) {
-      this.children = new ColumnGroups(children, store, this);
+    if (children && children.length > 0) {
+      if (!column.aggregation || !aggregation) {
+        this.children = new ColumnGroups(children, store, this);
+      } else {
+        this.childrenInAggregation = new ColumnGroups(children, store, this);
+      }
     }
   }
 

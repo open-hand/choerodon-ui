@@ -54,16 +54,16 @@ function renderPhone({ record, text }) {
   return [record.get('phone-region'), text].filter(Boolean).join('-');
 }
 
-function renderColumnFooter(dataset, name) {
+function renderColumnFooter({ dataSet, name }) {
   const max = Math.max(
     0,
-    ...dataset.data.map(record => record.get(name)).filter(value => !isNaN(value)),
+    ...dataSet.map(record => record.get(name)).filter(value => !isNaN(value)),
   );
   return `最大年龄：${NumberField.format(max)}`;
 }
 
-function renderColumnHeader(dataset, name) {
-  const field = dataset.getField(name);
+function renderColumnHeader({ dataSet, name }) {
+  const field = dataSet.getField(name);
   return (
     <span>
       <i>-=</i>
@@ -485,7 +485,7 @@ class App extends React.Component {
         buttons={buttons}
         dataSet={this.userDs}
         header="User"
-        style={{ height: 300 }}
+        style={{ maxHeight: 300 }}
         rowNumber
         showAllPageSelectionButton
         showSelectionTips

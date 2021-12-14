@@ -27,7 +27,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Record from '../data-set/Record';
-import { ColumnProps } from './Column';
+import { ColumnProps, ColumnRenderProps } from './Column';
 import TableContext from './TableContext';
 import { TableButtonProps } from './Table';
 import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
@@ -66,6 +66,7 @@ import useComputed from '../use-computed';
 import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
 import { iteratorReduce } from '../_util/iteratorUtils';
+import { Group } from '../data-set/DataSet';
 
 let inTab = false;
 
@@ -77,10 +78,12 @@ export interface TableCellInnerProps {
   inAggregation?: boolean;
   prefixCls?: string;
   colSpan?: number;
+  headerGroup?: Group;
+  rowGroup?: Group;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCellInner(props) {
-  const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan } = props;
+  const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan, headerGroup, rowGroup } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -446,7 +449,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         dataSet,
         name,
         repeat,
-      });
+        headerGroup,
+        rowGroup,
+      } as ColumnRenderProps);
     };
     if (field) {
       if (!cellEditorInCell) {

@@ -114,7 +114,7 @@ export default class ColumnGroups {
   get rowGroup(): Group | undefined {
     const { parent } = this;
     if (parent) {
-      return parent.rowGroup;
+      return parent.headerGroup;
     }
   }
 

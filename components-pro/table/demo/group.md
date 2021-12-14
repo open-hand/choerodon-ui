@@ -1,17 +1,17 @@
 ---
 order: 27
 title:
-  zh-CN: 分组
-  en-US: Group
+  zh-CN: 数据分组
+  en-US: Data Group
 ---
 
 ## zh-CN
 
-分组。
+数据分组。
 
 ## en-US
 
-Group.
+Data Group.
 
 ```jsx
 import {
@@ -84,7 +84,7 @@ const App = () => {
       name: 'company',
       type: companyGroup,
       columnProps: {
-        header: (dataSet, name, title) => <span style={{ color: 'red' }}>{title}</span>,
+        header: ({ dataSet, name, title }) => <span style={{ color: 'red' }}>{title}</span>,
         renderer: ({ text }) => <span style={{ color: 'blue' }}>{text}</span>,
       },
     },
@@ -92,7 +92,7 @@ const App = () => {
       name: 'dept',
       type: deptGroup,
       columnProps: {
-        header: (dataSet, name, title) => <span style={{ color: 'red' }}>{title}</span>,
+        header: ({ dataSet, name, title }) => <span style={{ color: 'red' }}>{title}</span>,
         renderer: ({ text }) => <span style={{ color: 'blue' }}>{text}</span>,
       },
     },

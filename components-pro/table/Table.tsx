@@ -31,7 +31,7 @@ import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
-import DataSet, { Group, ValidationErrors } from '../data-set/DataSet';
+import DataSet, { ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
 import { TransportProps } from '../data-set/Transport';
@@ -84,20 +84,16 @@ import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { Size } from '../core/enum';
-import { HighlightRenderer, Renderer, RenderProps } from '../field/FormField';
+import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames } from '../data-set/utils';
 
-export interface GroupRenderProps extends RenderProps {
-  group: Group;
-  type: GroupType;
-}
-
 export type TableGroup = {
   name: string;
   type: GroupType;
-  columnProps?: ColumnProps & { renderer?: Renderer<GroupRenderProps> };
+  hidden?: boolean;
+  columnProps?: ColumnProps;
 }
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode };
@@ -431,9 +427,19 @@ export interface TableProps extends DataSetComponentProps {
   showQueryBar?: boolean;
   /**
    * 行高
-   * @default 31
+   * @default 30
    */
   rowHeight?: number | 'auto';
+  /**
+   * 头行高
+   * @default rowHeight
+   */
+  headerRowHeight?: number | 'auto';
+  /**
+   * 脚行高
+   * @default rowHeight
+   */
+  footerRowHeight?: number | 'auto';
   /**
    * 默认行是否展开，当dataSet没有设置expandField时才有效
    * @default false;
@@ -673,6 +679,8 @@ export interface TableProps extends DataSetComponentProps {
    * 分组
    */
   groups?: TableGroup[];
+  onScrollLeft?: (left: number) => void;
+  onScrollTop?: (top: number) => void;
 }
 
 @observer
@@ -873,6 +881,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   tableFootWrap: HTMLDivElement | null;
 
+  tableContentWrap: HTMLDivElement | null;
+
   fixedColumnsBodyLeft: HTMLDivElement | null;
 
   fixedColumnsBodyRight: HTMLDivElement | null;
@@ -916,6 +926,11 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   saveResizeRef(node: HTMLDivElement | null) {
     this.resizeLine = node;
+  }
+
+  @autobind
+  saveContentRef(node) {
+    this.tableContentWrap = node;
   }
 
   useFocusedClassName() {
@@ -1336,6 +1351,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'buttons',
       'buttonsLimit',
       'rowHeight',
+      'headerRowHeight',
+      'footerRowHeight',
       'queryFields',
       'queryFieldsLimit',
       'summaryFieldsLimit',
@@ -1396,6 +1413,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'showRemovedRow',
       'searchCode',
       'groups',
+      'onScrollLeft',
+      'onScrollTop',
     ]);
   }
 
@@ -1626,6 +1645,7 @@ export default class Table extends DataSetComponent<TableProps> {
               <div {...this.getOtherProps()}>
                 <div
                   className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
+                  ref={this.saveContentRef}
                   onScroll={this.handleBodyScroll}
                 >
                   {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
@@ -1716,35 +1736,13 @@ export default class Table extends DataSetComponent<TableProps> {
     ) {
       return;
     }
-    const fixedColumnsBodyLeft = this.fixedColumnsBodyLeft;
-    const bodyTable = this.tableBodyWrap;
-    const fixedColumnsBodyRight = this.fixedColumnsBodyRight;
     const { scrollTop } = target;
-    if (scrollTop !== tableStore.lastScrollTop) {
-      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = scrollTop;
-      }
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollTop = scrollTop;
-      }
-      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = scrollTop;
-      }
-      const { refSpin } = this;
-      if (refSpin) {
-        refSpin.style.display = 'block';
-        this.setSpin();
-      }
-      this.tableStore.setLastScrollTop(scrollTop);
-    }
+    this.setScrollTop(scrollTop, target);
   }
 
   handleBodyScrollLeft(e, currentTarget) {
     const { target } = e;
     const { tableStore } = this;
-    const headTable = this.tableHeadWrap;
-    const bodyTable = this.tableBodyWrap;
-    const footTable = this.tableFootWrap;
     if (
       !tableStore.overflowX ||
       currentTarget !== target ||
@@ -1754,36 +1752,13 @@ export default class Table extends DataSetComponent<TableProps> {
       return;
     }
     const { scrollLeft } = target;
-    if (scrollLeft !== this.lastScrollLeft) {
-      if (isStickySupport()) {
-        tableStore.editors.forEach((editor) => {
-          if (editor.lock && editor.cellNode) {
-            if (tableStore.inlineEdit) {
-              editor.alignEditor(editor.cellNode);
-            } else {
-              editor.hideEditor();
-            }
-          }
-        });
-      }
-      if (headTable && target !== headTable) {
-        headTable.scrollLeft = scrollLeft;
-      }
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollLeft = scrollLeft;
-      }
-      if (footTable && target !== footTable) {
-        footTable.scrollLeft = scrollLeft;
-      }
-      this.setScrollPositionClassName(target);
-    }
-    this.lastScrollLeft = scrollLeft;
+    this.setScrollLeft(scrollLeft, target);
   }
 
   setScrollPositionClassName(target?: any): void {
     const { tableStore } = this;
     if (tableStore.isAnyColumnsLock && tableStore.overflowX) {
-      const node = target || this.tableBodyWrap;
+      const node = target || this.tableBodyWrap || this.tableContentWrap;
       if (node) {
         const scrollToLeft = node.scrollLeft === 0;
         const table = node.querySelector('table');
@@ -2207,5 +2182,70 @@ export default class Table extends DataSetComponent<TableProps> {
       return wrapper.offsetWidth;
     }
     return 0;
+  }
+
+  setScrollTop(scrollTop: number, target?: HTMLElement) {
+    const { tableStore } = this;
+    if (scrollTop !== tableStore.lastScrollTop) {
+      const { fixedColumnsBodyLeft, tableBodyWrap, fixedColumnsBodyRight, tableContentWrap } = this;
+      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+        fixedColumnsBodyLeft.scrollTop = scrollTop;
+      }
+      if (tableBodyWrap && target !== tableBodyWrap) {
+        tableBodyWrap.scrollTop = scrollTop;
+      }
+      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+        fixedColumnsBodyRight.scrollTop = scrollTop;
+      }
+      if (tableContentWrap && target !== tableContentWrap) {
+        tableContentWrap.scrollTop = scrollTop;
+      }
+      const { refSpin } = this;
+      if (refSpin) {
+        refSpin.style.display = 'block';
+        this.setSpin();
+      }
+      tableStore.setLastScrollTop(scrollTop);
+      if (target) {
+        const { onScrollTop = noop } = this.props;
+        onScrollTop(scrollTop);
+      }
+    }
+  }
+
+  setScrollLeft(scrollLeft: number, target?: HTMLElement) {
+    if (scrollLeft !== this.lastScrollLeft) {
+      const { tableStore } = this;
+      const { tableHeadWrap, tableBodyWrap, tableFootWrap, tableContentWrap } = this;
+      if (isStickySupport()) {
+        tableStore.editors.forEach((editor) => {
+          if (editor.lock && editor.cellNode) {
+            if (tableStore.inlineEdit) {
+              editor.alignEditor(editor.cellNode);
+            } else {
+              editor.hideEditor();
+            }
+          }
+        });
+      }
+      if (tableHeadWrap && target !== tableHeadWrap) {
+        tableHeadWrap.scrollLeft = scrollLeft;
+      }
+      if (tableBodyWrap && target !== tableBodyWrap) {
+        tableBodyWrap.scrollLeft = scrollLeft;
+      }
+      if (tableFootWrap && target !== tableFootWrap) {
+        tableFootWrap.scrollLeft = scrollLeft;
+      }
+      if (tableContentWrap && target !== tableContentWrap) {
+        tableContentWrap.scrollLeft = scrollLeft;
+      }
+      this.setScrollPositionClassName(target);
+      this.lastScrollLeft = scrollLeft;
+      if (target) {
+        const { onScrollLeft = noop } = this.props;
+        onScrollLeft(scrollLeft);
+      }
+    }
   }
 }

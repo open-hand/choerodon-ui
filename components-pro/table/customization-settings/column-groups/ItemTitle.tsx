@@ -28,7 +28,9 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
     name: record.get('name'),
     title,
     header: record.get('header'),
-  }, dataSet, aggregation);
+    dataSet,
+    aggregation,
+  });
   const titleEditable = columnTitleEditable && record.get('titleEditable') !== false;
 
   return (

@@ -211,7 +211,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       >
         <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
           {
-            tableStore.hasAggregationColumn && (
+            tableStore.hasAggregationColumn && (tableStore.props.onAggregationChange || tableStore.props.aggregation === undefined) && (
               <SelectBox name="aggregation" label={$l('Table', 'view_display')} mode={ViewMode.button}>
                 <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
                   <Tooltip title={$l('Table', 'tiled_view')} placement="top">
