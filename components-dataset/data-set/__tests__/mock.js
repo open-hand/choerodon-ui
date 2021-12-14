@@ -1445,7 +1445,7 @@ export const fatherDs = {
 };
 
 
-export const treeTableData = (parentLength,childrenLength)=>{
+export const treeTableData = (parentLength,childrenLength,grandChildrenLength)=>{
   const template = {
     creationDate: '2021-09-03 15:57:39',
     createdBy: 25,
@@ -1500,10 +1500,20 @@ export const treeTableData = (parentLength,childrenLength)=>{
     });
     // 创建字段
     for (let j = 0; j < childrenLength; j++) {
+      const grandChildren = [];
       const _data2 = { ...fieldTemplate };
       Object.assign(_data2, { parentId: i });
       Object.assign(_data2, { id: `${i}-${j}` });
       child.push(_data2);
+      if(grandChildrenLength){
+        for (let k = 0; k < grandChildrenLength; k++) {
+          const _data3 = { ...fieldTemplate };
+          Object.assign(_data3, { parentId: i });
+          Object.assign(_data3, { id: `${i}-${j}-${k}` });
+          grandChildren.push(_data3);
+          _data2.businessObjectRelationFieldList = grandChildren;
+        }
+      }
     }
     _data1.businessObjectRelationFieldList = child;
     data.push(_data1);
@@ -1512,22 +1522,7 @@ export const treeTableData = (parentLength,childrenLength)=>{
 }
 
 // 用于Table中的树形Ds数据模拟
-export const mockTableTreeDs = (parentLength,childrenLength) => {
-
-  const columns = [
-    { name: 'id' },
-    {
-      name: 'businessObjectFieldName',
-      tooltip: 'overflow',
-    },
-    {
-      width: 100,
-      name: 'componentType',
-      tooltip: 'overflow',
-      editor: true,
-    }
-  ]
-
+export const mockTableTreeDs = (parentLength,childrenLength,grandChildrenLength) => {
   const tableTreeDs = {
     primaryKey: 'id',
     autoQuery: false,
@@ -1535,7 +1530,7 @@ export const mockTableTreeDs = (parentLength,childrenLength) => {
     expandField: 'expand',
     paging: false,
     autoLocateFirst: false,
-    data:treeTableData(parentLength,childrenLength),
+    data:treeTableData(parentLength,childrenLength,grandChildrenLength),
     fields: [
       { name: 'id', type: 'string' },
       { name: 'parentId', type: 'string', parentFieldName: 'id' },
