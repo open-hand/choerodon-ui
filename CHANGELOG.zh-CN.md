@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `Message`: 增加 promise 化的回调接口。
 - 🌟 `<pro>Table`: 新增 groups, headerRowHeight, footerRowHeight, onScrollLeft, onScrollTop 属性, setScrollLeft, setScrollTop 实例方法。
 - 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded, defaultWidth 属性。
+- 🌟 `<pro>Transfer`: 新增 oneWay 单向穿梭属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。

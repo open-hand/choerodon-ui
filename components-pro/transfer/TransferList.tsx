@@ -17,6 +17,7 @@ export interface TransferListProps extends SelectProps {
   header?: ReactNode;
   selected: Record[];
   currentIndex?: number;
+  oneWay?: boolean;
   footer?: (options: Record[]) => ReactNode;
   onSelect: (e) => void;
   onSelectAll: (value: any) => void;
@@ -91,6 +92,9 @@ export default class TransferList extends Select<TransferListProps> {
     delete otherProps.currentIndex;
     delete otherProps.sortable;
     delete otherProps.sortOperations;
+    delete otherProps.oneWay;
+    delete otherProps.optionRenderer;
+    delete otherProps.renderer;
     return otherProps;
   }
 
@@ -144,6 +148,11 @@ export default class TransferList extends Select<TransferListProps> {
         </ObserverCheckBox>
       );
     }
+    return (
+      <span className={`${prefixCls}-header-selected`}>
+        {`${length}${$l('Transfer', 'items')}`}
+      </span>
+    )
   }
 
   getSearchField(): ReactNode {
@@ -168,15 +177,16 @@ export default class TransferList extends Select<TransferListProps> {
       searchable,
       textField,
       valueField,
+      multiple,
       props: { selected, onSelect },
     } = this;
     const searchField = searchable && this.getSearchField();
     const classString = classNames(`${prefixCls}-body`, {
       [`${prefixCls}-body-with-search`]: searchable,
     });
-    const selectedKeys = selected.map(record =>
+    const selectedKeys = multiple ? selected.map(record =>
       getItemKey(record, record.get(textField), record.get(valueField)),
-    );
+    ) : [];
     return (
       <div className={classString}>
         {searchField}

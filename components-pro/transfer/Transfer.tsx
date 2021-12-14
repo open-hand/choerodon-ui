@@ -12,6 +12,7 @@ import TransferSort from './TransferSort';
 import autobind from '../_util/autobind';
 import Record from '../data-set/Record';
 import isSameLike from '../_util/isSameLike';
+import Icon from '../icon';
 
 export interface TransferProps extends SelectProps {
   titles?: [ReactNode, ReactNode];
@@ -19,6 +20,7 @@ export interface TransferProps extends SelectProps {
   operations?: string[] | ReactNode[];
   sortable?: boolean;
   sortOperations?: string[] | ReactNode[];
+  oneWay?: boolean;
 }
 
 @observer
@@ -36,6 +38,7 @@ export default class Transfer extends Select<TransferProps> {
     suffixCls: 'transfer',
     multiple: true,
     sortable: false,
+    oneWay: false,
   };
 
   static Option = Option;
@@ -53,6 +56,7 @@ export default class Transfer extends Select<TransferProps> {
     runInAction(() => {
       this.sourceSelected = [];
       this.targetSelected = [];
+      this.clearCurrentIndex();
     });
   }
 
@@ -121,8 +125,7 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.removeValues(this.targetSelected.map(record => record.get(valueField)));
     this.targetSelected = [];
-    this.changeOptionIndex();
-    this.clearCurrentIndex();
+    this.updateIndex()
   }
 
   @autobind
@@ -131,8 +134,7 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));
     this.sourceSelected = [];
-    this.changeOptionIndex();
-    this.clearCurrentIndex();
+    this.updateIndex()
   }
 
   @autobind
@@ -140,14 +142,14 @@ export default class Transfer extends Select<TransferProps> {
   handleSortTo(direction: string) {
     const { valueField } = this;
     const to = direction === 'up' ? -1 : 1
-    
+
     const targetFilteredOptions = this.options.getState('targetFilteredOptions');
-    const index = targetFilteredOptions.findIndex(record => record.get(valueField)=== this.options.current?.get(valueField))
-    const currentOpt =  targetFilteredOptions[index]
-    const moveOpt =  targetFilteredOptions[index + to]
-    
+    const index = targetFilteredOptions.findIndex(record => record.get(valueField) === this.options.current?.get(valueField))
+    const currentOpt = targetFilteredOptions[index]
+    const moveOpt = targetFilteredOptions[index + to]
+
     const optionsCurrentIndex = this.options.findIndex(record => record.get(valueField) === currentOpt.get(valueField))
-    const optionsMoveIndex = this.options.findIndex(record=>record.get(valueField) === moveOpt.get(valueField))
+    const optionsMoveIndex = this.options.findIndex(record => record.get(valueField) === moveOpt.get(valueField))
 
     this.options.move(optionsCurrentIndex, optionsMoveIndex);
   }
@@ -201,6 +203,28 @@ export default class Transfer extends Select<TransferProps> {
     this.options.data = optionData;
   };
 
+  handleDelete = (value) => {
+    this.removeValues([value]);
+    this.updateIndex();
+  }
+
+  @action
+  updateIndex() {
+    this.changeOptionIndex();
+    this.clearCurrentIndex();
+  }
+
+  renderer = ({ text, value }) => {
+    return (
+      <div className={`${this.prefixCls}-item-delete`}>
+        <div>{text}</div>
+        <Icon type="delete_black-o" className={`${this.prefixCls}-item-icon`} onClick={() => this.handleDelete(value)} />
+      </div>
+    )
+  };
+
+  optionRenderer = ({ text, value }) => this.renderer({ text, value });
+
   renderWrapper() {
     const {
       disabled,
@@ -209,7 +233,7 @@ export default class Transfer extends Select<TransferProps> {
       sourceSelected,
       multiple,
       valueField,
-      props: { titles = [], operations = [], sortOperations = [], sortable },
+      props: { titles = [], operations = [], sortOperations = [], sortable, oneWay },
     } = this;
 
     const targetValues = this.getValues();
@@ -228,6 +252,14 @@ export default class Transfer extends Select<TransferProps> {
     const classNameString = classNames(`${prefixCls}-wrapper`, {
       [`${prefixCls}-sortable`]: sortable,
     });
+    let oneWayProps = {};
+    if (oneWay) {
+      oneWayProps = {
+        multiple: false,
+        optionRenderer: this.optionRenderer,
+        renderer: this.render,
+      }
+    }
 
     return (
       <span key="wrapper" className={classNameString}>
@@ -249,6 +281,7 @@ export default class Transfer extends Select<TransferProps> {
           moveToLeft={this.handleMoveToLeft}
           moveToRight={this.handleMoveToRight}
           multiple={multiple}
+          oneWay={oneWay}
         />
         <TransferList
           {...this.props}
@@ -259,6 +292,7 @@ export default class Transfer extends Select<TransferProps> {
           onSelectAll={this.handleTargetSelectAllChange}
           onSelect={this.handleTargetMenuClick}
           optionsFilter={this.targetFilter}
+          {...oneWayProps}
         />
         {sortable && (
           <TransferSort
