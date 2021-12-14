@@ -27,6 +27,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.
 - 🐞 `<pro>Button`: Fix the problem that the `href` button can be jumped when the href button is `disabled`.
 - 🐞 `Notification`: Fix the problem that multiple messages opened at different times will be closed at the same time.
+- 🐞 `Divider`: Fix an issue with the dashed attribute of Divider.
+- 🐞 `Menu`: Fix an issue where mouse moves into collapsed Menu reports errors.
 
 ## 1.5.0
 

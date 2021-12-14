@@ -27,6 +27,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。
 - 🐞 `<pro>Button`: 修复 href 按钮禁用状态下仍可跳转的问题。
 - 🐞 `Notification`: 修复多个非同时打开的消息会同时关闭的问题。
+- 🐞 `Divider`: 修复分割线标题不居中时使用 dashed 属性出现bug的问题。
+- 🐞 `Menu`: 修复菜单收起时鼠标移入 Menu.Item 时报错的问题。
 
 ## 1.5.0
 
