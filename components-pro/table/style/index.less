@@ -185,7 +185,6 @@
 
     &-multiple-block {
       .tag-block;
-      vertical-align: text-top;
     }
 
     &-aggregation {
@@ -201,6 +200,11 @@
 
     &:not(&-aggregation) &-inner > * {
       vertical-align: middle;
+    }
+
+    &-multiple-block,
+    &:not(&-aggregation) &-inner > &-multiple-block {
+      vertical-align: text-top;
     }
 
     &-tree {

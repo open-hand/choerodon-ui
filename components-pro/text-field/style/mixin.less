@@ -159,6 +159,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    display: flex;
+    align-items: center;
     max-width: 100%;
     height: @input-height-base;
     margin: auto 0;
@@ -295,15 +297,19 @@
 
   > ul {
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     margin: 0;
-    padding: 0.02rem 0 0 0;
+    padding: 0.01rem 0;
     overflow: hidden auto;
 
     > li, span {
       display: inline-block;
       max-width: 99%;
       height: 0.24rem;
-      margin-bottom: 0.02rem;
+      margin-top: 0.01rem;
+      margin-bottom: 0.01rem;
       line-height: 0.22rem;
       vertical-align: middle;
     }
