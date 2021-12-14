@@ -130,6 +130,7 @@ class App extends React.Component {
     pageSize: 5,
     cacheSelection: true,
     cacheModified: true,
+    minLength: 10,
     transport: {
       read({ params: { page, pagesize } }) {
         if (pagesize > 20) {

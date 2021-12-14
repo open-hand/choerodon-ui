@@ -13,6 +13,7 @@ export interface Locale {
     submit_success: string;
     submit_failure: string;
     cannot_add_record_when_head_no_current: string;
+    data_length_too_short: string;
   };
   Validator: {
     bad_input: string;

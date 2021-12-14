@@ -12,7 +12,7 @@ import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, get, IReactionDisposer, reaction, runInAction, toJS } from 'mobx';
+import { action, get, IReactionDisposer, observable, reaction, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -28,6 +28,8 @@ import { isCalcSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor'
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
+import Animate from 'choerodon-ui/lib/animate';
+import Icon from 'choerodon-ui/lib/icon';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
@@ -901,6 +903,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   bodyHeightReaction?: IReactionDisposer;
 
+  @observable showDataSetError?: boolean;
+
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls } = this;
     return this.element.querySelector(
@@ -1008,10 +1012,14 @@ export default class Table extends DataSetComponent<TableProps> {
   handleDataSetValidate({ valid, dataSet, errors: validationErrors, noLocate }: { valid: boolean; dataSet: DataSet; errors: ValidationErrors[]; noLocate?: boolean }) {
     if (!noLocate && !valid) {
       const { tableStore } = this;
+      runInAction(() => {
+        this.showDataSetError = dataSet.selfValidationError ? !dataSet.selfValidationError.valid : false;
+      });
+      if (!validationErrors.length) return;
       const [firstInvalidRecord] = validationErrors;
-      if (firstInvalidRecord) {
+      if (validationErrors && firstInvalidRecord) {
         const { errors, record } = firstInvalidRecord;
-        if (errors.length) {
+        if (record && errors.length) {
           if (!tableStore.showCachedSelection) {
             if (dataSet.cachedRecords.includes(record)) {
               runInAction(() => {
@@ -1035,6 +1043,11 @@ export default class Table extends DataSetComponent<TableProps> {
         }
       }
     }
+  }
+
+  @autobind
+  handleDataSetReset() {
+    this.clearError();
   }
 
   @autobind
@@ -1534,6 +1547,7 @@ export default class Table extends DataSetComponent<TableProps> {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
+      handler.call(dataSet, DataSetEvents.reset, this.handleDataSetReset);
     }
   }
 
@@ -1623,6 +1637,7 @@ export default class Table extends DataSetComponent<TableProps> {
               treeQueryExpanded={treeQueryExpanded}
               searchCode={searchCode}
             />
+            {this.getValidationErrors()}
             <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
               {
                 virtual && virtualSpin && (
@@ -2254,5 +2269,37 @@ export default class Table extends DataSetComponent<TableProps> {
         onScrollLeft(scrollLeft);
       }
     }
+  }
+
+  getValidationErrors(): ReactNode {
+    const error = this.props.dataSet.selfValidationError;
+    const showError = this.showDataSetError && error && !error.valid;
+
+    return (
+      <Animate
+        transitionName="slide-down"
+        className={classNames(`${this.prefixCls}-error`)}
+        hiddenProp="hidden"
+        component="div"
+      >
+        {
+          showError && (<div hidden={!showError} className={classNames(`${this.prefixCls}-error-content`)}>
+            <div>
+              <Icon type="cancel" />
+              {error.error}
+            </div>
+            <Icon type="close" onClick={this.clearError} />
+          </div>)
+        }
+      </Animate>
+    )
+  }
+
+  @autobind
+  @action
+  clearError() {
+    runInAction(() => {
+      this.showDataSetError = false;
+    });
   }
 }

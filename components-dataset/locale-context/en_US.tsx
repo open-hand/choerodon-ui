@@ -12,6 +12,7 @@ const locale: Locale = {
     submit_success: 'Submit successfully.',
     submit_failure: 'Fail to submit data.',
     cannot_add_record_when_head_no_current: `Can't create new row record when head record unselected.`,
+    data_length_too_short: 'Please maintain at least {length} data.',
   },
   Validator: {
     bad_input: 'Please input a number.',
