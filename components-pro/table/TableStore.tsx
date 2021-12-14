@@ -440,7 +440,7 @@ function normalizeColumns(
 }
 
 
-function getColumnGroupedColumns(groups: TableGroup[], dataSet: DataSet, customizedColumns?: { [key: string]: ColumnProps }): ColumnProps[] {
+function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [key: string]: ColumnProps }): ColumnProps[] {
   const groupedColumns: ColumnProps[] = [];
   groups.forEach((group) => {
     const { name, type, columnProps } = group;
@@ -450,19 +450,15 @@ function getColumnGroupedColumns(groups: TableGroup[], dataSet: DataSet, customi
         lock: ColumnLock.left,
         ...columnProps,
         draggable: false,
+        hideable: false,
         key: `__group-${name}`,
+        name,
         __tableGroup: group,
       };
       if (customizedColumns) {
         Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
       }
-      groupedColumns.push({
-        ...column,
-        header: getHeader({
-          ...column,
-          name,
-        }, dataSet),
-      });
+      groupedColumns.push(column);
     }
   });
   return groupedColumns;
@@ -477,49 +473,73 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
     const subColumns = subGroups.length ? getHeaderGroupedColumns(subGroups, tableGroups, columns, dataSet, groupedColumns, customizedColumns, key) : columns;
     const tableGroup = tableGroups.find(($tableGroup) => name === $tableGroup.name);
     if (tableGroup) {
-      const { columnProps, name: groupName } = tableGroup;
-      const { length } = groupedColumns;
-      if (length && !headerUsed) {
-        headerUsed = true;
-        const header = getHeader({
-          ...columnProps,
-          name: groupName,
-        }, dataSet);
-        if (header) {
-          const oldColumn: ColumnProps = groupedColumns[length - 1];
-          const newKey = `${key}-${getColumnKey(oldColumn)}`;
-          const newColumn: ColumnProps = {
-            ...columnProps,
-            key: newKey,
-            header,
-            children: [oldColumn],
-          };
-          if (customizedColumns) {
-            Object.assign(newColumn, customizedColumns[newKey]);
-          }
-          groupedColumns[length - 1] = newColumn;
-        }
-      }
-      const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
-      const column = {
-        ...columnProps,
-        key,
-        header: renderer({ dataSet, record: group.totalRecords[0], name: groupName, text: value, value, group, type: GroupType.header }),
-        children: subColumns.map(col => {
+      const { columnProps, name: groupName, hidden } = tableGroup;
+      if (hidden) {
+        subColumns.forEach(col => {
           const colKey = `${key}-${getColumnKey(col)}`;
-          const newCol = { ...col, key: colKey };
+          const newCol = {
+            ...col,
+            key: colKey,
+            __tableGroup: tableGroup,
+            __group: group,
+          };
           if (customizedColumns) {
             Object.assign(newCol, customizedColumns[colKey]);
           }
-          return newCol;
-        }),
-        __tableGroup: tableGroup,
-        __group: group,
-      };
-      if (customizedColumns) {
-        Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
+          generatedColumns.add(newCol);
+        });
+      } else {
+        const { length } = groupedColumns;
+        if (length && !headerUsed) {
+          headerUsed = true;
+          const header = getHeader({
+            ...columnProps,
+            name: groupName,
+            dataSet,
+            group,
+          });
+          if (header) {
+            const oldColumn: ColumnProps = groupedColumns[length - 1];
+            const newKey = `${key}-${getColumnKey(oldColumn)}`;
+            const newColumn: ColumnProps = {
+              ...columnProps,
+              lock: ColumnLock.left,
+              titleEditable: false,
+              draggable: false,
+              hideable: false,
+              key: newKey,
+              header,
+              children: [oldColumn],
+            };
+            if (customizedColumns) {
+              Object.assign(newColumn, customizedColumns[newKey]);
+            }
+            groupedColumns[length - 1] = newColumn;
+          }
+        }
+        const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
+        const column = {
+          ...columnProps,
+          titleEditable: false,
+          key,
+          headerStyle: columnProps && columnProps.style,
+          header: () => renderer({ dataSet, record: group.totalRecords[0], name: groupName, text: value, value, headerGroup: group }),
+          children: subColumns.map(col => {
+            const colKey = `${key}-${getColumnKey(col)}`;
+            const newCol = { ...col, key: colKey };
+            if (customizedColumns) {
+              Object.assign(newCol, customizedColumns[colKey]);
+            }
+            return newCol;
+          }),
+          __tableGroup: tableGroup,
+          __group: group,
+        };
+        if (customizedColumns) {
+          Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
+        }
+        generatedColumns.add(column);
       }
-      generatedColumns.add(column);
     } else if (subColumns.length) {
       subColumns.forEach(column => generatedColumns.add(column));
     }
@@ -541,7 +561,7 @@ export function normalizeGroupColumns(
     : normalizeColumns(children, aggregation, customizedColumns, hasHeaderGroup);
   const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] = generatedColumns;
   const columnGroupedColumns = groups.length ?
-    getColumnGroupedColumns(groups, dataSet, customizedColumns) :
+    getColumnGroupedColumns(groups, customizedColumns) :
     [];
   const headerGroupedColumns = hasHeaderGroup ?
     getHeaderGroupedColumns(tableStore.groupedDataWithHeader, headerTableGroups!, originalColumns, dataSet, columnGroupedColumns, customizedColumns) :
@@ -562,7 +582,7 @@ async function getHeaderTexts(
 ): Promise<HeaderText[]> {
   const column = columns.shift();
   if (column) {
-    headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet, aggregation)) });
+    headers.push({ name: column.name!, label: await getReactNodeText(getHeader({ ...column, dataSet, aggregation })) });
   }
   if (columns.length) {
     await getHeaderTexts(dataSet, columns, aggregation, headers);

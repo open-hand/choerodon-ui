@@ -18,8 +18,8 @@ timeline: true
 - 🌟 `configure`: attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
-- 🌟 `<pro>Table`: 新增 groups 属性。
-- 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded 属性。
+- 🌟 `<pro>Table`: 新增 groups, headerRowHeight, footerRowHeight, onScrollLeft, onScrollTop 属性, setScrollLeft, setScrollTop 实例方法。
+- 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded, defaultWidth 属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。

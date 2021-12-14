@@ -39,6 +39,33 @@ import ColumnGroup from './ColumnGroup';
 import { iteratorSome } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
 
+function getGroupByPath(group: Group, groupPath: [Group, boolean][]): Group | undefined {
+  const { subGroups } = group;
+  if (groupPath.length) {
+    const path = groupPath.shift();
+    if (path && subGroups.length) {
+      const subGroup = subGroups.find(sub => sub.value === path[0].value);
+      if (subGroup) {
+        return getGroupByPath(subGroup, groupPath);
+      }
+      return undefined;
+    }
+  }
+  return group;
+}
+
+function getRecord(columnGroup: ColumnGroup, groupPath: [Group, boolean][] | undefined, index: number, record: Record): Record | undefined {
+  const { headerGroup } = columnGroup;
+  if (headerGroup && groupPath) {
+    const group = getGroupByPath(headerGroup, groupPath.slice());
+    if (group) {
+      return group.totalRecords[index];
+    }
+    return undefined;
+  }
+  return record;
+}
+
 const VIRTUAL_HEIGHT = '__VIRTUAL_HEIGHT__';
 
 export interface TableRowProps extends ElementProps {
@@ -355,7 +382,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => (
     <TableCell
       columnGroup={columnGroup}
-      record={columnGroup.rowGroup ? columnGroup.rowGroup.totalRecords[index] : record}
+      record={getRecord(columnGroup, groupPath, index, record)}
       isDragging={snapshot ? snapshot.isDragging : false}
       lock={lock}
       provided={rest.key === DRAG_KEY ? provided : undefined}
