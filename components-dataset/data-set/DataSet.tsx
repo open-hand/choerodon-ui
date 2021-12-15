@@ -1206,7 +1206,8 @@ export default class DataSet extends EventManager {
    * @param number exportQuantity 导出数量
    */
   async export(columns: any = {}, exportQuantity = 0): Promise<void | any[]> {
-    if (this.checkReadable(this.parent) && (await this.ready())) {
+    if (this.checkReadable(this.parent)) {
+      await this.ready();
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
       const { totalCount, totalKey } = this;

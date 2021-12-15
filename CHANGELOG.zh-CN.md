@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `Notification`: 修复多个非同时打开的消息会同时关闭的问题。
 - 🐞 `Divider`: 修复分割线标题不居中时使用 dashed 属性出现bug的问题。
 - 🐞 `Menu`: 修复菜单收起时鼠标移入 Menu.Item 时报错的问题。
+- 🐞 `<pro>DataSet`: 修复导出失效问题。
 
 ## 1.5.0
 

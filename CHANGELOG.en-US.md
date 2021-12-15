@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `Notification`: Fix the problem that multiple messages opened at different times will be closed at the same time.
 - 🐞 `Divider`: Fix an issue with the dashed attribute of Divider.
 - 🐞 `Menu`: Fix an issue where mouse moves into collapsed Menu reports errors.
+- 🐞 `<pro>DataSet`: Fix the issue of export failure.
 
 ## 1.5.0
 
