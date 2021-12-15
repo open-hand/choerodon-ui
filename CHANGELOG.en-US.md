@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>TextArea`: Added `clearButton` property.
 - 🌟 `<pro>DataSet`: Added `validateSelf` event and `getAllValidationErrors` method.
 - 🌟 `<pro>DataSet`: Added `validationRules` property.
+- 🌟 `<pro>Lov`: Added `selectionProps` property.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.

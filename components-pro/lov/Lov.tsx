@@ -59,6 +59,11 @@ export type NodeRenderer = (record: Record) => ReactNode;
 
 export { LovConfigItem };
 
+export interface SelectionProps {
+  nodeRenderer?: NodeRenderer;
+  placeholder?: string | ReactNode;
+}
+
 export interface LovConfig extends DataSetLovConfig {
   queryBar?: TableQueryBarType | TableQueryBarHook;
   tableProps?: Partial<TableProps>;
@@ -91,6 +96,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   viewRenderer?: ViewRenderer;
   nodeRenderer?: NodeRenderer;
   showSelectedInView?: boolean;
+  selectionProps?: SelectionProps;
 }
 
 @observer
@@ -113,6 +119,7 @@ export default class Lov extends Select<LovProps> {
     viewRenderer: PropTypes.func,
     nodeRenderer: PropTypes.func,
     showSelectedInView: PropTypes.bool,
+    selectionProps: PropTypes.object,
   };
 
   static defaultProps = {
@@ -440,7 +447,7 @@ export default class Lov extends Select<LovProps> {
   private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode } = this.observableProps;
-    const { onBeforeSelect, viewRenderer, nodeRenderer } = this.props;
+    const { onBeforeSelect, viewRenderer, nodeRenderer, selectionProps } = this.props;
     const drawer = viewMode === 'drawer';
     if (viewMode === 'modal' || drawer) {
       const config = this.getConfig();
@@ -473,8 +480,8 @@ export default class Lov extends Select<LovProps> {
               valueField={valueField}
               textField={textField}
               viewRenderer={viewRenderer}
-              nodeRenderer={nodeRenderer}
               showSelectedInView={this.showSelectedInView}
+              selectionProps={selectionProps || { nodeRenderer }}
             />
           ),
           onClose: this.handleLovViewClose,
@@ -729,6 +736,7 @@ export default class Lov extends Select<LovProps> {
       'viewRenderer',
       'nodeRenderer',
       'showSelectedInView',
+      'selectionProps',
     ]);
   }
 

@@ -15,7 +15,7 @@ import { modalChildrenProps } from '../modal/interface';
 import autobind from '../_util/autobind';
 import { getColumnKey } from '../table/utils';
 import SelectionList, { TIMESTAMP, SelectionsPosition } from './SelectionList';
-import { LovConfig, ViewRenderer, NodeRenderer } from './Lov';
+import { LovConfig, ViewRenderer, SelectionProps } from './Lov';
 import { FormContextValue } from '../form/FormContext';
 
 export interface LovViewProps {
@@ -33,8 +33,8 @@ export interface LovViewProps {
   valueField?: string;
   textField?: string;
   viewRenderer?: ViewRenderer;
-  nodeRenderer?: NodeRenderer,
   showSelectedInView?: boolean;
+  selectionProps?: SelectionProps,
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -286,12 +286,12 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       valueField = '',
       textField = '',
-      nodeRenderer,
       config: { treeFlag, tableProps: configTableProps = {} },
       tableProps,
       multiple,
       viewMode,
       showSelectedInView,
+      selectionProps,
     } = this.props;
     if (!showSelectedInView || !multiple) {
       return null;
@@ -316,8 +316,8 @@ export default class LovView extends Component<LovViewProps> {
         treeFlag={treeFlag}
         valueField={valueField}
         textField={textField}
-        nodeRenderer={nodeRenderer}
         selectionsPosition={selectionsPosition}
+        selectionProps={selectionProps}
       />
     );
   }

@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>TextArea`: 新增 clearButton 属性。
 - 🌟 `<pro>DataSet`: 新增 validateSelf 事件和 getAllValidationErrors 方法。
 - 🌟 `<pro>DataSet`: 新增 validationRules 属性。
+- 🌟 `<pro>Lov`: 新增 selectionProps 属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。
