@@ -13,6 +13,7 @@ export interface TransferOperationProps {
   leftActive?: boolean;
   rightActive?: boolean;
   multiple?: boolean;
+  oneWay?: boolean;
 }
 
 export default function TransferOperation(props: TransferOperationProps) {
@@ -25,6 +26,7 @@ export default function TransferOperation(props: TransferOperationProps) {
     rightActive,
     className,
     multiple,
+    oneWay,
   } = props;
   const customLeftClass = classNames(`${className}-custom-left-active`, {
     [`${className}-custom-left-disable`]: !leftActive,
@@ -33,37 +35,49 @@ export default function TransferOperation(props: TransferOperationProps) {
     [`${className}-custom-left-disable`]: !rightActive,
   });
   if (multiple) {
+    let leftArrowBtn;
+    let rightArrowBtn;
+    if (typeof leftArrowText === 'string') {
+      leftArrowBtn = (
+        <Button
+          color={leftActive ? ButtonColor.primary : ButtonColor.default}
+          disabled={!leftActive}
+          onClick={moveToLeft}
+          icon={!leftArrowText ? 'navigate_before' : undefined}
+        >
+          {leftArrowText || undefined}
+        </Button>
+      );
+    } else {
+      leftArrowBtn = (
+        <div className={customLeftClass} onClick={leftActive ? moveToLeft : undefined}>
+          {leftArrowText}
+        </div>
+      )
+    }
+    if (typeof rightArrowText === 'string') {
+      rightArrowBtn = (
+        <Button
+          color={rightActive ? ButtonColor.primary : ButtonColor.default}
+          disabled={!rightActive}
+          onClick={moveToRight}
+          icon={!rightArrowText ? 'navigate_next' : undefined}
+        >
+          {rightArrowText || undefined}
+        </Button>
+      );
+    } else {
+      rightArrowBtn = (
+        <div className={customRightClass} onClick={rightActive ? moveToRight : undefined}>
+          {rightArrowText}
+        </div>
+      )
+    }
+
     return (
       <div className={className}>
-        {typeof leftArrowText === 'string' ? (
-          <Button
-            color={leftActive ? ButtonColor.primary : ButtonColor.default}
-            disabled={!leftActive}
-            onClick={moveToLeft}
-            icon="navigate_before"
-          >
-            {leftArrowText}
-          </Button>
-        ) : (
-          <div className={customLeftClass} onClick={leftActive ? moveToLeft : undefined}>
-            {leftArrowText}
-          </div>
-        )}
-
-        {typeof rightArrowText === 'string' ? (
-          <Button
-            color={rightActive ? ButtonColor.primary : ButtonColor.default}
-            disabled={!rightActive}
-            onClick={moveToRight}
-            icon="navigate_next"
-          >
-            {rightArrowText}
-          </Button>
-        ) : (
-          <div className={customRightClass} onClick={rightActive ? moveToRight : undefined}>
-            {rightArrowText}
-          </div>
-        )}
+        {oneWay ? null : leftArrowBtn}
+        {rightArrowBtn}
       </div>
     );
   }
