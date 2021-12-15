@@ -898,6 +898,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   wrapperWidthTimer?: number;
 
+  resizeObserver?: ResizeObserver;
+
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls } = this;
     return this.element.querySelector(
@@ -1506,13 +1508,14 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   syncParentSize(entries: ResizeObserverEntry[]) {
     const [entry] = entries;
-    const { contentRect } = entry;
-    const { tableStore, element } = this;
-    tableStore.parentHeight = contentRect.height;
-    tableStore.parentPaddingTop = (element as HTMLDivElement).getBoundingClientRect().top - contentRect.top;
+    const { contentRect: { height, top } } = entry;
+    const { tableStore, element, wrapper } = this;
+    const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
+    if (wrapperHeight !== height) {
+      tableStore.parentHeight = height;
+      tableStore.parentPaddingTop = (element as HTMLDivElement).getBoundingClientRect().top - top;
+    }
   }
-
-  resizeObserver?: ResizeObserver;
 
   connect() {
     this.processDataSetListener(true);
