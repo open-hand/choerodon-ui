@@ -21,6 +21,8 @@ timeline: true
 - 🌟 `<pro>Table`: Added `groups`, `headerRowHeight`, `footerRowHeight`, `onScrollLeft`, `onScrollTop`, `heightChangeable` properties, `setScrollLeft`, `setScrollTop` instance methods.
 - 🌟 `<pro>Transfer`: Added properties of `oneWay`.
 - 🌟 `<pro>Table.Column`: Added `aggregationLimitDefaultExpanded`, `defaultWidth` properties.
+- 🌟 `<pro>DataSet`: Added `minLength` property.
+- 🌟 `<pro>DataSet`: Added `validateDataSetSelf` event and `getAllValidationErrors` method.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
@@ -61,7 +63,6 @@ timeline: true
 - 🌟 `<pro>CodeArea`: Added `themeSwitch`, `title` properties.
 - 🌟 `<pro>Form`: Added the `showHelp` attribute to control the display mode of the form input box help.
 - 🌟 `<pro>FormItem`: The new `label` method is added to the `showHelp` property, which supports the display of help information on the Label.
-- 🌟 `<pro>DataSet`: Added `minLength` property.
 - 💄 `<pro>FormItem`: Optimize the mandatory input and colon styles in the form input box, and will not hide if it is omitted.
 - 💄 `<pro>Modal`: Optimized that when the mouse clicks on the unmasked modal box, it will be automatically set to the top.
 - 💄 `<pro>PerformanceTable`: Optimized header can be nested to three levels.

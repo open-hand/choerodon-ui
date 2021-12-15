@@ -1012,14 +1012,10 @@ export default class Table extends DataSetComponent<TableProps> {
   handleDataSetValidate({ valid, dataSet, errors: validationErrors, noLocate }: { valid: boolean; dataSet: DataSet; errors: ValidationErrors[]; noLocate?: boolean }) {
     if (!noLocate && !valid) {
       const { tableStore } = this;
-      runInAction(() => {
-        this.showDataSetError = dataSet.selfValidationError ? !dataSet.selfValidationError.valid : false;
-      });
-      if (!validationErrors.length) return;
       const [firstInvalidRecord] = validationErrors;
-      if (validationErrors && firstInvalidRecord) {
+      if (firstInvalidRecord) {
         const { errors, record } = firstInvalidRecord;
-        if (record && errors.length) {
+        if (errors.length) {
           if (!tableStore.showCachedSelection) {
             if (dataSet.cachedRecords.includes(record)) {
               runInAction(() => {
@@ -1043,6 +1039,11 @@ export default class Table extends DataSetComponent<TableProps> {
         }
       }
     }
+  }
+
+  @autobind
+  handleDataSetSelfValidate({ valid }: { valid: boolean; }) {
+    this.showDataSetError = !valid;
   }
 
   @autobind
@@ -1547,6 +1548,7 @@ export default class Table extends DataSetComponent<TableProps> {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
+      handler.call(dataSet, DataSetEvents.validateDataSetSelf, this.handleDataSetSelfValidate);
       handler.call(dataSet, DataSetEvents.reset, this.handleDataSetReset);
     }
   }
@@ -2272,7 +2274,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getValidationErrors(): ReactNode {
-    const error = this.props.dataSet.selfValidationError;
+    const error = this.props.dataSet.validationErrorSelf;
     const showError = this.showDataSetError && error && !error.valid;
 
     return (
@@ -2298,8 +2300,6 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   @action
   clearError() {
-    runInAction(() => {
-      this.showDataSetError = false;
-    });
+    this.handleDataSetSelfValidate({ valid: true });
   }
 }

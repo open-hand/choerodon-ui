@@ -162,7 +162,8 @@ title: DataSet
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | modifiedCheck(message) | 变更检查。 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage |  |
 | setAllPageSelection(enabled) | 切换是否跨页全选。 | `enabled` - 是否开启 |  |
-| getValidationErrors() | 获取校验错误信息 |  |  |
+| getValidationErrors() | 获取records校验错误信息 |  |  |
+| getAllValidationErrors() | 获取所有校验错误信息 |  |  |
 
 ### DataSet Events
 
@@ -193,6 +194,7 @@ title: DataSet
 | beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 | 是 |
 | reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 记录集 | 是 |
 | validate | 校验事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果集 | 是 |
+| validateDataSetSelf | 校验dataSet事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果 | 是 |
 
 ### Record Props
 

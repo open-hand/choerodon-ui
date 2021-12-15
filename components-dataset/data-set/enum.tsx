@@ -24,6 +24,7 @@ export enum DataSetEvents {
   beforeDelete = 'beforeDelete',
   reset = 'reset',
   validate = 'validate',
+  validateDataSetSelf = 'validateDataSetSelf',
 }
 
 export enum ExportMode {

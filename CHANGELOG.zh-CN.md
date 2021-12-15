@@ -21,6 +21,8 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 groups, headerRowHeight, footerRowHeight, onScrollLeft, onScrollTop, heightChangeable 属性, setScrollLeft, setScrollTop 实例方法。
 - 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded, defaultWidth 属性。
 - 🌟 `<pro>Transfer`: 新增 oneWay 单向穿梭属性。
+- 🌟 `<pro>DataSet`: 新增 minLength 属性。
+- 🌟 `<pro>DataSet`: 新增 validateDataSetSelf 事件和 getAllValidationErrors 方法。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。
@@ -61,7 +63,6 @@ timeline: true
 - 🌟 `<pro>CodeArea`: 新增 themeSwitch, title 属性。
 - 🌟 `<pro>Form`: 新增 showHelp 属性, 控制表单输入框 help 展示方式。
 - 🌟 `<pro>FormItem`: showHelp 属性新增 label 方式，支持在 Label 上展示 help 信息。
-- 🌟 `<pro>DataSet`: 新增 minLength 属性。
 - 💄 `<pro>FormItem`: 优化表单输入框必输、冒号样式，超出省略不隐藏。
 - 💄 `<pro>Modal`: 优化鼠标点击无遮罩的模态框时会自动置顶。
 - 💄 `<pro>PerformanceTable`: 优化表头可以嵌套至三级。
