@@ -9,7 +9,6 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import { NotificationInterface } from 'choerodon-ui/shared/notification-manager';
 import Animate from '../animate';
 import Notice, { NoticeProps } from './Notice';
-import Alert from '../alert';
 import { getNoticeLocale } from './locale';
 import EventManager from '../_util/EventManager';
 import { getStyle } from '../rc-components/util/Dom/css';
@@ -215,7 +214,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   };
 
   render() {
-    const { notices, scrollHeight, offset } = this.state;
+    const { notices, scrollHeight, offset, totalHeight } = this.state;
     const { contentClassName, prefixCls, closeIcon, className, style, foldCount } = this.props;
     const noticeNodes = notices.map((notice) => (
       <Notice
@@ -233,6 +232,10 @@ export default class Notification extends PureComponent<NotificationProps, Notif
     ));
     const cls = classNames(`${prefixCls}`, className, [{
       [`${prefixCls}-fold`]: !!foldCount,
+      [`${prefixCls}-before-shadow`]: !!foldCount && notices.length > foldCount && offset > 0,
+      [`${prefixCls}-after-shadow`]:
+        foldCount && notices.length > foldCount &&
+        Math.abs(totalHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 1,
     }]);
 
     const scrollCls = classNames({
@@ -258,12 +261,10 @@ export default class Notification extends PureComponent<NotificationProps, Notif
         </div>
 
         {foldCount && notices.length > foldCount && (
-          <Alert
-            className={`${prefixCls}-alert`}
-            message={`${runtimeLocale.total} ${notices.length} ${runtimeLocale.message}`}
-            closeText={`${runtimeLocale.closeAll}`}
-            onClose={this.clearNotices}
-          />
+          <div className={`${prefixCls}-alert`}>
+            <div className={`${prefixCls}-alert-message`}>{`${runtimeLocale.total} ${notices.length} ${runtimeLocale.message}`}</div>
+            <div className={`${prefixCls}-alert-close`} onClick={this.clearNotices}>{`${runtimeLocale.closeAll}`}</div>
+          </div>
         )}
       </div>
     );
