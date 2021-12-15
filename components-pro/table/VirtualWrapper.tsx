@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import TableContext from './TableContext';
 import { TableWrapperProps } from './TableWrapper';
-import { toTransformValue } from '../_util/transform';
 
 export interface VirtualWrapperProps {
   children?: ReactElement<TableWrapperProps>;
@@ -32,11 +31,9 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
   return (
     <div
       className={`${prefixCls}-tbody-wrapper`}
-      style={{ height: pxToRem(virtualHeight) }}
+      style={{ height: pxToRem(virtualHeight), paddingTop: pxToRem(virtualTop) }}
     >
-      <div style={{ transform: toTransformValue({ translate: `0,${pxToRem(virtualTop)}` }) }}>
-        {children}
-      </div>
+      {children}
     </div>
   );
 };
