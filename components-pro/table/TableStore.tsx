@@ -1,4 +1,4 @@
-import React, { Children, isValidElement, Key, ReactNode } from 'react';
+import React, { Children, CSSProperties, isValidElement, Key, ReactNode } from 'react';
 import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
@@ -7,6 +7,7 @@ import isObject from 'lodash/isObject';
 import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import defaultTo from 'lodash/defaultTo';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -590,6 +591,19 @@ async function getHeaderTexts(
   return headers;
 }
 
+function autoHeightToStyle(autoHeight: { type: TableAutoHeightType, diff: number }, parentPaddingTop = 0): CSSProperties {
+  const { type, diff } = autoHeight;
+  const height = `calc(100% - ${diff + parentPaddingTop}px)`;
+  if (type === TableAutoHeightType.minHeight) {
+    return {
+      height,
+    };
+  }
+  return {
+    maxHeight: height,
+  };
+}
+
 export default class TableStore {
   configContext: ConfigContextValue;
 
@@ -618,10 +632,6 @@ export default class TableStore {
   @observable calcBodyHeight: number;
 
   @observable width?: number;
-
-  @observable height?: number;
-
-  @observable totalHeight?: number;
 
   @observable lastScrollTop: number;
 
@@ -668,8 +678,87 @@ export default class TableStore {
     renderEnd: number;
   } = { renderStart: 0, renderEnd: 0 };
 
+  @observable parentHeight?: number | undefined;
+
+  @observable parentPaddingTop?: number | undefined;
+
+  @observable screenHeight: number;
+
+  @observable headerHeight: number;
+
+  @observable footerHeight: number;
+
+  get styleHeight(): string | number | undefined {
+    const { autoHeight, props: { style }, parentPaddingTop } = this;
+    return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
+  }
+
+  get styleMaxHeight(): string | number | undefined {
+    const { autoHeight, props: { style }, parentPaddingTop } = this;
+    return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).maxHeight : style && style.maxHeight;
+  }
+
+  get styleMinHeight(): string | number | undefined {
+    const { style } = this.props;
+    return style && toPx(style.minHeight, this.getRelationSize);
+  }
+
+  @computed
+  get computedHeight(): number | undefined {
+    if (this.heightChangeable) {
+      const {
+        customized: { heightType, height, heightDiff },
+        tempCustomized,
+      } = this;
+      const tempHeightType = get(tempCustomized, 'heightType');
+      if (tempHeightType) {
+        if (tempHeightType === TableHeightType.fixed) {
+          return get(tempCustomized, 'height');
+        }
+        if (tempHeightType === TableHeightType.flex) {
+          return this.screenHeight - (get(tempCustomized, 'heightDiff') || 0);
+        }
+        return undefined;
+      }
+      if (heightType) {
+        if (heightType === TableHeightType.fixed) {
+          return height;
+        }
+        if (heightType === TableHeightType.flex) {
+          return this.screenHeight - (heightDiff || 0);
+        }
+        return undefined;
+      }
+    }
+    return toPx(this.styleHeight, this.getRelationSize);
+  }
+
+  @computed
+  get height(): number | undefined {
+    const { computedHeight } = this;
+    const maxHeight = toPx(this.styleMaxHeight, this.getRelationSize);
+    const minHeight = toPx(this.styleMinHeight, this.getRelationSize);
+    const isComputedHeight = isNumber(computedHeight);
+    if (isComputedHeight || isNumber(minHeight) || isNumber(maxHeight)) {
+      const { rowHeight, headerHeight, footerHeight } = this;
+      const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + headerHeight + footerHeight;
+      const minTotalHeight = minHeight ? Math.max(
+        rowMinHeight,
+        minHeight,
+      ) : rowMinHeight;
+      const height = defaultTo(computedHeight, this.bodyHeight + headerHeight + footerHeight);
+      const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : height);
+      return isComputedHeight || totalHeight !== height ? totalHeight - headerHeight - footerHeight : undefined;
+    }
+  }
+
+  get totalHeight(): number {
+    const { height, bodyHeight, headerHeight, footerHeight } = this;
+    return defaultTo(height, bodyHeight) + headerHeight + footerHeight;
+  }
+
   get bodyHeight(): number {
-    return this.virtual ? this.virtualHeight : this.calcBodyHeight;
+    return this.propVirtual ? this.virtualHeight : this.calcBodyHeight;
   }
 
   get stickyLeft(): boolean {
@@ -690,8 +779,7 @@ export default class TableStore {
   }
 
   get prefixCls() {
-    const { suffixCls, prefixCls } = this.props;
-    return this.node.getContextProPrefixCls(suffixCls!, prefixCls);
+    return this.node.prefixCls;
   }
 
   get customizable(): boolean | undefined {
@@ -752,16 +840,12 @@ export default class TableStore {
   }
 
   get originalHeightType(): TableHeightType {
-    const { style, autoHeight } = this.props;
-    if (autoHeight) {
-      return TableHeightType.flex;
-    }
-    if (style) {
-      const { height } = style;
-      if (isString(height) && isCalcSize(height)) {
+    const { styleHeight } = this;
+    if (styleHeight) {
+      if (isString(styleHeight) && isCalcSize(styleHeight)) {
         return TableHeightType.flex;
       }
-      if (isNumber(toPx(height))) {
+      if (isNumber(toPx(styleHeight))) {
         return TableHeightType.fixed;
       }
     }
@@ -786,12 +870,16 @@ export default class TableStore {
     return isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
   }
 
+  get propVirtual(): boolean | undefined {
+    if ('virtual' in this.props) {
+      return this.props.virtual;
+    }
+    return this.getConfig('tableVirtual');
+  }
+
   get virtual(): boolean | undefined {
     if (this.height !== undefined && isNumber(this.virtualRowHeight)) {
-      if ('virtual' in this.props) {
-        return this.props.virtual;
-      }
-      return this.getConfig('tableVirtual');
+      return this.propVirtual;
     }
     return false;
   }
@@ -1528,6 +1616,9 @@ export default class TableStore {
       this.lockColumnsFootRowsHeight = {};
       this.node = node;
       this.expandedRows = [];
+      this.screenHeight = typeof window === 'undefined' ? 0 : document.documentElement.clientHeight;
+      this.headerHeight = 0;
+      this.footerHeight = 0;
       this.lastScrollTop = 0;
       this.customizedActiveKey = ['columns'];
       this.leftOriginalColumns = [];
@@ -1812,10 +1903,6 @@ export default class TableStore {
   @autobind
   @action
   openCustomizationModal(modal) {
-    const { node: { element }, height } = this;
-    if (height === undefined) {
-      this.totalHeight = element.offsetHeight;
-    }
     const { customizedCode } = this.props;
     const modalProps: ModalProps = {
       drawer: true,
@@ -1916,4 +2003,13 @@ export default class TableStore {
     }
     return buttons;
   }
+
+  @autobind
+  private getRelationSize(type: 'vh' | 'vw' | '%' | 'em'): number | undefined {
+    if (type === '%') {
+      return this.parentHeight;
+    }
+    return this.screenHeight;
+  }
+
 }
