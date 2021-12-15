@@ -122,6 +122,7 @@ export interface Config extends DataSetConfig {
   tableColumnHideable?: boolean;
   performanceTableColumnHideable?: boolean;
   tableColumnTitleEditable?: boolean;
+  tableHeightChangeable?: boolean;
   performanceTableColumnTitleEditable?: boolean;
   tableDragColumnAlign?: DragColumnAlign;
   tableColumnDraggable?: boolean;

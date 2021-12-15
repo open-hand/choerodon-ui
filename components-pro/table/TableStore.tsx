@@ -696,7 +696,7 @@ export default class TableStore {
 
   get customizable(): boolean | undefined {
     const { customizedCode } = this.props;
-    if (customizedCode && (this.columnTitleEditable || this.columnDraggable || this.columnHideable)) {
+    if (customizedCode) {
       if ('customizable' in this.props) {
         return this.props.customizable;
       }
@@ -738,13 +738,15 @@ export default class TableStore {
   }
 
   get heightType(): TableHeightType {
-    const tempHeightType = get(this.tempCustomized, 'heightType');
-    if (tempHeightType !== undefined) {
-      return tempHeightType;
-    }
-    const { heightType } = this.customized;
-    if (heightType !== undefined) {
-      return heightType;
+    if (this.heightChangeable) {
+      const tempHeightType = get(this.tempCustomized, 'heightType');
+      if (tempHeightType !== undefined) {
+        return tempHeightType;
+      }
+      const { heightType } = this.customized;
+      if (heightType !== undefined) {
+        return heightType;
+      }
     }
     return this.originalHeightType;
   }
@@ -897,6 +899,13 @@ export default class TableStore {
       return this.props.columnTitleEditable!;
     }
     return this.getConfig('tableColumnTitleEditable') === true;
+  }
+
+  get heightChangeable(): boolean {
+    if ('heightChangeable' in this.props) {
+      return this.props.heightChangeable!;
+    }
+    return this.getConfig('tableHeightChangeable') === true;
   }
 
   get pagination(): TablePaginationConfig | false | undefined {

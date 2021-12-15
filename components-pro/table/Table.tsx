@@ -525,6 +525,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   columnTitleEditable?: boolean;
   /**
+   * 可设置高度
+   */
+  heightChangeable?: boolean;
+  /**
    * 显示原始值
    */
   pristine?: boolean;
@@ -2051,26 +2055,29 @@ export default class Table extends DataSetComponent<TableProps> {
         autoHeight,
         customized: { heightType, height, heightDiff },
         tempCustomized,
+        heightChangeable,
       },
     } = this;
-    const tempHeightType = get(tempCustomized, 'heightType');
-    if (tempHeightType) {
-      if (tempHeightType === TableHeightType.fixed) {
-        return get(tempCustomized, 'height');
+    if (heightChangeable) {
+      const tempHeightType = get(tempCustomized, 'heightType');
+      if (tempHeightType) {
+        if (tempHeightType === TableHeightType.fixed) {
+          return get(tempCustomized, 'height');
+        }
+        if (tempHeightType === TableHeightType.flex) {
+          return document.documentElement.clientHeight - (get(tempCustomized, 'heightDiff') || 0);
+        }
+        return undefined;
       }
-      if (tempHeightType === TableHeightType.flex) {
-        return document.documentElement.clientHeight - (get(tempCustomized, 'heightDiff') || 0);
+      if (heightType) {
+        if (heightType === TableHeightType.fixed) {
+          return height;
+        }
+        if (heightType === TableHeightType.flex) {
+          return document.documentElement.clientHeight - (heightDiff || 0);
+        }
+        return undefined;
       }
-      return undefined;
-    }
-    if (heightType) {
-      if (heightType === TableHeightType.fixed) {
-        return height;
-      }
-      if (heightType === TableHeightType.flex) {
-        return document.documentElement.clientHeight - (heightDiff || 0);
-      }
-      return undefined;
     }
     if (autoHeight) {
       const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();

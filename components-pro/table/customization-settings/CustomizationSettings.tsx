@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, MouseEvent, ReactElement, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
@@ -191,7 +191,58 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     }
   }, [handleOk, handleCancel, columnDataSet, tableStore]);
   const renderIcon = useCallback(({ isActive }) => <Icon type={isActive ? 'expand_more' : 'navigate_next'} />, []);
-  const tableHeightType = tableRecord.get('heightType');
+  const tableSettings: ReactElement[] = [];
+  if (tableStore.heightChangeable) {
+    const tableHeightType = tableRecord.get('heightType');
+    tableSettings.push(
+      <SelectBox key="heightType" vertical name="heightType" label={$l('Table', 'height_settings')} onOption={handleOption}>
+        <Option value={TableHeightType.auto}>
+          {$l('Table', 'auto_height')}
+        </Option>
+        <Option value={TableHeightType.fixed}>
+          <span className={`${prefixCls}-customization-option-label`}>
+            {$l('Table', 'fixed_height')}
+          </span>
+          <ObserverNumberField
+            className={`${prefixCls}-customization-option-input`}
+            labelLayout={LabelLayout.none}
+            name="height"
+            disabled={tableHeightType !== TableHeightType.fixed}
+            step={1}
+          />
+        </Option>
+        <Option value={TableHeightType.flex}>
+          <span className={`${prefixCls}-customization-option-label`}>
+            {$l('Table', 'flex_height')}
+          </span>
+          <ObserverNumberField
+            groupClassName={`${prefixCls}-customization-option-input`}
+            labelLayout={LabelLayout.none}
+            name="heightDiff"
+            disabled={tableHeightType !== TableHeightType.flex}
+            showHelp={ShowHelp.tooltip}
+            help={$l('Table', 'flex_height_help')}
+            step={1}
+          />
+        </Option>
+      </SelectBox>,
+    );
+  }
+  if (tableRecord.get('aggregation')) {
+    tableSettings.push(
+      <SelectBox key="aggregationExpandType" name="aggregationExpandType" label={$l('Table', 'row_expand_settings')}>
+        <Option value="cell">
+          {$l('Table', 'expand_cell')}
+        </Option>
+        <Option value="row">
+          {$l('Table', 'expand_row')}
+        </Option>
+        <Option value="column">
+          {$l('Table', 'expand_column')}
+        </Option>
+      </SelectBox>,
+    );
+  }
   return (
     <Collapse
       activeKey={tableStore.customizedActiveKey.slice()}
@@ -252,74 +303,33 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
           </SelectBox>
         </Form>
       </CollapsePanel>
-      <CollapsePanel
-        header={
-          <span className={`${prefixCls}-customization-panel-title`}>
-            {$l('Table', 'table_settings')}
-          </span>
-        }
-        key="table"
-        extra={
-          <Button
-            className={`${prefixCls}-customization-header-button`}
-            color={ButtonColor.primary}
-            funcType={FuncType.flat}
-            size={Size.small}
-            onClick={handleRestoreTable}
+      {
+        tableSettings.length ? (
+          <CollapsePanel
+            header={
+              <span className={`${prefixCls}-customization-panel-title`}>
+                {$l('Table', 'table_settings')}
+              </span>
+            }
+            key="table"
+            extra={
+              <Button
+                className={`${prefixCls}-customization-header-button`}
+                color={ButtonColor.primary}
+                funcType={FuncType.flat}
+                size={Size.small}
+                onClick={handleRestoreTable}
+              >
+                {$l('Table', 'restore_default')}
+              </Button>
+            }
           >
-            {$l('Table', 'restore_default')}
-          </Button>
-        }
-      >
-        <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
-          <SelectBox vertical name="heightType" label={$l('Table', 'height_settings')} onOption={handleOption}>
-            <Option value={TableHeightType.auto}>
-              {$l('Table', 'auto_height')}
-            </Option>
-            <Option value={TableHeightType.fixed}>
-              <span className={`${prefixCls}-customization-option-label`}>
-                {$l('Table', 'fixed_height')}
-              </span>
-              <ObserverNumberField
-                className={`${prefixCls}-customization-option-input`}
-                labelLayout={LabelLayout.none}
-                name="height"
-                disabled={tableHeightType !== TableHeightType.fixed}
-                step={1}
-              />
-            </Option>
-            <Option value={TableHeightType.flex}>
-              <span className={`${prefixCls}-customization-option-label`}>
-                {$l('Table', 'flex_height')}
-              </span>
-              <ObserverNumberField
-                groupClassName={`${prefixCls}-customization-option-input`}
-                labelLayout={LabelLayout.none}
-                name="heightDiff"
-                disabled={tableHeightType !== TableHeightType.flex}
-                showHelp={ShowHelp.tooltip}
-                help={$l('Table', 'flex_height_help')}
-                step={1}
-              />
-            </Option>
-          </SelectBox>
-          {
-            tableRecord.get('aggregation') && (
-              <SelectBox name="aggregationExpandType" label={$l('Table', 'row_expand_settings')}>
-                <Option value="cell">
-                  {$l('Table', 'expand_cell')}
-                </Option>
-                <Option value="row">
-                  {$l('Table', 'expand_row')}
-                </Option>
-                <Option value="column">
-                  {$l('Table', 'expand_column')}
-                </Option>
-              </SelectBox>
-            )
-          }
-        </Form>
-      </CollapsePanel>
+            <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
+              {tableSettings}
+            </Form>
+          </CollapsePanel>
+        ) : null
+      }
       <CollapsePanel
         header={
           <span className={`${prefixCls}-customization-panel-title`}>
