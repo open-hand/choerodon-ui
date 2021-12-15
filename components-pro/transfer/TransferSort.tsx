@@ -40,9 +40,9 @@ export default function TransferSort(props: TransferSortProps) {
             color={upActive ? ButtonColor.primary : ButtonColor.default}
             disabled={!upActive}
             onClick={moveToUp}
-            icon="expand_less"
+            icon={!upArrowText ? 'expand_less' : undefined}
           >
-            {upArrowText}
+            {upArrowText || undefined}
           </Button>
         ) : (
           <div className={customUpClass} onClick={upActive ? moveToUp : undefined}>
@@ -55,9 +55,9 @@ export default function TransferSort(props: TransferSortProps) {
             color={downActive ? ButtonColor.primary : ButtonColor.default}
             disabled={!downActive}
             onClick={moveToDown}
-            icon="expand_more"
+            icon={!downArrowText ? 'expand_more' : undefined}
           >
-            {downArrowText}
+            {downArrowText || undefined}
           </Button>
         ) : (
           <div className={customDownClass} onClick={downActive ? moveToDown : undefined}>

@@ -924,11 +924,19 @@
 
     .@{c7n-pro-prefix}-select {
       display: inline-block;
+      max-width: 1.72rem;
       margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       border: none;
     }
 
-    &-expand {
+    &-query {
+     margin-right: 0.04rem;
+    }
+
+    &-expand, &-query {
       cursor: pointer;
 
       i {
@@ -1028,52 +1036,44 @@
   }
 
   &-filterName-select {
+    max-width: 1.72rem;
     margin-left: 0.12rem;
     border: none;
   }
 
   &-filter-menu-option {
+    display: flex;
     &-content {
-      display: inline-block;
-      width: 1.6rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
 
-      .@{c7n-prefix}-tag {
-        height: 0.2rem;
-        margin: 0 0 0 0.08rem;
-      }
+    .@{c7n-prefix}-tag {
+      height: 0.2rem;
+      margin: 0 0.04rem;
     }
 
     &:hover &-icons {
-      i {
-        display: inline-block;
-      }
+      display: inline-flex;
+      margin-left: auto;
     }
 
     &:hover &-selected {
-      i {
-        display: none;
-      }
+      display: none;
     }
 
     &-icons {
-      position: absolute;
-      right: 0.08rem;
-      display: inline-block;
+      display: none;
+      height: 0.2rem;
       color: @primary-color;
-
-      i {
-        display: none;
-        font-size: 0.16rem;
-      }
+      font-size: 0.16rem;
     }
 
     &-selected {
-      position: absolute;
-      right: 0.08rem;
-      display: inline-block;
+      display: inline-flex;
+      margin-left: auto;
+      font-size: 0.16rem;
     }
   }
 
@@ -1498,21 +1498,6 @@
   &-small {
     .@{table-prefix-cls}-cell {
       padding: @table-cell-padding-vertical-sm @table-cell-padding-horizontal-sm;
-    }
-  }
-}
-
-.@{c7n-pro-prefix}-select-dropdown-menu-item-selected {
-  .@{table-prefix-cls}-filter-menu-option-selected {
-    position: absolute;
-    right: 0.08rem;
-    display: inline-block;
-    font-size: 0.16rem;
-  }
-
-  &:hover {
-    .@{table-prefix-cls}-filter-menu-option-selected {
-      display: none;
     }
   }
 }

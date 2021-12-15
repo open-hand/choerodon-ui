@@ -19,13 +19,17 @@ timeline: true
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.
 - 🌟 `<pro>Table`: Added `groups`, `headerRowHeight`, `footerRowHeight`, `onScrollLeft`, `onScrollTop`, `heightChangeable` properties, `setScrollLeft`, `setScrollTop` instance methods.
+- 🌟 `<pro>Transfer`: Added properties of `oneWay`.
 - 🌟 `<pro>Table.Column`: Added `aggregationLimitDefaultExpanded`, `defaultWidth` properties.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
+- 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.
 - 🐞 `<pro>Button`: Fix the problem that the `href` button can be jumped when the href button is `disabled`.
 - 🐞 `Notification`: Fix the problem that multiple messages opened at different times will be closed at the same time.
+- 🐞 `Divider`: Fix an issue with the dashed attribute of Divider.
+- 🐞 `Menu`: Fix an issue where mouse moves into collapsed Menu reports errors.
 
 ## 1.5.0
 

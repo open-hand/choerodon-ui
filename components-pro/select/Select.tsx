@@ -675,8 +675,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         options.map((record) => {
           if (record.get(valueField) === item) {
             text = maxCommonTagTextLength &&
-            isString(record.get(textField)) &&
-            record.get(textField).length > maxCommonTagTextLength
+              isString(record.get(textField)) &&
+              record.get(textField).length > maxCommonTagTextLength
               ? `${record.get(textField).slice(0, maxCommonTagTextLength)}...`
               : record.get(textField);
             textRecord = record;
@@ -718,6 +718,16 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     }
   }
 
+  getMenuItem({ record, text, value }): string | ReactNode {
+    const {
+      options,
+      props: { optionRenderer },
+    } = this
+    return optionRenderer
+      ? optionRenderer({ dataSet: options, record, text, value })
+      : text;
+  }
+
   @autobind
   getMenu(menuProps: object = {}): ReactNode {
     const {
@@ -731,7 +741,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       disabled: menuDisabled,
       textField,
       valueField,
-      props: { dropdownMenuStyle, optionRenderer, onOption, optionTooltip = getTooltip('select-option') },
+      props: { dropdownMenuStyle, onOption, optionTooltip = getTooltip('select-option') },
     } = this;
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
@@ -779,9 +789,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       if (!('selectedKeys' in menuProps) && this.isSelected(record)) {
         selectedKeys.push(key);
       }
-      const itemContent = optionRenderer
-        ? optionRenderer({ dataSet: options, record, text, value })
-        : text;
+      const itemContent = this.getMenuItem({ record, text, value })
       const recordValues = record.get(OTHER_OPTION_PROPS) || {};
       const itemProps = {
         ...recordValues,

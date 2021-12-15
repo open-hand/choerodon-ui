@@ -147,10 +147,10 @@
 
     .@{c7n-pro-prefix}-btn {
       display: block;
-      width: 0.24rem;
+      min-width: 0.24rem;
       height: 0.24rem;
       margin-bottom: 0.08rem;
-      padding: 0;
+
       + .@{c7n-pro-prefix}-btn {
         margin-left: 0;
       }
@@ -175,5 +175,17 @@
   &-sort-custom-up-disable,
   &-sort-custom-down-disable {
     cursor: no-drop;
+  }
+
+  &-item-delete{
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  &-item-icon{
+    color:@disabled-color;
+    &:hover{
+      color: @text-color-secondary;
+    }
   }
 }

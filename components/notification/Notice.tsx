@@ -80,7 +80,7 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
   const componentClass = `${prefixCls}-notice`;
   const classString = classNames(componentClass, className, {
     [`${componentClass}-closable`]: closable,
-    [`${componentClass}-opacity`]: hideShadow,
+    [`${componentClass}-hide-shadow`]: hideShadow,
   });
   return (
     <div
@@ -93,7 +93,7 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
       <div className={classNames(`${componentClass}-content`, contentClassName)}>{children}</div>
       {
         closable && (
-          <a tabIndex={0} onClick={close} className={`${componentClass}-close`}>
+          <a tabIndex={0} onClick={!hideShadow ? close : undefined} className={`${componentClass}-close`}>
             {closeIcon || <span className={`${componentClass}-close-x`} />}
           </a>
         )

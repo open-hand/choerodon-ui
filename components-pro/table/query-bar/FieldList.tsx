@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useCallback, useMemo, useState, memo } from 'react';
 import Icon from 'choerodon-ui/lib/icon';
+import difference from 'lodash/difference';
 import TextField from '../../text-field';
 import CheckBox from '../../check-box';
 import Field from '../../data-set/Field';
@@ -27,8 +28,9 @@ type FieldListProps = {
 const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value, onSelect, onUnSelect, groups, prefixCls }) {
   const [searchText, setSearchText] = useState('');
   const codes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => o.get('name'))], []), [groups]);
+  const labelCodes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => [o.get('name'), o.get('label')])], []), [groups]);
   const hasSelect = useMemo(() => value.length > 0, [value.length]);
-  const hasSelectAll = useMemo(() => value.length >= codes.length, [codes.length, value.length]);
+  const hasSelectAll = useMemo(() => difference(codes, value).length === 0, [codes.length, value.length]);
   const isChecked = useCallback((code: string) => value.includes(code), [value]);
   const handleChange = useCallback((code: string | string[], select: boolean) => {
     if (select) {
@@ -102,7 +104,13 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
           style={{ display: !hasSelectAll ? 'inline-block' : 'none' }}
           className={`${prefixCls}-search-action`}
           onClick={() => {
-            handleChange(codes, true);
+            const values = labelCodes.map(lc => {
+              if (lc[1] && lc[1].includes(searchText || '')) {
+                return lc[0]
+              }
+              return undefined;
+            }).filter(v => !!v);
+            handleChange(values, true);
           }}
         >
           {$l('Select', 'select_all')}
@@ -111,7 +119,13 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
           style={{ display: hasSelect ? 'inline-block' : 'none' }}
           className={`${prefixCls}-search-action`}
           onClick={() => {
-            handleChange(codes, false);
+            const values = labelCodes.map(lc => {
+              if (lc[1] && lc[1].includes(searchText || '')) {
+                return lc[0]
+              }
+              return undefined;
+            }).filter(v => !!v);
+            handleChange(values, false);
           }}
         >
           {$l('Table', 'clear_filter')}

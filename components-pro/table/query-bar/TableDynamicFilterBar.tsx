@@ -14,6 +14,7 @@ import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
+import difference from 'lodash/difference';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -75,6 +76,50 @@ export function isEqualDynamicProps(originalValue, newValue) {
   return isEqual(newValue, originalValue);
 }
 
+/**
+ * 提交副本数据
+ * @param data
+ */
+export function omitData(data) {
+  return omit(
+    data,
+    'creationDate',
+    'createdBy',
+    'lastUpdateDate',
+    'lastUpdatedBy',
+    'objectVersionNumber',
+    '_token',
+    'searchId',
+    'searchConditionId',
+    'searchQueryId',
+    'searchOrderId',
+  );
+}
+
+
+/**
+ * obj 值使用 JSON 保存、获取赋值转化
+ * @param value
+ */
+export function parseValue(value) {
+  try {
+    const res = JSON.parse(value);
+    if (typeof res === 'object') {
+      return res;
+    }
+    return value;
+  } catch (e) {
+    return value;
+  }
+}
+
+export function stringifyValue(value) {
+  if (typeof value === 'object') {
+    return JSON.stringify(value);
+  }
+  return value;
+}
+
 export interface TableDynamicFilterBarProps extends ElementProps {
   dataSet: DataSet;
   queryDataSet: DataSet;
@@ -91,6 +136,15 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   searchCode?: string;
   autoQuery?: boolean;
 }
+
+export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
+export const SELECTFIELDS = '__SELECTFIELDS__';
+export const MENUDATASET = '__MENUDATASET__';
+export const CONDITIONDATASET = '__CONDITIONDATASET__';
+export const OPTIONDATASET = '__OPTIONDATASET__';
+export const FILTERMENUDATASET = '__FILTERMENUDATASET__';
+export const MENURESULT = '__MENURESULT__';
+export const SEARCHTEXT = '__SEARCHTEXT__';
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
@@ -191,20 +245,23 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @autobind
   async handleDataSetQuery({ dataSet }) {
-    if (!dataSet.getState('_menuResult') && this.tableFilterAdapter) {
+    if (!dataSet.getState(MENURESULT) && this.tableFilterAdapter) {
       await this.initMenuDataSet();
-      const { conditionList } = dataSet.getState('_menuResult').filter(menu => menu.defaultFlag)[0];
-      const initQueryData = {};
-      if (conditionList && conditionList.length) {
-        map(conditionList, condition => {
-          if (condition.comparator === 'EQUAL') {
-            const { fieldName, value } = condition;
-            initQueryData[fieldName] = value;
+      const res = dataSet.getState(MENURESULT);
+      if (res && res.length && res.filter(menu => menu.defaultFlag).length) {
+        const { conditionList } = res.filter(menu => menu.defaultFlag)[0];
+        const initQueryData = {};
+        if (conditionList && conditionList.length) {
+          map(conditionList, condition => {
+            if (condition.comparator === 'EQUAL') {
+              const { fieldName, value } = condition;
+              initQueryData[fieldName] = parseValue(value);
+            }
+          });
+          if (Object.keys(initQueryData).length) {
+            dataSet.query();
+            return false;
           }
-        });
-        if (Object.keys(initQueryData).length) {
-          dataSet.query();
-          return false;
         }
       }
     }
@@ -237,8 +294,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @autobind
   setConditionStatus(value, orglValue?: object) {
-    const { queryDataSet } = this.props;
-    queryDataSet.setState('conditionStatus', value);
+    const { dataSet } = this.props;
+    dataSet.setState(CONDITIONSTATUS, value);
     if (value === RecordStatus.sync && orglValue) {
       this.originalValue = orglValue;
     }
@@ -246,13 +303,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @action
   setOriginalConditionFields = (code) => {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, dataSet } = this.props;
     if (!code) {
       this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.get(0) });
     } else {
       this.originalConditionFields = Array.isArray(code) ? code : [code];
     }
-    queryDataSet.setState('selectFields', [...this.originalConditionFields]);
+    dataSet.setState(SELECTFIELDS, [...this.originalConditionFields]);
   };
 
   /**
@@ -285,11 +342,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 初始化勾选值、条件字段
    * @param props
    */
+  @action
   initConditionFields(props) {
     const { dataSet, record } = props;
     const originalValue = omit(record.toData(true), ['__dirty']);
     const conditionData = Object.entries(originalValue);
     this.originalValue = originalValue;
+    this.originalConditionFields = [];
     const { fields } = dataSet;
     map(conditionData, data => {
       let name = data[0];
@@ -299,7 +358,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         !isArray(data[1])) {
         name = `${data[0]}.${Object.keys(data[1])[0]}`;
       }
-      if (isSelect(data) && !(dataSet.getState('selectFields') || []).includes(name)) {
+      if (isSelect(data) && !(dataSet.getState(SELECTFIELDS) || []).includes(name)) {
         const field = dataSet.getField(name);
         if (!field || !field.get('bind', record)) {
           this.originalConditionFields.push(name);
@@ -340,14 +399,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         ],
       });
       // 初始化状态
-      queryDataSet.setState('menuDataSet', menuDataSet);
-      queryDataSet.setState('conditionDataSet', conditionDataSet);
-      queryDataSet.setState('optionDataSet', optionDataSet);
-      queryDataSet.setState('filterMenuDataSet', filterMenuDataSet);
-      queryDataSet.setState('conditionStatus', RecordStatus.sync);
-      queryDataSet.setState('searchText', '');
+      dataSet.setState(MENUDATASET, menuDataSet);
+      dataSet.setState(CONDITIONDATASET, conditionDataSet);
+      dataSet.setState(OPTIONDATASET, optionDataSet);
+      dataSet.setState(FILTERMENUDATASET, filterMenuDataSet);
+      dataSet.setState(CONDITIONSTATUS, RecordStatus.sync);
+      dataSet.setState(SEARCHTEXT, '');
       const result = await menuDataSet.query();
-      dataSet.setState('_menuResult', result);
+      dataSet.setState(MENURESULT, result);
       if (optionDataSet) {
         optionDataSet.loadData(result);
       }
@@ -480,11 +539,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   @action
   handleSelect = (code) => {
-    const { queryDataSet } = this.props;
+    const { dataSet } = this.props;
     const codes = Array.isArray(code) ? code : [code];
-    const selectFields = queryDataSet.getState('selectFields') || [];
-    queryDataSet.setState('selectFields', uniq([...selectFields, ...codes]));
-    const shouldUpdate = !isEqual(toJS(queryDataSet.getState('selectFields') || []), toJS(this.originalConditionFields));
+    const selectFields = dataSet.getState(SELECTFIELDS) || [];
+    dataSet.setState(SELECTFIELDS, uniq([...selectFields, ...codes]));
+    const shouldUpdate = dataSet.getState(SELECTFIELDS).length !== this.originalConditionFields.length
+      || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
     this.setConditionStatus(shouldUpdate ? RecordStatus.update : RecordStatus.sync);
   };
 
@@ -494,7 +554,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   @action
   handleUnSelect = (code) => {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, dataSet } = this.props;
     const codes = Array.isArray(code) ? code : [code];
     if (queryDataSet) {
       const { current } = queryDataSet;
@@ -502,11 +562,27 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         codes.forEach((name) => current.set(name, undefined));
       }
     }
-    const selectFields = queryDataSet.getState('selectFields') || [];
-    queryDataSet.setState('selectFields', pull([...selectFields], ...codes));
-    const shouldUpdate = !isEqual(toJS(queryDataSet.getState('selectFields')), toJS(this.originalConditionFields));
+    const selectFields = dataSet.getState(SELECTFIELDS) || [];
+    dataSet.setState(SELECTFIELDS, pull([...selectFields], ...codes));
+    const shouldUpdate = dataSet.getState(SELECTFIELDS).length !== this.originalConditionFields.length
+      || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
     this.setConditionStatus(shouldUpdate ? RecordStatus.update : RecordStatus.sync);
   };
+
+  // TODO 待设计稿
+  // renderRefreshIcon(): ReactNode {
+  //   const { prefixCls, props: { dataSet } } = this;
+  //   return (
+  //     <span
+  //       className={`${prefixCls}-filter-menu-query`}
+  //       onClick={() => dataSet.query()}
+  //     >
+  //     <Tooltip title={$l('Table', 'query_button')}>
+  //       <Icon type="refresh" />
+  //     </Tooltip>
+  //     </span>
+  //   );
+  // }
 
   /**
    * 渲染展开逻辑
@@ -558,7 +634,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, queryDataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { dataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { getConfig } = this.context;
     const { prefixCls } = this;
     const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
@@ -570,18 +646,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         clearButton
         placeholder={placeholder}
         prefix={<Icon type="search" />}
-        value={queryDataSet.getState('searchText')}
+        value={dataSet.getState(SEARCHTEXT)}
         valueChangeAction={ValueChangeAction.input}
         onChange={debounce((value: string) => {
           runInAction(() => {
-            queryDataSet.setState('searchText', value || '');
+            dataSet.setState(SEARCHTEXT, value || '');
           });
           dataSet.setQueryParameter(searchText, value);
           this.handleQuery();
         }, 500)}
         onClear={() => {
           runInAction(() => {
-            queryDataSet.setState('searchText', '');
+            dataSet.setState(SEARCHTEXT, '');
           });
           onReset();
         }}
@@ -593,12 +669,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染重置按钮
    */
   getResetButton() {
-    const { queryDataSet, autoQueryAfterReset, onReset = noop } = this.props;
+    const { queryDataSet, dataSet, autoQueryAfterReset, onReset = noop } = this.props;
     const { prefixCls } = this;
     return (
       <div className={`${prefixCls}-filter-buttons`}>
         {
-          queryDataSet.getState('conditionStatus') === RecordStatus.update && (
+          dataSet.getState(CONDITIONSTATUS) === RecordStatus.update && (
             <Button
               onClick={() => {
                 let shouldQuery = false;
@@ -607,8 +683,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   if (current) {
                     shouldQuery = !isEqualDynamicProps(this.originalValue, omit(current.toData(true), ['__dirty']));
                     current.reset();
-                    queryDataSet.setState('searchText', '');
-                    queryDataSet.setState('selectFields', [...this.originalConditionFields]);
+                    dataSet.setState(SEARCHTEXT, '');
+                    dataSet.setState(SELECTFIELDS, [...this.originalConditionFields]);
                   }
                 }
                 this.setConditionStatus(RecordStatus.sync);
@@ -646,14 +722,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             dataSet,
             queryDataSet,
             onChange: this.handleSelect,
-            conditionStatus: queryDataSet.getState('conditionStatus'),
+            conditionStatus: dataSet.getState(CONDITIONSTATUS),
             onStatusChange: this.setConditionStatus,
-            selectFields: queryDataSet.getState('selectFields'),
+            selectFields: dataSet.getState(SELECTFIELDS),
             onOriginalChange: this.setOriginalConditionFields,
-            menuDataSet: queryDataSet.getState('menuDataSet'),
-            filterMenuDataSet: queryDataSet.getState('filterMenuDataSet'),
-            conditionDataSet: queryDataSet.getState('conditionDataSet'),
-            optionDataSet: queryDataSet.getState('optionDataSet'),
+            menuDataSet: dataSet.getState(MENUDATASET),
+            filterMenuDataSet: dataSet.getState(FILTERMENUDATASET),
+            conditionDataSet: dataSet.getState(CONDITIONDATASET),
+            optionDataSet: dataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
           }}
         >
@@ -684,9 +760,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
-    const { queryFieldsLimit = 3, queryFields, queryDataSet } = this.props;
+    const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet } = this.props;
     const { prefixCls } = this;
-    const selectFields = queryDataSet?.getState('selectFields') || [];
+    const selectFields = dataSet.getState(SELECTFIELDS) || [];
     if (queryDataSet && queryFields.length) {
       const singleLineModeAction = this.isSingleLineOpt() ?
         <div className={`${prefixCls}-dynamic-filter-bar-single-action`}>
