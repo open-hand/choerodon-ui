@@ -1,11 +1,9 @@
 import React from 'react';
-import { mount, render } from "enzyme";
+import { mount } from "enzyme";
 import DataSet from "..";
 import Record from '../Record';
-import Tree from '../../../components-pro/tree';
 import Table from '../../../components-pro/table';
-import { testName, data as mockData, commonDs, commonQueryFields, mockTableTreeDs, childDs, fatherDs } from "./mock";
-import { randomData } from './utils';
+import { data as mockData, commonDs, mockTableTreeDs } from "./mock";
 
 
 describe('Record Values', () => {
