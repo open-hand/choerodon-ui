@@ -72,12 +72,13 @@ const prefixCls = getConfig('prefixCls');
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
 | tableColumnResizable | 默认 Table 列可调整列宽 | boolean | true |
-| tableColumnHideable | 默认 Table 列可调整显示 | boolean | true |
+| tableColumnHideable | 默认 Table 个性化开启列显示设置 | boolean | true |
 | tableShowRemovedRow |	默认 Table 是否显示临时移除的行，默认置灰显示 |	boolean |	true |
 | performanceTableColumnHideable | 默认 performanceTable 列可调整显示 | boolean | true |
-| tableColumnTitleEditable | 默认 Table 列可编辑标题 | boolean | false |
+| tableColumnTitleEditable | 默认 Table 个性化是否开启列标题编辑 | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |
-| tableColumnDraggable | Table 是否开启列拖拽 | boolean | false |
+| tableColumnDraggable | 默认 Table 个性化是否开启列拖拽 | boolean | false |
+| tableHeightChangeable | 默认 Table 个性化是否开启高度设置 | boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | tableRowDraggable | Table是否开启行拖拽 | boolean | false |
 | tableDragColumnAlign | Table行拖拽的模式 | 'left'\|'right' | - |

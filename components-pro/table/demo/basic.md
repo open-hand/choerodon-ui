@@ -485,7 +485,7 @@ class App extends React.Component {
         buttons={buttons}
         dataSet={this.userDs}
         header="User"
-        style={{ maxHeight: 300 }}
+        style={{ maxHeight: 'calc(100vh - 400px)' }}
         rowNumber
         showAllPageSelectionButton
         showSelectionTips

@@ -1141,7 +1141,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls } = this;
     const [placeholder] = this.getPlaceholders();
     if (placeholder) {
-      return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
+      return (
+        <div className={`${prefixCls}-placeholder`}>
+          <span className={`${prefixCls}-placeholder-inner`}>{placeholder}</span>
+        </div>
+      );
     }
   }
 
