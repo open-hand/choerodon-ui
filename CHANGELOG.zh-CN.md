@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。
 - 💄 `<pro>TextArea`: 优化 autoSize 初始化样式。
+- 💄 `<pro>TextField`: 优化同时设置 clearButton showLengthInfo suffix 属性时的样式。
 - 🐞 `<pro>Table`: 修复 style 只设置了 maxHeight 时虚拟滚动首次渲染会全量渲染的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。
@@ -33,6 +34,7 @@ timeline: true
 - 🐞 `Notification`: 修复多个非同时打开的消息会同时关闭的问题。
 - 🐞 `Divider`: 修复分割线标题不居中时使用 dashed 属性出现bug的问题。
 - 🐞 `Menu`: 修复菜单收起时鼠标移入 Menu.Item 时报错的问题。
+- 🐞 `<pro>TextArea`: 修复已输入长度信息显示。
 
 ## 1.5.0
 

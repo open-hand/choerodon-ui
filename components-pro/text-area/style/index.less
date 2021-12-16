@@ -11,7 +11,7 @@
     max-width: 100%;
 
     label {
-      .@{textarea-prefix}:not(:last-child) {
+      .@{textarea-prefix} {
         padding-right: 0.13rem;
       }
 
@@ -20,6 +20,11 @@
         right: 0.03rem;
         bottom: unset;
         width: 0.2rem;
+      }
+
+      .@{textarea-prefix}-length-info {
+        right: 0;
+        bottom: -0.2rem;
       }
     }
   }

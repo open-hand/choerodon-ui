@@ -25,6 +25,8 @@ subtitle: 文本域
 | autoSize | 自适应内容高度，可设置为 true\| false 或对象：{ minRows: 2, maxRows: 6 } | boolean\| object  | false |
 | onResize | 大小调整回调 | (width, height) => void |  |
 | clearButton | 是否显示清除按钮 | boolean  | false |
+| maxLength | 最大长度 | number |   |
+| showLengthInfo | 是否显示长度信息 | boolean | |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 
