@@ -51,16 +51,16 @@ function handleUserDSLoad({ dataSet }) {
   }
 }
 
-function renderColumnFooter(dataset, name) {
+function renderColumnFooter({ dataSet, name }) {
   const max = Math.max(
     0,
-    ...dataset.data.map(record => record.get(name)).filter(value => !isNaN(value)),
+    ...dataSet.map(record => record.get(name)).filter(value => !isNaN(value)),
   );
   return `最大年龄：${NumberField.format(max)}`;
 }
 
-function renderColumnHeader(dataset, name) {
-  const field = dataset.getField(name);
+function renderColumnHeader({ dataSet, name }) {
+  const field = dataSet.getField(name);
   return (
     <span>
       <i>-=</i>

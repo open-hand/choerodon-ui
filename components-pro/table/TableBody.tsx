@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import TableContext from './TableContext';
-import { ColumnLock, TableAutoHeightType } from './enum';
+import { ColumnLock } from './enum';
 
 export interface TableBodyProps {
   lock?: ColumnLock | boolean;
@@ -15,21 +15,10 @@ export interface TableBodyProps {
 const TableBody: FunctionComponent<TableBodyProps> = function TableBody(props) {
   const { children, lock, onScroll, style, getRef } = props;
   const { prefixCls, tableStore } = useContext(TableContext);
-  const { hasFooter, overflowY, overflowX } = tableStore;
-
-  const getHeightStyle = () => {
-    if (!tableStore.customized.heightType) {
-      const { autoHeight } = tableStore;
-      if (autoHeight && autoHeight.type === TableAutoHeightType.maxHeight) {
-        return undefined;
-      }
-    }
-    return tableStore.height;
-  };
+  const { hasFooter, overflowY, overflowX, height } = tableStore;
   const fixedLeft = lock === true || lock === ColumnLock.left;
   const scrollbar = measureScrollbar();
   const hasFooterAndNotLock = !lock && hasFooter && overflowX && scrollbar;
-  const height = getHeightStyle();
   const hasLockAndNoFooter = lock && !hasFooter && overflowX && height !== undefined && scrollbar;
   const tableBody = (
     <div

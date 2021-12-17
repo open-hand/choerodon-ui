@@ -342,6 +342,25 @@ title: DataSet
 
 * 当 field 是通过 ds.getField 获取的字段时， 以上传了 record 参数的方法等同于调用了通过 record.getField 得到的 field 对应的方法。版本： 1.5.0+
 
+### Group Values
+
+| 名称     | 说明     | 类型                      |
+| -------- | -------- | ------------------------- |
+| name     | 分组名， 对应字段名   | readonly string           |
+| value    | 分组值， 对应字段值     | readonly any  |
+| records    | 分组数据集，若有子分组则为空数组     | Record[]  |
+| totalRecords    | 总数据集，涵盖所有子分组的数据集     | Record[]  |
+| subGroups    | 子分组     | Group[]  |
+| parent    | 父分组     | Group  |
+| index    | 索引     | number  |
+
+### Group Methods
+| 名称 | 说明 | 参数 | 返回值类型 |
+| --- | --- | --- | --- |
+| setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
+| getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
+
+
 ### Transport
 
 | 属性 | 说明 | 类型 |

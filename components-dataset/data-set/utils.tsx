@@ -980,7 +980,7 @@ const EMPTY_GROUP_KEY = Symbol('__empty_group__');
 
 export function normalizeGroups(groups: string[], hGroups: string[], records: Record[]): Group[] {
   const optGroups: Group[] = [];
-  const emptyGroup = new Group(EMPTY_GROUP_KEY);
+  const emptyGroup = new Group(EMPTY_GROUP_KEY, 0);
   records.forEach((record) => {
     let previousGroup: Group | undefined;
     groups.forEach((key) => {
@@ -988,7 +988,7 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
       if (!previousGroup) {
         previousGroup = optGroups.find(item => item.value === label);
         if (!previousGroup) {
-          previousGroup = new Group(key, label);
+          previousGroup = new Group(key, optGroups.length, label);
           optGroups.push(previousGroup);
         }
       } else {
@@ -996,7 +996,7 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
         const parent = previousGroup;
         previousGroup = subGroups.find(item => item.value === label);
         if (!previousGroup) {
-          previousGroup = new Group(key, label, parent);
+          previousGroup = new Group(key, subGroups.length, label, parent);
           subGroups.push(previousGroup);
         }
       }
@@ -1012,7 +1012,7 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
         if (!previousGroup) {
           previousGroup = optGroups.find(item => item.value === label);
           if (!previousGroup) {
-            previousGroup = new Group(key, label);
+            previousGroup = new Group(key, optGroups.length, label);
             optGroups.push(previousGroup);
           }
         } else {
@@ -1020,7 +1020,7 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
           const parent = previousGroup;
           previousGroup = subGroups.find(item => item.value === label);
           if (!previousGroup) {
-            previousGroup = new Group(key, label, parent);
+            previousGroup = new Group(key, subGroups.length, label, parent);
             subGroups.push(previousGroup);
           }
         }

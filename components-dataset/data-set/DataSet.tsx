@@ -9,6 +9,7 @@ import isNil from 'lodash/isNil';
 import defer from 'lodash/defer';
 import isString from 'lodash/isString';
 import isPlainObject from 'lodash/isPlainObject';
+import isFunction from 'lodash/isFunction';
 import debounce from 'lodash/debounce';
 import { isEmpty, warning } from '../utils';
 import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
@@ -946,6 +947,9 @@ export default class DataSet extends EventManager {
 
   constructor(props?: DataSetProps, context?: DataSetContext) {
     super();
+    if (context && !isFunction(context.getConfig)) {
+      throw new Error('The type of the second parameter of the DataSet constructor is wrong. Please not pass the parameter or pass a DataSetContext type parameter instead.');
+    }
     runInAction(() => {
       props = { ...DataSet.defaultProps, ...props } as DataSetProps;
       this.props = props;

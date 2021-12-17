@@ -244,20 +244,20 @@ export default class TableTBody extends Component<TableTBodyProps> {
         const { columnProps } = tableGroup;
         const { renderer = defaultAggregationRenderer } = columnProps || {};
         const groupName = tableGroup.name;
-        const header = getHeader({ ...columnProps, name: groupName }, dataSet);
+        const header = getHeader({ ...columnProps, name: groupName, dataSet, group });
         rows.push(
           <TableRowGroup columnGroups={columnGroups} lock={lock}>
             {header}
             {header && <span className={`${prefixCls}-row-group-divider`} />}
-            {renderer({ text: group.value, group, name: groupName, dataSet, record: group.totalRecords[0], type: GroupType.row })}
+            {renderer({ text: group.value, rowGroup: group, name: groupName, dataSet, record: group.totalRecords[0] })}
           </TableRowGroup>,
         );
       }
       if (subHGroups) {
         let i = 0;
         subHGroups.forEach((group) => {
-          group.records.slice(i).forEach(record => {
-            rows.push(this.getRow(columnGroups, record, index.count++, true, path));
+          group.records.slice(i).forEach((record, j) => {
+            rows.push(this.getRow(columnGroups, record, j, true, path));
             i++;
           });
         });

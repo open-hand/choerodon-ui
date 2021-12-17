@@ -60,6 +60,14 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   @observable resized?: boolean;
 
+  componentDidMount() {
+    super.componentDidMount();
+    if (this.element && this.props.autoSize) {
+      // 自适应高度，挂载时渲染样式
+      this.forceUpdate();
+    }
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'resize',
@@ -107,19 +115,39 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return null;
   }
 
+  renderLengthInfoWrapper(): ReactNode {
+    if (!this.showLengthInfo) {
+      return null;
+    }
+    const editorTextInfo = this.getEditorTextInfo();
+    const inputLength = editorTextInfo.text.length;
+    const maxLength = this.getProp('maxLength');
+    const lengthElement = this.renderLengthInfo(maxLength, inputLength);
+    return lengthElement;
+  }
+
   renderWrapper(): ReactNode {
     const { resize = ResizeType.none } = this.props;
     const text = this.getTextNode();
     const resizable = resize !== ResizeType.none;
     const wrapperProps = this.getWrapperProps() || {};
     const elementProps = this.getOtherProps() || {};
-    const lengthElement = this.renderLengthInfo();
+    const lengthElement = this.renderLengthInfoWrapper();
+    // 先计算suffix，然后再计算clearButton，设置right，避免重叠
     const suffix = this.getSuffix();
+    const button = this.getInnerSpanButton();
     if (this.resized) {
       const { style: wrapperStyle } = wrapperProps;
       wrapperProps.style = {
         ...wrapperStyle,
         width: 'auto',
+      };
+    }
+    if (lengthElement) {
+      const { style: wrapperStyle } = wrapperProps;
+      wrapperProps.style = {
+        ...wrapperStyle,
+        marginBottom: '0.2rem',
       };
     }
     const element = (
@@ -130,6 +158,14 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
         value={isString(text) ? text : this.processValue(this.getValue()) as string}
       />
     );
+    const children = (
+      <>
+        {element}
+        {lengthElement}
+        {suffix}
+        {button}
+      </>
+    );
     return (
       <div key="wrapper" {...wrapperProps}>
         {this.renderPlaceHolder()}
@@ -137,11 +173,9 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
           {
             resizable ? (
               <ReactResizeObserver onResize={this.handleResize} resizeProp={getResizeProp(resize)}>
-                {element}
-                {suffix}
-                {lengthElement}
+                {children}
               </ReactResizeObserver>
-            ) : <>{element}{suffix}{lengthElement}</>
+            ) : children
           }
           {this.renderFloatLabel()}
         </label>

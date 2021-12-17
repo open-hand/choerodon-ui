@@ -1,18 +1,17 @@
 import React, { CSSProperties, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import ResizeObserver from 'resize-observer-polyfill';
 import raf from 'raf';
 import { observer } from 'mobx-react';
-import defaultTo from 'lodash/defaultTo';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
-import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, get, IReactionDisposer, reaction, runInAction, toJS } from 'mobx';
+import { action, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -24,14 +23,14 @@ import {
   ResponderProvided,
 } from 'react-beautiful-dnd';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { isCalcSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
-import DataSet, { Group, ValidationErrors } from '../data-set/DataSet';
+import DataSet, { ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
 import { TransportProps } from '../data-set/Transport';
@@ -84,20 +83,16 @@ import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { Size } from '../core/enum';
-import { HighlightRenderer, Renderer, RenderProps } from '../field/FormField';
+import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames } from '../data-set/utils';
 
-export interface GroupRenderProps extends RenderProps {
-  group: Group;
-  type: GroupType;
-}
-
 export type TableGroup = {
   name: string;
   type: GroupType;
-  columnProps?: ColumnProps & { renderer?: Renderer<GroupRenderProps> };
+  hidden?: boolean;
+  columnProps?: ColumnProps;
 }
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode };
@@ -431,9 +426,19 @@ export interface TableProps extends DataSetComponentProps {
   showQueryBar?: boolean;
   /**
    * 行高
-   * @default 31
+   * @default 30
    */
   rowHeight?: number | 'auto';
+  /**
+   * 头行高
+   * @default rowHeight
+   */
+  headerRowHeight?: number | 'auto';
+  /**
+   * 脚行高
+   * @default rowHeight
+   */
+  footerRowHeight?: number | 'auto';
   /**
    * 默认行是否展开，当dataSet没有设置expandField时才有效
    * @default false;
@@ -518,6 +523,10 @@ export interface TableProps extends DataSetComponentProps {
    * 可编辑列标题
    */
   columnTitleEditable?: boolean;
+  /**
+   * 可设置高度
+   */
+  heightChangeable?: boolean;
   /**
    * 显示原始值
    */
@@ -673,6 +682,8 @@ export interface TableProps extends DataSetComponentProps {
    * 分组
    */
   groups?: TableGroup[];
+  onScrollLeft?: (left: number) => void;
+  onScrollTop?: (top: number) => void;
 }
 
 @observer
@@ -873,6 +884,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   tableFootWrap: HTMLDivElement | null;
 
+  tableContentWrap: HTMLDivElement | null;
+
   fixedColumnsBodyLeft: HTMLDivElement | null;
 
   fixedColumnsBodyRight: HTMLDivElement | null;
@@ -885,7 +898,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   wrapperWidthTimer?: number;
 
-  bodyHeightReaction?: IReactionDisposer;
+  resizeObserver?: ResizeObserver;
 
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls } = this;
@@ -916,6 +929,11 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   saveResizeRef(node: HTMLDivElement | null) {
     this.resizeLine = node;
+  }
+
+  @autobind
+  saveContentRef(node) {
+    this.tableContentWrap = node;
   }
 
   useFocusedClassName() {
@@ -1336,6 +1354,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'buttons',
       'buttonsLimit',
       'rowHeight',
+      'headerRowHeight',
+      'footerRowHeight',
       'queryFields',
       'queryFieldsLimit',
       'summaryFieldsLimit',
@@ -1396,6 +1416,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'showRemovedRow',
       'searchCode',
       'groups',
+      'onScrollLeft',
+      'onScrollTop',
     ]);
   }
 
@@ -1459,11 +1481,11 @@ export default class Table extends DataSetComponent<TableProps> {
 
   componentWillMount() {
     this.initDefaultExpandedRows();
-    this.connect();
   }
 
   componentDidMount() {
     super.componentDidMount();
+    this.connect();
     this.syncSize();
     this.syncSizeInFrame();
   }
@@ -1480,22 +1502,46 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.scrollId !== undefined) {
       raf.cancel(this.scrollId);
     }
-    const { bodyHeightReaction } = this;
-    if (bodyHeightReaction) {
-      bodyHeightReaction();
+  }
+
+  @autobind
+  @action
+  syncParentSize(entries: ResizeObserverEntry[]) {
+    const [entry] = entries;
+    const { contentRect: { height, top } } = entry;
+    const { tableStore, element, wrapper } = this;
+    const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
+    if (wrapperHeight !== height) {
+      tableStore.parentHeight = height;
+      tableStore.parentPaddingTop = (element as HTMLDivElement).getBoundingClientRect().top - top;
     }
   }
 
   connect() {
     this.processDataSetListener(true);
-    const { style } = this.props;
-    const { maxHeight, minHeight } = style || {};
-    if (this.tableStore.heightType === TableHeightType.flex || (isString(maxHeight) && isCalcSize(maxHeight)) || (isString(minHeight) && isCalcSize(minHeight))) {
+    const { styleMaxHeight, styleMinHeight, styleHeight, heightType } = this.tableStore;
+    if ((isString(styleHeight) && isPercentSize(styleHeight)) || (isString(styleMaxHeight) && isPercentSize(styleMaxHeight)) || (isString(styleMinHeight) && isPercentSize(styleMinHeight))) {
+      const { wrapper } = this;
+      if (wrapper) {
+        const { parentNode } = wrapper;
+        if (parentNode) {
+          const resizeObserver = new ResizeObserver(this.syncParentSize);
+          resizeObserver.observe(parentNode);
+          this.resizeObserver = resizeObserver;
+        }
+      }
+    }
+    if (heightType === TableHeightType.flex || (isString(styleMaxHeight) && isCalcSize(styleMaxHeight)) || (isString(styleMinHeight) && isCalcSize(styleMinHeight))) {
       window.addEventListener('resize', this.handleWindowResize, false);
     }
   }
 
   disconnect() {
+    const { resizeObserver } = this;
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      delete this.resizeObserver;
+    }
     this.processDataSetListener(false);
     window.removeEventListener('resize', this.handleWindowResize, false);
   }
@@ -1626,6 +1672,7 @@ export default class Table extends DataSetComponent<TableProps> {
               <div {...this.getOtherProps()}>
                 <div
                   className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
+                  ref={this.saveContentRef}
                   onScroll={this.handleBodyScroll}
                 >
                   {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
@@ -1716,35 +1763,13 @@ export default class Table extends DataSetComponent<TableProps> {
     ) {
       return;
     }
-    const fixedColumnsBodyLeft = this.fixedColumnsBodyLeft;
-    const bodyTable = this.tableBodyWrap;
-    const fixedColumnsBodyRight = this.fixedColumnsBodyRight;
     const { scrollTop } = target;
-    if (scrollTop !== tableStore.lastScrollTop) {
-      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = scrollTop;
-      }
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollTop = scrollTop;
-      }
-      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = scrollTop;
-      }
-      const { refSpin } = this;
-      if (refSpin) {
-        refSpin.style.display = 'block';
-        this.setSpin();
-      }
-      this.tableStore.setLastScrollTop(scrollTop);
-    }
+    this.setScrollTop(scrollTop, target);
   }
 
   handleBodyScrollLeft(e, currentTarget) {
     const { target } = e;
     const { tableStore } = this;
-    const headTable = this.tableHeadWrap;
-    const bodyTable = this.tableBodyWrap;
-    const footTable = this.tableFootWrap;
     if (
       !tableStore.overflowX ||
       currentTarget !== target ||
@@ -1754,36 +1779,13 @@ export default class Table extends DataSetComponent<TableProps> {
       return;
     }
     const { scrollLeft } = target;
-    if (scrollLeft !== this.lastScrollLeft) {
-      if (isStickySupport()) {
-        tableStore.editors.forEach((editor) => {
-          if (editor.lock && editor.cellNode) {
-            if (tableStore.inlineEdit) {
-              editor.alignEditor(editor.cellNode);
-            } else {
-              editor.hideEditor();
-            }
-          }
-        });
-      }
-      if (headTable && target !== headTable) {
-        headTable.scrollLeft = scrollLeft;
-      }
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollLeft = scrollLeft;
-      }
-      if (footTable && target !== footTable) {
-        footTable.scrollLeft = scrollLeft;
-      }
-      this.setScrollPositionClassName(target);
-    }
-    this.lastScrollLeft = scrollLeft;
+    this.setScrollLeft(scrollLeft, target);
   }
 
   setScrollPositionClassName(target?: any): void {
     const { tableStore } = this;
     if (tableStore.isAnyColumnsLock && tableStore.overflowX) {
-      const node = target || this.tableBodyWrap;
+      const node = target || this.tableBodyWrap || this.tableContentWrap;
       if (node) {
         const scrollToLeft = node.scrollLeft === 0;
         const table = node.querySelector('table');
@@ -2069,109 +2071,23 @@ export default class Table extends DataSetComponent<TableProps> {
     this.nextFrameActionId = raf(this.syncSize.bind(this, width));
   }
 
-  getComputedHeight() {
-    const {
-      wrapper, element, tableBodyWrap,
-      tableStore: {
-        autoHeight,
-        customized: { heightType, height, heightDiff },
-        tempCustomized,
-      },
-    } = this;
-    const tempHeightType = get(tempCustomized, 'heightType');
-    if (tempHeightType) {
-      if (tempHeightType === TableHeightType.fixed) {
-        return get(tempCustomized, 'height');
-      }
-      if (tempHeightType === TableHeightType.flex) {
-        return document.documentElement.clientHeight - (get(tempCustomized, 'heightDiff') || 0);
-      }
-      return undefined;
-    }
-    if (heightType) {
-      if (heightType === TableHeightType.fixed) {
-        return height;
-      }
-      if (heightType === TableHeightType.flex) {
-        return document.documentElement.clientHeight - (heightDiff || 0);
-      }
-      return undefined;
-    }
-    if (autoHeight) {
-      const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
-      const { paddingBottom } = document.defaultView ? document.defaultView.getComputedStyle(wrapper.parentNode) : { paddingBottom: 0 };
-      const { top: tableTop } = element.getBoundingClientRect();
-      const { diff, type } = autoHeight;
-      const paddingBottomPx = toPx(paddingBottom) || 0;
-      if (wrapper) {
-        if (type === TableAutoHeightType.minHeight) {
-          return parentHeight - (tableTop - parentTop) - diff - paddingBottomPx;
-        }
-        const maxHeight = parentHeight - (tableTop - parentTop) - diff - paddingBottomPx;
-        // 保证max高度和Height维持一致防止scroll问题 maxHeight - 外框paddingBottom 以及 diff 和其他 tableBody 以外的高度。
-        if (tableBodyWrap) {
-          let maxBodyHeight = maxHeight;
-          const { prefixCls } = this;
-          const tableHeader: HTMLTableSectionElement | null = element.querySelector(
-            `.${prefixCls}-thead`,
-          );
-          const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
-          if (tableHeader) {
-            maxBodyHeight -= getHeight(tableHeader);
-          }
-          if (tableFooter) {
-            maxBodyHeight -= getHeight(tableFooter);
-          }
-          tableBodyWrap.style.maxHeight = pxToRem(maxBodyHeight) || '';
-        }
-        return maxHeight || 0;
-      }
-    }
-    return this.getStyleHeight();
-  }
-
   @autobind
   @action
   syncSize(width: number = this.getWidth()) {
-    const { element, tableStore, bodyHeightReaction } = this;
+    const { element, tableStore } = this;
     if (tableStore.hidden || !element.offsetParent) {
       return;
     }
-    if (bodyHeightReaction) {
-      bodyHeightReaction();
-      delete this.bodyHeightReaction;
-    }
     if (element) {
       tableStore.width = Math.floor(width);
-      const { style } = this.props;
-      const maxHeight = style && toPx(style.maxHeight);
-      const minHeight = style && toPx(style.minHeight);
-      const computedHeight = this.getComputedHeight();
-      const isComputedHeight = isNumber(computedHeight);
-      if (isComputedHeight || isNumber(maxHeight) || isNumber(minHeight)) {
-        const { prefixCls } = this;
-        const { rowHeight } = tableStore;
-        const tableHeader: HTMLTableSectionElement | null = element.querySelector(
-          `.${prefixCls}-thead`,
-        );
-        const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
-        const headerHeight = tableHeader ? getHeight(tableHeader) : 0;
-        const footerHeight = tableFooter ? getHeight(tableFooter) : 0;
-        const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + headerHeight + footerHeight;
-        const minTotalHeight = minHeight ? Math.max(
-          rowMinHeight,
-          minHeight,
-        ) : rowMinHeight;
-        const height = defaultTo(computedHeight, tableStore.bodyHeight + headerHeight + footerHeight);
-        const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : height);
-        tableStore.totalHeight = totalHeight;
-        tableStore.height = isComputedHeight || totalHeight !== height ? totalHeight - headerHeight - footerHeight : undefined;
-        if (!isComputedHeight) {
-          this.bodyHeightReaction = reaction(() => tableStore.bodyHeight, () => this.syncSize());
-        }
-      } else {
-        tableStore.height = undefined;
-      }
+      const { prefixCls } = this;
+      const tableHeader: HTMLTableSectionElement | null = element.querySelector(
+        `.${prefixCls}-thead`,
+      );
+      const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+      tableStore.screenHeight = document.documentElement.clientHeight;
+      tableStore.headerHeight = tableHeader ? getHeight(tableHeader) : 0;
+      tableStore.footerHeight = tableFooter ? getHeight(tableFooter) : 0;
     }
     this.setScrollPositionClassName();
   }
@@ -2207,5 +2123,70 @@ export default class Table extends DataSetComponent<TableProps> {
       return wrapper.offsetWidth;
     }
     return 0;
+  }
+
+  setScrollTop(scrollTop: number, target?: HTMLElement) {
+    const { tableStore } = this;
+    if (scrollTop !== tableStore.lastScrollTop) {
+      const { fixedColumnsBodyLeft, tableBodyWrap, fixedColumnsBodyRight, tableContentWrap } = this;
+      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+        fixedColumnsBodyLeft.scrollTop = scrollTop;
+      }
+      if (tableBodyWrap && target !== tableBodyWrap) {
+        tableBodyWrap.scrollTop = scrollTop;
+      }
+      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+        fixedColumnsBodyRight.scrollTop = scrollTop;
+      }
+      if (tableContentWrap && target !== tableContentWrap) {
+        tableContentWrap.scrollTop = scrollTop;
+      }
+      const { refSpin } = this;
+      if (refSpin) {
+        refSpin.style.display = 'block';
+        this.setSpin();
+      }
+      tableStore.setLastScrollTop(scrollTop);
+      if (target) {
+        const { onScrollTop = noop } = this.props;
+        onScrollTop(scrollTop);
+      }
+    }
+  }
+
+  setScrollLeft(scrollLeft: number, target?: HTMLElement) {
+    if (scrollLeft !== this.lastScrollLeft) {
+      const { tableStore } = this;
+      const { tableHeadWrap, tableBodyWrap, tableFootWrap, tableContentWrap } = this;
+      if (isStickySupport()) {
+        tableStore.editors.forEach((editor) => {
+          if (editor.lock && editor.cellNode) {
+            if (tableStore.inlineEdit) {
+              editor.alignEditor(editor.cellNode);
+            } else {
+              editor.hideEditor();
+            }
+          }
+        });
+      }
+      if (tableHeadWrap && target !== tableHeadWrap) {
+        tableHeadWrap.scrollLeft = scrollLeft;
+      }
+      if (tableBodyWrap && target !== tableBodyWrap) {
+        tableBodyWrap.scrollLeft = scrollLeft;
+      }
+      if (tableFootWrap && target !== tableFootWrap) {
+        tableFootWrap.scrollLeft = scrollLeft;
+      }
+      if (tableContentWrap && target !== tableContentWrap) {
+        tableContentWrap.scrollLeft = scrollLeft;
+      }
+      this.setScrollPositionClassName(target);
+      this.lastScrollLeft = scrollLeft;
+      if (target) {
+        const { onScrollLeft = noop } = this.props;
+        onScrollLeft(scrollLeft);
+      }
+    }
   }
 }

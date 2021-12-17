@@ -64,7 +64,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               cellProps.colSpan = colSpan;
             }
             return (
-              <TableHeaderCell {...cellProps} />
+              <TableHeaderCell {...cellProps} scope={children ? 'colgroup' : 'col'} />
             );
           }
           return undefined;

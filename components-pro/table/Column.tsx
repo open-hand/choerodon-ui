@@ -18,6 +18,19 @@ export type commandProps = { dataSet: DataSet; record: Record; aggregation?: boo
 
 export interface ColumnRenderProps extends RenderProps {
   aggregation?: boolean;
+  headerGroup?: Group;
+  rowGroup?: Group;
+}
+
+export interface FooterHookOptions {
+  dataSet: DataSet;
+  name?: string | undefined;
+}
+
+export interface HeaderHookOptions extends FooterHookOptions {
+  title?: string | undefined;
+  aggregation?: boolean | undefined;
+  group?: Group | undefined;
 }
 
 export interface ColumnPropsBase extends ElementProps {
@@ -31,6 +44,11 @@ export interface ColumnPropsBase extends ElementProps {
    */
   width?: number;
   /**
+   * 默认列宽
+   * 只在出横向滚动条时起作用
+   */
+  defaultWidth?: number;
+  /**
    * 最小列宽
    */
   minWidth?: number;
@@ -41,11 +59,11 @@ export interface ColumnPropsBase extends ElementProps {
   /**
    * 列头
    */
-  header?: ReactNode | ((dataSet: DataSet, name?: string, title?: string, aggregation?: boolean) => ReactNode);
+  header?: ReactNode | ((dataSet: DataSet | HeaderHookOptions, name?: string, title?: string, aggregation?: boolean) => ReactNode);
   /**
    * 列脚
    */
-  footer?: ReactNode | ((dataSet: DataSet, name?: string) => ReactNode);
+  footer?: ReactNode | ((dataSet: DataSet | FooterHookOptions, name?: string) => ReactNode);
   /**
    * 单元格渲染回调
    */
@@ -136,7 +154,7 @@ export interface ColumnPropsBase extends ElementProps {
   /**
    * 是否聚合
    */
-  aggregation?: boolean;
+  aggregation?: boolean | undefined;
   /**
    * 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示
    * @default 4
@@ -210,6 +228,22 @@ export function minColumnWidth(col: ColumnProps, store: TableStore): number {
   return Math.min(width, minWidth);
 }
 
+function getDefaultWidth(col: ColumnProps, store: TableStore, aggregation?: boolean): number {
+  const defaultWidth: number | undefined = get(col, 'defaultWidth');
+  if (defaultWidth === undefined) {
+    return store.getConfig(aggregation ? 'tableAggregationColumnDefaultWidth' : 'tableColumnDefaultWidth');
+  }
+  return defaultWidth;
+}
+
+function getMinWidth(col: ColumnProps, store: TableStore, aggregation?: boolean): number {
+  const minWidth: number | undefined = get(col, 'minWidth');
+  if (minWidth === undefined) {
+    return store.getConfig(aggregation ? 'tableAggregationColumnDefaultMinWidth' : 'tableColumnDefaultMinWidth');
+  }
+  return minWidth;
+}
+
 export function columnWidth(col: ColumnProps, store: TableStore): number {
   const hidden = get(col, 'hidden');
   if (hidden) {
@@ -218,12 +252,9 @@ export function columnWidth(col: ColumnProps, store: TableStore): number {
   const width: number | undefined = get(col, 'width');
   if (width === undefined) {
     const aggregation: boolean | undefined = get(col, 'aggregation');
-    const globalDefaultWidth = store.getConfig(aggregation ? 'tableAggregationColumnDefaultWidth' : 'tableColumnDefaultWidth');
-    const minWidth: number | undefined = get(col, 'minWidth');
-    if (minWidth === undefined) {
-      return Math.max(store.getConfig(aggregation ? 'tableAggregationColumnDefaultMinWidth' : 'tableColumnDefaultMinWidth'), globalDefaultWidth);
-    }
-    return Math.max(minWidth, globalDefaultWidth);
+    const defaultWidth: number | undefined = getDefaultWidth(col, store, aggregation);
+    const minWidth: number | undefined = getMinWidth(col, store, aggregation);
+    return Math.max(minWidth, defaultWidth);
   }
   return width;
 }

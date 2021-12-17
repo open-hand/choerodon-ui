@@ -155,6 +155,8 @@ export default class UploadList extends Component<UploadListProps, any> {
       if (listType === 'picture' || listType === 'picture-card') {
         if (listType === 'picture-card' && file.status === 'uploading') {
           icon = <div className={`${prefixCls}-list-item-uploading-text`}>{locale.uploading}</div>;
+        } else if (listType === 'picture' && file.status === 'uploading') {
+          icon = <Progress key='loading' type={ProgressType.loading} size={Size.small} />;
         } else if (!file.thumbUrl && !file.url) {
           icon = <Icon className={`${prefixCls}-list-item-thumbnail`} type="picture" />;
         } else {
