@@ -22,6 +22,7 @@ class App extends React.Component {
     return (
       <TextArea
         placeholder="适应文本高度"
+        defaultValue="适应文本高度适应文本高1度适应文本高度适应文本高度适应文本高度适应文本高度适应文本高度适应文本高度适应文本高度适应文本高度适应文本高度适应文本高度适应文本高度应文本高度适应文本应文本高度适应文本应文本高度适应文本应文本高度适应文本"
         autoSize={{ minRows: 2, maxRows: 8 }}
       />
     );
