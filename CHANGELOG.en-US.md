@@ -37,6 +37,8 @@ timeline: true
 - 🐞 `Menu`: Fix an issue where mouse moves into collapsed Menu reports errors.
 - 🐞 `<pro>DataSet`: Fix the issue of export failure.
 - 🐞 `<pro>TextArea`: Fixed input length information display.
+- 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
+- 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
 
 ## 1.5.0
 
