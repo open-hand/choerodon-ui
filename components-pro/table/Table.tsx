@@ -11,7 +11,7 @@ import isNil from 'lodash/isNil';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, runInAction, toJS } from 'mobx';
+import { action, runInAction, toJS, observable } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -27,6 +27,8 @@ import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
+import Animate from 'choerodon-ui/lib/animate';
+import Icon from 'choerodon-ui/lib/icon';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
@@ -900,6 +902,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   resizeObserver?: ResizeObserver;
 
+  @observable showDataSetError?: boolean;
+
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls } = this;
     return this.element.querySelector(
@@ -1034,6 +1038,16 @@ export default class Table extends DataSetComponent<TableProps> {
         }
       }
     }
+  }
+
+  @autobind
+  handleDataSetSelfValidate({ valid }: { valid: boolean; }) {
+    this.showDataSetError = !valid;
+  }
+
+  @autobind
+  handleDataSetReset() {
+    this.clearError();
   }
 
   @autobind
@@ -1557,6 +1571,8 @@ export default class Table extends DataSetComponent<TableProps> {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
+      handler.call(dataSet, DataSetEvents.validateSelf, this.handleDataSetSelfValidate);
+      handler.call(dataSet, DataSetEvents.reset, this.handleDataSetReset);
     }
   }
 
@@ -1646,6 +1662,7 @@ export default class Table extends DataSetComponent<TableProps> {
               treeQueryExpanded={treeQueryExpanded}
               searchCode={searchCode}
             />
+            {this.getValidationErrors()}
             <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
               {
                 virtual && virtualSpin && (
@@ -2188,5 +2205,35 @@ export default class Table extends DataSetComponent<TableProps> {
         onScrollLeft(scrollLeft);
       }
     }
+  }
+
+  getValidationErrors(): ReactNode {
+    const { validationSelfErrors: error } = this.props.dataSet;
+    const showError = this.showDataSetError && error && error.length;
+
+    return (
+      <Animate
+        transitionName="slide-down"
+        className={classNames(`${this.prefixCls}-error`)}
+        hiddenProp="hidden"
+        component="div"
+      >
+        {
+          showError && (<div hidden={!showError} className={classNames(`${this.prefixCls}-error-content`)}>
+            <div>
+              <Icon type="cancel" />
+              {error[0].message}
+            </div>
+            <Icon type="close" onClick={this.clearError} />
+          </div>)
+        }
+      </Animate>
+    )
+  }
+
+  @autobind
+  @action
+  clearError() {
+    this.handleDataSetSelfValidate({ valid: true });
   }
 }

@@ -22,12 +22,16 @@ timeline: true
 - 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded, defaultWidth 属性。
 - 🌟 `<pro>Transfer`: 新增 oneWay 单向穿梭属性。
 - 🌟 `<pro>TextArea`: 新增 clearButton 属性。
+- 🌟 `<pro>DataSet`: 新增 validateSelf 事件和 getAllValidationErrors 方法。
+- 🌟 `<pro>DataSet`: 新增 validationRules 属性。
+- 🌟 `<pro>Lov`: 新增 selectionProps 属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。
 - 💄 `<pro>TextArea`: 优化 autoSize 初始化样式。
 - 💄 `<pro>TextField`: 优化同时设置 clearButton showLengthInfo suffix 属性时的样式。
 - 💄 `<pro>Tree`: 支持通过配置 draggable.icon 属性展示拖拽图标。
+- 💄 `<pro>Lov`: 优化选中列表的排序。
 - 🐞 `<pro>Table`: 修复 style 只设置了 maxHeight 时虚拟滚动首次渲染会全量渲染的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。

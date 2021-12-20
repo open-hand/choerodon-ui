@@ -33,6 +33,24 @@
     border-bottom: @table-border;
   }
 
+  &-error-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 0.5rem;
+    padding: 0 0.2rem;
+    color: @error-color;
+    background-color: @error-bg-color;
+
+    .icon-cancel {
+      margin-right: 0.1rem;
+    }
+
+    .icon-close {
+      cursor: pointer;
+    }
+  }
+
   &-content {
     position: relative;
     overflow: hidden;
