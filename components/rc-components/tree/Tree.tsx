@@ -7,7 +7,7 @@ import isPromise from 'is-promise';
 import KeyCode from '../../_util/KeyCode';
 import warning from '../../_util/warning';
 
-import { NodeDragEventHandler, NodeDragEventParams, NodeMouseEventHandler, NodeMouseEventParams, TreeContext } from './contextTypes';
+import { NodeDragEventHandler, NodeDragEventParams, NodeMouseEventHandler, NodeMouseEventParams, TreeContext, DraggableProps } from './contextTypes';
 import {
   arrAdd,
   arrDel,
@@ -62,7 +62,7 @@ export interface TreeProps {
   multiple?: boolean;
   checkable?: boolean | React.ReactNode;
   checkStrictly?: boolean;
-  draggable?: ((node: DataNode) => boolean) | boolean;
+  draggable?: ((node?: DataNode) => boolean) | boolean | DraggableProps;
   defaultExpandParent?: boolean;
   autoExpandParent?: boolean;
   defaultExpandAll?: boolean;
