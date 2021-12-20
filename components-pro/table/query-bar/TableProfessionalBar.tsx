@@ -119,7 +119,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       this.moreFields = fields;
     }
     if (tableStore.node) {
-      tableStore.node.handleResize();
+      tableStore.node.handleHeightTypeChange();
     }
     return this.moreFields;
   };
