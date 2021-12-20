@@ -2223,7 +2223,7 @@ export default class Table extends DataSetComponent<TableProps> {
           showError && (<div hidden={!showError} className={classNames(`${this.prefixCls}-error-content`)}>
             <div>
               <Icon type="cancel" />
-              {error[0].message}
+              {error ? error[0].message : null}
             </div>
             <Icon type="close" onClick={this.clearError} />
           </div>)

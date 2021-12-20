@@ -112,7 +112,7 @@ export default class LovView extends Component<LovViewProps> {
   }
 
   @autobind
-  handleSelect(event?: React.MouseEvent | string) {
+  handleSelect(event?: React.MouseEvent | any) {
     const { selectionMode } = this;
     const {
       onSelect,
