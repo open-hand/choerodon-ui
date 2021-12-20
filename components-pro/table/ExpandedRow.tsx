@@ -3,14 +3,17 @@ import { observer } from 'mobx-react-lite';
 import isFunction from 'lodash/isFunction';
 import Record from '../data-set/Record';
 import ColumnGroups from './ColumnGroups';
+import TableStore from './TableStore';
 
 export interface ExpandedRowProps {
   isExpanded?: boolean;
+  tableStore: TableStore;
   columnGroups: ColumnGroups;
   record: Record;
   children?:
     | ReactNode
     | ((
+    tableStore: TableStore,
     columnGroups: ColumnGroups,
     record: Record,
     isExpanded?: boolean,
@@ -18,10 +21,10 @@ export interface ExpandedRowProps {
 }
 
 const ExpandedRow: FunctionComponent<ExpandedRowProps> = function ExpandedRow(props) {
-  const { isExpanded, children = null, columnGroups, record } = props;
+  const { tableStore, isExpanded, children = null, columnGroups, record } = props;
 
   if (isFunction(children)) {
-    const child = children(columnGroups, record, isExpanded);
+    const child = children(tableStore, columnGroups, record, isExpanded);
     if (child) {
       return child;
     }

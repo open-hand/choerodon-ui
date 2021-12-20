@@ -140,6 +140,7 @@ class App extends React.Component {
         rowNumber
         defaultRowExpanded
         style={{ height: 300 }}
+        virtual
       >
         <Column name="text" editor renderer={iconRenderer} width={450} sortable />
         <Column name="url" editor sortable />

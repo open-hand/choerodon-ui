@@ -27,6 +27,7 @@ title: DataSet
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | true |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
+| strictPageSize | 严格分页大小, 前端将截断超出 pageSize 的数据 | boolean | true |
 | paging | 是否分页, `server` 主要为table的tree服务,约定total为根节点数目,index的定位都是基于根节点, 为`server`时候保证同时存在idField 和parentField(根节点为空或者undefind) 不然表现和原有版本一致 | boolean \| `server`| true |
 | dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null | rows |
 | totalKey | 查询返回的 json 中对应的总数的 key | string | total |

@@ -438,7 +438,9 @@ export default class Record {
 
   @computed
   get path(): Record[] {
-    return [...this.parents, this];
+    const path = [this, ...this.parents];
+    path.reverse();
+    return path;
   }
 
   get level(): number {

@@ -44,6 +44,7 @@ import Spin, { SpinProps } from '../spin';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import { TableContextProvider } from './TableContext';
 import TableWrapper from './TableWrapper';
+import Profiler from './Profiler';
 import TableTBody from './TableTBody';
 import TableFooter from './TableFooter';
 import {
@@ -72,6 +73,7 @@ import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import {
   findCell,
   findIndexedSibling,
+  findRow,
   getHeight,
   getPaginationPosition,
   isCanEdictingRow,
@@ -653,6 +655,7 @@ export interface TableProps extends DataSetComponentProps {
    */
   clientExportQuantity?: number;
   /**
+   * @deprecated
    * 可以修改由于样式导致的虚拟高度和rowHeight不一致
    */
   virtualRowHeight?: number;
@@ -986,8 +989,10 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
+  @action
   handleDataSetLoad() {
     const { tableStore } = this;
+    tableStore.actualRows = undefined;
     if (tableStore.performanceEnabled) {
       tableStore.performanceOn = true;
     }
@@ -1023,10 +1028,10 @@ export default class Table extends DataSetComponent<TableProps> {
             }
           }
           const [{ field: { name } }] = errors;
-          if (tableStore.virtual && !tableStore.virtualData.includes(record)) {
+          if (tableStore.virtual && !findRow(tableStore, record)) {
             const { tableBodyWrap } = this;
             if (tableBodyWrap) {
-              tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
+              tableBodyWrap.scrollTop = record.index * tableStore.virtualEstimatedRowHeight;
             }
           }
           raf(() => {
@@ -1562,12 +1567,10 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   processDataSetListener(flag: boolean) {
-    const { isTree, dataSet, inlineEdit, performanceEnabled } = this.tableStore;
+    const { dataSet, inlineEdit } = this.tableStore;
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
-      if (isTree || performanceEnabled) {
-        handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
-      }
+      handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
       if (inlineEdit) {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
@@ -1846,54 +1849,7 @@ export default class Table extends DataSetComponent<TableProps> {
       return tableStore.columnGroups;
     })();
 
-    return tableStore.virtual ? (
-      <>
-        {
-          hasHeader && (
-            <TableWrapper
-              key="tableWrapper-header"
-              lock={lock}
-              hasBody={hasBody}
-              hasHeader={hasHeader}
-              hasFooter={hasFooter}
-              columnGroups={columnGroups}
-            >
-              {this.getTableHeader(lock)}
-            </TableWrapper>
-          )
-        }
-        {
-          hasBody && (
-            <VirtualWrapper>
-              <TableWrapper
-                key="tableWrapper-body"
-                lock={lock}
-                hasBody={hasBody}
-                hasHeader={hasHeader}
-                hasFooter={hasFooter}
-                columnGroups={columnGroups}
-              >
-                {this.getTableBody(columnGroups, lock)}
-              </TableWrapper>
-            </VirtualWrapper>
-          )
-        }
-        {
-          hasFooter && (
-            <TableWrapper
-              key="tableWrapper-footer"
-              lock={lock}
-              hasBody={hasBody}
-              hasHeader={hasFooter}
-              hasFooter={hasFooter}
-              columnGroups={columnGroups}
-            >
-              {this.getTableFooter(columnGroups, lock)}
-            </TableWrapper>
-          )
-        }
-      </>
-    ) : (
+    return (
       <TableWrapper
         key="tableWrapper"
         lock={lock}
@@ -1965,11 +1921,11 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getTable(lock?: ColumnLock): ReactNode {
     const { props, tableStore } = this;
-    const { overflowX, heightType, hasFooter: footer } = tableStore;
+    const { overflowX, heightType, hasFooter: footer, virtual } = tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
-    if ((!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType) || tableStore.height !== undefined) {
+    if (virtual || (!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType) || tableStore.height !== undefined) {
       const { prefixCls } = this;
       let tableHeadRef;
       let tableBodyRef;
@@ -2006,6 +1962,7 @@ export default class Table extends DataSetComponent<TableProps> {
         </div>
       );
       if (lock !== ColumnLock.right || !onlyCustomizedColumn(tableStore)) {
+        const body = this.renderTable(false, true, false, lock);
         tableBody = (
           <TableBody
             key="tableBody"
@@ -2014,7 +1971,7 @@ export default class Table extends DataSetComponent<TableProps> {
             onScroll={this.handleBodyScroll}
             style={pick(props.style, ['maxHeight', 'minHeight'])}
           >
-            {this.renderTable(false, true, false, lock)}
+            {virtual ? <VirtualWrapper>{body}</VirtualWrapper> : body}
           </TableBody>
         );
       }
@@ -2055,13 +2012,14 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableBody(columnGroups: ColumnGroups, lock?: ColumnLock): ReactNode {
-    const { tableStore: { rowDraggable } } = this;
+    const { tableStore: { rowDraggable, performanceEnabled } } = this;
     const body = <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
+    const bodyWithProfiler = performanceEnabled ? <Profiler>{body}</Profiler> : body;
     return rowDraggable ? (
       <DragDropContext onDragEnd={this.handleDragEnd}>
-        {body}
+        {bodyWithProfiler}
       </DragDropContext>
-    ) : body;
+    ) : bodyWithProfiler;
   }
 
   getTableHeader(lock?: ColumnLock): ReactNode {
