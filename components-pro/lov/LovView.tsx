@@ -126,17 +126,14 @@ export default class LovView extends Component<LovViewProps> {
     } = this.props;
     // 为了drawer模式下右侧勾选项的顺序
     if (showSelectedInView && (viewMode === 'drawer' || viewMode === 'modal') && multiple) {
-      dataSet.map(item => {
-        const timeStampState = item.getState(TIMESTAMP);
-        if (!item.isSelected && timeStampState) {
-          item.setState(TIMESTAMP, 0);
+      if (event && event.records) {
+        const [record] = event.records;
+        if (record.isSelected) {
+          record.setState(TIMESTAMP, new Date().getTime());
+        } else {
+          record.setState(TIMESTAMP, 0);
         }
-        if (item.isSelected && !timeStampState) {
-          const timestamp = new Date().getTime();
-          item.setState(TIMESTAMP, timestamp);
-        }
-        return item;
-      });
+      }
     }
     let records: Record[] = selectionMode === SelectionMode.treebox ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
