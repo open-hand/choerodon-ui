@@ -88,7 +88,7 @@ export default class Tree extends Component<TreeProps> {
     multiple: PropTypes.bool,
     checkable: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
     checkStrictly: PropTypes.bool,
-    draggable: PropTypes.bool,
+    draggable: PropTypes.oneOfType([PropTypes.bool, PropTypes.func, PropTypes.object]),
     defaultExpandParent: PropTypes.bool,
     autoExpandParent: PropTypes.bool,
     defaultExpandAll: PropTypes.bool,

@@ -25,13 +25,18 @@ export type NodeDragEventHandler<T = HTMLDivElement> = (
   outsideTree?: boolean,
 ) => void;
 
+export interface DraggableProps{
+  nodeDraggable: ((node?: DataNode) => boolean) | boolean;
+  icon: boolean | React.ReactNode;
+}
+
 export interface TreeContextProps {
   prefixCls: string;
   selectable?: boolean;
   showIcon?: boolean;
   icon: IconType;
   switcherIcon: IconType;
-  draggable?: ((node?: DataNode) => boolean) | boolean;
+  draggable?: ((node?: DataNode) => boolean) | boolean | DraggableProps;
   checkable: boolean | React.ReactNode;
   checkStrictly?: boolean;
   disabled?: boolean;
