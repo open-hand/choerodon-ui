@@ -18,6 +18,7 @@ import axios from '../axios';
 import Record, { RecordProps } from './Record';
 import Group from './Group';
 import Field, { FieldProps, Fields } from './Field';
+import { formatTemplate } from '../formatter';
 import {
   adapterDataToJSON,
   appendRecords,
@@ -184,7 +185,7 @@ export interface AllValidationErrors {
 export interface ValidationRule {
   name: string;
   value: number;
-  message: string;
+  message?: string;
 }
 
 export interface ValidationSelfErrors extends ValidationRule {
@@ -2307,15 +2308,16 @@ export default class DataSet extends EventManager {
     const result: ValidationSelfErrors[] = [];
     if (validationRules) {
       validationRules.forEach(item => {
-        switch (item.name) {
+        const { message, value, name } = item;
+        switch (name) {
           case ValidationSelfType.minLength:
-            if (this.length < item.value) {
-              result.push(this.getValidationSelfError(item));
+            if (this.length < value) {
+              result.push(this.getValidationSelfError({ ...item, message: message || formatTemplate($l('DataSet', 'data_length_too_short'), { length: value }) }));
             }
             break;
           case ValidationSelfType.maxLength:
-            if (this.length > item.value) {
-              result.push(this.getValidationSelfError(item));
+            if (this.length > value) {
+              result.push(this.getValidationSelfError({ ...item, message: message || formatTemplate($l('DataSet', 'data_length_too_long'), { length: value }) }));
             }
             break;
           default:
