@@ -1508,12 +1508,13 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   syncParentSize(entries: ResizeObserverEntry[]) {
     const [entry] = entries;
-    const { contentRect: { height, top } } = entry;
+    const { contentRect: { height } } = entry;
     const { tableStore, element, wrapper } = this;
     const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
     if (wrapperHeight !== height) {
       tableStore.parentHeight = height;
-      tableStore.parentPaddingTop = (element as HTMLDivElement).getBoundingClientRect().top - top;
+      tableStore.parentPaddingTop =
+        (element as HTMLDivElement).getBoundingClientRect().top - (entry.target as HTMLDivElement).getBoundingClientRect().top;
     }
   }
 
