@@ -12,6 +12,8 @@ const locale: Locale = {
     submit_success: '提交成功',
     submit_failure: '提交失败',
     cannot_add_record_when_head_no_current: '头未选中记录，不能新建行记录',
+    data_length_too_short: '请至少维护{length}条数据',
+    data_length_too_long: '请最多维护{length}条数据',
   },
   Validator: {
     bad_input: '请输入一个数字。',

@@ -12,7 +12,7 @@ import Record from '../data-set/Record';
 import Animate from '../animate';
 import Icon from '../icon';
 import { $l } from '../locale-context';
-import { NodeRenderer } from './Lov';
+import { SelectionProps } from './Lov';
 
 export const TIMESTAMP = '__TIMESTAMP__';
 
@@ -26,8 +26,8 @@ export interface SelectionListProps {
   treeFlag?: LovConfig['treeFlag'];
   valueField: string;
   textField: string;
-  nodeRenderer?: NodeRenderer;
   selectionsPosition?: SelectionsPosition;
+  selectionProps?: SelectionProps;
 }
 
 @observer
@@ -56,9 +56,11 @@ export default class SelectionList extends Component<SelectionListProps> {
   };
 
   renderSide() {
-    const { dataSet, treeFlag, valueField = '', textField = '', nodeRenderer } = this.props;
+    const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
+    const { nodeRenderer, placeholder } = selectionProps;
     const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
-    if (isEmpty(records)) {
+    const isEmptyList = isEmpty(records);
+    if (isEmptyList && !placeholder) {
       return null;
     }
 
@@ -79,7 +81,7 @@ export default class SelectionList extends Component<SelectionListProps> {
     return (
       <div className={`${classString}-container`}>
         <p className={`${classString}-intro`}>
-          {$l('Lov', 'selection_tips', {
+          {isEmptyList ? placeholder : $l('Lov', 'selection_tips', {
             count: <b key="count">{records.length}</b>,
           })}
         </p>
