@@ -93,7 +93,6 @@ subtitle: 表格
 | customizable | 是否显示个性化设置入口按钮  | boolean | [globalConfig.customizable](/components/configure#API) |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
 | clientExportQuantity | 客户端查询导出，查询数目设置  | number | |
-| virtualRowHeight | 可以修改由于样式导致的虚拟高度和rowHeight不一致  | number | |
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |

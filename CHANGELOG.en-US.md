@@ -23,7 +23,7 @@ timeline: true
 - 🌟 `<pro>Table.Column`: Added `aggregationLimitDefaultExpanded`, `defaultWidth` properties.
 - 🌟 `<pro>TextArea`: Added `clearButton` property.
 - 🌟 `<pro>DataSet`: Added `validateSelf` event and `getAllValidationErrors` method.
-- 🌟 `<pro>DataSet`: Added `validationRules` property.
+- 🌟 `<pro>DataSet`: Added `validationRules`, `strictPageSize` properties.
 - 🌟 `<pro>Lov`: Added `selectionProps` property.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimize the style when setting the `clearButton` `showLengthInfo` `suffix` properties at the same time.
 - 💄 `<pro>Tree`: Support the display of drag icon through `draggable.icon` property control.
 - 💄 `<pro>Lov`: Optimize sorting of selected list.
+- 💄 `<pro>Table`: Optimize virtual scrolling and support tree-shaped virtual scrolling.
 - 🐞 `<pro>Table`: Fix the problem that the virtual scroll will be fully rendered for the first time when only `maxHeight` is set in style.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.

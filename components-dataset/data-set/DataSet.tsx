@@ -293,6 +293,11 @@ export interface DataSetProps {
    */
   pageSize?: number;
   /**
+   * 严格分页大小
+   * @default true
+   */
+  strictPageSize?: boolean;
+  /**
    * 前端分页、后端分页还是不分页
    */
   paging?: boolean | 'server';
@@ -442,6 +447,7 @@ export default class DataSet extends EventManager {
     modifiedCheck: true,
     pageSize: 10,
     paging: true,
+    strictPageSize: true,
     combineSort: false,
     dataToJSON: DataToJSON.dirty,
     cascadeParams(parent, primaryKey) {
@@ -2313,12 +2319,18 @@ export default class DataSet extends EventManager {
         switch (name) {
           case ValidationSelfType.minLength:
             if (this.length < value) {
-              result.push(this.getValidationSelfError({ ...item, message: message || formatTemplate($l('DataSet', 'data_length_too_short'), { length: value }) }));
+              result.push(this.getValidationSelfError({
+                ...item,
+                message: message || formatTemplate($l('DataSet', 'data_length_too_short'), { length: value }),
+              }));
             }
             break;
           case ValidationSelfType.maxLength:
             if (this.length > value) {
-              result.push(this.getValidationSelfError({ ...item, message: message || formatTemplate($l('DataSet', 'data_length_too_long'), { length: value }) }));
+              result.push(this.getValidationSelfError({
+                ...item,
+                message: message || formatTemplate($l('DataSet', 'data_length_too_long'), { length: value }),
+              }));
             }
             break;
           default:
@@ -2334,14 +2346,14 @@ export default class DataSet extends EventManager {
       ...result,
       dataSet: this,
       valid: false,
-    }
+    };
   }
 
   getAllValidationErrors(): AllValidationErrors {
     return {
       dataSet: this.getValidationSelfErrors(),
       records: this.getValidationErrors(),
-    }
+    };
   }
 
   /**
@@ -2607,18 +2619,22 @@ Then the query method will be auto invoke.`,
     const {
       paging,
       pageSize,
-      props: { autoLocateFirst, idField, parentField, childrenField },
+      props: { autoLocateFirst, idField, parentField, childrenField, strictPageSize },
     } = this;
-    switch (paging) {
-      case true:
-        allData = allData.slice(0, pageSize);
-        break;
-      case 'server':
-        allData = idField && parentField && !childrenField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
-        break;
-      default:
-        allData = allData.slice();
-        break;
+    if (strictPageSize) {
+      switch (paging) {
+        case true:
+          allData = allData.slice(0, pageSize);
+          break;
+        case 'server':
+          allData = idField && parentField && !childrenField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
+          break;
+        default:
+          allData = allData.slice();
+          break;
+      }
+    } else {
+      allData = allData.slice();
     }
     const sortedData = sortData(allData, this);
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: sortedData });
