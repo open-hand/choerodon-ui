@@ -27,7 +27,7 @@ Almost anything can be represented in a tree structure. Examples include directo
 | defaultExpandParent | auto expand parent treeNodes when init | bool | true |
 | defaultSelectedKeys | Specifies the keys of the default selected treeNodes | string\[] | \[] |
 | disabled | whether disabled the tree | bool | false |
-| draggable | Specifies whether this Tree is draggable (IE > 8) | boolean | false |
+| draggable | Specifies whether this Tree is draggable (IE > 8) | boolean \| ((node?: DataNode) => boolean) \| {nodeDraggable: boolean \| ((node?: DataNode) => boolean), icon: boolean \| ReactNode} | false |
 | expandedKeys | (Controlled) Specifies the keys of the expanded treeNodes | string\[] | \[] |
 | filterTreeNode | Defines a function to filter (highlight) treeNodes. When the function returns `true`, the corresponding treeNode will be highlighted | function(node) | - |
 | loadData | Load data asynchronously | (node) => Promise | - |

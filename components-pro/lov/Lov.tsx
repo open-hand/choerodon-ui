@@ -566,6 +566,7 @@ export default class Lov extends Select<LovProps> {
     }
     this.setPopup(false);
     this.modal = undefined;
+    this.focus()
   }
 
   @autobind
