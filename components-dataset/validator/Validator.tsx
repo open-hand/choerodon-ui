@@ -8,7 +8,7 @@ import Record from '../data-set/Record';
 import { Form } from '../interface';
 import validationRules, { methodReturn, validationRule, ValidatorBaseProps, ValidatorProps } from './rules';
 import valueMissing from './rules/valueMissing';
-import { ValidationErrors, ValidationErrorSelf } from '../data-set/DataSet';
+import { ValidationErrors, ValidationSelfErrors } from '../data-set/DataSet';
 import { getGlobalConfig } from '../utils';
 
 export type CustomValidator = (
@@ -56,8 +56,9 @@ export default class Validator {
     }
   }
 
-  static reportDataSet(errors: ValidationErrorSelf) {
-    if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined' && !errors.valid) {
+  static reportDataSet(errors: ValidationSelfErrors[]) {
+    const { length } = errors;
+    if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined' && length) {
       console.warn('validations:', toJS(errors));
     }
   }

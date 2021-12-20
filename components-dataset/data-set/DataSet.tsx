@@ -9,6 +9,7 @@ import isNil from 'lodash/isNil';
 import defer from 'lodash/defer';
 import isString from 'lodash/isString';
 import isPlainObject from 'lodash/isPlainObject';
+import isFunction from 'lodash/isFunction';
 import debounce from 'lodash/debounce';
 import { isEmpty, warning } from '../utils';
 import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
@@ -17,7 +18,6 @@ import axios from '../axios';
 import Record, { RecordProps } from './Record';
 import Group from './Group';
 import Field, { FieldProps, Fields } from './Field';
-import { formatTemplate } from '../formatter';
 import {
   adapterDataToJSON,
   appendRecords,
@@ -69,6 +69,7 @@ import {
   FieldType,
   RecordStatus,
   SortOrder,
+  ValidationSelfType,
 } from './enum';
 import { Lang } from '../locale-context/enum';
 import * as ObjectChainValue from '../object-chain-value';
@@ -175,15 +176,20 @@ export interface ValidationErrors {
   valid: boolean;
 }
 
-export interface ValidationErrorSelf {
-  dataSet: DataSet;
-  error: string;
-  valid: boolean;
+export interface AllValidationErrors {
+  dataSet: ValidationSelfErrors[];
+  records: ValidationErrors[];
 }
 
-export interface AllValidationErrors {
-  dataSet: ValidationErrorSelf;
-  records: ValidationErrors[];
+export interface ValidationRule {
+  name: string;
+  value: number;
+  message: string;
+}
+
+export interface ValidationSelfErrors extends ValidationRule {
+  dataSet: DataSet;
+  valid: boolean;
 }
 
 export interface DataSetProps {
@@ -413,9 +419,9 @@ export interface DataSetProps {
   selectionStrategy?: CheckedStrategy;
   status?: DataSetStatus;
   /**
-   * records 最小长度
+   * dataSet校验规则
    */
-  minLength?: number;
+  validationRules?: ValidationRule[];
 }
 
 export type DataSetContext = {
@@ -443,7 +449,6 @@ export default class DataSet extends EventManager {
       }
       return omit(parent.toData(), ['__dirty']);
     },
-    minLength: 0,
   };
 
   id?: string;
@@ -523,7 +528,7 @@ export default class DataSet extends EventManager {
 
   @observable state: ObservableMap<string, any>;
 
-  validationErrorSelf: ValidationErrorSelf | undefined;
+  @observable validationSelfErrors: ValidationSelfErrors[] | undefined;
 
   $needToSortFields?: boolean;
 
@@ -965,6 +970,9 @@ export default class DataSet extends EventManager {
 
   constructor(props?: DataSetProps, context?: DataSetContext) {
     super();
+    if (context && !isFunction(context.getConfig)) {
+      throw new Error('The type of the second parameter of the DataSet constructor is wrong. Please not pass the parameter or pass a DataSetContext type parameter instead.');
+    }
     runInAction(() => {
       props = { ...DataSet.defaultProps, ...props } as DataSetProps;
       this.props = props;
@@ -1519,7 +1527,7 @@ export default class DataSet extends EventManager {
         items.forEach(([name, defaultValue]) => record.init(name, toJS(defaultValue)));
       }
     });
-    const { parentField, idField, childrenField, minLength } = this.props;
+    const { parentField, idField, childrenField, validationRules } = this.props;
     if (!childrenField && parentField && idField) {
       const parentId = record.get(parentField);
       if (parentId) {
@@ -1550,8 +1558,9 @@ export default class DataSet extends EventManager {
     if (this.props.autoLocateAfterCreate) {
       this.current = record;
     }
-    if (minLength && this.validationErrorSelf) {
-      if (minLength <= this.length && !this.validationErrorSelf.valid) {
+    if (validationRules && this.validationSelfErrors) {
+      const error = this.validationSelfErrors.find((item: ValidationSelfErrors) => item.name === ValidationSelfType.minLength);
+      if (error && error.value <= this.length) {
         this.clearValidationError();
       }
     }
@@ -1612,6 +1621,12 @@ export default class DataSet extends EventManager {
       if (data.length && this.fireEventSync(DataSetEvents.beforeRemove, { dataSet: this, records: data }) !== false) {
         const { current } = this;
         data.forEach(this.deleteRecord, this);
+        if (this.props.validationRules && this.validationSelfErrors) {
+          const error = this.validationSelfErrors.find((item: ValidationSelfErrors) => item.name === ValidationSelfType.maxLength);
+          if (error && error.value >= this.length) {
+            this.clearValidationError();
+          }
+        }
         this.fireEvent(DataSetEvents.remove, { dataSet: this, records: data });
         if (!this.current) {
           let record;
@@ -2196,7 +2211,7 @@ export default class DataSet extends EventManager {
    */
   @action
   clearValidationError() {
-    this.validationErrorSelf = undefined;
+    this.validationSelfErrors = undefined;
   }
 
   /**
@@ -2208,7 +2223,7 @@ export default class DataSet extends EventManager {
   async validate(isSelected?: boolean, noCascade?: boolean): Promise<boolean> {
     this.validating = true;
     try {
-      if (!this.validateDataSetSelf()) {
+      if (!this.validateSelf()) {
         return false;
       }
       const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
@@ -2232,15 +2247,15 @@ export default class DataSet extends EventManager {
    * @return true | false
    */
   @action
-  validateDataSetSelf(): boolean {
-    const { minLength } = this.props;
-    let valid = true;
-    if (minLength) {
-      valid = minLength <= this.length;
+  validateSelf(): boolean {
+    if (this.status === DataSetStatus.ready) {
+      const errors = this.getValidationSelfErrors();
+      const valid = !errors.length;
+      this.validationSelfErrors = errors;
+      this.reportSelfValidityImmediately(valid, errors);
+      return valid;
     }
-    this.validationErrorSelf = this.getValidationErrorSelf();
-    this.reportSelfValidityImmediately(valid, this.validationErrorSelf);
-    return valid;
+    return true;
   }
 
   reportValidityImmediately(valid: boolean, errors: ValidationErrors[] = this.getValidationErrors(), fromField?: boolean) {
@@ -2248,8 +2263,8 @@ export default class DataSet extends EventManager {
     Validator.reportAll(errors);
   }
 
-  reportSelfValidityImmediately(valid: boolean, errors: ValidationErrorSelf = this.getValidationErrorSelf()) {
-    this.fireEvent(DataSetEvents.validateDataSetSelf, { dataSet: this, result: Promise.resolve(valid), valid, errors });
+  reportSelfValidityImmediately(valid: boolean, errors: ValidationSelfErrors[] = this.getValidationSelfErrors()) {
+    this.fireEvent(DataSetEvents.validateSelf, { dataSet: this, result: Promise.resolve(valid), valid, errors });
     Validator.reportDataSet(errors);
   }
 
@@ -2287,19 +2302,41 @@ export default class DataSet extends EventManager {
     }, []);
   }
 
-  getValidationErrorSelf(): ValidationErrorSelf {
-    const { minLength: length } = this.props;
-    const result = {
-      dataSet: this,
-      error: formatTemplate($l('DataSet', 'data_length_too_short'), { length }),
-      valid: length ? (length <= this.length) : true,
-    };
+  getValidationSelfErrors(): ValidationSelfErrors[] {
+    const { validationRules } = this.props;
+    const result: ValidationSelfErrors[] = [];
+    if (validationRules) {
+      validationRules.forEach(item => {
+        switch (item.name) {
+          case ValidationSelfType.minLength:
+            if (this.length < item.value) {
+              result.push(this.getValidationSelfError(item));
+            }
+            break;
+          case ValidationSelfType.maxLength:
+            if (this.length > item.value) {
+              result.push(this.getValidationSelfError(item));
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    }
     return result;
+  }
+
+  private getValidationSelfError(result: ValidationRule): ValidationSelfErrors {
+    return {
+      ...result,
+      dataSet: this,
+      valid: false,
+    }
   }
 
   getAllValidationErrors(): AllValidationErrors {
     return {
-      dataSet: this.getValidationErrorSelf(),
+      dataSet: this.getValidationSelfErrors(),
       records: this.getValidationErrors(),
     }
   }

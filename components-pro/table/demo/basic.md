@@ -130,7 +130,18 @@ class App extends React.Component {
     pageSize: 5,
     cacheSelection: true,
     cacheModified: true,
-    minLength: 10,
+    validationRules: [
+      {
+        name: "minLength",
+        value: 7,
+        message: 'Maintain at least 7 pieces of data',
+      },
+      {
+        name: "maxLength",
+        value: 10,
+        message: 'A maximum of 10 pieces of data can be maintained',
+      }
+    ],
     transport: {
       read({ params: { page, pagesize } }) {
         if (pagesize > 20) {
@@ -486,7 +497,7 @@ class App extends React.Component {
         buttons={buttons}
         dataSet={this.userDs}
         header="User"
-        style={{ maxHeight: 300 }}
+        style={{ maxHeight: 'calc(100vh - 400px)' }}
         rowNumber
         showAllPageSelectionButton
         showSelectionTips
