@@ -27,6 +27,7 @@ title: DataSet
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | true |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
+| strictPageSize | 严格分页大小, 前端将截断超出 pageSize 的数据 | boolean | true |
 | paging | 是否分页 | boolean | true |
 | dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null | rows |
 | totalKey | 查询返回的 json 中对应的总数的 key | string | total |
@@ -56,6 +57,7 @@ title: DataSet
 | cascadeParams | 级联查询参数 | (parent, primaryKey) => object | (parent, primaryKey) => primaryKey ? parent.get(primaryKey) : parent.toData() |
 | combineSort | 是否开启组件列排序传参 | boolean | false |
 | forceValidate | 始终校验全部数据 | boolean | false |
+| validationRules | dataSet校验规则，详见[ValidationRule](#ValidationRule) | ValidationRule\[\] |  |
 
 ### DataSet Values
 
@@ -161,7 +163,8 @@ title: DataSet
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | modifiedCheck(message) | 变更检查。 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage |  |
 | setAllPageSelection(enabled) | 切换是否跨页全选。 | `enabled` - 是否开启 |  |
-| getValidationErrors() | 获取校验错误信息 |  |  |
+| getValidationErrors() | 获取records校验错误信息 |  |  |
+| getAllValidationErrors() | 获取所有校验错误信息 |  |  |
 
 ### DataSet Events
 
@@ -192,6 +195,7 @@ title: DataSet
 | beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 | 是 |
 | reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 记录集 | 是 |
 | validate | 校验事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果集 | 是 |
+| validateSelf | 校验dataSet事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果 | 是 |
 
 ### Record Props
 
@@ -417,3 +421,11 @@ title: DataSet
 | errorMessage   | 错误消息  | string |
 | invalid   | 检验失败，如果为true, 则无法重新上传  | boolean |
 | originFileObj   | 原始文件对象，只有通过上传按钮选择的附件才有该对象  | File |
+
+## ValidationRule
+
+| 属性                | 说明                                       | 类型     |
+| ------------------- | ------------------------------------------ | -------- |
+| name | 校验的名称，可选值：`minLength` `maxLength` | string |
+| value | 校验值 | number |
+| message | 校验提示内容  | string |

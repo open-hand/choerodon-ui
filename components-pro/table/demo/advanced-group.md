@@ -50,6 +50,7 @@ const App = () => {
       { id: 8, sectionName: 'section1', company: '山西XX科贸有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
       { id: 9, sectionName: 'section1', company: '山西XX科贸有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1 },
       { id: 10, sectionName: 'section1', company: '山西XX科贸有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 76000, quantity: 10, amount: 760000, tax: 0.1 },
+      { id: 11, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
       { id: 12, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
       { id: 13, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
       { id: 14, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 90000, quantity: 10, amount: 900000, tax: 0.1 },

@@ -69,6 +69,11 @@ export const AGGREGATION_EXPAND_CELL_KEY = '__aggregation-expand-cell__'; // TOD
 
 export type HeaderText = { name: string; label: string };
 
+export type RowMetaData = {
+  offset: number;
+  height: number | undefined;
+}
+
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
 }
@@ -859,15 +864,11 @@ export default class TableStore {
     return this.getConfig('tableVirtualCell');
   }
 
-  /**
-   * number 矫正虚拟滚动由于样式问题导致的高度不符问题
-   */
-  get virtualRowHeight(): number {
-    const { virtualRowHeight } = this.props;
-    if (virtualRowHeight) {
-      return virtualRowHeight;
+  get isFixedRowHeight(): boolean {
+    if (!this.aggregation || !this.hasAggregationColumn) {
+      return isNumber(this.rowHeight);
     }
-    return isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
+    return false;
   }
 
   get propVirtual(): boolean | undefined {
@@ -878,62 +879,110 @@ export default class TableStore {
   }
 
   get virtual(): boolean | undefined {
-    if (this.height !== undefined && isNumber(this.virtualRowHeight)) {
+    if (this.height !== undefined) {
       return this.propVirtual;
     }
     return false;
   }
 
+  @observable actualRows: number | undefined;
+
+  @observable actualRowHeight: number | undefined;
+
+  @computed
+  get virtualEstimatedRowHeight(): number {
+    const { actualRowHeight } = this;
+    if (actualRowHeight !== undefined) {
+      return actualRowHeight;
+    }
+    const normalRowHeight = isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
+    return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
+  }
+
+  get virtualEstimatedRows() {
+    const { actualRows } = this;
+    if (actualRows !== undefined) {
+      return actualRows;
+    }
+    return this.data.length;
+  }
+
   get virtualHeight(): number {
-    const { virtualRowHeight, data } = this;
-    return Math.round(data.length * virtualRowHeight);
+    const { virtualEstimatedRowHeight, virtualEstimatedRows } = this;
+    return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight);
+  }
+
+  virtualOverScanCount = 2;
+
+  @computed
+  get virtualVisibleStartIndex(): number {
+    const { height } = this;
+    if (height === undefined) {
+      return 0;
+    }
+    const { virtualEstimatedRowHeight, lastScrollTop, virtualEstimatedRows, virtualHeight } = this;
+    if (this.isFixedRowHeight || lastScrollTop < (virtualHeight - height) / 2) {
+      return Math.max(
+        0,
+        Math.min(
+          virtualEstimatedRows, Math.floor(lastScrollTop / virtualEstimatedRowHeight),
+        ),
+      );
+    }
+    const { virtualVisibleEndIndex } = this;
+    const numVisibleItems = Math.ceil(
+      height / virtualEstimatedRowHeight,
+    );
+    return Math.max(
+      0,
+      Math.min(
+        virtualEstimatedRows,
+        virtualVisibleEndIndex - numVisibleItems,
+      ),
+    );
   }
 
   @computed
+  get virtualVisibleEndIndex(): number {
+    const { height, virtualEstimatedRows } = this;
+    if (height === undefined) {
+      return virtualEstimatedRows;
+    }
+    const { virtualEstimatedRowHeight, lastScrollTop, virtualHeight } = this;
+    if (this.isFixedRowHeight || lastScrollTop < (virtualHeight - height) / 2) {
+      const { virtualVisibleStartIndex } = this;
+      const numVisibleItems = Math.ceil(
+        height / virtualEstimatedRowHeight,
+      );
+      return Math.max(
+        0,
+        Math.min(
+          virtualEstimatedRows,
+          virtualVisibleStartIndex + numVisibleItems,
+        ),
+      );
+    }
+    return Math.max(
+      0,
+      Math.min(
+        virtualEstimatedRows, Math.floor(virtualEstimatedRows - (virtualHeight - height - lastScrollTop) / virtualEstimatedRowHeight),
+      ),
+    );
+  }
+
   get virtualStartIndex(): number {
-    const { virtualRowHeight, lastScrollTop } = this;
-    return Math.max(Math.round((lastScrollTop / virtualRowHeight) - 3), 0);
+    const { virtualOverScanCount, virtualVisibleStartIndex } = this;
+    return Math.max(0, virtualVisibleStartIndex - virtualOverScanCount);
   }
 
-  @computed
   get virtualEndIndex(): number {
-    const { virtualRowHeight, lastScrollTop, height, data } = this;
-    return Math.min(height !== undefined ? Math.round((lastScrollTop + height) / virtualRowHeight) + 3 : Infinity, data.length);
+    const { virtualOverScanCount, virtualVisibleEndIndex, virtualEstimatedRows } = this;
+    return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + virtualOverScanCount);
   }
 
   get virtualTop(): number {
-    const { virtualRowHeight, virtualStartIndex } = this;
-    return virtualStartIndex * virtualRowHeight;
-  }
-
-  @computed
-  get virtualCachedData(): Record[] {
-    const { cachedData, virtual } = this;
-    if (virtual) {
-      return cachedData.slice(this.virtualStartIndex, this.virtualEndIndex);
-    }
-    return cachedData;
-  }
-
-  @computed
-  get virtualCurrentData(): Record[] {
-    const { currentData, virtual } = this;
-    if (virtual) {
-      const { cachedData: { length } } = this;
-      const currentStartIndex = Math.max(this.virtualStartIndex - length, 0);
-      const currentEndIndex = Math.max(this.virtualEndIndex - length, 0);
-      return currentData.slice(currentStartIndex, currentEndIndex);
-    }
-    return currentData;
-  }
-
-  @computed
-  get virtualData(): Record[] {
-    const { data, virtual } = this;
-    if (virtual) {
-      return [...this.virtualCachedData, ...this.virtualCurrentData];
-    }
-    return data;
+    const { virtualEstimatedRowHeight, virtualStartIndex } = this;
+    return virtualStartIndex * virtualEstimatedRowHeight;
   }
 
   get hidden(): boolean | undefined {
@@ -1486,17 +1535,20 @@ export default class TableStore {
   @computed
   get groupedData(): Group[] {
     const { groups } = this;
-    const headerGroupNames: string[] = [];
-    const groupNames: string[] = [];
-    groups.forEach(({ type, name }) => {
-      if (type === GroupType.header) {
-        headerGroupNames.push(name);
-      } else {
-        groupNames.push(name);
-      }
-    }, []);
-    const { dataSet } = this;
-    return this.isTree ? normalizeGroups(groupNames, headerGroupNames, dataSet.treeRecords) : normalizeGroups(groupNames, headerGroupNames, dataSet.records);
+    if (groups.length) {
+      const headerGroupNames: string[] = [];
+      const groupNames: string[] = [];
+      groups.forEach(({ type, name }) => {
+        if (type === GroupType.header) {
+          headerGroupNames.push(name);
+        } else {
+          groupNames.push(name);
+        }
+      }, []);
+      const { dataSet } = this;
+      return this.isTree ? normalizeGroups(groupNames, headerGroupNames, dataSet.treeRecords) : normalizeGroups(groupNames, headerGroupNames, dataSet.records);
+    }
+    return [];
   }
 
   @computed

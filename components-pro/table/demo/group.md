@@ -26,6 +26,7 @@ const { Option } = SelectBox;
 
 const App = () => {
   const userDs = useDataSet(() => ({
+    strictPageSize: false,
     data: [
       { id: 1, name: '张三', code: 'a', company: '汉得', dept: '人事' },
       { id: 2, name: '李四', code: 'b', company: '汉得', dept: '人事' },

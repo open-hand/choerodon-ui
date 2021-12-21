@@ -192,6 +192,12 @@ export function isStickySupport(): boolean {
   return true;
 }
 
+export function findRow(tableStore: TableStore, record: Record): HTMLTableRowElement | null {
+  const { node } = tableStore;
+  const selector = `tr[data-index="${record.id}"]`;
+  return node.element.querySelector(selector);
+}
+
 export function findCell(
   tableStore: TableStore,
   name?: Key,

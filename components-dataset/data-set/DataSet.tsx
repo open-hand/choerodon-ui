@@ -18,6 +18,7 @@ import axios from '../axios';
 import Record, { RecordProps } from './Record';
 import Group from './Group';
 import Field, { FieldProps, Fields } from './Field';
+import { formatTemplate } from '../formatter';
 import {
   adapterDataToJSON,
   appendRecords,
@@ -69,6 +70,7 @@ import {
   FieldType,
   RecordStatus,
   SortOrder,
+  ValidationSelfType,
 } from './enum';
 import { Lang } from '../locale-context/enum';
 import * as ObjectChainValue from '../object-chain-value';
@@ -175,6 +177,22 @@ export interface ValidationErrors {
   valid: boolean;
 }
 
+export interface AllValidationErrors {
+  dataSet: ValidationSelfErrors[];
+  records: ValidationErrors[];
+}
+
+export interface ValidationRule {
+  name: string;
+  value: number;
+  message?: string;
+}
+
+export interface ValidationSelfErrors extends ValidationRule {
+  dataSet: DataSet;
+  valid: boolean;
+}
+
 export interface DataSetProps {
   /**
    * 唯一标识
@@ -274,6 +292,11 @@ export interface DataSetProps {
    * @default 10
    */
   pageSize?: number;
+  /**
+   * 严格分页大小
+   * @default true
+   */
+  strictPageSize?: boolean;
   /**
    * 前端分页、后端分页还是不分页
    */
@@ -401,6 +424,10 @@ export interface DataSetProps {
    */
   selectionStrategy?: CheckedStrategy;
   status?: DataSetStatus;
+  /**
+   * dataSet校验规则
+   */
+  validationRules?: ValidationRule[];
 }
 
 export type DataSetContext = {
@@ -420,6 +447,7 @@ export default class DataSet extends EventManager {
     modifiedCheck: true,
     pageSize: 10,
     paging: true,
+    strictPageSize: true,
     combineSort: false,
     dataToJSON: DataToJSON.dirty,
     cascadeParams(parent, primaryKey) {
@@ -506,6 +534,8 @@ export default class DataSet extends EventManager {
   @observable dataToJSON: DataToJSON;
 
   @observable state: ObservableMap<string, any>;
+
+  @observable validationSelfErrors: ValidationSelfErrors[] | undefined;
 
   $needToSortFields?: boolean;
 
@@ -1206,7 +1236,8 @@ export default class DataSet extends EventManager {
    * @param number exportQuantity 导出数量
    */
   async export(columns: any = {}, exportQuantity = 0): Promise<void | any[]> {
-    if (this.checkReadable(this.parent) && (await this.ready())) {
+    if (this.checkReadable(this.parent)) {
+      await this.ready();
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
       const { totalCount, totalKey } = this;
@@ -1344,6 +1375,7 @@ export default class DataSet extends EventManager {
     if (this.props.autoCreate && this.records.length === 0) {
       this.create();
     }
+    this.clearValidationError();
     this.fireEvent(DataSetEvents.reset, { dataSet: this, records: this.records });
     return this;
   }
@@ -1503,7 +1535,7 @@ export default class DataSet extends EventManager {
         items.forEach(([name, defaultValue]) => record.init(name, toJS(defaultValue)));
       }
     });
-    const { parentField, idField, childrenField } = this.props;
+    const { parentField, idField, childrenField, validationRules } = this.props;
     if (!childrenField && parentField && idField) {
       const parentId = record.get(parentField);
       if (parentId) {
@@ -1534,6 +1566,13 @@ export default class DataSet extends EventManager {
     if (this.props.autoLocateAfterCreate) {
       this.current = record;
     }
+    if (validationRules && this.validationSelfErrors) {
+      const error = this.validationSelfErrors.find((item: ValidationSelfErrors) => item.name === ValidationSelfType.minLength);
+      if (error && error.value <= this.length) {
+        this.clearValidationError();
+      }
+    }
+
     this.fireEvent(DataSetEvents.create, { dataSet: this, record });
     return record;
   }
@@ -1590,6 +1629,12 @@ export default class DataSet extends EventManager {
       if (data.length && this.fireEventSync(DataSetEvents.beforeRemove, { dataSet: this, records: data }) !== false) {
         const { current } = this;
         data.forEach(this.deleteRecord, this);
+        if (this.props.validationRules && this.validationSelfErrors) {
+          const error = this.validationSelfErrors.find((item: ValidationSelfErrors) => item.name === ValidationSelfType.maxLength);
+          if (error && error.value >= this.length) {
+            this.clearValidationError();
+          }
+        }
         this.fireEvent(DataSetEvents.remove, { dataSet: this, records: data });
         if (!this.current) {
           let record;
@@ -2170,6 +2215,14 @@ export default class DataSet extends EventManager {
   }
 
   /**
+   * 清除校验结果
+   */
+  @action
+  clearValidationError() {
+    this.validationSelfErrors = undefined;
+  }
+
+  /**
    * 校验数据记录是否有效 对应参数后续会废弃
    * @param isSelected 是否只校验选中记录
    * @param noCascade 是否级联校验
@@ -2178,6 +2231,9 @@ export default class DataSet extends EventManager {
   async validate(isSelected?: boolean, noCascade?: boolean): Promise<boolean> {
     this.validating = true;
     try {
+      if (!this.validateSelf()) {
+        return false;
+      }
       const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
       const cascade =
         noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
@@ -2194,9 +2250,30 @@ export default class DataSet extends EventManager {
     }
   }
 
+  /**
+   * 校验dataSet是否有效
+   * @return true | false
+   */
+  @action
+  validateSelf(): boolean {
+    if (this.status === DataSetStatus.ready) {
+      const errors = this.getValidationSelfErrors();
+      const valid = !errors.length;
+      this.validationSelfErrors = errors;
+      this.reportSelfValidityImmediately(valid, errors);
+      return valid;
+    }
+    return true;
+  }
+
   reportValidityImmediately(valid: boolean, errors: ValidationErrors[] = this.getValidationErrors(), fromField?: boolean) {
     this.fireEvent(DataSetEvents.validate, { dataSet: this, result: Promise.resolve(valid), valid, errors, noLocate: fromField });
     Validator.reportAll(errors);
+  }
+
+  reportSelfValidityImmediately(valid: boolean, errors: ValidationSelfErrors[] = this.getValidationSelfErrors()) {
+    this.fireEvent(DataSetEvents.validateSelf, { dataSet: this, result: Promise.resolve(valid), valid, errors });
+    Validator.reportDataSet(errors);
   }
 
   reportValidity(result: ValidationErrors, fromField?: boolean) {
@@ -2219,7 +2296,8 @@ export default class DataSet extends EventManager {
 
   getValidationErrors(): ValidationErrors[] {
     const { dataToJSON } = this;
-    return (useSelected(dataToJSON) ? this.selected : this.data).reduce<ValidationErrors[]>((results, record) => {
+    const data = useSelected(dataToJSON) ? this.selected : this.data;
+    return data.reduce<ValidationErrors[]>((results, record) => {
       const validationResults = record.getValidationErrors();
       if (validationResults.length) {
         results.push({
@@ -2230,6 +2308,52 @@ export default class DataSet extends EventManager {
       }
       return results;
     }, []);
+  }
+
+  getValidationSelfErrors(): ValidationSelfErrors[] {
+    const { validationRules } = this.props;
+    const result: ValidationSelfErrors[] = [];
+    if (validationRules) {
+      validationRules.forEach(item => {
+        const { message, value, name } = item;
+        switch (name) {
+          case ValidationSelfType.minLength:
+            if (this.length < value) {
+              result.push(this.getValidationSelfError({
+                ...item,
+                message: message || formatTemplate($l('DataSet', 'data_length_too_short'), { length: value }),
+              }));
+            }
+            break;
+          case ValidationSelfType.maxLength:
+            if (this.length > value) {
+              result.push(this.getValidationSelfError({
+                ...item,
+                message: message || formatTemplate($l('DataSet', 'data_length_too_long'), { length: value }),
+              }));
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    }
+    return result;
+  }
+
+  private getValidationSelfError(result: ValidationRule): ValidationSelfErrors {
+    return {
+      ...result,
+      dataSet: this,
+      valid: false,
+    };
+  }
+
+  getAllValidationErrors(): AllValidationErrors {
+    return {
+      dataSet: this.getValidationSelfErrors(),
+      records: this.getValidationErrors(),
+    };
   }
 
   /**
@@ -2495,18 +2619,22 @@ Then the query method will be auto invoke.`,
     const {
       paging,
       pageSize,
-      props: { autoLocateFirst, idField, parentField, childrenField },
+      props: { autoLocateFirst, idField, parentField, childrenField, strictPageSize },
     } = this;
-    switch (paging) {
-      case true:
-        allData = allData.slice(0, pageSize);
-        break;
-      case 'server':
-        allData = idField && parentField && !childrenField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
-        break;
-      default:
-        allData = allData.slice();
-        break;
+    if (strictPageSize) {
+      switch (paging) {
+        case true:
+          allData = allData.slice(0, pageSize);
+          break;
+        case 'server':
+          allData = idField && parentField && !childrenField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
+          break;
+        default:
+          allData = allData.slice();
+          break;
+      }
+    } else {
+      allData = allData.slice();
     }
     const sortedData = sortData(allData, this);
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: sortedData });

@@ -59,6 +59,10 @@
       &-active .@{tree-prefix-cls}-node-content-wrapper {
         background: @tree-node-hover-bg;
       }
+
+      &:hover .@{tree-prefix-cls}-draggable-icon {
+        color: @btn-dark-bg;
+      }
     }
 
     // >>> Indent
@@ -70,6 +74,24 @@
       &-unit {
         display: inline-block;
         width: @tree-title-height;
+      }
+    }
+
+    // >>> DraggableIcon
+    & &-draggable-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 0.24rem;
+      height: 0.24rem;
+      color: @tree-node-selected-bg;
+
+      i.icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
       }
     }
 
