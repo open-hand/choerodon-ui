@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `Divider`: Fix an issue with the dashed attribute of Divider.
 - 🐞 `Menu`: Fix an issue where mouse moves into collapsed Menu reports errors.
 - 🐞 `<pro>DataSet`: Fix the issue of export failure.
+- 🐞 `<pro>DataSet`: Fix the problem that `selected` value will be recomputed after record state changed.
 - 🐞 `<pro>TextArea`: Fixed input length information display.
 - 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
 - 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.

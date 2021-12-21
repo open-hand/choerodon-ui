@@ -244,6 +244,7 @@ export default class Record {
     return this.dataSet.isAllPageSelection;
   }
 
+  @computed
   get isSelected(): boolean {
     if (this.isDataSetInAllPageSelection) {
       return !this.getState(UNSELECT_KEY);
