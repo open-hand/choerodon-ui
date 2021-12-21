@@ -3,6 +3,7 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import TableContext from './TableContext';
+import { toTransformValue } from '../_util/transform';
 
 export interface VirtualWrapperProps {
   children?: ReactNode;
@@ -11,7 +12,7 @@ export interface VirtualWrapperProps {
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
   const { children } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
-  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight } = tableStore;
+  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
   const [rowHeight, setRowHeight] = useState(virtualRowHeight);
   useEffect(action(() => {
@@ -38,9 +39,9 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
   return (
     <div
       className={`${prefixCls}-tbody-wrapper`}
-      style={{ height: pxToRem(virtualHeight), paddingTop: pxToRem(virtualTop) }}
+      style={{ height: pxToRem(virtualHeight), pointerEvents: scrolling ? 'none' : undefined }}
     >
-      <div style={{ position: 'relative' }}>
+      <div style={{ transform: toTransformValue({ translateY: pxToRem(virtualTop) }) }}>
         {children}
       </div>
     </div>
