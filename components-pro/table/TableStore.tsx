@@ -889,6 +889,8 @@ export default class TableStore {
 
   @observable actualRowHeight: number | undefined;
 
+  @observable scrolling: boolean | undefined;
+
   @computed
   get virtualEstimatedRowHeight(): number {
     const { actualRowHeight } = this;
@@ -1714,6 +1716,9 @@ export default class TableStore {
   @action
   setLastScrollTop(lastScrollTop: number) {
     this.lastScrollTop = lastScrollTop;
+    if (this.virtual) {
+      this.startScroll();
+    }
   }
 
   @action
@@ -2063,5 +2068,15 @@ export default class TableStore {
     }
     return this.screenHeight;
   }
+
+  @action
+  startScroll() {
+    this.scrolling = true;
+    this.stopScroll();
+  }
+
+  stopScroll = debounce(action(() => {
+    this.scrolling = false;
+  }), 150);
 
 }
