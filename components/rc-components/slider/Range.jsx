@@ -115,6 +115,9 @@ class Range extends Component {
   onEnd = () => {
     this.removeDocumentEvents();
     this.props.onAfterChange(this.getValue());
+    this.setState({
+      handle:undefined,
+    })
   }
 
   onMove(e, position) {

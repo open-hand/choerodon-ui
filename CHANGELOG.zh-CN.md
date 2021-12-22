@@ -33,6 +33,7 @@ timeline: true
 - 💄 `<pro>Tree`: 支持通过配置 draggable.icon 属性展示拖拽图标。
 - 💄 `<pro>Lov`: 优化选中列表的排序。
 - 💄 `<pro>Table`: 优化虚拟滚动并支持树形虚拟滚动。
+- 💄 `<pro>TriggerField`: 优化 TriggerField 相关组件的校验信息与下拉内容之间的展示逻辑。
 - 🐞 `<pro>Table`: 修复 style 只设置了 maxHeight 时虚拟滚动首次渲染会全量渲染的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。
@@ -44,6 +45,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: 修复已输入长度信息显示。
 - 🐞 `<pro>Table`: 修复过滤条内布尔变量渲染值错误。
 - 🐞 `<pro>Lov`: 修复 button 模式下关闭弹窗后按钮没有聚焦的问题。
+- 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。
 
 ## 1.5.0
 

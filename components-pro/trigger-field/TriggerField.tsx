@@ -7,7 +7,9 @@ import { PropTypes as MobxPropTypes } from 'mobx-react';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
 import { getIf } from '../data-set/utils';
+import { ShowValidation } from '../form/enum';
 import { TextField, TextFieldProps } from '../text-field/TextField';
+import { hide } from '../tooltip/singleton';
 import autobind from '../_util/autobind';
 import Icon from '../icon';
 import TaskRunner from '../_util/TaskRunner';
@@ -238,6 +240,9 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
 
   @autobind
   renderPopupContent() {
+    if( !this.hasFloatLabel && this.showValidation === ShowValidation.tooltip){
+      hide();
+    }
     const { popupContent } = this.props;
     if (popupContent === undefined) {
       return this.getPopupContent();

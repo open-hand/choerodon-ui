@@ -33,6 +33,7 @@ timeline: true
 - 💄 `<pro>Tree`: Support the display of drag icon through `draggable.icon` property control.
 - 💄 `<pro>Lov`: Optimize sorting of selected list.
 - 💄 `<pro>Table`: Optimize virtual scrolling and support tree-shaped virtual scrolling.
+- 💄 `<pro>TriggerField`: Optimize the presentation logic between the verification information of `TriggerField` related components and the drop-down content.
 - 🐞 `<pro>Table`: Fix the problem that the virtual scroll will be fully rendered for the first time when only `maxHeight` is set in style.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.
@@ -44,6 +45,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed input length information display.
 - 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
 - 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
+- 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
 
 ## 1.5.0
 
