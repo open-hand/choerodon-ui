@@ -384,7 +384,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     return renderer;
   }, [columnCommand, cellEditorInCell, renderEditor, renderCommand, renderer, field, aggregation]);
   const prefixStyle = useMemo(() => {
-    if (!aggregation) {
+    if (!aggregation || !tableStore.hasAggregationColumn) {
       if (height !== undefined && rows === 0) {
         return {
           height: pxToRem(height),

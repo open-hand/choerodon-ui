@@ -893,7 +893,6 @@ export default class Table extends DataSetComponent<TableProps> {
     autoMaxWidth: true,
     autoFootHeight: false,
     clientExportQuantity: 100,
-    aggregation: false,
     showSelectionCachedButton: true,
     showHeader: true,
   };

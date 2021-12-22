@@ -74,6 +74,7 @@ export interface TableRowProps extends ElementProps {
   columnGroups: ColumnGroups;
   record: Record;
   index: number;
+  virtualIndex?: number;
   headerGroupIndex?: number;
   expandIconColumnIndex?: number;
   snapshot?: DraggableStateSnapshot;
@@ -82,7 +83,7 @@ export interface TableRowProps extends ElementProps {
 }
 
 const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
-  const { record, hidden, index, headerGroupIndex, provided, snapshot, className, lock, columnGroups, children, groupPath, expandIconColumnIndex } = props;
+  const { record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, className, lock, columnGroups, children, groupPath, expandIconColumnIndex } = props;
   const context = useContext(TableContext);
   const {
     tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow,
@@ -131,9 +132,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     return !!expandedRowRenderer || (isTree && (!!record.children || (canTreeLoadData && !isLoaded)));
   })();
 
-  const setRowHeight = useCallback(action((key: Key, height: number | undefined) => {
+  const setRowHeight = useCallback(action((key: Key, height: number) => {
     if (isStickySupport()) {
-      if (tableStore.actualRowHeight === undefined) {
+      if (tableStore.actualRowHeight === undefined || (tableStore.isFixedRowHeight && (tableStore.actualRowHeight - height) > 1)) {
         tableStore.actualRowHeight = height;
       }
     } else {
@@ -395,7 +396,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       provided={rest.key === DRAG_KEY ? provided : undefined}
       inView={needIntersection ? inView : undefined}
       groupPath={groupPath}
-      rowIndex={index}
+      rowIndex={virtualIndex === undefined ? index : virtualIndex}
       {...rest}
     >
       {hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined}
