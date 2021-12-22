@@ -3,7 +3,7 @@ import React, {
   CSSProperties,
   FunctionComponent,
   isValidElement,
-  ReactElement,
+  ReactElement, ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -45,10 +45,11 @@ export interface TableHeaderCellProps extends ElementProps {
   rowIndex?: number;
   getHeaderNode?: () => HTMLTableSectionElement | null;
   scope?: string;
+  children?: ReactNode;
 }
 
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
-  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope } = props;
+  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onColumnResize = noop } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -386,7 +387,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
   };
-
   if (helpIcon) {
     if (cellStyle.textAlign === ColumnAlign.right) {
       childNodes.unshift(helpIcon);
@@ -404,6 +404,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     } else {
       childNodes.push(sortIcon);
     }
+  }
+  if (expandIcon) {
+    childNodes.unshift(
+      <span key="prefix" className={`${prefixCls}-header-expand-icon`}>
+        {expandIcon}
+      </span>,
+    );
   }
   if (headerRowHeight !== 'auto' && rowHeight !== 'auto') {
     const height: number = Number(cellStyle.height) || ((headerRowHeight === undefined ? rowHeight : headerRowHeight) * (rowSpan || 1));

@@ -50,6 +50,9 @@ subtitle: 表格
 | expandIcon | 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | expandIconColumnIndex | 展开图标所在列索引 | number |  |
 | expandIconAsCell | 展开图标是否单独单元格展示 | boolean | （非Tree mode）true \| false |
+| bodyExpandable | 表格体是否可展开 | boolean | true |
+| defaultBodyExpanded | 默认表格体是否展开 | boolean | true |
+| bodyExpanded | 表格体是否展开 | boolean |  |
 | indentSize | 展示树形数据时，每层缩进的宽度 | number | 15 |
 | filter | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean |  |
 | mode | 表格展示的模式, tree 需要配合 dataSet 的`idField`和`parentField`来展示，可选值: `list` `tree` | string | 'list' |
@@ -69,6 +72,7 @@ subtitle: 表格
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |
 | pristine | 显示原始值 | boolean | false |
 | onExpand | 点击展开图标时触发 | (expanded, record) => void |  |
+| onBodyExpand | 点击表格体展开图标时触发 | (expanded) => void |  |
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | [globalConfig.tableVirtual(/components/configure#API) |
 | virtualCell | 虚拟单元格 | boolean | [globalConfig.tableVirtualCell](/components/configure#API) |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |

@@ -15,6 +15,7 @@ import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
+import noop from 'lodash/noop';
 import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
 import isFragment from '../_util/isFragment';
@@ -66,6 +67,8 @@ export const EXPAND_KEY = '__expand-column__'; // TODO:Symbol
 export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
 
 export const AGGREGATION_EXPAND_CELL_KEY = '__aggregation-expand-cell__'; // TODO:Symbol
+
+export const BODY_EXPANDED = '__body_expanded__'; // TODO:Symbol
 
 export type HeaderText = { name: string; label: string };
 
@@ -740,6 +743,9 @@ export default class TableStore {
 
   @computed
   get height(): number | undefined {
+    if (!this.isBodyExpanded) {
+      return undefined;
+    }
     const { computedHeight } = this;
     const maxHeight = toPx(this.styleMaxHeight, this.getRelationSize);
     const minHeight = toPx(this.styleMinHeight, this.getRelationSize);
@@ -763,7 +769,13 @@ export default class TableStore {
   }
 
   get bodyHeight(): number {
-    return this.propVirtual ? this.virtualHeight : this.calcBodyHeight;
+    if (this.propVirtual) {
+      const { virtualHeight } = this;
+      if (virtualHeight > 0) {
+        return virtualHeight;
+      }
+    }
+    return this.calcBodyHeight;
   }
 
   get stickyLeft(): boolean {
@@ -1793,6 +1805,29 @@ export default class TableStore {
     const expandedKeys: ObservableMap<Key, boolean> = record.getState(AGGREGATION_EXPAND_CELL_KEY) || observable.map();
     expandedKeys.set(key, expanded);
     record.setState(AGGREGATION_EXPAND_CELL_KEY, expandedKeys);
+  }
+
+  get isBodyExpanded(): boolean {
+    if (!this.props.bodyExpandable) {
+      return true;
+    }
+    const { bodyExpanded } = this.props;
+    if (bodyExpanded !== undefined) {
+      return bodyExpanded;
+    }
+    const isBodyExpanded = this.dataSet.getState(BODY_EXPANDED);
+    if (isBodyExpanded !== undefined) {
+      return isBodyExpanded;
+    }
+    return defaultTo(this.props.defaultBodyExpanded, true);
+  }
+
+  setBodyExpanded(isBodyExpanded: boolean) {
+    const { bodyExpanded, onBodyExpand = noop } = this.props;
+    if (bodyExpanded === undefined) {
+      this.dataSet.setState(BODY_EXPANDED, isBodyExpanded);
+    }
+    onBodyExpand(isBodyExpanded);
   }
 
   isRowExpanded(record: Record): boolean {

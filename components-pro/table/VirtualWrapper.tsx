@@ -19,7 +19,12 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
     if (virtualHeight !== height) {
       const { lastScrollTop, node: { tableBodyWrap } } = tableStore;
       if (lastScrollTop && tableBodyWrap) {
-        tableBodyWrap.scrollTop = Math.max(0, virtualHeight - height + lastScrollTop);
+        const scrollTop = Math.max(0, virtualHeight - height + lastScrollTop);
+        if (scrollTop === tableBodyWrap.scrollTop) {
+          tableStore.setLastScrollTop(scrollTop);
+        } else {
+          tableBodyWrap.scrollTop = scrollTop;
+        }
       }
       setHeight(virtualHeight);
     }
