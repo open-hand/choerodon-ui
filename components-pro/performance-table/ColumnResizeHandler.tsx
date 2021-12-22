@@ -8,6 +8,7 @@ import { defaultClassPrefix, getUnhandledProps } from './utils';
 import { addEvent, removeEvent } from './utils/domFns';
 import TableContext from './TableContext';
 import { RESIZE_MIN_WIDTH } from './constants';
+import omit from 'lodash/omit';
 
 export type FixedType = boolean | 'left' | 'right';
 export interface Client {
@@ -28,6 +29,8 @@ export interface ColumnResizeHandlerProps {
   onColumnResizeStart?: (client: Client) => void;
   onColumnResizeEnd?: (columnWidth?: number, cursorDelta?: number) => void;
   onColumnResizeMove?: (columnWidth?: number, columnLeft?: number, columnFixed?: FixedType) => void;
+  onMouseEnterHandler?: (left: string) => void;
+  onMouseLeaveHandler?: () => void;
 }
 
 const propTypes = {
@@ -42,6 +45,8 @@ const propTypes = {
   onColumnResizeStart: PropTypes.func,
   onColumnResizeEnd: PropTypes.func,
   onColumnResizeMove: PropTypes.func,
+  onMouseEnterHandler: PropTypes.func,
+  onMouseLeaveHandler: PropTypes.func,
 };
 
 class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
@@ -183,6 +188,16 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     this.props.onColumnResizeStart?.(client);
   };
 
+  handleShowMouseArea = (e) => {
+    const { onMouseEnterHandler } = this.props;
+    if(onMouseEnterHandler) onMouseEnterHandler(getComputedStyle(e.target).left);
+  }
+
+  handleHideMouseArea = () => {
+    const { onMouseLeaveHandler } = this.props;
+    if(onMouseLeaveHandler) onMouseLeaveHandler();
+  }
+
   getMouseMoveTracker() {
     return (
       this.mouseMoveTracker ||
@@ -212,7 +227,7 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     };
 
     const classes = classNames(classPrefix, className);
-    const unhandled = getUnhandledProps(propTypes, rest);
+    const unhandled = omit(getUnhandledProps(propTypes, rest), ['onMouseEnterHandler', 'onMouseLeaveHandler']);
 
     return (
       <div
@@ -222,6 +237,8 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
         style={styles}
         onMouseDown={this.onColumnResizeMouseDown}
         onTouchEnd={this.handleDragStop}
+        onMouseEnter={this.handleShowMouseArea}
+        onMouseLeave={this.handleHideMouseArea}
         role="button"
         tabIndex={-1}
       />

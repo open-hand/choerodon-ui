@@ -30,9 +30,10 @@ timeline: true
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
 - 💄 `<pro>TextArea`: Optimize the `autoSize` initialization style.
 - 💄 `<pro>TextField`: Optimize the style when setting the `clearButton` `showLengthInfo` `suffix` properties at the same time.
-- 💄 `<pro>Tree`: Support the display of drag icon through `draggable.icon` property control.
+- 💄 `<pro>Tree`: Extend draggable supports object type and controls the display of drag-and-drop icon.
 - 💄 `<pro>Lov`: Optimize sorting of selected list.
 - 💄 `<pro>Table`: Optimize virtual scrolling and support tree-shaped virtual scrolling.
+- 💄 `<pro>Table`: Optimize column width drag-and-drop interaction effect.
 - 🐞 `<pro>Table`: Fix the problem that the virtual scroll will be fully rendered for the first time when only `maxHeight` is set in style.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.

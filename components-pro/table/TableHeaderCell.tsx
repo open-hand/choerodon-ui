@@ -247,6 +247,32 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     }
   }, [currentColumnGroup, setResizeGroup, autoMaxWidth, delayResizeStart, resizeStart]);
 
+  const showSplitLine = useCallback((e) => {
+    const { columnResizing } = tableStore;
+    if(columnResizing) return;
+    setSplitLineHidden(false);
+    const { node: { element } } = tableStore;
+    const { left } = element.getBoundingClientRect();
+    const { left: resizerLeft, width } = e.target.getBoundingClientRect();
+    const isLeftResizer = e.target.getAttribute('class').includes('-resizer-left');
+    globalRef.current.bodyLeft = border ? left + 1 : left;
+    setSplitLinePosition(resizerLeft + (isLeftResizer ? 0 : width));
+  }, [setSplitLineHidden, setSplitLinePosition]);
+
+  const delayShowSplitLine = useCallback(debounce(showSplitLine, 300), []);
+
+  const handleShowSplitLine = useCallback((e) => {
+    e.persist();
+    delayShowSplitLine(e);
+  }, []);
+
+  const handleHideSplitLine = useCallback(() => {
+    delayShowSplitLine.cancel();
+    const { columnResizing } = tableStore;
+    if(columnResizing) return;
+    setSplitLineHidden(true);
+  }, [delayShowSplitLine]);
+
   const resizeDoubleClick = useCallback(action((): void => {
     const { resizeColumnGroup } = globalRef.current;
     if (resizeColumnGroup) {
@@ -290,6 +316,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         onDoubleClick={autoMaxWidth ? handleLeftDoubleClick : undefined}
         onMouseDown={handleLeftResize}
         onMouseUp={autoMaxWidth ? handleStopResize : undefined}
+        onMouseEnter={handleShowSplitLine}
+        onMouseLeave={handleHideSplitLine}
       />
     );
     const next = currentColumnGroup && currentColumnGroup.column.resizable && (
@@ -299,6 +327,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         onDoubleClick={autoMaxWidth ? handleRightDoubleClick : undefined}
         onMouseDown={handleRightResize}
         onMouseUp={autoMaxWidth ? handleStopResize : undefined}
+        onMouseEnter={handleShowSplitLine}
+        onMouseLeave={handleHideSplitLine}
       />
     );
 

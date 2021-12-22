@@ -27,6 +27,8 @@ export interface HeaderCellProps extends CellProps {
   flexGrow?: number;
   fixed?: boolean | 'left' | 'right';
   dataIndex?: string;
+  onMouseEnterHandler?: (left: string, fixed) => void;
+  onMouseLeaveHandler?: () => void;
 }
 
 interface HeaderCelltate {
@@ -50,7 +52,9 @@ const propTypes = {
   onSortColumn: PropTypes.func,
   flexGrow: PropTypes.number,
   fixed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right'])]),
-  children: PropTypes.node
+  children: PropTypes.node,
+  onMouseEnterHandler: PropTypes.func,
+  onMouseLeaveHandler: PropTypes.func,
 };
 
 class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
@@ -104,6 +108,16 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     }
   };
 
+  handleShowMouseArea = (left) => {
+    const { onMouseEnterHandler, fixed } = this.props;
+    if(onMouseEnterHandler) onMouseEnterHandler(left, fixed);
+  };
+
+  handleHideMouseArea = () => {
+    const { onMouseLeaveHandler } = this.props;
+    if(onMouseLeaveHandler) onMouseLeaveHandler();
+  };
+
   // @ts-ignore
   addPrefix = (name: string) => prefix(this.props.classPrefix)(name);
 
@@ -133,6 +147,8 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
         onColumnResizeMove={onColumnResizeMove}
         onColumnResizeStart={this.handleColumnResizeStart}
         onColumnResizeEnd={this.handleColumnResizeEnd}
+        onMouseEnterHandler={this.handleShowMouseArea}
+        onMouseLeaveHandler={this.handleHideMouseArea}
       />
     );
   }

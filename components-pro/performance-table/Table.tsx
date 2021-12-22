@@ -1411,6 +1411,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               onColumnResizeEnd: this.handleColumnResizeEnd,
               onColumnResizeStart: this.handleColumnResizeStart,
               onColumnResizeMove: this.handleColumnResizeMove,
+              onMouseEnterHandler: this.handleShowMouseArea,
+              onMouseLeaveHandler: this.handleHideMouseArea,
             });
           }
 
@@ -1531,6 +1533,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.setState({ sortType });
     }
     this.props.onSortColumn?.(dataKey, sortType);
+  };
+
+  handleShowMouseArea = (left, fixed) => {
+    const mouseAreaLeft = parseFloat(left) + (!fixed ? this.scrollX : 0) + 1;
+    addStyle(this.mouseAreaRef.current, { display: 'block', left: `${mouseAreaLeft}px` });
+  };
+
+  handleHideMouseArea = () => {
+    addStyle(this.mouseAreaRef.current, { display: 'none' });
   };
 
   handleColumnResizeEnd = (
