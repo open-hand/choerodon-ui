@@ -290,6 +290,7 @@ const App = () => {
         ref={group1Ref}
         style={{ height: 500 }}
         selectionMode="none"
+        bodyExpandable
       />
       <Table
         customizable
@@ -305,6 +306,8 @@ const App = () => {
         onScrollLeft={handleGroup2ScrollLeft}
         ref={group2Ref}
         selectionMode="none"
+        bodyExpandable
+        defaultBodyExpanded={false}
       />
     </>
   );

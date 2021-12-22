@@ -75,17 +75,18 @@ export interface TableRowProps extends ElementProps {
   record: Record;
   index: number;
   headerGroupIndex?: number;
+  expandIconColumnIndex?: number;
   snapshot?: DraggableStateSnapshot;
   provided?: DraggableProvided;
   groupPath?: [Group, boolean][];
 }
 
 const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
-  const { record, hidden, index, headerGroupIndex, provided, snapshot, className, lock, columnGroups, children, groupPath } = props;
+  const { record, hidden, index, headerGroupIndex, provided, snapshot, className, lock, columnGroups, children, groupPath, expandIconColumnIndex } = props;
   const context = useContext(TableContext);
   const {
     tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow,
-    expandIconAsCell, expandedRowRenderer, expandRowByClick, isTree, canTreeLoadData,
+    expandIconAsCell, expandedRowRenderer, isTree, canTreeLoadData,
   } = context;
   const {
     highLightRow,
@@ -349,7 +350,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
         );
       }
       if (isValidElement<ExpandedRowProps>(children)) {
-        expandRows.push(cloneElement(children, { isExpanded, key: `${rowKey}-expanded-rows` }));
+        expandRows.push(cloneElement(children, { parentExpanded: isExpanded, key: `${rowKey}-expanded-rows` }));
       }
       return expandRows;
     }
@@ -381,13 +382,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     );
   };
 
-  const hasExpandIcon = (columnIndex: number) => {
-    return (
-      !expandRowByClick &&
-      (expandedRowRenderer || isTree) &&
-      (lock === ColumnLock.right ? columnIndex + columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : columnIndex) === tableStore.expandIconColumnIndex
-    );
-  };
+  const hasExpandIcon = (columnIndex: number) => (
+    expandIconColumnIndex !== undefined && expandIconColumnIndex > -1 && (columnIndex + expandIconColumnIndex) === tableStore.expandIconColumnIndex
+  );
 
   const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => (
     <TableCell
