@@ -103,6 +103,7 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
       {renderExpandedRows}
     </ExpandedRow>
   );
+  const { count } = index;
   const row = generateRow({ ...props, children });
   if (tableStore.rowDraggable) {
     const { dragColumnAlign } = tableStore;
@@ -115,7 +116,7 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
       return (
         <Draggable
           draggableId={String(key)}
-          index={index.count}
+          index={count}
           key={key}
         >
           {
