@@ -34,14 +34,14 @@ export default class Group {
 
   getState(key: string): any {
     const { state } = this;
-    if (state) {
-      return state.get(key);
-    }
+    return state && state.get(key);
   }
 
   @action
   setState(key: string, value: any) {
-    const state = getIf<Group, ObservableMap>(this, 'state', () => observable.map());
-    return state.set(key, value);
+    if (value !== undefined || this.state) {
+      const state = getIf<Group, ObservableMap>(this, 'state', () => observable.map());
+      return state.set(key, value);
+    }
   }
 }

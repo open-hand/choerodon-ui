@@ -97,7 +97,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     node,
   } = tableStore;
   const { id, key: rowKey } = record;
-  const needIntersection = !hidden && tableStore.virtualCell && !tableStore.virtual;
+  const needIntersection = !hidden && tableStore.virtualCell;
   const { ref: intersectionRef, inView, entry } = useInView({
     root: needIntersection && tableStore.overflowY ? node.tableBodyWrap || node.element : null,
     rootMargin: '100px',
