@@ -159,7 +159,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
       const text = renderer({ text: group.value, rowGroup: group, dataSet, record: group.totalRecords[0] });
       return (
-        <div className={`${cellPrefix}-inner`}>
+        <div className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
           {text}
         </div>
       );

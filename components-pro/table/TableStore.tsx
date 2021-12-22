@@ -935,7 +935,7 @@ export default class TableStore {
       return 0;
     }
     const { virtualEstimatedRowHeight, lastScrollTop, virtualEstimatedRows, virtualHeight } = this;
-    if (this.isFixedRowHeight || lastScrollTop < (virtualHeight - height) / 2) {
+    if ((this.isFixedRowHeight && !this.hasTableRowGroup) || lastScrollTop < (virtualHeight - height) / 2) {
       return Math.max(
         0,
         Math.min(
@@ -963,7 +963,7 @@ export default class TableStore {
       return virtualEstimatedRows;
     }
     const { virtualEstimatedRowHeight, lastScrollTop, virtualHeight } = this;
-    if (this.isFixedRowHeight || lastScrollTop < (virtualHeight - height) / 2) {
+    if ((this.isFixedRowHeight && !this.hasTableRowGroup) || lastScrollTop < (virtualHeight - height) / 2) {
       const { virtualVisibleStartIndex } = this;
       const numVisibleItems = Math.ceil(
         height / virtualEstimatedRowHeight,
@@ -1310,6 +1310,15 @@ export default class TableStore {
   get headerTableGroups(): TableGroup[] {
     const { groups } = this;
     return groups ? groups.filter(({ type }) => type === GroupType.header) : [];
+  }
+
+  @computed
+  get hasTableRowGroup(): boolean {
+    const { groups, cachedData } = this;
+    if(cachedData.length) {
+      return true
+    }
+    return groups ? groups.some(({ type }) => type === GroupType.row) : false;
   }
 
   @autobind
@@ -1755,6 +1764,7 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
+    this.actualRowHeight = undefined;
     const { showCachedSelection } = props;
     if (showCachedSelection !== undefined) {
       this.showCachedSelection = showCachedSelection;

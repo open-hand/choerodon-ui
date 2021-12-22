@@ -58,14 +58,17 @@ export interface GenerateRowProps extends GenerateRowsProps {
   groupPath?: [Group, boolean][];
   parentExpanded?: boolean | undefined;
   index: { count: number };
+  virtualIndex: { count: number };
   headerGroup?: { count: number };
   children?: ReactNode;
 }
 
 function generateRow(props: GenerateRowProps): ReactElement {
-  const { record, parentExpanded, lock, columnGroups, groupPath, index, expandIconColumnIndex, children, headerGroup } = props;
+  const { record, parentExpanded, lock, columnGroups, groupPath, index, virtualIndex, expandIconColumnIndex, children, headerGroup } = props;
+  const { count: virtualCount } = virtualIndex;
   const { count } = index;
   index.count++;
+  virtualIndex.count++;
   const headerGroupIndex = headerGroup && headerGroup.count;
   if (headerGroup) {
     headerGroup.count++;
@@ -78,6 +81,7 @@ function generateRow(props: GenerateRowProps): ReactElement {
       columnGroups={columnGroups}
       record={record}
       index={count}
+      virtualIndex={virtualCount}
       headerGroupIndex={headerGroupIndex}
       expandIconColumnIndex={expandIconColumnIndex}
       groupPath={groupPath}
@@ -156,11 +160,13 @@ function generateRowAndChildRows(rows: ReactNode[], props: GenerateRowProps): Re
 function generateCachedRows(
   records: Record[],
   props: GenerateSimpleRowsProps,
+  virtualIndex: { count: number },
   handleClearCache: () => void,
 ): ReactNode[] {
   if (records.length) {
     const { columnGroups, lock } = props;
     const index = { count: 0 };
+    virtualIndex.count++;
     const rows: ReactNode[] = [
       [
         <TableRowGroup key="$$group-cached-rows" columnGroups={columnGroups} lock={lock}>
@@ -180,6 +186,7 @@ function generateCachedRows(
       ...props,
       record,
       index,
+      virtualIndex,
       parentExpanded: true,
     })));
     return rows;
@@ -191,12 +198,14 @@ function generateNormalRows(
   rows: ReactNode[],
   records: Record[],
   props: GenerateRowsProps,
+  virtualIndex: { count: number },
   index = { count: 0 },
 ): ReactNode[] {
   records.forEach((record) => generateRowAndChildRows(rows, {
     ...props,
     record,
     index,
+    virtualIndex,
     parentExpanded: true,
   }));
   return rows;
@@ -206,6 +215,7 @@ function generateGroupRows(
   rows: ReactNode[],
   groups: Group[],
   props: GenerateRowsProps,
+  virtualIndex: { count: number },
   groupPath: [Group, boolean][] = [],
   index = { count: 0 },
   isParentLast?: boolean,
@@ -223,6 +233,7 @@ function generateGroupRows(
       const { renderer = defaultAggregationRenderer } = columnProps || {};
       const groupName = tableGroup.name;
       const header = getHeader({ ...columnProps, name: groupName, dataSet, group });
+      virtualIndex.count++;
       rows.push(
         [
           <TableRowGroup key={`$group-${group.value}`} columnGroups={columnGroups} lock={lock}>
@@ -242,6 +253,7 @@ function generateGroupRows(
             ...props,
             record,
             index,
+            virtualIndex,
             headerGroup: $index,
             groupPath: path,
             parentExpanded: true,
@@ -250,13 +262,14 @@ function generateGroupRows(
       });
     } else {
       if (subGroups && subGroups.length) {
-        generateGroupRows(rows, subGroups, props, path, index, isLast);
+        generateGroupRows(rows, subGroups, props, virtualIndex, path, index, isLast);
       }
       records.forEach((record) => {
         generateRowAndChildRows(rows, {
           ...props,
           record,
           index,
+          virtualIndex,
           groupPath: path,
           parentExpanded: true,
         });
@@ -270,24 +283,28 @@ function generateRows(
   records: Record[],
   groups: Group[],
   props: GenerateRowsProps,
+  virtualIndex: { count: number },
   hasCached: boolean,
 ): ReactNode[] {
   const rows: ReactNode[] = [];
-  if (groups.length) {
-    generateGroupRows(rows, groups, props);
-  } else if (records.length) {
-    generateNormalRows(rows, records, props);
-  }
-  if (hasCached && rows.length) {
-    const { columnGroups, lock } = props;
-    rows.unshift(
-      [
-        <TableRowGroup key="$$group-rows" columnGroups={columnGroups} lock={lock}>
-          {$l('Table', 'current_page_records')}
-        </TableRowGroup>,
-        true,
-      ],
-    );
+  if (groups.length || records.length) {
+    if (hasCached) {
+      const { columnGroups, lock } = props;
+      virtualIndex.count++;
+      rows.push(
+        [
+          <TableRowGroup key="$$group-rows" columnGroups={columnGroups} lock={lock}>
+            {$l('Table', 'current_page_records')}
+          </TableRowGroup>,
+          true,
+        ],
+      );
+    }
+    if (groups.length) {
+      generateGroupRows(rows, groups, props, virtualIndex);
+    } else if (records.length) {
+      generateNormalRows(rows, records, props, virtualIndex);
+    }
   }
   return rows;
 }
@@ -345,11 +362,12 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     );
   };
   const hasCache = cachedData.length > 0;
+  const virtualIndex = { count: 0 };
   const cachedRows: ReactNode[] = useComputed(() => (
-    generateCachedRows(cachedData, { tableStore, columnGroups, lock }, handleClearCache)
+    generateCachedRows(cachedData, { tableStore, columnGroups, lock }, virtualIndex, handleClearCache)
   ), [cachedData, tableStore, columnGroups, handleClearCache, lock]);
   const rows: ReactNode[] = useComputed(() => (
-    generateRows(currentData, groupedData, { tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender }, hasCache)
+    generateRows(currentData, groupedData, { tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender }, virtualIndex, hasCache)
   ), [currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, rowDragRender]);
   const totalRows = useMemo(() => [...cachedRows, ...rows], [cachedRows, rows]);
   const renderGroup = useCallback((startIndex) => (
@@ -422,6 +440,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
               columnGroups={leafColumnsBody}
               record={record}
               index={id}
+              className="dragging-row"
             />
           );
         }
