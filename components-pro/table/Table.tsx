@@ -11,7 +11,7 @@ import isNil from 'lodash/isNil';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, runInAction, toJS, observable } from 'mobx';
+import { action, observable, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -46,6 +46,7 @@ import { TableContextProvider } from './TableContext';
 import TableWrapper from './TableWrapper';
 import Profiler from './Profiler';
 import TableTBody from './TableTBody';
+import ExpandableTableTBody from './ExpandableTableTBody';
 import TableFooter from './TableFooter';
 import {
   ColumnLock,
@@ -687,8 +688,30 @@ export interface TableProps extends DataSetComponentProps {
    * 分组
    */
   groups?: TableGroup[];
+  /**
+   * 横向滚动事件
+   */
   onScrollLeft?: (left: number) => void;
+  /**
+   * 纵向滚动事件
+   */
   onScrollTop?: (top: number) => void;
+  /**
+   * 表格体是否可展开
+   */
+  bodyExpandable?: boolean;
+  /**
+   * 默认表格体是否展开
+   */
+  defaultBodyExpanded?: boolean;
+  /**
+   * 表格体是否展开
+   */
+  bodyExpanded?: boolean;
+  /**
+   * 表格体展开变更事件
+   */
+  onBodyExpand?: (expanded: boolean) => void;
 }
 
 @observer
@@ -870,7 +893,6 @@ export default class Table extends DataSetComponent<TableProps> {
     autoMaxWidth: true,
     autoFootHeight: false,
     clientExportQuantity: 100,
-    aggregation: false,
     showSelectionCachedButton: true,
     showHeader: true,
   };
@@ -1437,6 +1459,10 @@ export default class Table extends DataSetComponent<TableProps> {
       'groups',
       'onScrollLeft',
       'onScrollTop',
+      'bodyExpandable',
+      'defaultBodyExpanded',
+      'bodyExpanded',
+      'onBodyExpanded',
     ]);
   }
 
@@ -2012,8 +2038,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableBody(columnGroups: ColumnGroups, lock?: ColumnLock): ReactNode {
-    const { tableStore: { rowDraggable, performanceEnabled } } = this;
-    const body = <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
+    const { tableStore: { rowDraggable, performanceEnabled }, props: { bodyExpandable } } = this;
+    const body = bodyExpandable ? <ExpandableTableTBody  key="tbody" lock={lock} columnGroups={columnGroups} /> : <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
     const bodyWithProfiler = performanceEnabled ? <Profiler>{body}</Profiler> : body;
     return rowDraggable ? (
       <DragDropContext onDragEnd={this.handleDragEnd}>
@@ -2187,7 +2213,7 @@ export default class Table extends DataSetComponent<TableProps> {
           </div>)
         }
       </Animate>
-    )
+    );
   }
 
   @autobind

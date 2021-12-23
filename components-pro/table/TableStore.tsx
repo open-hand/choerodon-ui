@@ -15,6 +15,7 @@ import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
+import noop from 'lodash/noop';
 import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
 import isFragment from '../_util/isFragment';
@@ -54,6 +55,7 @@ import { ModalProps } from '../modal/Modal';
 import { treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
 import { normalizeGroups } from '../data-set/utils';
+import { ROW_GROUP_HEIGHT } from './TableRowGroup';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -67,20 +69,15 @@ export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
 
 export const AGGREGATION_EXPAND_CELL_KEY = '__aggregation-expand-cell__'; // TODO:Symbol
 
-export type HeaderText = { name: string; label: string };
+export const BODY_EXPANDED = '__body_expanded__'; // TODO:Symbol
 
-export type RowMetaData = {
-  offset: number;
-  height: number | undefined;
-}
+const VIRTUAL_OVER_SCAN_COUNT = 2;
+
+export type HeaderText = { name: string; label: string };
 
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
 }
-
-// function hasProperty<T>(target: T, property: string): (keyof T) is undefined {
-//   return property in target;
-// }
 
 export function getIdList(store: TableStore) {
   const { mouseBatchChooseStartId, mouseBatchChooseEndId, node: { element }, prefixCls } = store;
@@ -740,6 +737,9 @@ export default class TableStore {
 
   @computed
   get height(): number | undefined {
+    if (!this.isBodyExpanded) {
+      return undefined;
+    }
     const { computedHeight } = this;
     const maxHeight = toPx(this.styleMaxHeight, this.getRelationSize);
     const minHeight = toPx(this.styleMinHeight, this.getRelationSize);
@@ -763,7 +763,13 @@ export default class TableStore {
   }
 
   get bodyHeight(): number {
-    return this.propVirtual ? this.virtualHeight : this.calcBodyHeight;
+    if (this.propVirtual) {
+      const { virtualHeight } = this;
+      if (virtualHeight > 0) {
+        return virtualHeight;
+      }
+    }
+    return this.calcBodyHeight;
   }
 
   get stickyLeft(): boolean {
@@ -887,6 +893,8 @@ export default class TableStore {
 
   @observable actualRows: number | undefined;
 
+  @observable actualGroupRows: number;
+
   @observable actualRowHeight: number | undefined;
 
   @observable scrolling: boolean | undefined;
@@ -910,11 +918,9 @@ export default class TableStore {
   }
 
   get virtualHeight(): number {
-    const { virtualEstimatedRowHeight, virtualEstimatedRows } = this;
-    return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight);
+    const { virtualEstimatedRowHeight, virtualEstimatedRows, actualGroupRows } = this;
+    return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight - actualGroupRows * (virtualEstimatedRowHeight - ROW_GROUP_HEIGHT));
   }
-
-  virtualOverScanCount = 2;
 
   @computed
   get virtualVisibleStartIndex(): number {
@@ -973,13 +979,13 @@ export default class TableStore {
   }
 
   get virtualStartIndex(): number {
-    const { virtualOverScanCount, virtualVisibleStartIndex } = this;
-    return Math.max(0, virtualVisibleStartIndex - virtualOverScanCount);
+    const { virtualVisibleStartIndex } = this;
+    return Math.max(0, virtualVisibleStartIndex - VIRTUAL_OVER_SCAN_COUNT);
   }
 
   get virtualEndIndex(): number {
-    const { virtualOverScanCount, virtualVisibleEndIndex, virtualEstimatedRows } = this;
-    return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + virtualOverScanCount);
+    const { virtualVisibleEndIndex, virtualEstimatedRows } = this;
+    return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + VIRTUAL_OVER_SCAN_COUNT);
   }
 
   get virtualTop(): number {
@@ -1298,6 +1304,15 @@ export default class TableStore {
   get headerTableGroups(): TableGroup[] {
     const { groups } = this;
     return groups ? groups.filter(({ type }) => type === GroupType.header) : [];
+  }
+
+  @computed
+  get hasTableRowGroup(): boolean {
+    const { groups, cachedData } = this;
+    if (cachedData.length) {
+      return true;
+    }
+    return groups ? groups.some(({ type }) => type === GroupType.row) : false;
   }
 
   @autobind
@@ -1674,6 +1689,7 @@ export default class TableStore {
       this.headerHeight = 0;
       this.footerHeight = 0;
       this.lastScrollTop = 0;
+      this.actualGroupRows = 0;
       this.customizedActiveKey = ['columns'];
       this.leftOriginalColumns = [];
       this.originalColumns = [];
@@ -1743,6 +1759,7 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
+    this.actualRowHeight = undefined;
     const { showCachedSelection } = props;
     if (showCachedSelection !== undefined) {
       this.showCachedSelection = showCachedSelection;
@@ -1793,6 +1810,29 @@ export default class TableStore {
     const expandedKeys: ObservableMap<Key, boolean> = record.getState(AGGREGATION_EXPAND_CELL_KEY) || observable.map();
     expandedKeys.set(key, expanded);
     record.setState(AGGREGATION_EXPAND_CELL_KEY, expandedKeys);
+  }
+
+  get isBodyExpanded(): boolean {
+    if (!this.props.bodyExpandable) {
+      return true;
+    }
+    const { bodyExpanded } = this.props;
+    if (bodyExpanded !== undefined) {
+      return bodyExpanded;
+    }
+    const isBodyExpanded = this.dataSet.getState(BODY_EXPANDED);
+    if (isBodyExpanded !== undefined) {
+      return isBodyExpanded;
+    }
+    return defaultTo(this.props.defaultBodyExpanded, true);
+  }
+
+  setBodyExpanded(isBodyExpanded: boolean) {
+    const { bodyExpanded, onBodyExpand = noop } = this.props;
+    if (bodyExpanded === undefined) {
+      this.dataSet.setState(BODY_EXPANDED, isBodyExpanded);
+    }
+    onBodyExpand(isBodyExpanded);
   }
 
   isRowExpanded(record: Record): boolean {

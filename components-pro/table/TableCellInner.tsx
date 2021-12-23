@@ -93,12 +93,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const { name, key, lock, renderer, command, align } = column;
   const columnKey = getColumnKey(column);
   const height = record.getState(`__column_resize_height_${name}`);
-  const { currentEditRecord, isTree } = tableStore;
+  const { currentEditRecord } = tableStore;
   const field = dataSet.getField(name);
   const fieldDisabled = disabled || (field && field.get('disabled', record));
   const innerRef = useRef<HTMLSpanElement | null>(null);
   const prefixRef = useRef<HTMLSpanElement | null>(null);
-  const [paddingLeft, setPaddingLeft] = useState<number>(indentSize * record.level);
+  const [paddingLeft, setPaddingLeft] = useState<number>(children ? indentSize * record.level : 0);
   const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
       return command({ dataSet, record, aggregation });
@@ -384,7 +384,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     return renderer;
   }, [columnCommand, cellEditorInCell, renderEditor, renderCommand, renderer, field, aggregation]);
   const prefixStyle = useMemo(() => {
-    if (!aggregation) {
+    if (!aggregation || !tableStore.hasAggregationColumn) {
       if (height !== undefined && rows === 0) {
         return {
           height: pxToRem(height),
@@ -628,20 +628,23 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
 
   useEffect(() => {
     // 兼容Table Tree模式嵌套过深样式
-    if (isTree && prefixRef.current) {
-      const parentWidth = prefixRef.current.parentElement!.clientWidth;
-      const prefixWidth = prefixRef.current.offsetWidth;
-      if (prefixWidth > parentWidth) {
-        setPaddingLeft(paddingLeft - (prefixWidth - parentWidth));
+    const { current } = prefixRef;
+    if (children && current) {
+      const { parentElement, offsetWidth: prefixWidth } = current;
+      if (parentElement) {
+        const parentWidth = parentElement.clientWidth;
+        if (prefixWidth > parentWidth) {
+          setPaddingLeft(paddingLeft - (prefixWidth - parentWidth));
+        }
       }
     }
-  }, [prefixRef, paddingLeft, setPaddingLeft, isTree]);
+  }, [children, prefixRef, paddingLeft, setPaddingLeft]);
 
   const indentText = children && (
     <span style={{ paddingLeft: pxToRem(paddingLeft) }} />
   );
 
-  const prefix = (indentText || children || checkBox) && (
+  const prefix = children && (
     <span key="prefix" className={`${prefixCls}-prefix`} style={prefixStyle} ref={prefixRef}>
       {indentText}
       {children}
