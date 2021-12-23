@@ -47,6 +47,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复过滤条内布尔变量渲染值错误。
 - 🐞 `<pro>Lov`: 修复 button 模式下关闭弹窗后按钮没有聚焦的问题。
 - 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。
+- 🐞 `<pro>DataSet.Transport`: 修复 unique 配合 Transport.validate 进行远程唯一性校验时，校验信息不展示的问题。
 
 ## 1.5.0
 

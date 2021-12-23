@@ -47,6 +47,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
 - 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
 - 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
+- 🐞 `<pro>DataSet.Transport`: Fix the problem that the verification information is not displayed when unique cooperates with Transport.validate for remote uniqueness verification.
 
 ## 1.5.0
 
