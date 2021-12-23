@@ -28,7 +28,7 @@ import Validator, { CustomValidator, ValidationMessages } from '../validator/Val
 import { CheckedStrategy, DataSetEvents, DataSetSelection, DataSetStatus, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
-import attachmentStore from '../stores/AttachmentStore';
+import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
 import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit, mergeDataSetProps } from './utils';
 import ValidationResult from '../validator/ValidationResult';
@@ -139,6 +139,7 @@ function combineWithOldLookupData(lookup: object[], field: Field, record?: Recor
   }
   return lookup;
 }
+
 export type FormatNumberFuncOptions = {
   lang?: string | undefined;
   options: Intl.NumberFormatOptions;
@@ -1352,11 +1353,12 @@ export default class Field {
     if (record) {
       const value = uuid || record.get(this.name);
       if (value) {
-        const cache = attachmentStore.get(value);
+        const attachmentCaches = getIf<Record, ObservableMap<string, AttachmentCache>>(record, 'attachmentCaches', () => observable.map());
+        const cache = attachmentCaches.get(value);
         if (cache) {
           set(cache, 'attachments', attachments);
         } else {
-          attachmentStore.set(value, { attachments });
+          attachmentCaches.set(value, { attachments });
         }
       }
     } else {
@@ -1368,7 +1370,13 @@ export default class Field {
     if (record) {
       const uuid = record.get(this.name);
       if (uuid) {
-        return attachmentStore.getAttachments(uuid);
+        const { attachmentCaches } = record;
+        if (attachmentCaches) {
+          const cache = attachmentCaches.get(uuid);
+          if (cache) {
+            return get(cache, 'attachments');
+          }
+        }
       }
     } else {
       return this.get('attachments');
@@ -1381,11 +1389,12 @@ export default class Field {
     if (record) {
       const uuid = record.get(this.name);
       if (uuid) {
-        const cache = attachmentStore.get(uuid);
+        const attachmentCaches = getIf<Record, ObservableMap<string, AttachmentCache>>(record, 'attachmentCaches', () => observable.map());
+        const cache = attachmentCaches.get(uuid);
         if (cache) {
           set(cache, 'count', count);
         } else {
-          attachmentStore.set(uuid, { count });
+          attachmentCaches.set(uuid, { count });
         }
       }
     } else {
@@ -1401,7 +1410,13 @@ export default class Field {
     if (record) {
       const uuid = record.get(this.name);
       if (uuid) {
-        return attachmentStore.getCount(uuid);
+        const { attachmentCaches } = record;
+        if (attachmentCaches) {
+          const cache = attachmentCaches.get(uuid);
+          if (cache) {
+            return get(cache, 'count');
+          }
+        }
       }
     } else {
       return this.get('attachmentCount');

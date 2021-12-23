@@ -57,6 +57,7 @@ import { BooleanValue, DataSetEvents, DataSetSelection, FieldIgnore, FieldType, 
 import { treeReduce } from '../tree-helper';
 import { iteratorReduce, iteratorSome } from '../iterator-helper';
 import ValidationResult from '../validator/ValidationResult';
+import { AttachmentCache } from '../stores/AttachmentStore';
 
 /**
  * 记录ID生成器
@@ -175,6 +176,8 @@ export default class Record {
   @observable validationErrors?: ObservableMap<string, ValidationResult[]>;
 
   @observable lookupTokens?: ObservableMap<string, string | undefined> | undefined;
+
+  @observable attachmentCaches?: ObservableMap<string, AttachmentCache>;
 
   computedFieldProps?: Map<string | symbol, IComputedValue<any>>;
 

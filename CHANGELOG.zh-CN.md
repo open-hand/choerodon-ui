@@ -33,6 +33,7 @@ timeline: true
 - 💄 `<pro>Tree`: 支持通过配置 draggable.icon 属性展示拖拽图标。
 - 💄 `<pro>Lov`: 优化选中列表的排序。
 - 💄 `<pro>Table`: 优化虚拟滚动并支持树形虚拟滚动。
+- 💄 `<pro>Attachment`: 优化缓存逻辑。
 - 🐞 `<pro>Table`: 修复 style 只设置了 maxHeight 时虚拟滚动首次渲染会全量渲染的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。
