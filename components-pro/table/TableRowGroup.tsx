@@ -7,6 +7,8 @@ import TableContext from './TableContext';
 import { isStickySupport } from './utils';
 import { toTransformValue } from '../_util/transform';
 
+export const ROW_GROUP_HEIGHT = 25;
+
 export interface TableRowGroupProps {
   lock?: ColumnLock;
   columnGroups: ColumnGroups;
@@ -46,7 +48,7 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGr
     }
   }, [currentScrollTop]);
   return (
-    <Cmp className={`${prefixCls}-row-group`} style={isStickySupport() ? undefined : { height: pxToRem(25) }}>
+    <Cmp className={`${prefixCls}-row-group`} style={isStickySupport() ? undefined : { height: pxToRem(ROW_GROUP_HEIGHT) }}>
       <th colSpan={colSpan} className={`${prefixCls}-row-group-title`} style={style} ref={needFixSticky ? stickyRef : undefined} scope="colgroup">
         {
           lock !== ColumnLock.right && (

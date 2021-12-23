@@ -58,7 +58,7 @@ export interface GenerateRowProps extends GenerateRowsProps {
   groupPath?: [Group, boolean][];
   parentExpanded?: boolean | undefined;
   index: { count: number };
-  virtualIndex: { count: number };
+  virtualIndex: { count: number, rowGroups: number[] };
   headerGroup?: { count: number };
   children?: ReactNode;
 }
@@ -160,13 +160,13 @@ function generateRowAndChildRows(rows: ReactNode[], props: GenerateRowProps): Re
 function generateCachedRows(
   records: Record[],
   props: GenerateSimpleRowsProps,
-  virtualIndex: { count: number },
+  virtualIndex: { count: number, rowGroups: number[] },
   handleClearCache: () => void,
 ): ReactNode[] {
   if (records.length) {
     const { columnGroups, lock } = props;
     const index = { count: 0 };
-    virtualIndex.count++;
+    virtualIndex.rowGroups.push(virtualIndex.count++);
     const rows: ReactNode[] = [
       [
         <TableRowGroup key="$$group-cached-rows" columnGroups={columnGroups} lock={lock}>
@@ -198,7 +198,7 @@ function generateNormalRows(
   rows: ReactNode[],
   records: Record[],
   props: GenerateRowsProps,
-  virtualIndex: { count: number },
+  virtualIndex: { count: number, rowGroups: number[] },
   index = { count: 0 },
 ): ReactNode[] {
   records.forEach((record) => generateRowAndChildRows(rows, {
@@ -215,7 +215,7 @@ function generateGroupRows(
   rows: ReactNode[],
   groups: Group[],
   props: GenerateRowsProps,
-  virtualIndex: { count: number },
+  virtualIndex: { count: number, rowGroups: number[] },
   groupPath: [Group, boolean][] = [],
   index = { count: 0 },
   isParentLast?: boolean,
@@ -233,7 +233,7 @@ function generateGroupRows(
       const { renderer = defaultAggregationRenderer } = columnProps || {};
       const groupName = tableGroup.name;
       const header = getHeader({ ...columnProps, name: groupName, dataSet, group });
-      virtualIndex.count++;
+      virtualIndex.rowGroups.push(virtualIndex.count++);
       rows.push(
         [
           <TableRowGroup key={`$group-${group.value}`} columnGroups={columnGroups} lock={lock}>
@@ -283,14 +283,14 @@ function generateRows(
   records: Record[],
   groups: Group[],
   props: GenerateRowsProps,
-  virtualIndex: { count: number },
+  virtualIndex: { count: number, rowGroups: number[] },
   hasCached: boolean,
 ): ReactNode[] {
   const rows: ReactNode[] = [];
   if (groups.length || records.length) {
     if (hasCached) {
       const { columnGroups, lock } = props;
-      virtualIndex.count++;
+      virtualIndex.rowGroups.push(virtualIndex.count++);
       rows.push(
         [
           <TableRowGroup key="$$group-rows" columnGroups={columnGroups} lock={lock}>
@@ -362,7 +362,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     );
   };
   const hasCache = cachedData.length > 0;
-  const virtualIndex = { count: 0 };
+  const virtualIndex = { count: 0, rowGroups: [] };
   const cachedRows: ReactNode[] = useComputed(() => (
     generateCachedRows(cachedData, { tableStore, columnGroups, lock }, virtualIndex, handleClearCache)
   ), [cachedData, tableStore, columnGroups, handleClearCache, lock]);
@@ -375,6 +375,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
   ), [totalRows]);
   const renderRow = useCallback(rIndex => totalRows[rIndex], [totalRows]);
   const actualRows = cachedRows.length + rows.length;
+  const actualGroupRows = virtualIndex.rowGroups.length;
   useEffect(action(() => {
     if (actualRows && tableStore.actualRows !== actualRows) {
       if (tableStore.virtual) {
@@ -384,6 +385,15 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
       }
     }
   }), [actualRows, tableStore]);
+  useEffect(action(() => {
+    if (actualGroupRows && tableStore.actualGroupRows !== actualGroupRows) {
+      if (tableStore.virtual) {
+        tableStore.actualGroupRows = actualGroupRows;
+      } else {
+        tableStore.actualGroupRows = 0;
+      }
+    }
+  }), [actualGroupRows, tableStore]);
   const body = actualRows ? virtual ? (
     <VirtualRows renderBefore={renderGroup}>
       {renderRow}

@@ -55,6 +55,7 @@ import { ModalProps } from '../modal/Modal';
 import { treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
 import { normalizeGroups } from '../data-set/utils';
+import { ROW_GROUP_HEIGHT } from './TableRowGroup';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -70,20 +71,13 @@ export const AGGREGATION_EXPAND_CELL_KEY = '__aggregation-expand-cell__'; // TOD
 
 export const BODY_EXPANDED = '__body_expanded__'; // TODO:Symbol
 
-export type HeaderText = { name: string; label: string };
+const VIRTUAL_OVER_SCAN_COUNT = 2;
 
-export type RowMetaData = {
-  offset: number;
-  height: number | undefined;
-}
+export type HeaderText = { name: string; label: string };
 
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
 }
-
-// function hasProperty<T>(target: T, property: string): (keyof T) is undefined {
-//   return property in target;
-// }
 
 export function getIdList(store: TableStore) {
   const { mouseBatchChooseStartId, mouseBatchChooseEndId, node: { element }, prefixCls } = store;
@@ -899,6 +893,8 @@ export default class TableStore {
 
   @observable actualRows: number | undefined;
 
+  @observable actualGroupRows: number;
+
   @observable actualRowHeight: number | undefined;
 
   @observable scrolling: boolean | undefined;
@@ -922,11 +918,9 @@ export default class TableStore {
   }
 
   get virtualHeight(): number {
-    const { virtualEstimatedRowHeight, virtualEstimatedRows } = this;
-    return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight);
+    const { virtualEstimatedRowHeight, virtualEstimatedRows, actualGroupRows } = this;
+    return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight - actualGroupRows * (virtualEstimatedRowHeight - ROW_GROUP_HEIGHT));
   }
-
-  virtualOverScanCount = 2;
 
   @computed
   get virtualVisibleStartIndex(): number {
@@ -935,7 +929,7 @@ export default class TableStore {
       return 0;
     }
     const { virtualEstimatedRowHeight, lastScrollTop, virtualEstimatedRows, virtualHeight } = this;
-    if ((this.isFixedRowHeight && !this.hasTableRowGroup) || lastScrollTop < (virtualHeight - height) / 2) {
+    if (this.isFixedRowHeight || lastScrollTop < (virtualHeight - height) / 2) {
       return Math.max(
         0,
         Math.min(
@@ -963,7 +957,7 @@ export default class TableStore {
       return virtualEstimatedRows;
     }
     const { virtualEstimatedRowHeight, lastScrollTop, virtualHeight } = this;
-    if ((this.isFixedRowHeight && !this.hasTableRowGroup) || lastScrollTop < (virtualHeight - height) / 2) {
+    if (this.isFixedRowHeight || lastScrollTop < (virtualHeight - height) / 2) {
       const { virtualVisibleStartIndex } = this;
       const numVisibleItems = Math.ceil(
         height / virtualEstimatedRowHeight,
@@ -985,13 +979,13 @@ export default class TableStore {
   }
 
   get virtualStartIndex(): number {
-    const { virtualOverScanCount, virtualVisibleStartIndex } = this;
-    return Math.max(0, virtualVisibleStartIndex - virtualOverScanCount);
+    const { virtualVisibleStartIndex } = this;
+    return Math.max(0, virtualVisibleStartIndex - VIRTUAL_OVER_SCAN_COUNT);
   }
 
   get virtualEndIndex(): number {
-    const { virtualOverScanCount, virtualVisibleEndIndex, virtualEstimatedRows } = this;
-    return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + virtualOverScanCount);
+    const { virtualVisibleEndIndex, virtualEstimatedRows } = this;
+    return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + VIRTUAL_OVER_SCAN_COUNT);
   }
 
   get virtualTop(): number {
@@ -1315,8 +1309,8 @@ export default class TableStore {
   @computed
   get hasTableRowGroup(): boolean {
     const { groups, cachedData } = this;
-    if(cachedData.length) {
-      return true
+    if (cachedData.length) {
+      return true;
     }
     return groups ? groups.some(({ type }) => type === GroupType.row) : false;
   }
@@ -1695,6 +1689,7 @@ export default class TableStore {
       this.headerHeight = 0;
       this.footerHeight = 0;
       this.lastScrollTop = 0;
+      this.actualGroupRows = 0;
       this.customizedActiveKey = ['columns'];
       this.leftOriginalColumns = [];
       this.originalColumns = [];
