@@ -128,6 +128,7 @@ const App = () => {
         dataSet={userDs}
         columns={columns}
         groups={groups}
+        style={{ height: 200 }}
       />
     </>
   );

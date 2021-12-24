@@ -234,6 +234,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       'minLength',
       'timeZone',
       'editorInPopup',
+      'defaultTime',
     ]);
   }
 
@@ -782,8 +783,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return date;
   }
 
-  isLowerRange(m1: Moment, m2: Moment): boolean {
-    return m1.isBefore(m2);
+  isLowerRange(m1: any, m2: any): boolean {
+    const moment1 = this.toMoment(m1);
+    if (moment1) {
+      return moment1.isBefore(this.toMoment(m2));
+    }
+    return false;
   }
 
   @autobind
