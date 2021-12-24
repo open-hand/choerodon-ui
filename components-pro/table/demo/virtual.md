@@ -18,7 +18,7 @@ title:
 Virtual Scroll.
 
 ```jsx
-import { DataSet, Table } from 'choerodon-ui/pro';
+import { DataSet, Table, Tabs } from 'choerodon-ui/pro';
 
 class App extends React.Component {
   userDs = new DataSet({
@@ -176,19 +176,25 @@ class App extends React.Component {
     // 设置 virtualSpin 开启滚动loading效果，与 table spin 效果一致
     
     return (
-      <Table
-        key="user"
-        virtual
-        virtualCell
-        selectionMode='click'
-        selectedHighLightRow
-        dataSet={this.userDs}
-        style={{ height: 400 }}
-        columns={columns}
-        pagination={{
-          pageSizeOptions: ['10', '50', '100', '200', '1000'],
-        }}
-      />
+      <Tabs animated={false}>
+        <Tabs.TabPane tab="Main">
+          <Table
+            key="user"
+            virtual
+            virtualCell
+            selectionMode='click'
+            selectedHighLightRow
+            dataSet={this.userDs}
+            style={{ height: 400 }}
+            columns={columns}
+            pagination={{
+              pageSizeOptions: ['10', '50', '100', '200', '1000'],
+            }}
+          />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Other">
+        </Tabs.TabPane>
+      </Tabs>
     );
   }
 }

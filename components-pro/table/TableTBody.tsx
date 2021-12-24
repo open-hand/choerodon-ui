@@ -60,6 +60,7 @@ interface GenerateRowGroupProps extends GenerateSimpleRowsProps {
   key: Key;
   statistics?: Statistics | undefined;
   children?: ReactNode;
+  rowGroupLevel?: { count: number };
 }
 
 interface GenerateRowsProps extends GenerateSimpleRowsProps {
@@ -82,7 +83,7 @@ export interface GenerateRowProps extends GenerateRowsProps {
 }
 
 function generateRowGroup(props: GenerateRowGroupProps): ReactNode {
-  const { tableStore, columnGroups, lock, children, statistics, key } = props;
+  const { tableStore, columnGroups, lock, children, statistics, key, rowGroupLevel } = props;
   if (statistics) {
     statistics.rowGroups.push(statistics.count++);
     const { rowMetaData } = statistics;
@@ -93,7 +94,7 @@ function generateRowGroup(props: GenerateRowGroupProps): ReactNode {
     }
   }
   const group = (
-    <TableRowGroup key={key} columnGroups={columnGroups} lock={lock}>
+    <TableRowGroup key={key} columnGroups={columnGroups} lock={lock} level={rowGroupLevel ? rowGroupLevel.count : 0}>
       {children}
     </TableRowGroup>
   );
@@ -264,6 +265,7 @@ function generateGroupRows(
   rows: ReactNode[],
   groups: Group[],
   props: GenerateRowsProps,
+  hasCached: boolean,
   statistics?: Statistics | undefined,
   groupPath: [Group, boolean][] = [],
   index = { count: 0 },
@@ -284,7 +286,7 @@ function generateGroupRows(
       const header = getHeader({ ...columnProps, name: groupName, dataSet, group });
       rows.push(
         generateRowGroup({
-          key: `$group-${group.value}`,
+          key: `$group-${path.map(([g]) => g.value).join('-')}`,
           columnGroups,
           lock,
           tableStore,
@@ -296,6 +298,7 @@ function generateGroupRows(
               {renderer({ text: group.value, rowGroup: group, name: groupName, dataSet, record: group.totalRecords[0] })}
             </>
           ),
+          rowGroupLevel: { count: path.length - (hasCached ? 0 : 1) },
         }),
       );
     }
@@ -316,7 +319,7 @@ function generateGroupRows(
       });
     } else {
       if (subGroups && subGroups.length) {
-        generateGroupRows(rows, subGroups, props, statistics, path, index, isLast);
+        generateGroupRows(rows, subGroups, props, hasCached, statistics, path, index, isLast);
       }
       records.forEach((record) => {
         generateRowAndChildRows(rows, {
@@ -355,7 +358,7 @@ function generateRows(
     );
   }
   if (groupedData.length) {
-    generateGroupRows(rows, groupedData, props, statistics);
+    generateGroupRows(rows, groupedData, props, hasCached, statistics);
   } else if (currentData.length) {
     generateNormalRows(rows, currentData, props, statistics);
   }
@@ -399,9 +402,20 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
     }, cachedRows.length > 0, $statistics);
     return [cachedRows.concat(rows), $statistics];
   }, [tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender, onClearCache]);
-  const renderGroup = useCallback((startIndex) => (
-    totalRows.slice(0, startIndex).reverse().find(row => isArrayLike(row) && row[1] === true)
-  ), [totalRows]);
+  const renderGroup = useCallback((startIndex) => {
+    const groups: ReactNode[] = [];
+    let preGroup: ReactNode | undefined;
+    totalRows.slice(0, startIndex).reverse().some((row) => {
+      if (isArrayLike(row) && row[1] === true) {
+        groups.push(row);
+        preGroup = row;
+      } else if (preGroup) {
+        return true;
+      }
+      return false;
+    });
+    return groups;
+  }, [totalRows]);
   const renderRow = useCallback(rIndex => totalRows[rIndex], [totalRows]);
 
   useEffect(action(() => {

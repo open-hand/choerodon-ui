@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import omit from 'lodash/omit';
@@ -15,7 +15,7 @@ export interface VirtualWrapperProps {
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
   const { children } = props;
   const { tableStore, prefixCls, virtualSpin, spinProps } = useContext(TableContext);
-  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling = false } = tableStore;
+  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling = false, actualGroupRows } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
   const [rowHeight, setRowHeight] = useState(virtualRowHeight);
   useEffect(action(() => {
@@ -44,13 +44,19 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
       setRowHeight(virtualRowHeight);
     }
   }), [virtualRowHeight, rowHeight, tableStore]);
+  const wrapperStyle: CSSProperties = actualGroupRows ?
+    { height: pxToRem(virtualHeight), paddingTop: pxToRem(virtualTop), pointerEvents: scrolling ? 'none' : undefined } :
+    { height: pxToRem(virtualHeight), pointerEvents: scrolling ? 'none' : undefined };
+  const style: CSSProperties = actualGroupRows ? { position: 'relative' } : { transform: toTransformValue({ translateY: pxToRem(virtualTop) }) };
   return (
     <>
       <div
         className={`${prefixCls}-tbody-wrapper`}
-        style={{ height: pxToRem(virtualHeight), pointerEvents: scrolling ? 'none' : undefined }}
+        style={wrapperStyle}
       >
-        <div style={{ transform: toTransformValue({ translateY: pxToRem(virtualTop) }) }}>
+        <div
+          style={style}
+        >
           {children}
         </div>
       </div>

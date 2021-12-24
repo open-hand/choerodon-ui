@@ -16,6 +16,7 @@ import { observer } from 'mobx-react-lite';
 import { action, get, reaction, remove, set } from 'mobx';
 import classNames from 'classnames';
 import defer from 'lodash/defer';
+import isNumber from 'lodash/isNumber';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { useInView } from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -140,12 +141,15 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
 
   const setRowHeight = useCallback(action((key: Key, height: number) => {
     if (tableStore.propVirtual) {
-      if (metaData) {
-        if (Math.abs(metaData.height - height) > 1) {
-          tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
+      const { rowHeight } = tableStore;
+      if (height > (isNumber(rowHeight) ? rowHeight : 20)) {
+        if (metaData) {
+          if (Math.abs(metaData.height - height) > 1) {
+            tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
+          }
+        } else if ((tableStore.actualRowHeight === undefined || (tableStore.isFixedRowHeight && Math.abs(tableStore.actualRowHeight - height) > 1))) {
+          tableStore.actualRowHeight = height;
         }
-      } else if (tableStore.actualRowHeight === undefined || (tableStore.isFixedRowHeight && Math.abs(tableStore.actualRowHeight - height) > 1)) {
-        tableStore.actualRowHeight = height;
       }
     }
     if (!isStickySupport()) {
