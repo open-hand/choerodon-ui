@@ -22,14 +22,20 @@
     padding: 0 0.1rem 0.1rem 0.1rem;
     overflow-y: auto;
   }
+  &-fold-hidden {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
 
   &-before-shadow {
     &::before {
       position: absolute;
       top: 0;
-      left: 0.12rem;
+      left: 0.15rem;
       z-index: 1;
-      width: calc(100% - 0.48rem);
+      width: calc(100% - 0.62rem);
       height: 0.57rem;
       margin: 0 0.12rem;
       background-image: linear-gradient(180deg, rgba(255,255,255,0.50) 0%, rgba(255,255,255) 100%);
@@ -42,9 +48,9 @@
     &::after {
       position: absolute;
       bottom: 0.35rem;
-      left: 0.12rem;
+      left: 0.15rem;
       z-index: 1;
-      width: calc(100% - 0.48rem);
+      width: calc(100% - 0.62rem);
       height: 0.57rem;
       margin: 0 0.12rem;
       background-image: linear-gradient(180deg, rgba(255,255,255) 0%, rgba(255,255,255,0.50) 100%);
@@ -74,7 +80,7 @@
   &-alert {
     display: flex;
     justify-content: space-between;
-    margin: 0 0.12rem;
+    margin: 0 0.2rem 0 0.12rem;
     padding: 0.08rem 0.16rem;
     background: rgba(255,255,255);
     border: none;
