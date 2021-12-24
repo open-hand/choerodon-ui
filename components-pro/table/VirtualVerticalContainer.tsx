@@ -2,15 +2,16 @@ import React, { FunctionComponent, ReactNode, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import TableContext from './TableContext';
 
-export interface VirtualRowsProps {
+export interface VirtualVerticalContainerProps {
   renderBefore?: (startIndex: number) => ReactNode;
   children: (rowIndex: number) => ReactNode;
 }
 
-const VirtualRows: FunctionComponent<VirtualRowsProps> = function VirtualRows(props) {
+const VirtualVerticalContainer: FunctionComponent<VirtualVerticalContainerProps> = function VirtualVerticalContainer(props) {
   const { children, renderBefore } = props;
   const { tableStore } = useContext(TableContext);
-  const { virtualStartIndex, virtualEndIndex } = tableStore;
+  let { virtualStartIndex } = tableStore;
+  const { virtualEndIndex } = tableStore;
   const rows: ReactNode[] = [];
   if (renderBefore) {
     const before = renderBefore(virtualStartIndex);
@@ -18,12 +19,13 @@ const VirtualRows: FunctionComponent<VirtualRowsProps> = function VirtualRows(pr
       rows.push(before);
     }
   }
-  for (let rowIndex = virtualStartIndex; rowIndex < virtualEndIndex; rowIndex++) {
-    rows.push(children(rowIndex));
+  while (virtualStartIndex < virtualEndIndex) {
+    rows.push(children(virtualStartIndex));
+    virtualStartIndex++;
   }
   return <>{rows}</>;
 };
 
-VirtualRows.displayName = 'VirtualRows';
+VirtualVerticalContainer.displayName = 'VirtualVerticalContainer';
 
-export default observer(VirtualRows);
+export default observer(VirtualVerticalContainer);

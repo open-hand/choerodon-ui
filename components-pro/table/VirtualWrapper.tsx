@@ -1,9 +1,12 @@
 import React, { FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import omit from 'lodash/omit';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import Spin from '../spin';
 import TableContext from './TableContext';
 import { toTransformValue } from '../_util/transform';
+import mergeProps from '../_util/mergeProps';
 
 export interface VirtualWrapperProps {
   children?: ReactNode;
@@ -11,8 +14,8 @@ export interface VirtualWrapperProps {
 
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
   const { children } = props;
-  const { tableStore, prefixCls } = useContext(TableContext);
-  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling } = tableStore;
+  const { tableStore, prefixCls, virtualSpin, spinProps } = useContext(TableContext);
+  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling = false } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
   const [rowHeight, setRowHeight] = useState(virtualRowHeight);
   useEffect(action(() => {
@@ -42,14 +45,34 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
     }
   }), [virtualRowHeight, rowHeight, tableStore]);
   return (
-    <div
-      className={`${prefixCls}-tbody-wrapper`}
-      style={{ height: pxToRem(virtualHeight), pointerEvents: scrolling ? 'none' : undefined }}
-    >
-      <div style={{ transform: toTransformValue({ translateY: pxToRem(virtualTop) }) }}>
-        {children}
+    <>
+      <div
+        className={`${prefixCls}-tbody-wrapper`}
+        style={{ height: pxToRem(virtualHeight), pointerEvents: scrolling ? 'none' : undefined }}
+      >
+        <div style={{ transform: toTransformValue({ translateY: pxToRem(virtualTop) }) }}>
+          {children}
+        </div>
       </div>
-    </div>
+      {
+        virtualSpin && scrolling && (
+          <Spin
+            {
+              ...mergeProps(omit(spinProps, ['dataSet']), {
+                spinning: true,
+                style: {
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: pxToRem(tableStore.lastScrollTop)!,
+                  transform: toTransformValue({ translate: '-50% -50%' }),
+                },
+              })
+            }
+          />
+        )
+      }
+    </>
   );
 };
 

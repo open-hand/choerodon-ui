@@ -2,13 +2,13 @@ import React, {
   cloneElement,
   CSSProperties,
   FunctionComponent,
+  Key,
   ReactElement,
   ReactNode,
   useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
-  useMemo,
 } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike } from 'mobx';
@@ -19,7 +19,7 @@ import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import isFunction from 'lodash/isFunction';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import TableRow from './TableRow';
+import TableRow, { TableRowProps } from './TableRow';
 import Record from '../data-set/Record';
 import { ColumnLock, DragColumnAlign, GroupType } from './enum';
 import ExpandedRow from './ExpandedRow';
@@ -27,19 +27,27 @@ import { DataSetStatus } from '../data-set/enum';
 import { DragRender, DragTableRowProps, instance } from './Table';
 import { getHeader, isDraggingStyle, isStickySupport } from './utils';
 import ColumnGroups from './ColumnGroups';
-import TableRowGroup from './TableRowGroup';
+import TableRowGroup, { ROW_GROUP_HEIGHT } from './TableRowGroup';
 import { $l } from '../locale-context';
 import Button from '../button/Button';
 import { Size } from '../core/enum';
 import { ButtonColor, FuncType } from '../button/enum';
 import { defaultAggregationRenderer } from './Column';
-import VirtualRows from './VirtualRows';
+import VirtualVerticalContainer from './VirtualVerticalContainer';
 import TableStore from './TableStore';
 import useComputed from '../use-computed';
+import VirtualRowMetaData from './VirtualRowMetaData';
 
 export interface TableTBodyProps extends ElementProps {
-  lock?: ColumnLock;
+  lock?: ColumnLock | undefined;
   columnGroups: ColumnGroups;
+}
+
+type Statistics = {
+  count: number;
+  rowGroups: number[];
+  rowMetaData?: VirtualRowMetaData[];
+  lastRowMetaData?: VirtualRowMetaData;
 }
 
 interface GenerateSimpleRowsProps {
@@ -48,9 +56,19 @@ interface GenerateSimpleRowsProps {
   lock?: ColumnLock | undefined;
 }
 
+interface GenerateRowGroupProps extends GenerateSimpleRowsProps {
+  key: Key;
+  statistics?: Statistics | undefined;
+  children?: ReactNode;
+}
+
 interface GenerateRowsProps extends GenerateSimpleRowsProps {
   rowDragRender?: DragRender | undefined;
   expandIconColumnIndex?: number | undefined;
+}
+
+export interface RowsProps extends GenerateRowsProps {
+  onClearCache: () => void;
 }
 
 export interface GenerateRowProps extends GenerateRowsProps {
@@ -58,35 +76,64 @@ export interface GenerateRowProps extends GenerateRowsProps {
   groupPath?: [Group, boolean][];
   parentExpanded?: boolean | undefined;
   index: { count: number };
-  virtualIndex: { count: number, rowGroups: number[] };
+  statistics?: Statistics | undefined;
   headerGroup?: { count: number };
   children?: ReactNode;
 }
 
+function generateRowGroup(props: GenerateRowGroupProps): ReactNode {
+  const { tableStore, columnGroups, lock, children, statistics, key } = props;
+  if (statistics) {
+    statistics.rowGroups.push(statistics.count++);
+    const { rowMetaData } = statistics;
+    if (rowMetaData) {
+      const currentRowMetaData = new VirtualRowMetaData(tableStore, statistics.lastRowMetaData, ROW_GROUP_HEIGHT);
+      rowMetaData.push(currentRowMetaData);
+      statistics.lastRowMetaData = currentRowMetaData;
+    }
+  }
+  const group = (
+    <TableRowGroup key={key} columnGroups={columnGroups} lock={lock}>
+      {children}
+    </TableRowGroup>
+  );
+  return statistics ? [
+    group,
+    true,
+  ] : group;
+}
+
 function generateRow(props: GenerateRowProps): ReactElement {
-  const { record, parentExpanded, lock, columnGroups, groupPath, index, virtualIndex, expandIconColumnIndex, children, headerGroup } = props;
-  const { count: virtualCount } = virtualIndex;
-  const { count } = index;
+  const { tableStore, record, parentExpanded, lock, columnGroups, groupPath, index, statistics, expandIconColumnIndex, children, headerGroup } = props;
+  const tableRowProps: TableRowProps = {
+    columnGroups,
+    record,
+    index: index.count,
+    key: record.key,
+    hidden: !parentExpanded,
+    lock,
+    expandIconColumnIndex,
+    groupPath,
+    children,
+  };
+  if (statistics) {
+    const { rowMetaData } = statistics;
+    tableRowProps.virtualIndex = statistics.count;
+    statistics.count++;
+    if (rowMetaData) {
+      const currentRowMetaData = new VirtualRowMetaData(tableStore, statistics.lastRowMetaData);
+      rowMetaData.push(currentRowMetaData);
+      statistics.lastRowMetaData = currentRowMetaData;
+      tableRowProps.metaData = currentRowMetaData;
+    }
+  }
   index.count++;
-  virtualIndex.count++;
-  const headerGroupIndex = headerGroup && headerGroup.count;
   if (headerGroup) {
+    tableRowProps.headerGroupIndex = headerGroup.count;
     headerGroup.count++;
   }
   return (
-    <TableRow
-      key={record.key}
-      hidden={!parentExpanded}
-      lock={lock}
-      columnGroups={columnGroups}
-      record={record}
-      index={count}
-      virtualIndex={virtualCount}
-      headerGroupIndex={headerGroupIndex}
-      expandIconColumnIndex={expandIconColumnIndex}
-      groupPath={groupPath}
-    >{children}
-    </TableRow>
+    <TableRow {...tableRowProps} />
   );
 }
 
@@ -158,35 +205,37 @@ function generateRowAndChildRows(rows: ReactNode[], props: GenerateRowProps): Re
 }
 
 function generateCachedRows(
-  records: Record[],
   props: GenerateSimpleRowsProps,
-  virtualIndex: { count: number, rowGroups: number[] },
   handleClearCache: () => void,
+  statistics?: Statistics | undefined,
 ): ReactNode[] {
+  const { cachedData: records } = props.tableStore;
   if (records.length) {
-    const { columnGroups, lock } = props;
     const index = { count: 0 };
-    virtualIndex.rowGroups.push(virtualIndex.count++);
     const rows: ReactNode[] = [
-      [
-        <TableRowGroup key="$$group-cached-rows" columnGroups={columnGroups} lock={lock}>
-          <span>{$l('Table', 'cached_records')}</span>
-          <Button
-            funcType={FuncType.link}
-            color={ButtonColor.primary}
-            icon="delete"
-            size={Size.small}
-            onClick={handleClearCache}
-          />
-        </TableRowGroup>,
-        true,
-      ],
+      generateRowGroup({
+        ...props,
+        key: '$$group-cached-rows',
+        statistics,
+        children: (
+          <>
+            <span>{$l('Table', 'cached_records')}</span>
+            <Button
+              funcType={FuncType.link}
+              color={ButtonColor.primary}
+              icon="delete"
+              size={Size.small}
+              onClick={handleClearCache}
+            />
+          </>
+        ),
+      }),
     ];
     records.forEach(record => rows.push(generateRow({
       ...props,
       record,
       index,
-      virtualIndex,
+      statistics,
       parentExpanded: true,
     })));
     return rows;
@@ -198,14 +247,14 @@ function generateNormalRows(
   rows: ReactNode[],
   records: Record[],
   props: GenerateRowsProps,
-  virtualIndex: { count: number, rowGroups: number[] },
+  statistics?: Statistics | undefined,
   index = { count: 0 },
 ): ReactNode[] {
   records.forEach((record) => generateRowAndChildRows(rows, {
     ...props,
     record,
     index,
-    virtualIndex,
+    statistics,
     parentExpanded: true,
   }));
   return rows;
@@ -215,7 +264,7 @@ function generateGroupRows(
   rows: ReactNode[],
   groups: Group[],
   props: GenerateRowsProps,
-  virtualIndex: { count: number, rowGroups: number[] },
+  statistics?: Statistics | undefined,
   groupPath: [Group, boolean][] = [],
   index = { count: 0 },
   isParentLast?: boolean,
@@ -233,16 +282,21 @@ function generateGroupRows(
       const { renderer = defaultAggregationRenderer } = columnProps || {};
       const groupName = tableGroup.name;
       const header = getHeader({ ...columnProps, name: groupName, dataSet, group });
-      virtualIndex.rowGroups.push(virtualIndex.count++);
       rows.push(
-        [
-          <TableRowGroup key={`$group-${group.value}`} columnGroups={columnGroups} lock={lock}>
-            {header}
-            {header && <span className={`${prefixCls}-row-group-divider`} />}
-            {renderer({ text: group.value, rowGroup: group, name: groupName, dataSet, record: group.totalRecords[0] })}
-          </TableRowGroup>,
-          true,
-        ],
+        generateRowGroup({
+          key: `$group-${group.value}`,
+          columnGroups,
+          lock,
+          tableStore,
+          statistics,
+          children: (
+            <>
+              {header}
+              {header && <span className={`${prefixCls}-row-group-divider`} />}
+              {renderer({ text: group.value, rowGroup: group, name: groupName, dataSet, record: group.totalRecords[0] })}
+            </>
+          ),
+        }),
       );
     }
     if (subHGroups) {
@@ -253,7 +307,7 @@ function generateGroupRows(
             ...props,
             record,
             index,
-            virtualIndex,
+            statistics,
             headerGroup: $index,
             groupPath: path,
             parentExpanded: true,
@@ -262,14 +316,14 @@ function generateGroupRows(
       });
     } else {
       if (subGroups && subGroups.length) {
-        generateGroupRows(rows, subGroups, props, virtualIndex, path, index, isLast);
+        generateGroupRows(rows, subGroups, props, statistics, path, index, isLast);
       }
       records.forEach((record) => {
         generateRowAndChildRows(rows, {
           ...props,
           record,
           index,
-          virtualIndex,
+          statistics,
           groupPath: path,
           parentExpanded: true,
         });
@@ -280,41 +334,126 @@ function generateGroupRows(
 }
 
 function generateRows(
-  records: Record[],
-  groups: Group[],
   props: GenerateRowsProps,
-  virtualIndex: { count: number, rowGroups: number[] },
   hasCached: boolean,
+  statistics?: Statistics | undefined,
 ): ReactNode[] {
+  const { tableStore } = props;
+  const { currentData, groupedData } = tableStore;
   const rows: ReactNode[] = [];
-  if (groups.length || records.length) {
-    if (hasCached) {
-      const { columnGroups, lock } = props;
-      virtualIndex.rowGroups.push(virtualIndex.count++);
-      rows.push(
-        [
-          <TableRowGroup key="$$group-rows" columnGroups={columnGroups} lock={lock}>
-            {$l('Table', 'current_page_records')}
-          </TableRowGroup>,
-          true,
-        ],
-      );
-    }
-    if (groups.length) {
-      generateGroupRows(rows, groups, props, virtualIndex);
-    } else if (records.length) {
-      generateNormalRows(rows, records, props, virtualIndex);
-    }
+  if (hasCached && currentData.length) {
+    const { columnGroups, lock } = props;
+    rows.push(
+      generateRowGroup({
+        key: '$$group-rows',
+        columnGroups,
+        lock,
+        tableStore,
+        statistics,
+        children: $l('Table', 'current_page_records'),
+      }),
+    );
+  }
+  if (groupedData.length) {
+    generateGroupRows(rows, groupedData, props, statistics);
+  } else if (currentData.length) {
+    generateNormalRows(rows, currentData, props, statistics);
   }
   return rows;
 }
 
+function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
+  const { tableStore, columnGroups, lock } = props;
+  const { emptyText, width, prefixCls, dataSet } = tableStore;
+  const styles: CSSProperties = width ? {
+    position: isStickySupport() ? 'sticky' : 'relative',
+    left: pxToRem(width / 2)!,
+  } : {
+    transform: 'none',
+    display: 'inline-block',
+  };
+  const tdStyle: CSSProperties | undefined = width ? undefined : { textAlign: 'center' };
+  return (
+    <tr className={`${prefixCls}-empty-row`}>
+      <td colSpan={columnGroups.leafs.length} style={tdStyle}>
+        <div style={styles}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
+      </td>
+    </tr>
+  );
+}
+
+const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
+  const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender } = props;
+  const [totalRows, statistics]: [ReactNode[], Statistics] = useComputed(() => {
+    const $statistics: Statistics = { count: 0, rowGroups: [] };
+    if (!tableStore.isFixedRowHeight) {
+      $statistics.rowMetaData = [];
+    }
+    const cachedRows = generateCachedRows({ tableStore, columnGroups, lock }, onClearCache, $statistics);
+    const rows = generateRows({
+      tableStore,
+      columnGroups,
+      expandIconColumnIndex,
+      lock,
+      rowDragRender,
+    }, cachedRows.length > 0, $statistics);
+    return [cachedRows.concat(rows), $statistics];
+  }, [tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender, onClearCache]);
+  const renderGroup = useCallback((startIndex) => (
+    totalRows.slice(0, startIndex).reverse().find(row => isArrayLike(row) && row[1] === true)
+  ), [totalRows]);
+  const renderRow = useCallback(rIndex => totalRows[rIndex], [totalRows]);
+
+  useEffect(action(() => {
+    tableStore.lastMeasuredIndex = 0;
+    tableStore.rowMetaData = statistics.rowMetaData;
+    if (tableStore.isFixedRowHeight) {
+      const actualRows = totalRows.length;
+      if (tableStore.actualRows !== actualRows) {
+        tableStore.actualRows = actualRows;
+      }
+    }
+    const actualGroupRows = statistics.rowGroups.length;
+    if (tableStore.actualGroupRows !== actualGroupRows) {
+      tableStore.actualGroupRows = actualGroupRows;
+    }
+  }), [totalRows, statistics, tableStore]);
+
+  return totalRows.length ? (
+    <VirtualVerticalContainer renderBefore={renderGroup}>
+      {renderRow}
+    </VirtualVerticalContainer>
+  ) : getEmptyRow({ tableStore, lock, columnGroups });
+};
+VirtualRows.displayName = 'VirtualRows';
+
+const Rows: FunctionComponent<RowsProps> = function Rows(props) {
+  const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender } = props;
+  const { cachedData, currentData, groupedData } = tableStore;
+  const cachedRows: ReactNode[] = useComputed(() => (
+    generateCachedRows({ tableStore, columnGroups, lock }, onClearCache)
+  ), [cachedData, tableStore, columnGroups, onClearCache, lock]);
+  const hasCache = cachedRows.length > 0;
+  const rows: ReactNode[] = useComputed(() => (
+    generateRows({ tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender }, hasCache)
+  ), [currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, rowDragRender]);
+
+  return cachedRows.length || rows.length ? (
+    <>
+      {cachedRows}
+      {rows}
+    </>
+  ) : getEmptyRow({ tableStore, lock, columnGroups });
+};
+Rows.displayName = 'Rows';
+
+const ObserverVirtualRows = observer(VirtualRows);
+const ObserverRows = observer(Rows);
+
 const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props) {
   const { lock, columnGroups, ...rest } = props;
   const { prefixCls, tableStore, rowDragRender, dataSet, expandRowByClick, expandedRowRenderer } = useContext(TableContext);
-  const {
-    cachedData, currentData, groupedData, virtual, rowDraggable,
-  } = tableStore;
+  const { virtual, rowDraggable } = tableStore;
   const expandIconColumnIndex = !expandRowByClick && (expandedRowRenderer || tableStore.isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number) => {
@@ -343,67 +482,25 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     }
   }, [lock, tableStore]);
 
-  const getEmptyRow = (): ReactNode => {
-    const { emptyText, width } = tableStore;
-    const styles: CSSProperties = width ? {
-      position: isStickySupport() ? 'sticky' : 'relative',
-      left: pxToRem(width / 2)!,
-    } : {
-      transform: 'none',
-      display: 'inline-block',
-    };
-    const tdStyle: CSSProperties | undefined = width ? undefined : { textAlign: 'center' };
-    return (
-      <tr className={`${prefixCls}-empty-row`}>
-        <td colSpan={columnGroups.leafs.length} style={tdStyle}>
-          <div style={styles}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
-        </td>
-      </tr>
-    );
-  };
-  const hasCache = cachedData.length > 0;
-  const virtualIndex = { count: 0, rowGroups: [] };
-  const cachedRows: ReactNode[] = useComputed(() => (
-    generateCachedRows(cachedData, { tableStore, columnGroups, lock }, virtualIndex, handleClearCache)
-  ), [cachedData, tableStore, columnGroups, handleClearCache, lock]);
-  const rows: ReactNode[] = useComputed(() => (
-    generateRows(currentData, groupedData, { tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender }, virtualIndex, hasCache)
-  ), [currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, rowDragRender]);
-  const totalRows = useMemo(() => [...cachedRows, ...rows], [cachedRows, rows]);
-  const renderGroup = useCallback((startIndex) => (
-    totalRows.slice(0, startIndex).reverse().find(row => isArrayLike(row) && row[1] === true)
-  ), [totalRows]);
-  const renderRow = useCallback(rIndex => totalRows[rIndex], [totalRows]);
-  const actualRows = cachedRows.length + rows.length;
-  const actualGroupRows = virtualIndex.rowGroups.length;
-  useEffect(action(() => {
-    if (actualRows && tableStore.actualRows !== actualRows) {
-      if (tableStore.virtual) {
-        tableStore.actualRows = actualRows;
-      } else {
-        tableStore.actualRows = undefined;
-      }
-    }
-  }), [actualRows, tableStore]);
-  useEffect(action(() => {
-    if (actualGroupRows && tableStore.actualGroupRows !== actualGroupRows) {
-      if (tableStore.virtual) {
-        tableStore.actualGroupRows = actualGroupRows;
-      } else {
-        tableStore.actualGroupRows = 0;
-      }
-    }
-  }), [actualGroupRows, tableStore]);
-  const body = actualRows ? virtual ? (
-    <VirtualRows renderBefore={renderGroup}>
-      {renderRow}
-    </VirtualRows>
+  const body = virtual ? (
+    <ObserverVirtualRows
+      onClearCache={handleClearCache}
+      expandIconColumnIndex={expandIconColumnIndex}
+      columnGroups={columnGroups}
+      tableStore={tableStore}
+      rowDragRender={rowDragRender}
+      lock={lock}
+    />
   ) : (
-    <>
-      {cachedRows}
-      {rows}
-    </>
-  ) : getEmptyRow();
+    <ObserverRows
+      onClearCache={handleClearCache}
+      expandIconColumnIndex={expandIconColumnIndex}
+      columnGroups={columnGroups}
+      tableStore={tableStore}
+      rowDragRender={rowDragRender}
+      lock={lock}
+    />
+  );
   const tbody = rowDraggable ? (
     <Droppable
       droppableId="table"
@@ -476,9 +573,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
       {body}
     </tbody>
   );
-  return lock || (virtual && actualRows) ? (
-    tbody
-  ) : (
+  return lock ? tbody : (
     <ReactResizeObserver onResize={handleResize} resizeProp="height" immediately>
       {tbody}
     </ReactResizeObserver>

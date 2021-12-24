@@ -9,7 +9,6 @@ import omit from 'lodash/omit';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import isUndefined from 'lodash/isUndefined';
-import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import { action, observable, runInAction, toJS } from 'mobx';
 import {
@@ -92,6 +91,7 @@ import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames } from '../data-set/utils';
+import mergeProps from '../_util/mergeProps';
 
 export type TableGroup = {
   name: string;
@@ -919,8 +919,6 @@ export default class Table extends DataSetComponent<TableProps> {
 
   lastScrollLeft: number;
 
-  refSpin: HTMLDivElement | null;
-
   wrapperWidth: number[] = [];
 
   wrapperWidthTimer?: number;
@@ -948,11 +946,6 @@ export default class Table extends DataSetComponent<TableProps> {
     return this.element.querySelector(
       `.${prefixCls}-row:last-child`,
     ) as HTMLTableRowElement | null;
-  }
-
-  @autobind
-  saveVirtualSpinRef(node: HTMLDivElement | null) {
-    this.refSpin = node;
   }
 
   @autobind
@@ -1014,7 +1007,6 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   handleDataSetLoad() {
     const { tableStore } = this;
-    tableStore.actualRows = undefined;
     if (tableStore.performanceEnabled) {
       tableStore.performanceOn = true;
     }
@@ -1508,7 +1500,7 @@ export default class Table extends DataSetComponent<TableProps> {
   /**
    * 获取传入的 Spin props
    */
-  getSpinProps() {
+  getSpinProps(): SpinProps {
     const { spin, dataSet } = this.props;
     if (spin && !isUndefined(spin.spinning)) return { ...spin };
     const { loading } = this.tableStore;
@@ -1608,12 +1600,10 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      tableStore: { virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      tableStore: { overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
         dataSet,
-        style,
         treeQueryExpanded,
-        spin,
         virtualSpin,
         buttons,
         buttonsLimit,
@@ -1648,9 +1638,8 @@ export default class Table extends DataSetComponent<TableProps> {
     } = this;
     const content = this.getTable();
     const pagination = this.getPagination(TablePaginationPosition.top);
-    const tableSpinProps = this.getContextConfig('tableSpinProps');
+    const tableSpinProps = mergeProps(this.getContextConfig('tableSpinProps'), this.getSpinProps());
     const tableButtonsLimit = isNil(buttonsLimit) ? this.getContextConfig('tableButtonsLimit') : buttonsLimit;
-    const styleHeight = style ? toPx(style.height) : 0;
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
         <div {...this.getWrapperProps()}>
@@ -1673,6 +1662,8 @@ export default class Table extends DataSetComponent<TableProps> {
             autoMaxWidth={autoMaxWidth}
             pristine={pristine}
             summary={summary}
+            virtualSpin={virtualSpin}
+            spinProps={tableSpinProps}
             isTree={mode === TableMode.tree}
           >
             {this.getHeader()}
@@ -1693,29 +1684,7 @@ export default class Table extends DataSetComponent<TableProps> {
               searchCode={searchCode}
             />
             {this.getValidationErrors()}
-            <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
-              {
-                virtual && virtualSpin && (
-                  <div
-                    ref={this.saveVirtualSpinRef}
-                    style={{ display: 'none' }}
-                  >
-                    <Spin
-                      key="virtual"
-                      spinning
-                      style={{
-                        height: pxToRem(styleHeight),
-                        lineHeight: pxToRem(styleHeight),
-                        position: 'absolute',
-                        width: '100%',
-                        zIndex: 4,
-                      }}
-                      {...tableSpinProps}
-                      {...spin}
-                    />
-                  </div>
-                )
-              }
+            <Spin {...tableSpinProps} key="content">
               <div {...this.getOtherProps()}>
                 <div
                   className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
@@ -1787,16 +1756,6 @@ export default class Table extends DataSetComponent<TableProps> {
       this.scrollId = raf(handle);
     }
   }
-
-  /**
-   * 滚动结束隐藏spin
-   */
-  setSpin = debounce(() => {
-    const { refSpin } = this;
-    if (refSpin) {
-      refSpin.style.display = 'none';
-    }
-  }, 300);
 
   handleBodyScrollTop(e, currentTarget) {
     const { target } = e;
@@ -2142,11 +2101,6 @@ export default class Table extends DataSetComponent<TableProps> {
       }
       if (tableContentWrap && target !== tableContentWrap) {
         tableContentWrap.scrollTop = scrollTop;
-      }
-      const { refSpin } = this;
-      if (refSpin) {
-        refSpin.style.display = 'block';
-        this.setSpin();
       }
       tableStore.setLastScrollTop(scrollTop);
       if (target) {

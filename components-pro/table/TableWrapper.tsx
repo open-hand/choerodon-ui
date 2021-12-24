@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, ReactNode, useContext, useMemo } from 'react';
+import React, { FunctionComponent, Key, ReactElement, ReactNode, useContext, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -30,13 +30,18 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
   const tableWidth: number | string | undefined = overflowX ?
     lock !== ColumnLock.left && !hasBody && tableStore.overflowY ?
       pxToRem(width + measureScrollbar()) : pxToRem(width) : '100%';
+  const editorKeys = new Set<Key>();
   const editors = useMemo((): ReactElement<TableEditorProps>[] | undefined => hasBody ?
     treeReduce<ReactElement<TableEditorProps>[], ColumnProps>(leafs.map(({ column }) => column), (nodes, column) => {
       const { editor, name } = column;
       if (editor && name && (lock || isStickySupport() || !column.lock || !overflowX)) {
-        nodes.push(
-          <TableEditor key={getColumnKey(column)} column={column} />,
-        );
+        const key = getColumnKey(column);
+        if (!editorKeys.has(key)) {
+          editorKeys.add(key);
+          nodes.push(
+            <TableEditor key={key} column={column} />,
+          );
+        }
       }
       return nodes;
     }, []) : undefined,
