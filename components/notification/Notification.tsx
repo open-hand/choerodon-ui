@@ -200,6 +200,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   clearNotices = (): void => {
     this.setState({
       notices: [],
+      scrollHeight: 'auto',
     });
   };
 
@@ -232,6 +233,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
     ));
     const cls = classNames(`${prefixCls}`, className, [{
       [`${prefixCls}-fold`]: !!foldCount,
+      [`${prefixCls}-fold-hidden`]: !notices.length,
       [`${prefixCls}-before-shadow`]: !!foldCount && notices.length > foldCount && offset > 0,
       [`${prefixCls}-after-shadow`]:
         foldCount && notices.length > foldCount &&
