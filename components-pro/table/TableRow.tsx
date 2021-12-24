@@ -38,6 +38,7 @@ import ColumnGroups from './ColumnGroups';
 import ColumnGroup from './ColumnGroup';
 import { iteratorSome } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
+import VirtualRowMetaData from './VirtualRowMetaData';
 
 function getGroupByPath(group: Group, groupPath: [Group, boolean][]): Group | undefined {
   const { subGroups } = group;
@@ -69,21 +70,26 @@ function getRecord(columnGroup: ColumnGroup, groupPath: [Group, boolean][] | und
 const VIRTUAL_HEIGHT = '__VIRTUAL_HEIGHT__';
 
 export interface TableRowProps extends ElementProps {
-  lock?: ColumnLock | boolean;
-  isExpanded?: boolean;
+  lock?: ColumnLock | boolean | undefined;
+  isExpanded?: boolean | undefined;
   columnGroups: ColumnGroups;
   record: Record;
   index: number;
-  virtualIndex?: number;
-  headerGroupIndex?: number;
-  expandIconColumnIndex?: number;
-  snapshot?: DraggableStateSnapshot;
-  provided?: DraggableProvided;
-  groupPath?: [Group, boolean][];
+  virtualIndex?: number | undefined;
+  headerGroupIndex?: number | undefined;
+  expandIconColumnIndex?: number | undefined;
+  snapshot?: DraggableStateSnapshot | undefined;
+  provided?: DraggableProvided | undefined;
+  groupPath?: [Group, boolean][] | undefined;
+  metaData?: VirtualRowMetaData;
+  children?: ReactNode;
 }
 
 const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
-  const { record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, className, lock, columnGroups, children, groupPath, expandIconColumnIndex } = props;
+  const {
+    record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, className, lock, columnGroups,
+    children, groupPath, expandIconColumnIndex, metaData,
+  } = props;
   const context = useContext(TableContext);
   const {
     tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow,
@@ -133,14 +139,19 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   })();
 
   const setRowHeight = useCallback(action((key: Key, height: number) => {
-    if (isStickySupport()) {
-      if (tableStore.actualRowHeight === undefined || (tableStore.isFixedRowHeight && (tableStore.actualRowHeight - height) > 1)) {
+    if (tableStore.propVirtual) {
+      if (metaData) {
+        if (Math.abs(metaData.height - height) > 1) {
+          tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
+        }
+      } else if (tableStore.actualRowHeight === undefined || (tableStore.isFixedRowHeight && Math.abs(tableStore.actualRowHeight - height) > 1)) {
         tableStore.actualRowHeight = height;
       }
-    } else {
+    }
+    if (!isStickySupport()) {
       set(tableStore.lockColumnsBodyRowsHeight, key, height);
     }
-  }), [tableStore]);
+  }), [tableStore, metaData]);
 
   const saveRef = useCallback(action((row: HTMLTableRowElement | null) => {
     rowRef.current = row;
@@ -157,7 +168,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     if (needIntersection && typeof intersectionRef === 'function') {
       intersectionRef(row);
     }
-  }), [rowRef, intersectionRef, needIntersection, needSaveRowHeight, rowKey, provided]);
+  }), [rowRef, intersectionRef, needIntersection, needSaveRowHeight, rowKey, provided, setRowHeight]);
 
   const handleMouseEnter = useCallback(() => {
     if (highLightRow) {

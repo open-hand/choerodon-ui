@@ -54,8 +54,10 @@ import Menu from '../menu';
 import { ModalProps } from '../modal/Modal';
 import { treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
-import { normalizeGroups } from '../data-set/utils';
+import { getIf, normalizeGroups } from '../data-set/utils';
 import { ROW_GROUP_HEIGHT } from './TableRowGroup';
+import VirtualRowMetaData from './VirtualRowMetaData';
+import BatchRunner from '../_util/BatchRunner';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -77,6 +79,87 @@ export type HeaderText = { name: string; label: string };
 
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
+}
+
+function getItemMetadata(
+  rowMetaData: VirtualRowMetaData[],
+  index: number,
+  tableStore: TableStore,
+): VirtualRowMetaData {
+  const { lastMeasuredIndex } = tableStore;
+
+  if (index > lastMeasuredIndex) {
+    tableStore.lastMeasuredIndex = index;
+  }
+  return rowMetaData[index];
+}
+
+function findNearestItemBinarySearch(
+  rowMetaData: VirtualRowMetaData[],
+  tableStore: TableStore,
+  high: number,
+  low: number,
+  offset: number,
+): number {
+  while (low <= high) {
+    const middle = low + Math.floor((high - low) / 2);
+    const item = getItemMetadata(rowMetaData, middle, tableStore);
+    if (!item) {
+      return 0;
+    }
+    const currentOffset = item.offset;
+
+    if (currentOffset === offset) {
+      return middle;
+    }
+    if (currentOffset < offset) {
+      low = middle + 1;
+    }
+    if (currentOffset > offset) {
+      high = middle - 1;
+    }
+  }
+
+  if (low > 0) {
+    return low - 1;
+  }
+  return 0;
+}
+
+function overOffset(
+  rowMetaData: VirtualRowMetaData[],
+  tableStore: TableStore,
+  index: number,
+  offset: number,
+): boolean {
+  const item = getItemMetadata(rowMetaData, index, tableStore);
+  if (item) {
+    return item.offset < offset;
+  }
+  return false;
+}
+
+function findNearestItemExponentialSearch(
+  rowMetaData: VirtualRowMetaData[],
+  tableStore: TableStore,
+  index: number,
+  offset: number,
+): number {
+  const { virtualEstimatedRows } = tableStore;
+  let interval = 1;
+
+  while (index < virtualEstimatedRows && overOffset(rowMetaData, tableStore, index, offset)) {
+    index += interval;
+    interval *= 2;
+  }
+
+  return findNearestItemBinarySearch(
+    rowMetaData,
+    tableStore,
+    Math.min(index, virtualEstimatedRows - 1),
+    Math.floor(index / 2),
+    offset,
+  );
 }
 
 export function getIdList(store: TableStore) {
@@ -631,7 +714,7 @@ export default class TableStore {
 
   @observable hasAggregationColumn?: boolean;
 
-  @observable calcBodyHeight: number;
+  @observable calcBodyHeight: number | undefined;
 
   @observable width?: number;
 
@@ -769,7 +852,7 @@ export default class TableStore {
         return virtualHeight;
       }
     }
-    return this.calcBodyHeight;
+    return this.calcBodyHeight || 0;
   }
 
   get stickyLeft(): boolean {
@@ -897,6 +980,10 @@ export default class TableStore {
 
   @observable actualRowHeight: number | undefined;
 
+  @observable rowMetaData?: VirtualRowMetaData[] | undefined;
+
+  lastMeasuredIndex = 0;
+
   @observable scrolling: boolean | undefined;
 
   @computed
@@ -910,6 +997,10 @@ export default class TableStore {
   }
 
   get virtualEstimatedRows() {
+    const { rowMetaData } = this;
+    if (rowMetaData) {
+      return rowMetaData.length;
+    }
     const { actualRows } = this;
     if (actualRows !== undefined) {
       return actualRows;
@@ -919,17 +1010,43 @@ export default class TableStore {
 
   get virtualHeight(): number {
     const { virtualEstimatedRowHeight, virtualEstimatedRows, actualGroupRows } = this;
+    if (!virtualEstimatedRows) {
+      return 0;
+    }
+    if (!this.isFixedRowHeight) {
+      const { rowMetaData } = this;
+      if (rowMetaData) {
+        let { lastMeasuredIndex } = this;
+        let totalSizeOfMeasuredItems = 0;
+
+        if (lastMeasuredIndex >= virtualEstimatedRows) {
+          lastMeasuredIndex = virtualEstimatedRows - 1;
+        }
+
+        if (lastMeasuredIndex >= 0) {
+          const itemMetadata = rowMetaData[lastMeasuredIndex];
+          if (itemMetadata) {
+            totalSizeOfMeasuredItems = itemMetadata.offset + itemMetadata.height;
+          }
+        }
+
+        const numUnmeasuredItems = virtualEstimatedRows - lastMeasuredIndex - 1;
+        const totalSizeOfUnmeasuredItems = numUnmeasuredItems * virtualEstimatedRowHeight;
+
+        return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
+      }
+    }
     return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight - actualGroupRows * (virtualEstimatedRowHeight - ROW_GROUP_HEIGHT));
   }
 
   @computed
   get virtualVisibleStartIndex(): number {
-    const { height } = this;
-    if (height === undefined) {
+    const { height, virtualEstimatedRows } = this;
+    if (height === undefined || !virtualEstimatedRows) {
       return 0;
     }
-    const { virtualEstimatedRowHeight, lastScrollTop, virtualEstimatedRows, virtualHeight } = this;
-    if (this.isFixedRowHeight || lastScrollTop < (virtualHeight - height) / 2) {
+    const { virtualEstimatedRowHeight, lastScrollTop } = this;
+    if (this.isFixedRowHeight) {
       return Math.max(
         0,
         Math.min(
@@ -937,16 +1054,27 @@ export default class TableStore {
         ),
       );
     }
-    const { virtualVisibleEndIndex } = this;
-    const numVisibleItems = Math.ceil(
-      height / virtualEstimatedRowHeight,
-    );
-    return Math.max(
-      0,
-      Math.min(
-        virtualEstimatedRows,
-        virtualVisibleEndIndex - numVisibleItems,
-      ),
+    const { rowMetaData } = this;
+    if (!rowMetaData) {
+      return 0;
+    }
+    const { lastMeasuredIndex } = this;
+    const lastRowMetaData = lastMeasuredIndex > 0 ? rowMetaData[lastMeasuredIndex] : undefined;
+    const lastMeasuredItemOffset = lastRowMetaData ? lastRowMetaData.offset : 0;
+    if (lastMeasuredItemOffset >= lastScrollTop) {
+      return findNearestItemBinarySearch(
+        rowMetaData,
+        this,
+        lastMeasuredIndex,
+        0,
+        lastScrollTop,
+      );
+    }
+    return findNearestItemExponentialSearch(
+      rowMetaData,
+      this,
+      Math.max(0, lastMeasuredIndex),
+      lastScrollTop,
     );
   }
 
@@ -956,9 +1084,8 @@ export default class TableStore {
     if (height === undefined) {
       return virtualEstimatedRows;
     }
-    const { virtualEstimatedRowHeight, lastScrollTop, virtualHeight } = this;
-    if (this.isFixedRowHeight || lastScrollTop < (virtualHeight - height) / 2) {
-      const { virtualVisibleStartIndex } = this;
+    const { virtualEstimatedRowHeight, virtualVisibleStartIndex } = this;
+    if (this.isFixedRowHeight) {
       const numVisibleItems = Math.ceil(
         height / virtualEstimatedRowHeight,
       );
@@ -970,12 +1097,28 @@ export default class TableStore {
         ),
       );
     }
-    return Math.max(
-      0,
-      Math.min(
-        virtualEstimatedRows, Math.floor(virtualEstimatedRows - (virtualHeight - height - lastScrollTop) / virtualEstimatedRowHeight),
-      ),
-    );
+    const { rowMetaData } = this;
+    if (!rowMetaData || !rowMetaData.length) {
+      return 0;
+    }
+    const itemMetadata = getItemMetadata(rowMetaData, virtualVisibleStartIndex, this);
+    if (!itemMetadata) {
+      return 0;
+    }
+    const maxOffset = this.lastScrollTop + height;
+
+    let offset = itemMetadata.offset + itemMetadata.height;
+    let stopIndex = virtualVisibleStartIndex;
+
+    while (stopIndex < virtualEstimatedRows - 1 && offset < maxOffset) {
+      stopIndex++;
+      const item = getItemMetadata(rowMetaData, stopIndex, this);
+      if (item) {
+        offset += item.height;
+      }
+    }
+
+    return stopIndex;
   }
 
   get virtualStartIndex(): number {
@@ -990,6 +1133,12 @@ export default class TableStore {
 
   get virtualTop(): number {
     const { virtualEstimatedRowHeight, virtualStartIndex } = this;
+    if (!this.isFixedRowHeight) {
+      const { rowMetaData } = this;
+      if (rowMetaData && rowMetaData.length) {
+        return rowMetaData[virtualStartIndex].offset;
+      }
+    }
     return virtualStartIndex * virtualEstimatedRowHeight;
   }
 
@@ -1294,25 +1443,10 @@ export default class TableStore {
     );
   }
 
-  // @computed
-  // get bodyTableGroups(): TableGroup[] {
-  //   const { groups } = this;
-  //   return groups ? groups.filter(group => group.type === GroupType.column || group.type === GroupType.row) : [];
-  // }
-
   @computed
   get headerTableGroups(): TableGroup[] {
     const { groups } = this;
     return groups ? groups.filter(({ type }) => type === GroupType.header) : [];
-  }
-
-  @computed
-  get hasTableRowGroup(): boolean {
-    const { groups, cachedData } = this;
-    if (cachedData.length) {
-      return true;
-    }
-    return groups ? groups.some(({ type }) => type === GroupType.row) : false;
   }
 
   @autobind
@@ -2117,6 +2251,12 @@ export default class TableStore {
 
   stopScroll = debounce(action(() => {
     this.scrolling = false;
-  }), 150);
+  }), 300);
 
+  batchRunner?: BatchRunner;
+
+  batchSetRowHeight(key: Key, callback: Function) {
+    const batchRunner = getIf(this, 'batchRunner', () => new BatchRunner());
+    batchRunner.addTask(key, callback);
+  }
 }
