@@ -731,7 +731,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const flag = this.props.columns !== nextProps.columns
       || this.props.children !== nextProps.children
       || this.props.rowSelection !== nextProps.rowSelection
-    if(flag) {
+    if (flag) {
       runInAction(() => this.setSelectionColumn(nextProps));
     }
     return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
@@ -2279,6 +2279,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const findSpanRow: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex > x.start && rowIndex <= x.end);
       if (findSpanRow.length) {
         rowStyles.zIndex = findSpanRow[findSpanRow.length - 1].zIndex;
+      } else if (this.rowSpanList.find(x => x.start === rowIndex)) {
+        rowStyles.zIndex = 1
       }
       const {
         fixedLeftCells = [],
@@ -2538,6 +2540,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     let bottomHideHeight = 0;
 
     this._visibleRows = [];
+    this.rowSpanList = [];
+    this.nextRowZIndex = [];
+    this._cacheCalcStartRowSpan = [];
 
     if (data) {
       let top = 0; // Row position
