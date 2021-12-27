@@ -228,7 +228,7 @@ export type MultipleRenderOption = {
   isMultipleBlockDisabled?(v: any): boolean;
   processRenderer(v: any, repeat?: number): ReactNode;
   renderValidationResult(result: ValidationResult): ReactNode;
-  handleMutipleValueRemove?(e, value: any, index: number): void;
+  handleMultipleValueRemove?(e, value: any, index: number): void;
   isValidationMessageHidden(message?: ReactNode): boolean | undefined;
   showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme, tooltipPlacement?: TooltipPlacement): void;
   getKey?(v: any): string;
@@ -275,7 +275,7 @@ export function getValueKey(v: any) {
 export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode; multipleValidateMessageLength: number } {
   const {
     range, maxTagPlaceholder, prefixCls, validationResults, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
-    renderValidationResult, handleMutipleValueRemove, getKey = getValueKey, isValidationMessageHidden, showValidationMessage: selfShowValidationMessage,
+    renderValidationResult, handleMultipleValueRemove, getKey = getValueKey, isValidationMessageHidden, showValidationMessage: selfShowValidationMessage,
     tooltipTheme,
   } = option;
   const values = toMultipleValue(value, range);
@@ -310,7 +310,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
         multipleValidateMessageLength++;
       }
       const closeBtn = !blockDisabled && !readOnly && (
-        <CloseButton onClose={handleMutipleValueRemove} value={v} index={repeat} />
+        <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat} />
       );
       const inner = readOnly ? (
         <span key={String(index)} className={className}>{text}</span>

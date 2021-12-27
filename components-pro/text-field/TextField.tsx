@@ -933,11 +933,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
       multiple,
       range,
-      props: { style, isFlat },
+      props: { isFlat },
     } = this;
     const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
     if (multiple) {
-      const { height } = (style || {}) as CSSProperties;
       const { record } = this;
       const tags = (
         <Animate
@@ -945,8 +944,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           componentProps={{
             ref: this.saveTagContainer,
             onScroll: stopPropagation,
-            style:
-              height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
           }}
           transitionName={!record || record === this.lastAnimationRecord ? 'zoom' : ''}
           exclusive
@@ -966,7 +963,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       );
       this.lastAnimationRecord = record;
       return wrap(
-        <div key="text" className={otherProps.className} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div key="text" className={otherProps.className} style={otherProps.style} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
           {
             isFlat ? (
               <Tooltip title={this.getMultipleText()}>
@@ -979,7 +976,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     if (range) {
       return wrap(
-        <span key="text" className={otherProps.className} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <span key="text" className={otherProps.className} style={otherProps.style} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
           {this.renderRangeEditor(otherProps)}
         </span>,
       );
