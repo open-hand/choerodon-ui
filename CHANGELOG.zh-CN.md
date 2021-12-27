@@ -43,10 +43,12 @@ timeline: true
 - 🐞 `Menu`: 修复菜单收起时鼠标移入 Menu.Item 时报错的问题。
 - 🐞 `<pro>DataSet`: 修复导出失效问题。
 - 🐞 `<pro>DataSet`: 修复当 Record 变更 state 时， selected 值会重新计算的问题。
+- 🐞 `<pro>DataSet.Transport`: 修复 unique 配合 Transport.validate 进行远程唯一性校验时，校验信息不展示的问题。
 - 🐞 `<pro>TextArea`: 修复已输入长度信息显示。
 - 🐞 `<pro>Table`: 修复过滤条内布尔变量渲染值错误。
 - 🐞 `<pro>Lov`: 修复 button 模式下关闭弹窗后按钮没有聚焦的问题。
 - 🐞 `<pro>FormField`: 修复在多选自定义范围值模式下删除单个值会清除所有值的问题。
+- 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。
 
 ## 1.5.0
 
