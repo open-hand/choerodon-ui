@@ -145,10 +145,10 @@ export default class LovView extends Component<LovViewProps> {
     }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     if (record && onBeforeSelect(record) !== false) {
-      if (modal && (!multiple || event === 'close')) {
+      if (modal && (!event || !multiple)) {
         modal.close();
       }
-      if (!multiple || viewMode === 'popup' || event === 'close') {
+      if (!event || !multiple || viewMode === 'popup') {
         onSelect(record);
       }
     }
@@ -332,7 +332,7 @@ export default class LovView extends Component<LovViewProps> {
       multiple,
     } = this.props;
     if (modal) {
-      modal.handleOk(() => this.handleSelect('close'));
+      modal.handleOk(this.handleSelect);
     }
     return (
       <>
