@@ -43,10 +43,13 @@ timeline: true
 - 🐞 `Menu`: Fix an issue where mouse moves into collapsed Menu reports errors.
 - 🐞 `<pro>DataSet`: Fix the issue of export failure.
 - 🐞 `<pro>DataSet`: Fix the problem that `selected` value will be recomputed after record state changed.
+- 🐞 `<pro>DataSet.Transport`: Fix the problem that the verification information is not displayed when unique cooperates with Transport.validate for remote uniqueness verification.
 - 🐞 `<pro>TextArea`: Fixed input length information display.
 - 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
 - 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
 - 🐞 `<pro>FormField`: Fix the problem that deleting a single value will clear all other values in the multiple and custom range mode.
+- 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
+
 
 ## 1.5.0
 
