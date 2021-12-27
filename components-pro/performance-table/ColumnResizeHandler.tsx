@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import clamp from 'lodash/clamp';
+import debounce from 'lodash/debounce';
 import { DOMMouseMoveTracker } from 'dom-lib';
 import { defaultClassPrefix, getUnhandledProps } from './utils';
 import { addEvent, removeEvent } from './utils/domFns';
@@ -28,6 +29,8 @@ export interface ColumnResizeHandlerProps {
   onColumnResizeStart?: (client: Client) => void;
   onColumnResizeEnd?: (columnWidth?: number, cursorDelta?: number) => void;
   onColumnResizeMove?: (columnWidth?: number, columnLeft?: number, columnFixed?: FixedType) => void;
+  onMouseEnterHandler?: (left: number) => void;
+  onMouseLeaveHandler?: () => void;
 }
 
 const propTypes = {
@@ -42,6 +45,8 @@ const propTypes = {
   onColumnResizeStart: PropTypes.func,
   onColumnResizeEnd: PropTypes.func,
   onColumnResizeMove: PropTypes.func,
+  onMouseEnterHandler: PropTypes.func,
+  onMouseLeaveHandler: PropTypes.func,
 };
 
 class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
@@ -183,6 +188,25 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     this.props.onColumnResizeStart?.(client);
   };
 
+  showMouseArea = (e) => {
+    const { onMouseEnterHandler } = this.props;
+    const { left } = getComputedStyle(e.target);
+    onMouseEnterHandler && onMouseEnterHandler(parseFloat(left));
+  }
+
+  delayShowMouseArea = debounce(this.showMouseArea, 300)
+
+  handleShowMouseArea = (e) => {
+    e.persist();
+    this.delayShowMouseArea(e);
+  }
+
+  handleHideMouseArea = () => {
+    const { onMouseLeaveHandler } = this.props;
+    this.delayShowMouseArea.cancel();
+    onMouseLeaveHandler && onMouseLeaveHandler();
+  }
+
   getMouseMoveTracker() {
     return (
       this.mouseMoveTracker ||
@@ -222,6 +246,8 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
         style={styles}
         onMouseDown={this.onColumnResizeMouseDown}
         onTouchEnd={this.handleDragStop}
+        onMouseEnter={this.handleShowMouseArea}
+        onMouseLeave={this.handleHideMouseArea}
         role="button"
         tabIndex={-1}
       />

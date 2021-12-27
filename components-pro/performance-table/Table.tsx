@@ -10,6 +10,7 @@ import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
 import uniq from 'lodash/uniq';
+import noop from 'lodash/noop';
 import BScroll from '@better-scroll/core';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
@@ -78,7 +79,7 @@ import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import TableStore from './TableStore';
 import Toolbar, { ToolBarProps } from './tool-bar';
-import { TableHeightType } from '../table/enum';
+import { TableHeightType, TableResizeTriggerType } from '../table/enum';
 import { isDropresult } from '../table/utils';
 import { arrayMove } from '../data-set/utils';
 import { $l } from '../locale-context';
@@ -1406,11 +1407,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           };
 
           if (resizable) {
+            const { tableResizeTrigger } = this.tableStore;
             merge(headerCellProps, {
               onResize,
               onColumnResizeEnd: this.handleColumnResizeEnd,
               onColumnResizeStart: this.handleColumnResizeStart,
               onColumnResizeMove: this.handleColumnResizeMove,
+              onMouseEnterHandler: tableResizeTrigger === TableResizeTriggerType.hover ? this.handleShowMouseArea : noop,
+              onMouseLeaveHandler: tableResizeTrigger === TableResizeTriggerType.hover ? this.handleHideMouseArea : noop,
             });
           }
 
@@ -1531,6 +1535,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.setState({ sortType });
     }
     this.props.onSortColumn?.(dataKey, sortType);
+  };
+
+  handleShowMouseArea = (left: number, fixed: boolean | string | undefined) => {
+    const mouseAreaLeft = left + (!fixed ? this.scrollX : 0);
+    addStyle(this.mouseAreaRef.current, { display: 'block', left: `${mouseAreaLeft}px` });
+  };
+
+  handleHideMouseArea = () => {
+    addStyle(this.mouseAreaRef.current, { display: 'none' });
   };
 
   handleColumnResizeEnd = (

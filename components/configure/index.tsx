@@ -12,7 +12,7 @@ import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { expandIconProps, Suffixes, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
-import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType, TableResizeTriggerType } from 'choerodon-ui/pro/lib/table/enum';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
@@ -136,6 +136,7 @@ export interface Config extends DataSetConfig {
   tableColumnAlign?: (column: ColumnProps, field?: Field, record?: Record) => ColumnAlign | undefined;
   tableColumnDefaultWidth?: number;
   tableColumnDefaultMinWidth?: number;
+  tableResizeTrigger?: TableResizeTriggerType;
   tableAggregationColumnDefaultWidth?: number;
   tableAggregationColumnDefaultMinWidth?: number;
   tableShowSelectionTips?: boolean;

@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableHeightChangeable` property. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
+- 🌟 `configure`: Added `tableHeightChangeable`, `tableResizeTrigger` properties. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.
 - 🌟 `<pro>Table`: Added `groups`, `headerRowHeight`, `footerRowHeight`, `onScrollLeft`, `onScrollTop`, `heightChangeable`, `bodyExpandable`, `defaultBodyExpanded`, `bodyExpanded`, `onBodyExpand` properties, `setScrollLeft`, `setScrollTop` instance methods.
@@ -30,7 +30,7 @@ timeline: true
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
 - 💄 `<pro>TextArea`: Optimize the `autoSize` initialization style.
 - 💄 `<pro>TextField`: Optimize the style when setting the `clearButton` `showLengthInfo` `suffix` properties at the same time.
-- 💄 `<pro>Tree`: Support the display of drag icon through `draggable.icon` property control.
+- 💄 `<pro>Tree`: Extend draggable supports object type and controls the display of drag-and-drop icon.
 - 💄 `<pro>Lov`: Optimize sorting of selected list.
 - 💄 `<pro>Table`: Optimize virtual scrolling and support tree-shaped virtual scrolling.
 - 💄 `<pro>Attachment`: Optimize caching logic.

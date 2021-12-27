@@ -83,6 +83,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnAlign | 默认表格列对齐方式 | (column, field) => 'left' \| 'center' \| 'right' \| undefined | Function |
 | tableColumnDefaultWidth | 默认表格列宽度, 只在出横向滚动条时起作用 | number | 100 |
 | tableColumnDefaultMinWidth | 默认表格列最小宽度 | number | 50 |
+| tableResizeTrigger | 表格列宽拖拽分割线触发方式 | 'mouseDown'\|'hover' | 'mouseDown' |
 | tableAggregationColumnDefaultWidth | 默认表格聚合列宽度, 只在出横向滚动条时起作用 | number | 250 |
 | tableAggregationColumnDefaultMinWidth | 默认表格聚合列最小宽度 | number | 50 |
 | tableKeyboard | Table 开启或关闭新增的快捷按钮事件 | boolean | false |
