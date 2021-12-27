@@ -859,6 +859,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onOrderChange={this.handleOrderChange}
           onFetchAttachments={this.handleFetchAttachment}
           onPreview={this.handlePreview}
+          record={this.record}
         />
       );
     }

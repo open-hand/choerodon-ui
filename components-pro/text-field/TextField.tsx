@@ -22,7 +22,7 @@ import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, computed, observable, runInAction, toJS } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -48,7 +48,7 @@ import TextFieldGroup from './TextFieldGroup';
 import { findFirstFocusableElement } from '../_util/focusable';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
-import { toRangeValue } from '../field/utils';
+import { fromRangeValue, toRangeValue } from '../field/utils';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -963,7 +963,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       );
       this.lastAnimationRecord = record;
       return wrap(
-        <div key="text" className={otherProps.className} style={otherProps.style} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div
+          key="text"
+          className={otherProps.className}
+          style={otherProps.style}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
           {
             isFlat ? (
               <Tooltip title={this.getMultipleText()}>
@@ -976,7 +984,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     if (range) {
       return wrap(
-        <span key="text" className={otherProps.className} style={otherProps.style} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <span
+          key="text"
+          className={otherProps.className}
+          style={otherProps.style}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
           {this.renderRangeEditor(otherProps)}
         </span>,
       );
@@ -1052,12 +1068,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
       if (this.lengthElement) {
         this.lengthInfoWidth = measureTextWidth(`${inputLength} / ${maxLength}`);
-      }
-      else {
+      } else {
         this.lengthInfoWidth = undefined;
       }
-    }
-    else {
+    } else {
       this.lengthElement = undefined;
       this.lengthInfoWidth = undefined;
     }
@@ -1094,14 +1108,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           ...props,
         };
       }
-    }
-    else if (children && children !== true) {
+    } else if (children && children !== true) {
       this.suffixWidth = measureTextWidth(children.toString()) + 2;
       divStyle = {
         width: this.suffixWidth,
       };
-    }
-    else {
+    } else {
       this.suffixWidth = undefined;
     }
 
@@ -1247,8 +1259,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   removeLastValue() {
     const values = this.getValues();
     const value = values.pop();
-    this.setValue(values);
-    this.afterRemoveValue(value, -1);
+    const { range } = this;
+    this.setValue(isArrayLike(range) ? values.map(v => fromRangeValue(v, range)) : values);
+    this.afterRemoveValue(fromRangeValue(value, range), -1);
   }
 
   handleTagAnimateEnd() {

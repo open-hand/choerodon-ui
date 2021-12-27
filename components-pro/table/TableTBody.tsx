@@ -451,7 +451,17 @@ const Rows: FunctionComponent<RowsProps> = function Rows(props) {
   const rows: ReactNode[] = useComputed(() => (
     generateRows({ tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender }, hasCache)
   ), [currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, rowDragRender]);
-
+  useEffect(action(() => {
+    if (tableStore.actualRows !== undefined) {
+      tableStore.actualRows = undefined;
+    }
+    if (tableStore.rowMetaData) {
+      tableStore.rowMetaData = undefined;
+    }
+    if (tableStore.actualGroupRows) {
+      tableStore.actualGroupRows = 0;
+    }
+  }), [tableStore]);
   return cachedRows.length || rows.length ? (
     <>
       {cachedRows}
@@ -467,7 +477,7 @@ const ObserverRows = observer(Rows);
 const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props) {
   const { lock, columnGroups, ...rest } = props;
   const { prefixCls, tableStore, rowDragRender, dataSet, expandRowByClick, expandedRowRenderer } = useContext(TableContext);
-  const { virtual, rowDraggable } = tableStore;
+  const { rowDraggable } = tableStore;
   const expandIconColumnIndex = !expandRowByClick && (expandedRowRenderer || tableStore.isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number) => {
@@ -496,7 +506,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     }
   }, [lock, tableStore]);
 
-  const body = virtual ? (
+  const body = tableStore.propVirtual ? (
     <ObserverVirtualRows
       onClearCache={handleClearCache}
       expandIconColumnIndex={expandIconColumnIndex}
