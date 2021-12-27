@@ -25,7 +25,7 @@ const TableRowGroup: FunctionComponent<TableRowGroupProps> = function TableRowGr
       case ColumnLock.right:
         return columnGroups.rightLeafs.length;
       default:
-        return columnGroups.allLeafs.length;
+        return columnGroups.leafs.length;
     }
   })();
   const Cmp = tableStore.parityRow ? 'div' : 'tr';
