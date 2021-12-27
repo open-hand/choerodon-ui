@@ -143,29 +143,28 @@
     }
   }
   &-float-label & > ul {
-    margin-top: 0.06rem;
-    margin-bottom: @input-float-border-active-width;
     margin-left: 0.03rem;
+    padding: @input-float-multiple-padding;
 
     > li {
       display: inline-block;
       max-width: 99%;
-      height: 0.2rem;
-      margin-bottom: 0.02rem;
-      line-height: 0.2rem;
+      height: @input-float-tag-height-base;
+      margin-top: @input-float-tag-margin-vertical;
+      margin-bottom: @input-float-tag-margin-vertical;
+      padding: @input-float-tag-padding;
+      line-height: @input-float-tag-line-height-base;
       vertical-align: middle;
     }
   }
   &-float-label &-multiple-block {
     display: inline-block;
     max-width: 99%;
-    margin: 0 @input-float-border-active-width;
-    padding: 0 @input-float-border-active-width 0 0.08rem;
     overflow: hidden;
-    color: @tag-default-color;
+    color: @input-tag-default-color;
     line-height: @line-height-base;
     white-space: nowrap;
-    background-color: @tag-default-bg;
+    background-color: @input-tag-default-bg;
     border-radius: 0.12rem;
 
     > div {

@@ -46,6 +46,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed input length information display.
 - 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
 - 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
+- 🐞 `<pro>FormField`: Fix the problem that deleting a single value will clear all other values in the multiple and custom range mode.
 
 ## 1.5.0
 

@@ -7,6 +7,7 @@ import Spin from '../spin';
 import TableContext from './TableContext';
 import { toTransformValue } from '../_util/transform';
 import mergeProps from '../_util/mergeProps';
+import { isStickySupport } from './utils';
 
 export interface VirtualWrapperProps {
   children?: ReactNode;
@@ -15,7 +16,7 @@ export interface VirtualWrapperProps {
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
   const { children } = props;
   const { tableStore, prefixCls, virtualSpin, spinProps } = useContext(TableContext);
-  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling = false, actualGroupRows } = tableStore;
+  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling = false } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
   const [rowHeight, setRowHeight] = useState(virtualRowHeight);
   useEffect(action(() => {
@@ -44,10 +45,18 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
       setRowHeight(virtualRowHeight);
     }
   }), [virtualRowHeight, rowHeight, tableStore]);
-  const wrapperStyle: CSSProperties = actualGroupRows ?
-    { height: pxToRem(virtualHeight), paddingTop: pxToRem(virtualTop), pointerEvents: scrolling ? 'none' : undefined } :
-    { height: pxToRem(virtualHeight), pointerEvents: scrolling ? 'none' : undefined };
-  const style: CSSProperties = actualGroupRows ? { position: 'relative' } : { transform: toTransformValue({ translateY: pxToRem(virtualTop) }) };
+  const wrapperStyle: CSSProperties = { height: pxToRem(virtualHeight)! };
+  const style: CSSProperties = {};
+  if (scrolling) {
+    wrapperStyle.pointerEvents = 'none';
+  }
+  if (isStickySupport() && tableStore.actualGroupRows) {
+    wrapperStyle.paddingTop = pxToRem(virtualTop)!;
+    style.position = 'relative';
+  } else {
+    style.transform = toTransformValue({ translateY: pxToRem(virtualTop) });
+  }
+
   return (
     <>
       <div

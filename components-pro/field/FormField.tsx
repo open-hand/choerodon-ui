@@ -1200,21 +1200,22 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   removeValues(values: any[], index = 0) {
     let repeat: number;
-    this.setValue(
-      values.reduce((oldValues, value) => {
-        repeat = 0;
-        return oldValues.filter(v => {
-          if (this.getValueKey(v) === this.getValueKey(value)) {
-            if (index === -1 || repeat === index) {
-              this.afterRemoveValue(value, repeat++);
-              return false;
-            }
-            repeat++;
+    const newValues = values.reduce((oldValues, value) => {
+      repeat = 0;
+      const valueKey = this.getValueKey(value);
+      return oldValues.filter(v => {
+        if (this.getValueKey(v) === valueKey) {
+          if (index === -1 || repeat === index) {
+            this.afterRemoveValue(value, repeat++);
+            return false;
           }
-          return true;
-        });
-      }, this.getValues()),
-    );
+          repeat++;
+        }
+        return true;
+      });
+    }, this.getValues());
+    const { range } = this;
+    this.setValue(isArrayLike(range) ? newValues.map(v => fromRangeValue(v, range)) : newValues);
   }
 
   removeValue(value: any, index = 0) {
@@ -1365,7 +1366,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       isMultipleBlockDisabled: this.isMultipleBlockDisabled,
       processRenderer: this.processRenderer,
       renderValidationResult: this.renderValidationResult,
-      handleMutipleValueRemove: this.handleMutipleValueRemove,
+      handleMultipleValueRemove: this.handleMutipleValueRemove,
       isValidationMessageHidden: this.isValidationMessageHidden,
       showValidationMessage: this.showValidationMessage,
       getKey: this.getValueKey,
