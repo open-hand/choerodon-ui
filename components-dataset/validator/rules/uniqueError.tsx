@@ -100,7 +100,9 @@ export default function uniqueError(
               const newConfig = axiosConfigAdapter('validate', dataSet, { unique: [fields] });
               if (newConfig.url) {
                 const resultsPromise: any = dataSet.axios(newConfig);
-                return resultsPromise.then(results => [].concat(results).some(result => !result));
+                return resultsPromise.then(results => {
+                  return call([].concat(results).some(result => !result));
+                });
               }
             }
             return call(invalid);
