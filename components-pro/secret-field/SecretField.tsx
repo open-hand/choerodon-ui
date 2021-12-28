@@ -155,14 +155,12 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getInnerSpanButton(): ReactNode {
-    const { isSecretEnable, clearButton } = this;
-    if (clearButton) {
-      // 显示为脱敏组件时，禁用clearButton
-      if (isSecretEnable) {
-        return null;
-      }
-      // 显示为textField时，正常显示clearButton
-      return super.getInnerSpanButton();
+    const { isSecretEnable } = this;
+    // 显示为脱敏组件时，禁用clearButton
+    if (isSecretEnable) {
+      return null;
     }
+    // 显示为textField时，正常显示clearButton
+    return super.getInnerSpanButton();
   }
 }
