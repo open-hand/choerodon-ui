@@ -346,6 +346,7 @@ class App extends React.Component {
       { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
       { name: 'date.endDate', type: 'time', range: true, label: '结束日期', computedProps: { defaultValue: () => [moment(), moment()] } },
+      { name: 'bigNumberDemo', type: 'bigNumber', step: 2, max: '12345678901234567890', min: '-12345678901234567890', label: '大数据' },
     ],
     record: {
       dynamicProps: {
@@ -523,6 +524,7 @@ class App extends React.Component {
           lock
           sortable
         />
+        <Column name="bigNumberDemo" editor width={170} />
         <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
         <Column name="email" lock editor={<AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} />} />
         <Column name="phone" lock editor={renderPhoneEditor} width={150} renderer={renderPhone} />

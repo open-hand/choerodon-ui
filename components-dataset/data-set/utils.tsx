@@ -9,7 +9,7 @@ import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import { isEmpty, parseNumber, warning } from '../utils';
+import { isEmpty, parseNumber, warning, parseBigNumber } from '../utils';
 import Field, { FieldProps, Fields } from './Field';
 // import XLSX from 'xlsx';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
@@ -164,6 +164,9 @@ function processOne(value: any, field: Field, record?: Record, checkRange = true
           } else {
             value = undefined;
           }
+          break;
+        case FieldType.bigNumber:
+          value = parseBigNumber(value, field.get('precision', record));
           break;
         case FieldType.string:
         case FieldType.intl:
@@ -509,6 +512,7 @@ export function getBaseType(type: FieldType): FieldType {
     case FieldType.intl:
     case FieldType.url:
     case FieldType.email:
+    case FieldType.bigNumber:
       return FieldType.string;
     default:
       return type;

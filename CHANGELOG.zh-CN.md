@@ -25,6 +25,9 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 validateSelf 事件和 getAllValidationErrors 方法。
 - 🌟 `<pro>DataSet`: 新增 validationRules, strictPageSize 属性。
 - 🌟 `<pro>Lov`: 新增 selectionProps 属性。
+- 🌟 `<pro>NumberField`: 新增 stringMode 属性。
+- 🌟 `<pro>DataSet`: 新增 bigNumber 字段 type 。
+- 🌟 `configure`: 新增 bigNumberFormatter 属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。

@@ -1,11 +1,18 @@
 import { isMoment } from 'moment';
 import isNil from 'lodash/isNil';
+import { BigNumber } from 'bignumber.js';
 import { isEmpty, toRangeValue } from '../../utils';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
-const isUnderflow = (value, min, range) => {
+const isUnderflow = (value, min, range, isBigNumber) => {
+  if (isBigNumber) {
+    if (range) {
+      return toRangeValue(value, range).some(item => !isEmpty(item) && new BigNumber(item).isLessThan(min));
+    }
+    return new BigNumber(value).isLessThan(min);
+  }
   if (range) {
     return toRangeValue(value, range).some(item => !isEmpty(item) && Number(item) < Number(min));
   }
@@ -17,7 +24,8 @@ export default function rangeUnderflow(value: any, validatorBaseProps: Validator
     const min = getProp('min');
     if (!isNil(min)) {
       const range = getProp('range');
-      if (isUnderflow(value, min, range)) {
+      const stringMode = getProp('stringMode');
+      if (isUnderflow(value, min, range, stringMode)) {
         const format = getProp('format');
         const label = getProp('label');
         const injectionOptions = { min: isMoment(min) ? min.format(format) : min, label };
