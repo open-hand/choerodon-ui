@@ -12,6 +12,7 @@ import autobind from '../_util/autobind';
 import Icon from '../icon';
 import TaskRunner from '../_util/TaskRunner';
 import BUILT_IN_PLACEMENTS from './placements';
+import { hide } from '../tooltip/singleton';
 
 export interface TriggerFieldPopupContentProps {
   setValue: (value) => void;
@@ -170,6 +171,9 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
       this.statePopup = statePopup;
       const { onPopupHiddenChange = noop } = this.props;
       onPopupHiddenChange(!statePopup);
+      if (statePopup) {
+        hide();
+      }
     }
   }
 

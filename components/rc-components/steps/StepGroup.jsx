@@ -199,11 +199,11 @@ export default class Steps extends Component {
     const adjustedlabelPlacement = !!progressDot ? 'vertical' : labelPlacement;
     // 限制导航步骤条只能横向显示
     const isNavigation = type === 'navigation' && direction !== 'vertical';
-    const classString = classNames(`${prefixCls}-${direction}`, className, {
+    const classString = classNames(prefixCls, `${prefixCls}-${direction}`, className, {
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-label-${adjustedlabelPlacement}`]: direction === 'horizontal',
       [`${prefixCls}-dot`]: !!progressDot,
-      [`${prefixCls}-${isNavigation ? 'navigation' : 'default'}`]: 1
+      [`${prefixCls}-navigation`]: isNavigation
     });
     const menu = () => {
       return <div ref={dom => { this.menuRef = dom }}>
@@ -270,9 +270,13 @@ export default class Steps extends Component {
       return headerChildren.length > 0 ? <div className={`${prefixCls}-header`}>{headerChildren}</div> : null;
     }
 
+    const navCls = classNames({
+      [`${prefixCls}-navigation-container`]: isNavigation
+    })
+
     return (
-      <div className={`${prefixCls}`}>
-        <div className={classString} style={style} {...restProps} ref={ref => { this.navRef = ref }}>
+      <div className={isNavigation ? classString : undefined}>
+        <div className={isNavigation ? navCls : classString} style={style} {...restProps} ref={ref => { this.navRef = ref }}>
           {renderHeader(
             headerRender,
             headerText,
@@ -288,7 +292,7 @@ export default class Steps extends Component {
                 wrapperStyle: style,
                 progressDot,
                 onChange,
-                navigation: isNavigation,
+                navigation: isNavigation && filteredChildren.length - 1 !== index,
                 ...child.props,
               };
               /**

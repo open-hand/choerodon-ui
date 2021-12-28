@@ -24,7 +24,8 @@
     height: 0.01rem;
     margin: 0.24rem 0;
   }
-  &-horizontal&-with-text {
+  &-horizontal&-with-text,
+  &-horizontal&-with-text-center {
     display: table;
     margin: 0.16rem 0;
     color: @heading-color;
@@ -120,7 +121,10 @@
     background: none;
     border-top: @border-width-base dashed @border-color-split;
   }
-  &-horizontal&-with-text&-dashed {
+  &-horizontal&-with-text&-dashed,
+  &-horizontal&-with-text-center&-dashed,
+  &-horizontal&-with-text-left&-dashed,
+  &-horizontal&-with-text-right&-dashed {
     border-top: 0;
     &::before,
     &::after {

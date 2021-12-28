@@ -27,6 +27,7 @@ title: DataSet
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | true |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
+| strictPageSize | 严格分页大小, 前端将截断超出 pageSize 的数据 | boolean | true |
 | paging | 是否分页, `server` 主要为table的tree服务,约定total为根节点数目,index的定位都是基于根节点, 为`server`时候保证同时存在idField 和parentField(根节点为空或者undefind) 不然表现和原有版本一致 | boolean \| `server`| true |
 | dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null | rows |
 | totalKey | 查询返回的 json 中对应的总数的 key | string | total |
@@ -56,6 +57,7 @@ title: DataSet
 | cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |
 | combineSort | 是否开启组件列排序传参 | boolean | false |
 | forceValidate | 始终校验全部数据 | boolean | false |
+| validationRules | dataSet校验规则，详见[ValidationRule](#ValidationRule) | ValidationRule\[\] |  |
 
 ### DataSet Values
 
@@ -161,7 +163,8 @@ title: DataSet
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | modifiedCheck(message) | 变更检查。 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage |  |
 | setAllPageSelection(enabled) | 切换是否跨页全选。 | `enabled` - 是否开启 |  |
-| getValidationErrors() | 获取校验错误信息 |  |  |
+| getValidationErrors() | 获取records校验错误信息 |  |  |
+| getAllValidationErrors() | 获取所有校验错误信息 |  |  |
 
 ### DataSet Events
 
@@ -192,6 +195,7 @@ title: DataSet
 | beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 | 是 |
 | reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 记录集 | 是 |
 | validate | 校验事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果集 | 是 |
+| validateSelf | 校验dataSet事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果 | 是 |
 
 ### Record Props
 
@@ -267,8 +271,9 @@ title: DataSet
 | min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName | MIN_SAFE_INTEGER(number 类型) |
 | step | 步距 | number \| { hour: number, minute: number, second: number } |  |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
-| precision | 转换小数点位数 | number |  |
+| precision | 小数点精度, 提交时会截断 | number |  |
 | numberGrouping | 千分位分组显示 | boolean | true |
+| formatterOptions | 数字和货币格式化配置 | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |  |
 | validator | 校验器，当返回值为 false 或 涵盖错误信息的字符串，则为校验失败 | (value, name, record) =&gt; boolean \| string \| undefined |  |
 | required | 是否必选 | boolean | false |
 | readOnly | 是否只读 | boolean | false |
@@ -341,6 +346,25 @@ title: DataSet
 
 * 当 field 是通过 ds.getField 获取的字段时， 以上传了 record 参数的方法等同于调用了通过 record.getField 得到的 field 对应的方法。版本： 1.5.0+
 
+### Group Values
+
+| 名称     | 说明     | 类型                      |
+| -------- | -------- | ------------------------- |
+| name     | 分组名， 对应字段名   | readonly string           |
+| value    | 分组值， 对应字段值     | readonly any  |
+| records    | 分组数据集，若有子分组则为空数组     | Record[]  |
+| totalRecords    | 总数据集，涵盖所有子分组的数据集     | Record[]  |
+| subGroups    | 子分组     | Group[]  |
+| parent    | 父分组     | Group  |
+| index    | 索引     | number  |
+
+### Group Methods
+| 名称 | 说明 | 参数 | 返回值类型 |
+| --- | --- | --- | --- |
+| setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
+| getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
+
+
 ### Transport
 
 | 属性 | 说明 | 类型 |
@@ -398,3 +422,11 @@ title: DataSet
 | errorMessage   | 错误消息  | string |
 | invalid   | 检验失败，如果为true, 则无法重新上传  | boolean |
 | originFileObj   | 原始文件对象，只有通过上传按钮选择的附件才有该对象  | File |
+
+## ValidationRule
+
+| 属性                | 说明                                       | 类型     |
+| ------------------- | ------------------------------------------ | -------- |
+| name | 校验的名称，可选值：`minLength` `maxLength` | string |
+| value | 校验值 | number |
+| message | 校验提示内容  | string |

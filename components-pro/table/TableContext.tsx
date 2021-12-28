@@ -7,6 +7,7 @@ import Record from '../data-set/Record';
 import { DragRender, expandedRowRendererProps, onColumnResizeProps, onRowProps } from './Table';
 import { SelectionMode } from './enum';
 import ModalProvider from '../modal-provider';
+import { SpinProps } from '../spin';
 
 export interface TableContextProviderProps {
   code?: string;
@@ -28,6 +29,8 @@ export interface TableContextProviderProps {
   onShowCachedSelectionChange?: (showCachedSelection: boolean) => void;
   autoMaxWidth?: boolean;
   summary?: string;
+  virtualSpin?: boolean;
+  spinProps?: SpinProps;
 }
 
 export interface TableContextValue extends TableContextProviderProps {

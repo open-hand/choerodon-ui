@@ -1,18 +1,16 @@
 import React, { CSSProperties, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import ResizeObserver from 'resize-observer-polyfill';
 import raf from 'raf';
 import { observer } from 'mobx-react';
-import defaultTo from 'lodash/defaultTo';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
-import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
-import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
-import { action, get, IReactionDisposer, reaction, runInAction, toJS } from 'mobx';
+import { action, observable, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
   DraggableProps,
@@ -24,10 +22,12 @@ import {
   ResponderProvided,
 } from 'react-beautiful-dnd';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { isCalcSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
+import Animate from 'choerodon-ui/lib/animate';
+import Icon from 'choerodon-ui/lib/icon';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
@@ -43,11 +43,14 @@ import Spin, { SpinProps } from '../spin';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import { TableContextProvider } from './TableContext';
 import TableWrapper from './TableWrapper';
+import Profiler from './Profiler';
 import TableTBody from './TableTBody';
+import ExpandableTableTBody from './ExpandableTableTBody';
 import TableFooter from './TableFooter';
 import {
   ColumnLock,
   DragColumnAlign,
+  GroupType,
   HighLightRowType,
   RowBoxPlacement,
   ScrollPosition,
@@ -70,6 +73,7 @@ import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import {
   findCell,
   findIndexedSibling,
+  findRow,
   getHeight,
   getPaginationPosition,
   isCanEdictingRow,
@@ -87,6 +91,14 @@ import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames } from '../data-set/utils';
+import mergeProps from '../_util/mergeProps';
+
+export type TableGroup = {
+  name: string;
+  type: GroupType;
+  hidden?: boolean;
+  columnProps?: ColumnProps;
+}
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode };
 
@@ -419,9 +431,19 @@ export interface TableProps extends DataSetComponentProps {
   showQueryBar?: boolean;
   /**
    * 行高
-   * @default 31
+   * @default 30
    */
   rowHeight?: number | 'auto';
+  /**
+   * 头行高
+   * @default rowHeight
+   */
+  headerRowHeight?: number | 'auto';
+  /**
+   * 脚行高
+   * @default rowHeight
+   */
+  footerRowHeight?: number | 'auto';
   /**
    * 默认行是否展开，当dataSet没有设置expandField时才有效
    * @default false;
@@ -506,6 +528,10 @@ export interface TableProps extends DataSetComponentProps {
    * 可编辑列标题
    */
   columnTitleEditable?: boolean;
+  /**
+   * 可设置高度
+   */
+  heightChangeable?: boolean;
   /**
    * 显示原始值
    */
@@ -630,6 +656,7 @@ export interface TableProps extends DataSetComponentProps {
    */
   clientExportQuantity?: number;
   /**
+   * @deprecated
    * 可以修改由于样式导致的虚拟高度和rowHeight不一致
    */
   virtualRowHeight?: number;
@@ -657,6 +684,34 @@ export interface TableProps extends DataSetComponentProps {
    * 动态筛选条编码
    */
   searchCode?: string;
+  /**
+   * 分组
+   */
+  groups?: TableGroup[];
+  /**
+   * 横向滚动事件
+   */
+  onScrollLeft?: (left: number) => void;
+  /**
+   * 纵向滚动事件
+   */
+  onScrollTop?: (top: number) => void;
+  /**
+   * 表格体是否可展开
+   */
+  bodyExpandable?: boolean;
+  /**
+   * 默认表格体是否展开
+   */
+  defaultBodyExpanded?: boolean;
+  /**
+   * 表格体是否展开
+   */
+  bodyExpanded?: boolean;
+  /**
+   * 表格体展开变更事件
+   */
+  onBodyExpand?: (expanded: boolean) => void;
 }
 
 @observer
@@ -838,7 +893,6 @@ export default class Table extends DataSetComponent<TableProps> {
     autoMaxWidth: true,
     autoFootHeight: false,
     clientExportQuantity: 100,
-    aggregation: false,
     showSelectionCachedButton: true,
     showHeader: true,
   };
@@ -857,19 +911,21 @@ export default class Table extends DataSetComponent<TableProps> {
 
   tableFootWrap: HTMLDivElement | null;
 
+  tableContentWrap: HTMLDivElement | null;
+
   fixedColumnsBodyLeft: HTMLDivElement | null;
 
   fixedColumnsBodyRight: HTMLDivElement | null;
 
   lastScrollLeft: number;
 
-  refSpin: HTMLDivElement | null;
-
   wrapperWidth: number[] = [];
 
   wrapperWidthTimer?: number;
 
-  bodyHeightReaction?: IReactionDisposer;
+  resizeObserver?: ResizeObserver;
+
+  @observable showDataSetError?: boolean;
 
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls } = this;
@@ -893,13 +949,13 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
-  saveVirtualSpinRef(node: HTMLDivElement | null) {
-    this.refSpin = node;
+  saveResizeRef(node: HTMLDivElement | null) {
+    this.resizeLine = node;
   }
 
   @autobind
-  saveResizeRef(node: HTMLDivElement | null) {
-    this.resizeLine = node;
+  saveContentRef(node) {
+    this.tableContentWrap = node;
   }
 
   useFocusedClassName() {
@@ -948,6 +1004,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
+  @action
   handleDataSetLoad() {
     const { tableStore } = this;
     if (tableStore.performanceEnabled) {
@@ -985,10 +1042,10 @@ export default class Table extends DataSetComponent<TableProps> {
             }
           }
           const [{ field: { name } }] = errors;
-          if (tableStore.virtual && !tableStore.virtualData.includes(record)) {
+          if (tableStore.virtual && !findRow(tableStore, record)) {
             const { tableBodyWrap } = this;
             if (tableBodyWrap) {
-              tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
+              tableBodyWrap.scrollTop = record.index * tableStore.virtualEstimatedRowHeight;
             }
           }
           raf(() => {
@@ -1000,6 +1057,16 @@ export default class Table extends DataSetComponent<TableProps> {
         }
       }
     }
+  }
+
+  @autobind
+  handleDataSetSelfValidate({ valid }: { valid: boolean; }) {
+    this.showDataSetError = !valid;
+  }
+
+  @autobind
+  handleDataSetReset() {
+    this.clearError();
   }
 
   @autobind
@@ -1320,6 +1387,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'buttons',
       'buttonsLimit',
       'rowHeight',
+      'headerRowHeight',
+      'footerRowHeight',
       'queryFields',
       'queryFieldsLimit',
       'summaryFieldsLimit',
@@ -1379,6 +1448,13 @@ export default class Table extends DataSetComponent<TableProps> {
       'onAggregationChange',
       'showRemovedRow',
       'searchCode',
+      'groups',
+      'onScrollLeft',
+      'onScrollTop',
+      'bodyExpandable',
+      'defaultBodyExpanded',
+      'bodyExpanded',
+      'onBodyExpanded',
     ]);
   }
 
@@ -1424,7 +1500,7 @@ export default class Table extends DataSetComponent<TableProps> {
   /**
    * 获取传入的 Spin props
    */
-  getSpinProps() {
+  getSpinProps(): SpinProps {
     const { spin, dataSet } = this.props;
     if (spin && !isUndefined(spin.spinning)) return { ...spin };
     const { loading } = this.tableStore;
@@ -1442,11 +1518,11 @@ export default class Table extends DataSetComponent<TableProps> {
 
   componentWillMount() {
     this.initDefaultExpandedRows();
-    this.connect();
   }
 
   componentDidMount() {
     super.componentDidMount();
+    this.connect();
     this.syncSize();
     this.syncSizeInFrame();
   }
@@ -1463,48 +1539,71 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.scrollId !== undefined) {
       raf.cancel(this.scrollId);
     }
-    const { bodyHeightReaction } = this;
-    if (bodyHeightReaction) {
-      bodyHeightReaction();
+  }
+
+  @autobind
+  @action
+  syncParentSize(entries: ResizeObserverEntry[]) {
+    const [entry] = entries;
+    const { contentRect: { height } } = entry;
+    const { tableStore, element, wrapper } = this;
+    const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
+    if (wrapperHeight !== height) {
+      tableStore.parentHeight = height;
+      tableStore.parentPaddingTop =
+        (element as HTMLDivElement).getBoundingClientRect().top - (entry.target as HTMLDivElement).getBoundingClientRect().top;
     }
   }
 
   connect() {
     this.processDataSetListener(true);
-    const { style } = this.props;
-    const { maxHeight, minHeight } = style || {};
-    if (this.tableStore.heightType === TableHeightType.flex || (isString(maxHeight) && isCalcSize(maxHeight)) || (isString(minHeight) && isCalcSize(minHeight))) {
+    const { styleMaxHeight, styleMinHeight, styleHeight, heightType } = this.tableStore;
+    if ((isString(styleHeight) && isPercentSize(styleHeight)) || (isString(styleMaxHeight) && isPercentSize(styleMaxHeight)) || (isString(styleMinHeight) && isPercentSize(styleMinHeight))) {
+      const { wrapper } = this;
+      if (wrapper) {
+        const { parentNode } = wrapper;
+        if (parentNode) {
+          const resizeObserver = new ResizeObserver(this.syncParentSize);
+          resizeObserver.observe(parentNode);
+          this.resizeObserver = resizeObserver;
+        }
+      }
+    }
+    if (heightType === TableHeightType.flex || (isString(styleMaxHeight) && isCalcSize(styleMaxHeight)) || (isString(styleMinHeight) && isCalcSize(styleMinHeight))) {
       window.addEventListener('resize', this.handleWindowResize, false);
     }
   }
 
   disconnect() {
+    const { resizeObserver } = this;
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      delete this.resizeObserver;
+    }
     this.processDataSetListener(false);
     window.removeEventListener('resize', this.handleWindowResize, false);
   }
 
   processDataSetListener(flag: boolean) {
-    const { isTree, dataSet, inlineEdit, performanceEnabled } = this.tableStore;
+    const { dataSet, inlineEdit } = this.tableStore;
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
-      if (isTree || performanceEnabled) {
-        handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
-      }
+      handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
       if (inlineEdit) {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
+      handler.call(dataSet, DataSetEvents.validateSelf, this.handleDataSetSelfValidate);
+      handler.call(dataSet, DataSetEvents.reset, this.handleDataSetReset);
     }
   }
 
   render() {
     const {
-      tableStore: { virtual, overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      tableStore: { overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
         dataSet,
-        style,
         treeQueryExpanded,
-        spin,
         virtualSpin,
         buttons,
         buttonsLimit,
@@ -1539,9 +1638,8 @@ export default class Table extends DataSetComponent<TableProps> {
     } = this;
     const content = this.getTable();
     const pagination = this.getPagination(TablePaginationPosition.top);
-    const tableSpinProps = this.getContextConfig('tableSpinProps');
+    const tableSpinProps = mergeProps(this.getContextConfig('tableSpinProps'), this.getSpinProps());
     const tableButtonsLimit = isNil(buttonsLimit) ? this.getContextConfig('tableButtonsLimit') : buttonsLimit;
-    const styleHeight = style ? toPx(style.height) : 0;
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
         <div {...this.getWrapperProps()}>
@@ -1564,6 +1662,8 @@ export default class Table extends DataSetComponent<TableProps> {
             autoMaxWidth={autoMaxWidth}
             pristine={pristine}
             summary={summary}
+            virtualSpin={virtualSpin}
+            spinProps={tableSpinProps}
             isTree={mode === TableMode.tree}
           >
             {this.getHeader()}
@@ -1583,32 +1683,12 @@ export default class Table extends DataSetComponent<TableProps> {
               treeQueryExpanded={treeQueryExpanded}
               searchCode={searchCode}
             />
-            <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
-              {
-                virtual && virtualSpin && (
-                  <div
-                    ref={this.saveVirtualSpinRef}
-                    style={{ display: 'none' }}
-                  >
-                    <Spin
-                      key="virtual"
-                      spinning
-                      style={{
-                        height: pxToRem(styleHeight),
-                        lineHeight: pxToRem(styleHeight),
-                        position: 'absolute',
-                        width: '100%',
-                        zIndex: 4,
-                      }}
-                      {...tableSpinProps}
-                      {...spin}
-                    />
-                  </div>
-                )
-              }
+            {this.getValidationErrors()}
+            <Spin {...tableSpinProps} key="content">
               <div {...this.getOtherProps()}>
                 <div
                   className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
+                  ref={this.saveContentRef}
                   onScroll={this.handleBodyScroll}
                 >
                   {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
@@ -1677,16 +1757,6 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  /**
-   * 滚动结束隐藏spin
-   */
-  setSpin = debounce(() => {
-    const { refSpin } = this;
-    if (refSpin) {
-      refSpin.style.display = 'none';
-    }
-  }, 300);
-
   handleBodyScrollTop(e, currentTarget) {
     const { target } = e;
     const { tableStore } = this;
@@ -1699,35 +1769,13 @@ export default class Table extends DataSetComponent<TableProps> {
     ) {
       return;
     }
-    const fixedColumnsBodyLeft = this.fixedColumnsBodyLeft;
-    const bodyTable = this.tableBodyWrap;
-    const fixedColumnsBodyRight = this.fixedColumnsBodyRight;
     const { scrollTop } = target;
-    if (scrollTop !== tableStore.lastScrollTop) {
-      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
-        fixedColumnsBodyLeft.scrollTop = scrollTop;
-      }
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollTop = scrollTop;
-      }
-      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
-        fixedColumnsBodyRight.scrollTop = scrollTop;
-      }
-      const { refSpin } = this;
-      if (refSpin) {
-        refSpin.style.display = 'block';
-        this.setSpin();
-      }
-      this.tableStore.setLastScrollTop(scrollTop);
-    }
+    this.setScrollTop(scrollTop, target);
   }
 
   handleBodyScrollLeft(e, currentTarget) {
     const { target } = e;
     const { tableStore } = this;
-    const headTable = this.tableHeadWrap;
-    const bodyTable = this.tableBodyWrap;
-    const footTable = this.tableFootWrap;
     if (
       !tableStore.overflowX ||
       currentTarget !== target ||
@@ -1737,36 +1785,13 @@ export default class Table extends DataSetComponent<TableProps> {
       return;
     }
     const { scrollLeft } = target;
-    if (scrollLeft !== this.lastScrollLeft) {
-      if (isStickySupport()) {
-        tableStore.editors.forEach((editor) => {
-          if (editor.lock && editor.cellNode) {
-            if (tableStore.inlineEdit) {
-              editor.alignEditor(editor.cellNode);
-            } else {
-              editor.hideEditor();
-            }
-          }
-        });
-      }
-      if (headTable && target !== headTable) {
-        headTable.scrollLeft = scrollLeft;
-      }
-      if (bodyTable && target !== bodyTable) {
-        bodyTable.scrollLeft = scrollLeft;
-      }
-      if (footTable && target !== footTable) {
-        footTable.scrollLeft = scrollLeft;
-      }
-      this.setScrollPositionClassName(target);
-    }
-    this.lastScrollLeft = scrollLeft;
+    this.setScrollLeft(scrollLeft, target);
   }
 
   setScrollPositionClassName(target?: any): void {
     const { tableStore } = this;
     if (tableStore.isAnyColumnsLock && tableStore.overflowX) {
-      const node = target || this.tableBodyWrap;
+      const node = target || this.tableBodyWrap || this.tableContentWrap;
       if (node) {
         const scrollToLeft = node.scrollLeft === 0;
         const table = node.querySelector('table');
@@ -1809,54 +1834,7 @@ export default class Table extends DataSetComponent<TableProps> {
       return tableStore.columnGroups;
     })();
 
-    return tableStore.virtual ? (
-      <>
-        {
-          hasHeader && (
-            <TableWrapper
-              key="tableWrapper-header"
-              lock={lock}
-              hasBody={hasBody}
-              hasHeader={hasHeader}
-              hasFooter={hasFooter}
-              columnGroups={columnGroups}
-            >
-              {this.getTableHeader(lock)}
-            </TableWrapper>
-          )
-        }
-        {
-          hasBody && (
-            <VirtualWrapper>
-              <TableWrapper
-                key="tableWrapper-body"
-                lock={lock}
-                hasBody={hasBody}
-                hasHeader={hasHeader}
-                hasFooter={hasFooter}
-                columnGroups={columnGroups}
-              >
-                {this.getTableBody(columnGroups, lock)}
-              </TableWrapper>
-            </VirtualWrapper>
-          )
-        }
-        {
-          hasFooter && (
-            <TableWrapper
-              key="tableWrapper-footer"
-              lock={lock}
-              hasBody={hasBody}
-              hasHeader={hasFooter}
-              hasFooter={hasFooter}
-              columnGroups={columnGroups}
-            >
-              {this.getTableFooter(columnGroups, lock)}
-            </TableWrapper>
-          )
-        }
-      </>
-    ) : (
+    return (
       <TableWrapper
         key="tableWrapper"
         lock={lock}
@@ -1928,11 +1906,11 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getTable(lock?: ColumnLock): ReactNode {
     const { props, tableStore } = this;
-    const { overflowX, heightType, hasFooter: footer } = tableStore;
+    const { overflowX, heightType, hasFooter: footer, virtual } = tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
-    if ((!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType) || tableStore.height !== undefined) {
+    if (virtual || (!isStickySupport() && overflowX) || [TableHeightType.flex, TableHeightType.fixed].includes(heightType) || tableStore.height !== undefined) {
       const { prefixCls } = this;
       let tableHeadRef;
       let tableBodyRef;
@@ -1969,6 +1947,7 @@ export default class Table extends DataSetComponent<TableProps> {
         </div>
       );
       if (lock !== ColumnLock.right || !onlyCustomizedColumn(tableStore)) {
+        const body = this.renderTable(false, true, false, lock);
         tableBody = (
           <TableBody
             key="tableBody"
@@ -1977,7 +1956,7 @@ export default class Table extends DataSetComponent<TableProps> {
             onScroll={this.handleBodyScroll}
             style={pick(props.style, ['maxHeight', 'minHeight'])}
           >
-            {this.renderTable(false, true, false, lock)}
+            {virtual ? <VirtualWrapper>{body}</VirtualWrapper> : body}
           </TableBody>
         );
       }
@@ -2018,13 +1997,14 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableBody(columnGroups: ColumnGroups, lock?: ColumnLock): ReactNode {
-    const { tableStore: { rowDraggable } } = this;
-    const body = <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
+    const { tableStore: { rowDraggable, performanceEnabled }, props: { bodyExpandable } } = this;
+    const body = bodyExpandable ? <ExpandableTableTBody  key="tbody" lock={lock} columnGroups={columnGroups} /> : <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
+    const bodyWithProfiler = performanceEnabled ? <Profiler>{body}</Profiler> : body;
     return rowDraggable ? (
       <DragDropContext onDragEnd={this.handleDragEnd}>
-        {body}
+        {bodyWithProfiler}
       </DragDropContext>
-    ) : body;
+    ) : bodyWithProfiler;
   }
 
   getTableHeader(lock?: ColumnLock): ReactNode {
@@ -2052,109 +2032,23 @@ export default class Table extends DataSetComponent<TableProps> {
     this.nextFrameActionId = raf(this.syncSize.bind(this, width));
   }
 
-  getComputedHeight() {
-    const {
-      wrapper, element, tableBodyWrap,
-      tableStore: {
-        autoHeight,
-        customized: { heightType, height, heightDiff },
-        tempCustomized,
-      },
-    } = this;
-    const tempHeightType = get(tempCustomized, 'heightType');
-    if (tempHeightType) {
-      if (tempHeightType === TableHeightType.fixed) {
-        return get(tempCustomized, 'height');
-      }
-      if (tempHeightType === TableHeightType.flex) {
-        return document.documentElement.clientHeight - (get(tempCustomized, 'heightDiff') || 0);
-      }
-      return undefined;
-    }
-    if (heightType) {
-      if (heightType === TableHeightType.fixed) {
-        return height;
-      }
-      if (heightType === TableHeightType.flex) {
-        return document.documentElement.clientHeight - (heightDiff || 0);
-      }
-      return undefined;
-    }
-    if (autoHeight) {
-      const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
-      const { paddingBottom } = document.defaultView ? document.defaultView.getComputedStyle(wrapper.parentNode) : { paddingBottom: 0 };
-      const { top: tableTop } = element.getBoundingClientRect();
-      const { diff, type } = autoHeight;
-      const paddingBottomPx = toPx(paddingBottom) || 0;
-      if (wrapper) {
-        if (type === TableAutoHeightType.minHeight) {
-          return parentHeight - (tableTop - parentTop) - diff - paddingBottomPx;
-        }
-        const maxHeight = parentHeight - (tableTop - parentTop) - diff - paddingBottomPx;
-        // 保证max高度和Height维持一致防止scroll问题 maxHeight - 外框paddingBottom 以及 diff 和其他 tableBody 以外的高度。
-        if (tableBodyWrap) {
-          let maxBodyHeight = maxHeight;
-          const { prefixCls } = this;
-          const tableHeader: HTMLTableSectionElement | null = element.querySelector(
-            `.${prefixCls}-thead`,
-          );
-          const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
-          if (tableHeader) {
-            maxBodyHeight -= getHeight(tableHeader);
-          }
-          if (tableFooter) {
-            maxBodyHeight -= getHeight(tableFooter);
-          }
-          tableBodyWrap.style.maxHeight = pxToRem(maxBodyHeight) || '';
-        }
-        return maxHeight || 0;
-      }
-    }
-    return this.getStyleHeight();
-  }
-
   @autobind
   @action
   syncSize(width: number = this.getWidth()) {
-    const { element, tableStore, bodyHeightReaction } = this;
+    const { element, tableStore } = this;
     if (tableStore.hidden || !element.offsetParent) {
       return;
     }
-    if (bodyHeightReaction) {
-      bodyHeightReaction();
-      delete this.bodyHeightReaction;
-    }
     if (element) {
       tableStore.width = Math.floor(width);
-      const { style } = this.props;
-      const maxHeight = style && toPx(style.maxHeight);
-      const minHeight = style && toPx(style.minHeight);
-      const computedHeight = this.getComputedHeight();
-      const isComputedHeight = isNumber(computedHeight);
-      if (isComputedHeight || isNumber(maxHeight) || isNumber(minHeight)) {
-        const { prefixCls } = this;
-        const { rowHeight } = tableStore;
-        const tableHeader: HTMLTableSectionElement | null = element.querySelector(
-          `.${prefixCls}-thead`,
-        );
-        const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
-        const headerHeight = tableHeader ? getHeight(tableHeader) : 0;
-        const footerHeight = tableFooter ? getHeight(tableFooter) : 0;
-        const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + headerHeight + footerHeight;
-        const minTotalHeight = minHeight ? Math.max(
-          rowMinHeight,
-          minHeight,
-        ) : rowMinHeight;
-        const height = defaultTo(computedHeight, tableStore.bodyHeight + headerHeight + footerHeight);
-        const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : height);
-        tableStore.totalHeight = totalHeight;
-        tableStore.height = isComputedHeight || totalHeight !== height ? totalHeight - headerHeight - footerHeight : undefined;
-        if (!isComputedHeight) {
-          this.bodyHeightReaction = reaction(() => tableStore.bodyHeight, () => this.syncSize());
-        }
-      } else {
-        tableStore.height = undefined;
-      }
+      const { prefixCls } = this;
+      const tableHeader: HTMLTableSectionElement | null = element.querySelector(
+        `.${prefixCls}-thead`,
+      );
+      const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+      tableStore.screenHeight = document.documentElement.clientHeight;
+      tableStore.headerHeight = tableHeader ? getHeight(tableHeader) : 0;
+      tableStore.footerHeight = tableFooter ? getHeight(tableFooter) : 0;
     }
     this.setScrollPositionClassName();
   }
@@ -2190,5 +2084,95 @@ export default class Table extends DataSetComponent<TableProps> {
       return wrapper.offsetWidth;
     }
     return 0;
+  }
+
+  setScrollTop(scrollTop: number, target?: HTMLElement) {
+    const { tableStore } = this;
+    if (scrollTop !== tableStore.lastScrollTop) {
+      const { fixedColumnsBodyLeft, tableBodyWrap, fixedColumnsBodyRight, tableContentWrap } = this;
+      if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
+        fixedColumnsBodyLeft.scrollTop = scrollTop;
+      }
+      if (tableBodyWrap && target !== tableBodyWrap) {
+        tableBodyWrap.scrollTop = scrollTop;
+      }
+      if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
+        fixedColumnsBodyRight.scrollTop = scrollTop;
+      }
+      if (tableContentWrap && target !== tableContentWrap) {
+        tableContentWrap.scrollTop = scrollTop;
+      }
+      tableStore.setLastScrollTop(scrollTop);
+      if (target) {
+        const { onScrollTop = noop } = this.props;
+        onScrollTop(scrollTop);
+      }
+    }
+  }
+
+  setScrollLeft(scrollLeft: number, target?: HTMLElement) {
+    if (scrollLeft !== this.lastScrollLeft) {
+      const { tableStore } = this;
+      const { tableHeadWrap, tableBodyWrap, tableFootWrap, tableContentWrap } = this;
+      if (isStickySupport()) {
+        tableStore.editors.forEach((editor) => {
+          if (editor.lock && editor.cellNode) {
+            if (tableStore.inlineEdit) {
+              editor.alignEditor(editor.cellNode);
+            } else {
+              editor.hideEditor();
+            }
+          }
+        });
+      }
+      if (tableHeadWrap && target !== tableHeadWrap) {
+        tableHeadWrap.scrollLeft = scrollLeft;
+      }
+      if (tableBodyWrap && target !== tableBodyWrap) {
+        tableBodyWrap.scrollLeft = scrollLeft;
+      }
+      if (tableFootWrap && target !== tableFootWrap) {
+        tableFootWrap.scrollLeft = scrollLeft;
+      }
+      if (tableContentWrap && target !== tableContentWrap) {
+        tableContentWrap.scrollLeft = scrollLeft;
+      }
+      this.setScrollPositionClassName(target);
+      this.lastScrollLeft = scrollLeft;
+      if (target) {
+        const { onScrollLeft = noop } = this.props;
+        onScrollLeft(scrollLeft);
+      }
+    }
+  }
+
+  getValidationErrors(): ReactNode {
+    const { validationSelfErrors: error } = this.props.dataSet;
+    const showError = this.showDataSetError && error && error.length;
+
+    return (
+      <Animate
+        transitionName="slide-down"
+        className={classNames(`${this.prefixCls}-error`)}
+        hiddenProp="hidden"
+        component="div"
+      >
+        {
+          showError && (<div hidden={!showError} className={classNames(`${this.prefixCls}-error-content`)}>
+            <div>
+              <Icon type="cancel" />
+              {error ? error[0].message : null}
+            </div>
+            <Icon type="close" onClick={this.clearError} />
+          </div>)
+        }
+      </Animate>
+    );
+  }
+
+  @autobind
+  @action
+  clearError() {
+    this.handleDataSetSelfValidate({ valid: true });
   }
 }

@@ -27,7 +27,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Record from '../data-set/Record';
-import { ColumnProps } from './Column';
+import { ColumnProps, ColumnRenderProps } from './Column';
 import TableContext from './TableContext';
 import { TableButtonProps } from './Table';
 import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
@@ -66,6 +66,7 @@ import useComputed from '../use-computed';
 import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
 import { iteratorReduce } from '../_util/iteratorUtils';
+import { Group } from '../data-set/DataSet';
 
 let inTab = false;
 
@@ -77,10 +78,12 @@ export interface TableCellInnerProps {
   inAggregation?: boolean;
   prefixCls?: string;
   colSpan?: number;
+  headerGroup?: Group;
+  rowGroup?: Group;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCellInner(props) {
-  const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan } = props;
+  const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan, headerGroup, rowGroup } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -90,12 +93,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const { name, key, lock, renderer, command, align } = column;
   const columnKey = getColumnKey(column);
   const height = record.getState(`__column_resize_height_${name}`);
-  const { currentEditRecord, isTree } = tableStore;
+  const { currentEditRecord } = tableStore;
   const field = dataSet.getField(name);
   const fieldDisabled = disabled || (field && field.get('disabled', record));
   const innerRef = useRef<HTMLSpanElement | null>(null);
   const prefixRef = useRef<HTMLSpanElement | null>(null);
-  const [paddingLeft, setPaddingLeft] = useState<number>(indentSize * record.level);
+  const [paddingLeft, setPaddingLeft] = useState<number>(children ? indentSize * record.level : 0);
   const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
       return command({ dataSet, record, aggregation });
@@ -381,7 +384,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     return renderer;
   }, [columnCommand, cellEditorInCell, renderEditor, renderCommand, renderer, field, aggregation]);
   const prefixStyle = useMemo(() => {
-    if (!aggregation) {
+    if (!aggregation || !tableStore.hasAggregationColumn) {
       if (height !== undefined && rows === 0) {
         return {
           height: pxToRem(height),
@@ -446,7 +449,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         dataSet,
         name,
         repeat,
-      });
+        headerGroup,
+        rowGroup,
+      } as ColumnRenderProps);
     };
     if (field) {
       if (!cellEditorInCell) {
@@ -623,20 +628,23 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
 
   useEffect(() => {
     // 兼容Table Tree模式嵌套过深样式
-    if (isTree && prefixRef.current) {
-      const parentWidth = prefixRef.current.parentElement!.clientWidth;
-      const prefixWidth = prefixRef.current.offsetWidth;
-      if (prefixWidth > parentWidth) {
-        setPaddingLeft(paddingLeft - (prefixWidth - parentWidth));
+    const { current } = prefixRef;
+    if (children && current) {
+      const { parentElement, offsetWidth: prefixWidth } = current;
+      if (parentElement) {
+        const parentWidth = parentElement.clientWidth;
+        if (prefixWidth > parentWidth) {
+          setPaddingLeft(paddingLeft - (prefixWidth - parentWidth));
+        }
       }
     }
-  }, [prefixRef, paddingLeft, setPaddingLeft, isTree]);
+  }, [children, prefixRef, paddingLeft, setPaddingLeft]);
 
   const indentText = children && (
     <span style={{ paddingLeft: pxToRem(paddingLeft) }} />
   );
 
-  const prefix = (indentText || children || checkBox) && (
+  const prefix = children && (
     <span key="prefix" className={`${prefixCls}-prefix`} style={prefixStyle} ref={prefixRef}>
       {indentText}
       {children}

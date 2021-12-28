@@ -93,7 +93,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props
     if (columnTitleEditable && record.get('titleEditable') !== false) {
       menus.push(<Item key="rename">{$l('Table', 'rename')}</Item>);
     }
-    if (columnDraggable) {
+    if (columnDraggable && record.get('draggable') !== false) {
       if (!record.parent) {
         if (lock) {
           menus.push(<Item key="unlock">{$l('Table', 'unlock')}</Item>);

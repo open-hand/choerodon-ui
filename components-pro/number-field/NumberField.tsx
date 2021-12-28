@@ -6,6 +6,7 @@ import isString from 'lodash/isString';
 import isPlainObject from 'lodash/isPlainObject';
 import defaultTo from 'lodash/defaultTo';
 import isNil from 'lodash/isNil';
+import { FormatNumberFuncOptions } from 'choerodon-ui/dataset/data-set/Field';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
@@ -80,10 +81,7 @@ const stepDownMouseProps: KeepRunningProps = {
 
 export type FormatNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions) => string;
 
-export type FormatNumberFuncOptions = {
-  lang?: string | undefined;
-  options: Intl.NumberFormatOptions;
-};
+export { FormatNumberFuncOptions };
 
 export interface NumberFieldProps<V = number> extends TextFieldProps<V> {
   /**

@@ -504,7 +504,7 @@ class Trigger extends Component {
     if (childCallback) {
       childCallback(domEvent);
     }
-    if (!e.isDefaultPrevented()) {
+    if (!domEvent.isDefaultPrevented()) {
       const callback = this.props[type];
       if (callback) {
         callback(domEvent);

@@ -12,7 +12,16 @@ import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import { FormField, FormFieldProps } from '../field/FormField';
 import TableContext, { TableContextValue } from './TableContext';
-import { findCell, findIndexedSibling, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isInCellEditor, isStickySupport } from './utils';
+import {
+  findCell,
+  findIndexedSibling,
+  findRow,
+  getColumnKey,
+  getEditorByColumnAndRecord,
+  getEditorByField,
+  isInCellEditor,
+  isStickySupport,
+} from './utils';
 import { stopEvent } from '../_util/EventManager';
 import { ShowHelp } from '../field/enum';
 import autobind from '../_util/autobind';
@@ -100,31 +109,45 @@ export default class TableEditor extends Component<TableEditorProps> {
     }
   }
 
+  connect() {
+    const {
+      tableStore,
+    } = this.context;
+    const { dataSet, virtual } = tableStore;
+    if (virtual) {
+      this.reaction = reaction(() => [tableStore.virtualVisibleStartIndex, tableStore.virtualVisibleEndIndex], () => (
+        dataSet.current && findRow(tableStore, dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
+      ));
+    } else {
+      this.reaction = reaction(() => dataSet.current, r => (
+        r && this.cellNode ? raf(() => this.alignEditor()) : this.hideEditor()
+      ));
+    }
+  }
+
+  disconnect() {
+    if (this.reaction) {
+      this.reaction();
+    }
+  }
+
   componentDidMount() {
     const { column: { name } } = this.props;
     if (name) {
       const {
         tableStore,
       } = this.context;
-      const { dataSet, currentEditRecord, editors, inlineEdit, virtual } = tableStore;
+      const { dataSet, currentEditRecord, editors } = tableStore;
       const record = currentEditRecord || dataSet.current;
       const field = dataSet.getField(name);
       if (field && field.get('multiLine', record)) {
         window.addEventListener('click', this.handleWindowClick);
       }
       window.addEventListener('resize', this.handleWindowResize);
-      editors.set(name, this);
-      if (inlineEdit) {
+      if (tableStore.inlineEdit) {
         this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? raf(() => this.alignEditor()) : this.hideEditor());
-      } else if (virtual) {
-        this.reaction = reaction(() => tableStore.virtualData, (records) => (
-          dataSet.current && records.includes(dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
-        ));
-      } else {
-        this.reaction = reaction(() => dataSet.current, r => (
-          r && this.cellNode ? raf(() => this.alignEditor()) : this.hideEditor()
-        ));
       }
+      editors.set(name, this);
     }
   }
 
@@ -135,9 +158,7 @@ export default class TableEditor extends Component<TableEditorProps> {
       editors.delete(name);
       window.removeEventListener('resize', this.handleWindowResize);
       window.removeEventListener('click', this.handleWindowClick);
-      if (this.reaction) {
-        this.reaction();
-      }
+      this.disconnect();
     }
   }
 
@@ -314,10 +335,13 @@ export default class TableEditor extends Component<TableEditorProps> {
   @action
   alignEditor(cellNode?: HTMLSpanElement | undefined) {
     const { wrap, editor } = this;
+    const { tableStore } = this.context;
     if (!cellNode) {
-      const { tableStore } = this.context;
       const { column } = this.props;
       cellNode = findCell(tableStore, getColumnKey(column));
+    }
+    if (!this.cellNode && !tableStore.inlineEdit) {
+      this.connect();
     }
     this.cellNode = cellNode;
     if (cellNode) {
@@ -359,6 +383,9 @@ export default class TableEditor extends Component<TableEditorProps> {
         }
       }
       this.cellNode = undefined;
+      if (!tableStore.inlineEdit) {
+        this.disconnect();
+      }
     }
   }
 

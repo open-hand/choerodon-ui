@@ -57,6 +57,7 @@ import { BooleanValue, DataSetEvents, DataSetSelection, FieldIgnore, FieldType, 
 import { treeReduce } from '../tree-helper';
 import { iteratorReduce, iteratorSome } from '../iterator-helper';
 import ValidationResult from '../validator/ValidationResult';
+import { AttachmentCache } from '../stores/AttachmentStore';
 
 /**
  * 记录ID生成器
@@ -176,6 +177,8 @@ export default class Record {
 
   @observable lookupTokens?: ObservableMap<string, string | undefined> | undefined;
 
+  @observable attachmentCaches?: ObservableMap<string, AttachmentCache>;
+
   computedFieldProps?: Map<string | symbol, IComputedValue<any>>;
 
   lastDynamicFieldProps?: Map<string, { [key: string]: any } | undefined>;
@@ -244,6 +247,7 @@ export default class Record {
     return this.dataSet.isAllPageSelection;
   }
 
+  @computed
   get isSelected(): boolean {
     if (this.isDataSetInAllPageSelection) {
       return !this.getState(UNSELECT_KEY);
@@ -438,7 +442,9 @@ export default class Record {
 
   @computed
   get path(): Record[] {
-    return [...this.parents, this];
+    const path = [this, ...this.parents];
+    path.reverse();
+    return path;
   }
 
   get level(): number {

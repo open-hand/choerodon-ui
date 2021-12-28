@@ -16,6 +16,7 @@ import { observer } from 'mobx-react-lite';
 import { action, get, reaction, remove, set } from 'mobx';
 import classNames from 'classnames';
 import defer from 'lodash/defer';
+import isNumber from 'lodash/isNumber';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { useInView } from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -37,24 +38,63 @@ import useComputed from '../use-computed';
 import ColumnGroups from './ColumnGroups';
 import ColumnGroup from './ColumnGroup';
 import { iteratorSome } from '../_util/iteratorUtils';
+import { Group } from '../data-set/DataSet';
+import VirtualRowMetaData from './VirtualRowMetaData';
+
+function getGroupByPath(group: Group, groupPath: [Group, boolean][]): Group | undefined {
+  const { subGroups } = group;
+  if (groupPath.length) {
+    const path = groupPath.shift();
+    if (path && subGroups.length) {
+      const subGroup = subGroups.find(sub => sub.value === path[0].value);
+      if (subGroup) {
+        return getGroupByPath(subGroup, groupPath);
+      }
+      return undefined;
+    }
+  }
+  return group;
+}
+
+function getRecord(columnGroup: ColumnGroup, groupPath: [Group, boolean][] | undefined, index: number, record: Record): Record | undefined {
+  const { headerGroup } = columnGroup;
+  if (headerGroup && groupPath) {
+    const group = getGroupByPath(headerGroup, groupPath.slice());
+    if (group) {
+      return group.totalRecords[index];
+    }
+    return undefined;
+  }
+  return record;
+}
 
 const VIRTUAL_HEIGHT = '__VIRTUAL_HEIGHT__';
 
 export interface TableRowProps extends ElementProps {
-  lock?: ColumnLock | boolean;
+  lock?: ColumnLock | boolean | undefined;
+  isExpanded?: boolean | undefined;
   columnGroups: ColumnGroups;
   record: Record;
   index: number;
-  snapshot?: DraggableStateSnapshot;
-  provided?: DraggableProvided;
+  virtualIndex?: number | undefined;
+  headerGroupIndex?: number | undefined;
+  expandIconColumnIndex?: number | undefined;
+  snapshot?: DraggableStateSnapshot | undefined;
+  provided?: DraggableProvided | undefined;
+  groupPath?: [Group, boolean][] | undefined;
+  metaData?: VirtualRowMetaData;
+  children?: ReactNode;
 }
 
 const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
-  const { record, hidden, index, provided, snapshot, className, lock, columnGroups, children } = props;
+  const {
+    record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, className, lock, columnGroups,
+    children, groupPath, expandIconColumnIndex, metaData,
+  } = props;
   const context = useContext(TableContext);
   const {
-    tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow, aggregation, rowHeight,
-    expandIconAsCell, expandedRowRenderer, expandRowByClick, isTree, canTreeLoadData,
+    tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow,
+    expandIconAsCell, expandedRowRenderer, isTree, canTreeLoadData,
   } = context;
   const {
     highLightRow,
@@ -68,14 +108,14 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const { id, key: rowKey } = record;
   const needIntersection = !hidden && tableStore.virtualCell;
   const { ref: intersectionRef, inView, entry } = useInView({
-    root: needIntersection && tableStore.overflowY ? node.tableBodyWrap || node.element : undefined,
+    root: needIntersection && tableStore.overflowY ? node.tableBodyWrap || node.element : null,
     rootMargin: '100px',
     initialInView: index <= 10,
   });
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
-  const needSaveRowHeight = isStickySupport() ? false : (!lock && (rowHeight === 'auto' || (aggregation && tableStore.hasAggregationColumn) || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
+  const needSaveRowHeight = isStickySupport() ? tableStore.propVirtual : (!lock && (!tableStore.isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
   const rowExternalProps: any = useComputed(() => ({
     ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
     ...(typeof onRow === 'function'
@@ -99,16 +139,32 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     return !!expandedRowRenderer || (isTree && (!!record.children || (canTreeLoadData && !isLoaded)));
   })();
 
-  const setRowHeight = useCallback(action((key: Key, height: number | undefined) => {
-    set(tableStore.lockColumnsBodyRowsHeight, key, height);
-  }), [tableStore]);
+  const setRowHeight = useCallback(action((key: Key, height: number) => {
+    if (tableStore.propVirtual) {
+      const { rowHeight } = tableStore;
+      if (height > (isNumber(rowHeight) ? rowHeight : 20)) {
+        if (metaData) {
+          if (Math.abs(metaData.height - height) > 1) {
+            tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
+          }
+        } else if ((tableStore.actualRowHeight === undefined || (tableStore.isFixedRowHeight && Math.abs(tableStore.actualRowHeight - height) > 1))) {
+          tableStore.actualRowHeight = height;
+        }
+      }
+    }
+    if (!isStickySupport()) {
+      set(tableStore.lockColumnsBodyRowsHeight, key, height);
+    }
+  }), [tableStore, metaData]);
 
   const saveRef = useCallback(action((row: HTMLTableRowElement | null) => {
     rowRef.current = row;
-    if (row && needSaveRowHeight) {
-      setRowHeight(rowKey, row.offsetHeight);
-    } else if (get(tableStore.lockColumnsBodyRowsHeight, rowKey)) {
-      remove(tableStore.lockColumnsBodyRowsHeight, rowKey);
+    if (needSaveRowHeight) {
+      if (row) {
+        setRowHeight(rowKey, row.offsetHeight);
+      } else if (!isStickySupport() && get(tableStore.lockColumnsBodyRowsHeight, rowKey)) {
+        remove(tableStore.lockColumnsBodyRowsHeight, rowKey);
+      }
     }
     if (provided) {
       provided.innerRef(row);
@@ -116,7 +172,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     if (needIntersection && typeof intersectionRef === 'function') {
       intersectionRef(row);
     }
-  }), [rowRef, intersectionRef, needIntersection, needSaveRowHeight, rowKey, provided]);
+  }), [rowRef, intersectionRef, needIntersection, needSaveRowHeight, rowKey, provided, setRowHeight]);
 
   const handleMouseEnter = useCallback(() => {
     if (highLightRow) {
@@ -310,7 +366,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
         );
       }
       if (isValidElement<ExpandedRowProps>(children)) {
-        expandRows.push(cloneElement(children, { isExpanded, key: `${rowKey}-expanded-rows` }));
+        expandRows.push(cloneElement(children, { parentExpanded: isExpanded, key: `${rowKey}-expanded-rows` }));
       }
       return expandRows;
     }
@@ -342,22 +398,20 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     );
   };
 
-  const hasExpandIcon = (columnIndex: number) => {
-    return (
-      !expandRowByClick &&
-      (expandedRowRenderer || isTree) &&
-      (lock === ColumnLock.right ? columnIndex + columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : columnIndex) === tableStore.expandIconColumnIndex
-    );
-  };
+  const hasExpandIcon = (columnIndex: number) => (
+    expandIconColumnIndex !== undefined && expandIconColumnIndex > -1 && (columnIndex + expandIconColumnIndex) === tableStore.expandIconColumnIndex
+  );
 
   const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => (
     <TableCell
       columnGroup={columnGroup}
-      record={record}
+      record={headerGroupIndex === undefined ? record : getRecord(columnGroup, groupPath, headerGroupIndex, record)}
       isDragging={snapshot ? snapshot.isDragging : false}
       lock={lock}
       provided={rest.key === DRAG_KEY ? provided : undefined}
       inView={needIntersection ? inView : undefined}
+      groupPath={groupPath}
+      rowIndex={virtualIndex === undefined ? index : virtualIndex}
       {...rest}
     >
       {hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined}
@@ -428,18 +482,17 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   } else if (selectionMode === SelectionMode.mousedown) {
     rowProps.onMouseDown = handleSelectionByMouseDown;
   }
+  const rowStyle = {
+    ...style,
+  };
   if (rowDraggable && provided) {
     Object.assign(rowProps, provided.draggableProps);
-    rowProps.style = {
-      ...provided.draggableProps.style, ...style,
-      width: Math.max(tableStore.columnGroups.width, tableStore.width || 0),
-    };
+    Object.assign(rowStyle, provided.draggableProps.style, style);
+    rowStyle.width = Math.max(tableStore.columnGroups.width, tableStore.width || 0);
     if (!dragColumnAlign) {
-      rowProps.style!.cursor = 'move';
+      rowStyle.cursor = 'move';
       Object.assign(rowProps, provided.dragHandleProps);
     }
-  } else if (style) {
-    rowProps.style = { ...style };
   }
 
   useEffect(() => {
@@ -452,20 +505,17 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   }, [needIntersection, record, inView]);
 
   const height = needIntersection && (inView !== true || !columnGroups.inView) ? entry ? pxToRem(entry.boundingClientRect.height) :
-    pxToRem((record.getState(VIRTUAL_HEIGHT) || (rowHeight === 'auto' ? 30 : rowHeight)) * (aggregation && tableStore.hasAggregationColumn ? 4 : 1)) : lock ?
+    pxToRem((record.getState(VIRTUAL_HEIGHT) || tableStore.virtualEstimatedRowHeight)) : lock ?
     pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number) : undefined;
   if (height) {
-    if (rowProps.style) {
-      rowProps.style.height = height;
-    } else {
-      rowProps.style = { height };
-    }
+    rowStyle.height = height;
   }
   const tr = (
     <Element
       key={rowKey}
       {...rowExternalProps}
       {...rowProps}
+      style={rowStyle}
     >
       {getColumns()}
     </Element>

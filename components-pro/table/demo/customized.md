@@ -147,7 +147,7 @@ class App extends React.Component {
       >
         <Column header="组合">
           <Column header="子组合">
-            <Column name="userid" title="ID" header={(ds, name, title) => <i>{title}</i>} tooltip="always" />
+            <Column name="userid" title="ID" header={({ ds, name, title }) => <i>{title}</i>} tooltip="always" />
             <Column name="name" tooltip="overflow" renderer={this.renderName} />
           </Column>
         </Column>

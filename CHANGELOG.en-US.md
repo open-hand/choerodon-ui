@@ -15,12 +15,41 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableHeightChangeable` property. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.
+- 🌟 `<pro>Table`: Added `groups`, `headerRowHeight`, `footerRowHeight`, `onScrollLeft`, `onScrollTop`, `heightChangeable`, `bodyExpandable`, `defaultBodyExpanded`, `bodyExpanded`, `onBodyExpand` properties, `setScrollLeft`, `setScrollTop` instance methods.
+- 🌟 `<pro>Transfer`: Added properties of `oneWay`.
+- 🌟 `<pro>Table.Column`: Added `aggregationLimitDefaultExpanded`, `defaultWidth` properties.
+- 🌟 `<pro>TextArea`: Added `clearButton` property.
+- 🌟 `<pro>DataSet`: Added `validateSelf` event and `getAllValidationErrors` method.
+- 🌟 `<pro>DataSet`: Added `validationRules`, `strictPageSize` properties.
+- 🌟 `<pro>Lov`: Added `selectionProps` property.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
+- 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
+- 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
+- 💄 `<pro>TextArea`: Optimize the `autoSize` initialization style.
+- 💄 `<pro>TextField`: Optimize the style when setting the `clearButton` `showLengthInfo` `suffix` properties at the same time.
+- 💄 `<pro>Tree`: Support the display of drag icon through `draggable.icon` property control.
+- 💄 `<pro>Lov`: Optimize sorting of selected list.
+- 💄 `<pro>Table`: Optimize virtual scrolling and support tree-shaped virtual scrolling.
+- 💄 `<pro>Attachment`: Optimize caching logic.
+- 🐞 `<pro>Table`: Fix the problem that the virtual scroll will be fully rendered for the first time when only `maxHeight` is set in style.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.
 - 🐞 `<pro>Button`: Fix the problem that the `href` button can be jumped when the href button is `disabled`.
+- 🐞 `Notification`: Fix the problem that multiple messages opened at different times will be closed at the same time.
+- 🐞 `Divider`: Fix an issue with the dashed attribute of Divider.
+- 🐞 `Menu`: Fix an issue where mouse moves into collapsed Menu reports errors.
+- 🐞 `<pro>DataSet`: Fix the issue of export failure.
+- 🐞 `<pro>DataSet`: Fix the problem that `selected` value will be recomputed after record state changed.
+- 🐞 `<pro>DataSet.Transport`: Fix the problem that the verification information is not displayed when unique cooperates with Transport.validate for remote uniqueness verification.
+- 🐞 `<pro>TextArea`: Fixed input length information display.
+- 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
+- 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
+- 🐞 `<pro>FormField`: Fix the problem that deleting a single value will clear all other values in the multiple and custom range mode.
+- 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
+
 
 ## 1.5.0
 

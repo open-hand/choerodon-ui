@@ -68,14 +68,15 @@ const prefixCls = getConfig('prefixCls');
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false || pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
-| tableColumnResizable | Default Table column resizable | boolean | true |
-| tableColumnHideable | Default Table column hideable | boolean | true |
+| tableColumnResizable | Default Table columnResizable | boolean | true |
+| tableColumnHideable | Default Table columnHideable | boolean | true |
 | performanceTableColumnHideable | 默认 performanceTable 列可调整显示 | boolean | true |
-| tableColumnTitleEditable | Default Table column title editable | boolean | false |
+| tableColumnTitleEditable | Default Table columnTitleEditable | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |
-| tableColumnDraggable | Default Table column draggable| boolean | false |
+| tableColumnDraggable | Default Table columnDraggable| boolean | false |
+| tableHeightChangeable | Default Table heightChangeable| boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
-| tableRowDraggable | Default Table row draggable | boolean | false |
+| tableRowDraggable | Default Table rowDraggable | boolean | false |
 | tableDragColumnAlign | Default align of Table row drag handler | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | tableColumnOnCell | Custom cell property configuration | (dataSet, record, column) => object | - |
@@ -119,8 +120,10 @@ const prefixCls = getConfig('prefixCls');
 | textFieldAutoComplete | 全局配置textField的autoComplete属性 | 可选值: `on` `off` |  |
 | resultStatusRenderer | custom status render，you can add status renderer or cover status renderer, support the gloabal config | object-> {string:react.ReactNode} | - |
 | numberFieldNonStrictStep | 全局配置 NumberField 的 nonStrictStep 属性 | boolean | false |
-| numberFieldFormatter | NumberField格式器   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
-| numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
+| numberFieldFormatter | NumberField格式器   | FormatNumberFunc: (value: string, lang: string, options: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)) => string |        |
+| numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |        |
+| currencyFormatter | Currency格式器   | FormatNumberFunc: (value: string, lang: string, options: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)) => string |        |
+| currencyFormatterOptions | Currency格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |        |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
 | showInvalidDate | 显示无效日期 | boolean |  |
 | showRequiredColorsOnlyEmpty | 只有在空值时显示必填背景色和边框色 | boolean |  |

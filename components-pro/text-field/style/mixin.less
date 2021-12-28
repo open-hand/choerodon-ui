@@ -159,6 +159,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    display: flex;
+    align-items: center;
     max-width: 100%;
     height: @input-height-base;
     margin: auto 0;
@@ -295,16 +297,21 @@
 
   > ul {
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 100%;
     margin: 0;
-    padding: 0.02rem 0 0 0;
+    padding: @input-multiple-padding;
     overflow: hidden auto;
 
     > li, span {
       display: inline-block;
       max-width: 99%;
-      height: 0.24rem;
-      margin-bottom: 0.02rem;
-      line-height: 0.22rem;
+      height: @input-tag-height-base;
+      margin-top: @input-tag-margin-vertical;
+      margin-bottom: @input-tag-margin-vertical;
+      line-height: @input-tag-line-height-base;
       vertical-align: middle;
     }
   }
@@ -332,7 +339,7 @@
   }
 
   &-multiple & {
-    height: auto;
+    height: @input-multiple-height-base;
     min-height: @input-height-base;
     margin: 0;
     padding-top: 0;
@@ -341,10 +348,12 @@
   }
 
   &-multiple&-lg & {
+    height: @input-multiple-height-lg;
     min-height: @input-height-lg;
   }
 
   &-multiple&-sm & {
+    height: @input-multiple-height-sm;
     min-height: @input-height-sm;
   }
 
@@ -377,7 +386,6 @@
     &-text {
       position: relative;
       display: block;
-      width: 100%;
       height: 100%;
       white-space: nowrap;
     }
@@ -667,8 +675,8 @@
 .tag-block() {
   display: inline-block;
   max-width: 99%;
-  margin: 0 0.02rem;
-  padding: 0 0.08rem;
+  margin: @tag-margin;
+  padding: @tag-padding;
   overflow: hidden;
   color: @input-tag-default-color;
   line-height: @line-height-base;
