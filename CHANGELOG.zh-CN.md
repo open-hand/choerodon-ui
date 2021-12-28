@@ -15,12 +15,40 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 tableHeightChangeable 属性, attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
+- 🌟 `<pro>Table`: 新增 groups, headerRowHeight, footerRowHeight, onScrollLeft, onScrollTop, heightChangeable, bodyExpandable, defaultBodyExpanded, bodyExpanded, onBodyExpand 属性, setScrollLeft, setScrollTop 实例方法。
+- 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded, defaultWidth 属性。
+- 🌟 `<pro>Transfer`: 新增 oneWay 单向穿梭属性。
+- 🌟 `<pro>TextArea`: 新增 clearButton 属性。
+- 🌟 `<pro>DataSet`: 新增 validateSelf 事件和 getAllValidationErrors 方法。
+- 🌟 `<pro>DataSet`: 新增 validationRules, strictPageSize 属性。
+- 🌟 `<pro>Lov`: 新增 selectionProps 属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
+- 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
+- 💄 `Upload`: 优化图片列表上传时显示 loading 图标。
+- 💄 `<pro>TextArea`: 优化 autoSize 初始化样式。
+- 💄 `<pro>TextField`: 优化同时设置 clearButton showLengthInfo suffix 属性时的样式。
+- 💄 `<pro>Tree`: 支持通过配置 draggable.icon 属性展示拖拽图标。
+- 💄 `<pro>Lov`: 优化选中列表的排序。
+- 💄 `<pro>Table`: 优化虚拟滚动并支持树形虚拟滚动。
+- 💄 `<pro>Attachment`: 优化缓存逻辑。
+- 🐞 `<pro>Table`: 修复 style 只设置了 maxHeight 时虚拟滚动首次渲染会全量渲染的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。
-- 🐞 `<pro>Button`: 修复 href 按钮禁用状态下任可跳转的问题。
+- 🐞 `<pro>Button`: 修复 href 按钮禁用状态下仍可跳转的问题。
+- 🐞 `Notification`: 修复多个非同时打开的消息会同时关闭的问题。
+- 🐞 `Divider`: 修复分割线标题不居中时使用 dashed 属性出现bug的问题。
+- 🐞 `Menu`: 修复菜单收起时鼠标移入 Menu.Item 时报错的问题。
+- 🐞 `<pro>DataSet`: 修复导出失效问题。
+- 🐞 `<pro>DataSet`: 修复当 Record 变更 state 时， selected 值会重新计算的问题。
+- 🐞 `<pro>DataSet.Transport`: 修复 unique 配合 Transport.validate 进行远程唯一性校验时，校验信息不展示的问题。
+- 🐞 `<pro>TextArea`: 修复已输入长度信息显示。
+- 🐞 `<pro>Table`: 修复过滤条内布尔变量渲染值错误。
+- 🐞 `<pro>Lov`: 修复 button 模式下关闭弹窗后按钮没有聚焦的问题。
+- 🐞 `<pro>FormField`: 修复在多选自定义范围值模式下删除单个值会清除所有值的问题。
+- 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。
 
 ## 1.5.0
 

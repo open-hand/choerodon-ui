@@ -39,7 +39,7 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   border?: boolean;
   preview?: boolean;
   previewUrl?: string;
-  downloadUrl?: string;
+  downloadUrl?: string | Function;
   previewTarget?: string;
   objectFit?: ObjectFitProperty;
   objectPosition?: ObjectPositionProperty<string | 0>;
@@ -52,7 +52,7 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
 
 export interface PictureRef {
   src?: string | undefined;
-  downloadUrl?: string | undefined;
+  downloadUrl?: string | Function | undefined;
 }
 
 export interface PictureForwardRef {

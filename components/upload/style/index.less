@@ -304,6 +304,30 @@
       line-height: 1;
     }
   }
+  
+  &-picture {
+    .@{upload-item}-uploading {
+      .@{upload-item}-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .@{upload-item}-span {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+
+        .@{c7n-prefix}-progress-loading {
+          padding-left: 14px;
+        }
+
+        .@{upload-item}-name {
+          padding-left: 14px;
+        }
+      }
+    }
+  }
 
   &-picture-card {
     display: inline;

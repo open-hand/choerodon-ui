@@ -1,5 +1,6 @@
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
+import isNil from 'lodash/isNil';
 import cssUnitConverter from 'css-unit-converter';
 
 export function pxToRem(num?: number | string | null): string | undefined {
@@ -33,16 +34,27 @@ const builtInHeight = [
 const calcReg = /^calc\(([^()]*)\)$/;
 const unitReg = /^([+-]?[\d]+(?:[.][\d]+)?(?:[Ee][+-]?[\d]+)?)([^\d.+-]+)$/;
 
+function defaultTo(value: number | undefined | null, callback: () => number): number {
+  if (isNil(value)) {
+    return callback();
+  }
+  return value;
+}
+
 export function isCalcSize(num: string) {
   return num.match(calcReg);
 }
 
-export function toPx(num?: number | string | null): number | undefined {
+export function isPercentSize(num: string) {
+  return num.indexOf('%') !== -1;
+}
+
+export function toPx(num?: number | string | null, getRelationSize?: (unit: 'vh' | 'vw' | '%' | 'em') => number | undefined): number | undefined {
   if (num !== undefined && num !== null) {
     if (isNumber(num)) {
       return num;
     }
-    if (isString(num) && !builtInHeight.includes(num) && !num.endsWith('%')) {
+    if (isString(num) && !builtInHeight.includes(num)) {
       const calcMatches = isCalcSize(num);
       if (calcMatches) {
         try {
@@ -50,10 +62,10 @@ export function toPx(num?: number | string | null): number | undefined {
           return list.slice(1).reduce<number | undefined>((result, calc, index, array) => {
             if (index % 2 === 1) {
               /* eslint-disable-next-line no-eval */
-              return eval(`${result}${array[index - 1]}${toPx(calc)}`);
+              return eval(`${result}${array[index - 1]}${toPx(calc, getRelationSize)}`);
             }
             return result;
-          }, toPx(list[0]));
+          }, toPx(list[0], getRelationSize));
         } catch (e) {
           console.error(`Invalid property value in "${num}".`);
           return undefined;
@@ -65,19 +77,32 @@ export function toPx(num?: number | string | null): number | undefined {
         if (n) {
           const number = Number(n);
           if (u && u !== 'px') {
-            if (u === 'vh') {
-              return document.documentElement.clientHeight * number / 100;
-            }
-            if (u === 'vw') {
-              return document.documentElement.clientWidth * number / 100;
-            }
-            if (['rem', 'em'].includes(u)) {
-              return number * 100;
-            }
-            try {
-              return cssUnitConverter(number, u, 'px');
-            } catch (e) {
-              return undefined;
+            switch (u) {
+              case '%': {
+                const parentPx = getRelationSize && getRelationSize('%');
+                if (parentPx !== undefined) {
+                  return parentPx * number / 100;
+                }
+                return undefined;
+              }
+              case 'vh': {
+                const viewHeight = defaultTo(getRelationSize && getRelationSize('vh'), () => document.documentElement.clientHeight);
+                return viewHeight * number / 100;
+              }
+              case 'vw': {
+                const viewWidth = defaultTo(getRelationSize && getRelationSize('vw'), () => document.documentElement.clientWidth);
+                return viewWidth * number / 100;
+              }
+              case 'rem':
+                return number * defaultTo(toPx(window.getComputedStyle(document.documentElement).fontSize), () => 100);
+              case 'em':
+                return number * defaultTo(getRelationSize && getRelationSize('em'), () => defaultTo(toPx(window.getComputedStyle(document.body).fontSize), () => 12));
+              default:
+                try {
+                  return cssUnitConverter(number, u, 'px');
+                } catch (e) {
+                  return undefined;
+                }
             }
           }
           return number;

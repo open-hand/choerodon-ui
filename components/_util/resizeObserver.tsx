@@ -56,7 +56,7 @@ class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
 
   onResize: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
     const { onResize, resizeProp, boxSize } = this.props;
-    const entry = entries[0];
+    const [entry] = entries;
     const {
       target,
       contentRect,

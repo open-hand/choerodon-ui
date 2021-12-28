@@ -2,7 +2,7 @@ import React, { isValidElement, Key, ReactElement, ReactNode } from 'react';
 import { DraggingStyle, DropResult, NotDraggingStyle } from 'react-beautiful-dnd';
 import isString from 'lodash/isString';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { ColumnProps } from './Column';
+import { ColumnProps, HeaderHookOptions } from './Column';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { FieldType, RecordStatus } from '../data-set/enum';
@@ -29,7 +29,7 @@ import ColorPicker from '../color-picker/ColorPicker';
 import Output from '../output/Output';
 import Attachment from '../attachment/Attachment';
 import SecretField from '../secret-field/SecretField';
-import DataSet from '../data-set/DataSet';
+import DataSet, { Group } from '../data-set/DataSet';
 import TableStore, { CUSTOMIZED_KEY } from './TableStore';
 import { TablePaginationConfig } from './Table';
 import { $l } from '../locale-context';
@@ -192,6 +192,12 @@ export function isStickySupport(): boolean {
   return true;
 }
 
+export function findRow(tableStore: TableStore, record: Record): HTMLTableRowElement | null {
+  const { node } = tableStore;
+  const selector = `tr[data-index="${record.id}"]`;
+  return node.element.querySelector(selector);
+}
+
 export function findCell(
   tableStore: TableStore,
   name?: Key,
@@ -250,21 +256,42 @@ export function isSelectedRow(record: Record) {
   return record.isSelected;
 }
 
-export function getHeader(column: ColumnProps, dataSet: DataSet, aggregation?: boolean): ReactNode {
-  const { header, name, title } = column;
-  if (typeof header === 'function') {
-    return header(dataSet, name, title, aggregation);
-  }
-  if (title !== undefined) {
-    return title;
-  }
-  if (header !== undefined) {
-    return header;
-  }
+function getLabel(dataSet, name) {
   const field = dataSet.getField(name);
   if (field) {
     return field.get('label');
   }
+}
+
+export interface HeaderOptions extends ColumnProps {
+  dataSet: DataSet;
+  group?: Group | undefined;
+}
+
+export function getHeader(column: HeaderOptions): ReactNode {
+  const { header, name, title, dataSet, aggregation, group } = column;
+  if (header !== undefined) {
+    if (typeof header === 'function') {
+      const $title = title === undefined ? getLabel(dataSet, name) : title;
+      const options: HeaderHookOptions = {
+        dataSet,
+        name,
+        title: $title,
+        aggregation,
+        group,
+      };
+      try {
+        return header(options, name, $title, aggregation);
+      } catch (e) {
+        return header(dataSet, name, $title, aggregation);
+      }
+    }
+    return header;
+  }
+  if (title !== undefined) {
+    return title;
+  }
+  return getLabel(dataSet, name);
 }
 
 export function getColumnKey({ name, key }: ColumnProps): Key {

@@ -3,13 +3,12 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { NotificationManager } from 'choerodon-ui/shared';
+import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { NotificationInterface } from 'choerodon-ui/shared/notification-manager';
 import Animate from '../animate';
-import createChainedFunction from '../rc-components/util/createChainedFunction';
 import Notice, { NoticeProps } from './Notice';
-import Alert from '../alert';
 import { getNoticeLocale } from './locale';
 import EventManager from '../_util/EventManager';
 import { getStyle } from '../rc-components/util/Dom/css';
@@ -65,6 +64,7 @@ export interface NotificationProps {
 export interface NotificationState {
   notices: NoticeProps[];
   scrollHeight: string | number;
+  totalHeight: number;
   offset: number;
 }
 
@@ -94,14 +94,15 @@ export default class Notification extends PureComponent<NotificationProps, Notif
 
   scrollEvent: any;
 
-  noticesHeight: number;
+  isRemove: boolean;
 
   state: NotificationState = {
     notices: [],
     scrollHeight: 'auto',
+    totalHeight: 0,
     offset: 0,
   };
-  
+
 
   componentDidMount() {
     if (this.scrollRef) {
@@ -109,7 +110,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
         this.setState({
           offset: e.target.scrollTop,
         });
-      }, 200)
+      }, 200);
       this.scrollEvent = new EventManager(this.scrollRef);
       this.scrollEvent.addEventListener('scroll', debouncedResize);
     }
@@ -134,7 +135,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
     const { foldCount } = this.props;
     if (this.scrollRef && !!foldCount) {
       const childSpan = this.scrollRef.firstChild;
-      if (!childSpan) return
+      if (!childSpan) return;
       const childNodes = childSpan.childNodes;
       const lastNode = childNodes[childNodes.length - 1] as HTMLDivElement;
 
@@ -144,24 +145,24 @@ export default class Notification extends PureComponent<NotificationProps, Notif
           const element = childNodes[i] as HTMLDivElement;
           totalHeight += element.offsetHeight + getStyle(element, 'margin-bottom');
         }
-        this.noticesHeight = totalHeight;
         const scrollHeight = (totalHeight / childNodes.length) * (foldCount + 0.5);
         this.setState(
           {
             scrollHeight,
-          },
-          () => {
-            scrollIntoView(lastNode, {
-              block: 'center',
-              behavior: 'smooth',
-              scrollMode: 'if-needed',
-              boundary: this.scrollRef,
-            });
-          },
-        );
+            totalHeight,
+          }, () => {
+            if (!this.isRemove) {
+              scrollIntoView(lastNode, {
+                block: 'center',
+                behavior: 'smooth',
+                scrollMode: 'if-needed',
+                boundary: this.scrollRef,
+              });
+            }
+          });
       }
     }
-  }
+  };
 
   add(notice: NoticeProps) {
     if (!notice.key) {
@@ -175,6 +176,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
         if (maxCount && notices && notices.length > 0 && notices.length >= maxCount) {
           notices.shift();
         }
+        this.isRemove = false;
         return {
           ...previousState,
           notices: notices.concat(notice),
@@ -184,9 +186,13 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   }
 
   remove(key: Key) {
+    const { foldCount } = this.props;
     this.setState(previousState => {
+      this.isRemove = true;
+      const notices = previousState.notices.filter(notice => notice.key !== key);
       return {
-        notices: previousState.notices.filter(notice => notice.key !== key),
+        notices,
+        scrollHeight: foldCount && notices.length <= foldCount ? 'auto' : previousState.scrollHeight,
       };
     });
   }
@@ -196,39 +202,47 @@ export default class Notification extends PureComponent<NotificationProps, Notif
       notices: [],
       scrollHeight: 'auto',
     });
-  }
+  };
+
+  handleNoticeClose = (eventKey): void => {
+    const { notices } = this.state;
+    const notice = notices.find(({ key }) => key === eventKey);
+    this.remove(eventKey);
+    if (notice) {
+      const { onClose = noop } = notice;
+      onClose(eventKey);
+    }
+  };
 
   render() {
-    const { notices, scrollHeight, offset } = this.state;
+    const { notices, scrollHeight, offset, totalHeight } = this.state;
     const { contentClassName, prefixCls, closeIcon, className, style, foldCount } = this.props;
-    const noticeNodes = notices.map(notice => {
-      const { key } = notice;
-      const onClose = createChainedFunction(this.remove.bind(this, key), notice.onClose);
-      return (
-        <Notice
-          prefixCls={prefixCls}
-          contentClassName={contentClassName}
-          {...notice}
-          onClose={onClose}
-          closeIcon={closeIcon}
-          key={key}
-          foldable={!!foldCount}
-          offset={offset}
-          scrollHeight={scrollHeight}
-        />
-      );
-    });
+    const noticeNodes = notices.map((notice) => (
+      <Notice
+        prefixCls={prefixCls}
+        contentClassName={contentClassName}
+        {...notice}
+        onClose={this.handleNoticeClose}
+        closeIcon={closeIcon}
+        key={notice.key}
+        eventKey={notice.key}
+        foldable={!!foldCount}
+        offset={offset}
+        scrollHeight={scrollHeight}
+      />
+    ));
     const cls = classNames(`${prefixCls}`, className, [{
       [`${prefixCls}-fold`]: !!foldCount,
+      [`${prefixCls}-fold-hidden`]: !notices.length,
       [`${prefixCls}-before-shadow`]: !!foldCount && notices.length > foldCount && offset > 0,
       [`${prefixCls}-after-shadow`]:
         foldCount && notices.length > foldCount &&
-        Math.abs(this.noticesHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 1,
+        Math.abs(totalHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 1,
     }]);
 
     const scrollCls = classNames({
       [`${prefixCls}-scroll`]: !!foldCount,
-    })
+    });
 
     const runtimeLocale = getNoticeLocale();
 
@@ -249,12 +263,10 @@ export default class Notification extends PureComponent<NotificationProps, Notif
         </div>
 
         {foldCount && notices.length > foldCount && (
-          <Alert
-            className={`${prefixCls}-alert`}
-            message={`${runtimeLocale.total} ${notices.length} ${runtimeLocale.message}`}
-            closeText={`${runtimeLocale.closeAll}`}
-            onClose={this.clearNotices}
-          />
+          <div className={`${prefixCls}-alert`}>
+            <div className={`${prefixCls}-alert-message`}>{`${runtimeLocale.total} ${notices.length} ${runtimeLocale.message}`}</div>
+            <div className={`${prefixCls}-alert-close`} onClick={this.clearNotices}>{`${runtimeLocale.closeAll}`}</div>
+          </div>
         )}
       </div>
     );

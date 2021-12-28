@@ -8,6 +8,7 @@ import { ColumnLock } from './enum';
 import { getTableHeaderRows, isStickySupport } from './utils';
 import ColumnGroup from './ColumnGroup';
 import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow';
+import ExpandIcon from './ExpandIcon';
 
 export interface TableHeaderProps extends ElementProps {
   lock?: ColumnLock;
@@ -15,9 +16,7 @@ export interface TableHeaderProps extends ElementProps {
 
 const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(props) {
   const { lock } = props;
-  const {
-    prefixCls, border, tableStore,
-  } = useContext(TableContext);
+  const { prefixCls, border, tableStore, dataSet } = useContext(TableContext);
   const { columnResizable, columnResizing, columnGroups } = tableStore;
   const { columns } = columnGroups;
 
@@ -36,6 +35,39 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
   const handleTheadMouseLeave = useCallback(() => {
     setIsHeaderHover(false);
   }, []);
+
+  const isExpanded = tableStore.isBodyExpanded;
+  const handleExpandChange = useCallback(() => {
+    tableStore.setBodyExpanded(!isExpanded);
+  }, [tableStore, isExpanded]);
+  const renderExpandIcon = () => {
+    const record = dataSet.get(0);
+    if (record) {
+      const { expandIcon } = tableStore;
+      if (typeof expandIcon === 'function') {
+        return expandIcon({
+          prefixCls,
+          expanded: isExpanded,
+          expandable: true,
+          needIndentSpaced: false,
+          onExpand: handleExpandChange,
+          record,
+        });
+      }
+      return (
+        <ExpandIcon
+          prefixCls={prefixCls}
+          expandable
+          onChange={handleExpandChange}
+          expanded={isExpanded}
+        />
+      );
+    }
+  };
+  const expandIconColumnIndex = tableStore.props.bodyExpandable ? (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
+  const hasExpandIcon = (columnIndex: number) => (
+    expandIconColumnIndex > -1 && (columnIndex + expandIconColumnIndex) === tableStore.expandIconColumnIndex
+  );
 
   const getTrs = (): (ReactElement<TableHeaderRowProps> | undefined)[] => {
     return headerRows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
@@ -64,7 +96,9 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               cellProps.colSpan = colSpan;
             }
             return (
-              <TableHeaderCell {...cellProps} />
+              <TableHeaderCell {...cellProps} scope={children ? 'colgroup' : 'col'}>
+                {rowIndex === headerRows.length - 1 && hasExpandIcon(index) ? renderExpandIcon() : undefined}
+              </TableHeaderCell>
             );
           }
           return undefined;

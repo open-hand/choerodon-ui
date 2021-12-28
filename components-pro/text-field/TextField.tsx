@@ -22,7 +22,7 @@ import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, computed, observable, runInAction, toJS } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -48,7 +48,7 @@ import TextFieldGroup from './TextFieldGroup';
 import { findFirstFocusableElement } from '../_util/focusable';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
-import { toRangeValue } from '../field/utils';
+import { fromRangeValue, toRangeValue } from '../field/utils';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -262,7 +262,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     width: number;
   } | undefined;
 
+  lengthElement?: ReactNode;
+
   lengthInfoWidth?: number;
+
+  suffixWidth?: number;
+
+  isSuffixClick?: boolean;
 
   lastAnimationRecord?: Record;
 
@@ -604,9 +610,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderInputElement(): ReactNode {
     const { addonBefore, addonAfter, isFlat } = this.props;
     const renderedValue = this.renderRenderedValue(undefined, { isFlat });
-    const input = this.getWrappedEditor(renderedValue);
-    const button = this.getInnerSpanButton();
+    // 先计算lengthElement,然后计算suffix,再计算clearButton,设置right和输入框paddingRight,避免重叠
+    this.renderLengthElement();
     const suffix = this.getSuffix();
+    const button = this.getInnerSpanButton();
+
+    const input = this.getWrappedEditor(renderedValue);
     const prefix = this.getPrefix();
     const otherPrevNode = this.getOtherPrevNode();
     const otherNextNode = this.getOtherNextNode();
@@ -924,11 +933,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
       multiple,
       range,
-      props: { style, isFlat },
+      props: { isFlat },
     } = this;
     const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
     if (multiple) {
-      const { height } = (style || {}) as CSSProperties;
       const { record } = this;
       const tags = (
         <Animate
@@ -936,8 +944,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           componentProps={{
             ref: this.saveTagContainer,
             onScroll: stopPropagation,
-            style:
-              height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
           }}
           transitionName={!record || record === this.lastAnimationRecord ? 'zoom' : ''}
           exclusive
@@ -957,7 +963,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       );
       this.lastAnimationRecord = record;
       return wrap(
-        <div key="text" className={otherProps.className} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div
+          key="text"
+          className={otherProps.className}
+          style={otherProps.style}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
           {
             isFlat ? (
               <Tooltip title={this.getMultipleText()}>
@@ -970,7 +984,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     if (range) {
       return wrap(
-        <span key="text" className={otherProps.className} onFocus={onFocus} onBlur={onBlur} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <span
+          key="text"
+          className={otherProps.className}
+          style={otherProps.style}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
           {this.renderRangeEditor(otherProps)}
         </span>,
       );
@@ -991,6 +1013,27 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         boxSizing: 'content-box',
       };
     }
+
+    // 兼容继承的组件
+    if (this.showLengthInfo && !this.lengthElement) {
+      this.renderLengthElement();
+    }
+
+    // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
+    if (this.lengthInfoWidth || this.suffixWidth || this.clearButton) {
+      let paddingRight = this.isSuffixClick
+        ? (this.lengthInfoWidth ?? 0) + (this.suffixWidth ?? 0) + (this.clearButton ? 18 : 0)
+        : (this.lengthInfoWidth ?? 0) + Math.max((this.suffixWidth ?? 0), (this.clearButton ? 18 : 0));
+      if (this.lengthInfoWidth && !this.suffixWidth && !this.clearButton) {
+        paddingRight += 3;
+      }
+      if (paddingRight >= 25) {
+        otherProps.style = {
+          ...otherProps.style,
+          paddingRight,
+        };
+      }
+    }
     const childNodes: ReactNode[] = [
       <input
         key="text"
@@ -1004,22 +1047,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         readOnly={!this.editable}
       />,
     ];
-
-    if (this.showLengthInfo) {
-      const inputLength = editorTextInfo.text.length;
-      const maxLength = this.getProp('maxLength');
-      const lengthElement = this.renderLengthInfo(maxLength, inputLength);
-
-      // 存在长度信息，计算paddingRight
-      if (lengthElement) {
-        this.lengthInfoWidth = measureTextWidth(`${inputLength} / ${maxLength}`);
-        const paddingRight = this.lengthInfoWidth + 21;
-        otherProps.style = {
-          ...otherProps.style,
-          paddingRight,
-        };
-      }
-      childNodes.push(lengthElement);
+    if (this.showLengthInfo && this.lengthElement) {
+      childNodes.push(this.lengthElement);
     }
 
     return wrap(
@@ -1027,6 +1056,25 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {childNodes}
       </>,
     );
+  }
+
+  renderLengthElement(): void {
+    const { multiple, range, showLengthInfo } = this;
+    if (!multiple && !range && showLengthInfo) {
+      const editorTextInfo = this.getEditorTextInfo();
+      const inputLength = editorTextInfo.text.length;
+      const maxLength = this.getProp('maxLength');
+      this.lengthElement = this.renderLengthInfo(maxLength, inputLength);
+
+      if (this.lengthElement) {
+        this.lengthInfoWidth = measureTextWidth(`${inputLength} / ${maxLength}`);
+      } else {
+        this.lengthInfoWidth = undefined;
+      }
+    } else {
+      this.lengthElement = undefined;
+      this.lengthInfoWidth = undefined;
+    }
   }
 
   getSuffix(): ReactNode {
@@ -1042,7 +1090,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   wrapperSuffix(children: ReactNode, props?: any): ReactNode {
     const { prefixCls, clearButton } = this;
+    let divStyle = {};
     if (isValidElement<any>(children)) {
+      this.suffixWidth = 21;
+      if (children.props && children.props.style) {
+        divStyle = {
+          width: children.props.style.width,
+        };
+        this.suffixWidth = toPx(children.props.style.width) ?? 21;
+      }
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
       if (onClick) {
@@ -1052,12 +1108,22 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           ...props,
         };
       }
+    } else if (children && children !== true) {
+      this.suffixWidth = measureTextWidth(children.toString()) + 2;
+      divStyle = {
+        width: this.suffixWidth,
+      };
+    } else {
+      this.suffixWidth = undefined;
     }
+
+    this.isSuffixClick = props && props.onClick;
     const classString = classNames(`${prefixCls}-suffix`, {
       [`${prefixCls}-allow-clear`]: clearButton && !props?.onClick,
     });
+    const right = this.lengthInfoWidth ? this.lengthInfoWidth + 2 : undefined;
     return (
-      <div className={classString} style={{ right: this.lengthInfoWidth }} onMouseDown={preventDefault} {...props}>
+      <div className={classString} style={{ ...divStyle, right }} onMouseDown={preventDefault} {...props}>
         {children}
       </div>
     );
@@ -1141,7 +1207,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls } = this;
     const [placeholder] = this.getPlaceholders();
     if (placeholder) {
-      return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
+      return (
+        <div className={`${prefixCls}-placeholder`}>
+          <span className={`${prefixCls}-placeholder-inner`}>{placeholder}</span>
+        </div>
+      );
     }
   }
 
@@ -1151,6 +1221,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
     } = this;
     if (clearButton) {
+      let right: number | undefined;
+      if (this.lengthInfoWidth || this.suffixWidth) {
+        right = this.isSuffixClick
+          ? (this.lengthInfoWidth ?? 0) + (this.suffixWidth ?? 0)
+          : this.lengthInfoWidth;
+      }
       return this.wrapperInnerSpanButton(
         <Icon
           type="close"
@@ -1159,7 +1235,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         />,
         {
           className: `${prefixCls}-clear-button`,
-          style: { right: this.lengthInfoWidth },
+          style: { right },
         },
       );
     }
@@ -1183,8 +1259,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   removeLastValue() {
     const values = this.getValues();
     const value = values.pop();
-    this.setValue(values);
-    this.afterRemoveValue(value, -1);
+    const { range } = this;
+    this.setValue(isArrayLike(range) ? values.map(v => fromRangeValue(v, range)) : values);
+    this.afterRemoveValue(fromRangeValue(value, range), -1);
   }
 
   handleTagAnimateEnd() {

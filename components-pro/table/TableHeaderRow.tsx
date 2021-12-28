@@ -18,7 +18,7 @@ export interface TableHeaderRowProps {
 const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = function TableHeaderRow(props) {
   const { rowIndex, lock, children, rows } = props;
   const { rowHeight, tableStore } = useContext(TableContext);
-
+  const { headerRowHeight } = tableStore.props;
   const setRowHeight = useCallback(action((index: Key, height: number) => {
     set(tableStore.lockColumnsHeadRowsHeight, index, height);
   }), [tableStore]);
@@ -42,7 +42,7 @@ const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = function TableHea
         ),
     );
   };
-  const needStoreRowHeight = !isStickySupport() && (rowHeight === 'auto' || rows.length > 1);
+  const needStoreRowHeight = !isStickySupport() && (headerRowHeight === 'auto' || rowHeight === 'auto' || rows.length > 1);
   const style = lock && needStoreRowHeight ? {
     height: getHeaderRowStyle(),
   } : undefined;

@@ -58,6 +58,7 @@ export {
   DynamicFilterBarConfig,
   Suffixes,
   TableCustomized,
+  TableGroup,
 } from './Table';
 
 export {

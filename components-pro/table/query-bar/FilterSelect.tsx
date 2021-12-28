@@ -214,8 +214,9 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             }).join('~')}`;
           }
           if (field.get('bind', current) || isNil(fieldValue)) return;
+          const text = this.processText(isNil(fieldValue) ? this.processValue(value) : fieldValue);
           return `${this.getFieldLabel(field, current)}: ${processFieldValue(
-            isPlainObject(fieldValue) ? fieldValue : super.processValue(fieldValue),
+            isPlainObject(fieldValue) ? fieldValue : text,
             field,
             {
               getProp: (name) => this.getProp(name),

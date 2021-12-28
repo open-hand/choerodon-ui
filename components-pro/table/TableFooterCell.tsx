@@ -8,6 +8,7 @@ import { ElementProps } from '../core/ViewComponent';
 import { getColumnLock, isStickySupport } from './utils';
 import { ColumnAlign, ColumnLock } from './enum';
 import ColumnGroup from './ColumnGroup';
+import { FooterHookOptions } from './Column';
 
 export interface TableFooterCellProps extends ElementProps {
   columnGroup: ColumnGroup;
@@ -19,7 +20,7 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
   const { columnGroup, style, className, colSpan, right } = props;
   const { rowHeight, dataSet, prefixCls, tableStore } = useContext(TableContext);
   const { column } = columnGroup;
-  const { autoFootHeight } = tableStore;
+  const { autoFootHeight, props: { footerRowHeight } } = tableStore;
   const { footer, footerClassName, footerStyle = {}, align, name, command, lock } = column;
   const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
   const classString = classNames(`${prefixCls}-cell`, {
@@ -27,9 +28,9 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
   }, className, footerClassName);
   const innerClassNames = [`${prefixCls}-cell-inner`];
   const innerProps: any = {};
-  if (rowHeight !== 'auto' && !autoFootHeight) {
+  if (footerRowHeight !== 'auto' && rowHeight !== 'auto' && !autoFootHeight) {
     innerProps.style = {
-      height: pxToRem(rowHeight),
+      height: pxToRem(footerRowHeight === undefined ? rowHeight : footerRowHeight),
     };
     innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
   }
@@ -49,7 +50,15 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
   const getFooter = (): ReactNode => {
     switch (typeof footer) {
       case 'function': {
-        return footer(dataSet, column.name);
+        const footerHookOptions: FooterHookOptions = {
+          dataSet,
+          name,
+        };
+        try {
+          return footer(footerHookOptions);
+        } catch (e) {
+          return footer(dataSet, name);
+        }
       }
       case 'string':
         return <span>{footer}</span>;
@@ -58,7 +67,7 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
     }
   };
   return (
-    <th className={classString} style={omit(cellStyle, ['width', 'height'])} colSpan={colSpan}>
+    <th className={classString} style={omit(cellStyle, ['width', 'height'])} colSpan={colSpan} scope="col">
       <div {...innerProps} className={innerClassNames.join(' ')}>{getFooter()}</div>
     </th>
   );

@@ -1,4 +1,5 @@
 import React, { FunctionComponent, isValidElement, useCallback, useContext } from 'react';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import ObserverTextField from '../../../text-field/TextField';
@@ -27,7 +28,9 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
     name: record.get('name'),
     title,
     header: record.get('header'),
-  }, dataSet, aggregation);
+    dataSet,
+    aggregation,
+  });
   const titleEditable = columnTitleEditable && record.get('titleEditable') !== false;
 
   return (
@@ -41,7 +44,9 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
             autoFocus
           />
         ) : (
-          <span {...(provided && provided.dragHandleProps)} style={provided ? { cursor: 'move' } : undefined}>{header}</span>
+          <span {...(provided && provided.dragHandleProps)} style={provided ? { cursor: 'move' } : undefined}>
+            {toJS(header)}
+          </span>
         )
       }
     </>

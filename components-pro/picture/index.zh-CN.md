@@ -27,6 +27,7 @@ title: Picture
 | lazy | 懒加载 | boolean |  |
 | preview | 可预览 | boolean | true |
 | previewUrl | 预览时的路径， 默认为src | string |  |
+| downloadUrl | 预览时的下载路径 | string \| Function |  |
 | previewTarget | 预览方式，若设置则通过a标签来预览， 默认是弹窗预览 | string |  |
 | index | 序号, 配合[Picture.Provider](#Picture.Provider)进行组预览 | number |  |
 | status | 状态 | 'empty' \| 'loaded' \| 'error' |  |

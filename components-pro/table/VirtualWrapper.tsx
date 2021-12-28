@@ -1,43 +1,93 @@
-import React, { FunctionComponent, ReactElement, useContext, useEffect, useState } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import omit from 'lodash/omit';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import Spin from '../spin';
 import TableContext from './TableContext';
-import { TableWrapperProps } from './TableWrapper';
 import { toTransformValue } from '../_util/transform';
+import mergeProps from '../_util/mergeProps';
+import { isStickySupport } from './utils';
 
 export interface VirtualWrapperProps {
-  children?: ReactElement<TableWrapperProps>;
+  children?: ReactNode;
 }
 
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
   const { children } = props;
-  const { tableStore, prefixCls } = useContext(TableContext);
-  const { virtualTop, virtualHeight } = tableStore;
+  const { tableStore, prefixCls, virtualSpin, spinProps } = useContext(TableContext);
+  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling = false } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
-  useEffect(() => {
+  const [rowHeight, setRowHeight] = useState(virtualRowHeight);
+  useEffect(action(() => {
     if (virtualHeight !== height) {
       const { lastScrollTop, node: { tableBodyWrap } } = tableStore;
       if (lastScrollTop && tableBodyWrap) {
-        tableBodyWrap.scrollTop = Math.max(0, virtualHeight - height + lastScrollTop);
+        const scrollTop = Math.max(0, virtualHeight - height + lastScrollTop);
+        if (scrollTop === tableBodyWrap.scrollTop) {
+          tableStore.setLastScrollTop(scrollTop);
+        } else {
+          tableBodyWrap.scrollTop = scrollTop;
+        }
       }
       setHeight(virtualHeight);
     }
-  }, [virtualHeight, height, tableStore]);
+  }), [virtualHeight, height, tableStore]);
   useEffect(() => {
     const { lastScrollTop, node: { tableBodyWrap } } = tableStore;
     if (lastScrollTop) {
       tableStore.setLastScrollTop(tableBodyWrap ? tableBodyWrap.scrollTop : 0);
     }
   }, [tableStore]);
+  useEffect(action(() => {
+    if (virtualRowHeight !== rowHeight) {
+      tableStore.actualRowHeight = undefined;
+      setRowHeight(virtualRowHeight);
+    }
+  }), [virtualRowHeight, rowHeight, tableStore]);
+  const wrapperStyle: CSSProperties = { height: pxToRem(virtualHeight)! };
+  const style: CSSProperties = {};
+  if (scrolling) {
+    wrapperStyle.pointerEvents = 'none';
+  }
+  if (isStickySupport() && tableStore.actualGroupRows) {
+    wrapperStyle.paddingTop = pxToRem(virtualTop)!;
+    style.position = 'relative';
+  } else {
+    style.transform = toTransformValue({ translateY: pxToRem(virtualTop) });
+  }
+
   return (
-    <div
-      className={`${prefixCls}-tbody-wrapper`}
-      style={{ height: pxToRem(virtualHeight) }}
-    >
-      <div style={{ transform: toTransformValue({ translate: `0,${pxToRem(virtualTop)}` }) }}>
-        {children}
+    <>
+      <div
+        className={`${prefixCls}-tbody-wrapper`}
+        style={wrapperStyle}
+      >
+        <div
+          style={style}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+      {
+        virtualSpin && scrolling && (
+          <Spin
+            {
+              ...mergeProps(omit(spinProps, ['dataSet']), {
+                spinning: true,
+                style: {
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: pxToRem(tableStore.lastScrollTop)!,
+                  transform: toTransformValue({ translate: '-50% -50%' }),
+                },
+              })
+            }
+          />
+        )
+      }
+    </>
   );
 };
 

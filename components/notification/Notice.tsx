@@ -6,7 +6,8 @@ import Icon from 'choerodon-ui/lib/icon';
 
 export interface NoticeProps {
   key?: Key;
-  onClose?: () => void;
+  eventKey?: Key;
+  onClose?: (eventKey?: Key) => void;
   duration?: number;
   prefixCls?: string;
   className?: string;
@@ -35,9 +36,10 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
     foldable,
     offset = 0,
     scrollHeight = 0,
+    eventKey,
   } = props;
 
-  const noticeRef = useRef<HTMLDivElement | null>(null)
+  const noticeRef = useRef<HTMLDivElement | null>(null);
 
   const closeTimer = useRef<number | null>(null);
 
@@ -51,8 +53,8 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
 
   const close = useCallback(() => {
     clearCloseTimer();
-    onClose();
-  }, [onClose]);
+    onClose(eventKey);
+  }, [onClose, eventKey]);
 
   const startCloseTimer = useCallback(() => {
     if (duration) {
@@ -91,7 +93,7 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
       <div className={classNames(`${componentClass}-content`, contentClassName)}>{children}</div>
       {
         closable && (
-          <a tabIndex={0} onClick={close} className={`${componentClass}-close`}>
+          <a tabIndex={0} onClick={!hideShadow ? close : undefined} className={`${componentClass}-close`}>
             {closeIcon || <span className={`${componentClass}-close-x`} />}
           </a>
         )

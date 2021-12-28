@@ -1,4 +1,3 @@
-import { action, get, observable, ObservableMap } from 'mobx';
 import PromiseMerger from '../promise-merger';
 import AttachmentFile from '../data-set/AttachmentFile';
 import Field from '../data-set/Field';
@@ -11,8 +10,6 @@ type callbackArgs = [Field | undefined, boolean | undefined];
 const publicKey = Symbol('PUBLIC_KEY');
 
 export class AttachmentStore {
-
-  cache: ObservableMap<string, AttachmentCache> = observable.map<string, AttachmentCache>();
 
   batchCallback = (uuids: string[], args?: callbackArgs): Promise<{ [key: string]: number | undefined }> => {
     const { batchFetchCount } = getGlobalConfig('attachment', args && args[0]);
@@ -31,37 +28,42 @@ export class AttachmentStore {
     return this.merger.add(uuid, (privateKey) => isPublic ? publicKey : privateKey, [field, isPublic]);
   }
 
-  get(uuid: string): AttachmentCache | undefined {
-    return this.cache.get(uuid);
+  /**
+   * @deprecated
+   */
+  get(_uuid: string): undefined {
+    return undefined;
   }
 
-  set(uuid: string, cache: AttachmentCache) {
-    this.cache.set(uuid, cache);
+
+  /**
+   * @deprecated
+   */
+  set(_uuid: string, _cache: AttachmentCache) {
   }
 
-  getCount(uuid: string): number | undefined {
-    const cache = this.cache.get(uuid);
-    if (cache) {
-      return get(cache, 'count');
-    }
+
+  /**
+   * @deprecated
+   */
+  getCount(_uuid: string): number | undefined {
+    return undefined
   }
 
-  getAttachments(uuid: string): AttachmentFile[] | undefined {
-    const cache = this.cache.get(uuid);
-    if (cache) {
-      return get(cache, 'attachments');
-    }
+
+  /**
+   * @deprecated
+   */
+  getAttachments(_uuid: string): AttachmentFile[] | undefined {
+    return undefined
   }
 
-  @action
-  clearCache(codes?: string[]) {
-    if (codes) {
-      codes.forEach(code => {
-        this.cache.delete(code);
-      });
-    } else {
-      this.cache.clear();
-    }
+
+  /**
+   * @deprecated
+   */
+  clearCache(_codes?: string[]) {
+
   }
 }
 

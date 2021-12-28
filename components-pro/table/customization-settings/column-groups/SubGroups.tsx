@@ -47,7 +47,7 @@ const SubGroups: FunctionComponent<SubGroupsProps> = function SubGroups(props) {
               />
             )
           );
-          return columnDraggable ? (
+          return columnDraggable && record.get('draggable') !== false && (!record.parent || list.length > 1) ? (
             <Draggable key={record.key} draggableId={String(record.key)} index={index}>
               {
                 (provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (

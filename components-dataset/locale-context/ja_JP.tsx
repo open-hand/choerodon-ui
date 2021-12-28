@@ -13,6 +13,8 @@ const locale: Locale = {
     submit_failure: '送信に失敗しました',
     cannot_add_record_when_head_no_current:
       'ヘッダーが選択されていません。新しい行レコードを作成できません',
+    data_length_too_short: '少なくとも{length}のデータを保持してください',
+    data_length_too_long: '{length}までデータを保持してください',
   },
   Validator: {
     bad_input: '数字を入力してください。',

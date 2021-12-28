@@ -1,5 +1,5 @@
-import React, { Children, isValidElement, Key, ReactNode } from 'react';
-import { action, computed, get, observable, runInAction, set } from 'mobx';
+import React, { Children, CSSProperties, isValidElement, Key, ReactNode } from 'react';
+import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -7,13 +7,16 @@ import isObject from 'lodash/isObject';
 import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import defaultTo from 'lodash/defaultTo';
+import Group from 'choerodon-ui/dataset/data-set/Group';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
-import Column, { ColumnDefaultProps, ColumnProps } from './Column';
+import noop from 'lodash/noop';
+import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
 import isFragment from '../_util/isFragment';
 import DataSet from '../data-set/DataSet';
@@ -25,6 +28,7 @@ import {
   ColumnAlign,
   ColumnLock,
   DragColumnAlign,
+  GroupType,
   RowBoxPlacement,
   ScrollPosition,
   SelectionMode,
@@ -40,7 +44,7 @@ import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
-import Table, { expandIconProps, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from './Table';
+import Table, { expandIconProps, TableCustomized, TableGroup, TablePaginationConfig, TableProps, TableQueryBarHook } from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
@@ -50,6 +54,10 @@ import Menu from '../menu';
 import { ModalProps } from '../modal/Modal';
 import { treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
+import { getIf, normalizeGroups } from '../data-set/utils';
+import { ROW_GROUP_HEIGHT } from './TableRowGroup';
+import VirtualRowMetaData from './VirtualRowMetaData';
+import BatchRunner from '../_util/BatchRunner';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -63,15 +71,96 @@ export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
 
 export const AGGREGATION_EXPAND_CELL_KEY = '__aggregation-expand-cell__'; // TODO:Symbol
 
+export const BODY_EXPANDED = '__body_expanded__'; // TODO:Symbol
+
+const VIRTUAL_OVER_SCAN_COUNT = 2;
+
 export type HeaderText = { name: string; label: string };
 
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
 }
 
-// function hasProperty<T>(target: T, property: string): (keyof T) is undefined {
-//   return property in target;
-// }
+function getItemMetadata(
+  rowMetaData: VirtualRowMetaData[],
+  index: number,
+  tableStore: TableStore,
+): VirtualRowMetaData {
+  const { lastMeasuredIndex } = tableStore;
+
+  if (index > lastMeasuredIndex) {
+    tableStore.lastMeasuredIndex = index;
+  }
+  return rowMetaData[index];
+}
+
+function findNearestItemBinarySearch(
+  rowMetaData: VirtualRowMetaData[],
+  tableStore: TableStore,
+  high: number,
+  low: number,
+  offset: number,
+): number {
+  while (low <= high) {
+    const middle = low + Math.floor((high - low) / 2);
+    const item = getItemMetadata(rowMetaData, middle, tableStore);
+    if (!item) {
+      return 0;
+    }
+    const currentOffset = item.offset;
+
+    if (currentOffset === offset) {
+      return middle;
+    }
+    if (currentOffset < offset) {
+      low = middle + 1;
+    }
+    if (currentOffset > offset) {
+      high = middle - 1;
+    }
+  }
+
+  if (low > 0) {
+    return low - 1;
+  }
+  return 0;
+}
+
+function overOffset(
+  rowMetaData: VirtualRowMetaData[],
+  tableStore: TableStore,
+  index: number,
+  offset: number,
+): boolean {
+  const item = getItemMetadata(rowMetaData, index, tableStore);
+  if (item) {
+    return item.offset < offset;
+  }
+  return false;
+}
+
+function findNearestItemExponentialSearch(
+  rowMetaData: VirtualRowMetaData[],
+  tableStore: TableStore,
+  index: number,
+  offset: number,
+): number {
+  const { virtualEstimatedRows } = tableStore;
+  let interval = 1;
+
+  while (index < virtualEstimatedRows && overOffset(rowMetaData, tableStore, index, offset)) {
+    index += interval;
+    interval *= 2;
+  }
+
+  return findNearestItemBinarySearch(
+    rowMetaData,
+    tableStore,
+    Math.min(index, virtualEstimatedRows - 1),
+    Math.floor(index / 2),
+    offset,
+  );
+}
 
 export function getIdList(store: TableStore) {
   const { mouseBatchChooseStartId, mouseBatchChooseEndId, node: { element }, prefixCls } = store;
@@ -253,10 +342,11 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
   }
 }
 
-export function mergeDefaultProps(
+function mergeDefaultProps(
   originalColumns: ColumnProps[],
   tableAggregation?: boolean,
   customizedColumns?: { [key: string]: ColumnProps },
+  underGroup?: boolean,
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
   columnSort = {
@@ -264,10 +354,10 @@ export function mergeDefaultProps(
     center: 0,
     right: 0,
   },
-): [any[], any[], any[], boolean] {
-  const columns: any[] = [];
-  const leftColumns: any[] = [];
-  const rightColumns: any[] = [];
+): [ColumnProps[], ColumnProps[], ColumnProps[], boolean] {
+  const columns: ColumnProps[] = [];
+  const leftColumns: ColumnProps[] = [];
+  const rightColumns: ColumnProps[] = [];
   let hasAggregationColumn = false;
   originalColumns.forEach((column) => {
     if (isPlainObject(column)) {
@@ -287,13 +377,13 @@ export function mergeDefaultProps(
           newColumn.lock = parent.lock;
         }
         if (children) {
-          const [, childrenColumns, , childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, newColumn, defaultKey);
+          const [, childrenColumns, , childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, false, newColumn, defaultKey);
           newColumn.children = childrenColumns;
           if (!hasAggregationColumn && childrenHasAggregationColumn) {
             hasAggregationColumn = childrenHasAggregationColumn;
           }
         }
-        if (parent || !newColumn.lock) {
+        if (parent || underGroup || !newColumn.lock) {
           if (newColumn.sort === undefined) {
             newColumn.sort = columnSort.center;
           }
@@ -313,7 +403,7 @@ export function mergeDefaultProps(
           rightColumns.push(newColumn);
         }
       } else if (children) {
-        const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+        const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, false, parent, defaultKey, parent ? undefined : columnSort);
         if (!hasAggregationColumn && childrenHasAggregationColumn) {
           hasAggregationColumn = childrenHasAggregationColumn;
         }
@@ -327,7 +417,7 @@ export function mergeDefaultProps(
       }
     }
   }, []);
-  if (parent) {
+  if (parent || underGroup) {
     return [[], sortBy(columns, ({ sort }) => sort), [], hasAggregationColumn];
   }
   return [
@@ -338,10 +428,11 @@ export function mergeDefaultProps(
   ];
 }
 
-export function normalizeColumns(
+function normalizeColumns(
   elements: ReactNode,
   tableAggregation?: boolean,
   customizedColumns?: { [key: string]: ColumnProps },
+  underGroup?: boolean,
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
   columnSort = {
@@ -349,10 +440,10 @@ export function normalizeColumns(
     center: 0,
     right: 0,
   },
-): [any[], any[], any[], boolean] {
-  const columns: any[] = [];
-  const leftColumns: any[] = [];
-  const rightColumns: any[] = [];
+): [ColumnProps[], ColumnProps[], ColumnProps[], boolean] {
+  const columns: ColumnProps[] = [];
+  const leftColumns: ColumnProps[] = [];
+  const rightColumns: ColumnProps[] = [];
   let hasAggregationColumn = false;
   const normalizeColumn = (element) => {
     if (isValidElement<any>(element)) {
@@ -382,12 +473,12 @@ export function normalizeColumns(
           if (parent) {
             column.lock = parent.lock;
           }
-          const [, childrenColumns, , childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
+          const [, childrenColumns, , childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, false, column, defaultKey);
           column.children = childrenColumns;
           if (!hasAggregationColumn && childrenHasAggregationColumn) {
             hasAggregationColumn = childrenHasAggregationColumn;
           }
-          if (parent || !column.lock) {
+          if (parent || underGroup || !column.lock) {
             if (column.sort === undefined) {
               column.sort = columnSort.center;
             }
@@ -407,7 +498,7 @@ export function normalizeColumns(
             rightColumns.push(column);
           }
         } else {
-          const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+          const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, false, parent, defaultKey, parent ? undefined : columnSort);
           if (!hasAggregationColumn && childrenHasAggregationColumn) {
             hasAggregationColumn = childrenHasAggregationColumn;
           }
@@ -423,13 +514,148 @@ export function normalizeColumns(
     }
   };
   Children.forEach(elements, normalizeColumn);
-  if (parent) {
+  if (parent || underGroup) {
     return [[], sortBy(columns, ({ sort }) => sort), [], hasAggregationColumn];
   }
   return [
     sortBy(leftColumns, ({ sort }) => sort),
     sortBy(columns, ({ sort }) => sort),
     sortBy(rightColumns, ({ sort }) => sort),
+    hasAggregationColumn,
+  ];
+}
+
+
+function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [key: string]: ColumnProps }): ColumnProps[] {
+  const groupedColumns: ColumnProps[] = [];
+  groups.forEach((group) => {
+    const { name, type, columnProps } = group;
+    if (type === GroupType.column) {
+      const column: ColumnProps = {
+        ...ColumnDefaultProps,
+        lock: ColumnLock.left,
+        ...columnProps,
+        draggable: false,
+        hideable: false,
+        key: `__group-${name}`,
+        name,
+        __tableGroup: group,
+      };
+      if (customizedColumns) {
+        Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
+      }
+      groupedColumns.push(column);
+    }
+  });
+  return groupedColumns;
+}
+
+function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], columns: ColumnProps[], dataSet: DataSet, groupedColumns: ColumnProps[], customizedColumns?: { [key: string]: ColumnProps }, parentKey?: any): ColumnProps[] {
+  const generatedColumns: Set<ColumnProps> = new Set();
+  let headerUsed = false;
+  groups.forEach((group) => {
+    const { name, subGroups, value } = group;
+    const key = parentKey ? `${parentKey}-${value}` : value;
+    const subColumns = subGroups.length ? getHeaderGroupedColumns(subGroups, tableGroups, columns, dataSet, groupedColumns, customizedColumns, key) : columns;
+    const tableGroup = tableGroups.find(($tableGroup) => name === $tableGroup.name);
+    if (tableGroup) {
+      const { columnProps, name: groupName, hidden } = tableGroup;
+      if (hidden) {
+        subColumns.forEach(col => {
+          const colKey = `${key}-${getColumnKey(col)}`;
+          const newCol = {
+            ...col,
+            key: colKey,
+            __tableGroup: tableGroup,
+            __group: group,
+          };
+          if (customizedColumns) {
+            Object.assign(newCol, customizedColumns[colKey]);
+          }
+          generatedColumns.add(newCol);
+        });
+      } else {
+        const { length } = groupedColumns;
+        if (length && !headerUsed) {
+          headerUsed = true;
+          const header = getHeader({
+            ...columnProps,
+            name: groupName,
+            dataSet,
+            group,
+          });
+          if (header) {
+            const oldColumn: ColumnProps = groupedColumns[length - 1];
+            const newKey = `${key}-${getColumnKey(oldColumn)}`;
+            const newColumn: ColumnProps = {
+              ...columnProps,
+              lock: ColumnLock.left,
+              titleEditable: false,
+              draggable: false,
+              hideable: false,
+              key: newKey,
+              header,
+              children: [oldColumn],
+            };
+            if (customizedColumns) {
+              Object.assign(newColumn, customizedColumns[newKey]);
+            }
+            groupedColumns[length - 1] = newColumn;
+          }
+        }
+        const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
+        const column = {
+          ...columnProps,
+          titleEditable: false,
+          key,
+          headerStyle: columnProps && columnProps.style,
+          header: () => renderer({ dataSet, record: group.totalRecords[0], name: groupName, text: value, value, headerGroup: group }),
+          children: subColumns.map(col => {
+            const colKey = `${key}-${getColumnKey(col)}`;
+            const newCol = { ...col, key: colKey };
+            if (customizedColumns) {
+              Object.assign(newCol, customizedColumns[colKey]);
+            }
+            return newCol;
+          }),
+          __tableGroup: tableGroup,
+          __group: group,
+        };
+        if (customizedColumns) {
+          Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
+        }
+        generatedColumns.add(column);
+      }
+    } else if (subColumns.length) {
+      subColumns.forEach(column => generatedColumns.add(column));
+    }
+  });
+  return [...generatedColumns];
+}
+
+export function normalizeGroupColumns(
+  tableStore: TableStore,
+  columns: ColumnProps[] | undefined,
+  children: ReactNode,
+  aggregation?: boolean,
+  customizedColumns?: { [key: string]: ColumnProps },
+): [ColumnProps[], ColumnProps[], ColumnProps[], boolean] {
+  const { headerTableGroups, groups, dataSet } = tableStore;
+  const hasHeaderGroup = headerTableGroups.length > 0;
+  const generatedColumns = columns
+    ? mergeDefaultProps(columns, aggregation, customizedColumns, hasHeaderGroup)
+    : normalizeColumns(children, aggregation, customizedColumns, hasHeaderGroup);
+  const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] = generatedColumns;
+  const columnGroupedColumns = groups.length ?
+    getColumnGroupedColumns(groups, customizedColumns) :
+    [];
+  const headerGroupedColumns = hasHeaderGroup ?
+    getHeaderGroupedColumns(tableStore.groupedDataWithHeader, headerTableGroups!, originalColumns, dataSet, columnGroupedColumns, customizedColumns) :
+    originalColumns;
+  return [
+    [...columnGroupedColumns, ...leftOriginalColumns],
+    headerGroupedColumns,
+    rightOriginalColumns,
     hasAggregationColumn,
   ];
 }
@@ -442,12 +668,25 @@ async function getHeaderTexts(
 ): Promise<HeaderText[]> {
   const column = columns.shift();
   if (column) {
-    headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet, aggregation)) });
+    headers.push({ name: column.name!, label: await getReactNodeText(getHeader({ ...column, dataSet, aggregation })) });
   }
   if (columns.length) {
     await getHeaderTexts(dataSet, columns, aggregation, headers);
   }
   return headers;
+}
+
+function autoHeightToStyle(autoHeight: { type: TableAutoHeightType, diff: number }, parentPaddingTop = 0): CSSProperties {
+  const { type, diff } = autoHeight;
+  const height = `calc(100% - ${diff + parentPaddingTop}px)`;
+  if (type === TableAutoHeightType.minHeight) {
+    return {
+      height,
+    };
+  }
+  return {
+    maxHeight: height,
+  };
 }
 
 export default class TableStore {
@@ -475,13 +714,9 @@ export default class TableStore {
 
   @observable hasAggregationColumn?: boolean;
 
-  @observable calcBodyHeight: number;
+  @observable calcBodyHeight: number | undefined;
 
   @observable width?: number;
-
-  @observable height?: number;
-
-  @observable totalHeight?: number;
 
   @observable lastScrollTop: number;
 
@@ -528,8 +763,96 @@ export default class TableStore {
     renderEnd: number;
   } = { renderStart: 0, renderEnd: 0 };
 
+  @observable parentHeight?: number | undefined;
+
+  @observable parentPaddingTop?: number | undefined;
+
+  @observable screenHeight: number;
+
+  @observable headerHeight: number;
+
+  @observable footerHeight: number;
+
+  get styleHeight(): string | number | undefined {
+    const { autoHeight, props: { style }, parentPaddingTop } = this;
+    return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
+  }
+
+  get styleMaxHeight(): string | number | undefined {
+    const { autoHeight, props: { style }, parentPaddingTop } = this;
+    return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).maxHeight : style && style.maxHeight;
+  }
+
+  get styleMinHeight(): string | number | undefined {
+    const { style } = this.props;
+    return style && toPx(style.minHeight, this.getRelationSize);
+  }
+
+  @computed
+  get computedHeight(): number | undefined {
+    if (this.heightChangeable) {
+      const {
+        customized: { heightType, height, heightDiff },
+        tempCustomized,
+      } = this;
+      const tempHeightType = get(tempCustomized, 'heightType');
+      if (tempHeightType) {
+        if (tempHeightType === TableHeightType.fixed) {
+          return get(tempCustomized, 'height');
+        }
+        if (tempHeightType === TableHeightType.flex) {
+          return this.screenHeight - (get(tempCustomized, 'heightDiff') || 0);
+        }
+        return undefined;
+      }
+      if (heightType) {
+        if (heightType === TableHeightType.fixed) {
+          return height;
+        }
+        if (heightType === TableHeightType.flex) {
+          return this.screenHeight - (heightDiff || 0);
+        }
+        return undefined;
+      }
+    }
+    return toPx(this.styleHeight, this.getRelationSize);
+  }
+
+  @computed
+  get height(): number | undefined {
+    if (!this.isBodyExpanded) {
+      return undefined;
+    }
+    const { computedHeight } = this;
+    const maxHeight = toPx(this.styleMaxHeight, this.getRelationSize);
+    const minHeight = toPx(this.styleMinHeight, this.getRelationSize);
+    const isComputedHeight = isNumber(computedHeight);
+    if (isComputedHeight || isNumber(minHeight) || isNumber(maxHeight)) {
+      const { rowHeight, headerHeight, footerHeight } = this;
+      const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + headerHeight + footerHeight;
+      const minTotalHeight = minHeight ? Math.max(
+        rowMinHeight,
+        minHeight,
+      ) : rowMinHeight;
+      const height = defaultTo(computedHeight, this.bodyHeight + headerHeight + footerHeight);
+      const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : height);
+      return isComputedHeight || totalHeight !== height ? totalHeight - headerHeight - footerHeight : undefined;
+    }
+  }
+
+  get totalHeight(): number {
+    const { height, bodyHeight, headerHeight, footerHeight } = this;
+    return defaultTo(height, bodyHeight) + headerHeight + footerHeight;
+  }
+
   get bodyHeight(): number {
-    return this.virtual ? this.virtualHeight : this.calcBodyHeight;
+    if (this.propVirtual) {
+      const { virtualHeight } = this;
+      if (virtualHeight > 0) {
+        return virtualHeight;
+      }
+    }
+    return this.calcBodyHeight || 0;
   }
 
   get stickyLeft(): boolean {
@@ -550,13 +873,12 @@ export default class TableStore {
   }
 
   get prefixCls() {
-    const { suffixCls, prefixCls } = this.props;
-    return this.node.getContextProPrefixCls(suffixCls!, prefixCls);
+    return this.node.prefixCls;
   }
 
   get customizable(): boolean | undefined {
     const { customizedCode } = this.props;
-    if (customizedCode && (this.columnTitleEditable || this.columnDraggable || this.columnHideable)) {
+    if (customizedCode) {
       if ('customizable' in this.props) {
         return this.props.customizable;
       }
@@ -598,28 +920,26 @@ export default class TableStore {
   }
 
   get heightType(): TableHeightType {
-    const tempHeightType = get(this.tempCustomized, 'heightType');
-    if (tempHeightType !== undefined) {
-      return tempHeightType;
-    }
-    const { heightType } = this.customized;
-    if (heightType !== undefined) {
-      return heightType;
+    if (this.heightChangeable) {
+      const tempHeightType = get(this.tempCustomized, 'heightType');
+      if (tempHeightType !== undefined) {
+        return tempHeightType;
+      }
+      const { heightType } = this.customized;
+      if (heightType !== undefined) {
+        return heightType;
+      }
     }
     return this.originalHeightType;
   }
 
   get originalHeightType(): TableHeightType {
-    const { style, autoHeight } = this.props;
-    if (autoHeight) {
-      return TableHeightType.flex;
-    }
-    if (style) {
-      const { height } = style;
-      if (isString(height) && isCalcSize(height)) {
+    const { styleHeight } = this;
+    if (styleHeight) {
+      if (isString(styleHeight) && isCalcSize(styleHeight)) {
         return TableHeightType.flex;
       }
-      if (isNumber(toPx(height))) {
+      if (isNumber(toPx(styleHeight))) {
         return TableHeightType.fixed;
       }
     }
@@ -633,77 +953,193 @@ export default class TableStore {
     return this.getConfig('tableVirtualCell');
   }
 
-  /**
-   * number 矫正虚拟滚动由于样式问题导致的高度不符问题
-   */
-  get virtualRowHeight(): number {
-    const { virtualRowHeight } = this.props;
-    if (virtualRowHeight) {
-      return virtualRowHeight;
-    }
-    return isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
-  }
-
-  get virtual(): boolean | undefined {
-    if (this.height !== undefined && isNumber(this.virtualRowHeight)) {
-      if ('virtual' in this.props) {
-        return this.props.virtual;
-      }
-      return this.getConfig('tableVirtual');
+  get isFixedRowHeight(): boolean {
+    if (!this.aggregation || !this.hasAggregationColumn) {
+      return isNumber(this.rowHeight);
     }
     return false;
   }
 
+  get propVirtual(): boolean | undefined {
+    if ('virtual' in this.props) {
+      return this.props.virtual;
+    }
+    return this.getConfig('tableVirtual');
+  }
+
+  get virtual(): boolean | undefined {
+    if (this.height !== undefined) {
+      return this.propVirtual;
+    }
+    return false;
+  }
+
+  @observable actualRows: number | undefined;
+
+  @observable actualGroupRows: number;
+
+  @observable actualRowHeight: number | undefined;
+
+  @observable rowMetaData?: VirtualRowMetaData[] | undefined;
+
+  lastMeasuredIndex = 0;
+
+  @observable scrolling: boolean | undefined;
+
+  @computed
+  get virtualEstimatedRowHeight(): number {
+    const { actualRowHeight } = this;
+    if (actualRowHeight !== undefined) {
+      return actualRowHeight;
+    }
+    const normalRowHeight = isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
+    return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
+  }
+
+  get virtualEstimatedRows() {
+    const { rowMetaData } = this;
+    if (rowMetaData) {
+      return rowMetaData.length;
+    }
+    const { actualRows } = this;
+    if (actualRows !== undefined) {
+      return actualRows;
+    }
+    return this.data.length;
+  }
+
   get virtualHeight(): number {
-    const { virtualRowHeight, data } = this;
-    return Math.round(data.length * virtualRowHeight);
+    const { virtualEstimatedRowHeight, virtualEstimatedRows, actualGroupRows } = this;
+    if (!virtualEstimatedRows) {
+      return 0;
+    }
+    if (!this.isFixedRowHeight) {
+      const { rowMetaData } = this;
+      if (rowMetaData) {
+        let { lastMeasuredIndex } = this;
+        let totalSizeOfMeasuredItems = 0;
+
+        if (lastMeasuredIndex >= virtualEstimatedRows) {
+          lastMeasuredIndex = virtualEstimatedRows - 1;
+        }
+
+        if (lastMeasuredIndex >= 0) {
+          const itemMetadata = rowMetaData[lastMeasuredIndex];
+          if (itemMetadata) {
+            totalSizeOfMeasuredItems = itemMetadata.offset + itemMetadata.height;
+          }
+        }
+
+        const numUnmeasuredItems = virtualEstimatedRows - lastMeasuredIndex - 1;
+        const totalSizeOfUnmeasuredItems = numUnmeasuredItems * virtualEstimatedRowHeight;
+
+        return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
+      }
+    }
+    return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight - actualGroupRows * (virtualEstimatedRowHeight - ROW_GROUP_HEIGHT));
   }
 
   @computed
+  get virtualVisibleStartIndex(): number {
+    const { height, virtualEstimatedRows } = this;
+    if (height === undefined || !virtualEstimatedRows) {
+      return 0;
+    }
+    const { virtualEstimatedRowHeight, lastScrollTop } = this;
+    if (this.isFixedRowHeight) {
+      return Math.max(
+        0,
+        Math.min(
+          virtualEstimatedRows, Math.floor(lastScrollTop / virtualEstimatedRowHeight),
+        ),
+      );
+    }
+    const { rowMetaData } = this;
+    if (!rowMetaData) {
+      return 0;
+    }
+    const { lastMeasuredIndex } = this;
+    const lastRowMetaData = lastMeasuredIndex > 0 ? rowMetaData[lastMeasuredIndex] : undefined;
+    const lastMeasuredItemOffset = lastRowMetaData ? lastRowMetaData.offset : 0;
+    if (lastMeasuredItemOffset >= lastScrollTop) {
+      return findNearestItemBinarySearch(
+        rowMetaData,
+        this,
+        lastMeasuredIndex,
+        0,
+        lastScrollTop,
+      );
+    }
+    return findNearestItemExponentialSearch(
+      rowMetaData,
+      this,
+      Math.max(0, lastMeasuredIndex),
+      lastScrollTop,
+    );
+  }
+
+  @computed
+  get virtualVisibleEndIndex(): number {
+    const { height, virtualEstimatedRows } = this;
+    if (height === undefined) {
+      return virtualEstimatedRows;
+    }
+    const { virtualEstimatedRowHeight, virtualVisibleStartIndex } = this;
+    if (this.isFixedRowHeight) {
+      const numVisibleItems = Math.ceil(
+        height / virtualEstimatedRowHeight,
+      );
+      return Math.max(
+        0,
+        Math.min(
+          virtualEstimatedRows,
+          virtualVisibleStartIndex + numVisibleItems,
+        ),
+      );
+    }
+    const { rowMetaData } = this;
+    if (!rowMetaData || !rowMetaData.length) {
+      return 0;
+    }
+    const itemMetadata = getItemMetadata(rowMetaData, virtualVisibleStartIndex, this);
+    if (!itemMetadata) {
+      return 0;
+    }
+    const maxOffset = this.lastScrollTop + height;
+
+    let offset = itemMetadata.offset + itemMetadata.height;
+    let stopIndex = virtualVisibleStartIndex;
+
+    while (stopIndex < virtualEstimatedRows - 1 && offset < maxOffset) {
+      stopIndex++;
+      const item = getItemMetadata(rowMetaData, stopIndex, this);
+      if (item) {
+        offset += item.height;
+      }
+    }
+
+    return stopIndex;
+  }
+
   get virtualStartIndex(): number {
-    const { virtualRowHeight, lastScrollTop } = this;
-    return Math.max(Math.round((lastScrollTop / virtualRowHeight) - 3), 0);
+    const { virtualVisibleStartIndex } = this;
+    return Math.max(0, virtualVisibleStartIndex - VIRTUAL_OVER_SCAN_COUNT);
   }
 
-  @computed
   get virtualEndIndex(): number {
-    const { virtualRowHeight, lastScrollTop, height, data } = this;
-    return Math.min(height !== undefined ? Math.round((lastScrollTop + height) / virtualRowHeight) + 3 : Infinity, data.length);
+    const { virtualVisibleEndIndex, virtualEstimatedRows } = this;
+    return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + VIRTUAL_OVER_SCAN_COUNT);
   }
 
   get virtualTop(): number {
-    const { virtualRowHeight, virtualStartIndex } = this;
-    return virtualStartIndex * virtualRowHeight;
-  }
-
-  @computed
-  get virtualCachedData(): Record[] {
-    const { cachedData, virtual } = this;
-    if (virtual) {
-      return cachedData.slice(this.virtualStartIndex, this.virtualEndIndex);
+    const { virtualEstimatedRowHeight, virtualStartIndex } = this;
+    if (!this.isFixedRowHeight) {
+      const { rowMetaData } = this;
+      if (rowMetaData && rowMetaData.length) {
+        return rowMetaData[virtualStartIndex].offset;
+      }
     }
-    return cachedData;
-  }
-
-  @computed
-  get virtualCurrentData(): Record[] {
-    const { currentData, virtual } = this;
-    if (virtual) {
-      const { cachedData: { length } } = this;
-      const currentStartIndex = Math.max(this.virtualStartIndex - length, 0);
-      const currentEndIndex = Math.max(this.virtualEndIndex - length, 0);
-      return currentData.slice(currentStartIndex, currentEndIndex);
-    }
-    return currentData;
-  }
-
-  @computed
-  get virtualData(): Record[] {
-    const { data, virtual } = this;
-    if (virtual) {
-      return [...this.virtualCachedData, ...this.virtualCurrentData];
-    }
-    return data;
+    return virtualStartIndex * virtualEstimatedRowHeight;
   }
 
   get hidden(): boolean | undefined {
@@ -759,6 +1195,13 @@ export default class TableStore {
     return this.getConfig('tableColumnTitleEditable') === true;
   }
 
+  get heightChangeable(): boolean {
+    if ('heightChangeable' in this.props) {
+      return this.props.heightChangeable!;
+    }
+    return this.getConfig('tableHeightChangeable') === true;
+  }
+
   get pagination(): TablePaginationConfig | false | undefined {
     if ('pagination' in this.props) {
       return this.props.pagination;
@@ -787,7 +1230,7 @@ export default class TableStore {
   }
 
   get rowDraggable(): boolean {
-    if (this.isTree) {
+    if (this.isTree || this.groups.length) {
       return false;
     }
     if ('rowDraggable' in this.props) {
@@ -1000,6 +1443,12 @@ export default class TableStore {
     );
   }
 
+  @computed
+  get headerTableGroups(): TableGroup[] {
+    const { groups } = this;
+    return groups ? groups.filter(({ type }) => type === GroupType.header) : [];
+  }
+
   @autobind
   customizedColumnHeader() {
     return <CustomizationColumnHeader onHeaderClick={this.openCustomizationModal} />;
@@ -1144,7 +1593,11 @@ export default class TableStore {
 
   @computed
   get columns(): ColumnProps[] {
-    const { leftColumns, originalColumns, rightColumns } = this;
+    const { leftColumns, rightColumns, selectionColumn, props: { rowBoxPlacement } } = this;
+    const originalColumns = this.originalColumns.slice();
+    if (isNumber(rowBoxPlacement) && selectionColumn) {
+      originalColumns.splice(rowBoxPlacement as number, 0, selectionColumn);
+    }
     return observable.array([
       ...leftColumns,
       ...originalColumns,
@@ -1204,6 +1657,60 @@ export default class TableStore {
 
   get isAnyColumnsLock(): boolean {
     return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
+  }
+
+  @computed
+  get groups(): TableGroup[] {
+    const { groups = [] } = this.props;
+    const header: TableGroup[] = [];
+    const row: TableGroup[] = [];
+    const column: TableGroup[] = [];
+    groups.forEach((group) => {
+      const { type } = group;
+      switch (type) {
+        case GroupType.header:
+          header.push(group);
+          break;
+        case GroupType.row:
+          row.push(group);
+          break;
+        case GroupType.none:
+          break;
+        default:
+          column.push(group);
+      }
+    });
+    return [...header, ...row, ...column];
+  }
+
+  @computed
+  get groupedData(): Group[] {
+    const { groups } = this;
+    if (groups.length) {
+      const headerGroupNames: string[] = [];
+      const groupNames: string[] = [];
+      groups.forEach(({ type, name }) => {
+        if (type === GroupType.header) {
+          headerGroupNames.push(name);
+        } else {
+          groupNames.push(name);
+        }
+      }, []);
+      const { dataSet } = this;
+      return this.isTree ? normalizeGroups(groupNames, headerGroupNames, dataSet.treeRecords) : normalizeGroups(groupNames, headerGroupNames, dataSet.records);
+    }
+    return [];
+  }
+
+  @computed
+  get groupedDataWithHeader(): Group[] {
+    const { groups } = this;
+    if (groups.length) {
+      const { dataSet } = this;
+      const groupNames = groups.map(({ name }) => name);
+      return this.isTree ? normalizeGroups(groupNames, [], dataSet.treeRecords) : normalizeGroups(groupNames, [], dataSet.records);
+    }
+    return [];
   }
 
   get cachedData(): Record[] {
@@ -1312,7 +1819,11 @@ export default class TableStore {
       this.lockColumnsFootRowsHeight = {};
       this.node = node;
       this.expandedRows = [];
+      this.screenHeight = typeof window === 'undefined' ? 0 : document.documentElement.clientHeight;
+      this.headerHeight = 0;
+      this.footerHeight = 0;
       this.lastScrollTop = 0;
+      this.actualGroupRows = 0;
       this.customizedActiveKey = ['columns'];
       this.leftOriginalColumns = [];
       this.originalColumns = [];
@@ -1355,6 +1866,9 @@ export default class TableStore {
   @action
   setLastScrollTop(lastScrollTop: number) {
     this.lastScrollTop = lastScrollTop;
+    if (this.virtual) {
+      this.startScroll();
+    }
   }
 
   @action
@@ -1379,6 +1893,7 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
+    this.actualRowHeight = undefined;
     const { showCachedSelection } = props;
     if (showCachedSelection !== undefined) {
       this.showCachedSelection = showCachedSelection;
@@ -1406,41 +1921,52 @@ export default class TableStore {
 
   @action
   initColumns() {
-    const { customized, customizable, aggregation, selectionColumn } = this;
-    const { columns, children, rowBoxPlacement } = this.props;
+    const { customized, customizable, aggregation } = this;
+    const { columns, children } = this.props;
     const customizedColumns = customizable ? customized.columns : undefined;
-    const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] = columns
-      ? mergeDefaultProps(columns, aggregation, customizedColumns)
-      : normalizeColumns(children, aggregation, customizedColumns);
-    if (isNumber(rowBoxPlacement) && this.hasRowBox) {
-      originalColumns.splice(rowBoxPlacement as number, 0, selectionColumn);
-    }
+    const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] =
+      normalizeGroupColumns(this, columns, children, aggregation, customizedColumns);
     this.leftOriginalColumns = leftOriginalColumns;
     this.originalColumns = originalColumns;
     this.rightOriginalColumns = rightOriginalColumns;
     this.hasAggregationColumn = hasAggregationColumn;
   }
 
-  isAggregationCellExpanded(record: Record, key: Key): boolean {
-    const expandedKeys = record.getState(AGGREGATION_EXPAND_CELL_KEY);
+  isAggregationCellExpanded(record: Record, key: Key): boolean | undefined {
+    const expandedKeys: ObservableMap<Key, boolean> | undefined = record.getState(AGGREGATION_EXPAND_CELL_KEY) as ObservableMap<Key, boolean>;
     if (expandedKeys) {
-      return expandedKeys.includes(key);
+      return expandedKeys.get(key);
     }
-    return false;
   }
 
   @action
   setAggregationCellExpanded(record: Record, key: Key, expanded: boolean) {
-    const expandedKeys = record.getState(AGGREGATION_EXPAND_CELL_KEY) || [];
-    const index = expandedKeys.indexOf(key);
-    if (expanded) {
-      if (index === -1) {
-        expandedKeys.push(key);
-      }
-    } else if (index !== -1) {
-      expandedKeys.splice(index, 1);
-    }
+    const expandedKeys: ObservableMap<Key, boolean> = record.getState(AGGREGATION_EXPAND_CELL_KEY) || observable.map();
+    expandedKeys.set(key, expanded);
     record.setState(AGGREGATION_EXPAND_CELL_KEY, expandedKeys);
+  }
+
+  get isBodyExpanded(): boolean {
+    if (!this.props.bodyExpandable) {
+      return true;
+    }
+    const { bodyExpanded } = this.props;
+    if (bodyExpanded !== undefined) {
+      return bodyExpanded;
+    }
+    const isBodyExpanded = this.dataSet.getState(BODY_EXPANDED);
+    if (isBodyExpanded !== undefined) {
+      return isBodyExpanded;
+    }
+    return defaultTo(this.props.defaultBodyExpanded, true);
+  }
+
+  setBodyExpanded(isBodyExpanded: boolean) {
+    const { bodyExpanded, onBodyExpand = noop } = this.props;
+    if (bodyExpanded === undefined) {
+      this.dataSet.setState(BODY_EXPANDED, isBodyExpanded);
+    }
+    onBodyExpand(isBodyExpanded);
   }
 
   isRowExpanded(record: Record): boolean {
@@ -1608,10 +2134,6 @@ export default class TableStore {
   @autobind
   @action
   openCustomizationModal(modal) {
-    const { node: { element }, height } = this;
-    if (height === undefined) {
-      this.totalHeight = element.offsetHeight;
-    }
     const { customizedCode } = this.props;
     const modalProps: ModalProps = {
       drawer: true,
@@ -1711,5 +2233,30 @@ export default class TableStore {
       );
     }
     return buttons;
+  }
+
+  @autobind
+  private getRelationSize(type: 'vh' | 'vw' | '%' | 'em'): number | undefined {
+    if (type === '%') {
+      return this.parentHeight;
+    }
+    return this.screenHeight;
+  }
+
+  @action
+  startScroll() {
+    this.scrolling = true;
+    this.stopScroll();
+  }
+
+  stopScroll = debounce(action(() => {
+    this.scrolling = false;
+  }), 300);
+
+  batchRunner?: BatchRunner;
+
+  batchSetRowHeight(key: Key, callback: Function) {
+    const batchRunner = getIf(this, 'batchRunner', () => new BatchRunner());
+    batchRunner.addTask(key, callback);
   }
 }

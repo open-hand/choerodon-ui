@@ -3,7 +3,7 @@ import React, {
   CSSProperties,
   FunctionComponent,
   isValidElement,
-  ReactElement,
+  ReactElement, ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -44,14 +44,16 @@ export interface TableHeaderCellProps extends ElementProps {
   colSpan?: number;
   rowIndex?: number;
   getHeaderNode?: () => HTMLTableSectionElement | null;
+  scope?: string;
+  children?: ReactNode;
 }
 
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
-  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop } = props;
+  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onColumnResize = noop } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
-  const { columnResizable } = tableStore;
+  const { columnResizable, props: { headerRowHeight } } = tableStore;
   const {
     headerClassName,
     headerStyle = {},
@@ -67,7 +69,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     root: needIntersection ? tableStore.node.wrapper : undefined,
     rootMargin: '100px',
   });
-  const header = getHeader(column, dataSet, aggregation);
+  const header = getHeader({ ...column, dataSet, aggregation, group: columnGroup.headerGroup });
   const globalRef = useRef<{
     bodyLeft: number;
     resizeBoundary: number;
@@ -385,7 +387,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
   };
-
   if (helpIcon) {
     if (cellStyle.textAlign === ColumnAlign.right) {
       childNodes.unshift(helpIcon);
@@ -404,8 +405,15 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       childNodes.push(sortIcon);
     }
   }
-  if (rowHeight !== 'auto') {
-    const height: number = Number(cellStyle.height) || (rowHeight * (rowSpan || 1));
+  if (expandIcon) {
+    childNodes.unshift(
+      <span key="prefix" className={`${prefixCls}-header-expand-icon`}>
+        {expandIcon}
+      </span>,
+    );
+  }
+  if (headerRowHeight !== 'auto' && rowHeight !== 'auto') {
+    const height: number = Number(cellStyle.height) || ((headerRowHeight === undefined ? rowHeight : headerRowHeight) * (rowSpan || 1));
     innerProps.style = {
       height: pxToRem(height),
       lineHeight: pxToRem(height - 2),
@@ -423,6 +431,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     colSpan,
     'data-index': key,
     style: omit(cellStyle, ['width', 'height']),
+    scope,
   };
   if (needIntersection) {
     thProps.ref = ref;

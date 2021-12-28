@@ -98,6 +98,7 @@ const defaults = {
   performanceTableColumnHideable: true,
   tableRowDraggable: false,
   tableColumnDraggable: false,
+  tableHeightChangeable: true,
   performanceTableColumnDraggable: false,
   tableColumnAlign: defaultTableColumnAlign,
   tableSpinProps: defaultSpinProps,

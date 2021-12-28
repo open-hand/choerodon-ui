@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import classnames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -56,7 +57,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const { getPreviewUrl, getDownloadUrl } = attachmentConfig;
   const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
-  const downloadUrl = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+  const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
   const preview = !!src && (status === 'success' || status === 'done');
@@ -217,7 +218,8 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           className: classnames(`${prefixCls}-icon`),
           icon: isCard ? 'arrow_downward' : 'get_app',
           funcType: FuncType.link,
-          href: downloadUrl,
+          href: isString(downloadUrl) ? downloadUrl : undefined,
+          onClick: isFunction(downloadUrl) ? downloadUrl : undefined,
           target: ATTACHMENT_TARGET,
           block: isCard,
         };

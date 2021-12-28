@@ -15,7 +15,7 @@ import { modalChildrenProps } from '../modal/interface';
 import autobind from '../_util/autobind';
 import { getColumnKey } from '../table/utils';
 import SelectionList, { TIMESTAMP, SelectionsPosition } from './SelectionList';
-import { LovConfig, ViewRenderer, NodeRenderer } from './Lov';
+import { LovConfig, ViewRenderer, SelectionProps } from './Lov';
 import { FormContextValue } from '../form/FormContext';
 
 export interface LovViewProps {
@@ -33,8 +33,8 @@ export interface LovViewProps {
   valueField?: string;
   textField?: string;
   viewRenderer?: ViewRenderer;
-  nodeRenderer?: NodeRenderer,
   showSelectedInView?: boolean;
+  selectionProps?: SelectionProps,
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -58,7 +58,7 @@ export default class LovView extends Component<LovViewProps> {
     } = this.props;
     this.selection = selection;
     dataSet.selection = multiple ? DataSetSelection.multiple : DataSetSelection.single;
-    if ((viewMode === 'popup' || viewMode === 'drawer') && multiple) {
+    if ((viewMode === 'popup' || viewMode === 'drawer' || viewMode === 'modal') && multiple) {
       dataSet.addEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.addEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
@@ -68,7 +68,7 @@ export default class LovView extends Component<LovViewProps> {
   componentWillUnmount() {
     const { dataSet, multiple, viewMode } = this.props;
     dataSet.selection = this.selection;
-    if ((viewMode === 'popup' || viewMode === 'drawer') && multiple) {
+    if ((viewMode === 'popup' || viewMode === 'drawer' || viewMode === 'modal') && multiple) {
       dataSet.removeEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.removeEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
@@ -112,7 +112,7 @@ export default class LovView extends Component<LovViewProps> {
   }
 
   @autobind
-  handleSelect(event?: React.MouseEvent | string) {
+  handleSelect(event?: React.MouseEvent | any) {
     const { selectionMode } = this;
     const {
       onSelect,
@@ -122,20 +122,19 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       tableProps,
       viewMode,
+      showSelectedInView,
     } = this.props;
     // 为了drawer模式下右侧勾选项的顺序
-    if (viewMode === 'drawer' && multiple) {
-      dataSet.map(item => {
-        const timeStampState = item.getState(TIMESTAMP);
-        if (!item.isSelected && timeStampState) {
-          item.setState(TIMESTAMP, 0);
-        }
-        if (item.isSelected && !timeStampState) {
-          const timestamp = new Date().getTime();
-          item.setState(TIMESTAMP, timestamp);
-        }
-        return item;
-      });
+    if (showSelectedInView && (viewMode === 'drawer' || viewMode === 'modal') && multiple) {
+      if (event && event.records) {
+        event.records.forEach(item => {
+          if (item.isSelected) {
+            item.setState(TIMESTAMP, new Date().getTime());
+          } else {
+            item.setState(TIMESTAMP, 0);
+          }
+        });
+      }
     }
     let records: Record[] = selectionMode === SelectionMode.treebox ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
@@ -146,10 +145,10 @@ export default class LovView extends Component<LovViewProps> {
     }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     if (record && onBeforeSelect(record) !== false) {
-      if (modal && (!multiple || event === 'close')) {
+      if (modal && (!event || !multiple)) {
         modal.close();
       }
-      if (!multiple || viewMode === 'popup' || event === 'close') {
+      if (!event || !multiple || viewMode === 'popup') {
         onSelect(record);
       }
     }
@@ -285,12 +284,12 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       valueField = '',
       textField = '',
-      nodeRenderer,
       config: { treeFlag, tableProps: configTableProps = {} },
       tableProps,
       multiple,
       viewMode,
       showSelectedInView,
+      selectionProps,
     } = this.props;
     if (!showSelectedInView || !multiple) {
       return null;
@@ -315,8 +314,8 @@ export default class LovView extends Component<LovViewProps> {
         treeFlag={treeFlag}
         valueField={valueField}
         textField={textField}
-        nodeRenderer={nodeRenderer}
         selectionsPosition={selectionsPosition}
+        selectionProps={selectionProps}
       />
     );
   }
@@ -333,7 +332,7 @@ export default class LovView extends Component<LovViewProps> {
       multiple,
     } = this.props;
     if (modal) {
-      modal.handleOk(() => this.handleSelect('close'));
+      modal.handleOk(this.handleSelect);
     }
     return (
       <>

@@ -1,5 +1,6 @@
 import { Key } from 'react';
 import { action, computed, observable } from 'mobx';
+import Group from 'choerodon-ui/dataset/data-set/Group';
 import { ColumnProps, columnWidth } from './Column';
 import ColumnGroups from './ColumnGroups';
 import { getColumnKey, getColumnLock } from './utils';
@@ -12,6 +13,8 @@ export default class ColumnGroup {
   column: ColumnProps;
 
   children?: ColumnGroups;
+
+  childrenInAggregation?: ColumnGroups;
 
   parent: ColumnGroups;
 
@@ -101,6 +104,14 @@ export default class ColumnGroup {
     return [];
   }
 
+  get headerGroup(): Group | undefined {
+    const { __group } = this.column;
+    if (__group) {
+      return __group;
+    }
+    return this.parent.rowGroup;
+  }
+
   constructor(column: ColumnProps, parent: ColumnGroups, store: TableStore) {
     this.store = store;
     this.column = column;
@@ -108,8 +119,12 @@ export default class ColumnGroup {
     this.parent = parent;
     const { children } = column;
     const { aggregation } = parent;
-    if ((!column.aggregation || !aggregation) && children && children.length > 0) {
-      this.children = new ColumnGroups(children, store, this);
+    if (children && children.length > 0) {
+      if (!column.aggregation || !aggregation) {
+        this.children = new ColumnGroups(children, store, this);
+      } else {
+        this.childrenInAggregation = new ColumnGroups(children, store, this);
+      }
     }
   }
 

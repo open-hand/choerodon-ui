@@ -18,7 +18,7 @@ mock();
 
 configure({ enforceActions: 'always' });
 
-const uiConfigure = {
+export const uiConfigure = {
   performanceEnabled: { Table: true },
   onPerformance(key, event) {
     if (event) {

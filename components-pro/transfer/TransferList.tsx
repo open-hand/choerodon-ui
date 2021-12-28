@@ -17,9 +17,11 @@ export interface TransferListProps extends SelectProps {
   header?: ReactNode;
   selected: Record[];
   currentIndex?: number;
+  oneWay?: boolean;
   footer?: (options: Record[]) => ReactNode;
   onSelect: (e) => void;
   onSelectAll: (value: any) => void;
+  onRemove?: (e) => void;
 }
 
 @observer
@@ -91,6 +93,8 @@ export default class TransferList extends Select<TransferListProps> {
     delete otherProps.currentIndex;
     delete otherProps.sortable;
     delete otherProps.sortOperations;
+    delete otherProps.oneWay;
+    delete otherProps.onRemove;
     return otherProps;
   }
 
@@ -144,6 +148,11 @@ export default class TransferList extends Select<TransferListProps> {
         </ObserverCheckBox>
       );
     }
+    return (
+      <span className={`${prefixCls}-header-selected`}>
+        {`${length}${$l('Transfer', 'items')}`}
+      </span>
+    )
   }
 
   getSearchField(): ReactNode {
@@ -162,21 +171,50 @@ export default class TransferList extends Select<TransferListProps> {
     );
   }
 
+  handleRemove = (value) => {
+    const { onRemove } = this.props;
+    if (onRemove) {
+      onRemove(value);
+    }
+  }
+
+  getMenuItem({ record, text, value }): string | ReactNode {
+    const {
+      prefixCls,
+      multiple,
+      options,
+      props: { oneWay, optionRenderer },
+    } = this;
+    if (oneWay && !multiple) {
+      const renderer: ReactNode = (
+        <div className={`${prefixCls}-item-delete`}>
+          <div>{text}</div>
+          <Icon type="delete_black-o" className={`${prefixCls}-item-icon`} onClick={() => this.handleRemove(value)} />
+        </div>
+      );
+      return optionRenderer
+        ? optionRenderer({ dataSet: options, record, text, value })
+        : renderer
+    }
+    return super.getMenuItem({ record, text, value })
+  }
+
   renderBody(): ReactNode {
     const {
       prefixCls,
       searchable,
       textField,
       valueField,
+      multiple,
       props: { selected, onSelect },
     } = this;
     const searchField = searchable && this.getSearchField();
     const classString = classNames(`${prefixCls}-body`, {
       [`${prefixCls}-body-with-search`]: searchable,
     });
-    const selectedKeys = selected.map(record =>
+    const selectedKeys = multiple ? selected.map(record =>
       getItemKey(record, record.get(textField), record.get(valueField)),
-    );
+    ) : [];
     return (
       <div className={classString}>
         {searchField}
