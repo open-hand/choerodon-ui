@@ -205,9 +205,9 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   };
 
   handleNoticeClose = (eventKey): void => {
-    this.remove(eventKey);
     const { notices } = this.state;
     const notice = notices.find(({ key }) => key === eventKey);
+    this.remove(eventKey);
     if (notice) {
       const { onClose = noop } = notice;
       onClose(eventKey);
