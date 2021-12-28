@@ -47,7 +47,7 @@ const locale: Locale = {
     advanced_query: 'Advanced Query',
     advanced_query_conditions: 'Advanced Queries',
     more: 'More',
-    defalut_export: 'Default export file',
+    default_export: 'Default export file',
     download_button: 'Download',
     export_failed: 'Export failed ',
     export_success: 'Export Successed',

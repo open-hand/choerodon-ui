@@ -92,7 +92,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
 
   scrollRef: HTMLDivElement | null = null;
 
-  scrollEvent: any;
+  scrollEvent?: any;
 
   isRemove: boolean;
 
@@ -103,23 +103,15 @@ export default class Notification extends PureComponent<NotificationProps, Notif
     offset: 0,
   };
 
-
-  componentDidMount() {
-    if (this.scrollRef) {
-      const debouncedResize = debounce((e) => {
-        this.setState({
-          offset: e.target.scrollTop,
-        });
-      }, 200);
-      this.scrollEvent = new EventManager(this.scrollRef);
-      this.scrollEvent.addEventListener('scroll', debouncedResize);
+  dispose() {
+    const { scrollEvent } = this;
+    if (scrollEvent) {
+      scrollEvent.clear();
     }
   }
 
   componentWillUnmount() {
-    if (this.scrollEvent) {
-      this.scrollEvent.removeEventListener('scroll');
-    }
+    this.dispose();
   }
 
   getTransitionName() {
@@ -133,33 +125,40 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   onAnimateEnd = () => {
     const { notices } = this.state;
     const { foldCount } = this.props;
-    if (this.scrollRef && !!foldCount) {
-      const childSpan = this.scrollRef.firstChild;
-      if (!childSpan) return;
-      const childNodes = childSpan.childNodes;
-      const lastNode = childNodes[childNodes.length - 1] as HTMLDivElement;
+    if (foldCount) {
+      const { scrollRef } = this;
+      if (scrollRef) {
+        const childSpan = scrollRef.firstChild;
+        if (!childSpan) return;
+        const childNodes = childSpan.childNodes;
+        const lastNode = childNodes[childNodes.length - 1] as HTMLDivElement;
 
-      if (childNodes.length > foldCount && notices.length > foldCount) {
-        let totalHeight = 0;
-        for (let i = 0; i < childNodes.length; i += 1) {
-          const element = childNodes[i] as HTMLDivElement;
-          totalHeight += element.offsetHeight + getStyle(element, 'margin-bottom');
-        }
-        const scrollHeight = (totalHeight / childNodes.length) * (foldCount + 0.5);
-        this.setState(
-          {
-            scrollHeight,
-            totalHeight,
-          }, () => {
-            if (!this.isRemove) {
-              scrollIntoView(lastNode, {
-                block: 'center',
-                behavior: 'smooth',
-                scrollMode: 'if-needed',
-                boundary: this.scrollRef,
-              });
-            }
+        if (childNodes.length > foldCount && notices.length > foldCount) {
+          let totalHeight = 0;
+          for (let i = 0; i < childNodes.length; i += 1) {
+            const element = childNodes[i] as HTMLDivElement;
+            totalHeight += element.offsetHeight + getStyle(element, 'margin-bottom');
+          }
+          const scrollHeight = (totalHeight / childNodes.length) * (foldCount + 0.5);
+          this.setState(
+            {
+              scrollHeight,
+              totalHeight,
+            }, () => {
+              if (!this.isRemove) {
+                scrollIntoView(lastNode, {
+                  block: 'center',
+                  behavior: 'smooth',
+                  scrollMode: 'if-needed',
+                  boundary: scrollRef,
+                });
+              }
+            });
+        } else {
+          this.setState({
+            scrollHeight: 'auto',
           });
+        }
       }
     }
   };
@@ -186,13 +185,11 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   }
 
   remove(key: Key) {
-    const { foldCount } = this.props;
     this.setState(previousState => {
       this.isRemove = true;
       const notices = previousState.notices.filter(notice => notice.key !== key);
       return {
         notices,
-        scrollHeight: foldCount && notices.length <= foldCount ? 'auto' : previousState.scrollHeight,
       };
     });
   }
@@ -200,7 +197,6 @@ export default class Notification extends PureComponent<NotificationProps, Notif
   clearNotices = (): void => {
     this.setState({
       notices: [],
-      scrollHeight: 'auto',
     });
   };
 
@@ -211,6 +207,20 @@ export default class Notification extends PureComponent<NotificationProps, Notif
     if (notice) {
       const { onClose = noop } = notice;
       onClose(eventKey);
+    }
+  };
+
+  saveScrollRef = (dom) => {
+    this.scrollRef = dom;
+    if (dom) {
+      const debouncedResize = debounce((e) => {
+        this.setState({
+          offset: e.target.scrollTop,
+        });
+      }, 200);
+      this.scrollEvent = new EventManager(dom).addEventListener('scroll', debouncedResize);
+    } else {
+      this.dispose();
     }
   };
 
@@ -232,30 +242,26 @@ export default class Notification extends PureComponent<NotificationProps, Notif
       />
     ));
     const cls = classNames(`${prefixCls}`, className, [{
-      [`${prefixCls}-fold`]: !!foldCount,
-      [`${prefixCls}-fold-hidden`]: !notices.length,
       [`${prefixCls}-before-shadow`]: !!foldCount && notices.length > foldCount && offset > 0,
       [`${prefixCls}-after-shadow`]:
-        foldCount && notices.length > foldCount &&
-        Math.abs(totalHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 1,
+      foldCount && notices.length > foldCount &&
+      Math.abs(totalHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 1,
     }]);
 
     const scrollCls = classNames({
-      [`${prefixCls}-scroll`]: !!foldCount,
+      [`${prefixCls}-scroll`]: !!foldCount && scrollHeight !== 'auto',
     });
 
     const runtimeLocale = getNoticeLocale();
 
     return (
-      <div className={classNames(cls)} style={style}>
+      <div className={cls} style={style}>
         <div
-          className={classNames(scrollCls)}
-          style={{
+          className={scrollCls}
+          style={foldCount ? {
             height: scrollHeight,
-          }}
-          ref={dom => {
-            this.scrollRef = dom;
-          }}
+          } : undefined}
+          ref={foldCount ? this.saveScrollRef : undefined}
         >
           <Animate onEnd={this.onAnimateEnd} transitionName={this.getTransitionName()}>
             {noticeNodes}

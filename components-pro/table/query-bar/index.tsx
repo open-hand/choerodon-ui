@@ -121,7 +121,7 @@ const ExportBody = observer((props) => {
 
 const ExportFooter = observer((props) => {
   const { dataSet, prefixCls, exportButton } = props;
-  const [username, setUsername] = useState(dataSet.name || $l('Table', 'defalut_export'));
+  const [username, setUsername] = useState(dataSet.name || $l('Table', 'default_export'));
   const handleClick = () => {
     exportButton(dataSet.exportStatus, username);
   };
