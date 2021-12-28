@@ -155,30 +155,14 @@ export default class SecretField extends TextField<SecretFieldProps> {
   }
 
   getInnerSpanButton(): ReactNode {
-    const { isSecretEnable, clearButton, prefixCls } = this;
+    const { isSecretEnable, clearButton } = this;
     if (clearButton) {
       // 显示为脱敏组件时，禁用clearButton
       if (isSecretEnable) {
         return null;
       }
       // 显示为textField时，正常显示clearButton
-      let right: number | undefined;
-      if (this.lengthInfoWidth || this.suffixWidth) {
-        right = this.isSuffixClick
-          ? (this.lengthInfoWidth ?? 0) + (this.suffixWidth ?? 0)
-          : this.lengthInfoWidth;
-      }
-      return this.wrapperInnerSpanButton(
-        <Icon
-          type="close"
-          onClick={this.handleClearButtonClick}
-          onMouseDown={this.handleInnerButtonMouseDown}
-        />,
-        {
-          className: `${prefixCls}-clear-button`,
-          style: { right },
-        },
-      );
+      return super.getInnerSpanButton();
     }
   }
 }
