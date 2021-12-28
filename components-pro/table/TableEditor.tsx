@@ -113,10 +113,8 @@ export default class TableEditor extends Component<TableEditorProps> {
     const {
       tableStore,
     } = this.context;
-    const { dataSet, inlineEdit, virtual } = tableStore;
-    if (inlineEdit) {
-      this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? raf(() => this.alignEditor()) : this.hideEditor());
-    } else if (virtual) {
+    const { dataSet, virtual } = tableStore;
+    if (virtual) {
       this.reaction = reaction(() => [tableStore.virtualVisibleStartIndex, tableStore.virtualVisibleEndIndex], () => (
         dataSet.current && findRow(tableStore, dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
       ));
@@ -146,6 +144,9 @@ export default class TableEditor extends Component<TableEditorProps> {
         window.addEventListener('click', this.handleWindowClick);
       }
       window.addEventListener('resize', this.handleWindowResize);
+      if (tableStore.inlineEdit) {
+        this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? raf(() => this.alignEditor()) : this.hideEditor());
+      }
       editors.set(name, this);
     }
   }
@@ -157,9 +158,7 @@ export default class TableEditor extends Component<TableEditorProps> {
       editors.delete(name);
       window.removeEventListener('resize', this.handleWindowResize);
       window.removeEventListener('click', this.handleWindowClick);
-      if (this.reaction) {
-        this.reaction();
-      }
+      this.disconnect();
     }
   }
 
@@ -336,12 +335,12 @@ export default class TableEditor extends Component<TableEditorProps> {
   @action
   alignEditor(cellNode?: HTMLSpanElement | undefined) {
     const { wrap, editor } = this;
+    const { tableStore } = this.context;
     if (!cellNode) {
-      const { tableStore } = this.context;
       const { column } = this.props;
       cellNode = findCell(tableStore, getColumnKey(column));
     }
-    if (!this.cellNode) {
+    if (!this.cellNode && !tableStore.inlineEdit) {
       this.connect();
     }
     this.cellNode = cellNode;
@@ -384,7 +383,9 @@ export default class TableEditor extends Component<TableEditorProps> {
         }
       }
       this.cellNode = undefined;
-      this.disconnect();
+      if (!tableStore.inlineEdit) {
+        this.disconnect();
+      }
     }
   }
 
