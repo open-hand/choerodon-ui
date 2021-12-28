@@ -39,7 +39,7 @@ const locale: Locale = {
     collapse_button: '合并',
     export_button: '导出',
     file_name: '文件名',
-    defalut_export: '默认导出文件名',
+    default_export: '默认导出文件名',
     export_failed: '导出失败',
     export_success: '导出成功',
     export_ing: '正在导出...',

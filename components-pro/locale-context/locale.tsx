@@ -38,7 +38,7 @@ export interface Locale extends DataSetLocale {
     expand_button: string;
     collapse_button: string;
     export_button: string;
-    defalut_export: string;
+    default_export: string;
     advanced_search: string;
     dirty_info: string;
     restore: string;

@@ -13,20 +13,22 @@
 
   position: fixed;
   z-index: @zindex-notification;
-  width: @notification-width;
   max-width: ~'calc(100vw - .32rem)';
   margin-right: 0.24rem;
 
-  &-fold {
-    width: auto;
-    padding: 0 0.1rem 0.1rem 0.1rem;
+  &-scroll {
+    overflow-x: hidden;
     overflow-y: auto;
-  }
-  &-fold-hidden {
-    width: 0;
-    height: 0;
-    margin: 0;
-    padding: 0;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(45, 45, 45, .5);
+      border-radius: 8px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    }
   }
 
   &-before-shadow {
@@ -60,27 +62,10 @@
     }
   }
 
-  &-scroll {
-    width: auto;
-    padding: 0 0.12rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: rgba(45, 45, 45, .5);
-      border-radius: 8px;
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-  }
-
   &-alert {
     display: flex;
     justify-content: space-between;
-    margin: 0 0.2rem 0 0.12rem;
+    margin: 0 0.2rem 0.1rem 0.12rem;
     padding: 0.08rem 0.16rem;
     background: rgba(255,255,255);
     border: none;
@@ -224,6 +209,11 @@
       float: right;
       margin-top: 0.16rem;
     }
+  }
+
+  &-scroll &-notice {
+    margin-right: 0.12rem;
+    margin-left: 0.12rem;
   }
 
   .notification-fade-effect {
