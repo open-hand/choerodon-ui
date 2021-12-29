@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the virtual scroll will be fully rendered for the first time when only `maxHeight` is set in style.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.
+- 🐞 `<pro>Table`: Fix the sorting problem of query bar fields.
 - 🐞 `<pro>Button`: Fix the problem that the `href` button can be jumped when the href button is `disabled`.
 - 🐞 `Notification`: Fix the problem that multiple messages opened at different times will be closed at the same time.
 - 🐞 `Divider`: Fix an issue with the dashed attribute of Divider.
