@@ -1,5 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import TableStore from './TableStore';
+import Record from '../data-set/Record';
 
 export default class VirtualRowMetaData {
   store: TableStore;
@@ -8,12 +9,19 @@ export default class VirtualRowMetaData {
 
   @observable actualHeight?: number;
 
+  @observable actualRecord: Record;
+
   get height(): number {
     const { actualHeight } = this;
     if (actualHeight === undefined) {
       return this.store.virtualEstimatedRowHeight;
     }
     return actualHeight;
+  }
+
+  get record(): Record {
+    const { actualRecord } = this;
+    return actualRecord;
   }
 
   @computed
@@ -25,16 +33,24 @@ export default class VirtualRowMetaData {
     return 0;
   }
 
-  constructor(store: TableStore, prev?: VirtualRowMetaData, actualHeight?: number) {
+  constructor(store: TableStore, prev?: VirtualRowMetaData, actualHeight?: number, record?: Record) {
     this.store = store;
     this.prev = prev;
     if (actualHeight !== undefined) {
       this.setHeight(actualHeight);
+    }
+    if (record !== undefined) {
+      this.setRecord(record);
     }
   }
 
   @action
   setHeight(height: number) {
     this.actualHeight = height;
+  }
+
+  @action
+  setRecord(record: Record) {
+    this.actualRecord = record;
   }
 }

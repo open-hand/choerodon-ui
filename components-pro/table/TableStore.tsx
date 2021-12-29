@@ -961,6 +961,9 @@ export default class TableStore {
   }
 
   get propVirtual(): boolean | undefined {
+    if (this.isTree && this.rowDraggable) {
+      return true;
+    }
     if ('virtual' in this.props) {
       return this.props.virtual;
     }
@@ -1230,7 +1233,7 @@ export default class TableStore {
   }
 
   get rowDraggable(): boolean {
-    if (this.isTree || this.groups.length) {
+    if (this.groups.length) {
       return false;
     }
     if ('rowDraggable' in this.props) {

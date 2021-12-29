@@ -122,7 +122,7 @@ function generateRow(props: GenerateRowProps): ReactElement {
     tableRowProps.virtualIndex = statistics.count;
     statistics.count++;
     if (rowMetaData) {
-      const currentRowMetaData = new VirtualRowMetaData(tableStore, statistics.lastRowMetaData);
+      const currentRowMetaData = new VirtualRowMetaData(tableStore, statistics.lastRowMetaData, undefined, record);
       rowMetaData.push(currentRowMetaData);
       statistics.lastRowMetaData = currentRowMetaData;
       tableRowProps.metaData = currentRowMetaData;
@@ -153,11 +153,11 @@ function renderExpandedRows(
 }
 
 function generateDraggableRow(props: GenerateRowProps): ReactElement {
-  const { tableStore, record, lock, index, rowDragRender } = props;
+  const { tableStore, record, lock, index, rowDragRender, statistics } = props;
   const children = tableStore.isTree && !tableStore.virtual && (
     <ExpandedRow {...props} renderExpandedRows={renderExpandedRows} />
   );
-  const { count } = index;
+  const draggableIndex = tableStore.rowDraggable && tableStore.isTree && statistics ? statistics.count - 1 : index.count;
   const row = generateRow({ ...props, children });
   if (tableStore.rowDraggable) {
     const { dragColumnAlign } = tableStore;
@@ -170,7 +170,7 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
       return (
         <Draggable
           draggableId={String(key)}
-          index={count}
+          index={draggableIndex}
           key={key}
         >
           {
@@ -389,7 +389,7 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender } = props;
   const [totalRows, statistics]: [ReactNode[], Statistics] = useComputed(() => {
     const $statistics: Statistics = { count: 0, rowGroups: [] };
-    if (!tableStore.isFixedRowHeight) {
+    if (!tableStore.isFixedRowHeight || (tableStore.isTree && tableStore.rowDraggable)) {
       $statistics.rowMetaData = [];
     }
     const cachedRows = generateCachedRows({ tableStore, columnGroups, lock }, onClearCache, $statistics);
@@ -529,6 +529,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     <Droppable
       droppableId="table"
       key="table"
+      isCombineEnabled={tableStore.isTree}
       renderClone={(
         provided: DraggableProvided,
         snapshot: DraggableStateSnapshot,
@@ -541,7 +542,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
             style.left = left - Math.max(tableStore.columnGroups.leafColumnsWidth - tableStore.columnGroups.rightLeafColumnsWidth, width);
           }
         }
-        const record = dataSet.get(rubric.source.index);
+        const record = dataSet.find(record => String(record.key) === rubric.draggableId);
         if (record) {
           const leafColumnsBody = lock ? tableStore.columnGroups : columnGroups;
           const renderClone = rowDragRender && rowDragRender.renderClone;

@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 tableHeightChangeable 属性, attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
+- 🌟 `<pro>Table`: 树形表格支持行拖拽，新增 dragDropContextProps 属性。
 - 🌟 `<pro>Table`: 新增 groups, headerRowHeight, footerRowHeight, onScrollLeft, onScrollTop, heightChangeable, bodyExpandable, defaultBodyExpanded, bodyExpanded, onBodyExpand 属性, setScrollLeft, setScrollTop 实例方法。
 - 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded, defaultWidth 属性。
 - 🌟 `<pro>Transfer`: 新增 oneWay 单向穿梭属性。
