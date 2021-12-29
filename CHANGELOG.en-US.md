@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `tableHeightChangeable` property. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.
+- 🌟 `<pro>Table`: The tree table supports row dragging, and added `dragDropContextProps` property.
 - 🌟 `<pro>Table`: Added `groups`, `headerRowHeight`, `footerRowHeight`, `onScrollLeft`, `onScrollTop`, `heightChangeable`, `bodyExpandable`, `defaultBodyExpanded`, `bodyExpanded`, `onBodyExpand` properties, `setScrollLeft`, `setScrollTop` instance methods.
 - 🌟 `<pro>Transfer`: Added properties of `oneWay`.
 - 🌟 `<pro>Table.Column`: Added `aggregationLimitDefaultExpanded`, `defaultWidth` properties.
@@ -34,6 +35,7 @@ timeline: true
 - 💄 `<pro>Lov`: Optimize sorting of selected list.
 - 💄 `<pro>Table`: Optimize virtual scrolling and support tree-shaped virtual scrolling.
 - 💄 `<pro>Attachment`: Optimize caching logic.
+- 💄 `<pro>SecretField`: Disable the clear button.
 - 🐞 `<pro>Table`: Fix the problem that the virtual scroll will be fully rendered for the first time when only `maxHeight` is set in style.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.

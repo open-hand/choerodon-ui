@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 tableHeightChangeable 属性, attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
+- 🌟 `<pro>Table`: 树形表格支持行拖拽，新增 dragDropContextProps 属性。
 - 🌟 `<pro>Table`: 新增 groups, headerRowHeight, footerRowHeight, onScrollLeft, onScrollTop, heightChangeable, bodyExpandable, defaultBodyExpanded, bodyExpanded, onBodyExpand 属性, setScrollLeft, setScrollTop 实例方法。
 - 🌟 `<pro>Table.Column`: 新增 aggregationLimitDefaultExpanded, defaultWidth 属性。
 - 🌟 `<pro>Transfer`: 新增 oneWay 单向穿梭属性。
@@ -34,6 +35,7 @@ timeline: true
 - 💄 `<pro>Lov`: 优化选中列表的排序。
 - 💄 `<pro>Table`: 优化虚拟滚动并支持树形虚拟滚动。
 - 💄 `<pro>Attachment`: 优化缓存逻辑。
+- 💄 `<pro>SecretField`: 禁用清除按钮。
 - 🐞 `<pro>Table`: 修复 style 只设置了 maxHeight 时虚拟滚动首次渲染会全量渲染的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条初始化请求及保存传参问题。
 - 🐞 `<pro>Table`: 修复 Table Tree 模式数据嵌套过深样式。

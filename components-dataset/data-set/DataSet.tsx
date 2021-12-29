@@ -1752,6 +1752,7 @@ export default class DataSet extends EventManager {
   /**
    * 切换记录的顺序
    */
+  @action
   move(from: number, to: number) {
     arrayMove(this.records, from, to);
   }

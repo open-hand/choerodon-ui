@@ -129,6 +129,7 @@ class App extends React.Component {
     const { mode, expandIconColumnIndex, border, expandedRender, checkFieldAsColumn, selectionMode } = this.state;
     return (
       <Table
+        rowDraggable
         parityRow
         mode={mode}
         selectionMode={selectionMode}
