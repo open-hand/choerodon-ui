@@ -157,7 +157,7 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
   const children = tableStore.isTree && !tableStore.virtual && (
     <ExpandedRow {...props} renderExpandedRows={renderExpandedRows} />
   );
-  const draggableIndex = tableStore.rowDraggable && tableStore.isTree && statistics ? statistics.count - 1 : index.count;
+  const draggableIndex = tableStore.rowDraggable && tableStore.isTree && statistics ? statistics.count : index.count;
   const row = generateRow({ ...props, children });
   if (tableStore.rowDraggable) {
     const { dragColumnAlign } = tableStore;
