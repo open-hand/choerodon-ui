@@ -31,9 +31,9 @@ export interface TableCellProps extends ElementProps {
   columnGroup: ColumnGroup;
   record: Record | undefined;
   rowIndex: number;
+  columnIndex: number;
   colSpan?: number;
   isDragging: boolean;
-  lock?: ColumnLock | boolean;
   provided?: DraggableProvided;
   disabled?: boolean;
   inView?: boolean | undefined;
@@ -41,7 +41,7 @@ export interface TableCellProps extends ElementProps {
 }
 
 const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
-  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView, groupPath, rowIndex } = props;
+  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView, groupPath, rowIndex, columnIndex } = props;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
@@ -159,9 +159,9 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
       const text = renderer({ text: group.value, rowGroup: group, dataSet, record: group.totalRecords[0] });
       return (
-        <div className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
+        <span className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
           {text}
-        </div>
+        </span>
       );
     }
     if (expandIconAsCell && children) {
@@ -237,6 +237,9 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         delete tableStore.activeEmptyCell;
       };
       emptyCellProps.tabIndex = 0;
+    }
+    if (columnIndex === 0 && !tableStore.columnGroups.inView) {
+      emptyCellProps.children = <span className={`${cellPrefix}-inner`} style={{ height: tableStore.virtualEstimatedCellInnerHeight }} />;
     }
 
     return <TCell {...emptyCellProps} />;

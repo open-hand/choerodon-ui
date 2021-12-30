@@ -407,11 +407,11 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       columnGroup={columnGroup}
       record={headerGroupIndex === undefined ? record : getRecord(columnGroup, groupPath, headerGroupIndex, record)}
       isDragging={snapshot ? snapshot.isDragging : false}
-      lock={lock}
       provided={rest.key === DRAG_KEY ? provided : undefined}
       inView={needIntersection ? inView : undefined}
       groupPath={groupPath}
       rowIndex={virtualIndex === undefined ? index : virtualIndex}
+      columnIndex={columnIndex}
       {...rest}
     >
       {hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined}
@@ -504,8 +504,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }, [needIntersection, record, inView]);
 
-  const height = needIntersection && (inView !== true || !columnGroups.inView) ? entry ? pxToRem(entry.boundingClientRect.height) :
-    pxToRem((record.getState(VIRTUAL_HEIGHT) || tableStore.virtualEstimatedRowHeight)) : lock ?
+  const height = needIntersection && !inView ? entry ? pxToRem(entry.boundingClientRect.height) :
+    pxToRem(record.getState(VIRTUAL_HEIGHT) || tableStore.virtualRowHeight) : lock ?
     pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number) : undefined;
   if (height) {
     rowStyle.height = height;

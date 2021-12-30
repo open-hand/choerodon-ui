@@ -270,26 +270,26 @@ export interface HeaderOptions extends ColumnProps {
 
 export function getHeader(column: HeaderOptions): ReactNode {
   const { header, name, title, dataSet, aggregation, group } = column;
-  if (header !== undefined) {
-    if (typeof header === 'function') {
-      const $title = title === undefined ? getLabel(dataSet, name) : title;
-      const options: HeaderHookOptions = {
-        dataSet,
-        name,
-        title: $title,
-        aggregation,
-        group,
-      };
-      try {
-        return header(options, name, $title, aggregation);
-      } catch (e) {
-        return header(dataSet, name, $title, aggregation);
-      }
+  if (typeof header === 'function') {
+    const $title = title === undefined ? getLabel(dataSet, name) : title;
+    const options: HeaderHookOptions = {
+      dataSet,
+      name,
+      title: $title,
+      aggregation,
+      group,
+    };
+    try {
+      return header(options, name, $title, aggregation);
+    } catch (e) {
+      return header(dataSet, name, $title, aggregation);
     }
-    return header;
   }
   if (title !== undefined) {
     return title;
+  }
+  if (header !== undefined) {
+    return header;
   }
   return getLabel(dataSet, name);
 }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent, ReactElement, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, Key, MouseEvent, ReactElement, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
@@ -30,21 +30,27 @@ import Icon from '../../icon';
 import Tooltip from '../../tooltip/Tooltip';
 import { modalChildrenProps } from '../../modal/interface';
 
-function normalizeColumnsToTreeData(columns: ColumnProps[]) {
-  return treeReduce<object[], ColumnProps>(columns, (list, column, _sort, parentColumn) => list.concat({
-    key: getColumnKey(column),
-    parentKey: parentColumn && getColumnKey(parentColumn),
-    lock: getColumnLock(column.lock),
-    width: column.width,
-    header: column.header,
-    title: column.title,
-    hidden: column.hidden,
-    name: column.name,
-    sort: column.sort,
-    titleEditable: column.titleEditable,
-    hideable: column.hideable,
-    draggable: column.draggable,
-  }), []);
+function normalizeColumnsToTreeData(columns: ColumnProps[]): object[] {
+  return [...treeReduce<Map<Key, object>, ColumnProps>(columns, (map, column, _sort, parentColumn) => {
+    if (!column.__tableGroup) {
+      const key = column.__originalKey || getColumnKey(column);
+      map.set(key, {
+        key,
+        parentKey: parentColumn && (parentColumn.__originalKey || getColumnKey(parentColumn)),
+        lock: getColumnLock(column.lock),
+        width: column.width,
+        header: column.header,
+        title: column.title,
+        hidden: column.hidden,
+        name: column.name,
+        sort: column.sort,
+        titleEditable: column.titleEditable,
+        hideable: column.hideable,
+        draggable: column.draggable,
+      });
+    }
+    return map;
+  }, new Map()).values()];
 }
 
 function diff(height = 0): number {

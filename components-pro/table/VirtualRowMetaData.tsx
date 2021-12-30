@@ -14,7 +14,7 @@ export default class VirtualRowMetaData {
   get height(): number {
     const { actualHeight } = this;
     if (actualHeight === undefined) {
-      return this.store.virtualEstimatedRowHeight;
+      return this.store.virtualRowHeight;
     }
     return actualHeight;
   }
