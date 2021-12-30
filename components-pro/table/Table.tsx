@@ -1050,7 +1050,7 @@ export default class Table extends DataSetComponent<TableProps> {
           if (tableStore.virtual && !findRow(tableStore, record)) {
             const { tableBodyWrap } = this;
             if (tableBodyWrap) {
-              tableBodyWrap.scrollTop = record.index * tableStore.virtualEstimatedRowHeight;
+              tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
             }
           }
           raf(() => {
@@ -2110,10 +2110,10 @@ export default class Table extends DataSetComponent<TableProps> {
     if (element) {
       tableStore.width = Math.floor(width);
       const { prefixCls } = this;
-      const tableHeader: HTMLTableSectionElement | null = element.querySelector(
+      const tableHeader: HTMLTableSectionElement | null = tableStore.props.showHeader ? element.querySelector(
         `.${prefixCls}-thead`,
-      );
-      const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+      ) : null;
+      const tableFooter: HTMLDivElement | null = tableStore.hasFooter ? element.querySelector(`.${prefixCls}-tfoot`) : null;
       tableStore.screenHeight = document.documentElement.clientHeight;
       tableStore.headerHeight = tableHeader ? getHeight(tableHeader) : 0;
       tableStore.footerHeight = tableFooter ? getHeight(tableFooter) : 0;

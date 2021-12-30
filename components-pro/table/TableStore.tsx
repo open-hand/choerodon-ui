@@ -58,6 +58,7 @@ import { getIf, normalizeGroups } from '../data-set/utils';
 import { ROW_GROUP_HEIGHT } from './TableRowGroup';
 import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
+import { LabelLayout } from '../form/enum';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -323,6 +324,7 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
           onClick={handleClick}
           disabled={!record.selectable}
           data-selection-key={SELECTION_KEY}
+          labelLayout={LabelLayout.none}
           value
         />
       );
@@ -611,13 +613,14 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
           headerStyle: columnProps && columnProps.style,
           header: () => renderer({ dataSet, record: group.totalRecords[0], name: groupName, text: value, value, headerGroup: group }),
           children: subColumns.map(col => {
-            const colKey = `${key}-${getColumnKey(col)}`;
-            const newCol = { ...col, key: colKey };
+            const __originalKey = getColumnKey(col);
+            const colKey = `${key}-${__originalKey}`;
+            const newCol = { ...col, key: colKey, __originalKey };
             if (customizedColumns) {
-              Object.assign(newCol, customizedColumns[colKey]);
+              Object.assign(newCol, customizedColumns[__originalKey]);
             }
             return newCol;
-          }),
+          }).sort(({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2),
           __tableGroup: tableGroup,
           __group: group,
         };
@@ -818,6 +821,11 @@ export default class TableStore {
     return toPx(this.styleHeight, this.getRelationSize);
   }
 
+  get otherHeight() {
+    const scrollbarWidth = this.overflowX ? measureScrollbar() : 0;
+    return this.headerHeight + this.footerHeight + scrollbarWidth;
+  }
+
   @computed
   get height(): number | undefined {
     if (!this.isBodyExpanded) {
@@ -828,21 +836,21 @@ export default class TableStore {
     const minHeight = toPx(this.styleMinHeight, this.getRelationSize);
     const isComputedHeight = isNumber(computedHeight);
     if (isComputedHeight || isNumber(minHeight) || isNumber(maxHeight)) {
-      const { rowHeight, headerHeight, footerHeight } = this;
-      const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + headerHeight + footerHeight;
+      const { rowHeight, otherHeight } = this;
+      const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + otherHeight;
       const minTotalHeight = minHeight ? Math.max(
         rowMinHeight,
         minHeight,
       ) : rowMinHeight;
-      const height = defaultTo(computedHeight, this.bodyHeight + headerHeight + footerHeight);
+      const height = defaultTo(computedHeight, this.bodyHeight + otherHeight);
       const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : height);
-      return isComputedHeight || totalHeight !== height ? totalHeight - headerHeight - footerHeight : undefined;
+      return isComputedHeight || totalHeight !== height ? totalHeight - otherHeight : undefined;
     }
   }
 
   get totalHeight(): number {
-    const { height, bodyHeight, headerHeight, footerHeight } = this;
-    return defaultTo(height, bodyHeight) + headerHeight + footerHeight;
+    const { height, bodyHeight, otherHeight } = this;
+    return defaultTo(height, bodyHeight) + otherHeight;
   }
 
   get bodyHeight(): number {
@@ -989,14 +997,19 @@ export default class TableStore {
 
   @observable scrolling: boolean | undefined;
 
+  get virtualEstimatedCellInnerHeight(): number {
+    const { rowHeight } = this;
+    const normalRowHeight = isNumber(rowHeight) ? rowHeight : 30;
+    return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
+  }
+
   @computed
-  get virtualEstimatedRowHeight(): number {
+  get virtualRowHeight(): number {
     const { actualRowHeight } = this;
     if (actualRowHeight !== undefined) {
       return actualRowHeight;
     }
-    const normalRowHeight = isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
-    return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
+    return this.virtualEstimatedCellInnerHeight + (this.aggregation && this.hasAggregationColumn ? 3 * 4 : 3);
   }
 
   get virtualEstimatedRows() {
@@ -1012,7 +1025,7 @@ export default class TableStore {
   }
 
   get virtualHeight(): number {
-    const { virtualEstimatedRowHeight, virtualEstimatedRows, actualGroupRows } = this;
+    const { virtualRowHeight, virtualEstimatedRows, actualGroupRows } = this;
     if (!virtualEstimatedRows) {
       return 0;
     }
@@ -1034,12 +1047,12 @@ export default class TableStore {
         }
 
         const numUnmeasuredItems = virtualEstimatedRows - lastMeasuredIndex - 1;
-        const totalSizeOfUnmeasuredItems = numUnmeasuredItems * virtualEstimatedRowHeight;
+        const totalSizeOfUnmeasuredItems = numUnmeasuredItems * virtualRowHeight;
 
         return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
       }
     }
-    return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight - actualGroupRows * (virtualEstimatedRowHeight - ROW_GROUP_HEIGHT));
+    return Math.round(virtualEstimatedRows * virtualRowHeight - actualGroupRows * (virtualRowHeight - ROW_GROUP_HEIGHT));
   }
 
   @computed
@@ -1048,12 +1061,12 @@ export default class TableStore {
     if (height === undefined || !virtualEstimatedRows) {
       return 0;
     }
-    const { virtualEstimatedRowHeight, lastScrollTop } = this;
+    const { virtualRowHeight, lastScrollTop } = this;
     if (this.isFixedRowHeight) {
       return Math.max(
         0,
         Math.min(
-          virtualEstimatedRows, Math.floor(lastScrollTop / virtualEstimatedRowHeight),
+          virtualEstimatedRows, Math.floor(lastScrollTop / virtualRowHeight),
         ),
       );
     }
@@ -1087,10 +1100,10 @@ export default class TableStore {
     if (height === undefined) {
       return virtualEstimatedRows;
     }
-    const { virtualEstimatedRowHeight, virtualVisibleStartIndex } = this;
+    const { virtualRowHeight, virtualVisibleStartIndex } = this;
     if (this.isFixedRowHeight) {
       const numVisibleItems = Math.ceil(
-        height / virtualEstimatedRowHeight,
+        height / virtualRowHeight,
       );
       return Math.max(
         0,
@@ -1135,14 +1148,14 @@ export default class TableStore {
   }
 
   get virtualTop(): number {
-    const { virtualEstimatedRowHeight, virtualStartIndex } = this;
+    const { virtualRowHeight, virtualStartIndex } = this;
     if (!this.isFixedRowHeight) {
       const { rowMetaData } = this;
       if (rowMetaData && rowMetaData.length) {
         return rowMetaData[virtualStartIndex].offset;
       }
     }
-    return virtualStartIndex * virtualEstimatedRowHeight;
+    return virtualStartIndex * virtualRowHeight;
   }
 
   get hidden(): boolean | undefined {
@@ -2225,6 +2238,7 @@ export default class TableStore {
         checked={this.allChecked}
         indeterminate={this.indeterminate}
         onChange={this.handleSelectAllChange}
+        labelLayout={LabelLayout.none}
         value
       />,
     ];

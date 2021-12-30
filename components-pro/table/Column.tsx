@@ -186,6 +186,7 @@ export interface ColumnProps extends ColumnPropsBase {
   children?: ColumnProps[];
   __tableGroup?: TableGroup;
   __group?: Group;
+  __originalKey?: Key;
 }
 
 export interface ColumnPropsInner extends ColumnPropsBase {
