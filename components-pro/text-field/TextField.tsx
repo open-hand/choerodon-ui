@@ -962,6 +962,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         </Animate>
       );
       this.lastAnimationRecord = record;
+      this.setInputStylePadding(otherProps);
       return wrap(
         <div
           key="text"
@@ -1019,21 +1020,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       this.renderLengthElement();
     }
 
-    // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
-    if (this.lengthInfoWidth || this.suffixWidth || this.clearButton) {
-      let paddingRight = this.isSuffixClick
-        ? (this.lengthInfoWidth ?? 0) + (this.suffixWidth ?? 0) + (this.clearButton ? 18 : 0)
-        : (this.lengthInfoWidth ?? 0) + Math.max((this.suffixWidth ?? 0), (this.clearButton ? 18 : 0));
-      if (this.lengthInfoWidth && !this.suffixWidth && !this.clearButton) {
-        paddingRight += 3;
-      }
-      if (paddingRight >= 25) {
-        otherProps.style = {
-          ...otherProps.style,
-          paddingRight,
-        };
-      }
-    }
+    this.setInputStylePadding(otherProps);
     const childNodes: ReactNode[] = [
       <input
         key="text"
@@ -1056,6 +1043,24 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {childNodes}
       </>,
     );
+  }
+
+  setInputStylePadding(otherProps: any): void {
+    // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
+    if (this.lengthInfoWidth || this.suffixWidth || this.clearButton) {
+      let paddingRight = this.isSuffixClick
+        ? (this.lengthInfoWidth ?? 0) + (this.suffixWidth ?? 0) + (this.clearButton ? 18 : 0)
+        : (this.lengthInfoWidth ?? 0) + Math.max((this.suffixWidth ?? 0), (this.clearButton ? 18 : 0));
+      if (this.lengthInfoWidth && !this.suffixWidth && !this.clearButton) {
+        paddingRight += 3;
+      }
+      if (paddingRight >= 25) {
+        otherProps.style = {
+          ...otherProps.style,
+          paddingRight,
+        };
+      }
+    }
   }
 
   renderLengthElement(): void {

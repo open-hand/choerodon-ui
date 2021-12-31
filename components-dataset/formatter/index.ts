@@ -94,7 +94,6 @@ export function formatBigNumber(value, lang: string | undefined, options?: Intl.
         style: options.style ?? (bigNumberTarget === 'currency' ? 'currency' : 'decimal'),
         currency: options.currency,
         currencyDisplay: options.currencyDisplay,
-        currencySign: options.currencySign,
         maximumFractionDigits: 0,
       });
     }

@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 button 模式下关闭弹窗后按钮没有聚焦的问题。
 - 🐞 `<pro>FormField`: 修复在多选自定义范围值模式下删除单个值会清除所有值的问题。
 - 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。
+- 🐞 `<pro>DataSet`: 修复树形数据父子级关联问题。
 
 ## 1.5.0
 
