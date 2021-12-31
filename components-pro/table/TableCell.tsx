@@ -31,7 +31,6 @@ export interface TableCellProps extends ElementProps {
   columnGroup: ColumnGroup;
   record: Record | undefined;
   rowIndex: number;
-  columnIndex: number;
   colSpan?: number;
   isDragging: boolean;
   provided?: DraggableProvided;
@@ -41,7 +40,7 @@ export interface TableCellProps extends ElementProps {
 }
 
 const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
-  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView, groupPath, rowIndex, columnIndex } = props;
+  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView, groupPath, rowIndex } = props;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
@@ -154,16 +153,6 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     return null;
   }
   const renderInnerNode = (aggregation, onCellStyle?: CSSProperties) => {
-    if (groupCell && group && __tableGroup) {
-      const { columnProps } = __tableGroup;
-      const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
-      const text = renderer({ text: group.value, rowGroup: group, dataSet, record: group.totalRecords[0] });
-      return (
-        <span className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
-          {text}
-        </span>
-      );
-    }
     if (expandIconAsCell && children) {
       return (
         <span
@@ -207,12 +196,22 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
             </Tree>
           );
           return (
-            <div className={`${cellPrefix}-inner`}>
+            <span className={`${cellPrefix}-inner`}>
               {renderer({ text, record, dataSet, aggregation: tableAggregation, headerGroup: columnGroup.headerGroup, rowGroup })}
-            </div>
+            </span>
           );
         }
       }
+    }
+    if (groupCell && group && __tableGroup) {
+      const { columnProps } = __tableGroup;
+      const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
+      const text = renderer({ text: group.value, rowGroup: group, dataSet, record: group.totalRecords[0] });
+      return (
+        <span className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
+          {text}
+        </span>
+      );
     }
     return getInnerNode(column, onCellStyle, undefined, columnGroup.headerGroup);
   };
@@ -237,9 +236,6 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         delete tableStore.activeEmptyCell;
       };
       emptyCellProps.tabIndex = 0;
-    }
-    if (columnIndex === 0 && !tableStore.columnGroups.inView) {
-      emptyCellProps.children = <span className={`${cellPrefix}-inner`} style={{ height: tableStore.virtualEstimatedCellInnerHeight }} />;
     }
 
     return <TCell {...emptyCellProps} />;

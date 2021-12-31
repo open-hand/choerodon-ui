@@ -68,6 +68,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const { ref, inView } = useInView({
     root: needIntersection ? tableStore.node.wrapper : undefined,
     rootMargin: '100px',
+    initialInView: true,
   });
   const header = getHeader({ ...column, dataSet, aggregation, group: columnGroup.headerGroup });
   const globalRef = useRef<{

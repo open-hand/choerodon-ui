@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableHeightChangeable 属性, attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
+- 🌟 `configure`: 新增 bigNumberFormatter, tableHeightChangeable 属性, attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
 - 🌟 `<pro>Table`: 树形表格支持行拖拽，新增 dragDropContextProps 属性。
@@ -28,7 +28,7 @@ timeline: true
 - 🌟 `<pro>Lov`: 新增 selectionProps 属性。
 - 🌟 `<pro>NumberField`: 新增 stringMode 属性。
 - 🌟 `<pro>DataSet`: 新增 bigNumber 字段 type 。
-- 🌟 `configure`: 新增 bigNumberFormatter 属性。
+- 🌟 `<pro>Attachment`: 新增 previewTarget 属性。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。

@@ -43,11 +43,12 @@ export interface ItemProps {
   draggable?: boolean;
   hidden?: boolean;
   isPublic?: boolean;
+  previewTarget?: string;
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
-    attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview,
+    attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
@@ -57,7 +58,14 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const { getPreviewUrl, getDownloadUrl } = attachmentConfig;
   const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
-  const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+  const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
+    attachment,
+    bucketName,
+    bucketDirectory,
+    storageCode,
+    attachmentUUID,
+    isPublic,
+  });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
   const preview = !!src && (status === 'success' || status === 'done');
@@ -99,7 +107,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           status="loaded"
           index={index}
           className={`${prefixCls}-icon`}
-          previewTarget={isSrcIcon && !isPicture ? ATTACHMENT_TARGET : undefined}
+          previewTarget={isSrcIcon && !isPicture ? previewTarget : undefined}
           preview={preview}
           onPreview={onPreview}
           ref={pictureRef}
@@ -109,7 +117,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       ) : preview ? (
         <Button
           href={src}
-          target={ATTACHMENT_TARGET}
+          target={previewTarget}
           funcType={FuncType.link}
           className={`${prefixCls}-icon`}
         >
@@ -158,7 +166,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     );
     const nameNode = preview && listType === 'text' ? (
       <a
-        {...isPicture ? { onClick: handlePreview } : { href: src, target: ATTACHMENT_TARGET }}
+        {...isPicture ? { onClick: handlePreview } : { href: src, target: previewTarget }}
         className={`${prefixCls}-link`}
       >
         {fileName}
@@ -220,7 +228,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           funcType: FuncType.link,
           href: isString(downloadUrl) ? downloadUrl : undefined,
           onClick: isFunction(downloadUrl) ? downloadUrl : undefined,
-          target: ATTACHMENT_TARGET,
+          target: previewTarget,
           block: isCard,
         };
         buttons.push(
