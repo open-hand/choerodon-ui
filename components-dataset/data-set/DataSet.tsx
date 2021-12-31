@@ -144,11 +144,11 @@ function processTreeData(dataSet: DataSet, allData: (object | Record)[], status:
   const allMap = new Map<string, Record>();
   allData.forEach((data, index) => {
     const record = processOneData(dataSet, data, status);
-    const id = data[idField] || `__empty_${index}`;
-    allMap.set(id, record);
+    const id = !isNil(data[idField]) ? data[idField] : `__empty_${index}`;
+    allMap.set(String(id), record);
   });
   allMap.forEach((record) => {
-    const parent = allMap.get(record.get(parentField));
+    const parent = allMap.get(String(record.get(parentField)));
     if (parent) {
       if (parent.children) {
         parent.children.push(record);

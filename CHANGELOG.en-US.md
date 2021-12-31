@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
 - 🐞 `<pro>FormField`: Fix the problem that deleting a single value will clear all other values in the multiple and custom range mode.
 - 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
+- 🐞 `<pro>DataSet`: Fixed tree data parent-child association problem.
 
 
 ## 1.5.0

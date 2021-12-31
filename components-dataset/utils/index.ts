@@ -203,7 +203,7 @@ export function getNearStepValues<T extends Moment | number | string>(
   }
   else if (!isEmpty(value) && !isEmpty(step) && typeof step !== 'object') {
     if (isBigNumber) {
-      return getBigNumberNearStepValues(value, step, min as any, max as any) as T[] | undefined;
+      return getBigNumberNearStepValues(value as number | string, step, min as any, max as any) as T[] | undefined;
     }
     
     min = defaultTo(Number(min), -MAX_SAFE_INTEGER);
