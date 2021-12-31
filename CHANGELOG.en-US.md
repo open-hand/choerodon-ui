@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableHeightChangeable` property. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
+- 🌟 `configure`: Added `bigNumberFormatter`, `tableHeightChangeable` properties. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.
 - 🌟 `<pro>Table`: The tree table supports row dragging, and added `dragDropContextProps` property.
@@ -28,7 +28,7 @@ timeline: true
 - 🌟 `<pro>Lov`: Added `selectionProps` property.
 - 🌟 `<pro>NumberField`: Added `stringMode` property.
 - 🌟 `<pro>DataSet`: Added `bigNumber` field `type`.
-- 🌟 `configure`: Added `bigNumberFormatter` property.
+- 🌟 `<pro>Attachment`: Added `previewTarget` property.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.

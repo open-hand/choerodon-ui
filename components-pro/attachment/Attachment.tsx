@@ -78,6 +78,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
   onUploadError?: (error: AxiosError, response: any, attachment: AttachmentFile) => void;
   downloadAll?: ButtonProps | boolean;
+  previewTarget?: string;
   isPublic?: boolean;
   __inGroup?: boolean;
 }
@@ -831,7 +832,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory,
+      listType, sortable, listLimit, showHistory, previewTarget,
     } = this.props;
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
@@ -853,6 +854,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           readOnly={readOnly}
           isPublic={isPublic}
           limit={readOnly ? listLimit : undefined}
+          previewTarget={previewTarget}
           onHistory={showHistory ? this.handleHistory : undefined}
           onRemove={this.handleRemove}
           onUpload={this.uploadAttachment}

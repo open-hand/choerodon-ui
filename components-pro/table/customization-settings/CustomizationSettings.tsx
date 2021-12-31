@@ -32,7 +32,7 @@ import { modalChildrenProps } from '../../modal/interface';
 
 function normalizeColumnsToTreeData(columns: ColumnProps[]): object[] {
   return [...treeReduce<Map<Key, object>, ColumnProps>(columns, (map, column, _sort, parentColumn) => {
-    if (!column.__tableGroup) {
+    if (!column.__tableGroup || (!column.children && column.__group)) {
       const key = column.__originalKey || getColumnKey(column);
       map.set(key, {
         key,

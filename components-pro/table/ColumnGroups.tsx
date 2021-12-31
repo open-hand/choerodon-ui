@@ -64,10 +64,10 @@ export default class ColumnGroups {
     return this.columns.reduce<ColumnGroup[]>((leafs, group) => leafs.concat(aggregation && group.column.aggregation ? group : group.allLeafs), []);
   }
 
-  @computed
-  get inView(): boolean {
-    return this.allLeafs.some(group => group.inView !== false);
-  }
+  // @computed
+  // get inView(): boolean {
+  //   return this.allLeafs.some(group => group.inView !== false);
+  // }
 
   @computed
   get leafs(): ColumnGroup[] {

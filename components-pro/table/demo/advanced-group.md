@@ -29,32 +29,26 @@ import { action } from 'mobx';
 
 const { Option } = SelectBox;
 
-function getRowKey({ record }) {
-  return {
-    key: `${record.get('sectionName')}-${record.get('id')}`,
-  };
-}
-
 const App = () => {
   // 物料
   const itemDs = useDataSet(() => ({
     paging: false,
     data: [
-      { id: 1, sectionName: 'section1', company: '厦门XX食品有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 9000, quantity: 10, amount: 90000, tax: 0.1 },
-      { id: 2, sectionName: 'section1', company: '厦门XX食品有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 80000, quantity: 20, amount: 1600000, tax: 0.1 },
-      { id: 3, sectionName: 'section1', company: '厦门XX食品有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 85000, quantity: 20, amount: 1700000, tax: 0.1 },
-      { id: 4, sectionName: 'section1', company: '厦门XX食品有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 96000, quantity: 20, amount: 1920000, tax: 0.1 },
-      { id: 5, sectionName: 'section1', company: '厦门XX食品有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 88000000, quantity: 20, amount: 1960000000, tax: 0.1 },
-      { id: 6, sectionName: 'section1', company: '山西XX科贸有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
-      { id: 7, sectionName: 'section1', company: '山西XX科贸有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
-      { id: 8, sectionName: 'section1', company: '山西XX科贸有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
-      { id: 9, sectionName: 'section1', company: '山西XX科贸有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1 },
-      { id: 10, sectionName: 'section1', company: '山西XX科贸有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 76000, quantity: 10, amount: 760000, tax: 0.1 },
-      { id: 11, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
-      { id: 12, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
-      { id: 13, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1 },
-      { id: 14, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 90000, quantity: 10, amount: 900000, tax: 0.1 },
-      { id: 15, sectionName: 'section1', company: '上海XX商务有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1 },
+      { id: 1, company: '厦门XX食品有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 9000, quantity: 10, amount: 90000, tax: 0.1, totalAmount: 1965310000 },
+      { id: 2, company: '厦门XX食品有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 80000, quantity: 20, amount: 1600000, tax: 0.1, totalAmount: 1965310000 },
+      { id: 3, company: '厦门XX食品有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 85000, quantity: 20, amount: 1700000, tax: 0.1, totalAmount: 1965310000 },
+      { id: 4, company: '厦门XX食品有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 96000, quantity: 20, amount: 1920000, tax: 0.1, totalAmount: 1965310000 },
+      { id: 5, company: '厦门XX食品有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 88000000, quantity: 20, amount: 1960000000, tax: 0.1, totalAmount: 1965310000 },
+      { id: 6, company: '山西XX科贸有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000 },
+      { id: 7, company: '山西XX科贸有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000 },
+      { id: 8, company: '山西XX科贸有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000 },
+      { id: 9, company: '山西XX科贸有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1, totalAmount: 2701740000 },
+      { id: 10, company: '山西XX科贸有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 76000, quantity: 10, amount: 760000, tax: 0.1, totalAmount: 2701740000 },
+      { id: 11, company: '上海XX商务有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000 },
+      { id: 12, company: '上海XX商务有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000 },
+      { id: 13, company: '上海XX商务有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000 },
+      { id: 14, company: '上海XX商务有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 90000, quantity: 10, amount: 900000, tax: 0.1, totalAmount: 2701880000 },
+      { id: 15, company: '上海XX商务有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1, totalAmount: 2701880000 },
     ],
     fields: [
       {
@@ -67,7 +61,7 @@ const App = () => {
       },
       {
         name: 'itemCode',
-        label: '含税总价',
+        label: '报价信息',
       },
       {
         name: 'unitPrice',
@@ -85,6 +79,15 @@ const App = () => {
         label: '含税金额',
       },
       {
+        name: 'totalAmount',
+        type: 'currency',
+        label: '含税总价',
+      },
+      {
+        name: 'itemSize',
+        label: '规格',
+      },
+      {
         name: 'tax',
         type: 'number',
         label: '税率',
@@ -96,36 +99,36 @@ const App = () => {
   const scoreDs = useDataSet(() => ({
     paging: false,
     data: [
-      { id: 1, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '80' },
-      { id: 2, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '80' },
-      { id: 3, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '80' },
-      { id: 4, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '80', showInHeader: 1 },
-      { id: 5, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '80' },
-      { id: 6, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '80' },
-      { id: 7, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '80' },
-      { id: 8, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '80', showInHeader: 1 },
-      { id: 9, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '9', scoreMeaning: '总分', score: '80', showInHeader: 1 },
-      { id: 10, sectionName: 'section2', company: '厦门XX食品有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '80', showInHeader: 1 },
-      { id: 11, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '70' },
-      { id: 12, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '70' },
-      { id: 13, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '70' },
-      { id: 14, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '70', showInHeader: 1 },
-      { id: 15, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '70' },
-      { id: 16, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '70' },
-      { id: 17, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '70' },
-      { id: 18, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '70', showInHeader: 1 },
-      { id: 19, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '9', scoreMeaning: '总分', score: '70', showInHeader: 1 },
-      { id: 20, sectionName: 'section2', company: '山西XX科贸有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '70', showInHeader: 1 },
-      { id: 21, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '60' },
-      { id: 22, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '60' },
-      { id: 23, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '60' },
-      { id: 24, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '60', showInHeader: 1 },
-      { id: 25, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '60' },
-      { id: 26, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '60' },
-      { id: 27, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '60' },
-      { id: 28, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '60', showInHeader: 1 },
-      { id: 29, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '9', scoreMeaning: '总分', score: '60', showInHeader: 1 },
-      { id: 30, sectionName: 'section2', company: '上海XX商务有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '60', showInHeader: 1 },
+      { id: 1, company: '厦门XX食品有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '80' },
+      { id: 2, company: '厦门XX食品有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '80' },
+      { id: 3, company: '厦门XX食品有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '80' },
+      { id: 4, company: '厦门XX食品有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '80', showInHeader: 1 },
+      { id: 5, company: '厦门XX食品有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '80' },
+      { id: 6, company: '厦门XX食品有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '80' },
+      { id: 7, company: '厦门XX食品有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '80' },
+      { id: 8, company: '厦门XX食品有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '80', showInHeader: 1 },
+      { id: 9, company: '厦门XX食品有限公司', scoreId: '9', scoreMeaning: '总分', score: '80', showInHeader: 1 },
+      { id: 10, company: '厦门XX食品有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '80', showInHeader: 1 },
+      { id: 11, company: '山西XX科贸有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '70' },
+      { id: 12, company: '山西XX科贸有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '70' },
+      { id: 13, company: '山西XX科贸有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '70' },
+      { id: 14, company: '山西XX科贸有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '70', showInHeader: 1 },
+      { id: 15, company: '山西XX科贸有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '70' },
+      { id: 16, company: '山西XX科贸有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '70' },
+      { id: 17, company: '山西XX科贸有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '70' },
+      { id: 18, company: '山西XX科贸有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '70', showInHeader: 1 },
+      { id: 19, company: '山西XX科贸有限公司', scoreId: '9', scoreMeaning: '总分', score: '70', showInHeader: 1 },
+      { id: 20, company: '山西XX科贸有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '70', showInHeader: 1 },
+      { id: 21, company: '上海XX商务有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '60' },
+      { id: 22, company: '上海XX商务有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '60' },
+      { id: 23, company: '上海XX商务有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '60' },
+      { id: 24, company: '上海XX商务有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '60', showInHeader: 1 },
+      { id: 25, company: '上海XX商务有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '60' },
+      { id: 26, company: '上海XX商务有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '60' },
+      { id: 27, company: '上海XX商务有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '60' },
+      { id: 28, company: '上海XX商务有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '60', showInHeader: 1 },
+      { id: 29, company: '上海XX商务有限公司', scoreId: '9', scoreMeaning: '总分', score: '60', showInHeader: 1 },
+      { id: 30, company: '上海XX商务有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '60', showInHeader: 1 },
     ],
     fields: [
       {
@@ -211,6 +214,9 @@ const App = () => {
           }
           return text;
         },
+        children: [
+          { name: 'totalAmount' }
+        ],
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
       },
@@ -218,9 +224,13 @@ const App = () => {
     { 
       name: 'itemCode',
       type: 'column',
-      section: 'section1',
       columnProps: {
-        renderer: ({ record, dataSet }) => {
+        align: 'left',
+        aggregation: true,
+        children: [
+          { name: 'itemSize' }
+        ],
+        renderer: ({ record, dataSet, text }) => {
           const handleClick = action(() => {
             const isEditing = !dataSet.getState('editing');
             dataSet.setState('editing', isEditing);
@@ -229,8 +239,8 @@ const App = () => {
           return (
             <div style={{ cursor: 'pointer' }} onClick={handleClick}>
               {record.get('itemName')}
-              <div>
-                规格：{record.get('itemSize') || '-'}
+              <div style={{ fontWeight: 400 }}>
+                {text}
               </div>
             </div>
           );
@@ -249,7 +259,6 @@ const App = () => {
     { 
       name: 'scoreId',
       type: 'column',
-      section: 'section2',
       columnProps: {
         renderer: ({ record }) => record.get('scoreMeaning'),
         width: 200,
@@ -276,7 +285,7 @@ const App = () => {
     <>
       <Table
         customizable
-        customizedCode="section-group"
+        customizedCode="advanced-group"
         aggregation
         columnDraggable
         columnTitleEditable
@@ -294,7 +303,7 @@ const App = () => {
       />
       <Table
         customizable
-        customizedCode="section-group2"
+        customizedCode="advanced-group2"
         columnDraggable
         columnTitleEditable
         columnResizable={false}
@@ -308,6 +317,7 @@ const App = () => {
         selectionMode="none"
         bodyExpandable
         defaultBodyExpanded={false}
+        style={{ height: 300 }}
       />
     </>
   );
