@@ -1,11 +1,14 @@
 import isString from 'lodash/isString';
 import capitalize from 'lodash/capitalize';
+import BigNumber from 'bignumber.js';
+import { BigNumberTarget } from 'choerodon-ui/lib/configure';
 import { FieldType, FieldFormat, FieldTrim } from '../data-set/enum';
 import {
   getNumberFormatOptions,
   toLocaleStringPolyfill,
   toLocaleStringSupportsLocales,
   normalizeLanguage,
+  isValidBigNumber,
 } from '../utils';
 
 export interface FormatOptions {
@@ -77,6 +80,59 @@ export function formatNumber(value, lang: string | undefined, options?: Intl.Num
   }
   return value;
 }
+
+export function formatBigNumber(value, lang: string | undefined, options?: Intl.NumberFormatOptions, bigNumberTarget?: BigNumberTarget) {
+  const valueBig = new BigNumber(value);
+  if (!isValidBigNumber(valueBig)) {
+    return value;
+  }
+
+  let formatOne = '1';
+  if (toLocaleStringSupportsLocales()) {
+    if (lang && options && options.currency) {
+      formatOne = (1).toLocaleString(normalizeLanguage(lang), {
+        style: options.style ?? (bigNumberTarget === 'currency' ? 'currency' : 'decimal'),
+        currency: options.currency,
+        currencyDisplay: options.currencyDisplay,
+        currencySign: options.currencySign,
+        maximumFractionDigits: 0,
+      });
+    }
+  }
+  else if (options && options.currency) {
+    formatOne = `${options.currency} ${formatOne}`;
+  }
+
+  let decimalPlaces = 0;
+  const valuePrecision = valueBig.decimalPlaces();
+  if (options) {
+    const minimumFractionDigits = options.minimumFractionDigits;
+    const maximumFractionDigits = options.maximumFractionDigits;
+    decimalPlaces = minimumFractionDigits
+      ? minimumFractionDigits === maximumFractionDigits
+        ? minimumFractionDigits
+        : (maximumFractionDigits
+          ? (valuePrecision > maximumFractionDigits 
+            ? maximumFractionDigits : (valuePrecision < minimumFractionDigits ? minimumFractionDigits : valuePrecision))
+          : (valuePrecision < minimumFractionDigits 
+            ? minimumFractionDigits : valuePrecision))
+      : (maximumFractionDigits && maximumFractionDigits < valuePrecision ? maximumFractionDigits : valuePrecision);
+  }
+  const fmt = {
+    prefix: '',
+    decimalSeparator: '.',
+    groupSeparator: options && options.useGrouping === false ? '' : ',',
+    groupSize: 3,
+    secondaryGroupSize: 0,
+    fractionGroupSeparator: ' ',
+    fractionGroupSize: 0,
+    suffix: '',
+  };
+  let valueFormat = valueBig.toFormat(decimalPlaces, fmt);
+  valueFormat = formatOne.replace(/1|一|١/g, valueFormat);
+  return valueFormat;
+}
+
 const nargs = /\{([0-9a-zA-Z_]+)\}/g;
 
 export function formatTemplate(string: string, args: object | any[], lazy?: boolean) {

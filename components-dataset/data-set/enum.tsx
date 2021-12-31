@@ -79,6 +79,7 @@ export enum FieldType {
   attachment = 'attachment',
   secret = 'secret',
   reactNode = 'reactNode',
+  bigNumber = 'bigNumber',
 }
 
 export enum SortOrder {

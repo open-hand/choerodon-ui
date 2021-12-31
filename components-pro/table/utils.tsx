@@ -58,6 +58,12 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
   if (field.get('multiLine', record)) {
     return <Output />;
   }
+  if (type === FieldType.bigNumber) {
+    if (field.get('currency', record)) {
+      return <Currency isFlat={isFlat} />;
+    }
+    return <ObserverNumberField {...flatProps} />;
+  }
   switch (type) {
     case FieldType.boolean:
       return isQueryField ? (
@@ -119,6 +125,7 @@ export function getPlaceholderByField(field?: Field, record?: Record): string | 
     }
     switch (type) {
       case FieldType.number:
+      case FieldType.bigNumber:
       case FieldType.currency:
       case FieldType.string:
       case FieldType.intl:

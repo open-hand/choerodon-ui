@@ -8,12 +8,15 @@ import isPlainObject from 'lodash/isPlainObject';
 import { get, isArrayLike, isObservableObject } from 'mobx';
 import classNames from 'classnames';
 import { isMoment } from 'moment';
+import { BigNumber } from 'bignumber.js';
 import { Utils } from 'choerodon-ui/dataset';
+import { BigNumberTarget } from 'choerodon-ui/lib/configure';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { TooltipTheme, TooltipPlacement } from 'choerodon-ui/lib/tooltip';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
+import formatBigNumber from '../formatter/formatBigNumber';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
 import { getPrecision } from '../number-field/utils';
 import isEmpty from '../_util/isEmpty';
@@ -94,6 +97,14 @@ export function getNumberFormatter() {
   return formatNumber;
 }
 
+export function getBigNumberFormatter() {
+  const bigNumberFormatter = getConfig('bigNumberFormatter');
+  if (bigNumberFormatter !== undefined) {
+    return bigNumberFormatter;
+  }
+  return formatBigNumber;
+}
+
 export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: string): FormatNumberFuncOptions {
   const precision = getProp('precision');
   const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
@@ -141,6 +152,46 @@ export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => 
   };
 }
 
+export function getBigNumberFormatOptions(getProp: (name) => any, getValue?: () => number | undefined, value?: string, controlLang?: string,
+  bigNumberTarget?: BigNumberTarget): FormatNumberFuncOptions {
+  const precision = getProp('precision');
+  let bigNumberFormatterOptions: FormatNumberFuncOptions;
+  let options: Intl.NumberFormatOptions = {};
+  const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
+  if (bigNumberTarget === 'currency') {
+    if (isNumber(precision)) {
+      options.minimumFractionDigits = precision;
+      options.maximumFractionDigits = precision;
+    }
+    bigNumberFormatterOptions = getConfig('currencyFormatterOptions') || { options: {} };
+    Object.assign(options, bigNumberFormatterOptions.options, formatterOptions.options);
+    const currency = getProp('currency');
+    if (currency) {
+      options.currency = currency;
+    }
+  }
+  else {
+    const precisionInValue = isNumber(precision)
+      ? precision
+      : new BigNumber(isNil(value) ? getValue ? getValue() || 0 : 0 : value).decimalPlaces();
+    bigNumberFormatterOptions = getConfig('numberFieldFormatterOptions') || { options: {} };
+    options = {
+      maximumFractionDigits: precisionInValue,
+      ...bigNumberFormatterOptions.options,
+      ...formatterOptions.options,
+    };
+  }
+  const numberGrouping = getProp('numberGrouping');
+  if (numberGrouping === false) {
+    options.useGrouping = false;
+  }
+  const lang = formatterOptions.lang || bigNumberFormatterOptions.lang || controlLang;
+  return {
+    lang,
+    options,
+  };
+}
+
 export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any; getValue?(): any; lang?: string }, showValueIfNotFound?: boolean, record?: Record) {
   const { getProp, getValue, lang } = options;
   const type = getProp('type');
@@ -154,6 +205,11 @@ export function processFieldValue(value, field: Field | undefined, options: { ge
     const formatOptions = getNumberFormatOptions(getProp, getValue, value, lang);
     const formatter = getProp('formatter');
     return (formatter || getNumberFormatter())(value, formatOptions.lang, formatOptions.options);
+  }
+  if (type === FieldType.bigNumber) {
+    const formatOptions = getBigNumberFormatOptions(getProp, getValue, value, lang, (currency ? 'currency' : 'number-field'));
+    const formatter = getProp('formatter');
+    return (formatter || getBigNumberFormatter())(value, formatOptions.lang, formatOptions.options, (currency ? 'currency' : 'number-field'));
   }
   if (field) {
     return field.getText(value, showValueIfNotFound, record);

@@ -26,6 +26,9 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `validateSelf` event and `getAllValidationErrors` method.
 - 🌟 `<pro>DataSet`: Added `validationRules`, `strictPageSize` properties.
 - 🌟 `<pro>Lov`: Added `selectionProps` property.
+- 🌟 `<pro>NumberField`: Added `stringMode` property.
+- 🌟 `<pro>DataSet`: Added `bigNumber` field `type`.
+- 🌟 `configure`: Added `bigNumberFormatter` property.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
