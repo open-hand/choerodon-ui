@@ -68,6 +68,10 @@ export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
 export type LovViewTarget = 'modal' | 'drawer';
 
+export type BigNumberTarget = 'currency' | 'number-field';
+
+export type FormatBigNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions, bigNumberTarget: BigNumberTarget) => string;
+
 export type LovShowSelectedInViewHook = (viewMode?: LovViewTarget) => boolean;
 
 export type TableFilterAdapterProps = ({ type, config, searchCode, queryDataSet }) => AxiosRequestConfig;
@@ -183,6 +187,7 @@ export interface Config extends DataSetConfig {
   numberFieldFormatterOptions?: FormatNumberFuncOptions;
   currencyFormatter?: FormatNumberFunc;
   currencyFormatterOptions?: FormatNumberFuncOptions;
+  bigNumberFormatter?: FormatBigNumberFunc;
   /**
    * 是否显示长度信息
    */

@@ -124,6 +124,7 @@ const prefixCls = getConfig('prefixCls');
 | numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |        |
 | currencyFormatter | Currency格式器   | FormatNumberFunc: (value: string, lang: string, options: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)) => string |        |
 | currencyFormatterOptions | Currency格式器参数,可以与组件值进行合并   | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |        |
+| bigNumberFormatter | bigNumber 格式器。 `BigNumberTarget` 可选值：`currency` \| `number-field`  | FormatBigNumberFunc: (value: string, lang: string, options: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat), bigNumberTarget: BigNumberTarget) => string |        |
 | showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
 | showInvalidDate | 显示无效日期 | boolean |  |
 | showRequiredColorsOnlyEmpty | 只有在空值时显示必填背景色和边框色 | boolean |  |

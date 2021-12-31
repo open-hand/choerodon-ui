@@ -1,6 +1,6 @@
 import { Utils } from 'choerodon-ui/dataset';
 
-const { getNearStepValues, getPrecision, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, plus, parseNumber } = Utils;
+const { getNearStepValues, getPrecision, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, plus, parseNumber, bigNumberToFixed, parseBigNumber } = Utils;
 
 export {
   MAX_SAFE_INTEGER,
@@ -9,4 +9,6 @@ export {
   getPrecision,
   plus,
   parseNumber,
+  bigNumberToFixed,
+  parseBigNumber,
 };

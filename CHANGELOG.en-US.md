@@ -26,6 +26,9 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `validateSelf` event and `getAllValidationErrors` method.
 - 🌟 `<pro>DataSet`: Added `validationRules`, `strictPageSize` properties.
 - 🌟 `<pro>Lov`: Added `selectionProps` property.
+- 🌟 `<pro>NumberField`: Added `stringMode` property.
+- 🌟 `<pro>DataSet`: Added `bigNumber` field `type`.
+- 🌟 `configure`: Added `bigNumberFormatter` property.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
@@ -52,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
 - 🐞 `<pro>FormField`: Fix the problem that deleting a single value will clear all other values in the multiple and custom range mode.
 - 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
+- 🐞 `<pro>DataSet`: Fixed tree data parent-child association problem.
 
 
 ## 1.5.0

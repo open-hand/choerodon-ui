@@ -259,7 +259,7 @@ title: DataSet
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | name | 字段名 | string |  |
-| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` `attachment` `json` | string | string |
+| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` `attachment` `json` `bigNumber` | string | string |
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值：`asc` `desc` | string |  |
 | label | 字段标签 | string \| ReactNode |  |
 | labelWidth | 字段标签宽度 | number |  |
@@ -267,8 +267,8 @@ title: DataSet
 | pattern | 正则校验 | string \| RegExp |  |
 | maxLength | 最大长度 | number |  |
 | minLength | 最小长度 | number |  |
-| max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | number \| MomentInput \| fieldName | MAX_SAFE_INTEGER(number 类型) |
-| min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName | MIN_SAFE_INTEGER(number 类型) |
+| max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 type 为 `bigNumber` 时，传入 string 数字类型。 | number \| MomentInput \| fieldName \| string | MAX_SAFE_INTEGER(number 类型) |
+| min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 type 为 `bigNumber` 时，传入 string 数字类型。 | number \| MomentInput \| fieldName \| string | MIN_SAFE_INTEGER(number 类型) |
 | step | 步距 | number \| { hour: number, minute: number, second: number } |  |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
 | precision | 小数点精度, 提交时会截断 | number |  |
