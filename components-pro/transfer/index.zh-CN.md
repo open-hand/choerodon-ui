@@ -20,6 +20,7 @@ title: Transfer
 | operations | 操作文案集合，顺序从下至上 | string\[] \| ReactNode[] | ['>', '<'] |
 | sortable | 是否显示排序按钮 | boolean | false |
 | sortOperations | 排序文案集合 | string\[] \| ReactNode[] | ['∧', '∨'] |
+| oneWay | 是否单向穿梭 | boolean | false |
 
 更多属性请参考 [Select](/components-pro/select/#Select)。
 
