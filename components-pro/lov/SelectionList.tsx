@@ -36,7 +36,7 @@ export default class SelectionList extends Component<SelectionListProps> {
 
   getRecords(records: Record[]) {
     return sortBy(records, function(item) {
-      return item.getState(TIMESTAMP);
+      return item.getState(TIMESTAMP) ?? -1;
     });
   }
 
