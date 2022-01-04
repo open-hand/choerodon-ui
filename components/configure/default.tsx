@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { categories } from 'choerodon-ui-font';
 import noop from 'lodash/noop';
 import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
-import { ColumnAlign, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import { ColumnAlign, TableQueryBarType, TableColumnResizeTriggerType } from 'choerodon-ui/pro/lib/table/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
@@ -113,6 +113,7 @@ const defaults = {
   tableAutoHeightDiff: 80,
   tableColumnDefaultWidth: 100,
   tableColumnDefaultMinWidth: 50,
+  tableColumnResizeTrigger: TableColumnResizeTriggerType.mouseDown,
   tableAggregationColumnDefaultWidth: 250,
   tableAggregationColumnDefaultMinWidth: 50,
   customizedSave: defaultCustomizedSave,

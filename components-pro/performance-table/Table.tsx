@@ -78,7 +78,7 @@ import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import TableStore from './TableStore';
 import Toolbar, { ToolBarProps } from './tool-bar';
-import { TableHeightType } from '../table/enum';
+import { TableHeightType, TableColumnResizeTriggerType } from '../table/enum';
 import { isDropresult } from '../table/utils';
 import { arrayMove } from '../data-set/utils';
 import { $l } from '../locale-context';
@@ -1411,6 +1411,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               onColumnResizeEnd: this.handleColumnResizeEnd,
               onColumnResizeStart: this.handleColumnResizeStart,
               onColumnResizeMove: this.handleColumnResizeMove,
+              onMouseEnterHandler: this.handleShowMouseArea,
+              onMouseLeaveHandler: this.handleHideMouseArea,
             });
           }
 
@@ -1531,6 +1533,19 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.setState({ sortType });
     }
     this.props.onSortColumn?.(dataKey, sortType);
+  };
+
+  handleShowMouseArea = (left: number, fixed: boolean | string | undefined) => {
+    const { tableColumnResizeTrigger } = this.tableStore;
+    if(tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
+    const mouseAreaLeft = left + (!fixed ? this.scrollX : 0) + 1;
+    addStyle(this.mouseAreaRef.current, { display: 'block', left: `${mouseAreaLeft}px` });
+  };
+
+  handleHideMouseArea = () => {
+    const { tableColumnResizeTrigger } = this.tableStore;
+    if(tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
+    addStyle(this.mouseAreaRef.current, { display: 'none' });
   };
 
   handleColumnResizeEnd = (
