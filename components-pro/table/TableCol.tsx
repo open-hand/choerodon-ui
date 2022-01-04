@@ -4,7 +4,7 @@ import { get } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { ColumnProps, minColumnWidth } from './Column';
+import { ColumnProps, columnWidth, minColumnWidth } from './Column';
 
 export interface TableColProps extends ElementProps {
   column: ColumnProps;
@@ -14,7 +14,7 @@ export interface TableColProps extends ElementProps {
 const TableCol: FunctionComponent<TableColProps> = function TableCol(props) {
   const { column, last } = props;
   const { tableStore, prefixCls } = useContext(TableContext);
-  const width = last && !tableStore.hasEmptyWidthColumn ? undefined : get(column, 'width');
+  const width = last && !tableStore.hasEmptyWidthColumn ? undefined : tableStore.overflowX ? columnWidth(column, tableStore) : get(column, 'width');
   const minWidth = minColumnWidth(column, tableStore);
   const style = useMemo(() => ({
     width: pxToRem(width),
