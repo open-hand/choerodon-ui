@@ -29,7 +29,7 @@ import { ElementProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import EventManager from '../_util/EventManager';
 import { getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
-import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
+import { ColumnAlign, ColumnLock, TableColumnTooltip, TableColumnResizeTriggerType } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import transform from '../_util/transform';
@@ -170,9 +170,11 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     tableStore.columnResizing = true;
     delete globalRef.current.resizePosition;
     setSplitLineHidden(false);
-    const { node: { element } } = tableStore;
-    const { left } = element.getBoundingClientRect();
-    globalRef.current.bodyLeft = border ? left + 1 : left;
+    const { node: { element }, tableColumnResizeTrigger } = tableStore;
+    if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) {
+      const { left } = element.getBoundingClientRect();
+      globalRef.current.bodyLeft = border ? left + 1 : left;
+    }
     setSplitLinePosition(e.clientX);
     resizeEvent
       .setTarget(element.ownerDocument)
@@ -249,6 +251,36 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     }
   }, [currentColumnGroup, setResizeGroup, autoMaxWidth, delayResizeStart, resizeStart]);
 
+  const showSplitLine = useCallback((e, type) => {
+    const { columnResizing } = tableStore;
+    if (columnResizing) return;
+    setSplitLineHidden(false);
+    const { node: { element } } = tableStore;
+    const { left } = element.getBoundingClientRect();
+    const { left: resizerLeft, width } = e.target.getBoundingClientRect();
+    const newLeft = resizerLeft + (type === 'pre' ? 0 : width);
+    globalRef.current.bodyLeft = border ? left + 1 : left;
+    setSplitLinePosition(newLeft);
+  }, []);
+
+  const delayShowSplitLine = useCallback(debounce(showSplitLine, 300), []);
+
+  const handleShowSplitLine = useCallback((e, type) => {
+    const { tableColumnResizeTrigger } = tableStore;
+    if(tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
+    e.persist();
+    delayShowSplitLine(e, type);
+  }, []);
+
+  const handleHideSplitLine = useCallback(() => {
+    const { tableColumnResizeTrigger } = tableStore;
+    if(tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
+    delayShowSplitLine.cancel();
+    const { columnResizing } = tableStore;
+    if (columnResizing) return;
+    setSplitLineHidden(true);
+  }, []);
+
   const resizeDoubleClick = useCallback(action((): void => {
     const { resizeColumnGroup } = globalRef.current;
     if (resizeColumnGroup) {
@@ -284,6 +316,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }, [delayResizeStart, resizeDoubleClick]);
 
   const renderResizer = () => {
+    const { rightColumnGroups: { columns }, overflowX } = tableStore;
+    const { columnGroup } = props;
     const resizerPrefixCls = `${prefixCls}-resizer`;
     const pre = prevColumnGroup && prevColumnGroup.column.resizable && (
       <div
@@ -292,6 +326,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         onDoubleClick={autoMaxWidth ? handleLeftDoubleClick : undefined}
         onMouseDown={handleLeftResize}
         onMouseUp={autoMaxWidth ? handleStopResize : undefined}
+        onMouseEnter={(e) => handleShowSplitLine(e, 'pre')}
+        onMouseLeave={handleHideSplitLine}
       />
     );
     const next = currentColumnGroup && currentColumnGroup.column.resizable && (
@@ -301,9 +337,11 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         onDoubleClick={autoMaxWidth ? handleRightDoubleClick : undefined}
         onMouseDown={handleRightResize}
         onMouseUp={autoMaxWidth ? handleStopResize : undefined}
+        onMouseEnter={(e) => handleShowSplitLine(e, 'next')}
+        onMouseLeave={handleHideSplitLine}
       />
     );
-
+    if (columns.length && overflowX && columns[0].key === columnGroup.key) return next;
     return [pre, next];
   };
 

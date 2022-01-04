@@ -101,3 +101,8 @@ export enum GroupType {
   row = 'row',
   none = 'none',
 }
+
+export enum TableColumnResizeTriggerType {
+  hover = 'hover',
+  mouseDown = 'mouseDown',
+}
