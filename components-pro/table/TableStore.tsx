@@ -1758,15 +1758,19 @@ export default class TableStore {
     if (groups.length) {
       const headerGroupNames: string[] = [];
       const groupNames: string[] = [];
-      groups.forEach(({ type, name }) => {
+      const parentFields: Map<string | symbol, string> = new Map();
+      groups.forEach(({ type, name, parentField }) => {
         if (type === GroupType.header) {
           headerGroupNames.push(name);
         } else {
           groupNames.push(name);
         }
+        if (parentField) {
+          parentFields.set(name, parentField);
+        }
       }, []);
       const { dataSet } = this;
-      return this.isTree ? normalizeGroups(groupNames, headerGroupNames, dataSet.treeRecords) : normalizeGroups(groupNames, headerGroupNames, dataSet.records);
+      return normalizeGroups(groupNames, headerGroupNames, dataSet.records, parentFields);
     }
     return [];
   }
@@ -1777,7 +1781,7 @@ export default class TableStore {
     if (groups.length) {
       const { dataSet } = this;
       const groupNames = groups.map(({ name }) => name);
-      return this.isTree ? normalizeGroups(groupNames, [], dataSet.treeRecords) : normalizeGroups(groupNames, [], dataSet.records);
+      return normalizeGroups(groupNames, [], dataSet.records);
     }
     return [];
   }
@@ -2035,6 +2039,14 @@ export default class TableStore {
       this.dataSet.setState(BODY_EXPANDED, isBodyExpanded);
     }
     onBodyExpand(isBodyExpanded);
+  }
+
+  isGroupExpanded(group: Group): boolean {
+    return group.isExpanded && (!group.parent || this.isGroupExpanded(group.parent));
+  }
+
+  setGroupExpanded(group: Group, isExpanded: boolean) {
+    group.isExpanded = isExpanded;
   }
 
   isRowExpanded(record: Record): boolean {

@@ -98,6 +98,7 @@ export type TableGroup = {
   name: string;
   type: GroupType;
   hidden?: boolean;
+  parentField?: string;
   columnProps?: ColumnProps;
 }
 

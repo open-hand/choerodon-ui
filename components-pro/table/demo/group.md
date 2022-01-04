@@ -30,13 +30,13 @@ const App = () => {
     data: [
       { id: 1, name: '张三', code: 'a', company: '汉得', dept: '人事' },
       { id: 2, name: '李四', code: 'b', company: '汉得', dept: '人事' },
-      { id: 3, name: '王五', code: 'c', company: '汉得', dept: '研发' },
-      { id: 4, name: '赵六', code: 'd', company: '汉得', dept: '研发' },
-      { id: 5, name: '孙七', code: 'e', company: '甄云', dept: '人事' },
-      { id: 6, name: '周八', code: 'f', company: '甄云', dept: '人事' },
-      { id: 7, name: '吴九', code: 'g', company: '甄云', dept: '研发' },
-      { id: 8, name: '郑十', code: 'h', company: '甄云', dept: '研发' },
-      { id: 9, name: '老吴', code: 'i', company: '甄云', dept: '研发' },
+      { id: 3, name: '王五', code: 'c', company: '汉得', dept: '研发', parentDept: '人事' },
+      { id: 4, name: '赵六', code: 'd', company: '汉得', dept: '研发', parentDept: '人事' },
+      { id: 5, name: '孙七', code: 'e', company: '甄云', dept: '人事', parentCompany: '汉得' },
+      { id: 6, name: '周八', code: 'f', company: '甄云', dept: '人事', parentCompany: '汉得' },
+      { id: 7, name: '吴九', code: 'g', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
+      { id: 8, name: '郑十', code: 'h', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
+      { id: 9, name: '老吴', code: 'i', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
     ],
     fields: [
       {
@@ -79,10 +79,13 @@ const App = () => {
   const [deptGroup, setDeptGroup] = React.useState('column');
   const [companyFirst, setCompanyFirst] = React.useState(true);
   const [aggregation, setAggregation] = React.useState(false);
+  const [companyTree, setCompanyTree] = React.useState(false);
+  const [deptTree, setDeptTree] = React.useState(false);
 
   const groups = React.useMemo(() => [
     { 
       name: 'company',
+      parentField: companyTree ? 'parentCompany' : undefined,
       type: companyGroup,
       columnProps: {
         header: ({ dataSet, name, title }) => <span style={{ color: 'red' }}>{title}</span>,
@@ -91,13 +94,14 @@ const App = () => {
     },
     { 
       name: 'dept',
+      parentField: deptTree ? 'parentDept' : undefined,
       type: deptGroup,
       columnProps: {
         header: ({ dataSet, name, title }) => <span style={{ color: 'red' }}>{title}</span>,
         renderer: ({ text }) => <span style={{ color: 'blue' }}>{text}</span>,
       },
     },
-  ][companyFirst? 'slice':'reverse'](), [companyGroup, deptGroup, companyFirst]);
+  ][companyFirst? 'slice':'reverse'](), [companyGroup, deptGroup, companyFirst, companyTree, deptTree]);
 
   return (
     <>
@@ -114,6 +118,8 @@ const App = () => {
           <Option value="header">header</Option>
           <Option value="none">none</Option>
         </SelectBox>
+        <Switch value={true} checked={companyTree} onChange={setCompanyTree} label="公司树形" newLine />
+        <Switch value={true} checked={deptTree} onChange={setDeptTree} label="部门树形" />
         <Switch value={true} checked={companyFirst} onChange={setCompanyFirst} label="公司优先" />
         <Switch value={true} checked={aggregation} onChange={setAggregation} label="聚合" />
       </Form>
@@ -129,6 +135,7 @@ const App = () => {
         columns={columns}
         groups={groups}
         style={{ height: 200 }}
+        virtual
       />
     </>
   );

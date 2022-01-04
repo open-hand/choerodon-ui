@@ -275,8 +275,10 @@ function generateGroupRows(
   const { groups: tableGroups, dataSet, prefixCls } = tableStore;
   const { length } = groups;
   groups.forEach((group, i) => {
-    const isLast = i === length - 1 && isParentLast !== false;
-    const { subGroups, records, name, subHGroups } = group;
+    const { subGroups, records, name, subHGroups, children } = group;
+    const hasChildren = children && tableStore.isGroupExpanded(group);
+    const isLastInTreeNode = i === length - 1 && isParentLast !== false;
+    const isLast = isLastInTreeNode && !hasChildren;
     const path: [Group, boolean][] = [...groupPath, [group, isLast]];
     const tableGroup = tableGroups && tableGroups.find(g => g.name === name);
     if (tableGroup && tableGroup.type === GroupType.row) {
@@ -331,6 +333,9 @@ function generateGroupRows(
           parentExpanded: true,
         });
       });
+    }
+    if (hasChildren) {
+      generateGroupRows(rows, children!, props, hasCached, statistics, groupPath, undefined, isLastInTreeNode);
     }
   });
   return rows;

@@ -99,36 +99,30 @@ const App = () => {
   const scoreDs = useDataSet(() => ({
     paging: false,
     data: [
+      { id: 8, company: '厦门XX食品有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '80', showInHeader: 1 },
       { id: 1, company: '厦门XX食品有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '80' },
-      { id: 2, company: '厦门XX食品有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '80' },
+      { id: 2, company: '厦门XX食品有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '80', parentScoreId: '1' },
       { id: 3, company: '厦门XX食品有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '80' },
       { id: 4, company: '厦门XX食品有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '80', showInHeader: 1 },
       { id: 5, company: '厦门XX食品有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '80' },
-      { id: 6, company: '厦门XX食品有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '80' },
+      { id: 6, company: '厦门XX食品有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '80', parentScoreId: '5' },
       { id: 7, company: '厦门XX食品有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '80' },
-      { id: 8, company: '厦门XX食品有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '80', showInHeader: 1 },
-      { id: 9, company: '厦门XX食品有限公司', scoreId: '9', scoreMeaning: '总分', score: '80', showInHeader: 1 },
-      { id: 10, company: '厦门XX食品有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '80', showInHeader: 1 },
+      { id: 18, company: '山西XX科贸有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '70', showInHeader: 1 },
       { id: 11, company: '山西XX科贸有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '70' },
-      { id: 12, company: '山西XX科贸有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '70' },
+      { id: 12, company: '山西XX科贸有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '70', parentScoreId: '1' },
       { id: 13, company: '山西XX科贸有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '70' },
       { id: 14, company: '山西XX科贸有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '70', showInHeader: 1 },
       { id: 15, company: '山西XX科贸有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '70' },
-      { id: 16, company: '山西XX科贸有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '70' },
+      { id: 16, company: '山西XX科贸有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '70', parentScoreId: '5' },
       { id: 17, company: '山西XX科贸有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '70' },
-      { id: 18, company: '山西XX科贸有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '70', showInHeader: 1 },
-      { id: 19, company: '山西XX科贸有限公司', scoreId: '9', scoreMeaning: '总分', score: '70', showInHeader: 1 },
-      { id: 20, company: '山西XX科贸有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '70', showInHeader: 1 },
+      { id: 28, company: '上海XX商务有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '60', showInHeader: 1 },
       { id: 21, company: '上海XX商务有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '60' },
-      { id: 22, company: '上海XX商务有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '60' },
+      { id: 22, company: '上海XX商务有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '60', parentScoreId: '1' },
       { id: 23, company: '上海XX商务有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '60' },
       { id: 24, company: '上海XX商务有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '60', showInHeader: 1 },
       { id: 25, company: '上海XX商务有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '60' },
-      { id: 26, company: '上海XX商务有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '60' },
+      { id: 26, company: '上海XX商务有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '60', parentScoreId: '5' },
       { id: 27, company: '上海XX商务有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '60' },
-      { id: 28, company: '上海XX商务有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '60', showInHeader: 1 },
-      { id: 29, company: '上海XX商务有限公司', scoreId: '9', scoreMeaning: '总分', score: '60', showInHeader: 1 },
-      { id: 30, company: '上海XX商务有限公司', scoreId: '10', scoreMeaning: '推荐理由', score: '60', showInHeader: 1 },
     ],
     fields: [
       {
@@ -258,6 +252,7 @@ const App = () => {
     },
     { 
       name: 'scoreId',
+      parentField: 'parentScoreId',
       type: 'column',
       columnProps: {
         renderer: ({ record }) => record.get('scoreMeaning'),
@@ -317,7 +312,6 @@ const App = () => {
         selectionMode="none"
         bodyExpandable
         defaultBodyExpanded={false}
-        style={{ height: 300 }}
       />
     </>
   );

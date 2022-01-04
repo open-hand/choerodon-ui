@@ -519,7 +519,7 @@ class App extends React.Component {
           style={{ color: 'red' }}
           tooltip="overflow"
           editor
-          width={200}
+          defaultWidth={200}
           minWidth={150}
           lock
           sortable

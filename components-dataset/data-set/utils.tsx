@@ -9,7 +9,7 @@ import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import { isEmpty, parseNumber, warning, parseBigNumber } from '../utils';
+import { isEmpty, parseBigNumber, parseNumber, warning } from '../utils';
 import Field, { FieldProps, Fields } from './Field';
 // import XLSX from 'xlsx';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
@@ -980,29 +980,64 @@ export function fixAxiosConfig(config: AxiosRequestConfig): AxiosRequestConfig {
   return config;
 }
 
+function normalizeGroupsToTree(groups: Group[]): Group[] {
+  const map1: Map<string, Group> = new Map();
+  const map2: Map<string, Group> = new Map();
+  groups.forEach((group) => {
+    const { subGroups, value } = group;
+    map1.set(String(value), group);
+    map2.set(String(value), group);
+    if (subGroups.length) {
+      group.subGroups = normalizeGroupsToTree(subGroups);
+    }
+  });
+  if (map1.size) {
+    map1.forEach((group) => {
+      const { parentValue } = group;
+      const parent = parentValue ? map1.get(String(parentValue)) : undefined;
+      if (parent) {
+        if (parent.children) {
+          parent.children.push(group);
+        } else {
+          parent.children = [group];
+        }
+        group.parent = parent;
+        map2.delete(String(group.value));
+      }
+    });
+    return [...map2.values()];
+  }
+  return groups;
+}
+
 const EMPTY_GROUP_KEY = Symbol('__empty_group__');
 
-export function normalizeGroups(groups: string[], hGroups: string[], records: Record[]): Group[] {
+export function normalizeGroups(groups: string[], hGroups: string[], records: Record[], parentFields?: Map<string | symbol, string>): Group[] {
   const optGroups: Group[] = [];
   const emptyGroup = new Group(EMPTY_GROUP_KEY, 0);
   records.forEach((record) => {
     let previousGroup: Group | undefined;
-    groups.forEach((key) => {
-      const label = record.get(key);
+    groups.forEach((name) => {
+      const value = record.get(name);
       if (!previousGroup) {
-        previousGroup = optGroups.find(item => item.value === label);
+        previousGroup = optGroups.find(item => item.value === value);
         if (!previousGroup) {
-          previousGroup = new Group(key, optGroups.length, label);
+          previousGroup = new Group(name, optGroups.length, value);
           optGroups.push(previousGroup);
         }
       } else {
         const { subGroups } = previousGroup;
         const parent = previousGroup;
-        previousGroup = subGroups.find(item => item.value === label);
+        previousGroup = subGroups.find(item => item.value === value);
         if (!previousGroup) {
-          previousGroup = new Group(key, subGroups.length, label, parent);
+          previousGroup = new Group(name, subGroups.length, value, parent);
           subGroups.push(previousGroup);
         }
+      }
+      const parentField = parentFields && parentFields.get(name);
+      if (previousGroup && previousGroup.parentName !== parentField) {
+        previousGroup.parentName = parentField;
+        previousGroup.parentValue = record.get(parentField);
       }
     });
     if (hGroups.length) {
@@ -1039,10 +1074,13 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
       let parent: Group | undefined = previousGroup;
       while (parent) {
         parent.totalRecords.push(record);
-        parent = parent.parent;
+        parent = parent.parentGroup;
       }
     }
   });
+  if (parentFields && parentFields.size) {
+    return normalizeGroupsToTree(optGroups);
+  }
   if (!groups.length) {
     if (hGroups.length) {
       emptyGroup.subGroups = optGroups;

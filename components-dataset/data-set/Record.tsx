@@ -68,7 +68,7 @@ const IDGen: IterableIterator<number> = (function* (start: number) {
   }
 })(1000);
 
-const EXPANDED_KEY = '__EXPANDED_KEY__';  // TODO:Symbol
+export const EXPANDED_KEY = '__EXPANDED_KEY__';  // TODO:Symbol
 const SELECTABLE_KEY = '__SELECTABLE_KEY__';  // TODO:Symbol
 const DISABLED_KEY = '__DISABLED_KEY__';  // TODO:Symbol
 const SELECT_KEY = '__SELECT_KEY__';  // TODO:Symbol

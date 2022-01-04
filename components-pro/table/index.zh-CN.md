@@ -156,6 +156,8 @@ subtitle: 表格
 | --- | --- | --- | --- |
 | type | 分组类型， 可选值 `column` `row` `header` `none` | string | 'none' |
 | name | 分组对照的字段名 | string |  |
+| parentField | 树形分组对照的父字段名 | string |  |
+| hidden | 隐藏组, 只适用于类型为 header 的分组 | boolean |  |
 | columnProps | 列属性 | ColumnProps |  |
 
 ### Table.FilterBar
