@@ -242,8 +242,8 @@ export interface TableProps extends StandardProps {
   bodyRef?: (ref: HTMLElement) => void;
   bordered?: boolean;
   className?: string;
-  classPrefix: string;
-  children: React.ReactNode;
+  classPrefix?: string;
+  children?: React.ReactNode;
   cellBordered?: boolean;
   defaultSortType?: SortType;
   disabledScroll?: boolean;
@@ -251,16 +251,16 @@ export interface TableProps extends StandardProps {
   defaultExpandedRowKeys?: string[] | number[];
   data: object[];
   expandedRowKeys?: string[] | number[];
-  height: number;
+  height?: number;
   hover: boolean;
-  headerHeight: number;
-  locale: TableLocale;
-  clickScrollLength: TableScrollLength,
+  headerHeight?: number;
+  locale?: TableLocale;
+  clickScrollLength?: TableScrollLength,
   loading?: boolean;
   loadAnimation?: boolean;
-  minHeight: number;
-  rowHeight: number | ((rowData: object) => number);
-  rowKey: string;
+  minHeight?: number;
+  rowHeight?: number | ((rowData: object) => number);
+  rowKey?: string;
   isTree?: boolean;
   rowExpandedHeight?: number;
   rowClassName?: string | ((rowData: object) => string);
@@ -571,7 +571,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     } = props;
 
     const expandedRowKeys = defaultExpandAllRows
-      ? findRowKeys(data, rowKey, isFunction(renderRowExpanded))
+      ? findRowKeys(data, rowKey!, isFunction(renderRowExpanded))
       : defaultExpandedRowKeys || [];
 
     let shouldFixedColumn = Array.from(children as Iterable<any>).some(
@@ -744,7 +744,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.props.onDataUpdated?.(this.props.data, this.scrollTo);
 
       const maxHeight =
-        this.props.data.length * (typeof rowHeight === 'function' ? rowHeight({}) : rowHeight);
+        this.props.data.length * (typeof rowHeight === 'function' ? rowHeight({}) : rowHeight!);
       // 当开启允许更新滚动条，或者滚动条位置大于表格的最大高度，则初始滚动条位置
       if (this.props.shouldUpdateScroll || Math.abs(this.scrollY) > maxHeight) {
         this.scrollTo({ x: 0, y: 0 });
@@ -856,7 +856,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   getRowHeight(rowData = {}) {
     const { rowHeight } = this.props;
-    return typeof rowHeight === 'function' ? rowHeight(rowData) : rowHeight;
+    return typeof rowHeight === 'function' ? rowHeight(rowData) : rowHeight!;
   }
 
   /**
@@ -864,7 +864,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    */
   getTableHeaderHeight() {
     const { headerHeight, showHeader } = this.props;
-    return showHeader ? headerHeight : 0;
+    return showHeader ? headerHeight! : 0;
   }
 
   /**
@@ -888,7 +888,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       },
     } = this;
 
-    let tableHeight: number = height;
+    let tableHeight: number = height!;
 
     if (this.tableStore.customizable) {
       const tempHeightType = get(tempCustomized, 'heightType');
@@ -920,9 +920,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     if (autoHeight) {
       if (showScrollArrow) {
-        return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight + SCROLLBAR_LARGE_WIDTH);
+        return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight! + SCROLLBAR_LARGE_WIDTH);
       } else {
-        return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight + SCROLLBAR_WIDTH);
+        return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight! + SCROLLBAR_WIDTH);
       }
     } else {
       return tableHeight;
@@ -1921,11 +1921,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return (
       isFunction(renderRowExpanded) &&
       !isTree &&
-      expandedRowKeys.some(key => key === rowData[rowKey])
+      expandedRowKeys.some(key => key === rowData[rowKey!])
     );
   }
 
-  addPrefix = (name: string): string => prefix(this.props.classPrefix)(name);
+  addPrefix = (name: string): string => prefix(this.props.classPrefix!)(name);
 
   calculateRowMaxHeight() {
     const { wordWrap } = this.props;
@@ -2132,12 +2132,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   onRowClick(rowData, event, rowIndex, index) {
     const { highLightRow, rowKey, rowDraggable, isTree } = this.props;
-    const rowNum = rowDraggable || isTree ? rowData[rowKey] : rowIndex;
+    const rowNum = rowDraggable || isTree ? rowData[rowKey!] : rowIndex;
     if (highLightRow) {
       const tableRows = Object.values(this.tableRows);
       let ref = this.tableRows[index] && this.tableRows[index][0];
       if (rowDraggable || isTree) {
-        const findRow = tableRows.find(row => row[1] && row[1][rowKey] === rowData[rowKey]);
+        const findRow = tableRows.find(row => row[1] && row[1][rowKey!] === rowData[rowKey!]);
         ref = findRow ? findRow![0] : this.tableRows[index][0];
       }
       if (this._lastRowIndex !== rowNum && ref) {
@@ -2165,7 +2165,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   ) {
     const { renderTreeToggle, rowKey, wordWrap, isTree } = this.props;
     const hasChildren = isTree && rowData.children && Array.isArray(rowData.children);
-    const nextRowKey = typeof rowData[rowKey] !== 'undefined' ? rowData[rowKey] : props.key;
+    const nextRowKey = typeof rowData[rowKey!] !== 'undefined' ? rowData[rowKey!] : props.key;
 
     const rowProps: TableRowProps = {
       ...props,
@@ -2178,7 +2178,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     };
 
     const expandedRowKeys = this.getExpandedRowKeys() || [];
-    const expanded = expandedRowKeys.some(key => key === rowData[rowKey]);
+    const expanded = expandedRowKeys.some(key => key === rowData[rowKey!]);
     const cells = [];
 
     for (let i = 0; i < bodyCells.length; i++) {
@@ -2666,8 +2666,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             nextRowHeight = rowHeight(rowData);
           } else {
             nextRowHeight = maxHeight
-              ? Math.max(maxHeight + CELL_PADDING_HEIGHT, rowHeight)
-              : rowHeight;
+              ? Math.max(maxHeight + CELL_PADDING_HEIGHT, rowHeight!)
+              : rowHeight!;
             if (shouldRenderExpandedRow) {
               // @ts-ignore
               nextRowHeight += rowExpandedHeight!;
@@ -2892,7 +2892,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         <Scrollbar
           tableId={id}
           showScrollArrow={showScrollArrow}
-          clickScrollLength={clickScrollLength}
+          clickScrollLength={clickScrollLength!}
           className={classNames({ fixed: fixedHorizontalScrollbar })}
           style={{ width, bottom: fixedHorizontalScrollbar ? bottom : undefined }}
           length={this.state.width - decScrollBarOffset}
@@ -2905,7 +2905,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           vertical
           tableId={id}
           showScrollArrow={showScrollArrow}
-          clickScrollLength={clickScrollLength}
+          clickScrollLength={clickScrollLength!}
           length={height - headerHeight - decScrollBarOffset}
           scrollLength={contentHeight - decScrollBarOffset}
           onScroll={this.handleScrollY}

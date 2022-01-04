@@ -8,6 +8,7 @@ import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
 import { observer } from 'mobx-react';
+import { isMoment } from 'moment';
 import { action, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -214,7 +215,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             }).join('~')}`;
           }
           if (field.get('bind', current) || isNil(fieldValue)) return;
-          const text = this.processText(isNil(fieldValue) ? this.processValue(value) : fieldValue);
+          const text = this.processText(isNil(fieldValue) ? this.processValue(value) : isMoment(fieldValue) ? super.processValue(fieldValue) : fieldValue);
           return `${this.getFieldLabel(field, current)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : text,
             field,

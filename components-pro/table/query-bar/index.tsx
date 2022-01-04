@@ -185,7 +185,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   @observable moreSummary: SummaryBar[];
 
   static defaultProps = {
-    summaryFieldsLimit: 3,
     summaryBarFieldWidth: 170,
   };
 
@@ -446,17 +445,21 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    */
   renderSummary(summary) {
     const {
-      props: { summaryBar, summaryFieldsLimit = 3, summaryBarFieldWidth },
+      props: { summaryBar, summaryFieldsLimit, summaryBarFieldWidth },
       context: {
+        tableStore,
         dataSet,
         prefixCls,
       },
     } = this;
+    const { props: { queryBarProps } } = tableStore;
+    const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps };
+    const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
     const fieldTypeArr = [FieldType.currency, FieldType.number];
     if (summaryBar && summary && summary.length) {
       return summary.map((summaryCol, index) => {
         const field = dataSet.getField(summaryCol);
-        const hasSeparate = summaryBar.length > summaryFieldsLimit! || index !== (summaryBar.length - 1);
+        const hasSeparate = summaryBar.length > summaryFieldsLimits! || index !== (summaryBar.length - 1);
         if (isString(summaryCol) && field && fieldTypeArr.includes(field.type)) {
           const summaryValue = reduce(dataSet.map((record) => isNumber(record.get(summaryCol)) ? record.get(summaryCol) : 0), (sum, n) => sum + n);
           return (
@@ -472,7 +475,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           );
         }
         if (typeof summaryCol === 'function') {
-          const summaryObj = (summaryCol as SummaryBarHook)({ summaryFieldsLimit, summaryBarFieldWidth, dataSet });
+          const summaryObj = (summaryCol as SummaryBarHook)({ summaryFieldsLimit: summaryFieldsLimits, summaryBarFieldWidth, dataSet });
           return (
             <div key={isString(summaryObj.label) ? summaryObj.label : ''}>
               <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
@@ -546,12 +549,15 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       },
       context: {
         prefixCls,
+        tableStore,
       },
     } = this;
-
+    const { props: { queryBarProps } } = tableStore;
+    const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps };
+    const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit);
     if (summaryBar) {
-      const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimit));
-      const moreSummary = summaryBar.slice(summaryFieldsLimit);
+      const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimits));
+      const moreSummary = summaryBar.slice(summaryFieldsLimits);
       const moreSummaryButton: ReactElement | undefined = this.getMoreSummaryButton(moreSummary);
       return (
         <div className={`${prefixCls}-summary-group-wrapper`}>
@@ -819,9 +825,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
       const queryFields = this.getQueryFields();
-      const tableQueryBarProps = { ...queryBarProps, ...tableStore.getConfig('queryBarProps') };
+      const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps };
       const onReset = tableQueryBarProps && typeof tableQueryBarProps.onReset === 'function' ? tableQueryBarProps.onReset : noop;
       const onQuery = tableQueryBarProps && typeof tableQueryBarProps.onQuery === 'function' ? tableQueryBarProps.onQuery : noop;
+      const queryFieldsLimits = queryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.queryFieldsLimit);
+      const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit);
       const props: TableQueryBarHookCustomProps & TableQueryBarHookProps = {
         ...tableQueryBarProps,
         dataSet,
@@ -829,8 +837,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         buttons,
         pagination,
         queryFields,
-        queryFieldsLimit: queryFieldsLimit!,
-        summaryFieldsLimit: summaryFieldsLimit!,
+        queryFieldsLimit: queryFieldsLimits,
+        summaryFieldsLimit: summaryFieldsLimits,
         summaryBar,
         onQuery: treeQueryExpanded && isTree ? this.expandTree : onQuery,
         onReset: treeQueryExpanded && isTree ? this.collapseTree : onReset,

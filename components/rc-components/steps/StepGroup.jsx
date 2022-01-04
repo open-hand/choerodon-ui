@@ -17,8 +17,7 @@ import isString from 'lodash/isString';
 import Menu from '../../menu';
 import MenuItem from '../../menu/MenuItem';
 import Button from '../../button'
-
-
+import EventManager from '../../_util/EventManager';
 
 export default class Steps extends Component {
   static propTypes = {
@@ -60,6 +59,7 @@ export default class Steps extends Component {
       isShowMore: false,
     };
     this.calcStepOffsetWidth = debounce(this.calcStepOffsetWidth, 150);
+    this.resizeEvent = new EventManager(typeof window === 'undefined' ? undefined : window);
     this.navRef = null;
     this.menuRef = null;
   }
@@ -75,6 +75,8 @@ export default class Steps extends Component {
     if (this.props.type === 'navigation') {
       this.showMore()
     }
+   
+    this.resizeEvent.addEventListener('resize', this.showMore);
   }
 
   componentDidUpdate() {
@@ -105,6 +107,7 @@ export default class Steps extends Component {
     if (this.calcStepOffsetWidth && this.calcStepOffsetWidth.cancel) {
       this.calcStepOffsetWidth.cancel();
     }
+    this.resizeEvent.removeEventListener('resize', this.showMore);
   }
 
   showMore = () => {
@@ -207,7 +210,7 @@ export default class Steps extends Component {
     });
     const menu = () => {
       return <div ref={dom => { this.menuRef = dom }}>
-        <Menu onClick={this.menuClick} className={`${prefixCls}-dropdown-menu`}>
+        <Menu onClick={this.menuClick} className={`${prefixCls}-dropdown-menu`} selectedKeys={[`${current}`]}>
           {
             filteredChildren.map((child, index) => {
               const childProps = {

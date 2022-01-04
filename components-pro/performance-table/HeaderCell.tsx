@@ -15,6 +15,7 @@ export interface HeaderCellProps extends CellProps {
   sortable?: boolean;
   style?: React.CSSProperties;
   resizable?: boolean;
+  resizeLeft?: number;
   onColumnResizeStart?: (columnWidth?: number, left?: number, fixed?: boolean) => void;
   onColumnResizeEnd?: (
     columnWidth?: number,
@@ -91,10 +92,14 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
   }
 
   handleColumnResizeStart = () => {
-    const { left, fixed, onColumnResizeStart } = this.props;
-
-    onColumnResizeStart?.(this.state.columnWidth, left, !!fixed);
+    const { left = 0, fixed, onColumnResizeStart, resizeLeft = 0 } = this.props;
+    onColumnResizeStart?.(this.state.columnWidth, left + resizeLeft, !!fixed);
   };
+
+  handleColumnResizeMove = (width, left = 0, fixed) => {
+    const { onColumnResizeMove = noop, resizeLeft = 0 } = this.props;
+    onColumnResizeMove(width, left + resizeLeft, fixed)
+  }
 
   handleColumnResizeEnd = (columnWidth?: number, cursorDelta?: number) => {
     const { dataKey, index, onColumnResizeEnd, onResize } = this.props;
@@ -118,7 +123,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
   addPrefix = (name: string) => prefix(this.props.classPrefix)(name);
 
   renderResizeSpanner() {
-    const { resizable, left, onColumnResizeMove, onMouseLeaveHandler, fixed, headerHeight, minWidth, groupCount, children } = this.props;
+    const { resizable, left = 0, onMouseLeaveHandler, fixed, headerHeight, minWidth, groupCount, children, style } = this.props;
     const { columnWidth } = this.state;
 
     if (!resizable) {
@@ -140,7 +145,8 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
         columnFixed={fixed}
         height={headerHeight ? headerHeight - 1 : undefined}
         minWidth={minWidth}
-        onColumnResizeMove={onColumnResizeMove}
+        style={{ top: style ? style.top : 0 }}
+        onColumnResizeMove={this.handleColumnResizeMove}
         onColumnResizeStart={this.handleColumnResizeStart}
         onColumnResizeEnd={this.handleColumnResizeEnd}
         onMouseEnterHandler={this.handleShowMouseArea}

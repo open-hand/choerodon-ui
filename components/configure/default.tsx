@@ -53,6 +53,7 @@ const defaultTableColumnAlign = (_column: ColumnProps, field?: Field, record?: R
     switch (field.get('type', record)) {
       case FieldType.number:
       case FieldType.currency:
+      case FieldType.bigNumber:
         return ColumnAlign.right;
       case FieldType.boolean:
         return ColumnAlign.center;
