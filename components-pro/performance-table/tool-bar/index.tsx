@@ -119,7 +119,7 @@ const ToolBar: React.FC<ToolBarProps> = ({
     return settings?.length ? (
       <div className={`${toolbarPrefixCls}-setting-items`}>
         {settings.map((setting, index) => {
-          const settingItem = getSettingItem(setting, prefixCls);
+          const settingItem = getSettingItem(setting, prefixCls!);
           return (
           // eslint-disable-next-line react/no-array-index-key
             <div key={index} className={`${toolbarPrefixCls}-setting-item`}>

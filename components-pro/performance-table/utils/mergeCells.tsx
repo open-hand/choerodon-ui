@@ -28,12 +28,7 @@ function mergeCells(cells) {
       headerHeight,
       verticalAlign,
       parent,
-      dataKey,
-      sortable,
-      sortColumn,
-      sortType,
-      onSortColumn,
-      children
+      left: cellLeft,
     } = cells[i].props;
 
     if (usedCells.includes(cells[i].key)) {
@@ -49,6 +44,7 @@ function mergeCells(cells) {
     if (parent && isHeaderCell) {
       let nextWidth = width;
       let left = 0;
+      let resizeLeft: number = 0;
       for (let j = 0; j < groupCount; j += 1) {
         const nextCell = cells[i + j];
         const {
@@ -61,9 +57,13 @@ function mergeCells(cells) {
           sortType,
           headerHeight,
           groupHeader: nextGroupHeader = currentGroupName,
+          left: columnLeft,
+          resizable,
+          ...otherProps
         } = nextCell.props;
         if (j === 0) {
           currentGroupName = nextGroupHeader
+          resizeLeft = columnLeft;
         }
         if (currentGroupName !== nextGroupHeader) {
           groupChildrenStore = [...groupChildren]
@@ -76,9 +76,20 @@ function mergeCells(cells) {
           left += cells[i + j - 1].props.width;
           cells[i + j] = cloneCell(nextCell, { hidden: true });
         }
+        let otherHeaderProps;
+        if (resizable) {
+          otherHeaderProps = {
+            resizable,
+            resizeLeft: resizeLeft,
+            onColumnResizeEnd: otherProps.onColumnResizeEnd,
+            onColumnResizeMove: otherProps.onColumnResizeMove,
+            onColumnResizeStart: otherProps.onColumnResizeStart,
+          }
+        }
         groupChildren.push(
           <HeaderCell
             key={j}
+            index={i + j}
             left={left}
             dataKey={dataKey}
             width={nextCellWidth}
@@ -88,6 +99,7 @@ function mergeCells(cells) {
             onSortColumn={onSortColumn}
             verticalAlign={verticalAlign}
             headerHeight={headerHeight / 2}
+            {...otherHeaderProps}
           >
             {children}
           </HeaderCell>,
@@ -113,20 +125,11 @@ function mergeCells(cells) {
             >
               {groupChildren.map(x => React.cloneElement(x, { ...x.props, headerHeight: headerHeight / 3 }))}
             </ColumnGroup>) :
-            (<HeaderCell
-              key={i}
-              left={preWidth[preWidth.length - 1]}
-              dataKey={dataKey}
-              width={nextWidth}
-              sortable={sortable}
-              sortColumn={sortColumn}
-              sortType={sortType}
-              onSortColumn={onSortColumn}
-              verticalAlign={verticalAlign}
-              headerHeight={(headerHeight / 3) * 2}
-            >
-              {children}
-            </HeaderCell>),
+            React.cloneElement(cells[i], {
+              left: preWidth[preWidth.length - 1],
+              resizeLeft: cellLeft - preWidth[preWidth.length - 1],
+              headerHeight: (headerHeight / 3) * 2
+            }),
           ...parent.props,
           headerHeight,
           width: nextWidth,
@@ -221,6 +224,7 @@ function mergeCells(cells) {
           width,
           align,
           fixed,
+          resizable: false,
           children: (
             <ColumnGroup
               width={width}

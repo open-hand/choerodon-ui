@@ -43,9 +43,9 @@ export default function TransferOperation(props: TransferOperationProps) {
           color={leftActive ? ButtonColor.primary : ButtonColor.default}
           disabled={!leftActive}
           onClick={moveToLeft}
-          icon={!leftArrowText ? 'navigate_before' : undefined}
+          icon='navigate_before'
         >
-          {leftArrowText || undefined}
+          {leftArrowText}
         </Button>
       );
     } else {
@@ -61,9 +61,9 @@ export default function TransferOperation(props: TransferOperationProps) {
           color={rightActive ? ButtonColor.primary : ButtonColor.default}
           disabled={!rightActive}
           onClick={moveToRight}
-          icon={!rightArrowText ? 'navigate_next' : undefined}
+          icon='navigate_next'
         >
-          {rightArrowText || undefined}
+          {rightArrowText}
         </Button>
       );
     } else {
