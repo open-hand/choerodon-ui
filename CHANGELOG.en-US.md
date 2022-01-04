@@ -58,7 +58,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fix the problem that deleting a single value will clear all other values in the multiple and custom range mode.
 - 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
 - 🐞 `<pro>DataSet`: Fixed tree data parent-child association problem.
-
+- 🐞 `<pro>DatePicker`: Fix the problem of value setting in the `range` and `multiple` mode.
 
 ## 1.5.0
 

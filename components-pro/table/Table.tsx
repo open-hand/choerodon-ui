@@ -925,6 +925,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   lastScrollLeft: number;
 
+  lastScrollTop: number;
+
   wrapperWidth: number[] = [];
 
   wrapperWidthTimer?: number;
@@ -1824,8 +1826,8 @@ export default class Table extends DataSetComponent<TableProps> {
     const { target } = e;
     const { tableStore } = this;
     if (
-      (isStickySupport() && !tableStore.virtual) ||
-      // (![TableHeightType.fixed, TableHeightType.flex].includes(tableStore.heightType)) ||
+      // (isStickySupport() && !tableStore.virtual) ||
+    // (![TableHeightType.fixed, TableHeightType.flex].includes(tableStore.heightType)) ||
       !tableStore.overflowY ||
       currentTarget !== target ||
       target === this.tableFootWrap
@@ -2067,7 +2069,8 @@ export default class Table extends DataSetComponent<TableProps> {
         dragDropContextProps,
       },
     } = this;
-    const body = bodyExpandable ? <ExpandableTableTBody  key="tbody" lock={lock} columnGroups={columnGroups} /> : <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
+    const body = bodyExpandable ? <ExpandableTableTBody key="tbody" lock={lock} columnGroups={columnGroups} /> :
+      <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
     const bodyWithProfiler = performanceEnabled ? <Profiler>{body}</Profiler> : body;
     return rowDraggable ? (
       <DragDropContext {...dragDropContextProps} onDragEnd={this.handleDragEnd}>
@@ -2156,9 +2159,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   setScrollTop(scrollTop: number, target?: HTMLElement) {
-    const { tableStore } = this;
-    if (scrollTop !== tableStore.lastScrollTop) {
-      const { fixedColumnsBodyLeft, tableBodyWrap, fixedColumnsBodyRight, tableContentWrap } = this;
+    if (scrollTop !== this.lastScrollTop) {
+      const { tableStore, fixedColumnsBodyLeft, tableBodyWrap, fixedColumnsBodyRight, tableContentWrap } = this;
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
         fixedColumnsBodyLeft.scrollTop = scrollTop;
       }
@@ -2171,6 +2173,7 @@ export default class Table extends DataSetComponent<TableProps> {
       if (tableContentWrap && target !== tableContentWrap) {
         tableContentWrap.scrollTop = scrollTop;
       }
+      this.lastScrollTop = scrollTop;
       tableStore.setLastScrollTop(scrollTop);
       if (target) {
         const { onScrollTop = noop } = this.props;
