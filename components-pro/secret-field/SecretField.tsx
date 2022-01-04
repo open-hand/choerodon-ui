@@ -174,12 +174,12 @@ export default class SecretField extends TextField<SecretFieldProps> {
     return super.clearButton;
   }
 
-  @autobind
-  handleKeyDown(e) {
+  @action
+  clear() {
     const { isSecretEnable } = this;
+    // 只有显示为textField时，退格键正常删除内容
     if (!isSecretEnable) {
-      // 只有显示为textField时，才正常触发键盘操作
-      super.handleKeyDown(e);
+      super.clear();
     }
   }
 }
