@@ -163,4 +163,23 @@ export default class SecretField extends TextField<SecretFieldProps> {
     // 显示为textField时，正常显示clearButton
     return super.getInnerSpanButton();
   }
+
+  get clearButton(): boolean {
+    const { isSecretEnable } = this;
+    // 显示为脱敏组件时，clearButton为false
+    if (isSecretEnable) {
+      return false;
+    }
+    // 显示为textField时，正常显示clearButton
+    return super.clearButton;
+  }
+
+  @action
+  clear() {
+    const { isSecretEnable } = this;
+    // 只有显示为textField时，退格键正常删除内容
+    if (!isSecretEnable) {
+      super.clear();
+    }
+  }
 }
