@@ -18,7 +18,7 @@ import Column, { ColumnProps } from './Column';
 import autobind from '../_util/autobind';
 import { ModalProps } from '../modal/Modal';
 import { $l } from '../locale-context';
-import { ColumnLock, TableHeightType } from '../table/enum';
+import { ColumnLock, TableHeightType, TableColumnResizeTriggerType } from '../table/enum';
 // import isFragment from '../_util/isFragment';
 
 // export function normalizeColumns(
@@ -223,6 +223,10 @@ export default class TableStore {
     if (queryBar) {
       return queryBar.dataSet;
     }
+  }
+
+  get tableColumnResizeTrigger(): TableColumnResizeTriggerType {
+    return this.getConfig('tableColumnResizeTrigger');
   }
 
   // @computed

@@ -38,6 +38,7 @@ import {
   TableHeightType,
   TableMode,
   TableQueryBarType,
+  TableColumnResizeTriggerType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
@@ -1420,6 +1421,10 @@ export default class TableStore {
 
   get expandIcon(): ((props: expandIconProps) => ReactNode) | undefined {
     return this.props.expandIcon || this.getConfig('tableExpandIcon');
+  }
+
+  get tableColumnResizeTrigger(): TableColumnResizeTriggerType {
+    return this.getConfig('tableColumnResizeTrigger');
   }
 
   // get pristine(): boolean | undefined {

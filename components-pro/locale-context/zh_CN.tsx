@@ -111,6 +111,7 @@ const locale: Locale = {
     collapse_column: '收起整列',
     current_page_records: '当前页记录',
     cached_records: '缓存的记录',
+    refresh: '刷新',
   },
   Pagination: {
     page: '页',

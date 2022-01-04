@@ -132,9 +132,11 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
   fuzzyQuery?: boolean;
+  fuzzyQueryOnly?: boolean,
   fuzzyQueryPlaceholder?: string;
   searchCode?: string;
   autoQuery?: boolean;
+  refreshBtn?: boolean;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -156,7 +158,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     queryFieldsLimit: 3,
     autoQueryAfterReset: true,
     fuzzyQuery: true,
+    fuzzyQueryOnly: false,
     autoQuery: true,
+    refreshBtn: true,
     buttons: [],
   };
 
@@ -208,20 +212,26 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   componentDidMount(): void {
-    this.processDataSetListener(true);
-    document.addEventListener('click', this.handleClickOut);
-    if (this.isSingleLineOpt() && this.refSingleWrapper) {
-      const { height } = this.refSingleWrapper.getBoundingClientRect();
-      const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
-      runInAction(() => {
-        this.showExpandIcon = height > (childHeight + 18);
-      });
+    const { fuzzyQueryOnly } = this.props;
+    if (!fuzzyQueryOnly) {
+      this.processDataSetListener(true);
+      document.addEventListener('click', this.handleClickOut);
+      if (this.isSingleLineOpt() && this.refSingleWrapper) {
+        const { height } = this.refSingleWrapper.getBoundingClientRect();
+        const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
+        runInAction(() => {
+          this.showExpandIcon = height > (childHeight + 18);
+        });
+      }
     }
   }
 
   componentWillUnmount(): void {
-    document.removeEventListener('click', this.handleClickOut);
-    this.processDataSetListener(false);
+    const { fuzzyQueryOnly } = this.props;
+    if (!fuzzyQueryOnly) {
+      document.removeEventListener('click', this.handleClickOut);
+      this.processDataSetListener(false);
+    }
   }
 
   processDataSetListener(flag: boolean) {
@@ -569,27 +579,29 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     this.setConditionStatus(shouldUpdate ? RecordStatus.update : RecordStatus.sync);
   };
 
-  // TODO 待设计稿
-  // renderRefreshIcon(): ReactNode {
-  //   const { prefixCls, props: { dataSet } } = this;
-  //   return (
-  //     <span
-  //       className={`${prefixCls}-filter-menu-query`}
-  //       onClick={() => dataSet.query()}
-  //     >
-  //     <Tooltip title={$l('Table', 'query_button')}>
-  //       <Icon type="refresh" />
-  //     </Tooltip>
-  //     </span>
-  //   );
-  // }
+  renderRefreshBtn(): ReactNode {
+    const { prefixCls, props: { dataSet } } = this;
+    return (
+      <span
+        className={`${prefixCls}-filter-menu-query`}
+        onClick={(e) => {
+          e.stopPropagation();
+          dataSet.query();
+        }}
+      >
+        <Tooltip title={$l('Table', 'refresh')}>
+          <Icon type="refresh" />
+        </Tooltip>
+      </span>
+    );
+  }
 
   /**
    * 渲染展开逻辑
    * @param hidden 是否隐藏全部
    */
   getExpandNode(hidden): ReactNode {
-    const { prefixCls } = this;
+    const { prefixCls, props: { refreshBtn} } = this;
     if (!this.showExpandIcon && !hidden) return null;
     return (
       <span
@@ -621,6 +633,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           }
         }}
       >
+        {refreshBtn ? this.renderRefreshBtn() : null}
         {this.expand ? (<Tooltip title={$l('Table', 'collapse')}>
           <Icon type="baseline-arrow_drop_up" />
         </Tooltip>) : (<Tooltip title={$l('Table', 'expand_button')}>
@@ -707,11 +720,21 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * fuzzyQuery + quickFilterMenu + resetButton + buttons
    */
   getFilterMenu(): ReactNode {
-    const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery } = this.props;
+    const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly } = this.props;
     const { prefixCls } = this;
+    const prefix = this.getPrefix();
+    const suffix = this.renderSuffix();
+    const fuzzyQuery = this.getFuzzyQuery();
+    if (fuzzyQueryOnly) {
+      return (
+        <div className={`${prefixCls}-filter-menu`}>
+          {prefix}
+          {fuzzyQuery}
+          {suffix}
+        </div>
+      );
+    }
     if (queryDataSet && queryFields.length) {
-      const prefix = this.getPrefix();
-      const fuzzyQuery = this.getFuzzyQuery();
       const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
       const quickFilterMenu = this.tableFilterAdapter && searchCodes ? (
         <QuickFilterMenuContext.Provider
@@ -750,7 +773,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               {this.getExpandNode(true)}
             </>
           )}
-          {this.renderSuffix()}
+          {suffix}
         </div>
       );
     }
@@ -760,9 +783,16 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
-    const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet } = this.props;
+    const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, fuzzyQueryOnly } = this.props;
     const { prefixCls } = this;
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
+    if (fuzzyQueryOnly) {
+      return (
+        <div key="query_bar" className={`${prefixCls}-dynamic-filter-bar`}>
+          {this.getFilterMenu()}
+        </div>
+      );
+    }
     if (queryDataSet && queryFields.length) {
       const singleLineModeAction = this.isSingleLineOpt() ?
         <div className={`${prefixCls}-dynamic-filter-bar-single-action`}>

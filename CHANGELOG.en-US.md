@@ -15,11 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `bigNumberFormatter`, `tableHeightChangeable` properties. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
+- 🌟 `configure`: Added `bigNumberFormatter`, `tableHeightChangeable`, `tableColumnResizeTrigger` properties. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.
 - 🌟 `<pro>Table`: The tree table supports row dragging, and added `dragDropContextProps` property.
 - 🌟 `<pro>Table`: Added `groups`, `headerRowHeight`, `footerRowHeight`, `onScrollLeft`, `onScrollTop`, `heightChangeable`, `bodyExpandable`, `defaultBodyExpanded`, `bodyExpanded`, `onBodyExpand` properties, `setScrollLeft`, `setScrollTop` instance methods.
+- 🌟 `<pro>Table`: The dynamic filter bar adds `fuzzyQueryOnly` & `refreshBtn`, supports single fuzzy aggregation query mode and refresh button.
 - 🌟 `<pro>Transfer`: Added properties of `oneWay`.
 - 🌟 `<pro>Table.Column`: Added `aggregationLimitDefaultExpanded`, `defaultWidth` properties.
 - 🌟 `<pro>TextArea`: Added `clearButton` property.
@@ -34,11 +35,11 @@ timeline: true
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
 - 💄 `<pro>TextArea`: Optimize the `autoSize` initialization style.
 - 💄 `<pro>TextField`: Optimize the style when setting the `clearButton` `showLengthInfo` `suffix` properties at the same time.
-- 💄 `<pro>Tree`: Support the display of drag icon through `draggable.icon` property control.
+- 💄 `<pro>Tree`: Extend draggable supports object type and controls the display of drag-and-drop icon.
 - 💄 `<pro>Lov`: Optimize sorting of selected list.
 - 💄 `<pro>Table`: Optimize virtual scrolling and support tree-shaped virtual scrolling.
 - 💄 `<pro>Attachment`: Optimize caching logic.
-- 💄 `<pro>SecretField`: Disable the clear button.
+- 💄 `<pro>SecretField`: Disable clear button and backspace key to delete.
 - 🐞 `<pro>Table`: Fix the problem that the virtual scroll will be fully rendered for the first time when only `maxHeight` is set in style.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.

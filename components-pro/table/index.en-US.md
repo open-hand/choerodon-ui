@@ -194,8 +194,10 @@ subtitle: 表格
 | dynamicFilterBar | 筛选条属性配置 | DynamicFilterBarConfig | |
 | autoQueryAfterReset | 重置后自动查询 | boolean | true |
 | fuzzyQuery | 是否开启模糊查询 | boolean | true |
+| fuzzyQueryOnly | 是否仅使用模糊查询 | boolean | false |
 | fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  |
 | autoQuery | 条件变更是否自动查询  | boolean | true |
+| refreshBtn | 刷新按钮  | boolean | true |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
 

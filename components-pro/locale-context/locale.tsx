@@ -113,6 +113,7 @@ export interface Locale extends DataSetLocale {
     collapse_column: string;
     current_page_records: string;
     cached_records: string;
+    refresh: string;
   };
   Pagination: {
     page: string;
