@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `Message`: Added a promised interface to handle callback.
 - 🌟 `<pro>Table`: The tree table supports row dragging, and added `dragDropContextProps` property.
 - 🌟 `<pro>Table`: Added `groups`, `headerRowHeight`, `footerRowHeight`, `onScrollLeft`, `onScrollTop`, `heightChangeable`, `bodyExpandable`, `defaultBodyExpanded`, `bodyExpanded`, `onBodyExpand` properties, `setScrollLeft`, `setScrollTop` instance methods.
+- 🌟 `<pro>Table`: The dynamic filter bar adds `fuzzyQueryOnly` & `refreshBtn`, supports single fuzzy aggregation query mode and refresh button.
 - 🌟 `<pro>Transfer`: Added properties of `oneWay`.
 - 🌟 `<pro>Table.Column`: Added `aggregationLimitDefaultExpanded`, `defaultWidth` properties.
 - 🌟 `<pro>TextArea`: Added `clearButton` property.

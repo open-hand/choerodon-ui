@@ -114,6 +114,7 @@ const locale: Locale = {
     collapse_column: '列全体を折りたたむ',
     current_page_records: '現在のページレコード',
     cached_records: 'キャッシュされたレコード',
+    refresh: '更新',
   },
   Pagination: {
     page: 'ページ',

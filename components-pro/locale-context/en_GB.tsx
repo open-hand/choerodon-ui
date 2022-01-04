@@ -111,6 +111,7 @@ const locale: Locale = {
     collapse_column: 'Collapse the entire column',
     current_page_records: 'Current page records',
     cached_records: 'Cached records',
+    refresh: 'Refresh',
   },
   Pagination: {
     page: 'Page',
