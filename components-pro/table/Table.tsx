@@ -13,6 +13,7 @@ import noop from 'lodash/noop';
 import { action, observable, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
+  DragDropContextProps,
   DraggableProps,
   DraggableProvided,
   DraggableRubric,
@@ -597,6 +598,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   onDragEndBefore?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void;
   /**
+   * DragDropContext
+   */
+  dragDropContextProps?: DragDropContextProps;
+  /**
    * 渲染列拖拽
    */
   columnsDragRender?: DragRender;
@@ -1045,7 +1050,7 @@ export default class Table extends DataSetComponent<TableProps> {
           if (tableStore.virtual && !findRow(tableStore, record)) {
             const { tableBodyWrap } = this;
             if (tableBodyWrap) {
-              tableBodyWrap.scrollTop = record.index * tableStore.virtualEstimatedRowHeight;
+              tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
             }
           }
           raf(() => {
@@ -1714,9 +1719,33 @@ export default class Table extends DataSetComponent<TableProps> {
     dataSet.move(startIndex, endIndex);
   }
 
+
+  /**
+   * 触发组合或拖拽排序, 移除原纪录
+   * @param currentRecord
+   */
+  @action
+  removeSourceRecord(currentRecord) {
+    const { parent } = currentRecord;
+    if (parent) {
+      const { children } = parent;
+      if (children) {
+        const index = children.indexOf(currentRecord);
+        if (index !== -1) {
+          children.splice(index, 1);
+        }
+        if (!children.length) {
+          parent.children = undefined;
+        }
+      }
+    }
+  }
+
   @autobind
+  @action
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
-    const { onDragEnd, onDragEndBefore } = this.props;
+    const { dataSet, rowMetaData, isTree } = this.tableStore;
+    const { onDragEnd, onDragEndBefore, dragDropContextProps } = this.props;
 
     let resultBefore: DropResult | undefined = resultDrag;
     if (onDragEndBefore) {
@@ -1728,7 +1757,39 @@ export default class Table extends DataSetComponent<TableProps> {
         resultBefore = result;
       }
     }
-    if (resultBefore && resultBefore.destination) {
+    if (resultBefore && isTree && rowMetaData) {
+      const { destination, source, combine } = resultBefore;
+      const currentRecord = rowMetaData[source.index].record;
+      // 拖拽组合关联当前 record 父子
+      if (combine) {
+        const parentRecord = dataSet.find(record => String(record.key) === combine.draggableId)!;
+        this.removeSourceRecord(currentRecord);
+        currentRecord.parent = parentRecord;
+        if (parentRecord.children && parentRecord.children.length) {
+          parentRecord.children.unshift(currentRecord);
+        } else {
+          parentRecord.children = [currentRecord];
+        }
+      }
+      // 拖拽排序更新当前 record index 及父级
+      if (destination && destination.index !== source.index && rowMetaData) {
+        const destinationRecord = rowMetaData[destination.index].record;
+        const { parent } = destinationRecord;
+        if (parent && parent.children) {
+          const childIndex = parent.children.indexOf(destinationRecord);
+          this.removeSourceRecord(currentRecord);
+          currentRecord.parent = parent;
+          parent.children.splice(childIndex, 0, currentRecord);
+        } else {
+          if (currentRecord.parent) {
+            this.removeSourceRecord(currentRecord);
+            currentRecord.parent = undefined;
+          }
+          dataSet.move(currentRecord.index, destinationRecord.index);
+        }
+      }
+    } else if (resultBefore && resultBefore.destination) {
+      // 非树形拖拽排序
       this.reorderDataSet(
         resultBefore.source.index,
         resultBefore.destination.index,
@@ -1737,8 +1798,9 @@ export default class Table extends DataSetComponent<TableProps> {
     /**
      * 相应变化后的数据
      */
-    if (onDragEnd) {
-      onDragEnd(this.tableStore.dataSet, toJS(this.tableStore.columns), resultBefore, provided);
+    const onDragEndFun = onDragEnd || (dragDropContextProps ? dragDropContextProps.onDragEnd : undefined) as Function | undefined;
+    if (onDragEndFun) {
+      onDragEndFun(this.tableStore.dataSet, toJS(this.tableStore.columns), resultBefore, provided);
     }
   }
 
@@ -1997,11 +2059,17 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableBody(columnGroups: ColumnGroups, lock?: ColumnLock): ReactNode {
-    const { tableStore: { rowDraggable, performanceEnabled }, props: { bodyExpandable } } = this;
+    const {
+      tableStore: { rowDraggable, performanceEnabled },
+      props: {
+        bodyExpandable,
+        dragDropContextProps,
+      },
+    } = this;
     const body = bodyExpandable ? <ExpandableTableTBody  key="tbody" lock={lock} columnGroups={columnGroups} /> : <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
     const bodyWithProfiler = performanceEnabled ? <Profiler>{body}</Profiler> : body;
     return rowDraggable ? (
-      <DragDropContext onDragEnd={this.handleDragEnd}>
+      <DragDropContext {...dragDropContextProps} onDragEnd={this.handleDragEnd}>
         {bodyWithProfiler}
       </DragDropContext>
     ) : bodyWithProfiler;
@@ -2042,10 +2110,10 @@ export default class Table extends DataSetComponent<TableProps> {
     if (element) {
       tableStore.width = Math.floor(width);
       const { prefixCls } = this;
-      const tableHeader: HTMLTableSectionElement | null = element.querySelector(
+      const tableHeader: HTMLTableSectionElement | null = tableStore.props.showHeader ? element.querySelector(
         `.${prefixCls}-thead`,
-      );
-      const tableFooter: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+      ) : null;
+      const tableFooter: HTMLDivElement | null = tableStore.hasFooter ? element.querySelector(`.${prefixCls}-tfoot`) : null;
       tableStore.screenHeight = document.documentElement.clientHeight;
       tableStore.headerHeight = tableHeader ? getHeight(tableHeader) : 0;
       tableStore.footerHeight = tableFooter ? getHeight(tableFooter) : 0;

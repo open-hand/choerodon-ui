@@ -38,7 +38,7 @@ const locale: Locale = {
     collapse_button: '折り畳み',
     export_button: '書き出す',
     file_name: 'ファイル名',
-    defalut_export: 'デフォルトのエクスポートファイル',
+    default_export: 'デフォルトのエクスポートファイル',
     advanced_search: '高度な検索',
     export_waiting: 'データ量が多いので、待ってください',
     dirty_info: '表示条件が変更されました',

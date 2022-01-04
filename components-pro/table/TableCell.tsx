@@ -33,7 +33,6 @@ export interface TableCellProps extends ElementProps {
   rowIndex: number;
   colSpan?: number;
   isDragging: boolean;
-  lock?: ColumnLock | boolean;
   provided?: DraggableProvided;
   disabled?: boolean;
   inView?: boolean | undefined;
@@ -154,16 +153,6 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     return null;
   }
   const renderInnerNode = (aggregation, onCellStyle?: CSSProperties) => {
-    if (groupCell && group && __tableGroup) {
-      const { columnProps } = __tableGroup;
-      const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
-      const text = renderer({ text: group.value, rowGroup: group, dataSet, record: group.totalRecords[0] });
-      return (
-        <div className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
-          {text}
-        </div>
-      );
-    }
     if (expandIconAsCell && children) {
       return (
         <span
@@ -207,12 +196,22 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
             </Tree>
           );
           return (
-            <div className={`${cellPrefix}-inner`}>
+            <span className={`${cellPrefix}-inner`}>
               {renderer({ text, record, dataSet, aggregation: tableAggregation, headerGroup: columnGroup.headerGroup, rowGroup })}
-            </div>
+            </span>
           );
         }
       }
+    }
+    if (groupCell && group && __tableGroup) {
+      const { columnProps } = __tableGroup;
+      const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
+      const text = renderer({ text: group.value, rowGroup: group, dataSet, record: group.totalRecords[0] });
+      return (
+        <span className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
+          {text}
+        </span>
+      );
     }
     return getInnerNode(column, onCellStyle, undefined, columnGroup.headerGroup);
   };

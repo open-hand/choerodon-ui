@@ -2,7 +2,7 @@ import React, { CSSProperties, FunctionComponent, Key, memo, ReactNode, useCallb
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
-import Icon from 'choerodon-ui/lib/icon';
+import Icon from '../icon';
 
 export interface NoticeProps {
   key?: Key;

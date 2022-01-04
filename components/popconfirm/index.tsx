@@ -104,20 +104,18 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     const { title, cancelText, okText, okType } = this.props;
     const prefixCls = this.getPrefixCls();
     return (
-      <div>
-        <div className={`${prefixCls}-inner-content`}>
-          <div className={`${prefixCls}-message`}>
-            <Icon type="warning" />
-            <div className={`${prefixCls}-message-title`}>{typeof title === 'function' ? title() : title}</div>
-          </div>
-          <div className={`${prefixCls}-buttons`}>
-            <Button onClick={this.onCancel} size={Size.small}>
-              {cancelText || popconfirmLocale.cancelText}
-            </Button>
-            <Button onClick={this.onConfirm} type={okType} size={Size.small}>
-              {okText || popconfirmLocale.okText}
-            </Button>
-          </div>
+      <div className={`${prefixCls}-inner-content`}>
+        <div className={`${prefixCls}-message`}>
+          <Icon type="warning" />
+          <div className={`${prefixCls}-message-title`}>{typeof title === 'function' ? title() : title}</div>
+        </div>
+        <div className={`${prefixCls}-buttons`}>
+          <Button onClick={this.onCancel} size={Size.small}>
+            {cancelText || popconfirmLocale.cancelText}
+          </Button>
+          <Button onClick={this.onConfirm} type={okType} size={Size.small}>
+            {okText || popconfirmLocale.okText}
+          </Button>
         </div>
       </div>
     );

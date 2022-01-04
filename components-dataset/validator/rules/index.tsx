@@ -61,4 +61,5 @@ export interface ValidatorProps extends ValidatorBaseProps {
   format?: string | undefined;
   attachmentCount?: number | undefined;
   defaultValidationMessages?: ValidationMessages | undefined;
+  stringMode?: boolean;
 }

@@ -1161,6 +1161,8 @@ export default class Field {
               ...this.dataSet.getConfig('defaultValidationMessages'),
               ...this.get('defaultValidationMessages', record),
             };
+          case 'stringMode':
+            return this.get('type', record) === FieldType.bigNumber;
           default:
             return this.get(key, record);
         }

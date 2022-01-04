@@ -58,6 +58,7 @@ import { getIf, normalizeGroups } from '../data-set/utils';
 import { ROW_GROUP_HEIGHT } from './TableRowGroup';
 import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
+import { LabelLayout } from '../form/enum';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -73,12 +74,31 @@ export const AGGREGATION_EXPAND_CELL_KEY = '__aggregation-expand-cell__'; // TOD
 
 export const BODY_EXPANDED = '__body_expanded__'; // TODO:Symbol
 
-const VIRTUAL_OVER_SCAN_COUNT = 2;
+export const VIRTUAL_ROOT_MARGIN = 50;
 
 export type HeaderText = { name: string; label: string };
 
 function columnFilter(column: ColumnProps | undefined): column is ColumnProps {
   return Boolean(column);
+}
+
+function getOverScanCount(tableStore: TableStore, index: number, next?: boolean) {
+  const { rowMetaData } = tableStore;
+  if (rowMetaData) {
+    let count = 0;
+    let height = 0;
+    while (height < VIRTUAL_ROOT_MARGIN) {
+      index += next ? 1 : -1;
+      const metaData = rowMetaData[index];
+      if (!metaData) {
+        return count;
+      }
+      height += metaData.height;
+      count++;
+    }
+    return count;
+  }
+  return Math.ceil(VIRTUAL_ROOT_MARGIN / tableStore.virtualRowHeight);
 }
 
 function getItemMetadata(
@@ -160,6 +180,99 @@ function findNearestItemExponentialSearch(
     Math.floor(index / 2),
     offset,
   );
+}
+
+function getVisibleStartIndex(tableStore: TableStore, getLastScrollTop = () => tableStore.lastScrollTop): number {
+  const { height, virtualEstimatedRows } = tableStore;
+  if (height === undefined || !virtualEstimatedRows) {
+    return 0;
+  }
+  const lastScrollTop = getLastScrollTop();
+  const { virtualRowHeight } = tableStore;
+  if (tableStore.isFixedRowHeight) {
+    return Math.max(
+      0,
+      Math.min(
+        virtualEstimatedRows, Math.floor(lastScrollTop / virtualRowHeight),
+      ),
+    );
+  }
+  const { rowMetaData } = tableStore;
+  if (!rowMetaData) {
+    return 0;
+  }
+  const { lastMeasuredIndex } = tableStore;
+  const lastRowMetaData = lastMeasuredIndex > 0 ? rowMetaData[lastMeasuredIndex] : undefined;
+  const lastMeasuredItemOffset = lastRowMetaData ? lastRowMetaData.offset : 0;
+  if (lastMeasuredItemOffset >= lastScrollTop) {
+    return findNearestItemBinarySearch(
+      rowMetaData,
+      tableStore,
+      lastMeasuredIndex,
+      0,
+      lastScrollTop,
+    );
+  }
+  return findNearestItemExponentialSearch(
+    rowMetaData,
+    tableStore,
+    Math.max(0, lastMeasuredIndex),
+    lastScrollTop,
+  );
+}
+
+function getVisibleEndIndex(tableStore: TableStore, getVirtualVisibleStartIndex = () => tableStore.virtualVisibleStartIndex, getLastScrollTop = () => tableStore.lastScrollTop) {
+  const { height, virtualEstimatedRows } = tableStore;
+  if (height === undefined) {
+    return virtualEstimatedRows;
+  }
+  const { virtualRowHeight } = tableStore;
+  const virtualVisibleStartIndex = getVirtualVisibleStartIndex();
+  if (tableStore.isFixedRowHeight) {
+    const numVisibleItems = Math.ceil(
+      height / virtualRowHeight,
+    );
+    return Math.max(
+      0,
+      Math.min(
+        virtualEstimatedRows,
+        virtualVisibleStartIndex + numVisibleItems,
+      ),
+    );
+  }
+  const { rowMetaData } = tableStore;
+  if (!rowMetaData || !rowMetaData.length) {
+    return 0;
+  }
+  const itemMetadata = getItemMetadata(rowMetaData, virtualVisibleStartIndex, tableStore);
+  if (!itemMetadata) {
+    return 0;
+  }
+  const maxOffset = getLastScrollTop() + height;
+
+  let offset = itemMetadata.offset + itemMetadata.height;
+  let stopIndex = virtualVisibleStartIndex;
+
+  while (stopIndex < virtualEstimatedRows - 1 && offset < maxOffset) {
+    stopIndex++;
+    const item = getItemMetadata(rowMetaData, stopIndex, tableStore);
+    if (item) {
+      offset += item.height;
+    }
+  }
+
+  return stopIndex;
+}
+
+function getStartIndex(tableStore: TableStore, getVirtualVisibleStartIndex = () => tableStore.virtualVisibleStartIndex): number {
+  const virtualVisibleStartIndex = getVirtualVisibleStartIndex();
+  return Math.max(0, virtualVisibleStartIndex - getOverScanCount(tableStore, virtualVisibleStartIndex));
+}
+
+function getEndIndex(tableStore: TableStore, getVirtualVisibleEndIndex = () => tableStore.virtualVisibleEndIndex): number {
+  const virtualVisibleEndIndex = getVirtualVisibleEndIndex();
+  const { virtualEstimatedRows } = tableStore;
+  return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + getOverScanCount(tableStore, virtualVisibleEndIndex));
 }
 
 export function getIdList(store: TableStore) {
@@ -323,6 +436,7 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
           onClick={handleClick}
           disabled={!record.selectable}
           data-selection-key={SELECTION_KEY}
+          labelLayout={LabelLayout.none}
           value
         />
       );
@@ -346,7 +460,6 @@ function mergeDefaultProps(
   originalColumns: ColumnProps[],
   tableAggregation?: boolean,
   customizedColumns?: { [key: string]: ColumnProps },
-  underGroup?: boolean,
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
   columnSort = {
@@ -377,13 +490,13 @@ function mergeDefaultProps(
           newColumn.lock = parent.lock;
         }
         if (children) {
-          const [, childrenColumns, , childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, false, newColumn, defaultKey);
+          const [, childrenColumns, , childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, newColumn, defaultKey);
           newColumn.children = childrenColumns;
           if (!hasAggregationColumn && childrenHasAggregationColumn) {
             hasAggregationColumn = childrenHasAggregationColumn;
           }
         }
-        if (parent || underGroup || !newColumn.lock) {
+        if (parent || !newColumn.lock) {
           if (newColumn.sort === undefined) {
             newColumn.sort = columnSort.center;
           }
@@ -403,7 +516,7 @@ function mergeDefaultProps(
           rightColumns.push(newColumn);
         }
       } else if (children) {
-        const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, false, parent, defaultKey, parent ? undefined : columnSort);
+        const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
         if (!hasAggregationColumn && childrenHasAggregationColumn) {
           hasAggregationColumn = childrenHasAggregationColumn;
         }
@@ -417,7 +530,7 @@ function mergeDefaultProps(
       }
     }
   }, []);
-  if (parent || underGroup) {
+  if (parent) {
     return [[], sortBy(columns, ({ sort }) => sort), [], hasAggregationColumn];
   }
   return [
@@ -432,7 +545,6 @@ function normalizeColumns(
   elements: ReactNode,
   tableAggregation?: boolean,
   customizedColumns?: { [key: string]: ColumnProps },
-  underGroup?: boolean,
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
   columnSort = {
@@ -473,12 +585,12 @@ function normalizeColumns(
           if (parent) {
             column.lock = parent.lock;
           }
-          const [, childrenColumns, , childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, false, column, defaultKey);
+          const [, childrenColumns, , childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
           column.children = childrenColumns;
           if (!hasAggregationColumn && childrenHasAggregationColumn) {
             hasAggregationColumn = childrenHasAggregationColumn;
           }
-          if (parent || underGroup || !column.lock) {
+          if (parent || !column.lock) {
             if (column.sort === undefined) {
               column.sort = columnSort.center;
             }
@@ -498,7 +610,7 @@ function normalizeColumns(
             rightColumns.push(column);
           }
         } else {
-          const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, false, parent, defaultKey, parent ? undefined : columnSort);
+          const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
           if (!hasAggregationColumn && childrenHasAggregationColumn) {
             hasAggregationColumn = childrenHasAggregationColumn;
           }
@@ -514,7 +626,7 @@ function normalizeColumns(
     }
   };
   Children.forEach(elements, normalizeColumn);
-  if (parent || underGroup) {
+  if (parent) {
     return [[], sortBy(columns, ({ sort }) => sort), [], hasAggregationColumn];
   }
   return [
@@ -526,8 +638,9 @@ function normalizeColumns(
 }
 
 
-function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [key: string]: ColumnProps }): ColumnProps[] {
+function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [key: string]: ColumnProps }): [ColumnProps[], boolean] {
   const groupedColumns: ColumnProps[] = [];
+  let hasAggregation = false;
   groups.forEach((group) => {
     const { name, type, columnProps } = group;
     if (type === GroupType.column) {
@@ -545,9 +658,12 @@ function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [ke
         Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
       }
       groupedColumns.push(column);
+      if (columnProps && !hasAggregation && columnProps.aggregation) {
+        hasAggregation = true;
+      }
     }
   });
-  return groupedColumns;
+  return [groupedColumns, hasAggregation];
 }
 
 function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], columns: ColumnProps[], dataSet: DataSet, groupedColumns: ColumnProps[], customizedColumns?: { [key: string]: ColumnProps }, parentKey?: any): ColumnProps[] {
@@ -562,12 +678,14 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
       const { columnProps, name: groupName, hidden } = tableGroup;
       if (hidden) {
         subColumns.forEach(col => {
-          const colKey = `${key}-${getColumnKey(col)}`;
+          const __originalKey = getColumnKey(col);
+          const colKey = `${key}-${__originalKey}`;
           const newCol = {
             ...col,
             key: colKey,
             __tableGroup: tableGroup,
             __group: group,
+            __originalKey,
           };
           if (customizedColumns) {
             Object.assign(newCol, customizedColumns[colKey]);
@@ -596,6 +714,7 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
               key: newKey,
               header,
               children: [oldColumn],
+              __tableGroup: tableGroup,
             };
             if (customizedColumns) {
               Object.assign(newColumn, customizedColumns[newKey]);
@@ -611,13 +730,14 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
           headerStyle: columnProps && columnProps.style,
           header: () => renderer({ dataSet, record: group.totalRecords[0], name: groupName, text: value, value, headerGroup: group }),
           children: subColumns.map(col => {
-            const colKey = `${key}-${getColumnKey(col)}`;
-            const newCol = { ...col, key: colKey };
+            const __originalKey = getColumnKey(col);
+            const colKey = `${key}-${__originalKey}`;
+            const newCol = { ...col, key: colKey, __originalKey };
             if (customizedColumns) {
-              Object.assign(newCol, customizedColumns[colKey]);
+              Object.assign(newCol, customizedColumns[__originalKey]);
             }
             return newCol;
-          }),
+          }).sort(({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2),
           __tableGroup: tableGroup,
           __group: group,
         };
@@ -643,20 +763,25 @@ export function normalizeGroupColumns(
   const { headerTableGroups, groups, dataSet } = tableStore;
   const hasHeaderGroup = headerTableGroups.length > 0;
   const generatedColumns = columns
-    ? mergeDefaultProps(columns, aggregation, customizedColumns, hasHeaderGroup)
-    : normalizeColumns(children, aggregation, customizedColumns, hasHeaderGroup);
+    ? mergeDefaultProps(columns, aggregation, customizedColumns)
+    : normalizeColumns(children, aggregation, customizedColumns);
   const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] = generatedColumns;
-  const columnGroupedColumns = groups.length ?
+  const [columnGroupedColumns, hasAggregationColumnGroup] = groups.length ?
     getColumnGroupedColumns(groups, customizedColumns) :
-    [];
-  const headerGroupedColumns = hasHeaderGroup ?
-    getHeaderGroupedColumns(tableStore.groupedDataWithHeader, headerTableGroups!, originalColumns, dataSet, columnGroupedColumns, customizedColumns) :
-    originalColumns;
+    [[], false];
+  if (hasHeaderGroup) {
+    return [
+      columnGroupedColumns,
+      getHeaderGroupedColumns(tableStore.groupedDataWithHeader, headerTableGroups!, [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns], dataSet, columnGroupedColumns, customizedColumns),
+      [],
+      hasAggregationColumnGroup || hasAggregationColumn,
+    ];
+  }
   return [
     [...columnGroupedColumns, ...leftOriginalColumns],
-    headerGroupedColumns,
+    originalColumns,
     rightOriginalColumns,
-    hasAggregationColumn,
+    hasAggregationColumnGroup || hasAggregationColumn,
   ];
 }
 
@@ -818,6 +943,11 @@ export default class TableStore {
     return toPx(this.styleHeight, this.getRelationSize);
   }
 
+  get otherHeight() {
+    const scrollbarWidth = this.overflowX ? measureScrollbar() : 0;
+    return this.headerHeight + this.footerHeight + scrollbarWidth;
+  }
+
   @computed
   get height(): number | undefined {
     if (!this.isBodyExpanded) {
@@ -828,21 +958,21 @@ export default class TableStore {
     const minHeight = toPx(this.styleMinHeight, this.getRelationSize);
     const isComputedHeight = isNumber(computedHeight);
     if (isComputedHeight || isNumber(minHeight) || isNumber(maxHeight)) {
-      const { rowHeight, headerHeight, footerHeight } = this;
-      const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + headerHeight + footerHeight;
+      const { rowHeight, otherHeight } = this;
+      const rowMinHeight = (isNumber(rowHeight) ? rowHeight : 30) + otherHeight;
       const minTotalHeight = minHeight ? Math.max(
         rowMinHeight,
         minHeight,
       ) : rowMinHeight;
-      const height = defaultTo(computedHeight, this.bodyHeight + headerHeight + footerHeight);
+      const height = defaultTo(computedHeight, this.bodyHeight + otherHeight);
       const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : height);
-      return isComputedHeight || totalHeight !== height ? totalHeight - headerHeight - footerHeight : undefined;
+      return isComputedHeight || totalHeight !== height ? totalHeight - otherHeight : undefined;
     }
   }
 
   get totalHeight(): number {
-    const { height, bodyHeight, headerHeight, footerHeight } = this;
-    return defaultTo(height, bodyHeight) + headerHeight + footerHeight;
+    const { height, bodyHeight, otherHeight } = this;
+    return defaultTo(height, bodyHeight) + otherHeight;
   }
 
   get bodyHeight(): number {
@@ -961,6 +1091,9 @@ export default class TableStore {
   }
 
   get propVirtual(): boolean | undefined {
+    if (this.isTree && this.rowDraggable) {
+      return true;
+    }
     if ('virtual' in this.props) {
       return this.props.virtual;
     }
@@ -986,14 +1119,19 @@ export default class TableStore {
 
   @observable scrolling: boolean | undefined;
 
+  get virtualEstimatedCellInnerHeight(): number {
+    const { rowHeight } = this;
+    const normalRowHeight = isNumber(rowHeight) ? rowHeight : 30;
+    return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
+  }
+
   @computed
-  get virtualEstimatedRowHeight(): number {
+  get virtualRowHeight(): number {
     const { actualRowHeight } = this;
     if (actualRowHeight !== undefined) {
       return actualRowHeight;
     }
-    const normalRowHeight = isNumber(this.rowHeight) ? this.rowHeight + 3 : 33;
-    return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
+    return this.virtualEstimatedCellInnerHeight + (this.aggregation && this.hasAggregationColumn ? 3 * 4 : 3);
   }
 
   get virtualEstimatedRows() {
@@ -1009,7 +1147,7 @@ export default class TableStore {
   }
 
   get virtualHeight(): number {
-    const { virtualEstimatedRowHeight, virtualEstimatedRows, actualGroupRows } = this;
+    const { virtualRowHeight, virtualEstimatedRows, actualGroupRows } = this;
     if (!virtualEstimatedRows) {
       return 0;
     }
@@ -1031,115 +1169,41 @@ export default class TableStore {
         }
 
         const numUnmeasuredItems = virtualEstimatedRows - lastMeasuredIndex - 1;
-        const totalSizeOfUnmeasuredItems = numUnmeasuredItems * virtualEstimatedRowHeight;
+        const totalSizeOfUnmeasuredItems = numUnmeasuredItems * virtualRowHeight;
 
         return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
       }
     }
-    return Math.round(virtualEstimatedRows * virtualEstimatedRowHeight - actualGroupRows * (virtualEstimatedRowHeight - ROW_GROUP_HEIGHT));
+    return Math.round(virtualEstimatedRows * virtualRowHeight - actualGroupRows * (virtualRowHeight - ROW_GROUP_HEIGHT));
   }
 
   @computed
   get virtualVisibleStartIndex(): number {
-    const { height, virtualEstimatedRows } = this;
-    if (height === undefined || !virtualEstimatedRows) {
-      return 0;
-    }
-    const { virtualEstimatedRowHeight, lastScrollTop } = this;
-    if (this.isFixedRowHeight) {
-      return Math.max(
-        0,
-        Math.min(
-          virtualEstimatedRows, Math.floor(lastScrollTop / virtualEstimatedRowHeight),
-        ),
-      );
-    }
-    const { rowMetaData } = this;
-    if (!rowMetaData) {
-      return 0;
-    }
-    const { lastMeasuredIndex } = this;
-    const lastRowMetaData = lastMeasuredIndex > 0 ? rowMetaData[lastMeasuredIndex] : undefined;
-    const lastMeasuredItemOffset = lastRowMetaData ? lastRowMetaData.offset : 0;
-    if (lastMeasuredItemOffset >= lastScrollTop) {
-      return findNearestItemBinarySearch(
-        rowMetaData,
-        this,
-        lastMeasuredIndex,
-        0,
-        lastScrollTop,
-      );
-    }
-    return findNearestItemExponentialSearch(
-      rowMetaData,
-      this,
-      Math.max(0, lastMeasuredIndex),
-      lastScrollTop,
-    );
+    return getVisibleStartIndex(this);
   }
 
   @computed
   get virtualVisibleEndIndex(): number {
-    const { height, virtualEstimatedRows } = this;
-    if (height === undefined) {
-      return virtualEstimatedRows;
-    }
-    const { virtualEstimatedRowHeight, virtualVisibleStartIndex } = this;
-    if (this.isFixedRowHeight) {
-      const numVisibleItems = Math.ceil(
-        height / virtualEstimatedRowHeight,
-      );
-      return Math.max(
-        0,
-        Math.min(
-          virtualEstimatedRows,
-          virtualVisibleStartIndex + numVisibleItems,
-        ),
-      );
-    }
-    const { rowMetaData } = this;
-    if (!rowMetaData || !rowMetaData.length) {
-      return 0;
-    }
-    const itemMetadata = getItemMetadata(rowMetaData, virtualVisibleStartIndex, this);
-    if (!itemMetadata) {
-      return 0;
-    }
-    const maxOffset = this.lastScrollTop + height;
-
-    let offset = itemMetadata.offset + itemMetadata.height;
-    let stopIndex = virtualVisibleStartIndex;
-
-    while (stopIndex < virtualEstimatedRows - 1 && offset < maxOffset) {
-      stopIndex++;
-      const item = getItemMetadata(rowMetaData, stopIndex, this);
-      if (item) {
-        offset += item.height;
-      }
-    }
-
-    return stopIndex;
+    return getVisibleEndIndex(this);
   }
 
   get virtualStartIndex(): number {
-    const { virtualVisibleStartIndex } = this;
-    return Math.max(0, virtualVisibleStartIndex - VIRTUAL_OVER_SCAN_COUNT);
+    return getStartIndex(this);
   }
 
   get virtualEndIndex(): number {
-    const { virtualVisibleEndIndex, virtualEstimatedRows } = this;
-    return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + VIRTUAL_OVER_SCAN_COUNT);
+    return getEndIndex(this);
   }
 
   get virtualTop(): number {
-    const { virtualEstimatedRowHeight, virtualStartIndex } = this;
+    const { virtualRowHeight, virtualStartIndex } = this;
     if (!this.isFixedRowHeight) {
       const { rowMetaData } = this;
       if (rowMetaData && rowMetaData.length) {
         return rowMetaData[virtualStartIndex].offset;
       }
     }
-    return virtualStartIndex * virtualEstimatedRowHeight;
+    return virtualStartIndex * virtualRowHeight;
   }
 
   get hidden(): boolean | undefined {
@@ -1230,7 +1294,7 @@ export default class TableStore {
   }
 
   get rowDraggable(): boolean {
-    if (this.isTree || this.groups.length) {
+    if (this.groups.length) {
       return false;
     }
     if ('rowDraggable' in this.props) {
@@ -1893,7 +1957,6 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
-    this.actualRowHeight = undefined;
     const { showCachedSelection } = props;
     if (showCachedSelection !== undefined) {
       this.showCachedSelection = showCachedSelection;
@@ -2222,6 +2285,7 @@ export default class TableStore {
         checked={this.allChecked}
         indeterminate={this.indeterminate}
         onChange={this.handleSelectAllChange}
+        labelLayout={LabelLayout.none}
         value
       />,
     ];
@@ -2258,5 +2322,20 @@ export default class TableStore {
   batchSetRowHeight(key: Key, callback: Function) {
     const batchRunner = getIf(this, 'batchRunner', () => new BatchRunner());
     batchRunner.addTask(key, callback);
+  }
+
+  isRowInView(index: number): boolean {
+    const { propVirtual } = this;
+    if (propVirtual) {
+      return true;
+    }
+    if (this.height === undefined) {
+      return index <= 10;
+    }
+    const { node: { tableBodyWrap } } = this;
+    const scrollTop = tableBodyWrap ? tableBodyWrap.scrollTop : 0;
+    const visibleStartIndex = getVisibleStartIndex(this, () => scrollTop);
+    return index >= getStartIndex(this, () => visibleStartIndex) &&
+      index <= getEndIndex(this, () => getVisibleEndIndex(this, () => visibleStartIndex, () => scrollTop));
   }
 }

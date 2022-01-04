@@ -6,6 +6,7 @@ import ObserverTextField from '../../../text-field/TextField';
 import { getHeader } from '../../utils';
 import TableContext from '../../TableContext';
 import Record from '../../../data-set/Record';
+import { Size } from '../../../core/enum';
 
 export interface ItemTitleProps {
   record: Record;
@@ -42,6 +43,7 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
             value={isValidElement(header) ? title : header}
             onChange={handleHeaderChange}
             autoFocus
+            size={Size.small}
           />
         ) : (
           <span {...(provided && provided.dragHandleProps)} style={provided ? { cursor: 'move' } : undefined}>

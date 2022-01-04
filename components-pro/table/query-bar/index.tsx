@@ -43,6 +43,7 @@ import { exportExcel, findBindFieldBy } from '../../data-set/utils';
 import Dropdown from '../../dropdown/Dropdown';
 import Menu from '../../menu';
 import TextField from '../../text-field';
+import Field from '../../data-set/Field';
 
 export interface TableQueryBarProps {
   buttons?: Buttons[];
@@ -121,7 +122,7 @@ const ExportBody = observer((props) => {
 
 const ExportFooter = observer((props) => {
   const { dataSet, prefixCls, exportButton } = props;
-  const [username, setUsername] = useState(dataSet.name || $l('Table', 'defalut_export'));
+  const [username, setUsername] = useState(dataSet.name || $l('Table', 'default_export'));
   const handleClick = () => {
     exportButton(dataSet.exportStatus, username);
   };
@@ -699,8 +700,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const { queryDataSet } = dataSet;
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
-      const { fields, current } = queryDataSet;
-      fields.forEach((field, name) => {
+      const { fields, current, props: { fields: propFields = [] } } = queryDataSet;
+      const cloneFields: Map<string, Field> = fields.toJS();
+      const processField = (field, name) => {
         if (!field.get('bind', current) && !name.includes('__tls')) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
@@ -728,6 +730,16 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               }),
           );
         }
+      };
+      propFields.forEach(({ name }) => {
+        const field = cloneFields.get(name);
+        if (field) {
+          cloneFields.delete(name);
+          processField(field, name);
+        }
+      });
+      cloneFields.forEach((field, name) => {
+        processField(field, name);
       });
     }
     return result;

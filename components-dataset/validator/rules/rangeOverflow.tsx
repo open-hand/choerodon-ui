@@ -1,11 +1,18 @@
 import { isMoment } from 'moment';
 import isNil from 'lodash/isNil';
+import { BigNumber } from 'bignumber.js';
 import { isEmpty, toRangeValue } from '../../utils';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
-const isOverflow = (value, max, range) => {
+const isOverflow = (value, max, range, isBigNumber) => {
+  if (isBigNumber) {
+    if (range) {
+      return toRangeValue(value, range).some(item => !isEmpty(item) && new BigNumber(item).isGreaterThan(max));
+    }
+    return new BigNumber(value).isGreaterThan(max);
+  }
   if (range) {
     return toRangeValue(value, range).some(item => !isEmpty(item) && Number(item) > Number(max));
   }
@@ -17,7 +24,8 @@ export default function rangeOverflow(value: any, validatorBaseProps: ValidatorB
     const max = getProp('max');
     if (!isNil(max)) {
       const range = getProp('range');
-      if (isOverflow(value, max, range)) {
+      const stringMode = getProp('stringMode');
+      if (isOverflow(value, max, range, stringMode)) {
         const format = getProp('format');
         const label = getProp('label');
         const injectionOptions = { max: isMoment(max) ? max.format(format) : max, label };

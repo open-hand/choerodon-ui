@@ -81,9 +81,10 @@ subtitle: 表格
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
 | onDragEnd | 完成拖拽后的触发事件 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
+| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   | - |
+| dragDropContextProps | react-beautiful-dnd DragDropContextProps | [DragDropContextProps](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md) |  |
 | columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender)  |  |
 | rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender) |  |
-| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   | - |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | [globalConfig.tableKeyboard](/components/configure#API) |
 | treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | |
 | treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | boolean |  |
@@ -228,6 +229,10 @@ subtitle: 表格
 | 参数     | 说明               | 类型                        | 默认值   |
 | -------- | ------------------ | --------------------------- | -------- |
 | position | 指定分页显示的位置 | 'top' \| 'bottom' \| 'both' | 'bottom' |
+
+
+### DragDropContextProps
+
 
 ### DragRender
 

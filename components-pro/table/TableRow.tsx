@@ -29,7 +29,7 @@ import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
 import { ColumnLock, DragColumnAlign, HighLightRowType, SelectionMode } from './enum';
 import { findCell, getColumnKey, getColumnLock, isDisabledRow, isSelectedRow, isStickySupport } from './utils';
-import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
+import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY, SELECTION_KEY, VIRTUAL_ROOT_MARGIN } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import { RecordStatus } from '../data-set/enum';
 import ResizeObservedRow from './ResizeObservedRow';
@@ -106,11 +106,12 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     node,
   } = tableStore;
   const { id, key: rowKey } = record;
+  const mounted = useRef<boolean>(false);
   const needIntersection = !hidden && tableStore.virtualCell;
   const { ref: intersectionRef, inView, entry } = useInView({
     root: needIntersection && tableStore.overflowY ? node.tableBodyWrap || node.element : null,
-    rootMargin: '100px',
-    initialInView: index <= 10,
+    rootMargin: `${VIRTUAL_ROOT_MARGIN}px`,
+    initialInView: !needIntersection || mounted.current || tableStore.isRowInView(index),
   });
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
@@ -287,6 +288,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
 
   // componentDidMount
   useEffect(() => {
+    mounted.current = true;
     if (record.status === RecordStatus.add && tableStore.autoFocus) {
       const editor = tableStore.editors.values().next().value;
       if (editor && (isStickySupport() || getColumnLock(editor.props.column.lock) === getColumnLock(lock))) {
@@ -298,6 +300,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
     // componentWillUnmount
     return () => {
+      mounted.current = false;
       /**
        * Fixed the when row resize has scrollbar the expanded row would be collapsed
        */
@@ -407,7 +410,6 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       columnGroup={columnGroup}
       record={headerGroupIndex === undefined ? record : getRecord(columnGroup, groupPath, headerGroupIndex, record)}
       isDragging={snapshot ? snapshot.isDragging : false}
-      lock={lock}
       provided={rest.key === DRAG_KEY ? provided : undefined}
       inView={needIntersection ? inView : undefined}
       groupPath={groupPath}
@@ -504,8 +506,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }, [needIntersection, record, inView]);
 
-  const height = needIntersection && (inView !== true || !columnGroups.inView) ? entry ? pxToRem(entry.boundingClientRect.height) :
-    pxToRem((record.getState(VIRTUAL_HEIGHT) || tableStore.virtualEstimatedRowHeight)) : lock ?
+  const height = needIntersection && !inView ? entry ? pxToRem(entry.boundingClientRect.height) :
+    pxToRem(record.getState(VIRTUAL_HEIGHT) || tableStore.virtualRowHeight) : lock ?
     pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number) : undefined;
   if (height) {
     rowStyle.height = height;

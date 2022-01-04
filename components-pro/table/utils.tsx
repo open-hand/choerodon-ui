@@ -58,6 +58,12 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
   if (field.get('multiLine', record)) {
     return <Output />;
   }
+  if (type === FieldType.bigNumber) {
+    if (field.get('currency', record)) {
+      return <Currency isFlat={isFlat} />;
+    }
+    return <ObserverNumberField {...flatProps} />;
+  }
   switch (type) {
     case FieldType.boolean:
       return isQueryField ? (
@@ -119,6 +125,7 @@ export function getPlaceholderByField(field?: Field, record?: Record): string | 
     }
     switch (type) {
       case FieldType.number:
+      case FieldType.bigNumber:
       case FieldType.currency:
       case FieldType.string:
       case FieldType.intl:
@@ -270,26 +277,26 @@ export interface HeaderOptions extends ColumnProps {
 
 export function getHeader(column: HeaderOptions): ReactNode {
   const { header, name, title, dataSet, aggregation, group } = column;
-  if (header !== undefined) {
-    if (typeof header === 'function') {
-      const $title = title === undefined ? getLabel(dataSet, name) : title;
-      const options: HeaderHookOptions = {
-        dataSet,
-        name,
-        title: $title,
-        aggregation,
-        group,
-      };
-      try {
-        return header(options, name, $title, aggregation);
-      } catch (e) {
-        return header(dataSet, name, $title, aggregation);
-      }
+  if (typeof header === 'function') {
+    const $title = title === undefined ? getLabel(dataSet, name) : title;
+    const options: HeaderHookOptions = {
+      dataSet,
+      name,
+      title: $title,
+      aggregation,
+      group,
+    };
+    try {
+      return header(options, name, $title, aggregation);
+    } catch (e) {
+      return header(dataSet, name, $title, aggregation);
     }
-    return header;
   }
   if (title !== undefined) {
     return title;
+  }
+  if (header !== undefined) {
+    return header;
   }
   return getLabel(dataSet, name);
 }

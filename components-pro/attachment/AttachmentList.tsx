@@ -23,6 +23,7 @@ export interface AttachmentListProps {
   onOrderChange: (props: { attachments: AttachmentFile[] }) => void;
   onFetchAttachments: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => void;
   onPreview: () => void;
+  previewTarget?: string;
   bucketName?: string;
   bucketDirectory?: string;
   storageCode?: string;
@@ -55,6 +56,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     limit,
     onHistory,
     onPreview,
+    previewTarget,
     isPublic,
     record,
   } = props;
@@ -118,6 +120,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 hidden={hidden}
                 onHistory={onHistory}
                 onPreview={onPreview}
+                previewTarget={previewTarget}
                 isPublic={isPublic}
               />
             )
