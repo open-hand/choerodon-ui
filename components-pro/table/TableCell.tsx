@@ -18,13 +18,18 @@ import TableCellInner from './TableCellInner';
 import AggregationButton from './AggregationButton';
 import ColumnGroup from './ColumnGroup';
 import { treeSome } from '../_util/treeUtils';
+import TableGroupCellInner from './TableGroupCellInner';
+import TableStore from './TableStore';
 
-function getRowSpan(group: Group) {
-  const { subGroups, subHGroups } = group;
-  if (subHGroups) {
-    return IteratorHelper.iteratorReduce(subHGroups.values(), (rowSpan, group) => Math.max(rowSpan, group.records.length), 0);
+function getRowSpan(group: Group, tableStore: TableStore) {
+  if (tableStore.headerTableGroups.length) {
+    const { subGroups, subHGroups } = group;
+    if (subHGroups) {
+      return IteratorHelper.iteratorReduce(subHGroups.values(), (rowSpan, group) => Math.max(rowSpan, group.records.length), 0);
+    }
+    return subGroups.reduce((rowSpan, subGroup) => rowSpan + (subGroup.subGroups.length ? getRowSpan(subGroup, tableStore) : 0) + subGroup.records.length, 0);
   }
-  return subGroups.reduce((rowSpan, subGroup) => rowSpan + (subGroup.subGroups.length ? getRowSpan(subGroup) : 0) + subGroup.records.length, 0);
+  return group.expandedRecords.length;
 }
 
 export interface TableCellProps extends ElementProps {
@@ -152,32 +157,21 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   if (group && !groupCell) {
     return null;
   }
-  const renderInnerNode = (aggregation, onCellStyle?: CSSProperties) => {
-    if (expandIconAsCell && children) {
-      return (
-        <span
-          className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}
-          style={{ textAlign: 'center', ...onCellStyle }}
-        >
-          {children}
-        </span>
-      );
-    }
-    if (aggregation) {
+  const getAggregationList = ($aggregation) => {
+    if ($aggregation) {
       const { childrenInAggregation } = columnGroup;
       if (childrenInAggregation) {
         const visibleChildren: ColumnGroup[] = childrenInAggregation.columns.filter(child => !child.hidden);
         const { length } = visibleChildren;
         if (length > 0) {
-          const { renderer = defaultAggregationRenderer, aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll, aggregationLimitDefaultExpanded } = column;
+          const { aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll, aggregationLimitDefaultExpanded } = column;
           const expanded: boolean = defaultTo(
             tableStore.isAggregationCellExpanded(record, key),
             typeof aggregationLimitDefaultExpanded === 'function' ? aggregationLimitDefaultExpanded(record) : aggregationLimitDefaultExpanded,
           ) || false;
           const hasExpand = length > aggregationLimit!;
           const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
-
-          const text = (
+          return (
             <Tree
               prefixCls={`${cellPrefix}-tree`}
               virtual={false}
@@ -195,27 +189,40 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
               }
             </Tree>
           );
-          return (
-            <span className={`${cellPrefix}-inner`}>
-              {renderer({ text, record, dataSet, aggregation: tableAggregation, headerGroup: columnGroup.headerGroup, rowGroup })}
-            </span>
-          );
         }
       }
     }
-    if (groupCell && group && __tableGroup) {
-      const { columnProps } = __tableGroup;
-      const renderer = columnProps && columnProps.renderer || defaultAggregationRenderer;
-      const text = renderer({ text: group.value, rowGroup: group, dataSet, record: group.totalRecords[0] });
+  };
+  const renderInnerNode = ($aggregation, onCellStyle?: CSSProperties) => {
+    if (expandIconAsCell && children) {
       return (
-        <span className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
-          {text}
+        <span
+          className={classNames(`${cellPrefix}-inner`, { [`${cellPrefix}-inner-row-height-fixed`]: rowHeight !== 'auto' })}
+          style={{ textAlign: 'center', ...onCellStyle }}
+        >
+          {children}
+        </span>
+      );
+    }
+    const aggregationList = getAggregationList($aggregation);
+    if (groupCell && group && __tableGroup) {
+      return (
+        <TableGroupCellInner group={group} column={column}>
+          {aggregationList}
+        </TableGroupCellInner>
+      );
+    }
+    if (aggregationList) {
+      const { renderer = defaultAggregationRenderer } = column;
+      return (
+        <span className={`${cellPrefix}-inner`}>
+          {renderer({ text: aggregationList, record, dataSet, aggregation: tableAggregation, headerGroup: columnGroup.headerGroup, rowGroup })}
         </span>
       );
     }
     return getInnerNode(column, onCellStyle, undefined, columnGroup.headerGroup);
   };
-  const rowSpan = groupCell && group ? tableStore.headerTableGroups.length ? getRowSpan(group) - indexInGroup : group.totalRecords.length - indexInGroup : undefined;
+  const rowSpan = groupCell && group ? getRowSpan(group, tableStore) - indexInGroup : undefined;
   const scope = groupCell ? 'row' : undefined;
   const TCell = scope ? 'th' : 'td';
   if (inView === false || columnGroup.inView === false) {

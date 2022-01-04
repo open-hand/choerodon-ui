@@ -1,32 +1,76 @@
-import { action, observable, ObservableMap } from 'mobx';
-import Record from './Record';
+import { action, computed, observable, ObservableMap } from 'mobx';
+import Record, { EXPANDED_KEY } from './Record';
 import { getIf } from './utils';
 
 export default class Group {
 
   readonly name: string | symbol;
 
+  parentName?: string | symbol;
+
   readonly value: any;
+
+  parentValue?: any;
 
   records: Record[];
 
   readonly totalRecords: Record[];
 
+  // 子分组， 非同组
   subGroups: Group[];
 
   subHGroups?: Set<Group>;
 
-  readonly parent?: Group | undefined;
+  // 父分组， 非同组
+  readonly parentGroup?: Group | undefined;
 
   readonly index: number;
 
   @observable state?: ObservableMap<string, any>;
 
-  constructor(name: string | symbol, index: number, value?: any, parent?: Group) {
+  // 同组下的树形子分组
+  children?: Group[] | undefined;
+
+  // 同组下的父分组
+  parent?: Group | undefined;
+
+  get isExpanded(): boolean {
+    return this.getState(EXPANDED_KEY) !== false;
+  }
+
+  set isExpanded(isExpanded: boolean) {
+    this.setState(EXPANDED_KEY, isExpanded);
+  }
+
+  get level(): number {
+    const { parent } = this;
+    if (parent) {
+      return parent.level + 1;
+    }
+    return 0;
+  }
+
+  @computed
+  get expandedRecords(): Record[] {
+    const { subGroups } = this;
+    if (subGroups.length) {
+      return subGroups.reduce<Record[]>((list, group) => {
+        const newList = list.concat(group.expandedRecords);
+        const { children } = group;
+        if (children && group.isExpanded) {
+          return children.reduce((childList, childGroup) => childList.concat(childGroup.expandedRecords), newList);
+        }
+        return newList;
+      }, []);
+    }
+    return this.records;
+  }
+
+  constructor(name: string | symbol, index: number, value?: any, parentGroup?: Group) {
     this.index = index;
     this.name = name;
     this.value = value;
-    this.parent = parent;
+    this.parentGroup = parentGroup;
     this.records = [];
     this.totalRecords = [];
     this.subGroups = [];

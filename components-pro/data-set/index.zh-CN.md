@@ -354,8 +354,10 @@ title: DataSet
 | value    | 分组值， 对应字段值     | readonly any  |
 | records    | 分组数据集，若有子分组则为空数组     | Record[]  |
 | totalRecords    | 总数据集，涵盖所有子分组的数据集     | Record[]  |
-| subGroups    | 子分组     | Group[]  |
-| parent    | 父分组     | Group  |
+| subGroups    | 非同组子分组     | Group[]  |
+| parentGroup    | 非同组父分组     | Group  |
+| children    | 同组树形子分组     | Group[]  |
+| parent    | 同组树形父分组     | Group  |
 | index    | 索引     | number  |
 
 ### Group Methods
