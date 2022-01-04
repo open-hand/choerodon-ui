@@ -1146,9 +1146,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   addValue(...values) {
     if (this.multiple) {
-      const oldValues = toMultipleValue(this.getValue(), false);
+      const oldValues = this.getValues();
       if (values.length) {
-        this.setValue(uniqWith([...oldValues, ...values], this.compare));
+        const { range } = this;
+        this.setValue(uniqWith([...(isArrayLike(range) ? oldValues.map(v => fromRangeValue(v, range)) : oldValues), ...values], this.compare));
       } else if (!oldValues.length) {
         this.setValue(this.emptyValue);
       }

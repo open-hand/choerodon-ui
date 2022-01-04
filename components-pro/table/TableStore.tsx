@@ -1938,8 +1938,8 @@ export default class TableStore {
 
   @action
   setLastScrollTop(lastScrollTop: number) {
-    this.lastScrollTop = lastScrollTop;
     if (this.virtual) {
+      this.lastScrollTop = lastScrollTop;
       this.startScroll();
     }
   }
