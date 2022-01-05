@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
 import { action, computed, observable } from 'mobx';
 import TableStore from './TableStore';
 import Record from '../data-set/Record';
+import { ROW_GROUP_HEIGHT } from './TableRowGroup';
 
 export default class VirtualRowMetaData {
   store: TableStore;
@@ -11,7 +13,16 @@ export default class VirtualRowMetaData {
 
   @observable actualRecord: Record;
 
+  type: 'row' | 'group';
+
+  groupLevel?: number;
+
+  node?: ReactNode;
+
   get height(): number {
+    if (this.type === 'group') {
+      return ROW_GROUP_HEIGHT;
+    }
     const { actualHeight } = this;
     if (actualHeight === undefined) {
       return this.store.virtualRowHeight;
@@ -33,12 +44,10 @@ export default class VirtualRowMetaData {
     return 0;
   }
 
-  constructor(store: TableStore, prev?: VirtualRowMetaData, actualHeight?: number, record?: Record) {
+  constructor(store: TableStore, type: 'row' | 'group', prev?: VirtualRowMetaData, record?: Record) {
     this.store = store;
+    this.type = type;
     this.prev = prev;
-    if (actualHeight !== undefined) {
-      this.setHeight(actualHeight);
-    }
     if (record !== undefined) {
       this.setRecord(record);
     }

@@ -33,12 +33,12 @@ import {
   ScrollPosition,
   SelectionMode,
   TableAutoHeightType,
+  TableColumnResizeTriggerType,
   TableColumnTooltip,
   TableEditMode,
   TableHeightType,
   TableMode,
   TableQueryBarType,
-  TableColumnResizeTriggerType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
@@ -56,7 +56,6 @@ import { ModalProps } from '../modal/Modal';
 import { treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
 import { getIf, normalizeGroups } from '../data-set/utils';
-import { ROW_GROUP_HEIGHT } from './TableRowGroup';
 import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
 import { LabelLayout } from '../form/enum';
@@ -189,36 +188,35 @@ function getVisibleStartIndex(tableStore: TableStore, getLastScrollTop = () => t
     return 0;
   }
   const lastScrollTop = getLastScrollTop();
-  const { virtualRowHeight } = tableStore;
-  if (tableStore.isFixedRowHeight) {
-    return Math.max(
-      0,
-      Math.min(
-        virtualEstimatedRows, Math.floor(lastScrollTop / virtualRowHeight),
-      ),
-    );
-  }
-  const { rowMetaData } = tableStore;
-  if (!rowMetaData) {
-    return 0;
-  }
-  const { lastMeasuredIndex } = tableStore;
-  const lastRowMetaData = lastMeasuredIndex > 0 ? rowMetaData[lastMeasuredIndex] : undefined;
-  const lastMeasuredItemOffset = lastRowMetaData ? lastRowMetaData.offset : 0;
-  if (lastMeasuredItemOffset >= lastScrollTop) {
-    return findNearestItemBinarySearch(
+  const { virtualRowHeight, rowMetaData } = tableStore;
+  if (rowMetaData) {
+    if (!rowMetaData.length) {
+      return 0;
+    }
+    const { lastMeasuredIndex } = tableStore;
+    const lastRowMetaData = lastMeasuredIndex > 0 ? rowMetaData[lastMeasuredIndex] : undefined;
+    const lastMeasuredItemOffset = lastRowMetaData ? lastRowMetaData.offset : 0;
+    if (lastMeasuredItemOffset >= lastScrollTop) {
+      return findNearestItemBinarySearch(
+        rowMetaData,
+        tableStore,
+        lastMeasuredIndex,
+        0,
+        lastScrollTop,
+      );
+    }
+    return findNearestItemExponentialSearch(
       rowMetaData,
       tableStore,
-      lastMeasuredIndex,
-      0,
+      Math.max(0, lastMeasuredIndex),
       lastScrollTop,
     );
   }
-  return findNearestItemExponentialSearch(
-    rowMetaData,
-    tableStore,
-    Math.max(0, lastMeasuredIndex),
-    lastScrollTop,
+  return Math.max(
+    0,
+    Math.min(
+      virtualEstimatedRows, Math.floor(lastScrollTop / virtualRowHeight),
+    ),
   );
 }
 
@@ -227,42 +225,41 @@ function getVisibleEndIndex(tableStore: TableStore, getVirtualVisibleStartIndex 
   if (height === undefined) {
     return virtualEstimatedRows;
   }
-  const { virtualRowHeight } = tableStore;
   const virtualVisibleStartIndex = getVirtualVisibleStartIndex();
-  if (tableStore.isFixedRowHeight) {
-    const numVisibleItems = Math.ceil(
-      height / virtualRowHeight,
-    );
-    return Math.max(
-      0,
-      Math.min(
-        virtualEstimatedRows,
-        virtualVisibleStartIndex + numVisibleItems,
-      ),
-    );
-  }
-  const { rowMetaData } = tableStore;
-  if (!rowMetaData || !rowMetaData.length) {
-    return 0;
-  }
-  const itemMetadata = getItemMetadata(rowMetaData, virtualVisibleStartIndex, tableStore);
-  if (!itemMetadata) {
-    return 0;
-  }
-  const maxOffset = getLastScrollTop() + height;
-
-  let offset = itemMetadata.offset + itemMetadata.height;
-  let stopIndex = virtualVisibleStartIndex;
-
-  while (stopIndex < virtualEstimatedRows - 1 && offset < maxOffset) {
-    stopIndex++;
-    const item = getItemMetadata(rowMetaData, stopIndex, tableStore);
-    if (item) {
-      offset += item.height;
+  const { virtualRowHeight, rowMetaData } = tableStore;
+  if (rowMetaData) {
+    if (!rowMetaData.length) {
+      return 0;
     }
-  }
+    const itemMetadata = getItemMetadata(rowMetaData, virtualVisibleStartIndex, tableStore);
+    if (!itemMetadata) {
+      return 0;
+    }
+    const maxOffset = getLastScrollTop() + height;
 
-  return stopIndex;
+    let offset = itemMetadata.offset + itemMetadata.height;
+    let stopIndex = virtualVisibleStartIndex;
+
+    while (stopIndex < virtualEstimatedRows - 1 && offset < maxOffset) {
+      stopIndex++;
+      const item = getItemMetadata(rowMetaData, stopIndex, tableStore);
+      if (item) {
+        offset += item.height;
+      }
+    }
+
+    return stopIndex;
+  }
+  const numVisibleItems = Math.ceil(
+    height / virtualRowHeight,
+  );
+  return Math.max(
+    0,
+    Math.min(
+      virtualEstimatedRows,
+      virtualVisibleStartIndex + numVisibleItems,
+    ),
+  );
 }
 
 function getStartIndex(tableStore: TableStore, getVirtualVisibleStartIndex = () => tableStore.virtualVisibleStartIndex): number {
@@ -1110,8 +1107,6 @@ export default class TableStore {
 
   @observable actualRows: number | undefined;
 
-  @observable actualGroupRows: number;
-
   @observable actualRowHeight: number | undefined;
 
   @observable rowMetaData?: VirtualRowMetaData[] | undefined;
@@ -1148,34 +1143,32 @@ export default class TableStore {
   }
 
   get virtualHeight(): number {
-    const { virtualRowHeight, virtualEstimatedRows, actualGroupRows } = this;
+    const { virtualRowHeight, virtualEstimatedRows } = this;
     if (!virtualEstimatedRows) {
       return 0;
     }
-    if (!this.isFixedRowHeight) {
-      const { rowMetaData } = this;
-      if (rowMetaData) {
-        let { lastMeasuredIndex } = this;
-        let totalSizeOfMeasuredItems = 0;
+    const { rowMetaData } = this;
+    if (rowMetaData) {
+      let { lastMeasuredIndex } = this;
+      let totalSizeOfMeasuredItems = 0;
 
-        if (lastMeasuredIndex >= virtualEstimatedRows) {
-          lastMeasuredIndex = virtualEstimatedRows - 1;
-        }
-
-        if (lastMeasuredIndex >= 0) {
-          const itemMetadata = rowMetaData[lastMeasuredIndex];
-          if (itemMetadata) {
-            totalSizeOfMeasuredItems = itemMetadata.offset + itemMetadata.height;
-          }
-        }
-
-        const numUnmeasuredItems = virtualEstimatedRows - lastMeasuredIndex - 1;
-        const totalSizeOfUnmeasuredItems = numUnmeasuredItems * virtualRowHeight;
-
-        return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
+      if (lastMeasuredIndex >= virtualEstimatedRows) {
+        lastMeasuredIndex = virtualEstimatedRows - 1;
       }
+
+      if (lastMeasuredIndex >= 0) {
+        const itemMetadata = rowMetaData[lastMeasuredIndex];
+        if (itemMetadata) {
+          totalSizeOfMeasuredItems = itemMetadata.offset + itemMetadata.height;
+        }
+      }
+
+      const numUnmeasuredItems = virtualEstimatedRows - lastMeasuredIndex - 1;
+      const totalSizeOfUnmeasuredItems = numUnmeasuredItems * virtualRowHeight;
+
+      return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
     }
-    return Math.round(virtualEstimatedRows * virtualRowHeight - actualGroupRows * (virtualRowHeight - ROW_GROUP_HEIGHT));
+    return Math.round(virtualEstimatedRows * virtualRowHeight);
   }
 
   @computed
@@ -1198,11 +1191,9 @@ export default class TableStore {
 
   get virtualTop(): number {
     const { virtualRowHeight, virtualStartIndex } = this;
-    if (!this.isFixedRowHeight) {
-      const { rowMetaData } = this;
-      if (rowMetaData && rowMetaData.length) {
-        return rowMetaData[virtualStartIndex].offset;
-      }
+    const { rowMetaData } = this;
+    if (rowMetaData && rowMetaData.length) {
+      return rowMetaData[virtualStartIndex].offset;
     }
     return virtualStartIndex * virtualRowHeight;
   }
@@ -1510,6 +1501,18 @@ export default class TableStore {
       height !== undefined &&
       height < bodyHeight + (this.overflowX && !this.hasFooter ? measureScrollbar() : 0)
     );
+  }
+
+  @computed
+  get hasRowGroups(): boolean {
+    if (this.cachedData.length) {
+      return true;
+    }
+    const { groups } = this;
+    if (groups) {
+      return groups.some(({ type }) => type === GroupType.row);
+    }
+    return false;
   }
 
   @computed
@@ -1896,7 +1899,6 @@ export default class TableStore {
       this.headerHeight = 0;
       this.footerHeight = 0;
       this.lastScrollTop = 0;
-      this.actualGroupRows = 0;
       this.customizedActiveKey = ['columns'];
       this.leftOriginalColumns = [];
       this.originalColumns = [];

@@ -185,7 +185,7 @@ class App extends React.Component {
             selectionMode='click'
             selectedHighLightRow
             dataSet={this.userDs}
-            style={{ height: 400 }}
+            style={{ maxHeight: 400 }}
             columns={columns}
             pagination={{
               pageSizeOptions: ['10', '50', '100', '200', '1000'],
