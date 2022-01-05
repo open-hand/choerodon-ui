@@ -55,7 +55,8 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed input length information display.
 - 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
 - 🐞 `<pro>Table`: Fix `queryBarProps` configuration priority.
-- 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
+- 🐞 `<pro>Table`: Fix the initial data status judgment of the dynamic filter bar.
+- 🐞 `<pro>Lov`: Fix the problem that the button does not focus after closing the pop-up window in button mode.
 - 🐞 `<pro>FormField`: Fix the problem that deleting a single value will clear all other values in the multiple and custom range mode.
 - 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
 - 🐞 `<pro>DataSet`: Fixed tree data parent-child association problem.

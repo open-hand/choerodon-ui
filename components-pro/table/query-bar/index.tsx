@@ -554,7 +554,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     } = this;
     const { props: { queryBarProps } } = tableStore;
     const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps };
-    const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit);
+    const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
     if (summaryBar) {
       const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimits));
       const moreSummary = summaryBar.slice(summaryFieldsLimits);
@@ -829,7 +829,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const onReset = tableQueryBarProps && typeof tableQueryBarProps.onReset === 'function' ? tableQueryBarProps.onReset : noop;
       const onQuery = tableQueryBarProps && typeof tableQueryBarProps.onQuery === 'function' ? tableQueryBarProps.onQuery : noop;
       const queryFieldsLimits = queryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.queryFieldsLimit);
-      const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit);
+      const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
       const props: TableQueryBarHookCustomProps & TableQueryBarHookProps = {
         ...tableQueryBarProps,
         dataSet,
