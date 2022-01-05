@@ -12,11 +12,10 @@ import React, {
 } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike } from 'mobx';
-import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided, DraggableStateSnapshot, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
-import isFunction from 'lodash/isFunction';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import TableRow, { TableRowProps } from './TableRow';
@@ -24,8 +23,8 @@ import Record from '../data-set/Record';
 import { ColumnLock, DragColumnAlign, GroupType } from './enum';
 import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
-import { DragRender, DragTableRowProps, instance } from './Table';
-import { getHeader, isDraggingStyle, isStickySupport } from './utils';
+import { DragRender, instance } from './Table';
+import { getHeader, isStickySupport } from './utils';
 import ColumnGroups from './ColumnGroups';
 import TableRowGroup, { ROW_GROUP_HEIGHT } from './TableRowGroup';
 import { $l } from '../locale-context';
@@ -37,10 +36,14 @@ import VirtualVerticalContainer from './VirtualVerticalContainer';
 import TableStore from './TableStore';
 import useComputed from '../use-computed';
 import VirtualRowMetaData from './VirtualRowMetaData';
+import { toTransformValue } from '../_util/transform';
+import { useRenderClone } from './hooks';
 
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock | undefined;
   columnGroups: ColumnGroups;
+  snapshot?: DroppableStateSnapshot | undefined;
+  dragRowHeight?: number | undefined;
 }
 
 type Statistics = {
@@ -48,12 +51,18 @@ type Statistics = {
   rowGroups: number[];
   rowMetaData?: VirtualRowMetaData[];
   lastRowMetaData?: VirtualRowMetaData;
+  dragTargetFound?: boolean;
 }
 
 interface GenerateSimpleRowsProps {
   tableStore: TableStore;
   columnGroups: ColumnGroups;
   lock?: ColumnLock | undefined;
+  isTree?: boolean | undefined;
+  virtual?: boolean | undefined;
+  rowDraggable?: boolean | undefined;
+  draggableId?: string | undefined;
+  dragRowHeight?: number | undefined;
 }
 
 interface GenerateRowGroupProps extends GenerateSimpleRowsProps {
@@ -70,6 +79,8 @@ interface GenerateRowsProps extends GenerateSimpleRowsProps {
 
 export interface RowsProps extends GenerateRowsProps {
   onClearCache: () => void;
+  snapshot?: DroppableStateSnapshot;
+  dragRowHeight?: number;
 }
 
 export interface GenerateRowProps extends GenerateRowsProps {
@@ -105,12 +116,16 @@ function generateRowGroup(props: GenerateRowGroupProps): ReactNode {
 }
 
 function generateRow(props: GenerateRowProps): ReactElement {
-  const { tableStore, record, parentExpanded, lock, columnGroups, groupPath, index, statistics, expandIconColumnIndex, children, headerGroup } = props;
+  const {
+    tableStore, record, parentExpanded, lock, columnGroups, groupPath, index,
+    statistics, expandIconColumnIndex, children, headerGroup, draggableId, dragRowHeight,
+  } = props;
+  const { key } = record;
   const tableRowProps: TableRowProps = {
     columnGroups,
     record,
     index: index.count,
-    key: record.key,
+    key,
     hidden: !parentExpanded,
     lock,
     expandIconColumnIndex,
@@ -133,6 +148,17 @@ function generateRow(props: GenerateRowProps): ReactElement {
     tableRowProps.headerGroupIndex = headerGroup.count;
     headerGroup.count++;
   }
+  if (dragRowHeight && statistics && !statistics.dragTargetFound) {
+    if (draggableId && String(key) === String(draggableId)) {
+      statistics.dragTargetFound = true;
+    } else {
+      tableRowProps.style = {
+        transform: toTransformValue({
+          translateY: pxToRem(-dragRowHeight),
+        }),
+      };
+    }
+  }
   return (
     <TableRow {...tableRowProps} />
   );
@@ -153,13 +179,13 @@ function renderExpandedRows(
 }
 
 function generateDraggableRow(props: GenerateRowProps): ReactElement {
-  const { tableStore, record, lock, index, rowDragRender, statistics } = props;
-  const children = tableStore.isTree && !tableStore.virtual && (
+  const { tableStore, record, lock, index, rowDragRender, statistics, isTree, virtual, rowDraggable } = props;
+  const children = isTree && !virtual && (
     <ExpandedRow {...props} renderExpandedRows={renderExpandedRows} />
   );
-  const draggableIndex = tableStore.rowDraggable && tableStore.isTree && statistics ? statistics.count : index.count;
+  const draggableIndex = rowDraggable && isTree && statistics ? statistics.count : index.count;
   const row = generateRow({ ...props, children });
-  if (tableStore.rowDraggable) {
+  if (rowDraggable) {
     const { dragColumnAlign } = tableStore;
     if (
       !dragColumnAlign ||
@@ -189,11 +215,11 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
 }
 
 function generateRowAndChildRows(rows: ReactNode[], props: GenerateRowProps): ReactNode[] {
-  const { tableStore, record } = props;
+  const { tableStore, record, isTree, virtual } = props;
   rows.push(
     generateDraggableRow(props),
   );
-  if (tableStore.isTree && tableStore.virtual && tableStore.isRowExpanded(record)) {
+  if (isTree && virtual && tableStore.isRowExpanded(record)) {
     (record.children || []).forEach(record => {
       generateRowAndChildRows(rows, {
         ...props,
@@ -391,22 +417,28 @@ function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
 }
 
 const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
-  const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender } = props;
+  const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender, isTree, rowDraggable, snapshot, dragRowHeight } = props;
+  const draggableId = snapshot && snapshot.draggingFromThisWith;
   const [totalRows, statistics]: [ReactNode[], Statistics] = useComputed(() => {
     const $statistics: Statistics = { count: 0, rowGroups: [] };
-    if (!tableStore.isFixedRowHeight || (tableStore.isTree && tableStore.rowDraggable)) {
+    if (!tableStore.isFixedRowHeight || (isTree && rowDraggable)) {
       $statistics.rowMetaData = [];
     }
-    const cachedRows = generateCachedRows({ tableStore, columnGroups, lock }, onClearCache, $statistics);
+    const cachedRows = generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: true }, onClearCache, $statistics);
     const rows = generateRows({
       tableStore,
       columnGroups,
       expandIconColumnIndex,
       lock,
       rowDragRender,
+      isTree,
+      rowDraggable,
+      draggableId,
+      dragRowHeight,
+      virtual: true,
     }, cachedRows.length > 0, $statistics);
     return [cachedRows.concat(rows), $statistics];
-  }, [tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender, onClearCache]);
+  }, [tableStore, columnGroups, expandIconColumnIndex, lock, isTree, rowDraggable, rowDragRender, onClearCache, draggableId, dragRowHeight]);
   const renderGroup = useCallback((startIndex) => {
     const groups: ReactNode[] = [];
     let preGroup: ReactNode | undefined;
@@ -447,15 +479,15 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
 VirtualRows.displayName = 'VirtualRows';
 
 const Rows: FunctionComponent<RowsProps> = function Rows(props) {
-  const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender } = props;
+  const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender, isTree, rowDraggable } = props;
   const { cachedData, currentData, groupedData } = tableStore;
   const cachedRows: ReactNode[] = useComputed(() => (
-    generateCachedRows({ tableStore, columnGroups, lock }, onClearCache)
-  ), [cachedData, tableStore, columnGroups, onClearCache, lock]);
+    generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: false }, onClearCache)
+  ), [cachedData, tableStore, columnGroups, onClearCache, lock, isTree, rowDraggable]);
   const hasCache = cachedRows.length > 0;
   const rows: ReactNode[] = useComputed(() => (
-    generateRows({ tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender }, hasCache)
-  ), [currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, rowDragRender]);
+    generateRows({ tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender, isTree, rowDraggable, virtual: false }, hasCache)
+  ), [currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, isTree, rowDraggable, rowDragRender]);
   useEffect(action(() => {
     if (tableStore.actualRows !== undefined) {
       tableStore.actualRows = undefined;
@@ -480,10 +512,10 @@ const ObserverVirtualRows = observer(VirtualRows);
 const ObserverRows = observer(Rows);
 
 const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props) {
-  const { lock, columnGroups, ...rest } = props;
-  const { prefixCls, tableStore, rowDragRender, dataSet, expandRowByClick, expandedRowRenderer } = useContext(TableContext);
-  const { rowDraggable } = tableStore;
-  const expandIconColumnIndex = !expandRowByClick && (expandedRowRenderer || tableStore.isTree) ?
+  const { lock, columnGroups, snapshot, dragRowHeight, ...rest } = props;
+  const { prefixCls, tableStore, rowDragRender, dataSet, expandRowByClick, expandedRowRenderer, isTree } = useContext(TableContext);
+  const { rowDraggable, propVirtual } = tableStore;
+  const expandIconColumnIndex = !expandRowByClick && (expandedRowRenderer || isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number) => {
     if (!tableStore.hidden) {
@@ -511,7 +543,9 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     }
   }, [lock, tableStore]);
 
-  const body = tableStore.propVirtual ? (
+  const renderClone = useRenderClone(lock ? undefined : columnGroups);
+
+  const body = propVirtual ? (
     <ObserverVirtualRows
       onClearCache={handleClearCache}
       expandIconColumnIndex={expandIconColumnIndex}
@@ -519,6 +553,10 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
       tableStore={tableStore}
       rowDragRender={rowDragRender}
       lock={lock}
+      isTree={isTree}
+      rowDraggable={rowDraggable}
+      snapshot={snapshot}
+      dragRowHeight={dragRowHeight}
     />
   ) : (
     <ObserverRows
@@ -528,61 +566,17 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
       tableStore={tableStore}
       rowDragRender={rowDragRender}
       lock={lock}
+      isTree={isTree}
+      rowDraggable={rowDraggable}
     />
   );
-  const tbody = rowDraggable ? (
+  const tbody = rowDraggable && !propVirtual ? (
     <Droppable
       droppableId="table"
       key="table"
-      isCombineEnabled={tableStore.isTree}
-      renderClone={(
-        provided: DraggableProvided,
-        snapshot: DraggableStateSnapshot,
-        rubric: DraggableRubric,
-      ) => {
-        if (!isStickySupport() && snapshot.isDragging && tableStore.overflowX && tableStore.dragColumnAlign === DragColumnAlign.right) {
-          const { style } = provided.draggableProps;
-          if (isDraggingStyle(style)) {
-            const { left, width } = style;
-            style.left = left - Math.max(tableStore.columnGroups.leafColumnsWidth - tableStore.columnGroups.rightLeafColumnsWidth, width);
-          }
-        }
-        const record = dataSet.find(record => String(record.key) === rubric.draggableId);
-        if (record) {
-          const leafColumnsBody = lock ? tableStore.columnGroups : columnGroups;
-          const renderClone = rowDragRender && rowDragRender.renderClone;
-          const { id } = record;
-          if (renderClone && isFunction(renderClone)) {
-            return renderClone({
-              provided,
-              snapshot,
-              rubric,
-              key: id,
-              hidden: false,
-              lock: false,
-              prefixCls,
-              columns: leafColumnsBody.leafs.map(({ column }) => column),
-              columnGroups: leafColumnsBody,
-              record,
-              index: id,
-            } as DragTableRowProps);
-          }
-          return (
-            <TableRow
-              provided={provided}
-              snapshot={snapshot}
-              key={id}
-              hidden={false}
-              lock={false}
-              columnGroups={leafColumnsBody}
-              record={record}
-              index={id}
-              className="dragging-row"
-            />
-          );
-        }
-        return <span />;
-      }}
+      isCombineEnabled={isTree}
+      mode={propVirtual ? 'virtual' : 'standard'}
+      renderClone={renderClone}
       getContainerForClone={() => instance(tableStore.node.getClassName(), prefixCls).tbody as React.ReactElement<HTMLElement>}
       {...(rowDragRender && rowDragRender.droppableProps)}
     >

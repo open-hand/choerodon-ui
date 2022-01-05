@@ -89,7 +89,7 @@ export interface TableRowProps extends ElementProps {
 const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const {
     record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, className, lock, columnGroups,
-    children, groupPath, expandIconColumnIndex, metaData,
+    children, groupPath, expandIconColumnIndex, metaData, style: propStyle,
   } = props;
   const context = useContext(TableContext);
   const {
@@ -107,6 +107,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   } = tableStore;
   const { id, key: rowKey } = record;
   const mounted = useRef<boolean>(false);
+  const dragRef = useRef<boolean>(false);
   const needIntersection = !hidden && tableStore.virtualCell;
   const { ref: intersectionRef, inView, entry } = useInView({
     root: needIntersection && tableStore.overflowY ? node.tableBodyWrap || node.element : null,
@@ -484,12 +485,28 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   } else if (selectionMode === SelectionMode.mousedown) {
     rowProps.onMouseDown = handleSelectionByMouseDown;
   }
-  const rowStyle = {
+  const rowStyle: CSSProperties = {
     ...style,
   };
   if (rowDraggable && provided) {
     Object.assign(rowProps, provided.draggableProps);
     Object.assign(rowStyle, provided.draggableProps.style, style);
+    if (propStyle) {
+      const { transform } = propStyle;
+      if (transform) {
+        if (rowStyle.transform) {
+          rowStyle.transform = 'none';
+        } else {
+          rowStyle.transform = transform;
+          if (!dragRef.current) {
+            rowStyle.transition = 'none';
+            dragRef.current = true;
+          }
+        }
+      }
+    } else {
+      dragRef.current = false;
+    }
     rowStyle.width = Math.max(tableStore.columnGroups.width, tableStore.width || 0);
     if (!dragColumnAlign) {
       rowStyle.cursor = 'move';

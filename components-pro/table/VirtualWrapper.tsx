@@ -1,6 +1,7 @@
 import React, { CSSProperties, FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import { Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Spin from '../spin';
@@ -8,14 +9,32 @@ import TableContext from './TableContext';
 import { toTransformValue } from '../_util/transform';
 import mergeProps from '../_util/mergeProps';
 import { isStickySupport } from './utils';
+import { instance } from './Table';
+import TableStore from './TableStore';
+import DataSet from '../data-set/DataSet';
+import { useRenderClone } from './hooks';
 
 export interface VirtualWrapperProps {
-  children?: ReactNode;
+  children: (snapshot?: DroppableStateSnapshot, dragRowHeight ?: number) => ReactNode;
+}
+
+function getRowHeight(tableStore: TableStore, dataSet: DataSet, draggableId: string): number {
+  const { rowMetaData } = tableStore;
+  if (rowMetaData) {
+    const record = dataSet.find(r => String(r.key) === String(draggableId));
+    if (record) {
+      const metaData = rowMetaData.find(meta => meta.record === record);
+      if (metaData) {
+        return metaData.height;
+      }
+    }
+  }
+  return tableStore.virtualRowHeight;
 }
 
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
   const { children } = props;
-  const { tableStore, prefixCls, virtualSpin, spinProps } = useContext(TableContext);
+  const { tableStore, prefixCls, virtualSpin, spinProps, isTree, rowDragRender, dataSet } = useContext(TableContext);
   const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling = false } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
   const [rowHeight, setRowHeight] = useState(virtualRowHeight);
@@ -45,30 +64,54 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
       setRowHeight(virtualRowHeight);
     }
   }), [virtualRowHeight, rowHeight, tableStore]);
-  const wrapperStyle: CSSProperties = { height: pxToRem(virtualHeight)! };
-  const style: CSSProperties = {};
-  if (scrolling) {
-    wrapperStyle.pointerEvents = 'none';
-  }
-  if (isStickySupport() && tableStore.actualGroupRows) {
-    wrapperStyle.paddingTop = pxToRem(virtualTop)!;
-    style.position = 'relative';
-  } else {
-    style.transform = toTransformValue({ translateY: pxToRem(virtualTop) });
-  }
 
-  return (
-    <>
+  const getBody = (droppableProvided?: DroppableProvided, droppableSnapshot?: DroppableStateSnapshot) => {
+    const wrapperStyle: CSSProperties = { height: pxToRem(virtualHeight)! };
+    const style: CSSProperties = {};
+    if (scrolling) {
+      wrapperStyle.pointerEvents = 'none';
+    }
+    const dragRowHeight = droppableSnapshot && droppableSnapshot.draggingFromThisWith ? getRowHeight(tableStore, dataSet, droppableSnapshot.draggingFromThisWith) : undefined;
+    const top = dragRowHeight ? virtualTop + dragRowHeight : virtualTop;
+    if (isStickySupport() && tableStore.actualGroupRows) {
+      wrapperStyle.paddingTop = pxToRem(top)!;
+      style.position = 'relative';
+    } else {
+      style.transform = toTransformValue({ translateY: pxToRem(top) });
+    }
+    return (
       <div
         className={`${prefixCls}-tbody-wrapper`}
         style={wrapperStyle}
+        ref={droppableProvided && droppableProvided.innerRef}
+        {...(droppableProvided && droppableProvided.droppableProps)}
       >
         <div
           style={style}
         >
-          {children}
+          {children(droppableSnapshot, dragRowHeight)}
         </div>
       </div>
+    );
+  };
+  const renderClone = useRenderClone();
+  const content = tableStore.rowDraggable ? (
+    <Droppable
+      droppableId="table"
+      key="table"
+      isCombineEnabled={isTree}
+      mode="virtual"
+      renderClone={renderClone}
+      getContainerForClone={() => instance(tableStore.node.getClassName(), prefixCls).tbody as React.ReactElement<HTMLElement>}
+      {...(rowDragRender && rowDragRender.droppableProps)}
+    >
+      {getBody}
+    </Droppable>
+  ) : getBody();
+
+  return (
+    <>
+      {content}
       {
         virtualSpin && scrolling && (
           <Spin

@@ -19,6 +19,7 @@ import {
   DraggableRubric,
   DraggableStateSnapshot,
   DroppableProps,
+  DroppableStateSnapshot,
   DropResult,
   ResponderProvided,
 } from 'react-beautiful-dnd';
@@ -45,7 +46,7 @@ import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComp
 import { TableContextProvider } from './TableContext';
 import TableWrapper from './TableWrapper';
 import Profiler from './Profiler';
-import TableTBody from './TableTBody';
+import TableTBody, { TableTBodyProps } from './TableTBody';
 import ExpandableTableTBody from './ExpandableTableTBody';
 import TableFooter from './TableFooter';
 import {
@@ -1887,6 +1888,7 @@ export default class Table extends DataSetComponent<TableProps> {
     hasBody: boolean,
     hasFooter: boolean,
     lock?: ColumnLock,
+    virtual?: boolean,
   ): ReactNode {
     const { tableStore } = this;
     const columnGroups = (() => {
@@ -1899,7 +1901,8 @@ export default class Table extends DataSetComponent<TableProps> {
       return tableStore.columnGroups;
     })();
 
-    return (
+    /* eslint-disable react/no-this-in-sfc */
+    const wrapper = (snapshot?: DroppableStateSnapshot, dragRowHeight?: number) => (
       <TableWrapper
         key="tableWrapper"
         lock={lock}
@@ -1909,10 +1912,21 @@ export default class Table extends DataSetComponent<TableProps> {
         columnGroups={columnGroups}
       >
         {hasHeader && this.getTableHeader(lock)}
-        {hasBody && this.getTableBody(columnGroups, lock)}
+        {hasBody && this.getTableBody(columnGroups, lock, snapshot, dragRowHeight)}
         {hasFooter && this.getTableFooter(columnGroups, lock)}
       </TableWrapper>
     );
+    /* eslint-enable react/no-this-in-sfc */
+    const virtualWrapper = virtual ? <VirtualWrapper>{wrapper}</VirtualWrapper> : wrapper();
+    if (hasBody && tableStore.rowDraggable) {
+      const { dragDropContextProps } = this.props;
+      return (
+        <DragDropContext {...dragDropContextProps} onDragEnd={this.handleDragEnd}>
+          {virtualWrapper}
+        </DragDropContext>
+      );
+    }
+    return virtualWrapper;
   }
 
   getHeader(): ReactNode {
@@ -2012,7 +2026,7 @@ export default class Table extends DataSetComponent<TableProps> {
         </div>
       );
       if (lock !== ColumnLock.right || !onlyCustomizedColumn(tableStore)) {
-        const body = this.renderTable(false, true, false, lock);
+        const body = this.renderTable(false, true, false, lock, virtual);
         tableBody = (
           <TableBody
             key="tableBody"
@@ -2021,7 +2035,7 @@ export default class Table extends DataSetComponent<TableProps> {
             onScroll={this.handleBodyScroll}
             style={pick(props.style, ['maxHeight', 'minHeight'])}
           >
-            {virtual ? <VirtualWrapper>{body}</VirtualWrapper> : body}
+            {body}
           </TableBody>
         );
       }
@@ -2061,22 +2075,22 @@ export default class Table extends DataSetComponent<TableProps> {
     );
   }
 
-  getTableBody(columnGroups: ColumnGroups, lock?: ColumnLock): ReactNode {
+  getTableBody(columnGroups: ColumnGroups, lock?: ColumnLock, snapshot?: DroppableStateSnapshot, dragRowHeight?: number): ReactNode {
     const {
-      tableStore: { rowDraggable, performanceEnabled },
+      tableStore: { performanceEnabled },
       props: {
         bodyExpandable,
-        dragDropContextProps,
       },
     } = this;
-    const body = bodyExpandable ? <ExpandableTableTBody key="tbody" lock={lock} columnGroups={columnGroups} /> :
-      <TableTBody key="tbody" lock={lock} columnGroups={columnGroups} />;
-    const bodyWithProfiler = performanceEnabled ? <Profiler>{body}</Profiler> : body;
-    return rowDraggable ? (
-      <DragDropContext {...dragDropContextProps} onDragEnd={this.handleDragEnd}>
-        {bodyWithProfiler}
-      </DragDropContext>
-    ) : bodyWithProfiler;
+    const tBodyProps: TableTBodyProps = {
+      key: 'tbody',
+      lock,
+      columnGroups,
+      snapshot,
+      dragRowHeight,
+    };
+    const body = bodyExpandable ? <ExpandableTableTBody {...tBodyProps} /> : <TableTBody {...tBodyProps} />;
+    return performanceEnabled ? <Profiler>{body}</Profiler> : body;
   }
 
   getTableHeader(lock?: ColumnLock): ReactNode {
