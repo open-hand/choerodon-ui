@@ -37,6 +37,15 @@ const App = () => {
       { id: 7, name: '吴九', code: 'g', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
       { id: 8, name: '郑十', code: 'h', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
       { id: 9, name: '老吴', code: 'i', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
+      { id: 11, name: '张三', code: 'a1', company: '汉得', dept: '人事' },
+      { id: 22, name: '李四1', code: 'b1', company: '汉得', dept: '人事' },
+      { id: 33, name: '王五1', code: 'c1', company: '汉得', dept: '研发', parentDept: '人事' },
+      { id: 44, name: '赵六1', code: 'd1', company: '汉得', dept: '研发', parentDept: '人事' },
+      { id: 51, name: '孙七1', code: 'e1', company: '甄云', dept: '人事', parentCompany: '汉得' },
+      { id: 61, name: '周八1', code: 'f1', company: '甄云', dept: '人事', parentCompany: '汉得' },
+      { id: 71, name: '吴九1', code: 'g1', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
+      { id: 81, name: '郑十1', code: 'h1', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
+      { id: 91, name: '老吴1', code: 'i1', company: '甄云', dept: '研发', parentCompany: '汉得', parentDept: '人事' },
     ],
     fields: [
       {

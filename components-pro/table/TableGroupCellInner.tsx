@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useCallback, useContext } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactNode, useCallback, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -10,12 +10,13 @@ import ExpandIcon from './ExpandIcon';
 export interface TableGroupCellInnerProps {
   column: ColumnProps;
   group: Group;
+  rowSpan?: number;
   children?: ReactNode;
 }
 
 const TableGroupCellInner: FunctionComponent<TableGroupCellInnerProps> = function TableGroupCellInner(props) {
   const { dataSet, rowHeight, indentSize, tableStore, prefixCls } = useContext(TableContext);
-  const { column, group, children: aggregationList } = props;
+  const { column, group, children: aggregationList, rowSpan } = props;
   const { children } = group;
   const { renderer = defaultAggregationRenderer, __tableGroup } = column;
   const handleExpandChange = useCallback(() => {
@@ -54,8 +55,17 @@ const TableGroupCellInner: FunctionComponent<TableGroupCellInnerProps> = functio
       return <span key="indent" style={{ paddingLeft: pxToRem(indentSize * group.level) }} />;
     }
   };
+  const cellProps: { style?: CSSProperties, className: string } = {
+    className: classNames(`${prefixCls}-cell-inner`, { [`${prefixCls}-cell-inner-row-height-fixed`]: rowHeight !== 'auto' }),
+  };
+  if (rowSpan === undefined && rowHeight !== 'auto') {
+    cellProps.style = {
+      height: pxToRem(rowHeight)!,
+      lineHeight: pxToRem(rowHeight - 2)!,
+    };
+  }
   return (
-    <span className={classNames(`${prefixCls}-cell-inner`, { [`${prefixCls}-cell-inner-row-height-fixed`]: rowHeight !== 'auto' })}>
+    <span {...cellProps}>
       {renderIndent()}
       {renderExpandIcon()}
       {text}
