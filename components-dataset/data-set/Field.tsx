@@ -186,7 +186,7 @@ export type FieldProps = {
   /**
    * 步距
    */
-  step?: number | TimeStep;
+  step?: number | string | TimeStep;
   /**
    * 非严格步距
    */
