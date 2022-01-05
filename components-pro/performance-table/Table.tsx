@@ -252,7 +252,7 @@ export interface TableProps extends StandardProps {
   data: object[];
   expandedRowKeys?: string[] | number[];
   height?: number;
-  hover: boolean;
+  hover?: boolean;
   headerHeight?: number;
   locale?: TableLocale;
   clickScrollLength?: TableScrollLength,
