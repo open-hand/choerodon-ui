@@ -72,11 +72,12 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
   }
 
   getTimeProps = () => {
+    const { format = getDateFormatByFieldType(TimesView.type) } = this.props;
     const timeProps = {
       ...this.props,
       mode: ViewMode.time,
       datetimeSide: true,
-      format: getDateFormatByFieldType(TimesView.type),
+      format,
     } as TimesViewProps;
     return timeProps;
   };

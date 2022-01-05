@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。
 - 🐞 `<pro>DataSet`: 修复树形数据父子级关联问题。
 - 🐞 `<pro>DatePicker`: 修复 range 和 multiple 模式下设值的问题。
+- 🐞 `<pro>DateTimePicker`: 修复 format 属性失效的问题。
 
 ## 1.5.0
 

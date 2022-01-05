@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
 - 🐞 `<pro>DataSet`: Fixed tree data parent-child association problem.
 - 🐞 `<pro>DatePicker`: Fix the problem of value setting in the `range` and `multiple` mode.
+- 🐞 `<pro>DateTimePicker`: Fix the issue where the `format` property is invalid.
 
 ## 1.5.0
 
