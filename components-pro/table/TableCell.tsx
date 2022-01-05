@@ -152,7 +152,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       />
     );
   }
-  const indexInGroup: number = group ? group.totalRecords.indexOf(record) : -1;
+  const indexInGroup: number = group ? group.expandedRecords.indexOf(record) : -1;
   const groupCell = indexInGroup === 0 || tableStore.virtual && indexInGroup > -1 && tableStore.virtualStartIndex === rowIndex;
   if (group && !groupCell) {
     return null;
@@ -193,6 +193,8 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       }
     }
   };
+  const groupRowSpan = groupCell && group ? getRowSpan(group, tableStore) - indexInGroup : undefined;
+  const rowSpan = groupRowSpan === 1 ? undefined : groupRowSpan;
   const renderInnerNode = ($aggregation, onCellStyle?: CSSProperties) => {
     if (expandIconAsCell && children) {
       return (
@@ -207,7 +209,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     const aggregationList = getAggregationList($aggregation);
     if (groupCell && group && __tableGroup) {
       return (
-        <TableGroupCellInner group={group} column={column}>
+        <TableGroupCellInner rowSpan={rowSpan} group={group} column={column}>
           {aggregationList}
         </TableGroupCellInner>
       );
@@ -222,14 +224,13 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
     return getInnerNode(column, onCellStyle, undefined, columnGroup.headerGroup);
   };
-  const rowSpan = groupCell && group ? getRowSpan(group, tableStore) - indexInGroup : undefined;
   const scope = groupCell ? 'row' : undefined;
   const TCell = scope ? 'th' : 'td';
   if (inView === false || columnGroup.inView === false) {
     const hasEditor: boolean = aggregation ? treeSome(column.children || [], (node) => !!getEditorByColumnAndRecord(node, record)) : !!getEditorByColumnAndRecord(column, record);
     const emptyCellProps: TdHTMLAttributes<HTMLTableDataCellElement> & { 'data-index': Key } = {
       colSpan,
-      rowSpan: rowSpan === 1 ? undefined : rowSpan,
+      rowSpan,
       'data-index': key,
       className: baseClassName,
       style: baseStyle,
@@ -288,7 +289,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   return (
     <TCell
       colSpan={colSpan}
-      rowSpan={rowSpan === 1 ? undefined : rowSpan}
+      rowSpan={rowSpan}
       {...cellExternalProps}
       className={classString}
       data-index={key}
