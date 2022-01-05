@@ -398,3 +398,4 @@ export function onlyCustomizedColumn(tableStore: TableStore): boolean {
   const { rightLeafs } = tableStore.columnGroups;
   return rightLeafs.length === 0 || rightLeafs[0].key === CUSTOMIZED_KEY;
 }
+

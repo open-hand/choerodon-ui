@@ -50,7 +50,7 @@ subtitle: 表格
 | expandIcon | 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | expandIconColumnIndex | 展开图标所在列索引 | number |  |
 | expandIconAsCell | 展开图标是否单独单元格展示 | boolean | （非Tree mode）true \| false |
-| bodyExpandable | 表格体是否可展开 | boolean | true |
+| bodyExpandable | 表格体是否可展开 | boolean | |
 | defaultBodyExpanded | 默认表格体是否展开 | boolean | true |
 | bodyExpanded | 表格体是否展开 | boolean |  |
 | indentSize | 展示树形数据时，每层缩进的宽度 | number | 15 |
