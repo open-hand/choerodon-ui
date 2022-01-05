@@ -30,6 +30,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: 新增 stringMode 属性。
 - 🌟 `<pro>DataSet`: 新增 bigNumber 字段 type 。
 - 🌟 `<pro>Attachment`: 新增 previewTarget 属性。
+- 🌟 `<pro>DataSet`: 新增 forceRemove 参数在 remove, removeAll 方法中。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。
