@@ -84,44 +84,6 @@ function initRecordField(record: Record, name: string, fieldProps?: FieldProps):
   );
 }
 
-function processTreeLevel(props: { dataSet: DataSet; value: any; fieldName: string; }) {
-  const { dataSet, value, fieldName } = props;
-  const { parentField, idField, childrenField } = dataSet.props;
-  if (!childrenField && parentField && idField) {
-    if (fieldName === parentField) {
-      const { parent } = this;
-      if (parent) {
-        const oldChildren = parent.children;
-        if (oldChildren) {
-          const oldIndex = oldChildren.indexOf(this);
-          if (oldIndex !== -1) {
-            oldChildren.splice(oldIndex, 1);
-          }
-          if (!oldChildren.length) {
-            parent.children = undefined;
-          }
-        }
-      }
-      const newParent = dataSet.find(r => r.get(idField) === value);
-      this.parent = newParent;
-      if (newParent) {
-        const { children } = newParent;
-        if (children) {
-          children.push(this);
-          if (children.length > 1) {
-            const orderFields = getOrderFields(dataSet);
-            if (orderFields.length > 0) {
-              newParent.children = sortTree(children, orderFields);
-            }
-          }
-        } else {
-          newParent.children = [this];
-        }
-      }
-    }
-  }
-}
-
 export interface RecordBaseProps {
   disabled?: boolean | undefined;
   selectable?: boolean | undefined;
@@ -494,6 +456,45 @@ export default class Record {
     });
   }
 
+  @action
+  processTreeLevel(props: { dataSet: DataSet; value: any; fieldName: string; }) {
+    const { dataSet, value, fieldName } = props;
+    const { parentField, idField, childrenField } = dataSet.props;
+    if (!childrenField && parentField && idField) {
+      if (fieldName === parentField) {
+        const { parent } = this;
+        if (parent) {
+          const oldChildren = parent.children;
+          if (oldChildren) {
+            const oldIndex = oldChildren.indexOf(this);
+            if (oldIndex !== -1) {
+              oldChildren.splice(oldIndex, 1);
+            }
+            if (!oldChildren.length) {
+              parent.children = undefined;
+            }
+          }
+        }
+        const newParent = dataSet.find(r => r.get(idField) === value);
+        this.parent = newParent;
+        if (newParent) {
+          const { children } = newParent;
+          if (children) {
+            children.push(this);
+            if (children.length > 1) {
+              const orderFields = getOrderFields(dataSet);
+              if (orderFields.length > 0) {
+                newParent.children = sortTree(children, orderFields);
+              }
+            }
+          } else {
+            newParent.children = [this];
+          }
+        }
+      }
+    }
+  }
+
   /**
    * 转换成普通数据
    * 一般用于父级联数据源中的json类型字段
@@ -774,7 +775,7 @@ export default class Record {
             children.forEach(record => record.set(fieldName, value));
           }
         }
-        processTreeLevel({
+        this.processTreeLevel({
           dataSet,
           value: newValue,
           fieldName: oldName,
@@ -827,7 +828,7 @@ export default class Record {
       }
       ObjectChainValue.set(data, fieldName, newValue, dataSet.fields, this);
       field.commit(this);
-      processTreeLevel({
+      this.processTreeLevel({
         dataSet,
         value: newValue,
         fieldName: oldName,

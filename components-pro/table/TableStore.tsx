@@ -1564,7 +1564,7 @@ export default class TableStore {
     if (rowNumber) {
       return {
         key: ROW_NUMBER_KEY,
-        resizable: false,
+        resizable: true,
         titleEditable: false,
         headerClassName: `${this.prefixCls}-row-number-column`,
         renderer: this.renderRowNumber,

@@ -17,7 +17,7 @@ import {
   DraggableProps,
   DraggableProvided,
   DraggableRubric,
-  DraggableStateSnapshot,
+  DraggableStateSnapshot, DragStart,
   DroppableProps,
   DroppableStateSnapshot,
   DropResult,
@@ -1729,7 +1729,7 @@ export default class Table extends DataSetComponent<TableProps> {
    * @param currentRecord
    */
   @action
-  removeSourceRecord(currentRecord) {
+  removeSourceRecord(currentRecord: Record) {
     const { parent } = currentRecord;
     if (parent) {
       const { children } = parent;
@@ -1747,10 +1747,27 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   @action
+  handleDragStart(initial: DragStart, provided: ResponderProvided): void {
+    const { dragDropContextProps } = this.props;
+    const { rowMetaData, isTree } = this.tableStore;
+    if (isTree && rowMetaData) {
+      const { source } = initial;
+      const currentRecord = rowMetaData[source.index].record;
+      if (currentRecord.children && currentRecord.children.length) {
+        currentRecord.isExpanded = false;
+      }
+    }
+    if (dragDropContextProps && dragDropContextProps.onDragStart) {
+      dragDropContextProps.onDragStart(initial, provided);
+    }
+  }
+
+  @autobind
+  @action
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
     const { dataSet, rowMetaData, isTree } = this.tableStore;
+    const { parentField, idField, childrenField } = dataSet.props;
     const { onDragEnd, onDragEndBefore, dragDropContextProps } = this.props;
-
     let resultBefore: DropResult | undefined = resultDrag;
     if (onDragEndBefore) {
       const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided);
@@ -1764,40 +1781,78 @@ export default class Table extends DataSetComponent<TableProps> {
     if (resultBefore && isTree && rowMetaData) {
       const { destination, source, combine } = resultBefore;
       const currentRecord = rowMetaData[source.index].record;
-      // 拖拽组合关联当前 record 父子
-      if (combine) {
-        const parentRecord = dataSet.find(record => String(record.key) === combine.draggableId)!;
-        this.removeSourceRecord(currentRecord);
-        currentRecord.parent = parentRecord;
-        if (parentRecord.children && parentRecord.children.length) {
-          parentRecord.children.unshift(currentRecord);
-        } else {
-          parentRecord.children = [currentRecord];
+      // 平铺数据
+      if (!childrenField && parentField && idField) {
+        // 拖拽组合关联
+        if (combine) {
+          const parentRecord = dataSet.find(record => String(record.key) === combine.draggableId)!;
+          currentRecord.set(parentField, parentRecord.get(idField));
+          parentRecord.isExpanded = true;
+        }
+        // 拖拽排序更新
+        if (destination && destination.index !== source.index && rowMetaData) {
+          const destinationRecord = rowMetaData[destination.index].record;
+          const { parent } = destinationRecord;
+          if (parent) {
+            if (currentRecord.parent !== parent && parent !== currentRecord && parent.children) {
+              currentRecord.set(parentField, parent.get(idField));
+            } else if (parent.children) {
+              const childIndex = parent.children.indexOf(destinationRecord);
+              this.removeSourceRecord(currentRecord);
+              parent.children.splice(childIndex, 0, currentRecord);
+            }
+          } else {
+            currentRecord.set(parentField, undefined);
+            dataSet.move(currentRecord.index, destinationRecord.index);
+          }
         }
       }
-      // 拖拽排序更新当前 record index 及父级
-      if (destination && destination.index !== source.index && rowMetaData) {
-        const destinationRecord = rowMetaData[destination.index].record;
-        const { parent } = destinationRecord;
-        if (parent && parent.children) {
-          const childIndex = parent.children.indexOf(destinationRecord);
+      // 树形数据
+      if (childrenField) {
+        // 拖拽组合关联
+        if (combine) {
+          const parentRecord = dataSet.find(record => String(record.key) === combine.draggableId)!;
           this.removeSourceRecord(currentRecord);
-          currentRecord.parent = parent;
-          parent.children.splice(childIndex, 0, currentRecord);
-        } else {
-          if (currentRecord.parent) {
-            this.removeSourceRecord(currentRecord);
-            currentRecord.parent = undefined;
+          currentRecord.parent = parentRecord;
+          if (parentRecord.children && parentRecord.children.length) {
+            parentRecord.children.unshift(currentRecord);
+          } else {
+            parentRecord.children = [currentRecord];
           }
-          dataSet.move(currentRecord.index, destinationRecord.index);
+          parentRecord.isExpanded = true;
+        }
+        // 拖拽排序更新
+        if (destination && destination.index !== source.index && rowMetaData) {
+          const destinationRecord = rowMetaData[destination.index].record;
+          const { parent } = destinationRecord;
+          if (parent) {
+            if (currentRecord.parent !== parent && parent !== currentRecord && parent.children) {
+              const childIndex = parent.children.indexOf(destinationRecord);
+              this.removeSourceRecord(currentRecord);
+              currentRecord.parent = parent;
+              parent.children.splice(childIndex, 0, currentRecord);
+            } else if (parent.children) {
+              const childIndex = parent.children.indexOf(destinationRecord);
+              this.removeSourceRecord(currentRecord);
+              parent.children.splice(childIndex, 0, currentRecord);
+            }
+          } else {
+            if (currentRecord.parent) {
+              this.removeSourceRecord(currentRecord);
+              currentRecord.parent = undefined;
+            }
+            dataSet.move(currentRecord.index, destinationRecord.index);
+          }
         }
       }
     } else if (resultBefore && resultBefore.destination) {
-      // 非树形拖拽排序
-      this.reorderDataSet(
-        resultBefore.source.index,
-        resultBefore.destination.index,
-      );
+      if (resultBefore.source.index !== resultBefore.destination.index) {
+        // 非树形拖拽排序
+        this.reorderDataSet(
+          resultBefore.source.index,
+          resultBefore.destination.index,
+        );
+      }
     }
     /**
      * 相应变化后的数据
@@ -1921,7 +1976,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (hasBody && tableStore.rowDraggable) {
       const { dragDropContextProps } = this.props;
       return (
-        <DragDropContext {...dragDropContextProps} onDragEnd={this.handleDragEnd}>
+        <DragDropContext {...dragDropContextProps} onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
           {virtualWrapper}
         </DragDropContext>
       );
