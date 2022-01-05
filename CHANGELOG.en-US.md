@@ -30,6 +30,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: Added `stringMode` property.
 - 🌟 `<pro>DataSet`: Added `bigNumber` field `type`.
 - 🌟 `<pro>Attachment`: Added `previewTarget` property.
+- 🌟 `<pro>DataSet`: Added the `forceRemove` parameter to the `remove`, `removeAll` methods.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.

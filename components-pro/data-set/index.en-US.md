@@ -116,9 +116,9 @@ title: DataSet
 | nextPage() | 定位到下一页，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;any&gt; |
 | create(data, index) | 创建一条记录 | `data` - 记录数据对象；`index`&lt;optional,default:0&gt; - 记录所在的索引 | Record |
 | delete(records, confirmMessage: ReactNode \| ModalProps) | 立即删除记录 | `records` - 删除的记录或记录组 `confirmMessage` - 自定义提示信息或弹窗的属性, 设为false时不弹确认直接删除 |  |
-| remove(records) | 临时删除记录 | `records` - 删除的记录或记录组 |  |
+| remove(records, forceRemove) | 临时删除记录 | `records` - 删除的记录或记录组; `forceRemove` - 是否强制删除 |  |
 | deleteAll(confirmMessage: ReactNode \| ModalProps) | 立即删除所有记录 | `confirmMessage` - 自定义提示信息或弹窗的属性, 设为false时不弹确认直接删除 |  |
-| removeAll() | 临时删除所有记录 |  |  |
+| removeAll(forceRemove) | 临时删除所有记录 | `forceRemove` - 是否强制删除 |  |
 | push(...records) | 将若干数据记录插入记录堆栈顶部 | `records` - 插入的记录列表 | number |
 | unshift(...records) | 将若干数据记录插入记录堆栈底部 | `records` - 插入的记录列表 | number |
 | pop() | 从记录堆栈顶部获取记录 |  | Record |
