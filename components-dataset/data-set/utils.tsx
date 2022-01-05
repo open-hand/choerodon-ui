@@ -1289,6 +1289,16 @@ export function getIf<T, V>(target: T, propName: string, defaultValue: V | (() =
   return value;
 }
 
+export function getIfForMap<T extends Map<string, V>, V>(target: T, propName: string, defaultValue: V | (() => V)): V {
+  const value = target.get(propName);
+  if (value === undefined) {
+    const newValue = typeof defaultValue === 'function' ? (defaultValue as () => V)() : defaultValue;
+    target.set(propName, newValue);
+    return newValue;
+  }
+  return value;
+}
+
 export function getRecordDynamicProps<T extends keyof RecordDynamicProps>(record: Record, key: T, defaultValue: NonNullable<ReturnType<NonNullable<RecordDynamicProps[T]>>>): NonNullable<ReturnType<NonNullable<RecordDynamicProps[T]>>> {
   const { dataSet: { props: { record: recordProps } } } = record;
   if (recordProps) {

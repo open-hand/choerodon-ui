@@ -1,21 +1,7 @@
 import { CSSProperties, ReactNode } from 'react';
-import {
-  action,
-  computed,
-  get,
-  IComputedValue,
-  isArrayLike,
-  isObservableObject,
-  observable,
-  ObservableMap,
-  remove,
-  runInAction,
-  set,
-  toJS,
-} from 'mobx';
+import { action, computed, get, IComputedValue, isObservableObject, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
 import raf from 'raf';
-import isPromise from 'is-promise';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
@@ -30,7 +16,7 @@ import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
-import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getLimit, mergeDataSetProps } from './utils';
+import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, mergeDataSetProps } from './utils';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
 import { LovConfig, TimeStep } from '../interface';
@@ -39,6 +25,7 @@ import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getLovPara } from '../stores/utils';
 import AttachmentFile from './AttachmentFile';
 import { iteratorFind, iteratorSome } from '../iterator-helper';
+import LookupCache from './LookupCache';
 
 function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
@@ -750,8 +737,11 @@ export default class Field {
       const { lookupCaches } = dataSet;
       if (lookupToken && lookupCaches) {
         const lookup = lookupCaches.get(lookupToken);
-        if (isArrayLike(lookup)) {
-          return lookup;
+        if (lookup) {
+          const { items } = lookup;
+          if (items) {
+            return items;
+          }
         }
         return undefined;
       }
@@ -864,8 +854,11 @@ export default class Field {
     const { lookupCaches } = this.dataSet;
     if (lookupToken && lookupCaches) {
       const lookup = lookupCaches.get(lookupToken);
-      if (isArrayLike(lookup)) {
-        return combineWithOldLookupData(lookup, this, record);
+      if (lookup) {
+        const { items } = lookup;
+        if (items) {
+          return combineWithOldLookupData(items, this, record);
+        }
       }
     }
   }
@@ -995,22 +988,25 @@ export default class Field {
         const { lookupCaches } = this.dataSet;
         if (lookupCaches) {
           const lookup = lookupCaches.get(lookupToken);
-          if (isArrayLike(lookup)) {
-            const parentField = this.get('parentField', record);
-            const idField = this.get('idField', record) || this.get('valueField', record);
-            const selection = this.get('multiple', record) ? DataSetSelection.multiple : DataSetSelection.single;
-            const props = {
-              data: combineWithOldLookupData(lookup, this, record),
-              paging: false,
-              selection,
-              idField,
-              parentField,
-            };
-
-            return new DataSet(mergeDataSetProps(props, optionsProps));
-          }
-          if (isPromise(lookup)) {
-            return new DataSet({ status: DataSetStatus.loading });
+          if (lookup) {
+            const { items, promise } = lookup;
+            if (items) {
+              const parentField = this.get('parentField', record);
+              const idField = this.get('idField', record) || this.get('valueField', record);
+              const selection = this.get('multiple', record) ? DataSetSelection.multiple : DataSetSelection.single;
+              const props = {
+                data: combineWithOldLookupData(items, this, record),
+                paging: false,
+                selection,
+                idField,
+                parentField,
+                status: promise ? DataSetStatus.loading : DataSetStatus.ready,
+              };
+              return new DataSet(mergeDataSetProps(props, optionsProps));
+            }
+            if (promise) {
+              return new DataSet({ status: DataSetStatus.loading });
+            }
           }
         }
       }
@@ -1204,31 +1200,31 @@ export default class Field {
    */
   @action
   fetchLookup(noCache = false, record: Record | undefined = this.record): Promise<object[] | undefined> {
-    const lookupCaches = getIf<DataSet, ObservableMap<string, object[] | Promise<object[]>>>(this.dataSet, 'lookupCaches', () => observable.map());
+    const lookupCaches = getIf<DataSet, ObservableMap<string, LookupCache>>(this.dataSet, 'lookupCaches', () => observable.map());
     const oldToken = getLookupToken(this, record);
     const batch = this.get('lookupBatchAxiosConfig', record) || this.dataSet.getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode', record);
     let promise;
     if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0) {
-      const cachedLookup = lookupCaches.get(lookupCode);
+      const cachedLookup = getIfForMap<ObservableMap<string, LookupCache>, LookupCache>(lookupCaches, lookupCode, () => new LookupCache());
       if (lookupCode !== oldToken) {
         setLookupToken(this, lookupCode, record);
       }
-      if (cachedLookup) {
-        if (isArrayLike(cachedLookup)) {
-          promise = Promise.resolve<object[] | undefined>(cachedLookup);
-        } else {
-          promise = cachedLookup;
-        }
+      const { items } = cachedLookup;
+      if (items) {
+        promise = Promise.resolve<object[] | undefined>(items);
+      } else {
+        promise = cachedLookup.promise;
       }
       if (!promise) {
         promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch).then(action((result) => {
           if (result) {
-            lookupCaches.set(lookupCode, result);
+            cachedLookup.items = result;
+            cachedLookup.promise = undefined;
           }
           return result;
         }));
-        lookupCaches.set(lookupCode, promise);
+        cachedLookup.promise = promise;
       }
     } else {
       const axiosConfig = lookupStore.getAxiosConfig(this, record, noCache);
@@ -1237,24 +1233,24 @@ export default class Field {
         if (lookupToken !== oldToken) {
           setLookupToken(this, lookupToken, record);
         }
+        const cachedLookup = getIfForMap<ObservableMap<string, LookupCache>, LookupCache>(lookupCaches, lookupToken, () => new LookupCache());
         if (!noCache) {
-          const cachedLookup = lookupCaches.get(lookupToken);
-          if (cachedLookup) {
-            if (isArrayLike(cachedLookup)) {
-              promise = Promise.resolve<object[] | undefined>(cachedLookup);
-            } else {
-              promise = cachedLookup;
-            }
+          const { items } = cachedLookup;
+          if (items) {
+            promise = Promise.resolve<object[] | undefined>(items);
+          } else {
+            promise = cachedLookup.promise;
           }
         }
         if (!promise) {
           promise = lookupStore.fetchLookupData(axiosConfig, undefined, this).then(action((result) => {
             if (result) {
-              lookupCaches.set(lookupToken, result);
+              cachedLookup.items = result;
+              cachedLookup.promise = undefined;
             }
             return result;
           }));
-          lookupCaches.set(lookupToken, promise);
+          cachedLookup.promise = promise;
         }
       } else {
         setLookupToken(this, undefined, record);
@@ -1263,21 +1259,24 @@ export default class Field {
     if (promise) {
       return promise.then(action((result) => {
         const lookup = oldToken ? lookupCaches.get(oldToken) : undefined;
-        if (isArrayLike(lookup) && oldToken !== getLookupToken(this, record)) {
-          const value = this.getValue(record);
-          const valueField = this.get('valueField', record);
-          if (value && valueField) {
-            const values = this.get('multiple', record) ? [].concat(...value) : [].concat(value);
-            this.set(
-              LOOKUP_DATA,
-              values.reduce<object[]>((lookupData, v) => {
-                const found = lookup.find(item => isSameLike(item[valueField], v));
-                if (found) {
-                  lookupData.push(found);
-                }
-                return lookupData;
-              }, []),
-            );
+        if (lookup) {
+          const { items } = lookup;
+          if (items && oldToken !== getLookupToken(this, record)) {
+            const value = this.getValue(record);
+            const valueField = this.get('valueField', record);
+            if (value && valueField) {
+              const values = this.get('multiple', record) ? [].concat(...value) : [].concat(value);
+              this.set(
+                LOOKUP_DATA,
+                values.reduce<object[]>((lookupData, v) => {
+                  const found = items.find(item => isSameLike(item[valueField], v));
+                  if (found) {
+                    lookupData.push(found);
+                  }
+                  return lookupData;
+                }, []),
+              );
+            }
           }
         }
         return toJS(result);
