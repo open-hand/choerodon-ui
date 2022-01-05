@@ -40,6 +40,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize virtual scrolling and support tree-shaped virtual scrolling.
 - 💄 `<pro>Attachment`: Optimize caching logic.
 - 💄 `<pro>SecretField`: Disable clear button and backspace key to delete.
+- 💄 `<pro>Select`: Optimize the previous results will be retained until the query is successful in `noCache` mode.
 - 🐞 `<pro>Table`: Fix the problem that the virtual scroll will be fully rendered for the first time when only `maxHeight` is set in style.
 - 🐞 `<pro>Table`: Fix the problem of initializing request and saving parameters of dynamic filter bar.
 - 🐞 `<pro>Table`: Fix the deep nesting of `Table` `Tree` data.

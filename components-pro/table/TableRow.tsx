@@ -498,10 +498,11 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   }
 
   useEffect(() => {
-    if (needIntersection && inView && !record.getState(VIRTUAL_HEIGHT)) {
-      const { current } = rowRef;
-      if (current) {
-        record.setState(VIRTUAL_HEIGHT, current.offsetHeight);
+    const { current } = rowRef;
+    if (needIntersection && inView && current) {
+      const { offsetHeight } = current;
+      if (record.getState(VIRTUAL_HEIGHT) !== offsetHeight) {
+        record.setState(VIRTUAL_HEIGHT, offsetHeight);
       }
     }
   }, [needIntersection, record, inView]);

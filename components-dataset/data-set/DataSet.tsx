@@ -81,6 +81,7 @@ import defaultFeedback, { FeedBack } from './FeedBack';
 import ValidationResult from '../validator/ValidationResult';
 import { iteratorReduce } from '../iterator-helper';
 import Validator from '../validator/Validator';
+import LookupCache from './LookupCache';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
@@ -497,7 +498,7 @@ export default class DataSet extends EventManager {
 
   context?: DataSetContext | undefined;
 
-  @observable lookupCaches?: ObservableMap<string, object[] | Promise<object[]>>;
+  @observable lookupCaches?: ObservableMap<string, LookupCache>;
 
   @observable selectionStrategy?: CheckedStrategy;
 
