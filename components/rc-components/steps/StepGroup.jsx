@@ -72,10 +72,7 @@ export default class Steps extends Component {
         flexSupported: false,
       });
     }
-    if (this.props.type === 'navigation') {
-      this.showMore()
-    }
-   
+    this.showMore()
     this.resizeEvent.addEventListener('resize', this.showMore);
   }
 
@@ -111,11 +108,13 @@ export default class Steps extends Component {
   }
 
   showMore = () => {
-    const stepsDom = this.navRef
-    if (stepsDom) {
-      this.setState({
-        isShowMore: (stepsDom.scrollWidth > stepsDom.clientWidth) || (stepsDom.offsetWidth > stepsDom.clientWidth)
-      })
+    if (this.props.type === 'navigation') {
+      const stepsDom = this.navRef
+      if (stepsDom) {
+        this.setState({
+          isShowMore: (stepsDom.scrollWidth > stepsDom.clientWidth) || (stepsDom.offsetWidth > stepsDom.clientWidth)
+        })
+      }
     }
   }
 

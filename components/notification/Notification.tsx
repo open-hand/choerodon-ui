@@ -245,7 +245,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
       [`${prefixCls}-before-shadow`]: !!foldCount && notices.length > foldCount && offset > 0,
       [`${prefixCls}-after-shadow`]:
       foldCount && notices.length > foldCount &&
-      Math.abs(totalHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 1,
+      Math.abs(totalHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 15,
     }]);
 
     const scrollCls = classNames({
