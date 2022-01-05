@@ -73,7 +73,7 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
     }
     const dragRowHeight = droppableSnapshot && droppableSnapshot.draggingFromThisWith ? getRowHeight(tableStore, dataSet, droppableSnapshot.draggingFromThisWith) : undefined;
     const top = dragRowHeight ? virtualTop + dragRowHeight : virtualTop;
-    if (isStickySupport() && tableStore.actualGroupRows) {
+    if (isStickySupport() && tableStore.hasRowGroups) {
       wrapperStyle.paddingTop = pxToRem(top)!;
       style.position = 'relative';
     } else {

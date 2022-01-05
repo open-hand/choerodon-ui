@@ -11,7 +11,7 @@ import React, {
   useLayoutEffect,
 } from 'react';
 import { observer } from 'mobx-react';
-import { action, isArrayLike } from 'mobx';
+import { action } from 'mobx';
 import { Draggable, DraggableProvided, DraggableStateSnapshot, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -26,7 +26,7 @@ import { DataSetStatus } from '../data-set/enum';
 import { DragRender, instance } from './Table';
 import { getHeader, isStickySupport } from './utils';
 import ColumnGroups from './ColumnGroups';
-import TableRowGroup, { ROW_GROUP_HEIGHT } from './TableRowGroup';
+import TableRowGroup from './TableRowGroup';
 import { $l } from '../locale-context';
 import Button from '../button/Button';
 import { Size } from '../core/enum';
@@ -48,7 +48,6 @@ export interface TableTBodyProps extends ElementProps {
 
 type Statistics = {
   count: number;
-  rowGroups: number[];
   rowMetaData?: VirtualRowMetaData[];
   lastRowMetaData?: VirtualRowMetaData;
   dragTargetFound?: boolean;
@@ -93,26 +92,25 @@ export interface GenerateRowProps extends GenerateRowsProps {
   children?: ReactNode;
 }
 
-function generateRowGroup(props: GenerateRowGroupProps): ReactNode {
+function generateRowGroup(props: GenerateRowGroupProps): ReactElement {
   const { tableStore, columnGroups, lock, children, statistics, key, rowGroupLevel } = props;
+  const level = rowGroupLevel ? rowGroupLevel.count : 0;
+  const node = (
+    <TableRowGroup key={key} columnGroups={columnGroups} lock={lock} level={level}>
+      {children}
+    </TableRowGroup>
+  );
   if (statistics) {
-    statistics.rowGroups.push(statistics.count++);
     const { rowMetaData } = statistics;
     if (rowMetaData) {
-      const currentRowMetaData = new VirtualRowMetaData(tableStore, statistics.lastRowMetaData, ROW_GROUP_HEIGHT);
+      const currentRowMetaData = new VirtualRowMetaData(tableStore, 'group', statistics.lastRowMetaData);
+      currentRowMetaData.groupLevel = level;
+      currentRowMetaData.node = node;
       rowMetaData.push(currentRowMetaData);
       statistics.lastRowMetaData = currentRowMetaData;
     }
   }
-  const group = (
-    <TableRowGroup key={key} columnGroups={columnGroups} lock={lock} level={rowGroupLevel ? rowGroupLevel.count : 0}>
-      {children}
-    </TableRowGroup>
-  );
-  return statistics ? [
-    group,
-    true,
-  ] : group;
+  return node;
 }
 
 function generateRow(props: GenerateRowProps): ReactElement {
@@ -137,7 +135,7 @@ function generateRow(props: GenerateRowProps): ReactElement {
     tableRowProps.virtualIndex = statistics.count;
     statistics.count++;
     if (rowMetaData) {
-      const currentRowMetaData = new VirtualRowMetaData(tableStore, statistics.lastRowMetaData, undefined, record);
+      const currentRowMetaData = new VirtualRowMetaData(tableStore, 'row', statistics.lastRowMetaData, record);
       rowMetaData.push(currentRowMetaData);
       statistics.lastRowMetaData = currentRowMetaData;
       tableRowProps.metaData = currentRowMetaData;
@@ -420,8 +418,8 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender, isTree, rowDraggable, snapshot, dragRowHeight } = props;
   const draggableId = snapshot && snapshot.draggingFromThisWith;
   const [totalRows, statistics]: [ReactNode[], Statistics] = useComputed(() => {
-    const $statistics: Statistics = { count: 0, rowGroups: [] };
-    if (!tableStore.isFixedRowHeight || (isTree && rowDraggable)) {
+    const $statistics: Statistics = { count: 0 };
+    if (!tableStore.isFixedRowHeight || (isTree && rowDraggable) || tableStore.hasRowGroups) {
       $statistics.rowMetaData = [];
     }
     const cachedRows = generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: true }, onClearCache, $statistics);
@@ -441,37 +439,43 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   }, [tableStore, columnGroups, expandIconColumnIndex, lock, isTree, rowDraggable, rowDragRender, onClearCache, draggableId, dragRowHeight]);
   const renderGroup = useCallback((startIndex) => {
     const groups: ReactNode[] = [];
-    let preGroup: ReactNode | undefined;
-    totalRows.slice(0, startIndex).reverse().some((row) => {
-      if (isArrayLike(row) && row[1] === true) {
-        groups.push(row);
-        preGroup = row;
-      } else if (preGroup) {
-        return true;
+    const { rowMetaData } = statistics;
+    if (rowMetaData) {
+      const first = rowMetaData[startIndex];
+      if (first && first.type === 'group' && first.groupLevel === 0) {
+        return groups;
       }
-      return false;
-    });
+      let level;
+      rowMetaData.slice(0, startIndex).reverse().some((metaData) => {
+        if (metaData.type === 'group') {
+          const { groupLevel = 0 } = metaData;
+          if (level === undefined || groupLevel < level) {
+            level = groupLevel;
+            groups.unshift(metaData.node);
+          }
+          return groupLevel === 0;
+        }
+        return false;
+      });
+    }
     return groups;
-  }, [totalRows]);
+  }, [statistics]);
   const renderRow = useCallback(rIndex => totalRows[rIndex], [totalRows]);
 
   useEffect(action(() => {
     tableStore.lastMeasuredIndex = 0;
-    tableStore.rowMetaData = statistics.rowMetaData;
-    if (tableStore.isFixedRowHeight) {
+    const { rowMetaData } = statistics;
+    tableStore.rowMetaData = rowMetaData;
+    if (!rowMetaData) {
       const actualRows = totalRows.length;
       if (tableStore.actualRows !== actualRows) {
         tableStore.actualRows = actualRows;
       }
     }
-    const actualGroupRows = statistics.rowGroups.length;
-    if (tableStore.actualGroupRows !== actualGroupRows) {
-      tableStore.actualGroupRows = actualGroupRows;
-    }
   }), [totalRows, statistics, tableStore]);
 
   return totalRows.length ? (
-    <VirtualVerticalContainer renderBefore={renderGroup}>
+    <VirtualVerticalContainer renderBefore={tableStore.hasRowGroups ? renderGroup : undefined}>
       {renderRow}
     </VirtualVerticalContainer>
   ) : getEmptyRow({ tableStore, lock, columnGroups });
@@ -494,9 +498,6 @@ const Rows: FunctionComponent<RowsProps> = function Rows(props) {
     }
     if (tableStore.rowMetaData) {
       tableStore.rowMetaData = undefined;
-    }
-    if (tableStore.actualGroupRows) {
-      tableStore.actualGroupRows = 0;
     }
   }), [tableStore]);
   return cachedRows.length || rows.length ? (

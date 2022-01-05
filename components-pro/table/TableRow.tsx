@@ -149,7 +149,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
           if (Math.abs(metaData.height - height) > 1) {
             tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
           }
-        } else if ((tableStore.actualRowHeight === undefined || (tableStore.isFixedRowHeight && Math.abs(tableStore.actualRowHeight - height) > 1))) {
+        } else if ((tableStore.actualRowHeight === undefined || Math.abs(tableStore.actualRowHeight - height) > 1)) {
           tableStore.actualRowHeight = height;
         }
       }

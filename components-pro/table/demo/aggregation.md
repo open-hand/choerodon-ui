@@ -386,7 +386,7 @@ class App extends React.Component {
         dataSet={this.userDs}
         columnDraggable
         columnTitleEditable
-        style={{ height: 'calc(100vh - 100px)', maxHeight: 300 }}
+        style={{ maxHeight: 'calc(100vh - 400px)' }}
         aggregation={aggregation}
         onAggregationChange={this.handleAggregationChange}
         virtual
