@@ -27,13 +27,13 @@ export interface TabsCustomized {
   panes: { [key: string]: TabPaneProps };
 }
 
-export interface TabsProps<T = string> {
+export interface TabsProps {
   activeKey?: string;
   defaultActiveKey?: string;
   hideAdd?: boolean;
   hideOnlyGroup?: boolean;
   showMore?: boolean;
-  onChange?: (activeKey: T) => void;
+  onChange?: (activeKey: string) => void;
   onTabClick?: (key: string) => void;
   onPrevClick?: MouseEventHandler<any>;
   onNextClick?: MouseEventHandler<any>;

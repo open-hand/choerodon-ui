@@ -205,6 +205,8 @@ export interface Config extends DataSetConfig {
    * 性能监控钩子
    */
   onPerformance?: PerformanceEventHook<keyof PerformanceEvents>;
+  onTabsChange?: (props: { activeKey: string, title: string, activeGroupKey?: string, groupTitle?: string, code?: string }) => void;
+  onButtonClick?: (props: { title: string, icon?: string }) => void;
   /**
    * 开启性能监控
    */

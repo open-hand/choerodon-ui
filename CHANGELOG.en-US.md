@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
+
 ## 1.5.1
 
 `2021-01-06`

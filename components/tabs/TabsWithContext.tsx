@@ -1,9 +1,21 @@
-import React, { FunctionComponent, JSXElementConstructor, Key, MouseEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  FunctionComponent,
+  JSXElementConstructor,
+  Key,
+  MouseEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import classnames from 'classnames';
 import ModalProvider from 'choerodon-ui/pro/lib/modal-provider';
 import { iteratorSome } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
+import getReactNodeText from 'choerodon-ui/pro/lib/_util/getReactNodeText';
 import { TabsPosition, TabsType } from './enum';
-import { getDataAttr, getDefaultActiveKey, getDefaultActiveKeyInGroup, getDefaultGroupKey, isVertical, normalizePanes } from './utils';
+import { getDataAttr, getDefaultActiveKey, getDefaultActiveKeyInGroup, getDefaultGroupKey, getHeader, isVertical, normalizePanes } from './utils';
 import { Size } from '../_util/enum';
 import warning from '../_util/warning';
 import TabBar, { TabBarProps } from './TabBar';
@@ -68,6 +80,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabTitleEditable,
     tabCountHideable,
   }), [children, customized, tabDraggable, tabTitleEditable, tabCountHideable]);
+
   const defaultActiveKey = useMemo((): string | undefined => {
     const option: { activeKey?: string | undefined; defaultActiveKey?: string | undefined } = {
       activeKey: propActiveKey,
@@ -106,8 +119,19 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
       return getDefaultGroupKey(groupedPanelsMap);
     }
   }, [groupedPanelsMap, activeKey]);
-  const currentGroup = activeGroupKey && groupedPanelsMap.get(activeGroupKey);
+  const currentGroup = activeGroupKey ? groupedPanelsMap.get(activeGroupKey) : undefined;
   const currentPanelMap = currentGroup ? currentGroup.panelsMap : totalPanelsMap;
+  const refCurrent = {
+    activeGroupKey,
+    currentGroup,
+    currentPanelMap,
+  };
+  const ref = useRef<{
+    activeGroupKey: string | undefined,
+    currentGroup: GroupPanelMap | undefined,
+    currentPanelMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>,
+  }>(refCurrent);
+  ref.current = refCurrent;
   const changeActiveKey = useCallback((key: string, byGroup?: boolean) => {
     if (activeKey !== key) {
       if (!byGroup && currentGroup) {
@@ -149,7 +173,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   };
   const inkBarAnimated = isAnimated(animated) ? animated.inkBar : animated;
   let tabPaneAnimated = isAnimated(animated) ? animated.tabPane : animated;
-
+  const onTabsChange = getConfig('onTabsChange');
   // card tabs should not have animation
   if (type !== TabsType.line) {
     tabPaneAnimated = 'animated' in props ? tabPaneAnimated : false;
@@ -182,6 +206,30 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
       setActiveKey(getDefaultActiveKeyInGroup(currentPanelMap));
     }
   }, [hasPropActiveKey, propActiveKey, activeKey, totalPanelsMap, currentPanelMap]);
+  useEffect(() => {
+    if (onTabsChange && activeKey) {
+      const { current } = ref;
+      const currentPanel = current.currentPanelMap.get(activeKey);
+      if (currentPanel) {
+        const { currentGroup: $currentGroup, activeGroupKey: $activeGroupKey } = current;
+        const groupTab = $currentGroup ? $currentGroup.group.tab : undefined;
+        const title = getHeader(currentPanel);
+        const promises: (string | Promise<string>)[] = [getReactNodeText(title)];
+        if (groupTab) {
+          promises.push(getReactNodeText(groupTab));
+        }
+        Promise.all(promises).then(([title, groupTitle]) => {
+          onTabsChange({
+            activeKey,
+            activeGroupKey: $activeGroupKey,
+            title,
+            groupTitle,
+            code: customizedCode,
+          });
+        });
+      }
+    }
+  }, [activeKey, onTabsChange, customizedCode]);
 
   const cls = classnames(
     prefixCls,
