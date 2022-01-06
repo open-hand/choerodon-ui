@@ -25,3 +25,12 @@ title: API
 | isFlat | 自动宽度模式 | boolean | false | 1.4.5 |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。
+
+<style>
+.custom-suffix-button label .c7n-pro-input-suffix {
+  height: 28px;
+}
+.custom-suffix-text label .c7n-pro-input-suffix {
+  line-height: 20px;
+}
+</style>

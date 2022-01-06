@@ -134,6 +134,18 @@ class App extends React.Component {
     pageSize: 5,
     cacheSelection: true,
     cacheModified: true,
+    validationRules: [
+      {
+        name: 'minLength',
+        value: 7,
+        message: 'Maintain at least 7 pieces of data',
+      },
+      {
+        name: 'maxLength',
+        value: 10,
+        message: 'A maximum of 10 pieces of data can be maintained',
+      },
+    ],
     transport: {
       read({ params: { page, pagesize } }) {
         if (pagesize > 20) {
@@ -540,6 +552,8 @@ class App extends React.Component {
         summary="BASIC DEMO"
         virtual
         virtualCell
+        headerRowHeight={50}
+        footerRowHeight={40}
         pagination={{
           pageSizeEditable: true,
           showQuickJumper: true,
@@ -553,7 +567,7 @@ class App extends React.Component {
           style={{ color: 'red' }}
           tooltip="overflow"
           editor
-          width={200}
+          defaultWidth={200}
           minWidth={150}
           lock
           sortable

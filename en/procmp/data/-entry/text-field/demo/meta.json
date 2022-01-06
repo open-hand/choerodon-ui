@@ -143,6 +143,21 @@
       "order": 8,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "clearSuffixLength.js",
+      "title": {
+        "zh": "清除-后缀-长度",
+        "en": "clearButton suffix showLengthInfo"
+      },
+      "description": {
+        "zh": "各种后缀元素组合场景展示，特殊应用下需要自定义样式进行适配。\n",
+        "en": "clearButton suffix showLengthInfo group.\n"
+      },
+      "order": 9,
+      "height": 300,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

@@ -45,7 +45,7 @@ class App extends React.Component {
   render() {
     return (
       <Row>
-        <Col span={12}>
+        <Col span={12} style={{ marginBottom: 10 }}>
           <Select
             dataSet={this.ds}
             name="last-name"
@@ -53,10 +53,10 @@ class App extends React.Component {
             searchMatcher={this.searchMatcher}
           >
             <Option value="jack" text="Jack">
-              <p>Jack</p>
+              <p style={{ marginBottom: 0 }}>Jack</p>
             </Option>
             <Option value="lucy" text="Lucy">
-              <p>
+              <p style={{ marginBottom: 0 }}>
                 <em>lucy</em>
               </p>
             </Option>
@@ -68,7 +68,7 @@ class App extends React.Component {
             </Option>
           </Select>
         </Col>
-        <Col span={12}>
+        <Col span={12} style={{ marginBottom: 10 }}>
           <Select
             dataSet={this.ds}
             name="first-name"
@@ -81,7 +81,7 @@ class App extends React.Component {
             <Option value="aaa">Zhangsan</Option>
           </Select>
         </Col>
-        <Col span={12}>
+        <Col span={12} style={{ marginBottom: 10 }}>
           <Select
             dataSet={this.ds}
             name="last-name"
@@ -90,10 +90,10 @@ class App extends React.Component {
             searchMatcher={this.searchMatcher}
           >
             <Option value="jack" text="Jack">
-              <p>Jack</p>
+              <p style={{ marginBottom: 0 }}>Jack</p>
             </Option>
             <Option value="lucy" text="Lucy">
-              <p>
+              <p style={{ marginBottom: 0 }}>
                 <em>lucy</em>
               </p>
             </Option>
@@ -105,7 +105,7 @@ class App extends React.Component {
             </Option>
           </Select>
         </Col>
-        <Col span={12}>
+        <Col span={12} style={{ marginBottom: 10 }}>
           <Select
             dataSet={this.ds}
             name="first-name"
@@ -120,7 +120,7 @@ class App extends React.Component {
             <Option value="aaa">Zhangsan</Option>
           </Select>
         </Col>
-        <Col span={12}>
+        <Col span={12} style={{ marginBottom: 10 }}>
           <Select dataSet={this.ds} name="sex" searchable searchMatcher="key" />
         </Col>
       </Row>

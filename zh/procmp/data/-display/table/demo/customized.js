@@ -31,7 +31,7 @@ const EditButton = (props) => {
 };
 
 class App extends React.Component {
-  state = { customizedCode: 'customized' };
+  state = { customizedCode: 'customized', heightChangeable: true };
 
   style = { height: 'calc(100vh - 100px)' };
 
@@ -120,17 +120,28 @@ class App extends React.Component {
       customizedCode: customizedCode === 'customized' ? 'other' : 'customized',
     });
   };
+  handleChangeheightChangeable = () => {
+    const { heightChangeable } = this.state;
+    this.setState({
+      heightChangeable: !heightChangeable,
+    });
+  };
 
   render() {
-    const { customizedCode } = this.state;
+    const { customizedCode, heightChangeable } = this.state;
     return (
       <>
         <Button onClick={this.handleChangeCustomized}>
           当前customizedCode： {customizedCode}
         </Button>
+        <Button onClick={this.handleChangeheightChangeable}>
+          当前handleChangeheightChangeable状态:
+          {heightChangeable ? 'true' : 'false'}
+        </Button>
         <Table
           customizable
           border={false}
+          heightChangeable={heightChangeable}
           customizedCode={customizedCode}
           rowHeight={40}
           key="user"

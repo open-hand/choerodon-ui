@@ -413,7 +413,7 @@ class App extends React.Component {
         dataSet={this.userDs}
         columnDraggable
         columnTitleEditable
-        style={{ height: 'calc(100vh - 100px)', maxHeight: 300 }}
+        style={{ height: 'calc(100vh - 100px)' }}
         aggregation={aggregation}
         onAggregationChange={this.handleAggregationChange}
         virtualCell
@@ -481,6 +481,7 @@ class App extends React.Component {
           aggregation
           renderer={aggregationRendereer}
           key="code-group"
+          aggregationLimitDefaultExpanded
         >
           <Column name="code" editor width={150} sortable />
           <Column name="code_code" editor width={150} tooltip="overflow" />
@@ -494,6 +495,9 @@ class App extends React.Component {
           aggregationLimit={2}
           aggregation
           key="sex-group"
+          aggregationLimitDefaultExpanded={(record) =>
+            record.get('sex') === 'M'
+          }
         >
           <Column name="sex" editor={<SelectBox />} width={150} />
           <Column header="性别id" renderer={sexIdRenderer} />

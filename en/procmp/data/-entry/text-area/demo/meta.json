@@ -78,6 +78,21 @@
       "screenshot": "",
       "height": 140,
       "category": "pro"
+    },
+    {
+      "filename": "clear.js",
+      "title": {
+        "zh": "清除",
+        "en": "Clear "
+      },
+      "description": {
+        "zh": "可清除输入框\n",
+        "en": "Clear TextArea.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
     }
   ]
 }

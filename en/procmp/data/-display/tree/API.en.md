@@ -13,7 +13,8 @@ title: API
 | defaultExpandedKeys | defalut expand these node dataSetbind expandField ignore it                                            | string[]                                                                                  | []       |
 | defaultCheckedKeys  | defalut check these node when dataSet bind checkField ignore it                                        | string[]                                                                                  | []       |
 | defaultSelectKeys   | defalut select these node when dataSet bind idField ignore it                                          | string[]                                                                                  | []       |
-| treeNodeRenderer    | customize cover Tree node props                                                                        | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps ) | () => {} |
+| onTreeNode(1.1.0)    | customize cover Tree node props                                                                        | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps ) | () => {} |
+| async | Asynchronous loading requires the cooperation of the back-end interface. The corresponding data source will automatically call the query interface. The interface parameters will contain the parameter name corresponding to parentField and the parameter value corresponding to idField. The data returned by the interface will be appended to the existing data. | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
 | selectable(1.4.4) | 是否可选中 | boolean | true |
 | filter(1.5.0) | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean | |
 
@@ -34,8 +35,7 @@ title: API
 ### DataSet related
 
 | 参数       | 说明                                                                                                   | 类型              | 
-| ---------- | ------------------------------------------------------------------------------------------------------ | ----------------- |  
-| titleField | when there have dataSet ,the node text would bing titleField                                           | string            |        
+| ---------- | ------------------------------------------------------------------------------------------------------ | ----------------- |         
 | selection  | selection is false Tree checkable is true ,You can implement the whole treenode click to trigger check | string\|\|boolean |       
 
 dataSet The data format adopts a flat structure, and there is a structure of Id and parentId

@@ -19,10 +19,20 @@ title: API
 | viewRenderer | 自定义弹窗视图渲染器 | ({ dataSet, lovConfig, textField, valueField, multiple, modal}) => ReactNode |  | 1.5.0 |
 | nodeRenderer | 树形展示节点渲染器 | (record: Record) => ReactNode |  | 1.5.0 |
 | showSelectedInView | 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录(TableProps 的 showSelectionTips会被设置为 false) | boolean |  | 1.5.0 |
+| selectionProps | 显示已选记录时的参数，详情见[selectionProps](#selectionprops) | object |  |  1.5.1  |
 
-### Lov多选时输入框显示过长
+### selectionProps
 
-参考 [Select maxTagCount](/zh/tutorials/select#多选时输入框显示过长) 说明，Lov 相同。
+> 1.5.1 版本新增属性。
+
+| 参数        | 说明                   | 类型   | 默认值   |
+| ----------- | ---------------------- | ------ | -------- |
+| nodeRenderer | 节点渲染器 | (record: Record) => ReactNode | |
+| placeholder | 已选记录为空时的默认文案 | string \| ReactNode  | |
 
 更多属性请参考[Select](/zh/procmp/data-entry/select/#API), [TextField](/zh/procmp/data-entry/text-field/#TextField), [Button](/zh/procmp/general/button/#Button)。
 
+## Q & A
+### Lov多选时输入框显示过长
+
+参考 [Select maxTagCount](/en/tutorials/select#when-set-multiple-then-input-field-too-long) 说明，Lov 相同。

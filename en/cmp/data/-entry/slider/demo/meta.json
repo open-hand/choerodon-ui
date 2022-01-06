@@ -95,8 +95,8 @@
         "en": "Vertical"
       },
       "description": {
-        "zh": "垂直方向的 Slider。\n",
-        "en": "The vertical Slider.\n"
+        "zh": "垂直方向的 Slider，需配置滑块组件或包裹容器自身高度样式。\n",
+        "en": "The vertical Slider, the height style of the slider assembly or the package container itself needs to be configured.\n"
       },
       "ignores": ["theme1", "theme3", "theme4"],
       "order": 6,

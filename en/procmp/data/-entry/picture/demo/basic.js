@@ -9,18 +9,20 @@ const App = () => {
   return (
     <Row>
       <Col span={24}>
-        <SelectBox
-          label="objectFit"
-          value={objectFit}
-          onChange={setObjectFit}
-          labelLayout="float"
-        >
-          <Option value="fill">fill</Option>
-          <Option value="contain">contain</Option>
-          <Option value="cover">cover</Option>
-          <Option value="none">none</Option>
-          <Option value="scale-down">scale-down</Option>
-        </SelectBox>
+        <div style={{ marginBottom: 20 }}>
+          <SelectBox
+            label="objectFit"
+            value={objectFit}
+            onChange={setObjectFit}
+            labelLayout="float"
+          >
+            <Option value="fill">fill</Option>
+            <Option value="contain">contain</Option>
+            <Option value="cover">cover</Option>
+            <Option value="none">none</Option>
+            <Option value="scale-down">scale-down</Option>
+          </SelectBox>
+        </div>
       </Col>
       <Col span={24}>
         <SelectBox

@@ -10,12 +10,12 @@ title: API
 | layout | 布局, 可选值： table \| none | string | table | 1.4.0 |
 | processParams          | Ajax 提交时的参数回调                                                                                                                 | (event) => object           |                           |    |
 | useColon | 是否使用冒号当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。 | boolean | false | |
-| labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#Form Responsive), 如果为auto，则根据内部label最大长度来对齐所有label | number\| 'auto' \| ('auto' \| number)[] \| object | 100 | |
-| labelAlign             | 标签文字对齐方式，只在 labelLayout 为 horizontal 时起作用，可选值：left \| center \| right，响应式参考[Responsive](#Form Responsive) | string \| object            | right                     | |
-| labelLayout            | 标签位置，可选值 horizontal \| vertical \| placeholder \| float \| none，响应式参考[Responsive](#Form Responsive)                       | string \| object            | horizontal                |  |
+| labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#响应式), 如果为auto，则根据内部label最大长度来对齐所有label | number\| 'auto' \| ('auto' \| number)[] \| object | 100 | |
+| labelAlign             | 标签文字对齐方式，只在 labelLayout 为 horizontal 时起作用，可选值：left \| center \| right，响应式参考[Responsive](#响应式) | string \| object            | right                     | |
+| labelLayout            | 标签位置，可选值 horizontal \| vertical \| placeholder \| float \| none，响应式参考[Responsive](#响应式)                       | string \| object            | horizontal                |  |
 | dataIndex              | 对照 record 在 DataSet 中的 index                                                                                                     | number                      | ds.currentIndex           |    |
 | record                 | 对照 record，优先级高于 dataSet 和 dataIndex                                                                                          | Record                      |                           |    |
-| columns                | 列数，响应式参考[Responsive](#Form Responsive)                                                                                        | number \| object            | 1                         |    |
+| columns                | 列数，响应式参考[Responsive](#响应式)                                                                                        | number \| object            | 1                         |    |
 | pristine               | 显示原始值                                                                                                                            | boolean                     | false                     |    |
 | onSubmit               | 提交回调                                                                                                                              | Function                    |                           |    |
 | onReset                | 重置回调                                                                                                                              | Function                    |                           |    |
@@ -60,4 +60,4 @@ title: API
 
 响应式可设置参数 columns \| labelWidth \| labelAlign \| labelLayout 为一个键值对。
 
-键值可参考 [Responsive BreakPoints](/zh/procmp/data-display/responsive/#BreakPoints)。
+键值可参考 [Responsive BreakPoints](/en/cmp/data-display/responsive#breakpoints)。

@@ -4,7 +4,7 @@ title: API
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| modalProps | 该属性可以覆盖脱敏组件弹窗的部分属性 | 属性详情请参考[ModalProps](/components-pro/modal/#Modal) |  |
+| modalProps | 该属性可以覆盖脱敏组件弹窗的部分属性 | 属性详情请参考[ModalProps](/zh/procmp/feedback/modal#API) |  |
 
 ### SecretField
 

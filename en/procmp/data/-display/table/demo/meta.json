@@ -155,21 +155,6 @@
       "category": "pro"
     },
     {
-      "filename": "row-combine.js",
-      "title": {
-        "zh": "组合行",
-        "en": "Grouped Rows"
-      },
-      "description": {
-        "zh": "通过隐藏行实现行合并展示。\n",
-        "en": "Grouped Rows.\n"
-      },
-      "order": 10,
-      "screenshot": "",
-      "height": 450,
-      "category": "pro"
-    },
-    {
       "filename": "advanced-bar.js",
       "title": {
         "zh": "高级搜索条",
@@ -179,7 +164,7 @@
         "zh": "Table queryBar 设为 advancedBar 展示高级搜索条。\n",
         "en": "Advanced Search Bar.\n"
       },
-      "order": 11,
+      "order": 10,
       "screenshot": "",
       "height": 480,
       "ignores": ["theme1", "theme3", "theme5"],
@@ -195,7 +180,7 @@
         "zh": "Table queryBar 设为 bar 展示过滤条。\n",
         "en": "Filter Bar.\n"
       },
-      "order": 12,
+      "order": 11,
       "screenshot": "",
       "height": 558,
       "ignores": ["theme1", "theme3", "theme5"],
@@ -211,7 +196,7 @@
         "zh": "Table queryBar 设为 professionalBar 展示专业搜索条。\n",
         "en": "Professional Search Bar.\n"
       },
-      "order": 13,
+      "order": 12,
       "screenshot": "",
       "height": 520,
       "ignores": ["theme5"],
@@ -227,7 +212,7 @@
         "zh": "Table queryBar 设为 filterBar，查询条件为无边框可动态配置筛选条，结合后端标准接口可实现筛选列表保存。\n",
         "en": "There is no border to dynamically filter the bar, combined with the back-end standard interface to realize the preservation of the filter list.\n"
       },
-      "order": 14,
+      "order": 13,
       "screenshot": "",
       "height": 570,
       "category": "pro"
@@ -242,7 +227,7 @@
         "zh": "queryBar 采用钩子类型自定义搜索条，预置搜索条组件可导出配合使用。\n",
         "en": "Customize Search Bar.\n"
       },
-      "order": 15,
+      "order": 14,
       "screenshot": "",
       "height": 625,
       "ignores": ["theme5"],
@@ -258,7 +243,7 @@
         "zh": "自定义列表头部查询 DataSet，更灵活处理查询数据源逻辑。\n",
         "en": "Customize Query DataSet.\n"
       },
-      "order": 16,
+      "order": 15,
       "screenshot": "",
       "height": 485,
       "category": "pro"
@@ -273,7 +258,7 @@
         "zh": "Table Spin 受控与自定义渲染展示。\n",
         "en": "Table Spin.\n"
       },
-      "order": 17,
+      "order": 16,
       "screenshot": "",
       "height": 500,
       "category": "pro"
@@ -288,7 +273,7 @@
         "zh": "结合 mobx 处理一些按钮状态控制，避免在事件中使用 state 导致性能问题。\n",
         "en": "Combined with mobx to handle some button state control.\n"
       },
-      "order": 18,
+      "order": 17,
       "screenshot": "",
       "height": 485,
       "category": "pro"
@@ -303,7 +288,7 @@
         "zh": "动态切换字段编辑器，根据字段`基础`的值来改变字段`性别`编辑器为 lov 或 select。\n",
         "en": "Switch field editor to lov /select. based on other field values.\n"
       },
-      "order": 19,
+      "order": 18,
       "screenshot": "",
       "height": 590,
       "category": "pro"
@@ -318,7 +303,7 @@
         "zh": "通过 autoHeight 使得表格可以自适应容器高度，内容超出表内滚动。(需要父级元素非仅由 Table 撑开)。\n\nautoHeight 属性:\n\n| 类型 | 默认值 / 自定义 |\n| --- |  --- |\n| boolean | false |\n| boolean | true = { type: 'minHeight', diff: 80 } |\n| object | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数) } |\n",
         "en": "AutoHeight.\n"
       },
-      "order": 20,
+      "order": 19,
       "screenshot": "",
       "height": 643,
       "category": "pro"
@@ -333,7 +318,7 @@
         "zh": "虚拟滚动，virtual && virtualCell。\n\n 在大数据需求并同时对功能性需求很高的情况下建议开启。\n\n",
         "en": "Virtual Scroll.\n"
       },
-      "order": 21,
+      "order": 20,
       "screenshot": "",
       "height": 488,
       "category": "pro"
@@ -348,7 +333,7 @@
         "zh": "在 rowbox 列上鼠标保持按下拖拉,对两个 rowbox 之间的行进行批量勾选。\n",
         "en": "Click the starting rowbox, move the mouse to the ending rowbox, and select the options between the two rowboxes.\n"
       },
-      "order": 22,
+      "order": 21,
       "screenshot": "",
       "height": 680,
       "ignores": ["theme1", "theme3", "theme4"],
@@ -364,7 +349,7 @@
         "zh": "拖拽集成，点击对应按钮查看不同类型拖拽示例。\n",
         "en": " Click on the corresponding button to see different types of drag and drop examples.\n"
       },
-      "order": 23,
+      "order": 22,
       "screenshot": "",
       "height": 535,
       "category": "pro"
@@ -379,7 +364,7 @@
         "zh": "支持对列的各项属性进行配置并个性化存储。\n",
         "en": "Support the configuration and personalized storage of each attribute of the column.\n"
       },
-      "order": 24,
+      "order": 23,
       "screenshot": "",
       "height": 535,
       "category": "pro"
@@ -394,7 +379,7 @@
         "zh": "可以通过 rowDragRender 里面方法进行对于整体的拖拽控制，如 droppableProps，draggableProps 控制是否可以放入和拖动等。\n 更多查看 react-beautiful-dnd。\n",
         "en": "You can use the rowDragRender method to control the overall drag and drop, such as droppableProps, draggableProps control whether you can drag and drop, etc., you can check react-beautiful-dnd.\n"
       },
-      "order": 25,
+      "order": 24,
       "screenshot": "",
       "height": 500,
       "category": "pro"
@@ -409,7 +394,7 @@
         "zh": "对字段进行头部汇总展示，buttonsLimit 默认为 3。\n",
         "en": "Summary Bar.\n"
       },
-      "order": 26,
+      "order": 25,
       "screenshot": "",
       "height": 450,
       "ignores": ["theme4"],
@@ -425,7 +410,7 @@
         "zh": "单元格内多字段分行编辑展示。\n",
         "en": "Multiple Line Editor\n"
       },
-      "order": 27,
+      "order": 26,
       "screenshot": "",
       "height": 570,
       "category": "pro"
@@ -440,9 +425,39 @@
         "zh": "单元格内多字段聚合展示视图。\n",
         "en": "Aggregation View.\n"
       },
-      "order": 28,
+      "order": 27,
       "screenshot": "",
       "height": 800,
+      "category": "pro"
+    },
+    {
+      "filename": "group.js",
+      "title": {
+        "zh": "数据分组",
+        "en": "Data grouping"
+      },
+      "description": {
+        "zh": "数据分组。\n",
+        "en": "Data grouping.\n"
+      },
+      "order": 28,
+      "screenshot": "",
+      "height": 450,
+      "category": "pro"
+    },
+    {
+      "filename": "advanced-group.js",
+      "title": {
+        "zh": "进阶数据分组",
+        "en": "Advanced data grouping"
+      },
+      "description": {
+        "zh": "更为复杂的数据分组场景。\n",
+        "en": "More complex data grouping scenarios.\n"
+      },
+      "order": 29,
+      "screenshot": "",
+      "height": 680,
       "category": "pro"
     },
     {

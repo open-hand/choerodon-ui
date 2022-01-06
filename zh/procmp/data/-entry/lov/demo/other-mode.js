@@ -100,6 +100,12 @@ const App = () => {
             name="drawer_code_string"
             viewMode="drawer"
             viewRenderer={viewRenderer}
+            selectionProps={{
+              nodeRenderer: (record) => {
+                return <a href={record.get('url')}>{record.get('text')}</a>;
+              },
+              placeholder: 'Please select the data on the left',
+            }}
           />
         </Col>
       </Row>

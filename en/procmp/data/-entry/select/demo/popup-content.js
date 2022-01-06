@@ -29,12 +29,18 @@ const SelectContent = ({
           style={{ flex: 1 }}
           tabIndex={1}
         />
-        <Button onClick={handleAdd} tabIndex={3}>
-          Add
-        </Button>
-        <Button onClick={handleClose} tabIndex={2}>
-          Close
-        </Button>
+        <div>
+          <Button
+            onClick={handleAdd}
+            tabIndex={3}
+            style={{ height: '100%', marginLeft: 10 }}
+          >
+            Add
+          </Button>
+          <Button onClick={handleClose} tabIndex={2} style={{ height: '100%' }}>
+            Close
+          </Button>
+        </div>
       </div>
     </>
   );

@@ -67,8 +67,8 @@
         "en": "Lookup-Patterns - Certain Category"
       },
       "description": {
-        "zh": "[查询模式: 确定类目](/docs/spec/reaction#Lookup-Patterns) 示例。\n",
-        "en": "Demonstration of [Lookup Patterns: Certain Category](/docs/spec/reaction#Lookup-Patterns).\nBasic Usage, set datasource of autocomplete with `dataSource` property.\n"
+        "zh": "[查询模式: 确定类目](https://github.com/open-hand/choerodon-ui/blob/master/docs/spec/reaction.zh-CN.md) 示例。\n",
+        "en": "Demonstration of [Lookup Patterns: Certain Category](https://github.com/open-hand/choerodon-ui/blob/master/docs/spec/reaction.zh-CN.md).\nBasic Usage, set datasource of autocomplete with `dataSource` property.\n"
       },
       "order": 4,
       "height": 133,
@@ -81,8 +81,8 @@
         "en": "Lookup-Patterns - Uncertain Category"
       },
       "description": {
-        "zh": "[查询模式: 不确定类目](/docs/spec/reaction#Lookup-Patterns) 示例。\n",
-        "en": "Demonstration of [Lookup Patterns: Uncertain Category](/docs/spec/reaction#Lookup-Patterns).\nBasic Usage, set datasource of autocomplete with `dataSource` property.\n"
+        "zh": "[查询模式: 不确定类目](https://github.com/open-hand/choerodon-ui/blob/master/docs/spec/reaction.zh-CN.md) 示例。\n",
+        "en": "Demonstration of [Lookup Patterns: Uncertain Category](https://github.com/open-hand/choerodon-ui/blob/master/docs/spec/reaction.zh-CN.md).\nBasic Usage, set datasource of autocomplete with `dataSource` property.\n"
       },
       "order": 5,
       "height": 133,

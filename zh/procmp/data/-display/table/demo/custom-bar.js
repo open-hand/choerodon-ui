@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DataSet, Table, Button, Form } from 'choerodon-ui/pro';
+import { ConfigProvider } from 'choerodon-ui';
 
 const { FilterBar } = Table;
 
@@ -125,4 +126,10 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('container'));
+// 官网 demo 需要包裹 ConfigProvider
+ReactDOM.render(
+  <ConfigProvider prefixCls="c7n" proPrefixCls="c7n-pro">
+    <App />
+  </ConfigProvider>,
+  document.getElementById('container'),
+);

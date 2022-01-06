@@ -23,7 +23,7 @@ title: API
 | pagination | Pagination [config](#pagination) or [`Pagination`] (/zh/cmp/navigation/pagination/), hide it by setting it to `false` | object |  |
 | rowClassName | Row's className | Function(record, index):string | - |
 | rowKey | Row's unique key, could be a string or function that returns a string | string\|Function(record):string | `key` |
-| rowSelection | Row selection [config](#rowSelection) | object | null |
+| rowSelection | Row selection [config](#rowselection) | object | null |
 | scroll | Set horizontal or vertical scrolling, can also be used to specify the width and height of the scroll area. It is recommended to set a number for `x`, if you want to set it to `true`, you need to add style `.c7n-table td { white-space: nowrap; }`. | { x: number \| true, y: number } | - |
 | showHeader | Whether to show table header | boolean | `true` |
 | size | Size of table | `default` \| `large` \| `small` | `default` |
@@ -118,7 +118,7 @@ Properties for row selection.
 | hideDefaultSelections | Remove the default `Select All` and `Select Invert` selections | boolean | `false` |
 | selectedRowKeys | Controlled selected row keys | string\[] | \[] |
 | columnWidth | Set the width of the selection column | string\|number | - |
-| selections | Custom selection [config](#rowSelection), only displays default selections when set to `true` | object\[]\|boolean | - |
+| selections | Custom selection [config](#rowselection), only displays default selections when set to `true` | object\[]\|boolean | - |
 | type | `checkbox` or `radio` | `checkbox` \| `radio` | `checkbox` |
 | onChange | Callback executed when selected rows change | Function(selectedRowKeys, selectedRows) | - |
 | onSelect | Callback executed when select/deselect one row | Function(record, selected, selectedRows, nativeEvent) | - |

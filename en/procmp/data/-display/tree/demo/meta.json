@@ -78,6 +78,21 @@
       "screenshot": "",
       "height": 440,
       "category": "pro"
+    },
+    {
+      "filename": "draggable.js",
+      "title": {
+        "zh": "拖拽属性",
+        "en": "draggable"
+      },
+      "description": {
+        "zh": "通过配置draggable属性实现Tree组件整体拖拽、单个树节点拖拽以及拖拽图标的控制。\n",
+        "en": "By configuring the dragable property, the Tree component as a whole is dragged, a single tree node is dragged, and the drag icon is controlled.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 600,
+      "category": "pro"
     }
   ]
 }

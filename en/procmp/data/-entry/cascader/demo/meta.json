@@ -129,6 +129,20 @@
       "order": 9,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "sameValue.js",
+      "title": {
+        "zh": "相同业务值",
+        "en": "Same business value"
+      },
+      "description": {
+        "zh": "相同业务值。\n备注: DataSet 的 valueField 相当于 id ，它的值必须不同。但可以设置其他字段存储业务 value。\n",
+        "en": "Same business value.\nNote: the `valueField` of the `DataSet` corresponds to the `id`, which must be different. However, other fields can be set to store the business `value`.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

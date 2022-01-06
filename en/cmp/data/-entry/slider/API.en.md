@@ -16,7 +16,7 @@ title: API
 | step | The granularity the slider can step through values. Must greater than 0, and be divided by (max - min) . When  `marks` no null, `step` can be `null`. | number\|null | 1 |
 | tipFormatter | Slider will pass its value to `tipFormatter`, and display its value in Tooltip, and hide Tooltip when return value is null. | Function\|null | IDENTITY |
 | value | The value of slider. When `range` is `false`, use `number`, otherwise, use `[number, number]` | number\|number\[] |  |
-| vertical | If true, the slider will be vertical. | Boolean | false |
+| vertical | If true, the slider will be vertical, the height of the component itself or the outer container shall be configured. | Boolean | false |
 | onAfterChange | Fire when  `onmouseup` is fired. | Function(value) | NOOP |
 | onChange | Callback function that is fired when the user changes the slider's value. | Function(value) | NOOP |
 

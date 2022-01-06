@@ -17,7 +17,7 @@ title: API
 | defaultExpandParent | 默认展开父节点 | bool | true |
 | defaultSelectedKeys | 默认选中的树节点 | string\[] | \[] |
 | disabled | 将树禁用 | bool | false |
-| draggable | 设置节点可拖拽（IE>8） | boolean | false |
+| draggable | 设置节点可拖拽（IE>8） | boolean \| ((node?: DataNode) => boolean) \| {nodeDraggable: boolean \| ((node?: DataNode) => boolean), icon: boolean \| ReactNode} | false |
 | expandedKeys | （受控）展开指定的树节点 | string\[] | \[] |
 | filterTreeNode | 按需筛选树节点（高亮），返回 true | function(node) | - |
 | loadData | 异步加载数据 | function(node) | - |

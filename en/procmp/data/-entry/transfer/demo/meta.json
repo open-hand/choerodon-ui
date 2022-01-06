@@ -107,6 +107,21 @@
       "order": 6,
       "height": 300,
       "screenshot": ""
+    },
+    {
+      "filename": "oneWay.js",
+      "title": {
+        "zh": "单向穿梭",
+        "en": "oneWay"
+      },
+      "description": {
+        "zh": "数据项只能单向穿梭。\n",
+        "en": "Data items can only be shuttled in one direction.\n"
+      },
+      "order": 7,
+      "height": 320,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

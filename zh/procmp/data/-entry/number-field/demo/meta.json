@@ -73,7 +73,7 @@
       },
       "order": 5,
       "screenshot": "",
-      "height": 249,
+      "height": 305,
       "category": "pro"
     },
     {
@@ -88,6 +88,21 @@
       },
       "order": 6,
       "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "stringMode.js",
+      "title": {
+        "zh": "字符串模式",
+        "en": "stringMode"
+      },
+      "description": {
+        "zh": "字符串模式, 支持大数据。\n",
+        "en": "stringMode, support bigNumber.\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 200,
       "category": "pro"
     }
   ]

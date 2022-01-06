@@ -56,8 +56,8 @@
         "en": "vertical"
       },
       "description": {
-        "zh": "垂直方向的 Range。\n",
-        "en": "The vertical direction of the Range\n"
+        "zh": "垂直方向的 Range，需配置滑块组件或包裹容器自身高度样式。\n",
+        "en": "The vertical direction of the Range, the height style of the slider assembly or the package container itself needs to be configured.\n"
       },
       "order": 3,
       "screenshot": "",

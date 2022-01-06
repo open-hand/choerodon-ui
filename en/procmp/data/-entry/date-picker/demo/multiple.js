@@ -45,7 +45,7 @@ class App extends React.Component {
             multiple
             onChange={handleChange}
             placeholder="多选"
-            defaultValue={new Date()}
+            defaultValue={[new Date()]}
           />
         </Col>
       </Row>

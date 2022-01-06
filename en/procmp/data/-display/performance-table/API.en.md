@@ -54,7 +54,7 @@ title: API
 | columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 | 1.4.3  |
 | customizable | boolean | 是否显示个性化设置入口按钮  |  | 1.4.3  |
 | customizedCode |string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `customizedSave` `customizedLoad` | 1.4.3   |
-| rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowSelection)  | 
+| rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowselection)  | 
 | rowDraggable`(1.4.4)` | boolean `(false)` | 行拖拽，实现行的拖拽  |
 | onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
 | onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |

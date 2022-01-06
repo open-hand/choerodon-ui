@@ -23,6 +23,7 @@ title: API
 | bucketName | 附件上传的桶名 | string |  |
 | bucketDirectory | 附件上传的桶目录 | string |  |
 | storageCode | 附件存储编码 | string |  |
+| previewTarget(1.5.1) | 预览链接跳转对象， 如要在iframe内预览， 可给 iframe 指定 name={previewTarget} | string | 'attachment-preview'  |
 | isPublic(1.5.0) | 是否是公共的， [attachment](/zh/procmp/configure/configure#attachmentconfig)配置中相关钩子会使用该属性 | boolean | |
 | attachments | 附件列表 | (AttachmentFile \| FileLike)[] |  |
 | showValidation | 校验信息展示方式 | newLine \| tooltip | viewMode == popup ? tooltip : newLine |

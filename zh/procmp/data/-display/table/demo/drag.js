@@ -161,6 +161,11 @@ class App extends React.Component {
       <Table
         dragColumnAlign={dragColumnAlign}
         rowDraggable
+        dragDropContextProps={{
+          onDragEnd: () => {
+            console.log('Finish dragging.');
+          },
+        }}
         key="user"
         buttons={buttons}
         dataSet={this.userDs}

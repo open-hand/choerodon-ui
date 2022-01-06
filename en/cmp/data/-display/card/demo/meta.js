@@ -14,13 +14,15 @@ ReactDOM.render(
       />
     }
     actions={[
-      <Icon key="setting" type="setting" />,
-      <Icon key="edit" type="edit" />,
-      <Icon key="ellipsis" type="ellipsis" />,
+      <Icon key="setting" type="settings-o" />,
+      <Icon key="edit" type="mode_edit" />,
+      <Icon key="ellipsis" type="more_horiz" />,
     ]}
   >
     <Meta
-      avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+      avatar={
+        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+      }
       title="Card title"
       description="This is the description"
     />
