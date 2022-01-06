@@ -248,7 +248,7 @@ function getVisibleEndIndex(tableStore: TableStore, getVirtualVisibleStartIndex 
       }
     }
 
-    return stopIndex;
+    return Math.max(0, Math.min(virtualEstimatedRows, stopIndex + 1));
   }
   const numVisibleItems = Math.ceil(
     height / virtualRowHeight,
@@ -270,7 +270,7 @@ function getStartIndex(tableStore: TableStore, getVirtualVisibleStartIndex = () 
 function getEndIndex(tableStore: TableStore, getVirtualVisibleEndIndex = () => tableStore.virtualVisibleEndIndex): number {
   const virtualVisibleEndIndex = getVirtualVisibleEndIndex();
   const { virtualEstimatedRows } = tableStore;
-  return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + getOverScanCount(tableStore, virtualVisibleEndIndex));
+  return Math.min(virtualEstimatedRows, virtualVisibleEndIndex + getOverScanCount(tableStore, virtualVisibleEndIndex, true));
 }
 
 export function getIdList(store: TableStore) {

@@ -58,7 +58,7 @@ const TableGroupCellInner: FunctionComponent<TableGroupCellInnerProps> = functio
   const cellProps: { style?: CSSProperties, className: string } = {
     className: classNames(`${prefixCls}-cell-inner`, { [`${prefixCls}-cell-inner-row-height-fixed`]: rowHeight !== 'auto' }),
   };
-  if (rowSpan === undefined && tableStore.isFixedRowHeight) {
+  if (rowSpan === undefined && tableStore.isFixedRowHeight && rowHeight !== 'auto') {
     cellProps.style = {
       height: pxToRem(rowHeight)!,
       lineHeight: pxToRem(rowHeight - 2)!,

@@ -33,11 +33,11 @@ const codeDynamicProps = {
 
 const codeCodeDynamicProps = {
   // 代码code_code值绑定 为 字段code 的 值列表的值字段为code.codevalue
-  bind({ record }) {
+  bind({ record, dataSet }) {
     if (record) {
-      const field = record.getField('code');
+      const field = dataSet.getField('code');
       if (field) {
-        const valueField = field.get('valueField');
+        const valueField = field.get('valueField', record);
         return `code.${valueField}`;
       }
     }
@@ -45,11 +45,11 @@ const codeCodeDynamicProps = {
 };
 
 const codeDescriptionDynamicProps = {
-  bind({ record }) {
+  bind({ record, dataSet }) {
     if (record) {
-      const field = record.getField('code');
+      const field = dataSet.getField('code');
       if (field) {
-        const textField = field.get('textField');
+        const textField = field.get('textField', record);
         return `code.${textField}`;
       }
     }
