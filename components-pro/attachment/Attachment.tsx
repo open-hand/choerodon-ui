@@ -697,6 +697,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       onChange,
     };
     const width = isCardButton ? this.getPictureWidth() : undefined;
+    const countText = multiple && (max ? `${count}/${max}` : count) || undefined;
     return isCardButton ? (
       <Button
         funcType={FuncType.link}
@@ -707,7 +708,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         style={{ ...style, width, height: width }}
       >
         <div>{children || $l('Attachment', 'upload_picture')}</div>
-        {max ? <div>{`${count}/${max}`}</div> : count || undefined}
+        {countText ? <div>{countText}</div> : undefined}
         <input key="upload" {...uploadProps} hidden />
       </Button>
     ) : (
@@ -721,7 +722,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {children || $l('Attachment', 'upload_attachment')}{label && <>({label})</>} {multiple && (max ? `${count}/${max}` : count) || undefined}
+        {children || $l('Attachment', 'upload_attachment')}{label && <>({label})</>} {countText}
         <input key="upload" {...uploadProps} hidden />
       </Button>
     );
