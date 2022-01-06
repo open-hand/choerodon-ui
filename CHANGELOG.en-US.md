@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.1
+
+`2021-01-06`
+
 - 🌟 `configure`: Added `bigNumberFormatter`, `tableHeightChangeable`, `tableColumnResizeTrigger` properties. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.
@@ -30,6 +34,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: Added `stringMode` property.
 - 🌟 `<pro>DataSet`: Added `bigNumber` field `type`.
 - 🌟 `<pro>Attachment`: Added `previewTarget` property.
+- 🌟 `<pro>DataSet`: Added the `forceRemove` parameter to the `remove`, `removeAll` methods.
 - 💄 `Step`: Optimize the navigation style of the `Steps`.
 - 💄 `<pro>Button`: Optimize when button is disabled, set child node `pointer-events` to `none`.
 - 💄 `Upload`: Optimized `loading` icon are displayed when the picture list is uploading.
@@ -55,11 +60,13 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed input length information display.
 - 🐞 `<pro>Table`: Fixed render boolean problem of table filter bar.
 - 🐞 `<pro>Table`: Fix `queryBarProps` configuration priority.
-- 🐞 `<pro>Lov`: Fixd the problem that the button does not focus after closing the pop-up window in button mode.
+- 🐞 `<pro>Table`: Fix the initial data status judgment of the dynamic filter bar.
+- 🐞 `<pro>Lov`: Fix the problem that the button does not focus after closing the pop-up window in button mode.
 - 🐞 `<pro>FormField`: Fix the problem that deleting a single value will clear all other values in the multiple and custom range mode.
 - 🐞 `Slider`: Fix the problem that tooltip does not close in `range` mode.
 - 🐞 `<pro>DataSet`: Fixed tree data parent-child association problem.
 - 🐞 `<pro>DatePicker`: Fix the problem of value setting in the `range` and `multiple` mode.
+- 🐞 `<pro>DateTimePicker`: Fix the issue where the `format` property is invalid.
 
 ## 1.5.0
 

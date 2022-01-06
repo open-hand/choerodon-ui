@@ -1595,7 +1595,7 @@ export default class DataSet extends EventManager {
         (await this.fireEvent(DataSetEvents.beforeDelete, { dataSet: this, records })) !== false &&
         (confirmMessage === false || (await this.getConfig('confirm')(confirmMessage && confirmMessage !== true ? confirmMessage : $l('DataSet', 'delete_selected_row_confirm'))))
       ) {
-        this.remove(records, false);
+        this.remove(records, false, false);
         const res = await this.pending.add(this.write(this.destroyed, true));
         // 处理自动定位
         const { current } = this;
@@ -1624,12 +1624,12 @@ export default class DataSet extends EventManager {
    * @param locate 是否需要进行定位操作
    */
   @action
-  remove(records?: Record | Record[], locate?: boolean): void {
+  remove(records?: Record | Record[], forceRemove?: boolean, locate?: boolean): void {
     if (records) {
       const data = isArrayLike(records) ? records.slice() : [records];
       if (data.length && this.fireEventSync(DataSetEvents.beforeRemove, { dataSet: this, records: data }) !== false) {
         const { current } = this;
-        data.forEach(this.deleteRecord, this);
+        data.forEach((record => this.deleteRecord(record, forceRemove)));
         if (this.props.validationRules && this.validationSelfErrors) {
           const error = this.validationSelfErrors.find((item: ValidationSelfErrors) => item.name === ValidationSelfType.maxLength);
           if (error && error.value >= this.length) {
@@ -1657,10 +1657,10 @@ export default class DataSet extends EventManager {
    * 临时删除所有记录
    */
   @action
-  removeAll() {
+  removeAll(forceRemove?: boolean) {
     const { current, data } = this;
     if (data.length) {
-      data.forEach(this.deleteRecord, this);
+      data.forEach((record => this.deleteRecord(record, forceRemove)));
       this.fireEvent(DataSetEvents.remove, { dataSet: this, records: data });
       if (current) {
         this.fireEvent(DataSetEvents.indexChange, { dataSet: this, previous: current });
@@ -1735,7 +1735,7 @@ export default class DataSet extends EventManager {
   @action
   splice(from: number, deleteCount: number, ...items: Record[]): (Record | undefined)[] {
     const fromRecord = this.get(from);
-    const deleted = this.slice(from, from + deleteCount).map(this.deleteRecord, this);
+    const deleted = this.slice(from, from + deleteCount).map(record => this.deleteRecord(record));
     if (items.length) {
       checkParentByInsert(this);
       const { records } = this;
@@ -2684,7 +2684,7 @@ Then the query method will be auto invoke.`,
     return processNormalData(this, allData, status);
   }
 
-  private deleteRecord(record?: Record): Record | undefined {
+  private deleteRecord(record?: Record, forceRemove?: boolean): Record | undefined {
     if (record) {
       record.isSelected = false;
       record.isCurrent = false;
@@ -2693,7 +2693,7 @@ Then the query method will be auto invoke.`,
       if (selectedIndex !== -1) {
         selected.splice(selectedIndex, 1);
       }
-      if (record.isNew) {
+      if (record.isNew || forceRemove) {
         {
           const index = records.indexOf(record);
           if (index !== -1) {

@@ -4,6 +4,7 @@ import DirectoryTree from './DirectoryTree';
 import animation from '../_util/openAnimation';
 import RcTree, { TreeNode, TreeProps as RcTreeProps } from '../rc-components/tree';
 import { TreeNodeProps } from '../rc-components/tree/TreeNode';
+import { DraggableProps } from '../rc-components/tree/contextTypes';
 import Icon from '../icon';
 import Progress from '../progress';
 import { ProgressType } from '../progress/enum';
@@ -134,7 +135,7 @@ export interface TreeProps extends Omit<RcTreeProps, 'prefixCls' | 'showLine'> {
   selectable?: boolean;
   loadedKeys?: string[];
   /** 设置节点可拖拽（IE>8） */
-  draggable?: boolean;
+  draggable?: ((node?: DataNode) => boolean) | boolean | DraggableProps;
   style?: CSSProperties;
   showIcon?: boolean;
   icon?: ((nodeProps: C7ndTreeNodeAttribute) => ReactNode) | ReactNode;

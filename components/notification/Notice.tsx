@@ -19,6 +19,7 @@ export interface NoticeProps {
   foldable?: Boolean;
   offset?: number;
   scrollHeight?: string | number;
+  totalHeight?: number;
 }
 
 
@@ -66,7 +67,6 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
     startCloseTimer();
     return clearCloseTimer;
   }, [startCloseTimer]);
-
 
   let hideShadow: Boolean = false;
   const noticeRefCurrnet = noticeRef.current;

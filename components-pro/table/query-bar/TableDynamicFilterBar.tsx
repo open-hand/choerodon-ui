@@ -408,12 +408,16 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           },
         ],
       });
+      let status = RecordStatus.update;
+      if (queryDataSet.current) {
+        status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(true), ['__dirty'])) ? RecordStatus.sync : RecordStatus.update;
+      }
       // 初始化状态
       dataSet.setState(MENUDATASET, menuDataSet);
       dataSet.setState(CONDITIONDATASET, conditionDataSet);
       dataSet.setState(OPTIONDATASET, optionDataSet);
       dataSet.setState(FILTERMENUDATASET, filterMenuDataSet);
-      dataSet.setState(CONDITIONSTATUS, RecordStatus.sync);
+      dataSet.setState(CONDITIONSTATUS, status);
       dataSet.setState(SEARCHTEXT, '');
       const result = await menuDataSet.query();
       dataSet.setState(MENURESULT, result);

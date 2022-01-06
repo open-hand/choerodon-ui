@@ -116,9 +116,9 @@ title: DataSet
 | nextPage() | 定位到下一页，如果`paging` 为 `true`和`server`，则做远程查询 |  | Promise&lt;any&gt; |
 | create(data, index) | 创建一条记录 | `data` - 记录数据对象；`index`&lt;optional,default:0&gt; - 记录所在的索引 | Record |
 | delete(records, confirmMessage: ReactNode \| ModalProps) | 立即删除记录 | `records` - 删除的记录或记录组 `confirmMessage` - 自定义提示信息或弹窗的属性, 设为false时不弹确认直接删除 |  |
-| remove(records) | 临时删除记录 | `records` - 删除的记录或记录组 |  |
+| remove(records, forceRemove) | 临时删除记录 | `records` - 删除的记录或记录组; `forceRemove` - 是否强制删除 |  |
 | deleteAll(confirmMessage: ReactNode \| ModalProps) | 立即删除所有记录 | `confirmMessage` - 自定义提示信息或弹窗的属性, 设为false时不弹确认直接删除 |  |
-| removeAll() | 临时删除所有记录 |  |  |
+| removeAll(forceRemove) | 临时删除所有记录 | `forceRemove` - 是否强制删除 |  |
 | push(...records) | 将若干数据记录插入记录堆栈顶部 | `records` - 插入的记录列表 | number |
 | unshift(...records) | 将若干数据记录插入记录堆栈底部 | `records` - 插入的记录列表 | number |
 | pop() | 从记录堆栈顶部获取记录 |  | Record |
@@ -269,7 +269,7 @@ title: DataSet
 | minLength | 最小长度 | number |  |
 | max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 type 为 `bigNumber` 时，传入 string 数字类型。 | number \| MomentInput \| fieldName \| string | MAX_SAFE_INTEGER(number 类型) |
 | min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 type 为 `bigNumber` 时，传入 string 数字类型。 | number \| MomentInput \| fieldName \| string | MIN_SAFE_INTEGER(number 类型) |
-| step | 步距 | number \| { hour: number, minute: number, second: number } |  |
+| step | 步距。type 为 `bigNumber` 时，传入 string 数字类型。 | number \| { hour: number, minute: number, second: number } |  |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
 | precision | 小数点精度, 提交时会截断 | number |  |
 | numberGrouping | 千分位分组显示 | boolean | true |

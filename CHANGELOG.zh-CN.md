@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.1
+
+`2021-01-06`
+
 - 🌟 `configure`: 新增 bigNumberFormatter, tableHeightChangeable, tableColumnResizeTrigger 属性, attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
@@ -30,6 +34,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: 新增 stringMode 属性。
 - 🌟 `<pro>DataSet`: 新增 bigNumber 字段 type 。
 - 🌟 `<pro>Attachment`: 新增 previewTarget 属性。
+- 🌟 `<pro>DataSet`: 新增 forceRemove 参数在 remove, removeAll 方法中。
 - 💄 `Step`: 优化 Steps 组件的导航条样式。
 - 💄 `<pro>Button`: 优化禁用状态下设置子节点 pointer-events 为 none。
 - 💄 `Upload`: 优化图片列表上传时显示 loading 图标。
@@ -55,11 +60,13 @@ timeline: true
 - 🐞 `<pro>TextArea`: 修复已输入长度信息显示。
 - 🐞 `<pro>Table`: 修复过滤条内布尔变量渲染值错误。
 - 🐞 `<pro>Table`: 修复 queryBarProps 配置优先级。
+- 🐞 `<pro>Table`: 修复动态筛选条初始数据状态判断。
 - 🐞 `<pro>Lov`: 修复 button 模式下关闭弹窗后按钮没有聚焦的问题。
 - 🐞 `<pro>FormField`: 修复在多选自定义范围值模式下删除单个值会清除所有值的问题。
 - 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。
 - 🐞 `<pro>DataSet`: 修复树形数据父子级关联问题。
 - 🐞 `<pro>DatePicker`: 修复 range 和 multiple 模式下设值的问题。
+- 🐞 `<pro>DateTimePicker`: 修复 format 属性失效的问题。
 
 ## 1.5.0
 
