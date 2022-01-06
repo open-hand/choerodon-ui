@@ -2,6 +2,7 @@ import React, { ButtonHTMLAttributes, Children, CSSProperties, KeyboardEventHand
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import getReactNodeText from 'choerodon-ui/pro/lib/_util/getReactNodeText';
 import Icon from '../icon';
 import Group from './ButtonGroup';
 import Ripple from '../ripple';
@@ -116,6 +117,14 @@ export default class Button extends PureComponent<ButtonProps, any> {
     if (onClick) {
       onClick(e);
     }
+    const { getConfig } = this.context;
+    const onButtonClick = getConfig('onButtonClick');
+    if (onButtonClick) {
+      const { target } = e;
+      const { children, icon } = this.props;
+      const promise = Promise.resolve(target && (target as HTMLButtonElement | HTMLAnchorElement).textContent || getReactNodeText(children));
+      promise.then(title => onButtonClick({ icon, title }));
+    }
   };
 
   render() {
@@ -195,7 +204,7 @@ export default class Button extends PureComponent<ButtonProps, any> {
           type={
             others.href ? undefined : (htmlType as ButtonHTMLAttributes<any>['type']) || 'button'
           }
-          style={useWrapper? undefined : style}
+          style={useWrapper ? undefined : style}
           className={useWrapper ? undefined : classes}
           onClick={this.handleClick}
         >

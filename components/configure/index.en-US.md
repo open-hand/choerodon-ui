@@ -133,7 +133,6 @@ const prefixCls = getConfig('prefixCls');
 | showHelp| 显示提示信息的方式 | `tooltip` \| `newLine`\| `label`\| `none`| `newline` |
 | highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | performanceEnabled | 开启性能监控 | { Table: boolean } | { Table: false }  |
-| onPerformance | 性能监控埋点函数 | (type, event) => void |   |
 | tooltip | 是否开启提示, 参数 target 详见 [TooltipTarget](#TooltipTarget) | Tooltip.always \| Tooltip.overflow \| Tooltip.none \| function(target) | |
 | tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 target 详见 [TooltipTarget](#TooltipTarget) | dark \| light \| function(target) |  (target) => target === 'validation' ? 'light' : 'dark' |
 | tooltipPlacement | Tooltip 位置 或 返回位置的钩子, 参数 placement 详见 [TooltipPlacement](#TooltipPlacement) | [placement](/components-pro/tooltip/#API) \| function(target) |  [TooltipPlacement](#TooltipPlacement) |
@@ -141,6 +140,9 @@ const prefixCls = getConfig('prefixCls');
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 | numberFieldKeyboard | control `UP` `DOWN` keyboard events for `NumberField` component | boolean | true |
 | lovShowSelectedInView | Lov 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录  | boolean \| (viewMode) => boolean | (viewMode) => viewMode === 'drawer' |
+| onPerformance | 性能监控埋点函数 | (type, event) => void |   |
+| onTabsChange | Tabs 变更事件， 初始化时也会触发， 可用于监控埋点 | (props: { activeKey:string, activeGroupKey?:string, title: string, groupTitle?:string, code?:string }) => void |   |
+| onButtonClick | 按钮点击事件， 可用于监控埋点 | (props: { title:string, icon?:string }) => void |   |
 
 ### Customizable
 

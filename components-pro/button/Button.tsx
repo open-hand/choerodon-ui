@@ -21,6 +21,7 @@ import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComp
 import autobind from '../_util/autobind';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
+import getReactNodeText from '../_util/getReactNodeText';
 
 export interface ButtonProps extends DataSetComponentProps {
   /**
@@ -251,11 +252,18 @@ export default class Button extends DataSetComponent<ButtonProps> {
         }
       }
     }
+    const onButtonClick = this.context.getConfig('onButtonClick');
+    if (onButtonClick) {
+      const { target } = e;
+      const { children, icon } = this.props;
+      const promise = Promise.resolve(target && (target as HTMLButtonElement | HTMLAnchorElement).textContent || getReactNodeText(children));
+      promise.then(title => onButtonClick({ icon, title }));
+    }
   }
 
   @autobind
   handleMouseEnter(e) {
-    const { getTooltip, getTooltipTheme, getTooltipPlacement} = this.context;
+    const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const { tooltip = getTooltip('button'), children } = this.props;
     const { element } = this;
     if (tooltip === ButtonTooltip.always || (tooltip === ButtonTooltip.overflow && isOverflow(element))) {
