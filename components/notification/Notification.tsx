@@ -239,13 +239,14 @@ export default class Notification extends PureComponent<NotificationProps, Notif
         foldable={!!foldCount}
         offset={offset}
         scrollHeight={scrollHeight}
+        totalHeight={totalHeight}
       />
     ));
     const cls = classNames(`${prefixCls}`, className, [{
       [`${prefixCls}-before-shadow`]: !!foldCount && notices.length > foldCount && offset > 0,
       [`${prefixCls}-after-shadow`]:
       foldCount && notices.length > foldCount &&
-      Math.abs(totalHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset) > 15,
+      totalHeight - (typeof scrollHeight === 'number' ? scrollHeight : 0) - offset > 15,
     }]);
 
     const scrollCls = classNames({
