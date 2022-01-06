@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 onTabsChange, onButtonClick 属性。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下将输入框中的值清除后显示"无效日期"的问题。
+- 🐞 `<pro>Table`: 修复聚合模式下虚拟滚动的问题。
 
 ## 1.5.1
 

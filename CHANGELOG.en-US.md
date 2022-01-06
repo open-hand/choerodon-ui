@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
+- 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
 
 ## 1.5.1
 

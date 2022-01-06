@@ -27,9 +27,9 @@ import {
 
 const { Column } = Table;
 
-function sexIdRenderer({ record }) {
+function sexIdRenderer({ dataSet, record }) {
   // 获取性别codeValueId
-  return record.getField('sex').getLookupData().codeValueId;
+  return dataSet.getField('sex').getLookupData(undefined, record).codeValueId;
 }
 
 function handleUserDSLoad({ dataSet }) {
@@ -74,11 +74,11 @@ const nameDynamicProps = {
 };
 
 const codeDescriptionDynamicProps = {
-  bind({ record }) {
+  bind({ record, dataSet }) {
     if (record) {
-      const field = record.getField('code');
+      const field = dataSet.getField('code');
       if (field) {
-        const textField = field.get('textField');
+        const textField = field.get('textField', record);
         return `code.${textField}`;
       }
     }

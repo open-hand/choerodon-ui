@@ -30,9 +30,9 @@ import {
 
 const { Column } = Table;
 
-function sexIdRenderer({ record }) {
+function sexIdRenderer({ dataSet, record }) {
   // 获取性别codeValueId
-  return record.getField('sex').getLookupData().codeValueId;
+  return dataSet.getField('sex').getLookupData(undefined, record).codeValueId;
 }
 
 function aggregationRendereer({ text, record }) {
