@@ -760,7 +760,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   setRangeTarget(target) {
     if (this.text !== undefined) {
-      this.prepareSetValue(this.text);
+      this.prepareSetValue(this.text || this.emptyValue);
       this.setText();
     }
     super.setRangeTarget(target);
