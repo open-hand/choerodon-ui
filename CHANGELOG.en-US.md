@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.1
+
+`2021-01-06`
+
 - 🌟 `configure`: Added `bigNumberFormatter`, `tableHeightChangeable`, `tableColumnResizeTrigger` properties. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
 - 🌟 `Message`: Added a promised interface to handle callback.

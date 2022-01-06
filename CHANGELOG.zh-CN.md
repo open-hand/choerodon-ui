@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.1
+
+`2021-01-06`
+
 - 🌟 `configure`: 新增 bigNumberFormatter, tableHeightChangeable, tableColumnResizeTrigger 属性, attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。
 - 🌟 `Message`: 增加 promise 化的回调接口。
