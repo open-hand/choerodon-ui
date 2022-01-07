@@ -34,21 +34,21 @@ const App = () => {
   const itemDs = useDataSet(() => ({
     paging: false,
     data: [
-      { id: 1, company: '厦门XX食品有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 9000, quantity: 10, amount: 90000, tax: 0.1, totalAmount: 1965310000 },
-      { id: 2, company: '厦门XX食品有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 80000, quantity: 20, amount: 1600000, tax: 0.1, totalAmount: 1965310000 },
-      { id: 3, company: '厦门XX食品有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 85000, quantity: 20, amount: 1700000, tax: 0.1, totalAmount: 1965310000 },
-      { id: 4, company: '厦门XX食品有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 96000, quantity: 20, amount: 1920000, tax: 0.1, totalAmount: 1965310000 },
-      { id: 5, company: '厦门XX食品有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 88000000, quantity: 20, amount: 1960000000, tax: 0.1, totalAmount: 1965310000 },
-      { id: 6, company: '山西XX科贸有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000 },
-      { id: 7, company: '山西XX科贸有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000 },
-      { id: 8, company: '山西XX科贸有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000 },
-      { id: 9, company: '山西XX科贸有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1, totalAmount: 2701740000 },
-      { id: 10, company: '山西XX科贸有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 76000, quantity: 10, amount: 760000, tax: 0.1, totalAmount: 2701740000 },
-      { id: 11, company: '上海XX商务有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000 },
-      { id: 12, company: '上海XX商务有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000 },
-      { id: 13, company: '上海XX商务有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000 },
-      { id: 14, company: '上海XX商务有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 90000, quantity: 10, amount: 900000, tax: 0.1, totalAmount: 2701880000 },
-      { id: 15, company: '上海XX商务有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1, totalAmount: 2701880000 },
+      { id: 1, company: '厦门XX食品有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 9000, quantity: 10, amount: 90000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
+      { id: 2, company: '厦门XX食品有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 80000, quantity: 20, amount: 1600000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
+      { id: 3, company: '厦门XX食品有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 85000, quantity: 20, amount: 1700000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
+      { id: 4, company: '厦门XX食品有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 96000, quantity: 20, amount: 1920000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
+      { id: 5, company: '厦门XX食品有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 88000000, quantity: 20, amount: 1960000000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
+      { id: 6, company: '山西XX科贸有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
+      { id: 7, company: '山西XX科贸有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
+      { id: 8, company: '山西XX科贸有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
+      { id: 9, company: '山西XX科贸有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
+      { id: 10, company: '山西XX科贸有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 76000, quantity: 10, amount: 760000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
+      { id: 11, company: '上海XX商务有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
+      { id: 12, company: '上海XX商务有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
+      { id: 13, company: '上海XX商务有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
+      { id: 14, company: '上海XX商务有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 90000, quantity: 10, amount: 900000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
+      { id: 15, company: '上海XX商务有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
     ],
     fields: [
       {
@@ -81,11 +81,29 @@ const App = () => {
       {
         name: 'totalAmount',
         type: 'currency',
-        label: '含税总价',
+        label: '总价(含税)',
+      },
+      {
+        name: 'totalAmountNoTax',
+        type: 'currency',
+        label: '总价(不含税)',
+      },
+      {
+        name: 'taxAmount',
+        type: 'currency',
+        label: '税额',
       },
       {
         name: 'itemSize',
         label: '规格',
+      },
+      {
+        name: 'origin',
+        label: '产地',
+      },
+      {
+        name: 'unit',
+        label: '单位',
       },
       {
         name: 'tax',
@@ -142,9 +160,8 @@ const App = () => {
 
   const itemColumns = React.useMemo(() => [
     { 
-      header: ({ group, title }) => group ? (
-        group.totalRecords.reduce((sum, record) => sum + (record.get('amount') || 0), 0)
-      ) : title,
+      title: '头分组聚合列', // 可在个性化内显示
+      header: ({ aggregationTree, title }) => aggregationTree ? aggregationTree : title,
       renderer: ({ text, record, dataSet }) => record.getState('editing') ? (
         <Row>
           <Col span={12} style={{ cursor: 'pointer', borderRight: '1px solid #eee' }} onClick={() => record.isSelected ? dataSet.unSelect(record) : dataSet.select(record)}>
@@ -156,6 +173,9 @@ const App = () => {
         </Row>
       ) : text,
       aggregation: true,
+      aggregationLimit: 3,
+      aggregationLimitDefaultExpanded: true,
+      titleEditable: false,
       key: 'itemDetail',
       align: 'left',
       children: [
@@ -164,7 +184,7 @@ const App = () => {
         { name: 'amount' },
         { name: 'tax', renderer: ({ value }) => `${value * 100}%` },
       ],
-      defaultWidth: 300,
+      width: 300,
     },
   ], []);
 
@@ -181,7 +201,7 @@ const App = () => {
           return list;
         }, [])
       ) : title,
-      defaultWidth: 300,
+      width: 300,
     },
   ], []);
 
@@ -208,8 +228,12 @@ const App = () => {
           }
           return text;
         },
+        aggregationLimit: 2,
+        aggregationLimitDefaultExpanded: true,
         children: [
-          { name: 'totalAmount' }
+          { name: 'totalAmount' },
+          { name: 'totalAmountNoTax' },
+          { name: 'taxAmount' },
         ],
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
@@ -221,8 +245,12 @@ const App = () => {
       columnProps: {
         align: 'left',
         aggregation: true,
+        aggregationLimit: 2,
+        aggregationLimitDefaultExpanded: true,
         children: [
-          { name: 'itemSize' }
+          { name: 'itemSize' },
+          { name: 'origin' },
+          { name: 'unit' },
         ],
         renderer: ({ record, dataSet, text }) => {
           const handleClick = action(() => {
@@ -275,6 +303,18 @@ const App = () => {
       current.setScrollLeft(scrollLeft);
     }
   }, []);
+  const handleGroup1ColumnResize = React.useCallback(({ width, index }) => {
+    const { current } = group2Ref;
+    if (current) {
+      current.setColumnWidth(width, index);
+    }
+  }, []);
+  const handleGroup2ColumnResize = React.useCallback(({ width, index }) => {
+    const { current } = group1Ref;
+    if (current) {
+      current.setColumnWidth(width, index);
+    }
+  }, []);
 
   return (
     <>
@@ -284,13 +324,13 @@ const App = () => {
         aggregation
         columnDraggable
         columnTitleEditable
-        columnResizable={false}
         border
         dataSet={itemDs}
         columns={itemColumns}
         groups={itemGroups}
         headerRowHeight="auto"
         onScrollLeft={handleGroup1ScrollLeft}
+        onColumnResize={handleGroup1ColumnResize}
         ref={group1Ref}
         style={{ height: 500 }}
         selectionMode="none"
@@ -301,13 +341,13 @@ const App = () => {
         customizedCode="advanced-group2"
         columnDraggable
         columnTitleEditable
-        columnResizable={false}
         border
         dataSet={scoreDs}
         columns={scoreColumns}
         groups={scoreGroups}
         headerRowHeight="auto"
         onScrollLeft={handleGroup2ScrollLeft}
+        onColumnResize={handleGroup2ColumnResize}
         ref={group2Ref}
         selectionMode="none"
         bodyExpandable

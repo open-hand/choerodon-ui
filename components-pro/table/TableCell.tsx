@@ -3,23 +3,21 @@ import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
-import defaultTo from 'lodash/defaultTo';
 import { IteratorHelper } from 'choerodon-ui/dataset';
 import Group from 'choerodon-ui/dataset/data-set/Group';
-import Tree, { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, defaultAggregationRenderer } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { getColumnLock, getEditorByColumnAndRecord, getHeader, isStickySupport } from './utils';
+import { getColumnLock, getEditorByColumnAndRecord, isStickySupport } from './utils';
 import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
-import AggregationButton from './AggregationButton';
 import ColumnGroup from './ColumnGroup';
 import { treeSome } from '../_util/treeUtils';
 import TableGroupCellInner from './TableGroupCellInner';
 import TableStore from './TableStore';
+import AggregationTree from './AggregationTree';
 
 function getRowSpan(group: Group, tableStore: TableStore) {
   if (tableStore.headerTableGroups.length) {
@@ -69,57 +67,9 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     </TableCellInner>
   ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup]);
 
-  const getColumnsInnerNode = useCallback((columns: ColumnGroup[]) => {
-    return record ? columns.map((colGroup) => {
-      const { hidden, column: col } = colGroup;
-      const { hiddenInAggregation } = col;
-      if (!hidden && !(typeof hiddenInAggregation === 'function' ? hiddenInAggregation(record) : hiddenInAggregation)) {
-        const { key: columnKey, headerGroup } = colGroup;
-        const isBuiltInColumn = tableStore.isBuiltInColumn(col);
-        const columnOnCell = !isBuiltInColumn && (col.onCell || tableColumnOnCell);
-        const cellExternalProps: Partial<TreeNodeProps> =
-          typeof columnOnCell === 'function'
-            ? columnOnCell({
-              dataSet,
-              record,
-              column: col,
-            })
-            : {};
-        const header = getHeader({ ...col, dataSet, aggregation: tableAggregation, group: headerGroup });
-        // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
-        const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
-        const childColumns = colGroup.children;
-        if (childColumns) {
-          const { columns: colGroups } = childColumns;
-          if (colGroups.length) {
-            return (
-              <Tree.TreeNode
-                {...cellExternalProps}
-                key={columnKey}
-                title={header}
-              >
-                {getColumnsInnerNode(colGroups)}
-              </Tree.TreeNode>
-            );
-          }
-        }
-        const innerNode = getInnerNode(col, onCellStyle, true, headerGroup);
-        return (
-          <Tree.TreeNode
-            {...cellExternalProps}
-            key={columnKey}
-            title={
-              <>
-                <span className={`${cellPrefix}-label`}>{header}</span>
-                {innerNode}
-              </>
-            }
-          />
-        );
-      }
-      return undefined;
-    }) : [];
-  }, [tableStore, record, dataSet, cellPrefix, getInnerNode, tableColumnOnCell, tableAggregation]);
+  const aggregationTreeRenderer = useCallback(({ colGroup, style }) => {
+    return getInnerNode(colGroup.column, style, true, colGroup.headerGroup);
+  }, [getInnerNode]);
   const { style, lock, onCell, aggregation } = column;
   const columnLock = isStickySupport() && getColumnLock(lock);
   const baseStyle: CSSProperties | undefined = (() => {
@@ -157,39 +107,21 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   if (group && !groupCell) {
     return null;
   }
-  const getAggregationList = ($aggregation) => {
+  const getAggregationColumns = ($aggregation) => {
     if ($aggregation) {
       const { childrenInAggregation } = columnGroup;
       if (childrenInAggregation) {
-        const visibleChildren: ColumnGroup[] = childrenInAggregation.columns.filter(child => !child.hidden);
-        const { length } = visibleChildren;
-        if (length > 0) {
-          const { aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll, aggregationLimitDefaultExpanded } = column;
-          const expanded: boolean = defaultTo(
-            tableStore.isAggregationCellExpanded(record, key),
-            typeof aggregationLimitDefaultExpanded === 'function' ? aggregationLimitDefaultExpanded(record) : aggregationLimitDefaultExpanded,
-          ) || false;
-          const hasExpand = length > aggregationLimit!;
-          const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
-          return (
-            <Tree
-              prefixCls={`${cellPrefix}-tree`}
-              virtual={false}
-              focusable={false}
-              defaultExpandedKeys={aggregationDefaultExpandedKeys}
-              defaultExpandAll={aggregationDefaultExpandAll}
-            >
-              {
-                getColumnsInnerNode(nodes)
-              }
-              {
-                hasExpand && (
-                  <Tree.TreeNode title={<AggregationButton expanded={expanded} record={record} columnGroup={columnGroup} />} />
-                )
-              }
-            </Tree>
-          );
-        }
+        const groups = childrenInAggregation.columns;
+        return (
+          <AggregationTree
+            rowGroup={__tableGroup ? group : rowGroup}
+            headerGroup={columnGroup.headerGroup}
+            record={record}
+            groups={groups}
+            column={column}
+            renderer={aggregationTreeRenderer}
+          />
+        );
       }
     }
   };
@@ -206,7 +138,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         </span>
       );
     }
-    const aggregationList = getAggregationList($aggregation);
+    const aggregationList = getAggregationColumns($aggregation);
     if (groupCell && group && __tableGroup) {
       return (
         <TableGroupCellInner rowSpan={rowSpan} group={group} column={column}>

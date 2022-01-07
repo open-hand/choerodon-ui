@@ -104,7 +104,7 @@ subtitle: 表格
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | showHeader |	是否显示表头 |	boolean |	true |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean |	 |
-| onColumnResize | 列宽改变的回调事件  | ({ column, width }) => void | |
+| onColumnResize | 列宽改变的回调事件  | ({ column, width, index }) => void | |
 | searchCode | 动态筛选条后端接口唯一编码  | string | |
 | rowBoxPlacement | 行选择框位置  | `start` \| `end` \| number | start |
 
@@ -120,7 +120,7 @@ subtitle: 表格
 | defaultWidth | 默认列宽, 只在出横向滚动条时起作用 | number | [globalConfig.tableColumnDefaultWidth](/components/configure#API) \| [globalConfig.tableAggregationColumnDefaultWidth](/components/configure#API) |
 | minWidth | 最小列宽 | number | [globalConfig.tableColumnDefaultMinWidth](/components/configure#API) \| [globalConfig.tableAggregationColumnDefaultMinWidth](/components/configure#API) |
 | title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |
-| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/components-pro/data-set#Group-Values) }) => ReactNode |  |
+| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/components-pro/data-set#Group-Values), aggregationTree }) => ReactNode |  |
 | footer | 列脚 | ReactNode \| ({ dataSet, name }) => ReactNode |  |
 | renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet, rowGroup: [Group](/components-pro/data-set#Group-Values), headerGroup: [Group](/components-pro/data-set#Group-Values) }) => ReactNode |  |
 | editor | 编辑器, 设为`true`时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。 | FormField \| ((record, name) => FormField \| boolean) \| boolean |  |
@@ -268,6 +268,7 @@ spin的配置项。
 | --- | --- | --- | --- |
 | setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  |
 | setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  |
+| setColumnWidth(width, indexOrKeyOrName) | 设置列宽。 | `width` - 宽度 `indexOrKeyOrName` - 索引或key或name |  |
 
 ### 分页配置
 

@@ -15,6 +15,27 @@ export function treeReduce<U, T>(
   }, initialValue);
 }
 
+export function treeMap<T>(
+  nodes: T[],
+  fn: (node: T, index: number, parentNode?: T) => T,
+  sortFn?: (a: T, b: T) => number,
+  childName = 'children',
+  parentNode?: T,
+): T[] {
+  const newNodes: T[] = nodes.map((node, index) => {
+    const newNode = fn(node, index, parentNode);
+    const children = node[childName];
+    if (children && children.length) {
+      newNode[childName] = treeMap<T>(children, fn, sortFn, childName, node);
+    }
+    return newNode;
+  });
+  if (sortFn) {
+    newNodes.sort(sortFn);
+  }
+  return newNodes;
+}
+
 export function treeForEach<T>(
   nodes: T[],
   fn: (node: T, index: number, parentNode?: T) => void,
@@ -78,4 +99,5 @@ export default {
   treeForEach,
   treeFind,
   treeSome,
-}
+  treeMap,
+};

@@ -53,12 +53,13 @@ import TableEditor from './TableEditor';
 import Dropdown from '../dropdown/Dropdown';
 import Menu from '../menu';
 import { ModalProps } from '../modal/Modal';
-import { treeSome } from '../_util/treeUtils';
+import { treeMap, treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
 import { getIf, normalizeGroups } from '../data-set/utils';
 import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
 import { LabelLayout } from '../form/enum';
+import ColumnGroup from './ColumnGroup';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -646,6 +647,14 @@ function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [ke
         ...ColumnDefaultProps,
         lock: ColumnLock.left,
         ...columnProps,
+        children: columnProps && columnProps.children ? treeMap(columnProps.children, (col => {
+          const colKey = getColumnKey(col);
+          const newCol = { ...col, __tableGroup: group };
+          if (customizedColumns) {
+            Object.assign(newCol, customizedColumns[colKey]);
+          }
+          return newCol;
+        }), ({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2) : undefined,
         draggable: false,
         hideable: false,
         key: `__group-${name}`,
@@ -727,15 +736,15 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
           key,
           headerStyle: columnProps && columnProps.style,
           header: () => renderer({ dataSet, record: group.totalRecords[0], name: groupName, text: value, value, headerGroup: group }),
-          children: subColumns.map(col => {
+          children: treeMap(subColumns, (col => {
             const __originalKey = getColumnKey(col);
             const colKey = `${key}-${__originalKey}`;
             const newCol = { ...col, key: colKey, __originalKey };
             if (customizedColumns) {
-              Object.assign(newCol, customizedColumns[__originalKey]);
+              Object.assign(newCol, customizedColumns[__originalKey], customizedColumns[colKey]);
             }
             return newCol;
-          }).sort(({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2),
+          }), ({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2),
           __tableGroup: tableGroup,
           __group: group,
         };
@@ -1873,17 +1882,6 @@ export default class TableStore {
     }
   });
 
-  @autobind
-  @action
-  handleLoadCustomized() {
-    this.initColumns();
-    const { onAggregationChange, aggregation } = this.props;
-    const { aggregation: customAggregation } = this.customized;
-    if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
-      onAggregationChange(customAggregation);
-    }
-  }
-
   constructor(node: Table) {
     runInAction(() => {
       this.scrollPosition = ScrollPosition.left;
@@ -1907,7 +1905,7 @@ export default class TableStore {
       this.customized = { columns: {} };
       this.setProps(node.props);
       if (this.customizable) {
-        this.loadCustomized().then(this.handleLoadCustomized);
+        this.loadCustomized();
       } else {
         this.initColumns();
       }
@@ -1976,18 +1974,20 @@ export default class TableStore {
 
   @action
   updateProps(props) {
-    const { customizedCode } = this.props;
+    const { customizedCode, aggregation: oldAggregation } = this.props;
     this.setProps(props);
     if (this.customizable) {
       if (customizedCode !== props.customizedCode) {
-        this.loadCustomized().then(this.handleLoadCustomized);
+        this.loadCustomized();
         return;
       }
       const { aggregation } = props;
-      const { customized } = this;
-      if (!isNil(aggregation) && aggregation !== customized.aggregation) {
-        customized.aggregation = aggregation;
-        this.saveCustomized();
+      if (oldAggregation !== aggregation) {
+        const { customized } = this;
+        if (!isNil(aggregation) && aggregation !== customized.aggregation) {
+          customized.aggregation = aggregation;
+          this.saveCustomized();
+        }
       }
     }
     this.initColumns();
@@ -2184,6 +2184,31 @@ export default class TableStore {
     return <Icon type="baseline-drag_indicator" />;
   }
 
+  findColumnGroup(indexOrKeyOrName: number | string): ColumnGroup | undefined {
+    const { allLeafs } = this.columnGroups;
+    return isNumber(indexOrKeyOrName) ? allLeafs[indexOrKeyOrName] : allLeafs.find(({ key }) => String(key) === indexOrKeyOrName);
+  }
+
+  setColumnWidth(columnGroup: ColumnGroup, width: number) {
+    const { column } = columnGroup;
+    if (width !== column.width) {
+      this.changeCustomizedColumnValue(column, {
+        width,
+      });
+      const { onColumnResize } = this.props;
+      if (onColumnResize) {
+        const index = this.columnGroups.allLeafs.indexOf(columnGroup);
+        /**
+         * onColumnResize 事件回调
+         * 回调参数：
+         * @param column
+         * @param width
+         */
+        onColumnResize({ column, width, index });
+      }
+    }
+  }
+
   @action
   changeCustomizedColumnValue(column: ColumnProps, value: object) {
     const { customized: { columns } } = this;
@@ -2244,10 +2269,19 @@ export default class TableStore {
       try {
         const customized: TableCustomized | undefined | null = await tableCustomizedLoad(customizedCode, 'Table');
         runInAction(() => {
-          this.customized = { columns: {}, ...customized };
+          const newCustomized: TableCustomized = { columns: {}, ...customized };
+          this.customized = newCustomized;
+          this.initColumns();
+          const { aggregation: customAggregation } = newCustomized;
+          if (customAggregation !== undefined) {
+            const { onAggregationChange, aggregation } = this.props;
+            if (onAggregationChange && customAggregation !== aggregation) {
+              onAggregationChange(customAggregation);
+            }
+          }
         });
-        this.customizedLoaded = true;
       } finally {
+        this.customizedLoaded = true;
         runInAction(() => {
           this.loading = false;
         });

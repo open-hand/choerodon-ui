@@ -5,6 +5,7 @@ const {
   treeForEach,
   treeFind,
   treeSome,
+  treeMap,
 } = TreeHelper;
 
 export {
@@ -12,4 +13,5 @@ export {
   treeForEach,
   treeFind,
   treeSome,
+  treeMap,
 };
