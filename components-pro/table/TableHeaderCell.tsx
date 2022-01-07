@@ -3,7 +3,8 @@ import React, {
   CSSProperties,
   FunctionComponent,
   isValidElement,
-  ReactElement, ReactNode,
+  ReactElement,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -29,7 +30,7 @@ import { ElementProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import EventManager from '../_util/EventManager';
 import { getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
-import { ColumnAlign, ColumnLock, TableColumnTooltip, TableColumnResizeTriggerType } from './enum';
+import { ColumnAlign, ColumnLock, TableColumnResizeTriggerType, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import transform from '../_util/transform';
@@ -37,6 +38,8 @@ import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { CUSTOMIZED_KEY } from './TableStore';
 import ColumnGroup from './ColumnGroup';
+import AggregationTree from './AggregationTree';
+import TableCellInner from './TableCellInner';
 
 export interface TableHeaderCellProps extends ElementProps {
   columnGroup: ColumnGroup;
@@ -51,7 +54,7 @@ export interface TableHeaderCellProps extends ElementProps {
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
   const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon } = props;
   const { column, key, prev } = columnGroup;
-  const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth, onColumnResize = noop } = useContext(TableContext);
+  const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const { columnResizable, props: { headerRowHeight } } = tableStore;
   const {
@@ -70,7 +73,42 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     rootMargin: '100px',
     initialInView: true,
   });
-  const header = getHeader({ ...column, dataSet, aggregation, group: columnGroup.headerGroup });
+  const aggregationTree = useMemo((): ReactNode => {
+    if (aggregation) {
+      const { column: $column, headerGroup } = columnGroup;
+      if (headerGroup) {
+        const { tableGroup } = columnGroup;
+        if (tableGroup) {
+          const { columnProps } = tableGroup;
+          const { totalRecords } = headerGroup;
+          if (columnProps && totalRecords.length) {
+            const { children } = columnProps;
+            if (children && children.length) {
+              const renderer = ({ colGroup, style }) => {
+                return (
+                  <TableCellInner
+                    record={totalRecords[0]}
+                    column={colGroup.column}
+                    style={style}
+                    inAggregation
+                  />
+                );
+              };
+              return (
+                <AggregationTree
+                  columns={children}
+                  headerGroup={headerGroup}
+                  column={{ ...$column, ...columnProps }}
+                  renderer={renderer}
+                />
+              );
+            }
+          }
+        }
+      }
+    }
+  }, [columnGroup, aggregation]);
+  const header = getHeader({ ...column, dataSet, aggregation, group: columnGroup.headerGroup, aggregationTree });
   const globalRef = useRef<{
     bodyLeft: number;
     resizeBoundary: number;
@@ -137,32 +175,19 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
           if (col.width === undefined) {
             const th = element.querySelector(`.${prefixCls}-thead .${prefixCls}-cell[data-index="${col.name}"]`);
             if (th) {
-              tableStore.changeCustomizedColumnValue(col, {
-                width: th.offsetWidth,
-              });
+              tableStore.setColumnWidth(group, th.offsetWidth);
             }
           }
           group = group.prev;
         }
         if (width === undefined) {
           raf(() => {
-            tableStore.changeCustomizedColumnValue(resizeColumn, {
-              width: newWidth,
-            });
+            tableStore.setColumnWidth(resizeColumnGroup, newWidth);
           });
         } else {
-          tableStore.changeCustomizedColumnValue(resizeColumn, {
-            width: newWidth,
-          });
+          tableStore.setColumnWidth(resizeColumnGroup, newWidth);
         }
       }
-      /**
-       * onColumnResize 事件回调
-       * 回调参数：
-       * @param column
-       * @param width
-       */
-      onColumnResize({ column: resizeColumn, width: newWidth });
     }
   }), [globalRef, tableStore, setSplitLineHidden, resizeEvent]);
 
@@ -267,14 +292,14 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
 
   const handleShowSplitLine = useCallback((e, type) => {
     const { tableColumnResizeTrigger } = tableStore;
-    if(tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
+    if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
     e.persist();
     delayShowSplitLine(e, type);
   }, []);
 
   const handleHideSplitLine = useCallback(() => {
     const { tableColumnResizeTrigger } = tableStore;
-    if(tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
+    if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
     delayShowSplitLine.cancel();
     const { columnResizing } = tableStore;
     if (columnResizing) return;
@@ -294,13 +319,9 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         col.width ? col.width : 0,
       );
       if (maxWidth !== col.width) {
-        tableStore.changeCustomizedColumnValue(col, {
-          width: maxWidth,
-        });
+        tableStore.setColumnWidth(resizeColumnGroup, maxWidth);
       } else if (col.minWidth) {
-        tableStore.changeCustomizedColumnValue(col, {
-          width: col.minWidth,
-        });
+        tableStore.setColumnWidth(resizeColumnGroup, col.minWidth);
       }
     }
   }), [globalRef, prefixCls, tableStore]);

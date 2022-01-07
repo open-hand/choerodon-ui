@@ -31,6 +31,7 @@ export interface HeaderHookOptions extends FooterHookOptions {
   title?: string | undefined;
   aggregation?: boolean | undefined;
   group?: Group | undefined;
+  aggregationTree?: ReactNode;
 }
 
 export interface ColumnPropsBase extends ElementProps {

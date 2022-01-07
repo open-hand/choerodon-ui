@@ -511,7 +511,7 @@ class App extends React.Component {
           showQuickJumper: true,
           pageSizeOptions: ['10', '20', '100', '200', '500', '1000'],
         }}
-        onColumnResize={({ column, width }) => console.log(column, width)}
+        onColumnResize={({ column, width, index }) => console.log(column, width, index)}
       >
         <Column
           name="userid"

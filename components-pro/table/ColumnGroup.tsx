@@ -6,6 +6,7 @@ import ColumnGroups from './ColumnGroups';
 import { getColumnKey, getColumnLock } from './utils';
 import { ColumnLock } from './enum';
 import TableStore from './TableStore';
+import { TableGroup } from './Table';
 
 export default class ColumnGroup {
   store: TableStore;
@@ -109,7 +110,15 @@ export default class ColumnGroup {
     if (__group) {
       return __group;
     }
-    return this.parent.rowGroup;
+    return this.parent.headerGroup;
+  }
+
+  get tableGroup(): TableGroup | undefined {
+    const { __tableGroup } = this.column;
+    if (__tableGroup) {
+      return __tableGroup;
+    }
+    return this.parent.tableGroup;
   }
 
   constructor(column: ColumnProps, parent: ColumnGroups, store: TableStore) {

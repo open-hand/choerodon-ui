@@ -1,0 +1,141 @@
+import React, { CSSProperties, FunctionComponent, ReactNode, useCallback, useContext, useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
+import defaultTo from 'lodash/defaultTo';
+import omit from 'lodash/omit';
+import Tree, { TreeNodeProps } from 'choerodon-ui/lib/tree';
+import Record from '../data-set/Record';
+import AggregationButton from './AggregationButton';
+import { ColumnProps } from './Column';
+import TableContext from './TableContext';
+import ColumnGroups from './ColumnGroups';
+import ColumnGroup from './ColumnGroup';
+import { getColumnKey, getHeader } from './utils';
+import { Group } from '../data-set/DataSet';
+import { EXPAND_KEY } from './TableStore';
+
+export interface AggregationTreeProps {
+  groups?: ColumnGroup[];
+  columns?: ColumnProps[];
+  record?: Record;
+  rowGroup?: Group;
+  headerGroup?: Group;
+  column: ColumnProps;
+  renderer: (props: { colGroup: ColumnGroup; style?: CSSProperties }) => ReactNode;
+}
+
+const AggregationTree: FunctionComponent<AggregationTreeProps> = function AggregationTree(props) {
+  const { columns, groups, record, rowGroup, headerGroup, column, renderer } = props;
+  const { tableStore, prefixCls, dataSet, aggregation: tableAggregation } = useContext(TableContext);
+  const cellPrefix = `${prefixCls}-cell`;
+  const columnGroups: ColumnGroup[] = useMemo(() => {
+    if (groups) {
+      return groups;
+    }
+    if (columns) {
+      return new ColumnGroups(columns, tableStore).columns;
+    }
+    return [];
+  }, [columns, groups]);
+  const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
+  const getColumnsInnerNode = useCallback((columns: ColumnGroup[]) => {
+    return columns.map((colGroup) => {
+      const { hidden, column: col } = colGroup;
+      const { hiddenInAggregation } = col;
+      if (!hidden && !(typeof hiddenInAggregation === 'function' ? record ? hiddenInAggregation(record) : false : hiddenInAggregation)) {
+        const { key: columnKey, headerGroup } = colGroup;
+        const isBuiltInColumn = tableStore.isBuiltInColumn(col);
+        const columnOnCell = !isBuiltInColumn && (col.onCell || tableColumnOnCell);
+        const cellExternalProps: Partial<TreeNodeProps> =
+          typeof columnOnCell === 'function' && record
+            ? columnOnCell({
+              dataSet,
+              record,
+              column: col,
+            })
+            : {};
+        const header = getHeader({ ...col, dataSet, aggregation: tableAggregation, group: headerGroup });
+        const childColumns = colGroup.children;
+        if (childColumns) {
+          const { columns: colGroups } = childColumns;
+          if (colGroups.length) {
+            return (
+              <Tree.TreeNode
+                {...cellExternalProps}
+                key={columnKey}
+                title={header}
+              >
+                {getColumnsInnerNode(colGroups)}
+              </Tree.TreeNode>
+            );
+          }
+        }
+        // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
+        const style = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
+
+        const innerNode = renderer({
+          colGroup,
+          style,
+        });
+        return (
+          <Tree.TreeNode
+            {...cellExternalProps}
+            key={columnKey}
+            title={
+              <>
+                <span className={`${cellPrefix}-label`}>{header}</span>
+                {innerNode}
+              </>
+            }
+          />
+        );
+      }
+      return undefined;
+    });
+  }, [tableStore, record, dataSet, cellPrefix, renderer, tableColumnOnCell, tableAggregation]);
+  const aggregationExpandKey = getColumnKey(column);
+  const visibleChildren: ColumnGroup[] = columnGroups.filter(child => !child.hidden);
+  const { length } = visibleChildren;
+  if (length > 0) {
+    const { aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll, aggregationLimitDefaultExpanded } = column;
+    const expanded: boolean = defaultTo(
+      record ? tableStore.isAggregationCellExpanded(record, aggregationExpandKey) : headerGroup && headerGroup.getState(EXPAND_KEY),
+      typeof aggregationLimitDefaultExpanded === 'function' ? record ? aggregationLimitDefaultExpanded(record) : false : aggregationLimitDefaultExpanded,
+    ) || false;
+    const hasExpand = length > aggregationLimit!;
+    const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
+    return (
+      <Tree
+        prefixCls={`${cellPrefix}-tree`}
+        virtual={false}
+        focusable={false}
+        defaultExpandedKeys={aggregationDefaultExpandedKeys}
+        defaultExpandAll={aggregationDefaultExpandAll}
+      >
+        {
+          getColumnsInnerNode(nodes)
+        }
+        {
+          hasExpand && (
+            <Tree.TreeNode
+              title={
+                <AggregationButton
+                  expanded={expanded}
+                  record={record}
+                  rowGroup={rowGroup}
+                  headerGroup={headerGroup}
+                  isColumnGroup={!(headerGroup || !column.__tableGroup)}
+                  aggregationExpandKey={aggregationExpandKey}
+                />
+              }
+            />
+          )
+        }
+      </Tree>
+    );
+  }
+  return null;
+};
+
+AggregationTree.displayName = 'AggregationTree';
+
+export default observer(AggregationTree);
