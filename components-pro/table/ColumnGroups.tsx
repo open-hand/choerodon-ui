@@ -4,6 +4,7 @@ import { ColumnProps, columnWidth } from './Column';
 import ColumnGroup from './ColumnGroup';
 import { ColumnLock } from './enum';
 import TableStore from './TableStore';
+import { TableGroup } from './Table';
 
 export default class ColumnGroups {
   columns: ColumnGroup[];
@@ -111,10 +112,17 @@ export default class ColumnGroups {
     return this.rightLeafs.reduce<number>((total, { column }) => total + columnWidth(column, this.store), 0);
   }
 
-  get rowGroup(): Group | undefined {
+  get headerGroup(): Group | undefined {
     const { parent } = this;
     if (parent) {
       return parent.headerGroup;
+    }
+  }
+
+  get tableGroup(): TableGroup | undefined {
+    const { parent } = this;
+    if (parent) {
+      return parent.tableGroup;
     }
   }
 

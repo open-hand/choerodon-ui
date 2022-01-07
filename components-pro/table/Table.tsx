@@ -17,7 +17,8 @@ import {
   DraggableProps,
   DraggableProvided,
   DraggableRubric,
-  DraggableStateSnapshot, DragStart,
+  DraggableStateSnapshot,
+  DragStart,
   DroppableProps,
   DroppableStateSnapshot,
   DropResult,
@@ -170,6 +171,7 @@ export interface onRowProps {
 export interface onColumnResizeProps {
   column: ColumnProps;
   width: number;
+  index: number;
 }
 
 export type TableQueryBarHookCustomProps = Omit<object, keyof TableQueryBarHookProps>;
@@ -2227,7 +2229,15 @@ export default class Table extends DataSetComponent<TableProps> {
     return 0;
   }
 
-  setScrollTop(scrollTop: number, target?: HTMLElement) {
+  public setColumnWidth(width: number, indexOrKeyOrName: number | string) {
+    const { tableStore } = this;
+    const target = tableStore.findColumnGroup(indexOrKeyOrName);
+    if (target) {
+      tableStore.setColumnWidth(target, width);
+    }
+  }
+
+  public setScrollTop(scrollTop: number, target?: HTMLElement) {
     if (scrollTop !== this.lastScrollTop) {
       const { tableStore, fixedColumnsBodyLeft, tableBodyWrap, fixedColumnsBodyRight, tableContentWrap } = this;
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
@@ -2251,7 +2261,7 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  setScrollLeft(scrollLeft: number, target?: HTMLElement) {
+  public setScrollLeft(scrollLeft: number, target?: HTMLElement) {
     if (scrollLeft !== this.lastScrollLeft) {
       const { tableStore } = this;
       const { tableHeadWrap, tableBodyWrap, tableFootWrap, tableContentWrap } = this;
