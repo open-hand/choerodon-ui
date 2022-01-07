@@ -16,8 +16,10 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
+- 💄 `Alert`: Optimize the layout style of the component.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
+- 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 
 ## 1.5.1
 
