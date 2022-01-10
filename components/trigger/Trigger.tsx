@@ -167,8 +167,6 @@ export default class Trigger extends Component<TriggerProps> {
 
   documentEvent?: EventManager;
 
-  targetEvent?: EventManager;
-
   focusTime = 0;
 
   preClickTime = 0;
@@ -207,10 +205,9 @@ export default class Trigger extends Component<TriggerProps> {
   @autobind
   getFocusableElements(elements) {
     this.focusElements = elements;
-    const { target, targetEvent } = this;
-    if (target && targetEvent && (!elements || !elements.includes(targetEvent.el))) {
-      targetEvent.clear();
-      delete this.targetEvent;
+    const { target, activeElement } = this;
+    if (target && activeElement && (!elements || !elements.includes(activeElement))) {
+      this.activeElement = null;
       target.focus();
     }
   }
@@ -301,9 +298,6 @@ export default class Trigger extends Component<TriggerProps> {
     this.cancelPopupTask();
     if (this.documentEvent) {
       this.documentEvent.clear();
-    }
-    if (this.targetEvent) {
-      this.targetEvent.clear();
     }
   }
 
