@@ -348,7 +348,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @action
-  handleDateMounseEnter = (currentDate?: Moment): void => {
+  handleDateMouseEnter = (currentDate?: Moment): void => {
     const { editorInPopup } = this.observableProps;
     const hoverValue = currentDate && currentDate.format(this.getDateFormat());
     if (editorInPopup) {
@@ -360,7 +360,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @action
-  handleDateMounseLeave = (): void => {
+  handleDateMouseLeave = (): void => {
     this.hoverValue = null;
     this.popupHoverValue = null;
   }
@@ -388,8 +388,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             step: this.getProp('step') || {},
             renderExtraFooter: this.getProp('renderExtraFooter'),
             extraFooterPlacement: this.getProp('extraFooterPlacement') || 'bottom',
-            onDateMouseEnter: this.handleDateMounseEnter,
-            onDateMouseLeave: this.handleDateMounseLeave,
+            onDateMouseEnter: this.handleDateMouseEnter,
+            onDateMouseLeave: this.handleDateMouseLeave,
           } as DateViewProps)
         }
       </>

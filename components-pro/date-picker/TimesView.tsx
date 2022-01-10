@@ -373,7 +373,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
       };
       if (!isDisabled) {
         props.onClick = this.handleTimeCellClick.bind(this, current, unit);
-        props.onMouseEnter = this.handleDateMounseEnter(current);
+        props.onMouseEnter = this.handleDateMouseEnter(current);
         props.onMouseLeave = onDateMouseLeave;
       }
       items.push(renderer(props, text, current, selected));

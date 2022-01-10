@@ -119,7 +119,7 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
       };
       if (!isDisabled) {
         monthProps.onClick = this.handleCellClick.bind(this, currentMonth);
-        monthProps.onMouseEnter = this.handleDateMounseEnter(currentMonth);
+        monthProps.onMouseEnter = this.handleDateMouseEnter(currentMonth);
         monthProps.onMouseLeave = onDateMouseLeave;
       }
 

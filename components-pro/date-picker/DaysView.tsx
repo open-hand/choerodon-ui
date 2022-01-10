@@ -272,7 +272,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     return firstDay.date(firstDay.daysInMonth()).startOf('w');
   }
 
-  handleDateMounseEnter = (currentDate?: Moment): MouseEventHandler => {
+  handleDateMouseEnter = (currentDate?: Moment): MouseEventHandler => {
     const { onDateMouseEnter = noop } = this.props;
     return () => onDateMouseEnter(currentDate);
   }
@@ -313,7 +313,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
       if (!isDisabled) {
         dayProps.onClick = this.handleCellClick.bind(this, currentDate);
-        dayProps.onMouseEnter = this.handleDateMounseEnter(currentDate);
+        dayProps.onMouseEnter = this.handleDateMouseEnter(currentDate);
         dayProps.onMouseLeave = onDateMouseLeave;
       }
 
