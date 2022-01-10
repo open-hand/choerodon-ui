@@ -951,8 +951,9 @@ export default class TableStore {
   }
 
   get otherHeight() {
-    const scrollbarWidth = this.overflowX ? measureScrollbar() : 0;
-    return this.headerHeight + this.footerHeight + scrollbarWidth;
+    const { footerHeight } = this;
+    const footerTotalHeight = footerHeight && this.overflowX ? measureScrollbar() + footerHeight : 0;
+    return this.headerHeight + footerTotalHeight;
   }
 
   @computed
@@ -1508,7 +1509,7 @@ export default class TableStore {
     return (
       bodyHeight !== undefined &&
       height !== undefined &&
-      height < bodyHeight + (this.overflowX && !this.hasFooter ? measureScrollbar() : 0)
+      height < bodyHeight
     );
   }
 

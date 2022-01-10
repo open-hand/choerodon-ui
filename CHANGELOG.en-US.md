@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
+- 🐞 `<pro>Table`: Fix the height calculation problem when there is a horizontal scroll bar.
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 
 ## 1.5.1
