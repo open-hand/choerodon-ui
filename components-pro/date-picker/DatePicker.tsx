@@ -209,12 +209,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   /**
    * hover 时显示值
    */
-   @observable hoverValue?: string | null;
-
-  /**
-   * popup 弹框中输入框 hover 时显示值
-   */
-  @observable popupHoverValue?: string | null;
+  @observable hoverValue?: string | null;
 
   popupRangeEditor?: HTMLInputElement | null;
 
@@ -307,7 +302,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   getPopupEditor() {
     const { editorInPopup } = this.observableProps;
     if (editorInPopup) {
-      const { prefixCls, range, text, popupHoverValue, rangeTarget } = this;
+      const { prefixCls, range, text, rangeTarget } = this;
+      const popupHoverValue = this.getHoverValue(true);
       const className = classNames(`${prefixCls}-popup-editor`, {
         [`${prefixCls}-popup-hover-value`]: !isNil(popupHoverValue) && !range,
         [`${prefixCls}-popup-hover-value-start`]: !isNil(popupHoverValue) && range && rangeTarget === 0,
@@ -353,28 +349,32 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
+  getHoverValue(isPopup: boolean): string | null | undefined {
+    const { editorInPopup } = this.props;
+    const { hoverValue } = this;
+    return (
+      isPopup && editorInPopup
+        ? hoverValue
+        : !isPopup && !editorInPopup
+          ? hoverValue
+          : undefined
+    );
+  }
+
   @action
   handleDateMouseEnter = (currentDate?: Moment): void => {
-    const { editorInPopup } = this.observableProps;
-    const hoverValue = currentDate && currentDate.format(this.getDateFormat());
-    if (editorInPopup) {
-      this.popupHoverValue = hoverValue;
-    }
-    else {
-      this.hoverValue = hoverValue;
-    }
+    this.hoverValue = currentDate && currentDate.format(this.getDateFormat());
   }
 
   @action
   handleDateMouseLeave = (): void => {
     this.hoverValue = null;
-    this.popupHoverValue = null;
   }
 
   // 处理 hover 值显示
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
     const { isFlat } = this.props;
-    const { hoverValue } = this;
+    const hoverValue = this.getHoverValue(false);
     if (!isNil(hoverValue)) {
       if (rangeTarget === undefined || (rangeTarget === 0 && this.rangeTarget === 0) || (rangeTarget === 1 && this.rangeTarget === 1)) {
         return {
@@ -387,11 +387,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   getRangeInputValue(startText: string, endText: string): string {
-    return this.hoverValue ?? super.getRangeInputValue(startText, endText);
+    const hoverValue = this.getHoverValue(false);
+    return hoverValue ?? super.getRangeInputValue(startText, endText);
   }
 
   getInputClassString(className: string): string {
-    const { prefixCls, hoverValue } = this;
+    const { prefixCls } = this;
+    const hoverValue = this.getHoverValue(false);
     return classNames(className, {
       [`${prefixCls}-hover-value`]: !isNil(hoverValue),
     });
